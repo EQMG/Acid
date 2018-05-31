@@ -4,10 +4,10 @@
 
 namespace fl
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
-		m_descriptorSet(new DescriptorsHandler()),
-		m_uniformObject(new UniformHandler()),
+		m_descriptorSet(DescriptorsHandler()),
+		m_uniformObject(UniformHandler()),
 		m_model(nullptr),
 		m_string(text),
 		m_newString(""),
@@ -16,8 +16,8 @@ namespace fl
 		m_maxWidth(maxWidth),
 		m_kerning(kerning),
 		m_leading(leading),
-		m_textColour(new Colour("#ffffff")),
-		m_borderColour(new Colour("#000000")),
+		m_textColour(Colour("#ffffff")),
+		m_borderColour(Colour("#000000")),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(new DriverConstant(0.0f)),
@@ -31,20 +31,13 @@ namespace fl
 
 	Text::~Text()
 	{
-		delete m_descriptorSet;
-		delete m_uniformObject;
-		delete m_model;
-
-		delete m_textColour;
-		delete m_borderColour;
-
 		delete m_glowDriver;
 		delete m_borderDriver;
 	}
 
 	void Text::UpdateObject()
 	{
-		if (IsLoaded() && m_newString != "")
+		if (IsLoaded() && !m_newString.empty())
 		{
 			m_string = m_newString;
 			LoadText();
@@ -55,12 +48,12 @@ namespace fl
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 
 		// Updates uniforms.
-		m_uniformObject->Push("transform", *GetScreenTransform());
-		m_uniformObject->Push("colour", *m_textColour);
-		m_uniformObject->Push("borderColour", *m_borderColour);
-		m_uniformObject->Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
-		m_uniformObject->Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
-		m_uniformObject->Push("alpha", GetAlpha());
+		m_uniformObject.Push("transform", *GetScreenTransform());
+		m_uniformObject.Push("colour", m_textColour);
+		m_uniformObject.Push("borderColour", m_borderColour);
+		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
+		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
 	void Text::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
@@ -72,11 +65,11 @@ namespace fl
 		}
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboObject", m_uniformObject);
-		m_descriptorSet->Push("samplerColour", m_fontType->GetTexture());
-		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+		m_descriptorSet.Push("UboObject", m_uniformObject);
+		m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}
@@ -89,7 +82,7 @@ namespace fl
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 
@@ -182,11 +175,6 @@ namespace fl
 		auto lines = CreateStructure();
 		auto vertices = CreateQuad(lines);
 
-		for (auto line : lines)
-		{
-			delete line;
-		}
-
 		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
 		NormalizeQuad(&bounding, vertices);
@@ -197,11 +185,11 @@ namespace fl
 		GetRectangle()->SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 
-	std::vector<FontLine *> Text::CreateStructure()
+	std::vector<FontLine> Text::CreateStructure()
 	{
-		auto lines = std::vector<FontLine *>();
-		auto currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-		auto currentWord = new FontWord();
+		auto lines = std::vector<FontLine>();
+		auto currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		auto currentWord = FontWord();
 
 		auto formattedText = FormatString::Replace(m_string, "\t", "    ");
 		auto textLines = FormatString::Split(formattedText, "\n", true);
@@ -219,32 +207,32 @@ namespace fl
 
 				if (ascii == FontMetafile::SPACE_ASCII)
 				{
-					bool added = currentLine->AddWord(currentWord);
+					bool added = currentLine.AddWord(currentWord);
 
 					if (!added)
 					{
-						lines.push_back(currentLine);
-						currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-						currentLine->AddWord(currentWord);
+						lines.emplace_back(currentLine);
+						currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+						currentLine.AddWord(currentWord);
 					}
 
-					currentWord = new FontWord();
+					currentWord = FontWord();
 					continue;
 				}
 
 				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
 
-				if (character != nullptr)
+				if (character.GetId() != -1)
 				{
-					currentWord->AddCharacter(character, m_kerning);
+					currentWord.AddCharacter(character, m_kerning);
 				}
 			}
 
 			if (i != textLines.size() - 1)
 			{
-				lines.push_back(currentLine);
-				currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-				currentLine->AddWord(currentWord);
+				lines.emplace_back(currentLine);
+				currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+				currentLine.AddWord(currentWord);
 			}
 		}
 
@@ -252,21 +240,21 @@ namespace fl
 		return lines;
 	}
 
-	void Text::CompleteStructure(std::vector<FontLine *> &lines, FontLine *currentLine, FontWord *currentWord)
+	void Text::CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord)
 	{
-		bool added = currentLine->AddWord(currentWord);
+		bool added = currentLine.AddWord(currentWord);
 
 		if (!added)
 		{
-			lines.push_back(currentLine);
-			currentLine = new FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-			currentLine->AddWord(currentWord);
+			lines.emplace_back(currentLine);
+			currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+			currentLine.AddWord(currentWord);
 		}
 
-		lines.push_back(currentLine);
+		lines.emplace_back(currentLine);
 	}
 
-	std::vector<IVertex *> Text::CreateQuad(std::vector<FontLine *> lines)
+	std::vector<IVertex *> Text::CreateQuad(const std::vector<FontLine> &lines)
 	{
 		auto vertices = std::vector<IVertex *>();
 		//m_numberLines = static_cast<int>(lines.size());
@@ -283,27 +271,27 @@ namespace fl
 				cursorX = 0.0;
 				break;
 			case JUSTIFY_CENTRE:
-				cursorX = (line->GetMaxLength() - line->GetCurrentLineLength()) / 2.0;
+				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
 				break;
 			case JUSTIFY_RIGHT:
-				cursorX = line->GetMaxLength() - line->GetCurrentLineLength();
+				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			case JUSTIFY_FULLY:
 				cursorX = 0.0;
 				break;
 			}
 
-			for (auto word : line->GetWords())
+			for (auto word : line.GetWords())
 			{
-				for (auto letter : word->GetCharacters())
+				for (auto letter : word.GetCharacters())
 				{
-					AddVerticesForCharacter(cursorX, cursorY, *letter, vertices);
-					cursorX += m_kerning + letter->GetAdvanceX();
+					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
+					cursorX += m_kerning + letter.GetAdvanceX();
 				}
 
 				if (m_justify == JUSTIFY_FULLY && lineOrder > 1)
 				{
-					cursorX += (line->GetMaxLength() - line->GetCurrentWordsLength()) / line->GetWords().size();
+					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
 				}
 				else
 				{
@@ -342,7 +330,7 @@ namespace fl
 	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices)
 	{
 		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
-		vertices.push_back(vertex);
+		vertices.emplace_back(vertex);
 	}
 
 	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices)

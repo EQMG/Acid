@@ -30,7 +30,7 @@ namespace fl
 				vertex->m_position.m_y = radius * vertex->m_normal.m_y;
 				vertex->m_position.m_z = radius * vertex->m_normal.m_z;
 
-				vertices.push_back(vertex);
+				vertices.emplace_back(vertex);
 			}
 		}
 
@@ -41,13 +41,13 @@ namespace fl
 				uint32_t first = j + ((latitudeBands + 1) * i);
 				uint32_t second = j + ((latitudeBands + 1) * (i + 1));
 
-				indices.push_back(first);
-				indices.push_back(second + 1);
-				indices.push_back(second);
+				indices.emplace_back(first);
+				indices.emplace_back(second + 1);
+				indices.emplace_back(second);
 
-				indices.push_back(first);
-				indices.push_back(first + 1);
-				indices.push_back(second + 1);
+				indices.emplace_back(first);
+				indices.emplace_back(first + 1);
+				indices.emplace_back(second + 1);
 			}
 		}
 

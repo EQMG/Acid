@@ -18,22 +18,22 @@ namespace fl
 		{
 			if (weight > m_weights.at(i))
 			{
-				m_jointIds.insert(m_jointIds.begin() + i, jointId);
-				m_weights.insert(m_weights.begin() + i, weight);
+				m_jointIds[i] = jointId;
+				m_weights[i] = weight;
 				return;
 			}
 		}
 
-		m_jointIds.push_back(jointId);
-		m_weights.push_back(weight);
+		m_jointIds.emplace_back(jointId);
+		m_weights.emplace_back(weight);
 	}
 
 	void VertexSkinData::LimitJointNumber(const unsigned int &max)
 	{
 		if (m_jointIds.size() > max)
 		{
-			std::vector<float> topWeights = std::vector<float>(max);
-			float total = SaveTopWeights(&topWeights);
+			auto topWeights = std::vector<float>(max);
+			float total = SaveTopWeights(topWeights);
 			RefillWeightList(topWeights, total);
 			RemoveExcessJointIds(max);
 		}
@@ -47,19 +47,19 @@ namespace fl
 	{
 		while (m_jointIds.size() < max)
 		{
-			m_jointIds.push_back(0);
-			m_weights.push_back(0.0f);
+			m_jointIds.emplace_back(0);
+			m_weights.emplace_back(0.0f);
 		}
 	}
 
-	float VertexSkinData::SaveTopWeights(std::vector<float> *topWeightsArray)
+	float VertexSkinData::SaveTopWeights(std::vector<float> &topWeightsArray)
 	{
 		float total = 0.0f;
 
-		for (unsigned int i = 0; i < topWeightsArray->size(); i++)
+		for (unsigned int i = 0; i < topWeightsArray.size(); i++)
 		{
-			topWeightsArray->at(i) = m_weights.at(i);
-			total += topWeightsArray->at(i);
+			topWeightsArray.at(i) = m_weights.at(i);
+			total += topWeightsArray.at(i);
 		}
 
 		return total;
@@ -71,7 +71,7 @@ namespace fl
 
 		for (float topWeight : topWeights)
 		{
-			m_weights.push_back(topWeight / total);
+			m_weights.emplace_back(topWeight / total);
 		}
 	}
 

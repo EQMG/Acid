@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "Engine/Exports.hpp"
 #include "Scenes/ISpatialStructure.hpp"
 #include "Maths/Transform.hpp"
@@ -8,17 +9,18 @@
 
 namespace fl
 {
-	class FL_EXPORT GameObject
+	class FL_EXPORT GameObject :
+		public std::enable_shared_from_this<GameObject>
 	{
 	private:
 		std::string m_name;
 		Transform *m_transform;
-		std::vector<Component *> *m_components;
+		std::vector<std::shared_ptr<Component>> m_components;
 		ISpatialStructure *m_structure;
-		GameObject *m_parent;
+		GameObject* m_parent;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr, const std::string &name = "Unnamed");
+		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure = nullptr);
 
@@ -26,14 +28,14 @@ namespace fl
 
 		virtual void Update();
 
-		std::vector<Component *> *GetComponents() const { return m_components; }
+		std::vector<std::shared_ptr<Component>> GetComponents() const { return m_components; }
 
 		template<typename T>
-		T *GetComponent()
+		std::shared_ptr<T> GetComponent()
 		{
-			for (auto c : *m_components)
+			for (auto c : m_components)
 			{
-				T *casted = dynamic_cast<T *>(c);
+				auto casted = std::dynamic_pointer_cast<T>(c);
 
 				if (casted != nullptr)
 				{
@@ -44,29 +46,29 @@ namespace fl
 			return nullptr;
 		}
 
-		Component *AddComponent(Component *component);
+		std::shared_ptr<Component> AddComponent(std::shared_ptr<Component> component);
 
 		template<typename T, typename... Args>
-		T *AddComponent(Args &&... args)
+		std::shared_ptr<T> AddComponent(Args &&... args)
 		{
-			T *created = new T(std::forward<Args>(args)...);
+			auto created = std::make_shared<T>(std::forward<Args>(args)...);
 			AddComponent(created);
 			return created;
 		}
 
-		Component *RemoveComponent(Component *component);
+		std::shared_ptr<Component> RemoveComponent(std::shared_ptr<Component> component);
 
 		template<typename T>
-		T *RemoveComponent()
+		std::shared_ptr<T> RemoveComponent()
 		{
-			for (auto c : *m_components)
+			for (auto component : m_components)
 			{
-				T *casted = dynamic_cast<T *>(c);
+				auto casted = std::dynamic_pointer_cast<T>(component);
 
 				if (casted != nullptr)
 				{
-					RemoveComponent(c);
-					return c;
+					RemoveComponent(component);
+					return component;
 				}
 			}
 

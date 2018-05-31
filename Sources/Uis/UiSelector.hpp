@@ -7,14 +7,51 @@
 
 namespace fl
 {
-	struct FL_HIDDEN SelectorJoystick
+	struct FL_EXPORT SelectorJoystick
 	{
+	private:
+		JoystickPort m_joystick;
+		ButtonJoystick *m_clickLeft;
+		ButtonJoystick *m_clickRight;
+		AxisJoystick *m_axisX;
+		AxisJoystick *m_axisY;
 	public:
-		JoystickPort joystick;
-		ButtonJoystick *clickLeft;
-		ButtonJoystick *clickRight;
-		AxisJoystick *axisX;
-		AxisJoystick *axisY;
+		SelectorJoystick(const JoystickPort &joystick = JOYSTICK_LAST, const int &joystickLeftClick = 0, const int &joystickRightClick = 1, const int &joystickAxisX = 0, const int &joystickAxisY = 1) :
+			m_joystick(joystick),
+			m_clickLeft(new ButtonJoystick(joystick, {joystickLeftClick})),
+			m_clickRight(new ButtonJoystick(joystick, {joystickRightClick})),
+			m_axisX(new AxisJoystick(joystick, {joystickAxisX})),
+			m_axisY(new AxisJoystick(joystick, {joystickAxisY}))
+		{
+		}
+
+		~SelectorJoystick()
+		{
+			delete m_clickLeft;
+			delete m_clickRight;
+			delete m_axisX;
+			delete m_axisY;
+		}
+
+		JoystickPort GetJoystick() const { return m_joystick; }
+
+		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
+
+		ButtonJoystick *GetClickLeft() const { return m_clickLeft; }
+
+	//	void SetClickLeft(const ButtonJoystick &clickLeft) { m_clickLeft = clickLeft; }
+
+		ButtonJoystick *GetClickRight() const { return m_clickRight; }
+
+	//	void SetClickRight(const ButtonJoystick &clickRight) { m_clickRight = clickRight; }
+
+		AxisJoystick *GetAxisX() const { return m_axisX; }
+
+	//	void SetAxisX(const AxisJoystick &axisX) { m_axisX = axisX; }
+
+		AxisJoystick *GetAxisY() const { return m_axisY; }
+
+	//	void SetAxisY(const AxisJoystick &axisY) { m_axisY = axisY; }
 	};
 
 	/// <summary>
@@ -33,24 +70,12 @@ namespace fl
 
 		ButtonMouse *m_mouseLeft;
 		ButtonMouse *m_mouseRight;
-
-		SelectorJoystick *m_selectorJoystick;
 	public:
 		UiSelector();
 
 		~UiSelector();
 
-		/// <summary>
-		/// Sets up the joystick settings to be used for controlling the virtual cursor.
-		/// </summary>
-		/// <param name="joystick"> The joystick port to attach to. </param>
-		/// <param name="joystickLeftClick"> The joystick key to be used as the left click. </param>
-		/// <param name="joystickRightClick"> The joystick key to be used as the right click. </param>
-		/// <param name="joystickAxisX"> The joystick axis to be used for moving the x axis. </param>
-		/// <param name="joystickAxisY"> The joystick axis to be used for moving the y axis. </param>
-		void Load(const JoystickPort &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY);
-
-		void Update(const bool &paused);
+		void Update(const bool &paused, const SelectorJoystick &selectorJoystick);
 
 		/// <summary>
 		/// Gets if the object provided has the cursor hovered above it.

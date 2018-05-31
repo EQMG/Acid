@@ -8,7 +8,7 @@ namespace fl
 	const float UiInputSlider::CHANGE_TIME = 0.1f;
 	const float UiInputSlider::SCALE_NORMAL = 1.6f;
 	const float UiInputSlider::SCALE_SELECTED = 1.8f;
-	const Colour *UiInputSlider::COLOUR_NORMAL = new Colour("#000000");
+	const Colour UiInputSlider::COLOUR_NORMAL = Colour("#000000");
 
 	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const FontJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
@@ -87,7 +87,7 @@ namespace fl
 
 		// Update the background colour.
 		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
-		m_background->SetColourOffset(COLOUR_NORMAL->Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
+		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 		m_slider->SetColourOffset(Colour(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f));
 
 		//	// Update background size.

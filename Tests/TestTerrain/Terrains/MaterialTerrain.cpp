@@ -25,12 +25,12 @@ namespace test
 	{
 	}
 
-	void MaterialTerrain::PushUniforms(UniformHandler *uniformObject)
+	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 	}
 
-	void MaterialTerrain::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
 	}
 }

@@ -48,13 +48,12 @@ namespace fl
 		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);
 		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
-		Matrix4 matrix = ConvertData(matrixData);
-		matrix = matrix.Transpose();
+		Matrix4 matrix = ConvertData(matrixData).Transpose();
 
 		if (isRoot)
 		{
 			// Because in Blender z is up, but the engine is y up.
-			matrix *= *MeshAnimated::S_CORRECTION;
+			matrix *= MeshAnimated::CORRECTION;
 		}
 
 		m_jointCount++;
@@ -76,15 +75,13 @@ namespace fl
 
 	Matrix4 SkeletonLoader::ConvertData(const std::vector<std::string> &rawData)
 	{
-		float *data = new float[16];
+		Matrix4 result = Matrix4();
 
 		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
-			data[i] = std::stof(rawData[i]);
+			result.m_linear[i] = std::stof(rawData[i]);
 		}
 
-		Matrix4 result = Matrix4(data);
-		delete[] data;
 		return result;
 	}
 }

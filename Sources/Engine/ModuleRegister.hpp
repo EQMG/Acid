@@ -14,7 +14,7 @@ namespace fl
 	private:
 		typedef std::pair<std::string, IModule *> ModulePair;
 
-		std::multimap<float, ModulePair> *m_modules;
+		std::map<float, ModulePair> m_modules;
 	public:
 		/// <summary>
 		/// Creates a new module register.

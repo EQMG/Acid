@@ -148,7 +148,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		int *m_keyboardKeys;
+		std::array<int, KEY_LAST + 1> m_keyboardKeys;
 		int m_keyboardChar;
 
 		friend void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods);

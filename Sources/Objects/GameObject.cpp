@@ -5,10 +5,10 @@
 
 namespace fl
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure, const std::string &name) :
-		m_name(name),
+	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
+		m_name(""),
 		m_transform(new Transform(transform)),
-		m_components(new std::vector<Component *>()),
+		m_components(std::vector<std::shared_ptr<Component>>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
@@ -25,9 +25,9 @@ namespace fl
 	}
 
 	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
-		GameObject(transform, structure, prefabName)
+		GameObject(transform, structure)
 	{
-		PrefabObject *prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
+		auto prefabObject = PrefabObject::Resource("Resources/Objects/" + prefabName + "/" + prefabName + ".json");
 
 		for (auto value : *prefabObject->GetParent()->GetChildren())
 		{
@@ -36,7 +36,7 @@ namespace fl
 				continue;
 			}
 
-			Component *component = Scenes::Get()->CreateComponent(value->GetName());
+			auto component = Scenes::Get()->CreateComponent(value->GetName());
 
 			if (component == nullptr)
 			{
@@ -46,18 +46,13 @@ namespace fl
 			component->Load(value);
 			AddComponent(component);
 		}
+
+		m_name = prefabName;
 	}
 
 	GameObject::~GameObject()
 	{
 		StructureRemove();
-
-		for (auto component : *m_components)
-		{
-			delete component;
-		}
-
-		delete m_components;
 		delete m_transform;
 	}
 
@@ -68,7 +63,7 @@ namespace fl
 			return;
 		}
 
-		for (auto it = m_components->begin(); it != m_components->end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			if ((*it) == nullptr || (*it)->GetGameObject() == nullptr)
 			{
@@ -82,7 +77,7 @@ namespace fl
 		}
 	}
 
-	Component *GameObject::AddComponent(Component *component)
+	std::shared_ptr<Component> GameObject::AddComponent(std::shared_ptr<Component> component)
 	{
 		if (component == nullptr)
 		{
@@ -90,13 +85,13 @@ namespace fl
 		}
 
 		component->SetGameObject(this);
-		m_components->push_back(component);
+		m_components.emplace_back(component);
 		return component;
 	}
 
-	Component *GameObject::RemoveComponent(Component *component)
+	std::shared_ptr<Component> GameObject::RemoveComponent(std::shared_ptr<Component> component)
 	{
-		for (auto it = m_components->begin(); it != m_components->end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			if (*it == component)
 			{
@@ -105,8 +100,7 @@ namespace fl
 					(*it)->SetGameObject(nullptr);
 				}
 
-				delete component;
-				m_components->erase(it);
+				m_components.erase(it);
 				return *it;
 			}
 		}

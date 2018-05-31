@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	MaterialSkybox::MaterialSkybox(Cubemap *cubemap, const bool &enableFog) :
+	MaterialSkybox::MaterialSkybox(std::shared_ptr<Cubemap> cubemap, const bool &enableFog) :
 		IMaterial(),
 		m_cubemap(cubemap),
 		m_enableFog(enableFog),
@@ -21,11 +21,11 @@ namespace fl
 
 	void MaterialSkybox::Update()
 	{
-		GetGameObject()->GetTransform()->SetPosition(*Scenes::Get()->GetCamera()->GetPosition());
+		GetGameObject()->GetTransform()->SetPosition(Scenes::Get()->GetCamera()->GetPosition());
 
 		if (m_enableFog)
 		{
-			GetGameObject()->GetTransform()->SetRotation(*Worlds::Get()->GetSkyboxRotation());
+			GetGameObject()->GetTransform()->SetRotation(Worlds::Get()->GetSkyboxRotation());
 			m_blend = Worlds::Get()->GetStarIntensity();
 		}
 	}
@@ -42,27 +42,26 @@ namespace fl
 		destination->GetChild("Enable Fog", true)->Set((int) m_enableFog);
 	}
 
-	void MaterialSkybox::PushUniforms(UniformHandler *uniformObject)
+	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-		uniformObject->Push("skyColour", *Worlds::Get()->GetSkyColour());
-		uniformObject->Push("fogColour", *Worlds::Get()->GetFog()->GetColour());
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("skyColour", Worlds::Get()->GetSkyColour());
+		uniformObject.Push("fogColour", Worlds::Get()->GetFog().GetColour());
 
-		// Updates uniforms.
 		if (m_enableFog)
 		{
-			uniformObject->Push("fogLimits", GetGameObject()->GetTransform()->GetScaling()->m_y * Vector2(Worlds::Get()->GetFog()->GetLowerLimit(), Worlds::Get()->GetFog()->GetUpperLimit()));
-			uniformObject->Push("blendFactor", m_blend);
+			uniformObject.Push("fogLimits", GetGameObject()->GetTransform()->GetScaling().m_y * Vector2(Worlds::Get()->GetFog().GetLowerLimit(), Worlds::Get()->GetFog().GetUpperLimit()));
+			uniformObject.Push("blendFactor", m_blend);
 		}
 		else
 		{
-			uniformObject->Push("fogLimits", Vector2(-1000000.0f, -1000000.0f));
-			uniformObject->Push("blendFactor", 1.0f);
+			uniformObject.Push("fogLimits", Vector2(-1000000.0f, -1000000.0f));
+			uniformObject.Push("blendFactor", 1.0f);
 		}
 	}
 
-	void MaterialSkybox::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
-		descriptorSet->Push("samplerCubemap", m_cubemap);
+		descriptorSet.Push("samplerCubemap", m_cubemap);
 	}
 }

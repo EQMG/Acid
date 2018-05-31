@@ -24,10 +24,10 @@ namespace fl
 			switch (m_type)
 			{
 			case CELESTIAL_SUN:
-				entityTransform->SetPosition(*Worlds::Get()->GetSunPosition());
+				entityTransform->SetPosition(Worlds::Get()->GetSunPosition());
 				break;
 			case CELESTIAL_MOON:
-				entityTransform->SetPosition(*Worlds::Get()->GetMoonPosition());
+				entityTransform->SetPosition(Worlds::Get()->GetMoonPosition());
 				break;
 			}
 		}
@@ -39,10 +39,10 @@ namespace fl
 			switch (m_type)
 			{
 			case CELESTIAL_SUN:
-				componentLight->SetColour(*Worlds::Get()->GetSunColour());
+				componentLight->SetColour(Worlds::Get()->GetSunColour());
 				break;
 			case CELESTIAL_MOON:
-				componentLight->SetColour(*Worlds::Get()->GetMoonColour());
+				componentLight->SetColour(Worlds::Get()->GetMoonColour());
 				break;
 			}
 		}

@@ -11,10 +11,10 @@ namespace fl
 		public Component
 	{
 	private:
-		Model *m_model;
+		std::shared_ptr<Model> m_model;
 
 	public:
-		Mesh(Model *model = nullptr);
+		Mesh(std::shared_ptr<Model> model = nullptr);
 
 		~Mesh();
 
@@ -26,9 +26,9 @@ namespace fl
 
 		std::string GetName() const override { return "Mesh"; };
 
-		virtual Model *GetModel() const { return m_model; }
+		virtual std::shared_ptr<Model> GetModel() const { return m_model; }
 
-		virtual void SetModel(Model *model) { m_model = model; }
+		virtual void SetModel(std::shared_ptr<Model> model) { m_model = model; }
 
 		virtual void TrySetModel(const std::string &filename);
 	};

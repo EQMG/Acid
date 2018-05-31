@@ -38,7 +38,7 @@ namespace fl
 		LoadedValue *weightsNode = m_skinData->GetChildWithAttribute("source", "-id", weightsDataId)->GetChild("float_array");
 
 		auto rawData = FormatString::Split(weightsNode->GetChild("#text")->GetString(), " ");
-		std::vector<float> weights = std::vector<float>(rawData.size());
+		auto weights = std::vector<float>(rawData.size());
 
 		for (int i = 0; i < weights.size(); i++)
 		{
@@ -51,7 +51,7 @@ namespace fl
 	std::vector<int> SkinLoader::GetEffectiveJointsCounts(LoadedValue *weightsDataNode)
 	{
 		auto rawData = FormatString::Split(weightsDataNode->GetChild("vcount")->GetString(), " ");
-		std::vector<int> counts = std::vector<int>(rawData.size());
+		auto counts = std::vector<int>(rawData.size());
 
 		for (int i = 0; i < rawData.size(); i++)
 		{
@@ -78,7 +78,7 @@ namespace fl
 			}
 
 			skinData->LimitJointNumber(m_maxWeights);
-			m_verticesSkinData.push_back(skinData);
+			m_verticesSkinData.emplace_back(skinData);
 		}
 	}
 }

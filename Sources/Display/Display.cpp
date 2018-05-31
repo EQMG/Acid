@@ -205,18 +205,16 @@ namespace fl
 
 			if (data == nullptr)
 			{
-				printf("Unable to load texture: '%s'\n", m_icon.c_str());
-			}
-			else
-			{
-				GLFWimage icons[1];
-				icons[0].pixels = data;
-				icons[0].width = width;
-				icons[0].height = height;
-
-				glfwSetWindowIcon(m_window, 1, icons);
+				fprintf(stderr, "Unable to load texture: '%s'\n", m_icon.c_str());
+				return;
 			}
 
+			GLFWimage icons[1];
+			icons[0].pixels = data;
+			icons[0].width = width;
+			icons[0].height = height;
+
+			glfwSetWindowIcon(m_window, 1, icons);
 			Texture::DeletePixels(data);
 		}
 	}
@@ -492,13 +490,13 @@ namespace fl
 					fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName);
 				}
 
-				m_instanceLayerList.push_back(layerName);
+				m_instanceLayerList.emplace_back(layerName);
 			}
 		}
 
 		for (auto layerName : DEVICE_EXTENSIONS)
 		{
-			m_deviceExtensionList.push_back(layerName);
+			m_deviceExtensionList.emplace_back(layerName);
 		}
 	}
 
@@ -510,12 +508,12 @@ namespace fl
 
 		for (uint32_t i = 0; i < glfwExtensionCount; i++)
 		{
-			m_instanceExtensionList.push_back(glfwExtensions[i]);
+			m_instanceExtensionList.emplace_back(glfwExtensions[i]);
 		}
 
 		if (m_validationLayers)
 		{
-			m_instanceExtensionList.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+			m_instanceExtensionList.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 		}
 	}
 
@@ -606,7 +604,7 @@ namespace fl
 			VkPhysicalDeviceProperties deviceProperties;
 			vkGetPhysicalDeviceProperties(device, &deviceProperties);
 			int score = ScorePhysicalDevice(device);
-			rankedDevices.insert(std::make_pair(score, device));
+			rankedDevices.emplace(score, device);
 		}
 
 		// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.

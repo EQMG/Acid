@@ -9,7 +9,7 @@ namespace fl
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
 		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
@@ -19,13 +19,13 @@ namespace fl
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				m_imageAttachments.push_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT));
+				m_imageAttachments.emplace_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT));
 				break;
 			case ATTACHMENT_DEPTH:
-				m_imageAttachments.push_back(nullptr);
+				m_imageAttachments.emplace_back(nullptr);
 				break;
 			case ATTACHMENT_SWAPCHAIN:
-				m_imageAttachments.push_back(nullptr);
+				m_imageAttachments.emplace_back(nullptr);
 				break;
 			}
 		}
@@ -41,13 +41,13 @@ namespace fl
 				switch (image.GetType())
 				{
 				case ATTACHMENT_IMAGE:
-					attachments.push_back(GetTexture(image.GetBinding())->GetImageView());
+					attachments.emplace_back(GetTexture(image.GetBinding())->GetImageView());
 					break;
 				case ATTACHMENT_DEPTH:
-					attachments.push_back(depthStencil.GetVkImageView());
+					attachments.emplace_back(depthStencil.GetVkImageView());
 					break;
 				case ATTACHMENT_SWAPCHAIN:
-					attachments.push_back(swapchain.GetVkImageViews().at(i));
+					attachments.emplace_back(swapchain.GetVkImageViews().at(i));
 					break;
 				}
 			}
@@ -67,7 +67,7 @@ namespace fl
 
 	Framebuffers::~Framebuffers()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto attachment : m_imageAttachments)
 		{

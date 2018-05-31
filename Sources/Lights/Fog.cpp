@@ -2,8 +2,8 @@
 
 namespace fl
 {
-	Fog::Fog(Colour *colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
-		m_colour(colour),
+	Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
+		m_colour(Colour(colour)),
 		m_density(density),
 		m_gradient(gradient),
 		m_lowerLimit(lowerLimit),
@@ -13,12 +13,11 @@ namespace fl
 
 	Fog::~Fog()
 	{
-		delete m_colour;
 	}
 
 	void Fog::Write(LoadedValue *destination)
 	{
-		m_colour->Write(destination->GetChild("colour", true));
+		m_colour.Write(destination->GetChild("colour", true));
 		destination->SetChild<float>("density", m_density);
 		destination->SetChild<float>("gradient", m_gradient);
 		destination->SetChild<float>("lowerLimit", m_lowerLimit);
@@ -27,7 +26,7 @@ namespace fl
 
 	Fog &Fog::operator=(const Fog &other)
 	{
-		*m_colour = *other.m_colour;
+		m_colour = other.m_colour;
 		m_density = other.m_density;
 		m_gradient = other.m_gradient;
 		m_lowerLimit = other.m_lowerLimit;
@@ -37,7 +36,7 @@ namespace fl
 
 	Fog &Fog::operator=(LoadedValue *source)
 	{
-		*m_colour = source->GetChild("colour");
+		m_colour = source->GetChild("colour");
 		m_density = source->GetChild("density")->Get<float>();
 		m_gradient = source->GetChild("gradient")->Get<float>();
 		m_lowerLimit = source->GetChild("lowerLimit")->Get<float>();

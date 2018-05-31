@@ -4,40 +4,35 @@
 
 namespace fl
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, Texture *texture, const int &selectedRow) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow) :
 		UiObject(parent, rectangle),
-		m_descriptorSet(new DescriptorsHandler()),
-		m_uniformObject(new UniformHandler()),
+		m_descriptorSet(DescriptorsHandler()),
+		m_uniformObject(UniformHandler()),
 		m_model(ShapeRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
-		m_atlasOffset(new Vector2()),
-		m_colourOffset(new Colour(1.0f, 1.0f, 1.0f, 1.0f))
+		m_atlasOffset(Vector2()),
+		m_colourOffset(Colour(1.0f, 1.0f, 1.0f, 1.0f))
 	{
 	}
 
 	Gui::~Gui()
 	{
-		delete m_descriptorSet;
-		delete m_uniformObject;
-		delete m_model;
-		delete m_atlasOffset;
-		delete m_colourOffset;
 	}
 
 	void Gui::UpdateObject()
 	{
-		const int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
-		const int column = m_selectedRow % numberOfRows;
-		const int row = m_selectedRow / numberOfRows;
-		*m_atlasOffset = Vector2(static_cast<float>(column / numberOfRows), static_cast<float>(row / numberOfRows));
+		int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
+		int column = m_selectedRow % numberOfRows;
+		int row = m_selectedRow / numberOfRows;
+		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 		// Updates uniforms.
-		m_uniformObject->Push("transform", *GetScreenTransform());
-		m_uniformObject->Push("colourOffset", *m_colourOffset);
-		m_uniformObject->Push("atlasOffset", *m_atlasOffset);
-		m_uniformObject->Push("atlasRows", static_cast<float>(m_texture->GetNumberOfRows()));
-		m_uniformObject->Push("alpha", GetAlpha());
+		m_uniformObject.Push("transform", *GetScreenTransform());
+		m_uniformObject.Push("colourOffset", m_colourOffset);
+		m_uniformObject.Push("atlasOffset", m_atlasOffset);
+		m_uniformObject.Push("atlasRows", static_cast<float>(m_texture->GetNumberOfRows()));
+		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
 	void Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
@@ -49,11 +44,11 @@ namespace fl
 		}
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboObject", m_uniformObject);
-		m_descriptorSet->Push("samplerColour", m_texture);
-		bool descriptorsSet = m_descriptorSet->Update(pipeline);
+		m_descriptorSet.Push("UboObject", m_uniformObject);
+		m_descriptorSet.Push("samplerColour", m_texture);
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}
@@ -66,7 +61,7 @@ namespace fl
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }

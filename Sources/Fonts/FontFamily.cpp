@@ -17,23 +17,18 @@ namespace fl
 
 	FontFamily::~FontFamily()
 	{
-		delete m_typeThin;
-		delete m_typeLight;
-		delete m_typeRegular;
-		delete m_typeSemibold;
-		delete m_typeBold;
 	}
 
-	FontType *FontFamily::LoadFontType(const std::string &filename, const std::string &suffex)
+	std::shared_ptr<FontType> FontFamily::LoadFontType(const std::string &filename, const std::string &suffex)
 	{
-		const std::string filepathPng = filename + "/" + suffex + ".png";
-		const std::string filepathFnt = filename + "/" + suffex + ".fnt";
+		std::string filepathPng = filename + "/" + suffex + ".png";
+		std::string filepathFnt = filename + "/" + suffex + ".fnt";
 
 		if (!FileSystem::FileExists(filepathPng) || !FileSystem::FileExists(filepathFnt))
 		{
 			return nullptr;
 		}
 
-		return new FontType(filepathPng, filepathFnt);
+		return std::make_shared<FontType>(filepathPng, filepathFnt);
 	}
 }

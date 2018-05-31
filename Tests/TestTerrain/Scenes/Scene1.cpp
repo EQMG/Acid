@@ -80,7 +80,7 @@ namespace test
 		// Waters.
 		GameObject *water = new GameObject(Transform());
 		water->SetName("Water");
-		water->AddComponent<Mesh>(new MeshWater());
+		water->AddComponent<Mesh>(std::make_shared<MeshWater>());
 		water->AddComponent<MaterialWater>();
 		water->AddComponent<MeshRender>();
 

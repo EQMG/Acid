@@ -8,33 +8,32 @@ namespace fl
 	PrefabObject::PrefabObject(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
-		m_fileJson(new FileJson(filename))
+		m_fileJson(FileJson(filename))
 	{
 		if (!FileSystem::FileExists(filename))
 		{
 			FileSystem::CreateFile(filename);
 		}
 
-		m_fileJson->Load();
+		m_fileJson.Load();
 	}
 
 	PrefabObject::~PrefabObject()
 	{
-		delete m_fileJson;
 	}
 
-	void PrefabObject::Write(GameObject *gameObject)
+	void PrefabObject::Write(const GameObject &gameObject)
 	{
-		m_fileJson->Clear();
+		m_fileJson.Clear();
 
-		for (auto component : *gameObject->GetComponents())
+		for (auto component : gameObject.GetComponents())
 		{
-			component->Write(m_fileJson->GetParent()->GetChild(component->GetName(), true));
+			component->Write(m_fileJson.GetParent()->GetChild(component->GetName(), true));
 		}
 	}
 
 	void PrefabObject::Save()
 	{
-		m_fileJson->Save();
+		m_fileJson.Save();
 	}
 }

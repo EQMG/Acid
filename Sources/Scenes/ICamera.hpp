@@ -36,8 +36,8 @@ namespace fl
 		/// <summary>
 		/// Prepares the camera for the reflection render pass.
 		/// </summary>
-		/// <param name="waterHeight"> The height of the water to be reflected on. </param>
-		virtual void ReflectView(const float &waterHeight) = 0;
+		/// <param name="height"> The height of the horizontal plane to be reflected over. </param>
+		virtual void ReflectView(const float &height) = 0;
 
 		/// <summary>
 		/// Gets the distance of the near pane of the view frustum.
@@ -61,42 +61,42 @@ namespace fl
 		/// Gets the view frustum created by the current camera position and rotation.
 		/// </summary>
 		/// <returns> The view frustum created by the current camera position and rotation. </returns>
-		virtual Frustum *GetViewFrustum() const = 0;
+		virtual Frustum GetViewFrustum() const = 0;
 
 		/// <summary>
 		/// Gets the ray that extends from the cameras position though the screen.
 		/// </summary>
 		/// <returns> The cameras view ray. </returns>
-		virtual Ray *GetViewRay() const = 0;
+		virtual Ray GetViewRay() const = 0;
 
 		/// <summary>
 		/// Gets the view matrix created by the current camera position and rotation.
 		/// </summary>
 		/// <returns> The view matrix created by the current camera position and rotation. </returns>
-		virtual Matrix4 *GetViewMatrix() const = 0;
+		virtual Matrix4 GetViewMatrix() const = 0;
 
 		/// <summary>
 		/// Gets the projection matrix used in the current scene render.
 		/// </summary>
 		/// <returns> The projection matrix used in the current scene render. </returns>
-		virtual Matrix4 *GetProjectionMatrix() const = 0;
+		virtual Matrix4 GetProjectionMatrix() const = 0;
 
 		/// <summary>
 		/// Gets the cameras 3D position in the world.
 		/// </summary>
 		/// <returns> The cameras 3D position in the world. </returns>
-		virtual Vector3 *GetPosition() const = 0;
+		virtual Vector3 GetPosition() const = 0;
 
 		/// <summary>
 		/// Gets the cameras 3D velocity in the world.
 		/// </summary>
 		/// <returns> The cameras 3D velocity in the world. </returns>
-		virtual Vector3 *GetVelocity() const = 0;
+		virtual Vector3 GetVelocity() const = 0;
 
 		/// <summary>
 		/// Gets the cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll.
 		/// </summary>
 		/// <returns> The cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. </returns>
-		virtual Vector3 *GetRotation() const = 0;
+		virtual Vector3 GetRotation() const = 0;
 	};
 }

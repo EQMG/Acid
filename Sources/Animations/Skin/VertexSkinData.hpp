@@ -21,7 +21,7 @@ namespace fl
 
 		void FillEmptyWeights(const unsigned int &max);
 
-		float SaveTopWeights(std::vector<float> *topWeightsArray);
+		float SaveTopWeights(std::vector<float> &topWeightsArray);
 
 		void RefillWeightList(const std::vector<float> &topWeights, const float &total);
 
