@@ -33,73 +33,33 @@ namespace fl
 		~ColliderAabb();
 
 		/// <summary>
-		/// Creates a new aabb equivalent to this, scaled away from the centre origin.
+		/// Scales this aabb by a scalar vector.
 		/// </summary>
-		/// <param name="source"> The source aabb. </param>
 		/// <param name="scale"> Amount to scale up the aabb. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, scaled by the specified amounts. </returns>
-		static ColliderAabb *Scale(const ColliderAabb &source, const Vector3 &scale, ColliderAabb *destination);
+		/// <returns> The resultant aabb. </returns>
+		ColliderAabb Scale(const Vector3 &scale);
 
 		/// <summary>
-		/// Creates a new aabb equivalent to this, scaled away from the centre origin.
+		/// Expands this aabb away from the origin by a expansion vector.
 		/// </summary>
-		/// <param name="source"> The source aabb. </param>
-		/// <param name="scaleX"> Amount to scale up the aabb on X. </param>
-		/// <param name="scaleY"> Amount to scale up the aabb on Y. </param>
-		/// <param name="scaleZ"> Amount to scale up the aabb on Z. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, scaled by the specified amounts. </returns>
-		static ColliderAabb *Scale(const ColliderAabb &source, const float &scaleX, const float &scaleY, const float &scaleZ, ColliderAabb *destination);
+		/// <param name="expandX"> Amount to scale up the aabb. </param>
+		/// <returns> The resultant aabb. </returns>
+		ColliderAabb Expand(const Vector3 &expand);
 
 		/// <summary>
-		/// Creates a new aabb equivalent to this, but scaled away from the origin by a certain amount.
-		/// </summary>
-		/// <param name="source"> The source aabb. </param>
-		/// <param name="expand"> Amount to scale up the aabb. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, scaled by the specified amounts. </returns>
-		static ColliderAabb *Expand(const ColliderAabb &source, const Vector3 &expand, ColliderAabb *destination);
-
-		/// <summary>
-		/// Creates a new aabb equivalent to this, but scaled away from the origin by a certain amount.
-		/// </summary>
-		/// <param name="source"> The source aabb. </param>
-		/// <param name="expandX"> Amount to scale up the aabb on X. </param>
-		/// <param name="expandY"> Amount to scale up the aabb on Y. </param>
-		/// <param name="expandZ"> Amount to scale up the aabb on Z. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, scaled by the specified amounts. </returns>
-		static ColliderAabb *Expand(const ColliderAabb &source, const float &expandX, const float &expandY, const float &expandZ, ColliderAabb *destination);
-
-		/// <summary>
-		/// Creates an aabb that bounds both this aabb and another aabb.
+		/// Combines two aabbs.
 		/// </summary>
 		/// <param name="left"> The left source aabb. </param>
 		/// <param name="right"> The right source aabb. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> An aabb that bounds both this aabb and {@code other}. </returns>
-		static ColliderAabb *Combine(const ColliderAabb &left, const ColliderAabb &right, ColliderAabb *destination);
+		/// <returns> The resultant aabb. </returns>
+		ColliderAabb Combine(const ColliderAabb &other);
 
 		/// <summary>
-		/// Creates a new aabb equivalent to this, but stretched by a certain amount.
+		/// Stretched this aabb by a vector.
 		/// </summary>
-		/// <param name="source"> The source aabb. </param>
 		/// <param name="stretch"> The amount to stretch. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, stretched by the specified amounts. </returns>
-		static ColliderAabb *Stretch(const ColliderAabb &source, const Vector3 &stretch, ColliderAabb *destination);
-
-		/// <summary>
-		/// Creates a new aabb equivalent to this, but stretched by a certain amount.
-		/// </summary>
-		/// <param name="source"> The source aabb. </param>
-		/// <param name="stretchX"> The amount to stretch on the X. </param>
-		/// <param name="stretchY"> The amount to stretch on the Y. </param>
-		/// <param name="stretchZ"> The amount to stretch on the Z. </param>
-		/// <param name="destination"> The destination aabb or null if a new aabb is to be created. </param>
-		/// <returns> A new aabb, stretched by the specified amounts. </returns>
-		static ColliderAabb *Stretch(const ColliderAabb &source, const float &stretchX, const float &stretchY, const float &stretchZ, ColliderAabb *destination);
+		/// <returns> The resultant aabb. </returns>
+		ColliderAabb Stretch(const Vector3 &stretch);
 
 		void Load(LoadedValue *value) override;
 

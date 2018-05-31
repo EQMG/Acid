@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "Physics/Frustum.hpp"
 
 namespace fl

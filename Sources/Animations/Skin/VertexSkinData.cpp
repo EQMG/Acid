@@ -18,8 +18,8 @@ namespace fl
 		{
 			if (weight > m_weights.at(i))
 			{
-				m_jointIds.insert(m_jointIds.begin() + i, jointId);
-				m_weights.insert(m_weights.begin() + i, weight);
+				m_jointIds[i] = jointId;
+				m_weights[i] = weight;
 				return;
 			}
 		}
@@ -32,8 +32,8 @@ namespace fl
 	{
 		if (m_jointIds.size() > max)
 		{
-			std::vector<float> topWeights = std::vector<float>(max);
-			float total = SaveTopWeights(&topWeights);
+			auto topWeights = std::vector<float>(max);
+			float total = SaveTopWeights(topWeights);
 			RefillWeightList(topWeights, total);
 			RemoveExcessJointIds(max);
 		}
@@ -52,14 +52,14 @@ namespace fl
 		}
 	}
 
-	float VertexSkinData::SaveTopWeights(std::vector<float> *topWeightsArray)
+	float VertexSkinData::SaveTopWeights(std::vector<float> &topWeightsArray)
 	{
 		float total = 0.0f;
 
-		for (unsigned int i = 0; i < topWeightsArray->size(); i++)
+		for (unsigned int i = 0; i < topWeightsArray.size(); i++)
 		{
-			topWeightsArray->at(i) = m_weights.at(i);
-			total += topWeightsArray->at(i);
+			topWeightsArray.at(i) = m_weights.at(i);
+			total += topWeightsArray.at(i);
 		}
 
 		return total;

@@ -79,8 +79,7 @@ namespace fl
 		}
 
 		// Calculates the range in where there can be collisions.
-		ColliderAabb collisionRange = ColliderAabb();
-		ColliderAabb::Stretch(aabb1, amount, &collisionRange);
+		ColliderAabb collisionRange = aabb1.Stretch(amount);
 
 		auto rigidbodyList = Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>();
 
