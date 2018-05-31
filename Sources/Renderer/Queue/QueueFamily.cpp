@@ -4,7 +4,7 @@ namespace fl
 {
 	QueueFamilyIndices QueueFamily::FindQueueFamilies(const VkSurfaceKHR &surface)
 	{
-		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
 		int graphicsFamily = -1;
 		int presentFamily = -1;

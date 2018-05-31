@@ -36,7 +36,7 @@ namespace fl
 				break;
 			}
 
-			m_clearValues.push_back(clearValue);
+			m_clearValues.emplace_back(clearValue);
 		}
 	}
 
@@ -51,10 +51,10 @@ namespace fl
 	void RenderStage::Rebuild(Swapchain *swapchain)
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
 		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
 		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 
@@ -73,7 +73,7 @@ namespace fl
 		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
 #endif
 	}

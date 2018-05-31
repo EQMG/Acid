@@ -37,7 +37,7 @@ namespace fl
 
 		for (auto vertex : vertices)
 		{
-			thisVector.push_back(*((VertexAnimated *) vertex));
+			thisVector.emplace_back(*((VertexAnimated *) vertex));
 		}
 
 		memcpy(data, thisVector.data(), dataSize);

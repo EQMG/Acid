@@ -8,7 +8,7 @@ namespace fl
 	const float UiInputButton::CHANGE_TIME = 0.1f;
 	const float UiInputButton::SCALE_NORMAL = 1.6f;
 	const float UiInputButton::SCALE_SELECTED = 1.8f;
-	const Colour *UiInputButton::COLOUR_NORMAL = new Colour("#000000");
+	const Colour UiInputButton::COLOUR_NORMAL = Colour("#000000");
 
 	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string, const FontJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
@@ -40,7 +40,7 @@ namespace fl
 
 		// Update the background colour.
 		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
-		m_background->SetColourOffset(COLOUR_NORMAL->Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
+		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 
 		// Update background size.
 		//m_background->GetRectangle()->m_dimensions->Set(*m_text->GetRectangle()->m_dimensions);

@@ -78,8 +78,8 @@ namespace test
 		RENDERPASS_0_CREATE->SetWidth(Shadows::Get()->GetShadowSize());
 		RENDERPASS_0_CREATE->SetHeight(Shadows::Get()->GetShadowSize());
 
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		const auto camera = Scenes::Get()->GetCamera();
+		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
 		auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, 0);
@@ -98,8 +98,8 @@ namespace test
 
 	void MainRenderer::RenderPass1()
 	{
-		const auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		const auto camera = Scenes::Get()->GetCamera();
+		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		auto camera = Scenes::Get()->GetCamera();
 
 		// Starts Rendering.
 		auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, 1);
@@ -111,7 +111,7 @@ namespace test
 
 		// Subpass 0.
 		m_rendererMeshes->Render(*commandBuffer, m_infinity, *camera);
-		//	m_rendererParticles->Render(*commandBuffer, m_infinity, *camera);
+	//	m_rendererParticles->Render(*commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(*commandBuffer);
 
 		// Subpass 1.

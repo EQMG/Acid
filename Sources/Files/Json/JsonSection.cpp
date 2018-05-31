@@ -86,7 +86,7 @@ namespace fl
 		if (!isTopSection)
 		{
 			thisValue = new LoadedValue(parent, source->m_name, "");
-			parent->GetChildren()->push_back(thisValue);
+			parent->GetChildren()->emplace_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source->m_content, ",", true);
 
@@ -100,7 +100,7 @@ namespace fl
 				}
 
 				LoadedValue *newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
-				thisValue->GetChildren()->push_back(newChild);
+				thisValue->GetChildren()->emplace_back(newChild);
 			}
 		}
 

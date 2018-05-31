@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Component.hpp"
 
 namespace fl
@@ -10,9 +11,9 @@ namespace fl
 	class FL_EXPORT ComponentRegister
 	{
 	private:
-		typedef std::function<Component *()> ComponentCreate;
+		typedef std::function<std::shared_ptr<Component>()> ComponentCreate;
 
-		std::map<std::string, ComponentCreate *> *m_components;
+		std::map<std::string, ComponentCreate> m_components;
 	public:
 		/// <summary>
 		/// Creates a new component register.
@@ -33,14 +34,16 @@ namespace fl
 		template<typename T>
 		void RegisterComponent(const std::string &name)
 		{
-			if (m_components->find(name) != m_components->end())
+			if (m_components.find(name) != m_components.end())
 			{
 				fprintf(stderr, "Component '%s' is already registered!\n", name.c_str());
 				return;
 			}
 
-			m_components->insert(std::make_pair(name, new ComponentCreate([]() -> Component *
-			{ return static_cast<Component *>(new T()); })));
+			m_components.emplace(name, ComponentCreate([]() -> std::shared_ptr<Component>
+			{
+				return std::dynamic_pointer_cast<Component>(std::make_shared<T>());
+			}));
 		}
 
 		/// <summary>
@@ -54,13 +57,13 @@ namespace fl
 		/// </summary>
 		/// <param name="name"> The component name to get. </param>
 		/// <returns> The component create object. </returns>
-		ComponentCreate *GetComponent(const std::string &name);
+		ComponentCreate GetComponentCreate(const std::string &name);
 
 		/// <summary>
 		/// Creates a new component from the register.
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		Component *CreateComponent(const std::string &name);
+		std::shared_ptr<Component> CreateComponent(const std::string &name);
 	};
 }

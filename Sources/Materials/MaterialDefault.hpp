@@ -14,22 +14,22 @@ namespace fl
 		public IMaterial
 	{
 	private:
-		Colour *m_baseColor;
-		Texture *m_diffuseTexture;
+		Colour m_baseColor;
+		std::shared_ptr<Texture> m_diffuseTexture;
 
 		float m_metallic;
 		float m_roughness;
-		Texture *m_materialTexture;
-		Texture *m_normalTexture;
+		std::shared_ptr<Texture> m_materialTexture;
+		std::shared_ptr<Texture> m_normalTexture;
 
 		bool m_castsShadows;
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
 
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialDefault(const Colour &baseColor = Colour::WHITE, Texture *diffuseTexture = nullptr,
-						const float &metallic = 0.0f, const float &roughness = 0.0f, Texture *materialTexture = nullptr, Texture *normalTexture = nullptr,
+		MaterialDefault(const Colour &baseColor = Colour::WHITE, std::shared_ptr<Texture> diffuseTexture = nullptr,
+						const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Texture> materialTexture = nullptr, std::shared_ptr<Texture> normalTexture = nullptr,
 						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
 		);
 
@@ -41,21 +41,21 @@ namespace fl
 
 		void Write(LoadedValue *destination) override;
 
-		void PushUniforms(UniformHandler *uniformObject) override;
+		void PushUniforms(UniformHandler &uniformObject) override;
 
-		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
+		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialDefault"; };
 
 		std::vector<PipelineDefine> GetDefines();
 
-		Colour *GetBaseColor() const { return m_baseColor; }
+		Colour GetBaseColor() const { return m_baseColor; }
 
-		void SetBaseColor(const Colour &baseColor) { *m_baseColor = baseColor; }
+		void SetBaseColor(const Colour &baseColor) { m_baseColor = baseColor; }
 
-		Texture *GetDiffuseTexture() const { return m_diffuseTexture; }
+		std::shared_ptr<Texture> GetDiffuseTexture() const { return m_diffuseTexture; }
 
-		void SetDiffuseTexture(Texture *diffuseTexture) { m_diffuseTexture = diffuseTexture; }
+		void SetDiffuseTexture(std::shared_ptr<Texture> diffuseTexture) { m_diffuseTexture = diffuseTexture; }
 
 		void TrySetDiffuseTexture(const std::string &filename)
 		{
@@ -73,9 +73,9 @@ namespace fl
 
 		void SetRoughness(const float &roughness) { m_roughness = roughness; }
 
-		Texture *GetMaterialTexture() const { return m_materialTexture; }
+		std::shared_ptr<Texture> GetMaterialTexture() const { return m_materialTexture; }
 
-		void SetMaterialTexture(Texture *materialTexture) { m_materialTexture = materialTexture; }
+		void SetMaterialTexture(std::shared_ptr<Texture> materialTexture) { m_materialTexture = materialTexture; }
 
 		void TrySetMaterialTexture(const std::string &filename)
 		{
@@ -85,9 +85,9 @@ namespace fl
 			}
 		}
 
-		Texture *GetNormalTexture() const { return m_normalTexture; }
+		std::shared_ptr<Texture> GetNormalTexture() const { return m_normalTexture; }
 
-		void SetNormalTexture(Texture *normalTexture) { m_normalTexture = normalTexture; }
+		void SetNormalTexture(std::shared_ptr<Texture> normalTexture) { m_normalTexture = normalTexture; }
 
 		void TrySetNormalTexture(const std::string &filename)
 		{
@@ -109,6 +109,6 @@ namespace fl
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

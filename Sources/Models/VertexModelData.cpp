@@ -23,7 +23,7 @@ namespace fl
 
 	void VertexModelData::AddTangent(Vector3 *tangent)
 	{
-		m_tangents.push_back(tangent);
+		m_tangents.emplace_back(tangent);
 	}
 
 	void VertexModelData::AverageTangents()

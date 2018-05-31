@@ -31,7 +31,7 @@ namespace fl
 		m_dynamicState({})
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
 		CreateShaderProgram();
@@ -60,7 +60,7 @@ namespace fl
 		}
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 	//	printf("%s", m_shaderProgram->ToString().c_str());
 		printf("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
@@ -68,7 +68,7 @@ namespace fl
 
 	Pipeline::~Pipeline()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto shaderModule : m_modules)
 		{
@@ -96,8 +96,7 @@ namespace fl
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
 	}
-
-
+	
 	EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
 	{
 		switch (stageFlag)
@@ -219,7 +218,7 @@ namespace fl
 
 	void Pipeline::CreateShaderProgram()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::string defineBlock = "\n";
 
@@ -302,8 +301,8 @@ namespace fl
 			pipelineShaderStageCreateInfo.module = shaderModule;
 			pipelineShaderStageCreateInfo.pName = "main";
 
-			m_modules.push_back(shaderModule);
-			m_stages.push_back(pipelineShaderStageCreateInfo);
+			m_modules.emplace_back(shaderModule);
+			m_stages.emplace_back(pipelineShaderStageCreateInfo);
 		}
 
 		m_shaderProgram->ProcessShader();
@@ -311,13 +310,13 @@ namespace fl
 
 	void Pipeline::CreateDescriptorLayout()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
 		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
-			bindings.push_back(type.GetLayoutBinding());
+			bindings.emplace_back(type.GetLayoutBinding());
 		}
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
@@ -331,13 +330,13 @@ namespace fl
 
 	void Pipeline::CreateDescriptorPool()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
 		for (auto type : *m_shaderProgram->GetDescriptors())
 		{
-			poolSizes.push_back(type.GetPoolSize());
+			poolSizes.emplace_back(type.GetPoolSize());
 		}
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
@@ -353,7 +352,7 @@ namespace fl
 
 	void Pipeline::CreatePipelineLayout()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -437,9 +436,9 @@ namespace fl
 
 	void Pipeline::CreatePipelinePolygon()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
-		const auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
+		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -498,7 +497,7 @@ namespace fl
 			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
 			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
 				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-			blendAttachmentStates.push_back(blendAttachmentState);
+			blendAttachmentStates.emplace_back(blendAttachmentState);
 		}
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
@@ -523,7 +522,7 @@ namespace fl
 			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
 			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
 				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-			blendAttachmentStates.push_back(blendAttachmentState);
+			blendAttachmentStates.emplace_back(blendAttachmentState);
 		}
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());

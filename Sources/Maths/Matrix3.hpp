@@ -32,6 +32,11 @@ namespace fl
 			{
 				float m_elements[3][3];
 			};
+
+			struct
+			{
+				float m_linear[9];
+			};
 		};
 
 		static const Matrix3 IDENTITY;
@@ -136,12 +141,6 @@ namespace fl
 		/// </summary>
 		/// <returns> The identity matrix. </returns>
 		Matrix3 SetIdentity();
-
-		/// <summary>
-		/// Turns this 3x3 matrix into an array.
-		/// </summary>
-		/// <returns> A 9 float array. </returns>
-		float *ToArray() const;
 
 		/// <summary>
 		/// Saves this matrix into a loaded value.

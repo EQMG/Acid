@@ -28,17 +28,17 @@ namespace fl
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		static Cubemap *Resource(const std::string &filename, const std::string &fileExt)
+		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Cubemap *>(resource);
+				return std::dynamic_pointer_cast<Cubemap>(resource);
 			}
 
-			Cubemap *result = new Cubemap(filename, fileExt);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<Cubemap>(filename, fileExt);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
@@ -48,8 +48,13 @@ namespace fl
 		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true);
 
 		/// <summary>
+		/// A new cubemap object from a array of pixels.
+		/// </summary>
+		Cubemap(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+
+		/// <summary>
 		/// Deconstructor for the cubemap object.
-		//		/// </summary>
+		/// </summary>
 		~Cubemap();
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);

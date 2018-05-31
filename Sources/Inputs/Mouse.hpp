@@ -30,7 +30,7 @@ namespace fl
 	private:
 		std::string m_customMouse;
 
-		int *m_mouseButtons;
+		std::array<int, MOUSE_BUTTON_LAST + 1> m_mouseButtons;
 		float m_lastMousePositionX;
 		float m_lastMousePositionY;
 		float m_mousePositionX;

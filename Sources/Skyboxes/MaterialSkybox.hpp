@@ -12,14 +12,14 @@ namespace fl
 		public IMaterial
 	{
 	private:
-		Cubemap *m_cubemap;
+		std::shared_ptr<Cubemap> m_cubemap;
 		bool m_enableFog;
 
 		float m_blend;
 
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialSkybox(Cubemap *cubemap = nullptr, const bool &enableFog = true);
+		MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const bool &enableFog = true);
 
 		~MaterialSkybox();
 
@@ -29,15 +29,15 @@ namespace fl
 
 		void Write(LoadedValue *destination) override;
 
-		void PushUniforms(UniformHandler *uniformObject) override;
+		void PushUniforms(UniformHandler &uniformObject) override;
 
-		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
+		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialSkybox"; };
 
-		Cubemap *GetCubemap() const { return m_cubemap; }
+		std::shared_ptr<Cubemap> GetCubemap() const { return m_cubemap; }
 
-		void SetCubemap(Cubemap *cubemap) { m_cubemap = cubemap; }
+		void SetCubemap(std::shared_ptr<Cubemap> cubemap) { m_cubemap = cubemap; }
 
 		void TrySetCubemap(const std::string &filename)
 		{
@@ -51,6 +51,6 @@ namespace fl
 
 		void SetBlend(const float blend) { m_blend = blend; }
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

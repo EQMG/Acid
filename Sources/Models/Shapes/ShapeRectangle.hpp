@@ -9,21 +9,21 @@ namespace fl
 		public Model
 	{
 	public:
-		static ShapeRectangle *Resource(const float &min, const float &max)
+		static std::shared_ptr<ShapeRectangle> Resource(const float &min, const float &max)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(min, max));
+			auto resource = Resources::Get()->Get(ToFilename(min, max));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<ShapeRectangle *>(resource);
+				return std::dynamic_pointer_cast<ShapeRectangle>(resource);
 			}
 
-			ShapeRectangle *result = new ShapeRectangle(min, max);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<ShapeRectangle>(min, max);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static ShapeRectangle *Resource(const std::string &filename)
+		static std::shared_ptr<ShapeRectangle> Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			float width = static_cast<float>(atof(split[1].c_str()));

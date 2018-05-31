@@ -25,12 +25,12 @@ namespace test
 	{
 	}
 
-	void MaterialVoxel::PushUniforms(UniformHandler *uniformObject)
+	void MaterialVoxel::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
 	}
 
-	void MaterialVoxel::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialVoxel::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
 	}
 }

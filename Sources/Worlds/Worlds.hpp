@@ -15,32 +15,32 @@ namespace fl
 		public IModule
 	{
 	private:
-		static const Colour *FOG_COLOUR_SUNRISE;
-		static const Colour *FOG_COLOUR_NIGHT;
-		static const Colour *FOG_COLOUR_DAY;
+		static const Colour FOG_COLOUR_SUNRISE;
+		static const Colour FOG_COLOUR_NIGHT;
+		static const Colour FOG_COLOUR_DAY;
 
-		static const Colour *SUN_COLOUR_SUNRISE;
-		static const Colour *SUN_COLOUR_NIGHT;
-		static const Colour *SUN_COLOUR_DAY;
+		static const Colour SUN_COLOUR_SUNRISE;
+		static const Colour SUN_COLOUR_NIGHT;
+		static const Colour SUN_COLOUR_DAY;
 
-		static const Colour *MOON_COLOUR_NIGHT;
-		static const Colour *MOON_COLOUR_DAY;
+		static const Colour MOON_COLOUR_NIGHT;
+		static const Colour MOON_COLOUR_DAY;
 
-		static const Colour *SKYBOX_COLOUR_DAY;
+		static const Colour SKYBOX_COLOUR_DAY;
 
-		Noise *m_noiseTerrain;
+		Noise m_noiseTerrain;
 
-		DriverLinear *m_driverDay;
+		DriverLinear m_driverDay;
 		float m_factorDay;
 
-		Vector3 *m_skyboxRotation;
-		Vector3 *m_sunPosition;
-		Vector3 *m_moonPosition;
-		Colour *m_sunColour;
-		Colour *m_moonColour;
+		Vector3 m_skyboxRotation;
+		Vector3 m_sunPosition;
+		Vector3 m_moonPosition;
+		Colour m_sunColour;
+		Colour m_moonColour;
 
-		Fog *m_fog;
-		Colour *m_skyColour;
+		Fog m_fog;
+		Colour m_skyColour;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -75,24 +75,24 @@ namespace fl
 
 		float GetTerrainRadius(const float &radius, const float &theta, const float &phi);
 
-		Noise *GetNoiseTerrain() const { return m_noiseTerrain; }
+		Noise GetNoiseTerrain() const { return m_noiseTerrain; }
 
-		Vector3 *GetSkyboxRotation() const { return m_skyboxRotation; }
+		Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
 
-		Vector3 *GetSunPosition() const { return m_sunPosition; }
+		Vector3 GetSunPosition() const { return m_sunPosition; }
 
-		Vector3 *GetMoonPosition() const { return m_moonPosition; }
+		Vector3 GetMoonPosition() const { return m_moonPosition; }
 
-		Colour *GetSunColour() const { return m_sunColour; }
+		Colour GetSunColour() const { return m_sunColour; }
 
-		Colour *GetMoonColour() const { return m_moonColour; }
+		Colour GetMoonColour() const { return m_moonColour; }
 
-		Fog *GetFog() const { return m_fog; }
+		Fog GetFog() const { return m_fog; }
 
-		void SetFog(const Fog &fog) { *m_fog = fog; }
+		void SetFog(const Fog &fog) { m_fog = fog; }
 
-		Colour *GetSkyColour() const { return m_skyColour; }
+		Colour GetSkyColour() const { return m_skyColour; }
 
-		void SetSkyColour(const Colour &skyColour) { *m_skyColour = skyColour; }
+		void SetSkyColour(const Colour &skyColour) { m_skyColour = skyColour; }
 	};
 }

@@ -10,8 +10,7 @@ namespace fl
 		m_leftWasClick(false),
 		m_rightWasClick(false),
 		m_mouseLeft(new ButtonMouse({MouseButton::MOUSE_BUTTON_LEFT})),
-		m_mouseRight(new ButtonMouse({MouseButton::MOUSE_BUTTON_RIGHT})),
-		m_selectorJoystick(nullptr)
+		m_mouseRight(new ButtonMouse({MouseButton::MOUSE_BUTTON_RIGHT}))
 	{
 	}
 
@@ -19,22 +18,9 @@ namespace fl
 	{
 		delete m_mouseLeft;
 		delete m_mouseRight;
-
-		delete m_selectorJoystick;
 	}
 
-	void UiSelector::Load(const JoystickPort &joystick, const int &joystickLeftClick, const int &joystickRightClick, const int &joystickAxisX, const int &joystickAxisY)
-	{
-		m_selectorJoystick = new SelectorJoystick{
-			joystick,
-			new ButtonJoystick(joystick, {joystickLeftClick}),
-			new ButtonJoystick(joystick, {joystickRightClick}),
-			new AxisJoystick(joystick, {joystickAxisX}),
-			new AxisJoystick(joystick, {joystickAxisY})
-		};
-	}
-
-	void UiSelector::Update(const bool &paused)
+	void UiSelector::Update(const bool &paused, const SelectorJoystick &selectorJoystick)
 	{
 		float delta = Engine::Get()->GetDelta();
 
@@ -46,22 +32,22 @@ namespace fl
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();
 
-		if (m_selectorJoystick != nullptr && Joysticks::Get()->IsConnected(m_selectorJoystick->joystick) && paused)
+		if (Joysticks::Get()->IsConnected(selectorJoystick.GetJoystick()) && paused)
 		{
-			if (std::fabs(Maths::Deadband(0.1f, m_selectorJoystick->axisX->GetAmount())) > 0.0f ||
-				std::fabs(Maths::Deadband(0.1f, m_selectorJoystick->axisY->GetAmount())) > 0.0f)
+			if (std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisX()->GetAmount())) > 0.0f ||
+				std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisY()->GetAmount())) > 0.0f)
 			{
-				m_cursorX += m_selectorJoystick->axisX->GetAmount() * 0.75f * delta;
-				m_cursorY += m_selectorJoystick->axisY->GetAmount() * 0.75f * delta;
+				m_cursorX += selectorJoystick.GetAxisX()->GetAmount() * 0.75f * delta;
+				m_cursorY += selectorJoystick.GetAxisY()->GetAmount() * 0.75f * delta;
 				m_cursorX = Maths::Clamp(m_cursorX, 0.0f, 1.0f);
 				m_cursorY = Maths::Clamp(m_cursorY, 0.0f, 1.0f);
 				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
 			}
 
-			m_leftClick = m_leftClick || m_selectorJoystick->clickLeft->IsDown();
-			m_rightClick = m_rightClick || m_selectorJoystick->clickRight->IsDown();
-			m_leftWasClick = m_leftWasClick || m_selectorJoystick->clickLeft->WasDown();
-			m_rightWasClick = m_rightWasClick || m_selectorJoystick->clickRight->WasDown();
+			m_leftClick = m_leftClick || selectorJoystick.GetClickLeft()->IsDown();
+			m_rightClick = m_rightClick || selectorJoystick.GetClickRight()->IsDown();
+			m_leftWasClick = m_leftWasClick || selectorJoystick.GetClickLeft()->WasDown();
+			m_rightWasClick = m_rightWasClick || selectorJoystick.GetClickRight()->WasDown();
 		}
 	}
 

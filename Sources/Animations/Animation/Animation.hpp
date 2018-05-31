@@ -14,7 +14,7 @@ namespace fl
 	private:
 		float m_length;
 
-		std::vector<Keyframe *> *m_keyframes;
+		std::vector<Keyframe *> m_keyframes;
 	public:
 		/// <summary>
 		/// Creates a new animation.
@@ -38,6 +38,6 @@ namespace fl
 		/// keyframes in the animation (first keyframe of the animation in array position 0).
 		/// </summary>
 		/// <returns> The array of the animation's keyframes. </returns>
-		std::vector<Keyframe *> *GetKeyframes() const { return m_keyframes; }
+		std::vector<Keyframe *> GetKeyframes() const { return m_keyframes; }
 	};
 }

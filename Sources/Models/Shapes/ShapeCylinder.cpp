@@ -7,8 +7,8 @@ namespace fl
 	ShapeCylinder::ShapeCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
 		Model()
 	{
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
+		auto vertices = std::vector<IVertex *>();
+		auto indices = std::vector<uint32_t>();
 
 		for (unsigned int i = 0; i < slices + 1; i++)
 		{
@@ -32,7 +32,7 @@ namespace fl
 				vertex->m_normal.m_y = 0.0f;
 				vertex->m_normal.m_z = zDir;
 
-				vertices.push_back(vertex);
+				vertices.emplace_back(vertex);
 			}
 		}
 
@@ -43,13 +43,13 @@ namespace fl
 				uint32_t first = j + ((stacks + 1) * i);
 				uint32_t second = j + ((stacks + 1) * (i + 1));
 
-				indices.push_back(first);
-				indices.push_back(second);
-				indices.push_back(second + 1);
+				indices.emplace_back(first);
+				indices.emplace_back(second);
+				indices.emplace_back(second + 1);
 
-				indices.push_back(first);
-				indices.push_back(second + 1);
-				indices.push_back(first + 1);
+				indices.emplace_back(first);
+				indices.emplace_back(second + 1);
+				indices.emplace_back(first + 1);
 			}
 		}
 

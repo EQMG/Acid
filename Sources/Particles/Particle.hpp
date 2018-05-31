@@ -12,15 +12,15 @@ namespace fl
 	class FL_EXPORT Particle
 	{
 	private:
-		ParticleType *m_particleType;
+		std::shared_ptr<ParticleType> m_particleType;
 
-		Vector3 *m_position;
+		Vector3 m_position;
 
-		Vector3 *m_velocity;
-		Vector3 *m_change;
+		Vector3 m_velocity;
+		Vector3 m_change;
 
-		Vector2 *m_textureOffset1;
-		Vector2 *m_textureOffset2;
+		Vector2 m_textureOffset1;
+		Vector2 m_textureOffset2;
 
 		float m_lifeLength;
 		float m_rotation;
@@ -42,7 +42,7 @@ namespace fl
 		/// <param name="rotation"> The particles rotation. </param>
 		/// <param name="scale"> The particles scale. </param>
 		/// <param name="gravityEffect"> The particles gravity effect. </param>
-		Particle(ParticleType *particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
+		Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
 
 		/// <summary>
 		/// Deconstructor for the particle.
@@ -56,17 +56,17 @@ namespace fl
 
 		bool IsAlive() const { return m_transparency < 1.0f; }
 
-		ParticleType *GetParticleType() const { return m_particleType; }
+		std::shared_ptr<ParticleType> GetParticleType() const { return m_particleType; }
 
-		Vector3 *GetPosition() const { return m_position; }
+		Vector3 GetPosition() const { return m_position; }
 
-		Vector3 *GetVelocity() const { return m_velocity; }
+		Vector3 GetVelocity() const { return m_velocity; }
 
-		Vector3 *GetChange() const { return m_change; }
+		Vector3 GetChange() const { return m_change; }
 
-		Vector2 *GetTextureOffset1() const { return m_textureOffset1; }
+		Vector2 GetTextureOffset1() const { return m_textureOffset1; }
 
-		Vector2 *GetTextureOffset2() const { return m_textureOffset2; }
+		Vector2 GetTextureOffset2() const { return m_textureOffset2; }
 
 		float GetLifeLength() const { return m_lifeLength; }
 
@@ -87,6 +87,6 @@ namespace fl
 		bool operator<(const Particle &other) const;
 
 	private:
-		Vector2 *UpdateTextureOffset(Vector2 *offset, const int &index) const;
+		Vector2 CalculateTextureOffset(const int &index) const;
 	};
 }

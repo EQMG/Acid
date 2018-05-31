@@ -11,7 +11,7 @@ namespace fl
 		m_descriptorPool(pipeline.GetVkDescriptorPool()),
 		m_descriptorSet(VK_NULL_HANDLE)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkDescriptorSetLayout layouts[1] = {pipeline.GetVkDescriptorSetLayout()};
 
@@ -28,7 +28,7 @@ namespace fl
 
 	DescriptorSet::~DescriptorSet()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkDescriptorSet descriptors[1] = {m_descriptorSet};
 		vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, descriptors);
@@ -36,7 +36,7 @@ namespace fl
 
 	void DescriptorSet::Update(const std::vector<IDescriptor *> &descriptors)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
 
@@ -44,7 +44,7 @@ namespace fl
 		{
 			if (descriptors.at(i) != nullptr)
 			{
-				descriptorWrites.push_back(descriptors.at(i)->GetVkWriteDescriptor(i, *this));
+				descriptorWrites.emplace_back(descriptors.at(i)->GetVkWriteDescriptor(i, *this));
 			}
 		}
 

@@ -31,7 +31,7 @@ namespace fl
 
 		for (auto fm : fileMap)
 		{
-			m_values->insert(std::make_pair(fm.first, new ConfigKey(fm.second, true)));
+			m_values->emplace(fm.first, new ConfigKey(fm.second, true));
 		}
 	}
 
@@ -61,7 +61,7 @@ namespace fl
 		if (m_values->find(key) == m_values->end())
 		{
 			auto configKey = new ConfigKey(normal, false);
-			m_values->insert(std::make_pair(key, configKey));
+			m_values->emplace(key, configKey);
 			return configKey;
 		}
 
@@ -72,7 +72,7 @@ namespace fl
 	{
 		if (m_values->find(key) == m_values->end())
 		{
-			m_values->insert(std::make_pair(key, new ConfigKey(value, false)));
+			m_values->emplace(key, new ConfigKey(value, false));
 			return;
 		}
 

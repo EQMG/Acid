@@ -15,30 +15,30 @@ namespace fl
 		public IResource
 	{
 	private:
-		std::map<int, FontCharacter *> *m_metadata;
-		std::map<std::string, std::string> *m_values;
+		std::map<int, FontCharacter> m_metadata;
+		std::map<std::string, std::string> m_values;
 
 		std::string m_filename;
 		double m_verticalPerPixelSize;
 		double m_horizontalPerPixelSize;
 		int m_imageWidth;
 		double m_spaceWidth;
-		std::vector<int> *m_padding;
+		std::vector<int> m_padding;
 		int m_paddingWidth;
 		int m_paddingHeight;
 		double m_maxSizeY;
 	public:
-		static FontMetafile *Resource(const std::string &filename)
+		static std::shared_ptr<FontMetafile> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<FontMetafile *>(resource);
+				return std::dynamic_pointer_cast<FontMetafile>(resource);
 			}
 
-			FontMetafile *result = new FontMetafile(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<FontMetafile>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
@@ -65,7 +65,7 @@ namespace fl
 		/// </summary>
 		~FontMetafile();
 
-		FontCharacter *GetCharacter(const int &ascii);
+		FontCharacter GetCharacter(const int &ascii);
 
 		std::string GetFilename() override { return m_filename; }
 
@@ -91,17 +91,10 @@ namespace fl
 		void LoadLineSizes();
 
 		/// <summary>
-		/// Loads in data about each character and stores the data in the <seealso cref="Character"/> class.
-		/// </summary>
-		void LoadCharacterData();
-
-		/// <summary>
-		/// Loads all the data about one character in the texture atlas and converts it all from 'pixels' to 'screen-space' before storing.
+		/// Loads in data about each character from the texture atlas and converts it all from 'pixels' to 'screen-space' before storing. And stores the data in the <seealso cref="Character"/> class.
 		/// The effects of padding are also removed from the data.
 		/// </summary>
-		/// </param>
-		/// <returns> The data about the character. </returns>
-		FontCharacter *LoadCharacter();
+		void LoadCharacterData();
 
 		/// <summary>
 		/// Gets the {@code int} value of the variable with a certain name on the current line.

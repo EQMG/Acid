@@ -17,7 +17,7 @@ namespace fl
 	private:
 		CelestialType m_type;
 	public:
-		CelestialBody(const CelestialType &type = CelestialType::CELESTIAL_SUN);
+		CelestialBody(const CelestialType &type = CELESTIAL_SUN);
 
 		~CelestialBody();
 

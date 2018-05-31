@@ -25,19 +25,18 @@ namespace fl
 		IndexBuffer *m_indexBuffer;
 
 		ColliderAabb *m_aabb;
-
 	public:
-		static Model *Resource(const std::string &filename)
+		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{
-			IResource *resource = Resources::Get()->Get(filename);
+			auto resource = Resources::Get()->Get(filename);
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<Model *>(resource);
+				return std::dynamic_pointer_cast<Model>(resource);
 			}
 
-			Model *result = new Model(filename);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<Model>(filename);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 

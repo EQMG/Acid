@@ -26,8 +26,8 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		Texture *textureWhite = new Texture("Resources/Guis/White.png");
-		Texture *textureGeometry = new Texture("Resources/Guis/Geometry-Grain.png");
+		auto textureWhite = Texture::Resource("Resources/Guis/White.png");
+		auto textureGeometry = Texture::Resource("Resources/Guis/Geometry-Grain.png");
 
 		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), textureGeometry, 1);
 		m_barBackground->SetScissor(Vector4(0.0f, 0.0f, 1.0f, 0.125f));
@@ -47,7 +47,7 @@ namespace test
 			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
 			UiTab *uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
 			tabXOffset += 0.03f + uiTab->GetWidth();
-			m_tabs.push_back(uiTab);
+			m_tabs.emplace_back(uiTab);
 
 			if (i == 0)
 			{
@@ -82,15 +82,15 @@ namespace test
 			if (m_currentTab != nullptr)
 			{
 				m_barBackground->SetColourOffset(m_currentTab->GetColour().Interpolate(m_targetTab->GetColour(), progress));
-				m_tabPuck->GetRectangle()->m_position->m_x = Maths::Interpolate(m_currentTab->GetRectangle()->m_position->m_x, m_targetTab->GetRectangle()->m_position->m_x, progress);
-				m_tabPuck->GetRectangle()->m_dimensions->m_x = Maths::Interpolate(m_currentTab->GetWidth(), m_targetTab->GetWidth(), progress);
+				m_tabPuck->GetRectangle()->m_position.m_x = Maths::Interpolate(m_currentTab->GetRectangle()->m_position.m_x, m_targetTab->GetRectangle()->m_position.m_x, progress);
+				m_tabPuck->GetRectangle()->m_dimensions.m_x = Maths::Interpolate(m_currentTab->GetWidth(), m_targetTab->GetWidth(), progress);
 			}
 			else
 			{
 				progress = 1.0f;
 				m_barBackground->SetColourOffset(m_targetTab->GetColour());
-				m_tabPuck->GetRectangle()->m_position->m_x = m_targetTab->GetRectangle()->m_position->m_x;
-				m_tabPuck->GetRectangle()->m_dimensions->m_x = m_targetTab->GetWidth();
+				m_tabPuck->GetRectangle()->m_position.m_x = m_targetTab->GetRectangle()->m_position.m_x;
+				m_tabPuck->GetRectangle()->m_dimensions.m_x = m_targetTab->GetWidth();
 			}
 
 			if (progress == 1.0f)

@@ -4,30 +4,22 @@
 
 namespace fl
 {
-	ColliderSphere::ColliderSphere() :
-		ICollider(),
-		m_radius(1.0f),
-		m_position(new Vector3())
-	{
-	}
-
 	ColliderSphere::ColliderSphere(const float &radius, const Vector3 &position) :
 		ICollider(),
 		m_radius(radius),
-		m_position(new Vector3(position))
+		m_position(Vector3(position))
 	{
 	}
 
 	ColliderSphere::ColliderSphere(const ColliderSphere &source) :
 		ICollider(),
 		m_radius(source.m_radius),
-		m_position(new Vector3(*source.m_position))
+		m_position(Vector3(source.m_position))
 	{
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
-		delete m_position;
 	}
 
 	void ColliderSphere::Load(LoadedValue *value)
@@ -53,28 +45,26 @@ namespace fl
 			source = new ColliderSphere();
 		}
 
-		source->m_radius = m_radius * transform.GetScaling()->m_x;
-		*source->m_position = *transform.GetScaling();
+		source->m_radius = m_radius * transform.GetScaling().MaxComponent();
+		source->m_position = transform.GetScaling();
 
 		return source;
 	}
 
-	Vector3 *ColliderSphere::ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination)
+	Vector3 ColliderSphere::ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta)
 	{
-		if (destination == nullptr)
-		{
-			destination = new Vector3();
-		}
+		Vector3 result = Vector3();
 
-		//	const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere&>(other);
+		//	auto sphere2 = dynamic_cast<const ColliderSphere&>(other);
 		//	float d = sphere2.m_radius + m_radius;
 
-		//	float xDif = m_position->m_x - sphere2.m_position->m_x;
-		//	float yDif = m_position->m_y - sphere2.m_position->m_y;
-		//	float zDif = m_position->m_z - sphere2.m_position->m_z;
+		//	float xDif = m_position.m_x - sphere2.m_position.m_x;
+		//	float yDif = m_position.m_y - sphere2.m_position.m_y;
+		//	float zDif = m_position.m_z - sphere2.m_position.m_z;
 		//	float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 		// TODO: Resolve!
-		return destination;
+
+		return result;
 	}
 
 	Intersect ColliderSphere::Intersects(const ICollider &other)
@@ -85,43 +75,43 @@ namespace fl
 
 			float distanceSquared = m_radius * m_radius;
 
-			if (m_position->x < aabb->getMinExtents()->x)
+			if (m_position.x < aabb->getMinExtents()->x)
 			{
-				distanceSquared -= pow(m_position->x - aabb->getMinExtents()->x, 2);
+				distanceSquared -= pow(m_position.x - aabb->getMinExtents()->x, 2);
 			}
-			else if (m_position->x > aabb->getMaxExtents()->x)
+			else if (m_position.x > aabb->getMaxExtents()->x)
 			{
-				distanceSquared -= pow(m_position->x - aabb->getMaxExtents()->x, 2);
-			}
-
-			if (m_position->y < aabb->getMinExtents()->x)
-			{
-				distanceSquared -= pow(m_position->y - aabb->getMinExtents()->y, 2);
-			}
-			else if (m_position->x > aabb->getMaxExtents()->x)
-			{
-				distanceSquared -= pow(m_position->y - aabb->getMaxExtents()->y, 2);
+				distanceSquared -= pow(m_position.x - aabb->getMaxExtents()->x, 2);
 			}
 
-			if (m_position->z < aabb->getMinExtents()->x)
+			if (m_position.y < aabb->getMinExtents()->x)
 			{
-				distanceSquared -= pow(m_position->z - aabb->getMinExtents()->z, 2);
+				distanceSquared -= pow(m_position.y - aabb->getMinExtents()->y, 2);
 			}
-			else if (m_position->z > aabb->getMaxExtents()->x)
+			else if (m_position.x > aabb->getMaxExtents()->x)
 			{
-				distanceSquared -= pow(m_position->z - aabb->getMaxExtents()->z, 2);
+				distanceSquared -= pow(m_position.y - aabb->getMaxExtents()->y, 2);
+			}
+
+			if (m_position.z < aabb->getMinExtents()->x)
+			{
+				distanceSquared -= pow(m_position.z - aabb->getMinExtents()->z, 2);
+			}
+			else if (m_position.z > aabb->getMaxExtents()->x)
+			{
+				distanceSquared -= pow(m_position.z - aabb->getMaxExtents()->z, 2);
 			}
 
 			return new intersect(distanceSquared > 0.0f, dynamic_cast<float>(sqrt(distanceSquared)));
 		}
 		else */
-		const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere &>(other);
+		auto sphere2 = dynamic_cast<const ColliderSphere &>(other);
 
 		float d = sphere2.m_radius + m_radius;
 
-		float xDif = m_position->m_x - sphere2.m_position->m_x;
-		float yDif = m_position->m_y - sphere2.m_position->m_y;
-		float zDif = m_position->m_z - sphere2.m_position->m_z;
+		float xDif = m_position.m_x - sphere2.m_position.m_x;
+		float yDif = m_position.m_y - sphere2.m_position.m_y;
+		float zDif = m_position.m_z - sphere2.m_position.m_z;
 		float distance = xDif * xDif + yDif * yDif + zDif * zDif;
 
 		bool intersects = d * d > distance;
@@ -130,10 +120,10 @@ namespace fl
 
 	Intersect ColliderSphere::Intersects(const Ray &ray)
 	{
-		Vector3 L = *ray.m_origin - *m_position;
+		Vector3 L = ray.GetOrigin() - m_position;
 
-		float a = ray.m_currentRay->Dot(*ray.m_currentRay);
-		float b = 2.0f * ray.m_currentRay->Dot(L);
+		float a = ray.GetCurrentRay().Dot(ray.GetCurrentRay());
+		float b = 2.0f * ray.GetCurrentRay().Dot(L);
 		float c = L.Dot(L) - (m_radius * m_radius);
 
 		float disc = b * b - 4.0f * a * c;
@@ -186,23 +176,40 @@ namespace fl
 
 	bool ColliderSphere::InFrustum(const Frustum &frustum)
 	{
-		return frustum.SphereInFrustum(*m_position, m_radius);
+		return frustum.SphereInFrustum(m_position, m_radius);
 	}
 
 	bool ColliderSphere::Contains(const ICollider &other)
 	{
-		const ColliderSphere &sphere2 = dynamic_cast<const ColliderSphere &>(other);
+		auto sphere2 = dynamic_cast<const ColliderSphere &>(other);
 
-		return sphere2.m_position->m_x + sphere2.m_radius - 1.0f <= m_position->m_x + m_radius - 1.0f &&
-			sphere2.m_position->m_x - sphere2.m_radius + m_radius >= m_position->m_x - m_radius + 1.0f &&
-			sphere2.m_position->m_y + sphere2.m_radius - 1.0f <= m_position->m_y + m_radius - 1.0f &&
-			sphere2.m_position->m_y - sphere2.m_radius + 1.0f >= m_position->m_y - m_radius + 1.0f &&
-			sphere2.m_position->m_z + sphere2.m_radius - 1.0f <= m_position->m_z + m_radius - 1.0f &&
-			sphere2.m_position->m_z - sphere2.m_radius + 1.0f >= m_position->m_z - m_radius + 1.0f;
+		return sphere2.m_position.m_x + sphere2.m_radius - 1.0f <= m_position.m_x + m_radius - 1.0f &&
+			sphere2.m_position.m_x - sphere2.m_radius + m_radius >= m_position.m_x - m_radius + 1.0f &&
+			sphere2.m_position.m_y + sphere2.m_radius - 1.0f <= m_position.m_y + m_radius - 1.0f &&
+			sphere2.m_position.m_y - sphere2.m_radius + 1.0f >= m_position.m_y - m_radius + 1.0f &&
+			sphere2.m_position.m_z + sphere2.m_radius - 1.0f <= m_position.m_z + m_radius - 1.0f &&
+			sphere2.m_position.m_z - sphere2.m_radius + 1.0f >= m_position.m_z - m_radius + 1.0f;
 	}
 
 	bool ColliderSphere::Contains(const Vector3 &point)
 	{
-		return m_position->DistanceSquared(point) <= m_radius * m_radius;
+		return m_position.DistanceSquared(point) <= m_radius * m_radius;
+	}
+
+	ColliderSphere &ColliderSphere::operator=(const ColliderSphere &other)
+	{
+		m_radius = other.m_radius;
+		m_position = other.m_position;
+		return *this;
+	}
+
+	bool ColliderSphere::operator==(const ColliderSphere &other) const
+	{
+		return m_radius == other.m_radius && m_position == other.m_position;
+	}
+
+	bool ColliderSphere::operator!=(const ColliderSphere &other) const
+	{
+		return !(*this == other);
 	}
 }

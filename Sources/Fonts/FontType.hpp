@@ -11,8 +11,8 @@ namespace fl
 	class FL_EXPORT FontType
 	{
 	private:
-		Texture *m_texture;
-		FontMetafile *m_metadata;
+		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<FontMetafile> m_metadata;
 	public:
 		/// <summary>
 		/// Creates a new text loader.
@@ -26,8 +26,8 @@ namespace fl
 		/// </summary>
 		~FontType();
 
-		Texture *GetTexture() const { return m_texture; }
+		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
-		FontMetafile *GetMetadata() const { return m_metadata; }
+		std::shared_ptr<FontMetafile> GetMetadata() const { return m_metadata; }
 	};
 }

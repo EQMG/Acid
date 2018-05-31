@@ -15,8 +15,8 @@ namespace fl
 		float m_mass;
 		float m_drag;
 		bool m_useGravity;
-		Constraint3 *m_freezePosition;
-		Constraint3 *m_freezeRotation;
+		Constraint3 m_freezePosition;
+		Constraint3 m_freezeRotation;
 		ICollider *m_colliderCopy;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
@@ -46,13 +46,13 @@ namespace fl
 
 		void SetUseGravity(const bool &useGravity) { m_useGravity = useGravity; }
 
-		Constraint3 *GetFreezePosition() const { return m_freezePosition; }
+		Constraint3 GetFreezePosition() const { return m_freezePosition; }
 
-		void SetFreezePosition(const Constraint3 &freezePosition) const { *m_freezePosition = freezePosition; }
+		void SetFreezePosition(const Constraint3 &freezePosition) { m_freezePosition = freezePosition; }
 
-		Constraint3 *GetFreezeRotation() const { return m_freezeRotation; }
+		Constraint3 GetFreezeRotation() const { return m_freezeRotation; }
 
-		void SetFreezeRotation(const Constraint3 &freezeRotation) const { *m_freezeRotation = freezeRotation; }
+		void SetFreezeRotation(const Constraint3 &freezeRotation) { m_freezeRotation = freezeRotation; }
 
 		ICollider *GetCollider() const { return m_colliderCopy; }
 	};
