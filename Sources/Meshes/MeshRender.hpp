@@ -9,8 +9,8 @@ namespace fl
 		public Component
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformObject;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 	public:
 		MeshRender();
 
@@ -22,10 +22,10 @@ namespace fl
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler *uniformScene);
+		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene);
 
 		std::string GetName() const override { return "MeshRender"; };
 
-		UniformHandler *GetUniformObject() const { return m_uniformObject; }
+		UniformHandler GetUniformObject() const { return m_uniformObject; }
 	};
 }

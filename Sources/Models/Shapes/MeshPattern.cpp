@@ -13,8 +13,8 @@ namespace fl
 
 	void MeshPattern::GenerateMesh()
 	{
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
+		auto vertices = std::vector<IVertex *>();
+		auto indices = std::vector<uint32_t>();
 
 		// Creates and stores vertices.
 		for (int col = 0; col < m_vertexCount; col++)
@@ -22,16 +22,16 @@ namespace fl
 			for (int row = 0; row < m_vertexCount; row++)
 			{
 				// Creates and stores vertices.
-				const Vector3 position = GetPosition(
+				Vector3 position = GetPosition(
 					((row * m_squareSize) - m_sideLength) / 2.0f,
 					((col * m_squareSize) - m_sideLength) / 2.0f
 				);
-				const Vector2 uv = Vector2(
+				Vector2 uv = Vector2(
 					m_textureScale * static_cast<float>(col) / static_cast<float>(m_vertexCount),
 					m_textureScale * static_cast<float>(row) / static_cast<float>(m_vertexCount)
 				);
-				const Vector3 normal = GetNormal(position);
-				const Vector3 tangent = GetColour(position, normal);
+				Vector3 normal = GetNormal(position);
+				Vector3 tangent = GetColour(position, normal);
 				vertices.push_back(new VertexModel(position, uv, normal, tangent));
 			}
 		}
@@ -41,11 +41,11 @@ namespace fl
 		{
 			for (int row = 0; row < m_vertexCount - 1; row++)
 			{
-				const uint32_t topLeft = (row * m_vertexCount) + col;
-				const uint32_t topRight = topLeft + 1;
-				const uint32_t bottomLeft = ((row + 1) * m_vertexCount) + col;
-				const uint32_t bottomRight = bottomLeft + 1;
-				const bool mixed = col % 2 == 0;
+				uint32_t topLeft = (row * m_vertexCount) + col;
+				uint32_t topRight = topLeft + 1;
+				uint32_t bottomLeft = ((row + 1) * m_vertexCount) + col;
+				uint32_t bottomRight = bottomLeft + 1;
+				bool mixed = col % 2 == 0;
 
 				if (row % 2 == 0)
 				{

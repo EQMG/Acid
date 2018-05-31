@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	const Matrix4 *MeshAnimated::CORRECTION = new Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
+	const Matrix4 MeshAnimated::CORRECTION = Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
 	const int MeshAnimated::MAX_JOINTS = 50;
 	const int MeshAnimated::MAX_WEIGHTS = 3;
 
@@ -14,8 +14,8 @@ namespace fl
 		m_filename(filename),
 		m_model(nullptr),
 		m_headJoint(nullptr),
-		m_animation(nullptr),
 		m_animator(nullptr),
+		m_animation(nullptr),
 		m_jointMatrices(std::vector<Matrix4>())
 	{
 		TrySetModel(m_filename);
@@ -65,29 +65,23 @@ namespace fl
 			return;
 		}
 
-		FileJson *file = new FileJson(filename);
-		file->Load();
+		FileJson file = FileJson(filename);
+		file.Load();
 
-		SkinLoader *skinLoader = new SkinLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader *skeletonLoader = new SkeletonLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-			skinLoader->GetJointOrder());
-		GeometryLoader *geometryLoader = new GeometryLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader->GetVerticesSkinData());
-		auto vertices = geometryLoader->GetVertices();
-		auto indices = geometryLoader->GetIndices();
+		SkinLoader skinLoader = SkinLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
+		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
+			skinLoader.GetJointOrder());
+		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader.GetVerticesSkinData());
+		
+		auto vertices = geometryLoader.GetVertices();
+		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
-		m_headJoint = CreateJoints(skeletonLoader->GetHeadJoint());
-		delete skeletonLoader;
-		delete skinLoader;
-		delete geometryLoader;
-
-		AnimationLoader *animationLoader = new AnimationLoader(file->GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
-			file->GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-		m_animation = new Animation(animationLoader->GetLengthSeconds(), animationLoader->GetKeyframeData());
-		delete animationLoader;
-
-		delete file;
-
+		m_headJoint = CreateJoints(skeletonLoader.GetHeadJoint());
 		m_animator = new Animator(m_headJoint);
+
+		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
+			file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
+		m_animation = new Animation(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframeData());
 		m_animator->DoAnimation(m_animation);
 	}
 
@@ -107,10 +101,10 @@ namespace fl
 	{
 		if (headJoint.GetIndex() < jointMatrices->size())
 		{
-			jointMatrices->at(headJoint.GetIndex()) = *headJoint.GetAnimatedTransform();
+			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
 		}
 
-		for (auto childJoint : *headJoint.GetChildren())
+		for (auto childJoint : headJoint.GetChildren())
 		{
 			AddJointsToArray(*childJoint, jointMatrices);
 		}

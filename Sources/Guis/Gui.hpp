@@ -16,15 +16,15 @@ namespace fl
 		public UiObject
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformObject;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 
 		std::shared_ptr<Model> m_model;
 		std::shared_ptr<Texture> m_texture;
 		int m_selectedRow;
 
-		Vector2 *m_atlasOffset;
-		Colour *m_colourOffset;
+		Vector2 m_atlasOffset;
+		Colour m_colourOffset;
 	public:
 		/// <summary>
 		/// Creates a new GUI object.
@@ -51,10 +51,10 @@ namespace fl
 
 		void SetSelectedRow(const int &selectedRow) { m_selectedRow = selectedRow; }
 
-		Vector2 *GetAtlasOffset() const { return m_atlasOffset; }
+		Vector2 GetAtlasOffset() const { return m_atlasOffset; }
 
-		Colour *GetColourOffset() const { return m_colourOffset; }
+		Colour GetColourOffset() const { return m_colourOffset; }
 
-		void SetColourOffset(const Colour &colourOffset) { *m_colourOffset = colourOffset; }
+		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 	};
 }

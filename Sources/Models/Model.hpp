@@ -25,7 +25,6 @@ namespace fl
 		IndexBuffer *m_indexBuffer;
 
 		ColliderAabb *m_aabb;
-
 	public:
 		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{

@@ -162,16 +162,6 @@ namespace fl
 		return *this;
 	}
 
-	float *Matrix2::ToArray() const
-	{
-		float *result = new float[4];
-		result[0] = m_00;
-		result[1] = m_01;
-		result[2] = m_10;
-		result[3] = m_11;
-		return result;
-	}
-
 	void Matrix2::Write(LoadedValue *destination)
 	{
 		m_0->Write(destination->GetChild("m0", true));

@@ -9,7 +9,7 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		Pipeline *m_pipeline;
+		Pipeline m_pipeline;
 	public:
 		RendererGuis(const GraphicsStage &graphicsStage);
 

@@ -13,7 +13,7 @@ namespace fl
 		double m_maxLength;
 		double m_spaceSize;
 
-		std::vector<FontWord *> m_words;
+		std::vector<FontWord> m_words;
 		double m_currentWordsLength;
 		double m_currentLineLength;
 	public:
@@ -34,13 +34,13 @@ namespace fl
 		/// </summary>
 		/// <param name="word"> The word to try to add. </param>
 		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
-		bool AddWord(FontWord *word);
+		bool AddWord(const FontWord &word);
 
 		double GetMaxLength() const { return m_maxLength; }
 
 		double GetSpaceSize() const { return m_spaceSize; }
 
-		std::vector<FontWord *> GetWords() const { return m_words; }
+		std::vector<FontWord> GetWords() const { return m_words; }
 
 		double GetCurrentWordsLength() const { return m_currentWordsLength; }
 

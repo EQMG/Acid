@@ -8,7 +8,7 @@ namespace fl
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure, const std::string &name) :
 		m_name(name),
 		m_transform(new Transform(transform)),
-		m_components(new std::vector<Component *>()),
+		m_components(std::vector<Component *>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
@@ -52,12 +52,11 @@ namespace fl
 	{
 		StructureRemove();
 
-		for (auto component : *m_components)
+		for (auto component : m_components)
 		{
 			delete component;
 		}
 
-		delete m_components;
 		delete m_transform;
 	}
 
@@ -68,7 +67,7 @@ namespace fl
 			return;
 		}
 
-		for (auto it = m_components->begin(); it != m_components->end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			if ((*it) == nullptr || (*it)->GetGameObject() == nullptr)
 			{
@@ -90,13 +89,13 @@ namespace fl
 		}
 
 		component->SetGameObject(this);
-		m_components->push_back(component);
+		m_components.push_back(component);
 		return component;
 	}
 
 	Component *GameObject::RemoveComponent(Component *component)
 	{
-		for (auto it = m_components->begin(); it != m_components->end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			if (*it == component)
 			{
@@ -106,7 +105,7 @@ namespace fl
 				}
 
 				delete component;
-				m_components->erase(it);
+				m_components.erase(it);
 				return *it;
 			}
 		}

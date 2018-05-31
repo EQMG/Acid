@@ -16,7 +16,7 @@
 namespace fl
 {
 	ModuleRegister::ModuleRegister(const bool &emptyRegister) :
-		m_modules(new std::multimap<float, ModulePair>())
+		m_modules(std::map<float, ModulePair>())
 	{
 		if (!emptyRegister)
 		{
@@ -39,30 +39,28 @@ namespace fl
 
 	ModuleRegister::~ModuleRegister()
 	{
-		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
+		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
 			delete (*it).second.second;
 		}
-
-		delete m_modules;
 	}
 
 	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update, const std::string &name)
 	{
-		//	if (m_modules->find(name) != m_modules->end())
+		//	if (m_modules.find(name) != m_modules.end())
 		//	{
 		//		fprintf(stderr, "Module '%s' is already registered!\n", name.c_str());
 		//		return;
 		//	}
 
-		float offset = update + (0.01f * static_cast<float>(m_modules->size()));
-		m_modules->insert(std::make_pair(offset, std::make_pair(name, module)));
+		float offset = update + (0.01f * static_cast<float>(m_modules.size()));
+		m_modules.insert(std::make_pair(offset, std::make_pair(name, module)));
 		return module;
 	}
 
 	IModule *ModuleRegister::GetModule(const std::string &name)
 	{
-		for (auto &module : *m_modules)
+		for (auto module : m_modules)
 		{
 			if (module.second.first == name)
 			{
@@ -75,16 +73,16 @@ namespace fl
 
 	void ModuleRegister::DeregisterModule(const std::string &name)
 	{
-		for (auto it = --m_modules->end(); it != m_modules->begin(); --it)
+		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
-			m_modules->erase(it);
+			m_modules.erase(it);
 			delete (*it).second.second;
 		}
 	}
 
 	void ModuleRegister::RunUpdate(const ModuleUpdate &update) const
 	{
-		for (auto &module : *m_modules)
+		for (auto module : m_modules)
 		{
 			if (static_cast<int>(std::floor(module.first)) == update)
 			{

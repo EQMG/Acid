@@ -25,9 +25,9 @@ namespace test
 
 		void Write(LoadedValue *destination) override;
 
-		void PushUniforms(UniformHandler *uniformObject) override;
+		void PushUniforms(UniformHandler &uniformObject) override;
 
-		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
+		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialVoxel"; };
 

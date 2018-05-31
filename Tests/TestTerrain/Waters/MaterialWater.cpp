@@ -29,13 +29,13 @@ namespace test
 	{
 	}
 
-	void MaterialWater::PushUniforms(UniformHandler *uniformObject)
+	void MaterialWater::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-		uniformObject->Push("diffuseColour", m_colour);
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("diffuseColour", m_colour);
 	}
 
-	void MaterialWater::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialWater::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
 	}
 }

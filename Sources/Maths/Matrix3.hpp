@@ -143,12 +143,6 @@ namespace fl
 		Matrix3 SetIdentity();
 
 		/// <summary>
-		/// Turns this 3x3 matrix into an array.
-		/// </summary>
-		/// <returns> A 9 float array. </returns>
-		float *ToArray() const;
-
-		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
