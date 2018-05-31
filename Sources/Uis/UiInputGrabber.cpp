@@ -9,7 +9,7 @@ namespace fl
 	const float UiInputGrabber::CHANGE_TIME = 0.1f;
 	const float UiInputGrabber::SCALE_NORMAL = 1.6f;
 	const float UiInputGrabber::SCALE_SELECTED = 1.8f;
-	const Colour *UiInputGrabber::COLOUR_NORMAL = new Colour("#000000");
+	const Colour UiInputGrabber::COLOUR_NORMAL = Colour("#000000");
 
 	UiGrabberJoystick::UiGrabberJoystick(const JoystickPort &joystick) :
 		IUiGrabber(),
@@ -173,7 +173,7 @@ namespace fl
 
 		// Update the background colour.
 		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
-		m_background->SetColourOffset(COLOUR_NORMAL->Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
+		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 
 		// Update background size.
 		//m_background->GetDimensions()->Set(*m_text->GetDimensions());

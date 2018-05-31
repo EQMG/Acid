@@ -10,7 +10,7 @@ namespace fl
 
 		if (key < 0 || key > Key::KEY_LAST)
 		{
-			printf("Invalid action attempted with key: '%i'\n", key);
+			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
 		else
 		{
@@ -25,11 +25,11 @@ namespace fl
 
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(new int[Key::KEY_LAST + 1]),
+		m_keyboardKeys(std::array<int, KEY_LAST + 1>()),
 		m_keyboardChar(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < Key::KEY_LAST + 1; i++)
+		for (unsigned int i = 0; i < KEY_LAST + 1; i++)
 		{
 			m_keyboardKeys[i] = GLFW_RELEASE;
 		}
@@ -41,7 +41,6 @@ namespace fl
 
 	Keyboard::~Keyboard()
 	{
-		delete[] m_keyboardKeys;
 	}
 
 	void Keyboard::Update()
@@ -50,7 +49,7 @@ namespace fl
 
 	bool Keyboard::GetKey(const Key &key) const
 	{
-		if (key < 0 || key > Key::KEY_LAST + 1)
+		if (key < 0 || key > KEY_LAST + 1)
 		{
 			return false;
 		}

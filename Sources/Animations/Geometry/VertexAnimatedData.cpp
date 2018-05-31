@@ -19,12 +19,11 @@ namespace fl
 
 	VertexAnimatedData::~VertexAnimatedData()
 	{
-		//	delete m_duplicateVertex;
 	}
 
 	void VertexAnimatedData::AddTangent(Vector3 *tangent)
 	{
-		m_tangents.push_back(tangent);
+		m_tangents.emplace_back(tangent);
 	}
 
 	void VertexAnimatedData::AverageTangents()
@@ -36,7 +35,7 @@ namespace fl
 
 		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
 		{
-			m_averagedTangent += **it;
+			m_averagedTangent += *(*it);
 		}
 
 		if (m_averagedTangent.Length() > 0.0f)

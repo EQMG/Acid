@@ -38,7 +38,7 @@ namespace fl
 		}
 
 		LoadedValue *child = new LoadedValue(this, name, "");
-		m_children->push_back(child);
+		m_children->emplace_back(child);
 		return child;
 	}
 

@@ -55,10 +55,10 @@ namespace test
 
 			if (Scenes::Get()->GetCamera() != nullptr)
 			{
-				Vector3 *cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-				m_textPosition->SetString("POS: " + std::to_string(static_cast<int>(cameraPosition->m_x)) + ", " +
-					std::to_string(static_cast<int>(cameraPosition->m_y)) + ", " +
-					std::to_string(static_cast<int>(cameraPosition->m_z)));
+				Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+				m_textPosition->SetString("POS: " + std::to_string(static_cast<int>(cameraPosition.m_x)) + ", " +
+					std::to_string(static_cast<int>(cameraPosition.m_y)) + ", " +
+					std::to_string(static_cast<int>(cameraPosition.m_z)));
 			}
 
 			m_textFps->SetString("FPS: " + std::to_string(static_cast<int>(1.0 / Engine::Get()->GetDeltaRender())));

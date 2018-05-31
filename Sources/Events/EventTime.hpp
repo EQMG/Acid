@@ -13,7 +13,7 @@ namespace fl
 		public IEvent
 	{
 	private:
-		Timer *m_timer;
+		Timer m_timer;
 		bool m_repeat;
 		std::function<void()> m_onEvent;
 	public:

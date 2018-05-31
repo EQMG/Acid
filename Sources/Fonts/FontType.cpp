@@ -10,7 +10,5 @@ namespace fl
 
 	FontType::~FontType()
 	{
-		delete m_texture;
-		delete m_metadata;
 	}
 }

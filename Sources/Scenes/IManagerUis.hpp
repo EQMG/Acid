@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
+#include "Uis/UiSelector.hpp"
 
 namespace fl
 {
@@ -45,6 +46,12 @@ namespace fl
 		/// The primary colour to be used in UI elements.
 		/// </summary>
 		/// <returns> The primary colour. </returns>
-		virtual Colour *GetPrimaryColour() = 0;
+		virtual Colour *GetPrimaryColour() const = 0;
+
+		/// <summary>
+		/// The UI selector for a joystick.
+		/// </summary>
+		/// <returns> The joystick selector. </returns>
+		virtual SelectorJoystick *GetSelectorJoystick() const = 0;
 	};
 }

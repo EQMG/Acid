@@ -9,8 +9,8 @@ namespace test
 	class ConfigManager
 	{
 	private:
-		Config *m_configAudio;
-		Config *m_configGraphics;
+		Config m_configAudio;
+		Config m_configGraphics;
 	public:
 		ConfigManager();
 

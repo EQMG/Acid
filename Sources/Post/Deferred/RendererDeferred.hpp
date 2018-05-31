@@ -11,14 +11,16 @@ namespace fl
 		public IRenderer
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformScene;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformScene;
 
-		Pipeline *m_pipeline;
-		Model *m_model;
+		Pipeline m_pipeline;
+		std::shared_ptr<Model> m_model;
 
-		Texture *m_brdflut;
+		std::shared_ptr<Texture> m_brdflut;
 	public:
+		static const int MAX_LIGHTS;
+		
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
 		~RendererDeferred();

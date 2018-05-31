@@ -14,6 +14,6 @@ namespace fl
 
 	void KeyframeData::AddJointTransform(JointTransformData *transform)
 	{
-		m_jointTransforms.push_back(transform);
+		m_jointTransforms.emplace_back(transform);
 	}
 }

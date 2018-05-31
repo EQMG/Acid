@@ -15,9 +15,9 @@ namespace fl
 	private:
 		UiSelector *m_selector;
 		UiObject *m_container;
-		std::vector<UiObject *> *m_objects;
+		std::vector<UiObject *> m_objects;
 	public:
-		FontFamily *m_proximaNova;
+		std::shared_ptr<FontFamily> m_proximaNova;
 
 		/// <summary>
 		/// Gets this engine instance.
@@ -56,6 +56,6 @@ namespace fl
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
-		std::vector<UiObject *> *GetObjects() const { return m_objects; };
+		std::vector<UiObject *> GetObjects() const { return m_objects; };
 	};
 }

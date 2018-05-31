@@ -28,16 +28,16 @@ namespace fl
 	{
 	}
 
-	void MaterialAnimated::PushUniforms(UniformHandler *uniformObject)
+	void MaterialAnimated::PushUniforms(UniformHandler &uniformObject)
 	{
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 		auto joints = meshAnimated->GetJointTransforms();
 
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-		uniformObject->Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
 	}
 
-	void MaterialAnimated::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialAnimated::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
 	}
 }

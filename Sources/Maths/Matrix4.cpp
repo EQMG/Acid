@@ -74,7 +74,6 @@ namespace fl
 	{
 	}
 
-
 	Matrix4 Matrix4::Add(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
@@ -550,28 +549,6 @@ namespace fl
 		m_32 = 0.0f;
 		m_33 = 1.0f;
 		return *this;
-	}
-
-	float *Matrix4::ToArray() const
-	{
-		float *result = new float[16];
-		result[0] = m_00;
-		result[1] = m_01;
-		result[2] = m_02;
-		result[3] = m_03;
-		result[4] = m_10;
-		result[5] = m_11;
-		result[6] = m_12;
-		result[7] = m_13;
-		result[8] = m_20;
-		result[9] = m_21;
-		result[10] = m_22;
-		result[11] = m_23;
-		result[12] = m_30;
-		result[13] = m_31;
-		result[14] = m_32;
-		result[15] = m_33;
-		return result;
 	}
 
 	void Matrix4::Write(LoadedValue *destination)

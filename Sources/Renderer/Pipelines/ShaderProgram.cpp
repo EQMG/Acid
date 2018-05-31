@@ -71,7 +71,7 @@ namespace fl
 		{
 			if (reportIfFound)
 			{
-				m_notFoundNames.push_back(name);
+				m_notFoundNames.emplace_back(name);
 			}
 
 			return true;
@@ -116,7 +116,7 @@ namespace fl
 		// Process to descriptors.
 		for (auto uniformBlock : *m_uniformBlocks)
 		{
-			m_descriptors->push_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags()));
+			m_descriptors->emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags()));
 		}
 
 		for (auto uniform : *m_uniforms)
@@ -125,11 +125,11 @@ namespace fl
 			{
 			case 0x8B5E:
 			case 0x904D:
-				m_descriptors->push_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
+				m_descriptors->emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
 				break;
 			case 0x8B60:
 			case 0x904E:
-				m_descriptors->push_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
+				m_descriptors->emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
 				break;
 			default:
 				break;
@@ -147,7 +147,7 @@ namespace fl
 			attributeDescription.format = GlTypeToVk(vertexAttribute->GetGlType());
 			attributeDescription.offset = currentOffset;
 
-			m_attributeDescriptions->push_back(attributeDescription);
+			m_attributeDescriptions->emplace_back(attributeDescription);
 			currentOffset += vertexAttribute->GetSize();
 		}
 	}
@@ -323,7 +323,7 @@ namespace fl
 			}
 		}
 
-		m_uniformBlocks->push_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
+		m_uniformBlocks->emplace_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
@@ -355,7 +355,7 @@ namespace fl
 			}
 		}
 
-		m_uniforms->push_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
+		m_uniforms->emplace_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
@@ -368,7 +368,7 @@ namespace fl
 			}
 		}
 
-		m_vertexAttributes->push_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
+		m_vertexAttributes->emplace_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
 			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 }

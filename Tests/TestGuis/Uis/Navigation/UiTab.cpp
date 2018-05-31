@@ -11,7 +11,7 @@ namespace test
 		m_name(name),
 		m_colour(colour),
 		m_text(new Text(this, rectangle, 1.6f, name, Uis::Get()->m_proximaNova->GetRegular(), FontJustify::JUSTIFY_LEFT, 0.5f, 0.003f)),
-		m_width(m_text->GetRectangle()->m_dimensions->m_x * 1.6f),
+		m_width(m_text->GetRectangle()->m_dimensions.m_x * 1.6f),
 		m_soundClick(new Sound("Resources/Sounds/Button1.ogg", 0.9f))
 	{
 		this->SetActionLeft([&]()
@@ -32,8 +32,8 @@ namespace test
 
 	void UiTab::UpdateObject()
 	{
-		GetRectangle()->m_position->m_y = 1.0f;
-		*GetRectangle()->m_dimensions = *m_text->GetRectangle()->m_dimensions;
-		GetRectangle()->m_dimensions->m_y = 0.125f;
+		GetRectangle()->m_position.m_y = 1.0f;
+		GetRectangle()->m_dimensions = m_text->GetRectangle()->m_dimensions;
+		GetRectangle()->m_dimensions.m_y = 0.125f;
 	}
 }

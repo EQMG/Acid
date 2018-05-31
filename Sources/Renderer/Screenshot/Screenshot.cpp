@@ -10,15 +10,15 @@ namespace fl
 	void Screenshot::Capture(const std::string &filename)
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		const auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
-		const auto physicalDeviceMemoryProperties = Display::Get()->GetVkPhysicalDeviceMemoryProperties();
-		const auto width = Display::Get()->GetWidth();
-		const auto height = Display::Get()->GetHeight();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		auto physicalDeviceMemoryProperties = Display::Get()->GetVkPhysicalDeviceMemoryProperties();
+		auto width = Display::Get()->GetWidth();
+		auto height = Display::Get()->GetHeight();
 		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetVkImages().at(Renderer::Get()->GetVkActiveSwapchainImage());
 
 		printf("Saving screenshot to: '%s'\n", filename.c_str());
@@ -188,7 +188,7 @@ namespace fl
 		delete[] data;
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 	}

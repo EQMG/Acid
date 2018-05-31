@@ -51,19 +51,19 @@ namespace fl
 	std::vector<Keyframe *> Animator::GetPreviousAndNextFrames()
 	{
 		auto allFrames = m_currentAnimation->GetKeyframes();
-		Keyframe *previousFrame = allFrames->at(0);
-		Keyframe *nextFrame = allFrames->at(0);
+		Keyframe *previousFrame = allFrames[0];
+		Keyframe *nextFrame = allFrames[0];
 
-		for (unsigned int i = 1; i < allFrames->size(); i++)
+		for (unsigned int i = 1; i < allFrames.size(); i++)
 		{
-			nextFrame = allFrames->at(i);
+			nextFrame = allFrames[i];
 
 			if (nextFrame->GetTimeStamp() > m_animationTime)
 			{
 				break;
 			}
 
-			previousFrame = allFrames->at(i);
+			previousFrame = allFrames[i];
 		}
 
 		return {previousFrame, nextFrame};
@@ -80,12 +80,12 @@ namespace fl
 	{
 		auto currentPose = std::map<std::string, Matrix4>();
 
-		for (auto joint : *previousFrame.GetPose())
+		for (auto joint : previousFrame.GetPose())
 		{
-			JointTransform *previousTransform = previousFrame.GetPose()->find(joint.first)->second;
-			JointTransform *nextTransform = nextFrame.GetPose()->find(joint.first)->second;
+			JointTransform *previousTransform = previousFrame.GetPose().find(joint.first)->second;
+			JointTransform *nextTransform = nextFrame.GetPose().find(joint.first)->second;
 			JointTransform currentTransform = JointTransform::Interpolate(*previousTransform, *nextTransform, progression);
-			currentPose.insert(std::make_pair(joint.first, currentTransform.GetLocalTransform()));
+			currentPose.emplace(joint.first, currentTransform.GetLocalTransform());
 		}
 
 		return currentPose;
@@ -96,12 +96,12 @@ namespace fl
 		Matrix4 currentLocalTransform = currentPose.find(joint->GetName())->second;
 		Matrix4 currentTransform = parentTransform * currentLocalTransform;
 
-		for (auto childJoint : *joint->GetChildren())
+		for (auto childJoint : joint->GetChildren())
 		{
 			ApplyPoseToJoints(currentPose, childJoint, currentTransform);
 		}
 
-		currentTransform = currentTransform * *joint->GetInverseBindTransform();
+		currentTransform = currentTransform * joint->GetInverseBindTransform();
 		joint->SetAnimatedTransform(currentTransform);
 	}
 

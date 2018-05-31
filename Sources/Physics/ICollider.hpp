@@ -54,10 +54,10 @@ namespace fl
 		/// even if it won't necessarily intersect it after the movement specified by {@code moveDelta}.
 		/// </summary>
 		/// <param name="other"> The right source collider. </param>
+		/// <param name="positionStart"> Where the collider starts at.. </param>
 		/// <param name="positionDelta"> The delta movement for the left collider. </param>
-		/// <param name="destination"> Where the final resolved delta should be stored. </param>
-		/// <returns> The new, adjusted verifyMove delta that guarantees no intersection. </returns>
-		virtual Vector3 *ResolveCollision(const ICollider &other, const Vector3 &positionDelta, Vector3 *destination) = 0;
+		/// <returns> The new, adjusted delta that guarantees no intersection. </returns>
+		virtual Vector3 ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta) = 0;
 
 		/// <summary>
 		/// Tests whether a shape is intersecting this shape.
@@ -93,39 +93,5 @@ namespace fl
 		/// <param name="point"> The point to check if it is contained. </param>
 		/// <returns> If the point is contained in this shape. </returns>
 		virtual bool Contains(const Vector3 &point) = 0;
-
-		/*/// <summary>
-		/// Gets the (optional) model to be used in the <seealso cref="BoundingRenderer"/>.
-		/// </summary>
-		/// <returns> A model that can be used to render this shape. </returns>
-		virtual Model *GetRenderModel() = 0;
-
-		/// <summary>
-		/// Gets the centre for the rendered model.
-		/// </summary>
-		/// <param name="destination"> The destination for the information. </param>
-		/// <returns> The centre for the rendered model. </returns>
-		virtual Vector3 *GetRenderCentre(Vector3 *destination) = 0;
-
-		/// <summary>
-		/// Gets the rotation for the rendered model.
-		/// </summary>
-		/// <param name="destination"> The destination for the information. </param>
-		/// <returns> The rotation for the rendered model. </returns>
-		virtual Vector3 *GetRenderRotation(Vector3 *destination) = 0;
-
-		/// <summary>
-		/// Gets the scale for the rendered model.
-		/// </summary>
-		/// <param name="destination"> The destination for the information. </param>
-		/// <returns> The scale for the rendered model. </returns>
-		virtual Vector3 *GetRenderScale(Vector3 *destination) = 0;
-
-		/// <summary>
-		/// Gets the colour for the rendered model.
-		/// </summary>
-		/// <param name="destination"> The destination for the information. </param>
-		/// <returns> The colour for the rendered model. </returns>
-		virtual Colour *GetRenderColour(Colour *destination) = 0;*/
 	};
 }

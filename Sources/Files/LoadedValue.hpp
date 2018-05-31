@@ -48,7 +48,7 @@ namespace fl
 			}
 
 			child = value;
-			m_children->push_back(child);
+			m_children->emplace_back(child);
 		}
 
 		template<typename T>
@@ -60,7 +60,7 @@ namespace fl
 			if (child == nullptr)
 			{
 				child = new LoadedValue(this, name, strValue);
-				m_children->push_back(child);
+				m_children->emplace_back(child);
 				return;
 			}
 

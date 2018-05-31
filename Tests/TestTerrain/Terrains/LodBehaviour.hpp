@@ -12,7 +12,7 @@ namespace test
 		public Behaviour
 	{
 	private:
-		std::vector<Model *> m_modelLods;
+		std::vector<std::shared_ptr<Model>> m_modelLods;
 		unsigned int m_currentLod;
 	public:
 		LodBehaviour();

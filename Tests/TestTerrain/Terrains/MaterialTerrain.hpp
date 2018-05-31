@@ -13,7 +13,7 @@ namespace test
 		public IMaterial
 	{
 	private:
-		PipelineMaterial *m_material;
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialTerrain();
 
@@ -25,12 +25,12 @@ namespace test
 
 		void Write(LoadedValue *destination) override;
 
-		void PushUniforms(UniformHandler *uniformObject) override;
+		void PushUniforms(UniformHandler &uniformObject) override;
 
-		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
+		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialTerrain"; };
 
-		PipelineMaterial *GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
 }

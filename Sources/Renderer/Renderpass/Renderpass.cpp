@@ -7,7 +7,7 @@ namespace fl
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		// Attachments,
 		std::vector<VkAttachmentDescription> attachments = {};
@@ -38,7 +38,7 @@ namespace fl
 				break;
 			}
 
-			attachments.push_back(attachment);
+			attachments.emplace_back(attachment);
 		}
 
 		// Subpasses and dependencies.
@@ -62,7 +62,7 @@ namespace fl
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				subpassColourAttachments->push_back(attachmentReference);
+				subpassColourAttachments->emplace_back(attachmentReference);
 			}
 
 			// Description.
@@ -79,7 +79,7 @@ namespace fl
 				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilAttachment;
 			}
 
-			subpasses.push_back(subpassDescription);
+			subpasses.emplace_back(subpassDescription);
 
 			// Dependencies.
 			VkSubpassDependency subpassDependency = {};
@@ -113,7 +113,7 @@ namespace fl
 				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 			}
 
-			dependencies.push_back(subpassDependency);
+			dependencies.emplace_back(subpassDependency);
 		}
 
 		// Creates the render pass.
@@ -131,7 +131,7 @@ namespace fl
 
 	Renderpass::~Renderpass()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}

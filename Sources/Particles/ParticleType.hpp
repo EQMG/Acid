@@ -12,10 +12,12 @@ namespace fl
 	{
 	private:
 		std::string m_name;
-		Texture *m_texture;
+		std::shared_ptr<Texture> m_texture;
 		float m_lifeLength;
 		float m_scale;
 	public:
+		// TODO: Switch to using a resource function `std::shared_ptr<ParticleType>`.
+
 		/// <summary>
 		/// Creates a new particle type.
 		/// </summary>
@@ -23,7 +25,7 @@ namespace fl
 		/// <param name="texture"> The particles texture. </param>
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		ParticleType(const std::string &name, Texture *texture, const float &lifeLength, const float &scale);
+		ParticleType(const std::string &name, std::shared_ptr<Texture> texture, const float &lifeLength, const float &scale);
 
 		/// <summary>
 		/// Deconstructor for the particle type.
@@ -34,9 +36,9 @@ namespace fl
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		Texture *GetTexture() const { return m_texture; }
+		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
-		void SetTexture(Texture *texture) { m_texture = texture; }
+		void SetTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 		float GetLifeLength() const { return m_lifeLength; }
 

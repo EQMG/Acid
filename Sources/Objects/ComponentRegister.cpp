@@ -14,7 +14,7 @@
 namespace fl
 {
 	ComponentRegister::ComponentRegister() :
-		m_components(new std::map<std::string, ComponentCreate *>())
+		m_components(std::map<std::string, ComponentCreate>())
 	{
 		RegisterComponent<CelestialBody>("CelestialBody");
 		RegisterComponent<ColliderAabb>("AabbCollider");
@@ -32,46 +32,42 @@ namespace fl
 
 	ComponentRegister::~ComponentRegister()
 	{
-		for (auto it = --m_components->end(); it != m_components->begin(); --it)
-		{
-			delete (*it).second;
-		}
-
-		delete m_components;
 	}
 
-	ComponentRegister::ComponentCreate *ComponentRegister::GetComponent(const std::string &name)
+	ComponentRegister::ComponentCreate ComponentRegister::GetComponentCreate(const std::string &name)
 	{
-		for (auto &component : *m_components)
+		auto component = m_components.find(name);
+
+		if (component == m_components.end())
 		{
-			if (component.first == name)
-			{
-				return component.second;
-			}
+			return nullptr;
 		}
 
-		return nullptr;
+		return (*component).second;
 	}
 
 	void ComponentRegister::DeregisterComponent(const std::string &name)
 	{
-		for (auto it = --m_components->end(); it != m_components->begin(); --it)
+		auto component = m_components.find(name);
+
+		if (component == m_components.end())
 		{
-			m_components->erase(it);
-			delete (*it).second;
+			return;
 		}
+
+		m_components.erase(component);
 	}
 
-	Component *ComponentRegister::CreateComponent(const std::string &name)
+	std::shared_ptr<Component> ComponentRegister::CreateComponent(const std::string &name)
 	{
-		auto found = m_components->find(name);
+		auto found = m_components.find(name);
 
-		if (found == m_components->end())
+		if (found == m_components.end())
 		{
 			fprintf(stderr, "Could not find registered component: '%s'\n", name.c_str());
 			return nullptr;
 		}
 
-		return (*(*found).second)();
+		return ((*found).second)();
 	}
 }

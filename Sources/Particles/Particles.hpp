@@ -16,7 +16,7 @@ namespace fl
 	private:
 		static const float MAX_ELAPSED_TIME;
 
-		std::map<ParticleType *, std::vector<Particle *> *> *m_particles;
+		std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>> m_particles;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -50,6 +50,6 @@ namespace fl
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		std::map<ParticleType *, std::vector<Particle *> *> *GetParticles() const { return m_particles; }
+		std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>> GetParticles() const { return m_particles; }
 	};
 }

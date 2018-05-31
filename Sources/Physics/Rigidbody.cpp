@@ -11,16 +11,14 @@ namespace fl
 		m_mass(mass),
 		m_drag(drag),
 		m_useGravity(useGravity),
-		m_freezePosition(new Constraint3(freezePosition)),
-		m_freezeRotation(new Constraint3(freezeRotation)),
+		m_freezePosition(freezePosition),
+		m_freezeRotation(freezeRotation),
 		m_colliderCopy(nullptr)
 	{
 	}
 
 	Rigidbody::~Rigidbody()
 	{
-		delete m_freezePosition;
-		delete m_freezeRotation;
 		delete m_colliderCopy;
 	}
 
@@ -39,8 +37,8 @@ namespace fl
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_drag = value->GetChild("Drag")->Get<float>();
 		m_useGravity = value->GetChild("Use Gravity")->Get<bool>();
-		*m_freezePosition = value->GetChild("Freeze Position");
-		*m_freezeRotation = value->GetChild("Freeze Rotation");
+		m_freezePosition = value->GetChild("Freeze Position");
+		m_freezeRotation = value->GetChild("Freeze Rotation");
 	}
 
 	void Rigidbody::Write(LoadedValue *value)
@@ -48,8 +46,8 @@ namespace fl
 		value->GetChild("Mass", true)->Set(m_mass);
 		value->GetChild("Drag", true)->Set(m_drag);
 		value->GetChild("Use Gravity", true)->Set(m_useGravity);
-		m_freezePosition->Write(value->GetChild("Freeze Position", true));
-		m_freezeRotation->Write(value->GetChild("Freeze Rotation", true));
+		m_freezePosition.Write(value->GetChild("Freeze Position", true));
+		m_freezeRotation.Write(value->GetChild("Freeze Rotation", true));
 	}
 
 	Vector3 Rigidbody::ResolveCollisions(const Vector3 &amount)
@@ -71,9 +69,9 @@ namespace fl
 		}
 		else if (dynamic_cast<ColliderSphere *>(m_colliderCopy) != nullptr)
 		{
-			const float radius = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetRadius();
-			const Vector3 *pos = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetPosition();
-			aabb1 = ColliderAabb(-radius + *pos, radius + *pos);
+			float radius = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetRadius();
+			Vector3 pos = dynamic_cast<ColliderSphere *>(m_colliderCopy)->GetPosition();
+			aabb1 = ColliderAabb(-radius + pos, radius + pos);
 		}
 		else
 		{
@@ -81,14 +79,14 @@ namespace fl
 		}
 
 		// Calculates the range in where there can be collisions.
-		ColliderAabb collisionRange = ColliderAabb();
-		ColliderAabb::Stretch(aabb1, amount, &collisionRange);
+		ColliderAabb collisionRange = aabb1.Stretch(amount);
 
-		std::vector<Rigidbody *> rigidbodys = std::vector<Rigidbody *>();
-		Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>(&rigidbodys);
+		auto rigidbodyList = Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>();
+
+		Vector3 currentPosition = GetGameObject()->GetTransform()->GetPosition();
 
 		// Goes though all entities in the collision range.
-		for (auto rigidbody : rigidbodys)
+		for (auto rigidbody : rigidbodyList)
 		{
 			// Ignores the original entity.
 			if (rigidbody->GetGameObject() == GetGameObject())
@@ -99,7 +97,7 @@ namespace fl
 			// If the main collider intersects with the other entities general collider.
 			if (rigidbody->m_colliderCopy->Intersects(collisionRange).IsIntersection())
 			{
-				rigidbody->m_colliderCopy->ResolveCollision(*m_colliderCopy, result, &result);
+				result = rigidbody->m_colliderCopy->ResolveCollision(*m_colliderCopy, currentPosition, result);
 			}
 		}
 

@@ -10,21 +10,21 @@ namespace fl
 		public Model
 	{
 	public:
-		static ShapeCube *Resource(const float &width, const float &height, const float &depth)
+		static std::shared_ptr<ShapeCube> Resource(const float &width, const float &height, const float &depth)
 		{
-			IResource *resource = Resources::Get()->Get(ToFilename(width, height, depth));
+			auto resource = Resources::Get()->Get(ToFilename(width, height, depth));
 
 			if (resource != nullptr)
 			{
-				return dynamic_cast<ShapeCube *>(resource);
+				return std::dynamic_pointer_cast<ShapeCube>(resource);
 			}
 
-			ShapeCube *result = new ShapeCube(width, height, depth);
-			Resources::Get()->Add(dynamic_cast<IResource *>(result));
+			auto result = std::make_shared<ShapeCube>(width, height, depth);
+			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static ShapeCube *Resource(const std::string &filename)
+		static std::shared_ptr<ShapeCube> Resource(const std::string &filename)
 		{
 			auto split = FormatString::Split(filename, "_");
 			float width = static_cast<float>(atof(split[1].c_str()));
