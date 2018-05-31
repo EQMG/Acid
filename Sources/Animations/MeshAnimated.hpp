@@ -20,12 +20,12 @@ namespace fl
 
 		std::shared_ptr<Model> m_model;
 		Joint *m_headJoint;
+		Animator *m_animator;
 		Animation *m_animation;
 
-		Animator *m_animator;
 		std::vector<Matrix4> m_jointMatrices;
 	public:
-		static const Matrix4 *CORRECTION;
+		static const Matrix4 CORRECTION;
 		static const int MAX_JOINTS;
 		static const int MAX_WEIGHTS;
 

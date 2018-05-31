@@ -6,7 +6,7 @@ namespace fl
 									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
-		m_baseColor(new Colour(baseColor)),
+		m_baseColor(Colour(baseColor)),
 		m_diffuseTexture(diffuseTexture),
 		m_metallic(metallic),
 		m_roughness(roughness),
@@ -22,7 +22,6 @@ namespace fl
 
 	MaterialDefault::~MaterialDefault()
 	{
-		delete m_baseColor;
 	}
 
 	void MaterialDefault::Update()
@@ -31,7 +30,7 @@ namespace fl
 
 	void MaterialDefault::Load(LoadedValue *value)
 	{
-		*m_baseColor = value->GetChild("Base Colour")->GetString();
+		m_baseColor = value->GetChild("Base Colour")->GetString();
 		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
 
 		m_metallic = value->GetChild("Metallic")->Get<float>();
@@ -46,7 +45,7 @@ namespace fl
 
 	void MaterialDefault::Write(LoadedValue *destination)
 	{
-		destination->GetChild("Base Colour", true)->SetString(m_baseColor->GetHex());
+		destination->GetChild("Base Colour", true)->SetString(m_baseColor.GetHex());
 		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
 
 		destination->GetChild("Metallic", true)->Set(m_metallic);
@@ -59,21 +58,21 @@ namespace fl
 		destination->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
 	}
 
-	void MaterialDefault::PushUniforms(UniformHandler *uniformObject)
+	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject->Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-		uniformObject->Push("baseColor", *m_baseColor);
-		uniformObject->Push("metallic", m_metallic);
-		uniformObject->Push("roughness", m_roughness);
-		uniformObject->Push("ignoreFog", static_cast<float>(m_ignoreFog));
-		uniformObject->Push("ignoreLighting", static_cast<float>(m_ignoreLighting));
+		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("baseColor", m_baseColor);
+		uniformObject.Push("metallic", m_metallic);
+		uniformObject.Push("roughness", m_roughness);
+		uniformObject.Push("ignoreFog", static_cast<float>(m_ignoreFog));
+		uniformObject.Push("ignoreLighting", static_cast<float>(m_ignoreLighting));
 	}
 
-	void MaterialDefault::PushDescriptors(DescriptorsHandler *descriptorSet)
+	void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
-		descriptorSet->Push("samplerDiffuse", m_diffuseTexture);
-		descriptorSet->Push("samplerMaterial", m_materialTexture);
-		descriptorSet->Push("samplerNormal", m_normalTexture);
+		descriptorSet.Push("samplerDiffuse", m_diffuseTexture);
+		descriptorSet.Push("samplerMaterial", m_materialTexture);
+		descriptorSet.Push("samplerNormal", m_normalTexture);
 	}
 
 	std::vector<PipelineDefine> MaterialDefault::GetDefines()

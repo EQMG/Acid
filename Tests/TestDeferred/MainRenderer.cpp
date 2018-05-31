@@ -111,7 +111,7 @@ namespace test
 
 		// Subpass 0.
 		m_rendererMeshes->Render(*commandBuffer, m_infinity, *camera);
-		//	m_rendererParticles->Render(*commandBuffer, m_infinity, *camera);
+	//	m_rendererParticles->Render(*commandBuffer, m_infinity, *camera);
 		Renderer::Get()->NextSubpass(*commandBuffer);
 
 		// Subpass 1.

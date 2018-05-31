@@ -18,8 +18,8 @@ namespace fl
 
 			for (unsigned int j = 0; j < loops + 1; j++)
 			{
-				const float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
-				const float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
+				float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
+				float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
 
 				VertexModel *vertex = new VertexModel();
 				vertex->m_normal.m_x = 0.0f;

@@ -14,7 +14,7 @@ namespace fl
 		public IMaterial
 	{
 	private:
-		Colour *m_baseColor;
+		Colour m_baseColor;
 		std::shared_ptr<Texture> m_diffuseTexture;
 
 		float m_metallic;
@@ -41,17 +41,17 @@ namespace fl
 
 		void Write(LoadedValue *destination) override;
 
-		void PushUniforms(UniformHandler *uniformObject) override;
+		void PushUniforms(UniformHandler &uniformObject) override;
 
-		void PushDescriptors(DescriptorsHandler *descriptorSet) override;
+		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 		std::string GetName() const override { return "MaterialDefault"; };
 
 		std::vector<PipelineDefine> GetDefines();
 
-		Colour *GetBaseColor() const { return m_baseColor; }
+		Colour GetBaseColor() const { return m_baseColor; }
 
-		void SetBaseColor(const Colour &baseColor) { *m_baseColor = baseColor; }
+		void SetBaseColor(const Colour &baseColor) { m_baseColor = baseColor; }
 
 		std::shared_ptr<Texture> GetDiffuseTexture() const { return m_diffuseTexture; }
 

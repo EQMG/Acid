@@ -101,9 +101,9 @@ namespace fl
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
 		m_descriptorSet.Push("samplerBrdflut", m_brdflut);
 		m_descriptorSet.Push("samplerEnvironment", environment);
-		bool descriptorsSet = m_descriptorSet.Update(m_pipeline);
+		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}

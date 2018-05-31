@@ -13,7 +13,7 @@ namespace fl
 	private:
 		std::string m_name;
 		Transform *m_transform;
-		std::vector<Component *> *m_components;
+		std::vector<Component *> m_components;
 		ISpatialStructure *m_structure;
 		GameObject *m_parent;
 		bool m_removed;
@@ -26,12 +26,12 @@ namespace fl
 
 		virtual void Update();
 
-		std::vector<Component *> *GetComponents() const { return m_components; }
+		std::vector<Component *> GetComponents() const { return m_components; }
 
 		template<typename T>
 		T *GetComponent()
 		{
-			for (auto c : *m_components)
+			for (auto c : m_components)
 			{
 				T *casted = dynamic_cast<T *>(c);
 
@@ -59,7 +59,7 @@ namespace fl
 		template<typename T>
 		T *RemoveComponent()
 		{
-			for (auto c : *m_components)
+			for (auto c : m_components)
 			{
 				T *casted = dynamic_cast<T *>(c);
 

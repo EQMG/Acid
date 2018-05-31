@@ -29,12 +29,11 @@ namespace fl
 	private:
 		int m_index;
 		std::string m_name;
-		std::vector<Joint *> *m_children;
+		std::vector<Joint *> m_children;
 
-		Matrix4 *m_localBindTransform;
-		Matrix4 *m_animatedTransform;
-		Matrix4 *m_inverseBindTransform;
-
+		Matrix4 m_localBindTransform;
+		Matrix4 m_animatedTransform;
+		Matrix4 m_inverseBindTransform;
 	public:
 		/// <summary>
 		/// Creates a new joint.
@@ -70,7 +69,7 @@ namespace fl
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		std::vector<Joint *> *GetChildren() const { return m_children; }
+		std::vector<Joint *> GetChildren() const { return m_children; }
 
 		/// <summary>
 		/// Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
@@ -85,9 +84,9 @@ namespace fl
 		/// <param name="joints"> The array to add this and children into. </param>
 		void AddSelfAndChildren(std::vector<Joint *> *children);
 
-		Matrix4 *GetLocalBindTransform() const { return m_localBindTransform; }
+		Matrix4 GetLocalBindTransform() const { return m_localBindTransform; }
 
-		void SetLocalBindTransform(const Matrix4 &localBindTransform) { *m_localBindTransform = localBindTransform; }
+		void SetLocalBindTransform(const Matrix4 &localBindTransform) { m_localBindTransform = localBindTransform; }
 
 		/// <summary>
 		/// The animated transform is the transform that gets loaded up to the shader and is used to deform the vertices of the "skin". It represents the
@@ -95,9 +94,9 @@ namespace fl
 		/// This matrix is calculated by taking the desired model-space transform of the joint and multiplying it by the inverse of the starting model-space transform of the joint.
 		/// </summary>
 		/// <returns> The transformation matrix of the joint which is used to deform associated vertices of the skin in the shaders. </returns>
-		Matrix4 *GetAnimatedTransform() const { return m_animatedTransform; }
+		Matrix4 GetAnimatedTransform() const { return m_animatedTransform; }
 
-		void SetAnimatedTransform(const Matrix4 &animatedTransform) { *m_animatedTransform = animatedTransform; }
+		void SetAnimatedTransform(const Matrix4 &animatedTransform) { m_animatedTransform = animatedTransform; }
 
 		/// <summary>
 		/// This returns the inverted model-space bind transform.
@@ -105,8 +104,8 @@ namespace fl
 		/// This returns the inverse of that, which is used to calculate the animated transform matrix which gets used to transform vertices in the shader.
 		/// </summary>
 		/// <returns> The inverse of the joint's bind transform (in model-space). </returns>
-		Matrix4 *GetInverseBindTransform() const { return m_inverseBindTransform; }
+		Matrix4 GetInverseBindTransform() const { return m_inverseBindTransform; }
 
-		void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { *m_inverseBindTransform = inverseBindTransform; }
+		void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 	};
 }

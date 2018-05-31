@@ -19,7 +19,7 @@ namespace fl
 	{
 	private:
 		std::string m_filename;
-		FileJson *m_fileJson;
+		FileJson m_fileJson;
 	public:
 		static std::shared_ptr<PrefabObject> Resource(const std::string &filename)
 		{
@@ -43,12 +43,12 @@ namespace fl
 
 		~PrefabObject();
 
-		void Write(GameObject *gameObject);
+		void Write(const GameObject &gameObject);
 
 		void Save();
 
 		std::string GetFilename() override { return m_filename; }
 
-		LoadedValue *GetParent() const { return m_fileJson->GetParent(); }
+		LoadedValue *GetParent() const { return m_fileJson.GetParent(); }
 	};
 }

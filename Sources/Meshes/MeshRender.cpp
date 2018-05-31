@@ -4,15 +4,13 @@ namespace fl
 {
 	MeshRender::MeshRender() :
 		Component(),
-		m_descriptorSet(new DescriptorsHandler()),
-		m_uniformObject(new UniformHandler())
+		m_descriptorSet(DescriptorsHandler()),
+		m_uniformObject(UniformHandler())
 	{
 	}
 
 	MeshRender::~MeshRender()
 	{
-		delete m_descriptorSet;
-		delete m_uniformObject;
 	}
 
 	void MeshRender::Update()
@@ -28,7 +26,7 @@ namespace fl
 		material->PushUniforms(m_uniformObject);
 	}
 
-	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler *uniformScene)
+	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene)
 	{
 		// Checks if the mesh is in view.
 		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
@@ -54,18 +52,18 @@ namespace fl
 		material->GetMaterial()->GetPipeline()->BindPipeline(commandBuffer);
 
 		// Updates descriptors.
-		m_descriptorSet->Push("UboScene", uniformScene);
-		m_descriptorSet->Push("UboObject", m_uniformObject);
+		m_descriptorSet.Push("UboScene", uniformScene);
+		m_descriptorSet.Push("UboObject", m_uniformObject);
 		material->PushDescriptors(m_descriptorSet);
-		bool descriptorsSet = m_descriptorSet->Update(*material->GetMaterial()->GetPipeline());
+		bool updateSuccess = m_descriptorSet.Update(*material->GetMaterial()->GetPipeline());
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}
 
 		// Draws the object.
-		m_descriptorSet->GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 

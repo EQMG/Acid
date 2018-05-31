@@ -141,12 +141,6 @@ namespace fl
 		Matrix2 SetIdentity();
 
 		/// <summary>
-		/// Turns this 2x2 matrix into an array.
-		/// </summary>
-		/// <returns> A 4 float array. </returns>
-		float *ToArray() const;
-
-		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>

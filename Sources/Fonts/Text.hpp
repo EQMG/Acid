@@ -31,8 +31,8 @@ namespace fl
 		public UiObject
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformObject;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 
 		Model *m_model;
 
@@ -40,7 +40,7 @@ namespace fl
 		std::string m_newString;
 		FontJustify m_justify;
 
-		FontType *m_fontType;
+		std::shared_ptr<FontType> m_fontType;
 		float m_maxWidth;
 		float m_kerning;
 		float m_leading;
@@ -68,7 +68,7 @@ namespace fl
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, FontType *fontType = Uis::Get()->m_proximaNova->GetRegular(), const FontJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType = Uis::Get()->m_proximaNova->GetRegular(), const FontJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -143,7 +143,7 @@ namespace fl
 		/// Gets the font used by this text.
 		/// </summary>
 		/// <returns> The font used by this text. </returns>
-		FontType *GetFontType() const { return m_fontType; }
+		std::shared_ptr<FontType> GetFontType() const { return m_fontType; }
 
 		/// <summary>
 		/// Gets font type texture for this text.
@@ -230,11 +230,11 @@ namespace fl
 		/// </summary>
 		void LoadText();
 
-		std::vector<FontLine *> CreateStructure();
+		std::vector<FontLine> CreateStructure();
 
-		void CompleteStructure(std::vector<FontLine *> &lines, FontLine *currentLine, FontWord *currentWord);
+		void CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord);
 
-		std::vector<IVertex *> CreateQuad(std::vector<FontLine *> lines);
+		std::vector<IVertex *> CreateQuad(const std::vector<FontLine> &lines);
 
 		void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
 

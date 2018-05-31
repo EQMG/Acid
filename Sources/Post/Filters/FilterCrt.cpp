@@ -31,9 +31,9 @@ namespace fl
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
 		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(2));
 		m_descriptorSet.Push("samplerColour", m_pipeline.GetTexture(2));
-		bool descriptorsSet = m_descriptorSet.Update(m_pipeline);
+		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-		if (!descriptorsSet)
+		if (!updateSuccess)
 		{
 			return;
 		}

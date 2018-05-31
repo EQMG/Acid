@@ -106,7 +106,7 @@ namespace fl
 			if (root)
 			{
 				// Because up axis in Blender is different to up axis in game.
-				transform *= *MeshAnimated::CORRECTION;
+				transform *= MeshAnimated::CORRECTION;
 			}
 
 			m_keyframeData[i]->AddJointTransform(new JointTransformData(jointName, transform));

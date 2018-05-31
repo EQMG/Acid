@@ -12,7 +12,7 @@ namespace fl
 	{
 	private:
 		Pipeline *m_pipeline;
-		UniformHandler *m_uniformScene;
+		UniformHandler m_uniformScene;
 	public:
 		RendererShadows(const GraphicsStage &graphicsStage);
 

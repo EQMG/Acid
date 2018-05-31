@@ -28,9 +28,9 @@ namespace fl
 
 		virtual void Write(LoadedValue *destination) override = 0;
 
-		virtual void PushUniforms(UniformHandler *uniformObject) = 0;
+		virtual void PushUniforms(UniformHandler &uniformObject) = 0;
 
-		virtual void PushDescriptors(DescriptorsHandler *descriptorSet) = 0;
+		virtual void PushDescriptors(DescriptorsHandler &descriptorSet) = 0;
 
 		virtual std::string GetName() const override = 0;
 

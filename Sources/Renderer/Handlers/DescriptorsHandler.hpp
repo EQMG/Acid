@@ -23,9 +23,13 @@ namespace fl
 
 		void Push(const std::string &descriptorName, IDescriptor *descriptor);
 
+		void Push(const std::string &descriptorName, IDescriptor &descriptor) { Push(descriptorName, &descriptor); }
+
 		void Push(const std::string &descriptorName, std::shared_ptr<IDescriptor> descriptor) { Push(descriptorName, descriptor.get()); }
 
 		void Push(const std::string &descriptorName, UniformHandler *uniformHandler);
+
+		void Push(const std::string &descriptorName, UniformHandler &uniformHandler) { Push(descriptorName, &uniformHandler); }
 
 		void Push(const std::string &descriptorName, std::shared_ptr<UniformHandler> uniformHandler) { Push(descriptorName, uniformHandler.get()); }
 

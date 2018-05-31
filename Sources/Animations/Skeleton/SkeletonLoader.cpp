@@ -48,13 +48,12 @@ namespace fl
 		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);
 		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
-		Matrix4 matrix = ConvertData(matrixData);
-		matrix = matrix.Transpose();
+		Matrix4 matrix = ConvertData(matrixData).Transpose();
 
 		if (isRoot)
 		{
 			// Because in Blender z is up, but the engine is y up.
-			matrix *= *MeshAnimated::CORRECTION;
+			matrix *= MeshAnimated::CORRECTION;
 		}
 
 		m_jointCount++;

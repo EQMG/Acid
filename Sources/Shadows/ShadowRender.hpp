@@ -14,8 +14,8 @@ namespace fl
 		public Component
 	{
 	private:
-		DescriptorsHandler *m_descriptorSet;
-		UniformHandler *m_uniformObject;
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 	public:
 		ShadowRender();
 
@@ -27,10 +27,10 @@ namespace fl
 
 		void Write(LoadedValue *value) override;
 
-		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler *uniformScene);
+		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
 
 		std::string GetName() const override { return "ShadowRender"; };
 
-		UniformHandler *GetUniformObject() const { return m_uniformObject; }
+		UniformHandler GetUniformObject() const { return m_uniformObject; }
 	};
 }
