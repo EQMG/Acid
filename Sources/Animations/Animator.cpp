@@ -85,7 +85,7 @@ namespace fl
 			JointTransform *previousTransform = previousFrame.GetPose().find(joint.first)->second;
 			JointTransform *nextTransform = nextFrame.GetPose().find(joint.first)->second;
 			JointTransform currentTransform = JointTransform::Interpolate(*previousTransform, *nextTransform, progression);
-			currentPose.insert(std::make_pair(joint.first, currentTransform.GetLocalTransform()));
+			currentPose.emplace(joint.first, currentTransform.GetLocalTransform());
 		}
 
 		return currentPose;

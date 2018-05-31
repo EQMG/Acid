@@ -29,7 +29,7 @@ namespace fl
 			return;
 		}
 
-		std::vector<GameObject *> gameObjects = *m_scene->GetStructure()->GetAll();
+		auto gameObjects = m_scene->GetStructure()->GetAll();
 
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{

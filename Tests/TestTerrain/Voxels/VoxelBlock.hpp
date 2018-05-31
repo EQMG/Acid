@@ -23,7 +23,7 @@ namespace test
 	class VoxelBlock
 	{
 	private:
-		static std::map<std::string, Colour *> s_colours;
+		static std::map<std::string, Colour *> BLOCK_COLOURS;
 
 		VoxelChunk *m_parent;
 

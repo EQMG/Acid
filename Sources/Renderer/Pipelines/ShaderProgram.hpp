@@ -103,7 +103,7 @@ namespace fl
 				}
 			}
 
-			m_uniforms->push_back(uniform);
+			m_uniforms->emplace_back(uniform);
 		}
 
 		Uniform *GetUniform(const std::string &uniformName)

@@ -4,7 +4,7 @@
 
 namespace test
 {
-	std::map<std::string, Colour *> VoxelBlock::s_colours = std::map<std::string, Colour *>
+	std::map<std::string, Colour *> VoxelBlock::BLOCK_COLOURS = std::map<std::string, Colour *>
 		{
 			{"",      new Colour("#FFFFFF", 0.0f)},
 			{"Grass", new Colour("#5E7831")},
@@ -31,15 +31,15 @@ namespace test
 
 	Colour *VoxelBlock::FindColour(const std::string &key)
 	{
-		const auto it = s_colours.find(key);
+		auto it = BLOCK_COLOURS.find(key);
 
-		if (it == s_colours.end())
+		if (it == BLOCK_COLOURS.end())
 		{
 #if FL_VERBOSE
 			printf("Could not find a Block Face colour from key: %s", key.c_str());
 #endif
 			auto colour = new Colour();
-			s_colours.insert(std::make_pair(key, colour));
+			BLOCK_COLOURS.emplace(key, colour);
 			return colour;
 		}
 

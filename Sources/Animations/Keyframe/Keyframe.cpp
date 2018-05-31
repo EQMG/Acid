@@ -14,7 +14,7 @@ namespace fl
 	{
 		for (auto jointData : data.GetJointTransforms())
 		{
-			m_pose.insert(std::make_pair(jointData->GetJointNameId(), new JointTransform(*jointData)));
+			m_pose.emplace(jointData->GetJointNameId(), new JointTransform(*jointData));
 		}
 	}
 

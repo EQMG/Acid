@@ -20,7 +20,7 @@ namespace fl
 	void FileJson::Load()
 	{
 #if FL_VERBOSE
-		const auto debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
 		if (!FileSystem::FileExists(m_filename))
@@ -92,7 +92,7 @@ namespace fl
 		delete currentSection;
 
 #if FL_VERBOSE
-		const auto debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::Get()->GetTimeMs();
 		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -128,7 +128,7 @@ namespace fl
 				continue;
 			}
 
-			result.insert(std::make_pair(child->GetName(), child->GetValue()));
+			result.emplace(child->GetName(), child->GetValue());
 		}
 
 		return result;
@@ -145,7 +145,7 @@ namespace fl
 		}
 
 		LoadedValue *newChild = new LoadedValue(m_parent, key, value);
-		m_parent->GetChildren()->push_back(newChild);
+		m_parent->GetChildren()->emplace_back(newChild);
 	}
 
 	void FileJson::Verify()

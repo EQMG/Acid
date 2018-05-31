@@ -14,7 +14,7 @@ namespace fl
 	{
 		for (auto frameData : keyframeData)
 		{
-			m_keyframes.push_back(new Keyframe(*frameData));
+			m_keyframes.emplace_back(new Keyframe(*frameData));
 		}
 	}
 

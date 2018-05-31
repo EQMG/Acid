@@ -35,6 +35,8 @@ namespace fl
 
 		bool Update(const Pipeline &pipeline);
 
+		void BindDescriptor(const CommandBuffer &commandBuffer) { m_descriptorSet->BindDescriptor(commandBuffer); }
+
 		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet; }
 	};
 }

@@ -81,17 +81,17 @@ namespace fl
 
 		if (m_diffuseTexture != nullptr)
 		{
-			result.push_back(PipelineDefine("COLOUR_MAPPING", "TRUE"));
+			result.emplace_back(PipelineDefine("COLOUR_MAPPING", "TRUE"));
 		}
 
 		if (m_materialTexture != nullptr)
 		{
-			result.push_back(PipelineDefine("MATERIAL_MAPPING", "TRUE"));
+			result.emplace_back(PipelineDefine("MATERIAL_MAPPING", "TRUE"));
 		}
 
 		/*if (m_normalTexture != nullptr)
 		{
-			result.push_back({"NORMAL_MAPPING", "TRUE"});
+			result.emplace_back({"NORMAL_MAPPING", "TRUE"});
 		}*/
 
 		return result;

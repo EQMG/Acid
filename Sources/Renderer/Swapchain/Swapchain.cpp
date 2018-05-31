@@ -12,12 +12,12 @@ namespace fl
 		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		const auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		const auto surface = Display::Get()->GetVkSurface();
-		const auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
-		const auto surfaceCapabilities = Display::Get()->GetVkSurfaceCapabilities();
-		const auto indices = QueueFamily::FindQueueFamilies(surface);
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto surface = Display::Get()->GetVkSurface();
+		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		auto surfaceCapabilities = Display::Get()->GetVkSurfaceCapabilities();
+		auto indices = QueueFamily::FindQueueFamilies(surface);
 
 		m_extent = extent;
 
@@ -104,7 +104,7 @@ namespace fl
 
 	Swapchain::~Swapchain()
 	{
-		const auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto imageView : m_swapchainImageViews)
 		{

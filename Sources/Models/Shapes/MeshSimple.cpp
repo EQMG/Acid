@@ -32,7 +32,7 @@ namespace fl
 				);
 				Vector3 normal = GetNormal(position);
 				Vector3 tangent = GetColour(position, normal);
-				vertices.push_back(new VertexModel(position, uv, normal, tangent));
+				vertices.emplace_back(new VertexModel(position, uv, normal, tangent));
 			}
 		}
 
@@ -46,12 +46,12 @@ namespace fl
 				uint32_t bottomLeft = ((row + 1) * m_vertexCount) + col;
 				uint32_t bottomRight = bottomLeft + 1;
 
-				indices.push_back(topLeft);
-				indices.push_back(bottomLeft);
-				indices.push_back(topRight);
-				indices.push_back(topRight);
-				indices.push_back(bottomLeft);
-				indices.push_back(bottomRight);
+				indices.emplace_back(topLeft);
+				indices.emplace_back(bottomLeft);
+				indices.emplace_back(topRight);
+				indices.emplace_back(topRight);
+				indices.emplace_back(bottomLeft);
+				indices.emplace_back(bottomRight);
 			}
 		}
 

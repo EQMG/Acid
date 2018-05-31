@@ -21,7 +21,7 @@ namespace fl
 				currentS = Trim(currentS);
 			}
 
-			arr.push_back(currentS);
+			arr.emplace_back(currentS);
 			current = strtok(nullptr, sep.c_str());
 		}
 
@@ -72,15 +72,15 @@ namespace fl
 
 	std::string FormatString::Trim(const std::string &str, const std::string &whitespace)
 	{
-		const auto strBegin = str.find_first_not_of(whitespace);
+		auto strBegin = str.find_first_not_of(whitespace);
 
 		if (strBegin == std::string::npos)
 		{
 			return "";
 		}
 
-		const auto strEnd = str.find_last_not_of(whitespace);
-		const auto strRange = strEnd - strBegin + 1;
+		auto strEnd = str.find_last_not_of(whitespace);
+		auto strRange = strEnd - strBegin + 1;
 
 		std::string result = str;
 		result = result.substr(strBegin, strRange);

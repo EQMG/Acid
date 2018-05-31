@@ -39,8 +39,10 @@ namespace fl
 				return;
 			}
 
-			m_components->insert(std::make_pair(name, new ComponentCreate([]() -> Component *
-			{ return static_cast<Component *>(new T()); })));
+			m_components->emplace(name, new ComponentCreate([]() -> Component *
+			{
+				return static_cast<Component *>(new T());
+			}));
 		}
 
 		/// <summary>

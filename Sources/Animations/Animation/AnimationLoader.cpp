@@ -59,7 +59,7 @@ namespace fl
 	{
 		for (auto time : times)
 		{
-			m_keyframeData.push_back(new KeyframeData(time));
+			m_keyframeData.emplace_back(new KeyframeData(time));
 		}
 	}
 

@@ -49,11 +49,11 @@ namespace fl
 
 		if (list == m_particles.end())
 		{
-			m_particles.insert(std::make_pair(created->GetParticleType(), std::vector<Particle *>()));
+			m_particles.emplace(created->GetParticleType(), std::vector<Particle *>());
 			list = m_particles.find(created->GetParticleType());
 		}
 
-		(*list).second.push_back(created);
+		(*list).second.emplace_back(created);
 	}
 
 	void Particles::Clear()

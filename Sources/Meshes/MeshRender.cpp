@@ -63,7 +63,7 @@ namespace fl
 		}
 
 		// Draws the object.
-		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 

@@ -36,7 +36,7 @@ namespace fl
 
 	void Events::AddEvent(IEvent *event)
 	{
-		m_events.push_back(event);
+		m_events.emplace_back(event);
 	}
 
 	void Events::RemoveEvent(IEvent *event)

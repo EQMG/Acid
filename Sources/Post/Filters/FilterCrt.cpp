@@ -41,7 +41,7 @@ namespace fl
 		// Draws the object.
 		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet.GetDescriptorSet()->BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
 	}
 }
