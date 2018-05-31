@@ -36,8 +36,8 @@ namespace fl
 		/// <summary>
 		/// Prepares the camera for the reflection render pass.
 		/// </summary>
-		/// <param name="waterHeight"> The height of the water to be reflected on. </param>
-		virtual void ReflectView(const float &waterHeight) = 0;
+		/// <param name="height"> The height of the horizontal plane to be reflected over. </param>
+		virtual void ReflectView(const float &height) = 0;
 
 		/// <summary>
 		/// Gets the distance of the near pane of the view frustum.

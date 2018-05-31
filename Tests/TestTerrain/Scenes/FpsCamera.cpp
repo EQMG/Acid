@@ -231,9 +231,9 @@ namespace test
 		m_rotation.m_z = 0.0f;
 	}
 
-	void FpsCamera::ReflectView(const float &waterHeight)
+	void FpsCamera::ReflectView(const float &height)
 	{
-		m_position.m_y -= 2.0f * (m_position.m_y - waterHeight);
+		m_position.m_y -= 2.0f * (m_position.m_y - height);
 		m_rotation.m_x = -m_rotation.m_x;
 		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
 	}
