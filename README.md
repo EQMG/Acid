@@ -49,9 +49,9 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
 
 Readme   [Read more](https://equilibrium-games.github.io/Flounder/)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/Flounder-Docs/)
+Documentation   [Autogen docs](https://equilibrium-games.github.io/FlounderDocs/)
 
-Metrics   [Code metrics](https://equilibrium-games.github.io/Flounder-Docs/loc/LocMetrics.html)
+Metrics   [Code metrics](https://equilibrium-games.github.io/FlounderDocs/loc/LocMetrics.html)
 
 Website   [Learn more](https://equilibrium.games)
 
@@ -127,7 +127,7 @@ Currently Flounder does not run under Release mode in Visual Studios (bug).
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, history for `Resources` before https://github.com/Equilibrium-Games/Flounder/tree/e2abd26ee8f3eda4feabbd1ff9b8168f17e8fb4f can be found at: https://github.com/Equilibrium-Games/Flounder-Resources. Older resources can be found on this fork: https://github.com/mattparks/Flounder.
+Old resources have been removed from the main repo, older resources can be found on this fork: https://github.com/mattparks/Flounder.
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.
