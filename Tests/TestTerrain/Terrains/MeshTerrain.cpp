@@ -55,7 +55,7 @@ namespace test
 
 	float MeshTerrain::GetHeight(const float &x, const float &z)
 	{
-		float height1 = Worlds::Get()->GetNoiseTerrain().GetNoise(x, z);
+		float height1 = Worlds::Get()->GetWorld()->GetNoiseTerrain().GetNoise(x, z);
 		height1 = (height1 * 60.0f) + 15.0f;
 		//	float length = std::sqrt((x * x) + (z * z));
 

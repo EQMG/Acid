@@ -19,7 +19,7 @@
 namespace test
 {
 	Scene1::Scene1() :
-		Scene(new FpsCamera(), new ManagerUis()),
+		IScene(new FpsCamera(), new ManagerUis()),
 		m_buttonFullscreen(new ButtonKeyboard({Key::KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({Key::KEY_M, Key::KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),

@@ -41,7 +41,7 @@ namespace test
 
 			if (Worlds::Get() != nullptr)
 			{
-				float timePercent = (Worlds::Get()->GetDayFactor() * 24.0f) + 6.0f;
+				float timePercent = (Worlds::Get()->GetWorld()->GetDayFactor() * 24.0f) + 6.0f;
 				int hour = static_cast<int>(timePercent);
 				int minute = static_cast<int>((timePercent - hour) * 60.0f);
 

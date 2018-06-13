@@ -30,8 +30,8 @@ out gl_PerVertex
 
 void main() 
 {
-	vec4 totalLocalPos = vec4(0.0f);
-	vec4 totalNormal = vec4(0.0f);
+    vec4 totalLocalPos = vec4(0.0f);
+    vec4 totalNormal = vec4(0.0f);
 
     for (int i = 0; i < MAX_WEIGHTS; i++)
     {
@@ -43,7 +43,7 @@ void main()
         totalNormal += worldNormal * vertexWeights[i];
     }
 
-	vec4 worldPosition = object.transform * totalLocalPos;
+    vec4 worldPosition = object.transform * totalLocalPos;
 
     gl_Position = scene.projection * scene.view * worldPosition;
 
