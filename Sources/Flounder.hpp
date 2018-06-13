@@ -174,7 +174,7 @@
 #include "Scenes/IManagerUis.hpp"
 #include "Scenes/ISpatialStructure.hpp"
 #include "Scenes/Prefabs/PrefabObject.hpp"
-#include "Scenes/Scene.hpp"
+#include "Scenes/IScene.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Scenes/SceneStructure.hpp"
 #include "Shadows/RendererShadows.hpp"

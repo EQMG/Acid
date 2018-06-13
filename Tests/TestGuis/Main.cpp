@@ -4,9 +4,11 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Worlds/Worlds.hpp>
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
+#include "MainWorld.hpp"
 
 using namespace test;
 using namespace fl;
@@ -31,6 +33,7 @@ int main(int argc, char **argv)
 	Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
+	Worlds::Get()->SetWorld(new MainWorld());
 
 	// Runs the game loop.
 	const int exitCode = engine->Run();

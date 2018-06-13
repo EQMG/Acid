@@ -9,7 +9,7 @@ namespace fl
 	/// <summary>
 	/// A object used to represent a scene.
 	/// </summary>
-	class FL_EXPORT Scene
+	class FL_EXPORT IScene
 	{
 	private:
 		ICamera *m_camera;
@@ -21,12 +21,22 @@ namespace fl
 		/// </summary>
 		/// <param name="camera"> The camera. </param>
 		/// <param name="managerUis"> The new uis manager. </param>
-		Scene(ICamera *camera, IManagerUis *managerUis);
+		IScene(ICamera *camera, IManagerUis *managerUis) :
+			m_camera(camera),
+			m_managerUis(managerUis),
+			m_structure(new SceneStructure())
+		{
+		}
 
 		/// <summary>
 		/// Deconstructor for the scene.
 		/// </summary>
-		virtual ~Scene();
+		virtual ~IScene()
+		{
+			delete m_camera;
+			delete m_managerUis;
+			delete m_structure;
+		}
 
 		virtual void Start() = 0;
 

@@ -2,14 +2,14 @@
 
 #include <Audio/Sound.hpp>
 #include <Inputs/IButton.hpp>
-#include <Scenes/Scene.hpp>
+#include <Scenes/IScene.hpp>
 
 using namespace fl;
 
 namespace test
 {
 	class Scene1 :
-		public Scene
+		public IScene
 	{
 	private:
 		IButton *m_buttonFullscreen;

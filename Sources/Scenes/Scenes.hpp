@@ -3,7 +3,7 @@
 #include "Engine/Engine.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "SceneStructure.hpp"
-#include "Scene.hpp"
+#include "IScene.hpp"
 
 namespace fl
 {
@@ -15,7 +15,7 @@ namespace fl
 	{
 	private:
 		ComponentRegister *m_componentRegister;
-		Scene *m_scene;
+		IScene *m_scene;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -60,9 +60,9 @@ namespace fl
 		/// <returns> The new component. </returns>
 		std::shared_ptr<Component> CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
 
-		Scene *GetScene() const { return m_scene; }
+		IScene *GetScene() const { return m_scene; }
 
-		void SetScene(Scene *scene);
+		void SetScene(IScene *scene);
 
 		/// <summary>
 		/// Gets the current camera object.

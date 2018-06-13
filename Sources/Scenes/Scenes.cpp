@@ -50,12 +50,12 @@ namespace fl
 		m_scene->GetUiManager()->Update();
 	}
 
-	void Scenes::SetScene(Scene *scene)
+	void Scenes::SetScene(IScene *scene)
 	{
-		//	if (m_scene != scene)
-		//	{
-		//		delete m_scene;
-		//	}
+		if (m_scene != scene)
+		{
+			delete m_scene;
+		}
 
 		m_scene = scene;
 		m_scene->Start();

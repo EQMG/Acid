@@ -25,8 +25,8 @@ namespace fl
 
 		if (m_enableFog)
 		{
-			GetGameObject()->GetTransform()->SetRotation(Worlds::Get()->GetSkyboxRotation());
-			m_blend = Worlds::Get()->GetStarIntensity();
+			GetGameObject()->GetTransform()->SetRotation(Worlds::Get()->GetWorld()->GetSkyboxRotation());
+			m_blend = Worlds::Get()->GetWorld()->GetStarIntensity();
 		}
 	}
 
@@ -45,12 +45,12 @@ namespace fl
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 	{
 		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
-		uniformObject.Push("skyColour", Worlds::Get()->GetSkyColour());
-		uniformObject.Push("fogColour", Worlds::Get()->GetFog().GetColour());
+		uniformObject.Push("skyColour", Worlds::Get()->GetWorld()->GetSkyColour());
+		uniformObject.Push("fogColour", Worlds::Get()->GetWorld()->GetFog().GetColour());
 
 		if (m_enableFog)
 		{
-			uniformObject.Push("fogLimits", GetGameObject()->GetTransform()->GetScaling().m_y * Vector2(Worlds::Get()->GetFog().GetLowerLimit(), Worlds::Get()->GetFog().GetUpperLimit()));
+			uniformObject.Push("fogLimits", GetGameObject()->GetTransform()->GetScaling().m_y * Vector2(Worlds::Get()->GetWorld()->GetFog().GetLowerLimit(), Worlds::Get()->GetWorld()->GetFog().GetUpperLimit()));
 			uniformObject.Push("blendFactor", m_blend);
 		}
 		else

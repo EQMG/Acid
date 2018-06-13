@@ -6,6 +6,7 @@ set(TESTDEFERED_HEADERS_
         "Scenes/ManagerUis.hpp"
         "MainRenderer.hpp"
         "MainUpdater.hpp"
+        "MainWorld.hpp"
         "Uis/OverlayDebug.hpp"
         )
 
@@ -18,6 +19,7 @@ set(TESTDEFERED_SOURCES_
         "Main.cpp"
         "MainRenderer.cpp"
         "MainUpdater.cpp"
+        "MainWorld.cpp"
         "Uis/OverlayDebug.cpp"
         )
 

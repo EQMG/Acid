@@ -174,7 +174,7 @@ set(FLOUNDER_HEADERS_
         "Scenes/IManagerUis.hpp"
         "Scenes/ISpatialStructure.hpp"
         "Objects/Prefabs/PrefabObject.hpp"
-        "Scenes/Scene.hpp"
+        "Scenes/IScene.hpp"
         "Scenes/Scenes.hpp"
         "Scenes/SceneStructure.hpp"
         "Shadows/RendererShadows.hpp"
@@ -197,6 +197,7 @@ set(FLOUNDER_HEADERS_
         "Uis/UiSelector.hpp"
         "Uis/UiStartLogo.hpp"
         "Worlds/Worlds.hpp"
+        "Worlds/IWorld.hpp"
         )
 
 set(FLOUNDER_SOURCES_
@@ -353,7 +354,6 @@ set(FLOUNDER_SOURCES_
         "Renderer/Swapchain/Swapchain.cpp"
         "Resources/Resources.cpp"
         "Objects/Prefabs/PrefabObject.cpp"
-        "Scenes/Scene.cpp"
         "Scenes/Scenes.cpp"
         "Scenes/SceneStructure.cpp"
         "Shadows/RendererShadows.cpp"
