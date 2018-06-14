@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Testing Guis");
-	Display::Get()->SetIcon("Resources/Logos/Tail.png");
-	Mouse::Get()->SetCustomMouse("Resources/Guis/Cursor.png");
+	Display::Get()->SetIcon("Logos/Tail.png");
+	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 	Worlds::Get()->SetWorld(new MainWorld());

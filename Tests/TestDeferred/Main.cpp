@@ -6,6 +6,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Animations/MaterialAnimated.hpp>
 #include <Worlds/Worlds.hpp>
+#include <Files/Files.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
@@ -36,6 +37,9 @@ int main(int argc, char **argv)
 	// Registers components.
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
 	Scenes::Get()->RegisterComponent<MaterialAnimated>("MaterialAnimated");
+
+	// Registers paths.
+	Files::Get()->AddSearchPath("Resources");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Deferred");
