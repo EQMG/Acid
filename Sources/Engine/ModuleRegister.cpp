@@ -2,6 +2,7 @@
 
 #include "Audio/Audio.hpp"
 #include "Display/Display.hpp"
+#include "Files/Files.hpp"
 #include "Events/Events.hpp"
 #include "Inputs/Joysticks.hpp"
 #include "Inputs/Keyboard.hpp"
@@ -25,6 +26,7 @@ namespace fl
 			RegisterModule<Keyboard>(UPDATE_PRE, "keyboard");
 			RegisterModule<Mouse>(UPDATE_PRE, "mouse");
 			RegisterModule<Audio>(UPDATE_PRE, "audio");
+			RegisterModule<Files>(UPDATE_PRE, "files");
 			RegisterModule<Scenes>(UPDATE_NORMAL, "scenes");
 			RegisterModule<Renderer>(UPDATE_RENDER, "renderer");
 			RegisterModule<Resources>(UPDATE_PRE, "resources");
