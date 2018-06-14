@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "Files/Files.hpp"
 #include "Helpers/FormatString.hpp"
 #include "Resources/Resources.hpp"
 #include "Files/Json/FileJson.hpp"
@@ -23,14 +24,15 @@ namespace fl
 	public:
 		static std::shared_ptr<PrefabObject> Resource(const std::string &filename)
 		{
-			auto resource = Resources::Get()->Get(filename);
+			std::string realFilename = Files::Get()->SearchFile(filename);
+			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<PrefabObject>(resource);
 			}
 
-			auto result = std::make_shared<PrefabObject>(filename);
+			auto result = std::make_shared<PrefabObject>(realFilename);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}

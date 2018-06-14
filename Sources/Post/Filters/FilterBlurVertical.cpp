@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterBlurVertical::FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/BlurVertical.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/BlurVertical.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_scale(scale),
 		m_height(0.0f)

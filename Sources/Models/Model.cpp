@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	static const std::string FALLBACK_PATH = "Resources/Undefined.obj";
+	static const std::string FALLBACK_PATH = "Undefined.obj";
 
 	Model::Model() :
 		IResource(),

@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	const std::vector<std::string> SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap) :
 		IResource(),

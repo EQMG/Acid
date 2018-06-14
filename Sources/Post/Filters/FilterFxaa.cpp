@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Fxaa.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_spanMax(8.0f)
 	{

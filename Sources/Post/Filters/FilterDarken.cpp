@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Darken.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_factor(0.5f)
 	{

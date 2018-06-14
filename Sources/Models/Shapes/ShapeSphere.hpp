@@ -24,9 +24,9 @@ namespace fl
 			return result;
 		}
 
-		static std::shared_ptr<ShapeSphere> Resource(const std::string &filename)
+		static std::shared_ptr<ShapeSphere> Resource(const std::string &data)
 		{
-			auto split = FormatString::Split(filename, "_");
+			auto split = FormatString::Split(data, "_");
 			int latitudeBands = atoi(split[1].c_str());
 			int longitudeBands = atoi(split[2].c_str());
 			float radius = static_cast<float>(atof(split[3].c_str()));

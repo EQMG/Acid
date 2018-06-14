@@ -15,7 +15,7 @@ namespace fl
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Entities/Entity.vert", "Resources/Shaders/Entities/Entity.frag"},
+		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Entities/Entity.vert", "Shaders/Entities/Entity.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines()))
 	{
 	}

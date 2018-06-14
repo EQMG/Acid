@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "Files/Files.hpp"
 #include "Maths/Vector2.hpp"
 #include "Physics/ColliderAabb.hpp"
 #include "Resources/Resources.hpp"
@@ -28,14 +29,15 @@ namespace fl
 	public:
 		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{
-			auto resource = Resources::Get()->Get(filename);
+			std::string realFilename = Files::Get()->SearchFile(filename);
+			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<Model>(resource);
 			}
 
-			auto result = std::make_shared<Model>(filename);
+			auto result = std::make_shared<Model>(realFilename);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}

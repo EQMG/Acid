@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Tiltshift.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),

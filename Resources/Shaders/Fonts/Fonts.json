@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Fonts/Font.vert",
-    "Fragment": "Resources/Shaders/Fonts/Font.frag"
-  }
-}

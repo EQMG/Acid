@@ -24,7 +24,7 @@ namespace fl
 		float m_aspectRatio;
 
 		std::string m_title;
-		std::string m_icon;
+		std::string m_iconPath;
 		bool m_antialiasing;
 		bool m_fullscreen;
 
@@ -162,13 +162,13 @@ namespace fl
 		/// Gets the window's icon file.
 		/// </summary>
 		/// <returns> The window's icon file. </returns>
-		std::string GetIcon() const { return m_icon; }
+		std::string GetIcon() const { return m_iconPath; }
 
 		/// <summary>
 		/// Sets window icon image.
 		/// </summary>
-		/// <param name="title"> The new icon file. </param>
-		void SetIcon(const std::string &icon);
+		/// <param name="filename"> The new icon file. </param>
+		void SetIcon(const std::string &filename);
 
 		/// <summary>
 		/// Gets if the display requests antialiased images.

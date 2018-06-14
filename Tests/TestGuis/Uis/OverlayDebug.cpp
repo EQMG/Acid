@@ -18,7 +18,7 @@ namespace test
 	{
 		//	m_textPosition->SetVisible(false);
 
-	//	Gui *box = new Gui(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.4f), "CentreRight", true, true, Vector2(0.6f, 0.6f)), Texture::Resource("Resources/Guis/Black.png"), 0);
+	//	Gui *box = new Gui(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.4f), "CentreRight", true, true, Vector2(0.6f, 0.6f)), Texture::Resource("Guis/Black.png"), 0);
 	//	Text *title = new Text(box, UiBound(Vector2(0.5f, 0.9f), "TopCentre", true), 3.0f, "Hello World!", Uis::Get()->m_proximaNova->GetSemibold(), JustifyLeft, 0.2f);
 	//	title->SetTextColour(Colour::WHITE);
 	}

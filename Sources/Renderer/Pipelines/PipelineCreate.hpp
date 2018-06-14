@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Display/Display.hpp"
+#include "Files/Files.hpp"
 
 namespace fl
 {
@@ -125,6 +126,10 @@ namespace fl
 			m_polygonMode(polygonMode),
 			m_cullMode(cullMode)
 		{
+			for (auto &shaderStage : m_shaderStages)
+			{
+				shaderStage = Files::Get()->SearchFile(shaderStage);
+			}
 		}
 
 		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }

@@ -24,7 +24,7 @@ namespace test
 		m_buttonCaptureMouse(new ButtonKeyboard({Key::KEY_M, Key::KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({Key::KEY_DELETE})),
-		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
+		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg"))
 	{
 	}
 
@@ -47,7 +47,7 @@ namespace test
 		// Animated.
 		GameObject *animatedObject = new GameObject(Transform());
 		animatedObject->SetName("Animated");
-		animatedObject->AddComponent<MeshAnimated>("Resources/Objects/Animated/Model.json");
+		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.json");
 		animatedObject->AddComponent<MaterialAnimated>();
 		animatedObject->AddComponent<MeshRender>();
 		//animatedObject->AddComponent<ShadowRender>();
@@ -62,8 +62,8 @@ namespace test
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
-					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Resources/Objects/Testing/Material.png"), Texture::Resource("Resources/Objects/Testing/Normal.png"));
+				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
+					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 			//	sphere->AddComponent<ShadowRender>();
 			}

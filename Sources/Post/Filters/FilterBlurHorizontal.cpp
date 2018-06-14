@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterBlurHorizontal::FilterBlurHorizontal(const GraphicsStage &graphicsStage, const float &scale) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/BlurHorizontal.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/BlurHorizontal.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_scale(scale),
 		m_width(0.0f)

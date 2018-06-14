@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Sepia.frag"}, graphicsStage, {})
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Sepia.frag"}, graphicsStage, {})
 	{
 	}
 

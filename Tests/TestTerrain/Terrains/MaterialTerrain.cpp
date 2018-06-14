@@ -4,7 +4,7 @@ namespace test
 {
 	MaterialTerrain::MaterialTerrain() :
 		IMaterial(),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Terrains/Terrain.vert", "Resources/Shaders/Terrains/Terrain.frag"},
+		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))
 	{
 	}

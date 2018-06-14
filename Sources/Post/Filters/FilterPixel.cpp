@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Pixel.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_pixelSize(2.0f)
 	{

@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Skyboxes/Skybox.vert",
-    "Fragment": "Resources/Shaders/Skyboxes/Skybox.frag"
-  }
-}

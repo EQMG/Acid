@@ -24,9 +24,9 @@ namespace fl
 			return result;
 		}
 
-		static std::shared_ptr<ShapeCylinder> Resource(const std::string &filename)
+		static std::shared_ptr<ShapeCylinder> Resource(const std::string &data)
 		{
-			auto split = FormatString::Split(filename, "_");
+			auto split = FormatString::Split(data, "_");
 			float radiusBase = static_cast<float>(atof(split[1].c_str()));
 			float radiusTop = static_cast<float>(atof(split[2].c_str()));
 			float height = static_cast<float>(atof(split[3].c_str()));
