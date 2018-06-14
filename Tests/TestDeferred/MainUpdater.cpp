@@ -28,7 +28,7 @@ namespace test
 		m_timerRender->SetInterval(1.0f / Engine::Get()->GetFpsLimit());
 
 		// Always-Update.
-		moduleRegister->RunUpdate(ModuleUpdate::UPDATE_ALWAYS);
+		moduleRegister->RunUpdate(UPDATE_ALWAYS);
 
 		if (m_timerUpdate->IsPassedTime())
 		{
@@ -36,13 +36,13 @@ namespace test
 			m_timerUpdate->ResetStartTime();
 
 			// Pre-Update.
-			moduleRegister->RunUpdate(ModuleUpdate::UPDATE_PRE);
+			moduleRegister->RunUpdate(UPDATE_PRE);
 
 			// Update.
-			moduleRegister->RunUpdate(ModuleUpdate::UPDATE_NORMAL);
+			moduleRegister->RunUpdate(UPDATE_NORMAL);
 
 			// Post-Update.
-			moduleRegister->RunUpdate(ModuleUpdate::UPDATE_POST);
+			moduleRegister->RunUpdate(UPDATE_POST);
 
 			// Updates the engines delta.
 			m_deltaUpdate->Update();
@@ -61,7 +61,7 @@ namespace test
 			m_timerRender->ResetStartTime();
 
 			// Render
-			moduleRegister->RunUpdate(ModuleUpdate::UPDATE_RENDER);
+			moduleRegister->RunUpdate(UPDATE_RENDER);
 
 			// Updates the render delta, and render time extension.
 			m_deltaRender->Update();

@@ -157,7 +157,13 @@ namespace fl
 		static std::string FixPaths(const std::string &filepath);
 
 		/// <summary>
-		/// Gets the file extension for the file.
+		/// Gets the file name from the full path.
+		/// </summary>
+		/// <returns> The file name. </returns>
+		static std::string FindName(const std::string &filepath);
+
+		/// <summary>
+		/// Gets the file extension from the full path.
 		/// </summary>
 		/// <returns> The file extension. </returns>
 		static std::string FindExt(const std::string &filepath);

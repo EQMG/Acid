@@ -4,6 +4,7 @@
   },
   "MaterialSkybox": {
     "Cubemap Texture": "Objects/SkyboxStars",
+    "Cubemap Extension": ".png",
     "Enable Fog": true
   },
   "MeshRender": {

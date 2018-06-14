@@ -12,10 +12,10 @@ namespace test
 	ManagerUis::ManagerUis() :
 		IManagerUis(),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, 0, 1)),
+		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
 		m_buttonPause((new ButtonCompound({
-			new ButtonKeyboard({Key::KEY_ESCAPE}),
-			new ButtonJoystick(JoystickPort::JOYSTICK_1, {7})
+			new ButtonKeyboard({KEY_ESCAPE}),
+			new ButtonJoystick(JOYSTICK_1, {7})
 		}))),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),

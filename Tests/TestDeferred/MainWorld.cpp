@@ -30,10 +30,10 @@ namespace test
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyColour(Colour("#3399ff"))
 	{
-		m_noiseTerrain.SetNoiseType(NoiseType::TYPE_PERLINFRACTAL);
+		m_noiseTerrain.SetNoiseType(TYPE_PERLINFRACTAL);
 		m_noiseTerrain.SetFrequency(0.003f);
-		m_noiseTerrain.SetInterp(NoiseInterp::INTERP_QUINTIC);
-		m_noiseTerrain.SetFractalType(NoiseFractal::FRACTAL_FBM);
+		m_noiseTerrain.SetInterp(INTERP_QUINTIC);
+		m_noiseTerrain.SetFractalType(FRACTAL_FBM);
 		m_noiseTerrain.SetFractalOctaves(5);
 		m_noiseTerrain.SetFractalLacunarity(2.0f);
 		m_noiseTerrain.SetFractalGain(0.5f);

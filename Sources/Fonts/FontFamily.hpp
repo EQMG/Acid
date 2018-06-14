@@ -6,6 +6,15 @@
 
 namespace fl
 {
+	enum FamilyType
+	{
+		FAMILY_THIN = 0,
+		FAMILY_LIGHT = 1,
+		FAMILY_REGULAR = 2,
+		FAMILY_SEMIBOLD = 3,
+		FAMILY_BOLD = 4
+	};
+
 	class FL_EXPORT FontFamily :
 		public IResource
 	{
@@ -32,11 +41,18 @@ namespace fl
 			return result;
 		}
 
+		static std::shared_ptr<FontType> Resource(const std::string &filename, const FamilyType &familyType)
+		{
+			return Resource(filename)->GetType(familyType);
+		}
+
 		FontFamily(const std::string &filename);
 
 		~FontFamily();
 
 		std::string GetFilename() override { return m_filename; }
+
+		std::shared_ptr<FontType> GetType(const FamilyType &familyType);
 
 		std::shared_ptr<FontType> GetThin() const { return m_typeThin; }
 

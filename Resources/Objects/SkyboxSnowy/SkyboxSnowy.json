@@ -4,6 +4,7 @@
   },
   "MaterialSkybox": {
     "Cubemap Texture": "Objects/SkyboxSnowy/",
+    "Cubemap Extension": ".png",
     "Enable Fog": true
   },
   "MeshRender": {

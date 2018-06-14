@@ -128,6 +128,13 @@ namespace fl
 		return result;
 	}
 
+	std::string FileSystem::FindName(const std::string &filepath)
+	{
+		unsigned int lastSep = filepath.find_last_of("\\/") + 1;
+		unsigned int lastDot = filepath.find_last_of('.');
+		return filepath.substr(lastSep, lastDot - lastSep);
+	}
+
 	std::string FileSystem::FindExt(const std::string &filepath)
 	{
 		return filepath.substr(filepath.find_last_of('.') + 1, filepath.size());
