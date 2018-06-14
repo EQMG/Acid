@@ -1,6 +1,7 @@
 #include "Mouse.hpp"
 
 #include <GLFW/glfw3.h>
+#include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
 
@@ -29,7 +30,7 @@ namespace fl
 
 	Mouse::Mouse() :
 		IModule(),
-		m_customMouse(""),
+		m_mousePath(""),
 		m_mouseButtons(std::array<int, MOUSE_BUTTON_LAST + 1>()),
 		m_lastMousePositionX(0.5f),
 		m_lastMousePositionY(0.5f),
@@ -86,33 +87,35 @@ namespace fl
 		}
 	}
 
-	void Mouse::SetCustomMouse(const std::string &customMouse)
+	void Mouse::SetCustomMouse(const std::string &filename)
 	{
 		// Loads a custom cursor.
-		m_customMouse = customMouse;
+		m_mousePath = Files::Get()->SearchFile(filename);
 
-		if (!m_customMouse.empty())
+		if (m_mousePath.empty())
 		{
-			int width = 0;
-			int height = 0;
-			int components = 0;
-			auto data = Texture::LoadPixels(m_customMouse.c_str(), &width, &height, &components);
-
-			if (data == nullptr)
-			{
-				fprintf(stderr, "Unable to load texture: '%s'.\n", m_customMouse.c_str());
-				return;
-			}
-
-			GLFWimage image[1];
-			image[0].pixels = data;
-			image[0].width = width;
-			image[0].height = height;
-
-			GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-			glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
-			Texture::DeletePixels(data);
+			return;
 		}
+
+		int width = 0;
+		int height = 0;
+		int components = 0;
+		auto data = Texture::LoadPixels(m_mousePath.c_str(), &width, &height, &components);
+
+		if (data == nullptr)
+		{
+			fprintf(stderr, "Unable to load texture: '%s'.\n", m_mousePath.c_str());
+			return;
+		}
+
+		GLFWimage image[1];
+		image[0].pixels = data;
+		image[0].width = width;
+		image[0].height = height;
+
+		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
+		glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
+		Texture::DeletePixels(data);
 	}
 
 	void Mouse::SetCursorHidden(const bool &disabled)

@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Voxels/Voxel.vert",
-    "Fragment": "Resources/Shaders/Voxels/Voxel.frag"
-  }
-}

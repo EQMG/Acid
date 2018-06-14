@@ -8,7 +8,7 @@ namespace fl
 {
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Guis/Gui.vert", "Resources/Shaders/Guis/Gui.frag"},
+		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))
 	{
 	}

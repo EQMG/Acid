@@ -30,7 +30,7 @@ namespace test
 		m_buttonCaptureMouse(new ButtonKeyboard({Key::KEY_M, Key::KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({Key::KEY_DELETE})),
-		m_soundScreenshot(new Sound("Resources/Sounds/Screenshot.ogg"))
+		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg"))
 	{
 	}
 

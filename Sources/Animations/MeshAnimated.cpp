@@ -1,5 +1,6 @@
 #include "MeshAnimated.hpp"
 
+#include "Files/Files.hpp"
 #include "Files/Json/FileJson.hpp"
 #include "Helpers/FileSystem.hpp"
 
@@ -11,7 +12,7 @@ namespace fl
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Mesh(),
-		m_filename(filename),
+		m_filename(Files::Get()->SearchFile(filename)),
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animator(nullptr),

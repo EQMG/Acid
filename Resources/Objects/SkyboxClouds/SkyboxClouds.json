@@ -3,7 +3,7 @@
     "Model": "Sphere_6_6_1.0"
   },
   "MaterialSkybox": {
-    "Cubemap Texture": "Resources/Objects/SkyboxClouds",
+    "Cubemap Texture": "Objects/SkyboxClouds",
     "Enable Fog": true
   },
   "MeshRender": {

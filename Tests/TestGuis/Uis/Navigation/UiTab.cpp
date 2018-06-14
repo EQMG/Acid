@@ -12,7 +12,7 @@ namespace test
 		m_colour(colour),
 		m_text(new Text(this, rectangle, 1.6f, name, Uis::Get()->m_proximaNova->GetRegular(), FontJustify::JUSTIFY_LEFT, 0.5f, 0.003f)),
 		m_width(m_text->GetRectangle()->m_dimensions.m_x * 1.6f),
-		m_soundClick(new Sound("Resources/Sounds/Button1.ogg", 0.9f))
+		m_soundClick(new Sound("Sounds/Button1.ogg", 0.9f))
 	{
 		this->SetActionLeft([&]()
 		{

@@ -19,6 +19,9 @@ using namespace fl;
 int main(int argc, char **argv)
 //#endif
 {
+	// Registers file search paths.
+	Files::AddSearchPath("Resources/Engine");
+
 	// Creates the engine and updater objects.
 	auto engine = new Engine();
 	engine->SetUpdater(new MainUpdater());

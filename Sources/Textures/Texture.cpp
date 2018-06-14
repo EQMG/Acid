@@ -8,7 +8,7 @@
 
 namespace fl
 {
-	static const std::string FALLBACK_PATH = "Resources/Undefined.png";
+	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;
 
 	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :

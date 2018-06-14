@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Particles/Particle.vert",
-    "Fragment": "Resources/Shaders/Particles/Particle.frag"
-  }
-}

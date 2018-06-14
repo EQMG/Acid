@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Deferred/Deferred.vert",
-    "Fragment": "Resources/Shaders/Deferred/Deferred.frag"
-  }
-}

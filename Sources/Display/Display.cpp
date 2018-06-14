@@ -6,6 +6,7 @@
 #endif
 #include <GLFW/glfw3.h>
 #include <SPIRV/GlslangToSpv.h>
+#include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
 namespace fl
@@ -112,7 +113,7 @@ namespace fl
 		m_fullscreenHeight(0),
 		m_aspectRatio(1.5f),
 		m_title("Flounder Loading..."),
-		m_icon(""),
+		m_iconPath(""),
 		m_antialiasing(true),
 		m_fullscreen(false),
 		m_window(nullptr),
@@ -191,32 +192,34 @@ namespace fl
 		glfwSetWindowTitle(m_window, m_title.c_str());
 	}
 
-	void Display::SetIcon(const std::string &icon)
+	void Display::SetIcon(const std::string &filename)
 	{
-		// Creates a window icon for this GLFW display.
-		m_icon = icon;
+		// Loads a window icon for this GLFW display.
+		m_iconPath = Files::Get()->SearchFile(filename);
 
-		if (!m_icon.empty())
+		if (m_iconPath.empty())
 		{
-			int width = 0;
-			int height = 0;
-			int components = 0;
-			auto data = Texture::LoadPixels(m_icon.c_str(), &width, &height, &components);
-
-			if (data == nullptr)
-			{
-				fprintf(stderr, "Unable to load texture: '%s'\n", m_icon.c_str());
-				return;
-			}
-
-			GLFWimage icons[1];
-			icons[0].pixels = data;
-			icons[0].width = width;
-			icons[0].height = height;
-
-			glfwSetWindowIcon(m_window, 1, icons);
-			Texture::DeletePixels(data);
+			return;
 		}
+
+		int width = 0;
+		int height = 0;
+		int components = 0;
+		auto data = Texture::LoadPixels(m_iconPath.c_str(), &width, &height, &components);
+
+		if (data == nullptr)
+		{
+			fprintf(stderr, "Unable to load texture: '%s'\n", m_iconPath.c_str());
+			return;
+		}
+
+		GLFWimage icons[1];
+		icons[0].pixels = data;
+		icons[0].width = width;
+		icons[0].height = height;
+
+		glfwSetWindowIcon(m_window, 1, icons);
+		Texture::DeletePixels(data);
 	}
 
 	void Display::SetFullscreen(const bool &fullscreen)
@@ -524,8 +527,8 @@ namespace fl
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 2);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 72);
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 3);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 73);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;

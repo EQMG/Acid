@@ -7,7 +7,7 @@ namespace fl
 {
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(),
-		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Resources/Shaders/Shadows/Shadow.vert", "Resources/Shaders/Shadows/Shadow.frag"},
+		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_FRONT), {})),
 		m_uniformScene(UniformHandler())
 	{

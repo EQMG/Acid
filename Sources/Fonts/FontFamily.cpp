@@ -24,11 +24,6 @@ namespace fl
 		std::string filepathPng = filename + "/" + suffex + ".png";
 		std::string filepathFnt = filename + "/" + suffex + ".fnt";
 
-		if (!FileSystem::FileExists(filepathPng) || !FileSystem::FileExists(filepathFnt))
-		{
-			return nullptr;
-		}
-
 		return std::make_shared<FontType>(filepathPng, filepathFnt);
 	}
 }

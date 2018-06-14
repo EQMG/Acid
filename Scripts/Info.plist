@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>APPNAME</string>
 	<key>CFBundleIconFile</key>
-	<string>Resources/Logos/Tail.icns</string>
+	<string>Resources/Engine/Logos/Tail.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.equilibrium.flounder</string>
 	<key>CFBundleInfoDictionaryVersion</key>

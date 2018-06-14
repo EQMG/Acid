@@ -28,7 +28,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::string m_customMouse;
+		std::string m_mousePath;
 
 		std::array<int, MOUSE_BUTTON_LAST + 1> m_mouseButtons;
 		float m_lastMousePositionX;
@@ -77,13 +77,13 @@ namespace fl
 		/// Gets the mouses custom mouse file.
 		/// </summary>
 		/// <returns> The custom mouse file. </returns>
-		std::string GetCustomMouse() const { return m_customMouse; }
+		std::string GetCustomMouse() const { return m_mousePath; }
 
 		/// <summary>
 		/// Sets the custom mouse file.
 		/// </summary>
-		/// <param name="title"> The new custom mouse file. </param>
-		void SetCustomMouse(const std::string &customMouse);
+		/// <param name="filename"> The new custom mouse file. </param>
+		void SetCustomMouse(const std::string &filename);
 
 		/// <summary>
 		/// Sets if the operating systems cursor is hidden whilst in the display.

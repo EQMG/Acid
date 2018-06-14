@@ -12,7 +12,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<std::string> m_searchPaths;
+		static std::vector<std::string> SEARCH_PATHS;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -29,12 +29,19 @@ namespace fl
 
 		void Update() override;
 
-		std::vector<std::string> GetSearchPaths() const { return m_searchPaths; }
+		static std::vector<std::string> GetSearchPaths() { return SEARCH_PATHS; }
 
 		/// <summary>
 		/// Adds an file search path.
 		/// </summary>
 		/// <param name="path"> The task to add. </param>
-		void AddSearchPath(const std::string &path);
+		static void AddSearchPath(const std::string &path);
+
+		/// <summary>
+		/// Find a file by partial path in a search path.
+		/// </summary>
+		/// <param name="filename"> The filename to find. </param>
+		/// <returns> The path to the first file found. </returns>
+		std::string SearchFile(const std::string &filename);
 	};
 }

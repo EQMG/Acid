@@ -1,6 +1,0 @@
-{
-  "Shader": {
-    "Vertex": "Resources/Shaders/Terrains/Terrain.vert",
-    "Fragment": "Resources/Shaders/Terrains/Terrain.frag"
-  }
-}

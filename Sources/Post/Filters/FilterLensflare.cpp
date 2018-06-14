@@ -5,7 +5,7 @@
 namespace fl
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Lensflare.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_sunPosition(Vector3()),
 		m_sunHeight(0.0f)

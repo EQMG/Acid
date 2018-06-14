@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "FontCharacter.hpp"
 
@@ -30,14 +31,15 @@ namespace fl
 	public:
 		static std::shared_ptr<FontMetafile> Resource(const std::string &filename)
 		{
-			auto resource = Resources::Get()->Get(filename);
+			std::string realFilename = Files::Get()->SearchFile(filename);
+			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<FontMetafile>(resource);
 			}
 
-			auto result = std::make_shared<FontMetafile>(filename);
+			auto result = std::make_shared<FontMetafile>(realFilename);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}

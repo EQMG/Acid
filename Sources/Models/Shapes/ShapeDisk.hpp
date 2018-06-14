@@ -24,9 +24,9 @@ namespace fl
 			return result;
 		}
 
-		static std::shared_ptr<ShapeDisk> Resource(const std::string &filename)
+		static std::shared_ptr<ShapeDisk> Resource(const std::string &data)
 		{
-			auto split = FormatString::Split(filename, "_");
+			auto split = FormatString::Split(data, "_");
 			float innerRadius = static_cast<float>(atof(split[1].c_str()));
 			float outerRadius = static_cast<float>(atof(split[2].c_str()));
 			int slices = atoi(split[3].c_str());

@@ -20,16 +20,16 @@ Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.
 # Code snippets
 ```cpp
 // Imports a 2D texture.
-auto guiBlack = Texture::Resource("Resources/Guis/Black.png");
+auto guiBlack = Texture::Resource("Guis/Black.png");
 
 // Imports a 3D cubemap.
-auto skyboxSnowy = Cubemap::Resource("Resources/Objects/SkyboxSnowy", ".png");
+auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 
 // Imports a model.
-auto dragon = Model::Resource("Resources/Objects/Testing/Model_Dragon.obj");
+auto dragon = Model::Resource("Objects/Testing/Model_Dragon.obj");
 
 // Plays a 3D sound, at the origin, at half volume.
-auto jump = Sound("Resources/Sounds/Jump.ogg", 0.5f);
+auto jump = Sound("Sounds/Jump.ogg", 0.5f);
 jump.SetPosition(Vector3::ZERO);
 jump.Play();
 
@@ -39,8 +39,8 @@ auto playerObject = new GameObject("Player", Transform());
 // Creates a game object.
 auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
-sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Resources/Objects/Testing/Diffuse.png"),
-    0.0f, 0.0f, Texture::Resource("Resources/Objects/Testing/Material.png"), Texture::Resource("Resources/Objects/Testing/Normal.png"));
+sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
+    0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>();
 ```
 

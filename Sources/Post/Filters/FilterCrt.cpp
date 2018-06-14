@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Crt.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_screenColour(Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),

@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include "Display/Display.hpp"
+#include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
@@ -40,14 +41,15 @@ namespace fl
 	public:
 		static std::shared_ptr<Texture> Resource(const std::string &filename)
 		{
-			auto resource = Resources::Get()->Get(filename);
+			std::string realFilename = Files::Get()->SearchFile(filename);
+			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<Texture>(resource);
 			}
 
-			auto result = std::make_shared<Texture>(filename);
+			auto result = std::make_shared<Texture>(realFilename);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}

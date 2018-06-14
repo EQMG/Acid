@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Grey.frag"}, graphicsStage, {})
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Grey.frag"}, graphicsStage, {})
 	{
 	}
 

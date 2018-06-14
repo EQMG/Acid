@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Emboss.frag"}, graphicsStage, {})
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Emboss.frag"}, graphicsStage, {})
 	{
 	}
 

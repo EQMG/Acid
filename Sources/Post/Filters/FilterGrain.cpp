@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Grain.frag"}, graphicsStage, {}),
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, graphicsStage, {}),
 		m_uniformScene(UniformHandler()),
 		m_strength(2.3f)
 	{

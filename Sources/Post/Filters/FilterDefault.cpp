@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Resources/Shaders/Filters/Default.vert", "Resources/Shaders/Filters/Default.frag"}, graphicsStage, {})
+		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, graphicsStage, {})
 	{
 	}
 

@@ -10,7 +10,7 @@ namespace fl
 		m_cubemap(cubemap),
 		m_enableFog(enableFog),
 		m_blend(1.0f),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Resources/Shaders/Skyboxes/Skybox.vert", "Resources/Shaders/Skyboxes/Skybox.frag"},
+		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_FRONT), {}))
 	{
 	}

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <Helpers/FormatString.hpp>
 #include "Texture.hpp"
 
 namespace fl
@@ -13,6 +14,8 @@ namespace fl
 		public IDescriptor
 	{
 	private:
+		static const std::vector<std::string> SIDE_FILE_SUFFIXES;
+
 		std::string m_filename;
 		std::string m_fileExt;
 
@@ -30,14 +33,17 @@ namespace fl
 	public:
 		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt)
 		{
-			auto resource = Resources::Get()->Get(filename);
+			std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
+			std::string realFilename = Files::Get()->SearchFile(filename + suffixToken);
+			realFilename = FormatString::Replace(realFilename, suffixToken, "");
+			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<Cubemap>(resource);
 			}
 
-			auto result = std::make_shared<Cubemap>(filename, fileExt);
+			auto result = std::make_shared<Cubemap>(realFilename, fileExt);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
