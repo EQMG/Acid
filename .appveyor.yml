@@ -41,7 +41,7 @@ before_build:
   - xcopy Build\Debug\lib\Debug Flounder\ /s/h/e/k/f/c
   - xcopy Build\Debug\include Flounder\include\ /s/h/e/k/f/c
   - xcopy Build\Debug\bin\Debug Demos\ /s/h/e/k/f/c
-  - xcopy Resources Demos\Resources\ /s/h/e/k/f/c
+  - xcopy Resources Demos\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
   - path: Demos\

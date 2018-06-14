@@ -1,5 +1,6 @@
 #include "GameObject.hpp"
 
+#include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Prefabs/PrefabObject.hpp"
 
@@ -24,10 +25,10 @@ namespace fl
 		}
 	}
 
-	GameObject::GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure) :
+	GameObject::GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure)
 	{
-		auto prefabObject = PrefabObject::Resource("Objects/" + prefabName + "/" + prefabName + ".json");
+		auto prefabObject = PrefabObject::Resource(filepath);
 
 		for (auto value : *prefabObject->GetParent()->GetChildren())
 		{
@@ -47,7 +48,7 @@ namespace fl
 			AddComponent(component);
 		}
 
-		m_name = prefabName;
+		m_name = FileSystem::FindName(filepath);
 	}
 
 	GameObject::~GameObject()

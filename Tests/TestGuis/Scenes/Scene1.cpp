@@ -11,9 +11,9 @@ namespace test
 {
 	Scene1::Scene1() :
 		IScene(new FpsCamera(), new ManagerUis()),
-		m_buttonFullscreen(new ButtonKeyboard({Key::KEY_F11})),
-		m_buttonScreenshot(new ButtonKeyboard({Key::KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({Key::KEY_DELETE}))
+		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
+		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({KEY_DELETE}))
 	{
 	}
 

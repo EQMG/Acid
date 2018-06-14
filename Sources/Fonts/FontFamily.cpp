@@ -21,9 +21,27 @@ namespace fl
 
 	std::shared_ptr<FontType> FontFamily::LoadFontType(const std::string &filename, const std::string &suffex)
 	{
-		std::string filepathPng = filename + "/" + suffex + ".png";
-		std::string filepathFnt = filename + "/" + suffex + ".fnt";
+		std::string filepathTexture = filename + "/" + suffex + ".png";
+		std::string filepathFont = filename + "/" + suffex + ".fnt";
+		return std::make_shared<FontType>(filepathTexture, filepathFont);
+	}
 
-		return std::make_shared<FontType>(filepathPng, filepathFnt);
+	std::shared_ptr<FontType> FontFamily::GetType(const FamilyType &familyType)
+	{
+		switch (familyType)
+		{
+		case FAMILY_THIN:
+			return m_typeThin;
+		case FAMILY_LIGHT:
+			return m_typeLight;
+		case FAMILY_REGULAR:
+			return m_typeRegular;
+		case FAMILY_SEMIBOLD:
+			return m_typeSemibold;
+		case FAMILY_BOLD:
+			return m_typeBold;
+		default:
+			return nullptr;
+		}
 	}
 }

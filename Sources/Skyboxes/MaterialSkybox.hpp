@@ -39,11 +39,11 @@ namespace fl
 
 		void SetCubemap(std::shared_ptr<Cubemap> cubemap) { m_cubemap = cubemap; }
 
-		void TrySetCubemap(const std::string &filename)
+		void TrySetCubemap(const std::string &filename, const std::string &fileExt)
 		{
-			if (!filename.empty())
+			if (!filename.empty() && !fileExt.empty())
 			{
-				m_cubemap = Cubemap::Resource(filename, ".png");
+				m_cubemap = Cubemap::Resource(filename, fileExt);
 			}
 		}
 

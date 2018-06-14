@@ -22,7 +22,7 @@ namespace fl
 	public:
 		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
-		GameObject(const std::string &prefabName, const Transform &transform, ISpatialStructure *structure = nullptr);
+		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		virtual ~GameObject();
 
