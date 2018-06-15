@@ -3,7 +3,8 @@
 namespace fl
 {
 	Resources::Resources() :
-		m_resources(std::vector<std::shared_ptr<IResource>>())
+		m_resources(std::vector<std::shared_ptr<IResource>>()),
+		m_timerPurge(Timer(3.0f))
 	{
 	}
 
@@ -13,6 +14,19 @@ namespace fl
 
 	void Resources::Update()
 	{
+		if (m_timerPurge.IsPassedTime())
+		{
+			m_timerPurge.ResetStartTime();
+
+			for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
+			{
+				if ((*it).use_count() <= 1)
+				{
+					printf("Resource '%s' erased\n", (*it)->GetFilename().c_str());
+					m_resources.erase(it);
+				}
+			}
+		}
 	}
 
 	std::shared_ptr<IResource> Resources::Get(const std::string &filename)
@@ -39,7 +53,6 @@ namespace fl
 		{
 			if (*it == resource)
 			{
-			//	delete (*it);
 				m_resources.erase(it);
 			}
 		}
@@ -51,7 +64,6 @@ namespace fl
 		{
 			if ((*it)->GetFilename() == filename)
 			{
-			//	delete *it;
 				m_resources.erase(it);
 			}
 		}

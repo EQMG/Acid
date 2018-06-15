@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <Maths/Timer.hpp>
 #include "Engine/Engine.hpp"
 #include "IResource.hpp"
 
@@ -15,6 +16,7 @@ namespace fl
 	{
 	private:
 		std::vector<std::shared_ptr<IResource>> m_resources;
+		Timer m_timerPurge;
 	public:
 		/// <summary>
 		/// Gets this engine instance.

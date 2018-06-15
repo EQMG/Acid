@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include <string>
-#include "Audio/Audio.hpp"
 #include "Maths/Vector3.hpp"
+#include "Audio.hpp"
+#include "SoundBuffer.hpp"
 
 namespace fl
 {
@@ -12,6 +13,7 @@ namespace fl
 	class FL_EXPORT Sound
 	{
 	private:
+		std::shared_ptr<SoundBuffer> m_soundBuffer;
 		unsigned int m_source;
 
 		bool m_playing;

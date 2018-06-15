@@ -12,15 +12,14 @@
 namespace fl
 {
 	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
+		m_soundBuffer(SoundBuffer::Resource(filename)),
 		m_source(0),
 		m_playing(false),
 		m_gain(gain),
 		m_pitch(pitch)
 	{
-		auto soundBuffer = SoundBuffer::Resource(filename);
-
 		alGenSources(1, &m_source);
-		alSourcei(m_source, AL_BUFFER, soundBuffer->GetBuffer());
+		alSourcei(m_source, AL_BUFFER, m_soundBuffer->GetBuffer());
 
 		Audio::ErrorAl(alGetError());
 
