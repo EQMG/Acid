@@ -65,7 +65,7 @@ namespace fl
 			delete m_descriptorSet;
 
 			m_shaderProgram = pipeline.GetShaderProgram();
-			m_descriptors->resize(pipeline.GetShaderProgram()->GetDescriptors()->size());
+			m_descriptors->resize(pipeline.GetShaderProgram()->GetLastDescriptorBinding() + 1);
 			m_descriptorSet = new DescriptorSet(pipeline);
 			m_changed = false;
 			return false;

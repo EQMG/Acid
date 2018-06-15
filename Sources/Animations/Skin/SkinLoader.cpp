@@ -17,7 +17,7 @@ namespace fl
 
 	SkinLoader::~SkinLoader()
 	{
-		for (auto vertex : m_verticesSkinData)
+		for (auto &vertex : m_verticesSkinData)
 		{
 			delete vertex;
 		}

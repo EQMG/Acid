@@ -16,7 +16,7 @@ namespace fl
 		m_hasSwapchain(false),
 		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0)
 	{
-		for (auto image : renderpassCreate->GetImages())
+		for (auto &image : renderpassCreate->GetImages())
 		{
 			VkClearValue clearValue = {};
 

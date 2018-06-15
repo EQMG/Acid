@@ -31,7 +31,7 @@ namespace fl
 			return filename;
 		}
 
-		for (auto search : SEARCH_PATHS)
+		for (auto &search : SEARCH_PATHS)
 		{
 			std::string searchPath = search + "/" + filename;
 

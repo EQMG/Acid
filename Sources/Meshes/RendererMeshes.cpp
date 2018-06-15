@@ -23,7 +23,7 @@ namespace fl
 
 		auto renderList = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 
-		for (auto meshRender : renderList)
+		for (auto &meshRender : renderList)
 		{
 			meshRender->CmdRender(commandBuffer, m_uniformScene);
 		}

@@ -70,7 +70,7 @@ namespace fl
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		for (auto shaderModule : m_modules)
+		for (auto &shaderModule : m_modules)
 		{
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
@@ -222,12 +222,12 @@ namespace fl
 
 		std::string defineBlock = "\n";
 
-		for (auto define : m_defines)
+		for (auto &define : m_defines)
 		{
 			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
 		}
 
-		for (auto shaderStage : m_pipelineCreate.GetShaderStages())
+		for (auto &shaderStage : m_pipelineCreate.GetShaderStages())
 		{
 			if (!FileSystem::FileExists(shaderStage))
 			{
@@ -314,7 +314,7 @@ namespace fl
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
-		for (auto type : *m_shaderProgram->GetDescriptors())
+		for (auto &type : m_shaderProgram->GetDescriptors())
 		{
 			bindings.emplace_back(type.GetLayoutBinding());
 		}
@@ -334,7 +334,7 @@ namespace fl
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
-		for (auto type : *m_shaderProgram->GetDescriptors())
+		for (auto &type : m_shaderProgram->GetDescriptors())
 		{
 			poolSizes.emplace_back(type.GetPoolSize());
 		}
@@ -344,7 +344,7 @@ namespace fl
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 16384;
+		descriptorPoolCreateInfo.maxSets = 16384; // Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
 		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));

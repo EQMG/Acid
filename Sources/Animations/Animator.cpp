@@ -80,7 +80,7 @@ namespace fl
 	{
 		auto currentPose = std::map<std::string, Matrix4>();
 
-		for (auto joint : previousFrame.GetPose())
+		for (auto &joint : previousFrame.GetPose())
 		{
 			JointTransform *previousTransform = previousFrame.GetPose().find(joint.first)->second;
 			JointTransform *nextTransform = nextFrame.GetPose().find(joint.first)->second;
@@ -96,7 +96,7 @@ namespace fl
 		Matrix4 currentLocalTransform = currentPose.find(joint->GetName())->second;
 		Matrix4 currentTransform = parentTransform * currentLocalTransform;
 
-		for (auto childJoint : joint->GetChildren())
+		for (auto &childJoint : joint->GetChildren())
 		{
 			ApplyPoseToJoints(currentPose, childJoint, currentTransform);
 		}

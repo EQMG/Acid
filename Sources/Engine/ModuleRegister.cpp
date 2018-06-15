@@ -62,7 +62,7 @@ namespace fl
 
 	IModule *ModuleRegister::GetModule(const std::string &name)
 	{
-		for (auto module : m_modules)
+		for (auto &module : m_modules)
 		{
 			if (module.second.first == name)
 			{
@@ -84,7 +84,7 @@ namespace fl
 
 	void ModuleRegister::RunUpdate(const ModuleUpdate &update) const
 	{
-		for (auto module : m_modules)
+		for (auto &module : m_modules)
 		{
 			if (static_cast<int>(std::floor(module.first)) == update)
 			{

@@ -26,7 +26,7 @@ namespace fl
 
 		auto renderList = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
-		for (auto shadowRender : renderList)
+		for (auto &shadowRender : renderList)
 		{
 			shadowRender->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}

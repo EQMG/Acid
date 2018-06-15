@@ -14,7 +14,7 @@ namespace fl
 
 	LoadedValue::~LoadedValue()
 	{
-		for (auto child : *m_children)
+		for (auto &child : *m_children)
 		{
 			delete child;
 		}
@@ -24,7 +24,7 @@ namespace fl
 
 	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull)
 	{
-		for (auto child : *m_children)
+		for (auto &child : *m_children)
 		{
 			if (child->m_name == name)
 			{
@@ -63,7 +63,7 @@ namespace fl
 			return nullptr;
 		}
 
-		for (auto child : *GetChild(childName)->m_children)
+		for (auto &child : *GetChild(childName)->m_children)
 		{
 			auto attrib = child->GetChild(attribute);
 

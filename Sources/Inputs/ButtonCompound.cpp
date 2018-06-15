@@ -15,7 +15,7 @@ namespace fl
 
 	bool ButtonCompound::IsDown() const
 	{
-		for (auto button : m_buttons)
+		for (auto &button : m_buttons)
 		{
 			if (button->IsDown())
 			{

@@ -231,7 +231,7 @@ namespace fl
 		/// </summary>
 		/// <param name="radius"> The sphere radius. </param>
 		/// <returns> The projected cartesian coordinates. </returns>
-		Vector3 ProjectCubeToSphere(const float &radius);
+		Vector3 ProjectCubeToSphere(const float &radius) const;
 
 		/// <summary>
 		/// Gets the height of this vector on a point off of a 3d triangle.

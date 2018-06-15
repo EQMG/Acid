@@ -206,7 +206,7 @@ namespace fl
 	{
 		VkDeviceSize size = 0;
 
-		for (auto suffix : fileSuffixes)
+		for (auto &suffix : fileSuffixes)
 		{
 			const std::string filepathSide = filename + "/" + suffix + fileExt;
 			const VkDeviceSize sizeSide = LoadSize(filepathSide);
@@ -247,7 +247,7 @@ namespace fl
 		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
 		stbi_uc *offset = pixels;
 
-		for (auto suffix : fileSuffixes)
+		for (auto &suffix : fileSuffixes)
 		{
 			std::string filepathSide = filename + "/" + suffix + fileExt;
 			VkDeviceSize sizeSide = LoadSize(filepathSide);

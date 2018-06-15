@@ -30,7 +30,7 @@ namespace fl
 	{
 		auto prefabObject = PrefabObject::Resource(filepath);
 
-		for (auto value : *prefabObject->GetParent()->GetChildren())
+		for (auto &value : *prefabObject->GetParent()->GetChildren())
 		{
 			if (value->GetName().empty())
 			{

@@ -35,7 +35,7 @@ namespace fl
 		/*void *newData = malloc(m_size);
 		void *offset = newData;
 
-		for (auto pair : newDataMap)
+		for (auto &pair : newDataMap)
 		{
 			if (shaderProgram->IsDescriptorDefined(pair.first))
 			{

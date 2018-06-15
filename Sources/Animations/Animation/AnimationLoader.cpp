@@ -17,7 +17,7 @@ namespace fl
 		m_lengthSeconds = times[times.size() - 1];
 		CreateKeyframeData(times);
 
-		for (auto jointNode : *animationNodes)
+		for (auto &jointNode : *animationNodes)
 		{
 			LoadJointTransforms(jointNode, rootNode);
 		}
@@ -25,7 +25,7 @@ namespace fl
 
 	AnimationLoader::~AnimationLoader()
 	{
-		for (auto keyframeData : m_keyframeData)
+		for (auto &keyframeData : m_keyframeData)
 		{
 			delete keyframeData;
 		}
@@ -57,7 +57,7 @@ namespace fl
 
 	void AnimationLoader::CreateKeyframeData(const std::vector<float> &times)
 	{
-		for (auto time : times)
+		for (auto &time : times)
 		{
 			m_keyframeData.emplace_back(new KeyframeData(time));
 		}

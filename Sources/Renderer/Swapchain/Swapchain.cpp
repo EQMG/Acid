@@ -26,7 +26,7 @@ namespace fl
 		std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
 		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, physicalPresentModes.data());
 
-		for (auto presentMode : physicalPresentModes)
+		for (auto &presentMode : physicalPresentModes)
 		{
 			if (presentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 			{
@@ -106,7 +106,7 @@ namespace fl
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		for (auto imageView : m_swapchainImageViews)
+		for (auto &imageView : m_swapchainImageViews)
 		{
 			vkDestroyImageView(logicalDevice, imageView, nullptr);
 		}

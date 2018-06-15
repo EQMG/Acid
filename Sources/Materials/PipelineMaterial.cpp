@@ -19,14 +19,14 @@ namespace fl
 	{
 		std::string shaderString;
 
-		for (auto stage : pipelineCreate.GetShaderStages())
+		for (auto &stage : pipelineCreate.GetShaderStages())
 		{
 			shaderString += stage + "_";
 		}
 
 		std::string defineString;
 
-		for (auto element : defines)
+		for (auto &element : defines)
 		{
 			defineString += element.GetName() + element.GetValue() + "_";
 		}

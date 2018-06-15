@@ -86,7 +86,7 @@ namespace fl
 		Vector3 currentPosition = GetGameObject()->GetTransform()->GetPosition();
 
 		// Goes though all entities in the collision range.
-		for (auto rigidbody : rigidbodyList)
+		for (auto &rigidbody : rigidbodyList)
 		{
 			// Ignores the original entity.
 			if (rigidbody->GetGameObject() == GetGameObject())

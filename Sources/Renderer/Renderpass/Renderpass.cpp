@@ -12,7 +12,7 @@ namespace fl
 		// Attachments,
 		std::vector<VkAttachmentDescription> attachments = {};
 
-		for (auto image : renderpassCreate.GetImages())
+		for (auto &image : renderpassCreate.GetImages())
 		{
 			VkAttachmentDescription attachment = {};
 			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -45,13 +45,13 @@ namespace fl
 		std::vector<VkSubpassDescription> subpasses = {};
 		std::vector<VkSubpassDependency> dependencies = {};
 
-		for (auto subpassType : renderpassCreate.GetSubpasses())
+		for (auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
 			auto subpassColourAttachments = new std::vector<VkAttachmentReference>{};
 			uint32_t depthAttachment = 9999;
 
-			for (auto attachment : subpassType.GetAttachments())
+			for (auto &attachment : subpassType.GetAttachments())
 			{
 				if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_DEPTH)
 				{

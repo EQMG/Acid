@@ -12,7 +12,7 @@ namespace fl
 		m_length(length),
 		m_keyframes(std::vector<Keyframe *>())
 	{
-		for (auto frameData : keyframeData)
+		for (auto &frameData : keyframeData)
 		{
 			m_keyframes.emplace_back(new Keyframe(*frameData));
 		}
@@ -20,7 +20,7 @@ namespace fl
 
 	Animation::~Animation()
 	{
-		for (auto keyFrame : m_keyframes)
+		for (auto &keyFrame : m_keyframes)
 		{
 			delete keyFrame;
 		}

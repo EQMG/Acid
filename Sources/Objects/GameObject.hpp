@@ -33,7 +33,7 @@ namespace fl
 		template<typename T>
 		std::shared_ptr<T> GetComponent()
 		{
-			for (auto c : m_components)
+			for (auto &c : m_components)
 			{
 				auto casted = std::dynamic_pointer_cast<T>(c);
 
@@ -61,7 +61,7 @@ namespace fl
 		template<typename T>
 		std::shared_ptr<T> RemoveComponent()
 		{
-			for (auto component : m_components)
+			for (auto &component : m_components)
 			{
 				auto casted = std::dynamic_pointer_cast<T>(component);
 

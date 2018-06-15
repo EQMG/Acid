@@ -29,7 +29,7 @@ namespace fl
 		{
 			if (!jointNode->GetChild("node")->GetChild("-id"))
 			{
-				for (auto childNode : *jointNode->GetChild("node")->GetChildren())
+				for (auto &childNode : *jointNode->GetChild("node")->GetChildren())
 				{
 					joint->AddChild(LoadJointData(childNode, false));
 				}

@@ -18,7 +18,7 @@ namespace fl
 		// Iterate through queue families to find one that supports VK_QUEUE_GRAPHICS_BIT.
 		int i = 0;
 
-		for (auto queueFamily : queueFamilies)
+		for (auto &queueFamily : queueFamilies)
 		{
 			if (queueFamily.queueCount <= 0)
 			{

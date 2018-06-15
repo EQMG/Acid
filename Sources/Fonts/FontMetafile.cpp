@@ -34,7 +34,7 @@ namespace fl
 		std::string fileLoaded = FileSystem::ReadTextFile(filename);
 		auto lines = FormatString::Split(fileLoaded, "\n");
 
-		for (auto line : lines)
+		for (auto &line : lines)
 		{
 			ProcessNextLine(line);
 
@@ -74,7 +74,7 @@ namespace fl
 		m_values.clear();
 		auto parts = FormatString::Split(line, SPLITTER);
 
-		for (auto part : parts)
+		for (auto &part : parts)
 		{
 			auto pairs = FormatString::Split(part, "=");
 
@@ -87,7 +87,7 @@ namespace fl
 
 	void FontMetafile::LoadPaddingData()
 	{
-		for (auto padding : GetValuesOfVariable("padding"))
+		for (auto &padding : GetValuesOfVariable("padding"))
 		{
 			m_padding.emplace_back(padding);
 		}
@@ -147,7 +147,7 @@ namespace fl
 
 		int i = 0;
 
-		for (auto number : numbers)
+		for (auto &number : numbers)
 		{
 			result.emplace_back(std::stoi(number));
 			i++;
