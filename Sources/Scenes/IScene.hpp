@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ICamera.hpp"
-#include "IManagerUis.hpp"
 #include "SceneStructure.hpp"
+#include "Uis/UiSelector.hpp"
 
 namespace fl
 {
@@ -13,17 +13,14 @@ namespace fl
 	{
 	private:
 		ICamera *m_camera;
-		IManagerUis *m_managerUis;
 		SceneStructure *m_structure;
 	public:
 		/// <summary>
 		/// Creates a new scene.
 		/// </summary>
-		/// <param name="camera"> The camera. </param>
-		/// <param name="managerUis"> The new uis manager. </param>
-		IScene(ICamera *camera, IManagerUis *managerUis) :
+		/// <param name="camera"> The scenes camera. </param>
+		IScene(ICamera *camera) :
 			m_camera(camera),
-			m_managerUis(managerUis),
 			m_structure(new SceneStructure())
 		{
 		}
@@ -34,7 +31,6 @@ namespace fl
 		virtual ~IScene()
 		{
 			delete m_camera;
-			delete m_managerUis;
 			delete m_structure;
 		}
 
@@ -58,21 +54,27 @@ namespace fl
 		void SetCamera(ICamera *camera) { m_camera = camera; }
 
 		/// <summary>
-		/// Gets the uis manager.
-		/// </summary>
-		/// <returns> The uis manager. </returns>
-		IManagerUis *GetUiManager() const { return m_managerUis; };
-
-		/// <summary>
-		/// Sets the current uis manager to a new uis manager.
-		/// </summary>
-		/// <param name="managerUis"> The new uis manager. </param>
-		void SetUiManager(IManagerUis *managerUis) { m_managerUis = managerUis; }
-
-		/// <summary>
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
 		SceneStructure *GetStructure() const { return m_structure; }
+
+		/// <summary>
+		/// Gets if the main menu is open.
+		/// </summary>
+		/// <returns> If the main menu is open. </returns>
+		virtual bool IsGamePaused() = 0;
+
+		/// <summary>
+		/// The primary colour to be used in UI elements.
+		/// </summary>
+		/// <returns> The primary colour. </returns>
+		virtual Colour *GetUiColour() const = 0;
+
+		/// <summary>
+		/// The UI selector for a joystick.
+		/// </summary>
+		/// <returns> The joystick selector. </returns>
+		virtual SelectorJoystick *GetSelectorJoystick() const = 0;
 	};
 }

@@ -20,7 +20,7 @@ namespace fl
 	};
 
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
-		IRenderer(),
+		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},

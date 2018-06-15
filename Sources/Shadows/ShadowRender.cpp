@@ -5,7 +5,7 @@
 namespace fl
 {
 	ShadowRender::ShadowRender() :
-		Component(),
+		IComponent(),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler())
 	{

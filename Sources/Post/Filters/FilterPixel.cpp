@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_pixelSize(2.0f)
 	{
@@ -13,7 +13,7 @@ namespace fl
 	{
 	}
 
-	void FilterPixel::Render(const CommandBuffer &commandBuffer)
+	void FilterPixel::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("pixelSize", m_pixelSize);

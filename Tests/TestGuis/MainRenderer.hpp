@@ -14,8 +14,8 @@ namespace test
 	private:
 		Vector4 m_infinity;
 
-		RendererGuis *m_rendererGuis;
-		RendererFonts *m_rendererFonts;
+		RendererGuis m_rendererGuis;
+		RendererFonts m_rendererFonts;
 	public:
 		MainRenderer();
 

@@ -8,7 +8,7 @@ namespace fl
 {
 	class GameObject;
 
-	class Component;
+	class IComponent;
 
 	class ICollider;
 

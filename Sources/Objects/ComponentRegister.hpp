@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "Component.hpp"
+#include "IComponent.hpp"
 
 namespace fl
 {
@@ -11,7 +11,7 @@ namespace fl
 	class FL_EXPORT ComponentRegister
 	{
 	private:
-		typedef std::function<std::shared_ptr<Component>()> ComponentCreate;
+		typedef std::function<std::shared_ptr<IComponent>()> ComponentCreate;
 
 		std::map<std::string, ComponentCreate> m_components;
 	public:
@@ -40,9 +40,9 @@ namespace fl
 				return;
 			}
 
-			m_components.emplace(name, ComponentCreate([]() -> std::shared_ptr<Component>
+			m_components.emplace(name, ComponentCreate([]() -> std::shared_ptr<IComponent>
 			{
-				return std::dynamic_pointer_cast<Component>(std::make_shared<T>());
+				return std::dynamic_pointer_cast<IComponent>(std::make_shared<T>());
 			}));
 		}
 
@@ -64,6 +64,6 @@ namespace fl
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		std::shared_ptr<Component> CreateComponent(const std::string &name);
+		std::shared_ptr<IComponent> CreateComponent(const std::string &name);
 	};
 }

@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Emboss.frag"}, graphicsStage, {})
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Emboss.frag"}, {})
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace fl
 	{
 	}
 
-	void FilterEmboss::Render(const CommandBuffer &commandBuffer)
+	void FilterEmboss::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.
 		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(2));

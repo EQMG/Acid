@@ -5,7 +5,7 @@
 namespace fl
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_sunPosition(Vector3()),
 		m_sunHeight(0.0f)
@@ -16,7 +16,7 @@ namespace fl
 	{
 	}
 
-	void FilterLensflare::Render(const CommandBuffer &commandBuffer)
+	void FilterLensflare::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("sunPosition", m_sunPosition);

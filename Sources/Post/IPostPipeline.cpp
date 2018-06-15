@@ -2,7 +2,8 @@
 
 namespace fl
 {
-	IPostPipeline::IPostPipeline()
+	IPostPipeline::IPostPipeline(const GraphicsStage &graphicsStage) :
+		IRenderer(graphicsStage)
 	{
 	}
 

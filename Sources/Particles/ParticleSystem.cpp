@@ -6,7 +6,7 @@
 namespace fl
 {
 	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
-		Component(),
+		IComponent(),
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),

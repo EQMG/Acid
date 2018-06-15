@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_spanMax(8.0f)
 	{
@@ -13,7 +13,7 @@ namespace fl
 	{
 	}
 
-	void FilterFxaa::Render(const CommandBuffer &commandBuffer)
+	void FilterFxaa::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("spanMax", m_spanMax);

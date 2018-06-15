@@ -7,7 +7,7 @@
 namespace fl
 {
 	Rigidbody::Rigidbody(const float &mass, const float &drag, const bool &useGravity, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
-		Component(),
+		IComponent(),
 		m_mass(mass),
 		m_drag(drag),
 		m_useGravity(useGravity),

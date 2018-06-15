@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, graphicsStage, {})
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {})
 	{
 	}
 
@@ -11,7 +11,7 @@ namespace fl
 	{
 	}
 
-	void FilterDefault::Render(const CommandBuffer &commandBuffer)
+	void FilterDefault::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.
 		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(2));

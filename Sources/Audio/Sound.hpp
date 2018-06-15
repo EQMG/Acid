@@ -22,9 +22,7 @@ namespace fl
 
 		~Sound();
 
-		void Play();
-
-		void Loop();
+		void Play(const bool &loop = false);
 
 		void Pause();
 

@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterBlurVertical::FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/BlurVertical.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/BlurVertical.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_scale(scale),
 		m_height(0.0f)
@@ -14,7 +14,7 @@ namespace fl
 	{
 	}
 
-	void FilterBlurVertical::Render(const CommandBuffer &commandBuffer)
+	void FilterBlurVertical::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_height = Display::Get()->GetHeight();
 

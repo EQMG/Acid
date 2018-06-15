@@ -19,7 +19,7 @@ namespace fl
 
 		~FilterTiltshift();
 
-		void Render(const CommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetBlurAmount() const { return m_blurAmount; }
 

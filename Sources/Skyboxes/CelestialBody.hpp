@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 
 namespace fl
@@ -12,7 +12,7 @@ namespace fl
 	};
 
 	class FL_EXPORT CelestialBody :
-		public Component
+		public IComponent
 	{
 	private:
 		CelestialType m_type;

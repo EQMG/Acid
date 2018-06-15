@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Maths/Vector3.hpp"
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "Spawns/ISpawnParticle.hpp"
 #include "Particle.hpp"
@@ -14,7 +14,7 @@ namespace fl
 	/// A system of particles that are to be spawned.
 	/// </summary>
 	class FL_EXPORT ParticleSystem :
-		public Component
+		public IComponent
 	{
 	private:
 		std::vector<std::shared_ptr<ParticleType>> m_types;

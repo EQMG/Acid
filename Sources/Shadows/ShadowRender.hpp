@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
@@ -11,7 +11,7 @@ namespace fl
 	/// Class used to render a GameObject as a shadow.
 	/// </summary>
 	class FL_EXPORT ShadowRender :
-		public Component
+		public IComponent
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;

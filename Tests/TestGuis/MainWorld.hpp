@@ -11,16 +11,6 @@ namespace test
 	{
 	private:
 		Noise m_noiseTerrain;
-
-		DriverLinear m_driverDay;
-		float m_factorDay;
-
-		Vector3 m_skyboxRotation;
-		Vector3 m_sunPosition;
-		Vector3 m_moonPosition;
-		Colour m_sunColour;
-		Colour m_moonColour;
-
 		Fog m_fog;
 		Colour m_skyColour;
 	public:
@@ -44,15 +34,15 @@ namespace test
 
 		Noise GetNoiseTerrain() const override { return m_noiseTerrain; }
 
-		Vector3 GetSkyboxRotation() const override { return m_skyboxRotation; }
+		Vector3 GetSkyboxRotation() const override { return Vector3::ZERO; }
 
-		Vector3 GetSunPosition() const override { return m_sunPosition; }
+		Vector3 GetSunPosition() const override { return Vector3::ZERO; }
 
-		Vector3 GetMoonPosition() const override { return m_moonPosition; }
+		Vector3 GetMoonPosition() const override { return Vector3::ZERO; }
 
-		Colour GetSunColour() const override { return m_sunColour; }
+		Colour GetSunColour() const override { return Colour::WHITE; }
 
-		Colour GetMoonColour() const override { return m_moonColour; }
+		Colour GetMoonColour() const override { return Colour::WHITE; }
 
 		Fog GetFog() const override { return m_fog; }
 

@@ -58,7 +58,7 @@ namespace fl
 		m_components.erase(component);
 	}
 
-	std::shared_ptr<Component> ComponentRegister::CreateComponent(const std::string &name)
+	std::shared_ptr<IComponent> ComponentRegister::CreateComponent(const std::string &name)
 	{
 		auto found = m_components.find(name);
 

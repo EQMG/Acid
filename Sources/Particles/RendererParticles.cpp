@@ -5,7 +5,7 @@
 namespace fl
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
-		IRenderer(),
+		IRenderer(graphicsStage),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {}))

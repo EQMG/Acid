@@ -11,16 +11,23 @@ namespace fl
 {
 	class GameObject;
 
-	class FL_EXPORT Component
+	class FL_EXPORT IComponent
 	{
 	private:
 		std::string m_name;
 		GameObject *m_gameObject;
 		bool m_enabled;
 	public:
-		Component();
+		IComponent() :
+			m_name(""),
+			m_gameObject(nullptr),
+			m_enabled(true)
+		{
+		}
 
-		virtual ~Component();
+		virtual ~IComponent()
+		{
+		}
 
 		virtual void Update() = 0;
 

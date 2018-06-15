@@ -5,7 +5,7 @@
 #include "Engine/Exports.hpp"
 #include "Scenes/ISpatialStructure.hpp"
 #include "Maths/Transform.hpp"
-#include "Component.hpp"
+#include "IComponent.hpp"
 
 namespace fl
 {
@@ -15,7 +15,7 @@ namespace fl
 	private:
 		std::string m_name;
 		Transform *m_transform;
-		std::vector<std::shared_ptr<Component>> m_components;
+		std::vector<std::shared_ptr<IComponent>> m_components;
 		ISpatialStructure *m_structure;
 		GameObject* m_parent;
 		bool m_removed;
@@ -28,7 +28,7 @@ namespace fl
 
 		virtual void Update();
 
-		std::vector<std::shared_ptr<Component>> GetComponents() const { return m_components; }
+		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
 
 		template<typename T>
 		std::shared_ptr<T> GetComponent()
@@ -46,7 +46,7 @@ namespace fl
 			return nullptr;
 		}
 
-		std::shared_ptr<Component> AddComponent(std::shared_ptr<Component> component);
+		std::shared_ptr<IComponent> AddComponent(std::shared_ptr<IComponent> component);
 
 		template<typename T, typename... Args>
 		std::shared_ptr<T> AddComponent(Args &&... args)
@@ -56,7 +56,7 @@ namespace fl
 			return created;
 		}
 
-		std::shared_ptr<Component> RemoveComponent(std::shared_ptr<Component> component);
+		std::shared_ptr<IComponent> RemoveComponent(std::shared_ptr<IComponent> component);
 
 		template<typename T>
 		std::shared_ptr<T> RemoveComponent()

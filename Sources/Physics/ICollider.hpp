@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Transform.hpp"
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "Frustum.hpp"
 #include "Intersect.hpp"
@@ -13,7 +13,7 @@ namespace fl
 	/// A simple class that represents a physical shape.
 	/// </summary>
 	class FL_EXPORT ICollider :
-		public Component
+		public IComponent
 	{
 	public:
 		/// <summary>

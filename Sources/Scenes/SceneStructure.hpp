@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "ISpatialStructure.hpp"
 #include "Objects/GameObject.hpp"
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Physics/Rigidbody.hpp"
 
 namespace fl

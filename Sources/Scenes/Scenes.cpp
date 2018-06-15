@@ -47,7 +47,6 @@ namespace fl
 		}
 
 		m_scene->GetCamera()->Update();
-		m_scene->GetUiManager()->Update();
 	}
 
 	void Scenes::SetScene(IScene *scene)

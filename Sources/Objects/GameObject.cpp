@@ -9,7 +9,7 @@ namespace fl
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
 		m_transform(new Transform(transform)),
-		m_components(std::vector<std::shared_ptr<Component>>()),
+		m_components(std::vector<std::shared_ptr<IComponent>>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
@@ -78,7 +78,7 @@ namespace fl
 		}
 	}
 
-	std::shared_ptr<Component> GameObject::AddComponent(std::shared_ptr<Component> component)
+	std::shared_ptr<IComponent> GameObject::AddComponent(std::shared_ptr<IComponent> component)
 	{
 		if (component == nullptr)
 		{
@@ -90,7 +90,7 @@ namespace fl
 		return component;
 	}
 
-	std::shared_ptr<Component> GameObject::RemoveComponent(std::shared_ptr<Component> component)
+	std::shared_ptr<IComponent> GameObject::RemoveComponent(std::shared_ptr<IComponent> component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{

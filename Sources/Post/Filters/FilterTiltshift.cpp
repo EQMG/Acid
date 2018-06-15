@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_blurAmount(1.0f),
 		m_centre(1.1f),
@@ -16,7 +16,7 @@ namespace fl
 	{
 	}
 
-	void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
+	void FilterTiltshift::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("blurAmount", m_blurAmount);

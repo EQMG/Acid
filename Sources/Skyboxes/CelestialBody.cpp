@@ -6,7 +6,7 @@
 namespace fl
 {
 	CelestialBody::CelestialBody(const CelestialType &type) :
-		Component(),
+		IComponent(),
 		m_type(type)
 	{
 	}

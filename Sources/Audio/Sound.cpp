@@ -34,17 +34,9 @@ namespace fl
 		Audio::ErrorAl(alGetError());
 	}
 
-	void Sound::Play()
+	void Sound::Play(const bool &loop)
 	{
-		alSourcei(m_source, AL_LOOPING, false);
-		alSourcePlay(m_source);
-		m_playing = true;
-		Audio::ErrorAl(alGetError());
-	}
-
-	void Sound::Loop()
-	{
-		alSourcei(m_source, AL_LOOPING, true);
+		alSourcei(m_source, AL_LOOPING, loop);
 		alSourcePlay(m_source);
 		m_playing = true;
 		Audio::ErrorAl(alGetError());
