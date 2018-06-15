@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <Helpers/FormatString.hpp>
+#include "Helpers/FormatString.hpp"
 #include "Texture.hpp"
 
 namespace fl

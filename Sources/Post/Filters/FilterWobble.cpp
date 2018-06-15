@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_wobbleSpeed(2.0f),
 		m_wobbleAmount(0.0f)
@@ -14,7 +14,7 @@ namespace fl
 	{
 	}
 
-	void FilterWobble::Render(const CommandBuffer &commandBuffer)
+	void FilterWobble::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender();
 

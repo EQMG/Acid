@@ -1,26 +1,24 @@
 set(TESTDEFERED_HEADERS_
         "Configs/ConfigManager.hpp"
-        "Scenes/Scene1.hpp"
-        "Scenes/FpsCamera.hpp"
-        "Scenes/FpsPlayer.hpp"
-        "Scenes/ManagerUis.hpp"
         "MainRenderer.hpp"
         "MainUpdater.hpp"
         "MainWorld.hpp"
-        "Uis/OverlayDebug.hpp"
+        "Scenes/FpsCamera.hpp"
+        "Scenes/FpsPlayer.hpp"
+        "Scenes/Scene1.hpp"
+        "Scenes/Uis/OverlayDebug.hpp"
         )
 
 set(TESTDEFERED_SOURCES_
         "Configs/ConfigManager.cpp"
-        "Scenes/Scene1.cpp"
-        "Scenes/FpsCamera.cpp"
-        "Scenes/FpsPlayer.cpp"
-        "Scenes/ManagerUis.cpp"
         "Main.cpp"
         "MainRenderer.cpp"
         "MainUpdater.cpp"
         "MainWorld.cpp"
-        "Uis/OverlayDebug.cpp"
+        "Scenes/FpsCamera.cpp"
+        "Scenes/FpsPlayer.cpp"
+        "Scenes/Scene1.cpp"
+        "Scenes/Uis/OverlayDebug.cpp"
         )
 
 source_group("Header Files" FILES ${TESTDEFERED_HEADERS_})

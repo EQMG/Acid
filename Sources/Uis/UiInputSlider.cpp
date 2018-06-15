@@ -86,7 +86,7 @@ namespace fl
 		}
 
 		// Update the background colour.
-		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
+		auto primary = Scenes::Get()->GetScene()->GetUiColour();
 		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 		m_slider->SetColourOffset(Colour(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f));
 

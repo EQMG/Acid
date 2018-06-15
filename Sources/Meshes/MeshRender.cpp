@@ -3,7 +3,7 @@
 namespace fl
 {
 	MeshRender::MeshRender() :
-		Component(),
+		IComponent(),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler())
 	{

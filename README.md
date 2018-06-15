@@ -34,7 +34,7 @@ jump.SetPosition(Vector3::ZERO);
 jump.Play();
 
 // Imports a game object.
-auto playerObject = new GameObject("Player", Transform());
+auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
 
 // Creates a game object.
 auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
@@ -68,6 +68,7 @@ This is a list of current features in Flounder:
  * Deferred PBR IBL rendering
  * Normal, material, glow, and sway maps
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
+ * Resource path searches, and packing
  * GUI / text rendering
  * Particle effects system
  * Skyboxes and fog

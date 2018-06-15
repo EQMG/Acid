@@ -3,7 +3,7 @@
 namespace fl
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
-		Component(),
+		IComponent(),
 		m_colour(Colour(colour)),
 		m_position(Vector3()),
 		m_offset(Vector3(offset)),
@@ -12,7 +12,7 @@ namespace fl
 	}
 
 	Light::Light(const Light &source) :
-		Component(),
+		IComponent(),
 		m_colour(Colour(source.m_colour)),
 		m_position(Vector3()),
 		m_offset(Vector3(source.m_offset)),

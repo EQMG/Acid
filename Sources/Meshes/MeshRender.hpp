@@ -6,7 +6,7 @@
 namespace fl
 {
 	class FL_EXPORT MeshRender :
-		public Component
+		public IComponent
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;

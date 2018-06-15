@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_strength(2.3f)
 	{
@@ -13,7 +13,7 @@ namespace fl
 	{
 	}
 
-	void FilterGrain::Render(const CommandBuffer &commandBuffer)
+	void FilterGrain::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("strength", m_strength);

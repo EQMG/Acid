@@ -2,14 +2,14 @@
 
 #include "Maths/Constraint3.hpp"
 #include "Maths/Vector3.hpp"
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "ICollider.hpp"
 
 namespace fl
 {
 	class FL_EXPORT Rigidbody :
-		public Component
+		public IComponent
 	{
 	private:
 		float m_mass;

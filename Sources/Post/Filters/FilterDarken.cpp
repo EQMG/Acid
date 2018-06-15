@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_factor(0.5f)
 	{
@@ -13,7 +13,7 @@ namespace fl
 	{
 	}
 
-	void FilterDarken::Render(const CommandBuffer &commandBuffer)
+	void FilterDarken::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("factor", m_factor);

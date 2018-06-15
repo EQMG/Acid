@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/IRenderer.hpp"
 
 namespace fl
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>
-	class FL_EXPORT IPostFilter
+	class FL_EXPORT IPostFilter :
+		public IRenderer
 	{
 	protected:
 		DescriptorsHandler m_descriptorSet;
@@ -19,20 +21,17 @@ namespace fl
 		/// <summary>
 		/// Creates a new post effect filter
 		/// </summary>
-		/// <param name="shaderStages"> The pipelines shader stages. </param>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
+		/// <param name="shaderStages"> The pipelines shader stages. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		IPostFilter(const std::vector<std::string> &shaderStages, const GraphicsStage &graphicsStage, const std::vector<PipelineDefine> &defines = {});
+		IPostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<PipelineDefine> &defines = {});
 
 		/// <summary>
 		/// Deconstructor for the post filter.
 		/// </summary>
 		virtual ~IPostFilter();
 
-		/// <summary>
-		/// Renders the filter.
-		/// </summary>
-		virtual void Render(const CommandBuffer &commandBuffer) = 0;
+		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override = 0;
 
 		DescriptorsHandler GetDescriptorSet() const { return m_descriptorSet; }
 

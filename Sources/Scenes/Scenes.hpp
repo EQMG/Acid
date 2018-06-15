@@ -58,7 +58,7 @@ namespace fl
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		std::shared_ptr<Component> CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
+		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
 
 		IScene *GetScene() const { return m_scene; }
 
@@ -71,16 +71,10 @@ namespace fl
 		ICamera *GetCamera() const { return m_scene->GetCamera(); }
 
 		/// <summary>
-		/// Gets the uis manager.
-		/// </summary>
-		/// <returns> The uis manager. </returns>
-		IManagerUis *GetUiManager() const { return m_scene->GetUiManager(); };
-
-		/// <summary>
 		/// Gets if the scene is paused.
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
-		bool IsGamePaused() { return m_scene->GetUiManager()->IsGamePaused(); }
+		bool IsGamePaused() { return m_scene->IsGamePaused(); }
 
 		/// <summary>
 		/// Gets the GameObjects structure.

@@ -22,9 +22,9 @@ namespace fl
 	{
 		m_objects.clear();
 
-		if (Scenes::Get()->GetUiManager() != nullptr && Scenes::Get()->GetUiManager()->GetSelectorJoystick() != nullptr)
+		if (Scenes::Get()->GetScene() != nullptr && Scenes::Get()->GetScene()->GetSelectorJoystick() != nullptr)
 		{
-			m_selector->Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetUiManager()->GetSelectorJoystick());
+			m_selector->Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetScene()->GetSelectorJoystick());
 		}
 
 		m_container->Update();

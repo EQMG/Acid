@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
@@ -12,7 +12,7 @@ namespace fl
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
 	class FL_EXPORT Light :
-		public Component
+		public IComponent
 	{
 	private:
 		Colour m_colour;

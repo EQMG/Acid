@@ -16,7 +16,7 @@ namespace fl
 
 		~FilterDarken();
 
-		void Render(const CommandBuffer &commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetFactor() const { return m_factor; }
 

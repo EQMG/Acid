@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "PipelineMaterial.hpp"
 
@@ -10,11 +10,11 @@ namespace fl
 	/// Class that represents a material shader.
 	/// </summary>
 	class FL_EXPORT IMaterial :
-		public Component
+		public IComponent
 	{
 	public:
 		IMaterial() :
-			Component()
+			IComponent()
 		{
 		}
 

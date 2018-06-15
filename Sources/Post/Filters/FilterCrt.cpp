@@ -3,7 +3,7 @@
 namespace fl
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
-		IPostFilter({"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, graphicsStage, {}),
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, {}),
 		m_uniformScene(UniformHandler()),
 		m_screenColour(Colour(0.5f, 1.0f, 0.5f)),
 		m_curveAmountX(0.1f),
@@ -17,7 +17,7 @@ namespace fl
 	{
 	}
 
-	void FilterCrt::Render(const CommandBuffer &commandBuffer)
+	void FilterCrt::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
 		m_uniformScene.Push("screenColour", m_screenColour);

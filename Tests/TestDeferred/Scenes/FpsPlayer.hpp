@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Objects/Behaviour.hpp>
+#include <Objects/IBehaviour.hpp>
 #include <Objects/GameObject.hpp>
 #include <Inputs/IAxis.hpp>
 #include <Inputs/IButton.hpp>
@@ -10,7 +10,7 @@ using namespace fl;
 namespace test
 {
 	class FpsPlayer :
-		public Behaviour
+		public IBehaviour
 	{
 	private:
 		Vector3 *m_velocity;

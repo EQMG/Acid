@@ -1,31 +1,40 @@
 #include "Scene1.hpp"
 
+#include <Animations/MaterialAnimated.hpp>
 #include <Animations/MeshAnimated.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
+#include <Maths/Visual/DriverConstant.hpp>
+#include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
 #include <Models/Shapes/ShapeSphere.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
-#include <Animations/MaterialAnimated.hpp>
-#include "ManagerUis.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
 namespace test
 {
+	static const float UI_SLIDE_TIME = 0.2f;
+
 	Scene1::Scene1() :
-		IScene(new FpsCamera(), new ManagerUis()),
+		IScene(new FpsCamera()),
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
-		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg"))
+		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg")),
+		m_primaryColour(new Colour("#e74c3c")),
+		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
+		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
+		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
+		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
+		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
 	}
 
 	Scene1::~Scene1()
@@ -34,6 +43,11 @@ namespace test
 		delete m_buttonCaptureMouse;
 		delete m_buttonScreenshot;
 		delete m_buttonExit;
+
+		delete m_primaryColour;
+		delete m_selectorJoystick;
+		delete m_uiStartLogo;
+		delete m_overlayDebug;
 	}
 
 	void Scene1::Start()
@@ -95,5 +109,18 @@ namespace test
 		{
 			Engine::Get()->RequestClose(false);
 		}
+
+		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
+		{
+			m_uiStartLogo->SetAlphaDriver(new DriverConstant(0.0f));
+			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, UI_SLIDE_TIME));
+			m_uiStartLogo->SetStarting(false);
+			Mouse::Get()->SetCursorHidden(true);
+		}
+	}
+
+	bool Scene1::IsGamePaused()
+	{
+		return m_uiStartLogo->IsStarting();
 	}
 }

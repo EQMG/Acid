@@ -2,13 +2,13 @@
 
 #include <string>
 #include <vector>
-#include "Objects/Component.hpp"
+#include "Objects/IComponent.hpp"
 #include "Models/Model.hpp"
 
 namespace fl
 {
 	class FL_EXPORT Mesh :
-		public Component
+		public IComponent
 	{
 	private:
 		std::shared_ptr<Model> m_model;

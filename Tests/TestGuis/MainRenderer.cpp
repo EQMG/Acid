@@ -19,15 +19,13 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE}),
 		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
-		m_rendererGuis(new RendererGuis({0, 0})),
-		m_rendererFonts(new RendererFonts({0, 0}))
+		m_rendererGuis(RendererGuis({0, 0})),
+		m_rendererFonts(RendererFonts({0, 0}))
 	{
 	}
 
 	MainRenderer::~MainRenderer()
 	{
-		delete m_rendererGuis;
-		delete m_rendererFonts;
 	}
 
 	void MainRenderer::Render()
@@ -44,8 +42,8 @@ namespace test
 		}
 
 		// Subpass 0.
-		m_rendererGuis->Render(*commandBuffer, m_infinity, *camera);
-		m_rendererFonts->Render(*commandBuffer, m_infinity, *camera);
+		m_rendererGuis.Render(*commandBuffer, m_infinity, *camera);
+		m_rendererFonts.Render(*commandBuffer, m_infinity, *camera);
 
 		// Ends Rendering.
 		Renderer::Get()->EndRenderpass(*commandBuffer, 0);

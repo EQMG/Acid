@@ -9,7 +9,7 @@
 namespace fl
 {
 	Mesh::Mesh(std::shared_ptr<Model> model) :
-		Component(),
+		IComponent(),
 		m_model(model)
 	{
 	}

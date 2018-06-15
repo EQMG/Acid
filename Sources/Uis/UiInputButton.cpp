@@ -39,7 +39,7 @@ namespace fl
 		}
 
 		// Update the background colour.
-		Colour *primary = Scenes::Get()->GetUiManager()->GetPrimaryColour();
+		auto primary = Scenes::Get()->GetScene()->GetUiColour();
 		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
 
 		// Update background size.
