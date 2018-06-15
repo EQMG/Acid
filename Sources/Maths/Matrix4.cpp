@@ -242,7 +242,7 @@ namespace fl
 
 	Matrix4 Matrix4::Rotate(const float &angle, const Vector3 &axis) const
 	{
-		Matrix4 result = Matrix4();
+		Matrix4 result = Matrix4(*this);
 
 		float c = std::cos(angle);
 		float s = std::sin(angle);
@@ -264,31 +264,18 @@ namespace fl
 		float f21 = yz * o - xs;
 		float f22 = axis.m_z * axis.m_z * o + c;
 
-		float t00 = m_00 * f00 + m_10 * f01 + m_20 * f02;
-		float t01 = m_01 * f00 + m_11 * f01 + m_21 * f02;
-		float t02 = m_02 * f00 + m_12 * f01 + m_22 * f02;
-		float t03 = m_03 * f00 + m_13 * f01 + m_23 * f02;
-		float t10 = m_00 * f10 + m_10 * f11 + m_20 * f12;
-		float t11 = m_01 * f10 + m_11 * f11 + m_21 * f12;
-		float t12 = m_02 * f10 + m_12 * f11 + m_22 * f12;
-		float t13 = m_03 * f10 + m_13 * f11 + m_23 * f12;
-		float t20 = m_00 * f20 + m_10 * f21 + m_20 * f22;
-		float t21 = m_01 * f20 + m_11 * f21 + m_21 * f22;
-		float t22 = m_02 * f20 + m_12 * f21 + m_22 * f22;
-		float t23 = m_03 * f20 + m_13 * f21 + m_23 * f22;
-
-		result.m_00 = t00;
-		result.m_01 = t01;
-		result.m_02 = t02;
-		result.m_03 = t03;
-		result.m_10 = t10;
-		result.m_11 = t11;
-		result.m_12 = t12;
-		result.m_13 = t13;
-		result.m_20 = t20;
-		result.m_21 = t21;
-		result.m_22 = t22;
-		result.m_23 = t23;
+		result.m_00 = m_00 * f00 + m_10 * f01 + m_20 * f02;
+		result.m_01 = m_01 * f00 + m_11 * f01 + m_21 * f02;
+		result.m_02 = m_02 * f00 + m_12 * f01 + m_22 * f02;
+		result.m_03 = m_03 * f00 + m_13 * f01 + m_23 * f02;
+		result.m_10 = m_00 * f10 + m_10 * f11 + m_20 * f12;
+		result.m_11 = m_01 * f10 + m_11 * f11 + m_21 * f12;
+		result.m_12 = m_02 * f10 + m_12 * f11 + m_22 * f12;
+		result.m_13 = m_03 * f10 + m_13 * f11 + m_23 * f12;
+		result.m_20 = m_00 * f20 + m_10 * f21 + m_20 * f22;
+		result.m_21 = m_01 * f20 + m_11 * f21 + m_21 * f22;
+		result.m_22 = m_02 * f20 + m_12 * f21 + m_22 * f22;
+		result.m_23 = m_03 * f20 + m_13 * f21 + m_23 * f22;
 		return result;
 	}
 
@@ -401,7 +388,7 @@ namespace fl
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale)
 	{
-		Matrix4 result = Matrix4().SetIdentity();
+		Matrix4 result = Matrix4();
 
 		if (translation.LengthSquared() != 0.0f)
 		{
@@ -415,7 +402,6 @@ namespace fl
 			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
 		}
 
-		// Only scales if there is a scale.
 		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
 		{
 			result = result.Scale(scale);
@@ -426,12 +412,12 @@ namespace fl
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector2 &translation, const float &scale)
 	{
-		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(scale, scale, scale));
+		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3::ZERO, Vector3(scale, scale, scale));
 	}
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector2 &translation, const Vector3 &scale)
 	{
-		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3(0.0f, 0.0f, 0.0f), scale);
+		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3::ZERO, scale);
 	}
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale)
@@ -441,7 +427,7 @@ namespace fl
 
 	Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar)
 	{
-		Matrix4 result = Matrix4().SetIdentity();
+		Matrix4 result = Matrix4();
 
 		float yScale = 1.0f / std::tan(Maths::Radians(fov / 2.0f));
 		float xScale = yScale / aspectRatio;
@@ -458,7 +444,7 @@ namespace fl
 
 	Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far)
 	{
-		Matrix4 result = Matrix4().SetIdentity();
+		Matrix4 result = Matrix4();
 
 		float ox = 2.0f / (right - left);
 		float oy = 2.0f / (top - bottom);
@@ -480,7 +466,7 @@ namespace fl
 
 	Matrix4 Matrix4::ViewMatrix(const Vector3 &position, const Vector3 &rotation)
 	{
-		Matrix4 result = Matrix4().SetIdentity();
+		Matrix4 result = Matrix4();
 
 		if (rotation != 0.0f)
 		{
