@@ -8,7 +8,7 @@ namespace test
 		// Inventory.
 		/*	UiObject *uiInventory = new UiObject(this, UiBound(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.5f), true, true, Vector2(1.0f, 1.0f)));
 	
-			Text *username = new Text(uiInventory, Vector3(0.05f, 0.8f, RelativeNone), 1.8f, Vector2(0.0f, 0.0f), "Testing", FontFamily::Resource("Fonts/ProximaNova", FAMILY_REGULAR), JustifyLeft, 1.0f, 0.003f);
+			Text *username = new Text(uiInventory, Vector3(0.05f, 0.8f, RelativeNone), 1.8f, Vector2(0.0f, 0.0f), "Testing", FontType::Resource("Fonts/ProximaNova", FAMILY_REGULAR), JustifyLeft, 1.0f, 0.003f);
 	
 			for (int i = 0; i < 6; i++)
 			{
