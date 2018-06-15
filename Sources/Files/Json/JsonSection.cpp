@@ -11,7 +11,7 @@ namespace fl
 
 	JsonSection::~JsonSection()
 	{
-		for (auto child : m_children)
+		for (auto &child : m_children)
 		{
 			delete child;
 		}
@@ -20,7 +20,7 @@ namespace fl
 	void JsonSection::AppendData(LoadedValue *loadedValue, std::string *data, const int &indentation, const bool &end)
 	{
 	//	printf("%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
-	//	for (auto child : *loadedValue->GetChildren())
+	//	for (auto &child : *loadedValue->GetChildren())
 	//	{
 	//		AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
 	//	}
@@ -54,7 +54,7 @@ namespace fl
 			*data += "\n";
 		}
 
-		for (auto child : *loadedValue->GetChildren())
+		for (auto &child : *loadedValue->GetChildren())
 		{
 			AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
 		}
@@ -90,7 +90,7 @@ namespace fl
 
 			auto contentSplit = FormatString::Split(source->m_content, ",", true);
 
-			for (auto data : contentSplit)
+			for (auto &data : contentSplit)
 			{
 				auto dataSplit = FormatString::Split(data, ":", true);
 
@@ -104,7 +104,7 @@ namespace fl
 			}
 		}
 
-		for (auto child : source->m_children)
+		for (auto &child : source->m_children)
 		{
 			Convert(child, thisValue, false);
 		}

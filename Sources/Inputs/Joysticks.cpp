@@ -24,7 +24,7 @@ namespace fl
 	void Joysticks::Update()
 	{
 		// For each joystick check if connected and update.
-		for (auto joystick : m_connected)
+		for (auto &joystick : m_connected)
 		{
 			if (glfwJoystickPresent(joystick.m_id))
 			{

@@ -32,7 +32,7 @@ namespace fl
 		{
 			std::vector<UbosParticles::UboObject> objects = {};
 
-			for (auto particle : *(*iter).second)
+			for (auto &particle : *(*iter).second)
 			{
 				UbosParticles::UboObject object = {};
 				object.transform = ModelMatrix(particle, camera.GetViewMatrix());

@@ -90,7 +90,7 @@ namespace fl
 	{
 		Joint *j = new Joint(data->GetIndex(), data->GetNameId(), data->GetBindLocalTransform());
 
-		for (auto child : data->GetChildren())
+		for (auto &child : data->GetChildren())
 		{
 			j->AddChild(CreateJoints(child));
 		}
@@ -105,7 +105,7 @@ namespace fl
 			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
 		}
 
-		for (auto childJoint : headJoint.GetChildren())
+		for (auto &childJoint : headJoint.GetChildren())
 		{
 			AddJointsToArray(*childJoint, jointMatrices);
 		}

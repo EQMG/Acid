@@ -12,7 +12,7 @@ namespace fl
 		m_timeStamp(data.GetTime()),
 		m_pose(std::map<std::string, JointTransform *>())
 	{
-		for (auto jointData : data.GetJointTransforms())
+		for (auto &jointData : data.GetJointTransforms())
 		{
 			m_pose.emplace(jointData->GetJointNameId(), new JointTransform(*jointData));
 		}
@@ -20,7 +20,7 @@ namespace fl
 
 	Keyframe::~Keyframe()
 	{
-		for (auto transform : m_pose)
+		for (auto &transform : m_pose)
 		{
 			delete transform.second;
 		}

@@ -25,7 +25,7 @@ namespace fl
 
 		float result = 0.0f;
 
-		for (auto axis : m_axes)
+		for (auto &axis : m_axes)
 		{
 			result += Joysticks::Get()->GetAxis(m_joystick, axis);
 		}

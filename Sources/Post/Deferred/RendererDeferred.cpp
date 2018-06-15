@@ -44,7 +44,7 @@ namespace fl
 
 		auto gameObjects = Scenes::Get()->GetStructure()->GetAll();
 
-		for (auto entity : gameObjects)
+		for (auto &entity : gameObjects)
 		{
 			auto light = entity->GetComponent<Light>();
 

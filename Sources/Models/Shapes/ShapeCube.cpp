@@ -40,7 +40,7 @@ namespace fl
 			5, 12, 13
 		};
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			vertex->SetPosition(vertex->GetPosition() * Vector3(width, height, depth));
 		}

@@ -20,7 +20,7 @@ namespace fl
 			return false;
 		}
 
-		for (auto button : m_buttons)
+		for (auto &button : m_buttons)
 		{
 			if (Mouse::Get()->GetButton(button))
 			{

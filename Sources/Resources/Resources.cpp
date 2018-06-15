@@ -31,7 +31,7 @@ namespace fl
 
 	std::shared_ptr<IResource> Resources::Get(const std::string &filename)
 	{
-		for (auto resource : m_resources)
+		for (auto &resource : m_resources)
 		{
 			if (resource != nullptr && resource->GetFilename() == filename)
 			{

@@ -28,7 +28,7 @@ namespace fl
 
 		delete m_managerRender;
 
-		for (auto renderStage : m_renderStages)
+		for (auto &renderStage : m_renderStages)
 		{
 			delete renderStage;
 		}

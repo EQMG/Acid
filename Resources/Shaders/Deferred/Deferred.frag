@@ -3,8 +3,6 @@
 
 #define PI 3.14159265f
 #define EPSILON 0.001f
-//#define EXPOSURE 4.5f
-//#define GAMMA 2.2f
 
 struct Light
 {
@@ -257,9 +255,9 @@ void main()
 			irradiance += radiance * L0(N, L, V, roughness, metallic, albedo);
 		}*/
 
-//#ifdef USE_IBL
-//        irradiance += ibl_irradiance(samplerEnvironment, samplerBrdflut, N, V, roughness, metallic, textureColour.rgb);
-//#endif
+#ifdef USE_IBL
+        irradiance += ibl_irradiance(samplerEnvironment, samplerBrdflut, N, V, roughness, metallic, textureColour.rgb);
+#endif
 
         outColour = vec4(irradiance, 1.0f);
 	}
@@ -282,13 +280,6 @@ void main()
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
-
-	// Tone mapping.
-//	outColour.rgb = Uncharted2Tonemap(outColour.rgb * EXPOSURE);
-//	outColour.rgb = outColour.rgb * (1.0f / Uncharted2Tonemap(vec3(11.2f)));
-
-	// Gamma correction.
-//	outColour.rgb = pow(outColour.rgb, vec3(1.0f / GAMMA));
 
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);

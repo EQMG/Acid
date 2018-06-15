@@ -29,7 +29,7 @@ namespace fl
 
 	UiObject::~UiObject()
 	{
-		//	for (auto child : *m_children)
+		//	for (auto &child : *m_children)
 		//	{
 		//		delete child;
 		//	}
@@ -67,7 +67,7 @@ namespace fl
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
 
-		for (auto child : *m_children)
+		for (auto &child : *m_children)
 		{
 			child->Update();
 		}
@@ -119,7 +119,7 @@ namespace fl
 		{
 			list->emplace_back(this);
 
-			for (auto child : *m_children)
+			for (auto &child : *m_children)
 			{
 				child->GetAll(list);
 			}

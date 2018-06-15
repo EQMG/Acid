@@ -42,7 +42,7 @@ namespace fl
 
 		*m_aabb = CalculateAabb(vertices);
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			delete vertex;
 		}
@@ -63,7 +63,7 @@ namespace fl
 
 		*m_aabb = CalculateAabb(vertices);
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			delete vertex;
 		}
@@ -82,7 +82,7 @@ namespace fl
 
 		*m_aabb = CalculateAabb(vertices);
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			delete vertex;
 		}
@@ -138,7 +138,7 @@ namespace fl
 
 		*m_aabb = CalculateAabb(vertices);
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			delete vertex;
 		}
@@ -168,7 +168,7 @@ namespace fl
 		auto uvsList = std::vector<Vector2>();
 		auto normalsList = std::vector<Vector3>();
 
-		for (auto line : lines)
+		for (auto &line : lines)
 		{
 			auto split = FormatString::Split(line, " ", true);
 
@@ -228,7 +228,7 @@ namespace fl
 		}
 
 		// Averages out vertex tangents, and disabled non set vertices,
-		for (auto current : verticesList)
+		for (auto &current : verticesList)
 		{
 			current->AverageTangents();
 
@@ -242,7 +242,7 @@ namespace fl
 		indices->swap(indicesList);
 
 		// Turns the loaded data into a format that can be used by OpenGL.
-		for (auto current : verticesList)
+		for (auto &current : verticesList)
 		{
 			Vector3 position = current->GetPosition();
 			Vector2 textures = uvsList[current->GetUvIndex()];
@@ -335,7 +335,7 @@ namespace fl
 		float maxY = -std::numeric_limits<float>::infinity();
 		float maxZ = -std::numeric_limits<float>::infinity();
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			const Vector3 position = vertex->GetPosition();
 

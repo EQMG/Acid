@@ -201,7 +201,7 @@ namespace fl
 				continue;
 			}
 
-			for (auto c : textLines.at(i))
+			for (auto &c : textLines.at(i))
 			{
 				int ascii = static_cast<int>(c);
 
@@ -263,7 +263,7 @@ namespace fl
 		double cursorY = 0.0;
 		int lineOrder = static_cast<int>(lines.size());
 
-		for (auto line : lines)
+		for (auto &line : lines)
 		{
 			switch (m_justify)
 			{
@@ -281,9 +281,9 @@ namespace fl
 				break;
 			}
 
-			for (auto word : line.GetWords())
+			for (auto &word : line.GetWords())
 			{
-				for (auto letter : word.GetCharacters())
+				for (auto &letter : word.GetCharacters())
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
 					cursorX += m_kerning + letter.GetAdvanceX();
@@ -340,7 +340,7 @@ namespace fl
 		float maxX = -INFINITY;
 		float maxY = -INFINITY;
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			const Vector3 position = vertex->GetPosition();
 
@@ -369,7 +369,7 @@ namespace fl
 		maxX -= minX;
 		maxY -= minY;
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			Vector3 position = Vector3((vertex->GetPosition().m_x - minX) / maxX, (vertex->GetPosition().m_y - minY) / maxY, 0.0f);
 			vertex->SetPosition(position);

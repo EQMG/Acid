@@ -19,7 +19,7 @@ namespace fl
 		AssembleVertices();
 		RemoveUnusedVertices();
 
-		for (auto current : m_positionsList)
+		for (auto &current : m_positionsList)
 		{
 			Vector3 position = current->GetPosition();
 			Vector2 textures = m_uvsList.at(current->GetUvIndex());
@@ -130,7 +130,7 @@ namespace fl
 		{
 			VertexAnimatedData *anotherVertex = nullptr;
 
-			for (auto position : m_positionsList)
+			for (auto &position : m_positionsList)
 			{
 				if (position == previousVertex->GetDuplicateVertex())
 				{
@@ -159,7 +159,7 @@ namespace fl
 
 	void GeometryLoader::RemoveUnusedVertices()
 	{
-		for (auto vertex : m_positionsList)
+		for (auto &vertex : m_positionsList)
 		{
 			vertex->AverageTangents();
 

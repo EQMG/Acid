@@ -35,7 +35,7 @@ namespace fl
 
 		auto thisVector = std::vector<VertexAnimated>();
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			thisVector.emplace_back(*((VertexAnimated *) vertex));
 		}

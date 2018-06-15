@@ -29,7 +29,7 @@ namespace fl
 			return;
 		}
 
-		for (auto child : *m_parent->GetChildren())
+		for (auto &child : *m_parent->GetChildren())
 		{
 			delete child;
 		}
@@ -109,7 +109,7 @@ namespace fl
 
 	void FileJson::Clear()
 	{
-		for (auto child : *m_parent->GetChildren())
+		for (auto &child : *m_parent->GetChildren())
 		{
 			delete child;
 		}
@@ -121,7 +121,7 @@ namespace fl
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (auto child : *m_parent->GetChildren())
+		for (auto &child : *m_parent->GetChildren())
 		{
 			if (child->GetValue().empty())
 			{

@@ -12,7 +12,7 @@ namespace fl
 
 	JointData::~JointData()
 	{
-		for (auto child : m_children)
+		for (auto &child : m_children)
 		{
 			delete child;
 		}

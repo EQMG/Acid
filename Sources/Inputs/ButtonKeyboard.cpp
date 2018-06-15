@@ -20,7 +20,7 @@ namespace fl
 			return false;
 		}
 
-		for (auto key : m_keys)
+		for (auto &key : m_keys)
 		{
 			if (Keyboard::Get()->GetKey(key))
 			{

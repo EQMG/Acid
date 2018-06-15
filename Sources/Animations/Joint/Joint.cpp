@@ -14,7 +14,7 @@ namespace fl
 
 	Joint::~Joint()
 	{
-		for (auto child : m_children)
+		for (auto &child : m_children)
 		{
 			delete child;
 		}
@@ -25,7 +25,7 @@ namespace fl
 		Matrix4 bindTransform = parentBindTransform * m_localBindTransform;
 		m_inverseBindTransform = bindTransform.Invert();
 
-		for (auto child : m_children)
+		for (auto &child : m_children)
 		{
 			child->CalculateInverseBindTransform(bindTransform);
 		}
@@ -40,7 +40,7 @@ namespace fl
 	{
 		children->emplace_back(this);
 
-		for (auto child : *children)
+		for (auto &child : *children)
 		{
 			child->AddSelfAndChildren(children);
 		}

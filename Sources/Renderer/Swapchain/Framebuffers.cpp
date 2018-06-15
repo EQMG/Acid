@@ -14,7 +14,7 @@ namespace fl
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
 		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
 
-		for (auto image : renderpassCreate.GetImages())
+		for (auto &image : renderpassCreate.GetImages())
 		{
 			switch (image.GetType())
 			{
@@ -36,7 +36,7 @@ namespace fl
 		{
 			std::vector<VkImageView> attachments = {};
 
-			for (auto image : renderpassCreate.GetImages())
+			for (auto &image : renderpassCreate.GetImages())
 			{
 				switch (image.GetType())
 				{
@@ -69,12 +69,12 @@ namespace fl
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		for (auto attachment : m_imageAttachments)
+		for (auto &attachment : m_imageAttachments)
 		{
 			delete attachment;
 		}
 
-		for (auto framebuffer : m_framebuffers)
+		for (auto &framebuffer : m_framebuffers)
 		{
 			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
 		}

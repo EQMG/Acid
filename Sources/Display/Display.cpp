@@ -475,11 +475,11 @@ namespace fl
 		// Sets up the layers.
 		if (m_validationLayers)
 		{
-			for (auto layerName : VALIDATION_LAYERS)
+			for (auto &layerName : VALIDATION_LAYERS)
 			{
 				bool layerFound = false;
 
-				for (auto layerProperties : instanceLayerProperties)
+				for (auto &layerProperties : instanceLayerProperties)
 				{
 					if (strcmp(layerName, layerProperties.layerName) == 0)
 					{
@@ -497,7 +497,7 @@ namespace fl
 			}
 		}
 
-		for (auto layerName : DEVICE_EXTENSIONS)
+		for (auto &layerName : DEVICE_EXTENSIONS)
 		{
 			m_deviceExtensionList.emplace_back(layerName);
 		}
@@ -602,7 +602,7 @@ namespace fl
 		std::multimap<int, VkPhysicalDevice> rankedDevices;
 
 		// Iterates through all devices and rate their suitability.
-		for (auto device : devices)
+		for (auto &device : devices)
 		{
 			VkPhysicalDeviceProperties deviceProperties;
 			vkGetPhysicalDeviceProperties(device, &deviceProperties);
@@ -635,7 +635,7 @@ namespace fl
 			bool extensionFound = false;
 
 			// Checks if the extension is in the available extensions.
-			for (auto extension : extensionProperties)
+			for (auto &extension : extensionProperties)
 			{
 				if (strcmp(currentExtension, extension.extensionName) == 0)
 				{
@@ -783,7 +783,7 @@ namespace fl
 #if FL_VERBOSE
 		printf("-- Avalable Layers For: '%s' --\n", type.c_str());
 
-		for (auto layer : layerProperties)
+		for (auto &layer : layerProperties)
 		{
 			if (showDescription)
 			{

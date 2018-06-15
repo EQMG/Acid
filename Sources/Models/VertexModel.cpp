@@ -31,7 +31,7 @@ namespace fl
 
 		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
 
-		for (auto vertex : vertices)
+		for (auto &vertex : vertices)
 		{
 			thisVector.emplace_back(*((VertexModel *) vertex));
 		}

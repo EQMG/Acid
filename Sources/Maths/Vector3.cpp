@@ -200,11 +200,11 @@ namespace fl
 		return Vector3(x, y, z);
 	}
 
-	Vector3 Vector3::ProjectCubeToSphere(const float &radius)
+	Vector3 Vector3::ProjectCubeToSphere(const float &radius) const
 	{
 		if (radius == 0.0f)
 		{
-			return Vector3(*this);
+			return *this;
 		}
 
 		Vector3 cube = *this / radius;

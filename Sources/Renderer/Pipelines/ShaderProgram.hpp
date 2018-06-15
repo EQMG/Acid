@@ -95,7 +95,7 @@ namespace fl
 
 		void AddUniform(Uniform *uniform)
 		{
-			for (auto u : *m_uniforms)
+			for (auto &u : *m_uniforms)
 			{
 				if (*u == *uniform)
 				{
@@ -108,7 +108,7 @@ namespace fl
 
 		Uniform *GetUniform(const std::string &uniformName)
 		{
-			for (auto uniform : *m_uniforms)
+			for (auto &uniform : *m_uniforms)
 			{
 				if (uniform->GetName() == uniformName)
 				{
@@ -179,12 +179,12 @@ namespace fl
 	{
 	private:
 		std::string m_name;
-		std::vector<Uniform *> *m_uniforms;
-		std::vector<UniformBlock *> *m_uniformBlocks;
-		std::vector<VertexAttribute *> *m_vertexAttributes;
+		std::vector<Uniform *> m_uniforms;
+		std::vector<UniformBlock *> m_uniformBlocks;
+		std::vector<VertexAttribute *> m_vertexAttributes;
 
-		std::vector<DescriptorType> *m_descriptors;
-		std::vector<VkVertexInputAttributeDescription> *m_attributeDescriptions;
+		std::vector<DescriptorType> m_descriptors;
+		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 
 		std::vector<std::string> m_notFoundNames;
 	public:
@@ -210,9 +210,11 @@ namespace fl
 
 		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
 
-		std::vector<DescriptorType> *GetDescriptors() const { return m_descriptors; }
+		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
 
-		std::vector<VkVertexInputAttributeDescription> *GetAttributeDescriptions() const { return m_attributeDescriptions; }
+		unsigned int GetLastDescriptorBinding() const;
+
+		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 

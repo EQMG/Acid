@@ -10,7 +10,7 @@ namespace fl
 
 	Events::~Events()
 	{
-		for (auto event : m_events)
+		for (auto &event : m_events)
 		{
 			delete event;
 		}
@@ -18,7 +18,7 @@ namespace fl
 
 	void Events::Update()
 	{
-		for (auto event : std::vector<IEvent *>(m_events)) // TODO: Remove copying.
+		for (auto &event : std::vector<IEvent *>(m_events)) // TODO: Remove copying.
 		{
 			if (!event->EventTriggered())
 			{

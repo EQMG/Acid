@@ -14,7 +14,7 @@ namespace fl
 	{
 		delete m_file;
 
-		for (auto pair : *m_values)
+		for (auto &pair : *m_values)
 		{
 			delete pair.second;
 		}
@@ -29,7 +29,7 @@ namespace fl
 		auto fileMap = m_file->ConfigReadValues();
 		m_values->clear();
 
-		for (auto fm : fileMap)
+		for (auto &fm : fileMap)
 		{
 			m_values->emplace(fm.first, new ConfigKey(fm.second, true));
 		}
@@ -37,7 +37,7 @@ namespace fl
 
 	void Config::Update()
 	{
-		//	for (auto value : *m_values)
+		//	for (auto &value : *m_values)
 		//	{
 		//		value.second.SetValue((*value.second.GetGetter())());
 		//	}
@@ -48,7 +48,7 @@ namespace fl
 		Update();
 		m_file->Clear();
 
-		for (auto value : *m_values)
+		for (auto &value : *m_values)
 		{
 			m_file->ConfigPushValue(value.first, value.second->GetValue());
 		}

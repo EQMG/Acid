@@ -25,7 +25,7 @@ namespace fl
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
-		for (auto format : TRY_FORMATS)
+		for (auto &format : TRY_FORMATS)
 		{
 			VkFormatProperties formatProperties = {};
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);

@@ -26,7 +26,7 @@ namespace fl
 	{
 		m_fileJson.Clear();
 
-		for (auto component : gameObject.GetComponents())
+		for (auto &component : gameObject.GetComponents())
 		{
 			component->Write(m_fileJson.GetParent()->GetChild(component->GetName(), true));
 		}
