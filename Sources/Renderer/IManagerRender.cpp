@@ -1,5 +1,6 @@
 #include "IManagerRender.hpp"
 
+#include "IRenderer.hpp"
 #include "Renderer.hpp"
 
 namespace fl
@@ -21,7 +22,7 @@ namespace fl
 			return nullptr;
 		}
 
-		float key = StageKey(renderer->GetGraphicsStage());
+		float key = GetStageKey(renderer->GetGraphicsStage());
 		auto renderers = m_stages.find(key);
 
 		if (renderers != m_stages.end())
@@ -59,54 +60,13 @@ namespace fl
 		return nullptr;
 	}
 
-	void IManagerRender::RenderPass(const uint32_t &pass, const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
-	{
-		// Starts Rendering.
-		auto startResult = Renderer::Get()->StartRenderpass(commandBuffer, pass);
-
-		if (!startResult)
-		{
-			return;
-		}
-
-		// Renders subpasses.
-		uint32_t subpassCount = Renderer::Get()->GetRenderStage(pass)->SubpassCount();
-
-		for (uint32_t i = 0; i < subpassCount; i++)
-		{
-			float key = StageKey(pass, i);
-			auto renderers = m_stages.find(key);
-
-			if (renderers != m_stages.end())
-			{
-				for (auto &renderer : (*renderers).second)
-				{
-					if (!renderer->IsEnabled())
-					{
-						continue;
-					}
-
-					renderer->Render(commandBuffer, clipPlane, camera);
-				}
-			}
-
-			if (i != subpassCount - 1)
-			{
-				Renderer::Get()->NextSubpass(commandBuffer);
-			}
-		}
-
-		// Ends Rendering.
-		Renderer::Get()->EndRenderpass(commandBuffer, pass);
-	}
-
-	float IManagerRender::StageKey(const unsigned int &renderpass, const uint32_t &subpass)
+	float IManagerRender::GetStageKey(const unsigned int &renderpass, const uint32_t &subpass)
 	{
 		return static_cast<float>(renderpass) + (static_cast<float>(subpass) / 100.0f);
 	}
 
-	float IManagerRender::StageKey(const GraphicsStage &graphicsStage)
+	float IManagerRender::GetStageKey(const GraphicsStage &graphicsStage)
 	{
-		return StageKey(graphicsStage.GetRenderpass(), graphicsStage.GetSubpass());
+		return GetStageKey(graphicsStage.GetRenderpass(), graphicsStage.GetSubpass());
 	}
 }

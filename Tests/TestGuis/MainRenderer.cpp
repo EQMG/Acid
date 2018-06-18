@@ -17,35 +17,17 @@ namespace test
 		};
 
 	MainRenderer::MainRenderer() :
-		IManagerRender({RENDERPASS_0_CREATE}),
-		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY)),
-		m_rendererGuis(RendererGuis({0, 0})),
-		m_rendererFonts(RendererFonts({0, 0}))
+		IManagerRender({RENDERPASS_0_CREATE})
 	{
+		AddRenderer<RendererGuis>(GraphicsStage(0, 0));
+		AddRenderer<RendererFonts>(GraphicsStage(0, 0));
 	}
 
 	MainRenderer::~MainRenderer()
 	{
 	}
 
-	void MainRenderer::Render()
+	void MainRenderer::Update()
 	{
-		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		auto camera = Scenes::Get()->GetCamera();
-
-		// Starts Rendering.
-		auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, 0);
-
-		if (!startResult)
-		{
-			return;
-		}
-
-		// Subpass 0.
-		m_rendererGuis.Render(*commandBuffer, m_infinity, *camera);
-		m_rendererFonts.Render(*commandBuffer, m_infinity, *camera);
-
-		// Ends Rendering.
-		Renderer::Get()->EndRenderpass(*commandBuffer, 0);
 	}
 }

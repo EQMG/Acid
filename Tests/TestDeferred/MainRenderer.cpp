@@ -34,8 +34,7 @@ namespace test
 		};
 
 	MainRenderer::MainRenderer() :
-		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE}),
-		m_infinity(Vector4(0.0f, 1.0f, 0.0f, +INFINITY))
+		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
 		AddRenderer<RendererShadows>(GraphicsStage(0, 0));
 		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
@@ -43,31 +42,23 @@ namespace test
 		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
 		AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
 		AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
-		AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
-		AddRenderer<FilterGrain>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 
 		GetRenderer<RendererShadows>()->SetEnabled(false);
 		GetRenderer<FilterLensflare>()->SetEnabled(false);
-		GetRenderer<FilterTiltshift>()->SetEnabled(false);
-		GetRenderer<FilterGrain>()->SetEnabled(false);
 	}
 
 	MainRenderer::~MainRenderer()
 	{
 	}
 
-	void MainRenderer::Render()
+	void MainRenderer::Update()
 	{
-		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		auto camera = Scenes::Get()->GetCamera();
-
 		RENDERPASS_0_CREATE->SetWidth(Shadows::Get()->GetShadowSize());
 		RENDERPASS_0_CREATE->SetHeight(Shadows::Get()->GetShadowSize());
-
-		RenderPass(0, *commandBuffer, m_infinity, *camera);
-		RenderPass(1, *commandBuffer, m_infinity, *camera);
 	}
 }

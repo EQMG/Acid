@@ -5,6 +5,7 @@
 #include "Maths/Vector4.hpp"
 #include "Buffers/CommandBuffer.hpp"
 #include "Pipelines/PipelineCreate.hpp"
+#include "Renderer.hpp"
 
 namespace fl
 {
