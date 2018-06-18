@@ -14,7 +14,7 @@ namespace fl
 	private:
 		ShaderProgram *m_shaderProgram;
 		DescriptorSet *m_descriptorSet;
-		std::vector<IDescriptor *> *m_descriptors;
+		std::vector<IDescriptor *> m_descriptors;
 		bool m_changed;
 	public:
 		DescriptorsHandler();

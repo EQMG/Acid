@@ -55,9 +55,16 @@ namespace fl
 		/// <summary>
 		/// Normalizes a angle into the range of 0-360.
 		/// </summary>
-		/// <param name="angle"> The source angle. </param>
+		/// <param name="degrees"> The source angle. </param>
 		/// <returns> The normalized angle. </returns>
-		static float NormalizeAngle(const float &angle);
+		static float NormalizeDegrees(const float &degrees);
+
+		/// <summary>
+		/// Normalizes a angle into the range of 0-2PI.
+		/// </summary>
+		/// <param name="radians"> The source angle. </param>
+		/// <returns> The normalized angle. </returns>
+		static float NormalizeRadians(const float &radians);
 
 		/// <summary>
 		/// Rounds a value to a amount of places after the decimal point.

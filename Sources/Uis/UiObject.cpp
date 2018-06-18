@@ -8,7 +8,7 @@ namespace fl
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
-		m_children(new std::vector<UiObject *>()),
+		m_children(std::vector<UiObject *>()),
 		m_visible(true),
 		m_rectangle(new UiBound(rectangle)),
 		m_scissor(new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
@@ -23,23 +23,21 @@ namespace fl
 	{
 		if (parent != nullptr)
 		{
-			parent->m_children->emplace_back(this);
+			parent->m_children.emplace_back(this);
 		}
 	}
 
 	UiObject::~UiObject()
 	{
-		//	for (auto &child : *m_children)
-		//	{
-		//		delete child;
-		//	}
+		for (auto &child : m_children)
+		{
+			delete child;
+		}
 
 		if (m_parent != nullptr)
 		{
 			m_parent->RemoveChild(this);
 		}
-
-		delete m_children;
 
 		delete m_scissor;
 		delete m_rectangle;
@@ -67,7 +65,7 @@ namespace fl
 			Uis::Get()->GetSelector()->CancelWasEvent();
 		}
 
-		for (auto &child : *m_children)
+		for (auto &child : m_children)
 		{
 			child->Update();
 		}
@@ -103,11 +101,11 @@ namespace fl
 
 	void UiObject::RemoveChild(UiObject *child)
 	{
-		for (auto it = m_children->begin(); it != m_children->end(); ++it)
+		for (auto it = m_children.begin(); it != m_children.end(); ++it)
 		{
 			if (*it == child)
 			{
-				m_children->erase(it);
+				m_children.erase(it);
 				return;
 			}
 		}
@@ -119,7 +117,7 @@ namespace fl
 		{
 			list->emplace_back(this);
 
-			for (auto &child : *m_children)
+			for (auto &child : m_children)
 			{
 				child->GetAll(list);
 			}
@@ -131,7 +129,7 @@ namespace fl
 	void UiObject::SetParent(UiObject *parent)
 	{
 		m_parent->RemoveChild(this);
-		parent->m_children->emplace_back(this);
+		parent->m_children.emplace_back(this);
 		m_parent = parent;
 	}
 

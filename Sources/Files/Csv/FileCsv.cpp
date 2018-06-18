@@ -10,13 +10,12 @@ namespace fl
 		IFile(),
 		m_filename(filename),
 		m_delimiter(delimiter),
-		m_rows(new std::vector<RowCsv>())
+		m_rows(std::vector<RowCsv>())
 	{
 	}
 
 	FileCsv::~FileCsv()
 	{
-		delete m_rows;
 	}
 
 	void FileCsv::Load()
@@ -37,7 +36,7 @@ namespace fl
 		for (auto &line : lines)
 		{
 			RowCsv row = RowCsv(FormatString::Split(line, std::string(1, m_delimiter), true));
-			m_rows->emplace_back(row);
+			m_rows.emplace_back(row);
 		}
 
 #if FL_VERBOSE
@@ -50,7 +49,7 @@ namespace fl
 	{
 		std::string data = "";
 
-		for (auto &row : *m_rows)
+		for (auto &row : m_rows)
 		{
 			for (auto &element : row.GetElements())
 			{
@@ -68,16 +67,16 @@ namespace fl
 
 	void FileCsv::Clear()
 	{
-		m_rows->clear();
+		m_rows.clear();
 	}
 
 	std::map<std::string, std::string> FileCsv::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (unsigned int i = 0; i < m_rows->size(); i++)
+		for (unsigned int i = 0; i < m_rows.size(); i++)
 		{
-			RowCsv row = m_rows->at(i);
+			RowCsv row = m_rows.at(i);
 			result.emplace(row.GetElements().at(0), row.GetElements().at(1));
 		}
 
@@ -86,30 +85,30 @@ namespace fl
 
 	void FileCsv::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		m_rows->emplace_back(RowCsv({key, value}));
+		m_rows.emplace_back(RowCsv({key, value}));
 	}
 
 	RowCsv FileCsv::GetRow(const unsigned int &index)
 	{
-		return m_rows->at(index);
+		return m_rows.at(index);
 	}
 
 	void FileCsv::PushRow(const RowCsv &row)
 	{
-		m_rows->emplace_back(row);
+		m_rows.emplace_back(row);
 	}
 
 	void FileCsv::SetRow(const RowCsv &row, const unsigned int &index)
 	{
-		if (m_rows->size() <= index)
+		if (m_rows.size() <= index)
 		{
-			for (size_t i = m_rows->size(); i <= index; i++)
+			for (size_t i = m_rows.size(); i <= index; i++)
 			{
-				m_rows->emplace_back(RowCsv({}));
+				m_rows.emplace_back(RowCsv({}));
 			}
 		}
 
-		m_rows->at(index).SetElements(row.GetElements());
+		m_rows.at(index).SetElements(row.GetElements());
 	}
 
 	void FileCsv::Verify()

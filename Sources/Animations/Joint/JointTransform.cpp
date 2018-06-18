@@ -26,10 +26,9 @@ namespace fl
 
 	Matrix4 JointTransform::GetLocalTransform()
 	{
-		Matrix4 rotationMatrix = m_rotation.ToRotationMatrix();
 		Matrix4 matrix = Matrix4();
 		matrix = matrix.Translate(m_position);
-		matrix *= rotationMatrix;
+		matrix *= m_rotation.ToRotationMatrix();
 		return matrix;
 	}
 

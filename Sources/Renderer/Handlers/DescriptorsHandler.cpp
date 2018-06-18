@@ -7,7 +7,7 @@ namespace fl
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shaderProgram(nullptr),
 		m_descriptorSet(nullptr),
-		m_descriptors(new std::vector<IDescriptor *>()),
+		m_descriptors(std::vector<IDescriptor *>()),
 		m_changed(false)
 	{
 	}
@@ -15,7 +15,6 @@ namespace fl
 	DescriptorsHandler::~DescriptorsHandler()
 	{
 		delete m_descriptorSet;
-		delete m_descriptors;
 	}
 
 	void DescriptorsHandler::Push(const std::string &descriptorName, IDescriptor *descriptor)
@@ -39,9 +38,9 @@ namespace fl
 			return;
 		}
 
-		if (m_descriptors->at(location) != descriptor)
+		if (m_descriptors.at(location) != descriptor)
 		{
-			m_descriptors->at(location) = descriptor;
+			m_descriptors.at(location) = descriptor;
 			m_changed = true;
 		}
 	}
@@ -61,11 +60,11 @@ namespace fl
 	{
 		if (m_shaderProgram != pipeline.GetShaderProgram())
 		{
-			m_descriptors->clear();
+			m_descriptors.clear();
 			delete m_descriptorSet;
 
 			m_shaderProgram = pipeline.GetShaderProgram();
-			m_descriptors->resize(pipeline.GetShaderProgram()->GetLastDescriptorBinding() + 1);
+			m_descriptors.resize(pipeline.GetShaderProgram()->GetLastDescriptorBinding() + 1);
 			m_descriptorSet = new DescriptorSet(pipeline);
 			m_changed = false;
 			return false;
@@ -73,7 +72,7 @@ namespace fl
 
 		if (m_changed)
 		{
-			m_descriptorSet->Update(*m_descriptors);
+			m_descriptorSet->Update(m_descriptors);
 			m_changed = false;
 		}
 

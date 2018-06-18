@@ -40,7 +40,8 @@ namespace fl
 		{
 			m_jointMatrices.clear();
 			m_jointMatrices.resize(MAX_JOINTS);
-			AddJointsToArray(*m_headJoint, &m_jointMatrices);
+			AddJointsToArray(*m_headJoint, m_jointMatrices);
+		//	m_jointMatrices.shrink_to_fit();
 		}
 	}
 
@@ -98,11 +99,11 @@ namespace fl
 		return j;
 	}
 
-	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> *jointMatrices)
+	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices)
 	{
-		if (headJoint.GetIndex() < jointMatrices->size())
+		if (headJoint.GetIndex() < jointMatrices.size())
 		{
-			jointMatrices->at(headJoint.GetIndex()) = headJoint.GetAnimatedTransform();
+			jointMatrices[headJoint.GetIndex()] = headJoint.GetAnimatedTransform();
 		}
 
 		for (auto &childJoint : headJoint.GetChildren())

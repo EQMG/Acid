@@ -28,7 +28,7 @@ namespace fl
 	private:
 		std::string m_filename;
 		char m_delimiter;
-		std::vector<RowCsv> *m_rows;
+		std::vector<RowCsv> m_rows;
 	public:
 		FileCsv(const std::string &filename, const char &delimiter = ',');
 
@@ -44,7 +44,7 @@ namespace fl
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
-		size_t GetRowCount() const { return m_rows->size(); }
+		size_t GetRowCount() const { return m_rows.size(); }
 
 		RowCsv GetRow(const unsigned int &index);
 
