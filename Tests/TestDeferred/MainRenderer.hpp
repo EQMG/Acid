@@ -22,30 +22,11 @@ namespace test
 	{
 	private:
 		Vector4 m_infinity;
-
-		RendererShadows m_rendererShadows;
-
-		RendererMeshes m_rendererMeshes;
-		//	RendererParticles m_rendererParticles;
-
-		RendererDeferred m_rendererDeferred;
-		FilterFxaa m_filterFxaa;
-		FilterLensflare m_filterLensflare;
-		FilterTiltshift m_filterTiltshift;
-		FilterGrain m_filterGrain;
-		PipelineGaussian m_pipelineGaussian;
-		RendererGuis m_rendererGuis;
-		RendererFonts m_rendererFonts;
 	public:
 		MainRenderer();
 
 		~MainRenderer();
 
 		void Render() override;
-
-	private:
-		void RenderPass0();
-
-		void RenderPass1();
 	};
 }

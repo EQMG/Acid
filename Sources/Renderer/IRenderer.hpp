@@ -14,16 +14,16 @@ namespace fl
 	class FL_EXPORT IRenderer
 	{
 	private:
-		bool m_enabled;
 		GraphicsStage m_graphicsStage;
+		bool m_enabled;
 	public:
 		/// <summary>
 		/// Creates a new renderer.
 		/// </summary>
 		/// <param name="graphicsStage"> The graphics stage this renderer will be used in. </param>
 		IRenderer(const GraphicsStage &graphicsStage) :
-			m_enabled(true),
-			m_graphicsStage(graphicsStage)
+			m_graphicsStage(graphicsStage),
+			m_enabled(true)
 		{
 		}
 
@@ -41,10 +41,10 @@ namespace fl
 		/// <param name="camera"> The camera to be used when rendering. </param>
 		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
 
+		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+
 		bool IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
-
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 	};
 }
