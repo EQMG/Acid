@@ -40,8 +40,6 @@ namespace fl
 
 		virtual float GetShadowFactor() const = 0;
 
-		virtual float GetSunHeight() const = 0;
-
 		virtual float GetStarIntensity() const = 0;
 
 		virtual float GetTerrainRadius(const float &radius, const float &theta, const float &phi) = 0;

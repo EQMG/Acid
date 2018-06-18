@@ -11,16 +11,11 @@ namespace test
 	class MainRenderer :
 		public IManagerRender
 	{
-	private:
-		Vector4 m_infinity;
-
-		RendererGuis m_rendererGuis;
-		RendererFonts m_rendererFonts;
 	public:
 		MainRenderer();
 
 		~MainRenderer();
 
-		void Render() override;
+		void Update() override;
 	};
 }
