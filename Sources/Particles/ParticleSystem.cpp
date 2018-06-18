@@ -88,11 +88,11 @@ namespace fl
 		}
 
 		velocity = velocity.Normalize();
-		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::RandomInRange(1.0f - m_speedError, 1.0f + m_speedError));
+		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedError, 1.0f + m_speedError));
 
-		auto emitType = m_types.at(static_cast<unsigned int>(std::floor(Maths::RandomInRange(0, static_cast<int>(m_types.size())))));
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::RandomInRange(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::RandomInRange(1.0f - m_lifeError, 1.0f + m_lifeError));
+		auto emitType = m_types.at(static_cast<unsigned int>(std::floor(Maths::Random(0, static_cast<int>(m_types.size())))));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleError, 1.0f + m_scaleError));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();
 		spawnPos = GetGameObject()->GetTransform()->GetPosition() + m_systemOffset;
 		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
@@ -101,14 +101,14 @@ namespace fl
 
 	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
 	{
-		return average + ((Maths::RandomInRange(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
+		return average + ((Maths::Random(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
 	}
 
 	float ParticleSystem::GenerateRotation() const
 	{
 		if (m_randomRotation)
 		{
-			return Maths::RandomInRange(0.0f, 360.0f);
+			return Maths::Random(0.0f, 360.0f);
 		}
 
 		return 0.0f;
@@ -116,8 +116,8 @@ namespace fl
 
 	Vector3 ParticleSystem::GenerateRandomUnitVector() const
 	{
-		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
 		float y = rootOneMinusZSquared * std::sin(theta);

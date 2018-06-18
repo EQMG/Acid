@@ -5,42 +5,44 @@
 
 namespace fl
 {
-	float Maths::Random()
+	float Maths::Random(const float &min, const float &max)
 	{
 		std::mt19937_64 rng;
 		uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		std::seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed>>32)};
 		rng.seed(ss);
 
+		float range = max - min;
 		std::uniform_real_distribution<double> unif(0, 1);
-		return static_cast<float>(unif(rng));
+		float scaled = static_cast<float>(unif(rng));
+		scaled *= range;
+		return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
 	}
 
-	float Maths::LogRandom(const float &lowerLimit, const float &upperLimit)
+	float Maths::LogRandom(const float &min, const float &max)
 	{
-		float logLower = std::log(lowerLimit);
-		float logUpper = std::log(upperLimit);
-		float raw = RandomInRange(0.0f, 1.0f);
+		float logLower = std::log(min);
+		float logUpper = std::log(max);
+		float raw = Random(0.0f, 1.0f);
 
 		float result = std::exp(raw * (logUpper - logLower) + logLower);
 
-		if (result < lowerLimit)
+		if (result < min)
 		{
-			result = lowerLimit;
+			result = min;
 		}
-		else if (result > upperLimit)
+		else if (result > max)
 		{
-			result = upperLimit;
+			result = max;
 		}
 
 		return result;
 	}
 
-	float Maths::NormallyDistributedSingle(const float &standardDeviation, const float &mean)
+	float Maths::RandomNormallyDistributed(const float &standardDeviation, const float &mean)
 	{
-		// Intentionally duplicated to avoid IEnumerable overhead.
-		float u1 = RandomInRange(0.0f, 1.0f);
-		float u2 = RandomInRange(0.0f, 1.0f);
+		float u1 = Random(0.0f, 1.0f);
+		float u2 = Random(0.0f, 1.0f);
 
 		float x1 = std::sqrt(-2.0f * std::log(u1));
 		float x2 = 2.0f * PI * u2;
@@ -123,7 +125,7 @@ namespace fl
 		return (a * (1.0f - blend)) + (b * blend);
 	}
 
-	float Maths::CosInterpolate(const float &a, const float &b, const float &blend)
+	float Maths::InterpolateCosine(const float &a, const float &b, const float &blend)
 	{
 		float ft = blend * PI;
 		float f = 1.0f - std::cos(ft) * 0.5f;
@@ -134,13 +136,5 @@ namespace fl
 	{
 		float s = Clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
 		return s * s * (3.0f - 2.0f * s);
-	}
-
-	float Maths::RandomInRange(const float &min, const float &max)
-	{
-		float range = max - min;
-		float scaled = Random();
-		scaled *= range;
-		return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
 	}
 }

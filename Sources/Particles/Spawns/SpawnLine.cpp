@@ -20,7 +20,7 @@ namespace fl
 	{
 		m_spawnPosition = m_axis;
 		m_spawnPosition *= m_length;
-		m_spawnPosition *= Maths::RandomInRange(-0.5f, 0.5f);
+		m_spawnPosition *= Maths::Random(-0.5f, 0.5f);
 		return m_spawnPosition;
 	}
 }

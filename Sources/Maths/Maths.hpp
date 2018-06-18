@@ -16,18 +16,20 @@ namespace fl
 	{
 	public:
 		/// <summary>
-		/// Gets a random number between 0.0 and 1.0.
+		/// Generates a random value from between a range.
 		/// </summary>
-		/// <returns> The random number. </returns>
-		static float Random();
+		/// <param name="min"> The min value. </param>
+		/// <param name="max"> The max value. </param>
+		/// <returns> The randomly selected value within the range. </returns>
+		static float Random(const float &min = 0.0f, const float &max = 1.0f);
 
 		/// <summary>
 		/// Creates a number between two numbers, logarithmic.
 		/// </summary>
-		/// <param name="lowerLimit"> The lower number. </param>
-		/// <param name="upperLimit"> The upper number. </param>
+		/// <param name="min"> The min value. </param>
+		/// <param name="max"> The max value. </param>
 		/// <returns> The final random number. </returns>
-		static float LogRandom(const float &lowerLimit, const float &upperLimit);
+		static float LogRandom(const float &min, const float &max);
 
 		/// <summary>
 		/// Generates a single value from a normal distribution, using Box-Muller.
@@ -36,7 +38,7 @@ namespace fl
 		/// <param name="standardDeviation"> The standards deviation of the distribution. </param>
 		/// <param name="mean"> The mean of the distribution. </param>
 		/// <returns> A normally distributed value. </returns>
-		static float NormallyDistributedSingle(const float &standardDeviation, const float &mean);
+		static float RandomNormallyDistributed(const float &standardDeviation, const float &mean);
 
 		/// <summary>
 		/// Converts degrees to radians.
@@ -127,13 +129,13 @@ namespace fl
 		static float Interpolate(const float &a, const float &b, const float &blend);
 
 		/// <summary>
-		/// Interpolates two values by a blendFactor using cos interpolation.
+		/// Interpolates two values by a blendFactor using cosine interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>
 		/// <param name="blend"> The blend value. </param>
 		/// <returns> Returns a interpolated value. </returns>
-		static float CosInterpolate(const float &a, const float &b, const float &blend);
+		static float InterpolateCosine(const float &a, const float &b, const float &blend);
 
 		/// <summary>
 		/// A calculation that steps smoothly between two edges.
@@ -143,13 +145,5 @@ namespace fl
 		/// <param name="x"> The sample. </param>
 		/// <returns> The resulting stepped value. </returns>
 		static float SmoothlyStep(const float &edge0, const float &edge1, const float &x);
-
-		/// <summary>
-		/// Generates a random value from between a range.
-		/// </summary>
-		/// <param name="min"> The min value. </param>
-		/// <param name="max"> The max value. </param>
-		/// <returns> The randomly selected value within the range. </returns>
-		static float RandomInRange(const float &min, const float &max);
 	};
 }
