@@ -1,6 +1,5 @@
 ﻿#include "CelestialBody.hpp"
 
-#include "Renderer/Renderer.hpp"
 #include "Post/Filters/FilterLensflare.hpp"
 #include "Worlds/Worlds.hpp"
 #include "Lights/Light.hpp"

@@ -105,11 +105,6 @@ namespace test
 		return Maths::Clamp(1.7f * std::sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
 	}
 
-	float MainWorld::GetSunHeight() const
-	{
-		return m_sunPosition.m_y;
-	}
-
 	float MainWorld::GetStarIntensity() const
 	{
 		return Maths::Clamp(1.0f - GetShadowFactor(), 0.0f, 1.0f);

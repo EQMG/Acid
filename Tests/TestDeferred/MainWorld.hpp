@@ -36,8 +36,6 @@ namespace test
 
 		float GetShadowFactor() const override;
 
-		float GetSunHeight() const override;
-
 		float GetStarIntensity() const override;
 
 		float GetTerrainRadius(const float &radius, const float &theta, const float &phi) override;

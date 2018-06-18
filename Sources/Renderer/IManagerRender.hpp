@@ -2,11 +2,13 @@
 
 #include <map>
 #include <memory>
+#include "Pipelines/PipelineCreate.hpp"
 #include "Renderpass/RenderpassCreate.hpp"
-#include "IRenderer.hpp"
 
 namespace fl
 {
+	class IRenderer;
+
 	/// <summary>
 	/// A extension used with IRenderer's to define a master renderer.
 	/// </summary>
@@ -28,7 +30,7 @@ namespace fl
 		/// <summary>
 		/// Run when rendering the master renderer.
 		/// </summary>
-		virtual void Render() = 0;
+		virtual void Update() = 0;
 
 		std::map<float, std::vector<std::shared_ptr<IRenderer>>> GetStages() const { return m_stages; }
 
@@ -83,12 +85,8 @@ namespace fl
 			return nullptr;
 		}
 
-	protected:
-		void RenderPass(const uint32_t &pass, const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera);
+		float GetStageKey(const unsigned int &renderpass, const uint32_t &subpass);
 
-	private:
-		float StageKey(const unsigned int &renderpass, const uint32_t &subpass);
-
-		float StageKey(const GraphicsStage &graphicsStage);
+		float GetStageKey(const GraphicsStage &graphicsStage);
 	};
 }
