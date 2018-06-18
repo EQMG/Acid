@@ -35,11 +35,6 @@ namespace test
 		return 0.0f;
 	}
 
-	float MainWorld::GetSunHeight() const
-	{
-		return 0.0f;
-	}
-
 	float MainWorld::GetStarIntensity() const
 	{
 		return 0.0f;

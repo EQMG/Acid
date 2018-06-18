@@ -20,13 +20,11 @@ namespace test
 	class MainRenderer :
 		public IManagerRender
 	{
-	private:
-		Vector4 m_infinity;
 	public:
 		MainRenderer();
 
 		~MainRenderer();
 
-		void Render() override;
+		void Update() override;
 	};
 }

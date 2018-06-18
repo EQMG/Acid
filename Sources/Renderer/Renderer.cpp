@@ -1,5 +1,8 @@
 #include "Renderer.hpp"
 
+#include "Scenes/Scenes.hpp"
+#include "IRenderer.hpp"
+
 namespace fl
 {
 	Renderer::Renderer() :
@@ -50,7 +53,53 @@ namespace fl
 			return;
 		}
 
-		m_managerRender->Render();
+		m_managerRender->Update();
+
+		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+		auto camera = Scenes::Get()->GetCamera();
+		auto stages = m_managerRender->GetStages();
+		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +INFINITY);
+
+		for (uint32_t stage = 0; stage < m_renderStages.size(); stage++)
+		{
+			// Starts Rendering.
+			auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, stage);
+
+			if (!startResult)
+			{
+				return;
+			}
+
+			// Renders subpasses.
+			uint32_t subpassCount = Renderer::Get()->GetRenderStage(stage)->SubpassCount();
+
+			for (uint32_t subpass = 0; subpass < subpassCount; subpass++)
+			{
+				float key = m_managerRender->GetStageKey(stage, subpass);
+				auto renderers = stages.find(key);
+
+				if (renderers != stages.end())
+				{
+					for (auto &renderer : (*renderers).second)
+					{
+						if (!renderer->IsEnabled())
+						{
+							continue;
+						}
+
+						renderer->Render(*commandBuffer, clipPlane, *camera);
+					}
+				}
+
+				if (subpass != subpassCount - 1)
+				{
+					Renderer::Get()->NextSubpass(*commandBuffer);
+				}
+			}
+
+			// Ends Rendering.
+			Renderer::Get()->EndRenderpass(*commandBuffer, stage);
+		}
 	}
 
 	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
