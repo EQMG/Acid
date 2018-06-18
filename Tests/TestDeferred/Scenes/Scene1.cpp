@@ -74,7 +74,7 @@ namespace test
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(90.0f, 0.0f, 0.0f), 3.0f));
+				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));

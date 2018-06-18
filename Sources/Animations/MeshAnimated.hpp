@@ -52,6 +52,6 @@ namespace fl
 	private:
 		Joint *CreateJoints(JointData *data);
 
-		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> *jointMatrices);
+		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 	};
 }

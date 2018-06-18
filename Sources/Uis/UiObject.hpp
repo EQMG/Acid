@@ -19,7 +19,7 @@ namespace fl
 	{
 	private:
 		UiObject *m_parent;
-		std::vector<UiObject *> *m_children;
+		std::vector<UiObject *> m_children;
 
 		bool m_visible;
 		UiBound *m_rectangle;
@@ -85,7 +85,7 @@ namespace fl
 		/// <param name="parent"> The new parent object. </param>
 		void SetParent(UiObject *parent);
 
-		std::vector<UiObject *> *GetChildren() const { return m_children; }
+		std::vector<UiObject *> GetChildren() const { return m_children; }
 
 		bool IsVisible() const;
 

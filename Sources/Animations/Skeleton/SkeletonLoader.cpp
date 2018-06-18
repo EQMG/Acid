@@ -4,7 +4,6 @@
 
 namespace fl
 {
-
 	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),

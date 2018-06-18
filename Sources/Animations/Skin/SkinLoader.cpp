@@ -66,7 +66,7 @@ namespace fl
 		auto rawData = FormatString::Split(weightsDataNode->GetChild("v")->GetString(), " ");
 		int pointer = 0;
 
-		for (int count : counts)
+		for (auto count : counts)
 		{
 			auto skinData = new VertexSkinData();
 

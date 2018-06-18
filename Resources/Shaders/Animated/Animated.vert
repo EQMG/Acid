@@ -17,7 +17,7 @@ layout(set = 0, location = 0) in vec3 vertexPosition;
 layout(set = 0, location = 1) in vec2 vertexUv;
 layout(set = 0, location = 2) in vec3 vertexNormal;
 layout(set = 0, location = 3) in vec3 vertexTangent;
-layout(set = 0, location = 4) in vec3 vertexJointIndices;
+layout(set = 0, location = 4) in vec3 vertexJointIds;
 layout(set = 0, location = 5) in vec3 vertexWeights;
 
 layout(location = 0) out vec2 fragmentUv;
@@ -35,11 +35,11 @@ void main()
 
     for (int i = 0; i < MAX_WEIGHTS; i++)
     {
-        mat4 jointTransform = object.jointTransforms[int(vertexJointIndices[i])];
-        vec4 posePosition = jointTransform * vec4(vertexPosition, 1.0);
+        mat4 jointTransform = object.jointTransforms[int(vertexJointIds[i])];
+        vec4 posePosition = jointTransform * vec4(vertexPosition, 1.0f);
         totalLocalPos += posePosition * vertexWeights[i];
 
-        vec4 worldNormal = jointTransform * vec4(vertexNormal, 0.0);
+        vec4 worldNormal = jointTransform * vec4(vertexNormal, 0.0f);
         totalNormal += worldNormal * vertexWeights[i];
     }
 

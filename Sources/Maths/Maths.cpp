@@ -58,13 +58,25 @@ namespace fl
 		return radians * 180.0f / PI;
 	}
 
-	float Maths::NormalizeAngle(const float &degrees)
+	float Maths::NormalizeDegrees(const float &degrees)
 	{
 		float x = std::fmod(degrees, 360.0f);
 
 		if (x < 0.0f)
 		{
 			x += 360.0f;
+		}
+
+		return x;
+	}
+
+	float Maths::NormalizeRadians(const float &radians)
+	{
+		float x = std::fmod(radians, 2.0f * PI);
+
+		if (x < 0.0f)
+		{
+			x += 2.0f * PI;
 		}
 
 		return x;

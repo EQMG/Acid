@@ -58,7 +58,7 @@ namespace fl
 
 		for (unsigned int i = 0; i < topWeightsArray.size(); i++)
 		{
-			topWeightsArray.at(i) = m_weights.at(i);
+			topWeightsArray[i] = m_weights.at(i);
 			total += topWeightsArray.at(i);
 		}
 
@@ -79,7 +79,7 @@ namespace fl
 	{
 		while (m_jointIds.size() > max)
 		{
-			m_jointIds.erase(m_jointIds.end() - 1);
+			m_jointIds.pop_back();
 		}
 	}
 }
