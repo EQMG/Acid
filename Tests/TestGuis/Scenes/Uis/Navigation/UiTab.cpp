@@ -17,7 +17,7 @@ namespace test
 		this->SetActionLeft([&]()
 		{
 			dynamic_cast<UiNavigation *>(GetParent())->SwitchTab(m_name);
-			m_soundClick->SetPitch(Maths::RandomInRange(0.3f, 0.7f));
+			m_soundClick->SetPitch(Maths::Random(0.3f, 0.7f));
 			m_soundClick->Play();
 		});
 		m_content->SetAlphaDriver(new DriverConstant(0.0f));

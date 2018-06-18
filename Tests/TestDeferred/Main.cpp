@@ -32,8 +32,8 @@ int main(int argc, char **argv)
 	auto engine = new Engine();
 	engine->SetUpdater(new MainUpdater());
 
-	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.json");
-	return 0;
+//	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.json");
+//	return 0;
 
 	auto configManager = new ConfigManager();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());

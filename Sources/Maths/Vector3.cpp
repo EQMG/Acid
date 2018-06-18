@@ -238,8 +238,8 @@ namespace fl
 
 	Vector3 Vector3::RandomUnitVector()
 	{
-		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		float z = Maths::RandomInRange(0.0f, 1.0f) * 2.0f - 1.0f;
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
 		float y = rootOneMinusZSquared * std::sin(theta);
@@ -259,8 +259,8 @@ namespace fl
 		direction.Normalize();
 		direction *= radius;
 
-		float a = Maths::RandomInRange(0.0f, 1.0f);
-		float b = Maths::RandomInRange(0.0f, 1.0f);
+		float a = Maths::Random(0.0f, 1.0f);
+		float b = Maths::Random(0.0f, 1.0f);
 
 		if (a > b)
 		{
@@ -278,8 +278,8 @@ namespace fl
 	Vector3 Vector3::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle)
 	{
 		float cosAngle = std::cos(angle);
-		float theta = Maths::RandomInRange(0.0f, 1.0f) * 2.0f * PI;
-		float z = (cosAngle + Maths::RandomInRange(0.0f, 1.0f)) * (1.0f - cosAngle);
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
 		float y = rootOneMinusZSquared * std::sin(theta);

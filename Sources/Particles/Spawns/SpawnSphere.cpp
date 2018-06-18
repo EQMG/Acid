@@ -21,8 +21,8 @@ namespace fl
 		m_spawnPosition = Vector3::RandomUnitVector();
 
 		m_spawnPosition *= m_radius;
-		float a = Maths::RandomInRange(0.0f, 1.0f);
-		float b = Maths::RandomInRange(0.0f, 1.0f);
+		float a = Maths::Random(0.0f, 1.0f);
+		float b = Maths::Random(0.0f, 1.0f);
 
 		if (a > b)
 		{
