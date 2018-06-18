@@ -34,6 +34,8 @@ namespace fl
 
 		void Rebuild(Swapchain *swapchain);
 
+		uint32_t SubpassCount() const { return m_renderpassCreate->GetSubpasses().size(); };
+
 		uint32_t GetWidth() const;
 
 		uint32_t GetHeight() const;

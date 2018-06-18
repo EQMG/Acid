@@ -41,17 +41,23 @@ namespace fl
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
 		/// </summary>
+		/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 		/// <returns> The list specified by of all components that match the type. </returns>
 		template<typename T>
-		std::vector<std::shared_ptr<T>> QueryComponents()
+		std::vector<std::shared_ptr<T>> QueryComponents(const bool &allowDisabled = false)
 		{
 			auto result = std::vector<std::shared_ptr<T>>();
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
+				if ((*it)->IsRemoved())
+				{
+					continue;
+				}
+
 				auto component = (*it)->GetComponent<T>();
 
-				if (component != nullptr)
+				if (component != nullptr && (component->IsEnabled() || allowDisabled))
 				{
 					result.emplace_back(component);
 				}
@@ -63,15 +69,21 @@ namespace fl
 		/// <summary>
 		/// Returns the first component of a type found in the spatial structure.
 		/// </summary>
+		/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 		/// <returns> The first component of the type found. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetComponent()
+		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
 		{
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
+				if ((*it)->IsRemoved())
+				{
+					continue;
+				}
+
 				auto component = (*it)->GetComponent<T>();
 
-				if (component != nullptr)
+				if (component != nullptr && (component->IsEnabled() || allowDisabled))
 				{
 					return component;
 				}

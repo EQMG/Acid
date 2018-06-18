@@ -1,5 +1,7 @@
 ﻿#include "CelestialBody.hpp"
 
+#include "Renderer/Renderer.hpp"
+#include "Post/Filters/FilterLensflare.hpp"
 #include "Worlds/Worlds.hpp"
 #include "Lights/Light.hpp"
 
@@ -44,6 +46,17 @@ namespace fl
 			case CELESTIAL_MOON:
 				componentLight->SetColour(Worlds::Get()->GetWorld()->GetMoonColour());
 				break;
+			}
+		}
+
+		if (m_type == CELESTIAL_SUN)
+		{
+			auto filterLensflare = Renderer::Get()->GetManager()->GetRenderer<FilterLensflare>();
+
+			if (filterLensflare != nullptr)
+			{
+				filterLensflare->SetSunPosition(entityTransform->GetPosition());
+				filterLensflare->SetSunHeight(entityTransform->GetPosition().m_y);
 			}
 		}
 	}

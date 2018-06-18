@@ -33,9 +33,9 @@ namespace fl
 		template<typename T>
 		std::shared_ptr<T> GetComponent()
 		{
-			for (auto &c : m_components)
+			for (auto &component : m_components)
 			{
-				auto casted = std::dynamic_pointer_cast<T>(c);
+				auto casted = std::dynamic_pointer_cast<T>(component);
 
 				if (casted != nullptr)
 				{
@@ -85,7 +85,7 @@ namespace fl
 
 		ISpatialStructure *GetStructure() const { return m_structure; }
 
-		bool GetRemoved() const { return m_removed; }
+		bool IsRemoved() const { return m_removed; }
 
 		GameObject *GetParent() const { return m_parent; }
 
