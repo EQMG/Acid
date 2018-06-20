@@ -14,7 +14,7 @@ namespace test
 		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.042f, JUSTIFY_LEFT)),
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.062f, JUSTIFY_LEFT)),
 		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.082f, JUSTIFY_LEFT)),
-		m_timerUpdate(new Timer(0.333f))
+		m_timerUpdate(Timer(0.333f))
 	{
 		//	m_textPosition->SetVisible(false);
 
@@ -30,14 +30,13 @@ namespace test
 		delete m_textFps;
 		delete m_textUps;
 		delete m_textPosition;
-		delete m_timerUpdate;
 	}
 
 	void OverlayDebug::UpdateObject()
 	{
-		if (m_timerUpdate->IsPassedTime())
+		if (m_timerUpdate.IsPassedTime())
 		{
-			m_timerUpdate->ResetStartTime();
+			m_timerUpdate.ResetStartTime();
 
 			if (Worlds::Get() != nullptr)
 			{
@@ -55,7 +54,7 @@ namespace test
 
 			if (Scenes::Get()->GetCamera() != nullptr)
 			{
-				Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+				auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 				m_textPosition->SetString("POS: " + std::to_string(static_cast<int>(cameraPosition.m_x)) + ", " +
 					std::to_string(static_cast<int>(cameraPosition.m_y)) + ", " +
 					std::to_string(static_cast<int>(cameraPosition.m_z)));

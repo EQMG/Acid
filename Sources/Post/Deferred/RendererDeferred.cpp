@@ -76,8 +76,7 @@ namespace fl
 			}
 		}
 
-		//	printf("Rendered Lights: %i\n", sceneLights.size());
-
+		// Updates uniforms.
 		m_uniformScene.Push("lights", *sceneLights.data());
 		m_uniformScene.Push("lightsCount", static_cast<int>(sceneLights.size()));
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());

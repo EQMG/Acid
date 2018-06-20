@@ -37,11 +37,17 @@ jump.Play();
 auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
 
 // Creates a game object.
-auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3(), 3.0f));
+auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
     0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>();
+
+// Vector maths.
+Vector2 a(3.0f, -7.2f);
+Vector2 b(-1.74f, 15.4f);
+Vector2 c = a * b;
+float dist = a.Distance(b);
 ```
 
 ## Links
@@ -119,7 +125,9 @@ The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://ww
 
 On Windows, Flounder requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and Flounder should compile properly. Run Scripts/generate_vs.bat and an environment will be setup in Build.
 
-On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. GLFW requires `xorg-dev`, `libopenal1`, `libglfw3`, and `libvulkan` installed.
+Ensure you are using a compiler with full c++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
+
+On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Flounder requires `xorg-dev`, `libopenal1`, `libglfw3`, and `libvulkan` to be available.
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
@@ -128,7 +136,7 @@ Currently Flounder does not run under Release mode in Visual Studios (bug).
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, older resources can be found on this fork: https://github.com/mattparks/Flounder.
+Old resources have been removed from the main repo, older resources can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Flounder).
 
 ## Contributing
 You can contribute to Flounder in any way you want, we are always looking for help.

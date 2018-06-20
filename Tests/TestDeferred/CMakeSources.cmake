@@ -6,7 +6,7 @@ set(TESTDEFERED_HEADERS_
         "Scenes/FpsCamera.hpp"
         "Scenes/FpsPlayer.hpp"
         "Scenes/Scene1.hpp"
-        "Scenes/Uis/OverlayDebug.hpp"
+        "Uis/OverlayDebug.hpp"
         )
 
 set(TESTDEFERED_SOURCES_
@@ -18,7 +18,7 @@ set(TESTDEFERED_SOURCES_
         "Scenes/FpsCamera.cpp"
         "Scenes/FpsPlayer.cpp"
         "Scenes/Scene1.cpp"
-        "Scenes/Uis/OverlayDebug.cpp"
+        "Uis/OverlayDebug.cpp"
         )
 
 source_group("Header Files" FILES ${TESTDEFERED_HEADERS_})
