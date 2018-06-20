@@ -222,9 +222,9 @@ namespace fl
 
 				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
 
-				if (character.GetId() != -1)
+				if (character.has_value())
 				{
-					currentWord.AddCharacter(character, m_kerning);
+					currentWord.AddCharacter(character.value(), m_kerning);
 				}
 			}
 

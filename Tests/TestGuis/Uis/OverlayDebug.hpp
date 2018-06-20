@@ -17,7 +17,7 @@ namespace test
 		Text *m_textFps;
 		Text *m_textUps;
 		Text *m_textPosition;
-		Timer *m_timerUpdate;
+		Timer m_timerUpdate;
 	public:
 		OverlayDebug(UiObject *parent);
 
