@@ -47,6 +47,7 @@ matrix:
     compiler: clang
     env:
     - COMPILER=clang++-6.0
+    - COMPILER_FLAGS=-stdlib=libc++
     - GSL_CXX_STANDARD=17
     before_install:
     - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
@@ -54,9 +55,9 @@ matrix:
     - sudo apt-get -qq update
     - sudo apt-get install --allow-unauthenticated libglfw3 libglfw3-dev
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
-  # XCode 9.1
+  # XCode 9.4
   - os: osx
-    osx_image: xcode9.1
+    osx_image: xcode9.4
     sudo: required
     language: cpp
     compiler: clang
@@ -64,6 +65,7 @@ matrix:
     - COMPILER=clang++
     - GSL_CXX_STANDARD=17
     before_install:
+    - brew update
     - brew install cmake || brew upgrade cmake
 
 script:
@@ -73,9 +75,9 @@ script:
 - cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DFLOUNDER_INSTALL=ON
     else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Release
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Release -DFLOUNDER_INSTALL=OFF
     fi
 - ls
 - |
