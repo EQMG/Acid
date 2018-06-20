@@ -3,7 +3,7 @@ project (Flounder)
 
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
-option(FLOUNDER_INSTALL "Generate installation target" ON)
+option(FLOUNDER_INSTALL "Generate installation target" OFF)
 option(FLOUNDER_BUILD_TESTING "Build the Flounder test programs" ON)
 option(FLOUNDER_SETUP_COMPILER "If Flounder will set it's own compiler settings" ON)
 option(FLOUNDER_SETUP_OUTPUT "If Flounder will set it's own outputs" ON)
@@ -57,6 +57,7 @@ if (FLOUNDER_SETUP_COMPILER)
 	message(STATUS "Sizeof Void: ${CMAKE_SIZEOF_VOID_P}")
 
 	set(CMAKE_CXX_STANDARD 17)
+	set(CXX_STANDARD TRUE)
 	set(CMAKE_CXX_STANDARD_REQUIRED ON)
 	set(CMAKE_C_STANDARD 11)
 	set(CMAKE_C_STANDARD_REQUIRED ON)
