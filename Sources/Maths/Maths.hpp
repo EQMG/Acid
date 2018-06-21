@@ -24,21 +24,21 @@ namespace fl
 		static float Random(const float &min = 0.0f, const float &max = 1.0f);
 
 		/// <summary>
-		/// Creates a number between two numbers, logarithmic.
-		/// </summary>
-		/// <param name="min"> The min value. </param>
-		/// <param name="max"> The max value. </param>
-		/// <returns> The final random number. </returns>
-		static float LogRandom(const float &min, const float &max);
-
-		/// <summary>
 		/// Generates a single value from a normal distribution, using Box-Muller.
 		/// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 		/// </summary>
 		/// <param name="standardDeviation"> The standards deviation of the distribution. </param>
 		/// <param name="mean"> The mean of the distribution. </param>
 		/// <returns> A normally distributed value. </returns>
-		static float RandomNormallyDistributed(const float &standardDeviation, const float &mean);
+		static float RandomNormal(const float &standardDeviation, const float &mean);
+
+		/// <summary>
+		/// Creates a number between two numbers, logarithmic.
+		/// </summary>
+		/// <param name="min"> The min value. </param>
+		/// <param name="max"> The max value. </param>
+		/// <returns> The final random number. </returns>
+		static float RandomLog(const float &min, const float &max);
 
 		/// <summary>
 		/// Converts degrees to radians.
