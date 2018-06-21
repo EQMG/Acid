@@ -2,24 +2,34 @@
 
 #include <chrono>
 #include <random>
+#include <functional>
 
 namespace fl
 {
 	float Maths::Random(const float &min, const float &max)
 	{
-		std::mt19937_64 rng;
-		uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-		std::seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed>>32)};
-		rng.seed(ss);
+		std::mt19937_64 generator(uint64_t(std::rand()));
+	//	std::mt19937_64 rng;
+	//	uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	//	std::seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
+	//	rng.seed(ss);
 
-		float range = max - min;
-		std::uniform_real_distribution<double> unif(0, 1);
-		float scaled = static_cast<float>(unif(rng));
-		scaled *= range;
-		return scaled + min; // == (rand.nextDouble() * (max-min)) + min;
+		std::uniform_real_distribution<float> distribution(min, max);
+		return distribution(generator);
 	}
 
-	float Maths::LogRandom(const float &min, const float &max)
+	float Maths::RandomNormal(const float &standardDeviation, const float &mean)
+	{
+		std::mt19937_64 generator(uint64_t(std::rand()));
+	//	uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+	//	std::seed_seq seed{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
+	//	std::mt19937_64 generator(seed);
+
+		std::normal_distribution<float> distribution(mean, standardDeviation);
+		return distribution(generator);
+	}
+
+	float Maths::RandomLog(const float &min, const float &max)
 	{
 		float logLower = std::log(min);
 		float logUpper = std::log(max);
@@ -37,17 +47,6 @@ namespace fl
 		}
 
 		return result;
-	}
-
-	float Maths::RandomNormallyDistributed(const float &standardDeviation, const float &mean)
-	{
-		float u1 = Random(0.0f, 1.0f);
-		float u2 = Random(0.0f, 1.0f);
-
-		float x1 = std::sqrt(-2.0f * std::log(u1));
-		float x2 = 2.0f * PI * u2;
-		float z1 = x1 * std::sin(x2); // Random normal(0,1)
-		return z1 * standardDeviation + mean;
 	}
 
 	float Maths::Radians(const float &degrees)
