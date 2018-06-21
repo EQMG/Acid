@@ -40,7 +40,10 @@ namespace fl
 		std::vector<const char *> m_instanceLayerList;
 		std::vector<const char *> m_instanceExtensionList;
 		std::vector<const char *> m_deviceExtensionList;
-		VkDebugReportCallbackEXT m_debugReport;
+
+		PFN_vkCreateDebugUtilsMessengerEXT m_PFNCreateDebugUtilsMessengerEXT;
+		PFN_vkDestroyDebugUtilsMessengerEXT m_PFNDestroyDebugUtilsMessengerEXT;
+		VkDebugUtilsMessengerEXT m_debugReport;
 
 		VkInstance m_instance;
 		VkSurfaceKHR m_surface;
@@ -69,11 +72,7 @@ namespace fl
 
 		friend void CallbackIconify(GLFWwindow *window, int iconified);
 
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData);
-
-		VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
-
-		void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *callbackData, void *userData);
 
 	public:
 		/// <summary>
