@@ -152,6 +152,12 @@ typedef struct VkLayerInstanceDispatchTable_ {
     PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR GetPhysicalDeviceSurfaceCapabilities2KHR;
     PFN_vkGetPhysicalDeviceSurfaceFormats2KHR GetPhysicalDeviceSurfaceFormats2KHR;
 
+    // ---- VK_KHR_get_display_properties2 extension commands
+    PFN_vkGetPhysicalDeviceDisplayProperties2KHR GetPhysicalDeviceDisplayProperties2KHR;
+    PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR GetPhysicalDeviceDisplayPlaneProperties2KHR;
+    PFN_vkGetDisplayModeProperties2KHR GetDisplayModeProperties2KHR;
+    PFN_vkGetDisplayPlaneCapabilities2KHR GetDisplayPlaneCapabilities2KHR;
+
     // ---- VK_EXT_debug_report extension commands
     PFN_vkCreateDebugReportCallbackEXT CreateDebugReportCallbackEXT;
     PFN_vkDestroyDebugReportCallbackEXT DestroyDebugReportCallbackEXT;
@@ -429,6 +435,10 @@ typedef struct VkLayerDispatchTable_ {
 
     // ---- VK_KHR_maintenance3 extension commands
     PFN_vkGetDescriptorSetLayoutSupportKHR GetDescriptorSetLayoutSupportKHR;
+
+    // ---- VK_KHR_draw_indirect_count extension commands
+    PFN_vkCmdDrawIndirectCountKHR CmdDrawIndirectCountKHR;
+    PFN_vkCmdDrawIndexedIndirectCountKHR CmdDrawIndexedIndirectCountKHR;
 
     // ---- VK_EXT_debug_marker extension commands
     PFN_vkDebugMarkerSetObjectTagEXT DebugMarkerSetObjectTagEXT;

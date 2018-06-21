@@ -45,11 +45,22 @@ extern "C" {
 /** Enumerates the data type of a format. */
 typedef enum {
     kMVKFormatNone,             /**< Format type is unknown. */
-    kMVKFormatColorFloat,		/**< A floating point color. */
-    kMVKFormatColorInt,         /**< A signed integer color. */
-    kMVKFormatColorUInt,		/**< An unsigned integer color. */
+	kMVKFormatColorHalf,		/**< A 16-bit floating point color. */
+    kMVKFormatColorFloat,		/**< A 32-bit floating point color. */
+	kMVKFormatColorInt8,        /**< A signed 8-bit integer color. */
+	kMVKFormatColorUInt8,		/**< An unsigned 8-bit integer color. */
+	kMVKFormatColorInt16,       /**< A signed 16-bit integer color. */
+	kMVKFormatColorUInt16,		/**< An unsigned 16-bit integer color. */
+    kMVKFormatColorInt32,       /**< A signed 32-bit integer color. */
+    kMVKFormatColorUInt32,		/**< An unsigned 32-bit integer color. */
     kMVKFormatDepthStencil,     /**< A depth and stencil value. */
 } MVKFormatType;
+
+/** Returns whether the VkFormat is supported by this implementation. */
+bool mvkVkFormatIsSupported(VkFormat vkFormat);
+
+/** Returns whether the MTLPixelFormat is supported by this implementation. */
+bool mvkMTLPixelFormatIsSupported(MTLPixelFormat mtlFormat);
 
 /** Returns the format type corresponding to the specified Vulkan VkFormat, */
 MVKFormatType mvkFormatTypeFromVkFormat(VkFormat vkFormat);

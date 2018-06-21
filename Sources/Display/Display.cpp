@@ -77,32 +77,10 @@ namespace fl
 		Display::Get()->m_iconified = iconified == GLFW_TRUE;
 	}
 
-	VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char *layerPrefix, const char *msg, void *userData)
+	VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *callbackData, void *userData)
 	{
-		fprintf(stderr, "%s\n", msg);
+		fprintf(stderr, "%s\n", callbackData->pMessage);
 		return static_cast<VkBool32>(false);
-	}
-
-	VkResult Display::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
-	{
-		auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
-
-		if (func != nullptr)
-		{
-			return func(instance, pCreateInfo, pAllocator, pCallback);
-		}
-
-		return VK_ERROR_EXTENSION_NOT_PRESENT;
-	}
-
-	void Display::FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator)
-	{
-		auto func = reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
-
-		if (func != nullptr)
-		{
-			func(instance, callback, pAllocator);
-		}
 	}
 
 	Display::Display() :
@@ -130,6 +108,8 @@ namespace fl
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
+		m_PFNCreateDebugUtilsMessengerEXT(VK_NULL_HANDLE),
+		m_PFNDestroyDebugUtilsMessengerEXT(VK_NULL_HANDLE),
 		m_debugReport(VK_NULL_HANDLE),
 		m_instance(VK_NULL_HANDLE),
 		m_surface(VK_NULL_HANDLE),
@@ -156,7 +136,12 @@ namespace fl
 
 		// Destroys Vulkan.
 		vkDestroyDevice(m_logicalDevice, nullptr);
-		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReport, nullptr);
+
+		if (m_validationLayers)
+		{
+			m_PFNDestroyDebugUtilsMessengerEXT(m_instance, m_debugReport, nullptr);
+		}
+
 		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 		vkDestroyInstance(m_instance, nullptr);
 
@@ -517,6 +502,7 @@ namespace fl
 		if (m_validationLayers)
 		{
 			m_instanceExtensionList.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+			m_instanceExtensionList.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 		}
 	}
 
@@ -528,7 +514,7 @@ namespace fl
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 		applicationInfo.pEngineName = "Flounder";
 		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 3);
-		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 0, 73);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};
 		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -545,12 +531,22 @@ namespace fl
 	{
 		if (m_validationLayers)
 		{
-			VkDebugReportCallbackCreateInfoEXT debugCallBackCreateInfo = {};
-			debugCallBackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-			debugCallBackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
-			debugCallBackCreateInfo.pfnCallback = static_cast<PFN_vkDebugReportCallbackEXT>(VkCallbackDebug);
+			m_PFNCreateDebugUtilsMessengerEXT = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(m_instance, "vkCreateDebugUtilsMessengerEXT");
+			m_PFNDestroyDebugUtilsMessengerEXT = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(m_instance, "vkDestroyDebugUtilsMessengerEXT");
 
-			ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugCallBackCreateInfo, nullptr, &m_debugReport));
+			VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
+			debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+			debugUtilsMessengerCreateInfo.pNext = nullptr;
+			debugUtilsMessengerCreateInfo.flags = 0;
+			debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
+				VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+				VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT;
+			debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+				VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT;
+			debugUtilsMessengerCreateInfo.pfnUserCallback = VkCallbackDebug;
+			debugUtilsMessengerCreateInfo.pUserData = nullptr;
+
+			ErrorVk(m_PFNCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugReport));
 		}
 	}
 

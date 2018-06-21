@@ -57,7 +57,7 @@ if (FLOUNDER_SETUP_COMPILER)
 	message(STATUS "Sizeof Void: ${CMAKE_SIZEOF_VOID_P}")
 
 	set(CMAKE_CXX_STANDARD 17)
-	set(CMAKE_CXX_EXTENSIONS OFF)
+	set(CMAKE_CXX_EXTENSIONS ON)
 	set(CMAKE_CXX_STANDARD_REQUIRED ON)
 	set(CMAKE_C_STANDARD 11)
 	set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -78,7 +78,7 @@ if (FLOUNDER_SETUP_COMPILER)
 		endif()
 	elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 		add_definitions(-DFL_BUILD_CLANG)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG -Wno-unused-variable")
 	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
