@@ -1,32 +1,22 @@
 #include "Maths.hpp"
 
-#include <chrono>
 #include <random>
-#include <functional>
 
 namespace fl
 {
+	static std::random_device RANDOM_DEVICE;
+	static std::mt19937 RANDOM_GENERATOR(RANDOM_DEVICE());
+
 	float Maths::Random(const float &min, const float &max)
 	{
-		std::mt19937_64 generator(uint64_t(std::rand()));
-	//	std::mt19937_64 rng;
-	//	uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-	//	std::seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
-	//	rng.seed(ss);
-
-		std::uniform_real_distribution<float> distribution(min, max);
-		return distribution(generator);
+		std::uniform_real_distribution<float> dist(min, max);
+		return dist(RANDOM_GENERATOR);
 	}
 
 	float Maths::RandomNormal(const float &standardDeviation, const float &mean)
 	{
-		std::mt19937_64 generator(uint64_t(std::rand()));
-	//	uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-	//	std::seed_seq seed{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
-	//	std::mt19937_64 generator(seed);
-
-		std::normal_distribution<float> distribution(mean, standardDeviation);
-		return distribution(generator);
+		std::normal_distribution<float> dist(mean, standardDeviation);
+		return dist(RANDOM_GENERATOR);
 	}
 
 	float Maths::RandomLog(const float &min, const float &max)
