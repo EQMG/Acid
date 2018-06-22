@@ -33,7 +33,7 @@ namespace fl
 
 		virtual void Load(LoadedValue *value) = 0;
 
-		virtual void Write(LoadedValue *value) = 0;
+		virtual void Write(LoadedValue *destination) = 0;
 
 		virtual std::string GetName() const = 0;
 

@@ -56,7 +56,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Joysticks *Get()
 		{
-			return reinterpret_cast<Joysticks *>(Engine::Get()->GetModule("joysticks"));
+			return reinterpret_cast<Joysticks *>(Engine::Get()->GetModule("Joysticks"));
 		}
 
 		/// <summary>

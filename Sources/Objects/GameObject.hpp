@@ -31,19 +31,27 @@ namespace fl
 		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
 
 		template<typename T>
-		std::shared_ptr<T> GetComponent()
+		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
 		{
+			std::shared_ptr<T> alternative = nullptr;
+
 			for (auto &component : m_components)
 			{
 				auto casted = std::dynamic_pointer_cast<T>(component);
 
 				if (casted != nullptr)
 				{
+					if (!allowDisabled && !casted->IsEnabled())
+					{
+						alternative = casted;
+						continue;
+					}
+
 					return casted;
 				}
 			}
 
-			return nullptr;
+			return alternative;
 		}
 
 		std::shared_ptr<IComponent> AddComponent(std::shared_ptr<IComponent> component);

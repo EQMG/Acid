@@ -1,9 +1,11 @@
 ﻿#pragma once
 
-#include "Objects/IComponent.hpp"
-#include "Objects/GameObject.hpp"
+#include <Objects/IComponent.hpp>
+#include <Objects/GameObject.hpp>
 
-namespace fl
+using namespace fl;
+
+namespace test
 {
 	enum CelestialType
 	{
@@ -11,7 +13,7 @@ namespace fl
 		CELESTIAL_MOON = 1
 	};
 
-	class FL_EXPORT CelestialBody :
+	class CelestialBody :
 		public IComponent
 	{
 	private:
@@ -25,7 +27,7 @@ namespace fl
 
 		void Load(LoadedValue *value) override;
 
-		void Write(LoadedValue *value) override;
+		void Write(LoadedValue *destination) override;
 
 		std::string GetName() const override { return "CelestialBody"; };
 

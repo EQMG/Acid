@@ -25,7 +25,7 @@ namespace fl
 	{
 	}
 
-	void ShadowRender::Write(LoadedValue *value)
+	void ShadowRender::Write(LoadedValue *destination)
 	{
 	}
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Lights/Fog.hpp"
 #include "Renderer/IRenderer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
@@ -18,6 +19,8 @@ namespace fl
 		std::shared_ptr<Model> m_model;
 
 		std::shared_ptr<Texture> m_brdflut;
+
+		Fog m_fog;
 	public:
 		static const int MAX_LIGHTS;
 		
@@ -26,5 +29,9 @@ namespace fl
 		~RendererDeferred();
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+
+		Fog GetFog() const { return m_fog; }
+
+		void SetFog(const Fog &fog) { m_fog = fog; }
 	};
 }

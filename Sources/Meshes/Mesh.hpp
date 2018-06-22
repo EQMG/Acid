@@ -22,7 +22,7 @@ namespace fl
 
 		void Load(LoadedValue *value) override;
 
-		void Write(LoadedValue *value) override;
+		void Write(LoadedValue *destination) override;
 
 		std::string GetName() const override { return "Mesh"; };
 

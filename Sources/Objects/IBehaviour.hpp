@@ -27,7 +27,7 @@ namespace fl
 		{
 		}
 
-		void Write(LoadedValue *value) override
+		void Write(LoadedValue *destination) override
 		{
 		}
 
