@@ -41,9 +41,7 @@ namespace fl
 		std::vector<const char *> m_instanceExtensionList;
 		std::vector<const char *> m_deviceExtensionList;
 
-		PFN_vkCreateDebugUtilsMessengerEXT m_PFNCreateDebugUtilsMessengerEXT;
-		PFN_vkDestroyDebugUtilsMessengerEXT m_PFNDestroyDebugUtilsMessengerEXT;
-		VkDebugUtilsMessengerEXT m_debugReport;
+		VkDebugReportCallbackEXT m_debugReportCallback;
 
 		VkInstance m_instance;
 		VkSurfaceKHR m_surface;
@@ -72,8 +70,11 @@ namespace fl
 
 		friend void CallbackIconify(GLFWwindow *window, int iconified);
 
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *callbackData, void *userData);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 
+		friend VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
+
+		friend void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
