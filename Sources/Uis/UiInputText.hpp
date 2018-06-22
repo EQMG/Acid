@@ -23,7 +23,7 @@ namespace fl
 		std::string m_prefix;
 		std::string m_value;
 
-		UiInputDelay *m_inputDelay;
+		UiInputDelay m_inputDelay;
 		int m_lastKey;
 
 		bool m_selected;
