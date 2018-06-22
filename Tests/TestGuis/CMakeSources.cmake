@@ -1,7 +1,7 @@
 set(TESTGUIS_HEADERS_
         "MainRenderer.hpp"
         "MainUpdater.hpp"
-        "Scenes/FpsCamera.hpp"
+        "Scenes/FixedCamera.hpp"
         "Scenes/Scene1.hpp"
         "Uis/Navigation/ContentExit.hpp"
         "Uis/Navigation/UiNavigation.hpp"
@@ -14,7 +14,7 @@ set(TESTGUIS_SOURCES_
         "Main.cpp"
         "MainRenderer.cpp"
         "MainUpdater.cpp"
-        "Scenes/FpsCamera.cpp"
+        "Scenes/FixedCamera.cpp"
         "Scenes/Scene1.cpp"
         "Uis/Navigation/ContentExit.cpp"
         "Uis/Navigation/UiNavigation.cpp"

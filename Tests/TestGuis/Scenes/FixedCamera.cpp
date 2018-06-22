@@ -1,4 +1,4 @@
-#include "FpsCamera.hpp"
+#include "FixedCamera.hpp"
 
 #include <Scenes/Scenes.hpp>
 #include <Inputs/Mouse.hpp>
@@ -6,11 +6,11 @@
 
 namespace test
 {
-	const float FpsCamera::NEAR_PLANE = 0.1f;
-	const float FpsCamera::FAR_PLANE = 10000.0f;
-	const float FpsCamera::FIELD_OF_VIEW = 60.0f;
+	const float FixedCamera::NEAR_PLANE = 0.1f;
+	const float FixedCamera::FAR_PLANE = 10000.0f;
+	const float FixedCamera::FIELD_OF_VIEW = 60.0f;
 
-	FpsCamera::FpsCamera() :
+	FixedCamera::FixedCamera() :
 		m_position(Vector3()),
 		m_velocity(Vector3()),
 		m_rotation(Vector3()),
@@ -21,11 +21,11 @@ namespace test
 	{
 	}
 
-	FpsCamera::~FpsCamera()
+	FixedCamera::~FixedCamera()
 	{
 	}
 
-	void FpsCamera::Update()
+	void FixedCamera::Update()
 	{
 	//	float delta = std::min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
@@ -36,7 +36,7 @@ namespace test
 		m_viewRay.Update(m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), m_viewMatrix, m_projectionMatrix);
 	}
 
-	void FpsCamera::ReflectView(const float &height)
+	void FixedCamera::ReflectView(const float &height)
 	{
 		m_position.m_y -= 2.0f * (m_position.m_y - height);
 		m_rotation.m_x = -m_rotation.m_x;

@@ -22,7 +22,7 @@ namespace test
 	static const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(new FpsCamera()),
+		IScene(std::make_shared<FpsCamera>()),
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
@@ -33,8 +33,8 @@ namespace test
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
-		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
-		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
+		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
+		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
 	}
 
 	Scene1::~Scene1()
@@ -112,8 +112,8 @@ namespace test
 
 		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
 		{
-			m_uiStartLogo->SetAlphaDriver(new DriverConstant(0.0f));
-			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, UI_SLIDE_TIME));
+			m_uiStartLogo->SetAlphaDriver<DriverConstant>(0.0f);
+			m_overlayDebug->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
 			m_uiStartLogo->SetStarting(false);
 			Mouse::Get()->SetCursorHidden(true);
 		}

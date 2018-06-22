@@ -20,19 +20,17 @@ namespace fl
 		m_borderColour(Colour("#000000")),
 		m_solidBorder(false),
 		m_glowBorder(false),
-		m_glowDriver(new DriverConstant(0.0f)),
+		m_glowDriver(std::make_shared<DriverConstant>(0.0f)),
 		m_glowSize(0.0f),
-		m_borderDriver(new DriverConstant(0.0f)),
+		m_borderDriver(std::make_shared<DriverConstant>(0.0f)),
 		m_borderSize(0.0f)
 	{
-		SetScaleDriver(new DriverConstant(fontSize));
+		SetScaleDriver(std::make_shared<DriverConstant>(fontSize));
 		LoadText();
 	}
 
 	Text::~Text()
 	{
-		delete m_glowDriver;
-		delete m_borderDriver;
 	}
 
 	void Text::UpdateObject()
@@ -94,17 +92,15 @@ namespace fl
 		}
 	}
 
-	void Text::SetBorder(IDriver *driver)
+	void Text::SetBorderDriver(std::shared_ptr<IDriver> driver)
 	{
-		delete m_borderDriver;
 		m_borderDriver = driver;
 		m_solidBorder = true;
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowing(IDriver *driver)
+	void Text::SetGlowingDriver(std::shared_ptr<IDriver> driver)
 	{
-		delete m_glowDriver;
 		m_glowDriver = driver;
 		m_solidBorder = false;
 		m_glowBorder = true;

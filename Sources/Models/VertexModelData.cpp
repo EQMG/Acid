@@ -11,7 +11,7 @@ namespace fl
 		m_duplicateVertex(nullptr),
 		m_index(index),
 		m_length(position.Length()),
-		m_tangents(std::vector<Vector3 *>()),
+		m_tangents(std::vector<Vector3>()),
 		m_averagedTangent(Vector3())
 	{
 	}
@@ -21,7 +21,7 @@ namespace fl
 		//	delete m_duplicateVertex;
 	}
 
-	void VertexModelData::AddTangent(Vector3 *tangent)
+	void VertexModelData::AddTangent(const Vector3 &tangent)
 	{
 		m_tangents.emplace_back(tangent);
 	}
@@ -35,12 +35,12 @@ namespace fl
 
 		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
 		{
-			m_averagedTangent += **it;
+			m_averagedTangent += *it;
 		}
 
 		if (m_averagedTangent.Length() > 0.0f)
 		{
-			m_averagedTangent.Normalize();
+			m_averagedTangent = m_averagedTangent.Normalize();
 		}
 	}
 

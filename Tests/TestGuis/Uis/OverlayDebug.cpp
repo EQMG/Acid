@@ -43,7 +43,7 @@ namespace test
 		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "BottomLeft", true), 1.1f, content, FontType::Resource("Fonts/ProximaNova", FAMILY_REGULAR), justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));
 		result->SetBorderColour(Colour(0.15f, 0.15f, 0.15f));
-		result->SetBorder(new DriverConstant(0.04f));
+		result->SetBorderDriver<DriverConstant>(0.04f);
 		return result;
 	}
 }

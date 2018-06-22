@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "ICamera.hpp"
 #include "SceneStructure.hpp"
 #include "Uis/UiSelector.hpp"
@@ -12,17 +13,17 @@ namespace fl
 	class FL_EXPORT IScene
 	{
 	private:
-		ICamera *m_camera;
-		SceneStructure *m_structure;
+		std::shared_ptr<ICamera> m_camera;
+		std::shared_ptr<SceneStructure> m_structure;
 		bool m_started;
 	public:
 		/// <summary>
 		/// Creates a new scene.
 		/// </summary>
 		/// <param name="camera"> The scenes camera. </param>
-		IScene(ICamera *camera) :
+		IScene(std::shared_ptr<ICamera> camera) :
 			m_camera(camera),
-			m_structure(new SceneStructure()),
+			m_structure(std::make_shared<SceneStructure>()),
 			m_started(false)
 		{
 		}
@@ -32,8 +33,6 @@ namespace fl
 		/// </summary>
 		virtual ~IScene()
 		{
-			delete m_camera;
-			delete m_structure;
 		}
 
 		virtual void Start() = 0;
@@ -47,19 +46,19 @@ namespace fl
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		ICamera *GetCamera() const { return m_camera; }
+		std::shared_ptr<ICamera> GetCamera() const { return m_camera; }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
 		/// </summary>
 		/// <param name="camera"> The new camera. </param>
-		void SetCamera(ICamera *camera) { m_camera = camera; }
+		void SetCamera(std::shared_ptr<ICamera> camera) { m_camera = camera; }
 
 		/// <summary>
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
-		SceneStructure *GetStructure() const { return m_structure; }
+		std::shared_ptr<SceneStructure> GetStructure() const { return m_structure; }
 
 		/// <summary>
 		/// Gets if this scene has started.

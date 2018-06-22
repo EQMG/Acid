@@ -44,6 +44,14 @@ namespace fl
 		std::shared_ptr<IEvent> AddEvent(std::shared_ptr<IEvent> event);
 
 		/// <summary>
+		/// Adds an event to the listening list.
+		/// </summary>
+		/// <param name="T"> The type of event to add. </param>
+		/// <param name="args"> The type event arguments. </param>
+		template<typename T, typename... Args>
+		void AddEvent(Args &&... args) { AddEvent(std::make_shared<T>(std::forward<Args>(args)...)); }
+
+		/// <summary>
 		/// Removes a event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>

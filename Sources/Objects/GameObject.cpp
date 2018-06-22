@@ -6,7 +6,7 @@
 
 namespace fl
 {
-	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
+	GameObject::GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure) :
 		m_name(""),
 		m_transform(Transform(transform)),
 		m_components(std::vector<std::shared_ptr<IComponent>>()),
@@ -25,7 +25,7 @@ namespace fl
 		}
 	}
 
-	GameObject::GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure) :
+	GameObject::GameObject(const std::string &filepath, const Transform &transform, std::shared_ptr<ISpatialStructure> structure) :
 		GameObject(transform, structure)
 	{
 		auto prefabObject = PrefabObject::Resource(filepath);
@@ -108,7 +108,7 @@ namespace fl
 		return nullptr;
 	}
 
-	void GameObject::StructureSwitch(ISpatialStructure *structure)
+	void GameObject::SetStructure(std::shared_ptr<ISpatialStructure> structure)
 	{
 		if (m_structure != nullptr)
 		{

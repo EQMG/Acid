@@ -24,10 +24,10 @@ namespace test
 		m_configGraphics.Link<bool>("Is Antialiasing", true, CONFIG_GET(Display::Get()->IsAntialiasing()), CONFIG_SET(bool, Display::Get()->SetAntialiasing(v)));
 		m_configGraphics.Link<bool>("Is Fullscreen", false, CONFIG_GET(Display::Get()->IsFullscreen()), CONFIG_SET(bool, Display::Get()->SetFullscreen(v)));
 
-		Events::Get()->AddEvent(std::make_shared<EventTime>(2.5f, false, [&]() -> void
+		Events::Get()->AddEvent<EventTime>(2.5f, false, [&]() -> void
 		{
 			Save();
-		}));
+		});
 	}
 
 	ConfigManager::~ConfigManager()

@@ -50,10 +50,10 @@ namespace fl
 		bool m_solidBorder;
 		bool m_glowBorder;
 
-		IDriver *m_glowDriver;
+		std::shared_ptr<IDriver> m_glowDriver;
 		float m_glowSize;
 
-		IDriver *m_borderDriver;
+		std::shared_ptr<IDriver> m_borderDriver;
 		float m_borderSize;
 	public:
 		/// <summary>
@@ -176,16 +176,32 @@ namespace fl
 		void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
 		/// <summary>
-		/// Sets a new border driver, will disable glowing.
+		/// Sets the border driver, will disable glowing.
 		/// </summary>
 		/// <param name="driver"> The new border driver. </param>
-		void SetBorder(IDriver *driver);
+		void SetBorderDriver(std::shared_ptr<IDriver> driver);
 
 		/// <summary>
-		/// Sets a new glow driver, will disable solid borders.
+		/// Sets a new border driver from a type, will disable glowing.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetBorderDriver(Args &&... args) { SetBorderDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
+
+		/// <summary>
+		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="driver"> The new glow driver. </param>
-		void SetGlowing(IDriver *driver);
+		void SetGlowingDriver(std::shared_ptr<IDriver> driver);
+
+		/// <summary>
+		/// Sets a new glow driver from a type, will disable solid borders.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetGlowingDriver(Args &&... args) { SetGlowingDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.
