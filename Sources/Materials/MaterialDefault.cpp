@@ -6,7 +6,7 @@ namespace fl
 									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
-		m_baseColor(Colour(baseColor)),
+		m_baseColor(baseColor),
 		m_diffuseTexture(diffuseTexture),
 		m_metallic(metallic),
 		m_roughness(roughness),
@@ -60,7 +60,7 @@ namespace fl
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 		uniformObject.Push("baseColor", m_baseColor);
 		uniformObject.Push("metallic", m_metallic);
 		uniformObject.Push("roughness", m_roughness);

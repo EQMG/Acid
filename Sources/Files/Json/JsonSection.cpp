@@ -54,9 +54,9 @@ namespace fl
 			*data += "\n";
 		}
 
-		for (auto &child : *loadedValue->GetChildren())
+		for (auto &child : loadedValue->GetChildren())
 		{
-			AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
+			AppendData(child, data, indentation + 1, child == loadedValue->GetChildren().back());
 		}
 
 		if (loadedValue->GetName().empty())
@@ -86,7 +86,7 @@ namespace fl
 		if (!isTopSection)
 		{
 			thisValue = new LoadedValue(parent, source->m_name, "");
-			parent->GetChildren()->emplace_back(thisValue);
+			parent->GetChildren().emplace_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source->m_content, ",", true);
 
@@ -100,7 +100,7 @@ namespace fl
 				}
 
 				LoadedValue *newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
-				thisValue->GetChildren()->emplace_back(newChild);
+				thisValue->GetChildren().emplace_back(newChild);
 			}
 		}
 

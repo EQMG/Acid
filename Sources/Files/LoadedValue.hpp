@@ -11,7 +11,7 @@ namespace fl
 	{
 	private:
 		LoadedValue *m_parent;
-		std::vector<LoadedValue *> *m_children;
+		std::vector<LoadedValue *> m_children;
 
 		std::string m_name;
 		std::string m_value;
@@ -28,9 +28,7 @@ namespace fl
 
 		void SetValue(const std::string &data) { m_value = data; }
 
-		std::vector<LoadedValue *> *GetChildren() const { return m_children; }
-
-		unsigned int ChildrenCount() const { return m_children->size(); }
+		std::vector<LoadedValue *> &GetChildren() { return m_children; }
 
 		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
 
@@ -48,7 +46,7 @@ namespace fl
 			}
 
 			child = value;
-			m_children->emplace_back(child);
+			m_children.emplace_back(child);
 		}
 
 		template<typename T>
@@ -60,7 +58,7 @@ namespace fl
 			if (child == nullptr)
 			{
 				child = new LoadedValue(this, name, strValue);
-				m_children->emplace_back(child);
+				m_children.emplace_back(child);
 				return;
 			}
 

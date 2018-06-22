@@ -9,8 +9,8 @@ namespace test
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_textInfo(CreateStatus("Build: d0.0.1", 0.002f, 0.002f, JUSTIFY_LEFT)),
-		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.042f, JUSTIFY_LEFT)),
-		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.062f, JUSTIFY_LEFT)),
+		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.022f, JUSTIFY_LEFT)),
+		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, JUSTIFY_LEFT)),
 		m_timerUpdate(Timer(0.333f))
 	{
 		//	m_textPosition->SetVisible(false);

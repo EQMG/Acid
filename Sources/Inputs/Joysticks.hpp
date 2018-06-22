@@ -48,7 +48,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::array<Joystick, JOYSTICK_LAST + 1> m_connected;
+		std::array<Joystick, JOYSTICK_LAST> m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.

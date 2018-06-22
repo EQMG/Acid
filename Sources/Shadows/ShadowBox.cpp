@@ -13,7 +13,7 @@ namespace fl
 		m_lightViewMatrix(Matrix4()),
 		m_projectionViewMatrix(Matrix4()),
 		m_shadowMapSpaceMatrix(Matrix4()),
-		m_offset(Matrix4(CreateOffset())),
+		m_offset(CreateOffset()),
 		m_centre(Vector3()),
 		m_farHeight(0.0f),
 		m_farWidth(0.0f),

@@ -48,7 +48,7 @@ namespace fl
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 
 		// Updates uniforms.
-		m_uniformObject.Push("transform", *GetScreenTransform());
+		m_uniformObject.Push("transform", GetScreenTransform());
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
@@ -75,10 +75,10 @@ namespace fl
 		}
 
 		VkRect2D scissorRect = {};
-		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
-		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_y);
-		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_z);
-		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
+		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_x);
+		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_y);
+		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_z);
+		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_w);
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
@@ -182,7 +182,7 @@ namespace fl
 		// Loads the mesh data.
 		delete m_model;
 		m_model = new Model(vertices);
-		GetRectangle()->SetDimensions(Vector2(bounding.m_x, bounding.m_y));
+		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 
 	std::vector<FontLine> Text::CreateStructure()

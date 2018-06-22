@@ -23,7 +23,7 @@ namespace test
 
 	FpsPlayer::FpsPlayer() :
 		IBehaviour(),
-		m_velocity(new Vector3()),
+		m_velocity(Vector3()),
 		m_jumping(false),
 		m_noclipEnabled(true),
 		m_inputForward(new AxisCompound({
@@ -55,15 +55,13 @@ namespace test
 		m_toggleNoclip(new ButtonCompound({
 			new ButtonKeyboard({KEY_N}),
 		})),
-		m_amountMove(new Vector3()),
-		m_amountRotate(new Vector3())
+		m_amountMove(Vector3()),
+		m_amountRotate(Vector3())
 	{
 	}
 
 	FpsPlayer::~FpsPlayer()
 	{
-		delete m_velocity;
-
 		delete m_inputForward;
 		delete m_inputStrafe;
 
@@ -71,9 +69,6 @@ namespace test
 		delete m_inputCrouch;
 		delete m_inputJump;
 		delete m_toggleNoclip;
-
-		delete m_amountMove;
-		delete m_amountRotate;
 	}
 
 	void FpsPlayer::Update()
@@ -109,7 +104,7 @@ namespace test
 				if (m_inputJump->WasDown() && !m_jumping)
 				{
 					targetVelocity.m_y += crouchDown ? CROUCH_JUMP_SPEED : JUMP_SPEED;
-					m_velocity->m_y += targetVelocity.m_y;
+					m_velocity.m_y += targetVelocity.m_y;
 					m_jumping = true;
 				}
 			}
@@ -123,34 +118,34 @@ namespace test
 			}
 		}
 
-		*m_velocity = m_velocity->SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
+		m_velocity = m_velocity.SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-		Vector3 newPosition = GetGameObject()->GetTransform()->GetPosition();
-		Vector3 newRotation = GetGameObject()->GetTransform()->GetRotation();
+		Vector3 newPosition = GetGameObject()->GetTransform().GetPosition();
+		Vector3 newRotation = GetGameObject()->GetTransform().GetRotation();
 
 		float groundHeight = 0.0f;
 
 		// Calculates the deltas to the moved distance, and rotation.
 		float theta = Maths::Radians(cameraRotation.m_y);
-		float dx = -(m_velocity->m_z * std::sin(theta) + m_velocity->m_x * std::cos(theta)) * delta;
-		float dy = m_velocity->m_y * delta;
-		float dz = -(m_velocity->m_z * std::cos(theta) - m_velocity->m_x * std::sin(theta)) * delta;
+		float dx = -(m_velocity.m_z * std::sin(theta) + m_velocity.m_x * std::cos(theta)) * delta;
+		float dy = m_velocity.m_y * delta;
+		float dz = -(m_velocity.m_z * std::cos(theta) - m_velocity.m_x * std::sin(theta)) * delta;
 
-		*m_amountMove = Vector3(dx, dy, dz);
-		*m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);
+		m_amountMove = Vector3(dx, dy, dz);
+		m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);
 
-		newPosition += *m_amountMove;
-		newRotation += *m_amountRotate;
+		newPosition += m_amountMove;
+		newRotation += m_amountRotate;
 
 		if (!m_noclipEnabled && newPosition.m_y <= groundHeight)
 		{
-			m_velocity->m_y = 0.0f;
+			m_velocity.m_y = 0.0f;
 			m_jumping = false;
 			newPosition.m_y = groundHeight;
 		}
 
-		GetGameObject()->GetTransform()->SetPosition(newPosition);
-		GetGameObject()->GetTransform()->SetRotation(newRotation);
+		GetGameObject()->GetTransform().SetPosition(newPosition);
+		GetGameObject()->GetTransform().SetRotation(newRotation);
 	}
 }

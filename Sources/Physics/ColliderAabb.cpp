@@ -6,15 +6,15 @@ namespace fl
 {
 	ColliderAabb::ColliderAabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
 		ICollider(),
-		m_minExtents(Vector3(minExtents)),
-		m_maxExtents(Vector3(maxExtents))
+		m_minExtents(minExtents),
+		m_maxExtents(maxExtents)
 	{
 	}
 
 	ColliderAabb::ColliderAabb(const ColliderAabb &source) :
 		ICollider(),
-		m_minExtents(Vector3(source.m_minExtents)),
-		m_maxExtents(Vector3(source.m_maxExtents))
+		m_minExtents(source.m_minExtents),
+		m_maxExtents(source.m_maxExtents)
 	{
 	}
 

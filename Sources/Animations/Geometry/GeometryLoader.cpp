@@ -90,7 +90,7 @@ namespace fl
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int indexCount = m_meshData->GetChild("polylist")->GetChild("input")->GetChildren()->size();
+		int indexCount = m_meshData->GetChild("polylist")->GetChild("input")->GetChildren().size();
 		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetString(), " ");
 
 		for (unsigned int i = 0; i < indexRawData.size() / indexCount; i++)

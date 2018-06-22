@@ -11,47 +11,43 @@ namespace fl
 	{
 	private:
 		JoystickPort m_joystick;
-		ButtonJoystick *m_clickLeft;
-		ButtonJoystick *m_clickRight;
-		AxisJoystick *m_axisX;
-		AxisJoystick *m_axisY;
+		ButtonJoystick m_clickLeft;
+		ButtonJoystick m_clickRight;
+		AxisJoystick m_axisX;
+		AxisJoystick m_axisY;
 	public:
 		SelectorJoystick(const JoystickPort &joystick = JOYSTICK_LAST, const int &joystickLeftClick = 0, const int &joystickRightClick = 1, const int &joystickAxisX = 0, const int &joystickAxisY = 1) :
 			m_joystick(joystick),
-			m_clickLeft(new ButtonJoystick(joystick, {joystickLeftClick})),
-			m_clickRight(new ButtonJoystick(joystick, {joystickRightClick})),
-			m_axisX(new AxisJoystick(joystick, {joystickAxisX})),
-			m_axisY(new AxisJoystick(joystick, {joystickAxisY}))
+			m_clickLeft(ButtonJoystick(joystick, {joystickLeftClick})),
+			m_clickRight(ButtonJoystick(joystick, {joystickRightClick})),
+			m_axisX(AxisJoystick(joystick, {joystickAxisX})),
+			m_axisY(AxisJoystick(joystick, {joystickAxisY}))
 		{
 		}
 
 		~SelectorJoystick()
 		{
-			delete m_clickLeft;
-			delete m_clickRight;
-			delete m_axisX;
-			delete m_axisY;
 		}
 
 		JoystickPort GetJoystick() const { return m_joystick; }
 
 		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
 
-		ButtonJoystick *GetClickLeft() const { return m_clickLeft; }
+		ButtonJoystick GetClickLeft() const { return m_clickLeft; }
 
-	//	void SetClickLeft(const ButtonJoystick &clickLeft) { m_clickLeft = clickLeft; }
+		void SetClickLeft(const ButtonJoystick &clickLeft) { m_clickLeft = clickLeft; }
 
-		ButtonJoystick *GetClickRight() const { return m_clickRight; }
+		ButtonJoystick GetClickRight() const { return m_clickRight; }
 
-	//	void SetClickRight(const ButtonJoystick &clickRight) { m_clickRight = clickRight; }
+		void SetClickRight(const ButtonJoystick &clickRight) { m_clickRight = clickRight; }
 
-		AxisJoystick *GetAxisX() const { return m_axisX; }
+		AxisJoystick GetAxisX() const { return m_axisX; }
 
-	//	void SetAxisX(const AxisJoystick &axisX) { m_axisX = axisX; }
+		void SetAxisX(const AxisJoystick &axisX) { m_axisX = axisX; }
 
-		AxisJoystick *GetAxisY() const { return m_axisY; }
+		AxisJoystick GetAxisY() const { return m_axisY; }
 
-	//	void SetAxisY(const AxisJoystick &axisY) { m_axisY = axisY; }
+		void SetAxisY(const AxisJoystick &axisY) { m_axisY = axisY; }
 	};
 
 	/// <summary>
@@ -68,8 +64,8 @@ namespace fl
 		bool m_leftWasClick;
 		bool m_rightWasClick;
 
-		ButtonMouse *m_mouseLeft;
-		ButtonMouse *m_mouseRight;
+		ButtonMouse m_mouseLeft;
+		ButtonMouse m_mouseRight;
 	public:
 		UiSelector();
 

@@ -25,11 +25,11 @@ namespace fl
 
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(std::array<int, KEY_LAST + 1>()),
+		m_keyboardKeys(std::array<int, KEY_LAST>()),
 		m_keyboardChar(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < KEY_LAST + 1; i++)
+		for (unsigned int i = 0; i < KEY_LAST; i++)
 		{
 			m_keyboardKeys[i] = GLFW_RELEASE;
 		}
@@ -49,7 +49,7 @@ namespace fl
 
 	bool Keyboard::GetKey(const Key &key) const
 	{
-		if (key < 0 || key > KEY_LAST + 1)
+		if (key < 0 || key > KEY_LAST)
 		{
 			return false;
 		}

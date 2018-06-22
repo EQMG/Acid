@@ -14,10 +14,10 @@ namespace fl
 	{
 	private:
 		IFile *m_file;
-		std::map<std::string, ConfigKey *> *m_values;
+		std::map<std::string, ConfigKey *> m_values;
 	public:
-#define CONFIG_GET(f) (new std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
-#define CONFIG_SET(t, f) (new std::function<void(t)>([&](const t &v) -> void { f; }))
+#define CONFIG_GET(f) (std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
+#define CONFIG_SET(t, f) (std::function<void(t)>([&](const t &v) -> void { f; }))
 
 		Config(IFile *file);
 
@@ -48,7 +48,7 @@ namespace fl
 		}
 
 		template<typename T>
-		void Link(const std::string &key, const T &normal, std::function<std::string()> *getter, std::function<void(T)> *setter = nullptr)
+		void Link(const std::string &key, const T &normal, std::function<std::string()> getter, std::function<void(T)> setter = nullptr)
 		{
 			auto configKey = GetRaw(key, std::to_string(normal));
 
@@ -59,7 +59,7 @@ namespace fl
 
 			if (setter != nullptr)
 			{
-				(*setter)(Get<T>(key, FormatString::ConvertTo<T>(configKey->GetValue())));
+				setter(Get<T>(key, FormatString::ConvertTo<T>(configKey->GetValue())));
 			}
 		}
 	};

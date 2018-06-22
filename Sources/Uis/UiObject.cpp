@@ -10,10 +10,10 @@ namespace fl
 		m_parent(parent),
 		m_children(std::vector<UiObject *>()),
 		m_visible(true),
-		m_rectangle(new UiBound(rectangle)),
-		m_scissor(new Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
-		m_positionOffset(new Vector2()),
-		m_screenTransform(new Vector4()),
+		m_rectangle(UiBound(rectangle)),
+		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
+		m_positionOffset(Vector2()),
+		m_screenTransform(Vector4()),
 		m_alphaDriver(new DriverConstant(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
@@ -38,12 +38,6 @@ namespace fl
 		{
 			m_parent->RemoveChild(this);
 		}
-
-		delete m_scissor;
-		delete m_rectangle;
-
-		delete m_positionOffset;
-		delete m_screenTransform;
 
 		delete m_alphaDriver;
 		delete m_scaleDriver;
@@ -83,15 +77,15 @@ namespace fl
 		// Transform updates.
 		float aspectRatio = Display::Get()->GetAspectRatio();
 
-		float da = m_rectangle->m_aspectSize ? aspectRatio : 1.0f;
-		float dw = (m_rectangle->GetDimensions().m_x / da) * m_scale;
-		float dh = m_rectangle->GetDimensions().m_y * m_scale;
+		float da = m_rectangle.m_aspectSize ? aspectRatio : 1.0f;
+		float dw = (m_rectangle.GetDimensions().m_x / da) * m_scale;
+		float dh = m_rectangle.GetDimensions().m_y * m_scale;
 
-		float pa = m_rectangle->m_aspectPosition ? 1.0f : aspectRatio;
-		float px = (m_rectangle->GetPosition().m_x / pa) - (dw * m_rectangle->GetReference().m_x) + m_positionOffset->m_x;
-		float py = m_rectangle->GetPosition().m_y - (dh * (-1.0f + m_rectangle->GetReference().m_y)) + m_positionOffset->m_y;
+		float pa = m_rectangle.m_aspectPosition ? 1.0f : aspectRatio;
+		float px = (m_rectangle.GetPosition().m_x / pa) - (dw * m_rectangle.GetReference().m_x) + m_positionOffset.m_x;
+		float py = m_rectangle.GetPosition().m_y - (dh * (-1.0f + m_rectangle.GetReference().m_y)) + m_positionOffset.m_y;
 
-		*m_screenTransform = Vector4(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
+		m_screenTransform = Vector4(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
 
 	void UiObject::UpdateObject()

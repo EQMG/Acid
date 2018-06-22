@@ -13,7 +13,7 @@ namespace test
 		public IBehaviour
 	{
 	private:
-		Vector3 *m_velocity;
+		Vector3 m_velocity;
 		bool m_jumping;
 		bool m_noclipEnabled;
 
@@ -24,8 +24,8 @@ namespace test
 		IButton *m_inputCrouch;
 		IButton *m_toggleNoclip;
 
-		Vector3 *m_amountMove;
-		Vector3 *m_amountRotate;
+		Vector3 m_amountMove;
+		Vector3 m_amountRotate;
 	public:
 		FpsPlayer();
 

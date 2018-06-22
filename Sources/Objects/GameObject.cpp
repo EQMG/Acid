@@ -8,7 +8,7 @@ namespace fl
 {
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
-		m_transform(new Transform(transform)),
+		m_transform(Transform(transform)),
 		m_components(std::vector<std::shared_ptr<IComponent>>()),
 		m_structure(structure),
 		m_parent(nullptr),
@@ -30,7 +30,7 @@ namespace fl
 	{
 		auto prefabObject = PrefabObject::Resource(filepath);
 
-		for (auto &value : *prefabObject->GetParent()->GetChildren())
+		for (auto &value : prefabObject->GetParent()->GetChildren())
 		{
 			if (value->GetName().empty())
 			{
@@ -54,7 +54,6 @@ namespace fl
 	GameObject::~GameObject()
 	{
 		StructureRemove();
-		delete m_transform;
 	}
 
 	void GameObject::Update()

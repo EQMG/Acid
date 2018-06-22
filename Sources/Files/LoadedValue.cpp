@@ -6,7 +6,7 @@ namespace fl
 {
 	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :
 		m_parent(parent),
-		m_children(new std::vector<LoadedValue *>()),
+		m_children(std::vector<LoadedValue *>()),
 		m_name(FormatString::RemoveAll(name, '\"')),
 		m_value(value)
 	{
@@ -14,17 +14,15 @@ namespace fl
 
 	LoadedValue::~LoadedValue()
 	{
-		for (auto &child : *m_children)
+		for (auto &child : m_children)
 		{
 			delete child;
 		}
-
-		delete m_children;
 	}
 
 	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull)
 	{
-		for (auto &child : *m_children)
+		for (auto &child : m_children)
 		{
 			if (child->m_name == name)
 			{
@@ -38,15 +36,15 @@ namespace fl
 		}
 
 		LoadedValue *child = new LoadedValue(this, name, "");
-		m_children->emplace_back(child);
+		m_children.emplace_back(child);
 		return child;
 	}
 
 	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull)
 	{
-		if (m_children->size() >= index)
+		if (m_children.size() >= index)
 		{
-			return m_children->at(index);
+			return m_children.at(index);
 		}
 
 		// TODO
@@ -63,7 +61,7 @@ namespace fl
 			return nullptr;
 		}
 
-		for (auto &child : *GetChild(childName)->m_children)
+		for (auto &child : GetChild(childName)->m_children)
 		{
 			auto attrib = child->GetChild(attribute);
 

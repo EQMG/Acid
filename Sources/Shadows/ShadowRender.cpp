@@ -18,7 +18,7 @@ namespace fl
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.
-		m_uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 	}
 
 	void ShadowRender::Load(LoadedValue *value)

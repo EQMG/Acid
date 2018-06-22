@@ -28,7 +28,7 @@ namespace fl
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 		// Updates uniforms.
-		m_uniformObject.Push("transform", *GetScreenTransform());
+		m_uniformObject.Push("transform", GetScreenTransform());
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_texture->GetNumberOfRows()));
@@ -54,10 +54,10 @@ namespace fl
 		}
 
 		VkRect2D scissorRect = {};
-		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_x);
-		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_y);
-		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor()->m_z);
-		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor()->m_w);
+		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_x);
+		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_y);
+		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_z);
+		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_w);
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.

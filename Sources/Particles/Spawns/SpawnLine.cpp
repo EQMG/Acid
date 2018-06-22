@@ -7,7 +7,7 @@ namespace fl
 	SpawnLine::SpawnLine(const float &length, const Vector3 &axis) :
 		ISpawnParticle(),
 		m_length(length),
-		m_axis(Vector3(axis.Normalize())),
+		m_axis(axis.Normalize()),
 		m_spawnPosition(Vector3())
 	{
 	}

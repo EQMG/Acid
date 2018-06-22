@@ -10,22 +10,22 @@ namespace fl
 	}
 
 	Transform::Transform(const Transform &source) :
-		m_position(Vector3(source.m_position)),
-		m_rotation(Vector3(source.m_rotation)),
-		m_scaling(Vector3(source.m_scaling))
+		m_position(source.m_position),
+		m_rotation(source.m_rotation),
+		m_scaling(source.m_scaling)
 	{
 	}
 
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
-		m_position(Vector3(position)),
-		m_rotation(Vector3(rotation)),
-		m_scaling(Vector3(scaling))
+		m_position(position),
+		m_rotation(rotation),
+		m_scaling(scaling)
 	{
 	}
 
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
-		m_position(Vector3(position)),
-		m_rotation(Vector3(rotation)),
+		m_position(position),
+		m_rotation(rotation),
 		m_scaling(Vector3(scale, scale, scale))
 	{
 	}
