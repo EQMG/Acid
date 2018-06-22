@@ -41,13 +41,13 @@ namespace fl
 		m_freezeRotation = value->GetChild("Freeze Rotation");
 	}
 
-	void Rigidbody::Write(LoadedValue *value)
+	void Rigidbody::Write(LoadedValue *destination)
 	{
-		value->GetChild("Mass", true)->Set(m_mass);
-		value->GetChild("Drag", true)->Set(m_drag);
-		value->GetChild("Use Gravity", true)->Set(m_useGravity);
-		m_freezePosition.Write(value->GetChild("Freeze Position", true));
-		m_freezeRotation.Write(value->GetChild("Freeze Rotation", true));
+		destination->GetChild("Mass", true)->Set(m_mass);
+		destination->GetChild("Drag", true)->Set(m_drag);
+		destination->GetChild("Use Gravity", true)->Set(m_useGravity);
+		m_freezePosition.Write(destination->GetChild("Freeze Position", true));
+		m_freezeRotation.Write(destination->GetChild("Freeze Rotation", true));
 	}
 
 	Vector3 Rigidbody::ResolveCollisions(const Vector3 &amount)

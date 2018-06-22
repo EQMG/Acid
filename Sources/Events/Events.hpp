@@ -21,7 +21,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Events *Get()
 		{
-			return reinterpret_cast<Events *>(Engine::Get()->GetModule("events"));
+			return reinterpret_cast<Events *>(Engine::Get()->GetModule("Events"));
 		}
 
 		/// <summary>

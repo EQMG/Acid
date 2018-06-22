@@ -23,7 +23,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Scenes *Get()
 		{
-			return reinterpret_cast<Scenes *>(Engine::Get()->GetModule("scenes"));
+			return reinterpret_cast<Scenes *>(Engine::Get()->GetModule("Scenes"));
 		}
 
 		/// <summary>

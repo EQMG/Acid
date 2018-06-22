@@ -36,11 +36,11 @@ namespace fl
 		m_radius = value->GetChild("Radius")->Get<float>();
 	}
 
-	void Light::Write(LoadedValue *value)
+	void Light::Write(LoadedValue *destination)
 	{
-		value->GetChild("Colour", true)->SetString(m_colour.GetHex());
-		m_offset.Write(value->GetChild("Offset", true));
-		value->GetChild("Radius", true)->Set(m_radius);
+		destination->GetChild("Colour", true)->SetString(m_colour.GetHex());
+		m_offset.Write(destination->GetChild("Offset", true));
+		destination->GetChild("Radius", true)->Set(m_radius);
 	}
 
 	Light &Light::operator=(const Light &other)

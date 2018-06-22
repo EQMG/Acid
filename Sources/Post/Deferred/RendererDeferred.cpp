@@ -6,7 +6,6 @@
 #include "Renderer/Renderer.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
-#include "Worlds/Worlds.hpp"
 
 namespace fl
 {
@@ -26,7 +25,8 @@ namespace fl
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {{"USE_IBL", "TRUE"}, {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
 		m_model(ShapeRectangle::Resource(-1.0f, 1.0f)),
-		m_brdflut(Texture::Resource("BrdfLut.png"))
+		m_brdflut(Texture::Resource("BrdfLut.png")),
+		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
 	}
 
@@ -82,10 +82,10 @@ namespace fl
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-		m_uniformScene.Push("fogColour", Worlds::Get()->GetWorld()->GetFog().GetColour());
+		m_uniformScene.Push("fogColour", m_fog.GetColour());
 		m_uniformScene.Push("cameraPosition", camera.GetPosition());
-		m_uniformScene.Push("fogDensity", Worlds::Get()->GetWorld()->GetFog().GetDensity());
-		m_uniformScene.Push("fogGradient", Worlds::Get()->GetWorld()->GetFog().GetGradient());
+		m_uniformScene.Push("fogDensity", m_fog.GetDensity());
+		m_uniformScene.Push("fogGradient", m_fog.GetGradient());
 		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
 		m_uniformScene.Push("shadowTransition", Shadows::Get()->GetShadowTransition());
 		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());

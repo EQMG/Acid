@@ -180,7 +180,6 @@ set(FLOUNDER_HEADERS_
         "Shadows/ShadowBox.hpp"
         "Shadows/ShadowRender.hpp"
         "Shadows/Shadows.hpp"
-        "Skyboxes/CelestialBody.hpp"
         "Skyboxes/MaterialSkybox.hpp"
         "Tasks/Tasks.hpp"
         "Textures/Cubemap.hpp"
@@ -195,8 +194,6 @@ set(FLOUNDER_HEADERS_
         "Uis/Uis.hpp"
         "Uis/UiSelector.hpp"
         "Uis/UiStartLogo.hpp"
-        "Worlds/IWorld.hpp"
-        "Worlds/Worlds.hpp"
         )
 
 set(FLOUNDER_SOURCES_
@@ -357,7 +354,6 @@ set(FLOUNDER_SOURCES_
         "Shadows/ShadowBox.cpp"
         "Shadows/ShadowRender.cpp"
         "Shadows/Shadows.cpp"
-        "Skyboxes/CelestialBody.cpp"
         "Skyboxes/MaterialSkybox.cpp"
         "Tasks/Tasks.cpp"
         "Textures/Cubemap.cpp"
@@ -372,7 +368,6 @@ set(FLOUNDER_SOURCES_
         "Uis/Uis.cpp"
         "Uis/UiSelector.cpp"
         "Uis/UiStartLogo.cpp"
-        "Worlds/Worlds.cpp"
         )
 
 source_group("Header Files" FILES ${FLOUNDER_HEADERS_})

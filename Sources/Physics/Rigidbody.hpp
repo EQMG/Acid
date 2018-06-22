@@ -28,7 +28,7 @@ namespace fl
 
 		void Load(LoadedValue *value) override;
 
-		void Write(LoadedValue *value) override;
+		void Write(LoadedValue *destination) override;
 
 		Vector3 ResolveCollisions(const Vector3 &amount);
 

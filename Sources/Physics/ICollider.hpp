@@ -36,7 +36,7 @@ namespace fl
 
 		virtual void Load(LoadedValue *value) override = 0;
 
-		virtual void Write(LoadedValue *value) override = 0;
+		virtual void Write(LoadedValue *destination) override = 0;
 
 		virtual std::string GetName() const override = 0;
 

@@ -35,7 +35,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Renderer *Get()
 		{
-			return reinterpret_cast<Renderer *>(Engine::Get()->GetModule("renderer"));
+			return reinterpret_cast<Renderer *>(Engine::Get()->GetModule("Renderer"));
 		}
 
 		/// <summary>

@@ -2,6 +2,7 @@
 
 #include "Textures/Cubemap.hpp"
 #include "Materials/IMaterial.hpp"
+#include "Maths/Colour.hpp"
 
 namespace fl
 {
@@ -13,13 +14,14 @@ namespace fl
 	{
 	private:
 		std::shared_ptr<Cubemap> m_cubemap;
-		bool m_enableFog;
-
+		Colour m_skyColour;
 		float m_blend;
+		Colour m_fogColour;
+		Vector2 m_fogLimits;
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const bool &enableFog = true);
+		MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
 
 		~MaterialSkybox();
 
@@ -47,9 +49,21 @@ namespace fl
 			}
 		}
 
+		Colour GetSkyColour() const { return m_skyColour; }
+
+		void SetSkyColour(const Colour &skyColour) { m_skyColour = skyColour; }
+
 		float GetBlend() const { return m_blend; }
 
-		void SetBlend(const float blend) { m_blend = blend; }
+		void SetBlend(const float &blend) { m_blend = blend; }
+
+		Colour GetFogColour() const { return m_fogColour; }
+
+		void SetFogColour(const Colour &fogColour) { m_fogColour = fogColour; }
+
+		Vector2 GetFogLimits() const { return m_fogLimits; }
+
+		void SetFogLimits(const Vector2 &fogLimits) { m_fogLimits = fogLimits; }
 
 		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
 	};
