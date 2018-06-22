@@ -162,7 +162,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Keyboard *Get()
 		{
-			return reinterpret_cast<Keyboard *>(Engine::Get()->GetModule("Keyboard"));
+			return Engine::Get()->GetModule<Keyboard>();
 		}
 
 		/// <summary>

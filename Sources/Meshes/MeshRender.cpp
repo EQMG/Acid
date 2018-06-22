@@ -49,13 +49,13 @@ namespace fl
 		}
 
 		// Binds the material pipeline.
-		material->GetMaterial()->GetPipeline()->BindPipeline(commandBuffer);
+		material->GetMaterial()->GetPipeline().BindPipeline(commandBuffer);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("UboObject", m_uniformObject);
 		material->PushDescriptors(m_descriptorSet);
-		bool updateSuccess = m_descriptorSet.Update(*material->GetMaterial()->GetPipeline());
+		bool updateSuccess = m_descriptorSet.Update(material->GetMaterial()->GetPipeline());
 
 		if (!updateSuccess)
 		{

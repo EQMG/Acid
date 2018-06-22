@@ -32,7 +32,7 @@ namespace test
 		/// <returns> The current module instance. </returns>
 		static World *Get()
 		{
-			return reinterpret_cast<World *>(Engine::Get()->GetModule("World"));
+			return Engine::Get()->GetModule<World>();
 		}
 
 		/// <summary>

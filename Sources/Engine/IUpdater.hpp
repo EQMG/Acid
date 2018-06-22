@@ -29,7 +29,7 @@ namespace fl
 		/// Updates all modules in order.
 		/// </summary>
 		/// <returns> The module register. </returns>
-		virtual void Update(ModuleRegister *moduleRegister) = 0;
+		virtual void Update(const ModuleRegister &moduleRegister) = 0;
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.

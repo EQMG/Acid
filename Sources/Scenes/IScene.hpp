@@ -14,6 +14,7 @@ namespace fl
 	private:
 		ICamera *m_camera;
 		SceneStructure *m_structure;
+		bool m_started;
 	public:
 		/// <summary>
 		/// Creates a new scene.
@@ -21,7 +22,8 @@ namespace fl
 		/// <param name="camera"> The scenes camera. </param>
 		IScene(ICamera *camera) :
 			m_camera(camera),
-			m_structure(new SceneStructure())
+			m_structure(new SceneStructure()),
+			m_started(false)
 		{
 		}
 
@@ -58,6 +60,18 @@ namespace fl
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
 		SceneStructure *GetStructure() const { return m_structure; }
+
+		/// <summary>
+		/// Gets if this scene has started.
+		/// </summary>
+		/// <returns> If the scene has started. </returns>
+		bool IsStarted() const { return m_started; }
+
+		/// <summary>
+		/// Sets if this scene has started.
+		/// </summary>
+		/// <param name="started"> If the scene has started. </param>
+		void SetStarted(const bool &started) { m_started = started; }
 
 		/// <summary>
 		/// Gets if the main menu is open.

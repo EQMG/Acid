@@ -29,7 +29,7 @@ namespace fl
 	/// <summary>
 	/// A definition for a GLFW managed joystick.
 	/// </summary>
-	struct FL_HIDDEN Joystick
+	struct Joystick
 	{
 	public:
 		bool m_connected;
@@ -56,7 +56,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Joysticks *Get()
 		{
-			return reinterpret_cast<Joysticks *>(Engine::Get()->GetModule("Joysticks"));
+			return Engine::Get()->GetModule<Joysticks>();
 		}
 
 		/// <summary>

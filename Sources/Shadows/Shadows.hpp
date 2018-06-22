@@ -32,7 +32,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Shadows *Get()
 		{
-			return reinterpret_cast<Shadows *>(Engine::Get()->GetModule("Shadows"));
+			return Engine::Get()->GetModule<Shadows>();
 		}
 
 		/// <summary>

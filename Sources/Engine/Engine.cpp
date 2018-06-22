@@ -9,7 +9,7 @@ namespace fl
 	Engine::Engine(const bool &emptyRegister) :
 		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
-		m_moduleRegister(nullptr),
+		m_moduleRegister(ModuleRegister()),
 		m_fpsLimit(-1.0f),
 		m_initialized(false),
 		m_running(true),
@@ -17,13 +17,14 @@ namespace fl
 	{
 		INSTANCE = this;
 
-		m_moduleRegister = static_cast<ModuleRegister *>(malloc(sizeof(ModuleRegister)));
-		new(m_moduleRegister) ModuleRegister(emptyRegister);
+		if (!emptyRegister)
+		{
+			m_moduleRegister.FillRegister();
+		}
 	}
 
 	Engine::~Engine()
 	{
-		delete m_moduleRegister;
 	}
 
 	int Engine::Run() const

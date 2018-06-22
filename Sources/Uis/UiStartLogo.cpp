@@ -15,9 +15,9 @@ namespace fl
 		m_starting(true)
 	{
 #ifdef FL_BUILD_DEBUG
-		Events::Get()->AddEvent(new EventTime(1.65f, false, [&]()
+		Events::Get()->AddEvent(std::make_shared<EventTime>(1.65f, false, [&]()
 #else
-			Events::Get()->AddEvent(new EventTime(3.6f, false, [&]()
+		Events::Get()->AddEvent(new EventTime(3.6f, false, [&]()
 #endif
 		{
 			SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 1.0f));

@@ -29,8 +29,6 @@ namespace fl
 
 		vkQueueWaitIdle(queue);
 
-		delete m_managerRender;
-
 		for (auto &renderStage : m_renderStages)
 		{
 			delete renderStage;
