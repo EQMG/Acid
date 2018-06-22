@@ -10,8 +10,6 @@ namespace fl
 	/// </summary>
 	class FL_EXPORT UiBound
 	{
-	private:
-		static std::map<std::string, Vector2> PIVOT_MAP;
 	public:
 		Vector2 m_position;
 		Vector2 m_reference;

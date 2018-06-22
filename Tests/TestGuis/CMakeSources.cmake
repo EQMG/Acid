@@ -4,11 +4,11 @@ set(TESTGUIS_HEADERS_
         "MainWorld.hpp"
         "Scenes/FpsCamera.hpp"
         "Scenes/Scene1.hpp"
-        "Scenes/Uis/Navigation/ContentExit.hpp"
-        "Scenes/Uis/Navigation/UiNavigation.hpp"
-        "Scenes/Uis/Navigation/UiTab.hpp"
-        "Scenes/Uis/OverlayDebug.hpp"
-        "Scenes/Uis/UiInventory.hpp"
+        "Uis/Navigation/ContentExit.hpp"
+        "Uis/Navigation/UiNavigation.hpp"
+        "Uis/Navigation/UiTab.hpp"
+        "Uis/OverlayDebug.hpp"
+        "Uis/UiInventory.hpp"
         )
 
 set(TESTGUIS_SOURCES_
@@ -18,11 +18,11 @@ set(TESTGUIS_SOURCES_
         "MainWorld.cpp"
         "Scenes/FpsCamera.cpp"
         "Scenes/Scene1.cpp"
-        "Scenes/Uis/Navigation/ContentExit.cpp"
-        "Scenes/Uis/Navigation/UiNavigation.cpp"
-        "Scenes/Uis/Navigation/UiTab.cpp"
-        "Scenes/Uis/OverlayDebug.cpp"
-        "Scenes/Uis/UiInventory.cpp"
+        "Uis/Navigation/ContentExit.cpp"
+        "Uis/Navigation/UiNavigation.cpp"
+        "Uis/Navigation/UiTab.cpp"
+        "Uis/OverlayDebug.cpp"
+        "Uis/UiInventory.cpp"
         )
 
 source_group("Header Files" FILES ${TESTGUIS_HEADERS_})

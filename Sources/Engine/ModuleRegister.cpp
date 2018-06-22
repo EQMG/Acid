@@ -30,8 +30,8 @@ namespace fl
 			RegisterModule<Scenes>(UPDATE_NORMAL, "scenes");
 			RegisterModule<Renderer>(UPDATE_RENDER, "renderer");
 			RegisterModule<Resources>(UPDATE_PRE, "resources");
-			RegisterModule<Events>(UPDATE_ALWAYS, "events");
 			RegisterModule<Tasks>(UPDATE_ALWAYS, "tasks");
+			RegisterModule<Events>(UPDATE_ALWAYS, "events");
 			RegisterModule<Uis>(UPDATE_PRE, "uis");
 			RegisterModule<Worlds>(UPDATE_PRE, "worlds");
 			RegisterModule<Particles>(UPDATE_NORMAL, "particles");

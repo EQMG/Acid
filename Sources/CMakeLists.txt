@@ -1,6 +1,8 @@
 include(CMakeSources.cmake)
 #project(Flounder)
 
+find_package(Threads REQUIRED)
+
 set(FLOUNDER_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Flounder ${LIB_TYPE} ${FLOUNDER_SOURCES})

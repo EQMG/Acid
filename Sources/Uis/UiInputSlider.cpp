@@ -20,7 +20,7 @@ namespace fl
 		m_progressMax(progressMax),
 		m_mouseOver(false),
 		m_hasChange(false),
-		m_timerChange(new Timer(0.2f)),
+		m_timerChange(Timer(0.2f)),
 		m_actionChange(nullptr)
 	{
 		SetValue(value);
@@ -31,8 +31,6 @@ namespace fl
 		delete m_text;
 		delete m_background;
 		delete m_slider;
-
-		delete m_timerChange;
 	}
 
 	void UiInputSlider::UpdateObject()
@@ -62,7 +60,7 @@ namespace fl
 		}
 
 		// Updates the listener.
-		if (m_hasChange && m_timerChange->IsPassedTime())
+		if (m_hasChange && m_timerChange.IsPassedTime())
 		{
 			if (m_actionChange != nullptr)
 			{
@@ -70,7 +68,7 @@ namespace fl
 			}
 
 			m_hasChange = false;
-			m_timerChange->ResetStartTime();
+			m_timerChange.ResetStartTime();
 		}
 
 		// Mouse over updates.

@@ -138,7 +138,7 @@ namespace fl
 		if (renderStage->IsOutOfDate(m_swapchain->GetVkExtent()))
 		{
 			RecreatePass(i);
-			return false; // VK_ERROR_INITIALIZATION_FAILED
+			return false;
 		}
 
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
@@ -153,7 +153,7 @@ namespace fl
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
 				RecreatePass(i);
-				return false; // VK_ERROR_OUT_OF_DATE_KHR
+				return false;
 			}
 
 			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
@@ -204,7 +204,7 @@ namespace fl
 		scissor.extent.height = renderStage->GetHeight();
 		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissor);
 
-		return true; // VK_SUCCESS
+		return true;
 	}
 
 	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i)

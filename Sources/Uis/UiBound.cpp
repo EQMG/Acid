@@ -2,7 +2,7 @@
 
 namespace fl
 {
-	std::map<std::string, Vector2> UiBound::PIVOT_MAP = std::map<std::string, Vector2>
+	static std::map<std::string, Vector2> PIVOT_MAP = std::map<std::string, Vector2>
 		{
 			{"TopLeft",      Vector2(0.0f, 1.0f)},
 			{"TopCentre",    Vector2(0.5f, 1.0f)},
