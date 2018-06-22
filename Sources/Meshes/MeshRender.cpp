@@ -15,7 +15,7 @@ namespace fl
 
 	void MeshRender::Update()
 	{
-		auto material = GetGameObject()->GetComponent<IMaterial>();
+		auto material = GetGameObject()->GetComponent<IMaterial>(false);
 
 		if (material == nullptr)
 		{
@@ -40,8 +40,8 @@ namespace fl
 		}*/
 
 		// Gets required components.
-		auto material = GetGameObject()->GetComponent<IMaterial>();
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto material = GetGameObject()->GetComponent<IMaterial>(false);
+		auto mesh = GetGameObject()->GetComponent<Mesh>(false);
 
 		if (material == nullptr || mesh == nullptr || mesh->GetModel() == nullptr)
 		{
@@ -71,7 +71,7 @@ namespace fl
 	{
 	}
 
-	void MeshRender::Write(LoadedValue *value)
+	void MeshRender::Write(LoadedValue *destination)
 	{
 	}
 }

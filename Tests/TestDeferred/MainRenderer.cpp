@@ -2,7 +2,6 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Worlds/Worlds.hpp>
 
 namespace test
 {
@@ -36,20 +35,17 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
-		AddRenderer<RendererShadows>(GraphicsStage(0, 0));
+		AddRenderer<RendererShadows>(GraphicsStage(0, 0))->SetEnabled(false);
 		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
 		AddRenderer<RendererParticles>(GraphicsStage(1, 0));
 		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
 		AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-		AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
+		AddRenderer<FilterLensflare>(GraphicsStage(1, 2))->SetEnabled(false);
 	//	AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
 	//	AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
-
-		GetRenderer<RendererShadows>()->SetEnabled(false);
-		GetRenderer<FilterLensflare>()->SetEnabled(false);
 	}
 
 	MainRenderer::~MainRenderer()

@@ -35,8 +35,10 @@ namespace fl
 		std::map<float, std::vector<std::shared_ptr<IRenderer>>> GetStages() const { return m_stages; }
 
 		template<typename T>
-		std::shared_ptr<T> GetRenderer()
+		std::shared_ptr<T> GetRenderer(const bool &allowDisabled = false)
 		{
+			std::shared_ptr<T> alternative = nullptr;
+
 			for (auto &stage : m_stages)
 			{
 				for (auto &renderer : stage.second)
@@ -45,12 +47,18 @@ namespace fl
 
 					if (casted != nullptr)
 					{
+						if (!allowDisabled && !casted->IsEnabled())
+						{
+							alternative = casted;
+							continue;
+						}
+
 						return casted;
 					}
 				}
 			}
 
-			return nullptr;
+			return alternative;
 		}
 
 		std::shared_ptr<IRenderer> AddRenderer(std::shared_ptr<IRenderer> renderer);

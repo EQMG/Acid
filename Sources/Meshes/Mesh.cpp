@@ -40,9 +40,9 @@ namespace fl
 		TrySetModel(value->GetChild("Model")->GetString());
 	}
 
-	void Mesh::Write(LoadedValue *value)
+	void Mesh::Write(LoadedValue *destination)
 	{
-		value->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
+		destination->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)
@@ -51,7 +51,7 @@ namespace fl
 		{
 			return;
 		}
-
+		// TODO
 		auto split = FormatString::Split(filename, "_");
 
 		if (!split.empty() && split[0] == "Cube")

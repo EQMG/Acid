@@ -1,19 +1,20 @@
 #include <iostream>
+#include <Animations/MaterialAnimated.hpp>
+#include <Animations/MeshAnimated.hpp>
+#include <Files/Files.hpp>
 #include <Files/Json/FileJson.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Animations/MaterialAnimated.hpp>
-#include <Worlds/Worlds.hpp>
-#include <Files/Files.hpp>
-#include <Animations/MeshAnimated.hpp>
+#include "World/World.hpp"
+#include "Skybox/CelestialBody.hpp"
+#include "Skybox/SkyboxCycle.hpp"
 #include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
-#include "MainWorld.hpp"
 
 using namespace test;
 using namespace fl;
@@ -39,11 +40,14 @@ int main(int argc, char **argv)
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
-//	Engine::Get()->RegisterModule<Example>("Example");
+//	Engine::Get()->RegisterModule<Example>(UPDATE_NORMAL, "Example");
+	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL, "World");
 //	Engine::Get()->DeregisterModule("shadows");
 
 	// Registers components.
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
+	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
 	Scenes::Get()->RegisterComponent<MaterialAnimated>("MaterialAnimated");
 
 	// Initializes modules.
@@ -52,7 +56,6 @@ int main(int argc, char **argv)
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
-	Worlds::Get()->SetWorld(new MainWorld());
 
 	// Runs the game loop.
 	const int exitCode = engine->Run();

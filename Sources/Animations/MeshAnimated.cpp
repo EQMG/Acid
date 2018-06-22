@@ -50,9 +50,9 @@ namespace fl
 		TrySetModel(value->GetChild("Model")->GetString());
 	}
 
-	void MeshAnimated::Write(LoadedValue *value)
+	void MeshAnimated::Write(LoadedValue *destination)
 	{
-		value->GetChild("Model", true)->SetString(m_filename);
+		destination->GetChild("Model", true)->SetString(m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)

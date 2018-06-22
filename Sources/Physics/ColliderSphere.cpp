@@ -26,7 +26,7 @@ namespace fl
 	{
 	}
 
-	void ColliderSphere::Write(LoadedValue *value)
+	void ColliderSphere::Write(LoadedValue *destination)
 	{
 	}
 
