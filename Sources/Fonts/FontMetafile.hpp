@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 #include <map>
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
@@ -67,7 +68,7 @@ namespace fl
 		/// </summary>
 		~FontMetafile();
 
-		FontCharacter GetCharacter(const int &ascii);
+		std::optional<FontCharacter> GetCharacter(const int &ascii);
 
 		std::string GetFilename() override { return m_filename; }
 

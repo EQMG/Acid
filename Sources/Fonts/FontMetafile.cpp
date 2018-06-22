@@ -57,7 +57,7 @@ namespace fl
 	{
 	}
 
-	FontCharacter FontMetafile::GetCharacter(const int &ascii)
+	std::optional<FontCharacter> FontMetafile::GetCharacter(const int &ascii)
 	{
 		auto it = m_metadata.find(ascii);
 
@@ -66,7 +66,7 @@ namespace fl
 			return it->second;
 		}
 
-		return FontCharacter(-1, 0, 0, 0, 0, 0, 0, 0, 0, 0); // TODO: Use `std::optional`.
+		return {};
 	}
 
 	void FontMetafile::ProcessNextLine(const std::string &line)

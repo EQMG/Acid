@@ -138,7 +138,7 @@ typedef struct {
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
 typedef struct {
     VkIcdSurfaceBase base;
-    ANativeWindow *window;
+    struct ANativeWindow *window;
 } VkIcdSurfaceAndroid;
 #endif  // VK_USE_PLATFORM_ANDROID_KHR
 

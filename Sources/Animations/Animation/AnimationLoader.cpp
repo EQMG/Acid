@@ -40,7 +40,7 @@ namespace fl
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // FIXME: Find by child `source`
+		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // TODO: Find by child `source`
 		std::string sourceInput = animationGroup->GetChild("-id")->GetString() + "-input";
 		LoadedValue *timeData = animationGroup->GetChildWithAttribute("source", "-id", sourceInput)->GetChild("float_array")->GetChild("#text");
 

@@ -40,7 +40,7 @@ namespace fl
 		auto rawData = FormatString::Split(weightsNode->GetChild("#text")->GetString(), " ");
 		auto weights = std::vector<float>(rawData.size());
 
-		for (int i = 0; i < weights.size(); i++)
+		for (unsigned int i = 0; i < weights.size(); i++)
 		{
 			weights[i] = std::stof(rawData[i]);
 		}
@@ -53,7 +53,7 @@ namespace fl
 		auto rawData = FormatString::Split(weightsDataNode->GetChild("vcount")->GetString(), " ");
 		auto counts = std::vector<int>(rawData.size());
 
-		for (int i = 0; i < rawData.size(); i++)
+		for (unsigned int i = 0; i < rawData.size(); i++)
 		{
 			counts[i] = std::stoi(rawData[i]);
 		}

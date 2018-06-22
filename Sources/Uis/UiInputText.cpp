@@ -17,7 +17,7 @@ namespace fl
 		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"), 1)),
 		m_prefix(prefix),
 		m_value(value),
-		m_inputDelay(new UiInputDelay()),
+		m_inputDelay(UiInputDelay()),
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
@@ -30,8 +30,6 @@ namespace fl
 	{
 		delete m_text;
 		delete m_background;
-
-		delete m_inputDelay;
 	}
 
 	void UiInputText::UpdateObject()
@@ -43,9 +41,9 @@ namespace fl
 			// TODO: Fix inputs that are not GLFW defined.
 			if (key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
 			{
-				m_inputDelay->Update(true);
+				m_inputDelay.Update(true);
 
-				if (m_lastKey != key || m_inputDelay->CanInput())
+				if (m_lastKey != key || m_inputDelay.CanInput())
 				{
 					m_value += static_cast<char>(key);
 					m_text->SetString(m_prefix + m_value);
@@ -60,9 +58,9 @@ namespace fl
 			}
 			else if (Keyboard::Get()->GetKey(Key::KEY_BACKSPACE))
 			{
-				m_inputDelay->Update(true);
+				m_inputDelay.Update(true);
 
-				if (m_lastKey != 8 || m_inputDelay->CanInput())
+				if (m_lastKey != 8 || m_inputDelay.CanInput())
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
 					m_text->SetString(m_prefix + m_value);
@@ -77,14 +75,14 @@ namespace fl
 			}
 			else if (Keyboard::Get()->GetKey(Key::KEY_ENTER) && m_lastKey != 13)
 			{
-				m_inputDelay->Update(true);
+				m_inputDelay.Update(true);
 
 				m_selected = false;
 				m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
 			}
 			else
 			{
-				m_inputDelay->Update(false);
+				m_inputDelay.Update(false);
 				m_lastKey = 0;
 			}
 		}
