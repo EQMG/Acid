@@ -4,20 +4,14 @@
 
 namespace fl
 {
-	Config::Config(IFile *file) :
+	Config::Config(std::shared_ptr<IFile> file) :
 		m_file(file),
-		m_values(std::map<std::string, ConfigKey *>())
+		m_values(std::map<std::string, std::shared_ptr<ConfigKey>>())
 	{
 	}
 
 	Config::~Config()
 	{
-		delete m_file;
-
-		for (auto &pair : m_values)
-		{
-			delete pair.second;
-		}
 	}
 
 	void Config::Load()
@@ -35,6 +29,7 @@ namespace fl
 
 	void Config::Update()
 	{
+		// TODO: Implement.
 		//	for (auto &value : m_values)
 		//	{
 		//		value.second.SetValue(value.second.GetGetter()());
@@ -54,11 +49,11 @@ namespace fl
 		m_file->Save();
 	}
 
-	ConfigKey *Config::GetRaw(const std::string &key, const std::string &normal)
+	std::shared_ptr<ConfigKey> Config::GetRaw(const std::string &key, const std::string &normal)
 	{
 		if (m_values.find(key) == m_values.end())
 		{
-			auto configKey = new ConfigKey(normal, false);
+			auto configKey = std::make_shared<ConfigKey>(normal, false);
 			m_values.emplace(key, configKey);
 			return configKey;
 		}
@@ -70,11 +65,11 @@ namespace fl
 	{
 		if (m_values.find(key) == m_values.end())
 		{
-			m_values.emplace(key, new ConfigKey(value, false));
+			m_values.emplace(key, std::make_shared<ConfigKey>(value, false));
 			return;
 		}
 
-		m_values.at(key) = new ConfigKey(value);
+		m_values.at(key) = std::make_shared<ConfigKey>(value);
 	}
 
 	void Config::Remove(const std::string &key)
@@ -86,7 +81,6 @@ namespace fl
 			return;
 		}
 
-		delete (*value).second;
 		m_values.erase(key);
 	}
 }

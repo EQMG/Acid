@@ -47,7 +47,7 @@ namespace fl
 		}
 	}
 
-	void ParticleSystem::Load(LoadedValue *value)
+	void ParticleSystem::Load(std::shared_ptr<LoadedValue> value)
 	{
 		//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
 		//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
@@ -57,7 +57,7 @@ namespace fl
 		m_systemOffset = value->GetChild("Offset");
 	}
 
-	void ParticleSystem::Write(LoadedValue *destination)
+	void ParticleSystem::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->GetChild("PPS", true)->Set(m_pps);
 		destination->GetChild("Average Speed", true)->Set(m_averageSpeed);

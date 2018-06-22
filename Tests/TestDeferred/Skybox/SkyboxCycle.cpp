@@ -45,12 +45,12 @@ namespace test
 		materialSkybox->SetFogLimits(Vector2(-1000000.0f, -1000000.0f));
 	}
 
-	void SkyboxCycle::Load(LoadedValue *value)
+	void SkyboxCycle::Load(std::shared_ptr<LoadedValue> value)
 	{
 		m_enableFog = value->GetChild("Enable Fog")->Get<bool>();
 	}
 
-	void SkyboxCycle::Write(LoadedValue *destination)
+	void SkyboxCycle::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->GetChild("Enable Fog", true)->Set((int) m_enableFog);
 	}

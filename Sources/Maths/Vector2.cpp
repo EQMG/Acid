@@ -179,7 +179,7 @@ namespace fl
 		return Vector2(x, y);
 	}
 
-	void Vector2::Write(LoadedValue *destination)
+	void Vector2::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->SetChild<float>("x", m_x);
 		destination->SetChild<float>("y", m_y);
@@ -199,7 +199,7 @@ namespace fl
 		return *this;
 	}
 
-	Vector2 &Vector2::operator=(LoadedValue *source)
+	Vector2 &Vector2::operator=(std::shared_ptr<LoadedValue> source)
 	{
 		m_x = source->GetChild("x")->Get<float>();
 		m_y = source->GetChild("y")->Get<float>();

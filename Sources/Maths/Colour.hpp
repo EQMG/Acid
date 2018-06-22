@@ -177,7 +177,7 @@ namespace fl
 		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(std::shared_ptr<LoadedValue> destination);
 
 		float GetR() const { return m_r; }
 
@@ -199,7 +199,7 @@ namespace fl
 
 		Colour &operator=(const std::string &hex);
 
-		Colour &operator=(LoadedValue *value);
+		Colour &operator=(std::shared_ptr<LoadedValue> value);
 
 		bool operator==(const Colour &other) const;
 

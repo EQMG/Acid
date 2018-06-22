@@ -12,7 +12,7 @@ namespace fl
 		m_filename(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new ColliderAabb())
+		m_aabb(ColliderAabb())
 	{
 	}
 
@@ -21,7 +21,7 @@ namespace fl
 		m_filename(filename),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new ColliderAabb())
+		m_aabb(ColliderAabb())
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -31,16 +31,16 @@ namespace fl
 		if (!vertices.empty())
 		{
 			void *verticesData = vertices[0]->GetData(vertices);
-			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+			m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
 			free(verticesData);
 		}
 
 		if (!indices.empty())
 		{
-			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+			m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		*m_aabb = CalculateAabb(vertices);
+		m_aabb = CalculateAabb(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -53,15 +53,15 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new ColliderAabb())
+		m_aabb(ColliderAabb())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
-		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
 		free(verticesData);
 
-		m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+		m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 
-		*m_aabb = CalculateAabb(vertices);
+		m_aabb = CalculateAabb(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -74,13 +74,13 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(new ColliderAabb())
+		m_aabb(ColliderAabb())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
-		m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
 		free(verticesData);
 
-		*m_aabb = CalculateAabb(vertices);
+		m_aabb = CalculateAabb(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -90,9 +90,6 @@ namespace fl
 
 	Model::~Model()
 	{
-		delete m_indexBuffer;
-		delete m_vertexBuffer;
-		delete m_aabb;
 	}
 
 	void Model::CmdRender(const CommandBuffer &commandBuffer, const unsigned int &instances)
@@ -121,22 +118,20 @@ namespace fl
 	void Model::Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name)
 	{
 		m_filename = name;
-		delete m_vertexBuffer;
-		delete m_indexBuffer;
 
 		if (!vertices.empty())
 		{
 			void *verticesData = vertices[0]->GetData(vertices);
-			m_vertexBuffer = new VertexBuffer(vertices[0]->GetSize(), vertices.size(), verticesData);
+			m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
 			free(verticesData);
 		}
 
 		if (!indices.empty())
 		{
-			m_indexBuffer = new IndexBuffer(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
+			m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		*m_aabb = CalculateAabb(vertices);
+		m_aabb = CalculateAabb(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -149,9 +144,6 @@ namespace fl
 #if FL_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
-
-		delete m_indexBuffer;
-		delete m_vertexBuffer;
 
 		if (!FileSystem::FileExists(m_filename))
 		{

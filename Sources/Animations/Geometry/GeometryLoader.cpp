@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
+	GeometryLoader::GeometryLoader(std::shared_ptr<LoadedValue> libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<VertexAnimatedData *>()),
@@ -45,7 +45,7 @@ namespace fl
 	void GeometryLoader::LoadVertices()
 	{
 		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "-id", positionsSource)->GetChild("float_array");
+		std::shared_ptr<LoadedValue> positionsData = m_meshData->GetChildWithAttribute("source", "-id", positionsSource)->GetChild("float_array");
 		unsigned int positionsCount = std::stoi(positionsData->GetChild("-count")->GetString());
 		auto positionsRawData = FormatString::Split(positionsData->GetChild("#text")->GetString(), " ");
 
@@ -62,7 +62,7 @@ namespace fl
 	void GeometryLoader::LoadUvs()
 	{
 		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "TEXCOORD")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "-id", uvsSource)->GetChild("float_array");
+		std::shared_ptr<LoadedValue> uvsData = m_meshData->GetChildWithAttribute("source", "-id", uvsSource)->GetChild("float_array");
 		unsigned int uvsCount = std::stoi(uvsData->GetChild("-count")->GetString());
 		auto uvsRawData = FormatString::Split(uvsData->GetChild("#text")->GetString(), " ");
 
@@ -76,7 +76,7 @@ namespace fl
 	void GeometryLoader::LoadNormals()
 	{
 		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "NORMAL")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "-id", normalsSource)->GetChild("float_array");
+		std::shared_ptr<LoadedValue> normalsData = m_meshData->GetChildWithAttribute("source", "-id", normalsSource)->GetChild("float_array");
 		unsigned int normalsCount = std::stoi(normalsData->GetChild("-count")->GetString());
 		auto normalsRawData = FormatString::Split(normalsData->GetChild("#text")->GetString(), " ");
 

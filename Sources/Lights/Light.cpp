@@ -29,14 +29,14 @@ namespace fl
 		m_position = GetGameObject()->GetTransform().GetPosition() + m_offset;
 	}
 
-	void Light::Load(LoadedValue *value)
+	void Light::Load(std::shared_ptr<LoadedValue> value)
 	{
 		m_colour = value->GetChild("Colour")->GetString();
 		m_offset = value->GetChild("Offset");
 		m_radius = value->GetChild("Radius")->Get<float>();
 	}
 
-	void Light::Write(LoadedValue *destination)
+	void Light::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->GetChild("Colour", true)->SetString(m_colour.GetHex());
 		m_offset.Write(destination->GetChild("Offset", true));
@@ -51,7 +51,7 @@ namespace fl
 		return *this;
 	}
 
-	Light &Light::operator=(LoadedValue *source)
+	Light &Light::operator=(std::shared_ptr<LoadedValue> source)
 	{
 		m_colour = source->GetChild("colour");
 		m_offset = source->GetChild("offset");

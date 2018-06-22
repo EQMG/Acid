@@ -1,22 +1,25 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <utility>
 #include <vector>
+#include <bits/shared_ptr.h>
 #include "Helpers/FormatString.hpp"
 
 namespace fl
 {
-	class FL_EXPORT LoadedValue
+	class FL_EXPORT LoadedValue :
+		public std::enable_shared_from_this<LoadedValue>
 	{
 	private:
-		LoadedValue *m_parent;
-		std::vector<LoadedValue *> m_children;
+		std::shared_ptr<LoadedValue> m_parent;
+		std::vector<std::shared_ptr<LoadedValue>> m_children;
 
 		std::string m_name;
 		std::string m_value;
 	public:
-		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value);
+		LoadedValue(std::shared_ptr<LoadedValue> parent, const std::string &name, const std::string &value);
 
 		~LoadedValue();
 
@@ -28,16 +31,16 @@ namespace fl
 
 		void SetValue(const std::string &data) { m_value = data; }
 
-		std::vector<LoadedValue *> &GetChildren() { return m_children; }
+		std::vector<std::shared_ptr<LoadedValue>> &GetChildren() { return m_children; }
 
-		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
+		std::shared_ptr<LoadedValue> GetChild(const std::string &name, const bool &addIfNull = false);
 
-		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false);
+		std::shared_ptr<LoadedValue> GetChild(const unsigned int &index, const bool &addIfNull = false);
 
 		template<typename T>
-		void AddChild(LoadedValue *value)
+		void AddChild(std::shared_ptr<LoadedValue> value)
 		{
-			LoadedValue *child = GetChild(value->m_name);
+			auto child = GetChild(value->m_name);
 
 			if (child != nullptr)
 			{
@@ -53,11 +56,11 @@ namespace fl
 		void SetChild(const std::string &name, const T &value)
 		{
 			std::string strValue = std::to_string(value);
-			LoadedValue *child = GetChild(name);
+			auto child = GetChild(name);
 
 			if (child == nullptr)
 			{
-				child = new LoadedValue(this, name, strValue);
+				child = std::make_shared<LoadedValue>(shared_from_this(), name, strValue);
 				m_children.emplace_back(child);
 				return;
 			}
@@ -78,7 +81,7 @@ namespace fl
 			SetValue(std::to_string(data));
 		}
 
-		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
+		std::shared_ptr<LoadedValue> GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
 
 		std::string GetString();
 

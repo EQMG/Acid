@@ -32,9 +32,9 @@ namespace fl
 		/// </summary>
 		~ColliderSphere();
 
-		void Load(LoadedValue *value) override;
+		void Load(std::shared_ptr<LoadedValue> value) override;
 
-		void Write(LoadedValue *destination) override;
+		void Write(std::shared_ptr<LoadedValue> destination) override;
 
 		ICollider *UpdateCollider(const Transform &transform, ICollider *destination) override;
 

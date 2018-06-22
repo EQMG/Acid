@@ -25,13 +25,13 @@ namespace fl
 		GetGameObject()->GetTransform().SetPosition(Scenes::Get()->GetCamera()->GetPosition());
 	}
 
-	void MaterialSkybox::Load(LoadedValue *value)
+	void MaterialSkybox::Load(std::shared_ptr<LoadedValue> value)
 	{
 		TrySetCubemap(value->GetChild("Cubemap Texture")->GetString(), value->GetChild("Cubemap Extension")->GetString());
 		m_skyColour = value->GetChild("Sky Colour")->GetString();
 	}
 
-	void MaterialSkybox::Write(LoadedValue *destination)
+	void MaterialSkybox::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->GetChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
 		destination->GetChild("Cubemap Extension", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetExtension());

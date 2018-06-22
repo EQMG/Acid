@@ -212,7 +212,7 @@ namespace fl
 		return result;
 	}
 
-	void Quaternion::Write(LoadedValue *destination)
+	void Quaternion::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->SetChild<float>("x", m_x);
 		destination->SetChild<float>("y", m_y);
@@ -228,7 +228,7 @@ namespace fl
 		return *this;
 	}
 
-	Quaternion &Quaternion::operator=(LoadedValue *source)
+	Quaternion &Quaternion::operator=(std::shared_ptr<LoadedValue> source)
 	{
 		m_x = source->GetChild("x")->Get<float>();
 		m_y = source->GetChild("y")->Get<float>();
