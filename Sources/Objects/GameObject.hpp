@@ -19,13 +19,13 @@ namespace fl
 		std::string m_name;
 		Transform m_transform;
 		std::vector<std::shared_ptr<IComponent>> m_components;
-		ISpatialStructure *m_structure;
+		std::shared_ptr<ISpatialStructure> m_structure;
 		GameObject* m_parent;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
+		GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure = nullptr);
 
-		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
+		GameObject(const std::string &filepath, const Transform &transform, std::shared_ptr<ISpatialStructure> structure = nullptr);
 
 		virtual ~GameObject();
 
@@ -124,15 +124,15 @@ namespace fl
 
 		void SetTransform(const Transform &transform) { m_transform = transform; }
 
-		ISpatialStructure *GetStructure() const { return m_structure; }
+		std::shared_ptr<ISpatialStructure> GetStructure() const { return m_structure; }
+
+		void SetStructure(std::shared_ptr<ISpatialStructure> structure);
 
 		bool IsRemoved() const { return m_removed; }
 
 		GameObject *GetParent() const { return m_parent; }
 
 		void SetParent(GameObject *parent) { m_parent = parent; }
-
-		void StructureSwitch(ISpatialStructure *structure);
 
 		void StructureRemove();
 	};

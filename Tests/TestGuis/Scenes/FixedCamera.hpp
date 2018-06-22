@@ -8,7 +8,7 @@ using namespace fl;
 
 namespace test
 {
-	class FpsCamera :
+	class FixedCamera :
 		public ICamera
 	{
 	private:
@@ -26,9 +26,9 @@ namespace test
 		Frustum m_viewFrustum;
 		Ray m_viewRay;
 	public:
-		FpsCamera();
+		FixedCamera();
 
-		~FpsCamera();
+		~FixedCamera();
 
 		void Update() override;
 

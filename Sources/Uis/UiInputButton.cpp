@@ -29,12 +29,12 @@ namespace fl
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver)
 		{
-			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME));
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!Uis::Get()->GetSelector()->IsSelected(*m_text) && m_mouseOver)
 		{
-			m_text->SetScaleDriver(new DriverSlide(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME));
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
 

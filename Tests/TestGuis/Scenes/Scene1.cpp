@@ -7,14 +7,14 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
-#include "FpsCamera.hpp"
+#include "FixedCamera.hpp"
 
 namespace test
 {
 	const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(new FpsCamera()),
+		IScene(std::make_shared<FixedCamera>()),
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
@@ -28,9 +28,9 @@ namespace test
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
 		m_uiNavigation(new UiNavigation(Uis::Get()->GetContainer()))
 	{
-		m_uiStartLogo->SetAlphaDriver(new DriverConstant(1.0f));
-		m_overlayDebug->SetAlphaDriver(new DriverConstant(0.0f));
-		m_uiNavigation->SetAlphaDriver(new DriverConstant(0.0f));
+		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
+		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
+		m_uiNavigation->SetAlphaDriver<DriverConstant>(0.0f);
 	}
 
 	Scene1::~Scene1()
@@ -77,9 +77,9 @@ namespace test
 
 		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
 		{
-			m_uiStartLogo->SetAlphaDriver(new DriverConstant(0.0f));
-			m_overlayDebug->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, UI_SLIDE_TIME));
-			//m_uiNavigation->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, SLIDE_TIME));
+			m_uiStartLogo->SetAlphaDriver<DriverConstant>(0.0f);
+			m_overlayDebug->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
+			//m_uiNavigation->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, SLIDE_TIME);
 			m_uiStartLogo->SetStarting(false);
 
 			TogglePause(); // TODO: Automatic testing.
@@ -101,11 +101,11 @@ namespace test
 
 		if (IsGamePaused())
 		{
-			m_uiNavigation->SetAlphaDriver(new DriverSlide(m_uiNavigation->GetAlpha(), 0.0f, UI_SLIDE_TIME));
+			m_uiNavigation->SetAlphaDriver<DriverSlide>(m_uiNavigation->GetAlpha(), 0.0f, UI_SLIDE_TIME);
 		}
 		else
 		{
-			m_uiNavigation->SetAlphaDriver(new DriverSlide(m_uiNavigation->GetAlpha(), 1.0f, UI_SLIDE_TIME));
+			m_uiNavigation->SetAlphaDriver<DriverSlide>(m_uiNavigation->GetAlpha(), 1.0f, UI_SLIDE_TIME);
 		}
 	}
 }

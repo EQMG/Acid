@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
+#include <memory>
 #include <functional>
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
@@ -28,10 +29,10 @@ namespace fl
 		Vector2 m_positionOffset;
 		Vector4 m_screenTransform;
 
-		IDriver *m_alphaDriver;
+		std::shared_ptr<IDriver> m_alphaDriver;
 		float m_alpha;
 
-		IDriver *m_scaleDriver;
+		std::shared_ptr<IDriver> m_scaleDriver;
 		float m_scale;
 
 		std::function<void()> m_actionLeft;
@@ -109,11 +110,35 @@ namespace fl
 		/// <returns> The screen transform. </returns>
 		Vector4 GetScreenTransform() const { return m_screenTransform; }
 
-		void SetAlphaDriver(IDriver *alphaDriver);
+		/// <summary>
+		/// Sets the alpha driver.
+		/// </summary>
+		/// <param name="driver"> The new alpha driver. </param>
+		void SetAlphaDriver(std::shared_ptr<IDriver> alphaDriver) { m_alphaDriver = alphaDriver; }
+
+		/// <summary>
+		/// Sets a new alpha driver from a type.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetAlphaDriver(Args &&... args) { SetAlphaDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
 
 		float GetAlpha() const;
 
-		void SetScaleDriver(IDriver *scaleDriver);
+		/// <summary>
+		/// Sets the scale driver.
+		/// </summary>
+		/// <param name="driver"> The new scale driver. </param>
+		void SetScaleDriver(std::shared_ptr<IDriver> scaleDriver) { m_scaleDriver = scaleDriver; }
+
+		/// <summary>
+		/// Sets a new scale driver from a type.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetScaleDriver(Args &&... args) { SetScaleDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
 
 		float GetScale() const { return m_scale; }
 

@@ -69,18 +69,18 @@ namespace fl
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		ICamera *GetCamera() const { return m_scene->GetCamera(); }
+		std::shared_ptr<ICamera> GetCamera() const { return m_scene->GetCamera(); }
+
+		/// <summary>
+		/// Gets the GameObjects structure.
+		/// </summary>
+		/// <returns> The GameObjects structure. </returns>
+		std::shared_ptr<SceneStructure> GetStructure() const { return m_scene->GetStructure(); }
 
 		/// <summary>
 		/// Gets if the scene is paused.
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		bool IsGamePaused() { return m_scene->IsGamePaused(); }
-
-		/// <summary>
-		/// Gets the GameObjects structure.
-		/// </summary>
-		/// <returns> The GameObjects structure. </returns>
-		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
 	};
 }

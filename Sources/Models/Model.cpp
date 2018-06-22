@@ -319,7 +319,7 @@ namespace fl
 		deltaPos1 *= deltaUv2.m_y;
 		deltaPos2 *= deltaUv1.m_y;
 
-		Vector3 *tangent = new Vector3(r * (deltaPos1 - deltaPos2));
+		Vector3 tangent = Vector3(r * (deltaPos1 - deltaPos2));
 
 		v0->AddTangent(tangent);
 		v1->AddTangent(tangent);

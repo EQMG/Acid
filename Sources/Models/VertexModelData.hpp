@@ -20,7 +20,7 @@ namespace fl
 		uint32_t m_index;
 		float m_length;
 
-		std::vector<Vector3 *> m_tangents;
+		std::vector<Vector3> m_tangents;
 		Vector3 m_averagedTangent;
 	public:
 		VertexModelData(const uint32_t &index, const Vector3 &position);
@@ -45,7 +45,7 @@ namespace fl
 
 		float GetLength() const { return m_length; }
 
-		void AddTangent(Vector3 *tangent);
+		void AddTangent(const Vector3 &tangent);
 
 		void AverageTangents();
 

@@ -15,13 +15,13 @@ namespace fl
 		m_starting(true)
 	{
 #ifdef FL_BUILD_DEBUG
-		Events::Get()->AddEvent(std::make_shared<EventTime>(1.65f, false, [&]()
+		Events::Get()->AddEvent<EventTime>(1.65f, false, [&]()
 #else
-		Events::Get()->AddEvent(new EventTime(3.6f, false, [&]()
+		Events::Get()->AddEvent<EventTime>(3.6f, false, [&]()
 #endif
 		{
-			SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 1.0f));
-		}));
+			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 1.0f);
+		});
 	}
 
 	UiStartLogo::~UiStartLogo()
@@ -34,7 +34,7 @@ namespace fl
 	void UiStartLogo::UpdateObject()
 	{
 		m_guiBackground->GetRectangle().m_dimensions.m_x = Display::Get()->GetAspectRatio();
-		m_guiBackground->SetScaleDriver(new DriverConstant(1.6f));
+		m_guiBackground->SetScaleDriver<DriverConstant>(1.6f);
 		m_guiBackground->SetVisible(true);
 		m_guiLogo->SetVisible(true);
 	}

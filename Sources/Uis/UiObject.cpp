@@ -38,9 +38,6 @@ namespace fl
 		{
 			m_parent->RemoveChild(this);
 		}
-
-		delete m_alphaDriver;
-		delete m_scaleDriver;
 	}
 
 	void UiObject::Update()
@@ -137,12 +134,6 @@ namespace fl
 		return m_visible;
 	}
 
-	void UiObject::SetAlphaDriver(IDriver *alphaDriver)
-	{
-		delete m_alphaDriver;
-		m_alphaDriver = alphaDriver;
-	}
-
 	float UiObject::GetAlpha() const
 	{
 		if (m_parent != nullptr)
@@ -151,11 +142,5 @@ namespace fl
 		}
 
 		return m_alpha;
-	}
-
-	void UiObject::SetScaleDriver(IDriver *scaleDriver)
-	{
-		delete m_scaleDriver;
-		m_scaleDriver = scaleDriver;
 	}
 }
