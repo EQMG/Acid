@@ -58,7 +58,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Mouse *Get()
 		{
-			return reinterpret_cast<Mouse *>(Engine::Get()->GetModule("Mouse"));
+			return Engine::Get()->GetModule<Mouse>();
 		}
 
 		/// <summary>

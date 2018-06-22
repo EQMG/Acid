@@ -14,8 +14,9 @@ namespace fl
 		public IModule
 	{
 	private:
-		ComponentRegister *m_componentRegister;
-		IScene *m_scene;
+		std::shared_ptr<IScene> m_scene;
+
+		ComponentRegister m_componentRegister;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -23,7 +24,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Scenes *Get()
 		{
-			return reinterpret_cast<Scenes *>(Engine::Get()->GetModule("Scenes"));
+			return Engine::Get()->GetModule<Scenes>();
 		}
 
 		/// <summary>
@@ -38,6 +39,10 @@ namespace fl
 
 		void Update() override;
 
+		std::shared_ptr<IScene> GetScene() const { return m_scene; }
+
+		void SetScene(std::shared_ptr<IScene> scene) { m_scene = scene; }
+
 		/// <summary>
 		/// Registers a component with the register.
 		/// </summary>
@@ -45,24 +50,20 @@ namespace fl
 		/// <param name="name"> The components name. </param>
 		/// <param name="T"> The components type. </param>
 		template<typename T>
-		void RegisterComponent(const std::string &name) { m_componentRegister->RegisterComponent<T>(name); }
+		void RegisterComponent(const std::string &name) { m_componentRegister.RegisterComponent<T>(name); }
 
 		/// <summary>
 		/// Deregisters a component.
 		/// </summary>
 		/// <param name="name"> The components name. </param>
-		void DeregisterComponent(const std::string &name) { m_componentRegister->DeregisterComponent(name); }
+		void DeregisterComponent(const std::string &name) { m_componentRegister.DeregisterComponent(name); }
 
 		/// <summary>
 		/// Creates a new component from the register.
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister->CreateComponent(name); }
-
-		IScene *GetScene() const { return m_scene; }
-
-		void SetScene(IScene *scene);
+		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
 
 		/// <summary>
 		/// Gets the current camera object.

@@ -21,8 +21,8 @@ int main(int argc, char **argv)
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine and updater objects.
-	auto engine = new Engine();
-	engine->SetUpdater(new MainUpdater());
+	auto engine = std::make_shared<Engine>();
+	engine->SetUpdater(std::make_shared<MainUpdater>());
 
 	// Registers modules.
 
@@ -32,14 +32,11 @@ int main(int argc, char **argv)
 	Display::Get()->SetTitle("Testing Guis");
 	Display::Get()->SetIcon("Logos/Tail.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
-	Renderer::Get()->SetManager(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	Renderer::Get()->SetManager(std::make_shared<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_shared<Scene1>());
 
 	// Runs the game loop.
-	const int exitCode = engine->Run();
-
-	// Deletes the engine.
-	delete engine;
+	auto exitCode = engine->Run();
 
 	// Pauses the console.
 	std::cin.get();

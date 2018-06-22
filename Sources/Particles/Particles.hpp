@@ -24,7 +24,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Particles *Get()
 		{
-			return reinterpret_cast<Particles *>(Engine::Get()->GetModule("Particles"));
+			return Engine::Get()->GetModule<Particles>();
 		}
 
 		/// <summary>

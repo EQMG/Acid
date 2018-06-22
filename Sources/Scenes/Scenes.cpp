@@ -4,15 +4,13 @@ namespace fl
 {
 	Scenes::Scenes() :
 		IModule(),
-		m_componentRegister(new ComponentRegister()),
-		m_scene(nullptr)
+		m_scene(nullptr),
+		m_componentRegister(ComponentRegister())
 	{
 	}
 
 	Scenes::~Scenes()
 	{
-		delete m_scene;
-		delete m_componentRegister;
 	}
 
 	void Scenes::Update()
@@ -20,6 +18,12 @@ namespace fl
 		if (m_scene == nullptr)
 		{
 			return;
+		}
+
+		if (!m_scene->IsStarted())
+		{
+			m_scene->Start();
+			m_scene->SetStarted(true);
 		}
 
 		m_scene->Update();
@@ -47,16 +51,5 @@ namespace fl
 		}
 
 		m_scene->GetCamera()->Update();
-	}
-
-	void Scenes::SetScene(IScene *scene)
-	{
-		if (m_scene != scene)
-		{
-			delete m_scene;
-		}
-
-		m_scene = scene;
-		m_scene->Start();
 	}
 }

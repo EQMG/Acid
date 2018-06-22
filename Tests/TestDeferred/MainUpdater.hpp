@@ -12,20 +12,20 @@ namespace test
 		public IUpdater
 	{
 	private:
-		Delta *m_deltaUpdate;
-		Delta *m_deltaRender;
-		Timer *m_timerUpdate;
-		Timer *m_timerRender;
+		Delta m_deltaUpdate;
+		Delta m_deltaRender;
+		Timer m_timerUpdate;
+		Timer m_timerRender;
 
 	public:
 		MainUpdater();
 
 		~MainUpdater();
 
-		void Update(ModuleRegister *moduleRegister) override;
+		void Update(const ModuleRegister &moduleRegister) override;
 
-		float GetDelta() override { return m_deltaUpdate->GetChange(); }
+		float GetDelta() override { return m_deltaUpdate.GetChange(); }
 
-		float GetDeltaRender() override { return m_deltaRender->GetChange(); }
+		float GetDeltaRender() override { return m_deltaRender.GetChange(); }
 	};
 }

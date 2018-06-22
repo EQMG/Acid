@@ -9,6 +9,9 @@
 
 namespace fl
 {
+	/// <summary>
+	/// A class that represents a structured game object.
+	/// </summary>
 	class FL_EXPORT GameObject :
 		public std::enable_shared_from_this<GameObject>
 	{
@@ -28,8 +31,17 @@ namespace fl
 
 		virtual void Update();
 
+		/// <summary>
+		/// Gets all components attached to this game object.
+		/// </summary>
+		/// <returns> The list of components. </returns>
 		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
 
+		/// <summary>
+		/// Gets a component by type.
+		/// </summary>
+		/// <param name="T"> The component type to find. </param>
+		/// <returns> The found component. </returns>
 		template<typename T>
 		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
 		{
@@ -54,8 +66,19 @@ namespace fl
 			return alternative;
 		}
 
+		/// <summary>
+		/// Adds a component to this game object.
+		/// </summary>
+		/// <param name="component"> The component to add. </param>
+		/// <returns> The added component. </returns>
 		std::shared_ptr<IComponent> AddComponent(std::shared_ptr<IComponent> component);
 
+		/// <summary>
+		/// Creates a component by type to be added this game object.
+		/// </summary>
+		/// <param name="T"> The type of component to add. </param>
+		/// <param name="args"> The type constructor arguments. </param>
+		/// <returns> The added component. </returns>
 		template<typename T, typename... Args>
 		std::shared_ptr<T> AddComponent(Args &&... args)
 		{
@@ -64,8 +87,18 @@ namespace fl
 			return created;
 		}
 
+		/// <summary>
+		/// Removes a component from this game object.
+		/// </summary>
+		/// <param name="component"> The component to remove. </param>
+		/// <returns> The removed component. </returns>
 		std::shared_ptr<IComponent> RemoveComponent(std::shared_ptr<IComponent> component);
 
+		/// <summary>
+		/// Removes a component by type from this game object.
+		/// </summary>
+		/// <param name="T"> The type of component to remove. </param>
+		/// <returns> The removed component. </returns>
 		template<typename T>
 		std::shared_ptr<T> RemoveComponent()
 		{
@@ -76,7 +109,7 @@ namespace fl
 				if (casted != nullptr)
 				{
 					RemoveComponent(component);
-					return component;
+					return casted;
 				}
 			}
 

@@ -21,7 +21,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Tasks *Get()
 		{
-			return reinterpret_cast<Tasks *>(Engine::Get()->GetModule("Tasks"));
+			return Engine::Get()->GetModule<Tasks>();
 		}
 
 		Tasks();

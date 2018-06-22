@@ -20,7 +20,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Files *Get()
 		{
-			return reinterpret_cast<Files *>(Engine::Get()->GetModule("Files"));
+			return Engine::Get()->GetModule<Files>();
 		}
 
 		Files();

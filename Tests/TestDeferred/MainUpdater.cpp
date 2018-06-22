@@ -7,64 +7,59 @@ namespace test
 {
 	MainUpdater::MainUpdater() :
 		IUpdater(),
-		m_deltaUpdate(new Delta()),
-		m_deltaRender(new Delta()),
-		m_timerUpdate(new Timer(1.0f / 66.0f)),
-		m_timerRender(new Timer(1.0f / -1.0f))
+		m_deltaUpdate(Delta()),
+		m_deltaRender(Delta()),
+		m_timerUpdate(Timer(1.0f / 66.0f)),
+		m_timerRender(Timer(1.0f / -1.0f))
 	{
 	}
 
 	MainUpdater::~MainUpdater()
 	{
-		delete m_deltaRender;
-		delete m_deltaUpdate;
-
-		delete m_timerRender;
-		delete m_timerUpdate;
 	}
 
-	void MainUpdater::Update(ModuleRegister *moduleRegister)
+	void MainUpdater::Update(const ModuleRegister &moduleRegister)
 	{
-		m_timerRender->SetInterval(1.0f / Engine::Get()->GetFpsLimit());
+		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());
 
 		// Always-Update.
-		moduleRegister->RunUpdate(UPDATE_ALWAYS);
+		moduleRegister.RunUpdate(UPDATE_ALWAYS);
 
-		if (m_timerUpdate->IsPassedTime())
+		if (m_timerUpdate.IsPassedTime())
 		{
 			// Resets the timer.
-			m_timerUpdate->ResetStartTime();
+			m_timerUpdate.ResetStartTime();
 
 			// Pre-Update.
-			moduleRegister->RunUpdate(UPDATE_PRE);
+			moduleRegister.RunUpdate(UPDATE_PRE);
 
 			// Update.
-			moduleRegister->RunUpdate(UPDATE_NORMAL);
+			moduleRegister.RunUpdate(UPDATE_NORMAL);
 
 			// Post-Update.
-			moduleRegister->RunUpdate(UPDATE_POST);
+			moduleRegister.RunUpdate(UPDATE_POST);
 
 			// Updates the engines delta.
-			m_deltaUpdate->Update();
+			m_deltaUpdate.Update();
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_timerUpdate->GetInterval(), m_deltaUpdate->GetChange(), 5.0f))
+		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval(), m_deltaUpdate.GetChange(), 5.0f))
 		{
 			return;
 		}
 
 		// Renders when needed.
-		if (m_timerRender->IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f)
+		if (m_timerRender.IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f)
 		{
 			// Resets the timer.
-			m_timerRender->ResetStartTime();
+			m_timerRender.ResetStartTime();
 
 			// Render
-			moduleRegister->RunUpdate(UPDATE_RENDER);
+			moduleRegister.RunUpdate(UPDATE_RENDER);
 
 			// Updates the render delta, and render time extension.
-			m_deltaRender->Update();
+			m_deltaRender.Update();
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Audio *Get()
 		{
-			return reinterpret_cast<Audio *>(Engine::Get()->GetModule("Audio"));
+			return Engine::Get()->GetModule<Audio>();
 		}
 
 		/// <summary>

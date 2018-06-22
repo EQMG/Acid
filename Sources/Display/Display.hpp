@@ -82,7 +82,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Display *Get()
 		{
-			return reinterpret_cast<Display *>(Engine::Get()->GetModule("Display"));
+			return Engine::Get()->GetModule<Display>();
 		}
 
 		/// <summary>

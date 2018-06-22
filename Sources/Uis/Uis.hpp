@@ -22,7 +22,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Uis *Get()
 		{
-			return reinterpret_cast<Uis *>(Engine::Get()->GetModule("Uis"));
+			return Engine::Get()->GetModule<Uis>();
 		}
 
 		/// <summary>

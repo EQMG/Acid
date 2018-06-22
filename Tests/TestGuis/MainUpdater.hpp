@@ -22,7 +22,7 @@ namespace test
 
 		~MainUpdater();
 
-		void Update(ModuleRegister *moduleRegister) override;
+		void Update(const ModuleRegister &moduleRegister) override;
 
 		float GetDelta() override { return m_deltaUpdate.GetChange(); }
 

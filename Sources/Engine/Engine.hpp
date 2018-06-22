@@ -1,7 +1,8 @@
 #pragma once
 
-#include <chrono>
 #include <array>
+#include <memory>
+#include <chrono>
 #include "ModuleRegister.hpp"
 #include "IUpdater.hpp"
 
@@ -26,9 +27,9 @@ namespace fl
 		std::chrono::time_point<HighResolutionClock> m_start;
 		float m_timeOffset;
 
-		ModuleRegister *m_moduleRegister;
+		ModuleRegister m_moduleRegister;
 
-		IUpdater *m_updater;
+		std::shared_ptr<IUpdater> m_updater;
 		float m_fpsLimit;
 
 		bool m_initialized;
@@ -65,35 +66,38 @@ namespace fl
 		/// Gets the current updater.
 		/// </summary>
 		/// <returns> The current updater. </returns>
-		IUpdater *GetUpdater() const { return m_updater; }
+		std::shared_ptr<IUpdater> GetUpdater() const { return m_updater; }
 
 		/// <summary>
 		/// Loads the updater into the engine.
 		/// </summary>
 		/// <param name="updater"> The updater. </param>
-		void SetUpdater(IUpdater *updater) { m_updater = updater; }
+		void SetUpdater(std::shared_ptr<IUpdater> updater) { m_updater = updater; }
+
+		/// <summary>
+		/// Gets a module instance by type.
+		/// </summary>
+		/// <param name="T"> The module type to find. </param>
+		/// <returns> The found module. </returns>
+		template<typename T>
+		T *GetModule() const { return m_moduleRegister.GetModule<T>(); }
 
 		/// <summary>
 		/// Registers a module with the register.
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
-		/// <param name="name"> The modules name. </param>
-		/// <param name="T"> The modules type. </param>
+		/// <param name="T"> The type of module to register. </param>
+		/// <returns> The registered module. </returns>
 		template<typename T>
-		void RegisterModule(const ModuleUpdate &update, const std::string &name) { m_moduleRegister->RegisterModule<T>(update, name); }
+		T *RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
 
 		/// <summary>
 		/// Deregisters a module.
 		/// </summary>
-		/// <param name="name"> The modules name. </param>
-		void DeregisterModule(const std::string &name) { m_moduleRegister->DeregisterModule(name); }
-
-		/// <summary>
-		/// Gets a module instance by name.
-		/// </summary>
-		/// <param name="name"> The module name to find. </param>
-		/// <returns> The found module. </returns>
-		IModule *GetModule(const std::string &name) const { return m_moduleRegister->GetModule(name); }
+		/// <param name="T"> The type of module to deregister. </param>
+		/// <returns> The deregistered module. </returns>
+		template<typename T>
+		T *DeregisterModule() { return m_moduleRegister.DeregisterModule<T>(); }
 
 		/// <summary>
 		/// Gets the added/removed time for the engine (seconds).

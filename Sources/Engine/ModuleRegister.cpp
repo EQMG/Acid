@@ -15,69 +15,78 @@
 
 namespace fl
 {
-	ModuleRegister::ModuleRegister(const bool &emptyRegister) :
-		m_modules(std::map<float, ModulePair>())
+	ModuleRegister::ModuleRegister() :
+		m_modules(std::map<float, IModule *>())
 	{
-		if (!emptyRegister)
-		{
-			RegisterModule<Display>(UPDATE_POST, "Display");
-			RegisterModule<Joysticks>(UPDATE_PRE, "Joysticks");
-			RegisterModule<Keyboard>(UPDATE_PRE, "Keyboard");
-			RegisterModule<Mouse>(UPDATE_PRE, "Mouse");
-			RegisterModule<Audio>(UPDATE_PRE, "Audio");
-			RegisterModule<Files>(UPDATE_PRE, "Files");
-			RegisterModule<Scenes>(UPDATE_NORMAL, "Scenes");
-			RegisterModule<Renderer>(UPDATE_RENDER, "Renderer");
-			RegisterModule<Resources>(UPDATE_PRE, "Resources");
-			RegisterModule<Tasks>(UPDATE_ALWAYS, "Tasks");
-			RegisterModule<Events>(UPDATE_ALWAYS, "Events");
-			RegisterModule<Uis>(UPDATE_PRE, "Uis");
-			RegisterModule<Particles>(UPDATE_NORMAL, "Particles");
-			RegisterModule<Shadows>(UPDATE_NORMAL, "Shadows");
-		}
 	}
 
 	ModuleRegister::~ModuleRegister()
 	{
 		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
-			delete (*it).second.second;
+			delete (*it).second;
 		}
 	}
 
-	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update, const std::string &name)
+	void ModuleRegister::FillRegister()
 	{
-		//	if (m_modules.find(name) != m_modules.end())
-		//	{
-		//		fprintf(stderr, "Module '%s' is already registered!\n", name.c_str());
-		//		return;
-		//	}
+		RegisterModule<Display>(UPDATE_POST);
+		RegisterModule<Joysticks>(UPDATE_PRE);
+		RegisterModule<Keyboard>(UPDATE_PRE);
+		RegisterModule<Mouse>(UPDATE_PRE);
+		RegisterModule<Audio>(UPDATE_PRE);
+		RegisterModule<Files>(UPDATE_PRE);
+		RegisterModule<Scenes>(UPDATE_NORMAL);
+		RegisterModule<Renderer>(UPDATE_RENDER);
+		RegisterModule<Resources>(UPDATE_PRE);
+		RegisterModule<Tasks>(UPDATE_ALWAYS);
+		RegisterModule<Events>(UPDATE_ALWAYS);
+		RegisterModule<Uis>(UPDATE_PRE);
+		RegisterModule<Particles>(UPDATE_NORMAL);
+		RegisterModule<Shadows>(UPDATE_NORMAL);
+	}
+
+	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update)
+	{
+		if (ContainsModule(module))
+		{
+			fprintf(stderr, "Module '%i' is already registered!\n", update);
+			return nullptr;
+		}
 
 		float offset = update + (0.01f * static_cast<float>(m_modules.size()));
-		m_modules.emplace(offset, std::make_pair(name, module));
+		m_modules.emplace(offset, module);
 		return module;
 	}
 
-	IModule *ModuleRegister::GetModule(const std::string &name)
+	bool ModuleRegister::ContainsModule(IModule *module) const
 	{
-		for (auto &module : m_modules)
+		for (auto &module1 : m_modules)
 		{
-			if (module.second.first == name)
+			if (module1.second == module)
 			{
-				return module.second.second;
+				return true;
 			}
 		}
 
-		return nullptr;
+		return false;
 	}
 
-	void ModuleRegister::DeregisterModule(const std::string &name)
+	IModule *ModuleRegister::DeregisterModule(IModule *module)
 	{
 		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
+			if ((*it).second != module)
+			{
+				continue;
+			}
+
 			m_modules.erase(it);
-			delete (*it).second.second;
+			delete (*it).second;
+			return (*it).second;
 		}
+
+		return nullptr;
 	}
 
 	void ModuleRegister::RunUpdate(const ModuleUpdate &update) const
@@ -86,7 +95,7 @@ namespace fl
 		{
 			if (static_cast<int>(std::floor(module.first)) == update)
 			{
-				module.second.second->Update();
+				module.second->Update();
 			}
 		}
 	}

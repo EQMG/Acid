@@ -13,7 +13,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::vector<IEvent *> m_events;
+		std::vector<std::shared_ptr<IEvent>> m_events;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -21,7 +21,7 @@ namespace fl
 		/// <returns> The current module instance. </returns>
 		static Events *Get()
 		{
-			return reinterpret_cast<Events *>(Engine::Get()->GetModule("Events"));
+			return Engine::Get()->GetModule<Events>();
 		}
 
 		/// <summary>
@@ -40,12 +40,14 @@ namespace fl
 		/// Adds an event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to add. </param>
-		void AddEvent(IEvent *event);
+		/// <returns> The added event. </returns>
+		std::shared_ptr<IEvent> AddEvent(std::shared_ptr<IEvent> event);
 
 		/// <summary>
 		/// Removes a event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
-		void RemoveEvent(IEvent *event);
+		/// <returns> The removed event. </returns>
+		std::shared_ptr<IEvent> RemoveEvent(std::shared_ptr<IEvent> event);
 	};
 }

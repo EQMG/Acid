@@ -124,7 +124,7 @@ namespace test
 					m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide(1.0f, 0.0f, 0.1f));
 				}
 
-				Events::Get()->AddEvent(new EventTime(0.32f, false, [&]()
+				Events::Get()->AddEvent(std::make_shared<EventTime>(0.32f, false, [&]()
 				{
 					m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide(0.0f, 1.0f, 0.1f));
 				}));

@@ -30,19 +30,19 @@ int main(int argc, char **argv)
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine and updater objects.
-	auto engine = new Engine();
-	engine->SetUpdater(new MainUpdater());
+	auto engine = std::make_shared<Engine>();
+	engine->SetUpdater(std::make_shared<MainUpdater>());
 
 //	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.json");
 //	return 0;
 
-	auto configManager = new ConfigManager();
+	auto configManager = std::make_shared<ConfigManager>();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
-//	Engine::Get()->RegisterModule<Example>(UPDATE_NORMAL, "Example");
-	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL, "World");
-//	Engine::Get()->DeregisterModule("shadows");
+//	Engine::Get()->RegisterModule<Example>(UPDATE_NORMAL);
+	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);
+//	Engine::Get()->DeregisterModule<Shadows>();
 
 	// Registers components.
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
@@ -54,15 +54,11 @@ int main(int argc, char **argv)
 	Display::Get()->SetTitle("Test Deferred");
 	Display::Get()->SetIcon("Logos/Tail.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
-	Renderer::Get()->SetManager(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	Renderer::Get()->SetManager(std::make_shared<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_shared<Scene1>());
 
 	// Runs the game loop.
-	const int exitCode = engine->Run();
-
-	// Deletes the engine.
-	delete configManager;
-	delete engine;
+	auto exitCode = engine->Run();
 
 	// Pauses the console.
 	std::cin.get();
