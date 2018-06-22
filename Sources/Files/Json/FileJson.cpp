@@ -8,13 +8,12 @@ namespace fl
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(new LoadedValue(nullptr, "", ""))
+		m_parent(std::make_shared<LoadedValue>(nullptr, "", ""))
 	{
 	}
 
 	FileJson::~FileJson()
 	{
-		delete m_parent;
 	}
 
 	void FileJson::Load()
@@ -29,16 +28,11 @@ namespace fl
 			return;
 		}
 
-		for (auto &child : m_parent->GetChildren())
-		{
-			delete child;
-		}
-
 		m_parent->GetChildren().clear();
 
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
-		JsonSection *currentSection = nullptr;
-		std::string summation;
+		std::shared_ptr<JsonSection> currentSection = nullptr;
+		std::string summation = "";
 
 		for (auto &c : fileLoaded)
 		{
@@ -46,7 +40,7 @@ namespace fl
 			{
 				if (currentSection == nullptr)
 				{
-					currentSection = new JsonSection(nullptr, "", "");
+					currentSection = std::make_shared<JsonSection>(nullptr, "", "");
 					continue;
 				}
 
@@ -65,7 +59,7 @@ namespace fl
 				currentSection->SetContent(currentSection->GetContent() + summation);
 				summation.clear();
 
-				auto section = new JsonSection(currentSection, name, "");
+				auto section = std::make_shared<JsonSection>(currentSection, name, "");
 				currentSection->AddChild(section);
 				currentSection = section;
 			}
@@ -88,8 +82,8 @@ namespace fl
 			}
 		}
 
-		JsonSection::Convert(currentSection, m_parent, true);
-		delete currentSection;
+		JsonSection::Convert(*currentSection, m_parent, true);
+		currentSection->Clear();
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -100,7 +94,7 @@ namespace fl
 	void FileJson::Save()
 	{
 		std::string data;
-		JsonSection::AppendData(m_parent, &data, 0);
+		JsonSection::AppendData(m_parent, data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
@@ -109,11 +103,6 @@ namespace fl
 
 	void FileJson::Clear()
 	{
-		for (auto &child : m_parent->GetChildren())
-		{
-			delete child;
-		}
-
 		m_parent->GetChildren().clear();
 	}
 
@@ -136,7 +125,7 @@ namespace fl
 
 	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		LoadedValue *exiting = m_parent->GetChild(key);
+		auto exiting = m_parent->GetChild(key);
 
 		if (exiting != nullptr)
 		{
@@ -144,7 +133,7 @@ namespace fl
 			return;
 		}
 
-		LoadedValue *newChild = new LoadedValue(m_parent, key, value);
+		auto newChild = std::make_shared<LoadedValue>(m_parent, key, value);
 		m_parent->GetChildren().emplace_back(newChild);
 	}
 

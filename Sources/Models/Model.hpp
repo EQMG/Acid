@@ -22,10 +22,10 @@ namespace fl
 	private:
 		std::string m_filename;
 
-		VertexBuffer *m_vertexBuffer;
-		IndexBuffer *m_indexBuffer;
+		std::shared_ptr<VertexBuffer> m_vertexBuffer;
+		std::shared_ptr<IndexBuffer> m_indexBuffer;
 
-		ColliderAabb *m_aabb;
+		ColliderAabb m_aabb;
 	public:
 		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{
@@ -77,11 +77,11 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; }
 
-		ColliderAabb *GetAabb() const { return m_aabb; }
+		ColliderAabb GetAabb() const { return m_aabb; }
 
-		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer; }
+		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_vertexBuffer; }
 
-		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer; }
+		std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return m_indexBuffer; }
 
 	protected:
 		void Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");

@@ -13,13 +13,13 @@ namespace fl
 	class FL_EXPORT Config
 	{
 	private:
-		IFile *m_file;
-		std::map<std::string, ConfigKey *> m_values;
+		std::shared_ptr<IFile> m_file;
+		std::map<std::string, std::shared_ptr<ConfigKey>> m_values;
 	public:
 #define CONFIG_GET(f) (std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
 #define CONFIG_SET(t, f) (std::function<void(t)>([&](const t &v) -> void { f; }))
 
-		Config(IFile *file);
+		Config(std::shared_ptr<IFile> file);
 
 		~Config();
 
@@ -29,7 +29,7 @@ namespace fl
 
 		void Save();
 
-		ConfigKey *GetRaw(const std::string &key, const std::string &normal);
+		std::shared_ptr<ConfigKey> GetRaw(const std::string &key, const std::string &normal);
 
 		void SetRaw(const std::string &key, const std::string &value);
 

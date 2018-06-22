@@ -21,11 +21,11 @@ namespace fl
 		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 	}
 
-	void ShadowRender::Load(LoadedValue *value)
+	void ShadowRender::Load(std::shared_ptr<LoadedValue> value)
 	{
 	}
 
-	void ShadowRender::Write(LoadedValue *destination)
+	void ShadowRender::Write(std::shared_ptr<LoadedValue> destination)
 	{
 	}
 

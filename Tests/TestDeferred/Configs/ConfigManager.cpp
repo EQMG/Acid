@@ -9,8 +9,8 @@
 namespace test
 {
 	ConfigManager::ConfigManager() :
-		m_configAudio(Config(new FileJson(FileSystem::GetWorkingDirectory() + "/Configs/Audio.json"))),
-		m_configGraphics(Config(new FileJson(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.json")))
+		m_configAudio(Config(std::make_shared<FileJson>(FileSystem::GetWorkingDirectory() + "/Configs/Audio.json"))),
+		m_configGraphics(Config(std::make_shared<FileJson>(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.json")))
 	{
 		FileSystem::CreateFolder("Configs");
 

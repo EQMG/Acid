@@ -11,7 +11,7 @@ namespace fl
 	class FL_EXPORT GeometryLoader
 	{
 	private:
-		LoadedValue *m_meshData;
+		std::shared_ptr<LoadedValue> m_meshData;
 
 		std::vector<VertexSkinData *> m_vertexWeights;
 
@@ -22,7 +22,7 @@ namespace fl
 		std::vector<IVertex *> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
-		GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
+		GeometryLoader(std::shared_ptr<LoadedValue> libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
 
 		~GeometryLoader();
 

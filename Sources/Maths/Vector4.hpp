@@ -196,7 +196,7 @@ namespace fl
 		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(std::shared_ptr<LoadedValue> destination);
 
 		float GetX() const { return m_x; }
 
@@ -220,7 +220,7 @@ namespace fl
 
 		Vector4 &operator=(const Colour &other);
 
-		Vector4 &operator=(LoadedValue *value);
+		Vector4 &operator=(std::shared_ptr<LoadedValue> value);
 
 		bool operator==(const Vector4 &other) const;
 

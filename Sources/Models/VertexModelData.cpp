@@ -18,7 +18,6 @@ namespace fl
 
 	VertexModelData::~VertexModelData()
 	{
-		//	delete m_duplicateVertex;
 	}
 
 	void VertexModelData::AddTangent(const Vector3 &tangent)

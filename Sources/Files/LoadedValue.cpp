@@ -4,9 +4,9 @@
 
 namespace fl
 {
-	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :
+	LoadedValue::LoadedValue(std::shared_ptr<LoadedValue> parent, const std::string &name, const std::string &value) :
 		m_parent(parent),
-		m_children(std::vector<LoadedValue *>()),
+		m_children(std::vector<std::shared_ptr<LoadedValue>>()),
 		m_name(FormatString::RemoveAll(name, '\"')),
 		m_value(value)
 	{
@@ -14,13 +14,9 @@ namespace fl
 
 	LoadedValue::~LoadedValue()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
-	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull)
+	std::shared_ptr<LoadedValue> LoadedValue::GetChild(const std::string &name, const bool &addIfNull)
 	{
 		for (auto &child : m_children)
 		{
@@ -35,12 +31,12 @@ namespace fl
 			return nullptr;
 		}
 
-		LoadedValue *child = new LoadedValue(this, name, "");
+		auto child = std::make_shared<LoadedValue>(shared_from_this(), name, "");
 		m_children.emplace_back(child);
 		return child;
 	}
 
-	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull)
+	std::shared_ptr<LoadedValue> LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull)
 	{
 		if (m_children.size() >= index)
 		{
@@ -54,7 +50,7 @@ namespace fl
 		//}
 	}
 
-	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value)
+	std::shared_ptr<LoadedValue> LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value)
 	{
 		if (GetChild(childName) == nullptr)
 		{

@@ -160,7 +160,7 @@ namespace fl
 		return result;
 	}
 
-	void Colour::Write(LoadedValue *destination)
+	void Colour::Write(std::shared_ptr<LoadedValue> destination)
 	{
 		destination->SetChild<float>("r", m_r);
 		destination->SetChild<float>("g", m_g);
@@ -187,7 +187,7 @@ namespace fl
 		return *this;
 	}
 
-	Colour &Colour::operator=(LoadedValue *source)
+	Colour &Colour::operator=(std::shared_ptr<LoadedValue> source)
 	{
 		m_r = source->GetChild("r")->Get<float>();
 		m_g = source->GetChild("g")->Get<float>();

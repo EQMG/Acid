@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(std::shared_ptr<LoadedValue> libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
@@ -20,7 +20,7 @@ namespace fl
 		delete m_headJoint;
 	}
 
-	JointData *SkeletonLoader::LoadJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(std::shared_ptr<LoadedValue> jointNode, const bool &isRoot)
 	{
 		JointData *joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -42,7 +42,7 @@ namespace fl
 		return joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(std::shared_ptr<LoadedValue> jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);

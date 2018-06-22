@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	AnimationLoader::AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes) :
+	AnimationLoader::AnimationLoader(std::shared_ptr<LoadedValue> libraryAnimations, std::shared_ptr<LoadedValue> libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
 		m_libraryVisualScenes(libraryVisualScenes),
 		m_lengthSeconds(0.0f),
@@ -33,16 +33,16 @@ namespace fl
 
 	std::string AnimationLoader::FindRootJointName()
 	{
-		LoadedValue *skeleton = m_libraryVisualScenes->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
+		std::shared_ptr<LoadedValue> skeleton = m_libraryVisualScenes->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
 
 		return skeleton->GetChild("node")->GetChild("-id")->GetString();
 	}
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		LoadedValue *animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // TODO: Find by child `source`
+		std::shared_ptr<LoadedValue> animationGroup = m_libraryAnimations->GetChild("animation")->GetChild(0); // TODO: Find by child `source`
 		std::string sourceInput = animationGroup->GetChild("-id")->GetString() + "-input";
-		LoadedValue *timeData = animationGroup->GetChildWithAttribute("source", "-id", sourceInput)->GetChild("float_array")->GetChild("#text");
+		std::shared_ptr<LoadedValue> timeData = animationGroup->GetChildWithAttribute("source", "-id", sourceInput)->GetChild("float_array")->GetChild("#text");
 
 		auto rawTimes = FormatString::Split(timeData->GetString(), " ");
 		auto times = std::vector<float>(rawTimes.size());
@@ -63,26 +63,26 @@ namespace fl
 		}
 	}
 
-	void AnimationLoader::LoadJointTransforms(LoadedValue *jointData, const std::string &rootNodeId)
+	void AnimationLoader::LoadJointTransforms(std::shared_ptr<LoadedValue> jointData, const std::string &rootNodeId)
 	{
 		std::string jointNameId = GetJointName(jointData);
 		std::string dataId = GetDataId(jointData);
 
-		LoadedValue *transformData = jointData->GetChildWithAttribute("source", "-id", dataId);
+		std::shared_ptr<LoadedValue> transformData = jointData->GetChildWithAttribute("source", "-id", dataId);
 
 		std::string data = transformData->GetChild("float_array")->GetChild("#text")->GetString();
 		auto splitData = FormatString::Split(data, " ");
 		ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 	}
 
-	std::string AnimationLoader::GetDataId(LoadedValue *jointData)
+	std::string AnimationLoader::GetDataId(std::shared_ptr<LoadedValue> jointData)
 	{
-		LoadedValue *node = jointData->GetChild("sampler")->GetChildWithAttribute("input", "-semantic", "OUTPUT");
+		std::shared_ptr<LoadedValue> node = jointData->GetChild("sampler")->GetChildWithAttribute("input", "-semantic", "OUTPUT");
 
 		return node->GetChild("-source")->GetString().substr(1);
 	}
 
-	std::string AnimationLoader::GetJointName(LoadedValue *jointData)
+	std::string AnimationLoader::GetJointName(std::shared_ptr<LoadedValue> jointData)
 	{
 		auto channelNode = jointData->GetChild("channel");
 		std::string data = channelNode->GetChild("-target")->GetString();

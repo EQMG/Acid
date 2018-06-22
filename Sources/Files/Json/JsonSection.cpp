@@ -2,8 +2,9 @@
 
 namespace fl
 {
-	JsonSection::JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :
+	JsonSection::JsonSection(std::shared_ptr<JsonSection> parent, const std::string &name, const std::string &content) :
 		m_parent(parent),
+		m_children(std::vector<std::shared_ptr<JsonSection>>()),
 		m_name(name),
 		m_content(content)
 	{
@@ -11,13 +12,21 @@ namespace fl
 
 	JsonSection::~JsonSection()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
-	void JsonSection::AppendData(LoadedValue *loadedValue, std::string *data, const int &indentation, const bool &end)
+	void JsonSection::Clear()
+	{
+		m_parent = nullptr;
+
+		for (auto &child : m_children)
+		{
+			child->Clear();
+		}
+
+		m_children.clear();
+	}
+
+	void JsonSection::AppendData(std::shared_ptr<LoadedValue> loadedValue, std::string &data, const int &indentation, const bool &end)
 	{
 	//	printf("%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
 	//	for (auto &child : *loadedValue->GetChildren())
@@ -32,26 +41,26 @@ namespace fl
 			indent += "  ";
 		}
 
-		*data += indent;
+		data += indent;
 
 		if (loadedValue->GetName().empty())
 		{
-			*data += "{\n";
+			data += "{\n";
 		}
 		else if (loadedValue->GetValue().empty())
 		{
-			*data += "\"" + loadedValue->GetName() + "\": {\n";
+			data += "\"" + loadedValue->GetName() + "\": {\n";
 		}
 		else
 		{
-			*data += "\"" + loadedValue->GetName() + "\": " + loadedValue->GetValue();
+			data += "\"" + loadedValue->GetName() + "\": " + loadedValue->GetValue();
 
 			if (!end)
 			{
-				*data += ", ";
+				data += ", ";
 			}
 
-			*data += "\n";
+			data += "\n";
 		}
 
 		for (auto &child : loadedValue->GetChildren())
@@ -61,34 +70,34 @@ namespace fl
 
 		if (loadedValue->GetName().empty())
 		{
-			*data += indent;
-			*data += "}\n";
+			data += indent;
+			data += "}\n";
 		}
 		else if (loadedValue->GetValue().empty())
 		{
-			*data += indent;
+			data += indent;
 
 			if (end)
 			{
-				*data += "}\n";
+				data += "}\n";
 			}
 			else
 			{
-				*data += "},\n";
+				data += "},\n";
 			}
 		}
 	}
 
-	LoadedValue *JsonSection::Convert(JsonSection *source, LoadedValue *parent, const bool &isTopSection)
+	std::shared_ptr<LoadedValue> JsonSection::Convert(const JsonSection &source, std::shared_ptr<LoadedValue> parent, const bool &isTopSection)
 	{
-		LoadedValue *thisValue = parent;
+		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = new LoadedValue(parent, source->m_name, "");
+			thisValue = std::make_shared<LoadedValue>(parent, source.m_name, "");
 			parent->GetChildren().emplace_back(thisValue);
 
-			auto contentSplit = FormatString::Split(source->m_content, ",", true);
+			auto contentSplit = FormatString::Split(source.m_content, ",", true);
 
 			for (auto &data : contentSplit)
 			{
@@ -99,14 +108,14 @@ namespace fl
 					continue;
 				}
 
-				LoadedValue *newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
+				auto newChild = std::make_shared<LoadedValue>(thisValue, dataSplit.at(0), dataSplit.at(1));
 				thisValue->GetChildren().emplace_back(newChild);
 			}
 		}
 
-		for (auto &child : source->m_children)
+		for (auto &child : source.m_children)
 		{
-			Convert(child, thisValue, false);
+			Convert(*child, thisValue, false);
 		}
 
 		return thisValue;
