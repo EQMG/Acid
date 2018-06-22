@@ -22,11 +22,11 @@ namespace fl
 		std::vector<UiObject *> m_children;
 
 		bool m_visible;
-		UiBound *m_rectangle;
-		Vector4 *m_scissor; // TODO: Convert to UiBound.
+		UiBound m_rectangle;
+		Vector4 m_scissor; // TODO: Convert to UiBound.
 
-		Vector2 *m_positionOffset;
-		Vector4 *m_screenTransform;
+		Vector2 m_positionOffset;
+		Vector4 m_screenTransform;
 
 		IDriver *m_alphaDriver;
 		float m_alpha;
@@ -91,23 +91,23 @@ namespace fl
 
 		void SetVisible(const bool &visible) { m_visible = visible; }
 
-		UiBound *GetRectangle() const { return m_rectangle; }
+		UiBound &GetRectangle() { return m_rectangle; }
 
-		void SetRectangle(const UiBound &rectangle) { *m_rectangle = rectangle; }
+		void SetRectangle(const UiBound &rectangle) { m_rectangle = rectangle; }
 
-		Vector4 *GetScissor() const { return m_scissor; }
+		Vector4 GetScissor() const { return m_scissor; }
 
-		void SetScissor(const Vector4 &scissor) const { *m_scissor = scissor; }
+		void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
 
-		Vector2 *GetPositionOffset() const { return m_positionOffset; }
+		Vector2 GetPositionOffset() const { return m_positionOffset; }
 
-		void SetPositionOffset(const Vector2 &positionOffset) const { *m_positionOffset = positionOffset; }
+		void SetPositionOffset(const Vector2 &positionOffset) { m_positionOffset = positionOffset; }
 
 		/// <summary>
 		/// Gets the ui object screen space transform.
 		/// </summary>
 		/// <returns> The screen transform. </returns>
-		Vector4 *GetScreenTransform() const { return m_screenTransform; }
+		Vector4 GetScreenTransform() const { return m_screenTransform; }
 
 		void SetAlphaDriver(IDriver *alphaDriver);
 

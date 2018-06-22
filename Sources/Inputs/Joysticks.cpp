@@ -6,7 +6,7 @@ namespace fl
 {
 	Joysticks::Joysticks() :
 		IModule(),
-		m_connected(std::array<Joystick, JOYSTICK_LAST + 1>())
+		m_connected(std::array<Joystick, JOYSTICK_LAST>())
 	{
 		for (int i = JOYSTICK_1; i < JOYSTICK_LAST; i++)
 		{

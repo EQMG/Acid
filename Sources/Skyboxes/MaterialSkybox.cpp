@@ -10,7 +10,7 @@ namespace fl
 		m_skyColour(skyColour),
 		m_blend(1.0f),
 		m_fogColour(Colour()),
-		m_fogLimits(Vector2()),
+		m_fogLimits(Vector2(-1000000.0f, -1000000.0f)),
 		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_FRONT), {}))
 	{
@@ -22,7 +22,7 @@ namespace fl
 
 	void MaterialSkybox::Update()
 	{
-		GetGameObject()->GetTransform()->SetPosition(Scenes::Get()->GetCamera()->GetPosition());
+		GetGameObject()->GetTransform().SetPosition(Scenes::Get()->GetCamera()->GetPosition());
 	}
 
 	void MaterialSkybox::Load(LoadedValue *value)
@@ -40,10 +40,10 @@ namespace fl
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 		uniformObject.Push("skyColour", m_skyColour);
 		uniformObject.Push("fogColour", m_fogColour);
-		uniformObject.Push("fogLimits", GetGameObject()->GetTransform()->GetScaling().m_y * m_fogLimits);
+		uniformObject.Push("fogLimits", GetGameObject()->GetTransform().GetScaling().m_y * m_fogLimits);
 		uniformObject.Push("blendFactor", m_blend);
 	}
 

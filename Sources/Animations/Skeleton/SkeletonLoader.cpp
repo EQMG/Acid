@@ -28,12 +28,12 @@ namespace fl
 		{
 			if (!jointNode->GetChild("node")->GetChild("-id"))
 			{
-				for (auto &childNode : *jointNode->GetChild("node")->GetChildren())
+				for (auto &childNode : jointNode->GetChild("node")->GetChildren())
 				{
 					joint->AddChild(LoadJointData(childNode, false));
 				}
 			}
-			else if (!jointNode->GetChild("node")->GetChildren()->empty())
+			else if (!jointNode->GetChild("node")->GetChildren().empty())
 			{
 				joint->AddChild(LoadJointData(jointNode->GetChild("node"), false));
 			}

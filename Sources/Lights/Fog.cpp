@@ -3,7 +3,7 @@
 namespace fl
 {
 	Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
-		m_colour(Colour(colour)),
+		m_colour(colour),
 		m_density(density),
 		m_gradient(gradient),
 		m_lowerLimit(lowerLimit),

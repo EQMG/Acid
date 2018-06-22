@@ -6,7 +6,7 @@ namespace fl
 		m_index(index),
 		m_name(name),
 		m_children(std::vector<Joint *>()),
-		m_localBindTransform(Matrix4(bindLocalTransform)),
+		m_localBindTransform(bindLocalTransform),
 		m_animatedTransform(Matrix4()),
 		m_inverseBindTransform(Matrix4())
 	{

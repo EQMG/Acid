@@ -3,14 +3,14 @@
 namespace fl
 {
 	JointTransform::JointTransform(const Vector3 &position, const Quaternion &rotation) :
-		m_position(Vector3(position)),
-		m_rotation(Quaternion(rotation))
+		m_position(position),
+		m_rotation(rotation)
 	{
 	}
 
 	JointTransform::JointTransform(const Matrix4 &localTransform) :
 		m_position(Vector3(localTransform.m_30, localTransform.m_31, localTransform.m_32)),
-		m_rotation(Quaternion(localTransform))
+		m_rotation(localTransform)
 	{
 	}
 

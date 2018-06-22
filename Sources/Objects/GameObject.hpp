@@ -14,7 +14,7 @@ namespace fl
 	{
 	private:
 		std::string m_name;
-		Transform *m_transform;
+		Transform m_transform;
 		std::vector<std::shared_ptr<IComponent>> m_components;
 		ISpatialStructure *m_structure;
 		GameObject* m_parent;
@@ -87,9 +87,9 @@ namespace fl
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		Transform *GetTransform() const { return m_transform; }
+		Transform &GetTransform() { return m_transform; }
 
-		void SetTransform(const Transform &transform) const { *m_transform = transform; }
+		void SetTransform(const Transform &transform) { m_transform = transform; }
 
 		ISpatialStructure *GetStructure() const { return m_structure; }
 

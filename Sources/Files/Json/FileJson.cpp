@@ -29,12 +29,12 @@ namespace fl
 			return;
 		}
 
-		for (auto &child : *m_parent->GetChildren())
+		for (auto &child : m_parent->GetChildren())
 		{
 			delete child;
 		}
 
-		m_parent->GetChildren()->clear();
+		m_parent->GetChildren().clear();
 
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		JsonSection *currentSection = nullptr;
@@ -109,19 +109,19 @@ namespace fl
 
 	void FileJson::Clear()
 	{
-		for (auto &child : *m_parent->GetChildren())
+		for (auto &child : m_parent->GetChildren())
 		{
 			delete child;
 		}
 
-		m_parent->GetChildren()->clear();
+		m_parent->GetChildren().clear();
 	}
 
 	std::map<std::string, std::string> FileJson::ConfigReadValues()
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (auto &child : *m_parent->GetChildren())
+		for (auto &child : m_parent->GetChildren())
 		{
 			if (child->GetValue().empty())
 			{
@@ -145,7 +145,7 @@ namespace fl
 		}
 
 		LoadedValue *newChild = new LoadedValue(m_parent, key, value);
-		m_parent->GetChildren()->emplace_back(newChild);
+		m_parent->GetChildren().emplace_back(newChild);
 	}
 
 	void FileJson::Verify()

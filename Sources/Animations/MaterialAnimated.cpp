@@ -33,7 +33,7 @@ namespace fl
 		auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
 		auto joints = meshAnimated->GetJointTransforms();
 
-		uniformObject.Push("transform", GetGameObject()->GetTransform()->GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 		uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
 	}
 

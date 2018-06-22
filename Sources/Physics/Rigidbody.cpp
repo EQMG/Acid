@@ -28,7 +28,7 @@ namespace fl
 
 		if (collider != nullptr)
 		{
-			m_colliderCopy = collider->UpdateCollider(*GetGameObject()->GetTransform(), m_colliderCopy);
+			m_colliderCopy = collider->UpdateCollider(GetGameObject()->GetTransform(), m_colliderCopy);
 		}
 	}
 
@@ -83,7 +83,7 @@ namespace fl
 
 		auto rigidbodyList = Scenes::Get()->GetStructure()->QueryComponents<Rigidbody>();
 
-		Vector3 currentPosition = GetGameObject()->GetTransform()->GetPosition();
+		Vector3 currentPosition = GetGameObject()->GetTransform().GetPosition();
 
 		// Goes though all entities in the collision range.
 		for (auto &rigidbody : rigidbodyList)

@@ -79,15 +79,15 @@ namespace test
 			if (m_currentTab != nullptr)
 			{
 				m_barBackground->SetColourOffset(m_currentTab->GetColour().Interpolate(m_targetTab->GetColour(), progress));
-				m_tabPuck->GetRectangle()->m_position.m_x = Maths::Interpolate(m_currentTab->GetRectangle()->m_position.m_x, m_targetTab->GetRectangle()->m_position.m_x, progress);
-				m_tabPuck->GetRectangle()->m_dimensions.m_x = Maths::Interpolate(m_currentTab->GetWidth(), m_targetTab->GetWidth(), progress);
+				m_tabPuck->GetRectangle().m_position.m_x = Maths::Interpolate(m_currentTab->GetRectangle().m_position.m_x, m_targetTab->GetRectangle().m_position.m_x, progress);
+				m_tabPuck->GetRectangle().m_dimensions.m_x = Maths::Interpolate(m_currentTab->GetWidth(), m_targetTab->GetWidth(), progress);
 			}
 			else
 			{
 				progress = 1.0f;
 				m_barBackground->SetColourOffset(m_targetTab->GetColour());
-				m_tabPuck->GetRectangle()->m_position.m_x = m_targetTab->GetRectangle()->m_position.m_x;
-				m_tabPuck->GetRectangle()->m_dimensions.m_x = m_targetTab->GetWidth();
+				m_tabPuck->GetRectangle().m_position.m_x = m_targetTab->GetRectangle().m_position.m_x;
+				m_tabPuck->GetRectangle().m_dimensions.m_x = m_targetTab->GetWidth();
 			}
 
 			if (progress == 1.0f)

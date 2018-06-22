@@ -4,18 +4,18 @@ namespace fl
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
 		IComponent(),
-		m_colour(Colour(colour)),
+		m_colour(colour),
 		m_position(Vector3()),
-		m_offset(Vector3(offset)),
+		m_offset(offset),
 		m_radius(radius)
 	{
 	}
 
 	Light::Light(const Light &source) :
 		IComponent(),
-		m_colour(Colour(source.m_colour)),
+		m_colour(source.m_colour),
 		m_position(Vector3()),
-		m_offset(Vector3(source.m_offset)),
+		m_offset(source.m_offset),
 		m_radius(source.m_radius)
 	{
 	}
@@ -26,7 +26,7 @@ namespace fl
 
 	void Light::Update()
 	{
-		m_position = GetGameObject()->GetTransform()->GetPosition() + m_offset;
+		m_position = GetGameObject()->GetTransform().GetPosition() + m_offset;
 	}
 
 	void Light::Load(LoadedValue *value)

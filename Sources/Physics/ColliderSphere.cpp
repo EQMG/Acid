@@ -7,14 +7,14 @@ namespace fl
 	ColliderSphere::ColliderSphere(const float &radius, const Vector3 &position) :
 		ICollider(),
 		m_radius(radius),
-		m_position(Vector3(position))
+		m_position(position)
 	{
 	}
 
 	ColliderSphere::ColliderSphere(const ColliderSphere &source) :
 		ICollider(),
 		m_radius(source.m_radius),
-		m_position(Vector3(source.m_position))
+		m_position(source.m_position)
 	{
 	}
 

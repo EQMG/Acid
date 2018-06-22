@@ -7,8 +7,8 @@ namespace fl
 {
 	Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
-		m_position(Vector3(position)),
-		m_velocity(Vector3(velocity)),
+		m_position(position),
+		m_velocity(velocity),
 		m_change(Vector3()),
 		m_textureOffset1(Vector2()),
 		m_textureOffset2(Vector2()),
