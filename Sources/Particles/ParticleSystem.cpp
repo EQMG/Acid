@@ -57,12 +57,12 @@ namespace fl
 		m_systemOffset = value->GetChild("Offset");
 	}
 
-	void ParticleSystem::Write(LoadedValue *value)
+	void ParticleSystem::Write(LoadedValue *destination)
 	{
-		value->GetChild("PPS", true)->Set(m_pps);
-		value->GetChild("Average Speed", true)->Set(m_averageSpeed);
-		value->GetChild("Gravity Effect", true)->Set(m_gravityEffect);
-		m_systemOffset.Write(value->GetChild("Offset", true));
+		destination->GetChild("PPS", true)->Set(m_pps);
+		destination->GetChild("Average Speed", true)->Set(m_averageSpeed);
+		destination->GetChild("Gravity Effect", true)->Set(m_gravityEffect);
+		m_systemOffset.Write(destination->GetChild("Offset", true));
 	}
 
 	Particle *ParticleSystem::EmitParticle()

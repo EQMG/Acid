@@ -12,7 +12,6 @@
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Uis/Uis.hpp"
-#include "Worlds/Worlds.hpp"
 
 namespace fl
 {
@@ -21,21 +20,20 @@ namespace fl
 	{
 		if (!emptyRegister)
 		{
-			RegisterModule<Display>(UPDATE_POST, "display");
-			RegisterModule<Joysticks>(UPDATE_PRE, "joysticks");
-			RegisterModule<Keyboard>(UPDATE_PRE, "keyboard");
-			RegisterModule<Mouse>(UPDATE_PRE, "mouse");
-			RegisterModule<Audio>(UPDATE_PRE, "audio");
-			RegisterModule<Files>(UPDATE_PRE, "files");
-			RegisterModule<Scenes>(UPDATE_NORMAL, "scenes");
-			RegisterModule<Renderer>(UPDATE_RENDER, "renderer");
-			RegisterModule<Resources>(UPDATE_PRE, "resources");
-			RegisterModule<Tasks>(UPDATE_ALWAYS, "tasks");
-			RegisterModule<Events>(UPDATE_ALWAYS, "events");
-			RegisterModule<Uis>(UPDATE_PRE, "uis");
-			RegisterModule<Worlds>(UPDATE_PRE, "worlds");
-			RegisterModule<Particles>(UPDATE_NORMAL, "particles");
-			RegisterModule<Shadows>(UPDATE_NORMAL, "shadows");
+			RegisterModule<Display>(UPDATE_POST, "Display");
+			RegisterModule<Joysticks>(UPDATE_PRE, "Joysticks");
+			RegisterModule<Keyboard>(UPDATE_PRE, "Keyboard");
+			RegisterModule<Mouse>(UPDATE_PRE, "Mouse");
+			RegisterModule<Audio>(UPDATE_PRE, "Audio");
+			RegisterModule<Files>(UPDATE_PRE, "Files");
+			RegisterModule<Scenes>(UPDATE_NORMAL, "Scenes");
+			RegisterModule<Renderer>(UPDATE_RENDER, "Renderer");
+			RegisterModule<Resources>(UPDATE_PRE, "Resources");
+			RegisterModule<Tasks>(UPDATE_ALWAYS, "Tasks");
+			RegisterModule<Events>(UPDATE_ALWAYS, "Events");
+			RegisterModule<Uis>(UPDATE_PRE, "Uis");
+			RegisterModule<Particles>(UPDATE_NORMAL, "Particles");
+			RegisterModule<Shadows>(UPDATE_NORMAL, "Shadows");
 		}
 	}
 

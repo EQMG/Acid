@@ -1,9 +1,9 @@
 ﻿#include "OverlayDebug.hpp"
 
 #include <Maths/Visual/DriverConstant.hpp>
-#include <Worlds/Worlds.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Guis/Gui.hpp>
+#include "World/World.hpp"
 
 namespace test
 {
@@ -39,9 +39,9 @@ namespace test
 		{
 			m_timerUpdate->ResetStartTime();
 
-			if (Worlds::Get() != nullptr)
+			if (World::Get() != nullptr)
 			{
-				float timePercent = (Worlds::Get()->GetWorld()->GetDayFactor() * 24.0f) + 6.0f;
+				float timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
 				int hour = static_cast<int>(timePercent);
 				int minute = static_cast<int>((timePercent - hour) * 60.0f);
 

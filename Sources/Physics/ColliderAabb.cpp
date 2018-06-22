@@ -104,7 +104,7 @@ namespace fl
 	{
 	}
 
-	void ColliderAabb::Write(LoadedValue *value)
+	void ColliderAabb::Write(LoadedValue *destination)
 	{
 	}
 

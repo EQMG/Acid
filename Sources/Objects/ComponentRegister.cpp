@@ -8,7 +8,6 @@
 #include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Shadows/ShadowRender.hpp"
-#include "Skyboxes/CelestialBody.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
 namespace fl
@@ -16,7 +15,6 @@ namespace fl
 	ComponentRegister::ComponentRegister() :
 		m_components(std::map<std::string, ComponentCreate>())
 	{
-		RegisterComponent<CelestialBody>("CelestialBody");
 		RegisterComponent<ColliderAabb>("AabbCollider");
 		RegisterComponent<ColliderSphere>("SphereCollider");
 		RegisterComponent<Light>("Light");
