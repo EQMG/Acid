@@ -1,6 +1,5 @@
 #include "MeshAnimated.hpp"
 
-#include "Files/Files.hpp"
 #include "Files/Json/FileJson.hpp"
 #include "Helpers/FileSystem.hpp"
 
@@ -41,7 +40,7 @@ namespace fl
 			m_jointMatrices.clear();
 			m_jointMatrices.resize(MAX_JOINTS);
 			AddJointsToArray(*m_headJoint, m_jointMatrices);
-		//	m_jointMatrices.shrink_to_fit();
+			//	m_jointMatrices.shrink_to_fit();
 		}
 	}
 
@@ -74,7 +73,7 @@ namespace fl
 		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
 			skinLoader.GetJointOrder());
 		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader.GetVerticesSkinData());
-		
+
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);

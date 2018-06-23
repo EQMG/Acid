@@ -23,7 +23,7 @@ namespace fl
 		Fog m_fog;
 	public:
 		static const int MAX_LIGHTS;
-		
+
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
 		~RendererDeferred();

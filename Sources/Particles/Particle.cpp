@@ -1,7 +1,6 @@
 ﻿#include "Particle.hpp"
 
 #include "Scenes/Scenes.hpp"
-#include "Maths/Maths.hpp"
 
 namespace fl
 {

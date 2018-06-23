@@ -67,7 +67,7 @@ if (FLOUNDER_SETUP_COMPILER)
 		add_definitions(-DFL_BUILD_MSVC)
 		add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 		add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /arch:SSE2 /MP /W3 /wd4251")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /std:c++latest /Ox /Ob2 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /arch:SSE2 /MP /W3 /wd4251")
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /RTC1 /MDd -DDEBUG")
 
 		if (FLOUNDER_64BIT)
