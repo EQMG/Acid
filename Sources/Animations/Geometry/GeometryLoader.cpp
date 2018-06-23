@@ -26,7 +26,7 @@ namespace fl
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
 			Vector3 tangent = current->GetAverageTangent();
 
-			VertexSkinData* skin = current->GetSkinData();
+			VertexSkinData *skin = current->GetSkinData();
 			Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
 			Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 

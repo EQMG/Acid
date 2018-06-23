@@ -5,9 +5,7 @@
 #include <OpenAL/al.h>
 #else
 #include <AL/al.h>
-#include <AL/alc.h>
 #endif
-#include "SoundBuffer.hpp"
 
 namespace fl
 {

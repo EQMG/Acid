@@ -20,7 +20,7 @@ namespace fl
 		Transform m_transform;
 		std::vector<std::shared_ptr<IComponent>> m_components;
 		std::shared_ptr<ISpatialStructure> m_structure;
-		GameObject* m_parent;
+		GameObject *m_parent;
 		bool m_removed;
 	public:
 		GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure = nullptr);

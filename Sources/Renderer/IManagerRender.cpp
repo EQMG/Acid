@@ -1,7 +1,6 @@
 #include "IManagerRender.hpp"
 
 #include "IRenderer.hpp"
-#include "Renderer.hpp"
 
 namespace fl
 {
@@ -34,7 +33,7 @@ namespace fl
 			m_stages.emplace(key, std::vector<std::shared_ptr<IRenderer>>{renderer});
 		}
 
-	//	renderer->SetManager(this);
+		//	renderer->SetManager(this);
 		return renderer;
 	}
 
@@ -46,10 +45,10 @@ namespace fl
 			{
 				if (*it == renderer)
 				{
-				//	if (*it != nullptr)
-				//	{
-				//		(*it)->SetManager(nullptr);
-				//	}
+					//	if (*it != nullptr)
+					//	{
+					//		(*it)->SetManager(nullptr);
+					//	}
 
 					stage.second.erase(it);
 					return *it;

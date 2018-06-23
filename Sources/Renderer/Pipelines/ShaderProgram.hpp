@@ -221,6 +221,7 @@ namespace fl
 		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 
 		std::string ToString() const;
+
 	private:
 		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
 

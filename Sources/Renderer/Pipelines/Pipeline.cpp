@@ -61,7 +61,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-	//	printf("%s", m_shaderProgram->ToString().c_str());
+		//	printf("%s", m_shaderProgram->ToString().c_str());
 		printf("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -96,7 +96,7 @@ namespace fl
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
 	}
-	
+
 	EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
 	{
 		switch (stageFlag)

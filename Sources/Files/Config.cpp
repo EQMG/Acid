@@ -1,7 +1,5 @@
 #include "Config.hpp"
 
-#include <sstream>
-
 namespace fl
 {
 	Config::Config(std::shared_ptr<IFile> file) :
