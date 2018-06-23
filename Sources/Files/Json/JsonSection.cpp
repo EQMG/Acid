@@ -26,7 +26,7 @@ namespace fl
 		m_children.clear();
 	}
 
-	void JsonSection::AppendData(std::shared_ptr<LoadedValue> loadedValue, std::string &data, const int &indentation, const bool &end)
+	void JsonSection::AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation, const bool &end)
 	{
 		//	printf("%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
 		//	for (auto &child : *loadedValue->GetChildren())
@@ -88,13 +88,13 @@ namespace fl
 		}
 	}
 
-	std::shared_ptr<LoadedValue> JsonSection::Convert(const JsonSection &source, std::shared_ptr<LoadedValue> parent, const bool &isTopSection)
+	LoadedValue * JsonSection::Convert(const JsonSection &source, LoadedValue * parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = std::make_shared<LoadedValue>(parent, source.m_name, "");
+			thisValue = new LoadedValue(parent, source.m_name, "");
 			parent->GetChildren().emplace_back(thisValue);
 
 			auto contentSplit = FormatString::Split(source.m_content, ",", true);
@@ -108,7 +108,7 @@ namespace fl
 					continue;
 				}
 
-				auto newChild = std::make_shared<LoadedValue>(thisValue, dataSplit.at(0), dataSplit.at(1));
+				auto newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
 				thisValue->GetChildren().emplace_back(newChild);
 			}
 		}

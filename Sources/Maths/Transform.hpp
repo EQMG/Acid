@@ -53,7 +53,7 @@ namespace fl
 		/// Saves this transform into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(std::shared_ptr<LoadedValue> destination);
+		void Write(LoadedValue *destination);
 
 		Vector3 GetPosition() const { return m_position; }
 
@@ -69,7 +69,7 @@ namespace fl
 
 		Transform &operator=(const Transform &other);
 
-		Transform &operator=(std::shared_ptr<LoadedValue> value);
+		Transform &operator=(LoadedValue *value);
 
 		bool operator==(const Transform &other) const;
 

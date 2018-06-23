@@ -35,12 +35,12 @@ namespace fl
 		}*/
 	}
 
-	void Mesh::Load(std::shared_ptr<LoadedValue> value)
+	void Mesh::Load(LoadedValue *value)
 	{
 		TrySetModel(value->GetChild("Model")->GetString());
 	}
 
-	void Mesh::Write(std::shared_ptr<LoadedValue> destination)
+	void Mesh::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
 	}

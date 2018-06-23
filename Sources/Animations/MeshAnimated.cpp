@@ -44,12 +44,12 @@ namespace fl
 		}
 	}
 
-	void MeshAnimated::Load(std::shared_ptr<LoadedValue> value)
+	void MeshAnimated::Load(LoadedValue *value)
 	{
 		TrySetModel(value->GetChild("Model")->GetString());
 	}
 
-	void MeshAnimated::Write(std::shared_ptr<LoadedValue> destination)
+	void MeshAnimated::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Model", true)->SetString(m_filename);
 	}

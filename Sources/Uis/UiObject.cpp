@@ -43,17 +43,17 @@ namespace fl
 	void UiObject::Update()
 	{
 		// Click updates.
-		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasLeftClick() &&
-			Uis::Get()->GetSelector()->IsSelected(*this))
+		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector().WasLeftClick() &&
+			Uis::Get()->GetSelector().IsSelected(*this))
 		{
 			m_actionLeft();
-			Uis::Get()->GetSelector()->CancelWasEvent();
+			Uis::Get()->GetSelector().CancelWasEvent();
 		}
-		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector()->WasRightClick() &&
-			Uis::Get()->GetSelector()->IsSelected(*this))
+		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector().WasRightClick() &&
+			Uis::Get()->GetSelector().IsSelected(*this))
 		{
 			m_actionRight();
-			Uis::Get()->GetSelector()->CancelWasEvent();
+			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 
 		for (auto &child : m_children)

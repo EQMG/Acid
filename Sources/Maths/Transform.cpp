@@ -44,7 +44,7 @@ namespace fl
 		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation, Vector3());
 	}
 
-	void Transform::Write(std::shared_ptr<LoadedValue> destination)
+	void Transform::Write(LoadedValue *destination)
 	{
 		m_position.Write(destination->GetChild("position", true));
 		m_rotation.Write(destination->GetChild("rotation", true));
@@ -59,7 +59,7 @@ namespace fl
 		return *this;
 	}
 
-	Transform &Transform::operator=(std::shared_ptr<LoadedValue> value)
+	Transform &Transform::operator=(LoadedValue *value)
 	{
 		m_position = value->GetChild("position");
 		m_rotation = value->GetChild("rotation");

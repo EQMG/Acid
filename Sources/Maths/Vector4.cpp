@@ -162,7 +162,7 @@ namespace fl
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
-	void Vector4::Write(std::shared_ptr<LoadedValue> destination)
+	void Vector4::Write(LoadedValue *destination)
 	{
 		destination->SetChild<float>("x", m_x);
 		destination->SetChild<float>("y", m_y);
@@ -197,7 +197,7 @@ namespace fl
 		return *this;
 	}
 
-	Vector4 &Vector4::operator=(std::shared_ptr<LoadedValue> source)
+	Vector4 &Vector4::operator=(LoadedValue *source)
 	{
 		m_x = source->GetChild("x")->Get<float>();
 		m_y = source->GetChild("y")->Get<float>();

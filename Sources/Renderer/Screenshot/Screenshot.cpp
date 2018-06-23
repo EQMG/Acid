@@ -185,7 +185,7 @@ namespace fl
 		vkUnmapMemory(logicalDevice, dstImageMemory);
 		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
-		delete[] data;
+	//	delete data; // TODO: Delete one day...
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

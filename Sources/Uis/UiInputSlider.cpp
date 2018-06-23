@@ -36,8 +36,8 @@ namespace fl
 	void UiInputSlider::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector()->WasLeftClick())
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
+			Uis::Get()->GetSelector().WasLeftClick())
 		{
 			if (!m_updating)
 			{
@@ -48,11 +48,11 @@ namespace fl
 
 			//	float width = 2.0f * m_background->GetDimensions()->m_x * m_background->GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
 			//	float positionX = m_background->GetPosition()->m_x;
-			//	float cursorX = Uis::Get()->GetSelector()->GetCursorX() - positionX;
+			//	float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
 			//	m_value = 2.0f * cursorX / width;
 			//	m_value = (m_value + 1.0f) * 0.5f;
 
-			Uis::Get()->GetSelector()->CancelWasEvent();
+			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 		else
 		{
@@ -72,12 +72,12 @@ namespace fl
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver)
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector()->IsSelected(*m_text) && m_mouseOver)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;

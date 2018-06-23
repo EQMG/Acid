@@ -1,24 +1,22 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <utility>
 #include <vector>
 #include "Helpers/FormatString.hpp"
 
 namespace fl
 {
-	class FL_EXPORT LoadedValue :
-		public std::enable_shared_from_this<LoadedValue>
+	class FL_EXPORT LoadedValue
 	{
 	private:
-		std::shared_ptr<LoadedValue> m_parent;
-		std::vector<std::shared_ptr<LoadedValue>> m_children;
+		LoadedValue *m_parent;
+		std::vector<LoadedValue *> m_children;
 
 		std::string m_name;
 		std::string m_value;
 	public:
-		LoadedValue(std::shared_ptr<LoadedValue> parent, const std::string &name, const std::string &value);
+		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value);
 
 		~LoadedValue();
 
@@ -30,14 +28,14 @@ namespace fl
 
 		void SetValue(const std::string &data) { m_value = data; }
 
-		std::vector<std::shared_ptr<LoadedValue>> &GetChildren() { return m_children; }
+		std::vector<LoadedValue *> &GetChildren() { return m_children; }
 
-		std::shared_ptr<LoadedValue> GetChild(const std::string &name, const bool &addIfNull = false);
+		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
 
-		std::shared_ptr<LoadedValue> GetChild(const unsigned int &index, const bool &addIfNull = false);
+		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false);
 
 		template<typename T>
-		void AddChild(std::shared_ptr<LoadedValue> value)
+		void AddChild(LoadedValue *value)
 		{
 			auto child = GetChild(value->m_name);
 
@@ -59,7 +57,7 @@ namespace fl
 
 			if (child == nullptr)
 			{
-				child = std::make_shared<LoadedValue>(shared_from_this(), name, strValue);
+				child = new LoadedValue(this, name, strValue);
 				m_children.emplace_back(child);
 				return;
 			}
@@ -80,7 +78,7 @@ namespace fl
 			SetValue(std::to_string(data));
 		}
 
-		std::shared_ptr<LoadedValue> GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
+		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
 
 		std::string GetString();
 

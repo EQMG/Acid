@@ -302,7 +302,7 @@ namespace fl
 		return Vector3(direction);
 	}
 
-	void Vector3::Write(std::shared_ptr<LoadedValue> destination)
+	void Vector3::Write(LoadedValue *destination)
 	{
 		destination->SetChild<float>("x", m_x);
 		destination->SetChild<float>("y", m_y);
@@ -341,7 +341,7 @@ namespace fl
 		return *this;
 	}
 
-	Vector3 &Vector3::operator=(std::shared_ptr<LoadedValue> source)
+	Vector3 &Vector3::operator=(LoadedValue *source)
 	{
 		m_x = source->GetChild("x")->Get<float>();
 		m_y = source->GetChild("y")->Get<float>();

@@ -15,7 +15,7 @@ namespace fl
 	{
 	}
 
-	void Fog::Write(std::shared_ptr<LoadedValue> destination)
+	void Fog::Write(LoadedValue *destination)
 	{
 		m_colour.Write(destination->GetChild("colour", true));
 		destination->SetChild<float>("density", m_density);
@@ -34,7 +34,7 @@ namespace fl
 		return *this;
 	}
 
-	Fog &Fog::operator=(std::shared_ptr<LoadedValue> source)
+	Fog &Fog::operator=(LoadedValue *source)
 	{
 		m_colour = source->GetChild("colour");
 		m_density = source->GetChild("density")->Get<float>();

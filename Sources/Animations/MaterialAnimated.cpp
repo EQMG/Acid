@@ -21,11 +21,11 @@ namespace fl
 	{
 	}
 
-	void MaterialAnimated::Load(std::shared_ptr<LoadedValue> value)
+	void MaterialAnimated::Load(LoadedValue *value)
 	{
 	}
 
-	void MaterialAnimated::Write(std::shared_ptr<LoadedValue> destination)
+	void MaterialAnimated::Write(LoadedValue *destination)
 	{
 	}
 

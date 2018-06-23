@@ -32,7 +32,7 @@ namespace fl
 		}
 	}
 
-	void Rigidbody::Load(std::shared_ptr<LoadedValue> value)
+	void Rigidbody::Load(LoadedValue *value)
 	{
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_drag = value->GetChild("Drag")->Get<float>();
@@ -41,7 +41,7 @@ namespace fl
 		m_freezeRotation = value->GetChild("Freeze Rotation");
 	}
 
-	void Rigidbody::Write(std::shared_ptr<LoadedValue> destination)
+	void Rigidbody::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Mass", true)->Set(m_mass);
 		destination->GetChild("Drag", true)->Set(m_drag);

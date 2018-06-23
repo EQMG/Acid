@@ -8,12 +8,13 @@ namespace fl
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(std::make_shared<LoadedValue>(nullptr, "", ""))
+		m_parent(new LoadedValue(nullptr, "", ""))
 	{
 	}
 
 	FileJson::~FileJson()
 	{
+		delete m_parent;
 	}
 
 	void FileJson::Load()
@@ -133,7 +134,7 @@ namespace fl
 			return;
 		}
 
-		auto newChild = std::make_shared<LoadedValue>(m_parent, key, value);
+		auto newChild = new LoadedValue(m_parent, key, value);
 		m_parent->GetChildren().emplace_back(newChild);
 	}
 

@@ -67,11 +67,11 @@ namespace fl
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 
-	void MeshRender::Load(std::shared_ptr<LoadedValue> value)
+	void MeshRender::Load(LoadedValue *value)
 	{
 	}
 
-	void MeshRender::Write(std::shared_ptr<LoadedValue> destination)
+	void MeshRender::Write(LoadedValue *destination)
 	{
 	}
 }

@@ -41,9 +41,9 @@ namespace fl
 
 		void Update() override;
 
-		void Load(std::shared_ptr<LoadedValue> value) override;
+		void Load(LoadedValue *value) override;
 
-		void Write(std::shared_ptr<LoadedValue> destination) override;
+		void Write(LoadedValue *destination) override;
 
 		std::string GetName() const override { return "Light"; };
 
@@ -65,6 +65,6 @@ namespace fl
 
 		Light &operator=(const Light &other);
 
-		Light &operator=(std::shared_ptr<LoadedValue> value);
+		Light &operator=(LoadedValue *value);
 	};
 }

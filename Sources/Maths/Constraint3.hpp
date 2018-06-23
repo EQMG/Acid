@@ -57,7 +57,7 @@ namespace fl
 		/// Saves this constraint into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(std::shared_ptr<LoadedValue> source);
+		void Write(LoadedValue *source);
 
 		bool GetX() const { return m_x; }
 
@@ -73,7 +73,7 @@ namespace fl
 
 		Constraint3 &operator=(const Constraint3 &other);
 
-		Constraint3 &operator=(std::shared_ptr<LoadedValue> value);
+		Constraint3 &operator=(LoadedValue *value);
 
 		bool operator==(const Constraint3 &other) const;
 
