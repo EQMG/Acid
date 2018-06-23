@@ -6,7 +6,7 @@ namespace fl
 {
 	Uis::Uis() :
 		IModule(),
-		m_selector(new UiSelector()),
+		m_selector(UiSelector()),
 		m_container(new UiObject(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
 		m_objects(std::vector<UiObject *>())
 	{
@@ -14,7 +14,6 @@ namespace fl
 
 	Uis::~Uis()
 	{
-		delete m_selector;
 		delete m_container;
 	}
 
@@ -24,7 +23,7 @@ namespace fl
 
 		if (Scenes::Get()->GetScene() != nullptr && Scenes::Get()->GetScene()->GetSelectorJoystick() != nullptr)
 		{
-			m_selector->Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetScene()->GetSelectorJoystick());
+			m_selector.Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetScene()->GetSelectorJoystick());
 		}
 
 		m_container->Update();

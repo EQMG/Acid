@@ -70,12 +70,12 @@ namespace test
 		}
 	}
 
-	void CelestialBody::Load(std::shared_ptr<LoadedValue> value)
+	void CelestialBody::Load(LoadedValue *value)
 	{
 		m_type = static_cast<CelestialType>(value->GetChild("Type")->Get<int>());
 	}
 
-	void CelestialBody::Write(std::shared_ptr<LoadedValue> destination)
+	void CelestialBody::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Type", true)->Set(static_cast<int>(m_type));
 	}

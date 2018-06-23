@@ -28,7 +28,7 @@ namespace fl
 	{
 	}
 
-	void MaterialDefault::Load(std::shared_ptr<LoadedValue> value)
+	void MaterialDefault::Load(LoadedValue *value)
 	{
 		m_baseColor = value->GetChild("Base Colour")->GetString();
 		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
@@ -43,7 +43,7 @@ namespace fl
 		m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
 	}
 
-	void MaterialDefault::Write(std::shared_ptr<LoadedValue> destination)
+	void MaterialDefault::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Base Colour", true)->SetString(m_baseColor.GetHex());
 		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());

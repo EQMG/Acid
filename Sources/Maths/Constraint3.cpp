@@ -30,7 +30,7 @@ namespace fl
 	{
 	}
 
-	void Constraint3::Write(std::shared_ptr<LoadedValue> destination)
+	void Constraint3::Write(LoadedValue *destination)
 	{
 		destination->SetChild<bool>("x", m_x);
 		destination->SetChild<bool>("y", m_y);
@@ -45,7 +45,7 @@ namespace fl
 		return *this;
 	}
 
-	Constraint3 &Constraint3::operator=(std::shared_ptr<LoadedValue> source)
+	Constraint3 &Constraint3::operator=(LoadedValue *source)
 	{
 		m_x = source->GetChild("x")->Get<bool>();
 		m_y = source->GetChild("y")->Get<bool>();

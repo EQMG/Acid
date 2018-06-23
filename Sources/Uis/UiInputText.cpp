@@ -88,27 +88,27 @@ namespace fl
 		}
 
 		// Click updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector()->WasLeftClick())
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
+			Uis::Get()->GetSelector().WasLeftClick())
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_selected = true;
 
-			Uis::Get()->GetSelector()->CancelWasEvent();
+			Uis::Get()->GetSelector().CancelWasEvent();
 		}
-		else if (Uis::Get()->GetSelector()->WasLeftClick() && m_selected)
+		else if (Uis::Get()->GetSelector().WasLeftClick() && m_selected)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_selected = false;
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver && !m_selected)
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver && !m_selected)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector()->IsSelected(*m_text) && m_mouseOver && !m_selected)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver && !m_selected)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;

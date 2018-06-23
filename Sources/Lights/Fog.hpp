@@ -56,10 +56,10 @@ namespace fl
 		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(std::shared_ptr<LoadedValue> destination);
+		void Write(LoadedValue *destination);
 
 		Fog &operator=(const Fog &other);
 
-		Fog &operator=(std::shared_ptr<LoadedValue> value);
+		Fog &operator=(LoadedValue *value);
 	};
 }

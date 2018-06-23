@@ -27,12 +27,12 @@ namespace fl
 	void UiInputButton::UpdateObject()
 	{
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector()->IsSelected(*m_text) && !m_mouseOver)
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector()->IsSelected(*m_text) && m_mouseOver)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver)
 		{
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;

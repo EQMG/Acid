@@ -12,7 +12,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		UiSelector *m_selector;
+		UiSelector m_selector;
 		UiObject *m_container;
 		std::vector<UiObject *> m_objects;
 	public:
@@ -47,7 +47,7 @@ namespace fl
 		/// Gets the main GUI selector.
 		/// </summary>
 		/// <returns> The GUI selector. </returns>
-		UiSelector *GetSelector() const { return m_selector; }
+		UiSelector &GetSelector() { return m_selector; }
 
 		/// <summary>
 		/// The rendering objects from the container. Updated each update.

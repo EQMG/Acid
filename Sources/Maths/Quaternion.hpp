@@ -159,7 +159,7 @@ namespace fl
 		/// Saves this quaternion into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(std::shared_ptr<LoadedValue> destination);
+		void Write(LoadedValue *destination);
 
 		float GetX() const { return m_x; }
 
@@ -181,7 +181,7 @@ namespace fl
 
 		Quaternion &operator=(const Matrix4 &other);
 
-		Quaternion &operator=(std::shared_ptr<LoadedValue> value);
+		Quaternion &operator=(LoadedValue *value);
 
 		bool operator==(const Quaternion &other) const;
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <utility>
 #include <vector>
 #include "Helpers/FormatString.hpp"
@@ -37,8 +38,8 @@ namespace fl
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(std::shared_ptr<LoadedValue> loadedValue, std::string &data, const int &indentation, const bool &end = false);
+		static void AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation, const bool &end = false);
 
-		static std::shared_ptr<LoadedValue> Convert(const JsonSection &source, std::shared_ptr<LoadedValue> parent, const bool &isTopSection);
+		static LoadedValue * Convert(const JsonSection &source, LoadedValue * parent, const bool &isTopSection);
 	};
 }

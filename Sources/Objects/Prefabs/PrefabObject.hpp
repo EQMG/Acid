@@ -51,6 +51,6 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; }
 
-		std::shared_ptr<LoadedValue> GetParent() const { return m_fileJson.GetParent(); }
+		LoadedValue *GetParent() const { return m_fileJson.GetParent(); }
 	};
 }

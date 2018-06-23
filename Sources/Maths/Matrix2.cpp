@@ -161,7 +161,7 @@ namespace fl
 		return *this;
 	}
 
-	void Matrix2::Write(std::shared_ptr<LoadedValue> destination)
+	void Matrix2::Write(LoadedValue *destination)
 	{
 		m_0->Write(destination->GetChild("m0", true));
 		m_1->Write(destination->GetChild("m1", true));
@@ -185,7 +185,7 @@ namespace fl
 		return *this;
 	}
 
-	Matrix2 &Matrix2::operator=(std::shared_ptr<LoadedValue> source)
+	Matrix2 &Matrix2::operator=(LoadedValue *source)
 	{
 		*m_0 = source->GetChild("m0");
 		*m_1 = source->GetChild("m1");

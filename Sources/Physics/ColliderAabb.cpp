@@ -100,11 +100,11 @@ namespace fl
 		return ColliderAabb(minExtents, maxExtents);
 	}
 
-	void ColliderAabb::Load(std::shared_ptr<LoadedValue> value)
+	void ColliderAabb::Load(LoadedValue *value)
 	{
 	}
 
-	void ColliderAabb::Write(std::shared_ptr<LoadedValue> destination)
+	void ColliderAabb::Write(LoadedValue *destination)
 	{
 	}
 

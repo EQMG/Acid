@@ -19,9 +19,9 @@ namespace fl
 
 		void Update() override;
 
-		void Load(std::shared_ptr<LoadedValue> value) override;
+		void Load(LoadedValue *value) override;
 
-		void Write(std::shared_ptr<LoadedValue> destination) override;
+		void Write(LoadedValue *destination) override;
 
 		void PushUniforms(UniformHandler &uniformObject) override;
 

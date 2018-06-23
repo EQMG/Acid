@@ -22,11 +22,11 @@ namespace fl
 	{
 	}
 
-	void ColliderSphere::Load(std::shared_ptr<LoadedValue> value)
+	void ColliderSphere::Load(LoadedValue *value)
 	{
 	}
 
-	void ColliderSphere::Write(std::shared_ptr<LoadedValue> destination)
+	void ColliderSphere::Write(LoadedValue *destination)
 	{
 	}
 
