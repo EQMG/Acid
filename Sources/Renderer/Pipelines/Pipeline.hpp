@@ -7,6 +7,7 @@
 #include "Renderer/Buffers/CommandBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
+#include "IPipeline.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
@@ -17,7 +18,8 @@ namespace fl
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
-	class FL_EXPORT Pipeline
+	class FL_EXPORT Pipeline :
+		public IPipeline
 	{
 	private:
 		GraphicsStage m_graphicsStage;
@@ -60,7 +62,7 @@ namespace fl
 
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
-		ShaderProgram *GetShaderProgram() const { return m_shaderProgram; }
+		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram; }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
@@ -68,13 +70,13 @@ namespace fl
 
 		Texture *GetTexture(const unsigned int &i, const int &stage = -1) const;
 
-		VkDescriptorSetLayout GetVkDescriptorSetLayout() const { return m_descriptorSetLayout; }
+		VkDescriptorSetLayout GetVkDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetVkDescriptorPool() const { return m_descriptorPool; }
+		VkDescriptorPool GetVkDescriptorPool() const override { return m_descriptorPool; }
 
-		VkPipeline GetVkPipeline() const { return m_pipeline; }
+		VkPipeline GetVkPipeline() const override { return m_pipeline; }
 
-		VkPipelineLayout GetVkPipelineLayout() const { return m_pipelineLayout; }
+		VkPipelineLayout GetVkPipelineLayout() const override { return m_pipelineLayout; }
 	private:
 		void CreateShaderProgram();
 

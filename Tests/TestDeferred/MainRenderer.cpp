@@ -2,6 +2,8 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Renderer/Pipelines/Compute.hpp>
+#include <Models/Shapes/ShapeSphere.hpp>
 
 namespace test
 {
@@ -46,6 +48,23 @@ namespace test
 	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
+
+		/*{
+			auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+			auto compute = Compute("Shaders/Ibl/Ibl.comp", VertexModel::GetVertexInput());
+			auto descriptor = DescriptorsHandler();
+			auto cubemap = Cubemap::Resource("Objects/SkyboxStars", ".png");
+			auto cubemap2 = Cubemap::Resource("Objects/SkyboxClouds", ".png");
+			auto model = ShapeSphere::Resource(6, 6, 1.0f);
+			descriptor.Update(compute);
+			descriptor.Push("writeCubemap", cubemap2);
+			descriptor.Push("samplerCubemap", cubemap);
+			descriptor.Update(compute);
+
+			// Draws the object.
+			descriptor.BindDescriptor(*commandBuffer);
+			model->CmdRender(*commandBuffer);
+		}*/
 	}
 
 	MainRenderer::~MainRenderer()
