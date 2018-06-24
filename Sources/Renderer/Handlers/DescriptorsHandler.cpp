@@ -12,6 +12,14 @@ namespace fl
 	{
 	}
 
+	DescriptorsHandler::DescriptorsHandler(const IPipeline &pipeline) :
+		m_shaderProgram(pipeline.GetShaderProgram()),
+		m_descriptorSet(nullptr),
+		m_descriptors(std::vector<IDescriptor *>()),
+		m_changed(false)
+	{
+	}
+
 	DescriptorsHandler::~DescriptorsHandler()
 	{
 		delete m_descriptorSet;

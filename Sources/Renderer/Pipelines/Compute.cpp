@@ -3,18 +3,11 @@
 namespace fl
 {
 	Compute::Compute(const std::string &shader, const VertexInput &vertexInput) :
-		m_shader(shader),
-		m_vertexInput(vertexInput),
-		m_shaderProgram(new ShaderProgram(shader)),
-		m_descriptorSetLayout(VK_NULL_HANDLE),
-		m_descriptorPool(VK_NULL_HANDLE),
-		m_pipeline(VK_NULL_HANDLE),
-		m_pipelineLayout(VK_NULL_HANDLE)
+		Pipeline({0, 0}, PipelineCreate({shader}, vertexInput, PIPELINE_MODE_COMPUTE, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_NONE), {})
 	{
 	}
 
 	Compute::~Compute()
 	{
-		delete m_shaderProgram;
 	}
 }

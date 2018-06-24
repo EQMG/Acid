@@ -95,5 +95,7 @@ namespace fl
 		void CreatePipelineMrt();
 
 		void CreatePipelineMrtNoDepth();
+
+		void CreatePipelineCompute();
 	};
 }

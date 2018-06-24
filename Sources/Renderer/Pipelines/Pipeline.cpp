@@ -11,6 +11,7 @@ namespace fl
 	};
 
 	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines) :
+		IPipeline(),
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
 		m_defines(defines),
@@ -53,6 +54,9 @@ namespace fl
 			break;
 		case PIPELINE_MODE_MRT_NO_DEPTH:
 			CreatePipelineMrtNoDepth();
+			break;
+		case PIPELINE_MODE_COMPUTE:
+			CreatePipelineCompute();
 			break;
 		default:
 			assert(false);
@@ -531,6 +535,11 @@ namespace fl
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
 
+		CreatePipelinePolygon();
+	}
+
+	void Pipeline::CreatePipelineCompute()
+	{
 		CreatePipelinePolygon();
 	}
 }
