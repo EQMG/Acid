@@ -5,7 +5,7 @@
 
 namespace fl
 {
-	DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
+	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pipelineLayout(pipeline.GetVkPipelineLayout()),
 		m_descriptorPool(pipeline.GetVkDescriptorPool()),

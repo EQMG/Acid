@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
+#include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "UniformHandler.hpp"
 
 namespace fl
@@ -33,7 +34,7 @@ namespace fl
 
 		void Push(const std::string &descriptorName, std::shared_ptr<UniformHandler> uniformHandler) { Push(descriptorName, uniformHandler.get()); }
 
-		bool Update(const Pipeline &pipeline);
+		bool Update(const IPipeline &pipeline);
 
 		void BindDescriptor(const CommandBuffer &commandBuffer) { m_descriptorSet->BindDescriptor(commandBuffer); }
 

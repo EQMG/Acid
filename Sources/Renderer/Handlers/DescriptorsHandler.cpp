@@ -56,7 +56,7 @@ namespace fl
 		Push(descriptorName, uniformHandler->GetUniformBuffer());
 	}
 
-	bool DescriptorsHandler::Update(const Pipeline &pipeline)
+	bool DescriptorsHandler::Update(const IPipeline &pipeline)
 	{
 		if (m_shaderProgram != pipeline.GetShaderProgram())
 		{

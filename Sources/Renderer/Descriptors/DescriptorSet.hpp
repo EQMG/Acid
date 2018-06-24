@@ -4,14 +4,13 @@
 #include <map>
 #include "Display/Display.hpp"
 #include "Renderer/Buffers/CommandBuffer.hpp"
+#include "Renderer/Pipelines/IPipeline.hpp"
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 
 namespace fl
 {
 	class IDescriptor;
-
-	class Pipeline;
 
 	class FL_EXPORT DescriptorSet
 	{
@@ -21,7 +20,7 @@ namespace fl
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:
-		DescriptorSet(const Pipeline &pipeline);
+		DescriptorSet(const IPipeline &pipeline);
 
 		~DescriptorSet();
 
