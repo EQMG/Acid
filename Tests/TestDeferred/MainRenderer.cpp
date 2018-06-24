@@ -50,13 +50,15 @@ namespace test
 		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 
 		/*{
-			auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-			auto compute = Compute("Shaders/Ibl/Ibl.comp", VertexModel::GetVertexInput());
-			auto descriptor = DescriptorsHandler();
 			auto cubemap = Cubemap::Resource("Objects/SkyboxStars", ".png");
 			auto cubemap2 = Cubemap::Resource("Objects/SkyboxClouds", ".png");
 			auto model = ShapeSphere::Resource(6, 6, 1.0f);
-			descriptor.Update(compute);
+
+			auto commandBuffer = Renderer::Get()->GetCommandBuffer();
+			Renderer::Get()->StartRenderpass(*commandBuffer, 0);
+
+			auto compute = Compute("Shaders/Ibl/Ibl.comp", VertexModel::GetVertexInput());
+			auto descriptor = DescriptorsHandler(compute);
 			descriptor.Push("writeCubemap", cubemap2);
 			descriptor.Push("samplerCubemap", cubemap);
 			descriptor.Update(compute);
@@ -64,6 +66,8 @@ namespace test
 			// Draws the object.
 			descriptor.BindDescriptor(*commandBuffer);
 			model->CmdRender(*commandBuffer);
+
+			Renderer::Get()->EndRenderpass(*commandBuffer, 0);
 		}*/
 	}
 

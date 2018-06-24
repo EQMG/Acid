@@ -20,6 +20,8 @@ namespace fl
 	public:
 		DescriptorsHandler();
 
+		DescriptorsHandler(const IPipeline &pipeline);
+
 		~DescriptorsHandler();
 
 		void Push(const std::string &descriptorName, IDescriptor *descriptor);
