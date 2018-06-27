@@ -23,8 +23,8 @@ namespace fl
 
 	void Frustum::Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const
 	{
-		auto view = viewMatrix.m_linear;
-		auto proj = projectionMatrix.m_linear;
+		const float *view = viewMatrix.m_linear;
+		const float *proj = projectionMatrix.m_linear;
 		auto clip = std::array<float, 16>();
 
 		clip[0] = view[0] * proj[0] + view[1] * proj[4] + view[2] * proj[8] + view[3] * proj[12];

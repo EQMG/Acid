@@ -51,22 +51,6 @@ namespace fl
 		return source;
 	}
 
-	Vector3 ColliderSphere::ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta)
-	{
-		Vector3 result = Vector3();
-
-		//	auto sphere2 = dynamic_cast<const ColliderSphere&>(other);
-		//	float d = sphere2.m_radius + m_radius;
-
-		//	float xDif = m_position.m_x - sphere2.m_position.m_x;
-		//	float yDif = m_position.m_y - sphere2.m_position.m_y;
-		//	float zDif = m_position.m_z - sphere2.m_position.m_z;
-		//	float distance = xDif * xDif + yDif * yDif + zDif * zDif;
-		// TODO: Resolve!
-
-		return result;
-	}
-
 	Intersect ColliderSphere::Intersects(const ICollider &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
