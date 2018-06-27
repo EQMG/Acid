@@ -1,16 +1,117 @@
 #include "Scenes.hpp"
 
+#include <LinearMath/btAlignedObjectArray.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
+#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletCollision/CollisionShapes/btBoxShape.h>
+#include <LinearMath/btDefaultMotionState.h>
+
 namespace fl
 {
+	btDefaultCollisionConfiguration *m_collisionConfiguration;
+	btBroadphaseInterface *m_broadphase;
+	btCollisionDispatcher *m_dispatcher;
+	btSequentialImpulseConstraintSolver *m_solver;
+	btDiscreteDynamicsWorld *m_dynamicsWorld;
+	btAlignedObjectArray<btCollisionShape *> m_collisionShapes;
+
+	btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
+	{
+		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE));
+
+		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+		bool isDynamic = mass != 0.0f;
+
+		btVector3 localInertia(0.0f, 0.0f, 0.0f);
+
+		if (isDynamic)
+		{
+			shape->calculateLocalInertia(mass, localInertia);
+		}
+
+		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
+		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
+		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
+		btRigidBody *body = new btRigidBody(cInfo);
+	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
+	//	body->setUserIndex(-1);
+		m_dynamicsWorld->addRigidBody(body);
+		return body;
+	}
+
 	Scenes::Scenes() :
 		IModule(),
 		m_scene(nullptr),
 		m_componentRegister(ComponentRegister())
 	{
+		m_collisionConfiguration = new btDefaultCollisionConfiguration();
+		//m_collisionConfiguration->setConvexConvexMultipointIterations();
+
+		m_broadphase = new btDbvtBroadphase();
+
+		m_dispatcher = new btCollisionDispatcher(m_collisionConfiguration);
+
+		m_solver = new btSequentialImpulseConstraintSolver();
+
+		m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
+
+		m_dynamicsWorld->setGravity(btVector3(0.0f, -10.0f, 0.0f));
+		m_dynamicsWorld->getSolverInfo().m_erp2 = 0.0f;
+		m_dynamicsWorld->getSolverInfo().m_globalCfm = 0.0f;
+		m_dynamicsWorld->getSolverInfo().m_numIterations = 3;
+		m_dynamicsWorld->getSolverInfo().m_solverMode = SOLVER_SIMD; // | SOLVER_RANDMIZE_ORDER;
+		m_dynamicsWorld->getSolverInfo().m_splitImpulse = false;
+
+		m_collisionShapes = btAlignedObjectArray<btCollisionShape *>();
+
+		{
+			btBoxShape *groundShape = new btBoxShape(btVector3(50.0f, 50.0f, 50.0f));
+			m_collisionShapes.push_back(groundShape);
+
+			btTransform groundTransform = btTransform();
+			groundTransform.setIdentity();
+			groundTransform.setOrigin(btVector3(0.0f, -50.0f, 0.0f));
+
+			btScalar mass(0.0f);
+			btRigidBody* body = CreateRigidBody(mass, groundTransform, groundShape);
+
+			body->setContactStiffnessAndDamping(300.0f, 10.0f);
+		}
 	}
 
 	Scenes::~Scenes()
 	{
+		for (int i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			btCollisionObject *obj = m_dynamicsWorld->getCollisionObjectArray()[i];
+			btRigidBody *body = btRigidBody::upcast(obj);
+
+			if (body && body->getMotionState())
+			{
+				delete body->getMotionState();
+			}
+
+			m_dynamicsWorld->removeCollisionObject(obj);
+			delete obj;
+		}
+
+		for (int i = 0; i < m_collisionShapes.size(); i++)
+		{
+			btCollisionShape *shape = m_collisionShapes[i];
+			delete shape;
+		}
+
+		m_collisionShapes.clear();
+
+		delete m_collisionConfiguration;
+		delete m_dispatcher;
+		delete m_broadphase;
+		delete m_solver;
+		delete m_dynamicsWorld;
 	}
 
 	void Scenes::Update()
@@ -26,6 +127,7 @@ namespace fl
 			m_scene->SetStarted(true);
 		}
 
+		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta());
 		m_scene->Update();
 
 		if (m_scene->GetStructure() == nullptr)

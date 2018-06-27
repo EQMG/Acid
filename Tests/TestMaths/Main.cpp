@@ -3,6 +3,7 @@
 #include <Maths/Vector3.hpp>
 #include <Maths/Vector4.hpp>
 #include <Maths/Maths.hpp>
+#include <Maths/Quaternion.hpp>
 
 using namespace fl;
 

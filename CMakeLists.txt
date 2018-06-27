@@ -113,6 +113,7 @@ include(Libraries/FindGlslang.cmake)
 include(Libraries/FindOpenAL.cmake)
 include(Libraries/FindGLFW.cmake)
 include(Libraries/FindSTB.cmake)
+include(Libraries/FindBullet.cmake)
 
 set(LIBRARIES_INCLUDES ${LIBRARIES_INCLUDES} PARENT_SCOPE)
 set(LIBRARIES_LINKS ${LIBRARIES_LINKS} PARENT_SCOPE)
