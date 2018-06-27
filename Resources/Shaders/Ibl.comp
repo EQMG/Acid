@@ -6,7 +6,7 @@ layout(rgba16f, set = 0, binding = 0) uniform writeonly imageCube writeCubemap;
 
 layout(set = 0, binding = 1) uniform samplerCube samplerCubemap;
 
-const float pi = 3.1415926535897932384626433832795;
+const float pi = 3.1415926535897932384626433832795f;
 const float roughness = 0.6f;
 
 float sqr(float x)

@@ -18,6 +18,7 @@ install:
 # - git submodule update --init --recursive
   - git clone https://github.com/glfw/glfw.git Libraries/glfw
   - git clone https://github.com/KhronosGroup/glslang.git Libraries/glslang
+  - git clone https://github.com/bulletphysics/bullet3.git Libraries/bullet3
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
