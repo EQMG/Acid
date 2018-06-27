@@ -17,7 +17,6 @@ namespace fl
 		bool m_useGravity;
 		Constraint3 m_freezePosition;
 		Constraint3 m_freezeRotation;
-		ICollider *m_colliderCopy;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
@@ -29,8 +28,6 @@ namespace fl
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *destination) override;
-
-		Vector3 ResolveCollisions(const Vector3 &amount);
 
 		std::string GetName() const override { return "Rigidbody"; };
 
@@ -53,7 +50,5 @@ namespace fl
 		Constraint3 GetFreezeRotation() const { return m_freezeRotation; }
 
 		void SetFreezeRotation(const Constraint3 &freezeRotation) { m_freezeRotation = freezeRotation; }
-
-		ICollider *GetCollider() const { return m_colliderCopy; }
 	};
 }

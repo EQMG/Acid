@@ -49,17 +49,6 @@ namespace fl
 		virtual ICollider *UpdateCollider(const Transform &transform, ICollider *destination) = 0;
 
 		/// <summary>
-		/// Adjusts a movement amount so that after the move is performed, the this collider will not intersect the {@code right}.
-		/// This method assumes that this collider can actually intersect {@code right} after some amount of movement,
-		/// even if it won't necessarily intersect it after the movement specified by {@code moveDelta}.
-		/// </summary>
-		/// <param name="other"> The right source collider. </param>
-		/// <param name="positionStart"> Where the collider starts at.. </param>
-		/// <param name="positionDelta"> The delta movement for the left collider. </param>
-		/// <returns> The new, adjusted delta that guarantees no intersection. </returns>
-		virtual Vector3 ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta) = 0;
-
-		/// <summary>
 		/// Tests whether a shape is intersecting this shape.
 		/// </summary>
 		/// <param name="other"> The other shape being tested for intersection. </param>

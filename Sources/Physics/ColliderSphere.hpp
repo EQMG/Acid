@@ -38,8 +38,6 @@ namespace fl
 
 		ICollider *UpdateCollider(const Transform &transform, ICollider *destination) override;
 
-		Vector3 ResolveCollision(const ICollider &other, const Vector3 &positionStart, const Vector3 &positionDelta) override;
-
 		Intersect Intersects(const ICollider &other) override;
 
 		Intersect Intersects(const Ray &ray) override;

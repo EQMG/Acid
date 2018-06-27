@@ -26,7 +26,7 @@ auto guiBlack = Texture::Resource("Guis/Black.png");
 auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 
 // Imports a model.
-auto dragon = Model::Resource("Objects/Testing/Model_Dragon.obj");
+auto dragon = Model::Resource("Objects/Testing/ModelDragon.obj");
 
 // Plays a 3D sound, at the origin, at half volume.
 auto jump = Sound("Sounds/Jump.ogg", 0.5f);
@@ -72,15 +72,16 @@ This is a list of current features in Flounder:
  * Modular rendering pipeline
  * Material pipeline system
  * Deferred PBR IBL rendering
+ * Bullet3 physics engine
  * Normal, material, glow, and sway maps
+ * Resource management
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
+ * Event and tasks systems
  * Resource path searches, and packing
  * GUI / text rendering
  * Particle effects system
  * Skyboxes and fog
- * Resource management
  * Audio and music
- * Event and tasks systems
  * Frustum culling
  * Shadow mapping
  * Model file loading (OBJ)
@@ -92,16 +93,16 @@ This is a list of current features in Flounder:
  * Visual drivers and maths classes
  * Flexible input classes
  * C# generated files
- * Physics engine (WIP)
- * P2P networking (WIP)
- * Steam integration (WIP)
+ * Networking (WIP)
  * Resource packaging (WIP)
+ * Steam integration (WIP)
 
 ## Dependencies
 Flounder uses the following libraries:
  * [glfw](https://github.com/glfw/glfw) - Display handling
  * [glslang](https://github.com/KhronosGroup/glslang) - GLSL processing
  * [stb](https://github.com/nothings/stb) - Texture and OGG loading
+ * [bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [openal](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
  * [moltenvk](https://github.com/KhronosGroup/MoltenVK) - Vulkan for Apple

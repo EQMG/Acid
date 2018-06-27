@@ -47,9 +47,6 @@ namespace fl
 		/// <param name="projectionMatrix"> The projection matrix. </param>
 		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const;
 
-		/// <returns> The planes*value array used to represent the frustum. </returns>
-		float **GetFrustumArray() const { return m_frustumArray; };
-
 		/// <summary>
 		/// Is the point contained in the frustum?
 		/// </summary>

@@ -1,5 +1,6 @@
 #include "Scenes.hpp"
 
+#include <cassert>
 #include <LinearMath/btAlignedObjectArray.h>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>

@@ -51,9 +51,9 @@ namespace fl
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto rigidbody = gameObject->GetComponent<Rigidbody>();
+			auto collider = gameObject->GetComponent<ICollider>();
 
-			if (rigidbody == nullptr || rigidbody->GetCollider()->InFrustum(range))
+			if (collider == nullptr || collider->InFrustum(range))
 			{
 				result.emplace_back(*it);
 			}
@@ -69,9 +69,9 @@ namespace fl
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto rigidbody = gameObject->GetComponent<Rigidbody>();
+			auto collider = gameObject->GetComponent<ICollider>();
 
-			if (rigidbody == nullptr || range->Intersects(*rigidbody->GetCollider()).IsIntersection() || range->Contains(*rigidbody->GetCollider()))
+			if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
 			{
 				result.emplace_back(*it);
 			}
