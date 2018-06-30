@@ -9,8 +9,8 @@ namespace fl
 		m_rightClick(false),
 		m_leftWasClick(false),
 		m_rightWasClick(false),
-		m_mouseLeft(ButtonMouse({MouseButton::MOUSE_BUTTON_LEFT})),
-		m_mouseRight(ButtonMouse({MouseButton::MOUSE_BUTTON_RIGHT}))
+		m_mouseLeft(ButtonMouse({WSI_MOUSE_LEFT})),
+		m_mouseRight(ButtonMouse({WSI_MOUSE_RIGHT}))
 	{
 	}
 

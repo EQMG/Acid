@@ -1,14 +1,10 @@
 #include "Keyboard.hpp"
 
-#include <GLFW/glfw3.h>
-
 namespace fl
 {
-	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
+	void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, uint32_t modsCount, WsiModifier *mods)
 	{
-		// TODO: Play with mods.
-
-		if (key < 0 || key > Key::KEY_LAST)
+		if (key < 0 || key > WSI_KEY_LAST)
 		{
 			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
@@ -18,25 +14,19 @@ namespace fl
 		}
 	}
 
-	void CallbackChar(GLFWwindow *window, unsigned int codepoint)
-	{
-		Keyboard::Get()->m_keyboardChar = codepoint;
-	}
-
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(std::array<int, KEY_LAST>()),
+		m_keyboardKeys(std::array<WsiAction, WSI_KEY_LAST>()),
 		m_keyboardChar(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < KEY_LAST; i++)
+		for (unsigned int i = 0; i < WSI_KEY_LAST; i++)
 		{
-			m_keyboardKeys[i] = GLFW_RELEASE;
+			m_keyboardKeys[i] = WSI_ACTION_RELEASE;
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetGlfwWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetGlfwWindow(), CallbackChar);
+		wsiCmdSetKeyCallback(Display::Get()->GetWsiShell(), CallbackKey);
 	}
 
 	Keyboard::~Keyboard()
@@ -47,14 +37,14 @@ namespace fl
 	{
 	}
 
-	bool Keyboard::GetKey(const Key &key) const
+	bool Keyboard::GetKey(const WsiKey &key) const
 	{
-		if (key < 0 || key > KEY_LAST)
+		if (key < 0 || key > WSI_KEY_LAST)
 		{
 			return false;
 		}
 
-		return m_keyboardKeys[key] != GLFW_RELEASE;
+		return m_keyboardKeys[key] != WSI_ACTION_RELEASE;
 	}
 
 	int Keyboard::GetChar() const

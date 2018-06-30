@@ -4,10 +4,10 @@
 
 namespace fl
 {
-	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const std::vector<int> &axes, const bool &reverse) :
+	AxisJoystick::AxisJoystick(const WsiJoystick &joystick, const std::vector<uint32_t> &axes, const bool &reverse) :
 		IAxis(),
 		m_joystick(joystick),
-		m_axes(std::vector<int>(axes)),
+		m_axes(axes),
 		m_reverse(reverse)
 	{
 	}

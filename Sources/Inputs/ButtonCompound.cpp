@@ -4,7 +4,7 @@ namespace fl
 {
 	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
 		IButton(),
-		m_buttons(std::vector<IButton *>(buttons)),
+		m_buttons(buttons),
 		m_wasDown(false)
 	{
 	}
