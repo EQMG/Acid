@@ -28,32 +28,32 @@ namespace test
 		m_noclipEnabled(true),
 		m_inputForward(new AxisCompound({
 			new AxisButton(
-				new ButtonKeyboard({KEY_S, KEY_DOWN}),
-				new ButtonKeyboard({KEY_W, KEY_UP})
+				new ButtonKeyboard({WSI_KEY_S, WSI_KEY_DOWN}),
+				new ButtonKeyboard({WSI_KEY_W, WSI_KEY_UP})
 			),
-			new AxisJoystick(JOYSTICK_1, {1}, true)
+			new AxisJoystick(WSI_JOYSTICK_1, {1}, true)
 		})),
 		m_inputStrafe(new AxisCompound({
 			new AxisButton(
-				new ButtonKeyboard({KEY_D, KEY_RIGHT}),
-				new ButtonKeyboard({KEY_A, KEY_LEFT})
+				new ButtonKeyboard({WSI_KEY_D, WSI_KEY_RIGHT}),
+				new ButtonKeyboard({WSI_KEY_A, WSI_KEY_LEFT})
 			),
-			new AxisJoystick(JOYSTICK_1, {0}, true)
+			new AxisJoystick(WSI_JOYSTICK_1, {0}, true)
 		})),
 		m_inputSprint(new ButtonCompound({
-			new ButtonKeyboard({KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+			new ButtonKeyboard({WSI_KEY_LEFT_SHIFT, WSI_KEY_RIGHT_SHIFT}),
+			new ButtonJoystick(WSI_JOYSTICK_1, {1})
 		})),
 		m_inputJump(new ButtonCompound({
-			new ButtonKeyboard({KEY_SPACE}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+			new ButtonKeyboard({WSI_KEY_SPACE}),
+			new ButtonJoystick(WSI_JOYSTICK_1, {1})
 		})),
 		m_inputCrouch(new ButtonCompound({
-			new ButtonKeyboard({KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+			new ButtonKeyboard({WSI_KEY_LEFT_CONTROL, WSI_KEY_RIGHT_CONTROL}),
+			new ButtonJoystick(WSI_JOYSTICK_1, {1})
 		})),
 		m_toggleNoclip(new ButtonCompound({
-			new ButtonKeyboard({KEY_N}),
+			new ButtonKeyboard({WSI_KEY_N}),
 		})),
 		m_amountMove(Vector3()),
 		m_amountRotate(Vector3())

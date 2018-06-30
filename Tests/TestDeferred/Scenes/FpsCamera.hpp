@@ -51,7 +51,7 @@ namespace test
 		float m_targetRotationAngle;
 
 		float m_sensitivity;
-		MouseButton m_reangleButton;
+		WsiMouse m_reangleButton;
 		AxisJoystick m_joystickVertical;
 		AxisJoystick m_joystickHorizontal;
 

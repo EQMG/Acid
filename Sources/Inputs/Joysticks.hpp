@@ -5,40 +5,17 @@
 
 namespace fl
 {
-	enum JoystickPort
-	{
-		JOYSTICK_1 = 0,
-		JOYSTICK_2 = 1,
-		JOYSTICK_3 = 2,
-		JOYSTICK_4 = 3,
-		JOYSTICK_5 = 4,
-		JOYSTICK_6 = 5,
-		JOYSTICK_7 = 6,
-		JOYSTICK_8 = 7,
-		JOYSTICK_9 = 8,
-		JOYSTICK_10 = 9,
-		JOYSTICK_11 = 10,
-		JOYSTICK_12 = 11,
-		JOYSTICK_13 = 12,
-		JOYSTICK_14 = 13,
-		JOYSTICK_15 = 14,
-		JOYSTICK_16 = 15,
-		JOYSTICK_LAST = JOYSTICK_16
-	};
-
 	/// <summary>
 	/// A definition for a GLFW managed joystick.
 	/// </summary>
 	struct Joystick
 	{
 	public:
+		WsiJoystick m_port;
 		bool m_connected;
-		int m_id;
-		const char *m_name;
-		const float *m_axes;
-		const unsigned char *m_buttons;
-		int m_axeCount;
-		int m_buttonCount;
+		std::string m_name;
+		std::vector<WsiAction> m_buttons;
+		std::vector<float> m_axes;
 	};
 
 	/// <summary>
@@ -48,7 +25,14 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::array<Joystick, JOYSTICK_LAST> m_connected;
+		std::array<Joystick, WSI_JOYSTICK_LAST> m_connected;
+
+		friend void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, bool connected);
+
+		friend void CallbackJoystickButton(WsiShell shell, WsiJoystick port, uint32_t button, WsiAction action);
+
+		friend void CallbackJoystickAxis(WsiShell shell, WsiJoystick port, uint32_t axis, float amount);
+
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -76,22 +60,14 @@ namespace fl
 		/// </summary>
 		/// <param name="port"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool IsConnected(const JoystickPort &port) const { return m_connected.at(port).m_connected; }
+		bool IsConnected(const WsiJoystick &port) const { return m_connected.at(port).m_connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="port"> The joystick to get the name of. </param>
 		/// <returns> The joysticks name. </returns>
-		const char *GetName(const JoystickPort &port) const { return m_connected.at(port).m_name; }
-
-		/// <summary>
-		/// Gets the value of a joysticks axis.
-		/// </summary>
-		/// <param name="port"> The joystick to get the axis from. </param>
-		/// <param name="axis"> The axis of interest. </param>
-		/// <returns> The value of the joystick's axis. </returns>
-		float GetAxis(const JoystickPort &port, const int &axis) const;
+		std::string GetName(const WsiJoystick &port) const { return m_connected.at(port).m_name; }
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -99,20 +75,28 @@ namespace fl
 		/// <param name="port"> The joystick to get the button from. </param>
 		/// <param name="button"> The button of interest. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
-		bool GetButton(const JoystickPort &port, const int &button) const;
+		bool GetButton(const WsiJoystick &port, const int &button) const;
 
 		/// <summary>
-		/// Gets the number of axes the joystick offers.
+		/// Gets the value of a joysticks axis.
 		/// </summary>
-		/// <param name="port"> The joystick to the the axis count from. </param>
-		/// <returns> The number of axes the joystick offers. </returns>
-		int GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
+		/// <param name="port"> The joystick to get the axis from. </param>
+		/// <param name="axis"> The axis of interest. </param>
+		/// <returns> The value of the joystick's axis. </returns>
+		float GetAxis(const WsiJoystick &port, const int &axis) const;
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		int GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
+		unsigned int GetCountButtons(const WsiJoystick &port) const { return m_connected.at(port).m_buttons.size(); }
+
+		/// <summary>
+		/// Gets the number of axes the joystick offers.
+		/// </summary>
+		/// <param name="port"> The joystick to the the axis count from. </param>
+		/// <returns> The number of axes the joystick offers. </returns>
+		unsigned int GetCountAxes(const WsiJoystick &port) const { return m_connected.at(port).m_axes.size(); }
 	};
 }

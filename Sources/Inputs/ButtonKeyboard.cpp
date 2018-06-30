@@ -2,9 +2,9 @@
 
 namespace fl
 {
-	ButtonKeyboard::ButtonKeyboard(const std::vector<Key> &keys) :
+	ButtonKeyboard::ButtonKeyboard(const std::vector<WsiKey> &keys) :
 		IButton(),
-		m_keys(std::vector<Key>(keys)),
+		m_keys(keys),
 		m_wasDown(false)
 	{
 	}
