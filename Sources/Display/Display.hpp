@@ -4,7 +4,7 @@
 #include <cstring>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include <wsi/vulkan_wsi.h>
+#include <VWSI/vulkan_wsi.h>
 #include "Engine/Engine.hpp"
 
 namespace fl
@@ -59,11 +59,11 @@ namespace fl
 
 		friend void CallbackPosition(WsiShell shell, uint32_t x, uint32_t y);
 
-		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, bool fullscreen);
+		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 fullscreen);
 
-		friend void CallbackFocus(WsiShell shell, bool focused);
+		friend void CallbackFocus(WsiShell shell, VkBool32 focused);
 
-		friend void CallbackIconify(WsiShell shell, bool iconified);
+		friend void CallbackIconify(WsiShell shell, VkBool32 iconified);
 
 		friend void CallbackClose(WsiShell shell);
 

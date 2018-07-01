@@ -28,7 +28,7 @@ namespace fl
 		Display::Get()->m_positionY = y;
 	}
 
-	void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, bool fullscreen)
+	void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 fullscreen)
 	{
 		if (width <= 0 || height <= 0)
 		{
@@ -36,6 +36,7 @@ namespace fl
 		}
 
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Display::Get()->m_fullscreen = fullscreen;
 
 		if (Display::Get()->m_fullscreen)
 		{
@@ -51,12 +52,12 @@ namespace fl
 		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
-	void CallbackFocus(WsiShell shell, bool focused)
+	void CallbackFocus(WsiShell shell, VkBool32 focused)
 	{
 		Display::Get()->m_focused = focused;
 	}
 
-	void CallbackIconify(WsiShell shell, bool iconified)
+	void CallbackIconify(WsiShell shell, VkBool32 iconified)
 	{
 		Display::Get()->m_iconified = iconified;
 	}
@@ -165,7 +166,7 @@ namespace fl
 	void Display::Update()
 	{
 		// Polls for shell events. The key callback will only be invoked during this call.
-		wsiPollEvents(m_shell);
+		ErrorVk(wsiPollEvents(m_shell));
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(GetWidth()) / static_cast<float>(GetHeight());
@@ -176,13 +177,13 @@ namespace fl
 		m_windowWidth = width;
 		m_windowHeight = height;
 		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		wsiCmdSetSize(m_shell, width, height);
+		ErrorVk(wsiCmdSetSize(m_shell, width, height));
 	}
 
 	void Display::SetTitle(const std::string &title)
 	{
 		m_title = title;
-		wsiCmdSetTitle(m_shell, m_title.c_str());
+		ErrorVk(wsiCmdSetName(m_shell, m_title.c_str()));
 	}
 
 	void Display::SetIcon(const std::string &filename)
@@ -206,12 +207,12 @@ namespace fl
 			return;
 		}
 
-		WsiIcon icon = {};
+		WsiImage icon = {};
 		icon.pixels = data;
 		icon.width = width;
 		icon.height = height;
 
-		wsiCmdSetIcon(m_shell, icon);
+		ErrorVk(wsiCmdSetIcon(m_shell, icon));
 		Texture::DeletePixels(data);
 	}
 
@@ -337,33 +338,26 @@ namespace fl
 		WsiMonitorProperties monitorProperties;
 		wsiGetMonitorProperties(monitors[0], &monitorProperties);*/
 
-		WsiCallbacks callbacks = {};
-		callbacks.position = CallbackPosition;
-		callbacks.size = CallbackSize;
-		callbacks.focus = CallbackFocus;
-		callbacks.iconify = CallbackIconify;
-		callbacks.close = CallbackClose;
-//		callbacks.cursorPosition = CallbackCursorPosition;
-//		callbacks.cursorEnter = CallbackCursorEnter;
-//		callbacks.cursorScroll = CallbackCursorScroll;
-//		callbacks.key = CallbackKey;
-//		callbacks.mouse = CallbackMouseButton;
-//		callbacks.touch = CallbackTouch;
-//		callbacks.joystickConnect = CallbackJoystickConnect;
-//		callbacks.joystickButton = CallbackJoystickButton;
-//		callbacks.joystickAxis = CallbackJoystickAxis;
+		WsiShellCallbacks shellCallbacks = {};
+		shellCallbacks.pfnPosition = CallbackPosition;
+		shellCallbacks.pfnSize = CallbackSize;
+		shellCallbacks.pfnFocus = CallbackFocus;
+		shellCallbacks.pfnIconify = CallbackIconify;
+		shellCallbacks.pfnClose = CallbackClose;
 
-		WsiShellCreateInfo instanceCreateInfo = {};
-		instanceCreateInfo.pCallbacks = &callbacks;
-		instanceCreateInfo.pIcon = nullptr;
-		instanceCreateInfo.width = 1080;
-		instanceCreateInfo.height = 720;
-//		instanceCreateInfo.x = (monitorProperties.width - instanceCreateInfo.width) / 2;
-//		instanceCreateInfo.y = (monitorProperties.height - instanceCreateInfo.height) / 2;
-		instanceCreateInfo.resizable = true;
-		instanceCreateInfo.title = m_title.c_str();
+		WsiShellCreateInfo shellCreateInfo = {};
+		shellCreateInfo.sType = WSI_STRUCTURE_TYPE_SHELL_CREATE_INFO;
+		shellCreateInfo.pCallbacks = &shellCallbacks;
+		shellCreateInfo.pIcon = nullptr;
+		shellCreateInfo.pCursor = nullptr;
+		shellCreateInfo.width = 1080;
+		shellCreateInfo.height = 720;
+//		shellCreateInfo.x = (monitorProperties.width - instanceCreateInfo.width) / 2;
+//		shellCreateInfo.y = (monitorProperties.height - instanceCreateInfo.height) / 2;
+		shellCreateInfo.resizable = true;
+		shellCreateInfo.pName = m_title.c_str();
 
-		ErrorVk(wsiCreateShell(&instanceCreateInfo, &m_shell));
+		ErrorVk(wsiCreateShell(&shellCreateInfo, &m_shell));
 	}
 
 	void Display::SetupLayers()

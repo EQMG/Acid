@@ -2,7 +2,7 @@
 
 namespace fl
 {
-	ButtonMouse::ButtonMouse(const std::vector<WsiMouse> &buttons) :
+	ButtonMouse::ButtonMouse(const std::vector<WsiMouseButton> &buttons) :
 		IButton(),
 		m_buttons(buttons),
 		m_wasDown(false)

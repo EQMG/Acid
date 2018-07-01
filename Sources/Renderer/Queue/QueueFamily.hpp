@@ -12,16 +12,18 @@ namespace fl
 	{
 	private:
 		int m_graphicsFamily;
-		int m_presentFamily;
 		int m_computeFamily;
+		int m_transferFamily;
+		int m_sparseFamily;
 
-		std::array<uint32_t, 3> m_array;
+		std::array<uint32_t, 4> m_array;
 	public:
-		QueueFamilyIndices(const int &graphicsFamily, const int &presentFamily, const int &computeFamily) :
+		QueueFamilyIndices(const int &graphicsFamily, const int &computeFamily, const int &transferFamily, const int &sparseFamily) :
 			m_graphicsFamily(graphicsFamily),
-			m_presentFamily(presentFamily),
 			m_computeFamily(computeFamily),
-			m_array({static_cast<uint32_t>(m_graphicsFamily), static_cast<uint32_t>(m_presentFamily), static_cast<uint32_t>(m_computeFamily)})
+			m_transferFamily(transferFamily),
+			m_sparseFamily(sparseFamily),
+			m_array({static_cast<uint32_t>(m_graphicsFamily), static_cast<uint32_t>(m_computeFamily), static_cast<uint32_t>(m_transferFamily), static_cast<uint32_t>(m_sparseFamily)})
 		{
 		}
 
@@ -31,16 +33,18 @@ namespace fl
 		/// <return> If an index has been assigned. </return>
 		bool IsComplete() const
 		{
-			return m_graphicsFamily >= 0 && m_presentFamily >= 0 && m_computeFamily >= 0;
+			return m_graphicsFamily >= 0 && m_computeFamily >= 0 && m_transferFamily >= 0 && m_sparseFamily >= 0;
 		}
 
 		int GetGraphicsFamily() const { return m_graphicsFamily; }
 
-		int GetPresentFamily() const { return m_presentFamily; }
-
 		int GetComputeFamily() const { return m_computeFamily; }
 
-		std::array<uint32_t, 3> GetArray() const { return m_array; }
+		int GetTransferFamily() const { return m_transferFamily; }
+
+		int GetSparceFamily() const { return m_sparseFamily; }
+
+		std::array<uint32_t, 4> GetArray() const { return m_array; }
 	};
 
 	/// <summary>
