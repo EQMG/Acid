@@ -4,3 +4,6 @@
 [submodule "Libraries/bullet3"]
 	path = Libraries/bullet3
 	url = https://github.com/bulletphysics/bullet3
+[submodule "Libraries/vwsi"]
+	path = Libraries/vwsi
+	url = https://github.com/mattparks/vwsi
