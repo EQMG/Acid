@@ -2,16 +2,16 @@
 
 namespace fl
 {
-	void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, bool connected)
+	void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, VkBool32 connected)
 	{
 		Joystick joystick = Joysticks::Get()->m_connected[port];
-		bool newConnection = joystick.m_connected != connected;
+		bool changed = joystick.m_connected != connected;
 		joystick.m_connected = connected;
 		joystick.m_name = name;
 		joystick.m_buttons.resize(buttonCount);
 		joystick.m_axes.resize(axesCount);
 
-		if (newConnection)
+		if (changed)
 		{
 			for (int i = 0; i < buttonCount; i++)
 			{
@@ -50,9 +50,11 @@ namespace fl
 		}
 
 		// Sets the joystick callbacks.
-		wsiCmdSetJoystickConnectCallback(Display::Get()->GetWsiShell(), CallbackJoystickConnect);
-		wsiCmdSetJoystickButtonCallback(Display::Get()->GetWsiShell(), CallbackJoystickButton);
-		wsiCmdSetJoystickAxisCallback(Display::Get()->GetWsiShell(), CallbackJoystickAxis);
+		WsiShellCallbacks *callbacks;
+		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
+		callbacks->pfnJoystickConnect = CallbackJoystickConnect;
+		callbacks->pfnJoystickButton = CallbackJoystickButton;
+		callbacks->pfnJoystickAxis = CallbackJoystickAxis;
 	}
 
 	Joysticks::~Joysticks()
@@ -63,23 +65,23 @@ namespace fl
 	{
 	}
 
-	float Joysticks::GetAxis(const WsiJoystick &port, const int &axis) const
+	bool Joysticks::GetButton(const WsiJoystick &port, const uint32_t &button) const
 	{
-		if (axis < 0 || axis > GetCountAxes(port))
-		{
-			return false;
-		}
-
-		return m_connected.at(port).m_axes[axis];
-	}
-
-	bool Joysticks::GetButton(const WsiJoystick &port, const int &button) const
-	{
-		if (button < 0 || button > GetCountButtons(port))
+		if (button > GetCountButtons(port))
 		{
 			return false;
 		}
 
 		return m_connected.at(port).m_buttons[button];
+	}
+
+	float Joysticks::GetAxis(const WsiJoystick &port, const uint32_t &axis) const
+	{
+		if (axis > GetCountAxes(port))
+		{
+			return false;
+		}
+
+		return m_connected.at(port).m_axes[axis];
 	}
 }

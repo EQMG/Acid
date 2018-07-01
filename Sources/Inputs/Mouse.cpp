@@ -12,7 +12,7 @@ namespace fl
 		Mouse::Get()->m_mousePositionY = y / static_cast<float>(Display::Get()->GetHeight());
 	}
 
-	void CallbackCursorEnter(WsiShell shell, bool entered)
+	void CallbackCursorEnter(WsiShell shell, VkBool32 entered)
 	{
 		Mouse::Get()->m_displaySelected = entered;
 	}
@@ -22,7 +22,7 @@ namespace fl
 		Mouse::Get()->m_mouseDeltaWheel = y;
 	}
 
-	void CallbackMouseButton(WsiShell shell, WsiMouse mouseButton, WsiAction action)
+	void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action)
 	{
 		Mouse::Get()->m_mouseButtons[mouseButton] = action;
 	}
@@ -30,7 +30,7 @@ namespace fl
 	Mouse::Mouse() :
 		IModule(),
 		m_mousePath(""),
-		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_LAST>()),
+		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_BUTTON_LAST>()),
 		m_lastMousePositionX(0.5f),
 		m_lastMousePositionY(0.5f),
 		m_mousePositionX(0.5f),
@@ -43,16 +43,18 @@ namespace fl
 		m_lastCursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < WSI_MOUSE_LAST; i++)
+		for (int i = 0; i < WSI_MOUSE_BUTTON_LAST; i++)
 		{
 			m_mouseButtons[i] = WSI_ACTION_RELEASE;
 		}
 
 		// Sets the mouses callbacks.
-		wsiCmdSetCursorScrollCallback(Display::Get()->GetWsiShell(), CallbackScroll);
-		wsiCmdSetMouseButtonCallback(Display::Get()->GetWsiShell(), CallbackMouseButton);
-		wsiCmdSetCursorPositionCallback(Display::Get()->GetWsiShell(), CallbackCursorPosition);
-		wsiCmdSetCursorEnterCallback(Display::Get()->GetWsiShell(), CallbackCursorEnter);
+		WsiShellCallbacks *callbacks;
+		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
+		callbacks->pfnCursorScroll = CallbackScroll;
+		callbacks->pfnMouseButton = CallbackMouseButton;
+		callbacks->pfnCursorPosition = CallbackCursorPosition;
+		callbacks->pfnCursorEnter = CallbackCursorEnter;
 	}
 
 	Mouse::~Mouse()
@@ -107,7 +109,7 @@ namespace fl
 			return;
 		}
 
-		WsiIcon icon = {};
+		WsiImage icon = {};
 		icon.width = width;
 		icon.height = height;
 		icon.pixels = data;
@@ -131,9 +133,9 @@ namespace fl
 		m_cursorDisabled = disabled;
 	}
 
-	bool Mouse::GetButton(const WsiMouse &mouseButton) const
+	bool Mouse::GetButton(const WsiMouseButton &mouseButton) const
 	{
-		if (mouseButton < 0 || mouseButton > WSI_MOUSE_LAST)
+		if (mouseButton < 0 || mouseButton > WSI_MOUSE_BUTTON_LAST)
 		{
 			return false;
 		}

@@ -62,7 +62,7 @@ namespace fl
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (indices.GetGraphicsFamily() != indices.GetPresentFamily())
+		if (indices.GetGraphicsFamily() != indices.GetTransferFamily())
 		{
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.GetArray().size());

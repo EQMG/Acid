@@ -71,9 +71,9 @@ namespace fl
 	{
 		int key = -1;
 
-		for (int i = 0; i < WSI_MOUSE_LAST; i++)
+		for (int i = 0; i < WSI_MOUSE_BUTTON_LAST; i++)
 		{
-			if (Mouse::Get()->GetButton((WsiMouse) i))
+			if (Mouse::Get()->GetButton((WsiMouseButton) i))
 			{
 				if (i == 0)
 				{

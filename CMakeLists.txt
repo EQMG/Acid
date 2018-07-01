@@ -112,7 +112,7 @@ endif()
 include(Libraries/FindVulkan.cmake)
 include(Libraries/FindGlslang.cmake)
 include(Libraries/FindOpenAL.cmake)
-include(Libraries/FindWSI.cmake)
+include(Libraries/FindVWSI.cmake)
 include(Libraries/FindSTB.cmake)
 include(Libraries/FindBullet.cmake)
 

@@ -26,7 +26,9 @@ namespace fl
 		}
 
 		// Sets the keyboards callbacks.
-		wsiCmdSetKeyCallback(Display::Get()->GetWsiShell(), CallbackKey);
+		WsiShellCallbacks *callbacks;
+		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
+		callbacks->pfnKey = CallbackKey;
 	}
 
 	Keyboard::~Keyboard()
