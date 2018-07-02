@@ -7,7 +7,7 @@
 
 namespace fl
 {
-	struct FL_EXPORT SelectorJoystick
+	class FL_EXPORT SelectorJoystick
 	{
 	private:
 		WsiJoystick m_joystick;
@@ -16,7 +16,7 @@ namespace fl
 		AxisJoystick m_axisX;
 		AxisJoystick m_axisY;
 	public:
-		SelectorJoystick(const WsiJoystick &joystick = WSI_JOYSTICK_LAST, const uint32_t &joystickLeftClick = 0, const uint32_t &joystickRightClick = 1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1) :
+		SelectorJoystick(const WsiJoystick &joystick = WSI_JOYSTICK_END_RANGE, const uint32_t &joystickLeftClick = 0, const uint32_t &joystickRightClick = 1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1) :
 			m_joystick(joystick),
 			m_clickLeft(ButtonJoystick(joystick, {joystickLeftClick})),
 			m_clickRight(ButtonJoystick(joystick, {joystickRightClick})),

@@ -4,7 +4,7 @@ namespace fl
 {
 	void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, uint32_t modsCount, WsiModifier *mods)
 	{
-		if (key < 0 || key > WSI_KEY_LAST)
+		if (key < 0 || key > WSI_KEY_END_RANGE)
 		{
 			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
@@ -16,11 +16,11 @@ namespace fl
 
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(std::array<WsiAction, WSI_KEY_LAST>()),
+		m_keyboardKeys(std::array<WsiAction, WSI_KEY_END_RANGE>()),
 		m_keyboardChar(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < WSI_KEY_LAST; i++)
+		for (unsigned int i = 0; i < WSI_KEY_END_RANGE; i++)
 		{
 			m_keyboardKeys[i] = WSI_ACTION_RELEASE;
 		}
@@ -41,7 +41,7 @@ namespace fl
 
 	bool Keyboard::GetKey(const WsiKey &key) const
 	{
-		if (key < 0 || key > WSI_KEY_LAST)
+		if (key < 0 || key > WSI_KEY_END_RANGE)
 		{
 			return false;
 		}

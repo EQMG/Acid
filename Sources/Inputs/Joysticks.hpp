@@ -25,7 +25,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::array<Joystick, WSI_JOYSTICK_LAST> m_connected;
+		std::array<Joystick, WSI_JOYSTICK_END_RANGE> m_connected;
 
 		friend void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, VkBool32 connected);
 

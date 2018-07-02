@@ -154,19 +154,19 @@ namespace fl
 		vkDeviceWaitIdle(m_logicalDevice);
 
 		// Destroys Vulkan.
+		wsiDestroyShell(m_shell, nullptr);
 		vkDestroyDevice(m_logicalDevice, nullptr);
 		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
 		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 		vkDestroyInstance(m_instance, nullptr);
-		wsiDestroyShell(m_shell);
 
-		m_closed = false;
+		m_closed = true;
 	}
 
 	void Display::Update()
 	{
 		// Polls for shell events. The key callback will only be invoked during this call.
-		ErrorVk(wsiPollEvents(m_shell));
+		ErrorVk(wsiCmdPollEvents(m_shell));
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(GetWidth()) / static_cast<float>(GetHeight());
@@ -357,7 +357,7 @@ namespace fl
 		shellCreateInfo.resizable = true;
 		shellCreateInfo.pName = m_title.c_str();
 
-		ErrorVk(wsiCreateShell(&shellCreateInfo, &m_shell));
+		ErrorVk(wsiCreateShell(&shellCreateInfo, nullptr, &m_shell));
 	}
 
 	void Display::SetupLayers()

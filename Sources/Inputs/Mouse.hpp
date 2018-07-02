@@ -14,7 +14,7 @@ namespace fl
 	private:
 		std::string m_mousePath;
 
-		std::array<WsiAction, WSI_MOUSE_BUTTON_LAST> m_mouseButtons;
+		std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE> m_mouseButtons;
 		float m_lastMousePositionX;
 		float m_lastMousePositionY;
 		float m_mousePositionX;

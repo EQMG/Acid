@@ -39,9 +39,9 @@ namespace fl
 
 	Joysticks::Joysticks() :
 		IModule(),
-		m_connected(std::array<Joystick, WSI_JOYSTICK_LAST>())
+		m_connected(std::array<Joystick, WSI_JOYSTICK_END_RANGE>())
 	{
-		for (int i = 0; i < WSI_JOYSTICK_LAST; i++)
+		for (int i = 0; i < WSI_JOYSTICK_END_RANGE; i++)
 		{
 			Joystick joystick = Joystick();
 			joystick.m_port = static_cast<WsiJoystick>(i);
