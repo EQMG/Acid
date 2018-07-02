@@ -12,7 +12,7 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::array<WsiAction, WSI_KEY_LAST> m_keyboardKeys;
+		std::array<WsiAction, WSI_KEY_END_RANGE> m_keyboardKeys;
 		int m_keyboardChar;
 
 		friend void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, uint32_t modsCount, WsiModifier *mods);

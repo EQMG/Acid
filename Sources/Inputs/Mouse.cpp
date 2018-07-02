@@ -30,7 +30,7 @@ namespace fl
 	Mouse::Mouse() :
 		IModule(),
 		m_mousePath(""),
-		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_BUTTON_LAST>()),
+		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE>()),
 		m_lastMousePositionX(0.5f),
 		m_lastMousePositionY(0.5f),
 		m_mousePositionX(0.5f),
@@ -43,7 +43,7 @@ namespace fl
 		m_lastCursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < WSI_MOUSE_BUTTON_LAST; i++)
+		for (int i = 0; i < WSI_MOUSE_BUTTON_END_RANGE; i++)
 		{
 			m_mouseButtons[i] = WSI_ACTION_RELEASE;
 		}
@@ -135,7 +135,7 @@ namespace fl
 
 	bool Mouse::GetButton(const WsiMouseButton &mouseButton) const
 	{
-		if (mouseButton < 0 || mouseButton > WSI_MOUSE_BUTTON_LAST)
+		if (mouseButton < 0 || mouseButton > WSI_MOUSE_BUTTON_END_RANGE)
 		{
 			return false;
 		}
