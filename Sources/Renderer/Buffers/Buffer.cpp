@@ -15,6 +15,7 @@ namespace fl
 			return;
 		}
 
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto surface = Display::Get()->GetVkSurface();
 		auto indices = QueueFamily::FindQueueFamilies(surface);
@@ -27,7 +28,7 @@ namespace fl
 		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.GetArray().size());
 		bufferCreateInfo.pQueueFamilyIndices = indices.GetArray().data();
 
-		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
+		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, allocator, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
@@ -38,17 +39,18 @@ namespace fl
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
 
 	Buffer::~Buffer()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
-		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
+		vkDestroyBuffer(logicalDevice, m_buffer, allocator);
+		vkFreeMemory(logicalDevice, m_bufferMemory, allocator);
 	}
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)

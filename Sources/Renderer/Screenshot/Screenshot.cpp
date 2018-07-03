@@ -13,6 +13,7 @@ namespace fl
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
@@ -60,7 +61,7 @@ namespace fl
 
 		// Create the image.
 		VkImage dstImage;
-		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &dstImage));
+		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &dstImage));
 
 		// Create memory to back up the image.
 		VkMemoryRequirements memoryRequirements;
@@ -73,7 +74,7 @@ namespace fl
 
 		// Memory must be host visible to copy from.
 		memoryAllocateInfo.memoryTypeIndex = Renderer::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &dstImageMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &dstImageMemory));
 		Display::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
@@ -183,8 +184,8 @@ namespace fl
 
 		// Clean up resources.
 		vkUnmapMemory(logicalDevice, dstImageMemory);
-		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
-		vkDestroyImage(logicalDevice, dstImage, nullptr);
+		vkFreeMemory(logicalDevice, dstImageMemory, allocator);
+		vkDestroyImage(logicalDevice, dstImage, allocator);
 	//	delete data; // TODO: Delete one day...
 
 #if FL_VERBOSE

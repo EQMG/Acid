@@ -15,7 +15,7 @@ namespace fl
 		std::array<WsiAction, WSI_KEY_END_RANGE> m_keyboardKeys;
 		int m_keyboardChar;
 
-		friend void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, uint32_t modsCount, WsiModifier *mods);
+		friend void CallbackKey(WsiShell shell, WsiKey key, int scancode, WsiAction action, WsiModifierFlags modFlags);
 
 	public:
 		/// <summary>

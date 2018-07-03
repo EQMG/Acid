@@ -74,6 +74,21 @@ namespace fl
 		return static_cast<VkBool32>(false);
 	}
 
+	void *Allocation(void *pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
+	{
+		return nullptr; // TODO
+	}
+
+	void *Reallocation(void *pUserData, void *pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
+	{
+		return nullptr; // TODO
+	}
+
+	void Free(void *pUserData, void *pMemory)
+	{
+		// TODO
+	}
+
 	VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
 	{
 		auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
@@ -122,6 +137,7 @@ namespace fl
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
 		m_debugReportCallback(VK_NULL_HANDLE),
+		m_allocator(nullptr),
 		m_instance(VK_NULL_HANDLE),
 		m_surface(VK_NULL_HANDLE),
 		m_surfaceCapabilities({}),
@@ -134,6 +150,14 @@ namespace fl
 		m_physicalDeviceMemoryProperties({}),
 		m_graphicsFamilyIndex(0)
 	{
+	//	m_allocator = new VkAllocationCallbacks();
+	//	m_allocator->pUserData = this;
+	//	m_allocator->pfnAllocation = &Allocation;
+	//	m_allocator->pfnReallocation = &Reallocation;
+	//	m_allocator->pfnFree = &Free;
+	//	m_allocator->pfnInternalAllocation = nullptr;
+	//	m_allocator->pfnInternalFree = nullptr;
+
 		CreateWsi();
 		SetupLayers();
 		SetupExtensions();
@@ -154,11 +178,12 @@ namespace fl
 		vkDeviceWaitIdle(m_logicalDevice);
 
 		// Destroys Vulkan.
-		wsiDestroyShell(m_shell, nullptr);
-		vkDestroyDevice(m_logicalDevice, nullptr);
-		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
-		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
-		vkDestroyInstance(m_instance, nullptr);
+		wsiDestroyShell(m_shell, m_allocator);
+		vkDestroyDevice(m_logicalDevice, m_allocator);
+		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, m_allocator);
+		vkDestroySurfaceKHR(m_instance, m_surface, m_allocator);
+		vkDestroyInstance(m_instance, m_allocator);
+		delete m_allocator;
 
 		m_closed = true;
 	}
@@ -225,7 +250,7 @@ namespace fl
 
 		m_fullscreen = fullscreen;
 
-		/*uint32_t instanceMonitorCount;
+		uint32_t instanceMonitorCount;
 		wsiEnumerateMonitors(&instanceMonitorCount, nullptr);
 		std::vector<WsiMonitor> monitors(instanceMonitorCount);
 		wsiEnumerateMonitors(&instanceMonitorCount, monitors.data());
@@ -238,11 +263,7 @@ namespace fl
 #if FL_VERBOSE
 			printf("Display is going fullscreen\n");
 #endif
-			m_fullscreenWidth = monitorProperties.width;
-			m_fullscreenHeight = monitorProperties.height;
-			wsiCmdSetPosition(m_shell, 0, 0);
-			wsiCmdSetSize(m_shell, m_fullscreenWidth, m_fullscreenHeight);
-			wsiCmdSetFullscreen(m_shell, monitors[0], true);
+			ErrorVk(wsiCmdSetFullscreen(m_shell, monitors[0], true));
 		}
 		else
 		{
@@ -251,10 +272,10 @@ namespace fl
 #endif
 			m_positionX = (monitorProperties.width - m_windowWidth) / 2;
 			m_positionY = (monitorProperties.height - m_windowHeight) / 2;
-			wsiCmdSetFullscreen(m_shell, monitors[0], false);
-			wsiCmdSetSize(m_shell, m_windowWidth, m_windowHeight);
-			wsiCmdSetPosition(m_shell, m_positionX, m_positionY);
-		}*/
+			ErrorVk(wsiCmdSetFullscreen(m_shell, monitors[0], false));
+			ErrorVk(wsiCmdSetSize(m_shell, m_windowWidth, m_windowHeight));
+			ErrorVk(wsiCmdSetPosition(m_shell, m_positionX, m_positionY));
+		}
 	}
 
 	std::string Display::StringifyResultVk(const VkResult &result)
@@ -330,13 +351,13 @@ namespace fl
 
 	void Display::CreateWsi()
 	{
-		/*uint32_t instanceMonitorCount;
+		uint32_t instanceMonitorCount;
 		wsiEnumerateMonitors(&instanceMonitorCount, nullptr);
 		std::vector<WsiMonitor> monitors(instanceMonitorCount);
 		wsiEnumerateMonitors(&instanceMonitorCount, monitors.data());
 
 		WsiMonitorProperties monitorProperties;
-		wsiGetMonitorProperties(monitors[0], &monitorProperties);*/
+		wsiGetMonitorProperties(monitors[0], &monitorProperties);
 
 		WsiShellCallbacks shellCallbacks = {};
 		shellCallbacks.pfnPosition = CallbackPosition;
@@ -352,12 +373,12 @@ namespace fl
 		shellCreateInfo.pCursor = nullptr;
 		shellCreateInfo.width = 1080;
 		shellCreateInfo.height = 720;
-//		shellCreateInfo.x = (monitorProperties.width - instanceCreateInfo.width) / 2;
-//		shellCreateInfo.y = (monitorProperties.height - instanceCreateInfo.height) / 2;
+		shellCreateInfo.x = (monitorProperties.width - shellCreateInfo.width) / 2;
+		shellCreateInfo.y = (monitorProperties.height - shellCreateInfo.height) / 2;
 		shellCreateInfo.resizable = true;
 		shellCreateInfo.pName = m_title.c_str();
 
-		ErrorVk(wsiCreateShell(&shellCreateInfo, nullptr, &m_shell));
+		ErrorVk(wsiCreateShell(&shellCreateInfo, m_allocator, &m_shell));
 	}
 
 	void Display::SetupLayers()
@@ -438,7 +459,7 @@ namespace fl
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		ErrorVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		ErrorVk(vkCreateInstance(&instanceCreateInfo, m_allocator, &m_instance));
 	}
 
 	void Display::CreateDebugCallback()
@@ -454,7 +475,7 @@ namespace fl
 			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 			debugReportCallbackCreateInfo.pUserData = nullptr;
 
-			ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+			ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, m_allocator, &m_debugReportCallback));
 		}
 	}
 
@@ -599,7 +620,7 @@ namespace fl
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
-		ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
+		ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, m_allocator, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamilyIndex, 0, &m_queue);
 	}
@@ -607,7 +628,7 @@ namespace fl
 	void Display::CreateSurface()
 	{
 		// Creates the WSI Vulkan surface.
-		ErrorVk(wsiCreateSurface(m_shell, m_instance, nullptr, &m_surface));
+		ErrorVk(wsiCreateSurface(m_shell, m_instance, m_allocator, &m_surface));
 
 		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 

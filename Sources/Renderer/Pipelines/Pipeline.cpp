@@ -72,18 +72,19 @@ namespace fl
 
 	Pipeline::~Pipeline()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &shaderModule : m_modules)
 		{
-			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
+			vkDestroyShaderModule(logicalDevice, shaderModule, allocator);
 		}
 
 		delete m_shaderProgram;
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
-		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
-		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, allocator);
+		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, allocator);
+		vkDestroyPipeline(logicalDevice, m_pipeline, allocator);
+		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
 	}
 
 	void Pipeline::BindPipeline(const CommandBuffer &commandBuffer) const
@@ -222,6 +223,7 @@ namespace fl
 
 	void Pipeline::CreateShaderProgram()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::string defineBlock = "\n";
@@ -297,7 +299,7 @@ namespace fl
 			shaderModuleCreateInfo.pCode = spirv.data();
 
 			VkShaderModule shaderModule = VK_NULL_HANDLE;
-			Display::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
+			Display::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, allocator, &shaderModule));
 
 			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -314,6 +316,7 @@ namespace fl
 
 	void Pipeline::CreateDescriptorLayout()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
@@ -329,11 +332,12 @@ namespace fl
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Display::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
 	}
 
 	void Pipeline::CreateDescriptorPool()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
@@ -351,11 +355,12 @@ namespace fl
 		descriptorPoolCreateInfo.maxSets = 16384; // Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
 	}
 
 	void Pipeline::CreatePipelineLayout()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
@@ -364,7 +369,7 @@ namespace fl
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Display::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
@@ -440,6 +445,7 @@ namespace fl
 
 	void Pipeline::CreatePipelinePolygon()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
@@ -474,7 +480,7 @@ namespace fl
 		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
-		Display::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Display::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, allocator, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelinePolygonNoDepth()

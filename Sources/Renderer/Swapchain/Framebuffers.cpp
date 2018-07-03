@@ -9,6 +9,7 @@ namespace fl
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
@@ -61,12 +62,13 @@ namespace fl
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			Display::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
+			Display::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, allocator, &m_framebuffers.at(i)));
 		}
 	}
 
 	Framebuffers::~Framebuffers()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &attachment : m_imageAttachments)
@@ -76,7 +78,7 @@ namespace fl
 
 		for (auto &framebuffer : m_framebuffers)
 		{
-			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
+			vkDestroyFramebuffer(logicalDevice, framebuffer, allocator);
 		}
 	}
 }

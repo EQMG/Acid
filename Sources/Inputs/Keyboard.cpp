@@ -2,7 +2,7 @@
 
 namespace fl
 {
-	void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, uint32_t modsCount, WsiModifier *mods)
+	void CallbackKey(WsiShell shell, WsiKey key, int scancode, WsiAction action, WsiModifierFlags modFlags)
 	{
 		if (key < 0 || key > WSI_KEY_END_RANGE)
 		{
