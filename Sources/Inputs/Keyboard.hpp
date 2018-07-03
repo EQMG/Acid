@@ -13,9 +13,11 @@ namespace fl
 	{
 	private:
 		std::array<WsiAction, WSI_KEY_END_RANGE> m_keyboardKeys;
-		int m_keyboardChar;
+		char m_char;
 
-		friend void CallbackKey(WsiShell shell, WsiKey key, int scancode, WsiAction action, WsiModifierFlags modFlags);
+		friend void CallbackChar(WsiShell shell, const char *str);
+
+		friend void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, WsiModifierFlags modFlags);
 
 	public:
 		/// <summary>
@@ -41,7 +43,7 @@ namespace fl
 
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.
-		/// <p>GLFW Actions: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT</p>
+		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
@@ -51,6 +53,6 @@ namespace fl
 		/// Gets the current user input, ASCII Dec value.
 		/// </summary>
 		/// <returns> The current keyboard char. </returns>
-		int GetChar() const;
+		char GetChar() const;
 	};
 }

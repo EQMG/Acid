@@ -60,21 +60,13 @@ namespace fl
 
 		friend void CallbackPosition(WsiShell shell, uint32_t x, uint32_t y);
 
-		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 fullscreen);
+		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 iconified, VkBool32 fullscreen);
 
 		friend void CallbackFocus(WsiShell shell, VkBool32 focused);
-
-		friend void CallbackIconify(WsiShell shell, VkBool32 iconified);
 
 		friend void CallbackClose(WsiShell shell);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
-
-		friend void *VKAPI_CALL Allocation(void *pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope);
-
-		friend void *VKAPI_CALL Reallocation(void *pUserData, void *pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope);
-
-		friend void VKAPI_CALL Free(void* pUserData, void* pMemory);
 
 		friend VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
 
@@ -204,15 +196,15 @@ namespace fl
 		static void ErrorVk(const VkResult &result);
 
 		/// <summary>
-		/// Gets if the GLFW display is closed.
+		/// Gets if the display is closed.
 		/// </summary>
-		/// <returns> If the GLFW display is closed. </returns>
+		/// <returns> If the display is closed. </returns>
 		bool IsClosed() const { return m_closed; }
 
 		/// <summary>
-		/// Gets if the GLFW display is selected.
+		/// Gets if the display is selected.
 		/// </summary>
-		/// <returns> If the GLFW display is selected. </returns>
+		/// <returns> If the display is selected. </returns>
 		bool IsFocused() const { return m_focused; }
 
 		/// <summary>

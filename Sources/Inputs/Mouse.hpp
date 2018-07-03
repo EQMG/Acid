@@ -27,11 +27,11 @@ namespace fl
 		bool m_cursorDisabled;
 		bool m_lastCursorDisabled;
 
-		friend void CallbackCursorPosition(WsiShell shell, float x, float y);
+		friend void CallbackCursorPosition(WsiShell shell, uint32_t x, uint32_t y, float dx, float dy);
 
 		friend void CallbackCursorEnter(WsiShell shell, VkBool32 entered);
 
-		friend void CallbackScroll(WsiShell shell, float x, float y);
+		friend void CallbackScroll(WsiShell shell, int32_t x, int32_t y);
 
 		friend void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action);
 
@@ -77,7 +77,7 @@ namespace fl
 
 		/// <summary>
 		/// Gets whether or not a particular mouse button is currently pressed.
-		/// <p>GLFW Actions: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT</p>
+		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>
 		/// </summary>
 		/// <param name="mouseButton"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>

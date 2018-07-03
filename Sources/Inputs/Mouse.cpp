@@ -6,10 +6,14 @@
 
 namespace fl
 {
-	void CallbackCursorPosition(WsiShell shell, float x, float y)
+	void CallbackCursorPosition(WsiShell shell, uint32_t x, uint32_t y, float dx, float dy)
 	{
-		Mouse::Get()->m_mousePositionX = x / static_cast<float>(Display::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = y / static_cast<float>(Display::Get()->GetHeight());
+		Mouse::Get()->m_mousePositionX = static_cast<float>(x) / static_cast<float>(Display::Get()->GetWidth());
+		Mouse::Get()->m_mousePositionY = static_cast<float>(y) / static_cast<float>(Display::Get()->GetHeight());
+
+	//	Mouse::Get()->m_mouseDeltaX = dx;
+	//	Mouse::Get()->m_mouseDeltaY = dy;
+		printf("%f x %f\n", Mouse::Get()->m_mousePositionX, Mouse::Get()->m_mousePositionY);
 	}
 
 	void CallbackCursorEnter(WsiShell shell, VkBool32 entered)
@@ -17,9 +21,9 @@ namespace fl
 		Mouse::Get()->m_displaySelected = entered;
 	}
 
-	void CallbackScroll(WsiShell shell, float x, float y)
+	void CallbackScroll(WsiShell shell, int32_t x, int32_t y)
 	{
-		Mouse::Get()->m_mouseDeltaWheel = y;
+		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(y);
 	}
 
 	void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action)
