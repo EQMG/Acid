@@ -6,11 +6,10 @@
 namespace fl
 {
 	/// <summary>
-	/// A definition for a GLFW managed joystick.
+	/// A definition for a managed joystick.
 	/// </summary>
 	struct Joystick
 	{
-	public:
 		WsiJoystick m_port;
 		bool m_connected;
 		std::string m_name;
@@ -56,7 +55,7 @@ namespace fl
 		void Update() override;
 
 		/// <summary>
-		/// Determines if the GLFW joystick is connected
+		/// Determines if the joystick is connected
 		/// </summary>
 		/// <param name="port"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>

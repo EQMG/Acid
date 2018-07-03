@@ -28,7 +28,7 @@ namespace fl
 		Display::Get()->m_positionY = y;
 	}
 
-	void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 fullscreen)
+	void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 iconified, VkBool32 fullscreen)
 	{
 		if (width <= 0 || height <= 0)
 		{
@@ -36,6 +36,7 @@ namespace fl
 		}
 
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Display::Get()->m_iconified = iconified;
 		Display::Get()->m_fullscreen = fullscreen;
 
 		if (Display::Get()->m_fullscreen)
@@ -57,11 +58,6 @@ namespace fl
 		Display::Get()->m_focused = focused;
 	}
 
-	void CallbackIconify(WsiShell shell, VkBool32 iconified)
-	{
-		Display::Get()->m_iconified = iconified;
-	}
-
 	void CallbackClose(WsiShell shell)
 	{
 		Display::Get()->m_closed = true;
@@ -72,21 +68,6 @@ namespace fl
 	{
 		fprintf(stderr, "%s\n", pMessage);
 		return static_cast<VkBool32>(false);
-	}
-
-	void *Allocation(void *pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
-	{
-		return nullptr; // TODO
-	}
-
-	void *Reallocation(void *pUserData, void *pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope)
-	{
-		return nullptr; // TODO
-	}
-
-	void Free(void *pUserData, void *pMemory)
-	{
-		// TODO
 	}
 
 	VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
@@ -150,14 +131,6 @@ namespace fl
 		m_physicalDeviceMemoryProperties({}),
 		m_graphicsFamilyIndex(0)
 	{
-	//	m_allocator = new VkAllocationCallbacks();
-	//	m_allocator->pUserData = this;
-	//	m_allocator->pfnAllocation = &Allocation;
-	//	m_allocator->pfnReallocation = &Reallocation;
-	//	m_allocator->pfnFree = &Free;
-	//	m_allocator->pfnInternalAllocation = nullptr;
-	//	m_allocator->pfnInternalFree = nullptr;
-
 		CreateWsi();
 		SetupLayers();
 		SetupExtensions();
@@ -213,7 +186,7 @@ namespace fl
 
 	void Display::SetIcon(const std::string &filename)
 	{
-		// Loads a window icon for this GLFW display.
+		// Loads a window icon for this display.
 		m_iconPath = Files::Get()->SearchFile(filename);
 
 		if (m_iconPath.empty())
@@ -363,7 +336,6 @@ namespace fl
 		shellCallbacks.pfnPosition = CallbackPosition;
 		shellCallbacks.pfnSize = CallbackSize;
 		shellCallbacks.pfnFocus = CallbackFocus;
-		shellCallbacks.pfnIconify = CallbackIconify;
 		shellCallbacks.pfnClose = CallbackClose;
 
 		WsiShellCreateInfo shellCreateInfo = {};

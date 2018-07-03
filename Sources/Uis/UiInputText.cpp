@@ -38,7 +38,7 @@ namespace fl
 		{
 			int key = Keyboard::Get()->GetChar();
 
-			// TODO: Fix inputs that are not GLFW defined.
+			// TODO: Fix inputs that are not defined.
 			if (key != 0 && Keyboard::Get()->GetKey((WsiKey) toupper(key)))
 			{
 				m_inputDelay.Update(true);
