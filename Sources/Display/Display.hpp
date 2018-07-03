@@ -44,6 +44,7 @@ namespace fl
 
 		VkDebugReportCallbackEXT m_debugReportCallback;
 
+		VkAllocationCallbacks *m_allocator;
 		VkInstance m_instance;
 		VkSurfaceKHR m_surface;
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
@@ -68,6 +69,12 @@ namespace fl
 		friend void CallbackClose(WsiShell shell);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
+
+		friend void *VKAPI_CALL Allocation(void *pUserData, size_t size, size_t alignment, VkSystemAllocationScope allocationScope);
+
+		friend void *VKAPI_CALL Reallocation(void *pUserData, void *pOriginal, size_t size, size_t alignment, VkSystemAllocationScope allocationScope);
+
+		friend void VKAPI_CALL Free(void* pUserData, void* pMemory);
 
 		friend VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
 
@@ -227,6 +234,8 @@ namespace fl
 		bool IsIconified() const { return m_iconified; }
 
 		WsiShell GetWsiShell() const { return m_shell; }
+
+		VkAllocationCallbacks *GetVkAllocator() const { return m_allocator; }
 
 		VkInstance GetVkInstance() const { return m_instance; }
 

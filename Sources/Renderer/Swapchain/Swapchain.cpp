@@ -12,6 +12,7 @@ namespace fl
 		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 		auto surface = Display::Get()->GetVkSurface();
@@ -73,7 +74,7 @@ namespace fl
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
-		Display::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
+		Display::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, allocator, &m_swapchain));
 
 		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 		m_swapchainImages.resize(m_swapchainImageCount);
@@ -98,19 +99,20 @@ namespace fl
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchainImageViews.at(i)));
+			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_swapchainImageViews.at(i)));
 		}
 	}
 
 	Swapchain::~Swapchain()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &imageView : m_swapchainImageViews)
 		{
-			vkDestroyImageView(logicalDevice, imageView, nullptr);
+			vkDestroyImageView(logicalDevice, imageView, allocator);
 		}
 
-		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
+		vkDestroySwapchainKHR(logicalDevice, m_swapchain, allocator);
 	}
 }

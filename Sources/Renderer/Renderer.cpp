@@ -24,6 +24,7 @@ namespace fl
 
 	Renderer::~Renderer()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto queue = Display::Get()->GetVkQueue();
 
@@ -37,11 +38,11 @@ namespace fl
 		delete m_swapchain;
 		delete m_commandBuffer;
 
-		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
+		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, allocator);
 
-		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
-		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
-		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
+		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, allocator);
+		vkDestroySemaphore(logicalDevice, m_semaphore, allocator);
+		vkDestroyCommandPool(logicalDevice, m_commandPool, allocator);
 	}
 
 	void Renderer::Update()
@@ -292,40 +293,43 @@ namespace fl
 
 	void Renderer::CreateFences()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
+		vkCreateFence(logicalDevice, &fenceCreateInfo, allocator, &m_fenceSwapchainImage);
 	}
 
 	void Renderer::CreateCommandPool()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		Display::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
+		Display::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, allocator, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetVkGraphicsFamilyIndex();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
-		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
+		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, allocator, &m_commandPool));
 
 		m_commandBuffer = new CommandBuffer(false);
 	}
 
 	void Renderer::CreatePipelineCache()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 
-		Display::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+		Display::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, allocator, &m_pipelineCache));
 	}
 
 	void Renderer::RecreatePass(const int &i)
