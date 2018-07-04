@@ -4,9 +4,8 @@
 #include <cstring>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <VWSI/vulkan_wsi.h>
 #include "Engine/Engine.hpp"
-
-class GLFWwindow;
 
 namespace fl
 {
@@ -17,25 +16,27 @@ namespace fl
 		public IModule
 	{
 	private:
-		int m_windowWidth;
-		int m_windowHeight;
-		int m_fullscreenWidth;
-		int m_fullscreenHeight;
+		uint32_t m_windowWidth;
+		uint32_t m_windowHeight;
+		uint32_t m_fullscreenWidth;
+		uint32_t m_fullscreenHeight;
 		float m_aspectRatio;
+
+		uint32_t m_positionX;
+		uint32_t m_positionY;
 
 		std::string m_title;
 		std::string m_iconPath;
 		bool m_antialiasing;
 		bool m_fullscreen;
 
-		GLFWwindow *m_window;
 		bool m_closed;
 		bool m_focused;
-		int m_windowPosX;
-		int m_windowPosY;
 		bool m_iconified;
 
 		bool m_validationLayers;
+
+		WsiShell m_shell;
 
 		std::vector<const char *> m_instanceLayerList;
 		std::vector<const char *> m_instanceExtensionList;
@@ -43,6 +44,7 @@ namespace fl
 
 		VkDebugReportCallbackEXT m_debugReportCallback;
 
+		VkAllocationCallbacks *m_allocator;
 		VkInstance m_instance;
 		VkSurfaceKHR m_surface;
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
@@ -56,21 +58,15 @@ namespace fl
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		uint32_t m_graphicsFamilyIndex;
 
-		friend void CallbackError(int error, const char *description);
+		friend void CallbackPosition(WsiShell shell, uint32_t x, uint32_t y);
 
-		friend void CallbackClose(GLFWwindow *window);
+		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 iconified, VkBool32 fullscreen);
 
-		friend void CallbackFocus(GLFWwindow *window, int focused);
+		friend void CallbackFocus(WsiShell shell, VkBool32 focused);
 
-		friend void CallbackPosition(GLFWwindow *window, int xpos, int ypos);
+		friend void CallbackClose(WsiShell shell);
 
-		friend void CallbackSize(GLFWwindow *window, int width, int height);
-
-		friend void CallbackFrame(GLFWwindow *window, int width, int height);
-
-		friend void CallbackIconify(GLFWwindow *window, int iconified);
-
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL VkCallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
+		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 
 		friend VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
 
@@ -102,44 +98,44 @@ namespace fl
 		/// Gets the width of the display in pixels.
 		/// </summary>
 		/// <returns> The width of the display. </returns>
-		int GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		uint32_t GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+
+		/// <summary>
+		/// Gets the non-fullscreen width of the display in pixels.
+		/// </summary>
+		/// <returns> The width of the display. </returns>
+		uint32_t GetWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Sets the width of the display in pixels.
 		/// </summary>
 		/// <param name="width"> The new width in pixels. </param>
-		void SetWidth(const int &width) { SetWindowSize(width, GetHeight()); }
+		void SetWidth(const uint32_t &width) { SetWindowSize(width, GetHeight()); }
 
 		/// <summary>
 		/// Gets the height of the display in pixels.
 		/// </summary>
 		/// <returns> The height of the display. </returns>
-		int GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		uint32_t GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+
+		/// <summary>
+		/// Gets the non-fullscreen height of the display in pixels.
+		/// </summary>
+		/// <returns> The height of the display. </returns>
+		uint32_t GetWindowHeight() const { return m_windowHeight; }
 
 		/// <summary>
 		/// Sets the height of the display in pixels.
 		/// </summary>
 		/// <param name="height"> The new height in pixels. </param>
-		void SetHeight(const int &height) { SetWindowSize(GetWidth(), height); }
+		void SetHeight(const uint32_t &height) { SetWindowSize(GetWidth(), height); }
 
 		/// <summary>
 		/// Sets window size to a new size.
 		/// </summary>
 		/// <param name="width"> The new width in pixels. </param>
 		/// <param name="height"> The new height in pixels. </param>
-		void SetWindowSize(const int &width, const int &height);
-
-		/// <summary>
-		/// Gets the non-fullscreen width of the display in pixels.
-		/// </summary>
-		/// <returns> The width of the display. </returns>
-		int GetWindowWidth() const { return m_windowWidth; }
-
-		/// <summary>
-		/// Gets the non-fullscreen height of the display in pixels.
-		/// </summary>
-		/// <returns> The height of the display. </returns>
-		int GetWindowHeight() const { return m_windowHeight; }
+		void SetWindowSize(const uint32_t &width, const uint32_t &height);
 
 		/// <summary>
 		/// Gets the aspect ratio between the displays width and height.
@@ -199,41 +195,39 @@ namespace fl
 
 		static void ErrorVk(const VkResult &result);
 
-		FL_HIDDEN static std::string StringifyResultGlfw(const int &result);
-
-		FL_HIDDEN static void ErrorGlfw(const int &result);
-
-		FL_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
-
 		/// <summary>
-		/// Gets if the GLFW display is closed.
+		/// Gets if the display is closed.
 		/// </summary>
-		/// <returns> If the GLFW display is closed. </returns>
+		/// <returns> If the display is closed. </returns>
 		bool IsClosed() const { return m_closed; }
 
 		/// <summary>
-		/// Gets if the GLFW display is selected.
+		/// Gets if the display is selected.
 		/// </summary>
-		/// <returns> If the GLFW display is selected. </returns>
+		/// <returns> If the display is selected. </returns>
 		bool IsFocused() const { return m_focused; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		int GetWindowXPos() const { return m_windowPosX; }
+		int GetWindowXPos() const { return m_positionX; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		int GetWindowYPos() const { return m_windowPosY; }
+		int GetWindowYPos() const { return m_positionY; }
 
 		/// <summary>
 		/// Gets the windows is minimized.
 		/// </summary>
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
+
+		WsiShell GetWsiShell() const { return m_shell; }
+
+		VkAllocationCallbacks *GetVkAllocator() const { return m_allocator; }
 
 		VkInstance GetVkInstance() const { return m_instance; }
 
@@ -257,9 +251,7 @@ namespace fl
 
 		uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
-		void CreateGlfw();
-
-		void CreateVulkan();
+		void CreateWsi();
 
 		void SetupLayers();
 

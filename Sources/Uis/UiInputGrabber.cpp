@@ -11,7 +11,7 @@ namespace fl
 	const float UiInputGrabber::SCALE_SELECTED = 1.8f;
 	const Colour UiInputGrabber::COLOUR_NORMAL = Colour("#000000");
 
-	UiGrabberJoystick::UiGrabberJoystick(const JoystickPort &joystick) :
+	UiGrabberJoystick::UiGrabberJoystick(const WsiJoystick &joystick) :
 		IUiGrabber(),
 		m_joystick(joystick)
 	{
@@ -54,7 +54,7 @@ namespace fl
 	{
 		int key = Keyboard::Get()->GetChar();
 
-		if (key == 0 || !Keyboard::Get()->GetKey((Key) toupper(key)))
+		if (key == 0 || !Keyboard::Get()->GetKey((WsiKey) toupper(key)))
 		{
 			key = -1;
 		}
@@ -71,9 +71,9 @@ namespace fl
 	{
 		int key = -1;
 
-		for (int i = 0; i < MouseButton::MOUSE_BUTTON_LAST; i++)
+		for (int i = 0; i < WSI_MOUSE_BUTTON_END_RANGE; i++)
 		{
-			if (Mouse::Get()->GetButton((MouseButton) i))
+			if (Mouse::Get()->GetButton((WsiMouseButton) i))
 			{
 				if (i == 0)
 				{

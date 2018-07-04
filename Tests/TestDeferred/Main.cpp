@@ -61,6 +61,6 @@ int main(int argc, char **argv)
 	auto exitCode = engine->Run();
 
 	// Pauses the console.
-	std::cin.get();
+//	std::cin.get();
 	return exitCode;
 }

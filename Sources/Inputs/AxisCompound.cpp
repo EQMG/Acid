@@ -6,7 +6,7 @@ namespace fl
 {
 	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes) :
 		IAxis(),
-		m_axes(std::vector<IAxis *>(axes))
+		m_axes(axes)
 	{
 	}
 

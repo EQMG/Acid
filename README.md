@@ -99,13 +99,12 @@ This is a list of current features in Flounder:
 
 ## Dependencies
 Flounder uses the following libraries:
- * [glfw](https://github.com/glfw/glfw) - Display handling
- * [glslang](https://github.com/KhronosGroup/glslang) - GLSL processing
- * [stb](https://github.com/nothings/stb) - Texture and OGG loading
- * [bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
- * [openal](http://kcat.strangesoft.net/openal.html) - Audio interface
- * [vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
- * [moltenvk](https://github.com/KhronosGroup/MoltenVK) - Vulkan for Apple
+ * [Vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
+ * [VWSI](https://github.com/mattparks/vwsi) - Window system integration
+ * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
+ * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
+ * [STB](https://github.com/nothings/stb) - Texture and OGG loading
+ * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
 
 ## Screenshots
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot1.png" alt="flounder" width="600px">
