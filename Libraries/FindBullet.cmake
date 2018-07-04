@@ -1,5 +1,5 @@
 set(BULLET_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
-set(BUILD_BULLET3 ON CACHE INTERNAL "Set when you want to build Bullet 3")
+set(BUILD_BULLET3 OFF CACHE INTERNAL "Set when you want to build Bullet 3")
 set(BUILD_CPU_DEMOS OFF CACHE INTERNAL "Build original Bullet CPU examples")
 set(BUILD_BULLET2_DEMOS OFF CACHE INTERNAL "Set when you want to build the Bullet 2 demos")
 set(USE_GRAPHICAL_BENCHMARK OFF CACHE INTERNAL "Use Graphical Benchmark")

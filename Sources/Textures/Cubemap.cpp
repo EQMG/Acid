@@ -130,11 +130,12 @@ namespace fl
 
 	Cubemap::~Cubemap()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
+		vkDestroySampler(logicalDevice, m_sampler, allocator);
+		vkDestroyImage(logicalDevice, m_image, allocator);
+		vkDestroyImageView(logicalDevice, m_imageView, allocator);
 	}
 
 	DescriptorType Cubemap::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)

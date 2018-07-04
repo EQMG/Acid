@@ -13,8 +13,8 @@ namespace fl
 		public IAxis
 	{
 	private:
-		JoystickPort m_joystick;
-		std::vector<int> m_axes;
+		WsiJoystick m_joystick;
+		std::vector<uint32_t> m_axes;
 		bool m_reverse;
 	public:
 		/// <summary>
@@ -23,7 +23,7 @@ namespace fl
 		/// <param name="joystick"> The joystick port. </param>
 		/// <param name="axes"> The axes on the joystick being checked. </param>
 		/// <param name="reverse"> If the axis direction should be inverted. </param>
-		AxisJoystick(const JoystickPort &joystick, const std::vector<int> &axes, const bool &reverse = false);
+		AxisJoystick(const WsiJoystick &joystick, const std::vector<uint32_t> &axes, const bool &reverse = false);
 
 		/// <summary>
 		/// Deconstructor for the axis joystick.
@@ -32,12 +32,12 @@ namespace fl
 
 		float GetAmount() const override;
 
-		JoystickPort GetJoystick() const { return m_joystick; }
+		WsiJoystick GetJoystick() const { return m_joystick; }
 
-		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
+		void SetJoystick(const WsiJoystick &joystickPort) { m_joystick = joystickPort; }
 
-		std::vector<int> GetAxes() const { return m_axes; }
+		std::vector<uint32_t> GetAxes() const { return m_axes; }
 
-		void SetAxes(const std::vector<int> &axes) { m_axes = axes; }
+		void SetAxes(const std::vector<uint32_t> &axes) { m_axes = axes; }
 	};
 }

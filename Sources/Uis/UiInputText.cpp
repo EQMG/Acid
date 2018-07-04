@@ -38,8 +38,8 @@ namespace fl
 		{
 			int key = Keyboard::Get()->GetChar();
 
-			// TODO: Fix inputs that are not GLFW defined.
-			if (key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
+			// TODO: Fix inputs that are not defined.
+			if (key != 0 && Keyboard::Get()->GetKey((WsiKey) toupper(key)))
 			{
 				m_inputDelay.Update(true);
 
@@ -56,7 +56,7 @@ namespace fl
 					m_lastKey = key;
 				}
 			}
-			else if (Keyboard::Get()->GetKey(Key::KEY_BACKSPACE))
+			else if (Keyboard::Get()->GetKey(WSI_KEY_BACKSPACE))
 			{
 				m_inputDelay.Update(true);
 
@@ -73,7 +73,7 @@ namespace fl
 					m_lastKey = 8;
 				}
 			}
-			else if (Keyboard::Get()->GetKey(Key::KEY_ENTER) && m_lastKey != 13)
+			else if (Keyboard::Get()->GetKey(WSI_KEY_ENTER) && m_lastKey != 13)
 			{
 				m_inputDelay.Update(true);
 

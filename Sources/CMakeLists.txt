@@ -6,7 +6,7 @@ find_package(Threads REQUIRED)
 set(FLOUNDER_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Flounder ${LIB_TYPE} ${FLOUNDER_SOURCES})
-add_dependencies(Flounder SPIRV glfw stb LinearMath BulletCollision)
+add_dependencies(Flounder SPIRV VWSI STB LinearMath BulletCollision)
 
 set_target_properties(Flounder PROPERTIES
         POSITION_INDEPENDENT_CODE ON
@@ -14,6 +14,7 @@ set_target_properties(Flounder PROPERTIES
 
 if (WIN32 AND BUILD_SHARED_LIBS)
     set_target_properties(Flounder PROPERTIES PREFIX "")
+    set_target_properties(Flounder PROPERTIES DEBUG_POSTFIX "")
 endif ()
 
 if (BUILD_SHARED_LIBS)

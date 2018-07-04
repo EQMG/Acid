@@ -15,14 +15,14 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(std::make_shared<FixedCamera>()),
-		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
-		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
+		m_buttonFullscreen(new ButtonKeyboard({WSI_KEY_F11})),
+		m_buttonScreenshot(new ButtonKeyboard({WSI_KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({WSI_KEY_DELETE})),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
+		m_selectorJoystick(new SelectorJoystick(WSI_JOYSTICK_1, 0, 1, 0, 1)),
 		m_buttonPause((new ButtonCompound({
-			new ButtonKeyboard({KEY_ESCAPE}),
-			new ButtonJoystick(JOYSTICK_1, {7})
+			new ButtonKeyboard({WSI_KEY_ESCAPE}),
+			new ButtonJoystick(WSI_JOYSTICK_1, {7})
 		}))),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),

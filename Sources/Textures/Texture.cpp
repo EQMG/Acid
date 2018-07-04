@@ -139,11 +139,12 @@ namespace fl
 
 	Texture::~Texture()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
+		vkDestroySampler(logicalDevice, m_sampler, allocator);
+		vkDestroyImageView(logicalDevice, m_imageView, allocator);
+		vkDestroyImage(logicalDevice, m_image, allocator);
 	}
 
 	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
@@ -274,6 +275,7 @@ namespace fl
 
 	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
@@ -291,7 +293,7 @@ namespace fl
 		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &image));
+		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &image));
 
 		VkMemoryRequirements memoryRequirements;
 		vkGetImageMemoryRequirements(logicalDevice, image, &memoryRequirements);
@@ -301,7 +303,7 @@ namespace fl
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);;
 
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &imageMemory));
 
 		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
 	}
@@ -450,6 +452,7 @@ namespace fl
 
 	void Texture::CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
@@ -470,11 +473,12 @@ namespace fl
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 
-		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
+		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, allocator, &sampler));
 	}
 
 	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
@@ -493,6 +497,6 @@ namespace fl
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = layerCount;
 
-		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
+		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &imageView));
 	}
 }

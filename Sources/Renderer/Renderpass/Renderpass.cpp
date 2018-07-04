@@ -7,6 +7,7 @@ namespace fl
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		// Attachments,
@@ -126,13 +127,14 @@ namespace fl
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 		renderPassCreateInfo.pDependencies = dependencies.data();
 
-		Display::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
+		Display::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, allocator, &m_renderPass));
 	}
 
 	Renderpass::~Renderpass()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
+		vkDestroyRenderPass(logicalDevice, m_renderPass, allocator);
 	}
 }

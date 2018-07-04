@@ -1,37 +1,40 @@
 #include "Mouse.hpp"
 
-#include <GLFW/glfw3.h>
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
 
 namespace fl
 {
-	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
+	void CallbackCursorPosition(WsiShell shell, uint32_t x, uint32_t y, float dx, float dy)
 	{
-		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
+		Mouse::Get()->m_mousePositionX = static_cast<float>(x) / static_cast<float>(Display::Get()->GetWidth());
+		Mouse::Get()->m_mousePositionY = static_cast<float>(y) / static_cast<float>(Display::Get()->GetHeight());
+
+	//	Mouse::Get()->m_mouseDeltaX = dx;
+	//	Mouse::Get()->m_mouseDeltaY = dy;
+		printf("%f x %f\n", Mouse::Get()->m_mousePositionX, Mouse::Get()->m_mousePositionY);
 	}
 
-	void CallbackMouseButton(GLFWwindow *window, int button, int action, int mods)
+	void CallbackCursorEnter(WsiShell shell, VkBool32 entered)
 	{
-		Mouse::Get()->m_mouseButtons[button] = action;
+		Mouse::Get()->m_displaySelected = entered;
 	}
 
-	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
+	void CallbackScroll(WsiShell shell, int32_t x, int32_t y)
 	{
-		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Display::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight()));
+		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(y);
 	}
 
-	void CallbackCursorEnter(GLFWwindow *window, int entered)
+	void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action)
 	{
-		Mouse::Get()->m_displaySelected = static_cast<bool>(entered);
+		Mouse::Get()->m_mouseButtons[mouseButton] = action;
 	}
 
 	Mouse::Mouse() :
 		IModule(),
 		m_mousePath(""),
-		m_mouseButtons(std::array<int, MOUSE_BUTTON_LAST>()),
+		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE>()),
 		m_lastMousePositionX(0.5f),
 		m_lastMousePositionY(0.5f),
 		m_mousePositionX(0.5f),
@@ -44,16 +47,18 @@ namespace fl
 		m_lastCursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < MOUSE_BUTTON_LAST; i++)
+		for (int i = 0; i < WSI_MOUSE_BUTTON_END_RANGE; i++)
 		{
-			m_mouseButtons[i] = GLFW_RELEASE;
+			m_mouseButtons[i] = WSI_ACTION_RELEASE;
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Display::Get()->GetGlfwWindow(), CallbackScroll);
-		glfwSetMouseButtonCallback(Display::Get()->GetGlfwWindow(), CallbackMouseButton);
-		glfwSetCursorPosCallback(Display::Get()->GetGlfwWindow(), CallbackCursorPos);
-		glfwSetCursorEnterCallback(Display::Get()->GetGlfwWindow(), CallbackCursorEnter);
+		WsiShellCallbacks *callbacks;
+		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
+		callbacks->pfnCursorScroll = CallbackScroll;
+		callbacks->pfnMouseButton = CallbackMouseButton;
+		callbacks->pfnCursorPosition = CallbackCursorPosition;
+		callbacks->pfnCursorEnter = CallbackCursorEnter;
 	}
 
 	Mouse::~Mouse()
@@ -73,14 +78,14 @@ namespace fl
 		// Fixes snaps when toggling cursor.
 		if (m_cursorDisabled != m_lastCursorDisabled)
 		{
-			m_mouseDeltaX = 0.0;
-			m_mouseDeltaY = 0.0;
+			m_mouseDeltaX = 0.0f;
+			m_mouseDeltaY = 0.0f;
 
 			m_lastCursorDisabled = m_cursorDisabled;
 		}
 
 		// Updates the mouse wheel using a smooth scroll technique.
-		if (m_mouseDeltaWheel != 0.0)
+		if (m_mouseDeltaWheel != 0.0f)
 		{
 			m_mouseDeltaWheel -= Engine::Get()->GetDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
 			m_mouseDeltaWheel = Maths::Deadband(0.1f, m_mouseDeltaWheel);
@@ -108,13 +113,12 @@ namespace fl
 			return;
 		}
 
-		GLFWimage image[1];
-		image[0].pixels = data;
-		image[0].width = width;
-		image[0].height = height;
+		WsiImage icon = {};
+		icon.width = width;
+		icon.height = height;
+		icon.pixels = data;
 
-		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-		glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
+		wsiCmdSetCursor(Display::Get()->GetWsiShell(), icon);
 		Texture::DeletePixels(data);
 	}
 
@@ -122,31 +126,31 @@ namespace fl
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Display::Get()->GetGlfwWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			wsiCmdSetCursorMode(Display::Get()->GetWsiShell(), disabled ? WSI_CURSOR_MODE_DISABLED : WSI_CURSOR_MODE_NORMAL);
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Display::Get()->GetGlfwWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				wsiCmdSetCursorPos(Display::Get()->GetWsiShell(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 
 		m_cursorDisabled = disabled;
 	}
 
-	bool Mouse::GetButton(const MouseButton &button) const
+	bool Mouse::GetButton(const WsiMouseButton &mouseButton) const
 	{
-		if (button < 0 || button > MOUSE_BUTTON_LAST)
+		if (mouseButton < 0 || mouseButton > WSI_MOUSE_BUTTON_END_RANGE)
 		{
 			return false;
 		}
 
-		return m_mouseButtons[button] != GLFW_RELEASE;
+		return m_mouseButtons[mouseButton] != WSI_ACTION_RELEASE;
 	}
 
 	void Mouse::SetPosition(const float &cursorX, const float &cursorY)
 	{
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
-		glfwSetCursorPos(Display::Get()->GetGlfwWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
+		wsiCmdSetCursorPos(Display::Get()->GetWsiShell(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
 	}
 }

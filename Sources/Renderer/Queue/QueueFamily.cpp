@@ -7,8 +7,9 @@ namespace fl
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
 		int graphicsFamily = -1;
-		int presentFamily = -1;
 		int computeFamily = -1;
+		int transferFamily = -1;
+		int sparseFamily = -1;
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
 
@@ -37,19 +38,25 @@ namespace fl
 				}
 			}
 
-			// Check for transfer support.
-			if (queueFamily.queueFlags && VK_QUEUE_TRANSFER_BIT)
-			{
-				presentFamily = i;
-			}
-
 			// Check for compute support.
 			if (queueFamily.queueFlags && VK_QUEUE_COMPUTE_BIT)
 			{
 				computeFamily = i;
 			}
 
-			if (graphicsFamily >= 0 && presentFamily >= 0 && computeFamily >= 0)
+			// Check for transfer support.
+			if (queueFamily.queueFlags && VK_QUEUE_TRANSFER_BIT)
+			{
+				transferFamily = i;
+			}
+
+			// Check for sparse binding support.
+			if (queueFamily.queueFlags && VK_QUEUE_SPARSE_BINDING_BIT)
+			{
+				sparseFamily = i;
+			}
+
+			if (graphicsFamily >= 0 && computeFamily >= 0 && transferFamily >= 0 && sparseFamily >= 0)
 			{
 				break;
 			}
@@ -57,6 +64,6 @@ namespace fl
 			i++;
 		}
 
-		return QueueFamilyIndices(graphicsFamily, presentFamily, computeFamily);
+		return QueueFamilyIndices(graphicsFamily, computeFamily, transferFamily, sparseFamily);
 	}
 }

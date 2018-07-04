@@ -13,8 +13,8 @@ namespace fl
 		public IButton
 	{
 	private:
-		JoystickPort m_joystick;
-		std::vector<int> m_buttons;
+		WsiJoystick m_joystick;
+		std::vector<uint32_t> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
@@ -22,7 +22,7 @@ namespace fl
 		/// </summary>
 		/// <param name="joystick"> The joystick port. </param>
 		/// <param name="buttons"> The buttons on the joystick being checked. </param>
-		ButtonJoystick(const JoystickPort &joystick, const std::vector<int> &buttons);
+		ButtonJoystick(const WsiJoystick &joystick, const std::vector<uint32_t> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the button joystick.
@@ -33,12 +33,12 @@ namespace fl
 
 		bool WasDown() override;
 
-		JoystickPort GetJoystick() const { return m_joystick; }
+		WsiJoystick GetJoystick() const { return m_joystick; }
 
-		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
+		void SetJoystick(const WsiJoystick &joystickPort) { m_joystick = joystickPort; }
 
-		std::vector<int> GetButtons() const { return m_buttons; }
+		std::vector<uint32_t> GetButtons() const { return m_buttons; }
 
-		void SetButtons(const std::vector<int> &buttons) { m_buttons = buttons; }
+		void SetButtons(const std::vector<uint32_t> &buttons) { m_buttons = buttons; }
 	};
 }

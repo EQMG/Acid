@@ -22,6 +22,7 @@ namespace fl
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 
@@ -67,7 +68,7 @@ namespace fl
 		imageCreateInfo.pQueueFamilyIndices = nullptr;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_image));
+		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &m_image));
 
 		VkMemoryRequirements imageMemoryRequirements = {};
 		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
@@ -79,7 +80,7 @@ namespace fl
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = memoryTypeIndex;
 
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_imageMemory));
+		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_imageMemory));
 
 		Display::ErrorVk(vkBindImageMemory(logicalDevice, m_image, m_imageMemory, 0));
 
@@ -99,7 +100,7 @@ namespace fl
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
+		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_imageView));
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -116,7 +117,7 @@ namespace fl
 		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 
-		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
+		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, allocator, &m_sampler));
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -125,12 +126,13 @@ namespace fl
 
 	DepthStencil::~DepthStencil()
 	{
+		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkFreeMemory(logicalDevice, m_imageMemory, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
+		vkDestroySampler(logicalDevice, m_sampler, allocator);
+		vkDestroyImageView(logicalDevice, m_imageView, allocator);
+		vkFreeMemory(logicalDevice, m_imageMemory, allocator);
+		vkDestroyImage(logicalDevice, m_image, allocator);
 	}
 
 	DescriptorType DepthStencil::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
