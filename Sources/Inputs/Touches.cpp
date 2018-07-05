@@ -2,12 +2,12 @@
 
 namespace fl
 {
-	void CallbackTouch(WsiShell shell, uint32_t id, uint32_t x, uint32_t y, WsiAction action)
+	void CallbackTouch(WsiShell shell, uint32_t id, float x, float y, WsiAction action)
 	{
 		Touch touch = Touches::Get()->m_touches[id];
 		touch.m_action = action;
-		touch.m_x = static_cast<float>(x) / static_cast<float>(Display::Get()->GetWidth());
-		touch.m_y = static_cast<float>(y) / static_cast<float>(Display::Get()->GetHeight());
+		touch.m_x = x;
+		touch.m_y = y;
 	}
 
 	Touches::Touches() :

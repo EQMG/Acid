@@ -6,14 +6,12 @@
 
 namespace fl
 {
-	void CallbackCursorPosition(WsiShell shell, uint32_t x, uint32_t y, float dx, float dy)
+	void CallbackCursorPosition(WsiShell shell, float x, float y, float dx, float dy)
 	{
-		Mouse::Get()->m_mousePositionX = static_cast<float>(x) / static_cast<float>(Display::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = static_cast<float>(y) / static_cast<float>(Display::Get()->GetHeight());
-
-	//	Mouse::Get()->m_mouseDeltaX = dx;
-	//	Mouse::Get()->m_mouseDeltaY = dy;
-		printf("%f x %f\n", Mouse::Get()->m_mousePositionX, Mouse::Get()->m_mousePositionY);
+		Mouse::Get()->m_mousePositionX = x;
+		Mouse::Get()->m_mousePositionY = y;
+		Mouse::Get()->m_mouseDeltaX = dx;
+		Mouse::Get()->m_mouseDeltaY = dy;
 	}
 
 	void CallbackCursorEnter(WsiShell shell, VkBool32 entered)
@@ -21,9 +19,9 @@ namespace fl
 		Mouse::Get()->m_displaySelected = entered;
 	}
 
-	void CallbackScroll(WsiShell shell, int32_t x, int32_t y)
+	void CallbackScroll(WsiShell shell, float x, float y)
 	{
-		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(y);
+		Mouse::Get()->m_mouseDeltaWheel = y;
 	}
 
 	void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action)
@@ -35,16 +33,13 @@ namespace fl
 		IModule(),
 		m_mousePath(""),
 		m_mouseButtons(std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE>()),
-		m_lastMousePositionX(0.5f),
-		m_lastMousePositionY(0.5f),
-		m_mousePositionX(0.5f),
-		m_mousePositionY(0.5f),
+		m_mousePositionX(0.0f),
+		m_mousePositionY(0.0f),
 		m_mouseDeltaX(0.0f),
 		m_mouseDeltaY(0.0f),
 		m_mouseDeltaWheel(0.0f),
 		m_displaySelected(true),
-		m_cursorDisabled(false),
-		m_lastCursorDisabled(false)
+		m_cursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
 		for (int i = 0; i < WSI_MOUSE_BUTTON_END_RANGE; i++)
@@ -67,23 +62,6 @@ namespace fl
 
 	void Mouse::Update()
 	{
-		// Updates the mouses delta.
-		m_mouseDeltaX = Engine::Get()->GetDelta() * (m_lastMousePositionX - m_mousePositionX);
-		m_mouseDeltaY = Engine::Get()->GetDelta() * (m_lastMousePositionY - m_mousePositionY);
-
-		// Sets the last position of the current.
-		m_lastMousePositionX = m_mousePositionX;
-		m_lastMousePositionY = m_mousePositionY;
-
-		// Fixes snaps when toggling cursor.
-		if (m_cursorDisabled != m_lastCursorDisabled)
-		{
-			m_mouseDeltaX = 0.0f;
-			m_mouseDeltaY = 0.0f;
-
-			m_lastCursorDisabled = m_cursorDisabled;
-		}
-
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0f)
 		{

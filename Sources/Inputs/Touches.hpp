@@ -25,7 +25,7 @@ namespace fl
 	private:
 		std::array<Touch, 10> m_touches;
 
-		friend void CallbackTouch(WsiShell shell, uint32_t id, uint32_t x, uint32_t y, WsiAction action);
+		friend void CallbackTouch(WsiShell shell, uint32_t id, float x, float y, WsiAction action);
 
 	public:
 		/// <summary>

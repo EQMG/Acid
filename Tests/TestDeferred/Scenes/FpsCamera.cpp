@@ -103,7 +103,7 @@ namespace test
 			}
 			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
+				angleChange = Engine::Get()->GetDelta() * -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 			}
 		}
 
@@ -140,7 +140,7 @@ namespace test
 			}
 			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				angleChange = Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+				angleChange = Engine::Get()->GetDelta() * Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}
 		}
 

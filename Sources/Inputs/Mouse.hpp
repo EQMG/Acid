@@ -15,8 +15,6 @@ namespace fl
 		std::string m_mousePath;
 
 		std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE> m_mouseButtons;
-		float m_lastMousePositionX;
-		float m_lastMousePositionY;
 		float m_mousePositionX;
 		float m_mousePositionY;
 		float m_mouseDeltaX;
@@ -25,13 +23,12 @@ namespace fl
 		bool m_displaySelected;
 
 		bool m_cursorDisabled;
-		bool m_lastCursorDisabled;
 
-		friend void CallbackCursorPosition(WsiShell shell, uint32_t x, uint32_t y, float dx, float dy);
+		friend void CallbackCursorPosition(WsiShell shell, float x, float y, float dx, float dy);
 
 		friend void CallbackCursorEnter(WsiShell shell, VkBool32 entered);
 
-		friend void CallbackScroll(WsiShell shell, int32_t x, int32_t y);
+		friend void CallbackScroll(WsiShell shell, float x, float y);
 
 		friend void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action);
 
