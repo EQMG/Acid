@@ -30,25 +30,6 @@ namespace fl
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
 
-	void UniformBuffer::UpdateMap(const std::string &blockName, ShaderProgram *shaderProgram, const std::map<std::string, void *> &newDataMap)
-	{
-		/*void *newData = malloc(m_size);
-		void *offset = newData;
-
-		for (auto &pair : newDataMap)
-		{
-			if (shaderProgram->IsDescriptorDefined(pair.first))
-			{
-				Uniform *uniform = shaderProgram->GetBlockUniform(blockName, pair.first);
-				memcpy(offset, pair.second, uniform->m_size);
-				offset += uniform->m_offset;
-			}
-		}
-
-		Update(newData);
-		free(newData);*/
-	}
-
 	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};

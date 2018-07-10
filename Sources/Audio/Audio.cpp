@@ -1,9 +1,5 @@
 #include "Audio.hpp"
 
-#ifdef FL_BUILD_WINDOWS
-#define NOMINMAX
-#include <Windows.h>
-#endif
 #ifdef FL_BUILD_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -87,9 +83,7 @@ namespace fl
 		std::string failure = StringifyResultAl(result);
 
 		fprintf(stderr, "OpenAL error: %s, %i\n", failure.c_str(), result);
-#ifdef FL_BUILD_WINDOWS
-		MessageBox(nullptr, "" + result, "OpenAL Error", 0);
-#endif
+		wsiCmdMessageBox(Display::Get()->GetWsiShell(), "OpenAL Error", failure.c_str(), WSI_MESSAGE_YES, nullptr);
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 }

@@ -1,9 +1,5 @@
 #include "Display.hpp"
 
-#ifdef FL_BUILD_WINDOWS
-#define NOMINMAX
-#include <Windows.h>
-#endif
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
@@ -316,9 +312,7 @@ namespace fl
 		std::string failure = StringifyResultVk(result);
 
 		fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-#ifdef FL_BUILD_WINDOWS
-		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
-#endif
+		wsiCmdMessageBox(Display::Get()->GetWsiShell(), "Vulkan Error", failure.c_str(), WSI_MESSAGE_YES, nullptr);
 		throw std::runtime_error("Vulkan runtime error.");
 	}
 
