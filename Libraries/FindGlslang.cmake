@@ -1,5 +1,6 @@
 set(GLSLANG_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glslang/")
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
+set(ENABLE_SPVREMAPPER OFF CACHE INTERNAL "Enables building of SPVRemapper")
 set(ENABLE_GLSLANG_INSTALL ${FLOUNDER_INSTALL}  CACHE INTERNAL "Generate installation target")
 set(BUILD_TESTING OFF CACHE INTERNAL "Enables test builds")
 set(ENABLE_GLSLANG_BINARIES OFF CACHE INTERNAL "Builds glslangValidator and spirv-remap")
@@ -16,5 +17,3 @@ set(LIBRARIES_LINKS ${LIBRARIES_LINKS} ${GLSLANG_LIBRARY})
 if(NOT GLSLANG_LIBRARY)
     message(FATAL_ERROR "Glslang library not found!")
 endif()
-
-set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")

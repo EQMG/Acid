@@ -159,6 +159,7 @@ set(FLOUNDER_HEADERS_
         "Renderer/IManagerRender.hpp"
         "Renderer/IRenderer.hpp"
         "Renderer/Pipelines/Compute.hpp"
+        "Renderer/Pipelines/IPipeline.hpp"
         "Renderer/Pipelines/Pipeline.hpp"
         "Renderer/Pipelines/PipelineCreate.hpp"
         "Renderer/Pipelines/ShaderProgram.hpp"

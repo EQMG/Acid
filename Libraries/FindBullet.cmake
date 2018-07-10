@@ -15,5 +15,3 @@ set(LIBRARIES_LINKS ${LIBRARIES_LINKS} "LinearMath" "BulletCollision" "BulletDyn
 #if(NOT BULLET_LIBRARY)
 #	message(FATAL_ERROR "bullet library not found!")
 #endif()
-
-set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
