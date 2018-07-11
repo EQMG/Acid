@@ -33,15 +33,15 @@ before_build:
   - cd C:\Projects\Flounder
   - mkdir Build
   - cd Build
-  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=OFF -DFLOUNDER_INSTALL=ON
-  - cmake --build . --config Debug
+  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DFLOUNDER_INSTALL=ON
+  - cmake --build . --config Release --target install
   - cd ../
   - mkdir Flounder
   - mkdir Flounder\include
   - mkdir Demos
-  - xcopy Build\Debug\lib\Debug Flounder\ /s/h/e/k/f/c
-  - xcopy Build\Debug\include Flounder\include\ /s/h/e/k/f/c
-  - xcopy Build\Debug\bin\Debug Demos\ /s/h/e/k/f/c
+  - xcopy Build\Release\lib\Release Flounder\ /s/h/e/k/f/c
+  - xcopy Build\Release\include Flounder\include\ /s/h/e/k/f/c
+  - xcopy Build\Release\bin\Release Demos\ /s/h/e/k/f/c
   - xcopy Resources Demos\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:

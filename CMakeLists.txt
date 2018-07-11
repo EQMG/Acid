@@ -69,8 +69,8 @@ if (FLOUNDER_SETUP_COMPILER)
 		add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 		add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /std:c++17 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /arch:SSE2 /MP /W3 /wd4251")
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1 /MDd -DDEBUG")
-			set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ob2")
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1 /MDd /DEBUG")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ob2 /MD")
 
 		if (FLOUNDER_64BIT)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
@@ -111,9 +111,9 @@ endif()
 
 # Dependencies
 include(Libraries/FindVulkan.cmake)
+include(Libraries/FindVWSI.cmake)
 include(Libraries/FindGlslang.cmake)
 include(Libraries/FindOpenAL.cmake)
-include(Libraries/FindVWSI.cmake)
 include(Libraries/FindSTB.cmake)
 include(Libraries/FindBullet.cmake)
 

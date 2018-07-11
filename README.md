@@ -70,32 +70,30 @@ Flounder currently can be run on the following platforms:
 This is a list of current features in Flounder:
  * On the fly GLSL to SPIR-V compiler
  * Modular rendering pipeline
- * Material pipeline system
- * Deferred PBR IBL rendering
- * Bullet3 physics engine
- * Normal, material, glow, and sway maps
+ * Deferred PBR+IBL rendering
+ * Bullet physics engine
+ * Frustum and Occlusion culling
  * Resource management
- * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * Event and tasks systems
  * Resource path searches, and packing
- * GUI / text rendering
- * Particle effects system
- * Skyboxes and fog
+ * GUI and font rendering
+ * Particle effect systems
  * Audio and music
- * Frustum culling
+ * Skyboxes and fog
  * Shadow mapping
+ * GameObjects and component system
+ * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ)
  * Animations loading (DAE => JSON)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * Config and class loading/saving (CSV, JSON)
  * GameObject prefab loading/saving (JSON)
- * GameObjects and component system
  * Visual drivers and maths classes
  * Flexible input classes
  * C# generated files
  * Networking (WIP)
  * Resource packaging (WIP)
- * Steam integration (WIP)
+ * Steam integration (WIP
 
 ## Dependencies
 Flounder uses the following libraries:

@@ -6,7 +6,7 @@ find_package(Threads REQUIRED)
 set(FLOUNDER_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Flounder ${LIB_TYPE} ${FLOUNDER_SOURCES})
-add_dependencies(Flounder SPIRV VWSI STB LinearMath BulletCollision)
+add_dependencies(Flounder VWSI STB SPIRV LinearMath BulletCollision BulletDynamics)
 
 set_target_properties(Flounder PROPERTIES
         POSITION_INDEPENDENT_CODE ON
