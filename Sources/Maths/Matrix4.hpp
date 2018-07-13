@@ -2,13 +2,12 @@
 
 #include <ostream>
 #include <string>
+#include "Vector3.hpp"
 #include "Vector4.hpp"
 
 namespace fl
 {
 	class Vector2;
-
-	class Vector3;
 
 	/// <summary>
 	/// Holds a 4x4 matrix.
@@ -20,23 +19,7 @@ namespace fl
 		{
 			struct
 			{
-				Vector4 *m_0;
-				Vector4 *m_1;
-				Vector4 *m_2;
-				Vector4 *m_3;
-			};
-
-			struct
-			{
-				float m_00, m_01, m_02, m_03;
-				float m_10, m_11, m_12, m_13;
-				float m_20, m_21, m_22, m_23;
-				float m_30, m_31, m_32, m_33;
-			};
-
-			struct
-			{
-				float m_elements[4][4];
+				Vector4 m_rows[4];
 			};
 
 			struct
@@ -51,7 +34,8 @@ namespace fl
 		/// <summary>
 		/// Constructor for Matrix4. The matrix is initialised to the identity.
 		/// </summary>
-		Matrix4();
+		/// <param name="diagonal"> The value set to the diagonals. </param>
+		Matrix4(const float &diagonal = 1.0f);
 
 		/// <summary>
 		/// Constructor for Matrix4.
@@ -64,6 +48,12 @@ namespace fl
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 16 element array. </param>
 		Matrix4(const float source[16]);
+
+		/// <summary>
+		/// Constructor for Matrix4.
+		/// </summary>
+		/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
+		Matrix4(const Vector4 source[4]);
 
 		/// <summary>
 		/// Deconstructor for Matrix4.
@@ -182,31 +172,6 @@ namespace fl
 		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
 
 		/// <summary>
-		/// Creates a new transformation matrix for a object in 2d space.
-		/// </summary>
-		/// <param name="translation"> Translation amount the XY. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 TransformationMatrix(const Vector2 &translation, const float &scale);
-
-		/// <summary>
-		/// Creates a new transformation matrix for a object in 2d space.
-		/// </summary>
-		/// <param name="translation"> Translation amount the XY. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 TransformationMatrix(const Vector2 &translation, const Vector3 &scale);
-
-		/// <summary>
-		/// Creates a new transformation matrix for a object in 3d space.
-		/// </summary>
-		/// <param name="translation"> Translation amount the XYZ. </param>
-		/// <param name="rotation"> Rotation amount the XYZ. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale);
-
-		/// <summary>
 		/// Creates a new perspective matrix.
 		/// </summary>
 		/// <param name="fov"> The cameras FOV. </param>
@@ -247,16 +212,13 @@ namespace fl
 		static Vector3 WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 		/// <summary>
-		/// Sets this matrix to 0.
+		/// Creates a new transformation matrix that has the camera looking at the target.
 		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix4 SetZero();
-
-		/// <summary>
-		/// Sets this matrix to be the identity matrix.
-		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix4 SetIdentity();
+		/// <param name="camera"> The source position. </param>
+		/// <param name="object"> The target position. </param>
+		/// <param name="up"> What view direction is up. </param>
+		/// <returns> Returns the transformation matrix. </returns>
+		static Matrix4 LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up = Vector3::UP);
 
 		/// <summary>
 		/// Saves this matrix into a loaded value.
@@ -274,7 +236,11 @@ namespace fl
 
 		bool operator!=(const Matrix4 &other) const;
 
-		Matrix4 operator-();
+		Matrix4 operator-() const;
+
+		const Vector4 &operator[](uint32_t index) const;
+
+		Vector4 &operator[](uint32_t index);
 
 		FL_EXPORT friend Matrix4 operator+(Matrix4 left, const Matrix4 &right);
 

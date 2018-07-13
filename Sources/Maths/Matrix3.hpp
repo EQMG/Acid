@@ -16,21 +16,7 @@ namespace fl
 		{
 			struct
 			{
-				Vector3 *m_0;
-				Vector3 *m_1;
-				Vector3 *m_2;
-			};
-
-			struct
-			{
-				float m_00, m_01, m_02;
-				float m_10, m_11, m_12;
-				float m_20, m_21, m_22;
-			};
-
-			struct
-			{
-				float m_elements[3][3];
+				Vector3 m_rows[3];
 			};
 
 			struct
@@ -45,7 +31,8 @@ namespace fl
 		/// <summary>
 		/// Constructor for Matrix3. The matrix is initialised to the identity.
 		/// </summary>
-		Matrix3();
+		/// <param name="diagonal"> The value set to the diagonals. </param>
+		Matrix3(const float &diagonal = 1.0f);
 
 		/// <summary>
 		/// Constructor for Matrix3.
@@ -58,6 +45,12 @@ namespace fl
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 9 element array. </param>
 		Matrix3(const float source[9]);
+
+		/// <summary>
+		/// Constructor for Matrix3.
+		/// </summary>
+		/// <param name="source"> Creates this matrix out of a 3 vector array. </param>
+		Matrix3(const Vector3 source[3]);
 
 		/// <summary>
 		/// Deconstructor for Matrix3.
@@ -131,18 +124,6 @@ namespace fl
 		float Determinant() const;
 
 		/// <summary>
-		/// Sets this matrix to 0.
-		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix3 SetZero();
-
-		/// <summary>
-		/// Sets this matrix to be the identity matrix.
-		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix3 SetIdentity();
-
-		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
@@ -158,7 +139,11 @@ namespace fl
 
 		bool operator!=(const Matrix3 &other) const;
 
-		Matrix3 operator-();
+		Matrix3 operator-() const;
+
+		const Vector3 &operator[](uint32_t index) const;
+
+		Vector3 &operator[](uint32_t index);
 
 		FL_EXPORT friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
 

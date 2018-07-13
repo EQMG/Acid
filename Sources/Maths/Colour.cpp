@@ -41,13 +41,10 @@ namespace fl
 	{
 	}
 
-	Colour::Colour(const std::string &hex, const float &a) :
-		m_r(0.0f),
-		m_g(0.0f),
-		m_b(0.0f),
-		m_a(a)
+	Colour::Colour(const std::string &hex, const float &a)
 	{
 		*this = hex;
+		m_a = a;
 	}
 
 	Colour::Colour(const Colour &source) :
@@ -233,6 +230,18 @@ namespace fl
 	bool Colour::operator!=(const float &value) const
 	{
 		return !(*this == value);
+	}
+
+	const float &Colour::operator[](uint32_t index) const
+	{
+		assert(index < 4);
+		return m_elements[index];
+	}
+
+	float &Colour::operator[](uint32_t index)
+	{
+		assert(index < 4);
+		return m_elements[index];
 	}
 
 	Colour operator+(Colour left, const Colour &right)

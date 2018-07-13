@@ -5,7 +5,7 @@
 #include "Materials/MaterialDefault.hpp"
 #include "Meshes/MeshRender.hpp"
 #include "Particles/ParticleSystem.hpp"
-#include "Physics/ColliderSphere.hpp"
+#include "Physics/BoundingSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Shadows/ShadowRender.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
@@ -15,8 +15,8 @@ namespace fl
 	ComponentRegister::ComponentRegister() :
 		m_components(std::map<std::string, ComponentCreate>())
 	{
-		RegisterComponent<ColliderAabb>("AabbCollider");
-		RegisterComponent<ColliderSphere>("SphereCollider");
+		RegisterComponent<BoundingBox>("AabbCollider");
+		RegisterComponent<BoundingSphere>("SphereCollider");
 		RegisterComponent<Light>("Light");
 		RegisterComponent<MaterialDefault>("MaterialDefault");
 		RegisterComponent<MaterialSkybox>("MaterialSkybox");

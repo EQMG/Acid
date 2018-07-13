@@ -9,13 +9,13 @@ namespace fl
 	}
 
 	JointTransform::JointTransform(const Matrix4 &localTransform) :
-		m_position(Vector3(localTransform.m_30, localTransform.m_31, localTransform.m_32)),
+		m_position(Vector3(localTransform[3])),
 		m_rotation(localTransform)
 	{
 	}
 
 	JointTransform::JointTransform(const JointTransformData &data) :
-		m_position(Vector3(data.GetJointLocalTransform().m_30, data.GetJointLocalTransform().m_31, data.GetJointLocalTransform().m_32)),
+		m_position(Vector3(data.GetJointLocalTransform()[3])),
 		m_rotation(Quaternion(data.GetJointLocalTransform()))
 	{
 	}

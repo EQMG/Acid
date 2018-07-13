@@ -26,7 +26,7 @@ namespace fl
 			return;
 		}
 
-		auto aabb = GetGameObject()->GetComponent<ColliderAabb>();
+		auto aabb = GetGameObject()->GetComponent<BoundingBox>();
 
 		if (aabb != m_model->GetAabb())
 		{

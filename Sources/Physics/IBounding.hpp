@@ -12,21 +12,21 @@ namespace fl
 	/// <summary>
 	/// A simple class that represents a physical shape.
 	/// </summary>
-	class FL_EXPORT ICollider :
+	class FL_EXPORT IBounding :
 		public IComponent
 	{
 	public:
 		/// <summary>
 		/// Creates a new collider.
 		/// </summary>
-		ICollider()
+		IBounding()
 		{
 		}
 
 		/// <summary>
 		/// Deconstructor for the collider.
 		/// </summary>
-		virtual ~ICollider()
+		virtual ~IBounding()
 		{
 		}
 
@@ -46,14 +46,14 @@ namespace fl
 		/// <param name="transform"> The amount to transform the object. </param>
 		/// <param name="destination"> The collider to store the new data in. </param>
 		/// <returns> The destination. </returns>
-		virtual ICollider *UpdateCollider(const Transform &transform, ICollider *destination) = 0;
+		virtual IBounding *UpdateCollider(const Transform &transform, IBounding *destination) = 0;
 
 		/// <summary>
 		/// Tests whether a shape is intersecting this shape.
 		/// </summary>
 		/// <param name="other"> The other shape being tested for intersection. </param>
 		/// <returns> Data about the calculated shape intersection. </returns>
-		virtual Intersect Intersects(const ICollider &other) = 0;
+		virtual Intersect Intersects(const IBounding &other) = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
@@ -74,7 +74,7 @@ namespace fl
 		/// </summary>
 		/// <param name="other"> The shape being tested for containment. </param>
 		/// <returns> True if {@code other} is contained by this shape, false otherwise. </returns>
-		virtual bool Contains(const ICollider &other) = 0;
+		virtual bool Contains(const IBounding &other) = 0;
 
 		/// <summary>
 		/// Gets if a point is contained in this shape.

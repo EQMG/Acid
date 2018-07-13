@@ -2,11 +2,14 @@
 
 #include <ostream>
 #include <string>
+#include "Matrix3.hpp"
 #include "Matrix4.hpp"
 #include "Vector4.hpp"
 
 namespace fl
 {
+	class Vector3;
+
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
@@ -28,6 +31,7 @@ namespace fl
 
 		static const Quaternion ZERO;
 		static const Quaternion ONE;
+		static const Quaternion W_ONE;
 		static const Quaternion POSITIVE_INFINITY;
 		static const Quaternion NEGATIVE_INFINITY;
 
@@ -44,6 +48,14 @@ namespace fl
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
 		Quaternion(const float &x, const float &y, const float &z, const float &w);
+
+		/// <summary>
+		/// Constructor for Quaternion.
+		/// </summary>
+		/// <param name="pitch"> Start pitch. </param>
+		/// <param name="yaw"> Start yaw. </param>
+		/// <param name="roll"> Start roll. </param>
+		Quaternion(const float &pitch, const float &yaw, const float &roll);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -144,7 +156,9 @@ namespace fl
 		/// Converts this quaternion to a 4x4 matrix.
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix4 ToMatrix();
+		Matrix4 ToMatrix() const;
+
+		Matrix3 ToRotationMatrix3() const;
 
 		/// <summary>
 		/// Converts this quaternion to a 4x4 matrix representing the exact same
@@ -153,7 +167,13 @@ namespace fl
 		/// seeing as it will be multiplied with other 4x4 matrices).
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix4 ToRotationMatrix();
+		Matrix4 ToRotationMatrix() const;
+
+		/// <summary>
+		/// Converts this quaternion to euler angles.
+		/// </summary>
+		/// <returns> The euler angle representation of this quaternion. </returns>
+		Vector3 ToEuler() const;
 
 		/// <summary>
 		/// Saves this quaternion into a loaded value.
@@ -200,6 +220,10 @@ namespace fl
 		bool operator!=(const float &value) const;
 
 		Quaternion operator-();
+
+		const float operator[](uint32_t index) const;
+
+		float operator[](uint32_t index);
 
 		FL_EXPORT friend Quaternion operator*(Quaternion left, const Quaternion &right);
 

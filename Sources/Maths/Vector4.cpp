@@ -251,6 +251,18 @@ namespace fl
 		return Negate();
 	}
 
+	const float &Vector4::operator[](uint32_t index) const
+	{
+		assert(index < 4);
+		return m_elements[index];
+	}
+
+	float &Vector4::operator[](uint32_t index)
+	{
+		assert(index < 4);
+		return m_elements[index];
+	}
+
 	Vector4 operator+(Vector4 left, const Vector4 &right)
 	{
 		return left.Add(right);

@@ -17,12 +17,12 @@ namespace fl
 		{
 			struct
 			{
-				bool m_x, m_y, m_z;
+				bool m_elements[3];
 			};
 
 			struct
 			{
-				bool m_elements[3];
+				bool m_x, m_y, m_z;
 			};
 		};
 
@@ -54,6 +54,12 @@ namespace fl
 		~Constraint3();
 
 		/// <summary>
+		/// Negates this constraint.
+		/// </summary>
+		/// <returns> The negated constraint. </returns>
+		Constraint3 Negate() const;
+
+		/// <summary>
 		/// Saves this constraint into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
@@ -78,6 +84,12 @@ namespace fl
 		bool operator==(const Constraint3 &other) const;
 
 		bool operator!=(const Constraint3 &other) const;
+
+		Constraint3 operator-();
+
+		const bool &operator[](uint32_t index) const;
+
+		bool &operator[](uint32_t index);
 
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
 

@@ -4,7 +4,7 @@ namespace fl
 {
 	Transform::Transform() :
 		m_position(Vector3()),
-		m_rotation(Vector3()),
+		m_rotation(Quaternion()),
 		m_scaling(Vector3(1.0f, 1.0f, 1.0f))
 	{
 	}
@@ -16,16 +16,30 @@ namespace fl
 	{
 	}
 
-	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
+	Transform::Transform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scaling) :
 		m_position(position),
 		m_rotation(rotation),
 		m_scaling(scaling)
 	{
 	}
 
-	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
+	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
+		m_position(position),
+		m_rotation(rotation.ToQuaternion()),
+		m_scaling(scaling)
+	{
+	}
+
+	Transform::Transform(const Vector3 &position, const Quaternion &rotation, const float &scale) :
 		m_position(position),
 		m_rotation(rotation),
+		m_scaling(Vector3(scale, scale, scale))
+	{
+	}
+
+	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
+		m_position(position),
+		m_rotation(rotation.ToQuaternion()),
 		m_scaling(Vector3(scale, scale, scale))
 	{
 	}
@@ -36,12 +50,12 @@ namespace fl
 
 	Matrix4 Transform::GetWorldMatrix() const
 	{
-		return Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
+		return Matrix4::TransformationMatrix(m_position, m_rotation.ToEuler(), m_scaling);
 	}
 
 	Matrix4 Transform::GetModelMatrix() const
 	{
-		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation, Vector3());
+		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation.ToEuler(), Vector3::ZERO);
 	}
 
 	void Transform::Write(LoadedValue *destination)

@@ -3,9 +3,10 @@
 #include <cassert>
 #include "Maths.hpp"
 #include "Colour.hpp"
+#include "Matrix4.hpp"
+#include "Quaternion.hpp"
 #include "Vector2.hpp"
 #include "Vector4.hpp"
-#include "Matrix4.hpp"
 
 namespace fl
 {
@@ -157,6 +158,11 @@ namespace fl
 		return std::min(m_x, std::min(m_y, m_z));
 	}
 
+	Quaternion Vector3::ToQuaternion() const
+	{
+		return Quaternion(m_x, m_y, m_z);
+	}
+
 	float Vector3::DistanceSquared(const Vector3 &other) const
 	{
 		float dx = m_x - other.m_x;
@@ -290,7 +296,7 @@ namespace fl
 			Vector3 rotateAxis = coneDirection.Cross(Vector3::FRONT);
 			rotateAxis.Normalize();
 			float rotateAngle = std::acos(coneDirection.Dot(Vector3::FRONT));
-			Matrix4 rotationMatrix = Matrix4().SetIdentity();
+			Matrix4 rotationMatrix = Matrix4();
 			rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
 			direction = rotationMatrix.Transform(direction);
 		}
@@ -392,6 +398,18 @@ namespace fl
 	Vector3 Vector3::operator-()
 	{
 		return Negate();
+	}
+
+	const float &Vector3::operator[](uint32_t index) const
+	{
+		assert(index < 3);
+		return m_elements[index];
+	}
+
+	float &Vector3::operator[](uint32_t index)
+	{
+		assert(index < 3);
+		return m_elements[index];
 	}
 
 	Vector3 operator+(Vector3 left, const Vector3 &right)

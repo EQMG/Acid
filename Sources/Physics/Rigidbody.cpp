@@ -11,7 +11,9 @@ namespace fl
 		m_drag(drag),
 		m_useGravity(useGravity),
 		m_freezePosition(freezePosition),
-		m_freezeRotation(freezeRotation)
+		m_freezeRotation(freezeRotation),
+		m_shape(nullptr),
+		m_body(nullptr)
 	{
 	}
 
@@ -21,6 +23,12 @@ namespace fl
 
 	void Rigidbody::Update()
 	{
+		btVector3 position = m_body->getWorldTransform().getOrigin();
+		btQuaternion rotation = m_body->getWorldTransform().getRotation();
+
+		auto transform = GetGameObject()->GetTransform();
+		transform.SetPosition(Vector3(position.getX(), position.getY(), position.getZ()));
+		transform.SetRotation(Quaternion(rotation.getX(), rotation.getY(), rotation.getZ(), rotation.getW()));
 	}
 
 	void Rigidbody::Load(LoadedValue *value)

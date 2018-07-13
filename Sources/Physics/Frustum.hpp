@@ -4,24 +4,6 @@
 
 namespace fl
 {
-	enum FrustumPlanes
-	{
-		FRUSTUM_RIGHT = 0,
-		FRUSTUM_LEFT = 1,
-		FRUSTUM_BOTTOM = 2,
-		FRUSTUM_TOP = 3,
-		FRUSTUM_BACK = 4,
-		FRUSTUM_FRONT = 5
-	};
-
-	enum FrustumFace
-	{
-		FRUSTUM_A = 0,
-		FRUSTUM_B = 1,
-		FRUSTUM_C = 2,
-		FRUSTUM_D = 3
-	};
-
 	/// <summary>
 	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
 	/// </summary>
@@ -43,9 +25,9 @@ namespace fl
 		/// <summary>
 		/// Updates a frustum from the view and projection matrix.
 		/// </summary>
-		/// <param name="viewMatrix"> The view matrix. </param>
-		/// <param name="projectionMatrix"> The projection matrix. </param>
-		void Update(const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) const;
+		/// <param name="view"> The view matrix. </param>
+		/// <param name="projection"> The projection matrix. </param>
+		void Update(const Matrix4 &view, const Matrix4 &projection);
 
 		/// <summary>
 		/// Is the point contained in the frustum?
@@ -71,6 +53,6 @@ namespace fl
 		bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
 
 	private:
-		void NormalizePlane(const int &side) const;
+		void NormalizePlane(const int &side);
 	};
 }

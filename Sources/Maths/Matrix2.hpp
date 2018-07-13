@@ -16,19 +16,7 @@ namespace fl
 		{
 			struct
 			{
-				Vector2 *m_0;
-				Vector2 *m_1;
-			};
-
-			struct
-			{
-				float m_00, m_01;
-				float m_10, m_11;
-			};
-
-			struct
-			{
-				float m_elements[2][2];
+				Vector2 m_rows[2];
 			};
 
 			struct
@@ -43,7 +31,8 @@ namespace fl
 		/// <summary>
 		/// Constructor for Matrix2. The matrix is initialised to the identity.
 		/// </summary>
-		Matrix2();
+		/// <param name="diagonal"> The value set to the diagonals. </param>
+		Matrix2(const float &diagonal = 1.0f);
 
 		/// <summary>
 		/// Constructor for Matrix2.
@@ -56,6 +45,12 @@ namespace fl
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 4 element array. </param>
 		Matrix2(const float source[4]);
+
+		/// <summary>
+		/// Constructor for Matrix2.
+		/// </summary>
+		/// <param name="source"> Creates this matrix out of a 2 vector array. </param>
+		Matrix2(const Vector2 source[2]);
 
 		/// <summary>
 		/// Deconstructor for Matrix2.
@@ -129,18 +124,6 @@ namespace fl
 		float Determinant() const;
 
 		/// <summary>
-		/// Sets this matrix to 0.
-		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix2 SetZero();
-
-		/// <summary>
-		/// Sets this matrix to be the identity matrix.
-		/// </summary>
-		/// <returns> The identity matrix. </returns>
-		Matrix2 SetIdentity();
-
-		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
@@ -156,7 +139,11 @@ namespace fl
 
 		bool operator!=(const Matrix2 &other) const;
 
-		Matrix2 operator-();
+		Matrix2 operator-() const;
+
+		const Vector2 &operator[](uint32_t index) const;
+
+		Vector2 &operator[](uint32_t index);
 
 		FL_EXPORT friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
 

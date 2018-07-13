@@ -1,72 +1,36 @@
 #include "Matrix4.hpp"
 
+#include <cassert>
 #include "Maths.hpp"
 #include "Vector2.hpp"
-#include "Vector3.hpp"
 
 namespace fl
 {
-	const Matrix4 Matrix4::IDENTITY = Matrix4().SetIdentity();
-	const Matrix4 Matrix4::ZERO = Matrix4().SetZero();
+	const Matrix4 Matrix4::IDENTITY = Matrix4(new float[16]{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix4 Matrix4::ZERO = Matrix4();
 
-	Matrix4::Matrix4() :
-		m_00(1.0f),
-		m_01(0.0f),
-		m_02(0.0f),
-		m_03(0.0f),
-		m_10(0.0f),
-		m_11(1.0f),
-		m_12(0.0f),
-		m_13(0.0f),
-		m_20(0.0f),
-		m_21(0.0f),
-		m_22(1.0f),
-		m_23(0.0f),
-		m_30(0.0f),
-		m_31(0.0f),
-		m_32(0.0f),
-		m_33(1.0f)
+	Matrix4::Matrix4(const float &diagonal)
 	{
+		memset(m_rows, 0, 4 * sizeof(Vector4));
+		m_rows[0][0] = diagonal;
+		m_rows[1][1] = diagonal;
+		m_rows[2][2] = diagonal;
+		m_rows[3][3] = diagonal;
 	}
 
-	Matrix4::Matrix4(const Matrix4 &source) :
-		m_00(source.m_00),
-		m_01(source.m_01),
-		m_02(source.m_02),
-		m_03(source.m_03),
-		m_10(source.m_10),
-		m_11(source.m_11),
-		m_12(source.m_12),
-		m_13(source.m_13),
-		m_20(source.m_20),
-		m_21(source.m_21),
-		m_22(source.m_22),
-		m_23(source.m_23),
-		m_30(source.m_30),
-		m_31(source.m_31),
-		m_32(source.m_32),
-		m_33(source.m_33)
+	Matrix4::Matrix4(const Matrix4 &source)
 	{
+		memcpy(m_rows, source.m_rows, 4 * sizeof(Vector4));
 	}
 
-	Matrix4::Matrix4(const float source[16]) :
-		m_00(source[0]),
-		m_01(source[1]),
-		m_02(source[2]),
-		m_03(source[3]),
-		m_10(source[4]),
-		m_11(source[5]),
-		m_12(source[6]),
-		m_13(source[7]),
-		m_20(source[8]),
-		m_21(source[9]),
-		m_22(source[10]),
-		m_23(source[11]),
-		m_30(source[12]),
-		m_31(source[13]),
-		m_32(source[14]),
-		m_33(source[15])
+	Matrix4::Matrix4(const float *source)
 	{
+		memcpy(m_rows, source, 4 * 4 * sizeof(float));
+	}
+
+	Matrix4::Matrix4(const Vector4 *source)
+	{
+		memcpy(m_rows, source, 4 * sizeof(Vector4));
 	}
 
 	Matrix4::~Matrix4()
@@ -76,166 +40,166 @@ namespace fl
 	Matrix4 Matrix4::Add(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = m_00 + other.m_00;
-		result.m_01 = m_01 + other.m_01;
-		result.m_02 = m_02 + other.m_02;
-		result.m_03 = m_03 + other.m_03;
-		result.m_10 = m_10 + other.m_10;
-		result.m_11 = m_11 + other.m_11;
-		result.m_12 = m_12 + other.m_12;
-		result.m_13 = m_13 + other.m_13;
-		result.m_20 = m_20 + other.m_20;
-		result.m_21 = m_21 + other.m_21;
-		result.m_22 = m_22 + other.m_22;
-		result.m_23 = m_23 + other.m_23;
-		result.m_30 = m_30 + other.m_30;
-		result.m_31 = m_31 + other.m_31;
-		result.m_32 = m_32 + other.m_32;
-		result.m_33 = m_33 + other.m_33;
+		result[0][0] = m_rows[0][0] + other[0][0];
+		result[0][1] = m_rows[0][1] + other[0][1];
+		result[0][2] = m_rows[0][2] + other[0][2];
+		result[0][3] = m_rows[0][3] + other[0][3];
+		result[1][0] = m_rows[1][0] + other[1][0];
+		result[1][1] = m_rows[1][1] + other[1][1];
+		result[1][2] = m_rows[1][2] + other[1][2];
+		result[1][3] = m_rows[1][3] + other[1][3];
+		result[2][0] = m_rows[2][0] + other[2][0];
+		result[2][1] = m_rows[2][1] + other[2][1];
+		result[2][2] = m_rows[2][2] + other[2][2];
+		result[2][3] = m_rows[2][3] + other[2][3];
+		result[3][0] = m_rows[3][0] + other[3][0];
+		result[3][1] = m_rows[3][1] + other[3][1];
+		result[3][2] = m_rows[3][2] + other[3][2];
+		result[3][3] = m_rows[3][3] + other[3][3];
 		return result;
 	}
 
 	Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = m_00 - other.m_00;
-		result.m_01 = m_01 - other.m_01;
-		result.m_02 = m_02 - other.m_02;
-		result.m_03 = m_03 - other.m_03;
-		result.m_10 = m_10 - other.m_10;
-		result.m_11 = m_11 - other.m_11;
-		result.m_12 = m_12 - other.m_12;
-		result.m_13 = m_13 - other.m_13;
-		result.m_20 = m_20 - other.m_20;
-		result.m_21 = m_21 - other.m_21;
-		result.m_22 = m_22 - other.m_22;
-		result.m_23 = m_23 - other.m_23;
-		result.m_30 = m_30 - other.m_30;
-		result.m_31 = m_31 - other.m_31;
-		result.m_32 = m_32 - other.m_32;
-		result.m_33 = m_33 - other.m_33;
+		result[0][0] = m_rows[0][0] - other[0][0];
+		result[0][1] = m_rows[0][1] - other[0][1];
+		result[0][2] = m_rows[0][2] - other[0][2];
+		result[0][3] = m_rows[0][3] - other[0][3];
+		result[1][0] = m_rows[1][0] - other[1][0];
+		result[1][1] = m_rows[1][1] - other[1][1];
+		result[1][2] = m_rows[1][2] - other[1][2];
+		result[1][3] = m_rows[1][3] - other[1][3];
+		result[2][0] = m_rows[2][0] - other[2][0];
+		result[2][1] = m_rows[2][1] - other[2][1];
+		result[2][2] = m_rows[2][2] - other[2][2];
+		result[2][3] = m_rows[2][3] - other[2][3];
+		result[3][0] = m_rows[3][0] - other[3][0];
+		result[3][1] = m_rows[3][1] - other[3][1];
+		result[3][2] = m_rows[3][2] - other[3][2];
+		result[3][3] = m_rows[3][3] - other[3][3];
 		return result;
 	}
 
 	Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = m_00 * other.m_00 + m_10 * other.m_01 + m_20 * other.m_02 + m_30 * other.m_03;
-		result.m_01 = m_01 * other.m_00 + m_11 * other.m_01 + m_21 * other.m_02 + m_31 * other.m_03;
-		result.m_02 = m_02 * other.m_00 + m_12 * other.m_01 + m_22 * other.m_02 + m_32 * other.m_03;
-		result.m_03 = m_03 * other.m_00 + m_13 * other.m_01 + m_23 * other.m_02 + m_33 * other.m_03;
-		result.m_10 = m_00 * other.m_10 + m_10 * other.m_11 + m_20 * other.m_12 + m_30 * other.m_13;
-		result.m_11 = m_01 * other.m_10 + m_11 * other.m_11 + m_21 * other.m_12 + m_31 * other.m_13;
-		result.m_12 = m_02 * other.m_10 + m_12 * other.m_11 + m_22 * other.m_12 + m_32 * other.m_13;
-		result.m_13 = m_03 * other.m_10 + m_13 * other.m_11 + m_23 * other.m_12 + m_33 * other.m_13;
-		result.m_20 = m_00 * other.m_20 + m_10 * other.m_21 + m_20 * other.m_22 + m_30 * other.m_23;
-		result.m_21 = m_01 * other.m_20 + m_11 * other.m_21 + m_21 * other.m_22 + m_31 * other.m_23;
-		result.m_22 = m_02 * other.m_20 + m_12 * other.m_21 + m_22 * other.m_22 + m_32 * other.m_23;
-		result.m_23 = m_03 * other.m_20 + m_13 * other.m_21 + m_23 * other.m_22 + m_33 * other.m_23;
-		result.m_30 = m_00 * other.m_30 + m_10 * other.m_31 + m_20 * other.m_32 + m_30 * other.m_33;
-		result.m_31 = m_01 * other.m_30 + m_11 * other.m_31 + m_21 * other.m_32 + m_31 * other.m_33;
-		result.m_32 = m_02 * other.m_30 + m_12 * other.m_31 + m_22 * other.m_32 + m_32 * other.m_33;
-		result.m_33 = m_03 * other.m_30 + m_13 * other.m_31 + m_23 * other.m_32 + m_33 * other.m_33;
+		result[0][0] = m_rows[0][0] * other[0][0] + m_rows[1][0] * other[0][1] + m_rows[2][0] * other[0][2] + m_rows[3][0] * other[0][3];
+		result[0][1] = m_rows[0][1] * other[0][0] + m_rows[1][1] * other[0][1] + m_rows[2][1] * other[0][2] + m_rows[3][1] * other[0][3];
+		result[0][2] = m_rows[0][2] * other[0][0] + m_rows[1][2] * other[0][1] + m_rows[2][2] * other[0][2] + m_rows[3][2] * other[0][3];
+		result[0][3] = m_rows[0][3] * other[0][0] + m_rows[1][3] * other[0][1] + m_rows[2][3] * other[0][2] + m_rows[3][3] * other[0][3];
+		result[1][0] = m_rows[0][0] * other[1][0] + m_rows[1][0] * other[1][1] + m_rows[2][0] * other[1][2] + m_rows[3][0] * other[1][3];
+		result[1][1] = m_rows[0][1] * other[1][0] + m_rows[1][1] * other[1][1] + m_rows[2][1] * other[1][2] + m_rows[3][1] * other[1][3];
+		result[1][2] = m_rows[0][2] * other[1][0] + m_rows[1][2] * other[1][1] + m_rows[2][2] * other[1][2] + m_rows[3][2] * other[1][3];
+		result[1][3] = m_rows[0][3] * other[1][0] + m_rows[1][3] * other[1][1] + m_rows[2][3] * other[1][2] + m_rows[3][3] * other[1][3];
+		result[2][0] = m_rows[0][0] * other[2][0] + m_rows[1][0] * other[2][1] + m_rows[2][0] * other[2][2] + m_rows[3][0] * other[2][3];
+		result[2][1] = m_rows[0][1] * other[2][0] + m_rows[1][1] * other[2][1] + m_rows[2][1] * other[2][2] + m_rows[3][1] * other[2][3];
+		result[2][2] = m_rows[0][2] * other[2][0] + m_rows[1][2] * other[2][1] + m_rows[2][2] * other[2][2] + m_rows[3][2] * other[2][3];
+		result[2][3] = m_rows[0][3] * other[2][0] + m_rows[1][3] * other[2][1] + m_rows[2][3] * other[2][2] + m_rows[3][3] * other[2][3];
+		result[3][0] = m_rows[0][0] * other[3][0] + m_rows[1][0] * other[3][1] + m_rows[2][0] * other[3][2] + m_rows[3][0] * other[3][3];
+		result[3][1] = m_rows[0][1] * other[3][0] + m_rows[1][1] * other[3][1] + m_rows[2][1] * other[3][2] + m_rows[3][1] * other[3][3];
+		result[3][2] = m_rows[0][2] * other[3][0] + m_rows[1][2] * other[3][1] + m_rows[2][2] * other[3][2] + m_rows[3][2] * other[3][3];
+		result[3][3] = m_rows[0][3] * other[3][0] + m_rows[1][3] * other[3][1] + m_rows[2][3] * other[3][2] + m_rows[3][3] * other[3][3];
 		return result;
 	}
 
 	Vector4 Matrix4::Multiply(const Vector4 &other) const
 	{
-		float x = m_00 * other.m_x + m_10 * other.m_y + m_20 * other.m_z + m_30 * other.m_w;
-		float y = m_01 * other.m_x + m_11 * other.m_y + m_21 * other.m_z + m_31 * other.m_w;
-		float z = m_02 * other.m_x + m_12 * other.m_y + m_22 * other.m_z + m_32 * other.m_w;
-		float w = m_03 * other.m_x + m_13 * other.m_y + m_23 * other.m_z + m_33 * other.m_w;
+		float x = m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z + m_rows[3][0] * other.m_w;
+		float y = m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z + m_rows[3][1] * other.m_w;
+		float z = m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z + m_rows[3][2] * other.m_w;
+		float w = m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z + m_rows[3][3] * other.m_w;
 		return Vector4(x, y, z, w);
 	}
 
 	Matrix4 Matrix4::Divide(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = m_00 / other.m_00 + m_10 / other.m_01 + m_20 / other.m_02 + m_30 / other.m_03;
-		result.m_01 = m_01 / other.m_00 + m_11 / other.m_01 + m_21 / other.m_02 + m_31 / other.m_03;
-		result.m_02 = m_02 / other.m_00 + m_12 / other.m_01 + m_22 / other.m_02 + m_32 / other.m_03;
-		result.m_03 = m_03 / other.m_00 + m_13 / other.m_01 + m_23 / other.m_02 + m_33 / other.m_03;
-		result.m_10 = m_00 / other.m_10 + m_10 / other.m_11 + m_20 / other.m_12 + m_30 / other.m_13;
-		result.m_11 = m_01 / other.m_10 + m_11 / other.m_11 + m_21 / other.m_12 + m_31 / other.m_13;
-		result.m_12 = m_02 / other.m_10 + m_12 / other.m_11 + m_22 / other.m_12 + m_32 / other.m_13;
-		result.m_13 = m_03 / other.m_10 + m_13 / other.m_11 + m_23 / other.m_12 + m_33 / other.m_13;
-		result.m_20 = m_00 / other.m_20 + m_10 / other.m_21 + m_20 / other.m_22 + m_30 / other.m_23;
-		result.m_21 = m_01 / other.m_20 + m_11 / other.m_21 + m_21 / other.m_22 + m_31 / other.m_23;
-		result.m_22 = m_02 / other.m_20 + m_12 / other.m_21 + m_22 / other.m_22 + m_32 / other.m_23;
-		result.m_23 = m_03 / other.m_20 + m_13 / other.m_21 + m_23 / other.m_22 + m_33 / other.m_23;
-		result.m_30 = m_00 / other.m_30 + m_10 / other.m_31 + m_20 / other.m_32 + m_30 / other.m_33;
-		result.m_31 = m_01 / other.m_30 + m_11 / other.m_31 + m_21 / other.m_32 + m_31 / other.m_33;
-		result.m_32 = m_02 / other.m_30 + m_12 / other.m_31 + m_22 / other.m_32 + m_32 / other.m_33;
-		result.m_33 = m_03 / other.m_30 + m_13 / other.m_31 + m_23 / other.m_32 + m_33 / other.m_33;
+		result[0][0] = m_rows[0][0] / other[0][0] + m_rows[1][0] / other[0][1] + m_rows[2][0] / other[0][2] + m_rows[3][0] / other[0][3];
+		result[0][1] = m_rows[0][1] / other[0][0] + m_rows[1][1] / other[0][1] + m_rows[2][1] / other[0][2] + m_rows[3][1] / other[0][3];
+		result[0][2] = m_rows[0][2] / other[0][0] + m_rows[1][2] / other[0][1] + m_rows[2][2] / other[0][2] + m_rows[3][2] / other[0][3];
+		result[0][3] = m_rows[0][3] / other[0][0] + m_rows[1][3] / other[0][1] + m_rows[2][3] / other[0][2] + m_rows[3][3] / other[0][3];
+		result[1][0] = m_rows[0][0] / other[1][0] + m_rows[1][0] / other[1][1] + m_rows[2][0] / other[1][2] + m_rows[3][0] / other[1][3];
+		result[1][1] = m_rows[0][1] / other[1][0] + m_rows[1][1] / other[1][1] + m_rows[2][1] / other[1][2] + m_rows[3][1] / other[1][3];
+		result[1][2] = m_rows[0][2] / other[1][0] + m_rows[1][2] / other[1][1] + m_rows[2][2] / other[1][2] + m_rows[3][2] / other[1][3];
+		result[1][3] = m_rows[0][3] / other[1][0] + m_rows[1][3] / other[1][1] + m_rows[2][3] / other[1][2] + m_rows[3][3] / other[1][3];
+		result[2][0] = m_rows[0][0] / other[2][0] + m_rows[1][0] / other[2][1] + m_rows[2][0] / other[2][2] + m_rows[3][0] / other[2][3];
+		result[2][1] = m_rows[0][1] / other[2][0] + m_rows[1][1] / other[2][1] + m_rows[2][1] / other[2][2] + m_rows[3][1] / other[2][3];
+		result[2][2] = m_rows[0][2] / other[2][0] + m_rows[1][2] / other[2][1] + m_rows[2][2] / other[2][2] + m_rows[3][2] / other[2][3];
+		result[2][3] = m_rows[0][3] / other[2][0] + m_rows[1][3] / other[2][1] + m_rows[2][3] / other[2][2] + m_rows[3][3] / other[2][3];
+		result[3][0] = m_rows[0][0] / other[3][0] + m_rows[1][0] / other[3][1] + m_rows[2][0] / other[3][2] + m_rows[3][0] / other[3][3];
+		result[3][1] = m_rows[0][1] / other[3][0] + m_rows[1][1] / other[3][1] + m_rows[2][1] / other[3][2] + m_rows[3][1] / other[3][3];
+		result[3][2] = m_rows[0][2] / other[3][0] + m_rows[1][2] / other[3][1] + m_rows[2][2] / other[3][2] + m_rows[3][2] / other[3][3];
+		result[3][3] = m_rows[0][3] / other[3][0] + m_rows[1][3] / other[3][1] + m_rows[2][3] / other[3][2] + m_rows[3][3] / other[3][3];
 		return result;
 	}
 
 	Vector4 Matrix4::Transform(const Vector4 &other) const
 	{
-		float x = m_00 * other.m_x + m_10 * other.m_y + m_20 * other.m_z + m_30 * other.m_w;
-		float y = m_01 * other.m_x + m_11 * other.m_y + m_21 * other.m_z + m_31 * other.m_w;
-		float z = m_02 * other.m_x + m_12 * other.m_y + m_22 * other.m_z + m_32 * other.m_w;
-		float w = m_03 * other.m_x + m_13 * other.m_y + m_23 * other.m_z + m_33 * other.m_w;
+		float x = m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z + m_rows[3][0] * other.m_w;
+		float y = m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z + m_rows[3][1] * other.m_w;
+		float z = m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z + m_rows[3][2] * other.m_w;
+		float w = m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z + m_rows[3][3] * other.m_w;
 		return Vector4(x, y, z, w);
 	}
 
 	Matrix4 Matrix4::Translate(const Vector2 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result.m_30 += m_00 * other.m_x + m_10 * other.m_y;
-		result.m_31 += m_01 * other.m_x + m_11 * other.m_y;
-		result.m_32 += m_02 * other.m_x + m_12 * other.m_y;
-		result.m_33 += m_03 * other.m_x + m_13 * other.m_y;
+		result[3][0] += m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y;
+		result[3][1] += m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y;
+		result[3][2] += m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y;
+		result[3][3] += m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y;
 		return result;
 	}
 
 	Matrix4 Matrix4::Translate(const Vector3 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result.m_30 += m_00 * other.m_x + m_10 * other.m_y + m_20 * other.m_z;
-		result.m_31 += m_01 * other.m_x + m_11 * other.m_y + m_21 * other.m_z;
-		result.m_32 += m_02 * other.m_x + m_12 * other.m_y + m_22 * other.m_z;
-		result.m_33 += m_03 * other.m_x + m_13 * other.m_y + m_23 * other.m_z;
+		result[3][0] += m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z;
+		result[3][1] += m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z;
+		result[3][2] += m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z;
+		result[3][3] += m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z;
 		return result;
 	}
 
 	Matrix4 Matrix4::Scale(const Vector3 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result.m_00 *= other.m_x;
-		result.m_01 *= other.m_x;
-		result.m_02 *= other.m_x;
-		result.m_03 *= other.m_x;
-		result.m_10 *= other.m_y;
-		result.m_11 *= other.m_y;
-		result.m_12 *= other.m_y;
-		result.m_13 *= other.m_y;
-		result.m_20 *= other.m_z;
-		result.m_21 *= other.m_z;
-		result.m_22 *= other.m_z;
-		result.m_23 *= other.m_z;
+		result[0][0] *= other.m_x;
+		result[0][1] *= other.m_x;
+		result[0][2] *= other.m_x;
+		result[0][3] *= other.m_x;
+		result[1][0] *= other.m_y;
+		result[1][1] *= other.m_y;
+		result[1][2] *= other.m_y;
+		result[1][3] *= other.m_y;
+		result[2][0] *= other.m_z;
+		result[2][1] *= other.m_z;
+		result[2][2] *= other.m_z;
+		result[2][3] *= other.m_z;
 		return result;
 	}
 
 	Matrix4 Matrix4::Scale(const Vector4 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result.m_00 *= other.m_x;
-		result.m_01 *= other.m_x;
-		result.m_02 *= other.m_x;
-		result.m_03 *= other.m_x;
-		result.m_10 *= other.m_y;
-		result.m_11 *= other.m_y;
-		result.m_12 *= other.m_y;
-		result.m_13 *= other.m_y;
-		result.m_20 *= other.m_z;
-		result.m_21 *= other.m_z;
-		result.m_22 *= other.m_z;
-		result.m_23 *= other.m_z;
-		result.m_30 *= other.m_w;
-		result.m_31 *= other.m_w;
-		result.m_32 *= other.m_w;
-		result.m_33 *= other.m_w;
+		result[0][0] *= other.m_x;
+		result[0][1] *= other.m_x;
+		result[0][2] *= other.m_x;
+		result[0][3] *= other.m_x;
+		result[1][0] *= other.m_y;
+		result[1][1] *= other.m_y;
+		result[1][2] *= other.m_y;
+		result[1][3] *= other.m_y;
+		result[2][0] *= other.m_z;
+		result[2][1] *= other.m_z;
+		result[2][2] *= other.m_z;
+		result[2][3] *= other.m_z;
+		result[3][0] *= other.m_w;
+		result[3][1] *= other.m_w;
+		result[3][2] *= other.m_w;
+		result[3][3] *= other.m_w;
 		return result;
 	}
 
@@ -263,40 +227,40 @@ namespace fl
 		float f21 = yz * o - xs;
 		float f22 = axis.m_z * axis.m_z * o + c;
 
-		result.m_00 = m_00 * f00 + m_10 * f01 + m_20 * f02;
-		result.m_01 = m_01 * f00 + m_11 * f01 + m_21 * f02;
-		result.m_02 = m_02 * f00 + m_12 * f01 + m_22 * f02;
-		result.m_03 = m_03 * f00 + m_13 * f01 + m_23 * f02;
-		result.m_10 = m_00 * f10 + m_10 * f11 + m_20 * f12;
-		result.m_11 = m_01 * f10 + m_11 * f11 + m_21 * f12;
-		result.m_12 = m_02 * f10 + m_12 * f11 + m_22 * f12;
-		result.m_13 = m_03 * f10 + m_13 * f11 + m_23 * f12;
-		result.m_20 = m_00 * f20 + m_10 * f21 + m_20 * f22;
-		result.m_21 = m_01 * f20 + m_11 * f21 + m_21 * f22;
-		result.m_22 = m_02 * f20 + m_12 * f21 + m_22 * f22;
-		result.m_23 = m_03 * f20 + m_13 * f21 + m_23 * f22;
+		result[0][0] = m_rows[0][0] * f00 + m_rows[1][0] * f01 + m_rows[2][0] * f02;
+		result[0][1] = m_rows[0][1] * f00 + m_rows[1][1] * f01 + m_rows[2][1] * f02;
+		result[0][2] = m_rows[0][2] * f00 + m_rows[1][2] * f01 + m_rows[2][2] * f02;
+		result[0][3] = m_rows[0][3] * f00 + m_rows[1][3] * f01 + m_rows[2][3] * f02;
+		result[1][0] = m_rows[0][0] * f10 + m_rows[1][0] * f11 + m_rows[2][0] * f12;
+		result[1][1] = m_rows[0][1] * f10 + m_rows[1][1] * f11 + m_rows[2][1] * f12;
+		result[1][2] = m_rows[0][2] * f10 + m_rows[1][2] * f11 + m_rows[2][2] * f12;
+		result[1][3] = m_rows[0][3] * f10 + m_rows[1][3] * f11 + m_rows[2][3] * f12;
+		result[2][0] = m_rows[0][0] * f20 + m_rows[1][0] * f21 + m_rows[2][0] * f22;
+		result[2][1] = m_rows[0][1] * f20 + m_rows[1][1] * f21 + m_rows[2][1] * f22;
+		result[2][2] = m_rows[0][2] * f20 + m_rows[1][2] * f21 + m_rows[2][2] * f22;
+		result[2][3] = m_rows[0][3] * f20 + m_rows[1][3] * f21 + m_rows[2][3] * f22;
 		return result;
 	}
 
 	Matrix4 Matrix4::Negate() const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = -m_00;
-		result.m_01 = -m_01;
-		result.m_02 = -m_02;
-		result.m_03 = -m_03;
-		result.m_10 = -m_10;
-		result.m_11 = -m_11;
-		result.m_12 = -m_12;
-		result.m_13 = -m_13;
-		result.m_20 = -m_20;
-		result.m_21 = -m_21;
-		result.m_22 = -m_22;
-		result.m_23 = -m_23;
-		result.m_30 = -m_30;
-		result.m_31 = -m_31;
-		result.m_32 = -m_32;
-		result.m_33 = -m_33;
+		result[0][0] = -m_rows[0][0];
+		result[0][1] = -m_rows[0][1];
+		result[0][2] = -m_rows[0][2];
+		result[0][3] = -m_rows[0][3];
+		result[1][0] = -m_rows[1][0];
+		result[1][1] = -m_rows[1][1];
+		result[1][2] = -m_rows[1][2];
+		result[1][3] = -m_rows[1][3];
+		result[2][0] = -m_rows[2][0];
+		result[2][1] = -m_rows[2][1];
+		result[2][2] = -m_rows[2][2];
+		result[2][3] = -m_rows[2][3];
+		result[3][0] = -m_rows[3][0];
+		result[3][1] = -m_rows[3][1];
+		result[3][2] = -m_rows[3][2];
+		result[3][3] = -m_rows[3][3];
 		return result;
 	}
 
@@ -310,46 +274,46 @@ namespace fl
 			float determinantInv = 1.0f / d;
 
 			// First row.
-			float t00 = Determinant3x3(m_11, m_12, m_13, m_21, m_22, m_23, m_31, m_32, m_33);
-			float t01 = -Determinant3x3(m_10, m_12, m_13, m_20, m_22, m_23, m_30, m_32, m_33);
-			float t02 = Determinant3x3(m_10, m_11, m_13, m_20, m_21, m_23, m_30, m_31, m_33);
-			float t03 = -Determinant3x3(m_10, m_11, m_12, m_20, m_21, m_22, m_30, m_31, m_32);
+			float t00 = Determinant3x3(m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[2][1], m_rows[2][2], m_rows[2][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
+			float t01 = -Determinant3x3(m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[2][0], m_rows[2][2], m_rows[2][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
+			float t02 = Determinant3x3(m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[2][0], m_rows[2][1], m_rows[2][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
+			float t03 = -Determinant3x3(m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[2][0], m_rows[2][1], m_rows[2][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
 
 			// Second row.
-			float t10 = -Determinant3x3(m_01, m_02, m_03, m_21, m_22, m_23, m_31, m_32, m_33);
-			float t11 = Determinant3x3(m_00, m_02, m_03, m_20, m_22, m_23, m_30, m_32, m_33);
-			float t12 = -Determinant3x3(m_00, m_01, m_03, m_20, m_21, m_23, m_30, m_31, m_33);
-			float t13 = Determinant3x3(m_00, m_01, m_02, m_20, m_21, m_22, m_30, m_31, m_32);
+			float t10 = -Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[2][1], m_rows[2][2], m_rows[2][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
+			float t11 = Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[2][0], m_rows[2][2], m_rows[2][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
+			float t12 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[2][0], m_rows[2][1], m_rows[2][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
+			float t13 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[2][0], m_rows[2][1], m_rows[2][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
 
 			// Third row.
-			float t20 = Determinant3x3(m_01, m_02, m_03, m_11, m_12, m_13, m_31, m_32, m_33);
-			float t21 = -Determinant3x3(m_00, m_02, m_03, m_10, m_12, m_13, m_30, m_32, m_33);
-			float t22 = Determinant3x3(m_00, m_01, m_03, m_10, m_11, m_13, m_30, m_31, m_33);
-			float t23 = -Determinant3x3(m_00, m_01, m_02, m_10, m_11, m_12, m_30, m_31, m_32);
+			float t20 = Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
+			float t21 = -Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
+			float t22 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
+			float t23 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
 
 			// Fourth row.
-			float t30 = -Determinant3x3(m_01, m_02, m_03, m_11, m_12, m_13, m_21, m_22, m_23);
-			float t31 = Determinant3x3(m_00, m_02, m_03, m_10, m_12, m_13, m_20, m_22, m_23);
-			float t32 = -Determinant3x3(m_00, m_01, m_03, m_10, m_11, m_13, m_20, m_21, m_23);
-			float t33 = Determinant3x3(m_00, m_01, m_02, m_10, m_11, m_12, m_20, m_21, m_22);
+			float t30 = -Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[2][1], m_rows[2][2], m_rows[2][3]);
+			float t31 = Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[2][0], m_rows[2][2], m_rows[2][3]);
+			float t32 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[2][0], m_rows[2][1], m_rows[2][3]);
+			float t33 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[2][0], m_rows[2][1], m_rows[2][2]);
 
 			// Transpose and divide by the determinant.
-			result.m_00 = t00 * determinantInv;
-			result.m_11 = t11 * determinantInv;
-			result.m_22 = t22 * determinantInv;
-			result.m_33 = t33 * determinantInv;
-			result.m_01 = t10 * determinantInv;
-			result.m_10 = t01 * determinantInv;
-			result.m_20 = t02 * determinantInv;
-			result.m_02 = t20 * determinantInv;
-			result.m_12 = t21 * determinantInv;
-			result.m_21 = t12 * determinantInv;
-			result.m_03 = t30 * determinantInv;
-			result.m_30 = t03 * determinantInv;
-			result.m_13 = t31 * determinantInv;
-			result.m_31 = t13 * determinantInv;
-			result.m_32 = t23 * determinantInv;
-			result.m_23 = t32 * determinantInv;
+			result[0][0] = t00 * determinantInv;
+			result[1][1] = t11 * determinantInv;
+			result[2][2] = t22 * determinantInv;
+			result[3][3] = t33 * determinantInv;
+			result[0][1] = t10 * determinantInv;
+			result[1][0] = t01 * determinantInv;
+			result[2][0] = t02 * determinantInv;
+			result[0][2] = t20 * determinantInv;
+			result[1][2] = t21 * determinantInv;
+			result[2][1] = t12 * determinantInv;
+			result[0][3] = t30 * determinantInv;
+			result[3][0] = t03 * determinantInv;
+			result[1][3] = t31 * determinantInv;
+			result[3][1] = t13 * determinantInv;
+			result[3][2] = t23 * determinantInv;
+			result[2][3] = t32 * determinantInv;
 		}
 
 		return result;
@@ -358,31 +322,31 @@ namespace fl
 	Matrix4 Matrix4::Transpose() const
 	{
 		Matrix4 result = Matrix4();
-		result.m_00 = m_00;
-		result.m_01 = m_10;
-		result.m_02 = m_20;
-		result.m_03 = m_30;
-		result.m_10 = m_01;
-		result.m_11 = m_11;
-		result.m_12 = m_21;
-		result.m_13 = m_31;
-		result.m_20 = m_02;
-		result.m_21 = m_12;
-		result.m_22 = m_22;
-		result.m_23 = m_32;
-		result.m_30 = m_03;
-		result.m_31 = m_13;
-		result.m_32 = m_23;
-		result.m_33 = m_33;
+		result[0][0] = m_rows[0][0];
+		result[0][1] = m_rows[1][0];
+		result[0][2] = m_rows[2][0];
+		result[0][3] = m_rows[3][0];
+		result[1][0] = m_rows[0][1];
+		result[1][1] = m_rows[1][1];
+		result[1][2] = m_rows[2][1];
+		result[1][3] = m_rows[3][1];
+		result[2][0] = m_rows[0][2];
+		result[2][1] = m_rows[1][2];
+		result[2][2] = m_rows[2][2];
+		result[2][3] = m_rows[3][2];
+		result[3][0] = m_rows[0][3];
+		result[3][1] = m_rows[1][3];
+		result[3][2] = m_rows[2][3];
+		result[3][3] = m_rows[3][3];
 		return result;
 	}
 
 	float Matrix4::Determinant() const
 	{
-		return (m_00 * (m_11 * m_22 * m_33 + m_12 * m_23 * m_31 + m_13 * m_21 * m_32 - m_13 * m_22 * m_31 - m_11 * m_23 * m_32 - m_12 * m_21 * m_33))
-			- (m_01 * (m_10 * m_22 * m_33 + m_12 * m_23 * m_30 + m_13 * m_20 * m_32 - m_13 * m_22 * m_30 - m_10 * m_23 * m_32 - m_12 * m_20 * m_33))
-			+ (m_02 * (m_10 * m_21 * m_33 + m_11 * m_23 * m_30 + m_13 * m_20 * m_31 - m_13 * m_21 * m_30 - m_10 * m_23 * m_31 - m_11 * m_20 * m_33))
-			- (m_03 * (m_10 * m_21 * m_32 + m_11 * m_22 * m_30 + m_12 * m_20 * m_31 - m_12 * m_21 * m_30 - m_10 * m_22 * m_31 - m_11 * m_20 * m_32));
+		return (m_rows[0][0] * (m_rows[1][1] * m_rows[2][2] * m_rows[3][3] + m_rows[1][2] * m_rows[2][3] * m_rows[3][1] + m_rows[1][3] * m_rows[2][1] * m_rows[3][2] - m_rows[1][3] * m_rows[2][2] * m_rows[3][1] - m_rows[1][1] * m_rows[2][3] * m_rows[3][2] - m_rows[1][2] * m_rows[2][1] * m_rows[3][3]))
+			- (m_rows[0][1] * (m_rows[1][0] * m_rows[2][2] * m_rows[3][3] + m_rows[1][2] * m_rows[2][3] * m_rows[3][0] + m_rows[1][3] * m_rows[2][0] * m_rows[3][2] - m_rows[1][3] * m_rows[2][2] * m_rows[3][0] - m_rows[1][0] * m_rows[2][3] * m_rows[3][2] - m_rows[1][2] * m_rows[2][0] * m_rows[3][3]))
+			+ (m_rows[0][2] * (m_rows[1][0] * m_rows[2][1] * m_rows[3][3] + m_rows[1][1] * m_rows[2][3] * m_rows[3][0] + m_rows[1][3] * m_rows[2][0] * m_rows[3][1] - m_rows[1][3] * m_rows[2][1] * m_rows[3][0] - m_rows[1][0] * m_rows[2][3] * m_rows[3][1] - m_rows[1][1] * m_rows[2][0] * m_rows[3][3]))
+			- (m_rows[0][3] * (m_rows[1][0] * m_rows[2][1] * m_rows[3][2] + m_rows[1][1] * m_rows[2][2] * m_rows[3][0] + m_rows[1][2] * m_rows[2][0] * m_rows[3][1] - m_rows[1][2] * m_rows[2][1] * m_rows[3][0] - m_rows[1][0] * m_rows[2][2] * m_rows[3][1] - m_rows[1][1] * m_rows[2][0] * m_rows[3][2]));
 	}
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale)
@@ -409,21 +373,6 @@ namespace fl
 		return result;
 	}
 
-	Matrix4 Matrix4::TransformationMatrix(const Vector2 &translation, const float &scale)
-	{
-		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3::ZERO, Vector3(scale, scale, scale));
-	}
-
-	Matrix4 Matrix4::TransformationMatrix(const Vector2 &translation, const Vector3 &scale)
-	{
-		return TransformationMatrix(Vector3(translation.m_x, translation.m_y, 0.0f), Vector3::ZERO, scale);
-	}
-
-	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const float &scale)
-	{
-		return TransformationMatrix(translation, rotation, Vector3(scale, scale, scale));
-	}
-
 	Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar)
 	{
 		Matrix4 result = Matrix4();
@@ -432,12 +381,12 @@ namespace fl
 		float xScale = yScale / aspectRatio;
 		float length = zFar - zNear;
 
-		result.m_00 = xScale;
-		result.m_11 = -yScale;
-		result.m_22 = -((zFar + zNear) / length);
-		result.m_23 = -1.0f;
-		result.m_32 = -((2.0f * zNear * zFar) / length);
-		result.m_33 = 0.0f;
+		result[0][0] = xScale;
+		result[1][1] = -yScale;
+		result[2][2] = -((zFar + zNear) / length);
+		result[2][3] = -1.0f;
+		result[3][2] = -((2.0f * zNear * zFar) / length);
+		result[3][3] = 0.0f;
 		return result;
 	}
 
@@ -453,13 +402,13 @@ namespace fl
 		float ty = -(top + bottom) / (top - bottom);
 		float tz = -(far + near) / (far - near);
 
-		result.m_00 = ox;
-		result.m_11 = oy;
-		result.m_22 = oz;
-		result.m_03 = tx;
-		result.m_13 = ty;
-		result.m_23 = tz;
-		result.m_33 = 1.0f;
+		result[0][0] = ox;
+		result[1][1] = oy;
+		result[2][2] = oz;
+		result[0][3] = tx;
+		result[1][3] = ty;
+		result[2][3] = tz;
+		result[3][3] = 1.0f;
 		return result;
 	}
 
@@ -494,113 +443,64 @@ namespace fl
 		return result;
 	}
 
-	Matrix4 Matrix4::SetZero()
+	Matrix4 Matrix4::LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up)
 	{
-		m_00 = 0.0f;
-		m_01 = 0.0f;
-		m_02 = 0.0f;
-		m_03 = 0.0f;
-		m_10 = 0.0f;
-		m_11 = 0.0f;
-		m_12 = 0.0f;
-		m_13 = 0.0f;
-		m_20 = 0.0f;
-		m_21 = 0.0f;
-		m_22 = 0.0f;
-		m_23 = 0.0f;
-		m_30 = 0.0f;
-		m_31 = 0.0f;
-		m_32 = 0.0f;
-		m_33 = 0.0f;
-		return *this;
-	}
+		Vector3 f = (object - camera).Normalize();
+		Vector3 s = f.Cross(up.Normalize());
+		Vector3 u = s.Cross(f);
 
-	Matrix4 Matrix4::SetIdentity()
-	{
-		m_00 = 1.0f;
-		m_01 = 0.0f;
-		m_02 = 0.0f;
-		m_03 = 0.0f;
-		m_10 = 0.0f;
-		m_11 = 1.0f;
-		m_12 = 0.0f;
-		m_13 = 0.0f;
-		m_20 = 0.0f;
-		m_21 = 0.0f;
-		m_22 = 1.0f;
-		m_23 = 0.0f;
-		m_30 = 0.0f;
-		m_31 = 0.0f;
-		m_32 = 0.0f;
-		m_33 = 1.0f;
-		return *this;
+		Matrix4 result = Matrix4();
+		result[0][0] = s.m_x;
+		result[0][1] = s.m_y;
+		result[0][2] = s.m_z;
+		result[1][0] = u.m_x;
+		result[1][1] = u.m_y;
+		result[1][2] = u.m_z;
+		result[2][0] = -f.m_x;
+		result[2][1] = -f.m_y;
+		result[2][2] = -f.m_z;
+
+		result *= IDENTITY.Translate(Vector3(-camera.m_x, -camera.m_y, -camera.m_z));
+
+		return result;
 	}
 
 	void Matrix4::Write(LoadedValue *destination)
 	{
-		m_0->Write(destination->GetChild("m0", true));
-		m_1->Write(destination->GetChild("m1", true));
-		m_2->Write(destination->GetChild("m2", true));
-		m_3->Write(destination->GetChild("m3", true));
+		m_rows[0].Write(destination->GetChild("m0", true));
+		m_rows[1].Write(destination->GetChild("m1", true));
+		m_rows[2].Write(destination->GetChild("m2", true));
+		m_rows[3].Write(destination->GetChild("m3", true));
 	}
 
 	Matrix4 &Matrix4::operator=(const Matrix4 &other)
 	{
-		m_00 = other.m_00;
-		m_01 = other.m_01;
-		m_02 = other.m_02;
-		m_03 = other.m_03;
-		m_10 = other.m_10;
-		m_11 = other.m_11;
-		m_12 = other.m_12;
-		m_13 = other.m_13;
-		m_20 = other.m_20;
-		m_21 = other.m_21;
-		m_22 = other.m_22;
-		m_23 = other.m_23;
-		m_30 = other.m_30;
-		m_31 = other.m_31;
-		m_32 = other.m_32;
-		m_33 = other.m_33;
+		for (int i = 0; i < 4; i++)
+		{
+			m_rows[i] = other[i];
+		}
+
 		return *this;
 	}
 
-	Matrix4 &Matrix4::operator=(const float array[16])
+	Matrix4 &Matrix4::operator=(const float *array)
 	{
-		m_00 = array[0];
-		m_01 = array[1];
-		m_02 = array[2];
-		m_03 = array[3];
-		m_10 = array[4];
-		m_11 = array[5];
-		m_12 = array[6];
-		m_13 = array[7];
-		m_20 = array[8];
-		m_21 = array[9];
-		m_22 = array[10];
-		m_23 = array[11];
-		m_30 = array[12];
-		m_31 = array[13];
-		m_32 = array[14];
-		m_33 = array[15];
+		memcpy(m_rows, array, 4 * 4 * sizeof(float));
 		return *this;
 	}
 
 	Matrix4 &Matrix4::operator=(LoadedValue *source)
 	{
-		*m_0 = source->GetChild("m0");
-		*m_1 = source->GetChild("m1");
-		*m_2 = source->GetChild("m2");
-		*m_3 = source->GetChild("m3");
+		m_rows[0] = source->GetChild("m0");
+		m_rows[1] = source->GetChild("m1");
+		m_rows[2] = source->GetChild("m2");
+		m_rows[3] = source->GetChild("m3");
 		return *this;
 	}
 
 	bool Matrix4::operator==(const Matrix4 &other) const
 	{
-		return m_00 == other.m_00 && m_01 == other.m_01 && m_02 == other.m_02 && m_03 == other.m_03 &&
-			m_10 == other.m_10 && m_11 == other.m_11 && m_12 == other.m_12 && m_13 == other.m_13 &&
-			m_20 == other.m_20 && m_21 == other.m_21 && m_22 == other.m_22 && m_23 == other.m_23 &&
-			m_30 == other.m_30 && m_31 == other.m_31 && m_32 == other.m_32 && m_33 == other.m_33;
+		return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2] && m_rows[3] == other[3];
 	}
 
 	bool Matrix4::operator!=(const Matrix4 &other) const
@@ -608,9 +508,21 @@ namespace fl
 		return !(*this == other);
 	}
 
-	Matrix4 Matrix4::operator-()
+	Matrix4 Matrix4::operator-() const
 	{
 		return Negate();
+	}
+
+	const Vector4 &Matrix4::operator[](uint32_t index) const
+	{
+		assert(index < 4);
+		return m_rows[index];
+	}
+
+	Vector4 &Matrix4::operator[](uint32_t index)
+	{
+		assert(index < 4);
+		return m_rows[index];
 	}
 
 	Matrix4 operator+(Matrix4 left, const Matrix4 &right)
@@ -692,10 +604,10 @@ namespace fl
 	std::string Matrix4::ToString() const
 	{
 		std::stringstream result;
-		result << "Matrix4(" << m_00 << ", " << m_01 << ", " << m_02 << ", " << m_03 << ", " <<
-			m_10 << ", " << m_11 << ", " << m_12 << ", " << m_13 << ", " <<
-			m_20 << ", " << m_21 << ", " << m_22 << ", " << m_23 << ", " <<
-			m_30 << ", " << m_31 << ", " << m_32 << ", " << m_33 << ")";
+		result << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", " <<
+			m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " << m_rows[1][3] << ", " <<
+			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", " <<
+			m_rows[3][0] << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
 		return result.str();
 	}
 
