@@ -12,7 +12,7 @@ namespace fl
 		m_filename(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(ColliderAabb())
+		m_aabb(BoundingBox())
 	{
 	}
 
@@ -21,7 +21,7 @@ namespace fl
 		m_filename(filename),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(ColliderAabb())
+		m_aabb(BoundingBox())
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -53,7 +53,7 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(ColliderAabb())
+		m_aabb(BoundingBox())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
 		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
@@ -74,7 +74,7 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(ColliderAabb())
+		m_aabb(BoundingBox())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
 		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
@@ -318,7 +318,7 @@ namespace fl
 		v2->AddTangent(tangent);
 	}
 
-	ColliderAabb Model::CalculateAabb(const std::vector<IVertex *> &vertices)
+	BoundingBox Model::CalculateAabb(const std::vector<IVertex *> &vertices)
 	{
 		float minX = +std::numeric_limits<float>::infinity();
 		float minY = +std::numeric_limits<float>::infinity();
@@ -359,6 +359,6 @@ namespace fl
 			}
 		}
 
-		return ColliderAabb(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
+		return BoundingBox(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
 	}
 }

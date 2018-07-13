@@ -72,12 +72,11 @@ namespace test
 
 		if (player != nullptr)
 		{
-			auto playerRotation = player->GetGameObject()->GetTransform().GetRotation();
-			auto playerPosition = player->GetGameObject()->GetTransform().GetPosition();
+			auto transform = player->GetGameObject()->GetTransform();
 
-			m_velocity = (playerPosition - m_targetPosition) / delta;
-			m_targetPosition = playerPosition;
-			m_targetRotation = playerRotation;
+			m_velocity = (transform.GetPosition() - m_targetPosition) / delta;
+			m_targetPosition = transform.GetPosition();
+			m_targetRotation = transform.GetRotation().ToEuler();
 		}
 
 		UpdateHorizontalAngle(delta);

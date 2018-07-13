@@ -1,48 +1,48 @@
-#include "ColliderSphere.hpp"
+#include "BoundingSphere.hpp"
 
 #include <cmath>
 
 namespace fl
 {
-	ColliderSphere::ColliderSphere(const float &radius, const Vector3 &position) :
-		ICollider(),
+	BoundingSphere::BoundingSphere(const float &radius, const Vector3 &position) :
+		IBounding(),
 		m_radius(radius),
 		m_position(position)
 	{
 	}
 
-	ColliderSphere::ColliderSphere(const ColliderSphere &source) :
-		ICollider(),
+	BoundingSphere::BoundingSphere(const BoundingSphere &source) :
+		IBounding(),
 		m_radius(source.m_radius),
 		m_position(source.m_position)
 	{
 	}
 
-	ColliderSphere::~ColliderSphere()
+	BoundingSphere::~BoundingSphere()
 	{
 	}
 
-	void ColliderSphere::Load(LoadedValue *value)
+	void BoundingSphere::Load(LoadedValue *value)
 	{
 	}
 
-	void ColliderSphere::Write(LoadedValue *destination)
+	void BoundingSphere::Write(LoadedValue *destination)
 	{
 	}
 
-	ICollider *ColliderSphere::UpdateCollider(const Transform &transform, ICollider *destination)
+	IBounding *BoundingSphere::UpdateCollider(const Transform &transform, IBounding *destination)
 	{
 		if (destination == nullptr)
 		{
-			destination = new ColliderSphere();
+			destination = new BoundingSphere();
 		}
 
-		ColliderSphere *source = dynamic_cast<ColliderSphere *>(destination);
+		BoundingSphere *source = dynamic_cast<BoundingSphere *>(destination);
 
 		if (source == nullptr)
 		{
 			delete source;
-			source = new ColliderSphere();
+			source = new BoundingSphere();
 		}
 
 		source->m_radius = m_radius * transform.GetScaling().MaxComponent();
@@ -51,7 +51,7 @@ namespace fl
 		return source;
 	}
 
-	Intersect ColliderSphere::Intersects(const ICollider &other)
+	Intersect BoundingSphere::Intersects(const IBounding &other)
 	{
 		/*if (dynamic_cast<aabb*>(other) != 0)
 		{
@@ -89,7 +89,7 @@ namespace fl
 			return new intersect(distanceSquared > 0.0f, dynamic_cast<float>(sqrt(distanceSquared)));
 		}
 		else */
-		auto sphere2 = dynamic_cast<const ColliderSphere &>(other);
+		auto sphere2 = dynamic_cast<const BoundingSphere &>(other);
 
 		float d = sphere2.m_radius + m_radius;
 
@@ -102,7 +102,7 @@ namespace fl
 		return Intersect(intersects, (d * d) - distance);
 	}
 
-	Intersect ColliderSphere::Intersects(const Ray &ray)
+	Intersect BoundingSphere::Intersects(const Ray &ray)
 	{
 		Vector3 L = ray.GetOrigin() - m_position;
 
@@ -158,14 +158,14 @@ namespace fl
 		return Intersect(true, t);
 	}
 
-	bool ColliderSphere::InFrustum(const Frustum &frustum)
+	bool BoundingSphere::InFrustum(const Frustum &frustum)
 	{
 		return frustum.SphereInFrustum(m_position, m_radius);
 	}
 
-	bool ColliderSphere::Contains(const ICollider &other)
+	bool BoundingSphere::Contains(const IBounding &other)
 	{
-		auto sphere2 = dynamic_cast<const ColliderSphere &>(other);
+		auto sphere2 = dynamic_cast<const BoundingSphere &>(other);
 
 		return sphere2.m_position.m_x + sphere2.m_radius - 1.0f <= m_position.m_x + m_radius - 1.0f &&
 			sphere2.m_position.m_x - sphere2.m_radius + m_radius >= m_position.m_x - m_radius + 1.0f &&
@@ -175,24 +175,24 @@ namespace fl
 			sphere2.m_position.m_z - sphere2.m_radius + 1.0f >= m_position.m_z - m_radius + 1.0f;
 	}
 
-	bool ColliderSphere::Contains(const Vector3 &point)
+	bool BoundingSphere::Contains(const Vector3 &point)
 	{
 		return m_position.DistanceSquared(point) <= m_radius * m_radius;
 	}
 
-	ColliderSphere &ColliderSphere::operator=(const ColliderSphere &other)
+	BoundingSphere &BoundingSphere::operator=(const BoundingSphere &other)
 	{
 		m_radius = other.m_radius;
 		m_position = other.m_position;
 		return *this;
 	}
 
-	bool ColliderSphere::operator==(const ColliderSphere &other) const
+	bool BoundingSphere::operator==(const BoundingSphere &other) const
 	{
 		return m_radius == other.m_radius && m_position == other.m_position;
 	}
 
-	bool ColliderSphere::operator!=(const ColliderSphere &other) const
+	bool BoundingSphere::operator!=(const BoundingSphere &other) const
 	{
 		return !(*this == other);
 	}

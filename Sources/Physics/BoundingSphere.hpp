@@ -1,14 +1,14 @@
 #pragma once
 
-#include "ICollider.hpp"
+#include "IBounding.hpp"
 
 namespace fl
 {
 	/// <summary>
 	/// Represents a sphere in a 3d space.
 	/// </summary>
-	class FL_EXPORT ColliderSphere :
-		public ICollider
+	class FL_EXPORT BoundingSphere :
+		public IBounding
 	{
 	public:
 		float m_radius;
@@ -19,36 +19,36 @@ namespace fl
 		/// </summary>
 		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="position"> The spheres initial position. </param>
-		ColliderSphere(const float &radius = 0.0f, const Vector3 &position = Vector3::ZERO);
+		BoundingSphere(const float &radius = 0.0f, const Vector3 &position = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new sphere from another sphere source.
 		/// </summary>
 		/// <param name="source"> The source to create off of. </param>
-		ColliderSphere(const ColliderSphere &source);
+		BoundingSphere(const BoundingSphere &source);
 
 		/// <summary>
 		/// Deconstructor for the sphere.
 		/// </summary>
-		~ColliderSphere();
+		~BoundingSphere();
 
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *destination) override;
 
-		ICollider *UpdateCollider(const Transform &transform, ICollider *destination) override;
+		IBounding *UpdateCollider(const Transform &transform, IBounding *destination) override;
 
-		Intersect Intersects(const ICollider &other) override;
+		Intersect Intersects(const IBounding &other) override;
 
 		Intersect Intersects(const Ray &ray) override;
 
 		bool InFrustum(const Frustum &frustum) override;
 
-		bool Contains(const ICollider &other) override;
+		bool Contains(const IBounding &other) override;
 
 		bool Contains(const Vector3 &point) override;
 
-		std::string GetName() const override { return "ColliderSphere"; };
+		std::string GetName() const override { return "BoundingSphere"; };
 
 		float GetRadius() const { return m_radius; }
 
@@ -58,10 +58,10 @@ namespace fl
 
 		void SetPosition(const Vector3 &position) { m_position = position; }
 
-		ColliderSphere &operator=(const ColliderSphere &other);
+		BoundingSphere &operator=(const BoundingSphere &other);
 
-		bool operator==(const ColliderSphere &other) const;
+		bool operator==(const BoundingSphere &other) const;
 
-		bool operator!=(const ColliderSphere &other) const;
+		bool operator!=(const BoundingSphere &other) const;
 	};
 }

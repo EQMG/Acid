@@ -1,48 +1,48 @@
-#include "ColliderAabb.hpp"
+#include "BoundingBox.hpp"
 
 #include "Maths/Maths.hpp"
 
 namespace fl
 {
-	ColliderAabb::ColliderAabb(const Vector3 &minExtents, const Vector3 &maxExtents) :
-		ICollider(),
+	BoundingBox::BoundingBox(const Vector3 &minExtents, const Vector3 &maxExtents) :
+		IBounding(),
 		m_minExtents(minExtents),
 		m_maxExtents(maxExtents)
 	{
 	}
 
-	ColliderAabb::ColliderAabb(const ColliderAabb &source) :
-		ICollider(),
+	BoundingBox::BoundingBox(const BoundingBox &source) :
+		IBounding(),
 		m_minExtents(source.m_minExtents),
 		m_maxExtents(source.m_maxExtents)
 	{
 	}
 
-	ColliderAabb::~ColliderAabb()
+	BoundingBox::~BoundingBox()
 	{
 	}
 
-	ColliderAabb ColliderAabb::Scale(const Vector3 &scale)
+	BoundingBox BoundingBox::Scale(const Vector3 &scale)
 	{
 		Vector3 minExtents = Vector3(m_minExtents.m_x * scale.m_x,
 			m_minExtents.m_y * scale.m_y, m_minExtents.m_z * scale.m_z);
 		Vector3 maxExtents = Vector3(m_maxExtents.m_x * scale.m_x,
 			m_maxExtents.m_y * scale.m_y, m_maxExtents.m_z * scale.m_z);
 
-		return ColliderAabb(minExtents, maxExtents);
+		return BoundingBox(minExtents, maxExtents);
 	}
 
-	ColliderAabb ColliderAabb::Expand(const Vector3 &expand)
+	BoundingBox BoundingBox::Expand(const Vector3 &expand)
 	{
 		Vector3 minExtents = Vector3(m_minExtents.m_x - expand.m_x,
 			m_minExtents.m_y - expand.m_y, m_minExtents.m_z - expand.m_z);
 		Vector3 maxExtents = Vector3(m_maxExtents.m_x + expand.m_x,
 			m_maxExtents.m_y + expand.m_y, m_maxExtents.m_z + expand.m_z);
 
-		return ColliderAabb(minExtents, maxExtents);
+		return BoundingBox(minExtents, maxExtents);
 	}
 
-	ColliderAabb ColliderAabb::Combine(const ColliderAabb &other)
+	BoundingBox BoundingBox::Combine(const BoundingBox &other)
 	{
 		float newMinX = std::min(m_minExtents.m_x, other.m_minExtents.m_x);
 		float newMinY = std::min(m_minExtents.m_y, other.m_minExtents.m_y);
@@ -54,10 +54,10 @@ namespace fl
 		Vector3 minExtents = Vector3(newMinX, newMinY, newMinZ);
 		Vector3 maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
-		return ColliderAabb(minExtents, maxExtents);
+		return BoundingBox(minExtents, maxExtents);
 	}
 
-	ColliderAabb ColliderAabb::Stretch(const Vector3 &stretch)
+	BoundingBox BoundingBox::Stretch(const Vector3 &stretch)
 	{
 		float newMinX, newMaxX, newMinY, newMaxY, newMinZ, newMaxZ;
 
@@ -97,25 +97,25 @@ namespace fl
 		Vector3 minExtents = Vector3(newMinX, newMinY, newMinZ);
 		Vector3 maxExtents = Vector3(newMaxX, newMaxY, newMaxZ);
 
-		return ColliderAabb(minExtents, maxExtents);
+		return BoundingBox(minExtents, maxExtents);
 	}
 
-	void ColliderAabb::Load(LoadedValue *value)
+	void BoundingBox::Load(LoadedValue *value)
 	{
 	}
 
-	void ColliderAabb::Write(LoadedValue *destination)
+	void BoundingBox::Write(LoadedValue *destination)
 	{
 	}
 
-	ICollider *ColliderAabb::UpdateCollider(const Transform &transform, ICollider *destination)
+	IBounding *BoundingBox::UpdateCollider(const Transform &transform, IBounding *destination)
 	{
-		auto source = dynamic_cast<ColliderAabb *>(destination);
+		auto source = dynamic_cast<BoundingBox *>(destination);
 
 		if (source == nullptr)
 		{
 			delete destination;
-			source = new ColliderAabb();
+			source = new BoundingBox();
 			destination = source;
 		}
 
@@ -133,29 +133,31 @@ namespace fl
 		// Creates the 8 aabb corners and rotates them.
 		if (transform.GetRotation() != 0.0f)
 		{
+			// TODO: Check out rotations.
+
 			Vector3 fll = Vector3(source->m_minExtents.m_x, source->m_minExtents.m_y, source->m_minExtents.m_z);
-			fll = fll.Rotate(transform.GetRotation());
+		//	fll = fll.Rotate(transform.GetRotation());
 
 			Vector3 flr = Vector3(source->m_maxExtents.m_x, source->m_minExtents.m_y, source->m_minExtents.m_z);
-			flr = flr.Rotate(transform.GetRotation());
+		//	flr = flr.Rotate(transform.GetRotation());
 
 			Vector3 ful = Vector3(source->m_minExtents.m_x, source->m_maxExtents.m_y, source->m_minExtents.m_z);
-			ful = ful.Rotate(transform.GetRotation());
+		//	ful = ful.Rotate(transform.GetRotation());
 
 			Vector3 fur = Vector3(source->m_maxExtents.m_x, source->m_maxExtents.m_y, source->m_minExtents.m_z);
-			fur = fur.Rotate(transform.GetRotation());
+		//	fur = fur.Rotate(transform.GetRotation());
 
 			Vector3 bur = Vector3(source->m_maxExtents.m_x, source->m_maxExtents.m_y, source->m_maxExtents.m_z);
-			bur = bur.Rotate(transform.GetRotation());
+		//	bur = bur.Rotate(transform.GetRotation());
 
 			Vector3 bul = Vector3(source->m_minExtents.m_x, source->m_maxExtents.m_y, source->m_maxExtents.m_z);
-			bul = bul.Rotate(transform.GetRotation());
+		//	bul = bul.Rotate(transform.GetRotation());
 
 			Vector3 blr = Vector3(source->m_maxExtents.m_x, source->m_minExtents.m_y, source->m_maxExtents.m_z);
-			blr = blr.Rotate(transform.GetRotation());
+		//	blr = blr.Rotate(transform.GetRotation());
 
 			Vector3 bll = Vector3(source->m_minExtents.m_x, source->m_minExtents.m_y, source->m_maxExtents.m_z);
-			bll = bll.Rotate(transform.GetRotation());
+		//	bll = bll.Rotate(transform.GetRotation());
 
 			//source->m_minExtents = min(fll, min(flr, min(ful, min(fur, min(bur, min(bul, min(blr, bll)))))));
 			source->m_minExtents = Vector3::MinVector(fll, flr);
@@ -187,9 +189,9 @@ namespace fl
 		return destination;
 	}
 
-	Intersect ColliderAabb::Intersects(const ICollider &other)
+	Intersect BoundingBox::Intersects(const IBounding &other)
 	{
-		auto aabb2 = dynamic_cast<const ColliderAabb &>(other);
+		auto aabb2 = dynamic_cast<const BoundingBox &>(other);
 
 		Vector3 distance1 = m_minExtents - aabb2.m_maxExtents;
 		Vector3 distance2 = aabb2.m_minExtents - m_maxExtents;
@@ -198,9 +200,9 @@ namespace fl
 
 		return Intersect(maxDist < 0.0f, maxDist);
 
-		/*else if (dynamic_cast<ColliderSphere*>(other) != 0)
+		/*else if (dynamic_cast<BoundingSphere*>(other) != 0)
 		{
-			ColliderSphere *sphere = dynamic_cast<ColliderSphere*>(other);
+			BoundingSphere *sphere = dynamic_cast<BoundingSphere*>(other);
 
 			float distanceSquared = sphere->getRadius() * sphere->getRadius();
 
@@ -235,7 +237,7 @@ namespace fl
 		}*/
 	}
 
-	Intersect ColliderAabb::Intersects(const Ray &ray)
+	Intersect BoundingBox::Intersects(const Ray &ray)
 	{
 		float tmin = (m_minExtents.m_x - ray.GetOrigin().m_x) / ray.GetCurrentRay().m_x;
 		float tmax = (m_maxExtents.m_x - ray.GetOrigin().m_x) / ray.GetCurrentRay().m_x;
@@ -285,14 +287,14 @@ namespace fl
 		return Intersect(!(tmin > tzmax || tzmin > tmax), 0.0f);
 	}
 
-	bool ColliderAabb::InFrustum(const Frustum &frustum)
+	bool BoundingBox::InFrustum(const Frustum &frustum)
 	{
 		return frustum.CubeInFrustum(m_minExtents, m_maxExtents);
 	}
 
-	bool ColliderAabb::Contains(const ICollider &other)
+	bool BoundingBox::Contains(const IBounding &other)
 	{
-		auto aabb2 = dynamic_cast<const ColliderAabb &>(other);
+		auto aabb2 = dynamic_cast<const BoundingBox &>(other);
 
 		return m_minExtents.m_x <= aabb2.m_minExtents.m_x &&
 			aabb2.m_maxExtents.m_x <= m_maxExtents.m_x &&
@@ -302,7 +304,7 @@ namespace fl
 			aabb2.m_maxExtents.m_z <= m_maxExtents.m_z;
 	}
 
-	bool ColliderAabb::Contains(const Vector3 &point)
+	bool BoundingBox::Contains(const Vector3 &point)
 	{
 		if (point.m_x > m_maxExtents.m_x)
 		{
@@ -337,49 +339,49 @@ namespace fl
 		return true;
 	}
 
-	float ColliderAabb::GetCentreX() const
+	float BoundingBox::GetCentreX() const
 	{
 		return (m_minExtents.m_x + m_maxExtents.m_x) / 2.0f;
 	}
 
-	float ColliderAabb::GetCentreY() const
+	float BoundingBox::GetCentreY() const
 	{
 		return (m_minExtents.m_y + m_maxExtents.m_y) / 2.0f;
 	}
 
-	float ColliderAabb::GetCentreZ() const
+	float BoundingBox::GetCentreZ() const
 	{
 		return (m_minExtents.m_z + m_maxExtents.m_z) / 2.0f;
 	}
 
-	float ColliderAabb::GetWidth() const
+	float BoundingBox::GetWidth() const
 	{
 		return m_maxExtents.m_x - m_minExtents.m_x;
 	}
 
-	float ColliderAabb::GetHeight() const
+	float BoundingBox::GetHeight() const
 	{
 		return m_maxExtents.m_y - m_minExtents.m_y;
 	}
 
-	float ColliderAabb::GetDepth() const
+	float BoundingBox::GetDepth() const
 	{
 		return m_maxExtents.m_z - m_minExtents.m_z;
 	}
 
-	ColliderAabb &ColliderAabb::operator=(const ColliderAabb &other)
+	BoundingBox &BoundingBox::operator=(const BoundingBox &other)
 	{
 		m_minExtents = other.m_minExtents;
 		m_maxExtents = other.m_maxExtents;
 		return *this;
 	}
 
-	bool ColliderAabb::operator==(const ColliderAabb &other) const
+	bool BoundingBox::operator==(const BoundingBox &other) const
 	{
 		return m_minExtents == other.m_minExtents && m_maxExtents == other.m_maxExtents;
 	}
 
-	bool ColliderAabb::operator!=(const ColliderAabb &other) const
+	bool BoundingBox::operator!=(const BoundingBox &other) const
 	{
 		return !(*this == other);
 	}

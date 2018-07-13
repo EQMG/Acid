@@ -9,6 +9,8 @@ namespace fl
 {
 	class Colour;
 
+	class Quaternion;
+
 	class Vector2;
 
 	class Vector4;
@@ -23,12 +25,12 @@ namespace fl
 		{
 			struct
 			{
-				float m_x, m_y, m_z;
+				float m_elements[3];
 			};
 
 			struct
 			{
-				float m_elements[3];
+				float m_x, m_y, m_z;
 			};
 		};
 
@@ -186,6 +188,12 @@ namespace fl
 		float MinComponent() const;
 
 		/// <summary>
+		/// Converts these euler angles to a quaternion.
+		/// </summary>
+		/// <returns> The quaternion representation of this vector. </returns>
+		Quaternion ToQuaternion() const;
+
+		/// <summary>
 		/// Gets the distance between this vector and another vector.
 		/// </summary>
 		/// <param name="other"> The other vector. </param>
@@ -325,6 +333,10 @@ namespace fl
 		bool operator!=(const float &value) const;
 
 		Vector3 operator-();
+
+		const float &operator[](uint32_t index) const;
+
+		float &operator[](uint32_t index);
 
 		FL_EXPORT friend Vector3 operator+(Vector3 left, const Vector3 &right);
 

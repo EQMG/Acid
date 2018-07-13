@@ -51,7 +51,7 @@ namespace fl
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<ICollider>();
+			auto collider = gameObject->GetComponent<IBounding>();
 
 			if (collider == nullptr || collider->InFrustum(range))
 			{
@@ -62,14 +62,14 @@ namespace fl
 		return result;
 	}
 
-	std::vector<GameObject *> SceneStructure::QueryBounding(ICollider *range)
+	std::vector<GameObject *> SceneStructure::QueryBounding(IBounding *range)
 	{
 		auto result = std::vector<GameObject *>();
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<ICollider>();
+			auto collider = gameObject->GetComponent<IBounding>();
 
 			if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
 			{

@@ -4,7 +4,7 @@
 #include <vector>
 #include "Files/Files.hpp"
 #include "Maths/Vector2.hpp"
-#include "Physics/ColliderAabb.hpp"
+#include "Physics/BoundingBox.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
@@ -25,7 +25,7 @@ namespace fl
 		std::shared_ptr<VertexBuffer> m_vertexBuffer;
 		std::shared_ptr<IndexBuffer> m_indexBuffer;
 
-		ColliderAabb m_aabb;
+		BoundingBox m_aabb;
 	public:
 		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{
@@ -77,7 +77,7 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; }
 
-		ColliderAabb GetAabb() const { return m_aabb; }
+		BoundingBox GetAabb() const { return m_aabb; }
 
 		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_vertexBuffer; }
 
@@ -98,6 +98,6 @@ namespace fl
 
 		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs);
 
-		static ColliderAabb CalculateAabb(const std::vector<IVertex *> &vertices);
+		static BoundingBox CalculateAabb(const std::vector<IVertex *> &vertices);
 	};
 }

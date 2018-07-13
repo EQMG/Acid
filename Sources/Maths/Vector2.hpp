@@ -19,12 +19,12 @@ namespace fl
 		{
 			struct
 			{
-				float m_x, m_y;
+				float m_elements[2];
 			};
 
 			struct
 			{
-				float m_elements[2];
+				float m_x, m_y;
 			};
 		};
 
@@ -253,6 +253,10 @@ namespace fl
 		bool operator!=(const float &value) const;
 
 		Vector2 operator-();
+
+		const float &operator[](uint32_t index) const;
+
+		float &operator[](uint32_t index);
 
 		FL_EXPORT friend Vector2 operator+(Vector2 left, const Vector2 &right);
 

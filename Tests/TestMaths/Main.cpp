@@ -4,12 +4,23 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Maths.hpp>
 #include <Maths/Quaternion.hpp>
+#include <Maths/Transform.hpp>
 
 using namespace fl;
 
 int main(int argc, char **argv)
 {
-	{
+	Vector3 original = Vector3(90.0f, 0.0f, 0.0f);
+	Quaternion quaternion = original.ToQuaternion();
+	Vector3 restored = quaternion.ToEuler();
+
+	printf("Original: %s\n", original.ToString().c_str());
+	printf("Quaternion: %s\n", quaternion.ToString().c_str());
+	printf("Restored: %s\n", restored.ToString().c_str());
+
+	// Transform transform = Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f));
+
+	/*{
 		printf("Vector2 Size: %i\n", (int) sizeof(Vector2));
 		printf("Vector3 Size: %i\n", (int) sizeof(Vector3));
 		printf("Vector4 Size: %i\n", (int) sizeof(Vector4));
@@ -50,7 +61,7 @@ int main(int argc, char **argv)
 		printf("  len %s = %f\n", a.ToString().c_str(), a.Length());
 		printf("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		printf("\n");
-	}
+	}*/
 
 	// Pauses the console.
 	std::cin.get();

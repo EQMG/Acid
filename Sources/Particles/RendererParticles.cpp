@@ -50,15 +50,15 @@ namespace fl
 	Matrix4 RendererParticles::ModelMatrix(Particle *particle, const Matrix4 &viewMatrix)
 	{
 		Matrix4 modelMatrix = modelMatrix.Translate(particle->GetPosition());
-		modelMatrix.m_00 = viewMatrix.m_00;
-		modelMatrix.m_01 = viewMatrix.m_10;
-		modelMatrix.m_02 = viewMatrix.m_20;
-		modelMatrix.m_10 = viewMatrix.m_01;
-		modelMatrix.m_11 = viewMatrix.m_11;
-		modelMatrix.m_12 = viewMatrix.m_21;
-		modelMatrix.m_20 = viewMatrix.m_02;
-		modelMatrix.m_21 = viewMatrix.m_12;
-		modelMatrix.m_22 = viewMatrix.m_22;
+		modelMatrix[0][0] = viewMatrix[0][0];
+		modelMatrix[0][1] = viewMatrix[1][0];
+		modelMatrix[0][2] = viewMatrix[2][0];
+		modelMatrix[1][0] = viewMatrix[0][1];
+		modelMatrix[1][1] = viewMatrix[1][1];
+		modelMatrix[1][2] = viewMatrix[2][1];
+		modelMatrix[2][0] = viewMatrix[0][2];
+		modelMatrix[2][1] = viewMatrix[1][2];
+		modelMatrix[2][2] = viewMatrix[2][2];
 		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle->GetRotation()), Vector3::FRONT);
 		modelMatrix = modelMatrix.Scale(Vector3(particle->GetScale(), particle->GetScale(), particle->GetScale()));
 		return Matrix4();

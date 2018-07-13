@@ -77,8 +77,8 @@ namespace fl
 			groundTransform.setIdentity();
 			groundTransform.setOrigin(btVector3(0.0f, -50.0f, 0.0f));
 
-			btScalar mass(0.0f);
-			btRigidBody* body = CreateRigidBody(mass, groundTransform, groundShape);
+			float mass = 0.0f;
+			btRigidBody *body = CreateRigidBody(mass, groundTransform, groundShape);
 
 			body->setContactStiffnessAndDamping(300.0f, 10.0f);
 		}

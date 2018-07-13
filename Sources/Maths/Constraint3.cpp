@@ -1,5 +1,7 @@
 #include "Constraint3.hpp"
 
+#include <cassert>
+
 namespace fl
 {
 	const Constraint3 Constraint3::ZERO = Constraint3(false, false, false);
@@ -28,6 +30,11 @@ namespace fl
 
 	Constraint3::~Constraint3()
 	{
+	}
+
+	Constraint3 Constraint3::Negate() const
+	{
+		return Constraint3(!m_x, !m_y, !m_z);
 	}
 
 	void Constraint3::Write(LoadedValue *destination)
@@ -67,6 +74,23 @@ namespace fl
 	{
 		stream << vector.ToString();
 		return stream;
+	}
+
+	Constraint3 Constraint3::operator-()
+	{
+		return Negate();
+	}
+
+	const bool &Constraint3::operator[](uint32_t index) const
+	{
+		assert(index < 3);
+		return m_elements[index];
+	}
+
+	bool &Constraint3::operator[](uint32_t index)
+	{
+		assert(index < 3);
+		return m_elements[index];
 	}
 
 	std::string Constraint3::ToString() const

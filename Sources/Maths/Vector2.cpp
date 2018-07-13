@@ -250,6 +250,18 @@ namespace fl
 		return Negate();
 	}
 
+	const float &Vector2::operator[](uint32_t index) const
+	{
+		assert(index < 2);
+		return m_elements[index];
+	}
+
+	float &Vector2::operator[](uint32_t index)
+	{
+		assert(index < 2);
+		return m_elements[index];
+	}
+
 	Vector2 operator+(Vector2 left, const Vector2 &right)
 	{
 		return left.Add(right);

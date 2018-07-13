@@ -21,12 +21,12 @@ namespace fl
 		{
 			struct
 			{
-				float m_r, m_g, m_b, m_a;
+				float m_elements[4];
 			};
 
 			struct
 			{
-				float m_elements[4];
+				float m_r, m_g, m_b, m_a;
 			};
 		};
 
@@ -216,6 +216,10 @@ namespace fl
 		bool operator==(const float &value) const;
 
 		bool operator!=(const float &value) const;
+
+		const float &operator[](uint32_t index) const;
+
+		float &operator[](uint32_t index);
 
 		FL_EXPORT friend Colour operator+(Colour left, const Colour &right);
 

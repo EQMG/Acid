@@ -19,7 +19,7 @@ namespace fl
 		m_farWidth(0.0f),
 		m_nearHeight(0.0f),
 		m_nearWidth(0.0f),
-		m_aabb(ColliderAabb())
+		m_aabb(BoundingBox())
 	{
 	}
 
@@ -161,11 +161,11 @@ namespace fl
 
 	void ShadowBox::UpdateOrthoProjectionMatrix()
 	{
-		m_projectionMatrix = m_projectionMatrix.SetIdentity();
-		m_projectionMatrix.m_00 = 2.0f / m_aabb.GetWidth();
-		m_projectionMatrix.m_11 = 2.0f / m_aabb.GetHeight();
-		m_projectionMatrix.m_22 = -2.0f / m_aabb.GetDepth();
-		m_projectionMatrix.m_33 = 1.0f;
+		m_projectionMatrix = Matrix4::IDENTITY;
+		m_projectionMatrix[0][0] = 2.0f / m_aabb.GetWidth();
+		m_projectionMatrix[1][1] = 2.0f / m_aabb.GetHeight();
+		m_projectionMatrix[2][2] = -2.0f / m_aabb.GetDepth();
+		m_projectionMatrix[3][3] = 1.0f;
 	}
 
 	void ShadowBox::UpdateCenter()
@@ -181,7 +181,7 @@ namespace fl
 
 	void ShadowBox::UpdateLightViewMatrix()
 	{
-		m_lightViewMatrix = m_lightViewMatrix.SetIdentity();
+		m_lightViewMatrix = Matrix4::IDENTITY;
 		float pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::RIGHT);
 		float yaw = Maths::Degrees(std::atan(m_lightDirection.m_x / m_lightDirection.m_z));
@@ -197,8 +197,8 @@ namespace fl
 
 	void ShadowBox::UpdateViewShadowMatrix()
 	{
-		m_projectionViewMatrix = m_projectionViewMatrix.SetIdentity();
-		m_shadowMapSpaceMatrix = m_shadowMapSpaceMatrix.SetIdentity();
+		m_projectionViewMatrix = Matrix4::IDENTITY;
+		m_shadowMapSpaceMatrix = Matrix4::IDENTITY;
 		m_projectionViewMatrix = m_projectionMatrix * m_lightViewMatrix;
 		m_shadowMapSpaceMatrix = m_offset * m_projectionViewMatrix;
 	}

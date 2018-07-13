@@ -2,11 +2,13 @@
 
 #include <cassert>
 #include "Maths.hpp"
+#include "Vector3.hpp"
 
 namespace fl
 {
 	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+	const Quaternion Quaternion::W_ONE = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 	const Quaternion Quaternion::POSITIVE_INFINITY = Quaternion(+INFINITY, +INFINITY, +INFINITY, +INFINITY);
 	const Quaternion Quaternion::NEGATIVE_INFINITY = Quaternion(-INFINITY, -INFINITY, -INFINITY, -INFINITY);
 
@@ -26,6 +28,25 @@ namespace fl
 	{
 	}
 
+	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
+	{
+		float halfPitch = Maths::Radians(pitch) * 0.5f;
+		float halfYaw = Maths::Radians(yaw) * 0.5f;
+		float halfRoll = Maths::Radians(roll) * 0.5f;
+
+		float sinPitch = std::sin(halfPitch);
+		float cosPitch = std::cos(halfPitch);
+		float sinYaw = std::sin(halfYaw);
+		float cosYaw = std::cos(halfYaw);
+		float sinRoll = std::sin(halfRoll);
+		float cosRoll = std::cos(halfRoll);
+
+		m_x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
+		m_y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
+		m_z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
+		m_w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+	}
+
 	Quaternion::Quaternion(const Vector4 &source) :
 		m_x(source.m_x),
 		m_y(source.m_y),
@@ -42,11 +63,7 @@ namespace fl
 	{
 	}
 
-	Quaternion::Quaternion(const Matrix4 &source) :
-		m_x(0.0f),
-		m_y(0.0f),
-		m_z(0.0f),
-		m_w(0.0f)
+	Quaternion::Quaternion(const Matrix4 &source)
 	{
 		*this = source;
 	}
@@ -146,7 +163,7 @@ namespace fl
 		return std::min(m_x, std::min(m_y, std::min(m_z, m_w)));
 	}
 
-	Matrix4 Quaternion::ToMatrix()
+	Matrix4 Quaternion::ToMatrix() const
 	{
 		float xSquared = m_x * m_x;
 		float twoXY = 2.0f * m_x * m_y;
@@ -160,26 +177,54 @@ namespace fl
 		float wSquared = m_w * m_w;
 
 		Matrix4 result = Matrix4();
-		result.m_00 = wSquared + xSquared - ySquared - zSquared;
-		result.m_01 = twoXY - twoZW;
-		result.m_02 = twoXZ + twoYW;
-		result.m_03 = 0.0f;
-		result.m_10 = twoXY + twoZW;
-		result.m_11 = wSquared - xSquared + ySquared - zSquared;
-		result.m_12 = twoYZ - twoXW;
-		result.m_13 = 0.0f;
-		result.m_20 = twoXZ - twoYW;
-		result.m_21 = twoYZ + twoXW;
-		result.m_22 = wSquared - xSquared - ySquared + zSquared;
-		result.m_23 = 0.0f;
-		result.m_30 = 0.0f;
-		result.m_31 = 0.0f;
-		result.m_32 = 0.0f;
-		result.m_33 = 1.0f;
+		result[0][0] = wSquared + xSquared - ySquared - zSquared;
+		result[0][1] = twoXY - twoZW;
+		result[0][2] = twoXZ + twoYW;
+		result[0][3] = 0.0f;
+		result[1][0] = twoXY + twoZW;
+		result[1][1] = wSquared - xSquared + ySquared - zSquared;
+		result[1][2] = twoYZ - twoXW;
+		result[1][3] = 0.0f;
+		result[2][0] = twoXZ - twoYW;
+		result[2][1] = twoYZ + twoXW;
+		result[2][2] = wSquared - xSquared - ySquared + zSquared;
+		result[2][3] = 0.0f;
+		result[3][0] = 0.0f;
+		result[3][1] = 0.0f;
+		result[3][2] = 0.0f;
+		result[3][3] = 1.0f;
 		return result;
 	}
 
-	Matrix4 Quaternion::ToRotationMatrix()
+	Matrix3 Quaternion::ToRotationMatrix3() const
+	{
+		float tx = m_x + m_x;
+		float ty = m_y + m_y;
+		float fTz = m_z + m_z;
+		float twx = tx * m_w;
+		float twy = ty * m_w;
+		float twz = fTz * m_w;
+		float txx = tx * m_x;
+		float txy = ty * m_x;
+		float txz = fTz * m_x;
+		float tyy = ty * m_y;
+		float tyz = fTz * m_y;
+		float tzz = fTz * m_z;
+
+		Matrix3 result = Matrix3();
+		result[0][0] = 1.0f - (tyy + tzz);
+		result[0][1] = txy - twz;
+		result[0][2] = txz + twy;
+		result[1][0] = txy + twz;
+		result[1][1] = 1.0f - (txx + tzz);
+		result[1][2] = tyz - twx;
+		result[2][0] = txz - twy;
+		result[2][1] = tyz + twx;
+		result[2][2] = 1.0f - (txx + tyy);
+		return result;
+	}
+
+	Matrix4 Quaternion::ToRotationMatrix() const
 	{
 		float xy = m_x * m_y;
 		float xz = m_x * m_z;
@@ -192,22 +237,61 @@ namespace fl
 		float zSquared = m_z * m_z;
 
 		Matrix4 result = Matrix4();
-		result.m_00 = 1.0f - 2.0f * (ySquared + zSquared);
-		result.m_01 = 2.0f * (xy - zw);
-		result.m_02 = 2.0f * (xz + yw);
-		result.m_03 = 0.0f;
-		result.m_10 = 2.0f * (xy + zw);
-		result.m_11 = 1.0f - 2.0f * (xSquared + zSquared);
-		result.m_12 = 2.0f * (yz - xw);
-		result.m_13 = 0.0f;
-		result.m_20 = 2.0f * (xz - yw);
-		result.m_21 = 2.0f * (yz + xw);
-		result.m_22 = 1.0f - 2.0f * (xSquared + ySquared);
-		result.m_23 = 0.0f;
-		result.m_30 = 0.0f;
-		result.m_31 = 0.0f;
-		result.m_32 = 0.0f;
-		result.m_33 = 1.0f;
+		result[0][0] = 1.0f - 2.0f * (ySquared + zSquared);
+		result[0][1] = 2.0f * (xy - zw);
+		result[0][2] = 2.0f * (xz + yw);
+		result[0][3] = 0.0f;
+		result[1][0] = 2.0f * (xy + zw);
+		result[1][1] = 1.0f - 2.0f * (xSquared + zSquared);
+		result[1][2] = 2.0f * (yz - xw);
+		result[1][3] = 0.0f;
+		result[2][0] = 2.0f * (xz - yw);
+		result[2][1] = 2.0f * (yz + xw);
+		result[2][2] = 1.0f - 2.0f * (xSquared + ySquared);
+		result[2][3] = 0.0f;
+		result[3][0] = 0.0f;
+		result[3][1] = 0.0f;
+		result[3][2] = 0.0f;
+		result[3][3] = 1.0f;
+		return result;
+	}
+
+	Vector3 Quaternion::ToEuler() const
+	{
+		Matrix3 matrix = ToRotationMatrix3();
+		Vector3 result = Vector3();
+
+		result.m_x = -Maths::Degrees(std::asin(matrix[1][2]));
+
+		if (result.m_x < 90.0f)
+		{
+			if (result.m_x > -90.0f)
+			{
+				result.m_y = Maths::Degrees(std::atan2(matrix[0][2], matrix[2][2]));
+				result.m_z = Maths::Degrees(std::atan2(matrix[1][0], matrix[1][1]));
+
+				return result;
+			}
+			else
+			{
+				// Note: Not an unique solution.
+				result.m_x = -90.0f;
+				result.m_y = Maths::Degrees(std::atan2(-matrix[0][1], matrix[0][0]));
+				result.m_z = 0.0f;
+
+				return result;
+			}
+		}
+		else
+		{
+			// Note: Not an unique solution.
+			result.m_x = 90.0f;
+			result.m_y = Maths::Degrees(std::atan2(matrix[0][1], matrix[0][0]));
+			result.m_z = 0.0f;
+
+			return result;
+		}
+
 		return result;
 	}
 
@@ -238,38 +322,38 @@ namespace fl
 
 	Quaternion &Quaternion::operator=(const Matrix4 &other)
 	{
-		float diagonal = other.m_00 + other.m_11 + other.m_22;
+		float diagonal = other[0][0] + other[1][1] + other[2][2];
 
 		if (diagonal > 0.0f)
 		{
 			float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
 			m_w = w4 / 4.0f;
-			m_x = (other.m_21 - other.m_12) / w4;
-			m_y = (other.m_02 - other.m_20) / w4;
-			m_z = (other.m_10 - other.m_01) / w4;
+			m_x = (other[2][1] - other[1][2]) / w4;
+			m_y = (other[0][2] - other[2][0]) / w4;
+			m_z = (other[1][0] - other[0][1]) / w4;
 		}
-		else if ((other.m_00 > other.m_11) && (other.m_00 > other.m_22))
+		else if ((other[0][0] > other[1][1]) && (other[0][0] > other[2][2]))
 		{
-			float x4 = std::sqrt(1.0f + other.m_00 - other.m_11 - other.m_22) * 2.0f;
-			m_w = (other.m_21 - other.m_12) / x4;
+			float x4 = std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]) * 2.0f;
+			m_w = (other[2][1] - other[1][2]) / x4;
 			m_x = x4 / 4.0f;
-			m_y = (other.m_01 + other.m_10) / x4;
-			m_z = (other.m_02 + other.m_20) / x4;
+			m_y = (other[0][1] + other[1][0]) / x4;
+			m_z = (other[0][2] + other[2][0]) / x4;
 		}
-		else if (other.m_11 > other.m_22)
+		else if (other[1][1] > other[2][2])
 		{
-			float y4 = std::sqrt(1.0f + other.m_11 - other.m_00 - other.m_22 * 2.0f);
-			m_w = (other.m_02 - other.m_20) / y4;
-			m_x = (other.m_01 + other.m_10) / y4;
+			float y4 = std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2] * 2.0f);
+			m_w = (other[0][2] - other[2][0]) / y4;
+			m_x = (other[0][1] + other[1][0]) / y4;
 			m_y = y4 / 4.0f;
-			m_z = (other.m_12 + other.m_21) / y4;
+			m_z = (other[1][2] + other[2][1]) / y4;
 		}
 		else
 		{
-			float z4 = std::sqrt(1.0f + other.m_22 - other.m_00 - other.m_11) * 2.0f;
-			m_w = (other.m_10 - other.m_01) / z4;
-			m_x = (other.m_02 + other.m_20) / z4;
-			m_y = (other.m_12 + other.m_21) / z4;
+			float z4 = std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]) * 2.0f;
+			m_w = (other[1][0] - other[0][1]) / z4;
+			m_x = (other[0][2] + other[2][0]) / z4;
+			m_y = (other[1][2] + other[2][1]) / z4;
 			m_z = z4 / 4.0f;
 		}
 
@@ -319,6 +403,12 @@ namespace fl
 	Quaternion Quaternion::operator-()
 	{
 		return Negate();
+	}
+
+	float Quaternion::operator[](uint32_t index)
+	{
+		assert(index < 4);
+		return m_elements[index];
 	}
 
 	Quaternion operator*(Quaternion left, const Quaternion &right)
