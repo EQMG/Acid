@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
-#include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include <LinearMath/btDefaultMotionState.h>
 
 namespace fl
@@ -31,20 +30,6 @@ namespace fl
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = false;
 
 		m_collisionShapes = btAlignedObjectArray<btCollisionShape *>();
-
-		{
-			btBoxShape *groundShape = new btBoxShape(btVector3(50.0f, 50.0f, 50.0f));
-			m_collisionShapes.push_back(groundShape);
-
-			btTransform groundTransform = btTransform();
-			groundTransform.setIdentity();
-			groundTransform.setOrigin(btVector3(0.0f, -50.0f, 0.0f));
-
-			float mass = 0.0f;
-			btRigidBody *body = CreateRigidBody(mass, groundTransform, groundShape);
-			body->setContactStiffnessAndDamping(300.0f, 10.0f);
-			m_dynamicsWorld->addRigidBody(body);
-		}
 	}
 
 	Scenes::~Scenes()

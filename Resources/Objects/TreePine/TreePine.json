@@ -3,6 +3,9 @@
     "Mass": 1.0, 
     "Drag": 0.0, 
     "Use Gravity": false,
+    "ShapeConvexHull": {
+      "Source": "Mesh"
+    },
     "Freeze Position": {
       "x": true,
       "y": true,

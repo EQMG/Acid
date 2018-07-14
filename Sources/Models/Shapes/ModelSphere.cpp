@@ -1,10 +1,10 @@
-#include "ShapeSphere.hpp"
+#include "ModelSphere.hpp"
 
 #include "Maths/Maths.hpp"
 
 namespace fl
 {
-	ShapeSphere::ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
+	ModelSphere::ModelSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
@@ -55,11 +55,11 @@ namespace fl
 		Model::Set(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
 	}
 
-	ShapeSphere::~ShapeSphere()
+	ModelSphere::~ModelSphere()
 	{
 	}
 
-	std::string ShapeSphere::ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
+	std::string ModelSphere::ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
 	{
 		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
 			std::to_string(radius);

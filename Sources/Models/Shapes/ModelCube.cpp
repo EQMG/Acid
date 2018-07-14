@@ -1,8 +1,8 @@
-#include "ShapeCube.hpp"
+#include "ModelCube.hpp"
 
 namespace fl
 {
-	ShapeCube::ShapeCube(const float &width, const float &height, const float &depth) :
+	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = {
@@ -48,7 +48,7 @@ namespace fl
 		Model::Set(vertices, indices, ToFilename(width, height, depth));
 	}
 
-	std::string ShapeCube::ToFilename(const float &width, const float &height, const float &depth)
+	std::string ModelCube::ToFilename(const float &width, const float &height, const float &depth)
 	{
 		return "Cube_" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
 	}

@@ -1,8 +1,8 @@
-#include "ShapeRectangle.hpp"
+#include "ModelRectangle.hpp"
 
 namespace fl
 {
-	ShapeRectangle::ShapeRectangle(const float &min, const float &max) :
+	ModelRectangle::ModelRectangle(const float &min, const float &max) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = {
@@ -18,7 +18,7 @@ namespace fl
 		Model::Set(vertices, indices, ToFilename(min, max));
 	}
 
-	std::string ShapeRectangle::ToFilename(const float &min, const float &max)
+	std::string ModelRectangle::ToFilename(const float &min, const float &max)
 	{
 		return "Rectangle_" + std::to_string(min) + "_" + std::to_string(max);
 	}

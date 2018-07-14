@@ -10,10 +10,12 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Models/Shapes/ShapeSphere.hpp>
+#include <Models/Shapes/ModelSphere.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Physics/Shapes/ShapeBox.hpp>
+#include <Physics/Shapes/ShapeSphere.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
@@ -70,16 +72,19 @@ namespace test
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
+		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -5.0f, 0.0f), Vector3(), Vector3(100.0f, 1.0f, 100.0f)));
+		plane->AddComponent<Rigidbody>(0.0f, 0.2f, true, std::make_shared<ShapeBox>(Vector3(100.0f, 3.0f, 100.0f)));
+
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
-				sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
+				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-				sphere->AddComponent<Rigidbody>(2.0f, 0.01f, true);
+				sphere->AddComponent<Rigidbody>(2.0f, 0.1f, true, std::make_shared<ShapeSphere>(3.0f));
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
