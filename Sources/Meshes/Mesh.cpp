@@ -18,6 +18,11 @@ namespace fl
 	{
 	}
 
+	void Mesh::Start()
+	{
+
+	}
+
 	void Mesh::Update()
 	{
 		// TODO

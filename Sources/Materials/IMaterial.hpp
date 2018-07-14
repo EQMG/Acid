@@ -22,6 +22,8 @@ namespace fl
 		{
 		}
 
+		virtual void Start() override = 0;
+
 		virtual void Update() override = 0;
 
 		virtual void Load(LoadedValue *value) override = 0;

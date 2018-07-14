@@ -24,6 +24,10 @@ namespace fl
 	{
 	}
 
+	void Light::Start()
+	{
+	}
+
 	void Light::Update()
 	{
 		m_position = GetGameObject()->GetTransform().GetPosition() + m_offset;

@@ -1,49 +1,12 @@
 #include "Scenes.hpp"
 
 #include <cassert>
-#include <LinearMath/btAlignedObjectArray.h>
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
-#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
-#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
-#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include <LinearMath/btDefaultMotionState.h>
 
 namespace fl
 {
-	btDefaultCollisionConfiguration *m_collisionConfiguration;
-	btBroadphaseInterface *m_broadphase;
-	btCollisionDispatcher *m_dispatcher;
-	btSequentialImpulseConstraintSolver *m_solver;
-	btDiscreteDynamicsWorld *m_dynamicsWorld;
-	btAlignedObjectArray<btCollisionShape *> m_collisionShapes;
-
-	btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
-	{
-		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE));
-
-		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-		bool isDynamic = mass != 0.0f;
-
-		btVector3 localInertia(0.0f, 0.0f, 0.0f);
-
-		if (isDynamic)
-		{
-			shape->calculateLocalInertia(mass, localInertia);
-		}
-
-		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
-		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
-		btRigidBody *body = new btRigidBody(cInfo);
-	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-	//	body->setUserIndex(-1);
-		m_dynamicsWorld->addRigidBody(body);
-		return body;
-	}
-
 	Scenes::Scenes() :
 		IModule(),
 		m_scene(nullptr),
@@ -79,8 +42,8 @@ namespace fl
 
 			float mass = 0.0f;
 			btRigidBody *body = CreateRigidBody(mass, groundTransform, groundShape);
-
 			body->setContactStiffnessAndDamping(300.0f, 10.0f);
+			m_dynamicsWorld->addRigidBody(body);
 		}
 	}
 
@@ -154,5 +117,28 @@ namespace fl
 		}
 
 		m_scene->GetCamera()->Update();
+	}
+
+	btRigidBody *Scenes::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
+	{
+		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE));
+
+		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+		bool isDynamic = mass != 0.0f;
+
+		btVector3 localInertia(0.0f, 0.0f, 0.0f);
+
+		if (isDynamic)
+		{
+			shape->calculateLocalInertia(mass, localInertia);
+		}
+
+		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
+		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
+		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
+		btRigidBody *body = new btRigidBody(cInfo);
+		//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
+		//	body->setUserIndex(-1);
+		return body;
 	}
 }

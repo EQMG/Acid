@@ -39,6 +39,8 @@ namespace fl
 		/// </summary>
 		~Light();
 
+		void Start() override;
+
 		void Update() override;
 
 		void Load(LoadedValue *value) override;

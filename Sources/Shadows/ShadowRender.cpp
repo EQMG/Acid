@@ -15,6 +15,10 @@ namespace fl
 	{
 	}
 
+	void ShadowRender::Start()
+	{
+	}
+
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.

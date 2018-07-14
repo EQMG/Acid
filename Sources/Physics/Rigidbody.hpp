@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include "Maths/Constraint3.hpp"
 #include "Maths/Vector3.hpp"
@@ -19,6 +20,7 @@ namespace fl
 		Constraint3 m_freezePosition;
 		Constraint3 m_freezeRotation;
 
+		btTransform m_worldTransform;
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
@@ -26,6 +28,8 @@ namespace fl
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
 
 		~Rigidbody();
+
+		void Start() override;
 
 		void Update() override;
 

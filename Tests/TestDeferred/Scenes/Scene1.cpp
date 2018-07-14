@@ -79,6 +79,7 @@ namespace test
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
+				sphere->AddComponent<Rigidbody>(2.0f, 0.01f, true);
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
