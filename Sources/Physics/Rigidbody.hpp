@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include "Maths/Constraint3.hpp"
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 #include "IBounding.hpp"
+#include "Shapes/IShape.hpp"
 
 namespace fl
 {
@@ -20,11 +20,11 @@ namespace fl
 		Constraint3 m_freezePosition;
 		Constraint3 m_freezeRotation;
 
+		std::shared_ptr<IShape> m_shape;
 		btTransform m_worldTransform;
-		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true,
+		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true, std::shared_ptr<IShape> shape = nullptr,
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
 
 		~Rigidbody();

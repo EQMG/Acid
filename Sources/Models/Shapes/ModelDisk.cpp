@@ -1,10 +1,10 @@
-#include "ShapeDisk.hpp"
+#include "ModelDisk.hpp"
 
 #include "Maths/Maths.hpp"
 
 namespace fl
 {
-	ShapeDisk::ShapeDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
+	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
@@ -56,11 +56,11 @@ namespace fl
 		Model::Set(vertices, indices, ToFilename(innerRadius, outerRadius, slices, loops));
 	}
 
-	ShapeDisk::~ShapeDisk()
+	ModelDisk::~ModelDisk()
 	{
 	}
 
-	std::string ShapeDisk::ToFilename(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
+	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
 	{
 		return "Disk_" + std::to_string(innerRadius) + "_" + std::to_string(outerRadius) + "_" +
 			std::to_string(slices) + "_" + std::to_string(loops);

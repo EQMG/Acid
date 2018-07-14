@@ -1,10 +1,10 @@
 #include "Mesh.hpp"
 
-#include "Models/Shapes/ShapeCube.hpp"
-#include "Models/Shapes/ShapeCylinder.hpp"
-#include "Models/Shapes/ShapeDisk.hpp"
-#include "Models/Shapes/ShapeRectangle.hpp"
-#include "Models/Shapes/ShapeSphere.hpp"
+#include "Models/Shapes/ModelCube.hpp"
+#include "Models/Shapes/ModelCylinder.hpp"
+#include "Models/Shapes/ModelDisk.hpp"
+#include "Models/Shapes/ModelRectangle.hpp"
+#include "Models/Shapes/ModelSphere.hpp"
 
 namespace fl
 {
@@ -62,31 +62,31 @@ namespace fl
 
 		if (!split.empty() && split[0] == "Cube")
 		{
-			m_model = ShapeCube::Resource(filename);
+			m_model = ModelCube::Resource(filename);
 			return;
 		}
 
 		if (!split.empty() && split[0] == "Cylinder")
 		{
-			m_model = ShapeCylinder::Resource(filename);
+			m_model = ModelCylinder::Resource(filename);
 			return;
 		}
 
 		if (!split.empty() && split[0] == "Disk")
 		{
-			m_model = ShapeDisk::Resource(filename);
+			m_model = ModelDisk::Resource(filename);
 			return;
 		}
 
 		if (!split.empty() && split[0] == "Rectangle")
 		{
-			m_model = ShapeRectangle::Resource(filename);
+			m_model = ModelRectangle::Resource(filename);
 			return;
 		}
 
 		if (!split.empty() && split[0] == "Sphere")
 		{
-			m_model = ShapeSphere::Resource(filename);
+			m_model = ModelSphere::Resource(filename);
 			return;
 		}
 

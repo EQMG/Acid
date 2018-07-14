@@ -3,8 +3,8 @@
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Renderer/Pipelines/Compute.hpp>
-#include <Models/Shapes/ShapeSphere.hpp>
-#include <Models/Shapes/ShapeRectangle.hpp>
+#include <Models/Shapes/ModelSphere.hpp>
+#include <Models/Shapes/ModelRectangle.hpp>
 
 namespace test
 {

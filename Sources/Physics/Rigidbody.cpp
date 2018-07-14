@@ -6,26 +6,26 @@
 
 namespace fl
 {
-	Rigidbody::Rigidbody(const float &mass, const float &drag, const bool &useGravity, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
+	Rigidbody::Rigidbody(const float &mass, const float &drag, const bool &useGravity, std::shared_ptr<IShape> shape, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
 		IComponent(),
 		m_mass(mass),
 		m_drag(drag),
 		m_useGravity(useGravity),
 		m_freezePosition(freezePosition),
 		m_freezeRotation(freezeRotation),
+		m_shape(shape),
 		m_worldTransform(btTransform()),
-		m_shape(nullptr),
 		m_body(nullptr)
 	{
-		m_shape = new btSphereShape(3.0f);
-		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
-
 		m_worldTransform.setIdentity();
 		m_worldTransform.setOrigin(btVector3());
 
-		m_body = Scenes::Get()->CreateRigidBody(m_mass, m_worldTransform, m_shape);
-		m_body->setContactStiffnessAndDamping(300.0f, 10.0f);
-		Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
+		if (m_shape != nullptr)
+		{
+			m_body = Scenes::Get()->CreateRigidBody(m_mass, m_worldTransform, m_shape->GetCollisionShape());
+			m_body->setContactStiffnessAndDamping(300.0f, 10.0f);
+			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
+		}
 	}
 
 	Rigidbody::~Rigidbody()
@@ -40,10 +40,6 @@ namespace fl
 		Scenes::Get()->GetDynamicsWorld()->removeCollisionObject(m_body);
 
 		delete m_body;
-
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
-
-		delete m_shape;
 	}
 
 	void Rigidbody::Start()
@@ -55,7 +51,10 @@ namespace fl
 		m_worldTransform.setOrigin(btVector3(position.m_x, position.m_y, position.m_z));
 		m_worldTransform.setRotation(btQuaternion(rotation.m_x, rotation.m_y, rotation.m_z, rotation.m_w));
 
-		m_body->setWorldTransform(m_worldTransform);
+		if (m_body != nullptr)
+		{
+			m_body->setWorldTransform(m_worldTransform);
+		}
 	}
 
 	void Rigidbody::Update()

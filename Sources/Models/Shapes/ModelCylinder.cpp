@@ -1,10 +1,10 @@
-#include "ShapeCylinder.hpp"
+#include "ModelCylinder.hpp"
 
 #include "Maths/Maths.hpp"
 
 namespace fl
 {
-	ShapeCylinder::ShapeCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
+	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
 		Model()
 	{
 		auto vertices = std::vector<IVertex *>();
@@ -57,11 +57,11 @@ namespace fl
 		Model::Set(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
 	}
 
-	ShapeCylinder::~ShapeCylinder()
+	ModelCylinder::~ModelCylinder()
 	{
 	}
 
-	std::string ShapeCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
+	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
 	{
 		return "Cylinder_" + std::to_string(radiusBase) + "_" + std::to_string(radiusTop) + "_" + std::to_string(height) + "_" +
 			std::to_string(slices) + "_" + std::to_string(stacks) + "_" + std::to_string(y0);

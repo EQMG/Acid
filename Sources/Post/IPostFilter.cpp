@@ -1,6 +1,6 @@
 #include "Post/IPostFilter.hpp"
 
-#include "Models/Shapes/ShapeRectangle.hpp"
+#include "Models/Shapes/ModelRectangle.hpp"
 
 namespace fl
 {
@@ -9,7 +9,7 @@ namespace fl
 		m_descriptorSet(DescriptorsHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate(shaderStages, VertexModel::GetVertexInput(),
 			PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), defines)),
-		m_model(ShapeRectangle::Resource(-1.0f, 1.0f))
+		m_model(ModelRectangle::Resource(-1.0f, 1.0f))
 	{
 	}
 

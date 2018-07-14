@@ -6,25 +6,25 @@
 
 namespace fl
 {
-	class FL_EXPORT ShapeSphere :
+	class FL_EXPORT ModelSphere :
 		public Model
 	{
 	public:
-		static std::shared_ptr<ShapeSphere> Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
+		static std::shared_ptr<ModelSphere> Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
 		{
 			auto resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
 
 			if (resource != nullptr)
 			{
-				return std::dynamic_pointer_cast<ShapeSphere>(resource);
+				return std::dynamic_pointer_cast<ModelSphere>(resource);
 			}
 
-			auto result = std::make_shared<ShapeSphere>(latitudeBands, longitudeBands, radius);
+			auto result = std::make_shared<ModelSphere>(latitudeBands, longitudeBands, radius);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static std::shared_ptr<ShapeSphere> Resource(const std::string &data)
+		static std::shared_ptr<ModelSphere> Resource(const std::string &data)
 		{
 			auto split = FormatString::Split(data, "_");
 			int latitudeBands = atoi(split[1].c_str());
@@ -33,9 +33,9 @@ namespace fl
 			return Resource(latitudeBands, longitudeBands, radius);
 		}
 
-		ShapeSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
+		ModelSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
 
-		~ShapeSphere();
+		~ModelSphere();
 
 	private:
 		static std::string ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);

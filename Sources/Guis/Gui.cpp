@@ -1,6 +1,6 @@
 ﻿#include "Gui.hpp"
 
-#include "Models/Shapes/ShapeRectangle.hpp"
+#include "Models/Shapes/ModelRectangle.hpp"
 
 namespace fl
 {
@@ -8,7 +8,7 @@ namespace fl
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
-		m_model(ShapeRectangle::Resource(0.0f, 1.0f)),
+		m_model(ModelRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
 		m_selectedRow(selectedRow),
 		m_atlasOffset(Vector2()),

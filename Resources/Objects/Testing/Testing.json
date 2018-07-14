@@ -3,6 +3,9 @@
     "Mass": 2.0, 
     "Drag": 0.1, 
     "Use Gravity": true,
+    "ShapeSphere": {
+      "Radius": 3.0
+    },
     "Freeze Position": {
       "x": false,
       "y": false,

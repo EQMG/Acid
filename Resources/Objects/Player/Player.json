@@ -3,6 +3,10 @@
     "Mass": 1.0,
     "Drag": 0.0,
     "Use Gravity": true,
+    "ShapeCapsule": {
+      "Radius": 0.125,
+      "Half Height": 0.82
+    },
     "Freeze Position": {
       "x": true,
       "y": true,

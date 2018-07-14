@@ -6,25 +6,25 @@
 
 namespace fl
 {
-	class FL_EXPORT ShapeCylinder :
+	class FL_EXPORT ModelCylinder :
 		public Model
 	{
 	public:
-		static std::shared_ptr<ShapeCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
+		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
 		{
 			auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
 
 			if (resource != nullptr)
 			{
-				return std::dynamic_pointer_cast<ShapeCylinder>(resource);
+				return std::dynamic_pointer_cast<ModelCylinder>(resource);
 			}
 
-			auto result = std::make_shared<ShapeCylinder>(radiusBase, radiusTop, height, slices, stacks, y0);
+			auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks, y0);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		static std::shared_ptr<ShapeCylinder> Resource(const std::string &data)
+		static std::shared_ptr<ModelCylinder> Resource(const std::string &data)
 		{
 			auto split = FormatString::Split(data, "_");
 			float radiusBase = static_cast<float>(atof(split[1].c_str()));
@@ -36,9 +36,9 @@ namespace fl
 			return Resource(radiusBase, radiusTop, height, slices, stacks, y0);
 		}
 
-		ShapeCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0);
+		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0);
 
-		~ShapeCylinder();
+		~ModelCylinder();
 
 	private:
 		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0);
