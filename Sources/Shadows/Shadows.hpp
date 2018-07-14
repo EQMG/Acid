@@ -47,6 +47,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Shadows"; };
+
 		Vector3 GetLightDirection() const { return m_lightDirection; }
 
 		void SetLightDirection(const Vector3 &lightDirection) { m_lightDirection = lightDirection; }

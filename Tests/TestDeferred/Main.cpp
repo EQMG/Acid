@@ -33,14 +33,10 @@ int main(int argc, char **argv)
 	auto engine = std::make_shared<Engine>();
 	engine->SetUpdater(std::make_shared<MainUpdater>());
 
-//	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.json");
-//	return 0;
-
 	auto configManager = std::make_shared<ConfigManager>();
 	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
-//	Engine::Get()->RegisterModule<Example>(UPDATE_NORMAL);
 	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);
 //	Engine::Get()->DeregisterModule<Shadows>();
 
@@ -61,6 +57,6 @@ int main(int argc, char **argv)
 	auto exitCode = engine->Run();
 
 	// Pauses the console.
-//	std::cin.get();
+	std::cin.get();
 	return exitCode;
 }

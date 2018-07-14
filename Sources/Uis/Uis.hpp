@@ -37,6 +37,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Uis"; };
+
 		/// <summary>
 		/// Gets the screen container.
 		/// </summary>

@@ -94,6 +94,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Display"; };
+
 		/// <summary>
 		/// Gets the width of the display in pixels.
 		/// </summary>

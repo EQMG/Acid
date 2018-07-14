@@ -1,29 +1,39 @@
 #include <iostream>
+#include <Maths/Maths.hpp>
+#include <Maths/Colour.hpp>
+#include <Maths/Matrix2.hpp>
+#include <Maths/Matrix3.hpp>
+#include <Maths/Matrix4.hpp>
+#include <Maths/Quaternion.hpp>
 #include <Maths/Vector2.hpp>
 #include <Maths/Vector3.hpp>
 #include <Maths/Vector4.hpp>
-#include <Maths/Maths.hpp>
-#include <Maths/Quaternion.hpp>
 #include <Maths/Transform.hpp>
 
 using namespace fl;
 
 int main(int argc, char **argv)
 {
-	Vector3 original = Vector3(90.0f, 0.0f, 0.0f);
-	Quaternion quaternion = original.ToQuaternion();
-	Vector3 restored = quaternion.ToEuler();
-
-	printf("Original: %s\n", original.ToString().c_str());
-	printf("Quaternion: %s\n", quaternion.ToString().c_str());
-	printf("Restored: %s\n", restored.ToString().c_str());
-
-	// Transform transform = Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f));
-
-	/*{
+	{
+		printf("Colour Size: %i\n", (int) sizeof(Colour));
+		printf("Matrix2 Size: %i\n", (int) sizeof(Matrix2));
+		printf("Matrix3 Size: %i\n", (int) sizeof(Matrix3));
+		printf("Matrix4 Size: %i\n", (int) sizeof(Matrix4));
 		printf("Vector2 Size: %i\n", (int) sizeof(Vector2));
 		printf("Vector3 Size: %i\n", (int) sizeof(Vector3));
 		printf("Vector4 Size: %i\n", (int) sizeof(Vector4));
+		printf("\n");
+	}
+	{
+	// Transform transform = Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f));
+
+		Vector3 original = Vector3(90.0f, 0.0f, 0.0f);
+		Quaternion quaternion = original.ToQuaternion();
+		Vector3 restored = quaternion.ToEuler();
+
+		printf("Original: %s\n", original.ToString().c_str());
+		printf("Quaternion: %s\n", quaternion.ToString().c_str());
+		printf("Restored: %s\n", restored.ToString().c_str());
 		printf("\n");
 	}
 	{
@@ -61,7 +71,7 @@ int main(int argc, char **argv)
 		printf("  len %s = %f\n", a.ToString().c_str(), a.Length());
 		printf("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		printf("\n");
-	}*/
+	}
 
 	// Pauses the console.
 	std::cin.get();

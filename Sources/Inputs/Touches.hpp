@@ -49,6 +49,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Touches"; };
+
 		/// <summary>
 		/// Gets whether or not a particular location is currently pressed.
 		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>

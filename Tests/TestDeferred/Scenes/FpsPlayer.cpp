@@ -120,10 +120,9 @@ namespace test
 
 		m_velocity = m_velocity.SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
-		auto transform = GetGameObject()->GetTransform();
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-		Vector3 newPosition = transform.GetPosition();
-		Vector3 newRotation = transform.GetRotation().ToEuler();
+		Vector3 newPosition = GetGameObject()->GetTransform().GetPosition();
+		Vector3 newRotation = GetGameObject()->GetTransform().GetRotation().ToEuler();
 
 		float groundHeight = 0.0f;
 
@@ -146,7 +145,7 @@ namespace test
 			newPosition.m_y = groundHeight;
 		}
 
-		transform.SetPosition(newPosition);
-		transform.SetRotation(newRotation);
+		GetGameObject()->GetTransform().SetPosition(newPosition);
+		GetGameObject()->GetTransform().SetRotation(newRotation);
 	}
 }

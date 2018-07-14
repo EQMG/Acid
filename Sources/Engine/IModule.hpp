@@ -40,5 +40,7 @@ namespace fl
 		/// The update function for the module.
 		/// </summary>
 		virtual void Update() = 0;
+
+		virtual std::string GetName() const = 0;
 	};
 }

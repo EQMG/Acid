@@ -30,6 +30,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Tasks"; };
+
 		/// <summary>
 		/// Adds an task to the que.
 		/// </summary>

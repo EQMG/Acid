@@ -36,6 +36,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Events"; };
+
 		/// <summary>
 		/// Adds an event to the listening list.
 		/// </summary>
