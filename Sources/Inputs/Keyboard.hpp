@@ -41,6 +41,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Keyboard"; };
+
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.
 		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>

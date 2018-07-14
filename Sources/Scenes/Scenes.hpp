@@ -39,6 +39,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Scenes"; };
+
 		std::shared_ptr<IScene> GetScene() const { return m_scene; }
 
 		void SetScene(std::shared_ptr<IScene> scene) { m_scene = scene; }

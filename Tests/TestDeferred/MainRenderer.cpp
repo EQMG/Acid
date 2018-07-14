@@ -49,42 +49,6 @@ namespace test
 	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
-
-		/*{
-			auto brdfTexture = Texture(512, 512, VK_FORMAT_R16G16_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
-			auto model = ShapeRectangle::Resource(0.0f, 1.0f);
-
-			auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-
-			auto compute = Compute("Shaders/Brdf.comp", VertexModel::GetVertexInput());
-			auto descriptor = DescriptorsHandler(compute);
-			descriptor.Push("outColour", brdfTexture);
-			descriptor.Update(compute);
-
-			descriptor.BindDescriptor(*commandBuffer);
-			model->CmdRender(*commandBuffer);
-		}*/
-
-		/*{
-			auto cubemap = Cubemap::Resource("Objects/SkyboxStars", ".png");
-			auto cubemap2 = Cubemap::Resource("Objects/SkyboxClouds", ".png");
-			auto model = ShapeSphere::Resource(6, 6, 1.0f);
-
-			auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-			Renderer::Get()->StartRenderpass(*commandBuffer, 0);
-
-			auto compute = Compute("Shaders/Ibl.comp", VertexModel::GetVertexInput());
-			auto descriptor = DescriptorsHandler(compute);
-			descriptor.Push("writeCubemap", cubemap2);
-			descriptor.Push("samplerCubemap", cubemap);
-			descriptor.Update(compute);
-
-			// Draws the object.
-			descriptor.BindDescriptor(*commandBuffer);
-			model->CmdRender(*commandBuffer);
-
-			Renderer::Get()->EndRenderpass(*commandBuffer, 0);
-		}*/
 	}
 
 	MainRenderer::~MainRenderer()

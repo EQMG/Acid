@@ -23,6 +23,11 @@ namespace fl
 
 	void Rigidbody::Update()
 	{
+		if (m_body == nullptr)
+		{
+			return;
+		}
+
 		btVector3 position = m_body->getWorldTransform().getOrigin();
 		btQuaternion rotation = m_body->getWorldTransform().getRotation();
 

@@ -39,6 +39,8 @@ namespace fl
 
 		void Update() override;
 
+		std::string GetName() const override { return "Audio"; };
+
 		FL_HIDDEN static std::string StringifyResultAl(const int &result);
 
 		FL_HIDDEN static void ErrorAl(const int &result);

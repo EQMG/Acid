@@ -48,8 +48,9 @@ namespace fl
 		/// </summary>
 		~Renderer();
 
-	public:
 		void Update() override;
+
+		std::string GetName() const override { return "Renderer"; };
 
 		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
