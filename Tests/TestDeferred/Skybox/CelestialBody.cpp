@@ -23,6 +23,10 @@ namespace test
 	{
 	}
 
+	void CelestialBody::Start()
+	{
+	}
+
 	void CelestialBody::Update()
 	{
 		auto transform = GetGameObject()->GetTransform();

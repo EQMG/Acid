@@ -16,11 +16,13 @@ namespace fl
 	private:
 		std::string m_name;
 		GameObject *m_gameObject;
+		bool m_started;
 		bool m_enabled;
 	public:
 		IComponent() :
 			m_name(""),
 			m_gameObject(nullptr),
+			m_started(false),
 			m_enabled(true)
 		{
 		}
@@ -28,6 +30,8 @@ namespace fl
 		virtual ~IComponent()
 		{
 		}
+
+		virtual void Start() = 0;
 
 		virtual void Update() = 0;
 
@@ -42,6 +46,10 @@ namespace fl
 		GameObject *GetGameObject() const { return m_gameObject; }
 
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
+
+		FL_HIDDEN bool IsStarted() const { return m_started; };
+
+		FL_HIDDEN void SetStarted(const bool &started) { m_started = started; }
 
 		bool IsEnabled() const { return m_enabled; };
 

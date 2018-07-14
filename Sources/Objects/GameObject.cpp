@@ -70,6 +70,12 @@ namespace fl
 				continue;
 			}
 
+			if (!(*it)->IsStarted())
+			{
+				(*it)->Start();
+				(*it)->SetStarted(true);
+			}
+
 			if ((*it)->IsEnabled())
 			{
 				(*it)->Update();

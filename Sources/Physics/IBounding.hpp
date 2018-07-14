@@ -30,6 +30,10 @@ namespace fl
 		{
 		}
 
+		void Start() override
+		{
+		}
+
 		void Update() override
 		{
 		}

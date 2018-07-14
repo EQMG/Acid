@@ -30,6 +30,10 @@ namespace fl
 		delete m_spawn;
 	}
 
+	void ParticleSystem::Start()
+	{
+	}
+
 	void ParticleSystem::Update()
 	{
 		if (m_paused || m_types.empty())

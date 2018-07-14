@@ -24,6 +24,10 @@ namespace fl
 	{
 	}
 
+	void MaterialDefault::Start()
+	{
+	}
+
 	void MaterialDefault::Update()
 	{
 	}

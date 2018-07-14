@@ -1,5 +1,10 @@
 #pragma once
 
+#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
+#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include "Engine/Engine.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "SceneStructure.hpp"
@@ -17,6 +22,13 @@ namespace fl
 		std::shared_ptr<IScene> m_scene;
 
 		ComponentRegister m_componentRegister;
+
+		btDefaultCollisionConfiguration *m_collisionConfiguration;
+		btBroadphaseInterface *m_broadphase;
+		btCollisionDispatcher *m_dispatcher;
+		btSequentialImpulseConstraintSolver *m_solver;
+		btDiscreteDynamicsWorld *m_dynamicsWorld;
+		btAlignedObjectArray<btCollisionShape *> m_collisionShapes;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -38,6 +50,8 @@ namespace fl
 		~Scenes();
 
 		void Update() override;
+
+		btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 
 		std::string GetName() const override { return "Scenes"; };
 
@@ -84,5 +98,9 @@ namespace fl
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		bool IsGamePaused() { return m_scene->IsGamePaused(); }
+
+		FL_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
+
+		FL_HIDDEN btAlignedObjectArray<btCollisionShape *> &GetCollisionShapes() { return m_collisionShapes; }
 	};
 }

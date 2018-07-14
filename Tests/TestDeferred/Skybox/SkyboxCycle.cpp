@@ -18,6 +18,10 @@ namespace test
 	{
 	}
 
+	void SkyboxCycle::Start()
+	{
+	}
+
 	void SkyboxCycle::Update()
 	{
 		auto materialSkybox = GetGameObject()->GetComponent<MaterialSkybox>();

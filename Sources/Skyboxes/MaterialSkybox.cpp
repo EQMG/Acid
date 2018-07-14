@@ -20,6 +20,10 @@ namespace fl
 	{
 	}
 
+	void MaterialSkybox::Start()
+	{
+	}
+
 	void MaterialSkybox::Update()
 	{
 		GetGameObject()->GetTransform().SetPosition(Scenes::Get()->GetCamera()->GetPosition());

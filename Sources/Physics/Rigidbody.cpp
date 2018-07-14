@@ -1,5 +1,6 @@
 ﻿#include "Rigidbody.hpp"
 
+#include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include "Models/Model.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -12,13 +13,49 @@ namespace fl
 		m_useGravity(useGravity),
 		m_freezePosition(freezePosition),
 		m_freezeRotation(freezeRotation),
+		m_worldTransform(btTransform()),
 		m_shape(nullptr),
 		m_body(nullptr)
 	{
+		m_shape = new btSphereShape(3.0f);
+		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
+
+		m_worldTransform.setIdentity();
+		m_worldTransform.setOrigin(btVector3());
+
+		m_body = Scenes::Get()->CreateRigidBody(m_mass, m_worldTransform, m_shape);
+		m_body->setContactStiffnessAndDamping(300.0f, 10.0f);
+		Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
 	}
 
 	Rigidbody::~Rigidbody()
 	{
+		btRigidBody *body = btRigidBody::upcast(m_body);
+
+		if (body && body->getMotionState())
+		{
+			delete body->getMotionState();
+		}
+
+		Scenes::Get()->GetDynamicsWorld()->removeCollisionObject(m_body);
+
+		delete m_body;
+
+		Scenes::Get()->GetCollisionShapes().remove(m_shape);
+
+		delete m_shape;
+	}
+
+	void Rigidbody::Start()
+	{
+		Vector3 position = GetGameObject()->GetTransform().GetPosition();
+		Quaternion rotation = GetGameObject()->GetTransform().GetRotation();
+
+		m_worldTransform.setIdentity();
+		m_worldTransform.setOrigin(btVector3(position.m_x, position.m_y, position.m_z));
+		m_worldTransform.setRotation(btQuaternion(rotation.m_x, rotation.m_y, rotation.m_z, rotation.m_w));
+
+		m_body->setWorldTransform(m_worldTransform);
 	}
 
 	void Rigidbody::Update()
@@ -28,12 +65,26 @@ namespace fl
 			return;
 		}
 
-		btVector3 position = m_body->getWorldTransform().getOrigin();
-		btQuaternion rotation = m_body->getWorldTransform().getRotation();
+		auto &transform = GetGameObject()->GetTransform();
 
-		auto transform = GetGameObject()->GetTransform();
-		transform.SetPosition(Vector3(position.getX(), position.getY(), position.getZ()));
-		transform.SetRotation(Quaternion(rotation.getX(), rotation.getY(), rotation.getZ(), rotation.getW()));
+		if (m_freezePosition != Constraint3::ONE)
+		{
+			btVector3 position = m_body->getWorldTransform().getOrigin();
+			transform.SetPosition(Vector3(position.getX(), position.getY(), position.getZ()));
+		}
+
+		if (m_freezeRotation != Constraint3::ONE)
+		{
+			btQuaternion rotation = m_body->getWorldTransform().getRotation();
+			transform.SetRotation(Quaternion(rotation.getX(), rotation.getY(), rotation.getZ(), rotation.getW()));
+		}
+
+	//	m_worldTransform.setIdentity();
+	//	m_worldTransform.setOrigin(btVector3(transform.GetPosition().m_x, transform.GetPosition().m_y, transform.GetPosition().m_z));
+	//	m_worldTransform.setRotation(btQuaternion(transform.GetRotation().m_x, transform.GetRotation().m_y, transform.GetRotation().m_z, transform.GetRotation().m_w));
+
+	//	m_body->setWorldTransform(m_worldTransform);
+	//	m_body->setLinearVelocity(m_velocity);
 	}
 
 	void Rigidbody::Load(LoadedValue *value)

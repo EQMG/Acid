@@ -4,14 +4,14 @@
     "Drag": 0.0,
     "Use Gravity": true,
     "Freeze Position": {
-      "x": false,
-      "y": false,
-      "z": false
+      "x": true,
+      "y": true,
+      "z": true
     },
     "Freeze Rotation": {
-      "x": false,
+      "x": true,
       "y": true,
-      "z": false
+      "z": true
     }
   },
   "FpsPlayer": {

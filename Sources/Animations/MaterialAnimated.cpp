@@ -17,6 +17,10 @@ namespace fl
 	{
 	}
 
+	void MaterialAnimated::Start()
+	{
+	}
+
 	void MaterialAnimated::Update()
 	{
 	}

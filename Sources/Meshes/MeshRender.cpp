@@ -13,6 +13,10 @@ namespace fl
 	{
 	}
 
+	void MeshRender::Start()
+	{
+	}
+
 	void MeshRender::Update()
 	{
 		auto material = GetGameObject()->GetComponent<IMaterial>(false);
