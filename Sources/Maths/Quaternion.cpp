@@ -9,8 +9,8 @@ namespace fl
 	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 	const Quaternion Quaternion::W_ONE = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-	const Quaternion Quaternion::POSITIVE_INFINITY = Quaternion(+INFINITY, +INFINITY, +INFINITY, +INFINITY);
-	const Quaternion Quaternion::NEGATIVE_INFINITY = Quaternion(-INFINITY, -INFINITY, -INFINITY, -INFINITY);
+	const Quaternion Quaternion::POSITIVE_INFINITY = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Quaternion Quaternion::NEGATIVE_INFINITY = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Quaternion::Quaternion() :
 		m_x(0.0f),
@@ -78,6 +78,18 @@ namespace fl
 			m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
 			m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
 			m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
+	}
+
+	Vector3 Quaternion::Multiply(const Vector3 &other) const
+	{
+	//	Matrix3 rotation = left.ToRotationMatrix3();
+	//	return right * rotation;
+
+		Vector3 q = Vector3(m_x, m_y, m_z);
+		Vector3 cross1 = q.Cross(other);
+		Vector3 cross2 = q.Cross(cross1);
+
+		return other + 2.0f * (cross1 * m_w + cross2);
 	}
 
 	Quaternion Quaternion::MultiplyInverse(const Quaternion &other) const
@@ -400,30 +412,46 @@ namespace fl
 		return !(*this == value);
 	}
 
-	Quaternion Quaternion::operator-()
+	Quaternion Quaternion::operator-() const
 	{
 		return Negate();
 	}
 
-	float Quaternion::operator[](uint32_t index)
+	const float Quaternion::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
 		return m_elements[index];
 	}
 
-	Quaternion operator*(Quaternion left, const Quaternion &right)
+	float Quaternion::operator[](const uint32_t &index)
+	{
+		assert(index < 4);
+		return m_elements[index];
+	}
+
+	Quaternion operator*(const Quaternion &left, const Quaternion &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Quaternion operator*(Quaternion left, float value)
+	Vector3 operator*(const Vector3 &left, const Quaternion &right)
 	{
-		return left.Multiply(Quaternion(value, value, value, value));
+		return right.Multiply(left);
 	}
 
-	Quaternion operator*(float value, Quaternion left)
+	Vector3 operator*(const Quaternion &left, const Vector3 &right)
 	{
-		return Quaternion(value, value, value, value).Multiply(left);
+		return left.Multiply(right);
+	}
+
+	Quaternion operator*(const float &left, const Quaternion &right)
+	{
+		return right.Scale(left);
+	}
+
+	Quaternion operator*(const Quaternion &left, const float &right)
+	{
+		return left.Scale(right);
 	}
 
 	Quaternion &Quaternion::operator*=(const Quaternion &other)
@@ -431,14 +459,14 @@ namespace fl
 		return *this = Multiply(other);
 	}
 
-	Quaternion &Quaternion::operator*=(float value)
+	Quaternion &Quaternion::operator*=(const float &other)
 	{
-		return *this = Multiply(Quaternion(value, value, value, value));
+		return *this = Scale(other);
 	}
 
-	std::ostream &operator<<(std::ostream &stream, const Quaternion &vector)
+	std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion)
 	{
-		stream << vector.ToString();
+		stream << quaternion.ToString();
 		return stream;
 	}
 

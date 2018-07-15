@@ -233,35 +233,35 @@ namespace fl
 
 		bool operator!=(const float &value) const;
 
-		Vector4 operator-();
+		Vector4 operator-() const;
 
-		const float &operator[](uint32_t index) const;
+		const float &operator[](const uint32_t &index) const;
 
-		float &operator[](uint32_t index);
+		float &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Vector4 operator+(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator+(const Vector4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator-(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator-(const Vector4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator*(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator*(const Vector4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator/(Vector4 left, const Vector4 &right);
+		FL_EXPORT friend Vector4 operator/(const Vector4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator+(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator+(const float &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator-(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator-(const float &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator*(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator*(const float &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator/(Vector4 left, float value);
+		FL_EXPORT friend Vector4 operator/(const float &left, const Vector4 &right);
 
-		FL_EXPORT friend Vector4 operator+(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator+(const Vector4 &left, const float &right);
 
-		FL_EXPORT friend Vector4 operator-(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator-(const Vector4 &left, const float &right);
 
-		FL_EXPORT friend Vector4 operator*(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator*(const Vector4 &left, const float &right);
 
-		FL_EXPORT friend Vector4 operator/(float value, Vector4 left);
+		FL_EXPORT friend Vector4 operator/(const Vector4 &left, const float &right);
 
 		Vector4 &operator+=(const Vector4 &other);
 
@@ -271,13 +271,13 @@ namespace fl
 
 		Vector4 &operator/=(const Vector4 &other);
 
-		Vector4 &operator+=(float value);
+		Vector4 &operator+=(const float &other);
 
-		Vector4 &operator-=(float value);
+		Vector4 &operator-=(const float &other);
 
-		Vector4 &operator*=(float value);
+		Vector4 &operator*=(const float &other);
 
-		Vector4 &operator/=(float value);
+		Vector4 &operator/=(const float &other);
 
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
 

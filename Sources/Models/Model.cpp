@@ -12,7 +12,9 @@ namespace fl
 		m_filename(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(BoundingBox())
+		m_pointCloud(std::vector<float>()),
+		m_minExtents(Vector3()),
+		m_maxExtents(Vector3())
 	{
 	}
 
@@ -21,7 +23,9 @@ namespace fl
 		m_filename(filename),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(BoundingBox())
+		m_pointCloud(std::vector<float>()),
+		m_minExtents(Vector3()),
+		m_maxExtents(Vector3())
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
@@ -40,7 +44,7 @@ namespace fl
 			m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		m_aabb = CalculateAabb(vertices);
+		CalculateBounds(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -53,7 +57,9 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(BoundingBox())
+		m_pointCloud(std::vector<float>()),
+		m_minExtents(Vector3()),
+		m_maxExtents(Vector3())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
 		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
@@ -61,7 +67,7 @@ namespace fl
 
 		m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 
-		m_aabb = CalculateAabb(vertices);
+		CalculateBounds(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -74,13 +80,15 @@ namespace fl
 		m_filename(name),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_aabb(BoundingBox())
+		m_pointCloud(std::vector<float>()),
+		m_minExtents(Vector3()),
+		m_maxExtents(Vector3())
 	{
 		void *verticesData = vertices[0]->GetData(vertices);
 		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices[0]->GetSize(), vertices.size(), verticesData);
 		free(verticesData);
 
-		m_aabb = CalculateAabb(vertices);
+		CalculateBounds(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -115,6 +123,15 @@ namespace fl
 		}
 	}
 
+	float Model::GetRadius() const
+	{
+		float min0 = std::abs(m_minExtents.MaxComponent());
+		float min1 = std::abs(m_minExtents.MinComponent());
+		float max0 = std::abs(m_maxExtents.MaxComponent());
+		float max1 = std::abs(m_maxExtents.MinComponent());
+		return std::max(min0, std::max(min1, std::max(max0, max1)));
+	}
+
 	void Model::Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name)
 	{
 		m_filename = name;
@@ -131,7 +148,7 @@ namespace fl
 			m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(indices[0]), indices.size(), indices.data());
 		}
 
-		m_aabb = CalculateAabb(vertices);
+		CalculateBounds(vertices);
 
 		for (auto &vertex : vertices)
 		{
@@ -318,47 +335,55 @@ namespace fl
 		v2->AddTangent(tangent);
 	}
 
-	BoundingBox Model::CalculateAabb(const std::vector<IVertex *> &vertices)
+	void Model::CalculateBounds(const std::vector<IVertex *> &vertices)
 	{
-		float minX = +std::numeric_limits<float>::infinity();
-		float minY = +std::numeric_limits<float>::infinity();
-		float minZ = +std::numeric_limits<float>::infinity();
-		float maxX = -std::numeric_limits<float>::infinity();
-		float maxY = -std::numeric_limits<float>::infinity();
-		float maxZ = -std::numeric_limits<float>::infinity();
+		m_pointCloud.clear();
+		m_pointCloud.resize(vertices.size() * 3);
+
+		m_minExtents.m_x = +std::numeric_limits<float>::infinity();
+		m_minExtents.m_y = +std::numeric_limits<float>::infinity();
+		m_minExtents.m_z = +std::numeric_limits<float>::infinity();
+		m_maxExtents.m_x = -std::numeric_limits<float>::infinity();
+		m_maxExtents.m_y = -std::numeric_limits<float>::infinity();
+		m_maxExtents.m_z = -std::numeric_limits<float>::infinity();
+
+		int i = 0;
 
 		for (auto &vertex : vertices)
 		{
-			const Vector3 position = vertex->GetPosition();
+			Vector3 position = vertex->GetPosition();
 
-			if (position.m_x < minX)
-			{
-				minX = position.m_x;
-			}
-			else if (position.m_x > maxX)
-			{
-				maxX = position.m_x;
-			}
+			m_pointCloud[i] = position.m_x;
+			m_pointCloud[i + 1] = position.m_y;
+			m_pointCloud[i + 2] = position.m_z;
+			i += 3;
 
-			if (position.m_y < minY)
+			if (position.m_x < m_minExtents.m_x)
 			{
-				minY = position.m_y;
+				m_minExtents.m_x = position.m_x;
 			}
-			else if (position.m_y > maxY)
+			else if (position.m_x > m_maxExtents.m_x)
 			{
-				maxY = position.m_y;
+				m_maxExtents.m_x = position.m_x;
 			}
 
-			if (position.m_z < minZ)
+			if (position.m_y < m_minExtents.m_y)
 			{
-				minZ = position.m_z;
+				m_minExtents.m_y = position.m_y;
 			}
-			else if (position.m_z > maxZ)
+			else if (position.m_y > m_maxExtents.m_y)
 			{
-				maxZ = position.m_z;
+				m_maxExtents.m_y = position.m_y;
+			}
+
+			if (position.m_z < m_minExtents.m_z)
+			{
+				m_minExtents.m_z = position.m_z;
+			}
+			else if (position.m_z > m_maxExtents.m_z)
+			{
+				m_maxExtents.m_z = position.m_z;
 			}
 		}
-
-		return BoundingBox(Vector3(minX, minY, minZ), Vector3(maxX, maxY, maxZ));
 	}
 }

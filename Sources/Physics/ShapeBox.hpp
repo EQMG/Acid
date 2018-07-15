@@ -12,9 +12,13 @@ namespace fl
 	private:
 		btBoxShape *m_shape;
 	public:
-		ShapeBox(const Vector3 &halfExtents = Vector3::ONE);
+		ShapeBox(const Vector3 &extents = Vector3::ONE);
 
 		~ShapeBox();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -23,5 +27,9 @@ namespace fl
 		std::string GetName() const override { return "ShapeBox"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		Vector3 GetExtents() const;
+
+		void SetExtents(const Vector3 &extents);
 	};
 }

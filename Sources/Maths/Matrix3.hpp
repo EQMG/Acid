@@ -7,7 +7,7 @@
 namespace fl
 {
 	/// <summary>
-	/// Holds a 3x3 matrix.
+	/// Holds a row major 3x3 matrix.
 	/// </summary>
 	class FL_EXPORT Matrix3
 	{
@@ -79,6 +79,13 @@ namespace fl
 		Matrix3 Multiply(const Matrix3 &other) const;
 
 		/// <summary>
+		/// Multiplies this matrix by a vector.
+		/// </summary>
+		/// <param name="other"> The vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector3 Multiply(const Vector3 &other) const;
+
+		/// <summary>
 		/// Divides this matrix by another matrix.
 		/// </summary>
 		/// <param name="other"> The other matrix. </param>
@@ -141,9 +148,9 @@ namespace fl
 
 		Matrix3 operator-() const;
 
-		const Vector3 &operator[](uint32_t index) const;
+		const Vector3 &operator[](const uint32_t &index) const;
 
-		Vector3 &operator[](uint32_t index);
+		Vector3 &operator[](const uint32_t &index);
 
 		FL_EXPORT friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
 
@@ -153,17 +160,19 @@ namespace fl
 
 		FL_EXPORT friend Matrix3 operator/(Matrix3 left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator*(Matrix3 left, Vector3 value);
+		FL_EXPORT friend Matrix3 operator*(Matrix3 left, Vector3 right);
 
-		FL_EXPORT friend Matrix3 operator/(Matrix3 left, Vector3 value);
+		FL_EXPORT friend Matrix3 operator/(Matrix3 left, Vector3 right);
 
-		FL_EXPORT friend Matrix3 operator*(Matrix3 left, float value);
+		FL_EXPORT friend Matrix3 operator*(Matrix3 left, float right);
 
-		FL_EXPORT friend Matrix3 operator/(Matrix3 left, float value);
+		FL_EXPORT friend Matrix3 operator/(Matrix3 left, float right);
 
-		FL_EXPORT friend Matrix3 operator*(float value, Matrix3 left);
+		FL_EXPORT friend Matrix3 operator*(float left, Matrix3 right);
 
-		FL_EXPORT friend Matrix3 operator/(float value, Matrix3 left);
+		FL_EXPORT friend Matrix3 operator/(float left, Matrix3 right);
+
+		FL_EXPORT friend Vector3 operator*(Vector3 left, Matrix3 right);
 
 		Matrix3 &operator+=(const Matrix3 &other);
 

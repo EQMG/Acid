@@ -10,16 +10,16 @@ namespace fl
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
+		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks)
 		{
-			auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
+			auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks));
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<ModelCylinder>(resource);
 			}
 
-			auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks, y0);
+			auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
@@ -32,15 +32,14 @@ namespace fl
 			float height = static_cast<float>(atof(split[3].c_str()));
 			int slices = atoi(split[4].c_str());
 			int stacks = atoi(split[5].c_str());
-			float y0 = static_cast<float>(atof(split[6].c_str()));
-			return Resource(radiusBase, radiusTop, height, slices, stacks, y0);
+			return Resource(radiusBase, radiusTop, height, slices, stacks);
 		}
 
-		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0);
+		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks);
 
 		~ModelCylinder();
 
 	private:
-		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0);
+		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks);
 	};
 }

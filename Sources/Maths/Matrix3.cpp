@@ -80,6 +80,18 @@ namespace fl
 		return result;
 	}
 
+	Vector3 Matrix3::Multiply(const Vector3 &other) const
+	{
+		Vector3 result = Vector3();
+
+		for (int row = 0; row < 3; row++)
+		{
+			result[row] = m_rows[row][0] * other[0] + m_rows[row][1] * other[1] + m_rows[row][2] * other[2];
+		}
+
+		return result;
+	}
+
 	Matrix3 Matrix3::Divide(const Matrix3 &other) const
 	{
 		Matrix3 result = Matrix3();
@@ -248,13 +260,13 @@ namespace fl
 		return Negate();
 	}
 
-	const Vector3 &Matrix3::operator[](uint32_t index) const
+	const Vector3 &Matrix3::operator[](const uint32_t &index) const
 	{
 		assert(index < 3);
 		return m_rows[index];
 	}
 
-	Vector3 &Matrix3::operator[](uint32_t index)
+	Vector3 &Matrix3::operator[](const uint32_t &index)
 	{
 		assert(index < 3);
 		return m_rows[index];
@@ -280,34 +292,39 @@ namespace fl
 		return left.Divide(right);
 	}
 
-	Matrix3 operator*(Matrix3 left, Vector3 value)
+	Matrix3 operator*(Matrix3 left, Vector3 right)
 	{
-		return left.Scale(value);
+		return left.Scale(right);
 	}
 
-	Matrix3 operator/(Matrix3 left, Vector3 value)
+	Matrix3 operator/(Matrix3 left, Vector3 right)
 	{
-		return left.Scale(1.0f / value);
+		return left.Scale(1.0f / right);
 	}
 
-	Matrix3 operator*(Matrix3 left, float value)
+	Matrix3 operator*(Matrix3 left, float right)
 	{
-		return left.Scale(Vector3(value, value, value));
+		return left.Scale(Vector3(right, right, right));
 	}
 
-	Matrix3 operator/(Matrix3 left, float value)
+	Matrix3 operator/(Matrix3 left, float right)
 	{
-		return left.Scale(1.0f / Vector3(value, value, value));
+		return left.Scale(1.0f / Vector3(right, right, right));
 	}
 
-	Matrix3 operator*(float value, Matrix3 left)
+	Matrix3 operator*(float left, Matrix3 right)
 	{
-		return left.Scale(Vector3(value, value, value));
+		return right.Scale(Vector3(left, left, left));
 	}
 
-	Matrix3 operator/(float value, Matrix3 left)
+	Matrix3 operator/(float left, Matrix3 right)
 	{
-		return left.Scale(1.0f / Vector3(value, value, value));
+		return right.Scale(1.0f / Vector3(left, left, left));
+	}
+
+	Vector3 operator*(Vector3 left, Matrix3 right)
+	{
+		return right.Multiply(left);
 	}
 
 	Matrix3 &Matrix3::operator+=(const Matrix3 &other)

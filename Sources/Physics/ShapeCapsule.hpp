@@ -12,9 +12,13 @@ namespace fl
 	private:
 		btCapsuleShape *m_shape;
 	public:
-		ShapeCapsule(const float &radius = 0.5f, const float &halfHeight = 0.5f);
+		ShapeCapsule(const float &diameter = 1.0f, const float &height = 1.0f);
 
 		~ShapeCapsule();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -23,5 +27,13 @@ namespace fl
 		std::string GetName() const override { return "ShapeCapsule"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		float GetDiameter() const;
+
+		void SetDiameter(const float &diameter);
+
+		float GetHeight() const;
+
+		void SetHeight(const float &height);
 	};
 }

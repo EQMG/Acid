@@ -14,8 +14,14 @@
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
-#include <Physics/Shapes/ShapeBox.hpp>
-#include <Physics/Shapes/ShapeSphere.hpp>
+#include <Physics/ShapeBox.hpp>
+#include <Physics/ShapeSphere.hpp>
+#include <Models/Shapes/ModelCube.hpp>
+#include <Physics/ShapeConvexHull.hpp>
+#include <Physics/ShapeCylinder.hpp>
+#include <Models/Shapes/ModelCylinder.hpp>
+#include <Physics/ShapeCone.hpp>
+#include <Scenes/Scenes.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
@@ -25,6 +31,7 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(std::make_shared<FpsCamera>()),
+		m_buttonSpawnSphere(new ButtonMouse({WSI_MOUSE_BUTTON_1})),
 		m_buttonFullscreen(new ButtonKeyboard({WSI_KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({WSI_KEY_M, WSI_KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({WSI_KEY_F12})),
@@ -41,6 +48,7 @@ namespace test
 
 	Scene1::~Scene1()
 	{
+		delete m_buttonSpawnSphere;
 		delete m_buttonFullscreen;
 		delete m_buttonCaptureMouse;
 		delete m_buttonScreenshot;
@@ -72,8 +80,12 @@ namespace test
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
-		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -5.0f, 0.0f), Vector3(), Vector3(100.0f, 1.0f, 100.0f)));
-		plane->AddComponent<Rigidbody>(0.0f, 0.2f, true, std::make_shared<ShapeBox>(Vector3(100.0f, 3.0f, 100.0f)));
+		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -5.0f, 0.0f), Vector3(), Vector3(200.0f, 3.0f, 200.0f)));
+		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined.png"), 0.0f, 1.0f);
+		plane->AddComponent<MeshRender>();
+		plane->AddComponent<ShapeBox>(Vector3(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<Rigidbody>(0.0f);
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -84,14 +96,35 @@ namespace test
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-				sphere->AddComponent<Rigidbody>(2.0f, 0.1f, true, std::make_shared<ShapeSphere>(3.0f));
+				sphere->AddComponent<ShapeSphere>(2.0f);
+				sphere->AddComponent<Rigidbody>(2.0f);
 			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
+
+		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 0.0f, 48.0f), Vector3(), 1.2f));
+		convex->AddComponent<Mesh>(Model::Resource("Objects/Testing/Model_Tea.obj"));
+		convex->AddComponent<ShapeConvexHull>();
+		convex->AddComponent<Rigidbody>(5.0f);
+		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
+		convex->AddComponent<MeshRender>();
 	}
 
 	void Scene1::Update()
 	{
+		if (m_buttonSpawnSphere->WasDown())
+		{
+			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 3.0f));
+			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
+			sphere->AddComponent<ShapeSphere>(2.0f);
+			auto rigidbody = sphere->AddComponent<Rigidbody>(2.0f);
+			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
+			sphere->AddComponent<MeshRender>();
+			rigidbody->AddForce(cameraRotation.ToQuaternion() * Vector3::FRONT * 6000.0f, Vector3::ZERO);
+		}
+
 		if (m_buttonFullscreen->WasDown())
 		{
 			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());

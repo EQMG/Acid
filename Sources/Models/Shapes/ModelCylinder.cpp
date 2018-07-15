@@ -4,7 +4,7 @@
 
 namespace fl
 {
-	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0) :
+	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks) :
 		Model()
 	{
 		auto vertices = std::vector<IVertex *>();
@@ -24,7 +24,7 @@ namespace fl
 
 				VertexModel *vertex = new VertexModel();
 				vertex->m_position.m_x = xDir * radius;
-				vertex->m_position.m_y = y0 + jDivStacks * height;
+				vertex->m_position.m_y = jDivStacks * height - (height / 2.0f);
 				vertex->m_position.m_z = zDir * radius;
 				vertex->m_uv.m_x = 1.0f - iDivSlices;
 				vertex->m_uv.m_y = 1.0f - jDivStacks;
@@ -54,16 +54,16 @@ namespace fl
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Set(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks, y0));
+		Model::Set(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks));
 	}
 
 	ModelCylinder::~ModelCylinder()
 	{
 	}
 
-	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks, const float &y0)
+	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks)
 	{
 		return "Cylinder_" + std::to_string(radiusBase) + "_" + std::to_string(radiusTop) + "_" + std::to_string(height) + "_" +
-			std::to_string(slices) + "_" + std::to_string(stacks) + "_" + std::to_string(y0);
+			std::to_string(slices) + "_" + std::to_string(stacks);
 	}
 }

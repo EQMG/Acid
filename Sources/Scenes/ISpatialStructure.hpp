@@ -10,10 +10,10 @@ namespace fl
 
 	class IComponent;
 
-	class IBounding;
+	class IShape;
 
 	/// <summary>
-	/// A data structure that stores objects with a notion of flounder.space.
+	/// A data structure that stores objects with a notion of space.
 	/// </summary>
 	class FL_EXPORT ISpatialStructure
 	{
@@ -75,7 +75,7 @@ namespace fl
 		/// <param name="range"> The frustum range of space being queried. </param>
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
+	//	virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -84,7 +84,7 @@ namespace fl
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<GameObject *> QueryBounding(IBounding *range) = 0;
+	//	virtual std::vector<GameObject *> QueryBounding(IShape *range) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

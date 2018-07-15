@@ -18,8 +18,8 @@ namespace fl
 	const Vector3 Vector3::DOWN = Vector3(0.0f, -1.0f, 0.0f);
 	const Vector3 Vector3::FRONT = Vector3(0.0f, 0.0f, 1.0f);
 	const Vector3 Vector3::BACK = Vector3(0.0f, 0.0f, -1.0f);
-	const Vector3 Vector3::POSITIVE_INFINITY = Vector3(+INFINITY, +INFINITY, +INFINITY);
-	const Vector3 Vector3::NEGATIVE_INFINITY = Vector3(-INFINITY, -INFINITY, -INFINITY);
+	const Vector3 Vector3::POSITIVE_INFINITY = Vector3(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector3 Vector3::NEGATIVE_INFINITY = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector3::Vector3() :
 		m_x(0.0f),
@@ -395,81 +395,81 @@ namespace fl
 		return !(*this == value);
 	}
 
-	Vector3 Vector3::operator-()
+	Vector3 Vector3::operator-() const
 	{
 		return Negate();
 	}
 
-	const float &Vector3::operator[](uint32_t index) const
+	const float &Vector3::operator[](const uint32_t &index) const
 	{
 		assert(index < 3);
 		return m_elements[index];
 	}
 
-	float &Vector3::operator[](uint32_t index)
+	float &Vector3::operator[](const uint32_t &index)
 	{
 		assert(index < 3);
 		return m_elements[index];
 	}
 
-	Vector3 operator+(Vector3 left, const Vector3 &right)
+	Vector3 operator+(const Vector3 &left, const Vector3 &right)
 	{
 		return left.Add(right);
 	}
 
-	Vector3 operator-(Vector3 left, const Vector3 &right)
+	Vector3 operator-(const Vector3 &left, const Vector3 &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Vector3 operator*(Vector3 left, const Vector3 &right)
+	Vector3 operator*(const Vector3 &left, const Vector3 &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Vector3 operator/(Vector3 left, const Vector3 &right)
+	Vector3 operator/(const Vector3 &left, const Vector3 &right)
 	{
 		return left.Divide(right);
 	}
 
-	Vector3 operator+(Vector3 left, float value)
+	Vector3 operator+(const float &left, const Vector3 &right)
 	{
-		return left.Add(Vector3(value, value, value));
+		return Vector3(left, left, left).Add(right);
 	}
 
-	Vector3 operator-(Vector3 left, float value)
+	Vector3 operator-(const float &left, const Vector3 &right)
 	{
-		return left.Subtract(Vector3(value, value, value));
+		return Vector3(left, left, left).Subtract(right);
 	}
 
-	Vector3 operator*(Vector3 left, float value)
+	Vector3 operator*(const float &left, const Vector3 &right)
 	{
-		return left.Multiply(Vector3(value, value, value));
+		return Vector3(left, left, left).Multiply(right);
 	}
 
-	Vector3 operator/(Vector3 left, float value)
+	Vector3 operator/(const float &left, const Vector3 &right)
 	{
-		return left.Divide(Vector3(value, value, value));
+		return Vector3(left, left, left).Divide(right);
 	}
 
-	Vector3 operator+(float value, Vector3 left)
+	Vector3 operator+(const Vector3 &left, const float &right)
 	{
-		return Vector3(value, value, value).Add(left);
+		return left.Add(Vector3(right, right, right));
 	}
 
-	Vector3 operator-(float value, Vector3 left)
+	Vector3 operator-(const Vector3 &left, const float &right)
 	{
-		return Vector3(value, value, value).Subtract(left);
+		return left.Subtract(Vector3(right, right, right));
 	}
 
-	Vector3 operator*(float value, Vector3 left)
+	Vector3 operator*(const Vector3 &left, const float &right)
 	{
-		return Vector3(value, value, value).Multiply(left);
+		return left.Multiply(Vector3(right, right, right));
 	}
 
-	Vector3 operator/(float value, Vector3 left)
+	Vector3 operator/(const Vector3 &left, const float &right)
 	{
-		return Vector3(value, value, value).Divide(left);
+		return left.Divide(Vector3(right, right, right));
 	}
 
 	Vector3 &Vector3::operator+=(const Vector3 &other)
@@ -492,24 +492,24 @@ namespace fl
 		return *this = Divide(other);
 	}
 
-	Vector3 &Vector3::operator+=(float value)
+	Vector3 &Vector3::operator+=(const float &other)
 	{
-		return *this = Add(Vector3(value, value, value));
+		return *this = Add(Vector3(other, other, other));
 	}
 
-	Vector3 &Vector3::operator-=(float value)
+	Vector3 &Vector3::operator-=(const float &other)
 	{
-		return *this = Subtract(Vector3(value, value, value));
+		return *this = Subtract(Vector3(other, other, other));
 	}
 
-	Vector3 &Vector3::operator*=(float value)
+	Vector3 &Vector3::operator*=(const float &other)
 	{
-		return *this = Multiply(Vector3(value, value, value));
+		return *this = Multiply(Vector3(other, other, other));
 	}
 
-	Vector3 &Vector3::operator/=(float value)
+	Vector3 &Vector3::operator/=(const float &other)
 	{
-		return *this = Divide(Vector3(value, value, value));
+		return *this = Divide(Vector3(other, other, other));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Vector3 &vector)

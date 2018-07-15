@@ -5,8 +5,6 @@
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
-#include "IBounding.hpp"
-#include "Shapes/IShape.hpp"
 
 namespace fl
 {
@@ -15,16 +13,16 @@ namespace fl
 	{
 	private:
 		float m_mass;
-		float m_drag;
-		bool m_useGravity;
+		float m_stiffness;
+		float m_damping;
 		Constraint3 m_freezePosition;
 		Constraint3 m_freezeRotation;
 
-		std::shared_ptr<IShape> m_shape;
 		btTransform m_worldTransform;
+		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &drag = 0.0f, const bool &useGravity = true, std::shared_ptr<IShape> shape = nullptr,
+		Rigidbody(const float &mass = 1.0f, const float &stiffness = 300.0f, const float &damping = 10.0f,
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
 
 		~Rigidbody();
@@ -39,24 +37,34 @@ namespace fl
 
 		std::string GetName() const override { return "Rigidbody"; };
 
+		void SetAngularVelocity(const Vector3 &velocity);
+
+		void SetLinearVelocity(const Vector3 &velocity);
+
+		void AddForce(const Vector3 &force, const Vector3 &position);
+
+		void ClearForces();
+
 		float GetMass() const { return m_mass; }
 
-		void SetMass(const float &mass) { m_mass = mass; }
+		void SetMass(const float &mass);
 
-		float GetDrag() const { return m_drag; }
+		float GetStiffness() const { return m_stiffness; }
 
-		void SetDrag(const float &drag) { m_drag = drag; }
+		void SetStiffness(const float &stiffness);
 
-		bool IsUseGravity() const { return m_useGravity; }
+		float GetDamping() const { return m_damping; }
 
-		void SetUseGravity(const bool &useGravity) { m_useGravity = useGravity; }
+		void SetDamping(const float &damping);
 
 		Constraint3 GetFreezePosition() const { return m_freezePosition; }
 
-		void SetFreezePosition(const Constraint3 &freezePosition) { m_freezePosition = freezePosition; }
+		void SetFreezePosition(const Constraint3 &freezePosition);
 
 		Constraint3 GetFreezeRotation() const { return m_freezeRotation; }
 
-		void SetFreezeRotation(const Constraint3 &freezeRotation) { m_freezeRotation = freezeRotation; }
+		void SetFreezeRotation(const Constraint3 &freezeRotation);
+	private:
+		static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 	};
 }

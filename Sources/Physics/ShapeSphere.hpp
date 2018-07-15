@@ -11,9 +11,13 @@ namespace fl
 	private:
 		btSphereShape *m_shape;
 	public:
-		ShapeSphere(const float &radius = 1.0f);
+		ShapeSphere(const float &diameter = 2.0f);
 
 		~ShapeSphere();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -22,5 +26,9 @@ namespace fl
 		std::string GetName() const override { return "ShapeSphere"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		float GetDiameter() const;
+
+		void SetDiameter(const float &diameter);
 	};
 }

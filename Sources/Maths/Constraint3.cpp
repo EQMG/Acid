@@ -76,18 +76,18 @@ namespace fl
 		return stream;
 	}
 
-	Constraint3 Constraint3::operator-()
+	Constraint3 Constraint3::operator-() const
 	{
 		return Negate();
 	}
 
-	const bool &Constraint3::operator[](uint32_t index) const
+	const bool &Constraint3::operator[](const uint32_t &index) const
 	{
 		assert(index < 3);
 		return m_elements[index];
 	}
 
-	bool &Constraint3::operator[](uint32_t index)
+	bool &Constraint3::operator[](const uint32_t &index)
 	{
 		assert(index < 3);
 		return m_elements[index];

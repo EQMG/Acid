@@ -12,9 +12,13 @@ namespace fl
 	private:
 		btConeShape *m_shape;
 	public:
-		ShapeCone(const float &radius = 0.5f, const float &height = 0.5f);
+		ShapeCone(const float &diameter = 1.0f, const float &height = 1.0f);
 
 		~ShapeCone();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -23,5 +27,13 @@ namespace fl
 		std::string GetName() const override { return "ShapeCone"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		float GetDiameter() const;
+
+		void SetDiameter(const float &diameter);
+
+		float GetHeight() const;
+
+		void SetHeight(const float &height);
 	};
 }

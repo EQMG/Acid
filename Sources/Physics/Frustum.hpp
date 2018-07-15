@@ -5,12 +5,12 @@
 namespace fl
 {
 	/// <summary>
-	/// Represents the region of flounder.space in the modeled world that may appear on the screen.
+	/// Represents the region of space in the modeled world that may appear on the screen.
 	/// </summary>
 	class FL_EXPORT Frustum
 	{
 	private:
-		float **m_frustumArray; // TODO: Move to using a `std::array` instead.
+		float **m_frustumArray;
 	public:
 		/// <summary>
 		/// Creates a new frustum.

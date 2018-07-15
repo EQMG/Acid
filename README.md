@@ -39,6 +39,8 @@ auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
 // Creates a game object.
 auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
+sphere->AddComponent<ShapeSphere>(3.0f);
+sphere->AddComponent<Rigidbody>(2.0f);
 sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
     0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>();

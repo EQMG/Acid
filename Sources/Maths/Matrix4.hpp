@@ -7,10 +7,12 @@
 
 namespace fl
 {
+	class Matrix3;
+
 	class Vector2;
 
 	/// <summary>
-	/// Holds a 4x4 matrix.
+	/// Holds a row major 4x4 matrix.
 	/// </summary>
 	class FL_EXPORT Matrix4
 	{
@@ -163,6 +165,12 @@ namespace fl
 		float Determinant() const;
 
 		/// <summary>
+		/// Gets the submatrix of this matrix.
+		/// </summary>
+		/// <returns> The submatrix. </returns>
+		Matrix3 GetSubmatrix(const int &row, const int &col) const;
+
+		/// <summary>
 		/// Creates a new transformation matrix for a object in 3d space.
 		/// </summary>
 		/// <param name="translation"> Translation amount the XYZ. </param>
@@ -238,29 +246,33 @@ namespace fl
 
 		Matrix4 operator-() const;
 
-		const Vector4 &operator[](uint32_t index) const;
+		const Vector4 &operator[](const uint32_t &index) const;
 
-		Vector4 &operator[](uint32_t index);
+		Vector4 &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Matrix4 operator+(Matrix4 left, const Matrix4 &right);
+		FL_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator-(Matrix4 left, const Matrix4 &right);
+		FL_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(Matrix4 left, const Matrix4 &right);
+		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(Matrix4 left, const Matrix4 &right);
+		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(Matrix4 left, Vector4 value);
+		FL_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(Matrix4 left, Vector4 value);
+		FL_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(Matrix4 left, float value);
+		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(Matrix4 left, float value);
+		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(float value, Matrix4 left);
+		FL_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(float value, Matrix4 left);
+		FL_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
+
+		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
+
+		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
 
 		Matrix4 &operator+=(const Matrix4 &other);
 
@@ -270,11 +282,16 @@ namespace fl
 
 		Matrix4 &operator/=(const Matrix4 &other);
 
+		Matrix4 &operator*=(const Vector4 &other);
+
+		Matrix4 &operator/=(const Vector4 &other);
+
+		Matrix4 &operator*=(const float &other);
+
+		Matrix4 &operator/=(const float &other);
+
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
 		std::string ToString() const;
-
-	private:
-		static float Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22);
 	};
 }

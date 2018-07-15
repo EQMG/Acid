@@ -59,9 +59,7 @@ namespace fl
 			return Vector3();
 		}
 
-		return Vector3((coords.m_x / coords.m_w + 1.0f) / 2.0f,
-			1.0f - (coords.m_y / coords.m_w + 1.0f) / 2.0f, coords.m_z
-		);
+		return Vector3((coords.m_x / coords.m_w + 1.0f) / 2.0f, 1.0f - (coords.m_y / coords.m_w + 1.0f) / 2.0f, coords.m_z);
 	}
 
 	void Ray::UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY)
