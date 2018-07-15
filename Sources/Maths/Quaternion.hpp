@@ -81,14 +81,21 @@ namespace fl
 		~Quaternion();
 
 		/// <summary>
-		/// Sets the value of this quaternion to the quaternion product of quaternions left and right (this = left * right). Note that this is safe for aliasing (e.g. this can be left or right).
+		/// Multiplies this quaternion with another quaternion.
 		/// </summary>
 		/// <param name="other"> The other quaternion. </param>
 		/// <returns> The resultant quaternion. </returns>
 		Quaternion Multiply(const Quaternion &other) const;
 
 		/// <summary>
-		/// Multiplies quaternion left by the inverse of quaternion right and places the value into this quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
+		/// Multiplies this quaternion with another vector.
+		/// </summary>
+		/// <param name="other"> The other vector. </param>
+		/// <returns> The resultant vector. </returns>
+		Vector3 Multiply(const Vector3 &other) const;
+
+		/// <summary>
+		/// Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
 		/// </summary>
 		/// <param name="other"> The other quaternion. </param>
 		/// <returns> The resultant quaternion. </returns>
@@ -158,6 +165,11 @@ namespace fl
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
 		Matrix4 ToMatrix() const;
 
+		/// <summary>
+		/// Converts this quaternion to a 3x3 matrix representing the exact same
+		/// rotation as this quaternion.
+		/// </summary>
+		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
 		Matrix3 ToRotationMatrix3() const;
 
 		/// <summary>
@@ -219,21 +231,27 @@ namespace fl
 
 		bool operator!=(const float &value) const;
 
-		Quaternion operator-();
+		Quaternion operator-() const;
 
-		const float operator[](uint32_t index) const;
+		const float operator[](const uint32_t &index) const;
 
-		float operator[](uint32_t index);
+		float operator[](const uint32_t &index);
 
-		FL_EXPORT friend Quaternion operator*(Quaternion left, const Quaternion &right);
+		FL_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 
-		FL_EXPORT friend Quaternion operator*(float value, Quaternion left);
+		FL_EXPORT friend Vector3 operator*(const Vector3 &right, const Quaternion &left);
+
+		FL_EXPORT friend Vector3 operator*(const Quaternion &left, const Vector3 &right);
+
+		FL_EXPORT friend Quaternion operator*(const float &left, const Quaternion &right);
+
+		FL_EXPORT friend Quaternion operator*(const Quaternion &left, const float &right);
 
 		Quaternion &operator*=(const Quaternion &other);
 
-		Quaternion &operator*=(float value);
+		Quaternion &operator*=(const float &other);
 
-		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &vector);
+		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
 		std::string ToString() const;
 	};

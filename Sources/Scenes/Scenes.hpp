@@ -51,8 +51,6 @@ namespace fl
 
 		void Update() override;
 
-		btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
-
 		std::string GetName() const override { return "Scenes"; };
 
 		std::shared_ptr<IScene> GetScene() const { return m_scene; }

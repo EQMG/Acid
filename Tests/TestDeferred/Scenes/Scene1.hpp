@@ -14,6 +14,7 @@ namespace test
 		public IScene
 	{
 	private:
+		IButton *m_buttonSpawnSphere;
 		IButton *m_buttonFullscreen;
 		IButton *m_buttonCaptureMouse;
 		IButton *m_buttonScreenshot;

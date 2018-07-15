@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
-#include <LinearMath/btDefaultMotionState.h>
 
 namespace fl
 {
@@ -22,11 +21,14 @@ namespace fl
 
 		m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
 
-		m_dynamicsWorld->setGravity(btVector3(0.0f, -10.0f, 0.0f));
-		m_dynamicsWorld->getSolverInfo().m_erp2 = 0.0f;
+		m_dynamicsWorld->setGravity(btVector3(0.0f, -20.0f, 0.0f));
+		m_dynamicsWorld->getSolverInfo().m_damping = 1.0f;
+		m_dynamicsWorld->getSolverInfo().m_friction = 0.3f;
+		m_dynamicsWorld->getSolverInfo().m_timeStep = 1.0f / 60.0f;
+		m_dynamicsWorld->getSolverInfo().m_erp2 = 0.8f;
 		m_dynamicsWorld->getSolverInfo().m_globalCfm = 0.0f;
-		m_dynamicsWorld->getSolverInfo().m_numIterations = 3;
-		m_dynamicsWorld->getSolverInfo().m_solverMode = SOLVER_SIMD; // | SOLVER_RANDMIZE_ORDER;
+		m_dynamicsWorld->getSolverInfo().m_numIterations = 10;
+		m_dynamicsWorld->getSolverInfo().m_solverMode = SOLVER_USE_WARMSTARTING | SOLVER_SIMD; // | SOLVER_RANDMIZE_ORDER;
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = false;
 
 		m_collisionShapes = btAlignedObjectArray<btCollisionShape *>();
@@ -102,28 +104,5 @@ namespace fl
 		}
 
 		m_scene->GetCamera()->Update();
-	}
-
-	btRigidBody *Scenes::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
-	{
-		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE));
-
-		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-		bool isDynamic = mass != 0.0f;
-
-		btVector3 localInertia(0.0f, 0.0f, 0.0f);
-
-		if (isDynamic)
-		{
-			shape->calculateLocalInertia(mass, localInertia);
-		}
-
-		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
-		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
-		btRigidBody *body = new btRigidBody(cInfo);
-		//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-		//	body->setUserIndex(-1);
-		return body;
 	}
 }

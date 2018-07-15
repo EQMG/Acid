@@ -217,9 +217,9 @@ namespace fl
 
 		bool operator!=(const float &value) const;
 
-		const float &operator[](uint32_t index) const;
+		const float &operator[](const uint32_t &index) const;
 
-		float &operator[](uint32_t index);
+		float &operator[](const uint32_t &index);
 
 		FL_EXPORT friend Colour operator+(Colour left, const Colour &right);
 

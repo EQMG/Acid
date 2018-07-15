@@ -85,11 +85,11 @@ namespace fl
 
 		bool operator!=(const Constraint3 &other) const;
 
-		Constraint3 operator-();
+		Constraint3 operator-() const;
 
-		const bool &operator[](uint32_t index) const;
+		const bool &operator[](const uint32_t &index) const;
 
-		bool &operator[](uint32_t index);
+		bool &operator[](const uint32_t &index);
 
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Constraint3 &constraint);
 

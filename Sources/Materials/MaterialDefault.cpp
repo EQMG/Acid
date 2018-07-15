@@ -1,5 +1,7 @@
 #include "MaterialDefault.hpp"
 
+#include "Objects/GameObject.hpp"
+
 namespace fl
 {
 	MaterialDefault::MaterialDefault(const Colour &baseColor, std::shared_ptr<Texture> diffuseTexture,

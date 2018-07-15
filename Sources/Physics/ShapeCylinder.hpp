@@ -12,9 +12,13 @@ namespace fl
 	private:
 		btCylinderShape *m_shape;
 	public:
-		ShapeCylinder(const Vector3 &halfExtents = Vector3::ONE);
+		ShapeCylinder(const float &diameter = 1.0f, const float &height = 1.0f);
 
 		~ShapeCylinder();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -23,5 +27,13 @@ namespace fl
 		std::string GetName() const override { return "ShapeCylinder"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		float GetDiameter() const;
+
+		void SetDiameter(const float &diameter);
+
+		float GetHeight() const;
+
+		void SetHeight(const float &height);
 	};
 }

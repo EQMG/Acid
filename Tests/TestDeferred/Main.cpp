@@ -29,6 +29,11 @@ int main(int argc, char **argv)
 //	Files::AddSearchPath("Resources/Game");
 	Files::AddSearchPath("Resources/Engine");
 
+	Matrix4 a = Quaternion(63.1f, 9.0f, -70.0f).ToRotationMatrix();
+	//Matrix4 b = Quaternion(-10.1f, 0.0f, 0.0f).ToRotationMatrix();
+	Matrix4 c = a.Invert();
+	printf("%s\n", c.ToString().c_str());
+
 	// Creates the engine and updater objects.
 	auto engine = std::make_shared<Engine>();
 	engine->SetUpdater(std::make_shared<MainUpdater>());

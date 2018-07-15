@@ -1,5 +1,7 @@
 #include "MeshRender.hpp"
 
+#include "Objects/GameObject.hpp"
+
 namespace fl
 {
 	MeshRender::MeshRender() :
@@ -19,7 +21,7 @@ namespace fl
 
 	void MeshRender::Update()
 	{
-		auto material = GetGameObject()->GetComponent<IMaterial>(false);
+		auto material = GetGameObject()->GetComponent<IMaterial>();
 
 		if (material == nullptr)
 		{
@@ -44,8 +46,8 @@ namespace fl
 		}*/
 
 		// Gets required components.
-		auto material = GetGameObject()->GetComponent<IMaterial>(false);
-		auto mesh = GetGameObject()->GetComponent<Mesh>(false);
+		auto material = GetGameObject()->GetComponent<IMaterial>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (material == nullptr || mesh == nullptr || mesh->GetModel() == nullptr)
 		{

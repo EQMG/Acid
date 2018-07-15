@@ -1,11 +1,11 @@
 {
+  "ShapeSphere": {
+    "Diameter": 1.0
+  },
   "Rigidbody": {
-    "Mass": 2.0, 
-    "Drag": 0.1, 
-    "Use Gravity": true,
-    "ShapeSphere": {
-      "Radius": 3.0
-    },
+    "Mass": 2.0,
+    "Stiffness": 300.0,
+    "Damping": 10.0,
     "Freeze Position": {
       "x": false,
       "y": false,

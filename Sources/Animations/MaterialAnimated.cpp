@@ -1,5 +1,6 @@
 #include "MaterialAnimated.hpp"
 
+#include "Objects/GameObject.hpp"
 #include "MeshAnimated.hpp"
 
 namespace fl

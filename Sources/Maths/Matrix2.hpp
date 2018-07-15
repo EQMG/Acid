@@ -7,7 +7,7 @@
 namespace fl
 {
 	/// <summary>
-	/// Holds a 2x2 matrix.
+	/// Holds a row major 2x2 matrix.
 	/// </summary>
 	class FL_EXPORT Matrix2
 	{
@@ -141,9 +141,9 @@ namespace fl
 
 		Matrix2 operator-() const;
 
-		const Vector2 &operator[](uint32_t index) const;
+		const Vector2 &operator[](const uint32_t &index) const;
 
-		Vector2 &operator[](uint32_t index);
+		Vector2 &operator[](const uint32_t &index);
 
 		FL_EXPORT friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
 
@@ -153,17 +153,17 @@ namespace fl
 
 		FL_EXPORT friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator*(Matrix2 left, Vector2 value);
+		FL_EXPORT friend Matrix2 operator*(Matrix2 left, Vector2 right);
 
-		FL_EXPORT friend Matrix2 operator/(Matrix2 left, Vector2 value);
+		FL_EXPORT friend Matrix2 operator/(Matrix2 left, Vector2 right);
 
-		FL_EXPORT friend Matrix2 operator*(Matrix2 left, float value);
+		FL_EXPORT friend Matrix2 operator*(Matrix2 left, float right);
 
-		FL_EXPORT friend Matrix2 operator/(Matrix2 left, float value);
+		FL_EXPORT friend Matrix2 operator/(Matrix2 left, float right);
 
-		FL_EXPORT friend Matrix2 operator*(float value, Matrix2 left);
+		FL_EXPORT friend Matrix2 operator*(float left, Matrix2 right);
 
-		FL_EXPORT friend Matrix2 operator/(float value, Matrix2 left);
+		FL_EXPORT friend Matrix2 operator/(float left, Matrix2 right);
 
 		Matrix2 &operator+=(const Matrix2 &other);
 

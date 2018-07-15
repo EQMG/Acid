@@ -57,7 +57,7 @@ namespace fl
 		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		auto camera = Scenes::Get()->GetCamera();
 		auto stages = m_managerRender->GetStages();
-		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +INFINITY);
+		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +std::numeric_limits<float>::infinity());
 
 		for (uint32_t stage = 0; stage < m_renderStages.size(); stage++)
 		{

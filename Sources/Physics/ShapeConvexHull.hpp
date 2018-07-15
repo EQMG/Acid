@@ -12,9 +12,13 @@ namespace fl
 	private:
 		btConvexHullShape *m_shape;
 	public:
-		ShapeConvexHull(const std::vector<Vector3> &data = std::vector<Vector3>());
+		ShapeConvexHull(const std::vector<float> &pointCloud = std::vector<float>());
 
 		~ShapeConvexHull();
+
+		void Start() override;
+
+		void Update() override;
 
 		void Load(LoadedValue *value) override;
 
@@ -22,8 +26,8 @@ namespace fl
 
 		std::string GetName() const override { return "ShapeConvexHull"; };
 
-		void LoadData(const std::vector<Vector3> &data);
-
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		void SetPointCloud(const std::vector<float> &pointCloud);
 	};
 }

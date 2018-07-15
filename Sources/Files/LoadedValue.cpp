@@ -30,6 +30,7 @@ namespace fl
 
 		if (!addIfNull)
 		{
+			fprintf(stderr, "Could not find loaded value: %s\n", name.c_str());
 			return nullptr;
 		}
 
@@ -48,6 +49,7 @@ namespace fl
 		// TODO
 		//if (!addIfNull)
 		//{
+		fprintf(stderr, "Could not find loaded value child at: %i\n", index);
 		return nullptr;
 		//}
 	}
@@ -69,6 +71,7 @@ namespace fl
 			}
 		}
 
+		fprintf(stderr, "Could not find loaded value child with: %s\n", attribute.c_str());
 		return nullptr;
 	}
 

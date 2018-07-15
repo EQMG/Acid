@@ -12,8 +12,8 @@ namespace fl
 	const Vector2 Vector2::RIGHT = Vector2(1.0f, 0.0f);
 	const Vector2 Vector2::UP = Vector2(0.0f, 1.0f);
 	const Vector2 Vector2::DOWN = Vector2(0.0f, -1.0f);
-	const Vector2 Vector2::POSITIVE_INFINITY = Vector2(+INFINITY, +INFINITY);
-	const Vector2 Vector2::NEGATIVE_INFINITY = Vector2(-INFINITY, -INFINITY);
+	const Vector2 Vector2::POSITIVE_INFINITY = Vector2(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector2 Vector2::NEGATIVE_INFINITY = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector2::Vector2() :
 		m_x(0.0f),
@@ -245,81 +245,81 @@ namespace fl
 		return !(*this == value);
 	}
 
-	Vector2 Vector2::operator-()
+	Vector2 Vector2::operator-() const
 	{
 		return Negate();
 	}
 
-	const float &Vector2::operator[](uint32_t index) const
+	const float &Vector2::operator[](const uint32_t &index) const
 	{
 		assert(index < 2);
 		return m_elements[index];
 	}
 
-	float &Vector2::operator[](uint32_t index)
+	float &Vector2::operator[](const uint32_t &index)
 	{
 		assert(index < 2);
 		return m_elements[index];
 	}
 
-	Vector2 operator+(Vector2 left, const Vector2 &right)
+	Vector2 operator+(const Vector2 &left, const Vector2 &right)
 	{
 		return left.Add(right);
 	}
 
-	Vector2 operator-(Vector2 left, const Vector2 &right)
+	Vector2 operator-(const Vector2 &left, const Vector2 &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Vector2 operator*(Vector2 left, const Vector2 &right)
+	Vector2 operator*(const Vector2 &left, const Vector2 &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Vector2 operator/(Vector2 left, const Vector2 &right)
+	Vector2 operator/(const Vector2 &left, const Vector2 &right)
 	{
 		return left.Divide(right);
 	}
 
-	Vector2 operator+(Vector2 left, float value)
+	Vector2 operator+(const float &left, const Vector2 &right)
 	{
-		return left.Add(Vector2(value, value));
+		return Vector2(left, left).Add(right);
 	}
 
-	Vector2 operator-(Vector2 left, float value)
+	Vector2 operator-(const float &left, const Vector2 &right)
 	{
-		return left.Subtract(Vector2(value, value));
+		return Vector2(left, left).Subtract(right);
 	}
 
-	Vector2 operator*(Vector2 left, float value)
+	Vector2 operator*(const float &left, const Vector2 &right)
 	{
-		return left.Multiply(Vector2(value, value));
+		return Vector2(left, left).Multiply(right);
 	}
 
-	Vector2 operator/(Vector2 left, float value)
+	Vector2 operator/(const float &left, const Vector2 &right)
 	{
-		return left.Divide(Vector2(value, value));
+		return Vector2(left, left).Divide(right);
 	}
 
-	Vector2 operator+(float value, Vector2 left)
+	Vector2 operator+(const Vector2 &left, const float &right)
 	{
-		return Vector2(value, value).Add(left);
+		return left.Add(Vector2(right, right));
 	}
 
-	Vector2 operator-(float value, Vector2 left)
+	Vector2 operator-(const Vector2 &left, const float &right)
 	{
-		return Vector2(value, value).Subtract(left);
+		return left.Subtract(Vector2(right, right));
 	}
 
-	Vector2 operator*(float value, Vector2 left)
+	Vector2 operator*(const Vector2 &left, const float &right)
 	{
-		return Vector2(value, value).Multiply(left);
+		return left.Multiply(Vector2(right, right));
 	}
 
-	Vector2 operator/(float value, Vector2 left)
+	Vector2 operator/(const Vector2 &left, const float &right)
 	{
-		return Vector2(value, value).Divide(left);
+		return left.Divide(Vector2(right, right));
 	}
 
 	Vector2 &Vector2::operator+=(const Vector2 &other)
@@ -342,24 +342,24 @@ namespace fl
 		return *this = Divide(other);
 	}
 
-	Vector2 &Vector2::operator+=(float value)
+	Vector2 &Vector2::operator+=(const float &other)
 	{
-		return *this = Add(Vector2(value, value));
+		return *this = Add(Vector2(other, other));
 	}
 
-	Vector2 &Vector2::operator-=(float value)
+	Vector2 &Vector2::operator-=(const float &other)
 	{
-		return *this = Subtract(Vector2(value, value));
+		return *this = Subtract(Vector2(other, other));
 	}
 
-	Vector2 &Vector2::operator*=(float value)
+	Vector2 &Vector2::operator*=(const float &other)
 	{
-		return *this = Multiply(Vector2(value, value));
+		return *this = Multiply(Vector2(other, other));
 	}
 
-	Vector2 &Vector2::operator/=(float value)
+	Vector2 &Vector2::operator/=(const float &other)
 	{
-		return *this = Divide(Vector2(value, value));
+		return *this = Divide(Vector2(other, other));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Vector2 &vector)

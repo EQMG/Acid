@@ -232,13 +232,13 @@ namespace fl
 		return !(*this == value);
 	}
 
-	const float &Colour::operator[](uint32_t index) const
+	const float &Colour::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
 		return m_elements[index];
 	}
 
-	float &Colour::operator[](uint32_t index)
+	float &Colour::operator[](const uint32_t &index)
 	{
 		assert(index < 4);
 		return m_elements[index];

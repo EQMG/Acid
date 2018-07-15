@@ -9,8 +9,8 @@ namespace fl
 {
 	const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 	const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	const Vector4 Vector4::POSITIVE_INFINITY = Vector4(+INFINITY, +INFINITY, +INFINITY, +INFINITY);
-	const Vector4 Vector4::NEGATIVE_INFINITY = Vector4(-INFINITY, -INFINITY, -INFINITY, -INFINITY);
+	const Vector4 Vector4::POSITIVE_INFINITY = Vector4(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector4 Vector4::NEGATIVE_INFINITY = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector4::Vector4() :
 		m_x(0.0f),
@@ -246,81 +246,81 @@ namespace fl
 		return !(*this == value);
 	}
 
-	Vector4 Vector4::operator-()
+	Vector4 Vector4::operator-() const
 	{
 		return Negate();
 	}
 
-	const float &Vector4::operator[](uint32_t index) const
+	const float &Vector4::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
 		return m_elements[index];
 	}
 
-	float &Vector4::operator[](uint32_t index)
+	float &Vector4::operator[](const uint32_t &index)
 	{
 		assert(index < 4);
 		return m_elements[index];
 	}
 
-	Vector4 operator+(Vector4 left, const Vector4 &right)
+	Vector4 operator+(const Vector4 &left, const Vector4 &right)
 	{
 		return left.Add(right);
 	}
 
-	Vector4 operator-(Vector4 left, const Vector4 &right)
+	Vector4 operator-(const Vector4 &left, const Vector4 &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Vector4 operator*(Vector4 left, const Vector4 &right)
+	Vector4 operator*(const Vector4 &left, const Vector4 &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Vector4 operator/(Vector4 left, const Vector4 &right)
+	Vector4 operator/(const Vector4 &left, const Vector4 &right)
 	{
 		return left.Divide(right);
 	}
 
-	Vector4 operator+(Vector4 left, float value)
+	Vector4 operator+(const float &left, const Vector4 &right)
 	{
-		return left.Add(Vector4(value, value, value, value));
+		return Vector4(left, left, left, left).Add(right);
 	}
 
-	Vector4 operator-(Vector4 left, float value)
+	Vector4 operator-(const float &left, const Vector4 &right)
 	{
-		return left.Subtract(Vector4(value, value, value, value));
+		return Vector4(left, left, left, left).Subtract(right);
 	}
 
-	Vector4 operator*(Vector4 left, float value)
+	Vector4 operator*(const float &left, const Vector4 &right)
 	{
-		return left.Multiply(Vector4(value, value, value, value));
+		return Vector4(left, left, left, left).Multiply(right);
 	}
 
-	Vector4 operator/(Vector4 left, float value)
+	Vector4 operator/(const float &left, const Vector4 &right)
 	{
-		return left.Divide(Vector4(value, value, value, value));
+		return Vector4(left, left, left, left).Divide(right);
 	}
 
-	Vector4 operator+(float value, Vector4 left)
+	Vector4 operator+(const Vector4 &left, const float &right)
 	{
-		return Vector4(value, value, value, value).Add(left);
+		return left.Add(Vector4(right, right, right, right));
 	}
 
-	Vector4 operator-(float value, Vector4 left)
+	Vector4 operator-(const Vector4 &left, const float &right)
 	{
-		return Vector4(value, value, value, value).Subtract(left);
+		return left.Subtract(Vector4(right, right, right, right));
 	}
 
-	Vector4 operator*(float value, Vector4 left)
+	Vector4 operator*(const Vector4 &left, const float &right)
 	{
-		return Vector4(value, value, value, value).Multiply(left);
+		return left.Multiply(Vector4(right, right, right, right));
 	}
 
-	Vector4 operator/(float value, Vector4 left)
+	Vector4 operator/(const Vector4 &left, const float &right)
 	{
-		return Vector4(value, value, value, value).Divide(left);
+		return left.Divide(Vector4(right, right, right, right));
 	}
 
 	Vector4 &Vector4::operator+=(const Vector4 &other)
@@ -343,24 +343,24 @@ namespace fl
 		return *this = Divide(other);
 	}
 
-	Vector4 &Vector4::operator+=(float value)
+	Vector4 &Vector4::operator+=(const float &other)
 	{
-		return *this = Add(Vector4(value, value, value, value));
+		return *this = Add(Vector4(other, other, other, other));
 	}
 
-	Vector4 &Vector4::operator-=(float value)
+	Vector4 &Vector4::operator-=(const float &other)
 	{
-		return *this = Subtract(Vector4(value, value, value, value));
+		return *this = Subtract(Vector4(other, other, other, other));
 	}
 
-	Vector4 &Vector4::operator*=(float value)
+	Vector4 &Vector4::operator*=(const float &other)
 	{
-		return *this = Multiply(Vector4(value, value, value, value));
+		return *this = Multiply(Vector4(other, other, other, other));
 	}
 
-	Vector4 &Vector4::operator/=(float value)
+	Vector4 &Vector4::operator/=(const float &other)
 	{
-		return *this = Divide(Vector4(value, value, value, value));
+		return *this = Divide(Vector4(other, other, other, other));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Vector4 &vector)

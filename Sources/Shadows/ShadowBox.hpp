@@ -3,7 +3,6 @@
 #include "Scenes/ICamera.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
-#include "Physics/BoundingBox.hpp"
 
 namespace fl
 {
@@ -29,7 +28,8 @@ namespace fl
 		float m_farHeight, m_farWidth;
 		float m_nearHeight, m_nearWidth;
 
-		BoundingBox m_aabb;
+		Vector3 m_minExtents;
+		Vector3 m_maxExtents;
 	public:
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
@@ -120,6 +120,14 @@ namespace fl
 		/// <returns> The light's "view" matrix. </returns>
 		Matrix4 GetLightSpaceTransform() const { return m_lightViewMatrix; }
 
-		BoundingBox GetAabb() const { return m_aabb; }
+		Vector3 GetMinExtents() const { return m_minExtents; }
+
+		Vector3 GetMaxExtents() const { return m_maxExtents; }
+
+		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
+
+		float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
+
+		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
 	};
 }

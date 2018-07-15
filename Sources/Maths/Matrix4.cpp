@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include "Maths.hpp"
+#include "Matrix3.hpp"
 #include "Vector2.hpp"
 
 namespace fl
@@ -40,166 +41,138 @@ namespace fl
 	Matrix4 Matrix4::Add(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = m_rows[0][0] + other[0][0];
-		result[0][1] = m_rows[0][1] + other[0][1];
-		result[0][2] = m_rows[0][2] + other[0][2];
-		result[0][3] = m_rows[0][3] + other[0][3];
-		result[1][0] = m_rows[1][0] + other[1][0];
-		result[1][1] = m_rows[1][1] + other[1][1];
-		result[1][2] = m_rows[1][2] + other[1][2];
-		result[1][3] = m_rows[1][3] + other[1][3];
-		result[2][0] = m_rows[2][0] + other[2][0];
-		result[2][1] = m_rows[2][1] + other[2][1];
-		result[2][2] = m_rows[2][2] + other[2][2];
-		result[2][3] = m_rows[2][3] + other[2][3];
-		result[3][0] = m_rows[3][0] + other[3][0];
-		result[3][1] = m_rows[3][1] + other[3][1];
-		result[3][2] = m_rows[3][2] + other[3][2];
-		result[3][3] = m_rows[3][3] + other[3][3];
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[row][col] + other[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = m_rows[0][0] - other[0][0];
-		result[0][1] = m_rows[0][1] - other[0][1];
-		result[0][2] = m_rows[0][2] - other[0][2];
-		result[0][3] = m_rows[0][3] - other[0][3];
-		result[1][0] = m_rows[1][0] - other[1][0];
-		result[1][1] = m_rows[1][1] - other[1][1];
-		result[1][2] = m_rows[1][2] - other[1][2];
-		result[1][3] = m_rows[1][3] - other[1][3];
-		result[2][0] = m_rows[2][0] - other[2][0];
-		result[2][1] = m_rows[2][1] - other[2][1];
-		result[2][2] = m_rows[2][2] - other[2][2];
-		result[2][3] = m_rows[2][3] - other[2][3];
-		result[3][0] = m_rows[3][0] - other[3][0];
-		result[3][1] = m_rows[3][1] - other[3][1];
-		result[3][2] = m_rows[3][2] - other[3][2];
-		result[3][3] = m_rows[3][3] - other[3][3];
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[row][col] - other[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = m_rows[0][0] * other[0][0] + m_rows[1][0] * other[0][1] + m_rows[2][0] * other[0][2] + m_rows[3][0] * other[0][3];
-		result[0][1] = m_rows[0][1] * other[0][0] + m_rows[1][1] * other[0][1] + m_rows[2][1] * other[0][2] + m_rows[3][1] * other[0][3];
-		result[0][2] = m_rows[0][2] * other[0][0] + m_rows[1][2] * other[0][1] + m_rows[2][2] * other[0][2] + m_rows[3][2] * other[0][3];
-		result[0][3] = m_rows[0][3] * other[0][0] + m_rows[1][3] * other[0][1] + m_rows[2][3] * other[0][2] + m_rows[3][3] * other[0][3];
-		result[1][0] = m_rows[0][0] * other[1][0] + m_rows[1][0] * other[1][1] + m_rows[2][0] * other[1][2] + m_rows[3][0] * other[1][3];
-		result[1][1] = m_rows[0][1] * other[1][0] + m_rows[1][1] * other[1][1] + m_rows[2][1] * other[1][2] + m_rows[3][1] * other[1][3];
-		result[1][2] = m_rows[0][2] * other[1][0] + m_rows[1][2] * other[1][1] + m_rows[2][2] * other[1][2] + m_rows[3][2] * other[1][3];
-		result[1][3] = m_rows[0][3] * other[1][0] + m_rows[1][3] * other[1][1] + m_rows[2][3] * other[1][2] + m_rows[3][3] * other[1][3];
-		result[2][0] = m_rows[0][0] * other[2][0] + m_rows[1][0] * other[2][1] + m_rows[2][0] * other[2][2] + m_rows[3][0] * other[2][3];
-		result[2][1] = m_rows[0][1] * other[2][0] + m_rows[1][1] * other[2][1] + m_rows[2][1] * other[2][2] + m_rows[3][1] * other[2][3];
-		result[2][2] = m_rows[0][2] * other[2][0] + m_rows[1][2] * other[2][1] + m_rows[2][2] * other[2][2] + m_rows[3][2] * other[2][3];
-		result[2][3] = m_rows[0][3] * other[2][0] + m_rows[1][3] * other[2][1] + m_rows[2][3] * other[2][2] + m_rows[3][3] * other[2][3];
-		result[3][0] = m_rows[0][0] * other[3][0] + m_rows[1][0] * other[3][1] + m_rows[2][0] * other[3][2] + m_rows[3][0] * other[3][3];
-		result[3][1] = m_rows[0][1] * other[3][0] + m_rows[1][1] * other[3][1] + m_rows[2][1] * other[3][2] + m_rows[3][1] * other[3][3];
-		result[3][2] = m_rows[0][2] * other[3][0] + m_rows[1][2] * other[3][1] + m_rows[2][2] * other[3][2] + m_rows[3][2] * other[3][3];
-		result[3][3] = m_rows[0][3] * other[3][0] + m_rows[1][3] * other[3][1] + m_rows[2][3] * other[3][2] + m_rows[3][3] * other[3][3];
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
+			}
+		}
+
 		return result;
 	}
 
 	Vector4 Matrix4::Multiply(const Vector4 &other) const
 	{
-		float x = m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z + m_rows[3][0] * other.m_w;
-		float y = m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z + m_rows[3][1] * other.m_w;
-		float z = m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z + m_rows[3][2] * other.m_w;
-		float w = m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z + m_rows[3][3] * other.m_w;
-		return Vector4(x, y, z, w);
+		Vector4 result = Vector4();
+
+		for (int row = 0; row < 4; row++)
+		{
+			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
+		}
+
+		return result;
 	}
 
 	Matrix4 Matrix4::Divide(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = m_rows[0][0] / other[0][0] + m_rows[1][0] / other[0][1] + m_rows[2][0] / other[0][2] + m_rows[3][0] / other[0][3];
-		result[0][1] = m_rows[0][1] / other[0][0] + m_rows[1][1] / other[0][1] + m_rows[2][1] / other[0][2] + m_rows[3][1] / other[0][3];
-		result[0][2] = m_rows[0][2] / other[0][0] + m_rows[1][2] / other[0][1] + m_rows[2][2] / other[0][2] + m_rows[3][2] / other[0][3];
-		result[0][3] = m_rows[0][3] / other[0][0] + m_rows[1][3] / other[0][1] + m_rows[2][3] / other[0][2] + m_rows[3][3] / other[0][3];
-		result[1][0] = m_rows[0][0] / other[1][0] + m_rows[1][0] / other[1][1] + m_rows[2][0] / other[1][2] + m_rows[3][0] / other[1][3];
-		result[1][1] = m_rows[0][1] / other[1][0] + m_rows[1][1] / other[1][1] + m_rows[2][1] / other[1][2] + m_rows[3][1] / other[1][3];
-		result[1][2] = m_rows[0][2] / other[1][0] + m_rows[1][2] / other[1][1] + m_rows[2][2] / other[1][2] + m_rows[3][2] / other[1][3];
-		result[1][3] = m_rows[0][3] / other[1][0] + m_rows[1][3] / other[1][1] + m_rows[2][3] / other[1][2] + m_rows[3][3] / other[1][3];
-		result[2][0] = m_rows[0][0] / other[2][0] + m_rows[1][0] / other[2][1] + m_rows[2][0] / other[2][2] + m_rows[3][0] / other[2][3];
-		result[2][1] = m_rows[0][1] / other[2][0] + m_rows[1][1] / other[2][1] + m_rows[2][1] / other[2][2] + m_rows[3][1] / other[2][3];
-		result[2][2] = m_rows[0][2] / other[2][0] + m_rows[1][2] / other[2][1] + m_rows[2][2] / other[2][2] + m_rows[3][2] / other[2][3];
-		result[2][3] = m_rows[0][3] / other[2][0] + m_rows[1][3] / other[2][1] + m_rows[2][3] / other[2][2] + m_rows[3][3] / other[2][3];
-		result[3][0] = m_rows[0][0] / other[3][0] + m_rows[1][0] / other[3][1] + m_rows[2][0] / other[3][2] + m_rows[3][0] / other[3][3];
-		result[3][1] = m_rows[0][1] / other[3][0] + m_rows[1][1] / other[3][1] + m_rows[2][1] / other[3][2] + m_rows[3][1] / other[3][3];
-		result[3][2] = m_rows[0][2] / other[3][0] + m_rows[1][2] / other[3][1] + m_rows[2][2] / other[3][2] + m_rows[3][2] / other[3][3];
-		result[3][3] = m_rows[0][3] / other[3][0] + m_rows[1][3] / other[3][1] + m_rows[2][3] / other[3][2] + m_rows[3][3] / other[3][3];
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2] + m_rows[3][col] / other[row][3];
+			}
+		}
+
 		return result;
 	}
 
 	Vector4 Matrix4::Transform(const Vector4 &other) const
 	{
-		float x = m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z + m_rows[3][0] * other.m_w;
-		float y = m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z + m_rows[3][1] * other.m_w;
-		float z = m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z + m_rows[3][2] * other.m_w;
-		float w = m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z + m_rows[3][3] * other.m_w;
-		return Vector4(x, y, z, w);
+		Vector4 result = Vector4();
+
+		for (int row = 0; row < 4; row++)
+		{
+			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
+		}
+
+		return result;
 	}
 
 	Matrix4 Matrix4::Translate(const Vector2 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result[3][0] += m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y;
-		result[3][1] += m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y;
-		result[3][2] += m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y;
-		result[3][3] += m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y;
+
+		for (int col = 0; col < 4; col++)
+		{
+			result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y;
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Translate(const Vector3 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result[3][0] += m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y + m_rows[2][0] * other.m_z;
-		result[3][1] += m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y + m_rows[2][1] * other.m_z;
-		result[3][2] += m_rows[0][2] * other.m_x + m_rows[1][2] * other.m_y + m_rows[2][2] * other.m_z;
-		result[3][3] += m_rows[0][3] * other.m_x + m_rows[1][3] * other.m_y + m_rows[2][3] * other.m_z;
+
+		for (int col = 0; col < 4; col++)
+		{
+			result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y + m_rows[2][col] * other.m_z;
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Scale(const Vector3 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result[0][0] *= other.m_x;
-		result[0][1] *= other.m_x;
-		result[0][2] *= other.m_x;
-		result[0][3] *= other.m_x;
-		result[1][0] *= other.m_y;
-		result[1][1] *= other.m_y;
-		result[1][2] *= other.m_y;
-		result[1][3] *= other.m_y;
-		result[2][0] *= other.m_z;
-		result[2][1] *= other.m_z;
-		result[2][2] *= other.m_z;
-		result[2][3] *= other.m_z;
+
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] *= other[row];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Scale(const Vector4 &other) const
 	{
 		Matrix4 result = Matrix4(*this);
-		result[0][0] *= other.m_x;
-		result[0][1] *= other.m_x;
-		result[0][2] *= other.m_x;
-		result[0][3] *= other.m_x;
-		result[1][0] *= other.m_y;
-		result[1][1] *= other.m_y;
-		result[1][2] *= other.m_y;
-		result[1][3] *= other.m_y;
-		result[2][0] *= other.m_z;
-		result[2][1] *= other.m_z;
-		result[2][2] *= other.m_z;
-		result[2][3] *= other.m_z;
-		result[3][0] *= other.m_w;
-		result[3][1] *= other.m_w;
-		result[3][2] *= other.m_w;
-		result[3][3] *= other.m_w;
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] *= other[row];
+			}
+		}
+
 		return result;
 	}
 
@@ -217,103 +190,64 @@ namespace fl
 		float ys = axis.m_y * s;
 		float zs = axis.m_z * s;
 
-		float f00 = axis.m_x * axis.m_x * o + c;
-		float f01 = xy * o + zs;
-		float f02 = xz * o - ys;
-		float f10 = xy * o - zs;
-		float f11 = axis.m_y * axis.m_y * o + c;
-		float f12 = yz * o + xs;
-		float f20 = xz * o + ys;
-		float f21 = yz * o - xs;
-		float f22 = axis.m_z * axis.m_z * o + c;
+		Matrix3 f = Matrix3();
+		f[0][0] = axis.m_x * axis.m_x * o + c;
+		f[0][1] = xy * o + zs;
+		f[0][2] = xz * o - ys;
+		f[1][0] = xy * o - zs;
+		f[1][1] = axis.m_y * axis.m_y * o + c;
+		f[1][2] = yz * o + xs;
+		f[2][0] = xz * o + ys;
+		f[2][1] = yz * o - xs;
+		f[2][2] = axis.m_z * axis.m_z * o + c;
 
-		result[0][0] = m_rows[0][0] * f00 + m_rows[1][0] * f01 + m_rows[2][0] * f02;
-		result[0][1] = m_rows[0][1] * f00 + m_rows[1][1] * f01 + m_rows[2][1] * f02;
-		result[0][2] = m_rows[0][2] * f00 + m_rows[1][2] * f01 + m_rows[2][2] * f02;
-		result[0][3] = m_rows[0][3] * f00 + m_rows[1][3] * f01 + m_rows[2][3] * f02;
-		result[1][0] = m_rows[0][0] * f10 + m_rows[1][0] * f11 + m_rows[2][0] * f12;
-		result[1][1] = m_rows[0][1] * f10 + m_rows[1][1] * f11 + m_rows[2][1] * f12;
-		result[1][2] = m_rows[0][2] * f10 + m_rows[1][2] * f11 + m_rows[2][2] * f12;
-		result[1][3] = m_rows[0][3] * f10 + m_rows[1][3] * f11 + m_rows[2][3] * f12;
-		result[2][0] = m_rows[0][0] * f20 + m_rows[1][0] * f21 + m_rows[2][0] * f22;
-		result[2][1] = m_rows[0][1] * f20 + m_rows[1][1] * f21 + m_rows[2][1] * f22;
-		result[2][2] = m_rows[0][2] * f20 + m_rows[1][2] * f21 + m_rows[2][2] * f22;
-		result[2][3] = m_rows[0][3] * f20 + m_rows[1][3] * f21 + m_rows[2][3] * f22;
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Negate() const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = -m_rows[0][0];
-		result[0][1] = -m_rows[0][1];
-		result[0][2] = -m_rows[0][2];
-		result[0][3] = -m_rows[0][3];
-		result[1][0] = -m_rows[1][0];
-		result[1][1] = -m_rows[1][1];
-		result[1][2] = -m_rows[1][2];
-		result[1][3] = -m_rows[1][3];
-		result[2][0] = -m_rows[2][0];
-		result[2][1] = -m_rows[2][1];
-		result[2][2] = -m_rows[2][2];
-		result[2][3] = -m_rows[2][3];
-		result[3][0] = -m_rows[3][0];
-		result[3][1] = -m_rows[3][1];
-		result[3][2] = -m_rows[3][2];
-		result[3][3] = -m_rows[3][3];
+
+		for (int row = 0; row < 4; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = -m_rows[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix4 Matrix4::Invert() const
 	{
 		Matrix4 result = Matrix4();
-		const float d = Determinant();
 
-		if (d != 0.0f)
+		float det = Determinant();
+		assert(det != 0.0f && "Determinant cannot be zero!");
+
+		for (int j = 0; j < 4; j++)
 		{
-			float determinantInv = 1.0f / d;
+			for (int i = 0; i < 4; i++)
+			{
+				// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
+				Matrix3 minorSubmatrix = GetSubmatrix(j, i);
+				float minor = minorSubmatrix.Determinant();
 
-			// First row.
-			float t00 = Determinant3x3(m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[2][1], m_rows[2][2], m_rows[2][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
-			float t01 = -Determinant3x3(m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[2][0], m_rows[2][2], m_rows[2][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
-			float t02 = Determinant3x3(m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[2][0], m_rows[2][1], m_rows[2][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
-			float t03 = -Determinant3x3(m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[2][0], m_rows[2][1], m_rows[2][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
+				// Multiply by (−1)^{i+j}.
+				float factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+				float cofactor = minor * factor;
 
-			// Second row.
-			float t10 = -Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[2][1], m_rows[2][2], m_rows[2][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
-			float t11 = Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[2][0], m_rows[2][2], m_rows[2][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
-			float t12 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[2][0], m_rows[2][1], m_rows[2][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
-			float t13 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[2][0], m_rows[2][1], m_rows[2][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
-
-			// Third row.
-			float t20 = Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[3][1], m_rows[3][2], m_rows[3][3]);
-			float t21 = -Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[3][0], m_rows[3][2], m_rows[3][3]);
-			float t22 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[3][0], m_rows[3][1], m_rows[3][3]);
-			float t23 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[3][0], m_rows[3][1], m_rows[3][2]);
-
-			// Fourth row.
-			float t30 = -Determinant3x3(m_rows[0][1], m_rows[0][2], m_rows[0][3], m_rows[1][1], m_rows[1][2], m_rows[1][3], m_rows[2][1], m_rows[2][2], m_rows[2][3]);
-			float t31 = Determinant3x3(m_rows[0][0], m_rows[0][2], m_rows[0][3], m_rows[1][0], m_rows[1][2], m_rows[1][3], m_rows[2][0], m_rows[2][2], m_rows[2][3]);
-			float t32 = -Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][3], m_rows[1][0], m_rows[1][1], m_rows[1][3], m_rows[2][0], m_rows[2][1], m_rows[2][3]);
-			float t33 = Determinant3x3(m_rows[0][0], m_rows[0][1], m_rows[0][2], m_rows[1][0], m_rows[1][1], m_rows[1][2], m_rows[2][0], m_rows[2][1], m_rows[2][2]);
-
-			// Transpose and divide by the determinant.
-			result[0][0] = t00 * determinantInv;
-			result[1][1] = t11 * determinantInv;
-			result[2][2] = t22 * determinantInv;
-			result[3][3] = t33 * determinantInv;
-			result[0][1] = t10 * determinantInv;
-			result[1][0] = t01 * determinantInv;
-			result[2][0] = t02 * determinantInv;
-			result[0][2] = t20 * determinantInv;
-			result[1][2] = t21 * determinantInv;
-			result[2][1] = t12 * determinantInv;
-			result[0][3] = t30 * determinantInv;
-			result[3][0] = t03 * determinantInv;
-			result[1][3] = t31 * determinantInv;
-			result[3][1] = t13 * determinantInv;
-			result[3][2] = t23 * determinantInv;
-			result[2][3] = t32 * determinantInv;
+				result[i][j] = cofactor / det;
+			}
 		}
 
 		return result;
@@ -322,31 +256,63 @@ namespace fl
 	Matrix4 Matrix4::Transpose() const
 	{
 		Matrix4 result = Matrix4();
-		result[0][0] = m_rows[0][0];
-		result[0][1] = m_rows[1][0];
-		result[0][2] = m_rows[2][0];
-		result[0][3] = m_rows[3][0];
-		result[1][0] = m_rows[0][1];
-		result[1][1] = m_rows[1][1];
-		result[1][2] = m_rows[2][1];
-		result[1][3] = m_rows[3][1];
-		result[2][0] = m_rows[0][2];
-		result[2][1] = m_rows[1][2];
-		result[2][2] = m_rows[2][2];
-		result[2][3] = m_rows[3][2];
-		result[3][0] = m_rows[0][3];
-		result[3][1] = m_rows[1][3];
-		result[3][2] = m_rows[2][3];
-		result[3][3] = m_rows[3][3];
+
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[col][row];
+			}
+		}
+
 		return result;
 	}
 
 	float Matrix4::Determinant() const
 	{
-		return (m_rows[0][0] * (m_rows[1][1] * m_rows[2][2] * m_rows[3][3] + m_rows[1][2] * m_rows[2][3] * m_rows[3][1] + m_rows[1][3] * m_rows[2][1] * m_rows[3][2] - m_rows[1][3] * m_rows[2][2] * m_rows[3][1] - m_rows[1][1] * m_rows[2][3] * m_rows[3][2] - m_rows[1][2] * m_rows[2][1] * m_rows[3][3]))
-			- (m_rows[0][1] * (m_rows[1][0] * m_rows[2][2] * m_rows[3][3] + m_rows[1][2] * m_rows[2][3] * m_rows[3][0] + m_rows[1][3] * m_rows[2][0] * m_rows[3][2] - m_rows[1][3] * m_rows[2][2] * m_rows[3][0] - m_rows[1][0] * m_rows[2][3] * m_rows[3][2] - m_rows[1][2] * m_rows[2][0] * m_rows[3][3]))
-			+ (m_rows[0][2] * (m_rows[1][0] * m_rows[2][1] * m_rows[3][3] + m_rows[1][1] * m_rows[2][3] * m_rows[3][0] + m_rows[1][3] * m_rows[2][0] * m_rows[3][1] - m_rows[1][3] * m_rows[2][1] * m_rows[3][0] - m_rows[1][0] * m_rows[2][3] * m_rows[3][1] - m_rows[1][1] * m_rows[2][0] * m_rows[3][3]))
-			- (m_rows[0][3] * (m_rows[1][0] * m_rows[2][1] * m_rows[3][2] + m_rows[1][1] * m_rows[2][2] * m_rows[3][0] + m_rows[1][2] * m_rows[2][0] * m_rows[3][1] - m_rows[1][2] * m_rows[2][1] * m_rows[3][0] - m_rows[1][0] * m_rows[2][2] * m_rows[3][1] - m_rows[1][1] * m_rows[2][0] * m_rows[3][2]));
+		float result = 0.0f;
+
+		for (int i = 0; i < 4; i++)
+		{
+			// Get minor of element [0][i].
+			Matrix3 minorSubmatrix = GetSubmatrix(0, i);
+			float minor = minorSubmatrix.Determinant();
+
+			// If this is an odd-numbered row, negate the value.
+			float factor = (i % 2 == 1) ? -1.0f : 1.0f;
+
+			result += factor * m_rows[0][i] * minor;
+		}
+
+		return result;
+	}
+
+	Matrix3 Matrix4::GetSubmatrix(const int &row, const int &col) const
+	{
+		Matrix3 result = Matrix3();
+		int colCount = 0;
+		int rowCount = 0;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (i != row)
+			{
+				colCount = 0;
+
+				for (int j = 0; j < 4; j++)
+				{
+					if (j != col)
+					{
+						result[rowCount][colCount] = m_rows[i][j];
+						colCount++;
+					}
+				}
+
+				rowCount++;
+			}
+		}
+
+		return result;
 	}
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale)
@@ -513,66 +479,76 @@ namespace fl
 		return Negate();
 	}
 
-	const Vector4 &Matrix4::operator[](uint32_t index) const
+	const Vector4 &Matrix4::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
 		return m_rows[index];
 	}
 
-	Vector4 &Matrix4::operator[](uint32_t index)
+	Vector4 &Matrix4::operator[](const uint32_t &index)
 	{
 		assert(index < 4);
 		return m_rows[index];
 	}
 
-	Matrix4 operator+(Matrix4 left, const Matrix4 &right)
+	Matrix4 operator+(const Matrix4 &left, const Matrix4 &right)
 	{
 		return left.Add(right);
 	}
 
-	Matrix4 operator-(Matrix4 left, const Matrix4 &right)
+	Matrix4 operator-(const Matrix4 &left, const Matrix4 &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Matrix4 operator*(Matrix4 left, const Matrix4 &right)
+	Matrix4 operator*(const Matrix4 &left, const Matrix4 &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Matrix4 operator/(Matrix4 left, const Matrix4 &right)
+	Matrix4 operator/(const Matrix4 &left, const Matrix4 &right)
 	{
 		return left.Divide(right);
 	}
 
-	Matrix4 operator*(Matrix4 left, Vector4 value)
+	Matrix4 operator*(const Vector4 &left, const Matrix4 &right)
 	{
-		return left.Scale(value);
+		return right.Scale(left);
 	}
 
-	Matrix4 operator/(Matrix4 left, Vector4 value)
+	Matrix4 operator/(const Vector4 &left, const Matrix4 &right)
 	{
-		return left.Scale(1.0f / value);
+		return right.Scale(1.0f / left);
 	}
 
-	Matrix4 operator*(Matrix4 left, float value)
+	Matrix4 operator*(const Matrix4 &left, const Vector4 &right)
 	{
-		return left.Scale(Vector4(value, value, value, value));
+		return left.Scale(right);
 	}
 
-	Matrix4 operator/(Matrix4 left, float value)
+	Matrix4 operator/(const Matrix4 &left, const Vector4 &right)
 	{
-		return left.Scale(1.0f / Vector4(value, value, value, value));
+		return left.Scale(1.0f / right);
 	}
 
-	Matrix4 operator*(float value, Matrix4 left)
+	Matrix4 operator*(const float &left, const Matrix4 &right)
 	{
-		return left.Scale(Vector4(value, value, value, value));
+		return right.Scale(Vector4(left, left, left, left));
 	}
 
-	Matrix4 operator/(float value, Matrix4 left)
+	Matrix4 operator/(const float &left, const Matrix4 &right)
 	{
-		return left.Scale(1.0f / Vector4(value, value, value, value));
+		return right.Scale(1.0f / Vector4(left, left, left, left));
+	}
+
+	Matrix4 operator*(const Matrix4 &left, const float &right)
+	{
+		return left.Scale(Vector4(right, right, right, right));
+	}
+
+	Matrix4 operator/(const Matrix4 &left, const float &right)
+	{
+		return left.Scale(1.0f / Vector4(right, right, right, right));
 	}
 
 	Matrix4 &Matrix4::operator+=(const Matrix4 &other)
@@ -595,6 +571,26 @@ namespace fl
 		return *this = Divide(other);
 	}
 
+	Matrix4 &Matrix4::operator*=(const Vector4 &other)
+	{
+		return *this = Scale(other);
+	}
+
+	Matrix4 &Matrix4::operator/=(const Vector4 &other)
+	{
+		return *this = Scale(1.0f / other);
+	}
+
+	Matrix4 &Matrix4::operator*=(const float &other)
+	{
+		return *this = Scale(Vector4(other, other, other, other));
+	}
+
+	Matrix4 &Matrix4::operator/=(const float &other)
+	{
+		return *this = Scale(1.0f / Vector4(other, other, other, other));
+	}
+
 	std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)
 	{
 		stream << matrix.ToString();
@@ -609,10 +605,5 @@ namespace fl
 			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", " <<
 			m_rows[3][0] << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
 		return result.str();
-	}
-
-	float Matrix4::Determinant3x3(const float &t00, const float &t01, const float &t02, const float &t10, const float &t11, const float &t12, const float &t20, const float &t21, const float &t22)
-	{
-		return t00 * (t11 * t22 - t12 * t21) + t01 * (t12 * t20 - t10 * t22) + t02 * (t10 * t21 - t11 * t20);
 	}
 }

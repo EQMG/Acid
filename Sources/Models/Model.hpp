@@ -4,7 +4,6 @@
 #include <vector>
 #include "Files/Files.hpp"
 #include "Maths/Vector2.hpp"
-#include "Physics/BoundingBox.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
@@ -25,7 +24,10 @@ namespace fl
 		std::shared_ptr<VertexBuffer> m_vertexBuffer;
 		std::shared_ptr<IndexBuffer> m_indexBuffer;
 
-		BoundingBox m_aabb;
+		std::vector<float> m_pointCloud;
+
+		Vector3 m_minExtents;
+		Vector3 m_maxExtents;
 	public:
 		static std::shared_ptr<Model> Resource(const std::string &filename)
 		{
@@ -77,7 +79,19 @@ namespace fl
 
 		std::string GetFilename() override { return m_filename; }
 
-		BoundingBox GetAabb() const { return m_aabb; }
+		Vector3 GetMinExtents() const { return m_minExtents; }
+
+		Vector3 GetMaxExtents() const { return m_maxExtents; }
+
+		std::vector<float> GetPointCloud() const { return m_pointCloud; }
+
+		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
+
+		float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
+
+		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
+
+		float GetRadius() const;
 
 		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_vertexBuffer; }
 
@@ -98,6 +112,6 @@ namespace fl
 
 		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs);
 
-		static BoundingBox CalculateAabb(const std::vector<IVertex *> &vertices);
+		void CalculateBounds(const std::vector<IVertex *> &vertices);
 	};
 }

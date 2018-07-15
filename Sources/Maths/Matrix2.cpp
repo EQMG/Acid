@@ -187,13 +187,13 @@ namespace fl
 		return Negate();
 	}
 
-	const Vector2 &Matrix2::operator[](uint32_t index) const
+	const Vector2 &Matrix2::operator[](const uint32_t &index) const
 	{
 		assert(index < 2);
 		return m_rows[index];
 	}
 
-	Vector2 &Matrix2::operator[](uint32_t index)
+	Vector2 &Matrix2::operator[](const uint32_t &index)
 	{
 		assert(index < 2);
 		return m_rows[index];
@@ -219,34 +219,34 @@ namespace fl
 		return left.Divide(right);
 	}
 
-	Matrix2 operator*(Matrix2 left, Vector2 value)
+	Matrix2 operator*(Matrix2 left, Vector2 right)
 	{
-		return left.Scale(value);
+		return left.Scale(right);
 	}
 
-	Matrix2 operator/(Matrix2 left, Vector2 value)
+	Matrix2 operator/(Matrix2 left, Vector2 right)
 	{
-		return left.Scale(1.0f / value);
+		return left.Scale(1.0f / right);
 	}
 
-	Matrix2 operator*(Matrix2 left, float value)
+	Matrix2 operator*(Matrix2 left, float right)
 	{
-		return left.Scale(Vector2(value, value));
+		return left.Scale(Vector2(right, right));
 	}
 
-	Matrix2 operator/(Matrix2 left, float value)
+	Matrix2 operator/(Matrix2 left, float right)
 	{
-		return left.Scale(1.0f / Vector2(value, value));
+		return left.Scale(1.0f / Vector2(right, right));
 	}
 
-	Matrix2 operator*(float value, Matrix2 left)
+	Matrix2 operator*(float left, Matrix2 right)
 	{
-		return left.Scale(Vector2(value, value));
+		return right.Scale(Vector2(left, left));
 	}
 
-	Matrix2 operator/(float value, Matrix2 left)
+	Matrix2 operator/(float left, Matrix2 right)
 	{
-		return left.Scale(1.0f / Vector2(value, value));
+		return right.Scale(1.0f / Vector2(left, left));
 	}
 
 	Matrix2 &Matrix2::operator+=(const Matrix2 &other)
