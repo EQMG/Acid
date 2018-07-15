@@ -1,18 +1,18 @@
-#include "IShape.hpp"
+#include "ICollider.hpp"
 
 #include "Objects/GameObject.hpp"
 
 namespace fl
 {
-	IShape::IShape()
+	ICollider::ICollider()
 	{
 	}
 
-	IShape::~IShape()
+	ICollider::~ICollider()
 	{
 	}
 
-	bool IShape::InFrustum(const Frustum &frustum)
+	bool ICollider::InFrustum(const Frustum &frustum)
 	{
 		btCollisionShape *shape = GetCollisionShape();
 
@@ -26,8 +26,8 @@ namespace fl
 
 		btTransform worldTransform = btTransform();
 		worldTransform.setIdentity();
-		worldTransform.setOrigin(IShape::Convert(position));
-		worldTransform.setRotation(IShape::Convert(rotation));
+		worldTransform.setOrigin(ICollider::Convert(position));
+		worldTransform.setRotation(ICollider::Convert(rotation));
 
 		btVector3 min = btVector3();
 		btVector3 max = btVector3();

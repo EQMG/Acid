@@ -183,7 +183,7 @@ namespace fl
 		/// Creates a new transformation matrix for a object in 3d space.
 		/// </summary>
 		/// <param name="translation"> Translation amount the XYZ. </param>
-		/// <param name="rotation"> Rotation amount the XYZ. </param>
+		/// <param name="rotation"> Rotation amount (Pitch, Yaw, Roll). </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
@@ -192,7 +192,7 @@ namespace fl
 		/// Creates a new transformation matrix for a object in 3d space.
 		/// </summary>
 		/// <param name="translation"> Translation amount the XYZ. </param>
-		/// <param name="rotation"> Rotation quaternion. </param>
+		/// <param name="rotation"> Rotation amount. </param>
 		/// <param name="scale"> How much to scale the matrix. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static Matrix4 TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale);
@@ -227,6 +227,14 @@ namespace fl
 		/// <param name="rotation"> The cameras rotation. </param>
 		/// <returns> The transformation matrix. </returns>
 		static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
+
+		/// <summary>
+		/// Creates a new view matrix.
+		/// </summary>
+		/// <param name="position"> The cameras position. </param>
+		/// <param name="rotation"> The cameras rotation. </param>
+		/// <returns> The transformation matrix. </returns>
+		static Matrix4 ViewMatrix(const Vector3 &position, const Quaternion &rotation);
 
 		/// <summary>
 		/// Transforms a 3D world point into screen space.

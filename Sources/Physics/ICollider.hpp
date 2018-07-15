@@ -14,19 +14,19 @@ namespace fl
 	/// <summary>
 	/// A simple class that represents a physics shape.
 	/// </summary>
-	class FL_EXPORT IShape :
+	class FL_EXPORT ICollider :
 		public IComponent
 	{
 	public:
 		/// <summary>
 		/// Creates a new shape.
 		/// </summary>
-		IShape();
+		ICollider();
 
 		/// <summary>
 		/// Deconstructor for the shape.
 		/// </summary>
-		virtual ~IShape();
+		virtual ~ICollider();
 
 		void Start() override = 0;
 

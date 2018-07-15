@@ -2,19 +2,22 @@
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include "Maths/Vector3.hpp"
-#include "IShape.hpp"
+#include "Models/Model.hpp"
+#include "ICollider.hpp"
 
 namespace fl
 {
-	class FL_EXPORT ShapeConvexHull :
-		public IShape
+	class FL_EXPORT ColliderConvexHull :
+		public ICollider
 	{
 	private:
 		btConvexHullShape *m_shape;
+		std::shared_ptr<Model> m_model;
+		int m_points;
 	public:
-		ShapeConvexHull(const std::vector<float> &pointCloud = std::vector<float>());
+		ColliderConvexHull(const std::vector<float> &pointCloud = std::vector<float>());
 
-		~ShapeConvexHull();
+		~ColliderConvexHull();
 
 		void Start() override;
 
@@ -24,9 +27,11 @@ namespace fl
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ShapeConvexHull"; };
+		std::string GetName() const override { return "ColliderConvexHull"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+
+		int GetPoints() const { return m_points; }
 
 		void SetPointCloud(const std::vector<float> &pointCloud);
 	};

@@ -41,7 +41,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		printf("Csv '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

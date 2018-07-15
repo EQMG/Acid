@@ -4,8 +4,6 @@
   "Rigidbody": {
     "Mass": 0.0,
     "Friction": 0.5,
-    "Stiffness": 300.0,
-    "Damping": 10.0,
     "Freeze Position": {
       "x": true,
       "y": true,

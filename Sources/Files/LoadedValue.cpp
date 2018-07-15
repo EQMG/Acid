@@ -18,7 +18,7 @@ namespace fl
 		}
 	}
 
-	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull)
+	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull, const bool &reportError)
 	{
 		for (auto &child : m_children)
 		{
@@ -30,7 +30,11 @@ namespace fl
 
 		if (!addIfNull)
 		{
-			fprintf(stderr, "Could not find loaded value: %s\n", name.c_str());
+			if (reportError)
+			{
+				fprintf(stderr, "Could not find child in loaded value '%s' of name '%s'\n", m_name.c_str(), name.c_str());
+			}
+
 			return nullptr;
 		}
 
@@ -39,7 +43,7 @@ namespace fl
 		return child;
 	}
 
-	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull)
+	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull, const bool &reportError)
 	{
 		if (m_children.size() >= index)
 		{
@@ -49,12 +53,16 @@ namespace fl
 		// TODO
 		//if (!addIfNull)
 		//{
-		fprintf(stderr, "Could not find loaded value child at: %i\n", index);
+		if (reportError)
+		{
+			fprintf(stderr, "Could not find child in loaded value '%s' at '%i'\n", m_name.c_str(), index);
+		}
+
 		return nullptr;
 		//}
 	}
 
-	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value)
+	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError)
 	{
 		if (GetChild(childName) == nullptr)
 		{
@@ -71,8 +79,26 @@ namespace fl
 			}
 		}
 
-		fprintf(stderr, "Could not find loaded value child with: %s\n", attribute.c_str());
+		if (reportError)
+		{
+			fprintf(stderr, "Could not find child in loaded value '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
+		}
+
 		return nullptr;
+	}
+
+	void LoadedValue::AddChild(LoadedValue *value)
+	{
+		auto child = GetChild(value->m_name);
+
+		if (child != nullptr)
+		{
+			child->m_value = value->m_value;
+			return;
+		}
+
+		child = value;
+		m_children.emplace_back(child);
 	}
 
 	std::string LoadedValue::GetString()

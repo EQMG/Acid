@@ -126,7 +126,7 @@ namespace fl
 
 	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		auto exiting = m_parent->GetChild(key);
+		auto exiting = m_parent->GetChild(key, false, false);
 
 		if (exiting != nullptr)
 		{

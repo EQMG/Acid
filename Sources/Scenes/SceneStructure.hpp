@@ -96,7 +96,7 @@ namespace fl
 
 		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
 
-	//	std::vector<GameObject *> QueryBounding(IShape *range) override;
+	//	std::vector<GameObject *> QueryBounding(ICollider *range) override;
 
 		bool Contains(GameObject *object) override;
 	};

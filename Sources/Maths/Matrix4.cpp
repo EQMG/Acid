@@ -390,7 +390,10 @@ namespace fl
 
 		if (rotation != Quaternion::W_ONE)
 		{
-			result = result.Rotate(rotation);
+			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
+			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
+			result = result.Rotate(Maths::Radians(euler.m_y), Vector3::UP); // Rotate the Y component.
+			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.
 		}
 
 		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
@@ -449,6 +452,26 @@ namespace fl
 			result = result.Rotate(Maths::Radians(rotation.m_x), Vector3::RIGHT); // Rotate the X component.
 			result = result.Rotate(Maths::Radians(-rotation.m_y), Vector3::UP); // Rotate the Y component.
 			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
+		}
+
+		if (position != 0.0f)
+		{
+			result = result.Translate(position.Negate());
+		}
+
+		return result;
+	}
+
+	Matrix4 Matrix4::ViewMatrix(const Vector3 &position, const Quaternion &rotation)
+	{
+		Matrix4 result = Matrix4();
+
+		if (rotation != 0.0f)
+		{
+			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
+			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
+			result = result.Rotate(Maths::Radians(-euler.m_y), Vector3::UP); // Rotate the Y component.
+			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.
 		}
 
 		if (position != 0.0f)
