@@ -14,13 +14,13 @@
 #include <Renderer/Screenshot/Screenshot.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
-#include <Physics/ShapeBox.hpp>
-#include <Physics/ShapeSphere.hpp>
+#include <Physics/ColliderBox.hpp>
+#include <Physics/ColliderSphere.hpp>
 #include <Models/Shapes/ModelCube.hpp>
-#include <Physics/ShapeConvexHull.hpp>
-#include <Physics/ShapeCylinder.hpp>
+#include <Physics/ColliderConvexHull.hpp>
+#include <Physics/ColliderCylinder.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
-#include <Physics/ShapeCone.hpp>
+#include <Physics/ColliderCone.hpp>
 #include <Scenes/Scenes.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
@@ -82,8 +82,8 @@ namespace test
 
 		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -5.0f, 0.0f), Vector3(), Vector3(200.0f, 3.0f, 200.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<ShapeBox>(Vector3(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<Rigidbody>(0.0f, 0.8f);
+		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
 
@@ -93,7 +93,7 @@ namespace test
 			{
 				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<ShapeSphere>(2.0f);
+				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(1.5f);
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
@@ -102,9 +102,9 @@ namespace test
 			}
 		}
 
-		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 0.0f, 48.0f), Vector3(), 1.2f));
+		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 3.0f, 48.0f), Vector3(), 1.2f));
 		convex->AddComponent<Mesh>(Model::Resource("Objects/Testing/Model_Tea.obj"));
-		convex->AddComponent<ShapeConvexHull>();
+		convex->AddComponent<ColliderConvexHull>();
 		convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
@@ -118,11 +118,11 @@ namespace test
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 3.0f));
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
-			sphere->AddComponent<ShapeSphere>(2.0f);
-			auto rigidbody = sphere->AddComponent<Rigidbody>(2.0f);
+			sphere->AddComponent<ColliderSphere>();
+			auto rigidbody = sphere->AddComponent<Rigidbody>(1.5f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
-			rigidbody->AddForce(cameraRotation.ToQuaternion() * Vector3::BACK * 6000.0f, Vector3::ZERO);
+			rigidbody->AddForce((cameraRotation.ToQuaternion() * Vector3::FRONT) * 6000.0f, Vector3::ZERO);
 		}
 
 		if (m_buttonFullscreen->WasDown())

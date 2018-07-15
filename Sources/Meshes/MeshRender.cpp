@@ -1,7 +1,7 @@
 #include "MeshRender.hpp"
 
 #include "Objects/GameObject.hpp"
-#include "Physics/IShape.hpp"
+#include "Physics/ICollider.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace fl
@@ -37,7 +37,7 @@ namespace fl
 	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene)
 	{
 		// Checks if the mesh is in view.
-		/*auto shape = GetGameObject()->GetComponent<IShape>();
+		/*auto shape = GetGameObject()->GetComponent<ICollider>();
 
 		if (shape != nullptr)
 		{

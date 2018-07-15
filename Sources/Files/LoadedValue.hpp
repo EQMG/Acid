@@ -30,24 +30,13 @@ namespace fl
 
 		std::vector<LoadedValue *> &GetChildren() { return m_children; }
 
-		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false);
+		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false, const bool &reportError = true);
 
-		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false);
+		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false, const bool &reportError = true);
 
-		template<typename T>
-		void AddChild(LoadedValue *value)
-		{
-			auto child = GetChild(value->m_name);
+		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true);
 
-			if (child != nullptr)
-			{
-				child->m_value = value->m_value;
-				return;
-			}
-
-			child = value;
-			m_children.emplace_back(child);
-		}
+		void AddChild(LoadedValue *value);
 
 		template<typename T>
 		void SetChild(const std::string &name, const T &value)
@@ -77,8 +66,6 @@ namespace fl
 		{
 			SetValue(std::to_string(data));
 		}
-
-		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value);
 
 		std::string GetString();
 

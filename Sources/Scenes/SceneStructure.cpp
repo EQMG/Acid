@@ -1,6 +1,6 @@
 ﻿#include "SceneStructure.hpp"
 
-#include "Physics/IShape.hpp"
+#include "Physics/ICollider.hpp"
 
 namespace fl
 {
@@ -53,7 +53,7 @@ namespace fl
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<IShape>();
+			auto collider = gameObject->GetComponent<ICollider>();
 
 			if (collider == nullptr || collider->InFrustum(range))
 			{
@@ -64,14 +64,14 @@ namespace fl
 		return result;
 	}
 
-	/*std::vector<GameObject *> SceneStructure::QueryBounding(IShape *range)
+	/*std::vector<GameObject *> SceneStructure::QueryBounding(ICollider *range)
 	{
 		auto result = std::vector<GameObject *>();
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<IShape>();
+			auto collider = gameObject->GetComponent<ICollider>();
 
 			if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
 			{

@@ -1,19 +1,20 @@
 #pragma once
 
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
-#include "IShape.hpp"
+#include "ICollider.hpp"
 
 namespace fl
 {
-	class FL_EXPORT ShapeSphere :
-		public IShape
+	class FL_EXPORT ColliderSphere :
+		public ICollider
 	{
 	private:
 		btSphereShape *m_shape;
+		float m_radius;
 	public:
-		ShapeSphere(const float &diameter = 2.0f);
+		ColliderSphere(const float &radius = 1.0f);
 
-		~ShapeSphere();
+		~ColliderSphere();
 
 		void Start() override;
 
@@ -23,12 +24,12 @@ namespace fl
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ShapeSphere"; };
+		std::string GetName() const override { return "ColliderSphere"; };
 
 		btCollisionShape *GetCollisionShape() const override { return m_shape; };
 
-		float GetDiameter() const;
+		float GetRadius() const { return m_radius; }
 
-		void SetDiameter(const float &diameter);
+		void SetRadius(const float &radius) { m_radius = radius; }
 	};
 }

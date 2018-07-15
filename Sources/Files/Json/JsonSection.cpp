@@ -88,7 +88,7 @@ namespace fl
 		}
 	}
 
-	LoadedValue * JsonSection::Convert(const JsonSection &source, LoadedValue * parent, const bool &isTopSection)
+	LoadedValue *JsonSection::Convert(const JsonSection &source, LoadedValue *parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
@@ -96,21 +96,22 @@ namespace fl
 		{
 			thisValue = new LoadedValue(parent, source.m_name, "");
 			parent->GetChildren().emplace_back(thisValue);
+		}
 
-			auto contentSplit = FormatString::Split(source.m_content, ",", true);
+		auto contentSplit = FormatString::Split(source.m_content, ",", true);
 
-			for (auto &data : contentSplit)
+		for (auto &data : contentSplit)
+		{
+			auto dataSplit = FormatString::Split(data, ":", true);
+
+			if (dataSplit.size() != 2 || dataSplit.at(0).empty() || dataSplit.at(1).empty())
 			{
-				auto dataSplit = FormatString::Split(data, ":", true);
-
-				if (dataSplit.size() != 2 || dataSplit.at(0).empty() || dataSplit.at(1).empty())
-				{
-					continue;
-				}
-
-				auto newChild = new LoadedValue(thisValue, dataSplit.at(0), dataSplit.at(1));
-				thisValue->GetChildren().emplace_back(newChild);
+				continue;
 			}
+
+			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
+			auto newChild = new LoadedValue(thisValue, name, dataSplit.at(1));
+			thisValue->GetChildren().emplace_back(newChild);
 		}
 
 		for (auto &child : source.m_children)

@@ -1,13 +1,11 @@
 {
   "ShapeCapsule": {
-    "Diameter": 0.4,
+    "Radius": 0.2,
     "Height": 1.8
   },
   "Rigidbody": {
     "Mass": 1.0,
     "Friction": 0.4,
-    "Stiffness": 300.0,
-    "Damping": 10.0,
     "Freeze Position": {
       "x": true,
       "y": true,
