@@ -75,7 +75,7 @@ namespace fl
 		/// <param name="range"> The frustum range of space being queried. </param>
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-	//	virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
+		virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.

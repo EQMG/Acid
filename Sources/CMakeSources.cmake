@@ -311,6 +311,7 @@ set(FLOUNDER_SOURCES_
         "Particles/Spawns/SpawnPoint.cpp"
         "Particles/Spawns/SpawnSphere.cpp"
         "Physics/Frustum.cpp"
+        "Physics/IShape.cpp"
         "Physics/Ray.cpp"
         "Physics/Rigidbody.cpp"
         "Physics/ShapeBox.cpp"

@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Maths.hpp"
 #include "Matrix3.hpp"
+#include "Quaternion.hpp"
 #include "Vector2.hpp"
 
 namespace fl
@@ -212,6 +213,45 @@ namespace fl
 		return result;
 	}
 
+	Matrix4 Matrix4::Rotate(const Quaternion &quaternion) const
+	{
+		Matrix4 result = Matrix4(*this);
+
+		float qx2 = quaternion.m_x + quaternion.m_x;
+		float qy2 = quaternion.m_y + quaternion.m_y;
+		float qz2 = quaternion.m_z + quaternion.m_z;
+		float qxqx2 = quaternion.m_x * qx2;
+		float qxqy2 = quaternion.m_x * qy2;
+		float qxqz2 = quaternion.m_x * qz2;
+		float qxqw2 = quaternion.m_w * qx2;
+		float qyqy2 = quaternion.m_y * qy2;
+		float qyqz2 = quaternion.m_y * qz2;
+		float qyqw2 = quaternion.m_w * qy2;
+		float qzqz2 = quaternion.m_z * qz2;
+		float qzqw2 = quaternion.m_w * qz2;
+
+		Matrix3 f = Matrix3();
+		f[0][0] = (1.0f - qyqy2) - qzqz2;
+		f[0][1] = qxqy2 - qzqw2;
+		f[0][2] = qxqz2 + qyqw2;
+		f[1][0] = qxqy2 + qzqw2;
+		f[1][1] = (1.0f - qxqx2) - qzqz2;
+		f[1][2] = qyqz2 - qxqw2;
+		f[2][0] = qxqz2 - qyqw2;
+		f[2][1] = qyqz2 + qxqw2;
+		f[2][2] = (1.0f - qxqx2) - qyqy2;
+
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 4; col++)
+			{
+				result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
+			}
+		}
+
+		return result;
+	}
+
 	Matrix4 Matrix4::Negate() const
 	{
 		Matrix4 result = Matrix4();
@@ -257,7 +297,7 @@ namespace fl
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 3; row++)
+		for (int row = 0; row < 4; row++)
 		{
 			for (int col = 0; col < 4; col++)
 			{
@@ -329,6 +369,28 @@ namespace fl
 			result = result.Rotate(Maths::Radians(rotation.m_x), Vector3::RIGHT); // Rotate the X component.
 			result = result.Rotate(Maths::Radians(rotation.m_y), Vector3::UP); // Rotate the Y component.
 			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
+		}
+
+		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
+		{
+			result = result.Scale(scale);
+		}
+
+		return result;
+	}
+
+	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
+	{
+		Matrix4 result = Matrix4();
+
+		if (translation.LengthSquared() != 0.0f)
+		{
+			result = result.Translate(translation);
+		}
+
+		if (rotation != Quaternion::W_ONE)
+		{
+			result = result.Rotate(rotation);
 		}
 
 		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)

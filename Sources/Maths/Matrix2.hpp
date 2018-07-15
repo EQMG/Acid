@@ -124,6 +124,12 @@ namespace fl
 		float Determinant() const;
 
 		/// <summary>
+		/// Gets the submatrix of this matrix.
+		/// </summary>
+		/// <returns> The submatrix. </returns>
+		float GetSubmatrix(const int &row, const int &col) const;
+
+		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
@@ -145,25 +151,29 @@ namespace fl
 
 		Vector2 &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Matrix2 operator+(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator+(const Matrix2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator-(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator-(const Matrix2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator*(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator*(const Matrix2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator/(Matrix2 left, const Matrix2 &right);
+		FL_EXPORT friend Matrix2 operator/(const Matrix2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator*(Matrix2 left, Vector2 right);
+		FL_EXPORT friend Matrix2 operator*(const Vector2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator/(Matrix2 left, Vector2 right);
+		FL_EXPORT friend Matrix2 operator/(const Vector2 &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator*(Matrix2 left, float right);
+		FL_EXPORT friend Matrix2 operator*(const Matrix2 &left, const Vector2 &right);
 
-		FL_EXPORT friend Matrix2 operator/(Matrix2 left, float right);
+		FL_EXPORT friend Matrix2 operator/(const Matrix2 &left, const Vector2 &right);
 
-		FL_EXPORT friend Matrix2 operator*(float left, Matrix2 right);
+		FL_EXPORT friend Matrix2 operator*(const float &left, const Matrix2 &right);
 
-		FL_EXPORT friend Matrix2 operator/(float left, Matrix2 right);
+		FL_EXPORT friend Matrix2 operator/(const float &left, const Matrix2 &right);
+
+		FL_EXPORT friend Matrix2 operator*(const Matrix2 &left, const float &right);
+
+		FL_EXPORT friend Matrix2 operator/(const Matrix2 &left, const float &right);
 
 		Matrix2 &operator+=(const Matrix2 &other);
 
@@ -172,6 +182,14 @@ namespace fl
 		Matrix2 &operator*=(const Matrix2 &other);
 
 		Matrix2 &operator/=(const Matrix2 &other);
+
+		Matrix2 &operator*=(const Vector2 &other);
+
+		Matrix2 &operator/=(const Vector2 &other);
+
+		Matrix2 &operator*=(const float &other);
+
+		Matrix2 &operator/=(const float &other);
 
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
 

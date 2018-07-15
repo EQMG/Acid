@@ -50,12 +50,12 @@ namespace fl
 
 	Matrix4 Transform::GetWorldMatrix() const
 	{
-		return Matrix4::TransformationMatrix(m_position, m_rotation.ToEuler(), m_scaling);
+		return Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
 	}
 
 	Matrix4 Transform::GetModelMatrix() const
 	{
-		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation.ToEuler(), Vector3::ZERO);
+		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation, Vector3::ZERO);
 	}
 
 	void Transform::Write(LoadedValue *destination)

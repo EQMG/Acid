@@ -1,5 +1,7 @@
 ﻿#include "SceneStructure.hpp"
 
+#include "Physics/IShape.hpp"
+
 namespace fl
 {
 	SceneStructure::SceneStructure() :
@@ -44,7 +46,7 @@ namespace fl
 		return result;
 	}
 
-	/*std::vector<GameObject *> SceneStructure::QueryFrustum(const Frustum &range)
+	std::vector<GameObject *> SceneStructure::QueryFrustum(const Frustum &range)
 	{
 		auto result = std::vector<GameObject *>();
 
@@ -60,7 +62,7 @@ namespace fl
 		}
 
 		return result;
-	}*/
+	}
 
 	/*std::vector<GameObject *> SceneStructure::QueryBounding(IShape *range)
 	{

@@ -21,7 +21,7 @@ namespace fl
 
 		m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
 
-		m_dynamicsWorld->setGravity(btVector3(0.0f, -20.0f, 0.0f));
+		m_dynamicsWorld->setGravity(btVector3(0.0f, -14.0f, 0.0f));
 		m_dynamicsWorld->getSolverInfo().m_damping = 1.0f;
 		m_dynamicsWorld->getSolverInfo().m_friction = 0.3f;
 		m_dynamicsWorld->getSolverInfo().m_timeStep = 1.0f / 60.0f;

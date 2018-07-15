@@ -6,6 +6,8 @@
 
 namespace fl
 {
+	class Matrix2;
+
 	/// <summary>
 	/// Holds a row major 3x3 matrix.
 	/// </summary>
@@ -131,6 +133,12 @@ namespace fl
 		float Determinant() const;
 
 		/// <summary>
+		/// Gets the submatrix of this matrix.
+		/// </summary>
+		/// <returns> The submatrix. </returns>
+		Matrix2 GetSubmatrix(const int &row, const int &col) const;
+
+		/// <summary>
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
@@ -152,27 +160,29 @@ namespace fl
 
 		Vector3 &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Matrix3 operator+(Matrix3 left, const Matrix3 &right);
+		FL_EXPORT friend Matrix3 operator+(const Matrix3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator-(Matrix3 left, const Matrix3 &right);
+		FL_EXPORT friend Matrix3 operator-(const Matrix3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator*(Matrix3 left, const Matrix3 &right);
+		FL_EXPORT friend Matrix3 operator*(const Matrix3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator/(Matrix3 left, const Matrix3 &right);
+		FL_EXPORT friend Matrix3 operator/(const Matrix3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator*(Matrix3 left, Vector3 right);
+		FL_EXPORT friend Matrix3 operator*(const Vector3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator/(Matrix3 left, Vector3 right);
+		FL_EXPORT friend Matrix3 operator/(const Vector3 &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator*(Matrix3 left, float right);
+		FL_EXPORT friend Matrix3 operator*(const Matrix3 &left, const Vector3 &right);
 
-		FL_EXPORT friend Matrix3 operator/(Matrix3 left, float right);
+		FL_EXPORT friend Matrix3 operator/(const Matrix3 &left, const Vector3 &right);
 
-		FL_EXPORT friend Matrix3 operator*(float left, Matrix3 right);
+		FL_EXPORT friend Matrix3 operator*(const float &left, const Matrix3 &right);
 
-		FL_EXPORT friend Matrix3 operator/(float left, Matrix3 right);
+		FL_EXPORT friend Matrix3 operator/(const float &left, const Matrix3 &right);
 
-		FL_EXPORT friend Vector3 operator*(Vector3 left, Matrix3 right);
+		FL_EXPORT friend Matrix3 operator*(const Matrix3 &left, const float &right);
+
+		FL_EXPORT friend Matrix3 operator/(const Matrix3 &left, const float &right);
 
 		Matrix3 &operator+=(const Matrix3 &other);
 
@@ -181,6 +191,14 @@ namespace fl
 		Matrix3 &operator*=(const Matrix3 &other);
 
 		Matrix3 &operator/=(const Matrix3 &other);
+
+		Matrix3 &operator*=(const Vector3 &other);
+
+		Matrix3 &operator/=(const Vector3 &other);
+
+		Matrix3 &operator*=(const float &other);
+
+		Matrix3 &operator/=(const float &other);
 
 		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 

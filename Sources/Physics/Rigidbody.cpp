@@ -7,9 +7,10 @@
 
 namespace fl
 {
-	Rigidbody::Rigidbody(const float &mass, const float &stiffness, const float &damping, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
+	Rigidbody::Rigidbody(const float &mass, const float &friction, const float &stiffness, const float &damping, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
 		IComponent(),
 		m_mass(mass),
+		m_friction(friction),
 		m_stiffness(stiffness),
 		m_damping(damping),
 		m_freezePosition(freezePosition),
@@ -52,9 +53,10 @@ namespace fl
 			m_body = CreateRigidBody(m_mass, m_worldTransform, m_shape);
 			m_body->setWorldTransform(m_worldTransform);
 			m_body->setContactStiffnessAndDamping(m_stiffness, m_damping);
-			m_body->setLinearFactor(IShape::Convert(m_freezePosition, true));
-			m_body->setAngularFactor(IShape::Convert(m_freezeRotation, true));
-			m_body->setUserPointer(GetGameObject());
+			m_body->setFriction(m_friction);
+			m_body->setLinearFactor(IShape::Convert(-m_freezePosition));
+			m_body->setAngularFactor(IShape::Convert(-m_freezeRotation));
+		//	m_body->setUserPointer(GetGameObject());
 			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
 		}
 	}
@@ -101,6 +103,7 @@ namespace fl
 	void Rigidbody::Load(LoadedValue *value)
 	{
 		m_mass = value->GetChild("Mass")->Get<float>();
+		m_friction = value->GetChild("Friction")->Get<float>();
 		m_stiffness = value->GetChild("Stiffness")->Get<float>();
 		m_damping = value->GetChild("Damping")->Get<float>();
 		m_freezePosition = value->GetChild("Freeze Position");
@@ -110,6 +113,7 @@ namespace fl
 	void Rigidbody::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Mass", true)->Set(m_mass);
+		destination->GetChild("Friction", true)->Set(m_friction);
 		destination->GetChild("Stiffness", true)->Set(m_stiffness);
 		destination->GetChild("Damping", true)->Set(m_damping);
 		m_freezePosition.Write(destination->GetChild("Freeze Position", true));
@@ -159,6 +163,12 @@ namespace fl
 		m_body->setMassProps(m_mass, localInertia);
 	}
 
+	void Rigidbody::SetFriction(const float &friction)
+	{
+		m_friction = friction;
+		m_body->setFriction(m_friction);
+	}
+
 	void Rigidbody::SetStiffness(const float &stiffness)
 	{
 		m_stiffness = stiffness;
@@ -174,13 +184,13 @@ namespace fl
 	void Rigidbody::SetFreezePosition(const Constraint3 &freezePosition)
 	{
 		m_freezePosition = freezePosition;
-		m_body->setLinearFactor(IShape::Convert(m_freezePosition, true));
+		m_body->setLinearFactor(IShape::Convert(-m_freezePosition));
 	}
 
 	void Rigidbody::SetFreezeRotation(const Constraint3 &freezeRotation)
 	{
 		m_freezeRotation = freezeRotation;
-		m_body->setAngularFactor(IShape::Convert(m_freezeRotation, true));
+		m_body->setAngularFactor(IShape::Convert(-m_freezeRotation));
 	}
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
