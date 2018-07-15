@@ -37,90 +37,125 @@ namespace fl
 	Matrix2 Matrix2::Add(const Matrix2 &other) const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = m_rows[0][0] + other.m_rows[0][0];
-		result.m_rows[0][1] = m_rows[0][1] + other.m_rows[0][1];
-		result.m_rows[1][0] = m_rows[1][0] + other.m_rows[1][0];
-		result.m_rows[1][1] = m_rows[1][1] + other.m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = m_rows[row][col] + other[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix2 Matrix2::Subtract(const Matrix2 &other) const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = m_rows[0][0] - other.m_rows[0][0];
-		result.m_rows[0][1] = m_rows[0][1] - other.m_rows[0][1];
-		result.m_rows[1][0] = m_rows[1][0] - other.m_rows[1][0];
-		result.m_rows[1][1] = m_rows[1][1] - other.m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = m_rows[row][col] - other[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix2 Matrix2::Multiply(const Matrix2 &other) const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = m_rows[0][0] * other.m_rows[0][0] + m_rows[1][0] * other.m_rows[0][1];
-		result.m_rows[0][1] = m_rows[0][1] * other.m_rows[0][0] + m_rows[1][1] * other.m_rows[0][1];
-		result.m_rows[1][0] = m_rows[0][0] * other.m_rows[1][0] + m_rows[1][0] * other.m_rows[1][1];
-		result.m_rows[1][1] = m_rows[0][1] * other.m_rows[1][0] + m_rows[1][1] * other.m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix2 Matrix2::Divide(const Matrix2 &other) const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = m_rows[0][0] / other.m_rows[0][0] + m_rows[1][0] / other.m_rows[0][1];
-		result.m_rows[0][1] = m_rows[0][1] / other.m_rows[0][0] + m_rows[1][1] / other.m_rows[0][1];
-		result.m_rows[1][0] = m_rows[0][0] / other.m_rows[1][0] + m_rows[1][0] / other.m_rows[1][1];
-		result.m_rows[1][1] = m_rows[0][1] / other.m_rows[1][0] + m_rows[1][1] / other.m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1];
+			}
+		}
+
 		return result;
 	}
 
 	Vector2 Matrix2::Transform(const Vector2 &other) const
 	{
-		float x = m_rows[0][0] * other.m_x + m_rows[1][0] * other.m_y;
-		float y = m_rows[0][1] * other.m_x + m_rows[1][1] * other.m_y;
-		return Vector2(x, y);
+		Vector2 result = Vector2();
+
+		for (int row = 0; row < 3; row++)
+		{
+			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y;
+		}
+
+		return result;
 	}
 
 	Matrix2 Matrix2::Scale(const Vector2 &other) const
 	{
 		Matrix2 result = Matrix2(*this);
-		result.m_rows[0][0] = m_rows[0][0] * other.m_x;
-		result.m_rows[0][1] = m_rows[0][1] * other.m_x;
-		result.m_rows[1][0] = m_rows[1][0] * other.m_y;
-		result.m_rows[1][1] = m_rows[1][1] * other.m_y;
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] *= other[row];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix2 Matrix2::Negate() const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = -m_rows[0][0];
-		result.m_rows[0][1] = -m_rows[0][1];
-		result.m_rows[1][0] = -m_rows[1][0];
-		result.m_rows[1][1] = -m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = -m_rows[row][col];
+			}
+		}
+
 		return result;
 	}
 
 	Matrix2 Matrix2::Invert() const
 	{
 		Matrix2 result = Matrix2();
-		const float d = Determinant();
 
-		if (d != 0.0f)
+		float det = Determinant();
+		assert(det != 0.0f && "Determinant cannot be zero!");
+
+		for (int j = 0; j < 2; j++)
 		{
-			float determinantInv = 1.0f / d;
+			for (int i = 0; i < 2; i++)
+			{
+				// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
+				float minor = GetSubmatrix(j, i);
 
-			// Get the conjugate matrix.
-			float t00 = m_rows[1][1];
-			float t01 = -m_rows[0][1];
-			float t11 = m_rows[0][0];
-			float t10 = -m_rows[1][0];
+				// Multiply by (−1)^{i+j}.
+				float factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+				float cofactor = minor * factor;
 
-			// Transpose and divide by the determinant.
-			result.m_rows[0][0] = t00 * determinantInv;
-			result.m_rows[0][1] = t01 * determinantInv;
-			result.m_rows[1][0] = t10 * determinantInv;
-			result.m_rows[1][1] = t11 * determinantInv;
+				result[i][j] = cofactor / det;
+			}
 		}
 
 		return result;
@@ -129,16 +164,62 @@ namespace fl
 	Matrix2 Matrix2::Transpose() const
 	{
 		Matrix2 result = Matrix2();
-		result.m_rows[0][0] = m_rows[0][0];
-		result.m_rows[0][1] = m_rows[1][0];
-		result.m_rows[1][0] = m_rows[0][1];
-		result.m_rows[1][1] = m_rows[1][1];
+
+		for (int row = 0; row < 2; row++)
+		{
+			for (int col = 0; col < 2; col++)
+			{
+				result[row][col] = m_rows[col][row];
+			}
+		}
+
 		return result;
 	}
 
 	float Matrix2::Determinant() const
 	{
-		return m_rows[0][0] * m_rows[1][1] - m_rows[0][1] * m_rows[1][0];
+		float result = 0.0f;
+
+		for (int i = 0; i < 2; i++)
+		{
+			// Get minor of element [0][i].
+			float minor = GetSubmatrix(0, i);
+
+			// If this is an odd-numbered row, negate the value.
+			float factor = (i % 2 == 1) ? -1.0f : 1.0f;
+
+			result += factor * m_rows[0][i] * minor;
+		}
+
+		return result;
+	}
+
+	float Matrix2::GetSubmatrix(const int &row, const int &col) const
+	{
+		float result = 0.0f;
+		int colCount = 0;
+		int rowCount = 0;
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (i != row)
+			{
+				colCount = 0;
+
+				for (int j = 0; j < 2; j++)
+				{
+					if (j != col)
+					{
+						result = m_rows[i][j];
+						colCount++;
+					}
+				}
+
+				rowCount++;
+			}
+		}
+
+		return result;
 	}
 
 	void Matrix2::Write(LoadedValue *destination)
@@ -149,19 +230,17 @@ namespace fl
 
 	Matrix2 &Matrix2::operator=(const Matrix2 &other)
 	{
-		m_rows[0][0] = other.m_rows[0][0];
-		m_rows[0][1] = other.m_rows[0][1];
-		m_rows[1][0] = other.m_rows[1][0];
-		m_rows[1][1] = other.m_rows[1][1];
+		for (int i = 0; i < 2; i++)
+		{
+			m_rows[i] = other[i];
+		}
+
 		return *this;
 	}
 
 	Matrix2 &Matrix2::operator=(const float *array)
 	{
-		m_rows[0][0] = array[0];
-		m_rows[0][1] = array[1];
-		m_rows[1][0] = array[2];
-		m_rows[1][1] = array[3];
+		memcpy(m_rows, array, 2 * 2 * sizeof(float));
 		return *this;
 	}
 
@@ -199,54 +278,64 @@ namespace fl
 		return m_rows[index];
 	}
 
-	Matrix2 operator+(Matrix2 left, const Matrix2 &right)
+	Matrix2 operator+(const Matrix2 &left, const Matrix2 &right)
 	{
 		return left.Add(right);
 	}
 
-	Matrix2 operator-(Matrix2 left, const Matrix2 &right)
+	Matrix2 operator-(const Matrix2 &left, const Matrix2 &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Matrix2 operator*(Matrix2 left, const Matrix2 &right)
+	Matrix2 operator*(const Matrix2 &left, const Matrix2 &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Matrix2 operator/(Matrix2 left, const Matrix2 &right)
+	Matrix2 operator/(const Matrix2 &left, const Matrix2 &right)
 	{
 		return left.Divide(right);
 	}
 
-	Matrix2 operator*(Matrix2 left, Vector2 right)
+	Matrix2 operator*(const Vector2 &left, const Matrix2 &right)
+	{
+		return right.Scale(left);
+	}
+
+	Matrix2 operator/(const Vector2 &left, const Matrix2 &right)
+	{
+		return right.Scale(1.0f / left);
+	}
+
+	Matrix2 operator*(const Matrix2 &left, const Vector2 &right)
 	{
 		return left.Scale(right);
 	}
 
-	Matrix2 operator/(Matrix2 left, Vector2 right)
+	Matrix2 operator/(const Matrix2 &left, const Vector2 &right)
 	{
 		return left.Scale(1.0f / right);
 	}
 
-	Matrix2 operator*(Matrix2 left, float right)
-	{
-		return left.Scale(Vector2(right, right));
-	}
-
-	Matrix2 operator/(Matrix2 left, float right)
-	{
-		return left.Scale(1.0f / Vector2(right, right));
-	}
-
-	Matrix2 operator*(float left, Matrix2 right)
+	Matrix2 operator*(const float &left, const Matrix2 &right)
 	{
 		return right.Scale(Vector2(left, left));
 	}
 
-	Matrix2 operator/(float left, Matrix2 right)
+	Matrix2 operator/(const float &left, const Matrix2 &right)
 	{
 		return right.Scale(1.0f / Vector2(left, left));
+	}
+
+	Matrix2 operator*(const Matrix2 &left, const float &right)
+	{
+		return left.Scale(Vector2(right, right));
+	}
+
+	Matrix2 operator/(const Matrix2 &left, const float &right)
+	{
+		return left.Scale(1.0f / Vector2(right, right));
 	}
 
 	Matrix2 &Matrix2::operator+=(const Matrix2 &other)
@@ -267,6 +356,26 @@ namespace fl
 	Matrix2 &Matrix2::operator/=(const Matrix2 &other)
 	{
 		return *this = Divide(other);
+	}
+
+	Matrix2 &Matrix2::operator*=(const Vector2 &other)
+	{
+		return *this = Scale(other);
+	}
+
+	Matrix2 &Matrix2::operator/=(const Vector2 &other)
+	{
+		return *this = Scale(1.0f / other);
+	}
+
+	Matrix2 &Matrix2::operator*=(const float &other)
+	{
+		return *this = Scale(Vector2(other, other));
+	}
+
+	Matrix2 &Matrix2::operator/=(const float &other)
+	{
+		return *this = Scale(1.0f / Vector2(other, other));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)

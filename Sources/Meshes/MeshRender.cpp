@@ -1,6 +1,8 @@
 #include "MeshRender.hpp"
 
 #include "Objects/GameObject.hpp"
+#include "Physics/IShape.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace fl
 {
@@ -35,11 +37,11 @@ namespace fl
 	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene)
 	{
 		// Checks if the mesh is in view.
-		/*auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
+		/*auto shape = GetGameObject()->GetComponent<IShape>();
 
-		if (rigidbody != nullptr && rigidbody->GetCollider() != nullptr)
+		if (shape != nullptr)
 		{
-			if (!rigidbody->GetCollider()->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
+			if (!shape->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 			{
 				return;
 			}

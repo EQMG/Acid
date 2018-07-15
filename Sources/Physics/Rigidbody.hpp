@@ -13,6 +13,7 @@ namespace fl
 	{
 	private:
 		float m_mass;
+		float m_friction;
 		float m_stiffness;
 		float m_damping;
 		Constraint3 m_freezePosition;
@@ -22,7 +23,7 @@ namespace fl
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &stiffness = 300.0f, const float &damping = 10.0f,
+		Rigidbody(const float &mass = 1.0f, const float &friction = 0.5f, const float &stiffness = 500.0f, const float &damping = 10.0f,
 				  const Constraint3 &freezePosition = Constraint3::ZERO, const Constraint3 &freezeRotation = Constraint3::ZERO);
 
 		~Rigidbody();
@@ -48,6 +49,10 @@ namespace fl
 		float GetMass() const { return m_mass; }
 
 		void SetMass(const float &mass);
+
+		float GetFriction() const { return m_friction; }
+
+		void SetFriction(const float &friction);
 
 		float GetStiffness() const { return m_stiffness; }
 

@@ -1,10 +1,13 @@
 #pragma once
 
+#include <optional>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Objects/IComponent.hpp"
 #include "Maths/Constraint3.hpp"
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
+#include "Frustum.hpp"
+#include "Ray.hpp"
 
 namespace fl
 {
@@ -18,24 +21,16 @@ namespace fl
 		/// <summary>
 		/// Creates a new shape.
 		/// </summary>
-		IShape()
-		{
-		}
+		IShape();
 
 		/// <summary>
 		/// Deconstructor for the shape.
 		/// </summary>
-		virtual ~IShape()
-		{
-		}
+		virtual ~IShape();
 
-		void Start() override
-		{
-		}
+		void Start() override = 0;
 
-		void Update() override
-		{
-		}
+		void Update() override = 0;
 
 		virtual void Load(LoadedValue *value) = 0;
 
@@ -57,7 +52,7 @@ namespace fl
 		/// </summary>
 		/// <param name="frustum"> The view frustum. </param>
 		/// <returns> If the shape is partially in the view frustum. </returns>
-	//	virtual bool InFrustum(const Frustum &frustum) = 0;
+		bool InFrustum(const Frustum &frustum);
 
 		FL_HIDDEN static btVector3 Convert(const Vector3 &vector)
 		{
@@ -79,13 +74,8 @@ namespace fl
 			return Quaternion(quaternion.getX(), quaternion.getY(), quaternion.getZ(), quaternion.getW());
 		}
 
-		FL_HIDDEN static btVector3 Convert(const Constraint3 &constraint, const bool &inversed)
+		FL_HIDDEN static btVector3 Convert(const Constraint3 &constraint)
 		{
-			if (inversed)
-			{
-				return btVector3(1.0f - constraint.m_x, 1.0f - constraint.m_y, 1.0f - constraint.m_z);
-			}
-
 			return btVector3(constraint.m_x, constraint.m_y, constraint.m_z);
 		}
 	};

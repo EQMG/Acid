@@ -9,6 +9,8 @@ namespace fl
 {
 	class Matrix3;
 
+	class Quaternion;
+
 	class Vector2;
 
 	/// <summary>
@@ -135,10 +137,17 @@ namespace fl
 		/// <summary>
 		/// Rotates this matrix around the given axis the specified angle.
 		/// </summary>
-		/// <param name="angle"> the angle, in radians. </param>
+		/// <param name="angle"> The angle, in radians. </param>
 		/// <param name="axis"> The vector representing the rotation axis. </param>
 		/// <returns> The rotated matrix. </returns>
 		Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
+
+		/// <summary>
+		/// Rotates this matrix by a quaternion.
+		/// </summary>
+		/// <param name="quaternion"> The quaternion. </param>
+		/// <returns> The rotated matrix. </returns>
+		Matrix4 Rotate(const Quaternion &quaternion) const;
 
 		/// <summary>
 		/// Inverts this matrix.
@@ -178,6 +187,15 @@ namespace fl
 		/// <param name="scale"> How much to scale the matrix. </param>
 		/// <returns> Returns the transformation matrix. </returns>
 		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
+
+		/// <summary>
+		/// Creates a new transformation matrix for a object in 3d space.
+		/// </summary>
+		/// <param name="translation"> Translation amount the XYZ. </param>
+		/// <param name="rotation"> Rotation quaternion. </param>
+		/// <param name="scale"> How much to scale the matrix. </param>
+		/// <returns> Returns the transformation matrix. </returns>
+		static Matrix4 TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale);
 
 		/// <summary>
 		/// Creates a new perspective matrix.
