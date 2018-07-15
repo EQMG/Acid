@@ -1,5 +1,7 @@
 #include "Resources.hpp"
 
+#include <algorithm>
+
 namespace fl
 {
 	Resources::Resources() :
@@ -22,7 +24,7 @@ namespace fl
 			{
 				if ((*it).use_count() <= 1)
 				{
-					printf("Resource '%s' erased\n", (*it)->GetFilename().c_str());
+					fprintf(stdout, "Resource '%s' erased\n", (*it)->GetFilename().c_str());
 					m_resources.erase(it);
 				}
 			}
@@ -44,28 +46,39 @@ namespace fl
 
 	void Resources::Add(std::shared_ptr<IResource> resource)
 	{
+		if (std::find(m_resources.begin(), m_resources.end(), resource) != m_resources.end())
+		{
+			return;
+		}
+
 		m_resources.emplace_back(resource);
 	}
 
-	void Resources::Remove(std::shared_ptr<IResource> resource)
+	bool Resources::Remove(std::shared_ptr<IResource> resource)
 	{
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
 			if (*it == resource)
 			{
 				m_resources.erase(it);
+				return true;
 			}
 		}
+
+		return false;
 	}
 
-	void Resources::Remove(const std::string &filename)
+	bool Resources::Remove(const std::string &filename)
 	{
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
 			if ((*it)->GetFilename() == filename)
 			{
 				m_resources.erase(it);
+				return true;
 			}
 		}
+
+		return false;
 	}
 }

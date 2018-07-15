@@ -44,6 +44,6 @@ namespace fl
 		/// </summary>
 		/// <param name="filename"> The filename to find. </param>
 		/// <returns> The path to the first file found. </returns>
-		std::string SearchFile(const std::string &filename);
+		static std::string SearchFile(const std::string &filename);
 	};
 }

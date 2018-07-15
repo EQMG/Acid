@@ -2,7 +2,9 @@
 
 #include <string>
 #include <utility>
+#include <optional>
 #include <vector>
+#include <map>
 #include "Helpers/FormatString.hpp"
 
 namespace fl
@@ -15,8 +17,9 @@ namespace fl
 
 		std::string m_name;
 		std::string m_value;
+		std::map<std::string, std::string> m_attributes;
 	public:
-		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value);
+		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes = {});
 
 		~LoadedValue();
 
@@ -35,6 +38,18 @@ namespace fl
 		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false, const bool &reportError = true);
 
 		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true);
+
+	//	std::optional<LoadedValue *> SearchHierarchy(const std::vector<std::string> &names, const int &i = 0);
+
+	//	std::optional<LoadedValue *> SearchHierarchyAttribs(const std::vector<std::string> &names, const std::string &childName, const std::string &attribute, const std::string &value, const int &i = 0);
+
+		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
+
+		std::string GetAttribute(const std::string &attribute) const;
+
+		void AddAttribute(const std::string &attribute, const std::string &value);
+
+		bool RemoveAttribute(const std::string &attribute);
 
 		void AddChild(LoadedValue *value);
 
@@ -70,5 +85,7 @@ namespace fl
 		std::string GetString();
 
 		void SetString(const std::string &data);
+
+		static void PrintDebug(LoadedValue *value, const int &level = 0);
 	};
 }

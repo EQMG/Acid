@@ -47,16 +47,24 @@ namespace fl
 		std::string nameId = jointNode->GetChild("-id")->GetString();
 		auto index = GetBoneIndex(nameId);
 		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
-		Matrix4 matrix = ConvertData(matrixData).Transpose();
+
+		Matrix4 transform = Matrix4();
+
+		for (unsigned int i = 0; i < matrixData.size(); i++)
+		{
+			transform.m_linear[i] = std::stof(matrixData[i]);
+		}
+
+		transform = transform.Transpose();
 
 		if (isRoot)
 		{
 			// Because in Blender z is up, but the engine is y up.
-			matrix *= MeshAnimated::CORRECTION;
+			transform *= MeshAnimated::CORRECTION;
 		}
 
 		m_jointCount++;
-		return new JointData(index, nameId, matrix);
+		return new JointData(index, nameId, transform);
 	}
 
 	int SkeletonLoader::GetBoneIndex(const std::string &name)
@@ -70,17 +78,5 @@ namespace fl
 		}
 
 		return -1;
-	}
-
-	Matrix4 SkeletonLoader::ConvertData(const std::vector<std::string> &rawData)
-	{
-		Matrix4 result = Matrix4();
-
-		for (unsigned int i = 0; i < rawData.size(); i++)
-		{
-			result.m_linear[i] = std::stof(rawData[i]);
-		}
-
-		return result;
 	}
 }

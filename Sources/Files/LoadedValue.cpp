@@ -2,11 +2,12 @@
 
 namespace fl
 {
-	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value) :
+	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
 		m_parent(parent),
 		m_children(std::vector<LoadedValue *>()),
 		m_name(FormatString::RemoveAll(name, '\"')),
-		m_value(value)
+		m_value(value),
+		m_attributes(attributes)
 	{
 	}
 
@@ -87,6 +88,35 @@ namespace fl
 		return nullptr;
 	}
 
+	/*std::optional<LoadedValue *> LoadedValue::SearchHierarchy(const std::vector<std::string> &names, const int &i)
+	{
+		if (i == names.size())
+		{
+			return this;
+		}
+
+		auto child = GetChild(names[i]);
+
+		if (!child.has_value())
+		{
+			return {};
+		}
+
+		return child.value()->SearchHierarchy(names, i + 1);
+	}
+
+	std::optional<LoadedValue *> LoadedValue::SearchHierarchyAttribs(const std::vector<std::string> &names, const std::string &childName, const std::string &attribute, const std::string &value, const int &i)
+	{
+		auto child = SearchHierarchy(names, i);
+
+		if (!child.has_value())
+		{
+			return {};
+		}
+
+		return child.value()->GetChildWithAttribute(childName, attribute, value);
+	}*/
+
 	void LoadedValue::AddChild(LoadedValue *value)
 	{
 		auto child = GetChild(value->m_name);
@@ -101,6 +131,43 @@ namespace fl
 		m_children.emplace_back(child);
 	}
 
+	std::string LoadedValue::GetAttribute(const std::string &attribute) const
+	{
+		auto result = m_attributes.find(attribute);
+
+		if (result == m_attributes.end())
+		{
+			return nullptr;
+		}
+
+		return (*result).second;
+	}
+
+	void LoadedValue::AddAttribute(const std::string &attribute, const std::string &value)
+	{
+		auto find = m_attributes.find(attribute);
+
+		if (find == m_attributes.end())
+		{
+			m_attributes.emplace(attribute, value);
+		}
+
+		(*find).second = value;
+	}
+
+	bool LoadedValue::RemoveAttribute(const std::string &attribute)
+	{
+		auto find = m_attributes.find(attribute);
+
+		if (find != m_attributes.end())
+		{
+			m_attributes.erase(find);
+			return true;
+		}
+
+		return false;
+	}
+
 	std::string LoadedValue::GetString()
 	{
 		return FormatString::RemoveAll(m_value, '\"');
@@ -109,5 +176,27 @@ namespace fl
 	void LoadedValue::SetString(const std::string &data)
 	{
 		m_value = "\"" + data + "\"";
+	}
+
+	void LoadedValue::PrintDebug(LoadedValue *value, const int &level)
+	{
+		std::string tabs = "";
+
+		for (int i = 0; i < level; i++)
+		{
+			tabs += "  ";
+		}
+
+		bool empty = value->GetName().empty();
+
+		if (!empty)
+		{
+			fprintf(stdout, "%s- '%s': '%s'\n", tabs.c_str(), value->GetName().c_str(), value->GetValue().c_str());
+		}
+
+		for (auto &child : value->GetChildren())
+		{
+			PrintDebug(child, empty ? level : level + 1);
+		}
 	}
 }

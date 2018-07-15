@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<geometry>
+    <geometry_source id="positions">
+        <float_array id="positions-array" count="12">0.3735479 0.8294312 7.561044 0.8573105 0.3869484 7.61389 0.8302363 -0.3931463 7.619821 0.3681121 -0.8940711 0.1892383</float_array>
+    </geometry_source>
+    <geometry_common>
+        <accessor source="#positions-array" count="3840" stride="3">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+            <param name="Z" type="float"/>
+        </accessor>
+    </geometry_common>
+</geometry>

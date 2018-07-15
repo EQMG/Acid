@@ -65,8 +65,8 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		//	printf("%s", m_shaderProgram->ToString().c_str());
-		printf("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
+		//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
+		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -269,8 +269,8 @@ namespace fl
 
 			if (!shader.parse(&resources, 100, false, messages))
 			{
-				printf("%s\n", shader.getInfoLog());
-				printf("%s\n", shader.getInfoDebugLog());
+				fprintf(stdout, "%s\n", shader.getInfoLog());
+				fprintf(stdout, "%s\n", shader.getInfoDebugLog());
 				fprintf(stderr, "SPRIV shader compile failed!\n");
 			}
 

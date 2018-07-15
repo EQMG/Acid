@@ -75,7 +75,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		fprintf(stdout, "Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -185,7 +185,7 @@ namespace fl
 
 		if (!FileSystem::FileExists(filepath))
 		{
-			//	printf("File does not exist: '%s'\n", filepath.c_str());
+			//	fprintf(stdout, "File does not exist: '%s'\n", filepath.c_str());
 
 			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
 			{

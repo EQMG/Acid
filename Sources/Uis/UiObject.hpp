@@ -64,7 +64,7 @@ namespace fl
 		/// Disowns a child from this screen objects children list.
 		/// </summary>
 		/// <param name="child"> The child to disown. </param>
-		void RemoveChild(UiObject *child);
+		bool RemoveChild(UiObject *child);
 
 		/// <summary>
 		/// Adds this object and its children to a list.

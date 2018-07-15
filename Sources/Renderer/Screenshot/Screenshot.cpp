@@ -22,7 +22,7 @@ namespace fl
 		auto height = Display::Get()->GetHeight();
 		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetVkImages().at(Renderer::Get()->GetVkActiveSwapchainImage());
 
-		printf("Saving screenshot to: '%s'\n", filename.c_str());
+		fprintf(stdout, "Saving screenshot to: '%s'\n", filename.c_str());
 
 		// Checks blit swapchain support.
 		bool supportsBlit = true;
@@ -190,7 +190,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
+		fprintf(stdout, "Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

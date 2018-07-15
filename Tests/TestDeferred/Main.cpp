@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	engine->SetUpdater(std::make_shared<MainUpdater>());
 
 	auto configManager = std::make_shared<ConfigManager>();
-	printf("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
 	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);

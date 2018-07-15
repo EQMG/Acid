@@ -28,7 +28,7 @@ namespace fl
 
 	void JsonSection::AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation, const bool &end)
 	{
-		//	printf("%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
+		//	fprintf(stdout, "%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
 		//	for (auto &child : *loadedValue->GetChildren())
 		//	{
 		//		AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());

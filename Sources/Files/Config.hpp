@@ -33,7 +33,7 @@ namespace fl
 
 		void SetRaw(const std::string &key, const std::string &value);
 
-		void Remove(const std::string &key);
+		bool Remove(const std::string &key);
 
 		template<typename T>
 		T Get(const std::string &key, const T &normal)
