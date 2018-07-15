@@ -230,14 +230,14 @@ namespace fl
 		if (fullscreen)
 		{
 #if FL_VERBOSE
-			printf("Display is going fullscreen\n");
+			fprintf(stdout, "Display is going fullscreen\n");
 #endif
 			ErrorVk(wsiCmdSetFullscreen(m_shell, monitors[0], true));
 		}
 		else
 		{
 #if FL_VERBOSE
-			printf("Display is going windowed\n");
+			fprintf(stdout, "Display is going windowed\n");
 #endif
 			m_positionX = (monitorProperties.width - m_windowWidth) / 2;
 			m_positionY = (monitorProperties.height - m_windowHeight) / 2;
@@ -623,39 +623,39 @@ namespace fl
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
 #if FL_VERBOSE
-		printf("-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		fprintf(stdout, "-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
 		case 1:
-			printf("Type: Integrated\n");
+			fprintf(stdout, "Type: Integrated\n");
 			break;
 		case 2:
-			printf("Type: Discrete\n");
+			fprintf(stdout, "Type: Discrete\n");
 			break;
 		case 3:
-			printf("Type: Virtual\n");
+			fprintf(stdout, "Type: Virtual\n");
 			break;
 		case 4:
-			printf("Type: CPU\n");
+			fprintf(stdout, "Type: CPU\n");
 			break;
 		default:
-			printf("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
+			fprintf(stdout, "Type: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)
 		{
 		case 0x8086:
-			printf("Vendor: Intel\n");
+			fprintf(stdout, "Vendor: Intel\n");
 			break;
 		case 0x10DE:
-			printf("Vendor: NVIDIA\n");
+			fprintf(stdout, "Vendor: NVIDIA\n");
 			break;
 		case 0x1002:
-			printf("Vendor: AMD\n");
+			fprintf(stdout, "Vendor: AMD\n");
 			break;
 		default:
-			printf("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+			fprintf(stdout, "Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
 		}
 
 		uint32_t supportedVersion[] = {
@@ -663,30 +663,30 @@ namespace fl
 			VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 		};
-		printf("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
-		printf("Header Version: %i\n", VK_HEADER_VERSION);
-		printf("-- Done --\n");
+		fprintf(stdout, "Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		fprintf(stdout, "Header Version: %i\n", VK_HEADER_VERSION);
+		fprintf(stdout, "-- Done --\n");
 #endif
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
 #if FL_VERBOSE
-		printf("-- Avalable Layers For: '%s' --\n", type.c_str());
+		fprintf(stdout, "-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto &layer : layerProperties)
 		{
 			if (showDescription)
 			{
-				printf("\n    %s   | %s, ", layer.layerName, layer.description);
+				fprintf(stdout, "\n    %s   | %s, ", layer.layerName, layer.description);
 			}
 			else
 			{
-				printf("%s, ", layer.layerName);
+				fprintf(stdout, "%s, ", layer.layerName);
 			}
 		}
 
-		printf("\n-- Done --\n");
+		fprintf(stdout, "\n-- Done --\n");
 #endif
 	}
 }

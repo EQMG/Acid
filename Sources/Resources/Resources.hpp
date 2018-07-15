@@ -45,8 +45,8 @@ namespace fl
 
 		void Add(std::shared_ptr<IResource> resource);
 
-		void Remove(std::shared_ptr<IResource> resource);
+		bool Remove(std::shared_ptr<IResource> resource);
 
-		void Remove(const std::string &filename);
+		bool Remove(const std::string &filename);
 	};
 }

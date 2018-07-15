@@ -130,19 +130,26 @@ namespace fl
 
 	void ParticleSystem::AddParticleType(std::shared_ptr<ParticleType> type)
 	{
+		if (std::find(m_types.begin(), m_types.end(), type) != m_types.end()) 
+		{
+			return;
+		}
+		
 		m_types.emplace_back(type);
 	}
 
-	void ParticleSystem::RemoveParticleType(std::shared_ptr<ParticleType> type)
+	bool ParticleSystem::RemoveParticleType(std::shared_ptr<ParticleType> type)
 	{
 		for (auto it = m_types.begin(); it != m_types.end(); ++it)
 		{
 			if (*it == type)
 			{
 				m_types.erase(it);
-				return;
+				return true;
 			}
 		}
+
+		return false;
 	}
 
 	void ParticleSystem::SetSpawn(ISpawnParticle *spawn)

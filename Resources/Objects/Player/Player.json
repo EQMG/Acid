@@ -1,5 +1,5 @@
 {
-  "ShapeCapsule": {
+  "ColliderCapsule": {
     "Radius": 0.2,
     "Height": 1.8
   },

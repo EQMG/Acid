@@ -14,7 +14,7 @@ namespace fl
 	{
 	private:
 		std::string m_filename;
-		LoadedValue * m_parent;
+		LoadedValue *m_parent;
 	public:
 		FileJson(const std::string &filename);
 
@@ -30,9 +30,9 @@ namespace fl
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
-		LoadedValue * GetParent() const { return m_parent; }
+		LoadedValue *GetParent() const { return m_parent; }
 
-		LoadedValue * GetChild(const std::string &name) const { return m_parent->GetChild(name); }
+		LoadedValue *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
 	private:
 		void Verify();
 	};

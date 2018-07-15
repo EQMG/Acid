@@ -74,7 +74,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
+		fprintf(stdout, "Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
 #endif
 	}
 

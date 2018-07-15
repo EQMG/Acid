@@ -126,7 +126,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Renderpass created in %fms\n", debugEnd - debugStart);
+		fprintf(stdout, "Renderpass created in %fms\n", debugEnd - debugStart);
 #endif
 	}
 
@@ -346,7 +346,7 @@ namespace fl
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
 		{
 #if FL_VERBOSE
-			printf("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetVkExtent().width, m_swapchain->GetVkExtent().height, displayExtent2D.width, displayExtent2D.height);
+			fprintf(stdout, "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetVkExtent().width, m_swapchain->GetVkExtent().height, displayExtent2D.width, displayExtent2D.height);
 #endif
 			delete m_swapchain;
 			m_swapchain = new Swapchain(displayExtent2D);

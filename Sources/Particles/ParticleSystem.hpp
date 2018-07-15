@@ -75,7 +75,7 @@ namespace fl
 
 		void AddParticleType(std::shared_ptr<ParticleType> type);
 
-		void RemoveParticleType(std::shared_ptr<ParticleType> type);
+		bool RemoveParticleType(std::shared_ptr<ParticleType> type);
 
 		ISpawnParticle *GetSpawn() const { return m_spawn; }
 

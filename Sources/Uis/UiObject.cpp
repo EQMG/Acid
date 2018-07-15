@@ -90,16 +90,18 @@ namespace fl
 		// Pure virtual function.
 	}
 
-	void UiObject::RemoveChild(UiObject *child)
+	bool UiObject::RemoveChild(UiObject *child)
 	{
 		for (auto it = m_children.begin(); it != m_children.end(); ++it)
 		{
 			if (*it == child)
 			{
 				m_children.erase(it);
-				return;
+				return true;
 			}
 		}
+
+		return false;
 	}
 
 	std::vector<UiObject *> *UiObject::GetAll(std::vector<UiObject *> *list)

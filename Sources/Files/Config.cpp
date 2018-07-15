@@ -70,15 +70,16 @@ namespace fl
 		m_values.at(key) = std::make_shared<ConfigKey>(value);
 	}
 
-	void Config::Remove(const std::string &key)
+	bool Config::Remove(const std::string &key)
 	{
 		auto value = m_values.find(key);
 
-		if (value == m_values.end())
+		if (value != m_values.end())
 		{
-			return;
+			m_values.erase(key);
+			return true;
 		}
 
-		m_values.erase(key);
+		return false;
 	}
 }

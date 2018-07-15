@@ -105,7 +105,7 @@ namespace fl
 
 			if (root)
 			{
-				// Because up axis in Blender is different to up axis in game.
+				// Because in Blender z is up, but the engine is y up.
 				transform *= MeshAnimated::CORRECTION;
 			}
 

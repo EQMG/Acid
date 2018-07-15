@@ -30,7 +30,7 @@ namespace fl
 
 		void Add(GameObject *object) override;
 
-		void Remove(GameObject *object) override;
+		bool Remove(GameObject *object) override;
 
 		void Clear() override;
 

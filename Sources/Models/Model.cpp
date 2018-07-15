@@ -265,7 +265,7 @@ namespace fl
 
 #if FL_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		printf("Obj '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		fprintf(stdout, "Obj '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 
 		m_filename = filename;

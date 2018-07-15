@@ -114,7 +114,7 @@ namespace test
 				targetVelocity *= 0.0f;
 				m_jumping = false;
 				m_noclipEnabled = !m_noclipEnabled;
-				printf("Player Noclip: %s\n", m_noclipEnabled ? "true" : "false");
+				fprintf(stdout, "Player Noclip: %s\n", m_noclipEnabled ? "true" : "false");
 			}
 		}
 

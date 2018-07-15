@@ -5,7 +5,7 @@ namespace fl
 	void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, VkBool32 connected)
 	{
 #if FL_VERBOSE
-		printf("Joystick '%s' %s port %i\n", name, connected ? "connected to" : "disconnected from ", port);
+		fprintf(stdout, "Joystick '%s' %s port %i\n", name, connected ? "connected to" : "disconnected from ", port);
 #endif
 		Joystick joystick = Joysticks::Get()->m_connected[port];
 		bool changed = joystick.m_connected != connected;

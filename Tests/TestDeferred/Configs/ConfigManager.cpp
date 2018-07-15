@@ -37,7 +37,7 @@ namespace test
 
 	void ConfigManager::Save()
 	{
-		printf("Saving config manager\n");
+		fprintf(stdout, "Saving config manager\n");
 		m_configAudio.Save();
 		m_configGraphics.Save();
 	}

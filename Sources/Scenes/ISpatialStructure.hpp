@@ -42,7 +42,8 @@ namespace fl
 		/// Removes an object from the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
-		virtual void Remove(GameObject *object) = 0;
+		/// <returns> If the object was removed. </returns>
+		virtual bool Remove(GameObject *object) = 0;
 
 		/// <summary>
 		/// Removes all objects from the spatial structure..
