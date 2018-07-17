@@ -133,35 +133,35 @@ namespace fl
 
 	std::string LoadedValue::GetAttribute(const std::string &attribute) const
 	{
-		auto result = m_attributes.find(attribute);
+		auto it = m_attributes.find(attribute);
 
-		if (result == m_attributes.end())
+		if (it == m_attributes.end())
 		{
 			return nullptr;
 		}
 
-		return (*result).second;
+		return (*it).second;
 	}
 
 	void LoadedValue::AddAttribute(const std::string &attribute, const std::string &value)
 	{
-		auto find = m_attributes.find(attribute);
+		auto it = m_attributes.find(attribute);
 
-		if (find == m_attributes.end())
+		if (it == m_attributes.end())
 		{
 			m_attributes.emplace(attribute, value);
 		}
 
-		(*find).second = value;
+		(*it).second = value;
 	}
 
 	bool LoadedValue::RemoveAttribute(const std::string &attribute)
 	{
-		auto find = m_attributes.find(attribute);
+		auto it = m_attributes.find(attribute);
 
-		if (find != m_attributes.end())
+		if (it != m_attributes.end())
 		{
-			m_attributes.erase(find);
+			m_attributes.erase(it);
 			return true;
 		}
 
@@ -178,7 +178,7 @@ namespace fl
 		m_value = "\"" + data + "\"";
 	}
 
-	void LoadedValue::PrintDebug(LoadedValue *value, const int &level)
+	void LoadedValue::PrintDebug(LoadedValue *value, const bool &content, const int &level)
 	{
 		std::string tabs = "";
 
@@ -187,11 +187,18 @@ namespace fl
 			tabs += "  ";
 		}
 
-		bool empty = value->GetName().empty();
+		bool empty = value->GetName().empty() && level != 0;
 
 		if (!empty)
 		{
-			fprintf(stdout, "%s- '%s': '%s'\n", tabs.c_str(), value->GetName().c_str(), value->GetValue().c_str());
+			if (content)
+			{
+				fprintf(stdout, "%s- '%s': '%s'\n", tabs.c_str(), value->GetName().c_str(), value->GetValue().c_str());
+			}
+			else
+			{
+				fprintf(stdout, "%s- '%s'\n", tabs.c_str(), value->GetName().c_str());
+			}
 		}
 
 		for (auto &child : value->GetChildren())

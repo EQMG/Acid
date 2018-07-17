@@ -3,6 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
+#include "Models/VertexModel.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 

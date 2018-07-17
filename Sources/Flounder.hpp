@@ -43,6 +43,8 @@
 #include "Files/Json/FileJson.hpp"
 #include "Files/Json/JsonSection.hpp"
 #include "Files/LoadedValue.hpp"
+#include "Files/Xml/FileXml.hpp"
+#include "Files/Xml/XmlNode.hpp"
 #include "Flounder.hpp"
 #include "Fonts/FontCharacter.hpp"
 #include "Fonts/FontLine.hpp"

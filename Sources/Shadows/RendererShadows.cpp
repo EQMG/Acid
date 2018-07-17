@@ -1,6 +1,7 @@
 #include "RendererShadows.hpp"
 
 #include "Scenes/Scenes.hpp"
+#include "Models/VertexModel.hpp"
 #include "ShadowRender.hpp"
 
 namespace fl

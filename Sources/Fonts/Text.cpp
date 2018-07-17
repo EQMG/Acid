@@ -1,6 +1,7 @@
 ﻿#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace fl
 {

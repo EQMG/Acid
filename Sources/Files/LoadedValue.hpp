@@ -2,7 +2,6 @@
 
 #include <string>
 #include <utility>
-#include <optional>
 #include <vector>
 #include <map>
 #include "Helpers/FormatString.hpp"
@@ -47,6 +46,8 @@ namespace fl
 
 		std::string GetAttribute(const std::string &attribute) const;
 
+		void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }
+
 		void AddAttribute(const std::string &attribute, const std::string &value);
 
 		bool RemoveAttribute(const std::string &attribute);
@@ -86,6 +87,6 @@ namespace fl
 
 		void SetString(const std::string &data);
 
-		static void PrintDebug(LoadedValue *value, const int &level = 0);
+		static void PrintDebug(LoadedValue *value, const bool &content = true, const int &level = 0);
 	};
 }

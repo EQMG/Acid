@@ -26,7 +26,7 @@ auto guiBlack = Texture::Resource("Guis/Black.png");
 auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 
 // Imports a model.
-auto dragon = Model::Resource("Objects/Testing/ModelDragon.obj");
+auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
 
 // Plays a 3D sound, at the origin, at half volume.
 auto jump = Sound("Sounds/Jump.ogg", 0.5f);
@@ -86,10 +86,10 @@ This is a list of current features in Flounder:
  * GameObjects and component system
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ)
- * Animations loading (DAE => JSON)
+ * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * Config and class loading/saving (CSV, JSON)
- * GameObject prefab loading/saving (JSON)
+ * Config and class loading/saving (CSV, JSON, XML)
+ * GameObject prefab loading/saving (JSON, XML)
  * Visual drivers and maths classes
  * Flexible input classes
  * C# generated files

@@ -72,9 +72,9 @@ namespace fl
 
 	bool Config::Remove(const std::string &key)
 	{
-		auto value = m_values.find(key);
+		auto it = m_values.find(key);
 
-		if (value != m_values.end())
+		if (it != m_values.end())
 		{
 			m_values.erase(key);
 			return true;

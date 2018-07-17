@@ -1,5 +1,7 @@
 #include "MeshSimple.hpp"
 
+#include "Models/VertexModel.hpp"
+
 namespace fl
 {
 	MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :

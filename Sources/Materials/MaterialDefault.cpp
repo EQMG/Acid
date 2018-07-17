@@ -1,6 +1,7 @@
 #include "MaterialDefault.hpp"
 
 #include "Objects/GameObject.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace fl
 {

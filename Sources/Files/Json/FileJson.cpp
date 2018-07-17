@@ -35,9 +35,12 @@ namespace fl
 		std::shared_ptr<JsonSection> currentSection = nullptr;
 		std::string summation = "";
 
-		for (auto &c : fileLoaded)
+		for (char &c : fileLoaded)
 		{
-			if (c == '{' || c == '[')
+			switch (c)
+			{
+			case '{':
+			case '[':
 			{
 				if (currentSection == nullptr)
 				{
@@ -63,8 +66,11 @@ namespace fl
 				auto section = std::make_shared<JsonSection>(currentSection, name, "");
 				currentSection->AddChild(section);
 				currentSection = section;
+
+				break;
 			}
-			else if (c == '}' || c == ']')
+			case '}':
+			case ']':
 			{
 				currentSection->SetContent(currentSection->GetContent() + summation);
 				summation.clear();
@@ -73,13 +79,14 @@ namespace fl
 				{
 					currentSection = currentSection->GetParent();
 				}
+
+				break;
 			}
-			else if (c == '\n')
-			{
-			}
-			else
-			{
+			case '\n':
+				break;
+			default:
 				summation += c;
+				break;
 			}
 		}
 

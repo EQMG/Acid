@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-16" ?>
+<GameObjectDefinition name="Player">
+	<ColliderCapsule>
+		<Radius>0.2</Radius>
+		<Height>1.8</Height>
+	</ColliderCapsule>
+	<Rigidbody>
+		<Mass>1</Mass>
+		<Friction>0.4</Friction>
+		<Freeze_Position>
+			<x>true</x>
+			<y>true</y>
+			<z>true</z>
+		</Freeze_Position>
+		<Freeze_Rotation>
+			<x>true</x>
+			<y>true</y>
+			<z>true</z>
+		</Freeze_Rotation>
+	</Rigidbody>
+	<FpsPlayer />
+</GameObjectDefinition>

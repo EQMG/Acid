@@ -1,5 +1,7 @@
 #include "ModelCube.hpp"
 
+#include "Models/VertexModel.hpp"
+
 namespace fl
 {
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :

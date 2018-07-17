@@ -1,6 +1,7 @@
 #include "MaterialSkybox.hpp"
 
 #include "Scenes/Scenes.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace fl
 {
