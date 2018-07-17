@@ -22,6 +22,7 @@
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Physics/ColliderCone.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Models/Obj/ModelObj.hpp>
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
@@ -103,7 +104,7 @@ namespace test
 		}
 
 		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 3.0f, 48.0f), Vector3(), 1.2f));
-		convex->AddComponent<Mesh>(Model::Resource("Objects/Testing/Model_Tea.obj"));
+		convex->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		convex->AddComponent<ColliderConvexHull>();
 		convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);

@@ -1,5 +1,7 @@
 #include "ModelRectangle.hpp"
 
+#include "Models/VertexModel.hpp"
+
 namespace fl
 {
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :

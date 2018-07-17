@@ -1,6 +1,7 @@
 #include "RendererParticles.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace fl
 {

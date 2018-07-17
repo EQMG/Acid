@@ -9,6 +9,10 @@ namespace fl
 	class FL_EXPORT IFile
 	{
 	public:
+		IFile()
+		{
+		};
+
 		virtual ~IFile()
 		{
 		};

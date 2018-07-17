@@ -45,15 +45,15 @@ namespace fl
 			return;
 		}
 
-		auto list = m_particles.find(created->GetParticleType());
+		auto it = m_particles.find(created->GetParticleType());
 
-		if (list == m_particles.end())
+		if (it == m_particles.end())
 		{
 			m_particles.emplace(created->GetParticleType(), std::vector<Particle *>());
-			list = m_particles.find(created->GetParticleType());
+			it = m_particles.find(created->GetParticleType());
 		}
 
-		(*list).second.emplace_back(created);
+		(*it).second.emplace_back(created);
 	}
 
 	void Particles::Clear()

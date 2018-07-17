@@ -3,6 +3,7 @@
 #include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
 #include <Files/Json/FileJson.hpp>
+#include <Files/Xml/FileXml.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
@@ -32,6 +33,14 @@ int main(int argc, char **argv)
 	// Creates the engine and updater objects.
 	auto engine = std::make_shared<Engine>();
 	engine->SetUpdater(std::make_shared<MainUpdater>());
+
+	{
+
+		FileXml file = FileXml(Files::SearchFile("testing.xml")); // "Objects/Animated/Model.dae"
+		file.Load();
+		LoadedValue *parent = file.GetParent();
+		LoadedValue::PrintDebug(parent, false);
+	}
 
 	auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());

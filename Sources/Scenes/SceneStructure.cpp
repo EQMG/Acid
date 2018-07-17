@@ -21,11 +21,11 @@ namespace fl
 
 	bool SceneStructure::Remove(GameObject *object)
 	{
-		auto found = std::find(m_objects.begin(), m_objects.end(), object);
+		auto it = std::find(m_objects.begin(), m_objects.end(), object);
 
-		if (found != m_objects.end())
+		if (it != m_objects.end())
 		{
-			m_objects.erase(found);
+			m_objects.erase(it);
 			return true;
 		}
 

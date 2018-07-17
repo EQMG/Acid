@@ -1,5 +1,7 @@
 #include "MeshPattern.hpp"
 
+#include "Models/VertexModel.hpp"
+
 namespace fl
 {
 	MeshPattern::MeshPattern(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :

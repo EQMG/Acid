@@ -1,6 +1,7 @@
 #include "Post/IPostFilter.hpp"
 
 #include "Models/Shapes/ModelRectangle.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace fl
 {

@@ -1,3 +1,5 @@
+#include <Helpers/FileSystem.hpp>
+#include <Models/Obj/ModelObj.hpp>
 #include "Mesh.hpp"
 
 #include "Models/Shapes/ModelCube.hpp"
@@ -90,6 +92,12 @@ namespace fl
 			return;
 		}
 
-		m_model = Model::Resource(filename);
+		if (FileSystem::FindExt(filename) == "obj")
+		{
+			m_model = ModelObj::Resource(filename);
+			return;
+		}
+
+		fprintf(stderr, "Could not determine mesh model type: '%s'\n", filename.c_str());
 	}
 }

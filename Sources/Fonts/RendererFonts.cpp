@@ -1,5 +1,7 @@
 #include "RendererFonts.hpp"
 
+#include "Models/VertexModel.hpp"
+
 namespace fl
 {
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
