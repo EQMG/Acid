@@ -32,6 +32,8 @@ namespace fl
 
 		std::vector<LoadedValue *> &GetChildren() { return m_children; }
 
+		std::vector<LoadedValue *> GetChildren(const std::string &name);
+
 		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false, const bool &reportError = true);
 
 		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false, const bool &reportError = true);

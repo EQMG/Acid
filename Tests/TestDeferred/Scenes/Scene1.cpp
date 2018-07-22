@@ -72,7 +72,7 @@ namespace test
 		// Animated.
 		GameObject *animatedObject = new GameObject(Transform());
 		animatedObject->SetName("Animated");
-		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.json");
+		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialAnimated>();
 		animatedObject->AddComponent<MeshRender>();
 		//animatedObject->AddComponent<ShadowRender>();

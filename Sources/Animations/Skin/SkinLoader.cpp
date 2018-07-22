@@ -26,18 +26,18 @@ namespace fl
 	void SkinLoader::LoadJointsList()
 	{
 		LoadedValue *inputNode = m_skinData->GetChild("vertex_weights");
-		std::string jointDataId = inputNode->GetChildWithAttribute("input", "-semantic", "JOINT")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *jointsNode = m_skinData->GetChildWithAttribute("source", "-id", jointDataId)->GetChild("Name_array");
-		m_jointOrder = FormatString::Split(jointsNode->GetChild("#text")->GetString(), " ");
+		std::string jointDataId = inputNode->GetChildWithAttribute("input", "semantic", "JOINT")->GetAttribute("source").substr(1);
+		LoadedValue *jointsNode = m_skinData->GetChildWithAttribute("source", "id", jointDataId)->GetChild("Name_array");
+		m_jointOrder = FormatString::Split(jointsNode->GetValue(), " ");
 	}
 
 	std::vector<float> SkinLoader::LoadWeights()
 	{
 		LoadedValue *inputNode = m_skinData->GetChild("vertex_weights");
-		std::string weightsDataId = inputNode->GetChildWithAttribute("input", "-semantic", "WEIGHT")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *weightsNode = m_skinData->GetChildWithAttribute("source", "-id", weightsDataId)->GetChild("float_array");
+		std::string weightsDataId = inputNode->GetChildWithAttribute("input", "semantic", "WEIGHT")->GetAttribute("source").substr(1);
+		LoadedValue *weightsNode = m_skinData->GetChildWithAttribute("source", "id", weightsDataId)->GetChild("float_array");
 
-		auto rawData = FormatString::Split(weightsNode->GetChild("#text")->GetString(), " ");
+		auto rawData = FormatString::Split(weightsNode->GetValue(), " ");
 		auto weights = std::vector<float>(rawData.size());
 
 		for (unsigned int i = 0; i < weights.size(); i++)

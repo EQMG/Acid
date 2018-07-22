@@ -1,6 +1,6 @@
 #include "MeshAnimated.hpp"
 
-#include "Files/Json/FileJson.hpp"
+#include "Files/Xml/FileXml.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace fl
@@ -66,12 +66,11 @@ namespace fl
 			return;
 		}
 
-		FileJson file = FileJson(filename);
+		FileXml file = FileXml(filename);
 		file.Load();
 
 		SkinLoader skinLoader = SkinLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"),
-			skinLoader.GetJointOrder());
+		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"), skinLoader.GetJointOrder());
 		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader.GetVerticesSkinData());
 
 		auto vertices = geometryLoader.GetVertices();

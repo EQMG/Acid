@@ -44,10 +44,10 @@ namespace fl
 
 	void GeometryLoader::LoadVertices()
 	{
-		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "-id", positionsSource)->GetChild("float_array");
-		unsigned int positionsCount = std::stoi(positionsData->GetChild("-count")->GetString());
-		auto positionsRawData = FormatString::Split(positionsData->GetChild("#text")->GetString(), " ");
+		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetAttribute("source").substr(1);
+		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "id", positionsSource)->GetChild("float_array");
+		unsigned int positionsCount = std::stoi(positionsData->GetAttribute("count"));
+		auto positionsRawData = FormatString::Split(positionsData->GetValue(), " ");
 
 		for (unsigned int i = 0; i < positionsCount / 3; i++)
 		{
@@ -61,10 +61,10 @@ namespace fl
 
 	void GeometryLoader::LoadUvs()
 	{
-		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "TEXCOORD")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "-id", uvsSource)->GetChild("float_array");
-		unsigned int uvsCount = std::stoi(uvsData->GetChild("-count")->GetString());
-		auto uvsRawData = FormatString::Split(uvsData->GetChild("#text")->GetString(), " ");
+		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "semantic", "TEXCOORD")->GetAttribute("source").substr(1);
+		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "id", uvsSource)->GetChild("float_array");
+		unsigned int uvsCount = std::stoi(uvsData->GetAttribute("count"));
+		auto uvsRawData = FormatString::Split(uvsData->GetValue(), " ");
 
 		for (unsigned int i = 0; i < uvsCount / 2; i++)
 		{
@@ -75,10 +75,10 @@ namespace fl
 
 	void GeometryLoader::LoadNormals()
 	{
-		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "-semantic", "NORMAL")->GetChild("-source")->GetString().substr(1);
-		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "-id", normalsSource)->GetChild("float_array");
-		unsigned int normalsCount = std::stoi(normalsData->GetChild("-count")->GetString());
-		auto normalsRawData = FormatString::Split(normalsData->GetChild("#text")->GetString(), " ");
+		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "semantic", "NORMAL")->GetAttribute("source").substr(1);
+		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "id", normalsSource)->GetChild("float_array");
+		unsigned int normalsCount = std::stoi(normalsData->GetAttribute("count"));
+		auto normalsRawData = FormatString::Split(normalsData->GetValue(), " ");
 
 		for (unsigned int i = 0; i < normalsCount / 3; i++)
 		{
@@ -90,8 +90,8 @@ namespace fl
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int indexCount = m_meshData->GetChild("polylist")->GetChild("input")->GetChildren().size();
-		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetString(), " ");
+		int indexCount = m_meshData->GetChild("polylist")->GetChildren("input").size();
+		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetValue(), " ");
 
 		for (unsigned int i = 0; i < indexRawData.size() / indexCount; i++)
 		{
