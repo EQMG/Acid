@@ -1,9 +1,5 @@
 #include <iostream>
-#include <Animations/MaterialAnimated.hpp>
-#include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
-#include <Files/Json/FileJson.hpp>
-#include <Files/Xml/FileXml.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
@@ -45,7 +41,6 @@ int main(int argc, char **argv)
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
-	Scenes::Get()->RegisterComponent<MaterialAnimated>("MaterialAnimated");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Deferred");

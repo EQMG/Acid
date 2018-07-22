@@ -19,6 +19,21 @@ namespace fl
 		}
 	}
 
+	std::vector<LoadedValue *> LoadedValue::GetChildren(const std::string &name)
+	{
+		auto result = std::vector<LoadedValue *>();
+
+		for (auto &child : m_children)
+		{
+			if (child->m_name == name)
+			{
+				result.push_back(child);
+			}
+		}
+
+		return result;
+	}
+
 	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull, const bool &reportError)
 	{
 		for (auto &child : m_children)
@@ -65,16 +80,18 @@ namespace fl
 
 	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError)
 	{
-		if (GetChild(childName) == nullptr)
+		auto children = GetChildren(childName);
+
+		if (children.empty())
 		{
 			return nullptr;
 		}
 
-		for (auto &child : GetChild(childName)->m_children)
+		for (auto &child : children)
 		{
-			auto attrib = child->GetChild(attribute);
+			std::string attrib = child->GetAttribute(attribute);
 
-			if (attrib != nullptr && attrib->GetString() == value)
+			if (attrib == value)
 			{
 				return child;
 			}

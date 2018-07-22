@@ -10,7 +10,7 @@ namespace fl
 		m_jointCount(0),
 		m_headJoint(nullptr)
 	{
-		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "-id", "Armature");
+		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "id", "Armature");
 		auto headNode = m_armatureData->GetChild("node");
 		m_headJoint = LoadJointData(headNode, true);
 	}
@@ -24,19 +24,9 @@ namespace fl
 	{
 		JointData *joint = ExtractMainJointData(jointNode, isRoot);
 
-		if (jointNode->GetChild("node"))
+		for (auto &childNode : jointNode->GetChildren("node"))
 		{
-			if (!jointNode->GetChild("node")->GetChild("-id"))
-			{
-				for (auto &childNode : jointNode->GetChild("node")->GetChildren())
-				{
-					joint->AddChild(LoadJointData(childNode, false));
-				}
-			}
-			else if (!jointNode->GetChild("node")->GetChildren().empty())
-			{
-				joint->AddChild(LoadJointData(jointNode->GetChild("node"), false));
-			}
+			joint->AddChild(LoadJointData(childNode, false));
 		}
 
 		return joint;
@@ -44,9 +34,9 @@ namespace fl
 
 	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
 	{
-		std::string nameId = jointNode->GetChild("-id")->GetString();
+		std::string nameId = jointNode->GetAttribute("id");
 		auto index = GetBoneIndex(nameId);
-		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetChild("#text")->GetString(), " ");
+		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetValue(), " ");
 
 		Matrix4 transform = Matrix4();
 

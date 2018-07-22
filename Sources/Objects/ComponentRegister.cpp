@@ -1,6 +1,7 @@
 #include "ComponentRegister.hpp"
 
 #include "Animations/MeshAnimated.hpp"
+#include "Animations/MaterialAnimated.hpp"
 #include "Lights/Light.hpp"
 #include "Materials/MaterialDefault.hpp"
 #include "Meshes/MeshRender.hpp"
@@ -25,6 +26,7 @@ namespace fl
 		RegisterComponent<MaterialSkybox>("MaterialSkybox");
 		RegisterComponent<Mesh>("Mesh");
 		RegisterComponent<MeshAnimated>("MeshAnimated");
+		RegisterComponent<MaterialAnimated>("MaterialAnimated");
 		RegisterComponent<MeshRender>("MeshRender");
 		RegisterComponent<ParticleSystem>("ParticleSystem");
 		RegisterComponent<ColliderBox>("ColliderBox");
