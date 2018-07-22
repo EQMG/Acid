@@ -38,7 +38,7 @@ namespace fl
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation, const bool &end = false);
+		static void AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation);
 
 		static LoadedValue * Convert(const XmlNode &source, LoadedValue * parent, const bool &isTopSection);
 	};

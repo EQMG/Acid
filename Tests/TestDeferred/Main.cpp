@@ -34,14 +34,6 @@ int main(int argc, char **argv)
 	auto engine = std::make_shared<Engine>();
 	engine->SetUpdater(std::make_shared<MainUpdater>());
 
-	{
-
-		FileXml file = FileXml(Files::SearchFile("testing.xml")); // "Objects/Animated/Model.dae"
-		file.Load();
-		LoadedValue *parent = file.GetParent();
-		LoadedValue::PrintDebug(parent, false);
-	}
-
 	auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 

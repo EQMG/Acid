@@ -101,6 +101,23 @@ namespace fl
 		return result;
 	}
 
+	std::string FormatString::RemoveLast(const std::string &str, const char &token)
+	{
+		std::string result = str;
+
+		// TODO: Optimise better.
+		for (auto it = result.end(); it != result.begin(); --it)
+		{
+			if ((*it) == token)
+			{
+				result.erase(it);
+				return result;
+			}
+		}
+
+		return result;
+	}
+
 	std::string FormatString::Replace(const std::string &str, const std::string &token, const std::string &to)
 	{
 		std::string result = str;
