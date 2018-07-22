@@ -5,7 +5,7 @@
 		<Height>1.8</Height>
 	</ColliderCapsule>
 	<Rigidbody>
-		<Mass>1</Mass>
+		<Mass>1.0</Mass>
 		<Friction>0.4</Friction>
 		<Freeze_Position>
 			<x>true</x>

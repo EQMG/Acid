@@ -191,19 +191,26 @@ namespace fl
 
 		if (!empty)
 		{
+			std::string attributes = "";
+
+			for (auto &attribute : value->m_attributes)
+			{
+				attributes += attribute.first + "=\"" + attribute.second + "\" ";
+			}
+
 			if (content)
 			{
-				fprintf(stdout, "%s- '%s': '%s'\n", tabs.c_str(), value->GetName().c_str(), value->GetValue().c_str());
+				fprintf(stdout, "%s- '%s' (%s): '%s'\n", tabs.c_str(), value->GetName().c_str(), attributes.c_str(), value->GetValue().c_str());
 			}
 			else
 			{
-				fprintf(stdout, "%s- '%s'\n", tabs.c_str(), value->GetName().c_str());
+				fprintf(stdout, "%s- '%s' (%s)\n", tabs.c_str(), value->GetName().c_str(), attributes.c_str());
 			}
 		}
 
 		for (auto &child : value->GetChildren())
 		{
-			PrintDebug(child, empty ? level : level + 1);
+			PrintDebug(child, content, empty ? level : level + 1);
 		}
 	}
 }

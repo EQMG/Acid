@@ -44,6 +44,14 @@ namespace fl
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
+		std::string GetFilename() const { return m_filename; }
+
+		void SetFilename(const std::string &filename) { m_filename = filename; }
+
+		char GetDelimiter() const { return m_delimiter; }
+
+		void SetDelimiter(const char &delimiter) { m_delimiter = delimiter; }
+
 		size_t GetRowCount() const { return m_rows.size(); }
 
 		RowCsv GetRow(const unsigned int &index);

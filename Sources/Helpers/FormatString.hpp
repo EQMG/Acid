@@ -82,6 +82,14 @@ namespace fl
 		static std::string RemoveAll(const std::string &str, const char &token);
 
 		/// <summary>
+		/// Removes the last token from a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <returns> The string with the last token removed. </returns>
+		static std::string RemoveLast(const std::string &str, const char &token);
+
+		/// <summary>
 		/// Replaces all tokens from a string.
 		/// </summary>
 		/// <param name="str"> The string. </param>

@@ -83,10 +83,14 @@ namespace fl
 				break;
 			}
 			case '\n':
+			{
 				break;
+			}
 			default:
+			{
 				summation += c;
 				break;
+			}
 			}
 		}
 

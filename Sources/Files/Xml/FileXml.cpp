@@ -96,10 +96,14 @@ namespace fl
 				break;
 			}
 			case '\n':
+			{
 				break;
+			}
 			default:
+			{
 				summation += *it;
 				break;
+			}
 			}
 		}
 

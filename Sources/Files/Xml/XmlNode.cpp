@@ -26,10 +26,59 @@ namespace fl
 		m_children.clear();
 	}
 
-	void XmlNode::AppendData(LoadedValue *loadedValue, std::string &data, const int &indentation, const bool &end)
+	void XmlNode::AppendData(LoadedValue *loadedValue, std::string &data, const int &indentation)
 	{
-		// if has children, start <name attribs>...</name>
-		// else, <name attribs/>
+		std::string nameAndAttribs = loadedValue->GetName();
+
+		for (auto &attribute : loadedValue->GetAttributes())
+		{
+			nameAndAttribs += " " + attribute.first + "=\"" + attribute.second + "\"";
+		}
+
+		nameAndAttribs = FormatString::Trim(nameAndAttribs);
+
+		std::string indent;
+
+		for (int i = 0; i < indentation; i++)
+		{
+			indent += "  ";
+		}
+
+		data += indent;
+
+		if (loadedValue->GetName()[0] == '?')
+		{
+			data += "<" + nameAndAttribs + "?>\n";
+
+			for (auto &child : loadedValue->GetChildren())
+			{
+				AppendData(child, data, indentation);
+			}
+
+			return;
+		}
+
+		if (loadedValue->GetChildren().empty() && loadedValue->GetValue().empty())
+		{
+			data += "<" + nameAndAttribs + "/>\n";
+			return;
+		}
+
+		data += "<" + nameAndAttribs + ">" + loadedValue->GetValue();
+
+		if (!loadedValue->GetChildren().empty())
+		{
+			data += "\n";
+
+			for (auto &child : loadedValue->GetChildren())
+			{
+				AppendData(child, data, indentation + 1);
+			}
+
+			data += indent;
+		}
+
+		data += "</" + loadedValue->GetName() + ">\n";
 	}
 
 	LoadedValue *XmlNode::Convert(const XmlNode &source, LoadedValue *parent, const bool &isTopSection)
@@ -53,8 +102,43 @@ namespace fl
 
 		if (!attributes.empty())
 		{
-			// TODO: Split attributes string.
-		//	fprintf_s(stdout, "%s\n", attributes.c_str());
+			std::string currentKey = "";
+			std::string summation = "";
+
+			for (char &c : attributes)
+			{
+				switch (c)
+				{
+				case '"':
+				{
+					if (currentKey.empty())
+					{
+						currentKey = summation;
+						summation.clear();
+						continue;
+					}
+
+					parseAttributes.emplace(FormatString::Trim(currentKey), FormatString::Trim(summation));
+					currentKey.clear();
+					summation.clear();
+					break;
+				}
+				case '=':
+				{
+					if (!currentKey.empty())
+					{
+						summation += c;
+					}
+
+					break;
+				}
+				default:
+				{
+					summation += c;
+					break;
+				}
+				}
+			}
 		}
 
 		if (!isTopSection)
