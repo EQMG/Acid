@@ -26,33 +26,34 @@ namespace fl
 		m_children.clear();
 	}
 
-	void XmlNode::AppendData(LoadedValue *loadedValue, std::string &data, const int &indentation)
+	void XmlNode::AppendData(LoadedValue *loadedValue, std::stringstream &builder, const int &indentation)
 	{
-		std::string nameAndAttribs = loadedValue->GetName();
-
-		for (auto &attribute : loadedValue->GetAttributes())
-		{
-			nameAndAttribs += " " + attribute.first + "=\"" + attribute.second + "\"";
-		}
-
-		nameAndAttribs = FormatString::Trim(nameAndAttribs);
-
-		std::string indent;
+		std::stringstream indents;
 
 		for (int i = 0; i < indentation; i++)
 		{
-			indent += "\t";
+			indents << "\t";
 		}
 
-		data += indent;
+		std::stringstream nameAttributes;
+		nameAttributes << loadedValue->GetName();
+
+		for (auto &attribute : loadedValue->GetAttributes())
+		{
+			nameAttributes << " " << attribute.first << "=\"" << attribute.second << "\"";
+		}
+
+		std::string nameAndAttribs = FormatString::Trim(nameAttributes.str());
+
+		builder << indents.str();
 
 		if (loadedValue->GetName()[0] == '?')
 		{
-			data += "<" + nameAndAttribs + "?>\n";
+			builder << "<" << nameAndAttribs << "?>\n";
 
 			for (auto &child : loadedValue->GetChildren())
 			{
-				AppendData(child, data, indentation);
+				AppendData(child, builder, indentation);
 			}
 
 			return;
@@ -60,25 +61,25 @@ namespace fl
 
 		if (loadedValue->GetChildren().empty() && loadedValue->GetValue().empty())
 		{
-			data += "<" + nameAndAttribs + "/>\n";
+			builder << "<" << nameAndAttribs << "/>\n";
 			return;
 		}
 
-		data += "<" + nameAndAttribs + ">" + loadedValue->GetValue();
+		builder << "<" << nameAndAttribs << ">" << loadedValue->GetValue();
 
 		if (!loadedValue->GetChildren().empty())
 		{
-			data += "\n";
+			builder << "\n";
 
 			for (auto &child : loadedValue->GetChildren())
 			{
-				AppendData(child, data, indentation + 1);
+				AppendData(child, builder, indentation + 1);
 			}
 
-			data += indent;
+			builder << indents.str();
 		}
 
-		data += "</" + loadedValue->GetName() + ">\n";
+		builder << "</" << loadedValue->GetName() << ">\n";
 	}
 
 	LoadedValue *XmlNode::Convert(const XmlNode &source, LoadedValue *parent, const bool &isTopSection)

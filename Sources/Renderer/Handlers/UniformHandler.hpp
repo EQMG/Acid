@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace fl
@@ -42,7 +43,14 @@ namespace fl
 				return;
 			}
 
-			Push(object, static_cast<size_t>(uniform->GetOffset()), size == 0 ? sizeof(object) : size); // static_cast<size_t>(uniform->m_size)
+			size_t realSize = size;
+
+			if (realSize == 0)
+			{
+				realSize = std::min(sizeof(object), static_cast<size_t>(uniform->GetSize()));
+			}
+
+			Push(object, static_cast<size_t>(uniform->GetOffset()), realSize);
 		}
 
 		bool Update(UniformBlock *uniformBlock);

@@ -170,31 +170,31 @@ namespace fl
 
 	void LoadedValue::PrintDebug(LoadedValue *value, const bool &content, const int &level)
 	{
-		std::string tabs = "";
+		std::stringstream tabs;
 
 		for (int i = 0; i < level; i++)
 		{
-			tabs += "  ";
+			tabs << "  ";
 		}
 
 		bool empty = value->GetName().empty() && level != 0;
 
 		if (!empty)
 		{
-			std::string attributes = "";
+			std::stringstream attributes;
 
 			for (auto &attribute : value->m_attributes)
 			{
-				attributes += attribute.first + "=\"" + attribute.second + "\" ";
+				attributes << attribute.first << "=\"" << attribute.second << "\" ";
 			}
 
 			if (content)
 			{
-				fprintf(stdout, "%s- '%s' (%s): '%s'\n", tabs.c_str(), value->GetName().c_str(), attributes.c_str(), value->GetValue().c_str());
+				fprintf(stdout, "%s- '%s' (%s): '%s'\n", tabs.str().c_str(), value->GetName().c_str(), attributes.str().c_str(), value->GetValue().c_str());
 			}
 			else
 			{
-				fprintf(stdout, "%s- '%s' (%s)\n", tabs.c_str(), value->GetName().c_str(), attributes.c_str());
+				fprintf(stdout, "%s- '%s' (%s)\n", tabs.str().c_str(), value->GetName().c_str(), attributes.str().c_str());
 			}
 		}
 

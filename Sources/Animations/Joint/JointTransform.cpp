@@ -28,7 +28,7 @@ namespace fl
 	{
 		Matrix4 matrix = Matrix4();
 		matrix = matrix.Translate(m_position);
-		// matrix *= m_rotation.ToRotationMatrix(); // TODO
+		matrix *= m_rotation.ToRotationMatrix();
 		return matrix;
 	}
 

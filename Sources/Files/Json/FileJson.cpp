@@ -33,14 +33,11 @@ namespace fl
 
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::shared_ptr<JsonSection> currentSection = nullptr;
-		std::string summation = "";
+		std::stringstream summation;
 
 		for (char &c : fileLoaded)
 		{
-			switch (c)
-			{
-			case '{':
-			case '[':
+			if (c == '{' || c == '[')
 			{
 				if (currentSection == nullptr)
 				{
@@ -50,9 +47,9 @@ namespace fl
 
 				std::string name;
 
-				if (!summation.empty())
+				if (summation.tellp() != 0)
 				{
-					auto contentSplit = FormatString::Split(summation, "\"");
+					auto contentSplit = FormatString::Split(summation.str(), "\"");
 
 					if ((int) contentSplit.size() - 2 >= 0)
 					{
@@ -60,37 +57,29 @@ namespace fl
 					}
 				}
 
-				currentSection->SetContent(currentSection->GetContent() + summation);
-				summation.clear();
+				currentSection->SetContent(currentSection->GetContent() + summation.str());
+				summation.str(std::string());
 
 				auto section = std::make_shared<JsonSection>(currentSection, name, "");
 				currentSection->AddChild(section);
 				currentSection = section;
-
-				break;
 			}
-			case '}':
-			case ']':
+			else if (c == '}' || c == ']')
 			{
-				currentSection->SetContent(currentSection->GetContent() + summation);
-				summation.clear();
+				currentSection->SetContent(currentSection->GetContent() + summation.str());
+				summation.str(std::string());
 
 				if (currentSection->GetParent() != nullptr)
 				{
 					currentSection = currentSection->GetParent();
 				}
-
-				break;
 			}
-			case '\n':
+			else if (c == '\n')
 			{
-				break;
 			}
-			default:
+			else
 			{
-				summation += c;
-				break;
-			}
+				summation << c;
 			}
 		}
 
@@ -105,12 +94,21 @@ namespace fl
 
 	void FileJson::Save()
 	{
-		std::string data;
+#if FL_VERBOSE
+		float debugStart = Engine::Get()->GetTimeMs();
+#endif
+
+		std::stringstream data;
 		JsonSection::AppendData(m_parent, data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
-		FileSystem::WriteTextFile(m_filename, data);
+		FileSystem::WriteTextFile(m_filename, data.str());
+
+#if FL_VERBOSE
+		float debugEnd = Engine::Get()->GetTimeMs();
+		fprintf(stdout, "Json '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void FileJson::Clear()

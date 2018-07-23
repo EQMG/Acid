@@ -2,7 +2,6 @@
 
 #include <ostream>
 #include <string>
-#include "Matrix3.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
@@ -74,12 +73,6 @@ namespace fl
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing matrix. </param>
 		Quaternion(const Matrix4 &source);
-
-		/// <summary>
-		/// Constructor for Quaternion.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing matrix. </param>
-		Quaternion(const Matrix3 &source);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -184,14 +177,14 @@ namespace fl
 		/// Converts this quaternion to a 4x4 matrix.
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix3 ToMatrix() const;
+		Matrix4 ToMatrix() const;
 
 		/// <summary>
 		/// Converts this quaternion to a 3x3 matrix representing the exact same
 		/// rotation as this quaternion.
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix3 ToRotationMatrix() const;
+		Matrix4 ToRotationMatrix() const;
 
 		/// <summary>
 		/// Converts this quaternion to euler angles.
@@ -227,8 +220,6 @@ namespace fl
 
 		Quaternion &operator=(const Matrix4 &other);
 
-		Quaternion &operator=(const Matrix3 &other);
-
 		Quaternion &operator=(LoadedValue *value);
 
 		bool operator==(const Quaternion &other) const;
@@ -249,9 +240,9 @@ namespace fl
 
 		Quaternion operator-() const;
 
-		const float operator[](const uint32_t &index) const;
+		const float &operator[](const uint32_t &index) const;
 
-		float operator[](const uint32_t &index);
+		float &operator[](const uint32_t &index);
 
 		FL_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 
