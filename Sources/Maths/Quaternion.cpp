@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Maths.hpp"
 #include "Vector3.hpp"
+#include "Matrix4.hpp"
 
 namespace fl
 {
@@ -30,29 +31,12 @@ namespace fl
 
 	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
 	{
-		float halfPitch = Maths::Radians(pitch) * 0.5f;
-		float halfYaw = Maths::Radians(yaw) * 0.5f;
-		float halfRoll = Maths::Radians(roll) * 0.5f;
-
-		float sinPitch = std::sin(halfPitch);
-		float cosPitch = std::cos(halfPitch);
-		float sinYaw = std::sin(halfYaw);
-		float cosYaw = std::cos(halfYaw);
-		float sinRoll = std::sin(halfRoll);
-		float cosRoll = std::cos(halfRoll);
-
-		m_x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
-		m_y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
-		m_z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
-		m_w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+		*this = Vector3(pitch, yaw, roll);
 	}
 
-	Quaternion::Quaternion(const Vector4 &source) :
-		m_x(source.m_x),
-		m_y(source.m_y),
-		m_z(source.m_z),
-		m_w(source.m_w)
+	Quaternion::Quaternion(const Vector3 &source)
 	{
+		*this = source;
 	}
 
 	Quaternion::Quaternion(const Quaternion &source) :
@@ -66,6 +50,38 @@ namespace fl
 	Quaternion::Quaternion(const Matrix4 &source)
 	{
 		*this = source;
+	}
+
+	Quaternion::Quaternion(const Matrix3 &source)
+	{
+		*this = source;
+	}
+
+	Quaternion::Quaternion(const Vector3 &axis, const float &angle)
+	{
+		float halfAngle = 0.5f * angle;
+		float sin = std::sin(halfAngle);
+
+		m_w = std::cos(halfAngle);
+		m_x = sin*axis.m_x;
+		m_y = sin*axis.m_y;
+		m_z = sin*axis.m_z;
+	}
+
+	Quaternion::Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ)
+	{
+		Matrix3 rotation = Matrix3();
+		rotation[0][0] = axisX.m_x;
+		rotation[1][0] = axisX.m_y;
+		rotation[2][0] = axisX.m_z;
+		rotation[0][1] = axisY.m_x;
+		rotation[1][1] = axisY.m_y;
+		rotation[2][1] = axisY.m_z;
+		rotation[0][2] = axisZ.m_x;
+		rotation[1][2] = axisZ.m_y;
+		rotation[2][2] = axisZ.m_z;
+
+		*this = rotation;
 	}
 
 	Quaternion::~Quaternion()
@@ -175,7 +191,7 @@ namespace fl
 		return std::min(m_x, std::min(m_y, std::min(m_z, m_w)));
 	}
 
-	Matrix4 Quaternion::ToMatrix() const
+	Matrix3 Quaternion::ToMatrix() const
 	{
 		float xSquared = m_x * m_x;
 		float twoXY = 2.0f * m_x * m_y;
@@ -188,27 +204,20 @@ namespace fl
 		float zSquared = m_z * m_z;
 		float wSquared = m_w * m_w;
 
-		Matrix4 result = Matrix4();
+		Matrix3 result = Matrix3();
 		result[0][0] = wSquared + xSquared - ySquared - zSquared;
 		result[0][1] = twoXY - twoZW;
 		result[0][2] = twoXZ + twoYW;
-		result[0][3] = 0.0f;
 		result[1][0] = twoXY + twoZW;
 		result[1][1] = wSquared - xSquared + ySquared - zSquared;
 		result[1][2] = twoYZ - twoXW;
-		result[1][3] = 0.0f;
 		result[2][0] = twoXZ - twoYW;
 		result[2][1] = twoYZ + twoXW;
 		result[2][2] = wSquared - xSquared - ySquared + zSquared;
-		result[2][3] = 0.0f;
-		result[3][0] = 0.0f;
-		result[3][1] = 0.0f;
-		result[3][2] = 0.0f;
-		result[3][3] = 1.0f;
 		return result;
 	}
 
-	Matrix3 Quaternion::ToRotationMatrix3() const
+	Matrix3 Quaternion::ToRotationMatrix() const
 	{
 		float tx = m_x + m_x;
 		float ty = m_y + m_y;
@@ -236,41 +245,9 @@ namespace fl
 		return result;
 	}
 
-	Matrix4 Quaternion::ToRotationMatrix() const
-	{
-		float xy = m_x * m_y;
-		float xz = m_x * m_z;
-		float xw = m_x * m_w;
-		float yz = m_y * m_z;
-		float yw = m_y * m_w;
-		float zw = m_z * m_w;
-		float xSquared = m_x * m_x;
-		float ySquared = m_y * m_y;
-		float zSquared = m_z * m_z;
-
-		Matrix4 result = Matrix4();
-		result[0][0] = 1.0f - 2.0f * (ySquared + zSquared);
-		result[0][1] = 2.0f * (xy - zw);
-		result[0][2] = 2.0f * (xz + yw);
-		result[0][3] = 0.0f;
-		result[1][0] = 2.0f * (xy + zw);
-		result[1][1] = 1.0f - 2.0f * (xSquared + zSquared);
-		result[1][2] = 2.0f * (yz - xw);
-		result[1][3] = 0.0f;
-		result[2][0] = 2.0f * (xz - yw);
-		result[2][1] = 2.0f * (yz + xw);
-		result[2][2] = 1.0f - 2.0f * (xSquared + ySquared);
-		result[2][3] = 0.0f;
-		result[3][0] = 0.0f;
-		result[3][1] = 0.0f;
-		result[3][2] = 0.0f;
-		result[3][3] = 1.0f;
-		return result;
-	}
-
 	Vector3 Quaternion::ToEuler() const
 	{
-		Matrix3 matrix = ToRotationMatrix3();
+		Matrix3 matrix = ToRotationMatrix();
 		Vector3 result = Vector3();
 
 		result.m_x = -Maths::Degrees(std::asin(matrix[1][2]));
@@ -294,15 +271,11 @@ namespace fl
 				return result;
 			}
 		}
-		else
-		{
-			// Note: Not an unique solution.
-			result.m_x = 90.0f;
-			result.m_y = Maths::Degrees(std::atan2(matrix[0][1], matrix[0][0]));
-			result.m_z = 0.0f;
 
-			return result;
-		}
+		// Note: Not an unique solution.
+		result.m_x = 90.0f;
+		result.m_y = Maths::Degrees(std::atan2(matrix[0][1], matrix[0][0]));
+		result.m_z = 0.0f;
 
 		return result;
 	}
@@ -323,16 +296,42 @@ namespace fl
 		return *this;
 	}
 
-	Quaternion &Quaternion::operator=(LoadedValue *source)
+	Quaternion &Quaternion::operator=(const Vector3 &other)
 	{
-		m_x = source->GetChild("x")->Get<float>();
-		m_y = source->GetChild("y")->Get<float>();
-		m_z = source->GetChild("z")->Get<float>();
-		m_w = source->GetChild("w")->Get<float>();
+		float halfPitch = Maths::Radians(other.m_x) * 0.5f;
+		float halfYaw = Maths::Radians(other.m_y) * 0.5f;
+		float halfRoll = Maths::Radians(other.m_z) * 0.5f;
+
+		float sinPitch = std::sin(halfPitch);
+		float cosPitch = std::cos(halfPitch);
+		float sinYaw = std::sin(halfYaw);
+		float cosYaw = std::cos(halfYaw);
+		float sinRoll = std::sin(halfRoll);
+		float cosRoll = std::cos(halfRoll);
+
+		m_x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
+		m_y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
+		m_z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
+		m_w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
 		return *this;
 	}
 
 	Quaternion &Quaternion::operator=(const Matrix4 &other)
+	{
+		Matrix3 v = Matrix3();
+		v[0][0] = other[0][0];
+		v[0][1] = other[0][1];
+		v[0][2] = other[0][2];
+		v[1][0] = other[1][0];
+		v[1][1] = other[1][1];
+		v[1][2] = other[1][2];
+		v[2][0] = other[2][0];
+		v[2][1] = other[2][1];
+		v[2][2] = other[2][2];
+		return *this = v;
+	}
+
+	Quaternion &Quaternion::operator=(const Matrix3 &other)
 	{
 		float diagonal = other[0][0] + other[1][1] + other[2][2];
 
@@ -369,6 +368,15 @@ namespace fl
 			m_z = z4 / 4.0f;
 		}
 
+		return *this;
+	}
+
+	Quaternion &Quaternion::operator=(LoadedValue *source)
+	{
+		m_x = source->GetChild("x")->Get<float>();
+		m_y = source->GetChild("y")->Get<float>();
+		m_z = source->GetChild("z")->Get<float>();
+		m_w = source->GetChild("w")->Get<float>();
 		return *this;
 	}
 

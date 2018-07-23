@@ -49,7 +49,7 @@ namespace fl
 		return radians * 180.0f / PI;
 	}
 
-	float Maths::NormalizeDegrees(const float &degrees)
+	float Maths::WrapDegrees(const float &degrees)
 	{
 		float x = std::fmod(degrees, 360.0f);
 
@@ -61,7 +61,7 @@ namespace fl
 		return x;
 	}
 
-	float Maths::NormalizeRadians(const float &radians)
+	float Maths::WrapRadians(const float &radians)
 	{
 		float x = std::fmod(radians, 2.0f * PI);
 

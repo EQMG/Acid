@@ -4,7 +4,7 @@
 #include <string>
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
-#include "Vector4.hpp"
+#include "Vector3.hpp"
 
 namespace fl
 {
@@ -60,8 +60,8 @@ namespace fl
 		/// <summary>
 		/// Constructor for Quaternion.
 		/// </summary>
-		/// <param name="source"> Creates this quaternion out of a existing vector. </param>>
-		Quaternion(const Vector4 &source);
+		/// <param name="source"> Creates this quaternion out of a existing vector (pitch, yaw roll). </param>>
+		Quaternion(const Vector3 &source);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -74,6 +74,27 @@ namespace fl
 		/// </summary>
 		/// <param name="source"> Creates this vector out of a existing matrix. </param>
 		Quaternion(const Matrix4 &source);
+
+		/// <summary>
+		/// Constructor for Quaternion.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a existing matrix. </param>
+		Quaternion(const Matrix3 &source);
+
+		/// <summary>
+		/// Constructor for Quaternion.
+		/// </summary>
+		/// <param name="axis"> The axis to create from. </param>
+		/// <param name="angle"> The angle to rotate the angle around. </param>
+		Quaternion(const Vector3 &axis, const float &angle);
+
+		/// <summary>
+		/// Constructor for Quaternion.
+		/// </summary>
+		/// <param name="axisX"> The X axis. </param>
+		/// <param name="axisY"> The Y axis. </param>
+		/// <param name="axisZ"> The Z axis. </param>
+		Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ);
 
 		/// <summary>
 		/// Deconstructor for Quaternion.
@@ -163,23 +184,14 @@ namespace fl
 		/// Converts this quaternion to a 4x4 matrix.
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix4 ToMatrix() const;
+		Matrix3 ToMatrix() const;
 
 		/// <summary>
 		/// Converts this quaternion to a 3x3 matrix representing the exact same
 		/// rotation as this quaternion.
 		/// </summary>
 		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix3 ToRotationMatrix3() const;
-
-		/// <summary>
-		/// Converts this quaternion to a 4x4 matrix representing the exact same
-		/// rotation as this quaternion. (The rotation is only contained in the
-		/// top-left 3x3 part, but a 4x4 matrix is returned here for convenience
-		/// seeing as it will be multiplied with other 4x4 matrices).
-		/// </summary>
-		/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
-		Matrix4 ToRotationMatrix() const;
+		Matrix3 ToRotationMatrix() const;
 
 		/// <summary>
 		/// Converts this quaternion to euler angles.
@@ -211,7 +223,11 @@ namespace fl
 
 		Quaternion &operator=(const Quaternion &other);
 
+		Quaternion &operator=(const Vector3 &other);
+
 		Quaternion &operator=(const Matrix4 &other);
+
+		Quaternion &operator=(const Matrix3 &other);
 
 		Quaternion &operator=(LoadedValue *value);
 
