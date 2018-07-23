@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
@@ -29,6 +30,9 @@ int main(int argc, char **argv)
 	// Creates the engine and updater objects.
 	auto engine = std::make_shared<Engine>();
 	engine->SetUpdater(std::make_shared<MainUpdater>());
+
+//	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.dae");
+//	return 0;
 
 	auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());

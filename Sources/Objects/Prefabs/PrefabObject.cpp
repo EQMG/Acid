@@ -2,20 +2,34 @@
 
 #include "Objects/GameObject.hpp"
 #include "Helpers/FileSystem.hpp"
+#include "Files/Json/FileJson.hpp"
+#include "Files/Xml/FileXml.hpp"
 
 namespace fl
 {
 	PrefabObject::PrefabObject(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
-		m_fileJson(FileJson(filename))
+		m_file(nullptr),
+		m_parent(nullptr)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
 			FileSystem::CreateFile(filename);
 		}
 
-		m_fileJson.Load();
+		if (FileSystem::FindExt(filename) == "json")
+		{
+			m_file = std::make_shared<FileJson>(filename);
+			m_file->Load();
+			m_parent = m_file->GetParent();
+		}
+		else if (FileSystem::FindExt(filename) == "xml")
+		{
+			m_file = std::make_shared<FileXml>(filename);
+			m_file->Load();
+			m_parent = m_file->GetParent()->GetChild("GameObjectDefinition");
+		}
 	}
 
 	PrefabObject::~PrefabObject()
@@ -24,16 +38,16 @@ namespace fl
 
 	void PrefabObject::Write(const GameObject &gameObject)
 	{
-		m_fileJson.Clear();
+		m_file->Clear();
 
 		for (auto &component : gameObject.GetComponents())
 		{
-			component->Write(m_fileJson.GetParent()->GetChild(component->GetName(), true));
+			component->Write(m_parent->GetChild(component->GetName(), true));
 		}
 	}
 
 	void PrefabObject::Save()
 	{
-		m_fileJson.Save();
+		m_file->Save();
 	}
 }

@@ -5,15 +5,15 @@
   "Rigidbody": {
     "Mass": 2.0,
     "Friction": 0.2,
-    "Freeze Position": {
-      "x": false,
-      "y": false,
-      "z": false
+    "LinearFactor": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     },
-    "Freeze Rotation": {
-      "x": false,
-      "y": false,
-      "z": false
+    "AngularFactor": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
     }
   },
   "Mesh": {

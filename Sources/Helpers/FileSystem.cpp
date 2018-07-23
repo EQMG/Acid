@@ -137,6 +137,8 @@ namespace fl
 
 	std::string FileSystem::FindExt(const std::string &filepath)
 	{
-		return filepath.substr(filepath.find_last_of('.') + 1, filepath.size());
+		std::string result = filepath.substr(filepath.find_last_of('.') + 1, filepath.size());
+		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+		return result;
 	}
 }

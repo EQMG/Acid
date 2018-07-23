@@ -36,9 +36,11 @@ namespace fl
 
 	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull, const bool &reportError)
 	{
+		std::string nameNoSpaces = FormatString::Replace(name, " ", "_");
+
 		for (auto &child : m_children)
 		{
-			if (child->m_name == name)
+			if (child->m_name == name || child->m_name == nameNoSpaces)
 			{
 				return child;
 			}
@@ -104,35 +106,6 @@ namespace fl
 
 		return nullptr;
 	}
-
-	/*std::optional<LoadedValue *> LoadedValue::SearchHierarchy(const std::vector<std::string> &names, const int &i)
-	{
-		if (i == names.size())
-		{
-			return this;
-		}
-
-		auto child = GetChild(names[i]);
-
-		if (!child.has_value())
-		{
-			return {};
-		}
-
-		return child.value()->SearchHierarchy(names, i + 1);
-	}
-
-	std::optional<LoadedValue *> LoadedValue::SearchHierarchyAttribs(const std::vector<std::string> &names, const std::string &childName, const std::string &attribute, const std::string &value, const int &i)
-	{
-		auto child = SearchHierarchy(names, i);
-
-		if (!child.has_value())
-		{
-			return {};
-		}
-
-		return child.value()->GetChildWithAttribute(childName, attribute, value);
-	}*/
 
 	void LoadedValue::AddChild(LoadedValue *value)
 	{

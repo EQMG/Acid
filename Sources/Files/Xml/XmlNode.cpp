@@ -41,7 +41,7 @@ namespace fl
 
 		for (int i = 0; i < indentation; i++)
 		{
-			indent += "  ";
+			indent += "\t";
 		}
 
 		data += indent;

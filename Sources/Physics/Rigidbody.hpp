@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <BulletDynamics/Dynamics/btRigidBody.h>
-#include "Maths/Constraint3.hpp"
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
@@ -14,15 +13,15 @@ namespace fl
 	private:
 		float m_mass;
 		float m_friction;
-		Constraint3 m_freezePosition;
-		Constraint3 m_freezeRotation;
+		Vector3 m_linearFactor;
+		Vector3 m_angularFactor;
 
 		btTransform m_worldTransform;
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Constraint3 &freezePosition = Constraint3::ZERO,
-			const Constraint3 &freezeRotation = Constraint3::ZERO);
+		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::ONE,
+			const Vector3 &angularFactor = Vector3::ONE);
 
 		~Rigidbody();
 
@@ -52,13 +51,13 @@ namespace fl
 
 		void SetFriction(const float &friction);
 
-		Constraint3 GetFreezePosition() const { return m_freezePosition; }
+		Vector3 GetLinearFactor() const { return m_linearFactor; }
 
-		void SetFreezePosition(const Constraint3 &freezePosition);
+		void SetLinearFactor(const Vector3 &linearFactor);
 
-		Constraint3 GetFreezeRotation() const { return m_freezeRotation; }
+		Vector3 GetAngularFactor() const { return m_angularFactor; }
 
-		void SetFreezeRotation(const Constraint3 &freezeRotation);
+		void SetAngularFactor(const Vector3 &angularFactor);
 	private:
 		static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 	};

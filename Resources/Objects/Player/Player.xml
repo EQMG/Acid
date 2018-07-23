@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-16" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <GameObjectDefinition name="Player">
 	<ColliderCapsule>
 		<Radius>0.2</Radius>
@@ -7,16 +7,16 @@
 	<Rigidbody>
 		<Mass>1.0</Mass>
 		<Friction>0.4</Friction>
-		<Freeze_Position>
-			<x>true</x>
-			<y>true</y>
-			<z>true</z>
-		</Freeze_Position>
-		<Freeze_Rotation>
-			<x>true</x>
-			<y>true</y>
-			<z>true</z>
-		</Freeze_Rotation>
+		<Linear_Factor>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>0.0</z>
+		</Linear_Factor>
+		<Angular_Factor>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>0.0</z>
+		</Angular_Factor>
 	</Rigidbody>
 	<FpsPlayer />
 </GameObjectDefinition>
