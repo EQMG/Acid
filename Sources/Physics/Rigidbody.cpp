@@ -88,16 +88,17 @@ namespace fl
 		}
 
 		auto &transform = GetGameObject()->GetTransform();
+		btTransform worldTransform = m_body->getWorldTransform();
 
 		if (m_linearFactor != Vector3::ZERO)
 		{
-			btVector3 position = m_body->getWorldTransform().getOrigin();
+			btVector3 position = worldTransform.getOrigin();
 			transform.SetPosition(ICollider::Convert(position));
 		}
 
 		if (m_angularFactor != Vector3::ZERO)
 		{
-			btQuaternion rotation = m_body->getWorldTransform().getRotation();
+			btQuaternion rotation = worldTransform.getRotation();
 			transform.SetRotation(ICollider::Convert(rotation));
 		}
 

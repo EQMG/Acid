@@ -143,13 +143,6 @@ namespace fl
 		Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
 
 		/// <summary>
-		/// Rotates this matrix by a quaternion.
-		/// </summary>
-		/// <param name="quaternion"> The quaternion. </param>
-		/// <returns> The rotated matrix. </returns>
-		Matrix4 Rotate(const Quaternion &quaternion) const;
-
-		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
 		/// <returns> The inverted matrix. </returns>

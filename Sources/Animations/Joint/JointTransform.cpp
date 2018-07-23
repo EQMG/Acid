@@ -10,7 +10,7 @@ namespace fl
 
 	JointTransform::JointTransform(const Matrix4 &localTransform) :
 		m_position(Vector3(localTransform[3])),
-		m_rotation(localTransform)
+		m_rotation(Quaternion(localTransform))
 	{
 	}
 
@@ -28,7 +28,7 @@ namespace fl
 	{
 		Matrix4 matrix = Matrix4();
 		matrix = matrix.Translate(m_position);
-		matrix *= m_rotation.ToRotationMatrix();
+		// matrix *= m_rotation.ToRotationMatrix(); // TODO
 		return matrix;
 	}
 

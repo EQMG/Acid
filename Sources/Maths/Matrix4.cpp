@@ -213,45 +213,6 @@ namespace fl
 		return result;
 	}
 
-	Matrix4 Matrix4::Rotate(const Quaternion &quaternion) const
-	{
-		Matrix4 result = Matrix4(*this);
-
-		float qx2 = quaternion.m_x + quaternion.m_x;
-		float qy2 = quaternion.m_y + quaternion.m_y;
-		float qz2 = quaternion.m_z + quaternion.m_z;
-		float qxqx2 = quaternion.m_x * qx2;
-		float qxqy2 = quaternion.m_x * qy2;
-		float qxqz2 = quaternion.m_x * qz2;
-		float qxqw2 = quaternion.m_w * qx2;
-		float qyqy2 = quaternion.m_y * qy2;
-		float qyqz2 = quaternion.m_y * qz2;
-		float qyqw2 = quaternion.m_w * qy2;
-		float qzqz2 = quaternion.m_z * qz2;
-		float qzqw2 = quaternion.m_w * qz2;
-
-		Matrix3 f = Matrix3();
-		f[0][0] = (1.0f - qyqy2) - qzqz2;
-		f[0][1] = qxqy2 - qzqw2;
-		f[0][2] = qxqz2 + qyqw2;
-		f[1][0] = qxqy2 + qzqw2;
-		f[1][1] = (1.0f - qxqx2) - qzqz2;
-		f[1][2] = qyqz2 - qxqw2;
-		f[2][0] = qxqz2 - qyqw2;
-		f[2][1] = qyqz2 + qxqw2;
-		f[2][2] = (1.0f - qxqx2) - qyqy2;
-
-		for (int row = 0; row < 3; row++)
-		{
-			for (int col = 0; col < 4; col++)
-			{
-				result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
-			}
-		}
-
-		return result;
-	}
-
 	Matrix4 Matrix4::Negate() const
 	{
 		Matrix4 result = Matrix4();
@@ -391,6 +352,7 @@ namespace fl
 		if (rotation != Quaternion::W_ONE)
 		{
 			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
+			// result *= rotation.ToRotationMatrix();
 			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
 			result = result.Rotate(Maths::Radians(euler.m_y), Vector3::UP); // Rotate the Y component.
 			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.
@@ -469,6 +431,7 @@ namespace fl
 		if (rotation != 0.0f)
 		{
 			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
+			// result *= rotation.ToRotationMatrix();
 			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
 			result = result.Rotate(Maths::Radians(-euler.m_y), Vector3::UP); // Rotate the Y component.
 			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.

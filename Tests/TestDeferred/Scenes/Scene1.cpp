@@ -23,6 +23,7 @@
 #include <Physics/ColliderCone.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Models/Obj/ModelObj.hpp>
+#include "Rotate/RotateBehaviour.hpp"
 #include "FpsCamera.hpp"
 #include "FpsPlayer.hpp"
 
@@ -106,9 +107,10 @@ namespace test
 		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 3.0f, 48.0f), Vector3(), 1.2f));
 		convex->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		convex->AddComponent<ColliderConvexHull>();
-		convex->AddComponent<Rigidbody>(1.0f);
+	//	convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
+		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 1.0f, 0.0f));
 	}
 
 	void Scene1::Update()

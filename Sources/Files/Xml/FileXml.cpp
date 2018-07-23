@@ -10,7 +10,7 @@ namespace fl
 	FileXml::FileXml(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(new LoadedValue(nullptr, "", ""))
+		m_parent(new LoadedValue(nullptr, "?xml", "", {{"version", "1.0"}, {"encoding", "utf-8"}}))
 	{
 	}
 
@@ -133,10 +133,9 @@ namespace fl
 
 	std::map<std::string, std::string> FileXml::ConfigReadValues()
 	{
-		// TODO: Xml config.
 		auto result = std::map<std::string, std::string>();
 
-		for (auto &child : m_parent->GetChildren())
+		for (auto &child : m_parent->GetChild("Configuration", true)->GetChildren())
 		{
 			if (child->GetValue().empty())
 			{
@@ -151,8 +150,9 @@ namespace fl
 
 	void FileXml::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		// TODO: Xml config.
-		auto exiting = m_parent->GetChild(key, false, false);
+		std::string keyNoSpaces = FormatString::Replace(key, " ", "_");
+		auto child = m_parent->GetChild("Configuration", true);
+		auto exiting = child->GetChild(keyNoSpaces, false, false);
 
 		if (exiting != nullptr)
 		{
@@ -160,8 +160,8 @@ namespace fl
 			return;
 		}
 
-		auto newChild = new LoadedValue(m_parent, key, value);
-		m_parent->GetChildren().emplace_back(newChild);
+		auto newChild = new LoadedValue(child, keyNoSpaces, value);
+		child->GetChildren().emplace_back(newChild);
 	}
 
 	void FileXml::Verify()
