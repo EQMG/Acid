@@ -52,11 +52,6 @@ namespace fl
 		*this = source;
 	}
 
-	Quaternion::Quaternion(const Matrix3 &source)
-	{
-		*this = source;
-	}
-
 	Quaternion::Quaternion(const Vector3 &axis, const float &angle)
 	{
 		float halfAngle = 0.5f * angle;
@@ -70,7 +65,7 @@ namespace fl
 
 	Quaternion::Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ)
 	{
-		Matrix3 rotation = Matrix3();
+		Matrix4 rotation = Matrix4();
 		rotation[0][0] = axisX.m_x;
 		rotation[1][0] = axisX.m_y;
 		rotation[2][0] = axisX.m_z;
@@ -98,7 +93,7 @@ namespace fl
 
 	Vector3 Quaternion::Multiply(const Vector3 &other) const
 	{
-	//	Matrix3 rotation = left.ToRotationMatrix3();
+	//	Matrix4 rotation = left.ToRotationMatrix();
 	//	return right * rotation;
 
 		Vector3 q = Vector3(m_x, m_y, m_z);
@@ -191,7 +186,7 @@ namespace fl
 		return std::min(m_x, std::min(m_y, std::min(m_z, m_w)));
 	}
 
-	Matrix3 Quaternion::ToMatrix() const
+	Matrix4 Quaternion::ToMatrix() const
 	{
 		float xSquared = m_x * m_x;
 		float twoXY = 2.0f * m_x * m_y;
@@ -204,7 +199,7 @@ namespace fl
 		float zSquared = m_z * m_z;
 		float wSquared = m_w * m_w;
 
-		Matrix3 result = Matrix3();
+		Matrix4 result = Matrix4();
 		result[0][0] = wSquared + xSquared - ySquared - zSquared;
 		result[0][1] = twoXY - twoZW;
 		result[0][2] = twoXZ + twoYW;
@@ -217,7 +212,7 @@ namespace fl
 		return result;
 	}
 
-	Matrix3 Quaternion::ToRotationMatrix() const
+	Matrix4 Quaternion::ToRotationMatrix() const
 	{
 		float tx = m_x + m_x;
 		float ty = m_y + m_y;
@@ -232,7 +227,7 @@ namespace fl
 		float tyz = fTz * m_y;
 		float tzz = fTz * m_z;
 
-		Matrix3 result = Matrix3();
+		Matrix4 result = Matrix4();
 		result[0][0] = 1.0f - (tyy + tzz);
 		result[0][1] = txy - twz;
 		result[0][2] = txz + twy;
@@ -247,7 +242,7 @@ namespace fl
 
 	Vector3 Quaternion::ToEuler() const
 	{
-		Matrix3 matrix = ToRotationMatrix();
+		Matrix4 matrix = ToRotationMatrix();
 		Vector3 result = Vector3();
 
 		result.m_x = -Maths::Degrees(std::asin(matrix[1][2]));
@@ -317,21 +312,6 @@ namespace fl
 	}
 
 	Quaternion &Quaternion::operator=(const Matrix4 &other)
-	{
-		Matrix3 v = Matrix3();
-		v[0][0] = other[0][0];
-		v[0][1] = other[0][1];
-		v[0][2] = other[0][2];
-		v[1][0] = other[1][0];
-		v[1][1] = other[1][1];
-		v[1][2] = other[1][2];
-		v[2][0] = other[2][0];
-		v[2][1] = other[2][1];
-		v[2][2] = other[2][2];
-		return *this = v;
-	}
-
-	Quaternion &Quaternion::operator=(const Matrix3 &other)
 	{
 		float diagonal = other[0][0] + other[1][1] + other[2][2];
 
@@ -425,13 +405,13 @@ namespace fl
 		return Negate();
 	}
 
-	const float Quaternion::operator[](const uint32_t &index) const
+	const float &Quaternion::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
 		return m_elements[index];
 	}
 
-	float Quaternion::operator[](const uint32_t &index)
+	float &Quaternion::operator[](const uint32_t &index)
 	{
 		assert(index < 4);
 		return m_elements[index];

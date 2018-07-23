@@ -47,22 +47,35 @@ namespace fl
 
 	void FileCsv::Save()
 	{
-		std::string data = "";
+#if FL_VERBOSE
+		float debugStart = Engine::Get()->GetTimeMs();
+#endif
+
+		std::stringstream builder;
 
 		for (auto &row : m_rows)
 		{
 			for (auto &element : row.GetElements())
 			{
-				data += element + m_delimiter;
+				builder << element;
+
+				if (element != row.GetElements().back())
+				{
+					builder << m_delimiter;
+				}
 			}
 
-			data.pop_back();
-			data += "\n";
+			builder << "\n";
 		}
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
-		FileSystem::WriteTextFile(m_filename, data);
+		FileSystem::WriteTextFile(m_filename, builder.str());
+
+#if FL_VERBOSE
+		float debugEnd = Engine::Get()->GetTimeMs();
+		fprintf(stdout, "Csv '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void FileCsv::Clear()

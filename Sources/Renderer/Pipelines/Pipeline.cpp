@@ -226,11 +226,12 @@ namespace fl
 		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		std::string defineBlock = "\n";
+		std::stringstream defineBlock;
+		defineBlock << "\n";
 
 		for (auto &define : m_defines)
 		{
-			defineBlock += "#define " + define.GetName() + " " + define.GetValue() + "\n";
+			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
 		}
 
 		for (auto &shaderStage : m_pipelineCreate.GetShaderStages())
@@ -241,7 +242,7 @@ namespace fl
 				throw std::runtime_error("Could not create pipeline, missing shader stage!");
 			}
 
-			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(shaderStage), defineBlock);
+			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(shaderStage), defineBlock.str());
 
 			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
 			EShLanguage language = GetEshLanguage(stageFlag);

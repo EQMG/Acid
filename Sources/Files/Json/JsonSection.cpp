@@ -26,64 +26,57 @@ namespace fl
 		m_children.clear();
 	}
 
-	void JsonSection::AppendData(LoadedValue * loadedValue, std::string &data, const int &indentation, const bool &end)
+	void JsonSection::AppendData(LoadedValue *loadedValue, std::stringstream &builder, const int &indentation, const bool &end)
 	{
-		//	fprintf(stdout, "%s = %s\n", loadedValue->GetName().c_str(), loadedValue->GetValue().c_str());
-		//	for (auto &child : *loadedValue->GetChildren())
-		//	{
-		//		AppendData(child, data, indentation + 1, child == loadedValue->GetChildren()->back());
-		//	}
-
-		std::string indent;
+		std::stringstream indents;
 
 		for (int i = 0; i < indentation; i++)
 		{
-			indent += "  ";
+			indents << "  ";
 		}
 
-		data += indent;
+		builder << indents.str();
 
 		if (loadedValue->GetName().empty())
 		{
-			data += "{\n";
+			builder << "{\n";
 		}
 		else if (loadedValue->GetValue().empty())
 		{
-			data += "\"" + loadedValue->GetName() + "\": {\n";
+			builder << "\"" << loadedValue->GetName() << "\": {\n";
 		}
 		else
 		{
-			data += "\"" + loadedValue->GetName() + "\": " + loadedValue->GetValue();
+			builder << "\"" << loadedValue->GetName() + "\": " << loadedValue->GetValue();
 
 			if (!end)
 			{
-				data += ", ";
+				builder << ", ";
 			}
 
-			data += "\n";
+			builder << "\n";
 		}
 
 		for (auto &child : loadedValue->GetChildren())
 		{
-			AppendData(child, data, indentation + 1, child == loadedValue->GetChildren().back());
+			AppendData(child, builder, indentation + 1, child == loadedValue->GetChildren().back());
 		}
 
 		if (loadedValue->GetName().empty())
 		{
-			data += indent;
-			data += "}\n";
+			builder << indents.str() << "}\n";
 		}
 		else if (loadedValue->GetValue().empty())
 		{
-			data += indent;
+			builder << indents.str();
 
 			if (end)
 			{
-				data += "}\n";
+				builder << "}\n";
 			}
 			else
 			{
-				data += "},\n";
+				builder << "},\n";
 			}
 		}
 	}

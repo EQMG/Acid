@@ -16,20 +16,22 @@ namespace fl
 
 	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
 	{
-		std::string shaderString;
+		std::stringstream result;
+		result << "Material_";
+		result << std::to_string(graphicsStage.GetRenderpass()) << "_";
+		result << std::to_string(graphicsStage.GetSubpass()) << "_";
 
 		for (auto &stage : pipelineCreate.GetShaderStages())
 		{
-			shaderString += stage + "_";
+			result << stage << "_";
 		}
-
-		std::string defineString;
 
 		for (auto &element : defines)
 		{
-			defineString += element.GetName() + element.GetValue() + "_";
+			result << element.GetName() << "=";
+			result << element.GetValue() << "_";
 		}
 
-		return "Material_" + std::to_string(graphicsStage.GetRenderpass()) + "_" + std::to_string(graphicsStage.GetSubpass()) + "_" + shaderString + "_" + defineString;
+		return result.str();
 	}
 }

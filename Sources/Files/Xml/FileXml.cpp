@@ -35,14 +35,12 @@ namespace fl
 
 		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
 		std::shared_ptr<XmlNode> currentSection = nullptr;
-		std::string summation = "";
+		std::stringstream summation;
 		bool end = false;
 
 		for (auto it = fileLoaded.begin(); it != fileLoaded.end(); ++it)
 		{
-			switch (*it)
-			{
-			case '<':
+			if (*it == '<')
 			{
 				if (*(it + 1) == '?') // Prolog.
 				{
@@ -52,8 +50,7 @@ namespace fl
 
 				if (*(it + 1) == '/') // End tag.
 				{
-					summation = FormatString::Trim(summation);
-					currentSection->SetContent(currentSection->GetContent() + summation);
+					currentSection->SetContent(currentSection->GetContent() + summation.str());
 					end = true;
 				}
 				else // Start tag.
@@ -63,25 +60,16 @@ namespace fl
 					currentSection = section;
 				}
 
-				summation.clear();
-
-				break;
+				summation.str(std::string());
 			}
-			case '>':
+			else if (*it == '>')
 			{
-			//	if (*(it - 1) == '?') // Prolog.
-			//	{
-			//		summation.clear();
-			//		continue;
-			//	}
-
 				if (!end)
 				{
-					summation = FormatString::Trim(summation);
-					currentSection->SetAttributes(currentSection->GetAttributes() + summation);
+					currentSection->SetAttributes(currentSection->GetAttributes() + summation.str());
 				}
 
-				summation.clear();
+				summation.str(std::string());
 
 				if (end || *(it - 1) == '/') // End tag.
 				{
@@ -92,18 +80,13 @@ namespace fl
 						currentSection = currentSection->GetParent();
 					}
 				}
-
-				break;
 			}
-			case '\n':
+			else if (*it == '\n')
 			{
-				break;
 			}
-			default:
+			else
 			{
-				summation += *it;
-				break;
-			}
+				summation << *it;
 			}
 		}
 
@@ -118,12 +101,21 @@ namespace fl
 
 	void FileXml::Save()
 	{
-		std::string data = "";
+#if FL_VERBOSE
+		float debugStart = Engine::Get()->GetTimeMs();
+#endif
+
+		std::stringstream data;
 		XmlNode::AppendData(m_parent, data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);
-		FileSystem::WriteTextFile(m_filename, data);
+		FileSystem::WriteTextFile(m_filename, data.str());
+
+#if FL_VERBOSE
+		float debugEnd = Engine::Get()->GetTimeMs();
+		fprintf(stdout, "Xml '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	void FileXml::Clear()

@@ -33,23 +33,25 @@ namespace fl
 	{
 		auto camera = Scenes::Get()->GetScene()->GetCamera();
 
-		if (camera != nullptr)
+		if (camera == nullptr)
 		{
-			// Listener position.
-			Vector3 currentPosition = camera->GetPosition();
-			alListener3f(AL_POSITION, currentPosition.m_x, currentPosition.m_y, currentPosition.m_z);
-
-			// Listener velocity.
-			Vector3 currentVelocity = camera->GetVelocity();
-			alListener3f(AL_VELOCITY, currentVelocity.m_x, currentVelocity.m_y, currentVelocity.m_z);
-
-			// Listener orientation.
-			Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
-			ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
-
-			alListenerfv(AL_ORIENTATION, orientation);
-			ErrorAl(alGetError());
+			return;
 		}
+
+		// Listener position.
+		Vector3 currentPosition = camera->GetPosition();
+		alListener3f(AL_POSITION, currentPosition.m_x, currentPosition.m_y, currentPosition.m_z);
+
+		// Listener velocity.
+		Vector3 currentVelocity = camera->GetVelocity();
+		alListener3f(AL_VELOCITY, currentVelocity.m_x, currentVelocity.m_y, currentVelocity.m_z);
+
+		// Listener orientation.
+		Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
+		ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
+
+		alListenerfv(AL_ORIENTATION, orientation);
+		ErrorAl(alGetError());
 	}
 
 	std::string Audio::StringifyResultAl(const int &result)
