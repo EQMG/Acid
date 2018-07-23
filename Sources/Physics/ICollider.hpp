@@ -3,7 +3,6 @@
 #include <optional>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Objects/IComponent.hpp"
-#include "Maths/Constraint3.hpp"
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 #include "Frustum.hpp"
@@ -72,11 +71,6 @@ namespace fl
 		FL_HIDDEN static Quaternion Convert(const btQuaternion &quaternion)
 		{
 			return Quaternion(quaternion.getX(), quaternion.getY(), quaternion.getZ(), quaternion.getW());
-		}
-
-		FL_HIDDEN static btVector3 Convert(const Constraint3 &constraint)
-		{
-			return btVector3(constraint.m_x, constraint.m_y, constraint.m_z);
 		}
 	};
 }

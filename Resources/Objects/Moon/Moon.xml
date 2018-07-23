@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameObjectDefinition name="Moon">
+	<Mesh>
+		<Model>Sphere_18_18_1</Model>
+	</Mesh>
+	<MaterialDefault>
+		<Base_Colour>#DDE2FF</Base_Colour>
+		<Diffuse_Texture></Diffuse_Texture>
+		<Metallic>0.4</Metallic>
+		<Roughness>0.0</Roughness>
+		<Material_Texture></Material_Texture>
+		<Normal_Texture></Normal_Texture>
+		<Casts_Shadows>false</Casts_Shadows>
+		<Ignore_Lighting>true</Ignore_Lighting>
+		<Ignore_Fog>true</Ignore_Fog>
+	</MaterialDefault>
+	<Light>
+		<Colour>#FFFFFF</Colour>
+		<Radius>-1.0</Radius>
+		<Offset>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>0.0</z>
+		</Offset>
+	</Light>
+	<CelestialBody>
+		<Type>1</Type>
+	</CelestialBody>
+	<MeshRender />
+</GameObjectDefinition>

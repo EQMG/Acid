@@ -7,12 +7,12 @@
 
 namespace fl
 {
-	Rigidbody::Rigidbody(const float &mass, const float &friction, const Constraint3 &freezePosition, const Constraint3 &freezeRotation) :
+	Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3 &linearFactor, const Vector3 &angularFactor) :
 		IComponent(),
 		m_mass(mass),
 		m_friction(friction),
-		m_freezePosition(freezePosition),
-		m_freezeRotation(freezeRotation),
+		m_linearFactor(linearFactor),
+		m_angularFactor(angularFactor),
 		m_worldTransform(btTransform()),
 		m_shape(nullptr),
 		m_body(nullptr)
@@ -54,8 +54,8 @@ namespace fl
 			m_body->setFriction(m_friction);
 			m_body->setRollingFriction(m_friction);
 			m_body->setSpinningFriction(m_friction);
-			m_body->setLinearFactor(ICollider::Convert(-m_freezePosition));
-			m_body->setAngularFactor(ICollider::Convert(-m_freezeRotation));
+			m_body->setLinearFactor(ICollider::Convert(m_linearFactor));
+			m_body->setAngularFactor(ICollider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
 			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
 		}
@@ -89,13 +89,13 @@ namespace fl
 
 		auto &transform = GetGameObject()->GetTransform();
 
-		if (m_freezePosition != Constraint3::ONE)
+		if (m_linearFactor != Vector3::ZERO)
 		{
 			btVector3 position = m_body->getWorldTransform().getOrigin();
 			transform.SetPosition(ICollider::Convert(position));
 		}
 
-		if (m_freezeRotation != Constraint3::ONE)
+		if (m_angularFactor != Vector3::ZERO)
 		{
 			btQuaternion rotation = m_body->getWorldTransform().getRotation();
 			transform.SetRotation(ICollider::Convert(rotation));
@@ -114,16 +114,16 @@ namespace fl
 	{
 		m_mass = value->GetChild("Mass")->Get<float>();
 		m_friction = value->GetChild("Friction")->Get<float>();
-		m_freezePosition = value->GetChild("Freeze Position");
-		m_freezeRotation = value->GetChild("Freeze Rotation");
+		m_linearFactor = value->GetChild("Linear Factor");
+		m_angularFactor = value->GetChild("Angular Factor");
 	}
 
 	void Rigidbody::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Mass", true)->Set(m_mass);
 		destination->GetChild("Friction", true)->Set(m_friction);
-		m_freezePosition.Write(destination->GetChild("Freeze Position", true));
-		m_freezeRotation.Write(destination->GetChild("Freeze Rotation", true));
+		m_linearFactor.Write(destination->GetChild("Linear Factor", true));
+		m_angularFactor.Write(destination->GetChild("Angular Factor", true));
 	}
 
 	void Rigidbody::SetAngularVelocity(const Vector3 &velocity)
@@ -177,16 +177,16 @@ namespace fl
 		m_body->setSpinningFriction(m_friction);
 	}
 
-	void Rigidbody::SetFreezePosition(const Constraint3 &freezePosition)
+	void Rigidbody::SetLinearFactor(const Vector3 &linearFactor)
 	{
-		m_freezePosition = freezePosition;
-		m_body->setLinearFactor(ICollider::Convert(-m_freezePosition));
+		m_linearFactor = linearFactor;
+		m_body->setLinearFactor(ICollider::Convert(m_linearFactor));
 	}
 
-	void Rigidbody::SetFreezeRotation(const Constraint3 &freezeRotation)
+	void Rigidbody::SetAngularFactor(const Vector3 &angularFactor)
 	{
-		m_freezeRotation = freezeRotation;
-		m_body->setAngularFactor(ICollider::Convert(-m_freezeRotation));
+		m_angularFactor = angularFactor;
+		m_body->setAngularFactor(ICollider::Convert(m_angularFactor));
 	}
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)

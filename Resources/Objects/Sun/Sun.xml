@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameObjectDefinition name="Sun">
+	<Mesh>
+		<Model>Sphere_24_24_1.0</Model>
+	</Mesh>
+	<MaterialDefault>
+		<Base_Colour>#FFCC00</Base_Colour>
+		<Diffuse_Texture></Diffuse_Texture>
+		<Metallic>1.0</Metallic>
+		<Roughness>0.0</Roughness>
+		<Material_Texture></Material_Texture>
+		<Normal_Texture></Normal_Texture>
+		<Casts_Shadows>false</Casts_Shadows>
+		<Ignore_Lighting>true</Ignore_Lighting>
+		<Ignore_Fog>true</Ignore_Fog>
+	</MaterialDefault>
+	<Light>
+		<Colour>#FFFFFF</Colour>
+		<Radius>-1.0</Radius>
+		<Offset>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>0.0</z>
+		</Offset>
+	</Light>
+	<CelestialBody>
+		<Type>0.0</Type>
+	</CelestialBody>
+	<MeshRender />
+</GameObjectDefinition>

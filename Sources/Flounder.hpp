@@ -77,7 +77,6 @@
 #include "Materials/MaterialDefault.hpp"
 #include "Materials/PipelineMaterial.hpp"
 #include "Maths/Colour.hpp"
-#include "Maths/Constraint3.hpp"
 #include "Maths/Delta.hpp"
 #include "Maths/Interpolation/SmoothFloat.hpp"
 #include "Maths/Maths.hpp"

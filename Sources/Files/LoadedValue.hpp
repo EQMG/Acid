@@ -40,10 +40,6 @@ namespace fl
 
 		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true);
 
-	//	std::optional<LoadedValue *> SearchHierarchy(const std::vector<std::string> &names, const int &i = 0);
-
-	//	std::optional<LoadedValue *> SearchHierarchyAttribs(const std::vector<std::string> &names, const std::string &childName, const std::string &attribute, const std::string &value, const int &i = 0);
-
 		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
 
 		std::string GetAttribute(const std::string &attribute) const;

@@ -30,11 +30,11 @@ namespace fl
 
 		void ConfigPushValue(const std::string &key, const std::string &value) override;
 
-		std::string GetFilename() const { return m_filename; }
+		std::string GetFilename() const override { return m_filename; }
 
-		void SetFilename(const std::string &filename) { m_filename = filename; }
+		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		LoadedValue *GetParent() const { return m_parent; }
+		LoadedValue *GetParent() const override { return m_parent; }
 
 		LoadedValue *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
 	private:
