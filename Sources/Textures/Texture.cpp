@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <cassert>
-#include <STB/stb_image.h>
+#include <Textures/stb_image.h>
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 

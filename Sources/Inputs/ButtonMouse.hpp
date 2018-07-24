@@ -13,14 +13,14 @@ namespace fl
 		public IButton
 	{
 	private:
-		std::vector<WsiMouseButton> m_buttons;
+		std::vector<MouseButton> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button mouse.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the mouse being checked. </param>
-		ButtonMouse(const std::vector<WsiMouseButton> &buttons);
+		ButtonMouse(const std::vector<MouseButton> &buttons);
 
 		/// <summary>
 		/// Deconstructor for the button mouse.
@@ -31,8 +31,8 @@ namespace fl
 
 		bool WasDown() override;
 
-		std::vector<WsiMouseButton> GetButtons() const { return m_buttons; }
+		std::vector<MouseButton> GetButtons() const { return m_buttons; }
 
-		void SetButtons(const std::vector<WsiMouseButton> &buttons) { m_buttons = buttons; }
+		void SetButtons(const std::vector<MouseButton> &buttons) { m_buttons = buttons; }
 	};
 }

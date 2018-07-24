@@ -2,7 +2,7 @@
 
 namespace fl
 {
-	void CallbackJoystickConnect(WsiShell shell, WsiJoystick port, const char *name, uint32_t buttonCount, uint32_t axesCount, VkBool32 connected)
+	void CallbackJoystickConnect(JoystickPort port, std::string name, uint32_t buttonCount, uint32_t axesCount, bool connected)
 	{
 #if FL_VERBOSE
 		fprintf(stdout, "Joystick '%s' %s port %i\n", name, connected ? "connected to" : "disconnected from ", port);
@@ -18,7 +18,7 @@ namespace fl
 		{
 			for (int i = 0; i < buttonCount; i++)
 			{
-				joystick.m_buttons[i] = WSI_ACTION_RELEASE;
+				joystick.m_buttons[i] = false;
 			}
 
 			for (int i = 0; i < axesCount; i++)
@@ -28,36 +28,36 @@ namespace fl
 		}
 	}
 
-	void CallbackJoystickButton(WsiShell shell, WsiJoystick port, uint32_t button, WsiAction action)
+	void CallbackJoystickButton(JoystickPort port, uint32_t button, bool isDown)
 	{
-		Joystick joystick = Joysticks::Get()->m_connected[port];
-		joystick.m_buttons[button] = action;
+		Joystick &joystick = Joysticks::Get()->m_connected[port];
+		joystick.m_buttons[button] = isDown;
 	}
 
-	void CallbackJoystickAxis(WsiShell shell, WsiJoystick port, uint32_t axis, float amount)
+	void CallbackJoystickAxis(JoystickPort port, uint32_t axis, float amount)
 	{
-		Joystick joystick = Joysticks::Get()->m_connected[port];
+		Joystick &joystick = Joysticks::Get()->m_connected[port];
 		joystick.m_axes[axis] = amount;
 	}
 
 	Joysticks::Joysticks() :
 		IModule(),
-		m_connected(std::array<Joystick, WSI_JOYSTICK_END_RANGE>())
+		m_connected(std::array<Joystick, JOYSTICK_END_RANGE>())
 	{
-		for (int i = 0; i < WSI_JOYSTICK_END_RANGE; i++)
+		auto shell = Display::Get()->GetShell();
+
+		for (int i = 0; i < JOYSTICK_END_RANGE; i++)
 		{
 			Joystick joystick = Joystick();
-			joystick.m_port = static_cast<WsiJoystick>(i);
+			joystick.m_port = static_cast<JoystickPort>(i);
 			joystick.m_connected = false;
 			m_connected[i] = joystick;
 		}
 
 		// Sets the joystick callbacks.
-		WsiShellCallbacks *callbacks;
-		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
-		callbacks->pfnJoystickConnect = CallbackJoystickConnect;
-		callbacks->pfnJoystickButton = CallbackJoystickButton;
-		callbacks->pfnJoystickAxis = CallbackJoystickAxis;
+		shell->SetCallbackJoystickConnect(CallbackJoystickConnect);
+		shell->SetCallbackJoystickButton(CallbackJoystickButton);
+		shell->SetCallbackJoystickAxis(CallbackJoystickAxis);
 	}
 
 	Joysticks::~Joysticks()
@@ -68,7 +68,7 @@ namespace fl
 	{
 	}
 
-	bool Joysticks::GetButton(const WsiJoystick &port, const uint32_t &button) const
+	bool Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const
 	{
 		if (button > GetCountButtons(port))
 		{
@@ -78,7 +78,7 @@ namespace fl
 		return m_connected.at(port).m_buttons[button];
 	}
 
-	float Joysticks::GetAxis(const WsiJoystick &port, const uint32_t &axis) const
+	float Joysticks::GetAxis(const JoystickPort &port, const uint32_t &axis) const
 	{
 		if (axis > GetCountAxes(port))
 		{

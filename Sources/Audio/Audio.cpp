@@ -85,7 +85,7 @@ namespace fl
 		std::string failure = StringifyResultAl(result);
 
 		fprintf(stderr, "OpenAL error: %s, %i\n", failure.c_str(), result);
-		wsiCmdMessageBox(Display::Get()->GetWsiShell(), "OpenAL Error", failure.c_str(), WSI_MESSAGE_YES, nullptr);
+		Display::Get()->GetShell()->ShowMessageBox("OpenAL Error", failure.c_str(), MESSAGE_YES);
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 }

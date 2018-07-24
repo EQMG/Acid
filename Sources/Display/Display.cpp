@@ -4,6 +4,17 @@
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
+// TODO: Allow type to be overridden from a game.
+#if VK_USE_PLATFORM_ANDROID_KHR
+#elif VK_USE_PLATFORM_COCOA_KHR
+#elif VK_USE_PLATFORM_WIN32_KHR
+  #include "ShellWin32.hpp"
+  typedef fl::ShellWin32 Shell_t;
+#elif VK_USE_PLATFORM_XCB_KHR
+  #include "ShellXcb.hpp"
+  typedef fl::ShellXcb Shell_t;
+#endif
+
 namespace fl
 {
 	static const std::vector<const char *> VALIDATION_LAYERS = {
@@ -13,7 +24,7 @@ namespace fl
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
-	void CallbackPosition(WsiShell shell, uint32_t x, uint32_t y)
+	void CallbackPosition(uint32_t x, uint32_t y)
 	{
 		if (Display::Get()->m_fullscreen)
 		{
@@ -24,7 +35,7 @@ namespace fl
 		Display::Get()->m_positionY = y;
 	}
 
-	void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 iconified, VkBool32 fullscreen)
+	void CallbackSize(uint32_t width, uint32_t height, bool iconified, bool fullscreen)
 	{
 		if (width <= 0 || height <= 0)
 		{
@@ -49,12 +60,12 @@ namespace fl
 		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
-	void CallbackFocus(WsiShell shell, VkBool32 focused)
+	void CallbackFocus(bool focused)
 	{
 		Display::Get()->m_focused = focused;
 	}
 
-	void CallbackClose(WsiShell shell)
+	void CallbackClose()
 	{
 		Display::Get()->m_closed = true;
 		Engine::Get()->RequestClose(false);
@@ -109,7 +120,7 @@ namespace fl
 #else
 		m_validationLayers(false),
 #endif
-		m_shell(VK_NULL_HANDLE),
+		m_shell(new Shell_t()),
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
@@ -127,7 +138,7 @@ namespace fl
 		m_physicalDeviceMemoryProperties({}),
 		m_graphicsFamilyIndex(0)
 	{
-		CreateWsi();
+		CreateShell();
 		SetupLayers();
 		SetupExtensions();
 		CreateInstance();
@@ -147,7 +158,7 @@ namespace fl
 		vkDeviceWaitIdle(m_logicalDevice);
 
 		// Destroys Vulkan.
-		wsiDestroyShell(m_shell, m_allocator);
+		delete m_shell;
 		vkDestroyDevice(m_logicalDevice, m_allocator);
 		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, m_allocator);
 		vkDestroySurfaceKHR(m_instance, m_surface, m_allocator);
@@ -160,7 +171,7 @@ namespace fl
 	void Display::Update()
 	{
 		// Polls for shell events. The key callback will only be invoked during this call.
-		ErrorVk(wsiCmdPollEvents(m_shell));
+		m_shell->PollEvents();
 
 		// Updates the aspect ratio.
 		m_aspectRatio = static_cast<float>(GetWidth()) / static_cast<float>(GetHeight());
@@ -171,13 +182,13 @@ namespace fl
 		m_windowWidth = width;
 		m_windowHeight = height;
 		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		ErrorVk(wsiCmdSetSize(m_shell, width, height));
+		m_shell->SetSize(width, height);
 	}
 
 	void Display::SetTitle(const std::string &title)
 	{
 		m_title = title;
-		ErrorVk(wsiCmdSetName(m_shell, m_title.c_str()));
+		m_shell->SetTitle(m_title);
 	}
 
 	void Display::SetIcon(const std::string &filename)
@@ -201,12 +212,7 @@ namespace fl
 			return;
 		}
 
-		WsiImage icon = {};
-		icon.pixels = data;
-		icon.width = width;
-		icon.height = height;
-
-		ErrorVk(wsiCmdSetIcon(m_shell, icon));
+		m_shell->SetIconImage(data, width, height);
 		Texture::DeletePixels(data);
 	}
 
@@ -219,31 +225,25 @@ namespace fl
 
 		m_fullscreen = fullscreen;
 
-		uint32_t instanceMonitorCount;
-		wsiEnumerateMonitors(&instanceMonitorCount, nullptr);
-		std::vector<WsiMonitor> monitors(instanceMonitorCount);
-		wsiEnumerateMonitors(&instanceMonitorCount, monitors.data());
-
-		WsiMonitorProperties monitorProperties;
-		wsiGetMonitorProperties(monitors[0], &monitorProperties);
+		auto monitors = m_shell->GetMonitors();
 
 		if (fullscreen)
 		{
 #if FL_VERBOSE
 			fprintf(stdout, "Display is going fullscreen\n");
 #endif
-			ErrorVk(wsiCmdSetFullscreen(m_shell, monitors[0], true));
+			m_shell->SetFullscreen(monitors[0], true);
 		}
 		else
 		{
 #if FL_VERBOSE
 			fprintf(stdout, "Display is going windowed\n");
 #endif
-			m_positionX = (monitorProperties.width - m_windowWidth) / 2;
-			m_positionY = (monitorProperties.height - m_windowHeight) / 2;
-			ErrorVk(wsiCmdSetFullscreen(m_shell, monitors[0], false));
-			ErrorVk(wsiCmdSetSize(m_shell, m_windowWidth, m_windowHeight));
-			ErrorVk(wsiCmdSetPosition(m_shell, m_positionX, m_positionY));
+			m_positionX = (monitors[0]->GetWidth() - m_windowWidth) / 2;
+			m_positionY = (monitors[0]->GetHeight() - m_windowHeight) / 2;
+			m_shell->SetFullscreen(monitors[0], false);
+			m_shell->SetSize(m_windowWidth, m_windowHeight);
+			m_shell->SetPosition(m_positionX, m_positionY);
 		}
 	}
 
@@ -312,39 +312,28 @@ namespace fl
 		std::string failure = StringifyResultVk(result);
 
 		fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-		wsiCmdMessageBox(Display::Get()->GetWsiShell(), "Vulkan Error", failure.c_str(), WSI_MESSAGE_YES, nullptr);
+		Display::Get()->m_shell->ShowMessageBox("Vulkan Error", failure, MESSAGE_YES);
 		throw std::runtime_error("Vulkan runtime error.");
 	}
 
-	void Display::CreateWsi()
+	void Display::CreateShell()
 	{
-		uint32_t instanceMonitorCount;
-		wsiEnumerateMonitors(&instanceMonitorCount, nullptr);
-		std::vector<WsiMonitor> monitors(instanceMonitorCount);
-		wsiEnumerateMonitors(&instanceMonitorCount, monitors.data());
+		auto monitors = m_shell->GetMonitors();
 
-		WsiMonitorProperties monitorProperties;
-		wsiGetMonitorProperties(monitors[0], &monitorProperties);
+		m_shell->CreateShell();
 
-		WsiShellCallbacks shellCallbacks = {};
-		shellCallbacks.pfnPosition = CallbackPosition;
-		shellCallbacks.pfnSize = CallbackSize;
-		shellCallbacks.pfnFocus = CallbackFocus;
-		shellCallbacks.pfnClose = CallbackClose;
+		m_shell->SetCallbackPosition(CallbackPosition);
+		m_shell->SetCallbackSize(CallbackSize);
+		m_shell->SetCallbackFocus(CallbackFocus);
+		m_shell->SetCallbackClose(CallbackClose);
 
-		WsiShellCreateInfo shellCreateInfo = {};
-		shellCreateInfo.sType = WSI_STRUCTURE_TYPE_SHELL_CREATE_INFO;
-		shellCreateInfo.pCallbacks = &shellCallbacks;
-		shellCreateInfo.pIcon = nullptr;
-		shellCreateInfo.pCursor = nullptr;
-		shellCreateInfo.width = 1080;
-		shellCreateInfo.height = 720;
-		shellCreateInfo.x = (monitorProperties.width - shellCreateInfo.width) / 2;
-		shellCreateInfo.y = (monitorProperties.height - shellCreateInfo.height) / 2;
-		shellCreateInfo.resizable = true;
-		shellCreateInfo.pName = m_title.c_str();
+		m_shell->SetSize(1080, 720);
+		m_shell->SetPosition((monitors[0]->GetWidth() - 1080) / 2,
+			(monitors[0]->GetHeight() - 720) / 2);
+		m_shell->SetResizable(true);
+		m_shell->SetTitle(m_title);
 
-		ErrorVk(wsiCreateShell(&shellCreateInfo, m_allocator, &m_shell));
+		m_shell->SetShown(SHOWN_SHOWN_BIT);
 	}
 
 	void Display::SetupLayers()
@@ -390,10 +379,7 @@ namespace fl
 	void Display::SetupExtensions()
 	{
 		// Sets up the extensions.
-		uint32_t instanceExtensionCount;
-		wsiEnumerateShellExtensions(m_shell, &instanceExtensionCount, nullptr);
-		std::vector<const char *> instanceExtensions(instanceExtensionCount);
-		wsiEnumerateShellExtensions(m_shell, &instanceExtensionCount, instanceExtensions.data());
+		auto instanceExtensions = m_shell->GetExtensions();
 
 		for (auto &extension : instanceExtensions)
 		{
@@ -594,7 +580,7 @@ namespace fl
 	void Display::CreateSurface()
 	{
 		// Creates the WSI Vulkan surface.
-		ErrorVk(wsiCreateSurface(m_shell, m_instance, m_allocator, &m_surface));
+		m_shell->CreateSurface(m_instance, m_allocator, &m_surface);
 
 		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 

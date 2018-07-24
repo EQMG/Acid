@@ -12,12 +12,12 @@ namespace fl
 		public IModule
 	{
 	private:
-		std::array<WsiAction, WSI_KEY_END_RANGE> m_keyboardKeys;
+		std::array<bool, KEY_END_RANGE> m_keyboardKeys;
 		char m_char;
 
-		friend void CallbackChar(WsiShell shell, const char *str);
+		friend void CallbackChar(const char *str);
 
-		friend void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, WsiModifierFlags modFlags);
+		friend void CallbackKey(Key key, bool isDown);
 
 	public:
 		/// <summary>
@@ -49,7 +49,7 @@ namespace fl
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
-		bool GetKey(const WsiKey &key) const;
+		bool GetKey(const Key &key) const;
 
 		/// <summary>
 		/// Gets the current user input, ASCII Dec value.

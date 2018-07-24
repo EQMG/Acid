@@ -1,6 +1,6 @@
 #ifndef STB_VORBIS_HEADER_ONLY
 
-#include "../../include/STB/stb_vorbis.h"
+#include "stb_vorbis.h"
 
 // global configuration settings (e.g. set these in the project/makefile),
 // or just set them in this file at the top (although ideally the first few

@@ -2,7 +2,7 @@
 
 namespace fl
 {
-	ButtonJoystick::ButtonJoystick(const WsiJoystick &joystick, const std::vector<uint32_t> &buttons) :
+	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons) :
 		IButton(),
 		m_joystick(joystick),
 		m_buttons(buttons),
