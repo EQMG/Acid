@@ -41,9 +41,9 @@ namespace test
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.9f),
-		m_reangleButton(WSI_MOUSE_BUTTON_LEFT),
-		m_joystickVertical(AxisJoystick(WSI_JOYSTICK_1, {3}, true)),
-		m_joystickHorizontal(AxisJoystick(WSI_JOYSTICK_1, {2})),
+		m_reangleButton(MOUSE_BUTTON_LEFT),
+		m_joystickVertical(AxisJoystick(JOYSTICK_1, {3}, true)),
+		m_joystickHorizontal(AxisJoystick(JOYSTICK_1, {2})),
 		m_paused(false)
 	{
 	}

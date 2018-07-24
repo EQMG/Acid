@@ -1,7 +1,6 @@
 #include "Screenshot.hpp"
 
-#include <fstream>
-#include <STB/stb_image_write.h>
+#include <Textures/stb_image_write.h>
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 

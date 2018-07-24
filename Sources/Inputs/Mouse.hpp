@@ -14,7 +14,7 @@ namespace fl
 	private:
 		std::string m_mousePath;
 
-		std::array<WsiAction, WSI_MOUSE_BUTTON_END_RANGE> m_mouseButtons;
+		std::array<bool, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
 		float m_mousePositionX;
 		float m_mousePositionY;
 		float m_mouseDeltaX;
@@ -24,13 +24,13 @@ namespace fl
 
 		bool m_cursorDisabled;
 
-		friend void CallbackCursorPosition(WsiShell shell, float x, float y, float dx, float dy);
+		friend void CallbackCursorPosition(float x, float y, float dx, float dy);
 
-		friend void CallbackCursorEnter(WsiShell shell, VkBool32 entered);
+		friend void CallbackCursorEnter(VkBool32 entered);
 
-		friend void CallbackScroll(WsiShell shell, float x, float y);
+		friend void CallbackCursorScroll(float x, float y);
 
-		friend void CallbackMouseButton(WsiShell shell, WsiMouseButton mouseButton, WsiAction action);
+		friend void CallbackMouseButton(MouseButton mouseButton, bool isDown);
 
 	public:
 		/// <summary>
@@ -80,7 +80,7 @@ namespace fl
 		/// </summary>
 		/// <param name="mouseButton"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool GetButton(const WsiMouseButton &mouseButton) const;
+		bool GetButton(const MouseButton &mouseButton) const;
 
 		/// <summary>
 		/// Gets the mouses screen x position.

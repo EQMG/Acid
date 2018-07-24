@@ -12,7 +12,7 @@ namespace fl
 	struct Touch
 	{
 		uint32_t m_id;
-		WsiAction m_action;
+		bool m_isDown;
 		float m_x;
 		float m_y;
 	};
@@ -25,7 +25,7 @@ namespace fl
 	private:
 		std::array<Touch, 10> m_touches;
 
-		friend void CallbackTouch(WsiShell shell, uint32_t id, float x, float y, WsiAction action);
+		friend void CallbackTouch(uint32_t id, float x, float y, bool isDown);
 
 	public:
 		/// <summary>

@@ -33,14 +33,14 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(std::make_shared<FpsCamera>()),
-		m_buttonSpawnSphere(new ButtonMouse({WSI_MOUSE_BUTTON_1})),
-		m_buttonFullscreen(new ButtonKeyboard({WSI_KEY_F11})),
-		m_buttonCaptureMouse(new ButtonKeyboard({WSI_KEY_M, WSI_KEY_ESCAPE})),
-		m_buttonScreenshot(new ButtonKeyboard({WSI_KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({WSI_KEY_DELETE})),
+		m_buttonSpawnSphere(new ButtonMouse({MOUSE_BUTTON_1})),
+		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
+		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
+		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
+		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg")),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(WSI_JOYSTICK_1, 0, 1, 0, 1)),
+		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{

@@ -3,9 +3,8 @@
 #include <string>
 #include <cstring>
 #include <vector>
-#include <vulkan/vulkan.h>
-#include <VWSI/vulkan_wsi.h>
 #include "Engine/Engine.hpp"
+#include "IShell.hpp"
 
 namespace fl
 {
@@ -36,7 +35,7 @@ namespace fl
 
 		bool m_validationLayers;
 
-		WsiShell m_shell;
+		IShell *m_shell;
 
 		std::vector<const char *> m_instanceLayerList;
 		std::vector<const char *> m_instanceExtensionList;
@@ -58,13 +57,13 @@ namespace fl
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		uint32_t m_graphicsFamilyIndex;
 
-		friend void CallbackPosition(WsiShell shell, uint32_t x, uint32_t y);
+		friend void CallbackPosition(uint32_t x, uint32_t y);
 
-		friend void CallbackSize(WsiShell shell, uint32_t width, uint32_t height, VkBool32 iconified, VkBool32 fullscreen);
+		friend void CallbackSize(uint32_t width, uint32_t height, bool iconified, bool fullscreen);
 
-		friend void CallbackFocus(WsiShell shell, VkBool32 focused);
+		friend void CallbackFocus(bool focused);
 
-		friend void CallbackClose(WsiShell shell);
+		friend void CallbackClose();
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 
@@ -227,7 +226,7 @@ namespace fl
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		WsiShell GetWsiShell() const { return m_shell; }
+		IShell *GetShell() const { return m_shell; }
 
 		VkAllocationCallbacks *GetVkAllocator() const { return m_allocator; }
 
@@ -253,7 +252,7 @@ namespace fl
 
 		uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
-		void CreateWsi();
+		void CreateShell();
 
 		void SetupLayers();
 

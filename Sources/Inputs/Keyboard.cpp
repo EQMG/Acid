@@ -2,39 +2,39 @@
 
 namespace fl
 {
-	void CallbackChar(WsiShell shell, const char *str)
+	void CallbackChar(const char *str)
 	{
 		Keyboard::Get()->m_char = str[0];
 	}
 
-	void CallbackKey(WsiShell shell, WsiKey key, WsiAction action, WsiModifierFlags modFlags)
+	void CallbackKey(Key key, bool isDown)
 	{
-		if (key < 0 || key > WSI_KEY_END_RANGE)
+		if (key < 0 || key > KEY_END_RANGE)
 		{
 			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
 		else
 		{
-			Keyboard::Get()->m_keyboardKeys[key] = action;
+			Keyboard::Get()->m_keyboardKeys[key] = isDown;
 		}
 	}
 
 	Keyboard::Keyboard() :
 		IModule(),
-		m_keyboardKeys(std::array<WsiAction, WSI_KEY_END_RANGE>()),
+		m_keyboardKeys(std::array<bool, KEY_END_RANGE>()),
 		m_char(0)
 	{
+		auto shell = Display::Get()->GetShell();
+
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < WSI_KEY_END_RANGE; i++)
+		for (unsigned int i = 0; i < KEY_END_RANGE; i++)
 		{
-			m_keyboardKeys[i] = WSI_ACTION_RELEASE;
+			m_keyboardKeys[i] = false;
 		}
 
 		// Sets the keyboards callbacks.
-		WsiShellCallbacks *callbacks;
-		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
-		callbacks->pfnChar = CallbackChar;
-		callbacks->pfnKey = CallbackKey;
+		shell->SetCallbackChar(CallbackChar);
+		shell->SetCallbackKey(CallbackKey);
 	}
 
 	Keyboard::~Keyboard()
@@ -45,14 +45,14 @@ namespace fl
 	{
 	}
 
-	bool Keyboard::GetKey(const WsiKey &key) const
+	bool Keyboard::GetKey(const Key &key) const
 	{
-		if (key < 0 || key > WSI_KEY_END_RANGE)
+		if (key < 0 || key > KEY_END_RANGE)
 		{
 			return false;
 		}
 
-		return m_keyboardKeys[key] != WSI_ACTION_RELEASE;
+		return m_keyboardKeys[key];
 	}
 
 	char Keyboard::GetChar() const

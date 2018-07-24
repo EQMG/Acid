@@ -2,10 +2,10 @@
 
 namespace fl
 {
-	void CallbackTouch(WsiShell shell, uint32_t id, float x, float y, WsiAction action)
+	void CallbackTouch(uint32_t id, float x, float y, bool isDown)
 	{
 		Touch touch = Touches::Get()->m_touches[id];
-		touch.m_action = action;
+		touch.m_isDown = isDown;
 		touch.m_x = x;
 		touch.m_y = y;
 	}
@@ -14,6 +14,8 @@ namespace fl
 		IModule(),
 		m_touches(std::array<Touch, 10>())
 	{
+		auto shell = Display::Get()->GetShell();
+
 		// Sets the default state of the keys to released.
 		for (unsigned int i = 0; i < 10; i++)
 		{
@@ -22,9 +24,7 @@ namespace fl
 		}
 
 		// Sets the touch callbacks.
-		WsiShellCallbacks *callbacks;
-		wsiGetShellCallbacks(Display::Get()->GetWsiShell(), &callbacks);
-		callbacks->pfnTouch = CallbackTouch;
+		shell->SetCallbackTouch(CallbackTouch);
 	}
 
 	Touches::~Touches()
@@ -39,7 +39,7 @@ namespace fl
 	{
 		for (auto &touch : m_touches)
 		{
-			if (touch.m_action != WSI_ACTION_RELEASE)
+			if (touch.m_isDown)
 			{
 				float distance = coord.Distance(Vector2(touch.m_x, touch.m_y));
 

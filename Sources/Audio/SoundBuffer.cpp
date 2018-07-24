@@ -6,7 +6,7 @@
 #else
 #include <AL/al.h>
 #endif
-#include <STB/stb_vorbis.h>
+#include <Audio/stb_vorbis.h>
 #include "Helpers/FileSystem.hpp"
 
 namespace fl
