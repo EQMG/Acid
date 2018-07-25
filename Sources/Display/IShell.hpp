@@ -250,7 +250,24 @@ namespace fl
 		std::function<void(JoystickPort, uint32_t, bool)> m_callbackJoystickButton;
 		std::function<void(JoystickPort, uint32_t, float)> m_callbackJoystickAxis;
 	public:
-		IShell()
+		IShell() :
+			m_monitors(std::vector<std::shared_ptr<IMonitor>>()),
+			m_extensions(std::vector<const char *>()),
+			m_created(false),
+			m_callbackPosition(nullptr),
+			m_callbackSize(nullptr),
+			m_callbackFocus(nullptr),
+			m_callbackClose(nullptr),
+			m_callbackCursorPosition(nullptr),
+			m_callbackCursorEnter(nullptr),
+			m_callbackCursorScroll(nullptr),
+			m_callbackMouseButton(nullptr),
+			m_callbackChar(nullptr),
+			m_callbackKey(nullptr),
+			m_callbackTouch(nullptr),
+			m_callbackJoystickConnect(nullptr),
+			m_callbackJoystickButton(nullptr),
+			m_callbackJoystickAxis(nullptr)
 		{
 		}
 
@@ -260,7 +277,7 @@ namespace fl
 
 		virtual void CreateShell() = 0;
 
-		virtual void CreateSurface(VkInstance instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) = 0;
+		virtual VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) = 0;
 
 		virtual void PollEvents() = 0;
 

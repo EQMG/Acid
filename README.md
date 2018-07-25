@@ -1,6 +1,4 @@
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Flounder.png" alt="Flounder" height="128px">
-
-# Flounder v0.9
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Flounder-03.png" alt="Flounder" height="256px">
 
 [![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Flounder/issues)
 

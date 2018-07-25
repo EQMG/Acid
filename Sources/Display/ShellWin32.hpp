@@ -55,7 +55,7 @@ namespace fl
 
 		void CreateShell() override;
 
-		void CreateSurface(VkInstance instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) override;
+		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 
 		void PollEvents() override;
 
