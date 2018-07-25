@@ -2,7 +2,7 @@
 
 #include "ISpawnParticle.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT SpawnSphere :
 		public ISpawnParticle

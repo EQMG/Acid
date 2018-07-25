@@ -7,7 +7,7 @@
 #include "Textures/Cubemap.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
-namespace fl
+namespace acid
 {
 	ShaderProgram::ShaderProgram(const std::string &name) :
 		m_name(name),

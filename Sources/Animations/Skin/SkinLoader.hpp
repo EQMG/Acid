@@ -4,7 +4,7 @@
 #include "Files/LoadedValue.hpp"
 #include "VertexSkinData.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT SkinLoader
 	{

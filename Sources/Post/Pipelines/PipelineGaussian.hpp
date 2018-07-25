@@ -4,7 +4,7 @@
 #include "Post/Filters/FilterBlurHorizontal.hpp"
 #include "Post/IPostPipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT PipelineGaussian :
 		public IPostPipeline

@@ -4,7 +4,7 @@
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "Buffer.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UniformBuffer :
 		public Buffer,

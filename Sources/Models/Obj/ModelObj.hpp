@@ -6,7 +6,7 @@
 #include "Models/VertexModel.hpp"
 #include "Models/VertexModelData.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT ModelObj :
 		public Model

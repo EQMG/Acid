@@ -3,7 +3,7 @@
 #include <functional>
 #include "IEvent.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.

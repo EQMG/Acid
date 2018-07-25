@@ -3,7 +3,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Texture.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a loaded cubemap texture.

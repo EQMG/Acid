@@ -4,7 +4,7 @@
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
-namespace fl
+namespace acid
 {
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),

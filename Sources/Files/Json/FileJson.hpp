@@ -7,7 +7,7 @@
 #include "Files/IFile.hpp"
 #include "JsonSection.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT FileJson :
 		public IFile

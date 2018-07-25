@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Shadows.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT RendererShadows :
 		public IRenderer

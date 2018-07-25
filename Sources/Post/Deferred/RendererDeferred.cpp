@@ -7,7 +7,7 @@
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
-namespace fl
+namespace acid
 {
 	const int RendererDeferred::MAX_LIGHTS = 64;
 

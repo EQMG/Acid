@@ -1,6 +1,6 @@
 #include "Light.hpp"
 
-namespace fl
+namespace acid
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
 		IComponent(),

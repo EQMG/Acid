@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "IRenderer.hpp"
 
-namespace fl
+namespace acid
 {
 	Renderer::Renderer() :
 		IModule(),

@@ -2,7 +2,7 @@
 
 #include "IRenderer.hpp"
 
-namespace fl
+namespace acid
 {
 	IManagerRender::IManagerRender(const std::vector<RenderpassCreate *> &renderpassCreate) :
 		m_stages(std::map<float, std::vector<std::shared_ptr<IRenderer>>>())

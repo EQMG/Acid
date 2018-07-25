@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace fl
+namespace acid
 {
 	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes) :
 		IAxis(),

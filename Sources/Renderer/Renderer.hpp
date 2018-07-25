@@ -8,7 +8,7 @@
 #include "RenderStage.hpp"
 #include "IManagerRender.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Renderer :
 		public IModule

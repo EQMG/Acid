@@ -2,7 +2,7 @@
 
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	ModelObj::ModelObj(const std::string &filename) :
 		Model()

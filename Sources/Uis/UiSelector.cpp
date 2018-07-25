@@ -1,6 +1,6 @@
 ﻿#include "UiSelector.hpp"
 
-namespace fl
+namespace acid
 {
 	UiSelector::UiSelector() :
 		m_cursorX(0.0f),

@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Resources/Engine/Logos/Tail.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.equilibrium.flounder</string>
+	<string>com.equilibrium.acid</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleLongVersionString</key>

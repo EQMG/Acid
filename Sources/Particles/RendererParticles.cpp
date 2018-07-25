@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),

@@ -8,7 +8,7 @@
 #include "Frustum.hpp"
 #include "Ray.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A simple class that represents a physics shape.

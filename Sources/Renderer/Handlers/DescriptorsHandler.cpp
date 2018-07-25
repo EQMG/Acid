@@ -2,7 +2,7 @@
 
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shaderProgram(nullptr),

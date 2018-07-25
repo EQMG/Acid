@@ -10,7 +10,7 @@
 #include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT MeshAnimated :
 		public Mesh

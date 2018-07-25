@@ -4,7 +4,7 @@
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "PipelineMaterial.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a material shader.

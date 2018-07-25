@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace fl
+namespace acid
 {
 	SpawnLine::SpawnLine(const float &length, const Vector3 &axis) :
 		ISpawnParticle(),

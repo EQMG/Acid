@@ -4,7 +4,7 @@
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).

@@ -7,7 +7,7 @@
 #include "Maths/Transform.hpp"
 #include "IComponent.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A class that represents a structured game object.

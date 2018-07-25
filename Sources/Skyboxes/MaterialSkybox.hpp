@@ -4,7 +4,7 @@
 #include "Materials/IMaterial.hpp"
 #include "Maths/Colour.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a skybox material shader.

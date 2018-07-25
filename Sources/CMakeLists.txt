@@ -1,43 +1,43 @@
 include(CMakeSources.cmake)
-#project(Flounder)
+#project(Acid)
 
-set(FLOUNDER_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
+set(ACID_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
-add_library(Flounder ${LIB_TYPE} ${FLOUNDER_SOURCES})
-add_dependencies(Flounder SPIRV glslang BulletDynamics BulletCollision LinearMath)
+add_library(Acid ${LIB_TYPE} ${ACID_SOURCES})
+add_dependencies(Acid SPIRV glslang BulletDynamics BulletCollision LinearMath)
 
-set_target_properties(Flounder PROPERTIES
+set_target_properties(Acid PROPERTIES
         POSITION_INDEPENDENT_CODE ON
-        FOLDER "Flounder")
+        FOLDER "Acid")
 
 if (WIN32 AND BUILD_SHARED_LIBS)
-    set_target_properties(Flounder PROPERTIES PREFIX "")
-    set_target_properties(Flounder PROPERTIES DEBUG_POSTFIX "")
+    set_target_properties(Acid PROPERTIES PREFIX "")
+    set_target_properties(Acid PROPERTIES DEBUG_POSTFIX "")
 endif ()
 
 if (BUILD_SHARED_LIBS)
-    target_compile_definitions(Flounder PUBLIC
+    target_compile_definitions(Acid PUBLIC
             -DFL_EXPORTS
             )
 else ()
-    target_compile_definitions(Flounder PUBLIC
+    target_compile_definitions(Acid PUBLIC
             -DFL_STATICLIB
             )
 endif ()
 
-target_include_directories(Flounder PUBLIC ${LIBRARIES_INCLUDES} ${FLOUNDER_INCLUDES})
-target_link_libraries(Flounder PRIVATE ${LIBRARIES_LINKS})
+target_include_directories(Acid PUBLIC ${LIBRARIES_INCLUDES} ${ACID_INCLUDES})
+target_link_libraries(Acid PRIVATE ${LIBRARIES_LINKS})
 
 # Install
-if (FLOUNDER_INSTALL)
-    install(TARGETS Flounder
+if (ACID_INSTALL)
+    install(TARGETS Acid
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             )
 
-    foreach (file ${FLOUNDER_HEADERS_})
+    foreach (file ${ACID_HEADERS_})
         get_filename_component(dir ${file} DIRECTORY)
-        install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/fl/${dir})
+        install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/acid/${dir})
     endforeach ()
 endif ()

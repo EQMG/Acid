@@ -2,7 +2,7 @@
 
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	std::vector<std::string> Files::SEARCH_PATHS = std::vector<std::string>();
 

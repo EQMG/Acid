@@ -7,7 +7,7 @@
 #include "Textures/Texture.hpp"
 #include "Uis/UiObject.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A object the represents a texture in a GUI.

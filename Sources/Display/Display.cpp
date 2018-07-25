@@ -15,7 +15,7 @@
   typedef fl::ShellXcb Shell_t;
 #endif
 
-namespace fl
+namespace acid
 {
 	static const std::vector<const char *> VALIDATION_LAYERS = {
 		"VK_LAYER_LUNARG_standard_validation" // , "VK_LAYER_RENDERDOC_Capture"
@@ -108,7 +108,7 @@ namespace fl
 		m_aspectRatio(1.5f),
 		m_positionX(0),
 		m_positionY(0),
-		m_title("Flounder Loading..."),
+		m_title("Acid Loading..."),
 		m_iconPath(""),
 		m_antialiasing(true),
 		m_fullscreen(false),
@@ -396,8 +396,8 @@ namespace fl
 		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		applicationInfo.pApplicationName = m_title.c_str();
 		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
-		applicationInfo.pEngineName = "Flounder";
-		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 3);
+		applicationInfo.pEngineName = "Acid";
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 4);
 		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
 		VkInstanceCreateInfo instanceCreateInfo = {};

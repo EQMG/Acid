@@ -5,7 +5,7 @@
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Rigidbody :
 		public IComponent

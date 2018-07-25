@@ -2,7 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 
-namespace fl
+namespace acid
 {
 	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),

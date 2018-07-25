@@ -1,6 +1,6 @@
 #include "JointTransform.hpp"
 
-namespace fl
+namespace acid
 {
 	JointTransform::JointTransform(const Vector3 &position, const Quaternion &rotation) :
 		m_position(position),

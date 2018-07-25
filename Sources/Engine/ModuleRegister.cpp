@@ -14,7 +14,7 @@
 #include "Shadows/Shadows.hpp"
 #include "Uis/Uis.hpp"
 
-namespace fl
+namespace acid
 {
 	ModuleRegister::ModuleRegister() :
 		m_modules(std::map<float, IModule *>())

@@ -5,7 +5,7 @@
 #include "Textures/Texture.hpp"
 #include "FontMetafile.hpp"
 
-namespace fl
+namespace acid
 {
 	enum FamilyType
 	{

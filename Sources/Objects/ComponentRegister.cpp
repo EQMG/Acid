@@ -16,7 +16,7 @@
 #include "Shadows/ShadowRender.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
-namespace fl
+namespace acid
 {
 	ComponentRegister::ComponentRegister() :
 		m_components(std::map<std::string, ComponentCreate>())

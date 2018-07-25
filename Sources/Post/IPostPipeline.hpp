@@ -3,7 +3,7 @@
 #include "Post/IPostFilter.hpp"
 #include "Renderer/IRenderer.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents a system of post effects.

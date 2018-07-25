@@ -3,7 +3,7 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UiStartLogo :
 		public UiObject

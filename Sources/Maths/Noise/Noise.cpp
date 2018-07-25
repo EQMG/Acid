@@ -3,7 +3,7 @@
 #include <cassert>
 #include <random>
 
-namespace fl
+namespace acid
 {
 	// Hashing
 	static const int X_PRIME = 1619;

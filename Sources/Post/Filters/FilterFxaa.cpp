@@ -1,6 +1,6 @@
 #include "FilterFxaa.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, {}),

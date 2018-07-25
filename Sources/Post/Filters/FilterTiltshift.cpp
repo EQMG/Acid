@@ -1,6 +1,6 @@
 #include "FilterTiltshift.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, {}),

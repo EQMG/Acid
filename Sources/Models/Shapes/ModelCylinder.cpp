@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks) :
 		Model()

@@ -5,7 +5,7 @@
 #include "Objects/IComponent.hpp"
 #include "Models/Model.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Mesh :
 		public IComponent

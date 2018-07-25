@@ -6,7 +6,7 @@
 #include "VertexAnimated.hpp"
 #include "VertexAnimatedData.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT GeometryLoader
 	{

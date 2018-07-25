@@ -1,6 +1,6 @@
 #include "FilterGrey.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grey.frag"}, {})

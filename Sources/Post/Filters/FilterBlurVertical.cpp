@@ -1,6 +1,6 @@
 #include "FilterBlurVertical.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterBlurVertical::FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/BlurVertical.frag"}, {}),

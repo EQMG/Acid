@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that handles a uniform buffer.

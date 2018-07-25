@@ -3,7 +3,7 @@
 #include <cassert>
 #include <vulkan/vulkan_win32.h>
 
-namespace fl
+namespace acid
 {
 #ifndef WM_MOUSEHWHEEL
 #define WM_MOUSEHWHEEL 0x020E
@@ -833,7 +833,7 @@ namespace fl
 		RECT window_rect = {0, 0, 1080, 720};
 		AdjustWindowRect(&window_rect, WS_OVERLAPPEDWINDOW, false);
 
-		hwnd_ = CreateWindowEx(0, "ShellWin32", "Flounder", STYLE_NORMAL, 0, 0,
+		hwnd_ = CreateWindowEx(0, "ShellWin32", "Acid", STYLE_NORMAL, 0, 0,
 			window_rect.right - window_rect.left, window_rect.bottom - window_rect.top, nullptr, nullptr, hinstance_, nullptr);
 		assert(hwnd_ && "Failed to create a window.");
 

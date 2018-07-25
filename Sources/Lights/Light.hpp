@@ -6,7 +6,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.

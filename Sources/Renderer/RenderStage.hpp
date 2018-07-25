@@ -6,7 +6,7 @@
 #include "Swapchain/Swapchain.hpp"
 #include "Swapchain/Framebuffers.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT RenderStage
 	{

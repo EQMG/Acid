@@ -1,7 +1,7 @@
 #pragma once
 
 //
-// Flounder exports (prerequisites) file.
+// Acid exports (prerequisites) file.
 //
 
 #if FL_BUILD_WINDOWS

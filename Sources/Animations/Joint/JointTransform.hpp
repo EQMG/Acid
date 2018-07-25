@@ -4,7 +4,7 @@
 #include "Maths/Quaternion.hpp"
 #include "JointTransformData.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents the local bone-space transform of a joint at a certain keyframe during an animation.

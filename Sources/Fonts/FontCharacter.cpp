@@ -1,6 +1,6 @@
 #include "FontCharacter.hpp"
 
-namespace fl
+namespace acid
 {
 	FontCharacter::FontCharacter(const int &id, const double &textureCoordX, const double &textureCoordY, const double &textureSizeX, const double &textureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX) :
 		m_id(id),

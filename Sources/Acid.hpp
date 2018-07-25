@@ -1,7 +1,7 @@
 #pragma once
 
 //
-// Flounder header file.
+// Acid header file.
 //
 
 #include "Animations/Animation/Animation.hpp"
@@ -47,7 +47,6 @@
 #include "Files/LoadedValue.hpp"
 #include "Files/Xml/FileXml.hpp"
 #include "Files/Xml/XmlNode.hpp"
-#include "Flounder.hpp"
 #include "Fonts/FontCharacter.hpp"
 #include "Fonts/FontLine.hpp"
 #include "Fonts/FontMetafile.hpp"

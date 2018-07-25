@@ -6,7 +6,7 @@
 #include "Engine/Engine.hpp"
 #include "IShell.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.

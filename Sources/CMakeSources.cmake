@@ -1,4 +1,4 @@
-set(FLOUNDER_HEADERS_
+set(ACID_HEADERS_
         "Animations/Animation/Animation.hpp"
         "Animations/Animation/AnimationLoader.hpp"
         "Animations/Animator.hpp"
@@ -42,7 +42,7 @@ set(FLOUNDER_HEADERS_
         "Files/LoadedValue.hpp"
         "Files/Xml/FileXml.hpp"
         "Files/Xml/XmlNode.hpp"
-        "Flounder.hpp"
+        "Acid.hpp"
         "Fonts/FontCharacter.hpp"
         "Fonts/FontLine.hpp"
         "Fonts/FontMetafile.hpp"
@@ -208,7 +208,7 @@ set(FLOUNDER_HEADERS_
         "Uis/UiStartLogo.hpp"
         )
 
-set(FLOUNDER_SOURCES_
+set(ACID_SOURCES_
         "Animations/Animation/Animation.cpp"
         "Animations/Animation/AnimationLoader.cpp"
         "Animations/Animator.cpp"
@@ -396,17 +396,17 @@ set(FLOUNDER_SOURCES_
 
 
 if(WIN32)
-    set(FLOUNDER_HEADERS_ ${FLOUNDER_HEADERS_} "Display/ShellWin32.hpp")
-    set(FLOUNDER_SOURCES_ ${FLOUNDER_SOURCES_} "Display/ShellWin32.cpp")
+    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellWin32.hpp")
+    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellWin32.cpp")
 elseif(UNIX AND NOT APPLE)
-    set(FLOUNDER_HEADERS_ ${FLOUNDER_HEADERS_} "Display/ShellXcb.hpp")
-    set(FLOUNDER_SOURCES_ ${FLOUNDER_SOURCES_} "Display/ShellXcb.cpp")
+    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellXcb.hpp")
+    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellXcb.cpp")
 endif()
 
-source_group("Header Files" FILES ${FLOUNDER_HEADERS_})
-source_group("Source Files" FILES ${FLOUNDER_SOURCES_})
+source_group("Header Files" FILES ${ACID_HEADERS_})
+source_group("Source Files" FILES ${ACID_SOURCES_})
 
-set(FLOUNDER_SOURCES
-        ${FLOUNDER_HEADERS_}
-        ${FLOUNDER_SOURCES_}
+set(ACID_SOURCES
+        ${ACID_HEADERS_}
+        ${ACID_SOURCES_}
         )

@@ -1,6 +1,6 @@
 #include "IPostPipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	IPostPipeline::IPostPipeline(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage)

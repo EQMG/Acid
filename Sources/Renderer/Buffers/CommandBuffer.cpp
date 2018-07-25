@@ -2,7 +2,7 @@
 
 #include "Renderer/Renderer.hpp"
 
-namespace fl
+namespace acid
 {
 	CommandBuffer::CommandBuffer(const bool &begin, const CommandBufferLevel &bufferLevel) :
 		m_bufferLevel(bufferLevel),

@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
 		Model()

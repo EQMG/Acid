@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Textures/Texture.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a material pipeline.

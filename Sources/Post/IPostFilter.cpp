@@ -3,7 +3,7 @@
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	IPostFilter::IPostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<PipelineDefine> &defines) :
 		IRenderer(graphicsStage),

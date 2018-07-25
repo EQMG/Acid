@@ -1,6 +1,6 @@
 #include "FilterCrt.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, {}),

@@ -5,7 +5,7 @@
 #include "Helpers/FileSystem.hpp"
 #include "XmlNode.hpp"
 
-namespace fl
+namespace acid
 {
 	FileXml::FileXml(const std::string &filename) :
 		IFile(),

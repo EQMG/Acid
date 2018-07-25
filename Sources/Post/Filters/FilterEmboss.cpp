@@ -1,6 +1,6 @@
 #include "FilterEmboss.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterEmboss::FilterEmboss(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Emboss.frag"}, {})

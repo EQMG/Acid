@@ -5,7 +5,7 @@
 #include "Textures/Texture.hpp"
 #include "Materials/IMaterial.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT MaterialAnimated :
 		public IMaterial

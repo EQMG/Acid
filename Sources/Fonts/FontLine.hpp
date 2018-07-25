@@ -2,7 +2,7 @@
 
 #include "FontWord.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents a line of text during the loading of a text.

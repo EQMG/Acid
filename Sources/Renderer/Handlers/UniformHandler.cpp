@@ -1,6 +1,6 @@
 #include "UniformHandler.hpp"
 
-namespace fl
+namespace acid
 {
 	UniformHandler::UniformHandler(const bool &multipipeline) :
 		m_multipipeline(multipipeline),

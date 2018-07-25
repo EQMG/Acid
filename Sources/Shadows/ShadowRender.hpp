@@ -5,7 +5,7 @@
 #include "Objects/GameObject.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class used to render a GameObject as a shadow.

@@ -4,7 +4,7 @@
 #include "Display/Display.hpp"
 #include "Maths/Vector2.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A definition for a managed touch input.

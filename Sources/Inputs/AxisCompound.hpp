@@ -3,7 +3,7 @@
 #include <vector>
 #include "IAxis.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Axis composed of multiple other axes.

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace fl
+namespace acid
 {
 	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{

@@ -3,7 +3,7 @@
 #include <memory>
 #include "IComponent.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A class that holds registerd components.

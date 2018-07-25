@@ -3,7 +3,7 @@
 #include "Objects/GameObject.hpp"
 #include "MeshAnimated.hpp"
 
-namespace fl
+namespace acid
 {
 	MaterialAnimated::MaterialAnimated() :
 		IMaterial(),

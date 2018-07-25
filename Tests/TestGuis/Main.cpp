@@ -9,7 +9,7 @@
 #include "Scenes/Scene1.hpp"
 
 using namespace test;
-using namespace fl;
+using namespace acid;
 
 //#if (FL_BUILD_RELEASE && FL_BUILD_WINDOWS)
 //int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Testing Guis");
-	Display::Get()->SetIcon("Logos/Tail.png");
+	Display::Get()->SetIcon("Logos/Beaker.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(std::make_shared<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_shared<Scene1>());

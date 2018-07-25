@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT IResource
 	{

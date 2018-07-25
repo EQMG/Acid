@@ -1,6 +1,6 @@
 ﻿#include "ParticleType.hpp"
 
-namespace fl
+namespace acid
 {
 	ParticleType::ParticleType(const std::string &name, std::shared_ptr<Texture> texture, const float &lifeLength, const float &scale) :
 		m_name(name),

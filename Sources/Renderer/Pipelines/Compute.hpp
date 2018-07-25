@@ -2,7 +2,7 @@
 
 #include "Pipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a compute Vulkan pipeline.

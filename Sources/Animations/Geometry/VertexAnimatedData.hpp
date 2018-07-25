@@ -5,7 +5,7 @@
 #include "Maths/Vector3.hpp"
 #include "Animations/Skin/VertexSkinData.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT VertexAnimatedData
 	{

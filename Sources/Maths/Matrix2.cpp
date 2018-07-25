@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Maths.hpp"
 
-namespace fl
+namespace acid
 {
 	const Matrix2 Matrix2::IDENTITY = Matrix2(new float[4]{1.0f, 0.0f, 0.0f, 1.0f});
 	const Matrix2 Matrix2::ZERO = Matrix2();

@@ -4,7 +4,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Models/Model.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT ModelSphere :
 		public Model

@@ -3,7 +3,7 @@
 #include <string>
 #include "Textures/Texture.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A definition for what a particle should act and look like.

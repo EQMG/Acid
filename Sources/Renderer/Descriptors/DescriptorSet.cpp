@@ -3,7 +3,7 @@
 #include "IDescriptor.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
-namespace fl
+namespace acid
 {
 	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),

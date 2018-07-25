@@ -6,7 +6,7 @@ typedef struct ALCdevice_struct ALCdevice;
 
 typedef struct ALCcontext_struct ALCcontext;
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.

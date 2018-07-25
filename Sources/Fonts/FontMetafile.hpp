@@ -8,7 +8,7 @@
 #include "Resources/Resources.hpp"
 #include "FontCharacter.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.

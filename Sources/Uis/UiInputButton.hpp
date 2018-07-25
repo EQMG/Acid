@@ -5,7 +5,7 @@
 #include "Guis/Gui.hpp"
 #include "UiObject.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UiInputButton :
 		public UiObject

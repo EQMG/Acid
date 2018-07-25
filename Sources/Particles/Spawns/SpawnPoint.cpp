@@ -1,6 +1,6 @@
 ﻿#include "SpawnPoint.hpp"
 
-namespace fl
+namespace acid
 {
 	SpawnPoint::SpawnPoint() :
 		ISpawnParticle(),

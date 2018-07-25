@@ -1,6 +1,6 @@
 #include "SmoothFloat.hpp"
 
-namespace fl
+namespace acid
 {
 	SmoothFloat::SmoothFloat(const float &initialValue, const float &agility) :
 		m_agility(agility),

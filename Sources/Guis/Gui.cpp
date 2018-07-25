@@ -2,7 +2,7 @@
 
 #include "Models/Shapes/ModelRectangle.hpp"
 
-namespace fl
+namespace acid
 {
 	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow) :
 		UiObject(parent, rectangle),

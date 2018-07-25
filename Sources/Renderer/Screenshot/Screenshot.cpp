@@ -4,7 +4,7 @@
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
-namespace fl
+namespace acid
 {
 	void Screenshot::Capture(const std::string &filename)
 	{

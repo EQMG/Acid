@@ -7,7 +7,7 @@
 #include "Maths/Vector3.hpp"
 #include "Audio.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a sound buffer.

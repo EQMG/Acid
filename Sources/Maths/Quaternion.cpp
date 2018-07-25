@@ -5,7 +5,7 @@
 #include "Vector3.hpp"
 #include "Matrix4.hpp"
 
-namespace fl
+namespace acid
 {
 	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);

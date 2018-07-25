@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 
-namespace fl
+namespace acid
 {
 	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &axes, const bool &reverse) :
 		IAxis(),

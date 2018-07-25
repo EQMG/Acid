@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Engine/Engine.hpp"
 
-namespace fl
+namespace acid
 {
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),

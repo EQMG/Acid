@@ -1,6 +1,6 @@
 #include "FilterDefault.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {})

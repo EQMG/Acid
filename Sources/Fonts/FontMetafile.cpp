@@ -3,7 +3,7 @@
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
 
-namespace fl
+namespace acid
 {
 	const unsigned int FontMetafile::PAD_TOP = 0;
 	const unsigned int FontMetafile::PAD_LEFT = 1;

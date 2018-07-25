@@ -1,6 +1,6 @@
 #include "Keyframe.hpp"
 
-namespace fl
+namespace acid
 {
 	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform *> &pose) :
 		m_timeStamp(timeStamp),

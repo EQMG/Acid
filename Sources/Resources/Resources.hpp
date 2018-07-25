@@ -6,7 +6,7 @@
 #include "Engine/Engine.hpp"
 #include "IResource.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A module used for managing resources.

@@ -1,6 +1,6 @@
 #include "ConfigKey.hpp"
 
-namespace fl
+namespace acid
 {
 	ConfigKey::ConfigKey(const std::string &value, const bool &fromFile) :
 		m_value(value),

@@ -6,7 +6,7 @@
 #include "Models/Model.hpp"
 #include "Textures/Cubemap.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT RendererDeferred :
 		public IRenderer

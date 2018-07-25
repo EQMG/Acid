@@ -3,7 +3,7 @@
 #include "Maths/Visual/DriverConstant.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),

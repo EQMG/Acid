@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Post/IPostFilter.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT FilterCrt :
 		public IPostFilter

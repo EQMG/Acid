@@ -10,7 +10,7 @@
 #include "SceneStructure.hpp"
 #include "IScene.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A module used for managing game scenes on engine updates.

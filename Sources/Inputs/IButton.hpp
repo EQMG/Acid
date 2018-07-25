@@ -2,7 +2,7 @@
 
 #include "Engine/Exports.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Interface for a binary input device.

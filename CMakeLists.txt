@@ -1,12 +1,12 @@
 cmake_minimum_required (VERSION 3.1)
-project (Flounder)
+project (Acid)
 
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
-option(FLOUNDER_INSTALL "Generate installation target" OFF)
-option(FLOUNDER_BUILD_TESTING "Build the Flounder test programs" ON)
-option(FLOUNDER_SETUP_COMPILER "If Flounder will set it's own compiler settings" ON)
-option(FLOUNDER_SETUP_OUTPUT "If Flounder will set it's own outputs" ON)
+option(ACID_INSTALL "Generate installation target" OFF)
+option(ACID_BUILD_TESTING "Build the Acid test programs" ON)
+option(ACID_SETUP_COMPILER "If Acid will set it's own compiler settings" ON)
+option(ACID_SETUP_OUTPUT "If Acid will set it's own outputs" ON)
 
 set(LIB_TYPE STATIC)
 
@@ -15,6 +15,9 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 message(STATUS "Shared Libs: ${BUILD_SHARED_LIBS}")
+
+# Cmake Modules
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Libraries")
 
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -35,8 +38,6 @@ if(WIN32)
 	add_definitions(-DVK_USE_PLATFORM_WIN32_KHR)
 elseif(UNIX AND NOT APPLE)
 	find_package(XCB REQUIRED)
-	set(LIBRARIES_INCLUDES ${LIBRARIES_INCLUDES} ${XCB_INCLUDES})
-	set(LIBRARIES_LINKS ${LIBRARIES_LINKS} ${XCB_LIBRARIES})
 	message(STATUS "Platform: Linux")
 	add_definitions(-DFL_BUILD_LINUX)
 	add_definitions(-DVK_USE_PLATFORM_XCB_KHR)
@@ -51,15 +52,15 @@ elseif(ANDROID)
 endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(FLOUNDER_64BIT true)
+    set(ACID_64BIT true)
     add_definitions(-DFL_64BIT)
 else()
-    set(FLOUNDER_32BIT true)
+    set(ACID_32BIT true)
     add_definitions(-DFL_32BIT)
 endif()
 
 # Compiler Options
-if (FLOUNDER_SETUP_COMPILER)
+if (ACID_SETUP_COMPILER)
 	message(STATUS "System: ${CMAKE_SYSTEM}")
 	message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
 	message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
@@ -81,7 +82,7 @@ if (FLOUNDER_SETUP_COMPILER)
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1 /MDd /DEBUG")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ob2 /MD")
 
-		if (FLOUNDER_64BIT)
+		if (ACID_64BIT)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 			set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /OPT:ICF")
 		else()
@@ -108,7 +109,7 @@ if (FLOUNDER_SETUP_COMPILER)
 endif()
 
 # Output Directories
-if (FLOUNDER_SETUP_OUTPUT)
+if (ACID_SETUP_OUTPUT)
 	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
 	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/lib)
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/bin)
@@ -133,7 +134,7 @@ message(${LIBRARIES_LINKS})
 add_subdirectory(Sources)
 
 # Example Sources
-if (FLOUNDER_BUILD_TESTING)
+if (ACID_BUILD_TESTING)
 	add_subdirectory(Tests/TestDeferred)
 	add_subdirectory(Tests/TestGuis)
 	add_subdirectory(Tests/TestMaths)

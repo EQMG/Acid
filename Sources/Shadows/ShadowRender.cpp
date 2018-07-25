@@ -2,7 +2,7 @@
 
 #include "Meshes/Mesh.hpp"
 
-namespace fl
+namespace acid
 {
 	ShadowRender::ShadowRender() :
 		IComponent(),

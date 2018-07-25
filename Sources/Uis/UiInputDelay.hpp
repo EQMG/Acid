@@ -2,7 +2,7 @@
 
 #include "Maths/Timer.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UiInputDelay
 	{

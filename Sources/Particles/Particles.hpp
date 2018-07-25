@@ -5,7 +5,7 @@
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A manager that manages particles.

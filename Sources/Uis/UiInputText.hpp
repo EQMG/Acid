@@ -6,7 +6,7 @@
 #include "UiInputDelay.hpp"
 #include "UiObject.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UiInputText :
 		public UiObject

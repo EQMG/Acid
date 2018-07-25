@@ -1,6 +1,6 @@
 #include "ButtonJoystick.hpp"
 
-namespace fl
+namespace acid
 {
 	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons) :
 		IButton(),

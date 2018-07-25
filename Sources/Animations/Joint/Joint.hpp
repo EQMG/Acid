@@ -3,7 +3,7 @@
 #include "Maths/Matrix4.hpp"
 #include "JointData.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents a joint in a "skeleton".

@@ -1,7 +1,7 @@
 set(GLSLANG_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/glslang/")
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
 set(ENABLE_SPVREMAPPER OFF CACHE INTERNAL "Enables building of SPVRemapper")
-set(ENABLE_GLSLANG_INSTALL ${FLOUNDER_INSTALL}  CACHE INTERNAL "Generate installation target")
+set(ENABLE_GLSLANG_INSTALL ${ACID_INSTALL}  CACHE INTERNAL "Generate installation target")
 set(BUILD_TESTING OFF CACHE INTERNAL "Enables test builds")
 set(ENABLE_GLSLANG_BINARIES OFF CACHE INTERNAL "Builds glslangValidator and spirv-remap")
 set(ENABLE_AMD_EXTENSIONS OFF CACHE INTERNAL "Enables support of AMD-specific extensions")

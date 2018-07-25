@@ -4,7 +4,7 @@
 #include "Joysticks.hpp"
 #include "IButton.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Button from a joystick.

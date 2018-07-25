@@ -6,7 +6,7 @@
 #include "Files/IFile.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT FileXml :
 		public IFile
