@@ -49,7 +49,7 @@ namespace acid
 
 	void Mesh::Write(LoadedValue *destination)
 	{
-		destination->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
+		destination->GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetName());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)

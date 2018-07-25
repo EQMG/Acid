@@ -24,7 +24,7 @@ namespace acid
 			{
 				if ((*it).use_count() <= 1)
 				{
-					fprintf(stdout, "Resource '%s' erased\n", (*it)->GetFilename().c_str());
+					fprintf(stdout, "Resource '%s' erased\n", (*it)->GetName().c_str());
 					m_resources.erase(it);
 				}
 			}
@@ -35,7 +35,7 @@ namespace acid
 	{
 		for (auto &resource : m_resources)
 		{
-			if (resource != nullptr && resource->GetFilename() == filename)
+			if (resource != nullptr && resource->GetName() == filename)
 			{
 				return resource;
 			}
@@ -72,7 +72,7 @@ namespace acid
 	{
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
-			if ((*it)->GetFilename() == filename)
+			if ((*it)->GetName() == filename)
 			{
 				m_resources.erase(it);
 				return true;

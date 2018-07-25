@@ -53,12 +53,12 @@ namespace acid
 	void MaterialDefault::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Base Colour", true)->SetString(m_baseColor.GetHex());
-		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetName());
 
 		destination->GetChild("Metallic", true)->Set(m_metallic);
 		destination->GetChild("Roughness", true)->Set(m_roughness);
-		destination->GetChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
-		destination->GetChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
+		destination->GetChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetName());
+		destination->GetChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetName());
 
 		destination->GetChild("Casts Shadows", true)->Set(m_castsShadows);
 		destination->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);

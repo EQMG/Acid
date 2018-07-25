@@ -50,7 +50,7 @@ namespace acid
 
 		void Save();
 
-		std::string GetFilename() override { return m_filename; }
+		std::string GetName() override { return m_filename; }
 
 		LoadedValue *GetParent() const { return m_parent; }
 	};
