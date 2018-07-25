@@ -12,7 +12,7 @@ namespace glslang
 	class TProgram;
 }
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Uniform
 	{

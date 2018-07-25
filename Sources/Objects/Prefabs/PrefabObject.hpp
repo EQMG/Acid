@@ -8,7 +8,7 @@
 #include "Resources/Resources.hpp"
 #include "Files/IFile.hpp"
 
-namespace fl
+namespace acid
 {
 	class GameObject;
 

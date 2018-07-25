@@ -1,6 +1,6 @@
 #include "XmlNode.hpp"
 
-namespace fl
+namespace acid
 {
 	XmlNode::XmlNode(std::shared_ptr<XmlNode> parent, const std::string &attributes, const std::string &content) :
 		m_parent(parent),

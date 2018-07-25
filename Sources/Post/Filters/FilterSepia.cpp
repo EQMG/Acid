@@ -1,6 +1,6 @@
 #include "FilterSepia.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Sepia.frag"}, {})

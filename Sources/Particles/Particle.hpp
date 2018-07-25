@@ -4,7 +4,7 @@
 #include "Maths/Vector3.hpp"
 #include "ParticleType.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A instance of a particle type.

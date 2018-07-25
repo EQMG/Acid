@@ -8,7 +8,7 @@
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/Shapes/ModelSphere.hpp"
 
-namespace fl
+namespace acid
 {
 	Mesh::Mesh(std::shared_ptr<Model> model) :
 		IComponent(),

@@ -4,7 +4,7 @@
 #include <string>
 #include "IModule.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// The default updater for the engine.

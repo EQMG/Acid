@@ -2,7 +2,7 @@
 
 #include "Animation.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT AnimationLoader
 	{

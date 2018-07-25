@@ -2,7 +2,7 @@
 
 #include "Maths/Vector3.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A interface that defines a particle spawn type.

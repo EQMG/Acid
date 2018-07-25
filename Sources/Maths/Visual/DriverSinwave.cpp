@@ -1,6 +1,6 @@
 #include "DriverSinwave.hpp"
 
-namespace fl
+namespace acid
 {
 	DriverSinwave::DriverSinwave(const float &min, const float &max, const float &length) :
 		IDriver(length),

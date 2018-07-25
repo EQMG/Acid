@@ -6,7 +6,7 @@
 #include <map>
 #include "Helpers/FormatString.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT LoadedValue
 	{

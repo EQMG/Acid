@@ -1,6 +1,6 @@
 ﻿#include "SpawnCircle.hpp"
 
-namespace fl
+namespace acid
 {
 	SpawnCircle::SpawnCircle(const float &radius, const Vector3 &heading) :
 		ISpawnParticle(),

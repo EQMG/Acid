@@ -1,6 +1,6 @@
 #include "FilterGrain.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, {}),

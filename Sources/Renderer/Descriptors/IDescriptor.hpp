@@ -4,7 +4,7 @@
 #include "Display/Display.hpp"
 #include "DescriptorSet.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT IDescriptor
 	{

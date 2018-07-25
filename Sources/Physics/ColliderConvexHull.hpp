@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "ICollider.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT ColliderConvexHull :
 		public ICollider

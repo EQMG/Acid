@@ -1,6 +1,6 @@
 #include "Joint.hpp"
 
-namespace fl
+namespace acid
 {
 	Joint::Joint(const int &index, const std::string &name, const Matrix4 &bindLocalTransform) :
 		m_index(index),

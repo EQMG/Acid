@@ -1,6 +1,6 @@
 #include "ButtonCompound.hpp"
 
-namespace fl
+namespace acid
 {
 	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
 		IButton(),

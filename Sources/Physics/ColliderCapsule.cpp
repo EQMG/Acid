@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace fl
+namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height) :
 		m_shape(new btCapsuleShape(radius, height)),

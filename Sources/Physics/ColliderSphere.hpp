@@ -3,7 +3,7 @@
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include "ICollider.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT ColliderSphere :
 		public ICollider

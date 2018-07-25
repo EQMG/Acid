@@ -1,6 +1,6 @@
 #include "JointData.hpp"
 
-namespace fl
+namespace acid
 {
 	JointData::JointData(const int &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
 		m_index(index),

@@ -1,6 +1,6 @@
 #include "EventChange.hpp"
 
-namespace fl
+namespace acid
 {
 	template<typename T>
 	EventChange<T>::EventChange(T *reference, const std::function<void()> &onEvent) :

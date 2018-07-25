@@ -1,6 +1,6 @@
 ﻿#include "UniformBuffer.hpp"
 
-namespace fl
+namespace acid
 {
 	UniformBuffer::UniformBuffer(const VkDeviceSize &size) :
 		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),

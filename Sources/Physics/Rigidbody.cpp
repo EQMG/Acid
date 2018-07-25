@@ -5,7 +5,7 @@
 #include "Scenes/Scenes.hpp"
 #include "ICollider.hpp"
 
-namespace fl
+namespace acid
 {
 	Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3 &linearFactor, const Vector3 &angularFactor) :
 		IComponent(),

@@ -11,7 +11,7 @@
 #include "FontType.hpp"
 #include "FontLine.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A enum that represents how a font will be justified.

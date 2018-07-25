@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace fl
+namespace acid
 {
 	Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),

@@ -1,6 +1,6 @@
 #include "Fog.hpp"
 
-namespace fl
+namespace acid
 {
 	Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
 		m_colour(colour),

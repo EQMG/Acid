@@ -5,7 +5,7 @@
 #include "Audio.hpp"
 #include "SoundBuffer.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a loaded sound.

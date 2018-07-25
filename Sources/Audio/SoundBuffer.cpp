@@ -9,7 +9,7 @@
 #include <Audio/stb_vorbis.h>
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	SoundBuffer::SoundBuffer(const std::string &filename) :
 		IResource(),

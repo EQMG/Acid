@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-namespace fl
+namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.obj";
 

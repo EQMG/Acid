@@ -1,6 +1,6 @@
 #include "RenderStage.hpp"
 
-namespace fl
+namespace acid
 {
 	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
 		m_stageIndex(stageIndex),

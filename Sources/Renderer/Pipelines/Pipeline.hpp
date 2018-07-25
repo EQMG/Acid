@@ -11,7 +11,7 @@
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
-namespace fl
+namespace acid
 {
 	class DepthStencil;
 

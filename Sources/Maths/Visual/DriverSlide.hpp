@@ -2,7 +2,7 @@
 
 #include "IDriver.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A driver that slides to its destination using cosine interpolation.

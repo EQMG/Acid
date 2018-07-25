@@ -1,6 +1,6 @@
 #include "Config.hpp"
 
-namespace fl
+namespace acid
 {
 	Config::Config(std::shared_ptr<IFile> file) :
 		m_file(file),

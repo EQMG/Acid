@@ -5,7 +5,7 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
-namespace fl
+namespace acid
 {
 	const Colour Colour::CLEAR = Colour("#000000", 0.0f);
 	const Colour Colour::BLACK = Colour("#000000");

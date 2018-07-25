@@ -4,7 +4,7 @@
 #include "Models/VertexModel.hpp"
 #include "ShadowRender.hpp"
 
-namespace fl
+namespace acid
 {
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),

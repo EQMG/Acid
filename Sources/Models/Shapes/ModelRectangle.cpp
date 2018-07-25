@@ -2,7 +2,7 @@
 
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :
 		Model()

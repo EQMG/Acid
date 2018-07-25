@@ -2,7 +2,7 @@
 
 #include "Objects/GameObject.hpp"
 
-namespace fl
+namespace acid
 {
 	ICollider::ICollider()
 	{

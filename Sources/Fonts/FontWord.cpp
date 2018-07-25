@@ -1,6 +1,6 @@
 ﻿#include "FontWord.hpp"
 
-namespace fl
+namespace acid
 {
 	FontWord::FontWord() :
 		m_characters(std::vector<FontCharacter>()),

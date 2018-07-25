@@ -4,7 +4,7 @@
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Renderer/IRenderer.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.

@@ -1,6 +1,6 @@
 #include "VertexAnimatedData.hpp"
 
-namespace fl
+namespace acid
 {
 	const uint32_t VertexAnimatedData::NO_INDEX = static_cast<uint32_t>(-1);
 

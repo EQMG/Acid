@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace fl
+namespace acid
 {
 	Resources::Resources() :
 		m_resources(std::vector<std::shared_ptr<IResource>>()),

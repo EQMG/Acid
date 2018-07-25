@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace fl
+namespace acid
 {
 	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 

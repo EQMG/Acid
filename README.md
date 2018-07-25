@@ -1,19 +1,20 @@
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Flounder-03.png" alt="Flounder" height="256px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Beaker-Low.png" alt="Acid" height="128px">
 
-[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Flounder/issues)
+# Acid
+[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
 
-Flounder is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.
+Acid is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.
 
-The Vulkan API is used as the only rendering API; therefore, Vulkan structs and commands can be used directly in games. Flounder allows for direct usage of Vulkan API calls but provides more than enough function to where this type of usage can be avoided.
+The Vulkan API is used as the only rendering API; therefore, Vulkan structs and commands can be used directly in games. Acid allows for direct usage of Vulkan API calls but provides more than enough function to where this type of usage can be avoided.
 
-Features are broken down into modules, modules can be added or removed from Flounder with ease, and modules are easy to create. Vulkan is the only supported rendering API; however, APIs like Molten are supported through libraries, eventually, OpenGL and DirectX will be supported in this way.
+Features are broken down into modules, modules can be added or removed from Acid with ease, and modules are easy to create. Vulkan is the only supported rendering API; however, APIs like Molten are supported through libraries, eventually, OpenGL and DirectX will be supported in this way.
 
-Flounder is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Flounder, and if you want to know about our code style read GUIDELINES.
+Acid is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Acid, and if you want to know about our code style read GUIDELINES.
 
 ## Builds
-Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/flounder)
+Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/Acid)
 
-Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Flounder.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Flounder)
+Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
 # Code snippets
 ```cpp
@@ -51,23 +52,23 @@ float dist = a.Distance(b);
 ```
 
 ## Links
-Trello   [Board](https://trello.com/b/ZRvpbbYC/flounder)
+Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
-Readme   [Read more](https://equilibrium-games.github.io/Flounder/)
+Readme   [Read more](https://equilibrium-games.github.io/Acid/)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/FlounderDocs/)
+Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
 
-Metrics   [Code metrics](https://equilibrium-games.github.io/FlounderDocs/loc/LocMetrics.html)
+Metrics   [Code metrics](https://equilibrium-games.github.io/Acid-Docs/loc/LocMetrics.html)
 
 Website   [Learn more](https://equilibrium.games)
 
 ## Platforms
-Flounder currently can be run on the following platforms:
+Acid currently can be run on the following platforms:
  * Vulkan - Windows, Linux, Android
  * MoltenVK - MacOS, IOS
 
 ## Features
-This is a list of current features in Flounder:
+This is a list of current features in Acid:
  * On the fly GLSL to SPIR-V compiler
  * Modular rendering pipeline
  * Deferred PBR+IBL rendering
@@ -96,44 +97,44 @@ This is a list of current features in Flounder:
  * Steam integration (WIP
 
 ## Dependencies
-Flounder uses the following libraries:
- * [Vulkan](https://www.khronos.org/vulkan/) - Vulkan interface
+Acid uses the following libraries:
+ * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
 
 ## Screenshots
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot1.png" alt="flounder" width="600px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot1.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot2.png" alt="flounder" width="600px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot2.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot3.png" alt="flounder" width="600px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot3.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Flounder/master/Documents/Screenshot4.png" alt="flounder" width="600px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot4.png" alt="Acid" width="600px">
 
 ## License
-Flounder is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
+Acid is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
 
 ## Developer Setup
-Once Flounder is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
+Once Acid is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
 
-The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) is required to develop and run Flounder.
+The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) is required to develop and run Acid.
 
-On Windows, Flounder requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and Flounder should compile properly. Run Scripts/generate_vs.bat and an environment will be setup in Build.
+On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and Acid should compile properly. Run Scripts/generate_vs.bat and an environment will be setup in Build.
 
 Ensure you are using a compiler with full c++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
-On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Flounder requires `xorg-dev`, `libopenal1`, `libglfw3`, and `libvulkan` to be available.
+On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, `libglfw3`, and `libvulkan` to be available.
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 
-Currently Flounder does not run under Release mode in Visual Studios (bug).
+Currently Acid does not run under Release mode in Visual Studios (bug).
 
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, older resources can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Flounder).
+Old resources have been removed from the main repo, older resources can be found on this fork: [https://github.com/mattparks/Acid](https://github.com/mattparks/Acid).
 
 ## Contributing
-You can contribute to Flounder in any way you want, we are always looking for help.
+You can contribute to Acid in any way you want, we are always looking for help.

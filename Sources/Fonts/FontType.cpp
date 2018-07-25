@@ -1,6 +1,6 @@
 ﻿#include "FontType.hpp"
 
-namespace fl
+namespace acid
 {
 	FontType::FontType(const std::string &filename, const FamilyType &familyType) :
 		IResource(),

@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Particles.hpp"
 
-namespace fl
+namespace acid
 {
 	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		IComponent(),

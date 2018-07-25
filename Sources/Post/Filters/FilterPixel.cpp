@@ -1,6 +1,6 @@
 #include "FilterPixel.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, {}),

@@ -7,7 +7,7 @@
 #include "Models/Model.hpp"
 #include "Particles.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT RendererParticles :
 		public IRenderer

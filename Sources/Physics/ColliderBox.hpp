@@ -4,7 +4,7 @@
 #include "Maths/Vector3.hpp"
 #include "ICollider.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT ColliderBox :
 		public ICollider

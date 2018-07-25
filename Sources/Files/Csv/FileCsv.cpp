@@ -4,7 +4,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	FileCsv::FileCsv(const std::string &filename, const char &delimiter) :
 		IFile(),

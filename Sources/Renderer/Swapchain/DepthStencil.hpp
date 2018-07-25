@@ -2,7 +2,7 @@
 
 #include "Renderer/Descriptors/IDescriptor.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT DepthStencil :
 		public IDescriptor

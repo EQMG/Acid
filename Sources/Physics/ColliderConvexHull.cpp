@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Meshes/Mesh.hpp"
 
-namespace fl
+namespace acid
 {
 	ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud) :
 		m_shape(nullptr),

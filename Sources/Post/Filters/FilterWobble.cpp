@@ -1,6 +1,6 @@
 #include "FilterWobble.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),

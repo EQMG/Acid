@@ -6,7 +6,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;

@@ -1,6 +1,6 @@
 #include "SquareArray.hpp"
 
-namespace fl
+namespace acid
 {
 	float **SquareArray::FloatArray(const int &size1, const int &size2)
 	{

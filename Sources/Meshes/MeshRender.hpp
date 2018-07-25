@@ -3,7 +3,7 @@
 #include "Materials/IMaterial.hpp"
 #include "Mesh.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT MeshRender :
 		public IComponent

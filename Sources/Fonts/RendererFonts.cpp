@@ -2,7 +2,7 @@
 
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),

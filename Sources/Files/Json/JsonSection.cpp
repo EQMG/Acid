@@ -1,6 +1,6 @@
 #include "JsonSection.hpp"
 
-namespace fl
+namespace acid
 {
 	JsonSection::JsonSection(std::shared_ptr<JsonSection> parent, const std::string &name, const std::string &content) :
 		m_parent(parent),

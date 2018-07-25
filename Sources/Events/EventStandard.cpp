@@ -1,6 +1,6 @@
 #include "EventStandard.hpp"
 
-namespace fl
+namespace acid
 {
 	EventStandard::EventStandard(const bool &repeat, const std::function<bool()> &triggered, const std::function<void()> &onEvent) :
 		IEvent(),

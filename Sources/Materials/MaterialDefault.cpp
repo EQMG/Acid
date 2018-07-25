@@ -3,7 +3,7 @@
 #include "Objects/GameObject.hpp"
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	MaterialDefault::MaterialDefault(const Colour &baseColor, std::shared_ptr<Texture> diffuseTexture,
 									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,

@@ -1,6 +1,6 @@
 #include "JointTransformData.hpp"
 
-namespace fl
+namespace acid
 {
 	JointTransformData::JointTransformData(const std::string &jointNameId, const Matrix4 &jointLocalTransform) :
 		m_jointNameId(jointNameId),

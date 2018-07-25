@@ -9,7 +9,7 @@
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents a loaded texture.

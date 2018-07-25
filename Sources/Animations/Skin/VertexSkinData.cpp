@@ -1,6 +1,6 @@
 #include "VertexSkinData.hpp"
 
-namespace fl
+namespace acid
 {
 	VertexSkinData::VertexSkinData() :
 		m_jointIds(std::vector<int>()),

@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 
-namespace fl
+namespace acid
 {
 	Timer::Timer(const float &interval) :
 		m_startTime(0.0f),

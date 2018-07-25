@@ -7,7 +7,7 @@
 #include "Uis.hpp"
 #include "UiObject.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT UiInputSlider :
 		public UiObject

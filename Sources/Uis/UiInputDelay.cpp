@@ -1,6 +1,6 @@
 ﻿#include "UiInputDelay.hpp"
 
-namespace fl
+namespace acid
 {
 	UiInputDelay::UiInputDelay() :
 		m_timerDelay(Timer(0.4f)),

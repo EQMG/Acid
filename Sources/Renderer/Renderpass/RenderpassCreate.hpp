@@ -5,7 +5,7 @@
 #include "Display/Display.hpp"
 #include "Maths/Colour.hpp"
 
-namespace fl
+namespace acid
 {
 	enum AttachmentType
 	{

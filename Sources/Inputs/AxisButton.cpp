@@ -1,6 +1,6 @@
 #include "AxisButton.hpp"
 
-namespace fl
+namespace acid
 {
 	AxisButton::AxisButton(IButton *negative, IButton *positive) :
 		IAxis(),

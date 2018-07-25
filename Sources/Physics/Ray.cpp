@@ -1,6 +1,6 @@
 #include "Ray.hpp"
 
-namespace fl
+namespace acid
 {
 	Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
 		m_useMouse(useMouse),

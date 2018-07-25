@@ -3,7 +3,7 @@
 #include "Display/Display.hpp"
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Buffer
 	{

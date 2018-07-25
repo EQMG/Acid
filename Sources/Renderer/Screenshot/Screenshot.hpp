@@ -3,7 +3,7 @@
 #include <string>
 #include "Display/Display.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Screenshot
 	{

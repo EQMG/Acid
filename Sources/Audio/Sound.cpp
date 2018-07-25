@@ -7,7 +7,7 @@
 #include <AL/al.h>
 #endif
 
-namespace fl
+namespace acid
 {
 	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
 		m_soundBuffer(SoundBuffer::Resource(filename)),

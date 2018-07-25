@@ -4,7 +4,7 @@
 #include "Maths/Visual/DriverConstant.hpp"
 #include "Uis.hpp"
 
-namespace fl
+namespace acid
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),

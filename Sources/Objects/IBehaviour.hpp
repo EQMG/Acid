@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "IComponent.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT IBehaviour :
 		public IComponent

@@ -3,7 +3,7 @@
 #include "Files/Xml/FileXml.hpp"
 #include "Helpers/FileSystem.hpp"
 
-namespace fl
+namespace acid
 {
 	const Matrix4 MeshAnimated::CORRECTION = Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
 	const int MeshAnimated::MAX_JOINTS = 50;

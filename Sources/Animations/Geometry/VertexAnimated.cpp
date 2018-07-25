@@ -1,6 +1,6 @@
 #include "VertexAnimated.hpp"
 
-namespace fl
+namespace acid
 {
 	VertexAnimated::VertexAnimated(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent, const Vector3 &jointId, const Vector3 &vertexWeight) :
 		IVertex(),

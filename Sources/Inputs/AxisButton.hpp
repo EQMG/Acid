@@ -3,7 +3,7 @@
 #include "IButton.hpp"
 #include "IAxis.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Axis composed of two buttons.

@@ -2,7 +2,7 @@
 
 #include "IShell.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT MonitorXcb :
 		public IMonitor

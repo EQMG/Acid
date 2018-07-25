@@ -4,7 +4,7 @@
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
 
-namespace fl
+namespace acid
 {
 	void CallbackCursorPosition(float x, float y, float dx, float dy)
 	{

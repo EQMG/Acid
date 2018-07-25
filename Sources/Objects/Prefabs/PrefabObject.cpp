@@ -5,7 +5,7 @@
 #include "Files/Json/FileJson.hpp"
 #include "Files/Xml/FileXml.hpp"
 
-namespace fl
+namespace acid
 {
 	PrefabObject::PrefabObject(const std::string &filename) :
 		IResource(),

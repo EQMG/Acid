@@ -8,7 +8,7 @@
 #include "Particle.hpp"
 #include "ParticleType.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A system of particles that are to be spawned.

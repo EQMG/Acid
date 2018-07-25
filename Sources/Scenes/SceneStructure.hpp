@@ -7,7 +7,7 @@
 #include "Objects/IComponent.hpp"
 #include "Physics/Rigidbody.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.

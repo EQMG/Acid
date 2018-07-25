@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, {}),

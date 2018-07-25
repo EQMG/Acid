@@ -5,7 +5,7 @@
 #include "Textures/Texture.hpp"
 #include "IMaterial.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that represents the default material shader.

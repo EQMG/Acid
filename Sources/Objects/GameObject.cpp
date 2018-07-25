@@ -4,7 +4,7 @@
 #include "Scenes/Scenes.hpp"
 #include "Prefabs/PrefabObject.hpp"
 
-namespace fl
+namespace acid
 {
 	GameObject::GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure) :
 		m_name(""),

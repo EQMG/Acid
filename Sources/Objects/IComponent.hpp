@@ -7,7 +7,7 @@
 #include "Files/LoadedValue.hpp"
 #include "Helpers/FormatString.hpp"
 
-namespace fl
+namespace acid
 {
 	class GameObject;
 

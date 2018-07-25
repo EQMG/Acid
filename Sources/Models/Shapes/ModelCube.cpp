@@ -2,7 +2,7 @@
 
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
 		Model()

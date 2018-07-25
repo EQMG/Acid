@@ -3,7 +3,7 @@
 #include "Display/Display.hpp"
 #include "Maths/Maths.hpp"
 
-namespace fl
+namespace acid
 {
 	ShadowBox::ShadowBox() :
 		m_lightDirection(Vector3()),

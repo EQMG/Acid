@@ -8,7 +8,7 @@
 #include "IFile.hpp"
 #include "ConfigKey.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT Config
 	{

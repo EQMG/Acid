@@ -3,7 +3,7 @@
 #include <vector>
 #include "Animations/Keyframe/Keyframe.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Represents an animation that can be carried out by an animated entity.

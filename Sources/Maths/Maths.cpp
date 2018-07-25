@@ -2,7 +2,7 @@
 
 #include <random>
 
-namespace fl
+namespace acid
 {
 	static std::random_device RANDOM_DEVICE;
 	static std::mt19937 RANDOM_GENERATOR(RANDOM_DEVICE());

@@ -1,6 +1,6 @@
 #include "ShellXcb.hpp"
 
-namespace fl
+namespace acid
 {
 	ShellXcb::ShellXcb()
 	{

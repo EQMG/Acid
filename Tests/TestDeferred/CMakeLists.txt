@@ -11,15 +11,15 @@ add_executable(TestDeferred ${TESTDEFERED_SOURCES})
 
 set_target_properties(TestDeferred PROPERTIES
                       POSITION_INDEPENDENT_CODE ON
-                      FOLDER "Flounder")
+                      FOLDER "Acid")
 
-add_dependencies(TestDeferred Flounder)
+add_dependencies(TestDeferred Acid)
 
 target_include_directories(TestDeferred PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTDEFERED_INCLUDES})
-target_link_libraries(TestDeferred PRIVATE ${LIBRARIES_LINKS} Flounder)
+target_link_libraries(TestDeferred PRIVATE ${LIBRARIES_LINKS} Acid)
 
 # Install
-if (FLOUNDER_INSTALL)
+if (ACID_INSTALL)
     install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"

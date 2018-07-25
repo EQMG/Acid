@@ -5,7 +5,7 @@
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "UniformHandler.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Class that handles a descriptor set.

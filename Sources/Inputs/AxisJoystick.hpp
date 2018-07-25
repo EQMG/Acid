@@ -4,7 +4,7 @@
 #include "Joysticks.hpp"
 #include "IAxis.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// Axis from a joystick.

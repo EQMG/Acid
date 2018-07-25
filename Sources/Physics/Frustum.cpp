@@ -4,7 +4,7 @@
 #include <cmath>
 #include "Helpers/SquareArray.hpp"
 
-namespace fl
+namespace acid
 {
 	Frustum::Frustum() :
 		m_frustumArray(SquareArray::FloatArray(6, 4))

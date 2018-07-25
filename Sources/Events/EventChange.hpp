@@ -3,7 +3,7 @@
 #include <functional>
 #include "IEvent.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A class that acts as a basic change listener for a value.

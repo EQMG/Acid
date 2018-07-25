@@ -1,6 +1,6 @@
 #include "FilterDarken.hpp"
 
-namespace fl
+namespace acid
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),

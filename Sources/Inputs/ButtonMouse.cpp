@@ -1,6 +1,6 @@
 #include "ButtonMouse.hpp"
 
-namespace fl
+namespace acid
 {
 	ButtonMouse::ButtonMouse(const std::vector<MouseButton> &buttons) :
 		IButton(),

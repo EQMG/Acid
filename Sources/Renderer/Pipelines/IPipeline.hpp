@@ -2,7 +2,7 @@
 
 #include "ShaderProgram.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT IPipeline
 	{

@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Maths/Vector3.hpp"
 
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A helper for C++ arrays.

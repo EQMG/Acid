@@ -11,15 +11,15 @@ add_executable(TestGuis ${TESTGUIS_SOURCES})
 
 set_target_properties(TestGuis PROPERTIES
                       POSITION_INDEPENDENT_CODE ON
-                      FOLDER "Flounder")
+                      FOLDER "Acid")
 
-add_dependencies(TestGuis Flounder)
+add_dependencies(TestGuis Acid)
 
 target_include_directories(TestGuis PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTGUIS_INCLUDES})
-target_link_libraries(TestGuis PRIVATE ${LIBRARIES_LINKS} Flounder)
+target_link_libraries(TestGuis PRIVATE ${LIBRARIES_LINKS} Acid)
 
 # Install
-if (FLOUNDER_INSTALL)
+if (ACID_INSTALL)
     install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"

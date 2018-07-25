@@ -7,7 +7,7 @@
 #include "Helpers/FormatString.hpp"
 #include "Files/LoadedValue.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT XmlNode
 	{

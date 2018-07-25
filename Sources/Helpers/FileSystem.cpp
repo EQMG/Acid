@@ -11,7 +11,7 @@
 #define GetCurrentDir getcwd
 #endif
 
-namespace fl
+namespace acid
 {
 	bool FileSystem::FileExists(const std::string &filepath)
 	{

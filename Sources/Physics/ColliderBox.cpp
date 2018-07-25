@@ -2,7 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace fl
+namespace acid
 {
 	ColliderBox::ColliderBox(const Vector3 &extents) :
 		m_shape(new btBoxShape(ICollider::Convert(extents / 2.0f))),

@@ -5,7 +5,7 @@
 #include "Display/Display.hpp"
 #include "Files/Files.hpp"
 
-namespace fl
+namespace acid
 {
 	enum PipelineMode
 	{

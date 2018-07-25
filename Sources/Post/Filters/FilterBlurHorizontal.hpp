@@ -2,7 +2,7 @@
 
 #include "Post/IPostFilter.hpp"
 
-namespace fl
+namespace acid
 {
 	class FL_EXPORT FilterBlurHorizontal :
 		public IPostFilter

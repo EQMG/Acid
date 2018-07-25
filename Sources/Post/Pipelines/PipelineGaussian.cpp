@@ -1,6 +1,6 @@
 #include "PipelineGaussian.hpp"
 
-namespace fl
+namespace acid
 {
 	PipelineGaussian::PipelineGaussian(const GraphicsStage &graphicsStage, const float &scale) :
 		IPostPipeline(graphicsStage),

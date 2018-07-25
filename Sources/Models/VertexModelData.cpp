@@ -1,6 +1,6 @@
 #include "VertexModelData.hpp"
 
-namespace fl
+namespace acid
 {
 	const uint32_t VertexModelData::NO_INDEX = static_cast<uint32_t>(-1);
 

@@ -4,7 +4,7 @@
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
-namespace fl
+namespace acid
 {
 	const std::vector<VkDynamicState> DYNAMIC_STATES = {
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR

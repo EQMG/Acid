@@ -2,7 +2,7 @@
 
 #include "Models/VertexModel.hpp"
 
-namespace fl
+namespace acid
 {
 	MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale) :
 		Model(),

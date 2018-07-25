@@ -3,7 +3,7 @@
 #include "Renderer/Queue/QueueFamily.hpp"
 #include "Renderer/Renderer.hpp"
 
-namespace fl
+namespace acid
 {
 	Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties) :
 		m_size(size),

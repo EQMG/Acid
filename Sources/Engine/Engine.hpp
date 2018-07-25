@@ -7,9 +7,9 @@
 #include "IUpdater.hpp"
 
 /// <summary>
-/// The base Flounder namespace.
+/// The base Acid namespace.
 /// </summary>
-namespace fl
+namespace acid
 {
 	/// <summary>
 	/// A engine used for simplifying the creation of complicated applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, AIs, Games, and many more applications.
