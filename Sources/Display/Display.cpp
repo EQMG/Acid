@@ -170,11 +170,8 @@ namespace fl
 
 	void Display::Update()
 	{
-		// Polls for shell events. The key callback will only be invoked during this call.
+		// Polls for shell events.
 		m_shell->PollEvents();
-
-		// Updates the aspect ratio.
-		m_aspectRatio = static_cast<float>(GetWidth()) / static_cast<float>(GetHeight());
 	}
 
 	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
@@ -204,7 +201,7 @@ namespace fl
 		int width = 0;
 		int height = 0;
 		int components = 0;
-		auto data = Texture::LoadPixels(m_iconPath.c_str(), &width, &height, &components);
+		auto data = Texture::LoadPixels(m_iconPath, &width, &height, &components);
 
 		if (data == nullptr)
 		{
@@ -580,7 +577,7 @@ namespace fl
 	void Display::CreateSurface()
 	{
 		// Creates the WSI Vulkan surface.
-		m_shell->CreateSurface(m_instance, m_allocator, &m_surface);
+		ErrorVk(m_shell->CreateSurface(m_instance, m_allocator, &m_surface));
 
 		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 

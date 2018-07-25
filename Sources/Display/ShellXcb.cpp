@@ -14,8 +14,9 @@ namespace fl
 	{
 	}
 
-	void ShellXcb::CreateSurface(VkInstance instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface)
+	VkResult ShellXcb::CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface)
 	{
+		return VK_SUCCESS;
 	}
 
 	void ShellXcb::PollEvents()
