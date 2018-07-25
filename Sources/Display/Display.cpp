@@ -1,18 +1,23 @@
 #include "Display.hpp"
 
+#include <vulkan/vulkan.h>
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
 // TODO: Allow type to be overridden from a game.
-#if VK_USE_PLATFORM_ANDROID_KHR
-#elif VK_USE_PLATFORM_COCOA_KHR
-#elif VK_USE_PLATFORM_WIN32_KHR
+#if FL_BUILD_ANDROID
+  #include "ShellAndroid.hpp"
+  typedef acid::ShellAndroid Shell_t;
+#elif FL_BUILD_MACOS
+#include "ShellCoco.hpp"
+  typedef acid::ShellCoco Shell_t;
+#elif FL_BUILD_WINDOWS
   #include "ShellWin32.hpp"
-  typedef fl::ShellWin32 Shell_t;
-#elif VK_USE_PLATFORM_XCB_KHR
+  typedef acid::ShellWin32 Shell_t;
+#elif FL_BUILD_LINUX
   #include "ShellXcb.hpp"
-  typedef fl::ShellXcb Shell_t;
+  typedef acid::ShellXcb Shell_t;
 #endif
 
 namespace acid

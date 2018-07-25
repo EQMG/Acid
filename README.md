@@ -1,6 +1,5 @@
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Beaker-Low.png" alt="Acid" height="128px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="256px">
 
-# Acid
 [![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
 
 Acid is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.

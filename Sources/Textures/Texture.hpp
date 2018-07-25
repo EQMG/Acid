@@ -74,7 +74,7 @@ namespace acid
 
 		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		std::string GetFilename() override { return m_filename; };
+		std::string GetName() override { return m_filename; };
 
 		/// <summary>
 		/// Gets if the texture has alpha.

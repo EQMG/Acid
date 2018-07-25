@@ -1,4 +1,5 @@
 set(ACID_HEADERS_
+        "Acid.hpp"
         "Animations/Animation/Animation.hpp"
         "Animations/Animation/AnimationLoader.hpp"
         "Animations/Animator.hpp"
@@ -42,7 +43,6 @@ set(ACID_HEADERS_
         "Files/LoadedValue.hpp"
         "Files/Xml/FileXml.hpp"
         "Files/Xml/XmlNode.hpp"
-        "Acid.hpp"
         "Fonts/FontCharacter.hpp"
         "Fonts/FontLine.hpp"
         "Fonts/FontMetafile.hpp"

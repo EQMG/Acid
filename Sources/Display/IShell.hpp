@@ -4,8 +4,7 @@
 #include <vector>
 #include <string>
 #include <functional>
-#include <vulkan/vk_platform.h>
-#include <vulkan/vulkan_core.h>
+#include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 
 namespace acid
