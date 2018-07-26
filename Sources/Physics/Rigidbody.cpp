@@ -1,5 +1,6 @@
 ﻿#include "Rigidbody.hpp"
 
+#include <cassert>
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Scenes.hpp"
@@ -192,7 +193,7 @@ namespace acid
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
 	{
-		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE));
+		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 
 		btVector3 localInertia = btVector3();
 

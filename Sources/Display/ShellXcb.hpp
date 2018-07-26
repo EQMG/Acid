@@ -7,16 +7,24 @@ namespace acid
 	class FL_EXPORT MonitorXcb :
 		public IMonitor
 	{
+	private:
+		uint32_t m_width;
+		uint32_t m_height;
+	public:
 		MonitorXcb(const uint32_t &width, const uint32_t &height) :
-			IMonitor()
+			IMonitor(),
+			m_width(width),
+			m_height(height)
 		{
-			m_width = width;
-			m_height = height;
 		}
 
 		~MonitorXcb()
 		{
 		}
+
+		uint32_t GetWidth() const override { return m_width; }
+
+		uint32_t GetHeight() const override { return m_height; }
 	};
 
 	class ShellXcb :
@@ -27,8 +35,6 @@ namespace acid
 		ShellXcb();
 
 		~ShellXcb();
-
-		void CreateShell() override;
 
 		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 
@@ -54,6 +60,6 @@ namespace acid
 
 		void SetCursorMode(const CursorMode &mode) override;
 
-		void SetCursorPos(const uint32_t &x, const uint32_t &y) override;
+		void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
 	};
 }

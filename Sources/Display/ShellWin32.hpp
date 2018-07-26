@@ -11,17 +11,24 @@ namespace acid
 	class FL_EXPORT MonitorWin32 :
 		public IMonitor
 	{
+	private:
+		uint32_t m_width;
+		uint32_t m_height;
 	public:
 		MonitorWin32(const uint32_t &width, const uint32_t &height) :
-			IMonitor()
+			IMonitor(),
+			m_width(width),
+			m_height(height)
 		{
-			m_width = width;
-			m_height = height;
 		}
 
 		~MonitorWin32()
 		{
 		}
+
+		uint32_t GetWidth() const override { return m_width; }
+
+		uint32_t GetHeight() const override { return m_height; }
 	};
 
 	class FL_EXPORT ShellWin32 :
@@ -29,30 +36,28 @@ namespace acid
 	{
 	private:
 		// Window.
-		HINSTANCE hinstance_;
-		HWND hwnd_;
-		HMODULE hmodule_;
-		PFN_vkGetInstanceProcAddr vkproc_;
+		HINSTANCE m_hinstance;
+		HWND m_hwnd;
+		HMODULE m_hmodule;
+		PFN_vkGetInstanceProcAddr m_vkProc;
 
 		// Fullscreen.
-		int nw_, nh_;
-		bool fullscreen_;
+		uint32_t m_normalWidth, m_normalHeight;
+		bool m_fullscreen;
 
 		// Cursor movement.
-		bool cursorTracked_;
-		bool cursorDisabled_;
-		CursorMode cursorMode_;
-		HCURSOR cursor_;
+		bool m_cursorTracked;
+		bool m_cursorDisabled;
+		CursorMode m_cursorMode;
+		HCURSOR m_hcursor;
 
 		// Mouse input.
-		RAWINPUT *rawInput_;
-		int rawInputSize_;
+		RAWINPUT *m_rawInput;
+		int m_rawInputSize;
 	public:
 		ShellWin32();
 
 		~ShellWin32();
-
-		void CreateShell() override;
 
 		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 
@@ -78,23 +83,23 @@ namespace acid
 
 		void SetCursorMode(const CursorMode &mode) override;
 
-		void SetCursorPos(const uint32_t &x, const uint32_t &y) override;
+		void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
 
 	private:
-		Key TranslateKey(WPARAM wParam, LPARAM lParam);
-
-		void UpdateCursorImage();
-
-		void UpdateCursorClip(bool cliped);
-
 		friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-		HICON CreateIcon(unsigned char *pixels, int width, int height, int xhot, int yhot, VkBool32 icon);
 
 		void LoadVk();
 
 		void CreateDisplay();
 
 		void CreateInput();
+
+		Key TranslateKey(WPARAM wParam, LPARAM lParam);
+
+		void UpdateCursorImage();
+
+		void UpdateCursorClip(bool cliped);
+
+		HICON CreateIcon(unsigned char *pixels, int width, int height, int xhot, int yhot, VkBool32 icon);
 	};
 }

@@ -74,6 +74,8 @@ int main(int argc, char **argv)
 	}
 
 	// Pauses the console.
+#ifndef FL_VERBOSE
 	std::cin.get();
+#endif
 	return EXIT_SUCCESS;
 }
