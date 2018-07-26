@@ -47,11 +47,11 @@ namespace acid
 
 				std::string name;
 
-				if (summation.tellp() != 0)
+				if (!summation.str().empty())
 				{
 					auto contentSplit = FormatString::Split(summation.str(), "\"");
 
-					if ((int) contentSplit.size() - 2 >= 0)
+					if (static_cast<int>(contentSplit.size()) - 2 >= 0)
 					{
 						name = contentSplit.at(contentSplit.size() - 2);
 					}

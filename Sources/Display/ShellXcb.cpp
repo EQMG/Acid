@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	void ShellXcb::CreateShell()
-	{
-	}
-
 	VkResult ShellXcb::CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface)
 	{
 		return VK_SUCCESS;
@@ -64,7 +60,7 @@ namespace acid
 	{
 	}
 
-	void ShellXcb::SetCursorPos(const uint32_t &x, const uint32_t &y)
+	void ShellXcb::SetCursorPosition(const uint32_t &x, const uint32_t &y)
 	{
 	}
 }

@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 //	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.dae");
 //	return 0;
 
-	auto configManager = std::make_shared<ConfigManager>();
+	// auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Deferred");
-	Display::Get()->SetIcon("Logos/Beaker.png");
+	Display::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(std::make_shared<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_shared<Scene1>());
@@ -59,6 +59,8 @@ int main(int argc, char **argv)
 	auto exitCode = engine->Run();
 
 	// Pauses the console.
+#ifndef FL_VERBOSE
 	std::cin.get();
+#endif
 	return exitCode;
 }

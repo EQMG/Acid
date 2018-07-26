@@ -217,13 +217,10 @@ namespace acid
 
 	class FL_EXPORT IMonitor
 	{
-	protected:
-		uint32_t m_width;
-		uint32_t m_height;
 	public:
-		uint32_t GetWidth() const { return m_width; }
+		virtual uint32_t GetWidth() const = 0;
 
-		uint32_t GetHeight() const { return m_height; }
+		virtual uint32_t GetHeight() const = 0;
 	};
 
 	class FL_EXPORT IShell
@@ -231,8 +228,6 @@ namespace acid
 	protected:
 		std::vector<std::shared_ptr<IMonitor>> m_monitors;
 		std::vector<const char *> m_extensions;
-
-		bool m_created;
 
 		std::function<void(uint32_t, uint32_t)> m_callbackPosition;
 		std::function<void(uint32_t, uint32_t, bool, bool)> m_callbackSize;
@@ -252,7 +247,6 @@ namespace acid
 		IShell() :
 			m_monitors(std::vector<std::shared_ptr<IMonitor>>()),
 			m_extensions(std::vector<const char *>()),
-			m_created(false),
 			m_callbackPosition(nullptr),
 			m_callbackSize(nullptr),
 			m_callbackFocus(nullptr),
@@ -273,8 +267,6 @@ namespace acid
 		virtual ~IShell()
 		{
 		}
-
-		virtual void CreateShell() = 0;
 
 		virtual VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) = 0;
 
@@ -300,13 +292,11 @@ namespace acid
 
 		virtual void SetCursorMode(const CursorMode &mode) = 0;
 
-		virtual void SetCursorPos(const uint32_t &x, const uint32_t &y) = 0;
+		virtual void SetCursorPosition(const uint32_t &x, const uint32_t &y) = 0;
 
 		std::vector<std::shared_ptr<IMonitor>> GetMonitors() const { return m_monitors; };
 
 		std::vector<const char *> GetExtensions() const { return m_extensions; }
-
-		bool IsCreated() const { return m_created; }
 
 		void SetCallbackPosition(const std::function<void(uint32_t, uint32_t)> &callbackPosition) { m_callbackPosition = callbackPosition; }
 

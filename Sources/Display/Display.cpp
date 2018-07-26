@@ -62,6 +62,11 @@ namespace acid
 			Display::Get()->m_windowHeight = height;
 		}
 
+		if (Display::Get()->m_surface == nullptr)
+		{
+			return;
+		}
+
 		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
@@ -125,7 +130,7 @@ namespace acid
 #else
 		m_validationLayers(false),
 #endif
-		m_shell(new Shell_t()),
+		m_shell(nullptr),
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
@@ -320,18 +325,18 @@ namespace acid
 
 	void Display::CreateShell()
 	{
-		auto monitors = m_shell->GetMonitors();
-
-		m_shell->CreateShell();
+		m_shell = new Shell_t();
 
 		m_shell->SetCallbackPosition(CallbackPosition);
 		m_shell->SetCallbackSize(CallbackSize);
 		m_shell->SetCallbackFocus(CallbackFocus);
 		m_shell->SetCallbackClose(CallbackClose);
 
-		m_shell->SetSize(1080, 720);
-		m_shell->SetPosition((monitors[0]->GetWidth() - 1080) / 2,
-			(monitors[0]->GetHeight() - 720) / 2);
+		auto monitors = m_shell->GetMonitors();
+
+		m_shell->SetSize(m_windowWidth, m_windowHeight);
+		m_shell->SetPosition((monitors[0]->GetWidth() - m_windowWidth) / 2,
+			(monitors[0]->GetHeight() - m_windowHeight) / 2);
 		m_shell->SetResizable(true);
 		m_shell->SetTitle(m_title);
 

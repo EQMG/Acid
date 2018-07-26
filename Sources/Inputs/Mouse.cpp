@@ -107,7 +107,7 @@ namespace acid
 
 			if (!disabled && m_cursorDisabled)
 			{
-				shell->SetCursorPos(m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				shell->SetCursorPosition(m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 
@@ -130,6 +130,6 @@ namespace acid
 
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
-		shell->SetCursorPos(cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
+		shell->SetCursorPosition(cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
 	}
 }

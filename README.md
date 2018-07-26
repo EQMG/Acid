@@ -11,7 +11,7 @@ Features are broken down into modules, modules can be added or removed from Acid
 Acid is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Acid, and if you want to know about our code style read GUIDELINES.
 
 ## Builds
-Windows   [![Build status](https://ci.appveyor.com/api/projects/status/4uhakf6tt78wov7o?svg=true)](https://ci.appveyor.com/project/Mattparks/Acid)
+Windows   [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 
 Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
