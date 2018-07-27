@@ -4,7 +4,7 @@ else()
 	set(OPENAL_INCLUDES "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 endif()
 
-find_library(OPENAL_LIBRARY NAMES OpenAL32 OpenAL openal PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
+find_library(OPENAL_LIBRARY NAMES openal OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
 
 set(LIBRARIES_INCLUDES ${LIBRARIES_INCLUDES} ${OPENAL_INCLUDES})
 set(LIBRARIES_LINKS ${LIBRARIES_LINKS} "${OPENAL_LIBRARY}")

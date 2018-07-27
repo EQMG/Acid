@@ -451,14 +451,15 @@ namespace acid
 		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
+		auto bindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions();
+		auto attributeDescriptions = m_pipelineCreate.GetVertexInput().GetAttributeDescriptions(); // m_shaderProgram->GetAttributeDescriptions()
+
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(m_pipelineCreate.GetVertexInput().GetBindingDescriptions().size());
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
 		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions().data();
-		//vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_shaderProgram->GetAttributeDescriptions()->size());
-		//vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_shaderProgram->GetAttributeDescriptions()->data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(m_pipelineCreate.GetVertexInput().GetAttributeDescriptions().size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_pipelineCreate.GetVertexInput().GetAttributeDescriptions().data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
