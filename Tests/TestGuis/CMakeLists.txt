@@ -6,7 +6,7 @@ set(TESTGUIS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestGuis/")
 #if(FL_BUILD_RELEASE AND WIN32)
 #	add_executable(TestGuis WIN32 ${TESTGUIS_SOURCES})
 #else()
-add_executable(TestGuis ${TESTGUIS_SOURCES})
+add_executable(TestGuis "TestGuis.rc" ${TESTGUIS_SOURCES})
 #endif()
 
 set_target_properties(TestGuis PROPERTIES

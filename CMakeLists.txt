@@ -70,6 +70,11 @@ if (ACID_SETUP_COMPILER)
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 	set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
 
+    if(WIN32)
+        set(CMAKE_SHARED_LIBRARY_PREFIX "")
+    #   set(CMAKE_STATIC_LIBRARY_PREFIX "")
+    endif()
+
 	if(MSVC)
 		add_definitions(-DFL_BUILD_MSVC)
 		add_definitions(-D_SCL_SECURE_NO_WARNINGS)
