@@ -10,7 +10,7 @@ namespace acid
 
 	class IComponent;
 
-	class ICollider;
+	class Collider;
 
 	/// <summary>
 	/// A data structure that stores objects with a notion of space.
@@ -85,7 +85,7 @@ namespace acid
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-	//	virtual std::vector<GameObject *> QueryBounding(ICollider *range) = 0;
+	//	virtual std::vector<GameObject *> QueryBounding(Collider *range) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

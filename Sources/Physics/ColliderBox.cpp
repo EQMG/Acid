@@ -1,19 +1,18 @@
 #include "ColliderBox.hpp"
 
+#include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
 	ColliderBox::ColliderBox(const Vector3 &extents) :
-		m_shape(new btBoxShape(ICollider::Convert(extents / 2.0f))),
+		m_shape(new btBoxShape(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
-		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
 	}
 
 	ColliderBox::~ColliderBox()
 	{
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
 		delete m_shape;
 	}
 
@@ -23,7 +22,7 @@ namespace acid
 
 	void ColliderBox::Update()
 	{
-	//	m_shape->setImplicitShapeDimensions(ICollider::Convert(m_extents)); // TODO
+	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
 	void ColliderBox::Load(LoadedValue *value)
@@ -34,5 +33,10 @@ namespace acid
 	void ColliderBox::Write(LoadedValue *destination)
 	{
 		m_extents.Write(destination->GetChild("Extents", true));
+	}
+
+	btCollisionShape *ColliderBox::GetCollisionShape() const
+	{
+		return m_shape;
 	}
 }

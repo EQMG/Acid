@@ -1,14 +1,19 @@
 #pragma once
 
-#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
-#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
-#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
-#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
-#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include "Engine/Engine.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "SceneStructure.hpp"
 #include "IScene.hpp"
+
+class btDefaultCollisionConfiguration;
+
+class btBroadphaseInterface;
+
+class btCollisionDispatcher;
+
+class btSequentialImpulseConstraintSolver;
+
+class btDiscreteDynamicsWorld;
 
 namespace acid
 {
@@ -28,7 +33,6 @@ namespace acid
 		btCollisionDispatcher *m_dispatcher;
 		btSequentialImpulseConstraintSolver *m_solver;
 		btDiscreteDynamicsWorld *m_dynamicsWorld;
-		btAlignedObjectArray<btCollisionShape *> m_collisionShapes;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -98,7 +102,5 @@ namespace acid
 		bool IsGamePaused() { return m_scene->IsGamePaused(); }
 
 		FL_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
-
-		FL_HIDDEN btAlignedObjectArray<btCollisionShape *> &GetCollisionShapes() { return m_collisionShapes; }
 	};
 }

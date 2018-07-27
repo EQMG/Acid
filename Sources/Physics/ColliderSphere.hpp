@@ -1,12 +1,13 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btSphereShape.h>
-#include "ICollider.hpp"
+#include "Collider.hpp"
+
+class btSphereShape;
 
 namespace acid
 {
 	class FL_EXPORT ColliderSphere :
-		public ICollider
+		public Collider
 	{
 	private:
 		btSphereShape *m_shape;
@@ -26,7 +27,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderSphere"; };
 
-		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 

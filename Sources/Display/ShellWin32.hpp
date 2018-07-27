@@ -35,23 +35,19 @@ namespace acid
 		public IShell
 	{
 	private:
-		// Window.
 		HINSTANCE m_hinstance;
 		HWND m_hwnd;
 		HMODULE m_hmodule;
 		PFN_vkGetInstanceProcAddr m_vkProc;
 
-		// Fullscreen.
 		uint32_t m_normalWidth, m_normalHeight;
 		bool m_fullscreen;
 
-		// Cursor movement.
 		bool m_cursorTracked;
 		bool m_cursorDisabled;
 		CursorMode m_cursorMode;
 		HCURSOR m_hcursor;
 
-		// Mouse input.
 		RAWINPUT *m_rawInput;
 		int m_rawInputSize;
 	public:

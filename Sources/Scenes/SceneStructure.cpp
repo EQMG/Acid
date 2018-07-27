@@ -1,6 +1,6 @@
 ﻿#include "SceneStructure.hpp"
 
-#include "Physics/ICollider.hpp"
+#include "Physics/Collider.hpp"
 
 namespace acid
 {
@@ -56,7 +56,7 @@ namespace acid
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<ICollider>();
+			auto collider = gameObject->GetComponent<Collider>();
 
 			if (collider == nullptr || collider->InFrustum(range))
 			{
@@ -67,14 +67,14 @@ namespace acid
 		return result;
 	}
 
-	/*std::vector<GameObject *> SceneStructure::QueryBounding(ICollider *range)
+	/*std::vector<GameObject *> SceneStructure::QueryBounding(Collider *range)
 	{
 		auto result = std::vector<GameObject *>();
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			auto gameObject = static_cast<GameObject *>(*it);
-			auto collider = gameObject->GetComponent<ICollider>();
+			auto collider = gameObject->GetComponent<Collider>();
 
 			if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
 			{

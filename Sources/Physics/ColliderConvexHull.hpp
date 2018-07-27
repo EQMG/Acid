@@ -1,14 +1,15 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "ICollider.hpp"
+#include "Collider.hpp"
+
+class btConvexHullShape;
 
 namespace acid
 {
 	class FL_EXPORT ColliderConvexHull :
-		public ICollider
+		public Collider
 	{
 	private:
 		btConvexHullShape *m_shape;
@@ -29,10 +30,10 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderConvexHull"; };
 
-		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		int GetPoints() const { return m_points; }
 
-		void SetPointCloud(const std::vector<float> &pointCloud);
+		void Initialize(const std::vector<float> &pointCloud);
 	};
 }

@@ -1,6 +1,11 @@
 #include "Scenes.hpp"
 
 #include <cassert>
+#include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
+#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
 
 namespace acid
@@ -30,8 +35,6 @@ namespace acid
 		m_dynamicsWorld->getSolverInfo().m_numIterations = 10;
 		m_dynamicsWorld->getSolverInfo().m_solverMode = SOLVER_USE_WARMSTARTING | SOLVER_SIMD; // | SOLVER_RANDMIZE_ORDER;
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = false;
-
-		m_collisionShapes = btAlignedObjectArray<btCollisionShape *>();
 	}
 
 	Scenes::~Scenes()
@@ -49,14 +52,6 @@ namespace acid
 			m_dynamicsWorld->removeCollisionObject(obj);
 			delete obj;
 		}
-
-		for (int i = 0; i < m_collisionShapes.size(); i++)
-		{
-			btCollisionShape *shape = m_collisionShapes[i];
-			delete shape;
-		}
-
-		m_collisionShapes.clear();
 
 		delete m_collisionConfiguration;
 		delete m_dispatcher;

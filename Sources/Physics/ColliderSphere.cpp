@@ -1,5 +1,6 @@
 #include "ColliderSphere.hpp"
 
+#include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -8,12 +9,10 @@ namespace acid
 		m_shape(new btSphereShape(radius)),
 		m_radius(radius)
 	{
-		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
 		delete m_shape;
 	}
 
@@ -34,5 +33,10 @@ namespace acid
 	void ColliderSphere::Write(LoadedValue *destination)
 	{
 		destination->GetChild("Radius", true)->Set(m_radius);
+	}
+
+	btCollisionShape *ColliderSphere::GetCollisionShape() const
+	{
+		return m_shape;
 	}
 }

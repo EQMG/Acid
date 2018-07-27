@@ -1,9 +1,14 @@
 ﻿#pragma once
 
-#include <BulletDynamics/Dynamics/btRigidBody.h>
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
+
+class btTransform;
+
+class btCollisionShape;
+
+class btRigidBody;
 
 namespace acid
 {
@@ -16,7 +21,7 @@ namespace acid
 		Vector3 m_linearFactor;
 		Vector3 m_angularFactor;
 
-		btTransform m_worldTransform;
+		btTransform *m_worldTransform;
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 	public:
@@ -59,6 +64,6 @@ namespace acid
 
 		void SetAngularFactor(const Vector3 &angularFactor);
 	private:
-		static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
+		FL_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 	};
 }
