@@ -1,5 +1,6 @@
 #include "ColliderCone.hpp"
 
+#include <BulletCollision/CollisionShapes/btConeShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -9,12 +10,10 @@ namespace acid
 		m_radius(radius),
 		m_height(height)
 	{
-		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
 	}
 
 	ColliderCone::~ColliderCone()
 	{
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
 		delete m_shape;
 	}
 
@@ -38,5 +37,10 @@ namespace acid
 	{
 		destination->GetChild("Radius", true)->Set(m_radius);
 		destination->GetChild("Height", true)->Set(m_height);
+	}
+
+	btCollisionShape *ColliderCone::GetCollisionShape() const
+	{
+		return m_shape;
 	}
 }

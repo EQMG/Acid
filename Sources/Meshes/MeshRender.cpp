@@ -1,7 +1,7 @@
 #include "MeshRender.hpp"
 
 #include "Objects/GameObject.hpp"
-#include "Physics/ICollider.hpp"
+#include "Physics/Collider.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -37,7 +37,7 @@ namespace acid
 	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene)
 	{
 		// Checks if the mesh is in view.
-		/*auto shape = GetGameObject()->GetComponent<ICollider>();
+		/*auto shape = GetGameObject()->GetComponent<Collider>();
 
 		if (shape != nullptr)
 		{

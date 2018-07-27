@@ -1,31 +1,36 @@
 #pragma once
 
 #include <optional>
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include "Objects/IComponent.hpp"
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
+#include "Objects/IComponent.hpp"
 #include "Frustum.hpp"
 #include "Ray.hpp"
+
+class btCollisionShape;
+
+class btVector3;
+
+class btQuaternion;
 
 namespace acid
 {
 	/// <summary>
 	/// A simple class that represents a physics shape.
 	/// </summary>
-	class FL_EXPORT ICollider :
+	class FL_EXPORT Collider :
 		public IComponent
 	{
 	public:
 		/// <summary>
 		/// Creates a new shape.
 		/// </summary>
-		ICollider();
+		Collider();
 
 		/// <summary>
 		/// Deconstructor for the shape.
 		/// </summary>
-		virtual ~ICollider();
+		virtual ~Collider();
 
 		void Start() override = 0;
 
@@ -53,24 +58,12 @@ namespace acid
 		/// <returns> If the shape is partially in the view frustum. </returns>
 		bool InFrustum(const Frustum &frustum);
 
-		FL_HIDDEN static btVector3 Convert(const Vector3 &vector)
-		{
-			return btVector3(vector.m_x, vector.m_y, vector.m_z);
-		}
+		FL_HIDDEN static btVector3 Convert(const Vector3 &vector);
 
-		FL_HIDDEN static Vector3 Convert(const btVector3 &vector)
-		{
-			return Vector3(vector.getX(), vector.getY(), vector.getZ());
-		}
+		FL_HIDDEN static Vector3 Convert(const btVector3 &vector);
 
-		FL_HIDDEN static btQuaternion Convert(const Quaternion &quaternion)
-		{
-			return btQuaternion(quaternion.m_x, quaternion.m_y, quaternion.m_z, quaternion.m_w);
-		}
+		FL_HIDDEN static btQuaternion Convert(const Quaternion &quaternion);
 
-		FL_HIDDEN static Quaternion Convert(const btQuaternion &quaternion)
-		{
-			return Quaternion(quaternion.getX(), quaternion.getY(), quaternion.getZ(), quaternion.getW());
-		}
+		FL_HIDDEN static Quaternion Convert(const btQuaternion &quaternion);
 	};
 }

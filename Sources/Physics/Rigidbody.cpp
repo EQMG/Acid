@@ -1,10 +1,13 @@
 ﻿#include "Rigidbody.hpp"
 
 #include <cassert>
-#include <BulletCollision/CollisionShapes/btSphereShape.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <LinearMath/btTransform.h>
 #include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Scenes.hpp"
-#include "ICollider.hpp"
+#include "Collider.hpp"
 
 namespace acid
 {
@@ -14,10 +17,11 @@ namespace acid
 		m_friction(friction),
 		m_linearFactor(linearFactor),
 		m_angularFactor(angularFactor),
-		m_worldTransform(btTransform()),
+		m_worldTransform(new btTransform()),
 		m_shape(nullptr),
 		m_body(nullptr)
 	{
+		btTransform();
 	}
 
 	Rigidbody::~Rigidbody()
@@ -39,24 +43,24 @@ namespace acid
 		Vector3 position = GetGameObject()->GetTransform().GetPosition();
 		Quaternion rotation = GetGameObject()->GetTransform().GetRotation();
 
-		m_worldTransform.setIdentity();
-		m_worldTransform.setOrigin(ICollider::Convert(position));
-		m_worldTransform.setRotation(ICollider::Convert(rotation));
+		m_worldTransform->setIdentity();
+		m_worldTransform->setOrigin(Collider::Convert(position));
+		m_worldTransform->setRotation(Collider::Convert(rotation));
 
-		auto shape = GetGameObject()->GetComponent<ICollider>();
+		auto shape = GetGameObject()->GetComponent<Collider>();
 
 		if (shape != nullptr && shape->GetCollisionShape() != nullptr)
 		{
 			m_shape = shape->GetCollisionShape();
 
-			m_body = CreateRigidBody(m_mass, m_worldTransform, m_shape);
-			m_body->setWorldTransform(m_worldTransform);
+			m_body = CreateRigidBody(m_mass, *m_worldTransform, m_shape);
+			m_body->setWorldTransform(*m_worldTransform);
 			m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
 			m_body->setFriction(m_friction);
 			m_body->setRollingFriction(m_friction);
 			m_body->setSpinningFriction(m_friction);
-			m_body->setLinearFactor(ICollider::Convert(m_linearFactor));
-			m_body->setAngularFactor(ICollider::Convert(m_angularFactor));
+			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
+			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
 			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
 		}
@@ -70,7 +74,7 @@ namespace acid
 			return;
 		}
 
-		auto shape = GetGameObject()->GetComponent<ICollider>();
+		auto shape = GetGameObject()->GetComponent<Collider>();
 
 		if (shape != nullptr)
 		{
@@ -94,20 +98,20 @@ namespace acid
 		if (m_linearFactor != Vector3::ZERO)
 		{
 			btVector3 position = worldTransform.getOrigin();
-			transform.SetPosition(ICollider::Convert(position));
+			transform.SetPosition(Collider::Convert(position));
 		}
 
 		if (m_angularFactor != Vector3::ZERO)
 		{
 			btQuaternion rotation = worldTransform.getRotation();
-			transform.SetRotation(ICollider::Convert(rotation));
+			transform.SetRotation(Collider::Convert(rotation));
 		}
 
 	//	m_worldTransform.setIdentity();
-	//	m_worldTransform.setOrigin(ICollider::Convert(transform.GetPosition()));
-	//	m_worldTransform.setRotation(ICollider::Convert(transform.GetRotation()));
+	//	m_worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
+	//	m_worldTransform.setRotation(Collider::Convert(transform.GetRotation()));
 
-		m_shape->setLocalScaling(ICollider::Convert(transform.GetScaling()));
+		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
 	//	m_body->setWorldTransform(m_worldTransform);
 	//	m_body->setLinearVelocity(m_velocity);
 	}
@@ -130,12 +134,12 @@ namespace acid
 
 	void Rigidbody::SetAngularVelocity(const Vector3 &velocity)
 	{
-		m_body->setAngularVelocity(ICollider::Convert(velocity));
+		m_body->setAngularVelocity(Collider::Convert(velocity));
 	}
 
 	void Rigidbody::SetLinearVelocity(const Vector3 &velocity)
 	{
-		m_body->setLinearVelocity(ICollider::Convert(velocity));
+		m_body->setLinearVelocity(Collider::Convert(velocity));
 	}
 
 	void Rigidbody::AddForce(const Vector3 &force, const Vector3 &position)
@@ -145,7 +149,7 @@ namespace acid
 			return;
 		}
 
-		m_body->applyForce(ICollider::Convert(force), ICollider::Convert(position));
+		m_body->applyForce(Collider::Convert(force), Collider::Convert(position));
 	}
 
 	void Rigidbody::ClearForces()
@@ -161,7 +165,7 @@ namespace acid
 
 		btVector3 localInertia(0.0f, 0.0f, 0.0f);
 
-		auto shape = GetGameObject()->GetComponent<ICollider>();
+		auto shape = GetGameObject()->GetComponent<Collider>();
 
 		if (shape != nullptr && isDynamic)
 		{
@@ -182,13 +186,13 @@ namespace acid
 	void Rigidbody::SetLinearFactor(const Vector3 &linearFactor)
 	{
 		m_linearFactor = linearFactor;
-		m_body->setLinearFactor(ICollider::Convert(m_linearFactor));
+		m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 	}
 
 	void Rigidbody::SetAngularFactor(const Vector3 &angularFactor)
 	{
 		m_angularFactor = angularFactor;
-		m_body->setAngularFactor(ICollider::Convert(m_angularFactor));
+		m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 	}
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)

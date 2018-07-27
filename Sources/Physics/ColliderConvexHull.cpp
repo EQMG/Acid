@@ -1,5 +1,6 @@
 #include "ColliderConvexHull.hpp"
 
+#include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include "Scenes/Scenes.hpp"
 #include "Meshes/Mesh.hpp"
 
@@ -15,12 +16,11 @@ namespace acid
 			return;
 		}
 
-		SetPointCloud(pointCloud);
+		Initialize(pointCloud);
 	}
 
 	ColliderConvexHull::~ColliderConvexHull()
 	{
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
 		delete m_shape;
 	}
 
@@ -30,7 +30,7 @@ namespace acid
 
 		if (mesh != nullptr && mesh->GetModel() != nullptr)
 		{
-			SetPointCloud(mesh->GetModel()->GetPointCloud());
+			Initialize(mesh->GetModel()->GetPointCloud());
 		}
 	}
 
@@ -55,7 +55,7 @@ namespace acid
 		if (m_model != mesh->GetModel())
 		{
 			m_model == mesh->GetModel();
-			SetPointCloud(m_model->GetPointCloud());
+			Initialize(m_model->GetPointCloud());
 		}
 	}
 
@@ -67,9 +67,13 @@ namespace acid
 	{
 	}
 
-	void ColliderConvexHull::SetPointCloud(const std::vector<float> &pointCloud)
+	btCollisionShape *ColliderConvexHull::GetCollisionShape() const
 	{
-		Scenes::Get()->GetCollisionShapes().remove(m_shape);
+		return m_shape;
+	}
+
+	void ColliderConvexHull::Initialize(const std::vector<float> &pointCloud)
+	{
 		delete m_shape;
 
 		if (pointCloud.empty())
@@ -80,7 +84,6 @@ namespace acid
 		m_shape = new btConvexHullShape(pointCloud.data(), pointCloud.size() / 3, sizeof(float));
 		m_shape->optimizeConvexHull();
 		m_shape->initializePolyhedralFeatures();
-		Scenes::Get()->GetCollisionShapes().push_back(m_shape);
 		m_points = pointCloud.size() / 3;
 	}
 }

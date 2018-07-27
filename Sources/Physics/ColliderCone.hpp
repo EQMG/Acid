@@ -1,13 +1,14 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btConeShape.h>
 #include "Maths/Vector3.hpp"
-#include "ICollider.hpp"
+#include "Collider.hpp"
+
+class btConeShape;
 
 namespace acid
 {
 	class FL_EXPORT ColliderCone :
-		public ICollider
+		public Collider
 	{
 	private:
 		btConeShape *m_shape;
@@ -28,7 +29,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderCone"; };
 
-		btCollisionShape *GetCollisionShape() const override { return m_shape; };
+		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 
