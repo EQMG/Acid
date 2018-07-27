@@ -39,7 +39,7 @@ namespace test
 		float tabXOffset = 0.35f;
 		unsigned int i = 0;
 
-		for (auto tabType : TABS)
+		for (auto &tabType : TABS)
 		{
 			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
 			UiTab *uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
@@ -62,7 +62,7 @@ namespace test
 		delete m_barCreatedBy;
 		delete m_tabPuck;
 
-		for (auto text : m_tabs)
+		for (auto &text : m_tabs)
 		{
 			delete text;
 		}
