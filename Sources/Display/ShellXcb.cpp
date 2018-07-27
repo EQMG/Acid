@@ -33,7 +33,14 @@ namespace acid
 
 	VkResult ShellXcb::CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface)
 	{
-		return VK_SUCCESS;
+		*pSurface = VK_NULL_HANDLE;
+
+		VkXcbSurfaceCreateInfoKHR surfaceCreateInfo;
+		surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR;
+		surfaceCreateInfo.connection = m_connection;
+		surfaceCreateInfo.window = m_window;
+
+		return vkCreateXcbSurfaceKHR(instance, &surfaceCreateInfo, pAllocator, pSurface);
 	}
 
 	void ShellXcb::PollEvents()
@@ -130,20 +137,23 @@ namespace acid
 		const char filename[] = "libvulkan.so.1";
 		void *handle, *symbol;
 
-#ifdef UNINSTALLED_LOADER
+#ifdef ACID_UNINSTALLED_LOADER
 		handle = dlopen(UNINSTALLED_LOADER, RTLD_LAZY);
 
-    if (!handle)
-    {
-    	handle = dlopen(filename, RTLD_LAZY);
-    }
+        if (handle == nullptr)
+        {
+        	handle = dlopen(filename, RTLD_LAZY);
+        }
 #else
 		handle = dlopen(filename, RTLD_LAZY);
 #endif
 
-		if (handle) symbol = dlsym(handle, "vkGetInstanceProcAddr");
+		if (handle != nullptr)
+		{
+		    symbol = dlsym(handle, "vkGetInstanceProcAddr");
+		}
 
-		if (!handle || !symbol)
+		if (handle == nullptr || symbol == nullptr)
 		{
 			printf("%s\n", dlerror());
 

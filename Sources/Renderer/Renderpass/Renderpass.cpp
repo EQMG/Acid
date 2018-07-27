@@ -49,7 +49,7 @@ namespace acid
 		for (auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
-			auto subpassColourAttachments = std::vector<VkAttachmentReference>{};
+			auto subpassColourAttachments = new std::vector<VkAttachmentReference>{}; // TODO: Not allocate memory like this.
 			uint32_t depthAttachment = 9999;
 
 			for (auto &attachment : subpassType.GetAttachments())
@@ -63,14 +63,14 @@ namespace acid
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				subpassColourAttachments.emplace_back(attachmentReference);
+				subpassColourAttachments->emplace_back(attachmentReference);
 			}
 
 			// Description.
 			VkSubpassDescription subpassDescription = {};
 			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments.size());
-			subpassDescription.pColorAttachments = subpassColourAttachments.data();
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size());
+			subpassDescription.pColorAttachments = subpassColourAttachments->data();
 
 			if (depthAttachment != 9999)
 			{
