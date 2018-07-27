@@ -6,7 +6,7 @@ set(TESTDEFERED_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestDeferred/")
 #if(FL_BUILD_RELEASE AND WIN32)
 #	add_executable(TestDeferred WIN32 ${TESTDEFERED_SOURCES})
 #else()
-add_executable(TestDeferred ${TESTDEFERED_SOURCES})
+add_executable(TestDeferred "TestDeferred.rc" ${TESTDEFERED_SOURCES})
 #endif()
 
 set_target_properties(TestDeferred PROPERTIES

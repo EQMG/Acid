@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 
 set(TESTMATHS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestMaths/")
 
-add_executable(TestMaths ${TESTMATHS_SOURCES})
+add_executable(TestMaths "TestMaths.rc" ${TESTMATHS_SOURCES})
 
 set_target_properties(TestMaths PROPERTIES
                       POSITION_INDEPENDENT_CODE ON

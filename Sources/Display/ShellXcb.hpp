@@ -33,13 +33,13 @@ namespace acid
 		public IShell
 	{
 	private:
-		xcb_connection_t *connection_;
-		xcb_screen_t *screen_;
-		xcb_window_t window_;
-		xcb_atom_t wm_protocols_;
-		xcb_atom_t wm_delete_window_;
+		xcb_connection_t *m_connection;
+		xcb_screen_t *m_screen;
+		xcb_window_t m_window;
+		xcb_atom_t m_wmProtocols;
+		xcb_atom_t m_wmDeleteWindow_;
 
-		void *lib_handle_;
+		void *m_vkHandle;
 	public:
 		ShellXcb();
 
@@ -82,6 +82,5 @@ namespace acid
 		xcb_intern_atom_cookie_t intern_atom_cookie(xcb_connection_t *c, const char* s);
 
 		xcb_atom_t intern_atom(xcb_connection_t *c, xcb_intern_atom_cookie_t cookie);
-
 	};
 }
