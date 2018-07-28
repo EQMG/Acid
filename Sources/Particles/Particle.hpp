@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// A instance of a particle type.
 	/// </summary>
-	class FL_EXPORT Particle
+	class ACID_EXPORT Particle
 	{
 	private:
 		std::shared_ptr<ParticleType> m_particleType;

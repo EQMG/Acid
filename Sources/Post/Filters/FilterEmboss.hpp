@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterEmboss :
+	class ACID_EXPORT FilterEmboss :
 		public IPostFilter
 	{
 	public:

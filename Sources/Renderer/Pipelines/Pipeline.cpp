@@ -31,7 +31,7 @@ namespace acid
 		m_multisampleState({}),
 		m_dynamicState({})
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -63,7 +63,7 @@ namespace acid
 			break;
 		}
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
 		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);

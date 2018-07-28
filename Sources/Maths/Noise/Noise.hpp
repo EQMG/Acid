@@ -51,7 +51,7 @@ namespace acid
 		CELLULAR_DISTANCE2DIV = 7
 	};
 
-	class FL_EXPORT Noise
+	class ACID_EXPORT Noise
 	{
 	private:
 		int m_seed;

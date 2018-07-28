@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <algorithm>
-#ifdef FL_BUILD_WINDOWS
+#ifdef ACID_BUILD_WINDOWS
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else
@@ -66,7 +66,7 @@ namespace acid
 	{
 		int nError = 0;
 
-#ifdef FL_BUILD_WINDOWS
+#ifdef ACID_BUILD_WINDOWS
 		nError = _mkdir(path.c_str());
 #else
 		mode_t nMode = 0733;

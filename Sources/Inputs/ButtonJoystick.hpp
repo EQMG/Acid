@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Button from a joystick.
 	/// </summary>
-	class FL_EXPORT ButtonJoystick :
+	class ACID_EXPORT ButtonJoystick :
 		public IButton
 	{
 	private:

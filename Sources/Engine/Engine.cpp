@@ -29,14 +29,17 @@ namespace acid
 
 	int Engine::Run() const
 	{
+#ifndef ACID_VERBOSE
 		try
 		{
+#endif
 			while (m_running)
 			{
 				m_updater->Update(m_moduleRegister);
 			}
 
 			return EXIT_SUCCESS;
+#ifndef ACID_VERBOSE
 		}
 		catch (const std::runtime_error &e)
 		{
@@ -44,6 +47,7 @@ namespace acid
 			fprintf(stderr, "%s\n", e.what());
 			return EXIT_FAILURE;
 		}
+#endif
 	}
 
 	void Engine::RequestClose(const bool &error)

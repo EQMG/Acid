@@ -103,7 +103,7 @@ namespace acid
 
 	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -124,7 +124,7 @@ namespace acid
 		vkDeviceWaitIdle(Display::Get()->GetVkLogicalDevice());
 		vkQueueWaitIdle(Display::Get()->GetVkQueue());
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Renderpass created in %fms\n", debugEnd - debugStart);
 #endif
@@ -284,7 +284,7 @@ namespace acid
 			}
 		}
 
-//#ifdef FL_BUILD_WINDOWS
+//#ifdef ACID_BUILD_WINDOWS
 //		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
 //#endif
 		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
@@ -345,7 +345,7 @@ namespace acid
 
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
 		{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 			fprintf(stdout, "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetVkExtent().width, m_swapchain->GetVkExtent().height, displayExtent2D.width, displayExtent2D.height);
 #endif
 			delete m_swapchain;

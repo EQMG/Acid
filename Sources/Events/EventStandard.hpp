@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A class that is the most basic implementation of the event interface.
 	/// </summary>
-	class FL_EXPORT EventStandard :
+	class ACID_EXPORT EventStandard :
 		public IEvent
 	{
 	private:

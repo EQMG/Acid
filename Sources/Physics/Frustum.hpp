@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// Represents the region of space in the modeled world that may appear on the screen.
 	/// </summary>
-	class FL_EXPORT Frustum
+	class ACID_EXPORT Frustum
 	{
 	private:
 		float **m_frustumArray;

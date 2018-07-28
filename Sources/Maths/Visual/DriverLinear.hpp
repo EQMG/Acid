@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A driver that linearly increases its value.
 	/// </summary>
-	class FL_EXPORT DriverLinear :
+	class ACID_EXPORT DriverLinear :
 		public IDriver
 	{
 	private:

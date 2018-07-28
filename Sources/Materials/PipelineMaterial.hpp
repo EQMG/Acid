@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a material pipeline.
 	/// </summary>
-	class FL_EXPORT PipelineMaterial :
+	class ACID_EXPORT PipelineMaterial :
 		public IResource
 	{
 	private:

@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FileXml :
+	class ACID_EXPORT FileXml :
 		public IFile
 	{
 	private:

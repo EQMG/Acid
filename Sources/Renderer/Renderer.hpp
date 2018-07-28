@@ -10,7 +10,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Renderer :
+	class ACID_EXPORT Renderer :
 		public IModule
 	{
 	private:

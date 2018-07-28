@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IndexBuffer :
+	class ACID_EXPORT IndexBuffer :
 		public Buffer
 	{
 	private:

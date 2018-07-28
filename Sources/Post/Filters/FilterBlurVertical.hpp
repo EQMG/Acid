@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterBlurVertical :
+	class ACID_EXPORT FilterBlurVertical :
 		public IPostFilter
 	{
 	private:

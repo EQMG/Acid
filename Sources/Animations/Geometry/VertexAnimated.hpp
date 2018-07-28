@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT VertexAnimated :
+	class ACID_EXPORT VertexAnimated :
 		public IVertex
 	{
 	public:

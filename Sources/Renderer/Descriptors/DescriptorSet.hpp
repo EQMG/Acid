@@ -12,7 +12,7 @@ namespace acid
 {
 	class IDescriptor;
 
-	class FL_EXPORT DescriptorSet
+	class ACID_EXPORT DescriptorSet
 	{
 	private:
 		ShaderProgram *m_shaderProgram;

@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Used to store index of a QueueFamily with particular qualities.
 	/// </summary>
-	class FL_EXPORT QueueFamilyIndices
+	class ACID_EXPORT QueueFamilyIndices
 	{
 	private:
 		int m_graphicsFamily;
@@ -50,7 +50,7 @@ namespace acid
 	/// <summary>
 	/// A Vulkan queue family.
 	/// </summary>
-	class FL_EXPORT QueueFamily
+	class ACID_EXPORT QueueFamily
 	{
 	public:
 		/// <summary>

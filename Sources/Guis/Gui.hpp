@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A object the represents a texture in a GUI.
 	/// </summary>
-	class FL_EXPORT Gui :
+	class ACID_EXPORT Gui :
 		public UiObject
 	{
 	private:

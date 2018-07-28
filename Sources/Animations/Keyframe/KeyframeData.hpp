@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT KeyframeData
+	class ACID_EXPORT KeyframeData
 	{
 	private:
 		float m_time;

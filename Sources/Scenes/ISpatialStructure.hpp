@@ -15,7 +15,7 @@ namespace acid
 	/// <summary>
 	/// A data structure that stores objects with a notion of space.
 	/// </summary>
-	class FL_EXPORT ISpatialStructure
+	class ACID_EXPORT ISpatialStructure
 	{
 	public:
 		/// <summary>

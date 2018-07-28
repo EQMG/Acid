@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// Interface for a binary input device.
 	/// </summary>
-	class FL_EXPORT IButton
+	class ACID_EXPORT IButton
 	{
 	public:
 		/// <summary>

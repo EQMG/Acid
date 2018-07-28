@@ -14,7 +14,7 @@ namespace acid
 	/// The joint transforms are stored in a map, indexed by the name of the joint that they should be applied to.
 	/// </para>
 	/// </summary>
-	class FL_EXPORT Keyframe
+	class ACID_EXPORT Keyframe
 	{
 	private:
 		float m_timeStamp;

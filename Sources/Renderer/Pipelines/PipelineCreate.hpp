@@ -31,7 +31,7 @@ namespace acid
 		PIPELINE_CULL_MODE_ALL = 3,
 	};
 
-	class FL_EXPORT GraphicsStage
+	class ACID_EXPORT GraphicsStage
 	{
 	private:
 		unsigned int m_renderpass;
@@ -48,7 +48,7 @@ namespace acid
 		uint32_t GetSubpass() const { return m_subpass; }
 	};
 
-	class FL_EXPORT VertexInput
+	class ACID_EXPORT VertexInput
 	{
 	private:
 		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
@@ -65,7 +65,7 @@ namespace acid
 		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
 	};
 
-	class FL_EXPORT DescriptorType
+	class ACID_EXPORT DescriptorType
 	{
 	private:
 		uint32_t m_binding;
@@ -91,7 +91,7 @@ namespace acid
 		VkDescriptorPoolSize GetPoolSize() const { return m_descriptorPoolSize; }
 	};
 
-	class FL_EXPORT PipelineDefine
+	class ACID_EXPORT PipelineDefine
 	{
 	private:
 		std::string m_name;
@@ -108,7 +108,7 @@ namespace acid
 		std::string GetValue() const { return m_value; }
 	};
 
-	class FL_EXPORT PipelineCreate
+	class ACID_EXPORT PipelineCreate
 	{
 	private:
 		std::vector<std::string> m_shaderStages;

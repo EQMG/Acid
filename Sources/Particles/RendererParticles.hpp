@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererParticles :
+	class ACID_EXPORT RendererParticles :
 		public IRenderer
 	{
 	private:

@@ -215,7 +215,7 @@ namespace acid
 		MESSAGE_RESPONCE_CANCEL = 3
 	};
 
-	class FL_EXPORT IMonitor
+	class ACID_EXPORT IMonitor
 	{
 	public:
 		virtual uint32_t GetWidth() const = 0;
@@ -223,7 +223,7 @@ namespace acid
 		virtual uint32_t GetHeight() const = 0;
 	};
 
-	class FL_EXPORT IShell
+	class ACID_EXPORT IShell
 	{
 	protected:
 		std::vector<std::shared_ptr<IMonitor>> m_monitors;

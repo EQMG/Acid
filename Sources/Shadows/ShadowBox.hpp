@@ -11,7 +11,7 @@ namespace acid
 	/// It can be updated each frame to optimise the area, making it as small as possible (to allow for optimal shadow map resolution) while not being too small to avoid objects not having shadows when they should.
 	/// This class also provides functionality to test whether an object is inside this shadow box. Everything inside the box will be rendered to the shadow map in the shadow render pass.
 	/// </summary>
-	class FL_EXPORT ShadowBox
+	class ACID_EXPORT ShadowBox
 	{
 	private:
 		Vector3 m_lightDirection;

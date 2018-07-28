@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
-	class FL_EXPORT Mouse :
+	class ACID_EXPORT Mouse :
 		public IModule
 	{
 	private:

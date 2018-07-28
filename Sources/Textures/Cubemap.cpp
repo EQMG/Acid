@@ -22,7 +22,7 @@ namespace acid
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -58,7 +58,7 @@ namespace acid
 		delete bufferStaging;
 		Texture::DeletePixels(pixels);
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -80,7 +80,7 @@ namespace acid
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -122,7 +122,7 @@ namespace acid
 		delete bufferStaging;
 		delete[] pixels;
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

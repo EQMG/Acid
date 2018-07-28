@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT VertexModel :
+	class ACID_EXPORT VertexModel :
 		public IVertex
 	{
 	public:

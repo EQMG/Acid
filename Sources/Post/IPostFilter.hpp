@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Represents a post effect shader and on application saves the result into a fbo.
 	/// </summary>
-	class FL_EXPORT IPostFilter :
+	class ACID_EXPORT IPostFilter :
 		public IRenderer
 	{
 	protected:

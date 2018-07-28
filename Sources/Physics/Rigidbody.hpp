@@ -12,7 +12,7 @@ class btRigidBody;
 
 namespace acid
 {
-	class FL_EXPORT Rigidbody :
+	class ACID_EXPORT Rigidbody :
 		public IComponent
 	{
 	private:
@@ -64,6 +64,6 @@ namespace acid
 
 		void SetAngularFactor(const Vector3 &angularFactor);
 	private:
-		FL_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
+		ACID_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 	};
 }

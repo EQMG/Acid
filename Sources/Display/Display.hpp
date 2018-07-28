@@ -11,7 +11,7 @@ namespace acid
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class FL_EXPORT Display :
+	class ACID_EXPORT Display :
 		public IModule
 	{
 	private:

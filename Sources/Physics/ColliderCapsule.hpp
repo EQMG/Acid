@@ -7,7 +7,7 @@ class btCapsuleShape;
 
 namespace acid
 {
-	class FL_EXPORT ColliderCapsule :
+	class ACID_EXPORT ColliderCapsule :
 		public Collider
 	{
 	private:
@@ -29,7 +29,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderCapsule"; };
 
-		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 

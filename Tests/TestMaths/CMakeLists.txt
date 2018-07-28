@@ -15,7 +15,7 @@ target_include_directories(TestMaths PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOU
 target_link_libraries(TestMaths PRIVATE ${LIBRARIES_LINKS} Acid)
 
 # Install
-if (ACID_INSTALL)
+if(ACID_INSTALL)
     install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"
@@ -25,4 +25,4 @@ if (ACID_INSTALL)
     install(TARGETS TestMaths
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             )
-endif ()
+endif()

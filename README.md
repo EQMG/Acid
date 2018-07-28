@@ -13,7 +13,7 @@ Acid is licensed under MIT, we are open to contributions use the 'Developer Setu
 ## Builds
 Windows   [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 
-Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
+Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
 # Code snippets
 ```cpp
@@ -63,8 +63,9 @@ Website   [Learn more](https://equilibrium.games)
 
 ## Platforms
 Acid currently can be run on the following platforms:
- * Vulkan - Windows, Linux, Android
- * MoltenVK - MacOS, IOS
+ * Windows, Linux
+ * *Android*
+ * *MacOS, IOS*
 
 ## Features
 This is a list of current features in Acid:
@@ -124,7 +125,7 @@ On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (
 
 Ensure you are using a compiler with full c++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
-On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, `libglfw3`, and `libvulkan` to be available.
+On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 

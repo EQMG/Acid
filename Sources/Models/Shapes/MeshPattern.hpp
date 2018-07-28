@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT MeshPattern :
+	class ACID_EXPORT MeshPattern :
 		public Model
 	{
 	private:

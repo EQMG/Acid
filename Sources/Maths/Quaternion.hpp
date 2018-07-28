@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
 	/// </summary>
-	class FL_EXPORT Quaternion
+	class ACID_EXPORT Quaternion
 	{
 	public:
 		union
@@ -244,21 +244,21 @@ namespace acid
 
 		float &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
+		ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 
-		FL_EXPORT friend Vector3 operator*(const Vector3 &right, const Quaternion &left);
+		ACID_EXPORT friend Vector3 operator*(const Vector3 &right, const Quaternion &left);
 
-		FL_EXPORT friend Vector3 operator*(const Quaternion &left, const Vector3 &right);
+		ACID_EXPORT friend Vector3 operator*(const Quaternion &left, const Vector3 &right);
 
-		FL_EXPORT friend Quaternion operator*(const float &left, const Quaternion &right);
+		ACID_EXPORT friend Quaternion operator*(const float &left, const Quaternion &right);
 
-		FL_EXPORT friend Quaternion operator*(const Quaternion &left, const float &right);
+		ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const float &right);
 
 		Quaternion &operator*=(const Quaternion &other);
 
 		Quaternion &operator*=(const float &other);
 
-		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
+		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
 		std::string ToString() const;
 	};

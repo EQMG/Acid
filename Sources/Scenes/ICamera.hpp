@@ -11,7 +11,7 @@ namespace acid
 	/// <summary>
 	/// This class is used throughout the engine wherever the camera is involved, so that the engine doesn't rely at all on the camera's implementation.
 	/// </summary>
-	class FL_EXPORT ICamera
+	class ACID_EXPORT ICamera
 	{
 	public:
 		/// <summary>

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Screenshot
+	class ACID_EXPORT Screenshot
 	{
 	public:
 		/// <summary>

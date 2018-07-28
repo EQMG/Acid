@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A helper for C++ arrays.
 	/// </summary>
-	class FL_EXPORT SquareArray
+	class ACID_EXPORT SquareArray
 	{
 	public:
 		/// <summary>

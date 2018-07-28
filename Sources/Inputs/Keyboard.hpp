@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the keyboard keys.
 	/// </summary>
-	class FL_EXPORT Keyboard :
+	class ACID_EXPORT Keyboard :
 		public IModule
 	{
 	private:

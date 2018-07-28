@@ -10,7 +10,7 @@ namespace acid
 		BUFFER_LEVEL_SECONDARY = 1
 	};
 
-	class FL_EXPORT CommandBuffer
+	class ACID_EXPORT CommandBuffer
 	{
 	private:
 		CommandBufferLevel m_bufferLevel;

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelRectangle :
+	class ACID_EXPORT ModelRectangle :
 		public Model
 	{
 	public:

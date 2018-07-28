@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT UniformBuffer :
+	class ACID_EXPORT UniformBuffer :
 		public Buffer,
 		public IDescriptor
 	{

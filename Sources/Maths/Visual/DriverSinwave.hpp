@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A driver that uses a sine wave.
 	/// </summary>
-	class FL_EXPORT DriverSinwave :
+	class ACID_EXPORT DriverSinwave :
 		public IDriver
 	{
 	private:

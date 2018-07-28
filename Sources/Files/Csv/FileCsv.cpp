@@ -20,7 +20,7 @@ namespace acid
 
 	void FileCsv::Load()
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -39,7 +39,7 @@ namespace acid
 			m_rows.emplace_back(row);
 		}
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Csv '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -47,7 +47,7 @@ namespace acid
 
 	void FileCsv::Save()
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -72,7 +72,7 @@ namespace acid
 		FileSystem::ClearFile(m_filename);
 		FileSystem::WriteTextFile(m_filename, builder.str());
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Csv '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

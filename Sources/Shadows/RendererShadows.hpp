@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererShadows :
+	class ACID_EXPORT RendererShadows :
 		public IRenderer
 	{
 	private:

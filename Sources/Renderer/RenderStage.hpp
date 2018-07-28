@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RenderStage
+	class ACID_EXPORT RenderStage
 	{
 	private:
 		uint32_t m_lastWidth;

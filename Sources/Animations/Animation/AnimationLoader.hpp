@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT AnimationLoader
+	class ACID_EXPORT AnimationLoader
 	{
 	private:
 		LoadedValue *m_libraryAnimations;

@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include <stdlib.h>
 #include "IModule.hpp"
 
 namespace acid
@@ -9,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// The default updater for the engine.
 	/// </summary>
-	class FL_EXPORT ModuleRegister
+	class ACID_EXPORT ModuleRegister
 	{
 	private:
 		std::map<float, IModule *> m_modules;

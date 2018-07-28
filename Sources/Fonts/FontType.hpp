@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A loader capable of loading font data into a instance of a text mesh.
 	/// </summary>
-	class FL_EXPORT FontType :
+	class ACID_EXPORT FontType :
 		public IResource
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Buffer
+	class ACID_EXPORT Buffer
 	{
 	protected:
 		VkDeviceSize m_size;

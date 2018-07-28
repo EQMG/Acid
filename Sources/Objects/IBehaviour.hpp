@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IBehaviour :
+	class ACID_EXPORT IBehaviour :
 		public IComponent
 	{
 	private:

@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A class that smoothly increases its value.
 	/// </summary>
-	class FL_EXPORT SmoothFloat
+	class ACID_EXPORT SmoothFloat
 	{
 	private:
 		float m_agility;

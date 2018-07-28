@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A helper for C++ files.
 	/// </summary>
-	class FL_EXPORT FileSystem
+	class ACID_EXPORT FileSystem
 	{
 	public:
 		/// <summary>

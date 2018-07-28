@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererMeshes :
+	class ACID_EXPORT RendererMeshes :
 		public IRenderer
 	{
 	private:

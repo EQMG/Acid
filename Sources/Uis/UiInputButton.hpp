@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT UiInputButton :
+	class ACID_EXPORT UiInputButton :
 		public UiObject
 	{
 	private:

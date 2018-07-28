@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	class FL_EXPORT JsonSection
+	class ACID_EXPORT JsonSection
 	{
 	private:
 		std::shared_ptr<JsonSection> m_parent;

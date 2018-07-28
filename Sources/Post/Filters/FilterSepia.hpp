@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterSepia :
+	class ACID_EXPORT FilterSepia :
 		public IPostFilter
 	{
 	public:

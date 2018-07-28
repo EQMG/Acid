@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT SkeletonLoader
+	class ACID_EXPORT SkeletonLoader
 	{
 	private:
 		LoadedValue *m_armatureData;

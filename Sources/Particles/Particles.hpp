@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A manager that manages particles.
 	/// </summary>
-	class FL_EXPORT Particles :
+	class ACID_EXPORT Particles :
 		public IModule
 	{
 	private:

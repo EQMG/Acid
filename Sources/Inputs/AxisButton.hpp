@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Axis composed of two buttons.
 	/// </summary>
-	class FL_EXPORT AxisButton :
+	class ACID_EXPORT AxisButton :
 		public IAxis
 	{
 	private:

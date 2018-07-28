@@ -83,7 +83,7 @@ namespace acid
 		FORMAT_S8_UINT = 127
 	};
 
-	class FL_EXPORT Attachment
+	class ACID_EXPORT Attachment
 	{
 	private:
 		unsigned int m_binding;
@@ -108,7 +108,7 @@ namespace acid
 		Colour GetClearColour() const { return m_clearColour; }
 	};
 
-	class FL_EXPORT SubpassType
+	class ACID_EXPORT SubpassType
 	{
 	private:
 		uint32_t m_binding;
@@ -125,7 +125,7 @@ namespace acid
 		std::vector<uint32_t> GetAttachments() const { return m_attachments; }
 	};
 
-	class FL_EXPORT RenderpassCreate
+	class ACID_EXPORT RenderpassCreate
 	{
 	private:
 		uint32_t m_width;

@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A timer implementation for events.
 	/// </summary>
-	class FL_EXPORT Timer
+	class ACID_EXPORT Timer
 	{
 	private:
 		float m_startTime;

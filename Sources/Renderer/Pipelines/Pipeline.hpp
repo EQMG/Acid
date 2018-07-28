@@ -18,7 +18,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
 	/// </summary>
-	class FL_EXPORT Pipeline :
+	class ACID_EXPORT Pipeline :
 		public IPipeline
 	{
 	private:

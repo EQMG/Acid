@@ -14,7 +14,7 @@ namespace acid
 		m_textCopyright(new Text(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.6f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved. This product uses, Bullet, OpenAL, Vulkan, STB, and Glslang.", FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, 0.8f, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-#ifdef FL_BUILD_DEBUG
+#ifdef ACID_BUILD_DEBUG
 		Events::Get()->AddEvent<EventTime>(1.65f, false, [&]()
 #else
 		Events::Get()->AddEvent<EventTime>(3.6f, false, [&]()

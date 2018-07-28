@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Button from a mouse.
 	/// </summary>
-	class FL_EXPORT ButtonMouse :
+	class ACID_EXPORT ButtonMouse :
 		public IButton
 	{
 	private:

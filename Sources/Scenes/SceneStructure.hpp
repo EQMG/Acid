@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A structure of spatial objects for a 3D space.
 	/// </summary>
-	class FL_EXPORT SceneStructure :
+	class ACID_EXPORT SceneStructure :
 		public ISpatialStructure
 	{
 	private:

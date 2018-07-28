@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Mesh :
+	class ACID_EXPORT Mesh :
 		public IComponent
 	{
 	private:

@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A class for handing and calculating deltas.
 	/// </summary>
-	class FL_EXPORT Delta
+	class ACID_EXPORT Delta
 	{
 	private:
 		float m_currentFrameTime;

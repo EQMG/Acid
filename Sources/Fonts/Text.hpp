@@ -27,7 +27,7 @@ namespace acid
 	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
-	class FL_EXPORT Text :
+	class ACID_EXPORT Text :
 		public UiObject
 	{
 	private:

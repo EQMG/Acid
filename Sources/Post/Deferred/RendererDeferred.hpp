@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererDeferred :
+	class ACID_EXPORT RendererDeferred :
 		public IRenderer
 	{
 	private:

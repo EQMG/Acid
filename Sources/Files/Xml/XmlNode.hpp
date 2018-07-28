@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	class FL_EXPORT XmlNode
+	class ACID_EXPORT XmlNode
 	{
 	private:
 		std::shared_ptr<XmlNode> m_parent;

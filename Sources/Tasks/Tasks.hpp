@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// A module used for managing tasks on engine updates.
 	/// </summary>
-	class FL_EXPORT Tasks :
+	class ACID_EXPORT Tasks :
 		public IModule
 	{
 	private:

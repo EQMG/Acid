@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A simple event listener and runner.
 	/// </summary>
-	class FL_EXPORT IEvent
+	class ACID_EXPORT IEvent
 	{
 	public:
 		/// <summary>

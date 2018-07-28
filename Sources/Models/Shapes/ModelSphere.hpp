@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelSphere :
+	class ACID_EXPORT ModelSphere :
 		public Model
 	{
 	public:

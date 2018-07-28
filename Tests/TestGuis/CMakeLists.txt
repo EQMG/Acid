@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 
 set(TESTGUIS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestGuis/")
 
-#if(FL_BUILD_RELEASE AND WIN32)
+#if(ACID_BUILD_RELEASE AND WIN32)
 #	add_executable(TestGuis WIN32 ${TESTGUIS_SOURCES})
 #else()
 add_executable(TestGuis "TestGuis.rc" ${TESTGUIS_SOURCES})
@@ -19,7 +19,7 @@ target_include_directories(TestGuis PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOUR
 target_link_libraries(TestGuis PRIVATE ${LIBRARIES_LINKS} Acid)
 
 # Install
-if (ACID_INSTALL)
+if(ACID_INSTALL)
     install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"
@@ -29,4 +29,4 @@ if (ACID_INSTALL)
     install(TARGETS TestGuis
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             )
-endif ()
+endif()

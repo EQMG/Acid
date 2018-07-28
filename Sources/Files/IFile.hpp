@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IFile
+	class ACID_EXPORT IFile
 	{
 	public:
 		IFile()
