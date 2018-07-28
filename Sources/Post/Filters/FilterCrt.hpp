@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterCrt :
+	class ACID_EXPORT FilterCrt :
 		public IPostFilter
 	{
 	private:

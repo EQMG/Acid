@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// A class that runs a event after a time has passed.
 	/// </summary>
-	class FL_EXPORT EventTime :
+	class ACID_EXPORT EventTime :
 		public IEvent
 	{
 	private:

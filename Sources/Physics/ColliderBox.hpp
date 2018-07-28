@@ -7,7 +7,7 @@ class btBoxShape;
 
 namespace acid
 {
-	class FL_EXPORT ColliderBox :
+	class ACID_EXPORT ColliderBox :
 		public Collider
 	{
 	private:
@@ -28,7 +28,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderBox"; };
 
-		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		Vector3 GetExtents() const { return m_extents; }
 

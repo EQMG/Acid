@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A object used to represent a scene.
 	/// </summary>
-	class FL_EXPORT IScene
+	class ACID_EXPORT IScene
 	{
 	private:
 		std::shared_ptr<ICamera> m_camera;

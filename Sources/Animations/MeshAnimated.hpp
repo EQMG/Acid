@@ -12,7 +12,7 @@
 
 namespace acid
 {
-	class FL_EXPORT MeshAnimated :
+	class ACID_EXPORT MeshAnimated :
 		public Mesh
 	{
 	private:

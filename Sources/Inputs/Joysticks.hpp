@@ -20,7 +20,7 @@ namespace acid
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
-	class FL_EXPORT Joysticks :
+	class ACID_EXPORT Joysticks :
 		public IModule
 	{
 	private:

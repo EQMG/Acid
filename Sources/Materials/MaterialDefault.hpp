@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents the default material shader.
 	/// </summary>
-	class FL_EXPORT MaterialDefault :
+	class ACID_EXPORT MaterialDefault :
 		public IMaterial
 	{
 	private:

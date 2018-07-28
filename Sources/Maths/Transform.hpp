@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Holds position, rotation, and scale components.
 	/// </summary>
-	class FL_EXPORT Transform
+	class ACID_EXPORT Transform
 	{
 	private:
 		Vector3 m_position;

@@ -1,7 +1,7 @@
 #include "SoundBuffer.hpp"
 
 #include <fstream>
-#ifdef FL_BUILD_MACOS
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #else
 #include <AL/al.h>

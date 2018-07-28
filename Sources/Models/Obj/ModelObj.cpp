@@ -7,7 +7,7 @@ namespace acid
 	ModelObj::ModelObj(const std::string &filename) :
 		Model()
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -108,7 +108,7 @@ namespace acid
 			delete current;
 		}
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif

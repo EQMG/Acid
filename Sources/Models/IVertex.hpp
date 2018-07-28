@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IVertex
+	class ACID_EXPORT IVertex
 	{
 	public:
 		IVertex()

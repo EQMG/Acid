@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IUiGrabber
+	class ACID_EXPORT IUiGrabber
 	{
 	public:
 		virtual ~IUiGrabber() = default;
@@ -18,7 +18,7 @@ namespace acid
 		virtual std::string GetValue(const int &value) = 0;
 	};
 
-	class FL_EXPORT UiGrabberJoystick :
+	class ACID_EXPORT UiGrabberJoystick :
 		public IUiGrabber
 	{
 	private:
@@ -31,7 +31,7 @@ namespace acid
 		std::string GetValue(const int &value) override;
 	};
 
-	class FL_EXPORT UiGrabberKeyboard :
+	class ACID_EXPORT UiGrabberKeyboard :
 		public IUiGrabber
 	{
 	public:
@@ -40,7 +40,7 @@ namespace acid
 		std::string GetValue(const int &value) override;
 	};
 
-	class FL_EXPORT UiGrabberMouse :
+	class ACID_EXPORT UiGrabberMouse :
 		public IUiGrabber
 	{
 	public:
@@ -49,7 +49,7 @@ namespace acid
 		std::string GetValue(const int &value) override;
 	};
 
-	class FL_EXPORT UiInputGrabber :
+	class ACID_EXPORT UiInputGrabber :
 		public UiObject
 	{
 	private:

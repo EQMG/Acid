@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A class that holds registerd components.
 	/// </summary>
-	class FL_EXPORT ComponentRegister
+	class ACID_EXPORT ComponentRegister
 	{
 	private:
 		typedef std::function<std::shared_ptr<IComponent>()> ComponentCreate;

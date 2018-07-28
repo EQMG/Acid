@@ -65,7 +65,7 @@ namespace acid
 
 		if (it == PIVOT_MAP.end())
 		{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 			fprintf(stderr, "Could not find a UiBound pivot from key: %s", key.c_str());
 #endif
 			return Vector2(0.0f, 1.0f);

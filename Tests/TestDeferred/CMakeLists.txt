@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 
 set(TESTDEFERED_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestDeferred/")
 
-#if(FL_BUILD_RELEASE AND WIN32)
+#if(ACID_BUILD_RELEASE AND WIN32)
 #	add_executable(TestDeferred WIN32 ${TESTDEFERED_SOURCES})
 #else()
 add_executable(TestDeferred "TestDeferred.rc" ${TESTDEFERED_SOURCES})
@@ -19,7 +19,7 @@ target_include_directories(TestDeferred PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_
 target_link_libraries(TestDeferred PRIVATE ${LIBRARIES_LINKS} Acid)
 
 # Install
-if (ACID_INSTALL)
+if(ACID_INSTALL)
     install(DIRECTORY .
             DESTINATION include
             FILES_MATCHING PATTERN "*.h"
@@ -29,4 +29,4 @@ if (ACID_INSTALL)
     install(TARGETS TestDeferred
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             )
-endif ()
+endif()

@@ -18,7 +18,7 @@
 using namespace test;
 using namespace acid;
 
-//#if (FL_BUILD_RELEASE && FL_BUILD_WINDOWS)
+//#if (ACID_BUILD_RELEASE && ACID_BUILD_WINDOWS)
 //int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 //#else
 int main(int argc, char **argv)
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	auto exitCode = engine->Run();
 
 	// Pauses the console.
-#ifndef FL_VERBOSE
+#ifndef ACID_VERBOSE
 	std::cin.get();
 #endif
 	return exitCode;

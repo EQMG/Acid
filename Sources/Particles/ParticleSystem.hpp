@@ -13,7 +13,7 @@ namespace acid
 	/// <summary>
 	/// A system of particles that are to be spawned.
 	/// </summary>
-	class FL_EXPORT ParticleSystem :
+	class ACID_EXPORT ParticleSystem :
 		public IComponent
 	{
 	private:

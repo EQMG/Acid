@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT MaterialAnimated :
+	class ACID_EXPORT MaterialAnimated :
 		public IMaterial
 	{
 	private:

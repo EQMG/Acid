@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT JointData
+	class ACID_EXPORT JointData
 	{
 	private:
 		int m_index;

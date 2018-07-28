@@ -20,7 +20,7 @@ namespace acid
 	/// <summary>
 	/// A module used for managing game scenes on engine updates.
 	/// </summary>
-	class FL_EXPORT Scenes :
+	class ACID_EXPORT Scenes :
 		public IModule
 	{
 	private:
@@ -101,6 +101,6 @@ namespace acid
 		/// <returns> If the scene is paused. </returns>
 		bool IsGamePaused() { return m_scene->IsGamePaused(); }
 
-		FL_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
+		ACID_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
 	};
 }

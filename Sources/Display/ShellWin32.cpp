@@ -627,7 +627,7 @@ namespace acid
 
 		if (m_hmodule)
 		{
-			m_vkProc = (PFN_vkGetInstanceProcAddr) GetProcAddress(m_hmodule, "vkGetInstanceProcAddr");
+			m_vkProc = reinterpret_cast<PFN_vkGetInstanceProcAddr>(GetProcAddress(m_hmodule, "vkGetInstanceProcAddr"));
 		}
 
 		if (!m_hmodule || !m_vkProc)

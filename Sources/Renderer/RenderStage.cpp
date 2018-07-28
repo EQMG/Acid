@@ -50,7 +50,7 @@ namespace acid
 
 	void RenderStage::Rebuild(Swapchain *swapchain)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -72,7 +72,7 @@ namespace acid
 		delete m_framebuffers;
 		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
 #endif

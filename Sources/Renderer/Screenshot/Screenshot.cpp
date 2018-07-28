@@ -8,7 +8,7 @@ namespace acid
 {
 	void Screenshot::Capture(const std::string &filename)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -187,7 +187,7 @@ namespace acid
 		vkDestroyImage(logicalDevice, dstImage, allocator);
 	//	delete data; // TODO: Delete one day...
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif

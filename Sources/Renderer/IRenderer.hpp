@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// Represents a sub-renderer in the engine.
 	/// </summary>
-	class FL_EXPORT IRenderer
+	class ACID_EXPORT IRenderer
 	{
 	private:
 		GraphicsStage m_graphicsStage;

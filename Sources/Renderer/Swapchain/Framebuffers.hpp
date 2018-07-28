@@ -9,7 +9,7 @@ namespace acid
 
 	class DepthStencil;
 
-	class FL_EXPORT Framebuffers
+	class ACID_EXPORT Framebuffers
 	{
 	private:
 		std::vector<Texture *> m_imageAttachments;

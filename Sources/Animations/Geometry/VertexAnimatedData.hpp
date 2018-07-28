@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT VertexAnimatedData
+	class ACID_EXPORT VertexAnimatedData
 	{
 	private:
 		static const uint32_t NO_INDEX;

@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Class used to render a GameObject as a shadow.
 	/// </summary>
-	class FL_EXPORT ShadowRender :
+	class ACID_EXPORT ShadowRender :
 		public IComponent
 	{
 	private:

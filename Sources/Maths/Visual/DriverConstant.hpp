@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A driver that has a constant value.
 	/// </summary>
-	class FL_EXPORT DriverConstant :
+	class ACID_EXPORT DriverConstant :
 		public IDriver
 	{
 	private:

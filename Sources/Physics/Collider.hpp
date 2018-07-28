@@ -18,7 +18,7 @@ namespace acid
 	/// <summary>
 	/// A simple class that represents a physics shape.
 	/// </summary>
-	class FL_EXPORT Collider :
+	class ACID_EXPORT Collider :
 		public IComponent
 	{
 	public:
@@ -42,7 +42,7 @@ namespace acid
 
 		virtual std::string GetName() const = 0;
 
-		FL_HIDDEN virtual btCollisionShape *GetCollisionShape() const = 0;
+		ACID_HIDDEN virtual btCollisionShape *GetCollisionShape() const = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
@@ -58,12 +58,12 @@ namespace acid
 		/// <returns> If the shape is partially in the view frustum. </returns>
 		bool InFrustum(const Frustum &frustum);
 
-		FL_HIDDEN static btVector3 Convert(const Vector3 &vector);
+		ACID_HIDDEN static btVector3 Convert(const Vector3 &vector);
 
-		FL_HIDDEN static Vector3 Convert(const btVector3 &vector);
+		ACID_HIDDEN static Vector3 Convert(const btVector3 &vector);
 
-		FL_HIDDEN static btQuaternion Convert(const Quaternion &quaternion);
+		ACID_HIDDEN static btQuaternion Convert(const Quaternion &quaternion);
 
-		FL_HIDDEN static Quaternion Convert(const btQuaternion &quaternion);
+		ACID_HIDDEN static Quaternion Convert(const btQuaternion &quaternion);
 	};
 }

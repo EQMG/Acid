@@ -11,7 +11,7 @@ namespace acid
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
-	class FL_EXPORT Audio :
+	class ACID_EXPORT Audio :
 		public IModule
 	{
 	private:
@@ -41,12 +41,12 @@ namespace acid
 
 		std::string GetName() const override { return "Audio"; };
 
-		FL_HIDDEN static std::string StringifyResultAl(const int &result);
+		ACID_HIDDEN static std::string StringifyResultAl(const int &result);
 
-		FL_HIDDEN static void ErrorAl(const int &result);
+		ACID_HIDDEN static void ErrorAl(const int &result);
 
-		FL_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }
+		ACID_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }
 
-		FL_HIDDEN ALCcontext *GetAlcContext() const { return m_alContext; }
+		ACID_HIDDEN ALCcontext *GetAlcContext() const { return m_alContext; }
 	};
 }

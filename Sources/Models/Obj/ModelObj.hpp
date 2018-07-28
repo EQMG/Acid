@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelObj :
+	class ACID_EXPORT ModelObj :
 		public Model
 	{
 	public:

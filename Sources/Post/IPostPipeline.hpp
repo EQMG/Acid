@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Represents a system of post effects.
 	/// </summary>
-	class FL_EXPORT IPostPipeline :
+	class ACID_EXPORT IPostPipeline :
 		public IRenderer
 	{
 	public:

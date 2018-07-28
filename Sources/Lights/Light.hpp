@@ -11,7 +11,7 @@ namespace acid
 	/// <summary>
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
-	class FL_EXPORT Light :
+	class ACID_EXPORT Light :
 		public IComponent
 	{
 	private:

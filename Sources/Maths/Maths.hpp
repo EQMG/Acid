@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A class that holds many various math functions.
 	/// </summary>
-	class FL_EXPORT Maths
+	class ACID_EXPORT Maths
 	{
 	public:
 		/// <summary>

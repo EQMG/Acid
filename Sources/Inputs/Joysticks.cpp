@@ -4,7 +4,7 @@ namespace acid
 {
 	void CallbackJoystickConnect(JoystickPort port, std::string name, uint32_t buttonCount, uint32_t axesCount, bool connected)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		fprintf(stdout, "Joystick '%s' %s port %i\n", name, connected ? "connected to" : "disconnected from ", port);
 #endif
 		Joystick joystick = Joysticks::Get()->m_connected[port];

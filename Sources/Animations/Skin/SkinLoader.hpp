@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT SkinLoader
+	class ACID_EXPORT SkinLoader
 	{
 	private:
 		LoadedValue *m_skinData;

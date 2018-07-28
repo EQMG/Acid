@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class FL_EXPORT DriverBounce :
+	class ACID_EXPORT DriverBounce :
 		public IDriver
 	{
 	private:

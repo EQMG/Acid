@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererFonts :
+	class ACID_EXPORT RendererFonts :
 		public IRenderer
 	{
 	private:

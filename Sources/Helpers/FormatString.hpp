@@ -13,7 +13,7 @@ namespace acid
 	/// <summary>
 	/// A helper for C++ strings.
 	/// </summary>
-	class FL_EXPORT FormatString
+	class ACID_EXPORT FormatString
 	{
 	public:
 		/// <summary>

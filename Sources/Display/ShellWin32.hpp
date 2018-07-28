@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT MonitorWin32 :
+	class ACID_EXPORT MonitorWin32 :
 		public IMonitor
 	{
 	private:
@@ -31,7 +31,7 @@ namespace acid
 		uint32_t GetHeight() const override { return m_height; }
 	};
 
-	class FL_EXPORT ShellWin32 :
+	class ACID_EXPORT ShellWin32 :
 		public IShell
 	{
 	private:

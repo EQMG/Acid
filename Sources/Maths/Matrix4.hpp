@@ -16,7 +16,7 @@ namespace acid
 	/// <summary>
 	/// Holds a row major 4x4 matrix.
 	/// </summary>
-	class FL_EXPORT Matrix4
+	class ACID_EXPORT Matrix4
 	{
 	public:
 		union
@@ -269,29 +269,29 @@ namespace acid
 
 		Vector4 &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
+		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
+		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
+		ACID_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
 
-		FL_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
+		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
 
-		FL_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
+		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
 
 		Matrix4 &operator+=(const Matrix4 &other);
 
@@ -309,7 +309,7 @@ namespace acid
 
 		Matrix4 &operator/=(const float &other);
 
-		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
+		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
 		std::string ToString() const;
 	};

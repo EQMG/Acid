@@ -6,7 +6,7 @@ namespace acid
 {
 	class DepthStencil;
 
-	class FL_EXPORT Renderpass
+	class ACID_EXPORT Renderpass
 	{
 	private:
 		VkRenderPass m_renderPass;

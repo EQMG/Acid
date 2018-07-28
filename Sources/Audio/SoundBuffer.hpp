@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a sound buffer.
 	/// </summary>
-	class FL_EXPORT SoundBuffer :
+	class ACID_EXPORT SoundBuffer :
 		public IResource
 	{
 	private:

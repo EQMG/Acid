@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Keys from a keyboard.
 	/// </summary>
-	class FL_EXPORT ButtonKeyboard :
+	class ACID_EXPORT ButtonKeyboard :
 		public IButton
 	{
 	private:

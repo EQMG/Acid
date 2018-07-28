@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT VertexModelData
+	class ACID_EXPORT VertexModelData
 	{
 	private:
 		static const uint32_t NO_INDEX;

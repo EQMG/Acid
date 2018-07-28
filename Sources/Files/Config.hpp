@@ -10,7 +10,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Config
+	class ACID_EXPORT Config
 	{
 	private:
 		std::shared_ptr<IFile> m_file;

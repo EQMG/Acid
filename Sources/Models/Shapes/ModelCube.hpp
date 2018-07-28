@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelCube :
+	class ACID_EXPORT ModelCube :
 		public Model
 	{
 	public:

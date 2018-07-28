@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT PipelineGaussian :
+	class ACID_EXPORT PipelineGaussian :
 		public IPostPipeline
 	{
 	private:

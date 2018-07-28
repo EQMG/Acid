@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Axis from a joystick.
 	/// </summary>
-	class FL_EXPORT AxisJoystick :
+	class ACID_EXPORT AxisJoystick :
 		public IAxis
 	{
 	private:

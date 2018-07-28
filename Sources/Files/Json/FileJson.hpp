@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FileJson :
+	class ACID_EXPORT FileJson :
 		public IFile
 	{
 	private:

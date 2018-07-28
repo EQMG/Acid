@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT SelectorJoystick
+	class ACID_EXPORT SelectorJoystick
 	{
 	private:
 		JoystickPort m_joystick;
@@ -53,7 +53,7 @@ namespace acid
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
-	class FL_EXPORT UiSelector
+	class ACID_EXPORT UiSelector
 	{
 	private:
 		float m_cursorX;

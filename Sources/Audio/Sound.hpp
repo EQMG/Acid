@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a loaded sound.
 	/// </summary>
-	class FL_EXPORT Sound
+	class ACID_EXPORT Sound
 	{
 	private:
 		std::shared_ptr<SoundBuffer> m_soundBuffer;

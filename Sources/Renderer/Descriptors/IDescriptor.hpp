@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IDescriptor
+	class ACID_EXPORT IDescriptor
 	{
 	public:
 		IDescriptor()

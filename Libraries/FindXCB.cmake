@@ -12,6 +12,7 @@ include(FindPackageHandleStandardArgs)
 set(XCB_FOUND true)
 set(XCB_INCLUDE_DIRS "")
 set(XCB_LIBRARIES "")
+
 foreach(comp ${XCB_FIND_COMPONENTS})
     # component name
     string(TOUPPER ${comp} compname)

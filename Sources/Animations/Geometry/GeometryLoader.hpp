@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT GeometryLoader
+	class ACID_EXPORT GeometryLoader
 	{
 	private:
 		LoadedValue *m_meshData;

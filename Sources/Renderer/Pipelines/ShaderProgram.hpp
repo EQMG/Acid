@@ -14,7 +14,7 @@ namespace glslang
 
 namespace acid
 {
-	class FL_EXPORT Uniform
+	class ACID_EXPORT Uniform
 	{
 	private:
 		std::string m_name;
@@ -70,7 +70,7 @@ namespace acid
 		}
 	};
 
-	class FL_EXPORT UniformBlock
+	class ACID_EXPORT UniformBlock
 	{
 	private:
 		std::string m_name;
@@ -139,7 +139,7 @@ namespace acid
 		}
 	};
 
-	class FL_EXPORT VertexAttribute
+	class ACID_EXPORT VertexAttribute
 	{
 	private:
 		std::string m_name;
@@ -175,7 +175,7 @@ namespace acid
 		}
 	};
 
-	class FL_EXPORT ShaderProgram
+	class ACID_EXPORT ShaderProgram
 	{
 	private:
 		std::string m_name;

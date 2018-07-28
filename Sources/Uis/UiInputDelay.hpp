@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT UiInputDelay
+	class ACID_EXPORT UiInputDelay
 	{
 	private:
 		Timer m_timerDelay;

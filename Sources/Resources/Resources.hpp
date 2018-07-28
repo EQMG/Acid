@@ -11,7 +11,7 @@ namespace acid
 	/// <summary>
 	/// A module used for managing resources.
 	/// </summary>
-	class FL_EXPORT Resources :
+	class ACID_EXPORT Resources :
 		public IModule
 	{
 	private:

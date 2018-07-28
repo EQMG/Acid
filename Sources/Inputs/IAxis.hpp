@@ -7,7 +7,7 @@ namespace acid
 	/// <summary>
 	/// Interface for an axis based input device.
 	/// </summary>
-	class FL_EXPORT IAxis
+	class ACID_EXPORT IAxis
 	{
 	public:
 		/// <summary>

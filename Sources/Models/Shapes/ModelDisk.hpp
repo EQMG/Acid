@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelDisk :
+	class ACID_EXPORT ModelDisk :
 		public Model
 	{
 	public:

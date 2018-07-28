@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RowCsv
+	class ACID_EXPORT RowCsv
 	{
 	private:
 		std::vector<std::string> m_elements;
@@ -22,7 +22,7 @@ namespace acid
 		void SetElements(const std::vector<std::string> &elements) { m_elements = elements; }
 	};
 
-	class FL_EXPORT FileCsv :
+	class ACID_EXPORT FileCsv :
 		public IFile
 	{
 	private:

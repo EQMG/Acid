@@ -19,7 +19,7 @@ namespace acid
 	/// <summary>
 	/// A module used for the creation, updating and destruction of touch inputs.
 	/// </summary>
-	class FL_EXPORT Touches :
+	class ACID_EXPORT Touches :
 		public IModule
 	{
 	private:

@@ -5,17 +5,19 @@
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
-// TODO: Allow type to be overridden from a game.
-#if FL_BUILD_ANDROID
+#if ACID_WSI_ANDROID
   #include "ShellAndroid.hpp"
   typedef acid::ShellAndroid Shell_t;
-#elif FL_BUILD_MACOS
+#elif ACID_WSI_COCO
 #include "ShellCoco.hpp"
   typedef acid::ShellCoco Shell_t;
-#elif FL_BUILD_WINDOWS
+#elif ACID_BUILD_WIN32
   #include "ShellWin32.hpp"
   typedef acid::ShellWin32 Shell_t;
-#elif FL_BUILD_LINUX
+#elif ACID_WSI_WAYLAND
+  #include "ShellWayland.hpp"
+  typedef acid::ShellWayland Shell_t;
+#elif ACID_WSI_XCB
   #include "ShellXcb.hpp"
   typedef acid::ShellXcb Shell_t;
 #endif
@@ -125,7 +127,7 @@ namespace acid
 		m_closed(false),
 		m_focused(true),
 		m_iconified(false),
-#if defined(FL_VERBOSE) && !defined(FL_BUILD_MACOS)
+#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
 		m_validationLayers(true),
 #else
 		m_validationLayers(false),
@@ -236,14 +238,14 @@ namespace acid
 
 		if (fullscreen)
 		{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 			fprintf(stdout, "Display is going fullscreen\n");
 #endif
 			m_shell->SetFullscreen(monitors[0], true);
 		}
 		else
 		{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 			fprintf(stdout, "Display is going windowed\n");
 #endif
 			m_positionX = (monitors[0]->GetWidth() - m_windowWidth) / 2;
@@ -615,7 +617,7 @@ namespace acid
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		fprintf(stdout, "-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
@@ -664,7 +666,7 @@ namespace acid
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		fprintf(stdout, "-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto &layer : layerProperties)

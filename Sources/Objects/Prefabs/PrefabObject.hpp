@@ -15,7 +15,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a entity prefab.
 	/// </summary>
-	class FL_EXPORT PrefabObject :
+	class ACID_EXPORT PrefabObject :
 		public IResource
 	{
 	private:

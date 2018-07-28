@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	class FL_EXPORT UiInputSlider :
+	class ACID_EXPORT UiInputSlider :
 		public UiObject
 	{
 	private:

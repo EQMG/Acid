@@ -20,7 +20,7 @@ namespace acid
 	/// (based on the current animation time). The Animator then updates the transforms all of the joints each frame to match the current desired animation pose.
 	/// </para>
 	/// </summary>
-	class FL_EXPORT Animator
+	class ACID_EXPORT Animator
 	{
 	private:
 		Joint *m_rootJoint;

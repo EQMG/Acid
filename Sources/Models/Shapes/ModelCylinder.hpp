@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ModelCylinder :
+	class ACID_EXPORT ModelCylinder :
 		public Model
 	{
 	public:

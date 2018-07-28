@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT Swapchain
+	class ACID_EXPORT Swapchain
 	{
 	private:
 		VkPresentModeKHR m_presentMode;

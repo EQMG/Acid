@@ -10,34 +10,34 @@ set_target_properties(Acid PROPERTIES
         POSITION_INDEPENDENT_CODE ON
         FOLDER "Acid")
 
-if (WIN32 AND BUILD_SHARED_LIBS)
+if(WIN32 AND BUILD_SHARED_LIBS)
     set_target_properties(Acid PROPERTIES PREFIX "")
     set_target_properties(Acid PROPERTIES DEBUG_POSTFIX "")
-endif ()
+endif()
 
-if (BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS)
     target_compile_definitions(Acid PUBLIC
-            -DFL_EXPORTS
+            -DACID_EXPORTS
             )
-else ()
+else()
     target_compile_definitions(Acid PUBLIC
-            -DFL_STATICLIB
+            -DACID_STATICLIB
             )
-endif ()
+endif()
 
 target_include_directories(Acid PUBLIC ${LIBRARIES_INCLUDES} ${ACID_INCLUDES})
 target_link_libraries(Acid PRIVATE ${LIBRARIES_LINKS})
 
 # Install
-if (ACID_INSTALL)
+if(ACID_INSTALL)
     install(TARGETS Acid
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             )
 
-    foreach (file ${ACID_HEADERS_})
+    foreach(file ${ACID_HEADERS_})
         get_filename_component(dir ${file} DIRECTORY)
         install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/acid/${dir})
-    endforeach ()
-endif ()
+    endforeach()
+endif()

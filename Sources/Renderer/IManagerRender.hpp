@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A extension used with IRenderer's to define a master renderer.
 	/// </summary>
-	class FL_EXPORT IManagerRender
+	class ACID_EXPORT IManagerRender
 	{
 	private:
 		std::map<float, std::vector<std::shared_ptr<IRenderer>>> m_stages;

@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	class FL_EXPORT LoadedValue
+	class ACID_EXPORT LoadedValue
 	{
 	private:
 		LoadedValue *m_parent;

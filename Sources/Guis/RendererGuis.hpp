@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT RendererGuis :
+	class ACID_EXPORT RendererGuis :
 		public IRenderer
 	{
 	private:

@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Axis composed of multiple other axes.
 	/// </summary>
-	class FL_EXPORT AxisCompound :
+	class ACID_EXPORT AxisCompound :
 		public IAxis
 	{
 	private:

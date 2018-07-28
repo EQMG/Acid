@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Class that handles a descriptor set.
 	/// </summary>
-	class FL_EXPORT DescriptorsHandler
+	class ACID_EXPORT DescriptorsHandler
 	{
 	private:
 		ShaderProgram *m_shaderProgram;

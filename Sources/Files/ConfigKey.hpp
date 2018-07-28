@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT ConfigKey
+	class ACID_EXPORT ConfigKey
 	{
 	private:
 		std::string m_value;

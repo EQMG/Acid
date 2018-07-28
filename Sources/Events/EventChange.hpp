@@ -10,7 +10,7 @@ namespace acid
 	/// </summary>
 	/// @param <T> The type of value to find change with. </param>
 	template<typename T>
-	class FL_EXPORT EventChange :
+	class ACID_EXPORT EventChange :
 		public IEvent
 	{
 	private:

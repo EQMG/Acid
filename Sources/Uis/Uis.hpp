@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A module used for that manages gui textures in a container.
 	/// </summary>
-	class FL_EXPORT Uis :
+	class ACID_EXPORT Uis :
 		public IModule
 	{
 	private:

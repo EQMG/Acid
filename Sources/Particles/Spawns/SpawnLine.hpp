@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT SpawnLine :
+	class ACID_EXPORT SpawnLine :
 		public ISpawnParticle
 	{
 	private:

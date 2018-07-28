@@ -109,94 +109,6 @@ namespace acid
 		// TODO
 	}
 
-	void ShellXcb::InitConnection()
-	{
-		int scr;
-
-		m_connection = xcb_connect(nullptr, &scr);
-
-		if (!m_connection || xcb_connection_has_error(m_connection))
-		{
-			xcb_disconnect(m_connection);
-			assert("Failed to connect to the display server.");
-		}
-
-		const xcb_setup_t *setup = xcb_get_setup(m_connection);
-		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(setup);
-
-		while (scr-- > 0)
-		{
-			xcb_screen_next(&iter);
-		}
-
-		m_screen = iter.data;
-	}
-
-	void ShellXcb::LoadVk()
-	{
-		const char filename[] = "libvulkan.so.1";
-		void *handle, *symbol;
-
-#ifdef ACID_UNINSTALLED_LOADER
-		handle = dlopen(UNINSTALLED_LOADER, RTLD_LAZY);
-
-        if (handle == nullptr)
-        {
-        	handle = dlopen(filename, RTLD_LAZY);
-        }
-#else
-		handle = dlopen(filename, RTLD_LAZY);
-#endif
-
-		if (handle != nullptr)
-		{
-		    symbol = dlsym(handle, "vkGetInstanceProcAddr");
-		}
-
-		if (handle == nullptr || symbol == nullptr)
-		{
-			printf("%s\n", dlerror());
-
-			if (handle)
-			{
-				dlclose(handle);
-			}
-
-			assert("Failed to load Vulkan!");
-		}
-
-		m_vkHandle = handle;
-	}
-
-	void ShellXcb::CreateDisplay()
-	{
-		m_window = xcb_generate_id(m_connection);
-
-		uint32_t value_mask, value_list[32];
-		value_mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
-		value_list[0] = m_screen->black_pixel;
-		value_list[1] = XCB_EVENT_MASK_KEY_PRESS | XCB_EVENT_MASK_STRUCTURE_NOTIFY;
-
-		xcb_create_window(m_connection, XCB_COPY_FROM_PARENT, m_window, m_screen->root, 0, 0, 1080, 720, 0,
-			XCB_WINDOW_CLASS_INPUT_OUTPUT, m_screen->root_visual, value_mask, value_list);
-
-		xcb_intern_atom_cookie_t utf8_string_cookie = intern_atom_cookie(m_connection, "UTF8_STRING");
-		xcb_intern_atom_cookie_t _net_wm_name_cookie = intern_atom_cookie(m_connection, "_NET_WM_NAME");
-		xcb_intern_atom_cookie_t wm_protocols_cookie = intern_atom_cookie(m_connection, "WM_PROTOCOLS");
-		xcb_intern_atom_cookie_t wm_delete_window_cookie = intern_atom_cookie(m_connection, "WM_DELETE_WINDOW");
-
-		// set title
-		xcb_atom_t utf8_string = intern_atom(m_connection, utf8_string_cookie);
-		xcb_atom_t _net_wm_name = intern_atom(m_connection, _net_wm_name_cookie);
-		xcb_change_property(m_connection, XCB_PROP_MODE_REPLACE, m_window, _net_wm_name, utf8_string, 8, strlen("Acid"),
-			"Acid");
-
-		// advertise WM_DELETE_WINDOW
-		m_wmProtocols = intern_atom(m_connection, wm_protocols_cookie);
-		m_wmDeleteWindow_ = intern_atom(m_connection, wm_delete_window_cookie);
-		xcb_change_property(m_connection, XCB_PROP_MODE_REPLACE, m_window, m_wmProtocols, XCB_ATOM_ATOM, 32, 1, &m_wmDeleteWindow_);
-	}
-
 	void ShellXcb::HandleEvent(const xcb_generic_event_t *ev)
 	{
 		switch (ev->response_type & 0x7f)
@@ -233,6 +145,98 @@ namespace acid
 			break;
 		}
 		}
+	}
+
+	void ShellXcb::InitConnection()
+	{
+		int scr;
+
+		m_connection = xcb_connect(nullptr, &scr);
+
+		if (m_connection == nullptr || xcb_connection_has_error(m_connection))
+		{
+			xcb_disconnect(m_connection);
+			assert("Failed to connect to the display server.");
+		}
+
+		const xcb_setup_t *setup = xcb_get_setup(m_connection);
+		xcb_screen_iterator_t iter = xcb_setup_roots_iterator(setup);
+
+		while (scr-- > 0)
+		{
+			xcb_screen_next(&iter);
+		}
+
+		m_screen = iter.data;
+	}
+
+	void ShellXcb::LoadVk()
+	{
+		const char filename[] = "libvulkan.so.1";
+		void *handle, *symbol;
+
+#ifdef UNINSTALLED_LOADER
+		handle = dlopen(UNINSTALLED_LOADER, RTLD_LAZY);
+
+        if (handle == nullptr)
+        {
+        	handle = dlopen(filename, RTLD_LAZY);
+        }
+#else
+		handle = dlopen(filename, RTLD_LAZY);
+#endif
+
+		if (handle != nullptr)
+		{
+		    symbol = dlsym(handle, "vkGetInstanceProcAddr");
+		}
+
+		if (handle == nullptr || symbol == nullptr)
+		{
+			printf("%s\n", dlerror());
+
+			if (handle)
+			{
+				dlclose(handle);
+			}
+
+			assert("Failed to load Vulkan!");
+		}
+
+		m_vkHandle = handle;
+		m_vkProc = reinterpret_cast<PFN_vkGetInstanceProcAddr>(symbol);
+	}
+
+	void ShellXcb::CreateDisplay()
+	{
+		m_window = xcb_generate_id(m_connection);
+
+		uint32_t value_mask, value_list[32];
+		value_mask = XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK;
+		value_list[0] = m_screen->black_pixel;
+		value_list[1] = XCB_EVENT_MASK_KEY_PRESS | XCB_EVENT_MASK_STRUCTURE_NOTIFY;
+
+		xcb_create_window(m_connection, XCB_COPY_FROM_PARENT, m_window, m_screen->root, 0, 0, 1080, 720, 0,
+			XCB_WINDOW_CLASS_INPUT_OUTPUT, m_screen->root_visual, value_mask, value_list);
+
+		xcb_intern_atom_cookie_t utf8_string_cookie = intern_atom_cookie(m_connection, "UTF8_STRING");
+		xcb_intern_atom_cookie_t wm_name_cookie = intern_atom_cookie(m_connection, "WM_NAME");
+		xcb_intern_atom_cookie_t wm_protocols_cookie = intern_atom_cookie(m_connection, "WM_PROTOCOLS");
+		xcb_intern_atom_cookie_t wm_delete_window_cookie = intern_atom_cookie(m_connection, "WM_DELETE_WINDOW");
+
+		// set title
+		xcb_atom_t utf8_string = intern_atom(m_connection, utf8_string_cookie);
+		xcb_atom_t wm_name = intern_atom(m_connection, wm_name_cookie);
+		xcb_change_property(m_connection, XCB_PROP_MODE_REPLACE, m_window, wm_name, utf8_string, 8, strlen("Acid"),
+			"Acid");
+
+		// advertise WM_DELETE_WINDOW
+		m_wmProtocols = intern_atom(m_connection, wm_protocols_cookie);
+		m_wmDeleteWindow_ = intern_atom(m_connection, wm_delete_window_cookie);
+		xcb_change_property(m_connection, XCB_PROP_MODE_REPLACE, m_window, m_wmProtocols, XCB_ATOM_ATOM, 32, 1, &m_wmDeleteWindow_);
+
+		xcb_map_window(m_connection, m_window);
+		xcb_flush(m_connection);
 	}
 
 	xcb_intern_atom_cookie_t ShellXcb::intern_atom_cookie(xcb_connection_t *c, const char* s)

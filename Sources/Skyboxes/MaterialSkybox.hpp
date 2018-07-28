@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a skybox material shader.
 	/// </summary>
-	class FL_EXPORT MaterialSkybox :
+	class ACID_EXPORT MaterialSkybox :
 		public IMaterial
 	{
 	private:

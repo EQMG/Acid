@@ -11,7 +11,7 @@ namespace acid
 {
 	class GameObject;
 
-	class FL_EXPORT IComponent
+	class ACID_EXPORT IComponent
 	{
 	private:
 		std::string m_name;
@@ -47,9 +47,9 @@ namespace acid
 
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
 
-		FL_HIDDEN bool IsStarted() const { return m_started; };
+		ACID_HIDDEN bool IsStarted() const { return m_started; };
 
-		FL_HIDDEN void SetStarted(const bool &started) { m_started = started; }
+		ACID_HIDDEN void SetStarted(const bool &started) { m_started = started; }
 
 		bool IsEnabled() const { return m_enabled; };
 

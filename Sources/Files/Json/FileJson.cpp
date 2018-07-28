@@ -19,7 +19,7 @@ namespace acid
 
 	void FileJson::Load()
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -86,7 +86,7 @@ namespace acid
 		JsonSection::Convert(*currentSection, m_parent, true);
 		currentSection->Clear();
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -94,7 +94,7 @@ namespace acid
 
 	void FileJson::Save()
 	{
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -105,7 +105,7 @@ namespace acid
 		FileSystem::ClearFile(m_filename);
 		FileSystem::WriteTextFile(m_filename, data.str());
 
-#if FL_VERBOSE
+#if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Json '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

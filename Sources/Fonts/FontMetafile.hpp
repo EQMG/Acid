@@ -13,7 +13,7 @@ namespace acid
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class FL_EXPORT FontMetafile :
+	class ACID_EXPORT FontMetafile :
 		public IResource
 	{
 	private:

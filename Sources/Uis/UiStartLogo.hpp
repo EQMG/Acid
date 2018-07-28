@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT UiStartLogo :
+	class ACID_EXPORT UiStartLogo :
 		public UiObject
 	{
 	private:

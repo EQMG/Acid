@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// A class that represents a structured game object.
 	/// </summary>
-	class FL_EXPORT GameObject :
+	class ACID_EXPORT GameObject :
 		public std::enable_shared_from_this<GameObject>
 	{
 	private:

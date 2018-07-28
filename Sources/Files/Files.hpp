@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A module used for managing files on engine updates.
 	/// </summary>
-	class FL_EXPORT Files :
+	class ACID_EXPORT Files :
 		public IModule
 	{
 	private:

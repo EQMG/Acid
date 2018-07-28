@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// Holds a 3 dimensional ray.
 	/// </summary>
-	class FL_EXPORT Ray
+	class ACID_EXPORT Ray
 	{
 	private:
 		bool m_useMouse;

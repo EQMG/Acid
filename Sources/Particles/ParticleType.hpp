@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
-	class FL_EXPORT ParticleType
+	class ACID_EXPORT ParticleType
 	{
 	private:
 		std::string m_name;

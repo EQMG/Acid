@@ -9,7 +9,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a material shader.
 	/// </summary>
-	class FL_EXPORT IMaterial :
+	class ACID_EXPORT IMaterial :
 		public IComponent
 	{
 	public:

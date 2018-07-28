@@ -396,13 +396,20 @@ set(ACID_SOURCES_
         "Uis/UiStartLogo.cpp"
         )
 
-
 if(WIN32)
     set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellWin32.hpp")
     set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellWin32.cpp")
 elseif(UNIX AND NOT APPLE)
-    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellXcb.hpp")
-    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellXcb.cpp")
+    if(ACID_WAYLAND_SUPPORT)
+        set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellWayland.hpp")
+        set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellWayland.cpp")
+    else()
+        set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellXcb.hpp")
+        set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellXcb.cpp")
+    endif()
+elseif(UNIX AND APPLE)
+    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellCoco.hpp")
+    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellCoco.cpp")
 endif()
 
 source_group("Header Files" FILES ${ACID_HEADERS_})

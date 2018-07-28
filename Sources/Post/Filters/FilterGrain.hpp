@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterGrain :
+	class ACID_EXPORT FilterGrain :
 		public IPostFilter
 	{
 	private:

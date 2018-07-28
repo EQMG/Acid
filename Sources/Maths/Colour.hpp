@@ -14,7 +14,7 @@ namespace acid
 	/// <summary>
 	/// Holds a RGBA colour.
 	/// </summary>
-	class FL_EXPORT Colour
+	class ACID_EXPORT Colour
 	{
 	public:
 		union
@@ -221,29 +221,29 @@ namespace acid
 
 		float &operator[](const uint32_t &index);
 
-		FL_EXPORT friend Colour operator+(Colour left, const Colour &right);
+		ACID_EXPORT friend Colour operator+(Colour left, const Colour &right);
 
-		FL_EXPORT friend Colour operator-(Colour left, const Colour &right);
+		ACID_EXPORT friend Colour operator-(Colour left, const Colour &right);
 
-		FL_EXPORT friend Colour operator*(Colour left, const Colour &right);
+		ACID_EXPORT friend Colour operator*(Colour left, const Colour &right);
 
-		FL_EXPORT friend Colour operator/(Colour left, const Colour &right);
+		ACID_EXPORT friend Colour operator/(Colour left, const Colour &right);
 
-		FL_EXPORT friend Colour operator+(Colour left, float value);
+		ACID_EXPORT friend Colour operator+(Colour left, float value);
 
-		FL_EXPORT friend Colour operator-(Colour left, float value);
+		ACID_EXPORT friend Colour operator-(Colour left, float value);
 
-		FL_EXPORT friend Colour operator*(Colour left, float value);
+		ACID_EXPORT friend Colour operator*(Colour left, float value);
 
-		FL_EXPORT friend Colour operator/(Colour left, float value);
+		ACID_EXPORT friend Colour operator/(Colour left, float value);
 
-		FL_EXPORT friend Colour operator+(float value, Colour left);
+		ACID_EXPORT friend Colour operator+(float value, Colour left);
 
-		FL_EXPORT friend Colour operator-(float value, Colour left);
+		ACID_EXPORT friend Colour operator-(float value, Colour left);
 
-		FL_EXPORT friend Colour operator*(float value, Colour left);
+		ACID_EXPORT friend Colour operator*(float value, Colour left);
 
-		FL_EXPORT friend Colour operator/(float value, Colour left);
+		ACID_EXPORT friend Colour operator/(float value, Colour left);
 
 		Colour &operator+=(const Colour &other);
 
@@ -261,7 +261,7 @@ namespace acid
 
 		Colour &operator/=(float value);
 
-		FL_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
+		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
 
 		std::string ToString() const;
 	};

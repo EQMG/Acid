@@ -8,7 +8,7 @@ class btConvexHullShape;
 
 namespace acid
 {
-	class FL_EXPORT ColliderConvexHull :
+	class ACID_EXPORT ColliderConvexHull :
 		public Collider
 	{
 	private:
@@ -30,7 +30,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderConvexHull"; };
 
-		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		int GetPoints() const { return m_points; }
 

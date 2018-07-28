@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT IPipeline
+	class ACID_EXPORT IPipeline
 	{
 	public:
 		IPipeline()

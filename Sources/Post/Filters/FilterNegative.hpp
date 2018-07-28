@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT FilterNegative :
+	class ACID_EXPORT FilterNegative :
 		public IPostFilter
 	{
 	public:

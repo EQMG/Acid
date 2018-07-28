@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class FL_EXPORT MonitorXcb :
+	class ACID_EXPORT MonitorXcb :
 		public IMonitor
 	{
 	private:
@@ -40,6 +40,7 @@ namespace acid
 		xcb_atom_t m_wmDeleteWindow_;
 
 		void *m_vkHandle;
+		PFN_vkGetInstanceProcAddr m_vkProc;
 	public:
 		ShellXcb();
 

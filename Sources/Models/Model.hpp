@@ -12,7 +12,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a OBJ model.
 	/// </summary>
-	class FL_EXPORT Model :
+	class ACID_EXPORT Model :
 		public IResource
 	{
 	private:

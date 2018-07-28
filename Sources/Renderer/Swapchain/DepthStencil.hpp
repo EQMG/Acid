@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT DepthStencil :
+	class ACID_EXPORT DepthStencil :
 		public IDescriptor
 	{
 	private:

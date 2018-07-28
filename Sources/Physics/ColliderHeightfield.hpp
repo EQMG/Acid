@@ -8,7 +8,7 @@ class btHeightfieldTerrainShape;
 
 namespace acid
 {
-	class FL_EXPORT ColliderHeightfield :
+	class ACID_EXPORT ColliderHeightfield :
 		public Collider
 	{
 	private:
@@ -31,7 +31,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderHeightfield"; };
 
-		FL_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,
 						   const void *heightfieldData, const float &heightScale,

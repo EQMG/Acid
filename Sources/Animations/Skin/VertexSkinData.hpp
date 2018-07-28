@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class FL_EXPORT VertexSkinData
+	class ACID_EXPORT VertexSkinData
 	{
 	private:
 		std::vector<int> m_jointIds;

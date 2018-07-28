@@ -36,7 +36,7 @@ namespace acid
 
 		if (location == -1)
 		{
-#ifdef FL_VERBOSE
+#ifdef ACID_VERBOSE
 			if (m_shaderProgram->ReportedNotFound(descriptorName, true))
 			{
 				fprintf(stderr, "Could not find descriptor in shader '%s' of name '%s'\n", m_shaderProgram->GetName().c_str(), descriptorName.c_str());

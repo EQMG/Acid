@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Class that handles a uniform buffer.
 	/// </summary>
-	class FL_EXPORT UniformHandler
+	class ACID_EXPORT UniformHandler
 	{
 	private:
 		bool m_multipipeline;

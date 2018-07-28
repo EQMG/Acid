@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class FL_EXPORT SpawnSphere :
+	class ACID_EXPORT SpawnSphere :
 		public ISpawnParticle
 	{
 	private:
