@@ -5,21 +5,15 @@
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
-#if ACID_WSI_ANDROID
-  #include "ShellAndroid.hpp"
-  typedef acid::ShellAndroid Shell_t;
-#elif ACID_WSI_COCO
-#include "ShellCoco.hpp"
-  typedef acid::ShellCoco Shell_t;
-#elif ACID_BUILD_WIN32
+#if ACID_WSI_WIN32
   #include "ShellWin32.hpp"
   typedef acid::ShellWin32 Shell_t;
-#elif ACID_WSI_WAYLAND
-  #include "ShellWayland.hpp"
-  typedef acid::ShellWayland Shell_t;
 #elif ACID_WSI_XCB
   #include "ShellXcb.hpp"
   typedef acid::ShellXcb Shell_t;
+#elif ACID_WSI_COCO
+  #include "ShellCocoa.hpp"
+  typedef acid::ShellCocoa Shell_t;
 #endif
 
 namespace acid

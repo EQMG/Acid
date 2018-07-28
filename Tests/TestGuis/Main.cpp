@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #include <Files/Json/FileJson.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
@@ -38,9 +38,5 @@ int main(int argc, char **argv)
 	// Runs the game loop.
 	auto exitCode = engine->Run();
 
-	// Pauses the console.
-#ifndef ACID_VERBOSE
-	std::cin.get();
-#endif
 	return exitCode;
 }

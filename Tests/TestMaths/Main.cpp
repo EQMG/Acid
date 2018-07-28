@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #include <Maths/Maths.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Matrix2.hpp>
@@ -73,9 +73,5 @@ int main(int argc, char **argv)
 		fprintf(stdout, "\n");
 	}
 
-	// Pauses the console.
-#ifndef ACID_VERBOSE
-	std::cin.get();
-#endif
 	return EXIT_SUCCESS;
 }

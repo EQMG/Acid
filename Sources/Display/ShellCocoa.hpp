@@ -4,21 +4,21 @@
 
 namespace acid
 {
-	class ACID_EXPORT MonitorCoco :
+	class ACID_EXPORT MonitorCocoa :
 		public IMonitor
 	{
 	private:
 		uint32_t m_width;
 		uint32_t m_height;
 	public:
-		MonitorCoco(const uint32_t &width, const uint32_t &height) :
+		MonitorCocoa(const uint32_t &width, const uint32_t &height) :
 			IMonitor(),
 			m_width(width),
 			m_height(height)
 		{
 		}
 
-		~MonitorCoco()
+		~MonitorCocoa()
 		{
 		}
 
@@ -27,15 +27,15 @@ namespace acid
 		uint32_t GetHeight() const override { return m_height; }
 	};
 
-	class ShellCoco :
+	class ShellCocoa :
 		public IShell
 	{
 	private:
 
 	public:
-		ShellCoco();
+		ShellCocoa();
 
-		~ShellCoco();
+		~ShellCocoa();
 
 		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 

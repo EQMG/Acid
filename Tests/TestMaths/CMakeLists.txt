@@ -3,7 +3,7 @@ include(CMakeSources.cmake)
 
 set(TESTMATHS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestMaths/")
 
-add_executable(TestMaths "TestMaths.rc" ${TESTMATHS_SOURCES})
+add_executable(TestMaths ${TESTMATHS_SOURCES})
 
 set_target_properties(TestMaths PROPERTIES
                       POSITION_INDEPENDENT_CODE ON
@@ -11,8 +11,8 @@ set_target_properties(TestMaths PROPERTIES
 
 add_dependencies(TestMaths Acid)
 
-target_include_directories(TestMaths PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTMATHS_INCLUDES})
-target_link_libraries(TestMaths PRIVATE ${LIBRARIES_LINKS} Acid)
+target_include_directories(TestMaths PUBLIC ${ACID_INCLUDES} ${TESTMATHS_INCLUDES})
+target_link_libraries(TestMaths PRIVATE Acid)
 
 # Install
 if(ACID_INSTALL)
