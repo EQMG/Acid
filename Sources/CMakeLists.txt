@@ -4,7 +4,7 @@ include(CMakeSources.cmake)
 set(ACID_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Acid ${LIB_TYPE} ${ACID_SOURCES})
-add_dependencies(Acid SPIRV glslang BulletDynamics BulletCollision LinearMath)
+add_dependencies(Acid SPIRV BulletDynamics)
 
 set_target_properties(Acid PROPERTIES
         POSITION_INDEPENDENT_CODE ON
@@ -25,8 +25,22 @@ else()
             )
 endif()
 
-target_include_directories(Acid PUBLIC ${LIBRARIES_INCLUDES} ${ACID_INCLUDES})
-target_link_libraries(Acid PRIVATE ${LIBRARIES_LINKS})
+find_package(Threads REQUIRED)
+find_package(Vulkan REQUIRED)
+find_package(OpenAL REQUIRED)
+
+if(UNIX AND NOT APPLE)
+    find_package(XCB REQUIRED)
+    target_include_directories(Acid PUBLIC ${XCB_INCLUDE_DIRS})
+    target_link_libraries(Acid PUBLIC ${XCB_LIBRARIES})
+elseif(UNIX AND APPLE)
+    find_library(COCOA_LIBRARY Cocoa)
+    target_compile_options(Acid PRIVATE -std=c99 -x objective-c -fno-objc-arc -Wall -Wno-unused-function -Wno-unused-const-variable)
+    target_link_libraries(Acid PUBLIC ${COCOA_LIBRARY})
+endif()
+
+target_include_directories(Acid PUBLIC ${VULKAN_INCLUDE_DIR} ${OPENAL_INCLUDE_DIR} ${GLSLANG_INCLUDE_DIRS} ${BULLET_INCLUDE_DIRS} ${ACID_INCLUDES})
+target_link_libraries(Acid PUBLIC ${VULKAN_LIBRARY} ${OPENAL_LIBRARY} ${GLSLANG_LIBRARIES} ${BULLET_LIBRARIES})
 
 # Install
 if(ACID_INSTALL)

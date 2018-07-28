@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
@@ -58,9 +58,5 @@ int main(int argc, char **argv)
 	// Runs the game loop.
 	auto exitCode = engine->Run();
 
-	// Pauses the console.
-#ifndef ACID_VERBOSE
-	std::cin.get();
-#endif
 	return exitCode;
 }

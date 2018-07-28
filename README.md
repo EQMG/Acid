@@ -63,9 +63,7 @@ Website   [Learn more](https://equilibrium.games)
 
 ## Platforms
 Acid currently can be run on the following platforms:
- * Windows, Linux
- * *Android*
- * *MacOS, IOS*
+ * Windows, Linux, MacOS
 
 ## Features
 This is a list of current features in Acid:

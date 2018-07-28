@@ -2,6 +2,7 @@ set(TESTMATHS_HEADERS_
         )
 
 set(TESTMATHS_SOURCES_
+        "TestMaths.rc"
         "Main.cpp"
         )
 

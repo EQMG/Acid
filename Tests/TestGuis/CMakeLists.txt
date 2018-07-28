@@ -4,9 +4,9 @@ include(CMakeSources.cmake)
 set(TESTGUIS_INCLUDES "${PROJECT_SOURCE_DIR}/Tests/TestGuis/")
 
 #if(ACID_BUILD_RELEASE AND WIN32)
-#	add_executable(TestGuis WIN32 ${TESTGUIS_SOURCES})
+#add_executable(TestGuis WIN32 ${TESTGUIS_SOURCES})
 #else()
-add_executable(TestGuis "TestGuis.rc" ${TESTGUIS_SOURCES})
+add_executable(TestGuis ${TESTGUIS_SOURCES})
 #endif()
 
 set_target_properties(TestGuis PROPERTIES
@@ -15,8 +15,8 @@ set_target_properties(TestGuis PROPERTIES
 
 add_dependencies(TestGuis Acid)
 
-target_include_directories(TestGuis PUBLIC ${LIBRARIES_INCLUDES} "${PROJECT_SOURCE_DIR}/Sources/" ${TESTGUIS_INCLUDES})
-target_link_libraries(TestGuis PRIVATE ${LIBRARIES_LINKS} Acid)
+target_include_directories(TestGuis PUBLIC ${ACID_INCLUDES} ${TESTGUIS_INCLUDES})
+target_link_libraries(TestGuis PRIVATE Acid)
 
 # Install
 if(ACID_INSTALL)

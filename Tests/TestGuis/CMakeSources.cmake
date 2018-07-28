@@ -11,6 +11,7 @@ set(TESTGUIS_HEADERS_
         )
 
 set(TESTGUIS_SOURCES_
+        "TestGuis.rc"
         "Main.cpp"
         "MainRenderer.cpp"
         "MainUpdater.cpp"

@@ -13,6 +13,7 @@ set(TESTDEFERED_HEADERS_
         )
 
 set(TESTDEFERED_SOURCES_
+        "TestDeferred.rc"
         "Skybox/CelestialBody.cpp"
         "Skybox/SkyboxCycle.cpp"
         "Configs/ConfigManager.cpp"

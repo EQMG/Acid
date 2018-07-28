@@ -7,15 +7,12 @@ option(ACID_INSTALL "Generate installation target" OFF)
 option(ACID_BUILD_TESTING "Build the Acid test programs" ON)
 option(ACID_SETUP_COMPILER "If Acid will set it's own compiler settings" ON)
 option(ACID_SETUP_OUTPUT "If Acid will set it's own outputs" ON)
-option(ACID_WAYLAND_SUPPORT "If Acid on Linux will use Wayland over XCB/X11" OFF)
 
 set(LIB_TYPE STATIC)
 
 if(BUILD_SHARED_LIBS)
 	set(LIB_TYPE SHARED)
 endif()
-
-message(STATUS "Shared Libs: ${BUILD_SHARED_LIBS}")
 
 # Cmake Modules
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Libraries")
@@ -31,49 +28,19 @@ elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	add_definitions(-DACID_BUILD_RELEASE)
 endif()
 
-find_package(Threads REQUIRED)
-
 if(WIN32)
-	message(STATUS "Platform: Windows")
 	add_definitions(-DACID_WSI_WIN32)
 	add_definitions(-DACID_BUILD_WINDOWS)
 elseif(UNIX AND NOT APPLE)
-    message(STATUS "Platform: Linux")
-
-	if(ACID_WAYLAND_SUPPORT)
-		find_package(Wayland REQUIRED)
-		add_definitions(-DACID_WSI_WAYLAND)
-	else()
-		find_package(XCB REQUIRED)
-		add_definitions(-DACID_WSI_XCB)
-	endif()
-
+	add_definitions(-DACID_WSI_XCB)
 	add_definitions(-DACID_BUILD_LINUX)
 elseif(UNIX AND APPLE)
-	message(STATUS "Platform: Apple")
 	add_definitions(-DACID_WSI_COCO)
 	add_definitions(-DACID_BUILD_MACOS)
-elseif(ANDROID)
-	message(STATUS "Platform: Android")
-	add_definitions(-DACID_WSI_ANDROID)
-	add_definitions(-DACID_BUILD_ANDROID)
-endif()
-
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(ACID_64BIT true)
-    add_definitions(-DACID_64BIT)
-else()
-    set(ACID_32BIT true)
-    add_definitions(-DACID_32BIT)
 endif()
 
 # Compiler Options
 if(ACID_SETUP_COMPILER)
-	message(STATUS "System: ${CMAKE_SYSTEM}")
-	message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
-	message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
-	message(STATUS "Sizeof Void: ${CMAKE_SIZEOF_VOID_P}")
-
 	set(CMAKE_CXX_STANDARD 17)
 	set(CMAKE_CXX_EXTENSIONS ON)
 	set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -84,7 +51,6 @@ if(ACID_SETUP_COMPILER)
 
     if(WIN32)
         set(CMAKE_SHARED_LIBRARY_PREFIX "")
-    #   set(CMAKE_STATIC_LIBRARY_PREFIX "")
     endif()
 
 	if(MSVC)
@@ -94,8 +60,9 @@ if(ACID_SETUP_COMPILER)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /std:c++17 /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP /W3 /wd4251")
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1 /MDd /DEBUG")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ob2 /MD")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Ob2 /MDd /DEBUG")
 
-		if(ACID_64BIT)
+		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 			set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /OPT:ICF")
 		else()
@@ -107,18 +74,14 @@ if(ACID_SETUP_COMPILER)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -DNDEBUG -Wno-unused-variable")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
 	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 		add_definitions(-DACID_BUILD_GNU)
 		add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -mavx -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -s -DNDEBUG -Wno-unused-variable")
-	endif()
-
-	if(ANDROID)
-		set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate")
-		list(APPEND LIBRARIES_INCLUDES ${ANDROID_NDK}/sources/android/native_app_glue/)
-		list(APPEND LIBRARIES_LINKS "android log")
+		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
 	endif()
 endif()
 
@@ -133,21 +96,13 @@ if(ACID_SETUP_OUTPUT)
 	set(CMAKE_INSTALL_INCLUDEDIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/include)
 endif()
 
-# Dependencies
-include(Libraries/FindOpenAL.cmake)
-include(Libraries/FindVulkan.cmake)
-include(Libraries/FindBullet.cmake)
-include(Libraries/FindGlslang.cmake)
-
-set(LIBRARIES_INCLUDES ${LIBRARIES_INCLUDES} PARENT_SCOPE)
-set(LIBRARIES_LINKS ${LIBRARIES_LINKS} PARENT_SCOPE)
-message(${LIBRARIES_INCLUDES})
-message(${LIBRARIES_LINKS})
+# Library Sources
+add_subdirectory(Libraries)
 
 # Engine Sources
 add_subdirectory(Sources)
 
-# Example Sources
+# Testing Sources
 if(ACID_BUILD_TESTING)
 	add_subdirectory(Tests/TestDeferred)
 	add_subdirectory(Tests/TestGuis)
