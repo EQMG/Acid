@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <iostream>
 #include <Maths/Maths.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Matrix2.hpp>
@@ -73,5 +73,6 @@ int main(int argc, char **argv)
 		fprintf(stdout, "\n");
 	}
 
+	std::cin.get();
 	return EXIT_SUCCESS;
 }
