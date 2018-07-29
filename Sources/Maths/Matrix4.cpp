@@ -1,5 +1,8 @@
 #include "Matrix4.hpp"
 
+#ifdef ACID_SSE
+#include <emmintrin.h>
+#endif
 #include <cassert>
 #include "Maths.hpp"
 #include "Matrix3.hpp"
@@ -13,26 +16,54 @@ namespace acid
 
 	Matrix4::Matrix4(const float &diagonal)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_set_ps(0.0f, 0.0f, 0.0f, diagonal));
+		_mm_storeu_ps(&m_rows[1][0], _mm_set_ps(0.0f, 0.0f, diagonal, 0.0f));
+		_mm_storeu_ps(&m_rows[2][0], _mm_set_ps(0.0f, diagonal, 0.0f, 0.0f));
+		_mm_storeu_ps(&m_rows[3][0], _mm_set_ps(diagonal, 0.0f, 0.0f, 0.0f));
+#else
 		memset(m_rows, 0, 4 * sizeof(Vector4));
 		m_rows[0][0] = diagonal;
 		m_rows[1][1] = diagonal;
 		m_rows[2][2] = diagonal;
 		m_rows[3][3] = diagonal;
+#endif
 	}
 
 	Matrix4::Matrix4(const Matrix4 &source)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_loadu_ps(source[0].m_elements));
+		_mm_storeu_ps(&m_rows[1][0], _mm_loadu_ps(source[1].m_elements));
+		_mm_storeu_ps(&m_rows[2][0], _mm_loadu_ps(source[2].m_elements));
+		_mm_storeu_ps(&m_rows[3][0], _mm_loadu_ps(source[3].m_elements));
+#else
 		memcpy(m_rows, source.m_rows, 4 * sizeof(Vector4));
+#endif
 	}
 
 	Matrix4::Matrix4(const float *source)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_loadu_ps(source));
+		_mm_storeu_ps(&m_rows[1][0], _mm_loadu_ps(source + 4));
+		_mm_storeu_ps(&m_rows[2][0], _mm_loadu_ps(source + 8));
+		_mm_storeu_ps(&m_rows[3][0], _mm_loadu_ps(source + 12));
+#else
 		memcpy(m_rows, source, 4 * 4 * sizeof(float));
+#endif
 	}
 
 	Matrix4::Matrix4(const Vector4 *source)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_loadu_ps(source[0].m_elements));
+		_mm_storeu_ps(&m_rows[1][0], _mm_loadu_ps(source[1].m_elements));
+		_mm_storeu_ps(&m_rows[2][0], _mm_loadu_ps(source[2].m_elements));
+		_mm_storeu_ps(&m_rows[3][0], _mm_loadu_ps(source[3].m_elements));
+#else
 		memcpy(m_rows, source, 4 * sizeof(Vector4));
+#endif
 	}
 
 	Matrix4::~Matrix4()
@@ -43,6 +74,12 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
+#ifdef ACID_SSE
+		_mm_storeu_ps(&result[0][0], _mm_add_ps(_mm_loadu_ps(&m_rows[0][0]), _mm_loadu_ps(&other[0][0])));
+		_mm_storeu_ps(&result[1][0], _mm_add_ps(_mm_loadu_ps(&m_rows[1][0]), _mm_loadu_ps(&other[1][0])));
+		_mm_storeu_ps(&result[2][0], _mm_add_ps(_mm_loadu_ps(&m_rows[2][0]), _mm_loadu_ps(&other[2][0])));
+		_mm_storeu_ps(&result[3][0], _mm_add_ps(_mm_loadu_ps(&m_rows[3][0]), _mm_loadu_ps(&other[3][0])));
+#else
 		for (int row = 0; row < 4; row++)
 		{
 			for (int col = 0; col < 4; col++)
@@ -50,6 +87,7 @@ namespace acid
 				result[row][col] = m_rows[row][col] + other[row][col];
 			}
 		}
+#endif
 
 		return result;
 	}
@@ -58,6 +96,12 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
+#ifdef ACID_SSE
+		_mm_storeu_ps(&result[0][0], _mm_sub_ps(_mm_loadu_ps(&m_rows[0][0]), _mm_loadu_ps(&other[0][0])));
+		_mm_storeu_ps(&result[1][0], _mm_sub_ps(_mm_loadu_ps(&m_rows[1][0]), _mm_loadu_ps(&other[1][0])));
+		_mm_storeu_ps(&result[2][0], _mm_sub_ps(_mm_loadu_ps(&m_rows[2][0]), _mm_loadu_ps(&other[2][0])));
+		_mm_storeu_ps(&result[3][0], _mm_sub_ps(_mm_loadu_ps(&m_rows[3][0]), _mm_loadu_ps(&other[3][0])));
+#else
 		for (int row = 0; row < 4; row++)
 		{
 			for (int col = 0; col < 4; col++)
@@ -65,6 +109,7 @@ namespace acid
 				result[row][col] = m_rows[row][col] - other[row][col];
 			}
 		}
+#endif
 
 		return result;
 	}
@@ -73,6 +118,40 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
+#ifdef ACID_SSE
+		__m128 r0 = _mm_loadu_ps(&other[0][0]);
+		__m128 r1 = _mm_loadu_ps(&other[1][0]);
+		__m128 r2 = _mm_loadu_ps(&other[2][0]);
+		__m128 r3 = _mm_loadu_ps(&other[3][0]);
+
+		__m128 l = _mm_loadu_ps(&m_rows[0][0]);
+		__m128 t0 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(0, 0, 0, 0)), r0);
+		__m128 t1 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(1, 1, 1, 1)), r1);
+		__m128 t2 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(2, 2, 2, 2)), r2);
+		__m128 t3 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(3, 3, 3, 3)), r3);
+		_mm_storeu_ps(&result[0][0], _mm_add_ps(_mm_add_ps(t0, t1), _mm_add_ps(t2, t3)));
+
+		l = _mm_loadu_ps(&m_rows[1][0]);
+		t0 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(0, 0, 0, 0)), r0);
+		t1 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(1, 1, 1, 1)), r1);
+		t2 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(2, 2, 2, 2)), r2);
+		t3 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(3, 3, 3, 3)), r3);
+		_mm_storeu_ps(&result[1][0], _mm_add_ps(_mm_add_ps(t0, t1), _mm_add_ps(t2, t3)));
+
+		l = _mm_loadu_ps(&m_rows[2][0]);
+		t0 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(0, 0, 0, 0)), r0);
+		t1 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(1, 1, 1, 1)), r1);
+		t2 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(2, 2, 2, 2)), r2);
+		t3 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(3, 3, 3, 3)), r3);
+		_mm_storeu_ps(&result[2][0], _mm_add_ps(_mm_add_ps(t0, t1), _mm_add_ps(t2, t3)));
+
+		l = _mm_loadu_ps(&m_rows[3][0]);
+		t0 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(0, 0, 0, 0)), r0);
+		t1 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(1, 1, 1, 1)), r1);
+		t2 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(2, 2, 2, 2)), r2);
+		t3 = _mm_mul_ps(_mm_shuffle_ps(l, l, _MM_SHUFFLE(3, 3, 3, 3)), r3);
+		_mm_storeu_ps(&result[3][0], _mm_add_ps(_mm_add_ps(t0, t1), _mm_add_ps(t2, t3)));
+#else
 		for (int row = 0; row < 4; row++)
 		{
 			for (int col = 0; col < 4; col++)
@@ -80,6 +159,7 @@ namespace acid
 				result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
 			}
 		}
+#endif
 
 		return result;
 	}
@@ -258,6 +338,18 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
+#ifdef ACID_SSE
+		__m128 m0 = _mm_loadu_ps(&m_rows[0][0]);
+		__m128 m1 = _mm_loadu_ps(&m_rows[1][0]);
+		__m128 m2 = _mm_loadu_ps(&m_rows[2][0]);
+		__m128 m3 = _mm_loadu_ps(&m_rows[3][0]);
+		_MM_TRANSPOSE4_PS(m0, m1, m2, m3);
+
+		_mm_storeu_ps(&result[0][0], m0);
+		_mm_storeu_ps(&result[1][0], m1);
+		_mm_storeu_ps(&result[2][0], m2);
+		_mm_storeu_ps(&result[3][0], m3);
+#else
 		for (int row = 0; row < 4; row++)
 		{
 			for (int col = 0; col < 4; col++)
@@ -265,6 +357,7 @@ namespace acid
 				result[row][col] = m_rows[col][row];
 			}
 		}
+#endif
 
 		return result;
 	}
@@ -489,17 +582,31 @@ namespace acid
 
 	Matrix4 &Matrix4::operator=(const Matrix4 &other)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_loadu_ps(&other[0][0]));
+		_mm_storeu_ps(&m_rows[1][0], _mm_loadu_ps(&other[1][0]));
+		_mm_storeu_ps(&m_rows[2][0], _mm_loadu_ps(&other[2][0]));
+		_mm_storeu_ps(&m_rows[3][0], _mm_loadu_ps(&other[3][0]));
+#else
 		for (int i = 0; i < 4; i++)
 		{
 			m_rows[i] = other[i];
 		}
+#endif
 
 		return *this;
 	}
 
 	Matrix4 &Matrix4::operator=(const float *array)
 	{
+#ifdef ACID_SSE
+		_mm_storeu_ps(&m_rows[0][0], _mm_loadu_ps(array));
+		_mm_storeu_ps(&m_rows[1][0], _mm_loadu_ps(array + 4));
+		_mm_storeu_ps(&m_rows[2][0], _mm_loadu_ps(array + 8));
+		_mm_storeu_ps(&m_rows[3][0], _mm_loadu_ps(array + 12));
+#else
 		memcpy(m_rows, array, 4 * 4 * sizeof(float));
+#endif
 		return *this;
 	}
 
@@ -514,7 +621,22 @@ namespace acid
 
 	bool Matrix4::operator==(const Matrix4 &other) const
 	{
+#ifdef ACID_SSE
+		__m128 c0 = _mm_cmpeq_ps(_mm_loadu_ps(&m_rows[0][0]), _mm_loadu_ps(&other[0][0]));
+		__m128 c1 = _mm_cmpeq_ps(_mm_loadu_ps(&m_rows[1][0]), _mm_loadu_ps(&other[1][0]));
+		c0 = _mm_and_ps(c0, c1);
+		__m128 c2 = _mm_cmpeq_ps(_mm_loadu_ps(&m_rows[2][0]), _mm_loadu_ps(&other[2][0]));
+		__m128 c3 = _mm_cmpeq_ps(_mm_loadu_ps(&m_rows[3][0]), _mm_loadu_ps(&other[3][0]));
+		c2 = _mm_and_ps(c2, c3);
+		c0 = _mm_and_ps(c0, c2);
+		__m128 hi = _mm_movehl_ps(c0, c0);
+		c0 = _mm_and_ps(c0, hi);
+		hi = _mm_shuffle_ps(c0, c0, _MM_SHUFFLE(1, 1, 1, 1));
+		c0 = _mm_and_ps(c0, hi);
+		return _mm_cvtsi128_si32(_mm_castps_si128(c0)) == -1;
+#else
 		return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2] && m_rows[3] == other[3];
+#endif
 	}
 
 	bool Matrix4::operator!=(const Matrix4 &other) const

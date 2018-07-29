@@ -1,7 +1,5 @@
 #include "DescriptorsHandler.hpp"
 
-#include "Renderer/Pipelines/Pipeline.hpp"
-
 namespace acid
 {
 	DescriptorsHandler::DescriptorsHandler() :

@@ -1,9 +1,10 @@
-cmake_minimum_required (VERSION 3.1)
-project (Acid)
+cmake_minimum_required(VERSION 3.1)
+project(Acid)
 
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(ACID_INSTALL "Generate installation target" OFF)
+option(ACID_SSE "If Acid will use SSE maths" ON)
 option(ACID_BUILD_TESTING "Build the Acid test programs" ON)
 option(ACID_SETUP_COMPILER "If Acid will set it's own compiler settings" ON)
 option(ACID_SETUP_OUTPUT "If Acid will set it's own outputs" ON)
@@ -12,6 +13,10 @@ set(LIB_TYPE STATIC)
 
 if(BUILD_SHARED_LIBS)
 	set(LIB_TYPE SHARED)
+endif()
+
+if(ACID_SSE)
+    add_definitions(-DACID_SSE)
 endif()
 
 # Cmake Modules

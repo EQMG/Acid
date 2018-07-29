@@ -1,6 +1,5 @@
 #include "ShaderProgram.hpp"
 
-#include <algorithm>
 #include <SPIRV/GlslangToSpv.h>
 #include "Helpers/FormatString.hpp"
 #include "Textures/Texture.hpp"

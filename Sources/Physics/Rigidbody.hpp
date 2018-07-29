@@ -26,7 +26,7 @@ namespace acid
 		btRigidBody *m_body;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::ONE,
-			const Vector3 &angularFactor = Vector3::ONE);
+				  const Vector3 &angularFactor = Vector3::ONE);
 
 		~Rigidbody();
 
@@ -63,7 +63,8 @@ namespace acid
 		Vector3 GetAngularFactor() const { return m_angularFactor; }
 
 		void SetAngularFactor(const Vector3 &angularFactor);
+
 	private:
-		ACID_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
+		ACID_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape);
 	};
 }

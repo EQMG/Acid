@@ -23,7 +23,7 @@ namespace acid
 
 	void ColliderCapsule::Update()
 	{
-	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height, m_radius)); // TODO
+		//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height, m_radius)); // TODO
 	}
 
 	void ColliderCapsule::Load(LoadedValue *value)

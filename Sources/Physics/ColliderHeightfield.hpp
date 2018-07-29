@@ -34,8 +34,8 @@ namespace acid
 		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,
-						   const void *heightfieldData, const float &heightScale,
-						   const float &minHeight, const float &maxHeight,
-						   const int &upAxis, const bool &flipQuadEdges);
+						const void *heightfieldData, const float &heightScale,
+						const float &minHeight, const float &maxHeight,
+						const int &upAxis, const bool &flipQuadEdges);
 	};
 }

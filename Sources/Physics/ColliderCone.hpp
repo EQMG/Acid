@@ -35,7 +35,7 @@ namespace acid
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		float GetHeight() const { return m_height;}
+		float GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height) { m_height = height; }
 	};

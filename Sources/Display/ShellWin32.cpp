@@ -113,31 +113,49 @@ namespace acid
 		UINT uType = 0;
 
 		if (type == MESSAGE_YES)
-			uType = MB_OK;
-		else if (type == MESSAGE_YESCANCEL)
-			uType = MB_OKCANCEL;
-		else if (type == MESSAGE_RETRYCANCEL)
-			uType = MB_RETRYCANCEL;
-		else if (type == MESSAGE_YESNO)
-			uType = MB_YESNO;
-		else if (type == MESSAGE_YESNOCANCEL)
-			uType = MB_YESNOCANCEL;
-
-		int responce = MessageBox(m_hwnd, message.c_str(), title.c_str(), uType);
-
-		if (responce != 0)
 		{
-			if (responce == IDABORT)
-				return MESSAGE_RESPONCE_ABORT;
-			else if (responce == IDCANCEL)
-				return MESSAGE_RESPONCE_CANCEL;
-			else if (responce == IDOK || responce == IDYES)
-				return MESSAGE_RESPONCE_YES;
-			else if (responce == IDNO)
-				return MESSAGE_RESPONCE_NO;
+			uType = MB_OK;
+		}
+		else if (type == MESSAGE_YESCANCEL)
+		{
+			uType = MB_OKCANCEL;
+		}
+		else if (type == MESSAGE_RETRYCANCEL)
+		{
+			uType = MB_RETRYCANCEL;
+		}
+		else if (type == MESSAGE_YESNO)
+		{
+			uType = MB_YESNO;
+		}
+		else if (type == MESSAGE_YESNOCANCEL)
+		{
+			uType = MB_YESNOCANCEL;
 		}
 
-		return MESSAGE_RESPONCE_NO;
+		int response = MessageBox(m_hwnd, message.c_str(), title.c_str(), uType);
+
+		if (response != 0)
+		{
+			if (response == IDABORT)
+			{
+				return MESSAGE_RESPONSE_ABORT;
+			}
+			else if (response == IDCANCEL)
+			{
+				return MESSAGE_RESPONSE_CANCEL;
+			}
+			else if (response == IDOK || response == IDYES)
+			{
+				return MESSAGE_RESPONSE_YES;
+			}
+			else if (response == IDNO)
+			{
+				return MESSAGE_RESPONSE_NO;
+			}
+		}
+
+		return MESSAGE_RESPONSE_NO;
 	}
 
 	void ShellWin32::SetSize(const uint32_t &width, const uint32_t &height)
@@ -155,15 +173,25 @@ namespace acid
 		int nCmdShow = 0;
 
 		if (shownFlags & SHOWN_HIDDEN_BIT)
+		{
 			nCmdShow |= SW_HIDE;
+		}
 		if (shownFlags & SHOWN_SHOWN_BIT)
+		{
 			nCmdShow |= SW_SHOW;
+		}
 		if (shownFlags & SHOWN_MINIMIZED_BIT)
+		{
 			nCmdShow |= SW_MINIMIZE;
+		}
 		if (shownFlags & SHOWN_MAXIMIZED_BIT)
+		{
 			nCmdShow |= SW_MAXIMIZE;
+		}
 		if (shownFlags & SHOWN_RESTORED_BIT)
+		{
 			nCmdShow |= SW_RESTORE;
+		}
 
 		ShowWindow(m_hwnd, nCmdShow);
 	}
@@ -232,7 +260,7 @@ namespace acid
 
 		if (mode == CURSOR_MODE_DISABLED)
 		{
-			const RAWINPUTDEVICE rid = { HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, 0, m_hwnd };
+			const RAWINPUTDEVICE rid = {HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, 0, m_hwnd};
 
 			m_cursorDisabled = true;
 			UpdateCursorImage();
@@ -245,7 +273,7 @@ namespace acid
 		}
 		else
 		{
-			const RAWINPUTDEVICE rid = { HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, RIDEV_REMOVE, nullptr };
+			const RAWINPUTDEVICE rid = {HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, RIDEV_REMOVE, nullptr};
 
 			m_cursorDisabled = false;
 			UpdateCursorClip(false);
@@ -265,7 +293,7 @@ namespace acid
 
 	LRESULT WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		ShellWin32 *shell = (ShellWin32*) GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		ShellWin32 *shell = (ShellWin32 *) GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
 		if (shell == nullptr)
 		{
@@ -373,7 +401,7 @@ namespace acid
 			if (dwSize > (UINT) shell->m_rawInputSize)
 			{
 				free(shell->m_rawInput);
-				shell->m_rawInput = (RAWINPUT*)calloc(dwSize, 1);
+				shell->m_rawInput = (RAWINPUT *) calloc(dwSize, 1);
 				shell->m_rawInputSize = dwSize;
 			}
 
@@ -386,7 +414,7 @@ namespace acid
 				break;
 			}
 
-			RAWINPUT* raw = shell->m_rawInput;
+			RAWINPUT *raw = shell->m_rawInput;
 
 			if (raw->header.dwType == RIM_TYPEKEYBOARD)
 			{
@@ -402,11 +430,11 @@ namespace acid
 
 				if (shell->m_callbackCursorPosition != nullptr)
 				{
-					float width = (float)(windowRect.right - windowRect.left);
-					float height = (float)(windowRect.bottom - windowRect.top);
+					float width = (float) (windowRect.right - windowRect.left);
+					float height = (float) (windowRect.bottom - windowRect.top);
 
-					shell->m_callbackCursorPosition((float)ptCursor.x / width, (float)ptCursor.y / height,
-						-(float)raw->data.mouse.lLastX / width, -(float)raw->data.mouse.lLastY / height);
+					shell->m_callbackCursorPosition((float) ptCursor.x / width, (float) ptCursor.y / height,
+						-(float) raw->data.mouse.lLastX / width, -(float) raw->data.mouse.lLastY / height);
 				}
 			}
 
@@ -525,7 +553,7 @@ namespace acid
 			}
 
 			static char charBuf[4];
-			strncpy(charBuf, (const char*)&wParam, 4);
+			strncpy(charBuf, (const char *) &wParam, 4);
 
 			if (shell->m_callbackChar != nullptr)
 			{
@@ -570,48 +598,48 @@ namespace acid
 			break;
 		}
 #ifdef ENABLE_MULTITOUCH
-		case WM_POINTERUPDATE:
-		case WM_POINTERDOWN:
-		case WM_POINTERUP:
-		{
-			uint32_t x = GET_X_LPARAM(lParam);
-			uint32_t y = GET_Y_LPARAM(lParam);
-			bool action;
-			POINTER_INFO pointerInfo;
-
-			if (GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pointerInfo))
+			case WM_POINTERUPDATE:
+			case WM_POINTERDOWN:
+			case WM_POINTERUP:
 			{
-				uint32_t id = pointerInfo.pointerId;
-				POINT pt = pointerInfo.ptPixelLocation;
-				ScreenToClient(shell->hwnd_, &pt);
-				RECT windowRect;
-				GetClientRect(shell->hwnd_, &windowRect);
+				uint32_t x = GET_X_LPARAM(lParam);
+				uint32_t y = GET_Y_LPARAM(lParam);
+				bool action;
+				POINTER_INFO pointerInfo;
 
-				float width = (float)(windowRect.right - windowRect.left);
-				float height = (float)(windowRect.bottom - windowRect.top);
-
-				switch (uMsg)
+				if (GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pointerInfo))
 				{
-					case WM_POINTERUPDATE:
-					case WM_POINTERDOWN:
+					uint32_t id = pointerInfo.pointerId;
+					POINT pt = pointerInfo.ptPixelLocation;
+					ScreenToClient(shell->hwnd_, &pt);
+					RECT windowRect;
+					GetClientRect(shell->hwnd_, &windowRect);
+
+					float width = (float)(windowRect.right - windowRect.left);
+					float height = (float)(windowRect.bottom - windowRect.top);
+
+					switch (uMsg)
 					{
-						action = true;
-						break;
+						case WM_POINTERUPDATE:
+						case WM_POINTERDOWN:
+						{
+							action = true;
+							break;
+						}
+						case WM_POINTERUP:
+						{
+							action = false;
+							break;
+						}
 					}
-					case WM_POINTERUP:
+
+					if (shell->m_callbackTouch != nullptr)
 					{
-						action = false;
-						break;
+						shell->m_callbackTouch(id, (float)x / width, (float)y / height, action);
 					}
 				}
-
-				if (shell->m_callbackTouch != nullptr)
-				{
-					shell->m_callbackTouch(id, (float)x / width, (float)y / height, action);
-				}
+				break;
 			}
-			break;
-		}
 #endif
 			// TODO: Joystick connect, button, axis
 		}
@@ -732,7 +760,7 @@ namespace acid
 			return KEY_UNKNOWN;
 		}
 
-		return (Key)WIN32_TO_KEY[HIWORD(lParam) & 0x1FF];
+		return (Key) WIN32_TO_KEY[HIWORD(lParam) & 0x1FF];
 	}
 
 	void ShellWin32::UpdateCursorImage()
@@ -745,7 +773,7 @@ namespace acid
 			}
 			else
 			{
-				SetCursor(LoadCursorW(nullptr, (LPCWSTR)IDC_ARROW));
+				SetCursor(LoadCursorW(nullptr, (LPCWSTR) IDC_ARROW));
 			}
 		}
 		else
@@ -760,8 +788,8 @@ namespace acid
 		{
 			RECT clipRect;
 			GetClientRect(m_hwnd, &clipRect);
-			ClientToScreen(m_hwnd, (POINT*) &clipRect.left);
-			ClientToScreen(m_hwnd, (POINT*) &clipRect.right);
+			ClientToScreen(m_hwnd, (POINT *) &clipRect.left);
+			ClientToScreen(m_hwnd, (POINT *) &clipRect.right);
 			ClipCursor(&clipRect);
 		}
 		else

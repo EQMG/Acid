@@ -2,7 +2,6 @@
 
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include "Scenes/Scenes.hpp"
-#include "Meshes/Mesh.hpp"
 
 namespace acid
 {

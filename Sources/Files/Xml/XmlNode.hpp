@@ -40,6 +40,6 @@ namespace acid
 
 		static void AppendData(LoadedValue *loadedValue, std::stringstream &builder, const int &indentation);
 
-		static LoadedValue *Convert(const XmlNode &source, LoadedValue * parent, const bool &isTopSection);
+		static LoadedValue *Convert(const XmlNode &source, LoadedValue *parent, const bool &isTopSection);
 	};
 }

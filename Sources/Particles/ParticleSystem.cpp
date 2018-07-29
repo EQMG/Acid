@@ -130,11 +130,11 @@ namespace acid
 
 	void ParticleSystem::AddParticleType(std::shared_ptr<ParticleType> type)
 	{
-		if (std::find(m_types.begin(), m_types.end(), type) != m_types.end()) 
+		if (std::find(m_types.begin(), m_types.end(), type) != m_types.end())
 		{
 			return;
 		}
-		
+
 		m_types.emplace_back(type);
 	}
 

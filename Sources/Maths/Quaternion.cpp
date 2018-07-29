@@ -1,9 +1,10 @@
 #include "Quaternion.hpp"
 
+#ifdef ACID_SSE
+#include <emmintrin.h>
+#endif
 #include <cassert>
 #include "Maths.hpp"
-#include "Vector3.hpp"
-#include "Matrix4.hpp"
 
 namespace acid
 {
@@ -54,13 +55,14 @@ namespace acid
 
 	Quaternion::Quaternion(const Vector3 &axis, const float &angle)
 	{
-		float halfAngle = 0.5f * angle;
-		float sin = std::sin(halfAngle);
+		Vector3 normAxis = axis.Normalize();
+		float sinAngle = std::sin(angle * DEG_TO_RAD);
+		float cosAngle = std::cos(angle * DEG_TO_RAD);
 
-		m_w = std::cos(halfAngle);
-		m_x = sin*axis.m_x;
-		m_y = sin*axis.m_y;
-		m_z = sin*axis.m_z;
+		m_w = cosAngle;
+		m_x = normAxis.m_x * sinAngle;
+		m_y = normAxis.m_y * sinAngle;
+		m_z = normAxis.m_z * sinAngle;
 	}
 
 	Quaternion::Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ)
@@ -83,6 +85,28 @@ namespace acid
 	{
 	}
 
+	Quaternion Quaternion::Add(const Quaternion &other) const
+	{
+#ifdef ACID_SSE
+		Quaternion result = Quaternion();
+		_mm_storeu_ps(&result.m_w, _mm_add_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w)));
+		return result;
+#else
+		return Quaternion(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w);
+#endif
+	}
+
+	Quaternion Quaternion::Subtract(const Quaternion &other) const
+	{
+#ifdef ACID_SSE
+		Quaternion result = Quaternion();
+		_mm_storeu_ps(&result.m_w, _mm_sub_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w)));
+		return result;
+#else
+		return Quaternion(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w);
+#endif
+	}
+
 	Quaternion Quaternion::Multiply(const Quaternion &other) const
 	{
 		return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y,
@@ -93,8 +117,8 @@ namespace acid
 
 	Vector3 Quaternion::Multiply(const Vector3 &other) const
 	{
-	//	Matrix4 rotation = left.ToRotationMatrix();
-	//	return right * rotation;
+		//	Matrix4 rotation = left.ToRotationMatrix();
+		//	return right * rotation;
 
 		Vector3 q = Vector3(m_x, m_y, m_z);
 		Vector3 cross1 = q.Cross(other);
@@ -116,47 +140,70 @@ namespace acid
 
 	float Quaternion::Dot(const Quaternion &other) const
 	{
-		return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
+#ifdef ACID_SSE
+		__m128 q1 = _mm_loadu_ps(&m_w);
+		__m128 q2 = _mm_loadu_ps(&other.m_w);
+		__m128 n = _mm_mul_ps(q1, q2);
+		n = _mm_add_ps(n, _mm_shuffle_ps(n, n, _MM_SHUFFLE(2, 3, 0, 1)));
+		n = _mm_add_ps(n, _mm_shuffle_ps(n, n, _MM_SHUFFLE(0, 1, 2, 3)));
+		return _mm_cvtss_f32(n);
+#else
+		return m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
+#endif
 	}
 
 	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression)
 	{
-		Quaternion start = this->Normalize();
-		Quaternion end = other.Normalize();
+		// Favor accuracy for native code builds.
+		float cosAngle = Dot(other);
+		float sign = 1.0f;
 
-		float d = start.m_x * end.m_x + start.m_y * end.m_y + start.m_z * end.m_z + start.m_w * end.m_w;
-		float absDot = d < 0.0f ? -d : d;
-		float scale0 = 1.0f - progression;
-		float scale1 = progression;
-
-		if ((1.0f - absDot) > 0.1f)
+		// Enable shortest path rotation.
+		if (cosAngle < 0.0f)
 		{
-			float angle = std::acos(absDot);
-			float invSinTheta = 1.0f / std::sin(angle);
-			scale0 = std::sin((1.0f - progression) * angle) * invSinTheta;
-			scale1 = std::sin(progression * angle) * invSinTheta;
+			cosAngle = -cosAngle;
+			sign = -1.0f;
 		}
 
-		if (d < 0.0f)
+		float angle = acosf(cosAngle);
+		float sinAngle = sinf(angle);
+		float t1, t2;
+
+		if (sinAngle > 0.001f)
 		{
-			scale1 = -scale1;
+			float invSinAngle = 1.0f / sinAngle;
+			t1 = std::sin((1.0f - progression) * angle) * invSinAngle;
+			t2 = std::sin(progression * angle) * invSinAngle;
+		}
+		else
+		{
+			t1 = 1.0f - progression;
+			t2 = progression;
 		}
 
-		float x = (scale0 * start.m_x) + (scale1 * end.m_x);
-		float y = (scale0 * start.m_y) + (scale1 * end.m_y);
-		float z = (scale0 * start.m_z) + (scale1 * end.m_z);
-		float w = (scale0 * start.m_w) + (scale1 * end.m_w);
-		return Quaternion(x, y, z, w);
+		return *this * t1 + (other * sign) * t2;
 	}
 
 	Quaternion Quaternion::Scale(const float &scalar) const
 	{
+#ifdef ACID_SSE
+		Quaternion result = Quaternion();
+		_mm_storeu_ps(&result.m_w, _mm_mul_ps(_mm_loadu_ps(&m_w), _mm_set1_ps(scalar)));
+		return result;
+#else
 		return Quaternion(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
+#endif
 	}
 
 	Quaternion Quaternion::Negate() const
 	{
+#ifdef ACID_SSE
+		Quaternion result = Quaternion();
+		_mm_xor_ps(_mm_loadu_ps(&m_w), _mm_castsi128_ps(_mm_set1_epi32((int)0x80000000UL)));
+		return result;
+#else
 		return Quaternion(-m_x, -m_y, -m_z, -m_w);
+#endif
 	}
 
 	Quaternion Quaternion::Normalize() const
@@ -242,37 +289,30 @@ namespace acid
 
 	Vector3 Quaternion::ToEuler() const
 	{
-		Matrix4 matrix = ToRotationMatrix();
-		Vector3 result = Vector3();
+		float check = 2.0f * (-m_y * m_z + m_w * m_x);
 
-		result.m_x = -Maths::Degrees(std::asin(matrix[1][2]));
-
-		if (result.m_x < 90.0f)
+		if (check < -0.995f)
 		{
-			if (result.m_x > -90.0f)
-			{
-				result.m_y = Maths::Degrees(std::atan2(matrix[0][2], matrix[2][2]));
-				result.m_z = Maths::Degrees(std::atan2(matrix[1][0], matrix[1][1]));
-
-				return result;
-			}
-			else
-			{
-				// Note: Not an unique solution.
-				result.m_x = -90.0f;
-				result.m_y = Maths::Degrees(std::atan2(-matrix[0][1], matrix[0][0]));
-				result.m_z = 0.0f;
-
-				return result;
-			}
+			return Vector3(
+				-90.0f,
+				0.0f,
+				-atan2f(2.0f * (m_x * m_z - m_w * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z)) * RAD_TO_DEG
+			);
+		}
+		else if (check > 0.995f)
+		{
+			return Vector3(
+				90.0f,
+				0.0f,
+				atan2f(2.0f * (m_x * m_z - m_w * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z)) * RAD_TO_DEG
+			);
 		}
 
-		// Note: Not an unique solution.
-		result.m_x = 90.0f;
-		result.m_y = Maths::Degrees(std::atan2(matrix[0][1], matrix[0][0]));
-		result.m_z = 0.0f;
-
-		return result;
+		return Vector3(
+			asinf(check) * RAD_TO_DEG,
+			atan2f(2.0f * (m_x * m_z + m_w * m_y), 1.0f - 2.0f * (m_x * m_x + m_y * m_y)) * RAD_TO_DEG,
+			atan2f(2.0f * (m_x * m_y + m_w * m_z), 1.0f - 2.0f * (m_x * m_x + m_z * m_z)) * RAD_TO_DEG
+		);
 	}
 
 	void Quaternion::Write(LoadedValue *destination)
@@ -293,59 +333,73 @@ namespace acid
 
 	Quaternion &Quaternion::operator=(const Vector3 &other)
 	{
-		float halfPitch = Maths::Radians(other.m_x) * 0.5f;
-		float halfYaw = Maths::Radians(other.m_y) * 0.5f;
-		float halfRoll = Maths::Radians(other.m_z) * 0.5f;
+		float halfX = other.m_x * DEG_TO_RAD * 0.5f;
+		float halfY = other.m_y * DEG_TO_RAD * 0.5f;
+		float halfZ = other.m_z * DEG_TO_RAD * 0.5f;
 
-		float sinPitch = std::sin(halfPitch);
-		float cosPitch = std::cos(halfPitch);
-		float sinYaw = std::sin(halfYaw);
-		float cosYaw = std::cos(halfYaw);
-		float sinRoll = std::sin(halfRoll);
-		float cosRoll = std::cos(halfRoll);
+		float sinX = std::sin(halfX);
+		float cosX = std::cos(halfX);
 
-		m_x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
-		m_y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
-		m_z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
-		m_w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+		float sinY = std::sin(halfY);
+		float cosY = std::cos(halfY);
+
+		float sinZ = std::sin(halfZ);
+		float cosZ = std::cos(halfZ);
+
+		float cosYcosZ = cosY * cosZ;
+		float sinYcosZ = sinY * cosZ;
+		float cosYsinZ = cosY * sinZ;
+		float sinYsinZ = sinY * sinZ;
+
+		m_x = sinX * cosYcosZ - cosX * sinYsinZ;
+		m_y = cosX * sinYcosZ + sinX * cosYsinZ;
+		m_z = cosX * cosYsinZ - sinX * sinYcosZ;
+		m_w = cosX * cosYcosZ + sinX * sinYsinZ;
 		return *this;
 	}
 
 	Quaternion &Quaternion::operator=(const Matrix4 &other)
 	{
-		float diagonal = other[0][0] + other[1][1] + other[2][2];
+		float t = other[0][0] + other[1][1] + other[2][2];
 
-		if (diagonal > 0.0f)
+		if (t > 0.0f)
 		{
-			float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
-			m_w = w4 / 4.0f;
-			m_x = (other[2][1] - other[1][2]) / w4;
-			m_y = (other[0][2] - other[2][0]) / w4;
-			m_z = (other[1][0] - other[0][1]) / w4;
-		}
-		else if ((other[0][0] > other[1][1]) && (other[0][0] > other[2][2]))
-		{
-			float x4 = std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]) * 2.0f;
-			m_w = (other[2][1] - other[1][2]) / x4;
-			m_x = x4 / 4.0f;
-			m_y = (other[0][1] + other[1][0]) / x4;
-			m_z = (other[0][2] + other[2][0]) / x4;
-		}
-		else if (other[1][1] > other[2][2])
-		{
-			float y4 = std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2] * 2.0f);
-			m_w = (other[0][2] - other[2][0]) / y4;
-			m_x = (other[0][1] + other[1][0]) / y4;
-			m_y = y4 / 4.0f;
-			m_z = (other[1][2] + other[2][1]) / y4;
+			float invS = 0.5f / std::sqrt(1.0f + t);
+
+			m_x = (other[2][1] - other[1][2]) * invS;
+			m_y = (other[0][2] - other[2][0]) * invS;
+			m_z = (other[1][0] - other[0][1]) * invS;
+			m_w = 0.25f / invS;
 		}
 		else
 		{
-			float z4 = std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]) * 2.0f;
-			m_w = (other[1][0] - other[0][1]) / z4;
-			m_x = (other[0][2] + other[2][0]) / z4;
-			m_y = (other[1][2] + other[2][1]) / z4;
-			m_z = z4 / 4.0f;
+			if (other[0][0] > other[1][1] && other[0][0] > other[2][2])
+			{
+				float invS = 0.5f / std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]);
+
+				m_x = 0.25f / invS;
+				m_y = (other[0][1] + other[1][0]) * invS;
+				m_z = (other[2][0] + other[0][2]) * invS;
+				m_w = (other[2][1] - other[1][2]) * invS;
+			}
+			else if (other[1][1] > other[2][2])
+			{
+				float invS = 0.5f / std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2]);
+
+				m_x = (other[0][1] + other[1][0]) * invS;
+				m_y = 0.25f / invS;
+				m_z = (other[1][2] + other[2][1]) * invS;
+				m_w = (other[0][2] - other[2][0]) * invS;
+			}
+			else
+			{
+				float invS = 0.5f / std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]);
+
+				m_x = (other[0][2] + other[2][0]) * invS;
+				m_y = (other[1][2] + other[2][1]) * invS;
+				m_z = 0.25f / invS;
+				m_w = (other[1][0] - other[0][1]) * invS;
+			}
 		}
 
 		return *this;
@@ -362,7 +416,14 @@ namespace acid
 
 	bool Quaternion::operator==(const Quaternion &other) const
 	{
+#ifdef ACID_SSE
+		__m128 c = _mm_cmpeq_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w));
+		c = _mm_and_ps(c, _mm_movehl_ps(c, c));
+		c = _mm_and_ps(c, _mm_shuffle_ps(c, c, _MM_SHUFFLE(1, 1, 1, 1)));
+		return _mm_cvtsi128_si32(_mm_castps_si128(c)) == -1;
+#else
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
+#endif
 	}
 
 	bool Quaternion::operator!=(const Quaternion &other) const
@@ -415,6 +476,16 @@ namespace acid
 	{
 		assert(index < 4);
 		return m_elements[index];
+	}
+
+	Quaternion operator+(const Quaternion &left, const Quaternion &right)
+	{
+		return left.Add(right);
+	}
+
+	Quaternion operator-(const Quaternion &left, const Quaternion &right)
+	{
+		return left.Subtract(right);
 	}
 
 	Quaternion operator*(const Quaternion &left, const Quaternion &right)

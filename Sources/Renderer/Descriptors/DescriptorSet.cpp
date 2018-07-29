@@ -1,7 +1,6 @@
 #include "DescriptorSet.hpp"
 
 #include "IDescriptor.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
