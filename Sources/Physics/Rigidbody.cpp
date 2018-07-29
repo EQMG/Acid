@@ -4,7 +4,6 @@
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <LinearMath/btTransform.h>
 #include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Scenes.hpp"
 #include "Collider.hpp"
@@ -107,13 +106,13 @@ namespace acid
 			transform.SetRotation(Collider::Convert(rotation));
 		}
 
-	//	m_worldTransform.setIdentity();
-	//	m_worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
-	//	m_worldTransform.setRotation(Collider::Convert(transform.GetRotation()));
+		//	m_worldTransform.setIdentity();
+		//	m_worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
+		//	m_worldTransform.setRotation(Collider::Convert(transform.GetRotation()));
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-	//	m_body->setWorldTransform(m_worldTransform);
-	//	m_body->setLinearVelocity(m_velocity);
+		//	m_body->setWorldTransform(m_worldTransform);
+		//	m_body->setLinearVelocity(m_velocity);
 	}
 
 	void Rigidbody::Load(LoadedValue *value)
@@ -195,7 +194,7 @@ namespace acid
 		m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 	}
 
-	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape)
+	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 

@@ -22,7 +22,7 @@ namespace acid
 
 	void ColliderBox::Update()
 	{
-	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
+		//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
 	void ColliderBox::Load(LoadedValue *value)

@@ -4,67 +4,83 @@
 
 namespace acid
 {
-	class ACID_EXPORT MonitorCocoa :
-		public IMonitor
-	{
+	class ACID_EXPORT MonitorCocoa
+
+	:
+	public IMonitor
+{
 	private:
-		uint32_t m_width;
-		uint32_t m_height;
+	uint32_t m_width;
+	uint32_t m_height;
 	public:
-		MonitorCocoa(const uint32_t &width, const uint32_t &height) :
-			IMonitor(),
-			m_width(width),
-			m_height(height)
-		{
-		}
-
-		~MonitorCocoa()
-		{
-		}
-
-		uint32_t GetWidth() const override { return m_width; }
-
-		uint32_t GetHeight() const override { return m_height; }
-	};
-
-	class ShellCocoa :
-		public IShell
+	MonitorCocoa(const uint32_t &width, const uint32_t &height) :
+		IMonitor(),
+		m_width(width),
+		m_height(height)
 	{
-	private:
+	}
 
-	public:
-		ShellCocoa();
+	~
+	MonitorCocoa()
+	{
+	}
 
-		~ShellCocoa();
+	uint32_t GetWidth() const
 
-		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
+	override
+{
+	return
+	m_width;
+}
 
-		void PollEvents() override;
+uint32_t GetHeight() const
 
-		MessageResponse ShowMessageBox(const std::string &title, const std::string &message, const Message &type) override;
+override {
+return
+m_height;
+}
+};
 
-		void SetSize(const uint32_t &width, const uint32_t &height) override;
+class ShellCocoa :
+	public IShell
+{
+private:
 
-		void SetPosition(const uint32_t &x, const uint32_t &y) override;
+public:
+	ShellCocoa();
 
-		void SetShown(const uint32_t &shownFlags) override;
+	~ShellCocoa();
 
-		void SetResizable(const bool &resizable) override;
+	VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 
-		void SetTitle(const std::string &title) override;
+	void PollEvents() override;
 
-		void SetIconImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+	MessageResponse ShowMessageBox(const std::string &title, const std::string &message, const Message &type) override;
 
-		void SetCursorImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+	void SetSize(const uint32_t &width, const uint32_t &height) override;
 
-		void SetFullscreen(const std::shared_ptr<IMonitor> &monitor, const bool &fullscreen) override;
+	void SetPosition(const uint32_t &x, const uint32_t &y) override;
 
-		void SetCursorMode(const CursorMode &mode) override;
+	void SetShown(const uint32_t &shownFlags) override;
 
-		void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
-	private:
-		void LoadVk();
+	void SetResizable(const bool &resizable) override;
 
-		void CreateDisplay();
-	};
+	void SetTitle(const std::string &title) override;
+
+	void SetIconImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+
+	void SetCursorImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+
+	void SetFullscreen(const std::shared_ptr<IMonitor> &monitor, const bool &fullscreen) override;
+
+	void SetCursorMode(const CursorMode &mode) override;
+
+	void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
+
+private:
+	void LoadVk();
+
+	void CreateDisplay();
+};
+
 }

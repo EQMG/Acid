@@ -49,7 +49,7 @@ namespace acid
 		/// </summary>
 		/// <param name="ray"> The ray being tested for intersection. </param>
 		/// <returns> If the ray intersects, relative intersect location. </returns>
-	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
+		//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 		/// <summary>
 		/// Gets if the shape is partially in the view frustum.

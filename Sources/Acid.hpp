@@ -84,7 +84,7 @@
 #include "Maths/Matrix2.hpp"
 #include "Maths/Matrix3.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Maths/Noise/Noise.hpp"
+#include "Noise/Noise.hpp"
 #include "Maths/Quaternion.hpp"
 #include "Maths/Timer.hpp"
 #include "Maths/Transform.hpp"

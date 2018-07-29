@@ -1,6 +1,5 @@
 #include "Display.hpp"
 
-#include <vulkan/vulkan.h>
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"

@@ -95,6 +95,20 @@ namespace acid
 		~Quaternion();
 
 		/// <summary>
+		/// Adds this quaternion to another quaternion.
+		/// </summary>
+		/// <param name="other"> The other quaternion. </param>
+		/// <returns> The resultant quaternion. </returns>
+		Quaternion Add(const Quaternion &other) const;
+
+		/// <summary>
+		/// Subtracts this quaternion to another quaternion.
+		/// </summary>
+		/// <param name="other"> The other quaternion. </param>
+		/// <returns> The resultant quaternion. </returns>
+		Quaternion Subtract(const Quaternion &other) const;
+
+		/// <summary>
 		/// Multiplies this quaternion with another quaternion.
 		/// </summary>
 		/// <param name="other"> The other quaternion. </param>
@@ -243,6 +257,10 @@ namespace acid
 		const float &operator[](const uint32_t &index) const;
 
 		float &operator[](const uint32_t &index);
+
+		ACID_EXPORT friend Quaternion operator+(const Quaternion &left, const Quaternion &right);
+
+		ACID_EXPORT friend Quaternion operator-(const Quaternion &left, const Quaternion &right);
 
 		ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 

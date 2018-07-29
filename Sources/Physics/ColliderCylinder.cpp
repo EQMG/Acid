@@ -23,7 +23,7 @@ namespace acid
 
 	void ColliderCylinder::Update()
 	{
-	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
+		//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
 	}
 
 	void ColliderCylinder::Load(LoadedValue *value)

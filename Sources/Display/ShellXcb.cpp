@@ -56,7 +56,7 @@ namespace acid
 
 	MessageResponse ShellXcb::ShowMessageBox(const std::string &title, const std::string &message, const Message &type)
 	{
-		return MESSAGE_RESPONCE_NO; // TODO
+		return MESSAGE_RESPONSE_NO; // TODO
 	}
 
 	void ShellXcb::SetSize(const uint32_t &width, const uint32_t &height)
@@ -115,7 +115,7 @@ namespace acid
 		{
 		case XCB_CONFIGURE_NOTIFY:
 		{
-			const xcb_configure_notify_event_t *notify = (xcb_configure_notify_event_t *)ev;
+			const xcb_configure_notify_event_t *notify = (xcb_configure_notify_event_t *) ev;
 
 			if (m_callbackSize != nullptr)
 			{
@@ -126,13 +126,13 @@ namespace acid
 		}
 		case XCB_KEY_PRESS:
 		{
-			const xcb_key_press_event_t *press = (xcb_key_press_event_t *)ev;
+			const xcb_key_press_event_t *press = (xcb_key_press_event_t *) ev;
 
 			break;
 		}
 		case XCB_CLIENT_MESSAGE:
 		{
-			const xcb_client_message_event_t *msg = (xcb_client_message_event_t *)ev;
+			const xcb_client_message_event_t *msg = (xcb_client_message_event_t *) ev;
 
 			if (msg->type == m_wmProtocols && msg->data.data32[0] == m_wmDeleteWindow_)
 			{
@@ -178,17 +178,17 @@ namespace acid
 #ifdef UNINSTALLED_LOADER
 		handle = dlopen(UNINSTALLED_LOADER, RTLD_LAZY);
 
-        if (handle == nullptr)
-        {
-        	handle = dlopen(filename, RTLD_LAZY);
-        }
+		if (handle == nullptr)
+		{
+			handle = dlopen(filename, RTLD_LAZY);
+		}
 #else
 		handle = dlopen(filename, RTLD_LAZY);
 #endif
 
 		if (handle != nullptr)
 		{
-		    symbol = dlsym(handle, "vkGetInstanceProcAddr");
+			symbol = dlsym(handle, "vkGetInstanceProcAddr");
 		}
 
 		if (handle == nullptr || symbol == nullptr)
@@ -239,7 +239,7 @@ namespace acid
 		xcb_flush(m_connection);
 	}
 
-	xcb_intern_atom_cookie_t ShellXcb::intern_atom_cookie(xcb_connection_t *c, const char* s)
+	xcb_intern_atom_cookie_t ShellXcb::intern_atom_cookie(xcb_connection_t *c, const char *s)
 	{
 		return xcb_intern_atom(c, 0, strlen(s), s);
 	}

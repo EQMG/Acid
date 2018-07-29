@@ -6,82 +6,98 @@
 
 namespace acid
 {
-	class ACID_EXPORT MonitorXcb :
-		public IMonitor
-	{
+	class ACID_EXPORT MonitorXcb
+
+	:
+	public IMonitor
+{
 	private:
-		uint32_t m_width;
-		uint32_t m_height;
+	uint32_t m_width;
+	uint32_t m_height;
 	public:
-		MonitorXcb(const uint32_t &width, const uint32_t &height) :
-			IMonitor(),
-			m_width(width),
-			m_height(height)
-		{
-		}
-
-		~MonitorXcb()
-		{
-		}
-
-		uint32_t GetWidth() const override { return m_width; }
-
-		uint32_t GetHeight() const override { return m_height; }
-	};
-
-	class ShellXcb :
-		public IShell
+	MonitorXcb(const uint32_t &width, const uint32_t &height) :
+		IMonitor(),
+		m_width(width),
+		m_height(height)
 	{
-	private:
-		xcb_connection_t *m_connection;
-		xcb_screen_t *m_screen;
-		xcb_window_t m_window;
-		xcb_atom_t m_wmProtocols;
-		xcb_atom_t m_wmDeleteWindow_;
+	}
 
-		void *m_vkHandle;
-		PFN_vkGetInstanceProcAddr m_vkProc;
-	public:
-		ShellXcb();
+	~
+	MonitorXcb()
+	{
+	}
 
-		~ShellXcb();
+	uint32_t GetWidth() const
 
-		VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
+	override
+{
+	return
+	m_width;
+}
 
-		void PollEvents() override;
+uint32_t GetHeight() const
 
-		MessageResponse ShowMessageBox(const std::string &title, const std::string &message, const Message &type) override;
+override {
+return
+m_height;
+}
+};
 
-		void SetSize(const uint32_t &width, const uint32_t &height) override;
+class ShellXcb :
+	public IShell
+{
+private:
+	xcb_connection_t *m_connection;
+	xcb_screen_t *m_screen;
+	xcb_window_t m_window;
+	xcb_atom_t m_wmProtocols;
+	xcb_atom_t m_wmDeleteWindow_;
 
-		void SetPosition(const uint32_t &x, const uint32_t &y) override;
+	void *m_vkHandle;
+	PFN_vkGetInstanceProcAddr m_vkProc;
+public:
+	ShellXcb();
 
-		void SetShown(const uint32_t &shownFlags) override;
+	~ShellXcb();
 
-		void SetResizable(const bool &resizable) override;
+	VkResult CreateSurface(VkInstance instance, const VkAllocationCallbacks *pAllocator, VkSurfaceKHR *pSurface) override;
 
-		void SetTitle(const std::string &title) override;
+	void PollEvents() override;
 
-		void SetIconImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+	MessageResponse ShowMessageBox(const std::string &title, const std::string &message, const Message &type) override;
 
-		void SetCursorImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
+	void SetSize(const uint32_t &width, const uint32_t &height) override;
 
-		void SetFullscreen(const std::shared_ptr<IMonitor> &monitor, const bool &fullscreen) override;
+	void SetPosition(const uint32_t &x, const uint32_t &y) override;
 
-		void SetCursorMode(const CursorMode &mode) override;
+	void SetShown(const uint32_t &shownFlags) override;
 
-		void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
-	private:
-		void HandleEvent(const xcb_generic_event_t *ev);
+	void SetResizable(const bool &resizable) override;
 
-		void InitConnection();
+	void SetTitle(const std::string &title) override;
 
-		void LoadVk();
+	void SetIconImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
 
-		void CreateDisplay();
+	void SetCursorImage(unsigned char *data, const uint32_t &width, const uint32_t &height) override;
 
-		xcb_intern_atom_cookie_t intern_atom_cookie(xcb_connection_t *c, const char* s);
+	void SetFullscreen(const std::shared_ptr<IMonitor> &monitor, const bool &fullscreen) override;
 
-		xcb_atom_t intern_atom(xcb_connection_t *c, xcb_intern_atom_cookie_t cookie);
-	};
+	void SetCursorMode(const CursorMode &mode) override;
+
+	void SetCursorPosition(const uint32_t &x, const uint32_t &y) override;
+
+private:
+	void HandleEvent(const xcb_generic_event_t *ev);
+
+	void InitConnection();
+
+	void LoadVk();
+
+	void CreateDisplay();
+
+	xcb_intern_atom_cookie_t intern_atom_cookie(xcb_connection_t *c, const char *s);
+
+	xcb_atom_t intern_atom(xcb_connection_t *c, xcb_intern_atom_cookie_t cookie);
+};
+
 }

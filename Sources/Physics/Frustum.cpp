@@ -1,6 +1,5 @@
 #include "Frustum.hpp"
 
-#include <array>
 #include <cmath>
 #include "Helpers/SquareArray.hpp"
 

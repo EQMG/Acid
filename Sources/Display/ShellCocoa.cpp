@@ -39,7 +39,7 @@ namespace acid
 
 	MessageResponse ShellCocoa::ShowMessageBox(const std::string &title, const std::string &message, const Message &type)
 	{
-		return MESSAGE_RESPONCE_NO; // TODO
+		return MESSAGE_RESPONSE_NO; // TODO
 	}
 
 	void ShellCocoa::SetSize(const uint32_t &width, const uint32_t &height)

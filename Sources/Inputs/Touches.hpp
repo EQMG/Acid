@@ -16,6 +16,7 @@ namespace acid
 		float m_x;
 		float m_y;
 	};
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of touch inputs.
 	/// </summary>

@@ -185,7 +185,7 @@ namespace acid
 		vkUnmapMemory(logicalDevice, dstImageMemory);
 		vkFreeMemory(logicalDevice, dstImageMemory, allocator);
 		vkDestroyImage(logicalDevice, dstImage, allocator);
-	//	delete data; // TODO: Delete one day...
+		//	delete data; // TODO: Delete one day...
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

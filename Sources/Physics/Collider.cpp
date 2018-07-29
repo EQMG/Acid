@@ -1,8 +1,6 @@
 #include "Collider.hpp"
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <LinearMath/btVector3.h>
-#include <LinearMath/btQuaternion.h>
 #include "Objects/GameObject.hpp"
 
 namespace acid

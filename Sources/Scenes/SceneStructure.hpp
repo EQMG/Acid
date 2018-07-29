@@ -96,7 +96,7 @@ namespace acid
 
 		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
 
-	//	std::vector<GameObject *> QueryBounding(Collider *range) override;
+		//	std::vector<GameObject *> QueryBounding(Collider *range) override;
 
 		bool Contains(GameObject *object) override;
 	};

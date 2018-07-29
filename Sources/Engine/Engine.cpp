@@ -29,25 +29,12 @@ namespace acid
 
 	int Engine::Run() const
 	{
-#ifndef ACID_VERBOSE
-		try
+		while (m_running)
 		{
-#endif
-			while (m_running)
-			{
-				m_updater->Update(m_moduleRegister);
-			}
+			m_updater->Update(m_moduleRegister);
+		}
 
-			return EXIT_SUCCESS;
-#ifndef ACID_VERBOSE
-		}
-		catch (const std::runtime_error &e)
-		{
-			fprintf(stderr, "Acid has hit an exception!\n");
-			fprintf(stderr, "%s\n", e.what());
-			return EXIT_FAILURE;
-		}
-#endif
+		return EXIT_SUCCESS;
 	}
 
 	void Engine::RequestClose(const bool &error)

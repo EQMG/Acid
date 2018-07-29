@@ -1,8 +1,6 @@
 #include "MeshRender.hpp"
 
 #include "Objects/GameObject.hpp"
-#include "Physics/Collider.hpp"
-#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
