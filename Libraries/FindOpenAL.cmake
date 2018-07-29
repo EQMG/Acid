@@ -1,14 +1,7 @@
 if(APPLE)
-	FIND_PATH(OPENAL_INCLUDE_DIR al.h)
+	find_path(OPENAL_INCLUDE_DIR al.h)
 else()
 	set(OPENAL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/openal/include")
 endif()
 
 find_library(OPENAL_LIBRARY NAMES openal OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/")
-
-# Install
-if(ACID_INSTALL)
-	file(COPY "${OPENAL_INCLUDE_DIR}/" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/")
-    file(COPY "${OPENAL_LIBRARY}" DESTINATION "${CMAKE_INSTALL_BINDIR}/")
-    file(COPY "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/OpenAL32.lib" DESTINATION "${CMAKE_INSTALL_LIBDIR}/")
-endif()

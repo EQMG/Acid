@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <iostream>
 #include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
@@ -58,5 +58,7 @@ int main(int argc, char **argv)
 	// Runs the game loop.
 	auto exitCode = engine->Run();
 
+	// Pauses the console.
+	std::cin.get();
 	return exitCode;
 }
