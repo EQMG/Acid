@@ -1,8 +1,5 @@
 #include "Quaternion.hpp"
 
-#ifdef ACID_SSE
-#include <emmintrin.h>
-#endif
 #include <cassert>
 #include "Maths.hpp"
 
@@ -87,24 +84,12 @@ namespace acid
 
 	Quaternion Quaternion::Add(const Quaternion &other) const
 	{
-#ifdef ACID_SSE
-		Quaternion result = Quaternion();
-		_mm_storeu_ps(&result.m_w, _mm_add_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w)));
-		return result;
-#else
 		return Quaternion(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w);
-#endif
 	}
 
 	Quaternion Quaternion::Subtract(const Quaternion &other) const
 	{
-#ifdef ACID_SSE
-		Quaternion result = Quaternion();
-		_mm_storeu_ps(&result.m_w, _mm_sub_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w)));
-		return result;
-#else
 		return Quaternion(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w);
-#endif
 	}
 
 	Quaternion Quaternion::Multiply(const Quaternion &other) const
@@ -140,16 +125,7 @@ namespace acid
 
 	float Quaternion::Dot(const Quaternion &other) const
 	{
-#ifdef ACID_SSE
-		__m128 q1 = _mm_loadu_ps(&m_w);
-		__m128 q2 = _mm_loadu_ps(&other.m_w);
-		__m128 n = _mm_mul_ps(q1, q2);
-		n = _mm_add_ps(n, _mm_shuffle_ps(n, n, _MM_SHUFFLE(2, 3, 0, 1)));
-		n = _mm_add_ps(n, _mm_shuffle_ps(n, n, _MM_SHUFFLE(0, 1, 2, 3)));
-		return _mm_cvtss_f32(n);
-#else
 		return m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
-#endif
 	}
 
 	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression)
@@ -186,24 +162,12 @@ namespace acid
 
 	Quaternion Quaternion::Scale(const float &scalar) const
 	{
-#ifdef ACID_SSE
-		Quaternion result = Quaternion();
-		_mm_storeu_ps(&result.m_w, _mm_mul_ps(_mm_loadu_ps(&m_w), _mm_set1_ps(scalar)));
-		return result;
-#else
 		return Quaternion(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
-#endif
 	}
 
 	Quaternion Quaternion::Negate() const
 	{
-#ifdef ACID_SSE
-		Quaternion result = Quaternion();
-		_mm_xor_ps(_mm_loadu_ps(&m_w), _mm_castsi128_ps(_mm_set1_epi32((int)0x80000000UL)));
-		return result;
-#else
 		return Quaternion(-m_x, -m_y, -m_z, -m_w);
-#endif
 	}
 
 	Quaternion Quaternion::Normalize() const
@@ -416,14 +380,7 @@ namespace acid
 
 	bool Quaternion::operator==(const Quaternion &other) const
 	{
-#ifdef ACID_SSE
-		__m128 c = _mm_cmpeq_ps(_mm_loadu_ps(&m_w), _mm_loadu_ps(&other.m_w));
-		c = _mm_and_ps(c, _mm_movehl_ps(c, c));
-		c = _mm_and_ps(c, _mm_shuffle_ps(c, c, _MM_SHUFFLE(1, 1, 1, 1)));
-		return _mm_cvtsi128_si32(_mm_castps_si128(c)) == -1;
-#else
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
-#endif
 	}
 
 	bool Quaternion::operator!=(const Quaternion &other) const

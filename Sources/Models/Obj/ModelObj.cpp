@@ -11,8 +11,14 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		std::string fileLoaded = FileSystem::ReadTextFile(filename);
-		auto lines = FormatString::Split(fileLoaded, "\n");
+		auto fileLoaded = FileSystem::ReadTextFile(filename);
+
+		if (!fileLoaded.has_value())
+		{
+			return;
+		}
+
+		auto lines = FormatString::Split(fileLoaded.value(), "\n");
 
 		auto indicesList = std::vector<uint32_t>();
 		auto verticesList = std::vector<VertexModelData *>();

@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include <optional>
 #include "Engine/Exports.hpp"
 
 namespace acid
@@ -24,40 +25,45 @@ namespace acid
 		/// Deletes a file.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
-		static void DeleteFile(const std::string &filepath);
+		/// <returns> If the file was deleted. </returns>
+		static bool DeleteFile(const std::string &filepath);
 
 		/// <summary>
 		/// Creates a file, and the folder path.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="createFolders"> If folders should also be created. </param>
-		static void CreateFile(const std::string &filepath, const bool &createFolders = true);
+		/// <returns> If the file was created. </returns>
+		static bool CreateFile(const std::string &filepath, const bool &createFolders = true);
 
 		/// <summary>
 		/// Clears the contents from a file.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
-		static void ClearFile(const std::string &filepath);
+		/// <returns> If the file was cleared. </returns>
+		static bool ClearFile(const std::string &filepath);
 
 		/// <summary>
 		/// Creates a directory.
 		/// </summary>
 		/// <param name="path"> The directory to create. </param>
-		static void CreateFolder(const std::string &path);
+		/// <returns> If the folder was created. </returns>
+		static bool CreateFolder(const std::string &path);
 
 		/// <summary>
 		/// Reads a text file into a string.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <returns> The string containing the read file. </returns>
-		static std::string ReadTextFile(const std::string &filepath);
+		static std::optional<std::string> ReadTextFile(const std::string &filepath);
 
 		/// <summary>
 		/// Writes to a text file from a string.
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="data"> The text data. </param>
-		static void WriteTextFile(const std::string &filepath, const std::string &data);
+		/// <returns> If the file was written to. </returns>
+		static bool WriteTextFile(const std::string &filepath, const std::string &data);
 
 		/// <summary>
 		/// Reads a binary file into a char array.
@@ -66,7 +72,7 @@ namespace acid
 		///	<param name="mode"> The read mode. </param>
 		/// <returns> The char array loaded from the file. </returns>
 		template<typename T>
-		static std::vector<T> ReadBinaryFile(const std::string &filepath, const std::string &mode = "rb")
+		static std::optional<std::vector<T>> ReadBinaryFile(const std::string &filepath, const std::string &mode = "rb")
 		{
 			std::vector<T> data = {};
 
@@ -87,7 +93,7 @@ namespace acid
 					if (ferror(fp))
 					{
 						fprintf(stderr, "Error reading file: '%s'\n", filepath.c_str());
-						return data;
+						return {};
 					}
 				}
 				else
@@ -95,7 +101,7 @@ namespace acid
 					if (sizeof(T) != 1 && (ftell(fp) % sizeof(T)))
 					{
 						fprintf(stderr, "Corrupted word found in file: '%s'\n", filepath.c_str());
-						return data;
+						return {};
 					}
 				}
 
@@ -107,6 +113,7 @@ namespace acid
 			else
 			{
 				fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+				return {};
 			}
 
 			return data;
@@ -117,8 +124,9 @@ namespace acid
 		/// </summary>
 		/// <param name="filepath"> The filepath. </param>
 		/// <param name="data"> The binary data. </param>
+		/// <returns> If the file was written to. </returns>
 		template<typename T>
-		static void WriteBinaryFile(const std::string &filepath, const std::vector<char> &data, const std::string &mode = "wb")
+		static bool WriteBinaryFile(const std::string &filepath, const std::vector<char> &data, const std::string &mode = "wb")
 		{
 			const bool useStdout = !filepath.c_str() || (filepath.c_str()[0] == '-' && filepath.c_str()[1] == '\0');
 
@@ -129,7 +137,7 @@ namespace acid
 				if (data.size() != written)
 				{
 					fprintf(stderr, "Could not write to file: '%s'\n", filepath.c_str());
-					return;
+					return false;
 				}
 
 				if (!useStdout)
@@ -140,8 +148,10 @@ namespace acid
 			else
 			{
 				fprintf(stderr, "File could not be opened: '%s'\n", filepath.c_str());
-				return;
+				return false;
 			}
+
+			return true;
 		}
 
 		/// <summary>

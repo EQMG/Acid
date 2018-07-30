@@ -132,7 +132,7 @@ Currently Acid does not run under Release mode in Visual Studios (bug).
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, older resources can be found on this fork: [https://github.com/mattparks/Acid](https://github.com/mattparks/Acid).
+Old resources have been removed from the main repo, resources for commits from before April 4 2018 can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Folder).
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help.

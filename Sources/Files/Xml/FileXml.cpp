@@ -33,12 +33,18 @@ namespace acid
 
 		m_parent->GetChildren().clear();
 
-		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
+		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
+
+		if (!fileLoaded.has_value())
+		{
+			return;
+		}
+
 		std::shared_ptr<XmlNode> currentSection = nullptr;
 		std::stringstream summation;
 		bool end = false;
 
-		for (auto it = fileLoaded.begin(); it != fileLoaded.end(); ++it)
+		for (auto it = fileLoaded.value().begin(); it != fileLoaded.value().end(); ++it)
 		{
 			if (*it == '<')
 			{

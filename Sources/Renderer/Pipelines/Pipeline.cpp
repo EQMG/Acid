@@ -242,7 +242,14 @@ namespace acid
 				throw std::runtime_error("Could not create pipeline, missing shader stage!");
 			}
 
-			auto shaderCode = ShaderProgram::InsertDefineBlock(FileSystem::ReadTextFile(shaderStage), defineBlock.str());
+			auto fileLoaded = FileSystem::ReadTextFile(shaderStage);
+
+			if (!fileLoaded.has_value())
+			{
+				continue;
+			}
+
+			auto shaderCode = ShaderProgram::InsertDefineBlock(fileLoaded.value(), defineBlock.str());
 
 			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
 			EShLanguage language = GetEshLanguage(stageFlag);

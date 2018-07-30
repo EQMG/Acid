@@ -10,11 +10,8 @@ add_executable(TestDeferred ${TESTDEFERED_SOURCES})
 #endif()
 
 set_target_properties(TestDeferred PROPERTIES
-                      POSITION_INDEPENDENT_CODE ONif(UNIX AND NOT APPLE)
-        find_package(XCB REQUIRED)
-        endif()
-
-        FOLDER "Acid")
+                      POSITION_INDEPENDENT_CODE ON
+                      FOLDER "Acid")
 
 add_dependencies(TestDeferred Acid)
 

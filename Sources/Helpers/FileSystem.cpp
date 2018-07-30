@@ -24,21 +24,22 @@ namespace acid
 		return false;
 	}
 
-	void FileSystem::DeleteFile(const std::string &filepath)
+	bool FileSystem::DeleteFile(const std::string &filepath)
 	{
 		if (!FileExists(filepath))
 		{
-			return;
+			return false;
 		}
 
 		remove(filepath.c_str());
+		return false;
 	}
 
-	void FileSystem::CreateFile(const std::string &filepath, const bool &createFolders)
+	bool FileSystem::CreateFile(const std::string &filepath, const bool &createFolders)
 	{
 		if (FileExists(filepath))
 		{
-			return;
+			return false;
 		}
 
 		if (createFolders)
@@ -54,15 +55,17 @@ namespace acid
 		}
 
 		fclose(file);
+		return true;
 	}
 
-	void FileSystem::ClearFile(const std::string &filepath)
+	bool FileSystem::ClearFile(const std::string &filepath)
 	{
 		DeleteFile(filepath);
-		CreateFile(filepath);
+		bool created = CreateFile(filepath);
+		return created;
 	}
 
-	void FileSystem::CreateFolder(const std::string &path)
+	bool FileSystem::CreateFolder(const std::string &path)
 	{
 		int nError = 0;
 
@@ -73,20 +76,25 @@ namespace acid
 		nError = mkdir(path.c_str(), nMode);
 #endif
 
-		assert(nError != 0 && "Could not create folder!");
+	//	assert(nError != 0 && "Could not create folder!");
+		return nError == 0;
 	}
 
-	std::string FileSystem::ReadTextFile(const std::string &filepath)
+	std::optional<std::string> FileSystem::ReadTextFile(const std::string &filepath)
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
-			return "";
+			return {};
 		}
 
 		FILE *file = fopen(filepath.c_str(), "rb");
 
-		assert(file != nullptr && "Could not open file!");
+		if (file == nullptr)
+		{
+			fprintf(stderr, "Could not open file: '%s'\n", filepath.c_str());
+			return {};
+		}
 
 		fseek(file, 0, SEEK_END);
 		int length = ftell(file);
@@ -100,15 +108,18 @@ namespace acid
 		return result;
 	}
 
-	void FileSystem::WriteTextFile(const std::string &filepath, const std::string &data)
+	bool FileSystem::WriteTextFile(const std::string &filepath, const std::string &data)
 	{
-		FILE *fp = fopen(filepath.c_str(), "ab");
+		FILE *file = fopen(filepath.c_str(), "ab");
 
-		if (fp != nullptr)
+		if (file == nullptr)
 		{
-			fputs(data.c_str(), fp);
-			fclose(fp);
+			return false;
 		}
+
+		fputs(data.c_str(), file);
+		fclose(file);
+		return true;
 	}
 
 	std::string FileSystem::GetWorkingDirectory()
