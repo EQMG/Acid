@@ -11,7 +11,7 @@ namespace acid
 	class ACID_EXPORT ComponentRegister
 	{
 	private:
-		typedef std::function<std::shared_ptr<IComponent>()> ComponentCreate;
+		typedef std::function<IComponent *()> ComponentCreate;
 
 		std::map<std::string, ComponentCreate> m_components;
 	public:
@@ -24,6 +24,13 @@ namespace acid
 		/// Deconstructor for the component register.
 		/// </summary>
 		~ComponentRegister();
+
+		/// <summary>
+		/// Creates a new component from the register.
+		/// </summary>
+		/// <param name="name"> The component name to create. </param>
+		/// <returns> The new component. </returns>
+		IComponent *CreateComponent(const std::string &name);
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -40,9 +47,9 @@ namespace acid
 				return;
 			}
 
-			m_components.emplace(name, ComponentCreate([]() -> std::shared_ptr<IComponent>
+			m_components.emplace(name, ComponentCreate([]() -> IComponent *
 			{
-				return std::dynamic_pointer_cast<IComponent>(std::make_shared<T>());
+				return new T();
 			}));
 		}
 
@@ -50,20 +57,7 @@ namespace acid
 		/// Deregisters a component.
 		/// </summary>
 		/// <param name="name"> The components name. </param>
-		void DeregisterComponent(const std::string &name);
-
-		/// <summary>
-		/// Gets a component create object from the register.
-		/// </summary>
-		/// <param name="name"> The component name to get. </param>
-		/// <returns> The component create object. </returns>
-		ComponentCreate GetComponentCreate(const std::string &name);
-
-		/// <summary>
-		/// Creates a new component from the register.
-		/// </summary>
-		/// <param name="name"> The component name to create. </param>
-		/// <returns> The new component. </returns>
-		std::shared_ptr<IComponent> CreateComponent(const std::string &name);
+		/// <returns> If the component was deregistered. </returns>
+		bool DeregisterComponent(const std::string &name);
 	};
 }

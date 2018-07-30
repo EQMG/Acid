@@ -30,6 +30,8 @@ namespace acid
 
 		vkQueueWaitIdle(queue);
 
+		delete m_managerRender;
+
 		for (auto &renderStage : m_renderStages)
 		{
 			delete renderStage;
@@ -289,6 +291,12 @@ namespace acid
 //#endif
 		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
 		return UINT32_MAX;
+	}
+
+	void Renderer::SetManager(IManagerRender *managerRender)
+	{
+		delete m_managerRender;
+		m_managerRender = managerRender;
 	}
 
 	void Renderer::CreateFences()

@@ -84,16 +84,16 @@ namespace acid
 		/// Deregisters a module.
 		/// </summary>
 		/// <param name="module"> The module to deregister. </param>
-		/// <returns> The deregistered module. </returns>
-		IModule *DeregisterModule(IModule *module);
+		/// <returns> If the module was deregistered. </returns>
+		bool DeregisterModule(IModule *module);
 
 		/// <summary>
 		/// Removes a module by type from this game object.
 		/// </summary>
 		/// <param name="T"> The type of module to deregister. </param>
-		/// <returns> The deregistered module. </returns>
+		/// <returns> If the module was deregistered. </returns>
 		template<typename T>
-		T *DeregisterModule()
+		bool DeregisterModule()
 		{
 			for (auto &module : m_modules)
 			{
@@ -102,11 +102,11 @@ namespace acid
 				if (casted != nullptr)
 				{
 					DeregisterModule(module.second);
-					return casted;
+					return true;
 				}
 			}
 
-			return nullptr;
+			return false;
 		}
 
 		/// <summary>

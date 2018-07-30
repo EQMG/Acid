@@ -24,6 +24,9 @@ namespace acid
 		btTransform *m_worldTransform;
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
+
+		Vector3 m_linearVelocity;
+		Vector3 m_angularVelocity;
 	public:
 		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::ONE,
 				  const Vector3 &angularFactor = Vector3::ONE);
@@ -39,10 +42,6 @@ namespace acid
 		void Write(LoadedValue *destination) override;
 
 		std::string GetName() const override { return "Rigidbody"; };
-
-		void SetAngularVelocity(const Vector3 &velocity);
-
-		void SetLinearVelocity(const Vector3 &velocity);
 
 		void AddForce(const Vector3 &force, const Vector3 &position);
 
@@ -64,6 +63,13 @@ namespace acid
 
 		void SetAngularFactor(const Vector3 &angularFactor);
 
+		const Vector3 GetLinearVelocity() const { return m_linearVelocity; }
+
+		void SetLinearVelocity(const Vector3 &linearVelocity);
+
+		const Vector3 GetAngularVelocity() const { return m_angularVelocity; }
+
+		void SetAngularVelocity(const Vector3 &angularVelocity);
 	private:
 		ACID_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape);
 	};

@@ -2,7 +2,6 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Inputs/Mouse.hpp>
-#include <Maths/Maths.hpp>
 
 namespace test
 {

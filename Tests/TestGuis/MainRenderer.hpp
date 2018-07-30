@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Renderer/IManagerRender.hpp>
-#include <Fonts/RendererFonts.hpp>
-#include <Guis/RendererGuis.hpp>
 
 using namespace acid;
 

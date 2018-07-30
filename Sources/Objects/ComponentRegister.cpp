@@ -43,31 +43,7 @@ namespace acid
 	{
 	}
 
-	ComponentRegister::ComponentCreate ComponentRegister::GetComponentCreate(const std::string &name)
-	{
-		auto component = m_components.find(name);
-
-		if (component == m_components.end())
-		{
-			return nullptr;
-		}
-
-		return (*component).second;
-	}
-
-	void ComponentRegister::DeregisterComponent(const std::string &name)
-	{
-		auto component = m_components.find(name);
-
-		if (component == m_components.end())
-		{
-			return;
-		}
-
-		m_components.erase(component);
-	}
-
-	std::shared_ptr<IComponent> ComponentRegister::CreateComponent(const std::string &name)
+	IComponent *ComponentRegister::CreateComponent(const std::string &name)
 	{
 		auto found = m_components.find(name);
 
@@ -78,5 +54,18 @@ namespace acid
 		}
 
 		return ((*found).second)();
+	}
+
+	bool ComponentRegister::DeregisterComponent(const std::string &name)
+	{
+		auto component = m_components.find(name);
+
+		if (component == m_components.end())
+		{
+			return false;
+		}
+
+		m_components.erase(component);
+		return true;
 	}
 }

@@ -12,6 +12,7 @@ namespace test
 	{
 	private:
 		Vector3 m_rate;
+		Vector3 m_rotation;
 	public:
 		RotateBehaviour(const Vector3 &rate = Vector3::ZERO);
 

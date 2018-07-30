@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine and updater objects.
-	auto engine = std::make_shared<Engine>();
-	engine->SetUpdater(std::make_shared<MainUpdater>());
+	auto engine = new Engine();
+	engine->SetUpdater(new MainUpdater());
 
 //	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.dae");
 //	return 0;
@@ -52,11 +52,12 @@ int main(int argc, char **argv)
 	Display::Get()->SetTitle("Test Deferred");
 	Display::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
-	Renderer::Get()->SetManager(std::make_shared<MainRenderer>());
-	Scenes::Get()->SetScene(std::make_shared<Scene1>());
+	Renderer::Get()->SetManager(new MainRenderer());
+	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
+	delete engine;
 
 	// Pauses the console.
 	std::cin.get();

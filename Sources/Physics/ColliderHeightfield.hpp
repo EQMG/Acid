@@ -16,8 +16,7 @@ namespace acid
 	public:
 		ColliderHeightfield(const int &heightStickWidth, const int &heightStickLength,
 							const void *heightfieldData, const float &heightScale,
-							const float &minHeight, const float &maxHeight,
-							const int &upAxis, const bool &flipQuadEdges);
+							const float &minHeight, const float &maxHeight, const bool &flipQuadEdges);
 
 		~ColliderHeightfield();
 
@@ -35,7 +34,6 @@ namespace acid
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,
 						const void *heightfieldData, const float &heightScale,
-						const float &minHeight, const float &maxHeight,
-						const int &upAxis, const bool &flipQuadEdges);
+						const float &minHeight, const float &maxHeight, const bool &flipQuadEdges);
 	};
 }

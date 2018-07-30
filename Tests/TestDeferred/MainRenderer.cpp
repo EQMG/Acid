@@ -2,9 +2,15 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Renderer/Pipelines/Compute.hpp>
+#include <Meshes/RendererMeshes.hpp>
+#include <Fonts/RendererFonts.hpp>
+#include <Guis/RendererGuis.hpp>
+#include <Post/Deferred/RendererDeferred.hpp>
+#include <Post/Filters/FilterFxaa.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
+#include <Shadows/RendererShadows.hpp>
+#include <Particles/RendererParticles.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Models/Shapes/ModelRectangle.hpp>
 
 namespace test
 {

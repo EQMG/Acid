@@ -12,27 +12,21 @@
 #include <Meshes/MeshRender.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
-#include <Shadows/ShadowRender.hpp>
-#include <Skyboxes/MaterialSkybox.hpp>
 #include <Physics/ColliderBox.hpp>
 #include <Physics/ColliderSphere.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Physics/ColliderConvexHull.hpp>
-#include <Physics/ColliderCylinder.hpp>
-#include <Models/Shapes/ModelCylinder.hpp>
-#include <Physics/ColliderCone.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Models/Obj/ModelObj.hpp>
 #include "Rotate/RotateBehaviour.hpp"
 #include "FpsCamera.hpp"
-#include "FpsPlayer.hpp"
 
 namespace test
 {
 	static const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(std::make_shared<FpsCamera>()),
+		IScene(new FpsCamera()),
 		m_buttonSpawnSphere(new ButtonMouse({MOUSE_BUTTON_1})),
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
@@ -110,7 +104,7 @@ namespace test
 	//	convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
-		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 1.0f, 0.0f));
+		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 10.0f, 0.0f));
 	}
 
 	void Scene1::Update()

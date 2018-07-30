@@ -51,7 +51,7 @@ namespace acid
 		ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
 
 		alListenerfv(AL_ORIENTATION, orientation);
-		//	ErrorAl(alGetError());
+		ErrorAl(alGetError());
 	}
 
 	std::string Audio::StringifyResultAl(const int &result)

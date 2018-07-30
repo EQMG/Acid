@@ -11,12 +11,18 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
 set(GLSLANG_LIBRARIES "glslang" "SPIRV" PARENT_SCOPE)
 
 # BUILD_PYBULLET is only ON until bullet can fix Windows shared builds.
+set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+
+if(MSVC)
+    set(BUILD_SHARED_LIBS OFF)
+endif()
+
 set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "Use MSVC Runtime Library DLL (/MD or /MDd)")
-	
+
 set(BULLET_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src" PARENT_SCOPE)
 set(INSTALL_LIBS OFF CACHE INTERNAL "Set when you want to install libraries")
 set(INSTALL_CMAKE_FILES OFF CACHE INTERNAL "Install generated CMake files")
-set(BUILD_PYBULLET ON CACHE INTERNAL "Set when you want to build pybullet (Python bindings for Bullet)")
+set(BUILD_PYBULLET OFF CACHE INTERNAL "Set when you want to build pybullet (Python bindings for Bullet)")
 set(BUILD_BULLET3 OFF CACHE INTERNAL "Set when you want to build Bullet 3")
 set(BUILD_OPENGL3_DEMOS OFF CACHE INTERNAL "Set when you want to build the OpenGL3+ demos")
 set(BUILD_CPU_DEMOS OFF CACHE INTERNAL "Build original Bullet CPU examples")
@@ -26,4 +32,6 @@ set(BUILD_EXTRAS OFF CACHE INTERNAL "Set when you want to build the extras")
 set(USE_GLUT OFF CACHE INTERNAL "Use Glut")
 set(BUILD_UNIT_TESTS OFF CACHE INTERNAL "Build Unit Tests")
 add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
-set(BULLET_LIBRARIES "BulletDynamics" "BulletCollision" "LinearMath" PARENT_SCOPE)
+set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath" PARENT_SCOPE)
+
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
