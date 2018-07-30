@@ -1,8 +1,5 @@
 #include "Vector4.hpp"
 
-#ifdef ACID_SSE
-#include <emmintrin.h>
-#endif
 #include <cassert>
 #include "Maths.hpp"
 #include "Colour.hpp"
@@ -15,52 +12,36 @@ namespace acid
 	const Vector4 Vector4::POSITIVE_INFINITY = Vector4(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 	const Vector4 Vector4::NEGATIVE_INFINITY = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-	Vector4::Vector4()
+	Vector4::Vector4() :
+		m_x(0.0f),
+		m_y(0.0f),
+		m_z(0.0f),
+		m_w(1.0f)
 	{
-#ifdef ACID_SSE
-		_mm_storeu_ps(&m_x, _mm_set_ps(1.0f, 0.0f, 0.0f, 0.0f));
-#else
-		m_x = 0.0f;
-		m_y = 0.0f;
-		m_z = 0.0f;
-		m_w = 1.0f;
-#endif
 	}
 
-	Vector4::Vector4(const float &x, const float &y, const float &z, const float &w)
+	Vector4::Vector4(const float &x, const float &y, const float &z, const float &w) :
+		m_x(x),
+		m_y(y),
+		m_z(z),
+		m_w(w)
 	{
-#ifdef ACID_SSE
-		_mm_storeu_ps(&m_x, _mm_set_ps(w, z, y, x));
-#else
-		m_x = x;
-		m_y = y;
-		m_z = z;
-		m_w = w;
-#endif
 	}
 
-	Vector4::Vector4(const Vector3 &source, const float &w)
+	Vector4::Vector4(const Vector3 &source, const float &w) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(w)
 	{
-#ifdef ACID_SSE
-		_mm_storeu_ps(&m_x, _mm_set_ps(w, source.m_z, source.m_y, source.m_x));
-#else
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = source.m_z;
-		m_w = w;
-#endif
 	}
 
-	Vector4::Vector4(const Vector4 &source)
+	Vector4::Vector4(const Vector4 &source) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(source.m_w)
 	{
-#ifdef ACID_SSE
-		_mm_storeu_ps(&m_x, _mm_set_ps(source.m_w, source.m_z, source.m_y, source.m_x));
-#else
-		m_x = source.m_x;
-		m_y = source.m_y;
-		m_z = source.m_z;
-		m_w = source.m_w;
-#endif
 	}
 
 	Vector4::Vector4(const Colour &source) :
@@ -69,14 +50,6 @@ namespace acid
 		m_z(source.m_b),
 		m_w(source.m_a)
 	{
-#ifdef ACID_SSE
-		_mm_storeu_ps(&m_x, _mm_set_ps(source.m_a, source.m_b, source.m_g, source.m_r));
-#else
-		m_x = source.m_r;
-		m_y = source.m_g;
-		m_z = source.m_b;
-		m_w = source.m_a;
-#endif
 	}
 
 	Vector4::~Vector4()

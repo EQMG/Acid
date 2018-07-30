@@ -31,8 +31,14 @@ namespace acid
 		m_paddingHeight(0),
 		m_maxSizeY(0.0)
 	{
-		std::string fileLoaded = FileSystem::ReadTextFile(filename);
-		auto lines = FormatString::Split(fileLoaded, "\n");
+		auto fileLoaded = FileSystem::ReadTextFile(filename);
+
+		if (!fileLoaded.has_value())
+		{
+			return;
+		}
+
+		auto lines = FormatString::Split(fileLoaded.value(), "\n");
 
 		for (auto &line : lines)
 		{

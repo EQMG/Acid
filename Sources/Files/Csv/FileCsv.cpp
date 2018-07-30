@@ -29,8 +29,14 @@ namespace acid
 			return;
 		}
 
-		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
-		auto lines = FormatString::Split(fileLoaded, "\n", true);
+		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
+
+		if (!fileLoaded.has_value())
+		{
+			return;
+		}
+
+		auto lines = FormatString::Split(fileLoaded.value(), "\n", true);
 
 		for (auto &line : lines)
 		{

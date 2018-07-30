@@ -31,11 +31,17 @@ namespace acid
 
 		m_parent->GetChildren().clear();
 
-		std::string fileLoaded = FileSystem::ReadTextFile(m_filename);
+		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
+
+		if (!fileLoaded.has_value())
+		{
+			return;
+		}
+
 		std::shared_ptr<JsonSection> currentSection = nullptr;
 		std::stringstream summation;
 
-		for (char &c : fileLoaded)
+		for (char &c : fileLoaded.value())
 		{
 			if (c == '{' || c == '[')
 			{
