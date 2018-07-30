@@ -13,17 +13,17 @@ namespace acid
 	class ACID_EXPORT IScene
 	{
 	private:
-		std::shared_ptr<ICamera> m_camera;
-		std::shared_ptr<SceneStructure> m_structure;
+		ICamera *m_camera;
+		SceneStructure *m_structure;
 		bool m_started;
 	public:
 		/// <summary>
 		/// Creates a new scene.
 		/// </summary>
 		/// <param name="camera"> The scenes camera. </param>
-		IScene(std::shared_ptr<ICamera> camera) :
+		IScene(ICamera *camera) :
 			m_camera(camera),
-			m_structure(std::make_shared<SceneStructure>()),
+			m_structure(new SceneStructure()),
 			m_started(false)
 		{
 		}
@@ -33,6 +33,8 @@ namespace acid
 		/// </summary>
 		virtual ~IScene()
 		{
+			delete m_camera;
+			delete m_structure;
 		}
 
 		virtual void Start() = 0;
@@ -46,19 +48,23 @@ namespace acid
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		std::shared_ptr<ICamera> GetCamera() const { return m_camera; }
+		ICamera *GetCamera() const { return m_camera; }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
 		/// </summary>
 		/// <param name="camera"> The new camera. </param>
-		void SetCamera(std::shared_ptr<ICamera> camera) { m_camera = camera; }
+		void SetCamera(ICamera *camera)
+		{
+			delete m_camera; // TODO: Cleanup.
+			m_camera = camera;
+		}
 
 		/// <summary>
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
-		std::shared_ptr<SceneStructure> GetStructure() const { return m_structure; }
+		SceneStructure *GetStructure() const { return m_structure; }
 
 		/// <summary>
 		/// Gets if this scene has started.

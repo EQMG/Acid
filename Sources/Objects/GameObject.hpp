@@ -18,14 +18,14 @@ namespace acid
 	private:
 		std::string m_name;
 		Transform m_transform;
-		std::vector<std::shared_ptr<IComponent>> m_components;
-		std::shared_ptr<ISpatialStructure> m_structure;
+		std::vector<IComponent *> m_components;
+		ISpatialStructure *m_structure;
 		GameObject *m_parent;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure = nullptr);
+		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
-		GameObject(const std::string &filepath, const Transform &transform, std::shared_ptr<ISpatialStructure> structure = nullptr);
+		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		virtual ~GameObject();
 
@@ -35,7 +35,7 @@ namespace acid
 		/// Gets all components attached to this game object.
 		/// </summary>
 		/// <returns> The list of components. </returns>
-		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
+		std::vector<IComponent *> GetComponents() const { return m_components; }
 
 		/// <summary>
 		/// Gets a component by type.
@@ -43,13 +43,13 @@ namespace acid
 		/// <param name="T"> The component type to find. </param>
 		/// <returns> The found component. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
+		T *GetComponent(const bool &allowDisabled = false)
 		{
-			std::shared_ptr<T> alternative = nullptr;
+			T *alternative = nullptr;
 
 			for (auto &component : m_components)
 			{
-				auto casted = std::dynamic_pointer_cast<T>(component);
+				auto casted = dynamic_cast<T *>(component);
 
 				if (casted != nullptr)
 				{
@@ -71,7 +71,7 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to add. </param>
 		/// <returns> The added component. </returns>
-		std::shared_ptr<IComponent> AddComponent(std::shared_ptr<IComponent> component);
+		IComponent *AddComponent(IComponent *component);
 
 		/// <summary>
 		/// Creates a component by type to be added this game object.
@@ -80,9 +80,9 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added component. </returns>
 		template<typename T, typename... Args>
-		std::shared_ptr<T> AddComponent(Args &&... args)
+		T *AddComponent(Args &&... args)
 		{
-			auto created = std::make_shared<T>(std::forward<Args>(args)...);
+			auto created = new T(std::forward<Args>(args)...);
 			AddComponent(created);
 			return created;
 		}
@@ -91,29 +91,37 @@ namespace acid
 		/// Removes a component from this game object.
 		/// </summary>
 		/// <param name="component"> The component to remove. </param>
-		/// <returns> The removed component. </returns>
-		std::shared_ptr<IComponent> RemoveComponent(std::shared_ptr<IComponent> component);
+		/// <returns> If the component was removed. </returns>
+		bool RemoveComponent(IComponent *component);
+
+		/// <summary>
+		/// Removes a component from this game object.
+		/// </summary>
+		/// <param name="name"> The name of the component to remove. </param>
+		/// <returns> If the component was removed. </returns>
+		bool RemoveComponent(const std::string &name);
 
 		/// <summary>
 		/// Removes a component by type from this game object.
 		/// </summary>
 		/// <param name="T"> The type of component to remove. </param>
-		/// <returns> The removed component. </returns>
+		/// <returns> If the component was removed. </returns>
 		template<typename T>
-		std::shared_ptr<T> RemoveComponent()
+		bool RemoveComponent()
 		{
 			for (auto &component : m_components)
 			{
-				auto casted = std::dynamic_pointer_cast<T>(component);
+				auto casted = dynamic_cast<T *>(component);
 
 				if (casted != nullptr)
 				{
 					RemoveComponent(component);
-					return casted;
+					delete component;
+					return true;
 				}
 			}
 
-			return nullptr;
+			return false;
 		}
 
 		std::string GetName() const { return m_name; }
@@ -124,9 +132,9 @@ namespace acid
 
 		void SetTransform(const Transform &transform) { m_transform = transform; }
 
-		std::shared_ptr<ISpatialStructure> GetStructure() const { return m_structure; }
+		ISpatialStructure *GetStructure() const { return m_structure; }
 
-		void SetStructure(std::shared_ptr<ISpatialStructure> structure);
+		void SetStructure(ISpatialStructure *structure);
 
 		bool IsRemoved() const { return m_removed; }
 

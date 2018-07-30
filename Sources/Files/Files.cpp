@@ -9,6 +9,13 @@ namespace acid
 	Files::Files() :
 		IModule()
 	{
+		/*for (auto &search : SEARCH_PATHS)
+		{
+			if (!FileSystem::FolderExists(search))
+			{
+				fprintf(stderr, "File search path does not exist: '%s'\n", search.c_str());
+			}
+		}*/
 	}
 
 	Files::~Files()

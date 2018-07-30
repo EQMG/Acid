@@ -73,10 +73,7 @@ namespace acid
 		nError = mkdir(path.c_str(), nMode);
 #endif
 
-		if (nError != 0)
-		{
-			//	assert(false && "Could not create folder!");
-		}
+		assert(nError != 0 && "Could not create folder!");
 	}
 
 	std::string FileSystem::ReadTextFile(const std::string &filepath)

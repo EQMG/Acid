@@ -10,6 +10,7 @@ namespace acid
 		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
 		m_moduleRegister(ModuleRegister()),
+		m_updater(nullptr),
 		m_fpsLimit(-1.0f),
 		m_initialized(false),
 		m_running(true),
@@ -25,6 +26,7 @@ namespace acid
 
 	Engine::~Engine()
 	{
+		delete m_updater;
 	}
 
 	int Engine::Run() const

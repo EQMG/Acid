@@ -3,7 +3,6 @@
 #include <Animations/MeshAnimated.hpp>
 #include <Inputs/ButtonCompound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/Mouse.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Renderer/Screenshot/Screenshot.hpp>
@@ -14,7 +13,7 @@ namespace test
 	const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(std::make_shared<FixedCamera>()),
+		IScene(new FixedCamera()),
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),

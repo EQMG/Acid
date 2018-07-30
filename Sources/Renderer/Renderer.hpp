@@ -14,7 +14,7 @@ namespace acid
 		public IModule
 	{
 	private:
-		std::shared_ptr<IManagerRender> m_managerRender;
+		IManagerRender *m_managerRender;
 
 		std::vector<RenderStage *> m_renderStages;
 
@@ -80,17 +80,17 @@ namespace acid
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		std::shared_ptr<IManagerRender> GetManager() const { return m_managerRender; }
+		IManagerRender *GetManager() const { return m_managerRender;  }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		void SetManager(std::shared_ptr<IManagerRender> managerRender) { m_managerRender = managerRender; }
+		void SetManager(IManagerRender *managerRender);
 
 		std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
 
-		RenderStage *GetRenderStage(const int &i) const { return m_renderStages.at(i); }
+		RenderStage *GetRenderStage(const unsigned int &i) const { return m_renderStages.at(i); }
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 

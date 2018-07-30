@@ -16,7 +16,6 @@ namespace test
 		Delta m_deltaRender;
 		Timer m_timerUpdate;
 		Timer m_timerRender;
-
 	public:
 		MainUpdater();
 

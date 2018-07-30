@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Scenes/ICamera.hpp>
-#include <Inputs/ButtonJoystick.hpp>
-#include <Inputs/AxisJoystick.hpp>
 
 using namespace acid;
 

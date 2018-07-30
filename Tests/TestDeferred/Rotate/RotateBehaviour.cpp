@@ -6,7 +6,8 @@ namespace test
 {
 	RotateBehaviour::RotateBehaviour(const Vector3 &rate) :
 		IBehaviour(),
-		m_rate(rate)
+		m_rate(rate),
+		m_rotation(Vector3())
 	{
 	}
 
@@ -16,13 +17,13 @@ namespace test
 
 	void RotateBehaviour::Start()
 	{
+		m_rotation = GetGameObject()->GetTransform().GetRotation().ToEuler();
 	}
 
 	void RotateBehaviour::Update()
 	{
-		Vector3 euler = GetGameObject()->GetTransform().GetRotation().ToEuler();
-		euler += Engine::Get()->GetDelta() * m_rate;
-		GetGameObject()->GetTransform().SetRotation(euler.ToQuaternion());
+		m_rotation += Engine::Get()->GetDelta() * m_rate;
+		GetGameObject()->GetTransform().SetRotation(m_rotation.ToQuaternion());
 	}
 
 	void RotateBehaviour::Load(LoadedValue *value)

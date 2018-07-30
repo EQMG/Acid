@@ -13,7 +13,7 @@ namespace test
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, JUSTIFY_LEFT)),
 		m_timerUpdate(Timer(0.333f))
 	{
-		//	m_textPosition->SetVisible(false);
+	//	m_textPosition->SetVisible(false);
 
 	//	Gui *box = new Gui(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.4f), "CentreRight", true, true, Vector2(0.6f, 0.6f)), Texture::Resource("Guis/Black.png"), 0);
 	//	Text *title = new Text(box, UiBound(Vector2(0.5f, 0.9f), "TopCentre", true), 3.0f, "Hello World!", FontType::Resource("Fonts/ProximaNova", "Semibold"), JustifyLeft, 0.2f);

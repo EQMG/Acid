@@ -2,6 +2,8 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Guis/RendererGuis.hpp>
+#include <Fonts/RendererFonts.hpp>
 
 namespace test
 {

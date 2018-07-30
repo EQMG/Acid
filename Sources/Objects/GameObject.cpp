@@ -6,10 +6,10 @@
 
 namespace acid
 {
-	GameObject::GameObject(const Transform &transform, std::shared_ptr<ISpatialStructure> structure) :
+	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
 		m_transform(Transform(transform)),
-		m_components(std::vector<std::shared_ptr<IComponent>>()),
+		m_components(std::vector<IComponent *>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
@@ -25,7 +25,7 @@ namespace acid
 		}
 	}
 
-	GameObject::GameObject(const std::string &filepath, const Transform &transform, std::shared_ptr<ISpatialStructure> structure) :
+	GameObject::GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure)
 	{
 		auto prefabObject = PrefabObject::Resource(filepath);
@@ -54,6 +54,11 @@ namespace acid
 	GameObject::~GameObject()
 	{
 		StructureRemove();
+
+		for (auto &component : m_components)
+		{
+			delete component;
+		}
 	}
 
 	void GameObject::Update()
@@ -83,7 +88,7 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IComponent> GameObject::AddComponent(std::shared_ptr<IComponent> component)
+	IComponent *GameObject::AddComponent(IComponent *component)
 	{
 		if (component == nullptr)
 		{
@@ -95,26 +100,41 @@ namespace acid
 		return component;
 	}
 
-	std::shared_ptr<IComponent> GameObject::RemoveComponent(std::shared_ptr<IComponent> component)
+	bool GameObject::RemoveComponent(IComponent *component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			if (*it == component)
+			if (*it != nullptr && *it == component)
 			{
-				if (*it != nullptr)
-				{
-					(*it)->SetGameObject(nullptr);
-				}
+				(*it)->SetGameObject(nullptr);
 
 				m_components.erase(it);
-				return *it;
+				delete *it;
+				return true;
 			}
 		}
 
-		return nullptr;
+		return false;
 	}
 
-	void GameObject::SetStructure(std::shared_ptr<ISpatialStructure> structure)
+	bool GameObject::RemoveComponent(const std::string &name)
+	{
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			if (*it != nullptr && (*it)->GetName() == name)
+			{
+				(*it)->SetGameObject(nullptr);
+
+				m_components.erase(it);
+				delete *it;
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	void GameObject::SetStructure(ISpatialStructure *structure)
 	{
 		if (m_structure != nullptr)
 		{

@@ -5,7 +5,7 @@
 #include "SceneStructure.hpp"
 #include "IScene.hpp"
 
-class btDefaultCollisionConfiguration;
+class btCollisionConfiguration;
 
 class btBroadphaseInterface;
 
@@ -24,11 +24,11 @@ namespace acid
 		public IModule
 	{
 	private:
-		std::shared_ptr<IScene> m_scene;
+		IScene *m_scene;
 
 		ComponentRegister m_componentRegister;
 
-		btDefaultCollisionConfiguration *m_collisionConfiguration;
+		btCollisionConfiguration *m_collisionConfiguration;
 		btBroadphaseInterface *m_broadphase;
 		btCollisionDispatcher *m_dispatcher;
 		btSequentialImpulseConstraintSolver *m_solver;
@@ -57,9 +57,16 @@ namespace acid
 
 		std::string GetName() const override { return "Scenes"; };
 
-		std::shared_ptr<IScene> GetScene() const { return m_scene; }
+		IScene *GetScene() const { return m_scene; }
 
-		void SetScene(std::shared_ptr<IScene> scene) { m_scene = scene; }
+		void SetScene(IScene *scene);
+
+		/// <summary>
+		/// Creates a new component from the register.
+		/// </summary>
+		/// <param name="name"> The component name to create. </param>
+		/// <returns> The new component. </returns>
+		IComponent *CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -74,26 +81,20 @@ namespace acid
 		/// Deregisters a component.
 		/// </summary>
 		/// <param name="name"> The components name. </param>
-		void DeregisterComponent(const std::string &name) { m_componentRegister.DeregisterComponent(name); }
-
-		/// <summary>
-		/// Creates a new component from the register.
-		/// </summary>
-		/// <param name="name"> The component name to create. </param>
-		/// <returns> The new component. </returns>
-		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
+		/// <returns> If the component was deregistered. </returns>
+		bool DeregisterComponent(const std::string &name) { return m_componentRegister.DeregisterComponent(name); }
 
 		/// <summary>
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		std::shared_ptr<ICamera> GetCamera() const { return m_scene->GetCamera(); }
+		ICamera *GetCamera() const { return m_scene->GetCamera(); }
 
 		/// <summary>
 		/// Gets the GameObjects structure.
 		/// </summary>
 		/// <returns> The GameObjects structure. </returns>
-		std::shared_ptr<SceneStructure> GetStructure() const { return m_scene->GetStructure(); }
+		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
 
 		/// <summary>
 		/// Gets if the scene is paused.

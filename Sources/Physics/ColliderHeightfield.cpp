@@ -7,12 +7,11 @@ namespace acid
 {
 	ColliderHeightfield::ColliderHeightfield(const int &heightStickWidth, const int &heightStickLength,
 											 const void *heightfieldData, const float &heightScale,
-											 const float &minHeight, const float &maxHeight,
-											 const int &upAxis, const bool &flipQuadEdges) :
+											 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges) :
 		m_shape(nullptr)
 	{
 		Initialize(heightStickWidth, heightStickLength, heightfieldData,
-			heightScale, minHeight, maxHeight, upAxis, flipQuadEdges);
+			heightScale, minHeight, maxHeight, flipQuadEdges);
 	}
 
 	ColliderHeightfield::~ColliderHeightfield()
@@ -43,12 +42,11 @@ namespace acid
 
 	void ColliderHeightfield::Initialize(const int &heightStickWidth, const int &heightStickLength,
 										 const void *heightfieldData, const float &heightScale,
-										 const float &minHeight, const float &maxHeight,
-										 const int &upAxis, const bool &flipQuadEdges)
+										 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges)
 	{
 		delete m_shape;
 
 		m_shape = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData,
-			heightScale, minHeight, maxHeight, upAxis, PHY_FLOAT, flipQuadEdges);
+			heightScale, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 	}
 }

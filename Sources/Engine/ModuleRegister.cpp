@@ -74,7 +74,7 @@ namespace acid
 		return false;
 	}
 
-	IModule *ModuleRegister::DeregisterModule(IModule *module)
+	bool ModuleRegister::DeregisterModule(IModule *module)
 	{
 		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
@@ -85,10 +85,10 @@ namespace acid
 
 			m_modules.erase(it);
 			delete (*it).second;
-			return (*it).second;
+			return true;
 		}
 
-		return nullptr;
+		return false;
 	}
 
 	void ModuleRegister::RunUpdate(const ModuleUpdate &update) const

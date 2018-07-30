@@ -18,9 +18,10 @@ namespace acid
 		m_angularFactor(angularFactor),
 		m_worldTransform(new btTransform()),
 		m_shape(nullptr),
-		m_body(nullptr)
+		m_body(nullptr),
+		m_linearVelocity(Vector3()),
+		m_angularVelocity(Vector3())
 	{
-		btTransform();
 	}
 
 	Rigidbody::~Rigidbody()
@@ -54,7 +55,7 @@ namespace acid
 
 			m_body = CreateRigidBody(m_mass, *m_worldTransform, m_shape);
 			m_body->setWorldTransform(*m_worldTransform);
-			m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
+		//	m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
 			m_body->setFriction(m_friction);
 			m_body->setRollingFriction(m_friction);
 			m_body->setSpinningFriction(m_friction);
@@ -92,7 +93,8 @@ namespace acid
 		}
 
 		auto &transform = GetGameObject()->GetTransform();
-		btTransform worldTransform = m_body->getWorldTransform();
+		btTransform worldTransform;
+		m_body->getMotionState()->getWorldTransform(worldTransform);
 
 		if (m_linearFactor != Vector3::ZERO)
 		{
@@ -106,12 +108,14 @@ namespace acid
 			transform.SetRotation(Collider::Convert(rotation));
 		}
 
-		//	m_worldTransform.setIdentity();
-		//	m_worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
-		//	m_worldTransform.setRotation(Collider::Convert(transform.GetRotation()));
+		m_worldTransform->setIdentity();
+		m_worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));
+		m_worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-		//	m_body->setWorldTransform(m_worldTransform);
+		m_body->getMotionState()->setWorldTransform(*m_worldTransform);
+		m_linearVelocity = Collider::Convert(m_body->getLinearVelocity());
+		m_angularVelocity = Collider::Convert(m_body->getAngularVelocity());
 		//	m_body->setLinearVelocity(m_velocity);
 	}
 
@@ -129,16 +133,6 @@ namespace acid
 		destination->GetChild("Friction", true)->Set(m_friction);
 		m_linearFactor.Write(destination->GetChild("Linear Factor", true));
 		m_angularFactor.Write(destination->GetChild("Angular Factor", true));
-	}
-
-	void Rigidbody::SetAngularVelocity(const Vector3 &velocity)
-	{
-		m_body->setAngularVelocity(Collider::Convert(velocity));
-	}
-
-	void Rigidbody::SetLinearVelocity(const Vector3 &velocity)
-	{
-		m_body->setLinearVelocity(Collider::Convert(velocity));
 	}
 
 	void Rigidbody::AddForce(const Vector3 &force, const Vector3 &position)
@@ -192,6 +186,18 @@ namespace acid
 	{
 		m_angularFactor = angularFactor;
 		m_body->setAngularFactor(Collider::Convert(m_angularFactor));
+	}
+
+	void Rigidbody::SetAngularVelocity(const Vector3 &angularVelocity)
+	{
+		m_angularVelocity = angularVelocity;
+		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
+	}
+
+	void Rigidbody::SetLinearVelocity(const Vector3 &linearVelocity)
+	{
+		m_linearVelocity = linearVelocity;
+		m_body->setLinearVelocity(Collider::Convert(m_linearVelocity));
 	}
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape)

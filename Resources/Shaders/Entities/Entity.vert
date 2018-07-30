@@ -38,9 +38,7 @@ layout(set = 0, location = 5) in vec3 vertexWeights;
 layout(location = 0) out vec2 fragmentUv;
 layout(location = 1) out vec3 fragmentNormal;
 #ifdef NORMAL_MAPPING
-layout(location = 2) out vec3 tangentT;
-layout(location = 3) out vec3 tangentN;
-layout(location = 4) out vec3 tangentB;
+layout(location = 2) out mat3 tangent;
 #endif
 
 out gl_PerVertex 
@@ -76,9 +74,10 @@ void main()
 	fragmentNormal = normalize((object.transform * totalNormal).xyz);
 
 #ifdef NORMAL_MAPPING
-    mat3 normal_matrix = transpose(inverse(mat3(object.transform)));
-    tangentT = normalize(normal_matrix * vertexTangent);
-    tangentN = normalize(normal_matrix * vertexNormal);
-    tangentB = normalize(cross(tangentT, tangentN));
+    mat3 normalMatrix = transpose(inverse(mat3(object.transform)));
+    vec3 tangentT = normalize(normalMatrix * vertexTangent);
+    vec3 tangentN = normalize(normalMatrix * vertexNormal);
+    vec3 tangentB = normalize(cross(tangentT, tangentN));
+    tangent = mat3(tangentT, tangentN, tangentB);
 #endif
 }
