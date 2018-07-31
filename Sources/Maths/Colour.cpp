@@ -131,13 +131,13 @@ namespace acid
 		return Colour(Maths::SmoothDamp(m_r, target.m_r, rate.m_r), Maths::SmoothDamp(m_g, target.m_g, rate.m_g), Maths::SmoothDamp(m_b, target.m_b, rate.m_b), Maths::SmoothDamp(m_a, target.m_a, rate.m_a));
 	}
 
-	Colour Colour::GetUnit()
+	Colour Colour::GetUnit() const
 	{
 		float l = Length();
 		return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
 	}
 
-	std::string Colour::GetHex()
+	std::string Colour::GetHex() const
 	{
 		std::string result = "#";
 

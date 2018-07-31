@@ -133,7 +133,10 @@ namespace acid
 	Vector3 Vector3::Normalize() const
 	{
 		float l = Length();
-		assert(l != 0.0f && "Zero length vector!");
+		if (l == 0.0f)
+		{
+			assert(l != 0.0f && "Zero length vector!");
+		}
 		return Vector3(m_x / l, m_y / l, m_z / l);
 	}
 

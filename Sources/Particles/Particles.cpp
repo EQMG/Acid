@@ -25,14 +25,18 @@ namespace acid
 
 		for (auto it = m_particles.begin(); it != m_particles.end(); ++it)
 		{
-			for (auto it1 = (*it).second.begin(); it1 != (*it).second.end(); ++it1)
+			for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
 			{
 				(*it1)->Update();
 
 				if (!(*it1)->IsAlive())
 				{
 					delete *it1;
-					(*it).second.erase(it1);
+					it1 = (*it).second.erase(it1);
+				}
+				else
+				{
+					++it1;
 				}
 			}
 		}
