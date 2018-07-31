@@ -12,23 +12,21 @@ namespace acid
 	class ACID_EXPORT XmlNode
 	{
 	private:
-		std::shared_ptr<XmlNode> m_parent;
-		std::vector<std::shared_ptr<XmlNode>> m_children;
+		XmlNode *m_parent;
+		std::vector<XmlNode *> m_children;
 
 		std::string m_attributes;
 		std::string m_content;
 	public:
-		XmlNode(std::shared_ptr<XmlNode> parent, const std::string &attributes, const std::string &content);
+		XmlNode(XmlNode *parent, const std::string &attributes, const std::string &content);
 
 		~XmlNode();
 
-		std::shared_ptr<XmlNode> GetParent() const { return m_parent; }
+		XmlNode *GetParent() const { return m_parent; }
 
-		std::vector<std::shared_ptr<XmlNode>> GetChildren() const { return m_children; }
+		std::vector<XmlNode *> GetChildren() const { return m_children; }
 
-		void AddChild(std::shared_ptr<XmlNode> child) { m_children.emplace_back(child); }
-
-		void Clear();
+		void AddChild(XmlNode *child) { m_children.emplace_back(child); }
 
 		std::string GetAttributes() const { return m_attributes; }
 

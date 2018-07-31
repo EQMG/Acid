@@ -106,7 +106,7 @@ namespace test
 	//	convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
-		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 10.0f, 0.0f));
+		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 20.0f, 0.0f));
 
 		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
 			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), Colour::BLUE, 10.0f, 1.0f),

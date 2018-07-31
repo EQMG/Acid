@@ -2,7 +2,6 @@
 
 #include "Engine/Exports.hpp"
 #include "Vector3.hpp"
-#include "Quaternion.hpp"
 #include "Matrix4.hpp"
 
 namespace acid
@@ -14,7 +13,7 @@ namespace acid
 	{
 	private:
 		Vector3 m_position;
-		Quaternion m_rotation;
+		Vector3 m_rotation;
 		Vector3 m_scaling;
 	public:
 		/// <summary>
@@ -34,23 +33,7 @@ namespace acid
 		/// <param name="position"> The position. </param>
 		/// <param name="rotation"> The rotation. </param>
 		/// <param name="scaling"> The scaling. </param>
-		Transform(const Vector3 &position, const Quaternion &rotation = Quaternion::W_ONE, const Vector3 &scaling = Vector3::ONE);
-
-		/// <summary>
-		/// Constructor for Transform.
-		/// </summary>
-		/// <param name="position"> The position. </param>
-		/// <param name="rotation"> The rotation. </param>
-		/// <param name="scaling"> The scaling. </param>
-		Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling = Vector3::ONE);
-
-		/// <summary>
-		/// Constructor for Transform.
-		/// </summary>
-		/// <param name="position"> The position. </param>
-		/// <param name="rotation"> The rotation. </param>
-		/// <param name="scale"> The scale. </param>
-		Transform(const Vector3 &position, const Quaternion &rotation, const float &scale);
+		Transform(const Vector3 &position, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
 
 		/// <summary>
 		/// Constructor for Transform.
@@ -76,11 +59,9 @@ namespace acid
 
 		void SetPosition(const Vector3 &position) { m_position = position; }
 
-		Quaternion GetRotation() const { return m_rotation; }
+		Vector3 GetRotation() const { return m_rotation; }
 
-		void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
-
-		void SetRotation(const Vector3 &rotation) { m_rotation = rotation.ToQuaternion(); }
+		void SetRotation(const Vector3 &rotation) { m_rotation = rotation; }
 
 		Vector3 GetScaling() const { return m_scaling; }
 

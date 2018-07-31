@@ -4,7 +4,7 @@ namespace acid
 {
 	Transform::Transform() :
 		m_position(Vector3()),
-		m_rotation(Quaternion()),
+		m_rotation(Vector3()),
 		m_scaling(Vector3(1.0f, 1.0f, 1.0f))
 	{
 	}
@@ -16,30 +16,16 @@ namespace acid
 	{
 	}
 
-	Transform::Transform(const Vector3 &position, const Quaternion &rotation, const Vector3 &scaling) :
-		m_position(position),
-		m_rotation(rotation),
-		m_scaling(scaling)
-	{
-	}
-
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
 		m_position(position),
-		m_rotation(rotation.ToQuaternion()),
-		m_scaling(scaling)
-	{
-	}
-
-	Transform::Transform(const Vector3 &position, const Quaternion &rotation, const float &scale) :
-		m_position(position),
 		m_rotation(rotation),
-		m_scaling(Vector3(scale, scale, scale))
+		m_scaling(scaling)
 	{
 	}
 
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
 		m_position(position),
-		m_rotation(rotation.ToQuaternion()),
+		m_rotation(rotation),
 		m_scaling(Vector3(scale, scale, scale))
 	{
 	}

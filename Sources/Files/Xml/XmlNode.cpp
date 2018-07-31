@@ -2,9 +2,9 @@
 
 namespace acid
 {
-	XmlNode::XmlNode(std::shared_ptr<XmlNode> parent, const std::string &attributes, const std::string &content) :
+	XmlNode::XmlNode(XmlNode *parent, const std::string &attributes, const std::string &content) :
 		m_parent(parent),
-		m_children(std::vector<std::shared_ptr<XmlNode>>()),
+		m_children(std::vector<XmlNode *>()),
 		m_attributes(attributes),
 		m_content(content)
 	{
@@ -12,18 +12,10 @@ namespace acid
 
 	XmlNode::~XmlNode()
 	{
-	}
-
-	void XmlNode::Clear()
-	{
-		m_parent = nullptr;
-
 		for (auto &child : m_children)
 		{
-			child->Clear();
+			delete child;
 		}
-
-		m_children.clear();
 	}
 
 	void XmlNode::AppendData(LoadedValue *loadedValue, std::stringstream &builder, const int &indentation)

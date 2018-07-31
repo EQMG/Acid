@@ -17,13 +17,13 @@ namespace test
 
 	void RotateBehaviour::Start()
 	{
-		m_rotation = GetGameObject()->GetTransform().GetRotation().ToEuler();
+		m_rotation = GetGameObject()->GetTransform().GetRotation();
 	}
 
 	void RotateBehaviour::Update()
 	{
 		m_rotation += Engine::Get()->GetDelta() * m_rate;
-		GetGameObject()->GetTransform().SetRotation(m_rotation.ToQuaternion());
+		GetGameObject()->GetTransform().SetRotation(m_rotation);
 	}
 
 	void RotateBehaviour::Load(LoadedValue *value)
