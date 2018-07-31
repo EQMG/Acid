@@ -40,7 +40,7 @@ namespace acid
 			return;
 		}
 
-		std::shared_ptr<XmlNode> currentSection = nullptr;
+		XmlNode *currentSection = nullptr;
 		std::stringstream summation;
 		bool end = false;
 
@@ -50,7 +50,7 @@ namespace acid
 			{
 				if (*(it + 1) == '?') // Prolog.
 				{
-					currentSection = std::make_shared<XmlNode>(nullptr, "", "");
+					currentSection = new XmlNode(nullptr, "", "");
 					continue;
 				}
 
@@ -61,7 +61,7 @@ namespace acid
 				}
 				else // Start tag.
 				{
-					auto section = std::make_shared<XmlNode>(currentSection, "", "");
+					auto section = new XmlNode(currentSection, "", "");
 					currentSection->AddChild(section);
 					currentSection = section;
 				}
@@ -97,7 +97,7 @@ namespace acid
 		}
 
 		XmlNode::Convert(*currentSection, m_parent, true);
-		currentSection->Clear();
+		delete currentSection;
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

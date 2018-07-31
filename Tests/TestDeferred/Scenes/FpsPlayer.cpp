@@ -122,7 +122,7 @@ namespace test
 
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 		Vector3 newPosition = GetGameObject()->GetTransform().GetPosition();
-		Vector3 newRotation = GetGameObject()->GetTransform().GetRotation().ToEuler();
+		Vector3 newRotation = GetGameObject()->GetTransform().GetRotation();
 
 		float groundHeight = 0.0f;
 

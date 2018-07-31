@@ -38,7 +38,7 @@ namespace acid
 			return;
 		}
 
-		std::shared_ptr<JsonSection> currentSection = nullptr;
+		JsonSection *currentSection = nullptr;
 		std::stringstream summation;
 
 		for (char &c : fileLoaded.value())
@@ -47,7 +47,7 @@ namespace acid
 			{
 				if (currentSection == nullptr)
 				{
-					currentSection = std::make_shared<JsonSection>(nullptr, "", "");
+					currentSection = new JsonSection(nullptr, "", "");
 					continue;
 				}
 
@@ -66,7 +66,7 @@ namespace acid
 				currentSection->SetContent(currentSection->GetContent() + summation.str());
 				summation.str(std::string());
 
-				auto section = std::make_shared<JsonSection>(currentSection, name, "");
+				auto section = new JsonSection(currentSection, name, "");
 				currentSection->AddChild(section);
 				currentSection = section;
 			}
@@ -90,7 +90,7 @@ namespace acid
 		}
 
 		JsonSection::Convert(*currentSection, m_parent, true);
-		currentSection->Clear();
+		delete currentSection;
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

@@ -77,7 +77,7 @@ namespace test
 
 			m_velocity = (playerPosition - m_targetPosition) / delta;
 			m_targetPosition = playerPosition;
-			m_targetRotation = playerRotation.ToEuler();
+			m_targetRotation = playerRotation;
 		}
 
 		UpdateHorizontalAngle(delta);

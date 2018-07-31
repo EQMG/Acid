@@ -105,7 +105,10 @@ namespace acid
 		if (m_angularFactor != Vector3::ZERO)
 		{
 			btQuaternion rotation = worldTransform.getRotation();
-			transform.SetRotation(Collider::Convert(rotation));
+		//	transform.SetRotation(Collider::Convert(rotation));
+			float yaw, pitch, roll;
+			rotation.getEulerZYX(yaw, pitch, roll);
+			transform.SetRotation(Vector3(pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG));
 		}
 
 		//m_worldTransform->setIdentity();
