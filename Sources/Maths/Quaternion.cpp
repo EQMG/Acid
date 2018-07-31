@@ -173,7 +173,6 @@ namespace acid
 	Quaternion Quaternion::Normalize() const
 	{
 		float l = Length();
-		assert(l != 0.0f && "Zero length quaternion!");
 		return Quaternion(m_x / l, m_y / l, m_z / l, m_w / l);
 	}
 
@@ -225,34 +224,47 @@ namespace acid
 
 	Matrix4 Quaternion::ToRotationMatrix() const
 	{
-		float tx = m_x + m_x;
-		float ty = m_y + m_y;
-		float fTz = m_z + m_z;
-		float twx = tx * m_w;
-		float twy = ty * m_w;
-		float twz = fTz * m_w;
-		float txx = tx * m_x;
-		float txy = ty * m_x;
-		float txz = fTz * m_x;
-		float tyy = ty * m_y;
-		float tyz = fTz * m_y;
-		float tzz = fTz * m_z;
+		float d = LengthSquared();
+		float s = 2.0f / d;
+		float xs = m_x * s;
+		float ys = m_y * s;
+		float zs = m_z * s;
+		float wx = m_w * xs;
+		float wy = m_w * ys;
+		float wz = m_w * zs;
+		float xx = m_x * xs;
+		float xy = m_x * ys;
+		float xz = m_x * zs;
+		float yy = m_y * ys;
+		float yz = m_y * zs;
+		float zz = m_z * zs;
 
 		Matrix4 result = Matrix4();
-		result[0][0] = 1.0f - (tyy + tzz);
-		result[0][1] = txy - twz;
-		result[0][2] = txz + twy;
-		result[1][0] = txy + twz;
-		result[1][1] = 1.0f - (txx + tzz);
-		result[1][2] = tyz - twx;
-		result[2][0] = txz - twy;
-		result[2][1] = tyz + twx;
-		result[2][2] = 1.0f - (txx + tyy);
+		result[0][0] = 1.0f - (yy + zz);
+		result[0][1] = xy - wz;
+		result[0][2] = xz + wy;
+		result[1][0] = xy + wz;
+		result[1][1] = 1.0f - (xx + zz);
+		result[1][2] = yz - wx;
+		result[2][0] = xz - wy;
+		result[2][1] = yz + wx;
+		result[2][2] = 1.0f - (xx + yy);
 		return result;
 	}
 
 	Vector3 Quaternion::ToEuler() const
 	{
+		/*float sqx = m_x * m_x;
+		float sqy = m_y * m_y;
+		float sqz = m_z * m_z;
+		float squ = m_w * m_w;
+		float rollX = std::atan2(2.0f * (m_y * m_z + m_w * m_x), squ - sqx - sqy + sqz);
+		float sarg = -2.f * (m_x * m_z - m_w * m_y);
+		float pitchY = sarg <= -1.0f ? -0.5f * PI : (sarg >= 1.0f ? 0.5f * PI : std::asin(sarg));
+		float yawZ = std::atan2(2 * (m_x * m_y + m_w * m_z), squ + sqx - sqy - sqz);
+
+		return Vector3(pitchY * RAD_TO_DEG, yawZ * RAD_TO_DEG, rollX * RAD_TO_DEG);*/
+
 		float check = 2.0f * (-m_y * m_z + m_w * m_x);
 
 		if (check < -0.995f)
@@ -297,28 +309,21 @@ namespace acid
 
 	Quaternion &Quaternion::operator=(const Vector3 &other)
 	{
-		float halfX = other.m_x * DEG_TO_RAD * 0.5f;
-		float halfY = other.m_y * DEG_TO_RAD * 0.5f;
-		float halfZ = other.m_z * DEG_TO_RAD * 0.5f;
+		float halfPitch = other.m_x * DEG_TO_RAD * 0.5f;
+		float halfYaw = other.m_y * DEG_TO_RAD * 0.5f;
+		float halfRoll = other.m_z * DEG_TO_RAD * 0.5f;
 
-		float sinX = std::sin(halfX);
-		float cosX = std::cos(halfX);
+		float cosYaw = std::cos(halfYaw);
+		float sinYaw = std::sin(halfYaw);
+		float cosPitch = std::cos(halfPitch);
+		float sinPitch = std::sin(halfPitch);
+		float cosRoll = std::cos(halfRoll);
+		float sinRoll = std::sin(halfRoll);
 
-		float sinY = std::sin(halfY);
-		float cosY = std::cos(halfY);
-
-		float sinZ = std::sin(halfZ);
-		float cosZ = std::cos(halfZ);
-
-		float cosYcosZ = cosY * cosZ;
-		float sinYcosZ = sinY * cosZ;
-		float cosYsinZ = cosY * sinZ;
-		float sinYsinZ = sinY * sinZ;
-
-		m_x = sinX * cosYcosZ - cosX * sinYsinZ;
-		m_y = cosX * sinYcosZ + sinX * cosYsinZ;
-		m_z = cosX * cosYsinZ - sinX * sinYcosZ;
-		m_w = cosX * cosYcosZ + sinX * sinYsinZ;
+		m_x = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
+		m_y = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
+		m_z = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+		m_w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
 		return *this;
 	}
 

@@ -108,7 +108,6 @@ namespace acid
 	Vector2 Vector2::Normalize() const
 	{
 		float l = Length();
-		assert(l != 0.0f && "Zero length vector!");
 		return Vector2(m_x / l, m_y / l);
 	}
 

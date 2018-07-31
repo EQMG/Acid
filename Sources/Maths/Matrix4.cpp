@@ -332,7 +332,7 @@ namespace acid
 			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
 		}
 
-		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
+		if (scale != Vector3::ONE)
 		{
 			result = result.Scale(scale);
 		}
@@ -342,26 +342,14 @@ namespace acid
 
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
 	{
-		Matrix4 result = Matrix4();
+		Matrix4 result = rotation.ToRotationMatrix();
 
-		if (translation.LengthSquared() != 0.0f)
-		{
-			result = result.Translate(translation);
-		}
+		result[3][0] = translation.m_x;
+		result[3][1] = translation.m_y;
+		result[3][2] = translation.m_z;
+		result[3][3] = 1.0f;
 
-		if (rotation != Quaternion::W_ONE)
-		{
-			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
-			// result *= rotation.ToRotationMatrix();
-			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
-			result = result.Rotate(Maths::Radians(euler.m_y), Vector3::UP); // Rotate the Y component.
-			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.
-		}
-
-		if (scale.m_x != 1.0f || scale.m_y != 1.0f || scale.m_z != 1.0f)
-		{
-			result = result.Scale(scale);
-		}
+		result = result.Scale(scale);
 
 		return result;
 	}

@@ -4,7 +4,7 @@ namespace acid
 {
 	void CallbackTouch(uint32_t id, float x, float y, bool isDown)
 	{
-		Touch touch = Touches::Get()->m_touches[id];
+		Touch &touch = Touches::Get()->m_touches[id];
 		touch.m_isDown = isDown;
 		touch.m_x = x;
 		touch.m_y = y;

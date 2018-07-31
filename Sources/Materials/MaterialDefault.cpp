@@ -98,7 +98,7 @@ namespace acid
 
 		/*if (m_normalTexture != nullptr)
 		{
-			result.emplace_back({"NORMAL_MAPPING", "TRUE"});
+			result.emplace_back(PipelineDefine("NORMAL_MAPPING", "TRUE"));
 		}*/
 
 		return result;

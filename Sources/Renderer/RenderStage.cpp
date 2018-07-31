@@ -3,9 +3,9 @@
 namespace acid
 {
 	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
-		m_stageIndex(stageIndex),
 		m_lastWidth(renderpassCreate->GetWidth()),
 		m_lastHeight(renderpassCreate->GetHeight()),
+		m_stageIndex(stageIndex),
 		m_renderpassCreate(renderpassCreate),
 		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
