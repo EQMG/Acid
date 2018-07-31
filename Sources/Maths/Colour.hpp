@@ -165,13 +165,13 @@ namespace acid
 		/// Gets a colour representing the unit value of this colour.
 		/// </summary>
 		/// <returns> The unit colour. </returns>
-		Colour GetUnit();
+		Colour GetUnit() const;
 
 		/// <summary>
 		/// Gets the hex code from this colour.
 		/// </summary>
 		/// <returns> The hex code. </returns>
-		std::string GetHex();
+		std::string GetHex() const;
 
 		/// <summary>
 		/// Saves this vector into a loaded value.

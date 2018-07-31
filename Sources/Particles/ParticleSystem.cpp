@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, std::shared_ptr<ISpawnParticle> spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		IComponent(),
 		m_types(types),
 		m_spawn(spawn),
@@ -27,7 +27,6 @@ namespace acid
 
 	ParticleSystem::~ParticleSystem()
 	{
-		delete m_spawn;
 	}
 
 	void ParticleSystem::Start()
@@ -53,8 +52,8 @@ namespace acid
 
 	void ParticleSystem::Load(LoadedValue *value)
 	{
-		//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
-		//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
+	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
+	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
 		m_pps = value->GetChild("PPS")->Get<float>();
 		m_averageSpeed = value->GetChild("Average Speed")->Get<float>();
 		m_gravityEffect = value->GetChild("Gravity Effect")->Get<float>();
@@ -82,7 +81,7 @@ namespace acid
 		m_lastPosition = GetGameObject()->GetTransform().GetPosition();
 		velocity /= delta;
 
-		if (m_direction == 0.0f)
+		if (m_direction != 0.0f)
 		{
 			velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 		}
@@ -150,12 +149,6 @@ namespace acid
 		}
 
 		return false;
-	}
-
-	void ParticleSystem::SetSpawn(ISpawnParticle *spawn)
-	{
-		delete m_spawn;
-		m_spawn = spawn;
 	}
 
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)

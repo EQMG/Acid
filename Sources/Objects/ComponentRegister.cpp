@@ -45,15 +45,15 @@ namespace acid
 
 	IComponent *ComponentRegister::CreateComponent(const std::string &name)
 	{
-		auto found = m_components.find(name);
+		auto it = m_components.find(name);
 
-		if (found == m_components.end())
+		if (it == m_components.end())
 		{
 			fprintf(stderr, "Could not find registered component: '%s'\n", name.c_str());
 			return nullptr;
 		}
 
-		return ((*found).second)();
+		return ((*it).second)();
 	}
 
 	bool ComponentRegister::DeregisterComponent(const std::string &name)

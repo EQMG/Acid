@@ -14,19 +14,23 @@ namespace acid
 
 	void Events::Update()
 	{
-		for (auto &event : std::vector<std::shared_ptr<IEvent>>(m_events)) // TODO: Remove copying.
+		for (auto it = m_events.begin(); it != m_events.end();)
 		{
-			if (!event->EventTriggered())
+			if (!(*it)->EventTriggered())
 			{
+				++it;
 				continue;
 			}
 
-			event->OnEvent();
+			(*it)->OnEvent();
 
-			if (event->RemoveAfterEvent())
+			if ((*it)->RemoveAfterEvent())
 			{
-				RemoveEvent(event);
+				it = m_events.erase(it);
+				continue;
 			}
+
+			++it;
 		}
 	}
 

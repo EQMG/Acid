@@ -18,6 +18,8 @@
 #include <Physics/ColliderConvexHull.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Models/Obj/ModelObj.hpp>
+#include <Particles/ParticleSystem.hpp>
+#include <Particles/Spawns/SpawnCircle.hpp>
 #include "Rotate/RotateBehaviour.hpp"
 #include "FpsCamera.hpp"
 
@@ -105,6 +107,14 @@ namespace test
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
 		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 10.0f, 0.0f));
+
+		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
+			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), Colour::BLUE, 10.0f, 1.0f),
+			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), Colour::YELLOW, 6.0f, 3.0f),
+			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), Colour::RED, 8.0f, 2.0f)
+		};
+		GameObject *system1 = new GameObject(Transform(Vector3(0.0f, 10.0f, 0.0f)));
+		system1->AddComponent<ParticleSystem>(system1Types, std::make_shared<SpawnCircle>(2.0f, Vector3::UP), 50.0f, 0.3f, 1.0f, Vector3::ZERO);*/
 	}
 
 	void Scene1::Update()

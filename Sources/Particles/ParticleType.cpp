@@ -2,9 +2,10 @@
 
 namespace acid
 {
-	ParticleType::ParticleType(const std::string &name, std::shared_ptr<Texture> texture, const float &lifeLength, const float &scale) :
-		m_name(name),
+	ParticleType::ParticleType(std::shared_ptr<Texture> texture, const Colour &colourOffset, const float &lifeLength, const float &scale) :
+		m_filename(ToFilename(texture, colourOffset, lifeLength, scale)),
 		m_texture(texture),
+		m_colourOffset(colourOffset),
 		m_lifeLength(lifeLength),
 		m_scale(scale)
 	{
@@ -12,5 +13,10 @@ namespace acid
 
 	ParticleType::~ParticleType()
 	{
+	}
+
+	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const Colour &colourOffset, const float &lifeLength, const float &scale)
+	{
+		return "ParticleType_" + texture->GetName() + "_" + colourOffset.GetHex() + "_" + std::to_string(lifeLength) + "_" + std::to_string(scale);
 	}
 }

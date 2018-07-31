@@ -37,7 +37,7 @@ namespace acid
 			m_averagedTangent += *it;
 		}
 
-		if (m_averagedTangent.Length() > 0.0f)
+		if (m_averagedTangent.Length() != 0.0f)
 		{
 			m_averagedTangent = m_averagedTangent.Normalize();
 		}

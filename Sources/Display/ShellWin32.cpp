@@ -260,29 +260,15 @@ namespace acid
 
 		if (mode == CURSOR_MODE_DISABLED)
 		{
-			const RAWINPUTDEVICE rid = {HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, 0, m_hwnd};
-
 			m_cursorDisabled = true;
 			UpdateCursorImage();
 			UpdateCursorClip(true);
-
-			if (!RegisterRawInputDevices(&rid, 1, sizeof(rid)))
-			{
-				fprintf(stderr, "Win32: Failed to register raw input device\n");
-			}
 		}
 		else
 		{
-			const RAWINPUTDEVICE rid = {HID_USAGE_PAGE_GENERIC, HID_USAGE_GENERIC_MOUSE, RIDEV_REMOVE, nullptr};
-
 			m_cursorDisabled = false;
 			UpdateCursorClip(false);
 			UpdateCursorImage();
-
-			if (!RegisterRawInputDevices(&rid, 1, sizeof(rid)))
-			{
-				fprintf(stderr, "Win32: Failed to remove raw input device\n");
-			}
 		}
 	}
 
