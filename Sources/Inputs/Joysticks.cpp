@@ -5,7 +5,7 @@ namespace acid
 	void CallbackJoystickConnect(JoystickPort port, std::string name, uint32_t buttonCount, uint32_t axesCount, bool connected)
 	{
 #if ACID_VERBOSE
-		fprintf(stdout, "Joystick '%s' %s port %i\n", name, connected ? "connected to" : "disconnected from ", port);
+		fprintf(stdout, "Joystick '%s' %s port %i\n", name.c_str(), connected ? "connected to" : "disconnected from ", port);
 #endif
 		Joystick joystick = Joysticks::Get()->m_connected[port];
 		bool changed = joystick.m_connected != connected;
@@ -16,12 +16,12 @@ namespace acid
 
 		if (changed)
 		{
-			for (int i = 0; i < buttonCount; i++)
+			for (unsigned int i = 0; i < buttonCount; i++)
 			{
 				joystick.m_buttons[i] = false;
 			}
 
-			for (int i = 0; i < axesCount; i++)
+			for (unsigned int i = 0; i < axesCount; i++)
 			{
 				joystick.m_axes[i] = 0.0f;
 			}

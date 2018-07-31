@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	Joint::Joint(const int &index, const std::string &name, const Matrix4 &bindLocalTransform) :
+	Joint::Joint(const unsigned int &index, const std::string &name, const Matrix4 &bindLocalTransform) :
 		m_index(index),
 		m_name(name),
 		m_children(std::vector<Joint *>()),
