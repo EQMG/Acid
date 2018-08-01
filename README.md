@@ -98,6 +98,7 @@ This is a list of current features in Acid:
 Acid uses the following libraries:
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
+ * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
@@ -126,8 +127,6 @@ Ensure you are using a compiler with full c++17 support, on Windows we recommend
 On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
-
-Currently Acid does not run under Release mode in Visual Studios (bug).
 
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.

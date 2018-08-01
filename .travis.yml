@@ -22,6 +22,8 @@ matrix:
     - COMPILER=g++-7
     - GSL_CXX_STANDARD=17
     before_install:
+    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Clang 6.0
@@ -49,6 +51,8 @@ matrix:
 #    - COMPILER_FLAGS=-stdlib=libc++
 #    - GSL_CXX_STANDARD=17
 #    before_install:
+#    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+#    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
 #    - sudo apt-get -qq update
 #    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
   # XCode 9.4
@@ -63,6 +67,7 @@ matrix:
 #    before_install:
 #    - brew update
 #    - brew install openal-soft
+#    - brew install glfw3
 #    - brew install cmake || brew upgrade cmake
 
 script:

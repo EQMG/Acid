@@ -26,7 +26,6 @@
 #include "Audio/SoundBuffer.hpp"
 #include "Audio/stb_vorbis.h"
 #include "Display/Display.hpp"
-#include "Display/IShell.hpp"
 #include "Engine/Engine.hpp"
 #include "Engine/Exports.hpp"
 #include "Engine/IModule.hpp"

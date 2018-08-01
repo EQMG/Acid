@@ -1,51 +1,13 @@
 #include "Joysticks.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace acid
 {
-	void CallbackJoystickConnect(JoystickPort port, std::string name, uint32_t buttonCount, uint32_t axesCount, bool connected)
-	{
-#if ACID_VERBOSE
-		fprintf(stdout, "Joystick '%s' %s port %i\n", name.c_str(), connected ? "connected to" : "disconnected from ", port);
-#endif
-		Joystick joystick = Joysticks::Get()->m_connected[port];
-		bool changed = joystick.m_connected != connected;
-		joystick.m_connected = connected;
-		joystick.m_name = name;
-		joystick.m_buttons.resize(buttonCount);
-		joystick.m_axes.resize(axesCount);
-
-		if (changed)
-		{
-			for (unsigned int i = 0; i < buttonCount; i++)
-			{
-				joystick.m_buttons[i] = false;
-			}
-
-			for (unsigned int i = 0; i < axesCount; i++)
-			{
-				joystick.m_axes[i] = 0.0f;
-			}
-		}
-	}
-
-	void CallbackJoystickButton(JoystickPort port, uint32_t button, bool isDown)
-	{
-		Joystick &joystick = Joysticks::Get()->m_connected[port];
-		joystick.m_buttons[button] = isDown;
-	}
-
-	void CallbackJoystickAxis(JoystickPort port, uint32_t axis, float amount)
-	{
-		Joystick &joystick = Joysticks::Get()->m_connected[port];
-		joystick.m_axes[axis] = amount;
-	}
-
 	Joysticks::Joysticks() :
 		IModule(),
 		m_connected(std::array<Joystick, JOYSTICK_END_RANGE>())
 	{
-		auto shell = Display::Get()->GetShell();
-
 		for (int i = 0; i < JOYSTICK_END_RANGE; i++)
 		{
 			Joystick joystick = Joystick();
@@ -53,11 +15,6 @@ namespace acid
 			joystick.m_connected = false;
 			m_connected[i] = joystick;
 		}
-
-		// Sets the joystick callbacks.
-		shell->SetCallbackJoystickConnect(CallbackJoystickConnect);
-		shell->SetCallbackJoystickButton(CallbackJoystickButton);
-		shell->SetCallbackJoystickAxis(CallbackJoystickAxis);
 	}
 
 	Joysticks::~Joysticks()
@@ -66,6 +23,34 @@ namespace acid
 
 	void Joysticks::Update()
 	{
+		for (auto &joystick : m_connected)
+		{
+			if (glfwJoystickPresent(joystick.m_port))
+			{
+				if (!joystick.m_connected)
+				{
+					printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(joystick.m_port), joystick.m_port);
+					joystick.m_connected = true;
+					joystick.m_name = glfwGetJoystickName(joystick.m_port);
+				}
+
+				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &joystick.m_axeCount);
+				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &joystick.m_buttonCount);
+			}
+			else
+			{
+				if (joystick.m_connected)
+				{
+					printf("Joystick disconnected from %i\n", joystick.m_port);
+					joystick.m_connected = false;
+					joystick.m_name = "";
+					joystick.m_axes = nullptr;
+					joystick.m_buttons = nullptr;
+					joystick.m_axeCount = 0;
+					joystick.m_buttonCount = 0;
+				}
+			}
+		}
 	}
 
 	bool Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const

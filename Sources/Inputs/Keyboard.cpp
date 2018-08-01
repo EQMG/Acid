@@ -1,22 +1,24 @@
 #include "Keyboard.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace acid
 {
-	void CallbackChar(const char *str)
+	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
-		Keyboard::Get()->m_char = str[0];
-	}
-
-	void CallbackKey(Key key, bool isDown)
-	{
-		if (key < 0 || key > KEY_END_RANGE)
+		if (key < 0 || key > Key::KEY_END_RANGE)
 		{
 			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
 		}
 		else
 		{
-			Keyboard::Get()->m_keyboardKeys[key] = isDown;
+			Keyboard::Get()->m_keyboardKeys[key] = action != GLFW_RELEASE;
 		}
+	}
+
+	void CallbackChar(GLFWwindow *window, unsigned int codepoint)
+	{
+		Keyboard::Get()->m_char = static_cast<char>(codepoint);
 	}
 
 	Keyboard::Keyboard() :
@@ -24,8 +26,6 @@ namespace acid
 		m_keyboardKeys(std::array<bool, KEY_END_RANGE>()),
 		m_char(0)
 	{
-		auto shell = Display::Get()->GetShell();
-
 		// Sets the default state of the keys to released.
 		for (unsigned int i = 0; i < KEY_END_RANGE; i++)
 		{
@@ -33,8 +33,8 @@ namespace acid
 		}
 
 		// Sets the keyboards callbacks.
-		shell->SetCallbackChar(CallbackChar);
-		shell->SetCallbackKey(CallbackKey);
+		glfwSetKeyCallback(Display::Get()->GetGlfwWindow(), CallbackKey);
+		glfwSetCharCallback(Display::Get()->GetGlfwWindow(), CallbackChar);
 	}
 
 	Keyboard::~Keyboard()

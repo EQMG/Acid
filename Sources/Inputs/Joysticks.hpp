@@ -3,6 +3,30 @@
 #include "Engine/Engine.hpp"
 #include "Display/Display.hpp"
 
+enum JoystickPort
+{
+	JOYSTICK_1 = 0,
+	JOYSTICK_2 = 1,
+	JOYSTICK_3 = 2,
+	JOYSTICK_4 = 3,
+	JOYSTICK_5 = 4,
+	JOYSTICK_6 = 5,
+	JOYSTICK_7 = 6,
+	JOYSTICK_8 = 7,
+	JOYSTICK_9 = 8,
+	JOYSTICK_10 = 9,
+	JOYSTICK_11 = 10,
+	JOYSTICK_12 = 11,
+	JOYSTICK_13 = 12,
+	JOYSTICK_14 = 13,
+	JOYSTICK_15 = 14,
+	JOYSTICK_16 = 15,
+	JOYSTICK_BEGIN_RANGE = JOYSTICK_1,
+	JOYSTICK_END_RANGE = JOYSTICK_16,
+	JOYSTICK_RANGE_SIZE = (JOYSTICK_16 - JOYSTICK_1 + 1),
+	JOYSTICK_MAX_ENUM = 0x7FFFFFFF
+};
+
 namespace acid
 {
 	/// <summary>
@@ -13,8 +37,11 @@ namespace acid
 		JoystickPort m_port;
 		bool m_connected;
 		std::string m_name;
-		std::vector<bool> m_buttons;
-		std::vector<float> m_axes;
+
+		const float *m_axes;
+		const unsigned char *m_buttons;
+		int m_axeCount;
+		int m_buttonCount;
 	};
 
 	/// <summary>
@@ -25,13 +52,6 @@ namespace acid
 	{
 	private:
 		std::array<Joystick, JOYSTICK_END_RANGE> m_connected;
-
-		friend void CallbackJoystickConnect(JoystickPort port, std::string name, uint32_t buttonCount, uint32_t axesCount, bool connected);
-
-		friend void CallbackJoystickButton(JoystickPort port, uint32_t button, bool isDown);
-
-		friend void CallbackJoystickAxis(JoystickPort port, uint32_t axis, float amount);
-
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -91,13 +111,13 @@ namespace acid
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		uint32_t GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttons.size(); }
+		uint32_t GetCountButtons(const JoystickPort &port) const { return static_cast<uint32_t>(m_connected.at(port).m_buttonCount); }
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		uint32_t GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axes.size(); }
+		uint32_t GetCountAxes(const JoystickPort &port) const { return static_cast<uint32_t>(m_connected.at(port).m_axeCount); }
 	};
 }

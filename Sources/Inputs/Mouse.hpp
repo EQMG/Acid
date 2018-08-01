@@ -5,6 +5,25 @@
 
 namespace acid
 {
+	enum MouseButton
+	{
+		MOUSE_BUTTON_1 = 0,
+		MOUSE_BUTTON_2 = 1,
+		MOUSE_BUTTON_3 = 2,
+		MOUSE_BUTTON_4 = 3,
+		MOUSE_BUTTON_5 = 4,
+		MOUSE_BUTTON_6 = 5,
+		MOUSE_BUTTON_7 = 6,
+		MOUSE_BUTTON_8 = 7,
+		MOUSE_BUTTON_LEFT = 0,
+		MOUSE_BUTTON_RIGHT = 1,
+		MOUSE_BUTTON_MIDDLE = 2,
+		MOUSE_BUTTON_BEGIN_RANGE = MOUSE_BUTTON_1,
+		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8,
+		MOUSE_BUTTON_RANGE_SIZE = (MOUSE_BUTTON_8 - MOUSE_BUTTON_1 + 1),
+		MOUSE_BUTTON_MAX_ENUM = 0x7FFFFFFF
+	};
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
@@ -15,6 +34,8 @@ namespace acid
 		std::string m_mousePath;
 
 		std::array<bool, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
+		float m_lastMousePositionX;
+		float m_lastMousePositionY;
 		float m_mousePositionX;
 		float m_mousePositionY;
 		float m_mouseDeltaX;
@@ -22,15 +43,16 @@ namespace acid
 		float m_mouseDeltaWheel;
 		bool m_displaySelected;
 
+		bool m_lastCursorDisabled;
 		bool m_cursorDisabled;
 
-		friend void CallbackCursorPosition(float x, float y, float dx, float dy);
+		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
 
-		friend void CallbackCursorEnter(VkBool32 entered);
+		friend void CallbackMouseButton(GLFWwindow *window, int button, int action, int mods);
 
-		friend void CallbackCursorScroll(float x, float y);
+		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
 
-		friend void CallbackMouseButton(MouseButton mouseButton, bool isDown);
+		friend void CallbackCursorEnter(GLFWwindow *window, int entered);
 
 	public:
 		/// <summary>

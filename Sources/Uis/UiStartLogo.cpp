@@ -11,7 +11,7 @@ namespace acid
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_guiBackground(new Gui(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Black.png"), 1)),
 		m_guiLogo(new Gui(this, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(0.4f, 0.4f)), Texture::Resource("Logos/Flask-02.png"), 1)),
-		m_textCopyright(new Text(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.6f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved. This product uses, Bullet, OpenAL, Vulkan, STB, and Glslang.", FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, 0.8f, 0.0012f, 0.024f)),
+		m_textCopyright(new Text(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.6f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved. This product uses technology from Khronos Group, Bullet Physics, Nothings, and GLFW.", FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, 0.8f, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
 #ifdef ACID_BUILD_DEBUG

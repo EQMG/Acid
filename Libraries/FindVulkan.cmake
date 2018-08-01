@@ -20,12 +20,12 @@ if(APPLE)
 		message(FATAL_ERROR "QuartzCore library not found!")
 	endif()
 
-	find_library(VULKAN_LIBRARY NAMES MoltenVK PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
+	find_library(VULKAN_LIBRARY NAMES MoltenVK PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/" PARENT_SCOPE)
 else()
-	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/")
+	find_library(VULKAN_LIBRARY NAMES vulkan-1 vulkan PATHS "${PROJECT_SOURCE_DIR}/Libraries/vulkan/lib/" PARENT_SCOPE)
 endif()
 
-set(VULKAN_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include")
+set(VULKAN_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include" PARENT_SCOPE)
 
 # Install
 if(ACID_INSTALL)

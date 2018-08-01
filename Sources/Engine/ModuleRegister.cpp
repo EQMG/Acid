@@ -7,7 +7,6 @@
 #include "Inputs/Joysticks.hpp"
 #include "Inputs/Keyboard.hpp"
 #include "Inputs/Mouse.hpp"
-#include "Inputs/Touches.hpp"
 #include "Particles/Particles.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
@@ -35,7 +34,6 @@ namespace acid
 		RegisterModule<Joysticks>(UPDATE_PRE);
 		RegisterModule<Keyboard>(UPDATE_PRE);
 		RegisterModule<Mouse>(UPDATE_PRE);
-		RegisterModule<Touches>(UPDATE_PRE);
 		RegisterModule<Audio>(UPDATE_PRE);
 		RegisterModule<Files>(UPDATE_PRE);
 		RegisterModule<Scenes>(UPDATE_NORMAL);

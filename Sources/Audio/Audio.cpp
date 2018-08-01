@@ -1,5 +1,9 @@
 #include "Audio.hpp"
 
+#ifdef ACID_BUILD_WINDOWS
+#define NOMINMAX
+#include <Windows.h>
+#endif
 #ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -85,7 +89,9 @@ namespace acid
 		std::string failure = StringifyResultAl(result);
 
 		fprintf(stderr, "OpenAL error: %s, %i\n", failure.c_str(), result);
-		Display::Get()->GetShell()->ShowMessageBox("OpenAL Error", failure.c_str(), MESSAGE_YES);
+#ifdef ACID_BUILD_WINDOWS
+		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
+#endif
 		throw std::runtime_error("OpenAL runtime error.");
 	}
 }

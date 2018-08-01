@@ -1,3 +1,6 @@
+include(FindVulkan.cmake)
+include(FindOpenAL.cmake)
+
 set(GLSLANG_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/glslang/" PARENT_SCOPE)
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
 set(BUILD_TESTING OFF CACHE INTERNAL "Enables test builds")
@@ -9,6 +12,15 @@ set(ENABLE_HLSL OFF CACHE INTERNAL "Enables HLSL input support")
 set(ENABLE_OPT OFF CACHE INTERNAL "Enables spirv-opt capability if present")
 add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
 set(GLSLANG_LIBRARIES "glslang" "SPIRV" PARENT_SCOPE)
+
+set(GLFW_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/glfw/include" PARENT_SCOPE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
+set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
+set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
+set(GLFW_INSTALL ${FLOUNDER_INSTALL} CACHE INTERNAL "Generate installation target")
+set(GLFW_VULKAN_STATIC OFF CACHE INTERNAL "Use the Vulkan loader statically linked into application")
+add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
+set(GLFW_LIBRARY "glfw" PARENT_SCOPE)
 
 # BUILD_PYBULLET is only ON until bullet can fix Windows shared builds.
 set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")

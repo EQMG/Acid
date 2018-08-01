@@ -14,9 +14,6 @@ if(BUILD_SHARED_LIBS)
 	set(LIB_TYPE SHARED)
 endif()
 
-# Cmake Modules
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Libraries")
-
 # Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DACID_VERBOSE)
@@ -29,13 +26,10 @@ elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 endif()
 
 if(WIN32)
-	add_definitions(-DACID_WSI_WIN32)
 	add_definitions(-DACID_BUILD_WINDOWS)
 elseif(UNIX AND NOT APPLE)
-	add_definitions(-DACID_WSI_XCB)
 	add_definitions(-DACID_BUILD_LINUX)
 elseif(UNIX AND APPLE)
-	add_definitions(-DACID_WSI_COCO)
 	add_definitions(-DACID_BUILD_MACOS)
 endif()
 
@@ -96,7 +90,8 @@ if(ACID_SETUP_OUTPUT)
 	set(CMAKE_INSTALL_INCLUDEDIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/include)
 endif()
 
-# Library Sources
+# Dependencies
+find_package(Threads REQUIRED)
 add_subdirectory(Libraries)
 
 # Engine Sources
