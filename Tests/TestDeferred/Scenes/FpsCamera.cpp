@@ -40,7 +40,7 @@ namespace test
 		m_targetRotation(Vector3()),
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
-		m_sensitivity(0.9f),
+		m_sensitivity(0.6f),
 		m_reangleButton(MOUSE_BUTTON_LEFT),
 		m_joystickVertical(AxisJoystick(JOYSTICK_1, {3}, true)),
 		m_joystickHorizontal(AxisJoystick(JOYSTICK_1, {2})),
@@ -103,7 +103,7 @@ namespace test
 			}
 			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				angleChange = Engine::Get()->GetDelta() * -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
+				angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 			}
 		}
 
@@ -140,7 +140,7 @@ namespace test
 			}
 			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
 			{
-				angleChange = Engine::Get()->GetDelta() * Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+				angleChange = Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}
 		}
 

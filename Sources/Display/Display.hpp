@@ -3,8 +3,10 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
-#include "IShell.hpp"
+
+class GLFWwindow;
 
 namespace acid
 {
@@ -35,7 +37,7 @@ namespace acid
 
 		bool m_validationLayers;
 
-		IShell *m_shell;
+		GLFWwindow *m_window;
 
 		std::vector<const char *> m_instanceLayerList;
 		std::vector<const char *> m_instanceExtensionList;
@@ -57,13 +59,19 @@ namespace acid
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 		uint32_t m_graphicsFamilyIndex;
 
-		friend void CallbackPosition(uint32_t x, uint32_t y);
+		friend void CallbackError(int error, const char *description);
 
-		friend void CallbackSize(uint32_t width, uint32_t height, bool iconified, bool fullscreen);
+		friend void CallbackClose(GLFWwindow *window);
 
-		friend void CallbackFocus(bool focused);
+		friend void CallbackFocus(GLFWwindow *window, int focused);
 
-		friend void CallbackClose();
+		friend void CallbackPosition(GLFWwindow *window, int xpos, int ypos);
+
+		friend void CallbackSize(GLFWwindow *window, int width, int height);
+
+		friend void CallbackFrame(GLFWwindow *window, int width, int height);
+
+		friend void CallbackIconify(GLFWwindow *window, int iconified);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 
@@ -192,6 +200,10 @@ namespace acid
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
+		ACID_HIDDEN static std::string StringifyResultGlfw(const int &result);
+
+		ACID_HIDDEN static void ErrorGlfw(const int &result);
+
 		static std::string StringifyResultVk(const VkResult &result);
 
 		static void ErrorVk(const VkResult &result);
@@ -226,7 +238,7 @@ namespace acid
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		IShell *GetShell() const { return m_shell; }
+		ACID_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
 
 		VkAllocationCallbacks *GetVkAllocator() const { return m_allocator; }
 
@@ -252,7 +264,7 @@ namespace acid
 
 		uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
 	private:
-		void CreateShell();
+		void CreateGlfw();
 
 		void SetupLayers();
 

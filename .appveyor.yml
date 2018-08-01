@@ -16,6 +16,7 @@ configuration:
 
 install:
 # - git submodule update --init --recursive
+  - git clone https://github.com/glfw/glfw.git Libraries/glfw
   - git clone https://github.com/bulletphysics/bullet3.git Libraries/bullet3
   - git clone https://github.com/KhronosGroup/glslang.git Libraries/glslang
   - mkdir C:\Projects\deps

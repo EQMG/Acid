@@ -22,7 +22,6 @@ set(ACID_HEADERS_
         "Audio/SoundBuffer.hpp"
         "Audio/stb_vorbis.h"
         "Display/Display.hpp"
-        "Display/IShell.hpp"
         "Engine/Engine.hpp"
         "Engine/Exports.hpp"
         "Engine/IModule.hpp"
@@ -67,7 +66,6 @@ set(ACID_HEADERS_
         "Inputs/Joysticks.hpp"
         "Inputs/Keyboard.hpp"
         "Inputs/Mouse.hpp"
-        "Inputs/Touches.hpp"
         "Lights/Fog.hpp"
         "Lights/Light.hpp"
         "Materials/IMaterial.hpp"
@@ -269,7 +267,6 @@ set(ACID_SOURCES_
         "Inputs/Joysticks.cpp"
         "Inputs/Keyboard.cpp"
         "Inputs/Mouse.cpp"
-        "Inputs/Touches.cpp"
         "Lights/Fog.cpp"
         "Lights/Light.cpp"
         "Materials/MaterialDefault.cpp"
@@ -395,17 +392,6 @@ set(ACID_SOURCES_
         "Uis/UiSelector.cpp"
         "Uis/UiStartLogo.cpp"
         )
-
-if(WIN32)
-    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellWin32.hpp")
-    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellWin32.cpp")
-elseif(UNIX AND NOT APPLE)
-    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellXcb.hpp")
-    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellXcb.cpp")
-elseif(UNIX AND APPLE)
-    set(ACID_HEADERS_ ${ACID_HEADERS_} "Display/ShellCocoa.hpp")
-    set(ACID_SOURCES_ ${ACID_SOURCES_} "Display/ShellCocoa.cpp")
-endif()
 
 source_group("Header Files" FILES ${ACID_HEADERS_})
 source_group("Source Files" FILES ${ACID_SOURCES_})

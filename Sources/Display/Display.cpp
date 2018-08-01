@@ -1,19 +1,13 @@
 #include "Display.hpp"
 
+#ifdef ACID_BUILD_WINDOWS
+#define NOMINMAX
+#include <Windows.h>
+#endif
 #include <SPIRV/GlslangToSpv.h>
+#include <GLFW/glfw3.h>
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
-
-#if ACID_WSI_WIN32
-  #include "ShellWin32.hpp"
-  typedef acid::ShellWin32 Shell_t;
-#elif ACID_WSI_XCB
-  #include "ShellXcb.hpp"
-  typedef acid::ShellXcb Shell_t;
-#elif ACID_WSI_COCO
-  #include "ShellCocoa.hpp"
-  typedef acid::ShellCocoa Shell_t;
-#endif
 
 namespace acid
 {
@@ -24,18 +18,33 @@ namespace acid
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
-	void CallbackPosition(uint32_t x, uint32_t y)
+	void CallbackError(int error, const char *description)
 	{
-		if (Display::Get()->m_fullscreen)
-		{
-			return;
-		}
-
-		Display::Get()->m_positionX = x;
-		Display::Get()->m_positionY = y;
+		Display::ErrorGlfw(error);
+		fprintf(stderr, "GLFW error: %s, %i\n", description, error);
 	}
 
-	void CallbackSize(uint32_t width, uint32_t height, bool iconified, bool fullscreen)
+	void CallbackClose(GLFWwindow *window)
+	{
+		Display::Get()->m_closed = false;
+		Engine::Get()->RequestClose(false);
+	}
+
+	void CallbackFocus(GLFWwindow *window, int focused)
+	{
+		Display::Get()->m_focused = static_cast<bool>(focused);
+	}
+
+	void CallbackPosition(GLFWwindow *window, int xpos, int ypos)
+	{
+		if (!Display::Get()->m_fullscreen)
+		{
+			Display::Get()->m_positionX = static_cast<uint32_t>(xpos);
+			Display::Get()->m_positionY = static_cast<uint32_t>(ypos);
+		}
+	}
+
+	void CallbackSize(GLFWwindow *window, int width, int height)
 	{
 		if (width <= 0 || height <= 0)
 		{
@@ -43,37 +52,29 @@ namespace acid
 		}
 
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		Display::Get()->m_iconified = iconified;
-		Display::Get()->m_fullscreen = fullscreen;
 
 		if (Display::Get()->m_fullscreen)
 		{
-			Display::Get()->m_fullscreenWidth = width;
-			Display::Get()->m_fullscreenHeight = height;
+			Display::Get()->m_fullscreenWidth = static_cast<uint32_t>(width);
+			Display::Get()->m_fullscreenHeight = static_cast<uint32_t>(height);
 		}
 		else
 		{
-			Display::Get()->m_windowWidth = width;
-			Display::Get()->m_windowHeight = height;
-		}
-
-		if (Display::Get()->m_surface == nullptr)
-		{
-			return;
+			Display::Get()->m_windowWidth = static_cast<uint32_t>(width);
+			Display::Get()->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
 		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
-	void CallbackFocus(bool focused)
+	void CallbackFrame(GLFWwindow *window, int width, int height)
 	{
-		Display::Get()->m_focused = focused;
+		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	}
 
-	void CallbackClose()
+	void CallbackIconify(GLFWwindow *window, int iconified)
 	{
-		Display::Get()->m_closed = true;
-		Engine::Get()->RequestClose(false);
+		Display::Get()->m_iconified = iconified == GLFW_TRUE;
 	}
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
@@ -125,7 +126,7 @@ namespace acid
 #else
 		m_validationLayers(false),
 #endif
-		m_shell(nullptr),
+		m_window(nullptr),
 		m_instanceLayerList(std::vector<const char *>()),
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
@@ -143,7 +144,7 @@ namespace acid
 		m_physicalDeviceMemoryProperties({}),
 		m_graphicsFamilyIndex(0)
 	{
-		CreateShell();
+		CreateGlfw();
 		SetupLayers();
 		SetupExtensions();
 		CreateInstance();
@@ -162,21 +163,26 @@ namespace acid
 		// Waits for the device to finish before destroying.
 		vkDeviceWaitIdle(m_logicalDevice);
 
+		// Free the window callbacks and destroy the window.
+		glfwDestroyWindow(m_window);
+
 		// Destroys Vulkan.
-		delete m_shell;
 		vkDestroyDevice(m_logicalDevice, m_allocator);
 		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, m_allocator);
 		vkDestroySurfaceKHR(m_instance, m_surface, m_allocator);
 		vkDestroyInstance(m_instance, m_allocator);
 		delete m_allocator;
 
+		// Terminate GLFW.
+		glfwTerminate();
+
 		m_closed = true;
 	}
 
 	void Display::Update()
 	{
-		// Polls for shell events.
-		m_shell->PollEvents();
+		// Polls for window events.
+		glfwPollEvents();;
 	}
 
 	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
@@ -184,13 +190,13 @@ namespace acid
 		m_windowWidth = width;
 		m_windowHeight = height;
 		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-		m_shell->SetSize(width, height);
+		glfwSetWindowSize(m_window, width, height);
 	}
 
 	void Display::SetTitle(const std::string &title)
 	{
 		m_title = title;
-		m_shell->SetTitle(m_title);
+		glfwSetWindowTitle(m_window, m_title.c_str());
 	}
 
 	void Display::SetIcon(const std::string &filename)
@@ -214,7 +220,12 @@ namespace acid
 			return;
 		}
 
-		m_shell->SetIconImage(data, width, height);
+		GLFWimage icons[1];
+		icons[0].pixels = data;
+		icons[0].width = width;
+		icons[0].height = height;
+
+		glfwSetWindowIcon(m_window, 1, icons);
 		Texture::DeletePixels(data);
 	}
 
@@ -227,26 +238,77 @@ namespace acid
 
 		m_fullscreen = fullscreen;
 
-		auto monitors = m_shell->GetMonitors();
+		// int monitorCount;
+		// GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
+
+		GLFWmonitor *monitor = glfwGetPrimaryMonitor(); // monitors[1];
+		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
 
 		if (fullscreen)
 		{
 #if ACID_VERBOSE
-			fprintf(stdout, "Display is going fullscreen\n");
+			printf("Display is going fullscreen\n");
 #endif
-			m_shell->SetFullscreen(monitors[0], true);
+			m_fullscreenWidth = videoMode->width;
+			m_fullscreenHeight = videoMode->height;
+			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
 		{
 #if ACID_VERBOSE
-			fprintf(stdout, "Display is going windowed\n");
+			printf("Display is going windowed\n");
 #endif
-			m_positionX = (monitors[0]->GetWidth() - m_windowWidth) / 2;
-			m_positionY = (monitors[0]->GetHeight() - m_windowHeight) / 2;
-			m_shell->SetFullscreen(monitors[0], false);
-			m_shell->SetSize(m_windowWidth, m_windowHeight);
-			m_shell->SetPosition(m_positionX, m_positionY);
+			m_positionX = (videoMode->width - m_windowWidth) / 2;
+			m_positionY = (videoMode->height - m_windowHeight) / 2;
+			glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
+	}
+
+	std::string Display::StringifyResultGlfw(const int &result)
+	{
+		switch (result)
+		{
+		case GLFW_TRUE:
+			return "Success";
+		case GLFW_NOT_INITIALIZED:
+			return "GLFW has not been initialized";
+		case GLFW_NO_CURRENT_CONTEXT:
+			return "No context is current for this thread";
+		case GLFW_INVALID_ENUM:
+			return "One of the arguments to the function was an invalid enum value";
+		case GLFW_INVALID_VALUE:
+			return "One of the arguments to the function was an invalid value";
+		case GLFW_OUT_OF_MEMORY:
+			return "A memory allocation failed";
+		case GLFW_API_UNAVAILABLE:
+			return "GLFW could not find support for the requested API on the system";
+		case GLFW_VERSION_UNAVAILABLE:
+			return "The requested OpenGL or OpenGL ES version is not available";
+		case GLFW_PLATFORM_ERROR:
+			return "A platform-specific error occurred that does not match any of the more specific categories";
+		case GLFW_FORMAT_UNAVAILABLE:
+			return "The requested format is not supported or available";
+		case GLFW_NO_WINDOW_CONTEXT:
+			return "The specified window does not have an OpenGL or OpenGL ES context";
+		default:
+			return "ERROR: UNKNOWN GLFW ERROR";
+		}
+	}
+
+	void Display::ErrorGlfw(const int &result)
+	{
+		if (result == GLFW_TRUE)
+		{
+			return;
+		}
+
+		std::string failure = StringifyResultGlfw(result);
+
+		fprintf(stderr, "GLFW error: %s, %i\n", failure.c_str(), result);
+#ifdef ACID_BUILD_WINDOWS
+		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
+#endif
+		throw std::runtime_error("GLFW runtime error.");
 	}
 
 	std::string Display::StringifyResultVk(const VkResult &result)
@@ -314,28 +376,84 @@ namespace acid
 		std::string failure = StringifyResultVk(result);
 
 		fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
-		Display::Get()->m_shell->ShowMessageBox("Vulkan Error", failure, MESSAGE_YES);
+#ifdef ACID_BUILD_WINDOWS
+		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
+#endif
 		throw std::runtime_error("Vulkan runtime error.");
 	}
 
-	void Display::CreateShell()
+	void Display::CreateGlfw()
 	{
-		m_shell = new Shell_t();
+		// Set the error error callback
+		glfwSetErrorCallback(CallbackError);
 
-		m_shell->SetCallbackPosition(CallbackPosition);
-		m_shell->SetCallbackSize(CallbackSize);
-		m_shell->SetCallbackFocus(CallbackFocus);
-		m_shell->SetCallbackClose(CallbackClose);
+		// Initialize the GLFW library.
+		if (glfwInit() == GLFW_FALSE)
+		{
+			fprintf(stderr, "GLFW error: Failed to initialize!\n");
+			throw std::runtime_error("GLFW runtime error.");
+		}
 
-		auto monitors = m_shell->GetMonitors();
+		// Checks Vulkan support on GLFW.
+		if (glfwVulkanSupported() == GLFW_FALSE)
+		{
+			fprintf(stderr, "GLFW error: Failed to find Vulkan support!\n");
+			throw std::runtime_error("GLFW runtime error.");
+		}
 
-		m_shell->SetSize(m_windowWidth, m_windowHeight);
-		m_shell->SetPosition((monitors[0]->GetWidth() - m_windowWidth) / 2,
-			(monitors[0]->GetHeight() - m_windowHeight) / 2);
-		m_shell->SetResizable(true);
-		m_shell->SetTitle(m_title);
+		// Configures the window.
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
 
-		m_shell->SetShown(SHOWN_SHOWN_BIT);
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Disable context creation.
+
+		// For new GLFW, and macOS.
+		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
+		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
+
+		// Get the resolution of the primary monitor.
+		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
+
+		if (m_fullscreen)
+		{
+			m_fullscreenWidth = videoMode->width;
+			m_fullscreenHeight = videoMode->height;
+			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
+		}
+
+		glfwWindowHint(GLFW_RED_BITS, videoMode->redBits);
+		glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
+		glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
+		glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
+		// glfwWindowHint(GLFW_DECORATED, GL_FALSE); // Borderless window.
+
+		// Create a windowed mode window and its OpenGL context.
+		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
+
+		// Gets any window errors.
+		if (m_window == nullptr)
+		{
+			glfwTerminate();
+			throw std::runtime_error("Filed to create the GLFW window!");
+		}
+
+		// Centre the window position.
+		m_positionX = (videoMode->width - m_windowWidth) / 2;
+		m_positionY = (videoMode->height - m_windowHeight) / 2;
+		glfwSetWindowPos(m_window, m_positionX, m_positionY);
+
+		// Shows the glfw window.
+		glfwShowWindow(m_window);
+
+		// Sets the displays callbacks.
+		glfwSetWindowUserPointer(m_window, this);
+		glfwSetWindowCloseCallback(m_window, CallbackClose);
+		glfwSetWindowFocusCallback(m_window, CallbackFocus);
+		glfwSetWindowPosCallback(m_window, CallbackPosition);
+		glfwSetWindowSizeCallback(m_window, CallbackSize);
+		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
+		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
 	}
 
 	void Display::SetupLayers()
@@ -381,11 +499,12 @@ namespace acid
 	void Display::SetupExtensions()
 	{
 		// Sets up the extensions.
-		auto instanceExtensions = m_shell->GetExtensions();
+		unsigned int glfwExtensionCount = 0;
+		const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-		for (auto &extension : instanceExtensions)
+		for (uint32_t i = 0; i < glfwExtensionCount; i++)
 		{
-			m_instanceExtensionList.emplace_back(extension);
+			m_instanceExtensionList.emplace_back(glfwExtensions[i]);
 		}
 
 		if (m_validationLayers)
@@ -582,7 +701,7 @@ namespace acid
 	void Display::CreateSurface()
 	{
 		// Creates the WSI Vulkan surface.
-		ErrorVk(m_shell->CreateSurface(m_instance, m_allocator, &m_surface));
+		ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
 		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
