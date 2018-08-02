@@ -114,6 +114,8 @@ namespace acid
 
 		static unsigned char *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
 
+		static bool WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components = 4);
+
 		static void DeletePixels(unsigned char *pixels);
 
 		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
