@@ -33,11 +33,10 @@ namespace acid
 				{
 					delete *it1;
 					it1 = (*it).second.erase(it1);
+					continue;
 				}
-				else
-				{
-					++it1;
-				}
+
+				++it1;
 			}
 		}
 	}

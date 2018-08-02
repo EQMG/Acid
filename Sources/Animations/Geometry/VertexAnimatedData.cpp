@@ -6,13 +6,11 @@ namespace acid
 
 	VertexAnimatedData::VertexAnimatedData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
-		m_uvIndex(VertexAnimatedData::NO_INDEX),
-		m_normalIndex(VertexAnimatedData::NO_INDEX),
+		m_uvIndex(NO_INDEX),
+		m_normalIndex(NO_INDEX),
 		m_duplicateVertex(nullptr),
 		m_index(index),
 		m_length(position.Length()),
-		m_tangents(std::vector<Vector3 *>()),
-		m_averagedTangent(Vector3()),
 		m_skinData(nullptr)
 	{
 	}
