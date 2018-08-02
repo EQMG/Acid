@@ -202,7 +202,7 @@ namespace acid
 	void Display::SetIcon(const std::string &filename)
 	{
 		// Loads a window icon for this display.
-		m_iconPath = Files::Get()->SearchFile(filename);
+		m_iconPath = Files::SearchFile(filename);
 
 		if (m_iconPath.empty())
 		{

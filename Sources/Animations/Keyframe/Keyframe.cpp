@@ -9,8 +9,7 @@ namespace acid
 	}
 
 	Keyframe::Keyframe(const KeyframeData &data) :
-		m_timeStamp(data.GetTime()),
-		m_pose()
+		m_timeStamp(data.GetTime())
 	{
 		for (auto &jointData : data.GetJointTransforms())
 		{

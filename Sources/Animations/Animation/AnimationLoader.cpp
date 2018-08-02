@@ -6,9 +6,7 @@ namespace acid
 {
 	AnimationLoader::AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
-		m_libraryVisualScenes(libraryVisualScenes),
-		m_lengthSeconds(0.0f),
-		m_keyframeData(std::vector<KeyframeData *>())
+		m_libraryVisualScenes(libraryVisualScenes)
 	{
 		auto animationNodes = m_libraryAnimations->GetChildren("animation");
 

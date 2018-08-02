@@ -60,24 +60,24 @@ namespace test
 	void Scene1::Start()
 	{
 		// Player.
-		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f)));
+		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject("Objects/SkyboxChapel/SkyboxChapel.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated.
-		GameObject *animatedObject = new GameObject(Transform());
+		GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
 		animatedObject->SetName("Animated");
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Undefined.png"), 0.7f, 0.6f);
+		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<MeshRender>();
-		//animatedObject->AddComponent<ShadowRender>();
+		animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
-		GameObject *plane = new GameObject(Transform(Vector3(0.0f, 0.0f, 0.0f), Vector3(), Vector3(200.0f, 3.0f, 200.0f)));
+		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
@@ -89,10 +89,10 @@ namespace test
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j + 5.0f, -8.0f), Vector3(), 3.0f));
+				GameObject *sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
-				sphere->AddComponent<Rigidbody>(1.5f);
+				sphere->AddComponent<Rigidbody>(0.5f);
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
@@ -100,7 +100,7 @@ namespace test
 			}
 		}
 
-		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 7.0f, 48.0f), Vector3(), 1.2f));
+		GameObject *convex = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
 		convex->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		convex->AddComponent<ColliderConvexHull>();
 		convex->AddComponent<Rigidbody>(1.0f);
@@ -123,13 +123,13 @@ namespace test
 		{
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 3.0f));
+			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
-			auto rigidbody = sphere->AddComponent<Rigidbody>(1.5f);
+			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
-			rigidbody->AddForce((cameraRotation.ToQuaternion() * Vector3::FRONT) * 6000.0f, Vector3::ZERO);
+			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT) * -3.0f, 2.0f);
 		}
 
 		if (m_buttonFullscreen->WasDown())

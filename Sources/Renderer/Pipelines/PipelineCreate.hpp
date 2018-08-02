@@ -129,7 +129,7 @@ namespace acid
 		{
 			for (auto &shaderStage : m_shaderStages)
 			{
-				shaderStage = Files::Get()->SearchFile(shaderStage);
+				shaderStage = Files::SearchFile(shaderStage);
 			}
 		}
 

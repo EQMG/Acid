@@ -16,7 +16,7 @@ namespace test
 	const float CROUCH_SPEED = 1.2f;
 	const float JUMP_SPEED = 6.5f;
 	const float CROUCH_JUMP_SPEED = 3.0f;
-	const float NOCLIP_SPEED = 15.0f;
+	const float NOCLIP_SPEED = 8.0f;
 	const float GRAVITY = -9.81f;
 	const Vector3 DAMP_NOCLIP = Vector3(10.0f, 10.0f, 10.0f);
 	const Vector3 DAMP_NORMAL = Vector3(20.0f, 1.0f, 20.0f);
@@ -25,7 +25,7 @@ namespace test
 		IBehaviour(),
 		m_velocity(Vector3()),
 		m_jumping(false),
-		m_noclipEnabled(true),
+		m_noclipEnabled(false),
 		m_inputForward(new AxisCompound({
 			new AxisButton(
 				new ButtonKeyboard({KEY_S, KEY_DOWN}),

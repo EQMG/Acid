@@ -41,7 +41,7 @@ namespace acid
 	public:
 		static std::shared_ptr<Texture> Resource(const std::string &filename)
 		{
-			std::string realFilename = Files::Get()->SearchFile(filename);
+			std::string realFilename = Files::SearchFile(filename);
 			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
