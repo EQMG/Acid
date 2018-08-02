@@ -14,6 +14,8 @@ namespace test
 	const float FpsCamera::ROTATE_AGILITY = 32.0f;
 	const float FpsCamera::PITCH_AGILITY = 32.0f;
 
+	const float FpsCamera::VIEW_HEIGHT = 1.8f;
+
 	const float FpsCamera::INFLUENCE_OF_JOYSTICK_DY = 4.5f;
 	const float FpsCamera::INFLUENCE_OF_JOYSTICK_DX = 4.5f;
 
@@ -76,7 +78,7 @@ namespace test
 			auto playerPosition = player->GetGameObject()->GetTransform().GetPosition();
 
 			m_velocity = (playerPosition - m_targetPosition) / delta;
-			m_targetPosition = playerPosition;
+			m_targetPosition = playerPosition + Vector3(0.0f, VIEW_HEIGHT, 0.0f);
 			m_targetRotation = playerRotation;
 		}
 

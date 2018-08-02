@@ -11,12 +11,11 @@ namespace acid
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Mesh(),
-		m_filename(Files::Get()->SearchFile(filename)),
+		m_filename(Files::SearchFile(filename)),
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animator(nullptr),
-		m_animation(nullptr),
-		m_jointMatrices(std::vector<Matrix4>())
+		m_animation(nullptr)
 	{
 		TrySetModel(m_filename);
 	}

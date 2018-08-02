@@ -9,8 +9,7 @@ namespace acid
 	}
 
 	Animation::Animation(const float &length, const std::vector<KeyframeData *> &keyframeData) :
-		m_length(length),
-		m_keyframes(std::vector<Keyframe *>())
+		m_length(length)
 	{
 		for (auto &frameData : keyframeData)
 		{

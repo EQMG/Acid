@@ -3,6 +3,7 @@
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
+#include "Force.hpp"
 
 class btTransform;
 
@@ -25,6 +26,8 @@ namespace acid
 		btCollisionShape *m_shape;
 		btRigidBody *m_body;
 
+		std::vector<std::shared_ptr<Force>> m_forces;
+
 		Vector3 m_linearVelocity;
 		Vector3 m_angularVelocity;
 	public:
@@ -43,7 +46,10 @@ namespace acid
 
 		std::string GetName() const override { return "Rigidbody"; };
 
-		void AddForce(const Vector3 &force, const Vector3 &position);
+		std::shared_ptr<Force> AddForce(const std::shared_ptr<Force> &force);
+
+		template<typename T, typename... Args>
+		std::shared_ptr<Force> AddForce(Args &&... args) { return AddForce(std::make_shared<T>(std::forward<Args>(args)...)); }
 
 		void ClearForces();
 

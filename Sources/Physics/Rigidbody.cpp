@@ -63,6 +63,7 @@ namespace acid
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
 			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
+			m_body->activate(true);
 		}
 	}
 
@@ -90,6 +91,20 @@ namespace acid
 				shape->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
 				m_body->setMassProps(m_mass, localInertia);
 			}
+		}
+
+		for (auto it = m_forces.begin(); it != m_forces.end();)
+		{
+			(*it)->Update();
+			m_body->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
+
+			if ((*it)->IsExpired())
+			{
+				it = m_forces.erase(it);
+				continue;
+			}
+
+			++it;
 		}
 
 		auto &transform = GetGameObject()->GetTransform();
@@ -138,14 +153,10 @@ namespace acid
 		m_angularFactor.Write(destination->GetChild("Angular Factor", true));
 	}
 
-	void Rigidbody::AddForce(const Vector3 &force, const Vector3 &position)
+	std::shared_ptr<Force> Rigidbody::AddForce(const std::shared_ptr<Force> &force)
 	{
-		if (m_body == nullptr)
-		{
-			return;
-		}
-
-		m_body->applyForce(Collider::Convert(force), Collider::Convert(position));
+		m_forces.emplace_back(force);
+		return force;
 	}
 
 	void Rigidbody::ClearForces()
@@ -191,16 +202,16 @@ namespace acid
 		m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 	}
 
-	void Rigidbody::SetAngularVelocity(const Vector3 &angularVelocity)
-	{
-		m_angularVelocity = angularVelocity;
-		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
-	}
-
 	void Rigidbody::SetLinearVelocity(const Vector3 &linearVelocity)
 	{
 		m_linearVelocity = linearVelocity;
 		m_body->setLinearVelocity(Collider::Convert(m_linearVelocity));
+	}
+
+	void Rigidbody::SetAngularVelocity(const Vector3 &angularVelocity)
+	{
+		m_angularVelocity = angularVelocity;
+		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
 	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape)
