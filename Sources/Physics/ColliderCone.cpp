@@ -6,6 +6,7 @@
 namespace acid
 {
 	ColliderCone::ColliderCone(const float &radius, const float &height) :
+		Collider(),
 		m_shape(new btConeShape(radius, height)),
 		m_radius(radius),
 		m_height(height)

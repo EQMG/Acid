@@ -1,6 +1,5 @@
 #include "Scene1.hpp"
 
-#include <Animations/MaterialAnimated.hpp>
 #include <Animations/MeshAnimated.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/Mouse.hpp>
@@ -20,7 +19,7 @@
 #include <Models/Obj/ModelObj.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Particles/Spawns/SpawnCircle.hpp>
-#include "Rotate/RotateBehaviour.hpp"
+#include <Shadows/ShadowRender.hpp>
 #include "FpsCamera.hpp"
 
 namespace test
@@ -61,7 +60,7 @@ namespace test
 	void Scene1::Start()
 	{
 		// Player.
-		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject("Objects/SkyboxChapel/SkyboxChapel.json", Transform(Vector3(), Vector3(), 2048.0f));
@@ -70,7 +69,7 @@ namespace test
 		GameObject *animatedObject = new GameObject(Transform());
 		animatedObject->SetName("Animated");
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialAnimated>();
+		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Undefined.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<MeshRender>();
 		//animatedObject->AddComponent<ShadowRender>();
 
@@ -78,35 +77,36 @@ namespace test
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
-		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -5.0f, 0.0f), Vector3(), Vector3(200.0f, 3.0f, 200.0f)));
+		GameObject *plane = new GameObject(Transform(Vector3(0.0f, 0.0f, 0.0f), Vector3(), Vector3(200.0f, 3.0f, 200.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
+		plane->AddComponent<ShadowRender>();
 
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j, -8.0f), Vector3(), 3.0f));
+				GameObject *sphere = new GameObject(Transform(Vector3(6.7f * i, 6.7f * j + 5.0f, -8.0f), Vector3(), 3.0f));
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(1.5f);
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-			//	sphere->AddComponent<ShadowRender>();
+				sphere->AddComponent<ShadowRender>();
 			}
 		}
 
-		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 3.0f, 48.0f), Vector3(), 1.2f));
+		GameObject *convex = new GameObject(Transform(Vector3(27.0f, 7.0f, 48.0f), Vector3(), 1.2f));
 		convex->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		convex->AddComponent<ColliderConvexHull>();
-	//	convex->AddComponent<Rigidbody>(1.0f);
+		convex->AddComponent<Rigidbody>(1.0f);
 		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		convex->AddComponent<MeshRender>();
-		convex->AddComponent<RotateBehaviour>(Vector3(0.0f, 20.0f, 0.0f));
+		convex->AddComponent<ShadowRender>();
 
 		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
 			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), Colour::BLUE, 10.0f, 1.0f),

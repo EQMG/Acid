@@ -6,6 +6,7 @@
 namespace acid
 {
 	ColliderBox::ColliderBox(const Vector3 &extents) :
+		Collider(),
 		m_shape(new btBoxShape(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{

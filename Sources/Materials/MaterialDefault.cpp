@@ -1,6 +1,7 @@
 #include "MaterialDefault.hpp"
 
 #include "Objects/GameObject.hpp"
+#include "Animations/MeshAnimated.hpp"
 #include "Models/VertexModel.hpp"
 
 namespace acid
@@ -9,6 +10,7 @@ namespace acid
 									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
+		m_animated(false),
 		m_baseColor(baseColor),
 		m_diffuseTexture(diffuseTexture),
 		m_metallic(metallic),
@@ -18,8 +20,7 @@ namespace acid
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Entities/Entity.vert", "Shaders/Entities/Entity.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines()))
+		m_material(nullptr)
 	{
 	}
 
@@ -29,6 +30,17 @@ namespace acid
 
 	void MaterialDefault::Start()
 	{
+		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
+
+		if (mesh == nullptr)
+		{
+			fprintf(stderr, "Cannot have a material attached to a object without a mesh!\n");
+			return;
+		}
+
+		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
+		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Entities/Entity.vert", "Shaders/Entities/Entity.frag"},
+			mesh->GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines());
 	}
 
 	void MaterialDefault::Update()
@@ -67,6 +79,13 @@ namespace acid
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 	{
+		if (m_animated)
+		{
+			auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
+			auto joints = meshAnimated->GetJointTransforms();
+			uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
+		}
+
 		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 		uniformObject.Push("baseColor", m_baseColor);
 		uniformObject.Push("metallic", m_metallic);
@@ -94,6 +113,13 @@ namespace acid
 		if (m_materialTexture != nullptr)
 		{
 			result.emplace_back(PipelineDefine("MATERIAL_MAPPING", "TRUE"));
+		}
+
+		if (m_animated)
+		{
+			result.emplace_back(PipelineDefine("ANIMATED", "TRUE"));
+			result.emplace_back(PipelineDefine("MAX_JOINTS", std::to_string(MeshAnimated::MAX_JOINTS)));
+			result.emplace_back(PipelineDefine("MAX_WEIGHTS", std::to_string(MeshAnimated::MAX_WEIGHTS)));
 		}
 
 		/*if (m_normalTexture != nullptr)

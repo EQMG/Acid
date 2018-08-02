@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "Models/VertexModel.hpp"
 #include "Objects/IComponent.hpp"
 #include "Models/Model.hpp"
 
@@ -29,6 +30,8 @@ namespace acid
 		std::string GetName() const override { return "Mesh"; };
 
 		virtual std::shared_ptr<Model> GetModel() const { return m_model; }
+
+		virtual VertexInput GetVertexInput() const { return VertexModel::GetVertexInput(); }
 
 		virtual void SetModel(std::shared_ptr<Model> model) { m_model = model; }
 

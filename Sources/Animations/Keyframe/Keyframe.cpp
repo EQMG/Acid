@@ -4,13 +4,13 @@ namespace acid
 {
 	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform *> &pose) :
 		m_timeStamp(timeStamp),
-		m_pose(std::map<std::string, JointTransform *>(pose))
+		m_pose(pose)
 	{
 	}
 
 	Keyframe::Keyframe(const KeyframeData &data) :
 		m_timeStamp(data.GetTime()),
-		m_pose(std::map<std::string, JointTransform *>())
+		m_pose()
 	{
 		for (auto &jointData : data.GetJointTransforms())
 		{

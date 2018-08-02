@@ -7,7 +7,6 @@ set(TESTDEFERED_HEADERS_
         "Scenes/FpsCamera.hpp"
         "Scenes/FpsPlayer.hpp"
         "Scenes/Scene1.hpp"
-        "Rotate/RotateBehaviour.hpp"
         "Uis/OverlayDebug.hpp"
         "World/World.hpp"
         )
@@ -23,7 +22,6 @@ set(TESTDEFERED_SOURCES_
         "Scenes/FpsCamera.cpp"
         "Scenes/FpsPlayer.cpp"
         "Scenes/Scene1.cpp"
-        "Rotate/RotateBehaviour.cpp"
         "Uis/OverlayDebug.cpp"
         "World/World.cpp"
         )
