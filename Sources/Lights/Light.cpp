@@ -14,9 +14,9 @@ namespace acid
 	Light::Light(const Light &source) :
 		IComponent(),
 		m_colour(source.m_colour),
-		m_position(Vector3()),
 		m_offset(source.m_offset),
-		m_radius(source.m_radius)
+		m_radius(source.m_radius),
+		m_position(Vector3())
 	{
 	}
 

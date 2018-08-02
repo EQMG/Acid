@@ -38,38 +38,33 @@ namespace acid
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-		auto environment = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap();
+		auto ibl = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap(); // TODO: IBL cubemap.
 
 		// Updates uniforms.
 		std::vector<DeferredLight> sceneLights = {};
 
-		auto gameObjects = Scenes::Get()->GetStructure()->GetAll();
+		auto lights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
-		for (auto &entity : gameObjects)
+		for (auto &light : lights)
 		{
-			auto light = entity->GetComponent<Light>();
+			//	auto position = *light->GetPosition();
+			//	float radius = light->GetRadius();
 
-			if (light != nullptr)
+			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+			//	{
+			//		continue;
+			//	}
+
+			if (light->GetColour().LengthSquared() == 0.0f)
 			{
-				//	auto position = *light->GetPosition();
-				//	float radius = light->GetRadius();
-
-				//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-				//	{
-				//		continue;
-				//	}
-
-				if (light->GetColour().LengthSquared() == 0.0f)
-				{
-					continue;
-				}
-
-				DeferredLight lightObject = {};
-				lightObject.colour = light->GetColour();
-				lightObject.position = light->GetPosition();
-				lightObject.radius = light->GetRadius();
-				sceneLights.emplace_back(lightObject);
+				continue;
 			}
+
+			DeferredLight lightObject = {};
+			lightObject.colour = light->GetColour();
+			lightObject.position = light->GetPosition();
+			lightObject.radius = light->GetRadius();
+			sceneLights.emplace_back(lightObject);
 
 			if (sceneLights.size() >= MAX_LIGHTS)
 			{
@@ -102,7 +97,7 @@ namespace acid
 		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
 		m_descriptorSet.Push("samplerBrdflut", m_brdflut);
-		m_descriptorSet.Push("samplerEnvironment", environment);
+		m_descriptorSet.Push("samplerIbl", ibl);
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)
