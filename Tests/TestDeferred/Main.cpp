@@ -11,7 +11,6 @@
 #include "Configs/ConfigManager.hpp"
 #include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
-#include "Rotate/RotateBehaviour.hpp"
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
 
@@ -46,7 +45,6 @@ int main(int argc, char **argv)
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
-	Scenes::Get()->RegisterComponent<RotateBehaviour>("RotateBehaviour");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Deferred");

@@ -1,9 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-#define MAX_JOINTS 50
-#define MAX_WEIGHTS 3
-
 layout(set = 0, binding = 0) uniform UboScene
 {
 	mat4 projection;
@@ -31,7 +28,7 @@ layout(set = 0, location = 2) in vec3 vertexNormal;
 layout(set = 0, location = 3) in vec3 vertexTangent;
 #endif
 #ifdef ANIMATED
-layout(set = 0, location = 4) in ivec3 vertexJointIndices;
+layout(set = 0, location = 4) in vec3 vertexJointIds;
 layout(set = 0, location = 5) in vec3 vertexWeights;
 #endif
 
@@ -48,22 +45,22 @@ out gl_PerVertex
 
 void main() 
 {
+#ifdef ANIMATED
+    vec4 totalLocalPos = vec4(0.0f);
+    vec4 totalNormal = vec4(0.0f);
+
+    for (int i = 0; i < MAX_WEIGHTS; i++)
+    {
+        mat4 jointTransform = object.jointTransforms[int(vertexJointIds[i])];
+        vec4 posePosition = jointTransform * vec4(vertexPosition, 1.0f);
+        totalLocalPos += posePosition * vertexWeights[i];
+
+        vec4 worldNormal = jointTransform * vec4(vertexNormal, 0.0f);
+        totalNormal += worldNormal * vertexWeights[i];
+    }
+#else
 	vec4 totalLocalPos = vec4(vertexPosition, 1.0f);
 	vec4 totalNormal = vec4(vertexNormal, 0.0f);
-
-#ifdef ANIMATED
-    if (object.animated == 1.0f)
-    {
-        for (int i = 0; i < MAX_WEIGHTS; i++)
-        {
-            mat4 jointTransform = object.jointTransforms[vertexJointIndices[i]];
-            vec4 posePosition = jointTransform * totalLocalPos;
-            totalLocalPos += posePosition * vertexWeights[i];
-
-            vec4 worldNormal = jointTransform * totalNormal;
-            totalNormal += worldNormal * vertexWeights[i];
-        }
-    }
 #endif
 
 	vec4 worldPosition = object.transform * totalLocalPos;

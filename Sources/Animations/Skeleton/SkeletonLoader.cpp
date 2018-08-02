@@ -50,7 +50,7 @@ namespace acid
 		if (isRoot)
 		{
 			// Because in Blender z is up, but the engine is y up.
-			transform *= MeshAnimated::CORRECTION;
+			transform = MeshAnimated::CORRECTION * transform;
 		}
 
 		m_jointCount++;

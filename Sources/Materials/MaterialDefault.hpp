@@ -14,6 +14,7 @@ namespace acid
 		public IMaterial
 	{
 	private:
+		bool m_animated;
 		Colour m_baseColor;
 		std::shared_ptr<Texture> m_diffuseTexture;
 

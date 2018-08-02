@@ -224,31 +224,33 @@ namespace acid
 
 	Matrix4 Quaternion::ToRotationMatrix() const
 	{
-		float d = LengthSquared();
-		float s = 2.0f / d;
-		float xs = m_x * s;
-		float ys = m_y * s;
-		float zs = m_z * s;
-		float wx = m_w * xs;
-		float wy = m_w * ys;
-		float wz = m_w * zs;
-		float xx = m_x * xs;
-		float xy = m_x * ys;
-		float xz = m_x * zs;
-		float yy = m_y * ys;
-		float yz = m_y * zs;
-		float zz = m_z * zs;
+		float xy = m_x * m_y;
+		float xz = m_x * m_z;
+		float xw = m_x * m_w;
+		float yz = m_y * m_z;
+		float yw = m_y * m_w;
+		float zw = m_z * m_w;
+		float xSquared = m_x * m_x;
+		float ySquared = m_y * m_y;
+		float zSquared = m_z * m_z;
 
 		Matrix4 result = Matrix4();
-		result[0][0] = 1.0f - (yy + zz);
-		result[0][1] = xy - wz;
-		result[0][2] = xz + wy;
-		result[1][0] = xy + wz;
-		result[1][1] = 1.0f - (xx + zz);
-		result[1][2] = yz - wx;
-		result[2][0] = xz - wy;
-		result[2][1] = yz + wx;
-		result[2][2] = 1.0f - (xx + yy);
+		result[0][0] = 1.0f - 2.0f * (ySquared + zSquared);
+		result[0][1] = 2.0f * (xy - zw);
+		result[0][2] = 2.0f * (xz + yw);
+		result[0][3] = 0.0f;
+		result[1][0] = 2.0f * (xy + zw);
+		result[1][1] = 1.0f - 2.0f * (xSquared + zSquared);
+		result[1][2] = 2.0f * (yz - xw);
+		result[1][3] = 0.0f;
+		result[2][0] = 2.0f * (xz - yw);
+		result[2][1] = 2.0f * (yz + xw);
+		result[2][2] = 1.0f - 2.0f * (xSquared + ySquared);
+		result[2][3] = 0.0f;
+		result[3][0] = 0.0f;
+		result[3][1] = 0.0f;
+		result[3][2] = 0.0f;
+		result[3][3] = 1.0f;
 		return result;
 	}
 
@@ -329,46 +331,39 @@ namespace acid
 
 	Quaternion &Quaternion::operator=(const Matrix4 &other)
 	{
-		float t = other[0][0] + other[1][1] + other[2][2];
+		float diagonal = other[0][0] + other[1][1] + other[2][2];
 
-		if (t > 0.0f)
+		if (diagonal > 0.0f)
 		{
-			float invS = 0.5f / std::sqrt(1.0f + t);
-
-			m_x = (other[2][1] - other[1][2]) * invS;
-			m_y = (other[0][2] - other[2][0]) * invS;
-			m_z = (other[1][0] - other[0][1]) * invS;
-			m_w = 0.25f / invS;
+			float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
+			m_w = w4 / 4.0f;
+			m_x = (other[2][1] - other[1][2]) / w4;
+			m_y = (other[0][2] - other[2][0]) / w4;
+			m_z = (other[1][0] - other[0][1]) / w4;
+		}
+		else if ((other[0][0] > other[1][1]) && (other[0][0] > other[2][2]))
+		{
+			float x4 = std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]) * 2.0f;
+			m_w = (other[2][1] - other[1][2]) / x4;
+			m_x = x4 / 4.0f;
+			m_y = (other[0][1] + other[1][0]) / x4;
+			m_z = (other[0][2] + other[2][0]) / x4;
+		}
+		else if (other[1][1] > other[2][2])
+		{
+			float y4 = std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2]) * 2.0f;
+			m_w = (other[0][2] - other[2][0]) / y4;
+			m_x = (other[0][1] + other[1][0]) / y4;
+			m_y = y4 / 4.0f;
+			m_z = (other[1][2] + other[2][1]) / y4;
 		}
 		else
 		{
-			if (other[0][0] > other[1][1] && other[0][0] > other[2][2])
-			{
-				float invS = 0.5f / std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]);
-
-				m_x = 0.25f / invS;
-				m_y = (other[0][1] + other[1][0]) * invS;
-				m_z = (other[2][0] + other[0][2]) * invS;
-				m_w = (other[2][1] - other[1][2]) * invS;
-			}
-			else if (other[1][1] > other[2][2])
-			{
-				float invS = 0.5f / std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2]);
-
-				m_x = (other[0][1] + other[1][0]) * invS;
-				m_y = 0.25f / invS;
-				m_z = (other[1][2] + other[2][1]) * invS;
-				m_w = (other[0][2] - other[2][0]) * invS;
-			}
-			else
-			{
-				float invS = 0.5f / std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]);
-
-				m_x = (other[0][2] + other[2][0]) * invS;
-				m_y = (other[1][2] + other[2][1]) * invS;
-				m_z = 0.25f / invS;
-				m_w = (other[1][0] - other[0][1]) * invS;
-			}
+			float z4 = std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]) * 2.0f;
+			m_w = (other[1][0] - other[0][1]) / z4;
+			m_x = (other[0][2] + other[2][0]) / z4;
+			m_y = (other[1][2] + other[2][1]) / z4;
+			m_z = z4 / 4.0f;
 		}
 
 		return *this;

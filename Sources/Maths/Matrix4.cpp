@@ -230,7 +230,7 @@ namespace acid
 
 	Matrix4 Matrix4::Invert() const
 	{
-		Matrix4 result = Matrix4();
+		Matrix4 result = Matrix4(*this);
 
 		float det = Determinant();
 		assert(det != 0.0f && "Determinant cannot be zero!");
@@ -636,9 +636,9 @@ namespace acid
 	std::string Matrix4::ToString() const
 	{
 		std::stringstream result;
-		result << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", " <<
-			m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " << m_rows[1][3] << ", " <<
-			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", " <<
+		result << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" <<
+			m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" <<
+			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" <<
 			m_rows[3][0] << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
 		return result.str();
 	}

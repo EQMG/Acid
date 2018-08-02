@@ -7,6 +7,7 @@
 namespace acid
 {
 	ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud) :
+		Collider(),
 		m_shape(nullptr),
 		m_model(nullptr),
 		m_points(0)

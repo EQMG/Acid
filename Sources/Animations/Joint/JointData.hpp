@@ -9,17 +9,17 @@ namespace acid
 	class ACID_EXPORT JointData
 	{
 	private:
-		int m_index;
+		unsigned int m_index;
 		std::string m_nameId;
 		Matrix4 m_bindLocalTransform;
 
 		std::vector<JointData *> m_children;
 	public:
-		JointData(const int &index, const std::string &nameId, const Matrix4 &bindLocalTransform);
+		JointData(const unsigned int &index, const std::string &nameId, const Matrix4 &bindLocalTransform);
 
 		~JointData();
 
-		int GetIndex() const { return m_index; }
+		unsigned int GetIndex() const { return m_index; }
 
 		std::string GetNameId() const { return m_nameId; }
 

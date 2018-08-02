@@ -4,6 +4,7 @@
 #include "Maths/Matrix4.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Animation/AnimationLoader.hpp"
+#include "Geometry/VertexAnimated.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Objects/IComponent.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
@@ -42,6 +43,8 @@ namespace acid
 		std::string GetName() const override { return "MeshAnimated"; };
 
 		std::shared_ptr<Model> GetModel() const override { return m_model; }
+
+		virtual VertexInput GetVertexInput() const { return VertexAnimated::GetVertexInput(); }
 
 		void SetModel(std::shared_ptr<Model> model) override { m_model = model; }
 
