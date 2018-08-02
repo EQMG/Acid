@@ -16,9 +16,10 @@ namespace acid
 	{
 	private:
 		Colour m_colour;
-		Vector3 m_position;
 		Vector3 m_offset;
 		float m_radius;
+
+		Vector3 m_position;
 	public:
 		/// <summary>
 		/// Creates a new point light.
@@ -57,13 +58,11 @@ namespace acid
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Vector3 GetPosition() const { return m_position; }
-
-		void SetPosition(const Vector3 &position) { m_position = position; }
-
 		Vector3 GetOffset() const { return m_offset; }
 
 		void SetOffset(const Vector3 &offset) { m_offset = offset; }
+
+		Vector3 GetPosition() const { return m_position; }
 
 		Light &operator=(const Light &other);
 
