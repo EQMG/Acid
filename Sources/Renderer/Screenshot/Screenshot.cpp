@@ -1,6 +1,5 @@
 #include "Screenshot.hpp"
 
-#include <Textures/stb_image_write.h>
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -179,7 +178,7 @@ namespace acid
 		vkMapMemory(logicalDevice, dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
 		data += subResourceLayout.offset;
 
-		stbi_write_png(filename.c_str(), width, height, 4, data, width * 4);
+		Texture::WritePixels(filename, data, width, height, 4);
 
 		// Clean up resources.
 		vkUnmapMemory(logicalDevice, dstImageMemory);

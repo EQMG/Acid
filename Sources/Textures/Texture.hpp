@@ -41,7 +41,7 @@ namespace acid
 	public:
 		static std::shared_ptr<Texture> Resource(const std::string &filename)
 		{
-			std::string realFilename = Files::Get()->SearchFile(filename);
+			std::string realFilename = Files::SearchFile(filename);
 			auto resource = Resources::Get()->Get(realFilename);
 
 			if (resource != nullptr)
@@ -113,6 +113,8 @@ namespace acid
 		static unsigned char *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
 		static unsigned char *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
+
+		static bool WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components = 4);
 
 		static void DeletePixels(unsigned char *pixels);
 

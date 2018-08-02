@@ -6,12 +6,7 @@ namespace acid
 {
 	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
-		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<VertexAnimatedData *>()),
-		m_uvsList(std::vector<Vector2>()),
-		m_normalsList(std::vector<Vector3>()),
-		m_vertices(std::vector<IVertex *>()),
-		m_indices(std::vector<uint32_t>())
+		m_vertexWeights(vertexWeights)
 	{
 		LoadVertices();
 		LoadUvs();

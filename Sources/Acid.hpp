@@ -132,6 +132,7 @@
 #include "Physics/ColliderCylinder.hpp"
 #include "Physics/ColliderHeightfield.hpp"
 #include "Physics/ColliderSphere.hpp"
+#include "Physics/Force.hpp"
 #include "Physics/Frustum.hpp"
 #include "Physics/Collider.hpp"
 #include "Physics/Ray.hpp"

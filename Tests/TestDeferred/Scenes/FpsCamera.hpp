@@ -19,6 +19,8 @@ namespace test
 		static const float ROTATE_AGILITY;
 		static const float PITCH_AGILITY;
 
+		static const float VIEW_HEIGHT;
+
 		static const float INFLUENCE_OF_JOYSTICK_DY;
 		static const float INFLUENCE_OF_JOYSTICK_DX;
 

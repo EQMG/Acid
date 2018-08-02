@@ -4,9 +4,7 @@ namespace acid
 {
 	SkinLoader::SkinLoader(LoadedValue *libraryControllers, const int &maxWeights) :
 		m_skinData(libraryControllers->GetChild("controller")->GetChild("skin")),
-		m_maxWeights(maxWeights),
-		m_jointOrder(std::vector<std::string>()),
-		m_verticesSkinData(std::vector<VertexSkinData *>())
+		m_maxWeights(maxWeights)
 	{
 		LoadJointsList();
 		auto weights = LoadWeights();

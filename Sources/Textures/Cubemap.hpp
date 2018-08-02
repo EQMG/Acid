@@ -34,7 +34,7 @@ namespace acid
 		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt)
 		{
 			std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
-			std::string realFilename = Files::Get()->SearchFile(filename + suffixToken);
+			std::string realFilename = Files::SearchFile(filename + suffixToken);
 			realFilename = FormatString::Replace(realFilename, suffixToken, "");
 			auto resource = Resources::Get()->Get(realFilename);
 

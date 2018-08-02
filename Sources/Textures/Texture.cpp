@@ -2,7 +2,8 @@
 
 #include <cmath>
 #include <cassert>
-#include <Textures/stb_image.h>
+#include "Textures/stb_image.h"
+#include "Textures/stb_image_write.h"
 #include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 
@@ -261,6 +262,12 @@ namespace acid
 		}
 
 		return pixels;
+	}
+
+	bool Texture::WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components)
+	{
+		int result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
+		return result == 1;
 	}
 
 	void Texture::DeletePixels(unsigned char *pixels)

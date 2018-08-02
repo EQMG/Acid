@@ -78,7 +78,7 @@ namespace acid
 			m_scene->SetStarted(true);
 		}
 
-		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta(), 2, 1.0f / 60.0f);
+		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta());
 		m_scene->Update();
 
 		if (m_scene->GetStructure() == nullptr)
