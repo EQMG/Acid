@@ -143,6 +143,7 @@ namespace acid
 
 		structure->Add(this);
 		m_structure = structure;
+		m_removed = false;
 	}
 
 	void GameObject::StructureRemove()

@@ -27,7 +27,7 @@ namespace acid
 
 	void ColliderConvexHull::Start()
 	{
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
 
 		if (mesh != nullptr && mesh->GetModel() != nullptr)
 		{
@@ -37,7 +37,7 @@ namespace acid
 
 	void ColliderConvexHull::Update()
 	{
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
 
 		if (mesh == nullptr || mesh->GetModel() != nullptr)
 		{

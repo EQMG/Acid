@@ -61,6 +61,10 @@ namespace acid
 
 		void SetScene(IScene *scene);
 
+		void SetGravity(const Vector3 &gravity);
+
+		void SetAirDensity(const float &airDensity);
+
 		/// <summary>
 		/// Creates a new component from the register.
 		/// </summary>
