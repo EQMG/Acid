@@ -153,6 +153,11 @@ namespace acid
 		m_angularFactor.Write(destination->GetChild("Angular Factor", true));
 	}
 
+	void Rigidbody::SetGravity(const Vector3 &gravity)
+	{
+		m_body->setGravity(Collider::Convert(gravity));
+	}
+
 	std::shared_ptr<Force> Rigidbody::AddForce(const std::shared_ptr<Force> &force)
 	{
 		m_forces.emplace_back(force);
