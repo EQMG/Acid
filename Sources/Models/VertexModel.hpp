@@ -27,6 +27,18 @@ namespace acid
 
 		void SetPosition(const Vector3 &position) override { m_position = position; };
 
+		Vector2 GetUv() const { return m_uv; };
+
+		void SetUv(const Vector2 &uv) { m_uv = uv; };
+
+		Vector3 GetNormal() const { return m_normal; };
+
+		void SetNormal(const Vector3 &normal) { m_normal = normal; };
+
+		Vector3 GetTangent() const { return m_tangent; };
+
+		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
+
 		size_t GetSize() const override { return sizeof(VertexModel); }
 
 		void *GetData(std::vector<IVertex *> &vertices) override;

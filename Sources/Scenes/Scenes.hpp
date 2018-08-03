@@ -5,16 +5,6 @@
 #include "SceneStructure.hpp"
 #include "IScene.hpp"
 
-class btCollisionConfiguration;
-
-class btBroadphaseInterface;
-
-class btCollisionDispatcher;
-
-class btSequentialImpulseConstraintSolver;
-
-class btDiscreteDynamicsWorld;
-
 namespace acid
 {
 	/// <summary>
@@ -27,12 +17,6 @@ namespace acid
 		IScene *m_scene;
 
 		ComponentRegister m_componentRegister;
-
-		btCollisionConfiguration *m_collisionConfiguration;
-		btBroadphaseInterface *m_broadphase;
-		btCollisionDispatcher *m_dispatcher;
-		btSequentialImpulseConstraintSolver *m_solver;
-		btDiscreteDynamicsWorld *m_dynamicsWorld;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -60,10 +44,6 @@ namespace acid
 		IScene *GetScene() const { return m_scene; }
 
 		void SetScene(IScene *scene);
-
-		void SetGravity(const Vector3 &gravity);
-
-		void SetAirDensity(const float &airDensity);
 
 		/// <summary>
 		/// Creates a new component from the register.
@@ -95,9 +75,15 @@ namespace acid
 		ICamera *GetCamera() const { return m_scene->GetCamera(); }
 
 		/// <summary>
-		/// Gets the GameObjects structure.
+		/// Gets the scene physics system.
 		/// </summary>
-		/// <returns> The GameObjects structure. </returns>
+		/// <returns> The scenes physics syste,. </returns>
+		ScenePhysics *GetPhysics() const { return m_scene->GetPhysics(); }
+
+		/// <summary>
+		/// Gets the scene object structure.
+		/// </summary>
+		/// <returns> The scene object structure. </returns>
 		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
 
 		/// <summary>
@@ -105,7 +91,5 @@ namespace acid
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		bool IsGamePaused() { return m_scene->IsGamePaused(); }
-
-		ACID_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
 	};
 }

@@ -33,7 +33,7 @@ namespace acid
 			delete body->getMotionState();
 		}
 
-		Scenes::Get()->GetDynamicsWorld()->removeCollisionObject(m_body);
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body);
 
 		delete m_body;
 	}
@@ -62,7 +62,7 @@ namespace acid
 			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
-			Scenes::Get()->GetDynamicsWorld()->addRigidBody(m_body);
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body);
 			m_body->activate(true);
 		}
 	}

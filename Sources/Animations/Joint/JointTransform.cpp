@@ -28,7 +28,7 @@ namespace acid
 	{
 		Matrix4 matrix = Matrix4();
 		matrix = matrix.Translate(m_position);
-		matrix *= m_rotation.ToRotationMatrix();
+		matrix = matrix * m_rotation.ToRotationMatrix();
 		return matrix;
 	}
 
