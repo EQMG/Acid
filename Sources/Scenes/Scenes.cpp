@@ -1,11 +1,5 @@
 #include "Scenes.hpp"
 
-#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
-#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
-#include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
-#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
-#include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
-#include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Physics/Collider.hpp"
 
 namespace acid
@@ -15,50 +9,10 @@ namespace acid
 		m_scene(nullptr),
 		m_componentRegister(ComponentRegister())
 	{
-	//	m_collisionConfiguration = new btDefaultCollisionConfiguration();
-		m_collisionConfiguration = new btSoftBodyRigidBodyCollisionConfiguration();
-
-		m_broadphase = new btDbvtBroadphase();
-
-		m_dispatcher = new btCollisionDispatcher(m_collisionConfiguration);
-
-		m_solver = new btSequentialImpulseConstraintSolver();
-
-	//	m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
-		m_dynamicsWorld = new btSoftRigidDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
-
-		m_dynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
-		m_dynamicsWorld->getSolverInfo().m_solverMode |= SOLVER_RANDMIZE_ORDER;
-		m_dynamicsWorld->getDispatchInfo().m_enableSatConvex = true;
-		m_dynamicsWorld->getSolverInfo().m_splitImpulse = true;
-
-		auto softRigidDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
-		softRigidDynamicsWorld->getWorldInfo().air_density = 1.0f;
-		softRigidDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 
 	Scenes::~Scenes()
 	{
-		for (int i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-		{
-			btCollisionObject *obj = m_dynamicsWorld->getCollisionObjectArray()[i];
-			btRigidBody *body = btRigidBody::upcast(obj);
-
-			if (body && body->getMotionState())
-			{
-				delete body->getMotionState();
-			}
-
-			m_dynamicsWorld->removeCollisionObject(obj);
-			delete obj;
-		}
-
-		delete m_collisionConfiguration;
-		delete m_dispatcher;
-		delete m_broadphase;
-		delete m_solver;
-		delete m_dynamicsWorld;
-
 		delete m_scene;
 	}
 
@@ -75,7 +29,7 @@ namespace acid
 			m_scene->SetStarted(true);
 		}
 
-		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta());
+		m_scene->GetPhysics()->Update();
 		m_scene->Update();
 
 		if (m_scene->GetStructure() == nullptr)
@@ -107,17 +61,5 @@ namespace acid
 	{
 		delete m_scene;
 		m_scene = scene;
-	}
-
-	void Scenes::SetGravity(const Vector3 &gravity)
-	{
-		m_dynamicsWorld->setGravity(Collider::Convert(gravity));
-	}
-
-	void Scenes::SetAirDensity(const float &airDensity)
-	{
-		auto softRigidDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
-		softRigidDynamicsWorld->getWorldInfo().air_density = airDensity;
-		softRigidDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 }

@@ -59,6 +59,9 @@ namespace test
 
 	void Scene1::Start()
 	{
+		GetPhysics()->SetGravity(Vector3(0.0f, -9.81f, 0.0f));
+		GetPhysics()->SetAirDensity(1.0f);
+
 		// Player.
 		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 

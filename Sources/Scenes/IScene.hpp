@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "ICamera.hpp"
+#include "ScenePhysics.hpp"
 #include "SceneStructure.hpp"
 #include "Uis/UiSelector.hpp"
 
@@ -14,6 +15,7 @@ namespace acid
 	{
 	private:
 		ICamera *m_camera;
+		ScenePhysics *m_physics;
 		SceneStructure *m_structure;
 		bool m_started;
 	public:
@@ -23,6 +25,7 @@ namespace acid
 		/// <param name="camera"> The scenes camera. </param>
 		IScene(ICamera *camera) :
 			m_camera(camera),
+			m_physics(new ScenePhysics()),
 			m_structure(new SceneStructure()),
 			m_started(false)
 		{
@@ -33,8 +36,9 @@ namespace acid
 		/// </summary>
 		virtual ~IScene()
 		{
-			delete m_camera;
 			delete m_structure;
+			delete m_physics;
+			delete m_camera;
 		}
 
 		virtual void Start() = 0;
@@ -61,9 +65,15 @@ namespace acid
 		}
 
 		/// <summary>
-		/// Gets the GameObjects structure.
+		/// Gets the scene physics system.
 		/// </summary>
-		/// <returns> The GameObjects structure. </returns>
+		/// <returns> The scenes physics syste,. </returns>
+		ScenePhysics *GetPhysics() const { return m_physics; }
+
+		/// <summary>
+		/// Gets the scene object structure.
+		/// </summary>
+		/// <returns> The scene object structure. </returns>
 		SceneStructure *GetStructure() const { return m_structure; }
 
 		/// <summary>

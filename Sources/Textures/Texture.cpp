@@ -38,7 +38,7 @@ namespace acid
 		if (!FileSystem::FileExists(filename))
 		{
 			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
-			m_filename = FALLBACK_PATH;
+			m_filename = Files::SearchFile(FALLBACK_PATH);
 		}
 
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
