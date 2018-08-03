@@ -23,18 +23,17 @@ namespace acid
 		{
 			for (int row = 0; row < m_vertexCount; row++)
 			{
-				// Creates and stores vertices.
-				Vector3 position = GetPosition(
-					((row * m_squareSize) - m_sideLength) / 2.0f,
-					((col * m_squareSize) - m_sideLength) / 2.0f
-				);
+				float x = ((row * m_squareSize) - m_sideLength) / 2.0f;
+				float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
+
+				Vector3 position = GetPosition(x, z);
 				Vector2 uv = Vector2(
-					m_textureScale * static_cast<float>(col) / static_cast<float>(m_vertexCount),
-					m_textureScale * static_cast<float>(row) / static_cast<float>(m_vertexCount)
+					static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount),
+					static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount)
 				);
-				Vector3 normal = GetNormal(position);
-				Vector3 tangent = GetColour(position, normal);
-				vertices.emplace_back(new VertexModel(position, uv, normal, tangent));
+				Vector3 normal = GetNormal(x, z, position);
+				Vector3 colour = GetColour(position, normal);
+				vertices.emplace_back(new VertexModel(position, uv, normal, colour));
 			}
 		}
 
@@ -65,7 +64,7 @@ namespace acid
 		return Vector3(x, 0.0f, z);
 	}
 
-	Vector3 MeshSimple::GetNormal(const Vector3 &position)
+	Vector3 MeshSimple::GetNormal(const float &x, const float &z, const Vector3 &position)
 	{
 		return Vector3(0.0f, 1.0f, 0.0f);
 	}

@@ -6,6 +6,7 @@
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include "Physics/Collider.hpp"
 
 namespace acid
 {
@@ -33,10 +34,6 @@ namespace acid
 
 		auto softRigidDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
 		softRigidDynamicsWorld->getWorldInfo().air_density = 1.0f;
-		softRigidDynamicsWorld->getWorldInfo().water_density = 0.0f;
-		softRigidDynamicsWorld->getWorldInfo().water_offset = 0.0f;
-		softRigidDynamicsWorld->getWorldInfo().water_normal = btVector3(0.0f, 0.0f, 0.0f);
-		softRigidDynamicsWorld->getWorldInfo().m_gravity.setValue(0.0f, -9.81f, 0.0f);
 		softRigidDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 
@@ -110,5 +107,17 @@ namespace acid
 	{
 		delete m_scene;
 		m_scene = scene;
+	}
+
+	void Scenes::SetGravity(const Vector3 &gravity)
+	{
+		m_dynamicsWorld->setGravity(Collider::Convert(gravity));
+	}
+
+	void Scenes::SetAirDensity(const float &airDensity)
+	{
+		auto softRigidDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
+		softRigidDynamicsWorld->getWorldInfo().air_density = airDensity;
+		softRigidDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 }
