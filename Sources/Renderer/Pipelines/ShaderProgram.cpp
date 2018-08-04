@@ -1,6 +1,7 @@
 #include "ShaderProgram.hpp"
 
 #include <SPIRV/GlslangToSpv.h>
+#include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
 #include "Textures/Texture.hpp"
 #include "Textures/Cubemap.hpp"
@@ -206,6 +207,35 @@ namespace acid
 		size_t foundIndex2 = result.find('\n', foundIndex1 + 1);
 		result.insert(foundIndex2, blockCode);
 		return result;
+	}
+
+	std::string ShaderProgram::ProcessIncludes(const std::string &shaderCode)
+	{
+		auto lines = FormatString::Split(shaderCode, "\n", true);
+
+		std::stringstream result;
+
+		for (auto &line : lines)
+		{
+			if (FormatString::Contains(line, "#include"))
+			{
+				std::string path = FormatString::Replace(line, "#include", "");
+				path = FormatString::RemoveAll(path, '\"');
+				path = FormatString::Trim(path);
+				auto included = FileSystem::ReadTextFile(Files::SearchFile(path));
+
+				if (included.has_value())
+				{
+					result << "\n" << included.value() << "\n";
+				}
+
+				continue;
+			}
+
+			result << line << "\n";
+		}
+
+		return result.str();
 	}
 
 	Uniform *ShaderProgram::GetUniform(const std::string &uniformName)

@@ -250,6 +250,7 @@ namespace acid
 			}
 
 			auto shaderCode = ShaderProgram::InsertDefineBlock(fileLoaded.value(), defineBlock.str());
+			shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
 
 			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
 			EShLanguage language = GetEshLanguage(stageFlag);
