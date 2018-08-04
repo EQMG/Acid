@@ -508,7 +508,7 @@ namespace acid
 		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass())->GetImageAttachments(); i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
-			blendAttachmentState.blendEnable = VK_FALSE;
+			blendAttachmentState.blendEnable = i == 0 ? VK_TRUE : VK_FALSE; // TODO: Configurable blending.
 			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
