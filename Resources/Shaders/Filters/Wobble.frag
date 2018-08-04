@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 
 const float DI = 1.0 / 64.0;
-#define PI 3.141592653589793f
+#define PI 3.141592653589793238462643f
 
 layout(set = 0, binding = 0) uniform UboScene 
 {
@@ -17,7 +17,6 @@ layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
-//---------MAIN------------
 void main()
 {
 	vec2 t0 = fragmentUv;

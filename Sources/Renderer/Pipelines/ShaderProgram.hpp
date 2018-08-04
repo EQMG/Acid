@@ -218,6 +218,8 @@ namespace acid
 
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 
+		static std::string ProcessIncludes(const std::string &shaderCode);
+
 		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 
 		std::string ToString() const;
