@@ -1,9 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-#define PI 3.14159265f
-#define EPSILON 0.001f
-
 struct Light
 {
 	vec4 colour;
@@ -47,9 +44,15 @@ layout(location = 0) in vec2 fragmentUv;
 
 layout(location = 0) out vec4 outColour;
 
-
 #include "Shaders/Pipeline.glsl"
 #include "Shaders/Lighting.glsl"
+
+vec3 decodeWorldPosition(vec2 uv, float depth)
+{
+	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
+	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
+	return p.xyz / p.w;
+}
 
 float shadow(vec4 shadowCoords)
 {
