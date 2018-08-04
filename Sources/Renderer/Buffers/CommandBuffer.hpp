@@ -22,6 +22,8 @@ namespace acid
 
 		void Begin();
 
+		void End();
+
 		VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
 	};
 }

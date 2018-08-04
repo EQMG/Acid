@@ -216,11 +216,13 @@ namespace acid
 
 		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
+		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
+
 		static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
 
 		static std::string ProcessIncludes(const std::string &shaderCode);
 
-		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
+		VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag);
 
 		std::string ToString() const;
 

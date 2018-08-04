@@ -165,6 +165,8 @@ void main()
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
 
+//	outColour = vec4(integrate_brdf(fragmentUv.x, fragmentUv.y), 0.0f, 1.0f);
+
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
 }

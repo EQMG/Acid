@@ -7,7 +7,6 @@
 #include "Renderer/Buffers/CommandBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "IPipeline.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
@@ -25,7 +24,7 @@ namespace acid
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
 		std::vector<PipelineDefine> m_defines;
-		ShaderProgram *m_shaderProgram;
+		std::shared_ptr<ShaderProgram> m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
@@ -62,7 +61,7 @@ namespace acid
 
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
-		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram; }
+		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 

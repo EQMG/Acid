@@ -4,6 +4,7 @@
 #include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
+#include "Renderer/Pipelines/Compute.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
@@ -23,12 +24,27 @@ namespace acid
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), {{"USE_IBL",    "TRUE"},
-																																  {"MAX_LIGHTS", std::to_string(MAX_LIGHTS)}})),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines())),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdflut(Texture::Resource("BrdfLut.png")),
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
+		/*{
+			CommandBuffer commandBuffer = CommandBuffer();
+			Compute compute = Compute("Shaders/Brdf.comp");
+
+			DescriptorsHandler descriptors = DescriptorsHandler(compute);
+		//	descriptors.Push("writeColour", m_brdflut);
+			descriptors.Update(compute);
+
+			// Runs the compute pipeline.
+			compute.BindPipeline(commandBuffer);
+
+			m_descriptorSet.BindDescriptor(commandBuffer);
+			compute.CmdRender(commandBuffer);
+
+			commandBuffer.End();
+		}*/
 	}
 
 	RendererDeferred::~RendererDeferred()
@@ -110,5 +126,13 @@ namespace acid
 
 		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
+	}
+
+	std::vector<PipelineDefine> RendererDeferred::GetDefines()
+	{
+		std::vector<PipelineDefine> result = {};
+		result.emplace_back(PipelineDefine("USE_IBL", "TRUE"));
+		result.emplace_back(PipelineDefine("MAX_LIGHTS", std::to_string(MAX_LIGHTS)));
+		return result;
 	}
 }

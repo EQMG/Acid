@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "ShaderProgram.hpp"
 
 namespace acid
@@ -15,7 +16,7 @@ namespace acid
 		{
 		}
 
-		virtual ShaderProgram *GetShaderProgram() const = 0;
+		virtual std::shared_ptr<ShaderProgram> GetShaderProgram() const = 0;
 
 		virtual VkDescriptorSetLayout GetVkDescriptorSetLayout() const = 0;
 

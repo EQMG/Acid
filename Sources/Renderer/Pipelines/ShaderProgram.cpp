@@ -198,6 +198,36 @@ namespace acid
 		return binding;
 	}
 
+	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
+	{
+		if (FormatString::Contains(filename, ".comp"))
+		{
+			return VK_SHADER_STAGE_COMPUTE_BIT;
+		}
+		else if (FormatString::Contains(filename, ".vert"))
+		{
+			return VK_SHADER_STAGE_VERTEX_BIT;
+		}
+		else if (FormatString::Contains(filename, ".tesc"))
+		{
+			return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+		}
+		else if (FormatString::Contains(filename, ".tese"))
+		{
+			return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
+		}
+		else if (FormatString::Contains(filename, ".geom"))
+		{
+			return VK_SHADER_STAGE_GEOMETRY_BIT;
+		}
+		else if (FormatString::Contains(filename, ".frag"))
+		{
+			return VK_SHADER_STAGE_FRAGMENT_BIT;
+		}
+
+		return VK_SHADER_STAGE_ALL;
+	}
+
 	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
 		// TODO: Needs a rework.
@@ -238,6 +268,190 @@ namespace acid
 		return result.str();
 	}
 
+
+	EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
+	{
+		switch (stageFlag)
+		{
+		case VK_SHADER_STAGE_COMPUTE_BIT:
+			return EShLangCompute;
+		case VK_SHADER_STAGE_VERTEX_BIT:
+			return EShLangVertex;
+		case VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT:
+			return EShLangTessControl;
+		case VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT:
+			return EShLangTessEvaluation;
+		case VK_SHADER_STAGE_GEOMETRY_BIT:
+			return EShLangGeometry;
+		case VK_SHADER_STAGE_FRAGMENT_BIT:
+			return EShLangFragment;
+		default:
+			return EShLangCount;
+		}
+	}
+
+	TBuiltInResource GetResources()
+	{
+		TBuiltInResource resources = {};
+		resources.maxLights = 32;
+		resources.maxClipPlanes = 6;
+		resources.maxTextureUnits = 32;
+		resources.maxTextureCoords = 32;
+		resources.maxVertexAttribs = 64;
+		resources.maxVertexUniformComponents = 4096;
+		resources.maxVaryingFloats = 64;
+		resources.maxVertexTextureImageUnits = 32;
+		resources.maxCombinedTextureImageUnits = 80;
+		resources.maxTextureImageUnits = 32;
+		resources.maxFragmentUniformComponents = 4096;
+		resources.maxDrawBuffers = 32;
+		resources.maxVertexUniformVectors = 128;
+		resources.maxVaryingVectors = 8;
+		resources.maxFragmentUniformVectors = 16;
+		resources.maxVertexOutputVectors = 16;
+		resources.maxFragmentInputVectors = 15;
+		resources.minProgramTexelOffset = -8;
+		resources.maxProgramTexelOffset = 7;
+		resources.maxClipDistances = 8;
+		resources.maxComputeWorkGroupCountX = 65535;
+		resources.maxComputeWorkGroupCountY = 65535;
+		resources.maxComputeWorkGroupCountZ = 65535;
+		resources.maxComputeWorkGroupSizeX = 1024;
+		resources.maxComputeWorkGroupSizeY = 1024;
+		resources.maxComputeWorkGroupSizeZ = 64;
+		resources.maxComputeUniformComponents = 1024;
+		resources.maxComputeTextureImageUnits = 16;
+		resources.maxComputeImageUniforms = 8;
+		resources.maxComputeAtomicCounters = 8;
+		resources.maxComputeAtomicCounterBuffers = 1;
+		resources.maxVaryingComponents = 60;
+		resources.maxVertexOutputComponents = 64;
+		resources.maxGeometryInputComponents = 64;
+		resources.maxGeometryOutputComponents = 128;
+		resources.maxFragmentInputComponents = 128;
+		resources.maxImageUnits = 8;
+		resources.maxCombinedImageUnitsAndFragmentOutputs = 8;
+		resources.maxCombinedShaderOutputResources = 8;
+		resources.maxImageSamples = 0;
+		resources.maxVertexImageUniforms = 0;
+		resources.maxTessControlImageUniforms = 0;
+		resources.maxTessEvaluationImageUniforms = 0;
+		resources.maxGeometryImageUniforms = 0;
+		resources.maxFragmentImageUniforms = 8;
+		resources.maxCombinedImageUniforms = 8;
+		resources.maxGeometryTextureImageUnits = 16;
+		resources.maxGeometryOutputVertices = 256;
+		resources.maxGeometryTotalOutputComponents = 1024;
+		resources.maxGeometryUniformComponents = 1024;
+		resources.maxGeometryVaryingComponents = 64;
+		resources.maxTessControlInputComponents = 128;
+		resources.maxTessControlOutputComponents = 128;
+		resources.maxTessControlTextureImageUnits = 16;
+		resources.maxTessControlUniformComponents = 1024;
+		resources.maxTessControlTotalOutputComponents = 4096;
+		resources.maxTessEvaluationInputComponents = 128;
+		resources.maxTessEvaluationOutputComponents = 128;
+		resources.maxTessEvaluationTextureImageUnits = 16;
+		resources.maxTessEvaluationUniformComponents = 1024;
+		resources.maxTessPatchComponents = 120;
+		resources.maxPatchVertices = 32;
+		resources.maxTessGenLevel = 64;
+		resources.maxViewports = 16;
+		resources.maxVertexAtomicCounters = 0;
+		resources.maxTessControlAtomicCounters = 0;
+		resources.maxTessEvaluationAtomicCounters = 0;
+		resources.maxGeometryAtomicCounters = 0;
+		resources.maxFragmentAtomicCounters = 8;
+		resources.maxCombinedAtomicCounters = 8;
+		resources.maxAtomicCounterBindings = 1;
+		resources.maxVertexAtomicCounterBuffers = 0;
+		resources.maxTessControlAtomicCounterBuffers = 0;
+		resources.maxTessEvaluationAtomicCounterBuffers = 0;
+		resources.maxGeometryAtomicCounterBuffers = 0;
+		resources.maxFragmentAtomicCounterBuffers = 1;
+		resources.maxCombinedAtomicCounterBuffers = 1;
+		resources.maxAtomicCounterBufferSize = 16384;
+		resources.maxTransformFeedbackBuffers = 4;
+		resources.maxTransformFeedbackInterleavedComponents = 64;
+		resources.maxCullDistances = 8;
+		resources.maxCombinedClipAndCullDistances = 8;
+		resources.maxSamples = 4;
+		resources.limits.nonInductiveForLoops = true;
+		resources.limits.whileLoops = true;
+		resources.limits.doWhileLoops = true;
+		resources.limits.generalUniformIndexing = true;
+		resources.limits.generalAttributeMatrixVectorIndexing = true;
+		resources.limits.generalVaryingIndexing = true;
+		resources.limits.generalSamplerIndexing = true;
+		resources.limits.generalVariableIndexing = true;
+		resources.limits.generalConstantMatrixVectorIndexing = true;
+		return resources;
+	}
+
+	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag)
+	{
+		auto allocator = Display::Get()->GetVkAllocator();
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+
+		EShLanguage language = GetEshLanguage(stageFlag);
+
+		// Starts converting GLSL to SPIR-V.
+		glslang::TShader shader = glslang::TShader(language);
+		glslang::TProgram program;
+		const char *shaderStrings[1];
+		TBuiltInResource resources = GetResources();
+
+		// Enable SPIR-V and Vulkan rules when parsing GLSL.
+		EShMessages messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules);
+
+		shaderStrings[0] = shaderCode.c_str();
+		shader.setStrings(shaderStrings, 1);
+
+		shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 100);
+		shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_0);
+		shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_0);
+
+	//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
+	//	{
+	//		fprintf(stderr, "SPRIV shader preprocess failed!\n");
+	//	}
+
+		if (!shader.parse(&resources, 100, false, messages))
+		{
+			fprintf(stdout, "%s\n", shader.getInfoLog());
+			fprintf(stdout, "%s\n", shader.getInfoDebugLog());
+			fprintf(stderr, "SPRIV shader compile failed!\n");
+		}
+
+		program.addShader(&shader);
+
+		if (!program.link(messages) || !program.mapIO())
+		{
+			fprintf(stderr, "Error while linking shader program.\n");
+		}
+
+		program.buildReflection();
+	//	program.dumpReflection();
+		LoadProgram(program, stageFlag);
+
+		glslang::SpvOptions spvOptions;
+		spvOptions.generateDebugInfo = true;
+		spvOptions.disableOptimizer = true;
+		spvOptions.optimizeSize = false;
+
+		std::vector<uint32_t> spirv = std::vector<uint32_t>();
+		glslang::GlslangToSpv(*program.getIntermediate(language), spirv, &spvOptions);
+
+		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
+		shaderModuleCreateInfo.pCode = spirv.data();
+
+		VkShaderModule shaderModule = VK_NULL_HANDLE;
+		Display::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, allocator, &shaderModule));
+		return shaderModule;
+	}
+
 	Uniform *ShaderProgram::GetUniform(const std::string &uniformName)
 	{
 		for (auto &uniform : m_uniforms)
@@ -275,36 +489,6 @@ namespace acid
 		}
 
 		return nullptr;
-	}
-
-	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
-	{
-		if (FormatString::Contains(filename, ".comp"))
-		{
-			return VK_SHADER_STAGE_COMPUTE_BIT;
-		}
-		else if (FormatString::Contains(filename, ".vert"))
-		{
-			return VK_SHADER_STAGE_VERTEX_BIT;
-		}
-		else if (FormatString::Contains(filename, ".tesc"))
-		{
-			return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-		}
-		else if (FormatString::Contains(filename, ".tese"))
-		{
-			return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-		}
-		else if (FormatString::Contains(filename, ".geom"))
-		{
-			return VK_SHADER_STAGE_GEOMETRY_BIT;
-		}
-		else if (FormatString::Contains(filename, ".frag"))
-		{
-			return VK_SHADER_STAGE_FRAGMENT_BIT;
-		}
-
-		return VK_SHADER_STAGE_ALL;
 	}
 
 	std::string ShaderProgram::ToString() const
