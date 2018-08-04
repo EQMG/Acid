@@ -13,7 +13,7 @@ namespace acid
 	class ACID_EXPORT DescriptorsHandler
 	{
 	private:
-		ShaderProgram *m_shaderProgram;
+		std::shared_ptr<ShaderProgram> m_shaderProgram;
 		DescriptorSet *m_descriptorSet;
 		std::vector<IDescriptor *> m_descriptors;
 		bool m_changed;

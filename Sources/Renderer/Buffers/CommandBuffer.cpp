@@ -14,8 +14,8 @@ namespace acid
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		commandBufferAllocateInfo.commandPool = commandPool;
-		commandBufferAllocateInfo.commandBufferCount = 1;
 		commandBufferAllocateInfo.level = bufferLevel == BUFFER_LEVEL_PRIMARY ? VK_COMMAND_BUFFER_LEVEL_PRIMARY : VK_COMMAND_BUFFER_LEVEL_SECONDARY;
+		commandBufferAllocateInfo.commandBufferCount = 1;
 
 		Display::ErrorVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 
@@ -52,5 +52,10 @@ namespace acid
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
 		Display::ErrorVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
+	}
+
+	void CommandBuffer::End()
+	{
+		Display::ErrorVk(vkEndCommandBuffer(m_commandBuffer));
 	}
 }

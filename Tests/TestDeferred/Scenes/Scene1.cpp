@@ -132,7 +132,7 @@ namespace test
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
-			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT) * -3.0f, 2.0f);
+			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
 		}
 
 		if (m_buttonFullscreen->WasDown())

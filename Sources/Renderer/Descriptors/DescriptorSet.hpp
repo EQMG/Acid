@@ -15,7 +15,7 @@ namespace acid
 	class ACID_EXPORT DescriptorSet
 	{
 	private:
-		ShaderProgram *m_shaderProgram;
+		std::shared_ptr<ShaderProgram> m_shaderProgram;
 		VkPipelineLayout m_pipelineLayout;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
