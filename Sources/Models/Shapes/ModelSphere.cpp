@@ -5,18 +5,18 @@
 
 namespace acid
 {
-	ModelSphere::ModelSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius) :
+	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		for (unsigned int i = 0; i < longitudeBands + 1; i++)
+		for (uint32_t i = 0; i < longitudeBands + 1; i++)
 		{
 			float iDivLong = static_cast<float>(i) / static_cast<float>(longitudeBands);
 			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * PI;
 
-			for (unsigned int j = 0; j < latitudeBands + 1; j++)
+			for (uint32_t j = 0; j < latitudeBands + 1; j++)
 			{
 				float jDivLat = static_cast<float>(j) / static_cast<float>(latitudeBands);
 				float phi = jDivLat * 2.0f * PI;
@@ -35,9 +35,9 @@ namespace acid
 			}
 		}
 
-		for (unsigned int i = 0; i < longitudeBands; i++)
+		for (uint32_t i = 0; i < longitudeBands; i++)
 		{
-			for (unsigned int j = 0; j < latitudeBands; j++)
+			for (uint32_t j = 0; j < latitudeBands; j++)
 			{
 				uint32_t first = j + ((latitudeBands + 1) * i);
 				uint32_t second = j + ((latitudeBands + 1) * (i + 1));
@@ -60,7 +60,7 @@ namespace acid
 	{
 	}
 
-	std::string ModelSphere::ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
+	std::string ModelSphere::ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
 		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
 			std::to_string(radius);

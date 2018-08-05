@@ -68,7 +68,7 @@ Acid currently can be run on the following platforms:
 ## Features
 This is a list of current features in Acid:
  * On the fly GLSL to SPIR-V compiler
- * Modular rendering pipeline
+ * Modular rendering and compute pipeline
  * Deferred PBR+IBL rendering
  * Bullet physics engine
  * Frustum and Occlusion culling

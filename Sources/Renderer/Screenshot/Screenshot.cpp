@@ -59,7 +59,7 @@ namespace acid
 
 		// Create the image.
 		VkImage dstImage;
-		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &dstImage));
+		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &dstImage));
 
 		// Create memory to back up the image.
 		VkMemoryRequirements memoryRequirements;
@@ -72,15 +72,15 @@ namespace acid
 
 		// Memory must be host visible to copy from.
 		memoryAllocateInfo.memoryTypeIndex = Renderer::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &dstImageMemory));
-		Display::ErrorVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &dstImageMemory));
+		Display::CheckVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
-		CommandBuffer *copyCmd = new CommandBuffer(true, CommandBufferLevel::BUFFER_LEVEL_PRIMARY);
+		CommandBuffer commandBuffer = CommandBuffer();
 
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(
-			copyCmd->GetVkCommandBuffer(),
+			commandBuffer.GetVkCommandBuffer(),
 			dstImage,
 			VK_ACCESS_TRANSFER_WRITE_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -92,7 +92,7 @@ namespace acid
 
 		// Transition swapchain image from present to transfer source layout
 		InsertImageMemoryBarrier(
-			copyCmd->GetVkCommandBuffer(),
+			commandBuffer.GetVkCommandBuffer(),
 			srcImage,
 			VK_ACCESS_TRANSFER_READ_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -119,7 +119,7 @@ namespace acid
 			imageBlitRegion.dstOffsets[1] = blitSize;
 
 			// Issue the blit command
-			vkCmdBlitImage(copyCmd->GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion, VK_FILTER_NEAREST);
+			vkCmdBlitImage(commandBuffer.GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion, VK_FILTER_NEAREST);
 		}
 		else
 		{
@@ -134,12 +134,12 @@ namespace acid
 			imageCopyRegion.extent.depth = 1;
 
 			// Issue the copy command.
-			vkCmdCopyImage(copyCmd->GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
+			vkCmdCopyImage(commandBuffer.GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
 		}
 
 		// Transition destination image to general layout, which is the required layout for mapping the image memory later on
 		InsertImageMemoryBarrier(
-			copyCmd->GetVkCommandBuffer(),
+			commandBuffer.GetVkCommandBuffer(),
 			dstImage,
 			VK_ACCESS_TRANSFER_WRITE_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -151,7 +151,7 @@ namespace acid
 
 		// Transition back the swap chain image after the blit is done
 		InsertImageMemoryBarrier(
-			copyCmd->GetVkCommandBuffer(),
+			commandBuffer.GetVkCommandBuffer(),
 			srcImage,
 			VK_ACCESS_TRANSFER_READ_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -161,7 +161,8 @@ namespace acid
 			VK_PIPELINE_STAGE_TRANSFER_BIT,
 			VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1});
 
-		delete copyCmd;
+		commandBuffer.End();
+		commandBuffer.Submit();
 
 		// Get layout of the image (including row pitch).
 		VkImageSubresource subResource{};

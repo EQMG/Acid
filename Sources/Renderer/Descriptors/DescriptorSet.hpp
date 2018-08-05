@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 #include "Display/Display.hpp"
-#include "Renderer/Buffers/CommandBuffer.hpp"
+#include "Display/Command/CommandBuffer.hpp"
 #include "Renderer/Pipelines/IPipeline.hpp"
 #include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
@@ -17,6 +17,7 @@ namespace acid
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
 		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:

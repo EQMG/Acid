@@ -5,6 +5,7 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
+#include "Queue/QueueIndices.hpp"
 
 class GLFWwindow;
 
@@ -51,13 +52,14 @@ namespace acid
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
 		VkSurfaceFormatKHR m_surfaceFormat;
 		VkDevice m_logicalDevice;
-		VkQueue m_queue;
+		VkQueue m_queueGraphics;
+		VkQueue m_queueCompute;
 
 		VkPhysicalDevice m_physicalDevice;
 		VkPhysicalDeviceProperties m_physicalDeviceProperties;
 		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
-		uint32_t m_graphicsFamilyIndex;
+		QueueIndices m_queueIndices;
 
 		friend void CallbackError(int error, const char *description);
 
@@ -202,11 +204,11 @@ namespace acid
 
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int &result);
 
-		ACID_HIDDEN static void ErrorGlfw(const int &result);
+		ACID_HIDDEN static void CheckGlfw(const int &result);
 
 		static std::string StringifyResultVk(const VkResult &result);
 
-		static void ErrorVk(const VkResult &result);
+		static void CheckVk(const VkResult &result);
 
 		/// <summary>
 		/// Gets if the display is closed.
@@ -252,7 +254,9 @@ namespace acid
 
 		VkDevice GetVkLogicalDevice() const { return m_logicalDevice; }
 
-		VkQueue GetVkQueue() const { return m_queue; }
+		VkQueue GetVkQueueGraphics() const { return m_queueGraphics; }
+
+		VkQueue GetVkQueueCompute() const { return m_queueCompute; }
 
 		VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
 
@@ -262,7 +266,7 @@ namespace acid
 
 		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		uint32_t GetVkGraphicsFamilyIndex() const { return m_graphicsFamilyIndex; }
+		QueueIndices GetVkQueueIndices() const { return m_queueIndices; }
 	private:
 		void CreateGlfw();
 

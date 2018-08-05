@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "Textures/Texture.hpp"
-#include "Renderer/Buffers/CommandBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "PipelineCreate.hpp"
@@ -57,8 +56,6 @@ namespace acid
 		/// </summary>
 		~Pipeline();
 
-		void BindPipeline(const CommandBuffer &commandBuffer) const;
-
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
 		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
@@ -67,7 +64,7 @@ namespace acid
 
 		DepthStencil *GetDepthStencil(const int &stage = -1) const;
 
-		Texture *GetTexture(const unsigned int &i, const int &stage = -1) const;
+		Texture *GetTexture(const uint32_t &i, const int &stage = -1) const;
 
 		VkDescriptorSetLayout GetVkDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
@@ -76,6 +73,8 @@ namespace acid
 		VkPipeline GetVkPipeline() const override { return m_pipeline; }
 
 		VkPipelineLayout GetVkPipelineLayout() const override { return m_pipelineLayout; }
+
+		virtual VkPipelineBindPoint GetVkPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
 	private:
 		void CreateShaderProgram();
 

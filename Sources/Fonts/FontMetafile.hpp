@@ -45,10 +45,10 @@ namespace acid
 			return result;
 		}
 
-		static const unsigned int PAD_TOP;
-		static const unsigned int PAD_LEFT;
-		static const unsigned int PAD_BOTTOM;
-		static const unsigned int PAD_RIGHT;
+		static const uint32_t PAD_TOP;
+		static const uint32_t PAD_LEFT;
+		static const uint32_t PAD_BOTTOM;
+		static const uint32_t PAD_RIGHT;
 		static const int DESIRED_PADDING;
 
 		static const std::string SPLITTER;

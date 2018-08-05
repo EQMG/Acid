@@ -11,6 +11,15 @@ namespace acid
 	{
 	}
 
+	UniformHandler::UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline) :
+		m_multipipeline(multipipeline),
+		m_uniformBlock(uniformBlock),
+		m_uniformBuffer(new UniformBuffer(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()))),
+		m_data(malloc(static_cast<size_t>(m_uniformBlock->GetSize()))),
+		m_changed(false)
+	{
+	}
+
 	UniformHandler::~UniformHandler()
 	{
 		delete m_uniformBuffer;
@@ -25,8 +34,8 @@ namespace acid
 			delete m_uniformBuffer;
 
 			m_uniformBlock = uniformBlock;
-			m_uniformBuffer = new UniformBuffer(static_cast<VkDeviceSize>(uniformBlock->GetSize()));
-			m_data = malloc(static_cast<size_t>(uniformBlock->GetSize()));
+			m_uniformBuffer = new UniformBuffer(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()));
+			m_data = malloc(static_cast<size_t>(m_uniformBlock->GetSize()));
 			m_changed = false;
 			return false;
 		}

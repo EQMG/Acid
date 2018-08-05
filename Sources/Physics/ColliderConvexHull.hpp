@@ -14,7 +14,7 @@ namespace acid
 	private:
 		btConvexHullShape *m_shape;
 		std::shared_ptr<Model> m_model;
-		unsigned int m_points;
+		uint32_t m_points;
 	public:
 		ColliderConvexHull(const std::vector<float> &pointCloud = std::vector<float>());
 
@@ -32,7 +32,7 @@ namespace acid
 
 		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
 
-		unsigned int GetPoints() const { return m_points; }
+		uint32_t GetPoints() const { return m_points; }
 
 		void Initialize(const std::vector<float> &pointCloud);
 	};

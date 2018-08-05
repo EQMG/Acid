@@ -1,6 +1,6 @@
 ﻿#include "Buffer.hpp"
 
-#include "Renderer/Queue/QueueFamily.hpp"
+#include "Display/Queue/QueueIndices.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -18,17 +18,17 @@ namespace acid
 		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto surface = Display::Get()->GetVkSurface();
-		auto indices = QueueFamily::FindQueueFamilies(surface);
+		auto queueIndices = Display::Get()->GetVkQueueIndices();
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.GetArray().size());
-		bufferCreateInfo.pQueueFamilyIndices = indices.GetArray().data();
+		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueIndices.GetArray().size());
+		bufferCreateInfo.pQueueFamilyIndices = queueIndices.GetArray().data();
 
-		Display::ErrorVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, allocator, &m_buffer));
+		Display::CheckVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, allocator, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
@@ -39,7 +39,7 @@ namespace acid
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_bufferMemory));
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
 	}
@@ -77,8 +77,8 @@ namespace acid
 	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto queue = Display::Get()->GetVkQueue();
 		auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
 		// Makes a temporary command buffer for the memory transfer operation.
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
@@ -107,8 +107,8 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(queue);
+		vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(queueGraphics);
 
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
 	}

@@ -146,7 +146,7 @@ namespace acid
 
 		friend void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-		friend void CallbackChar(GLFWwindow *window, unsigned int codepoint);
+		friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 
 	public:
 		/// <summary>

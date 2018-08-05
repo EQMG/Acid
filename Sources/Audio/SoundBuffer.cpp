@@ -25,7 +25,7 @@ namespace acid
 			m_buffer = LoadBufferOgg(filename);
 		}
 
-		Audio::ErrorAl(alGetError());
+		Audio::CheckAl(alGetError());
 	}
 
 	SoundBuffer::~SoundBuffer()
@@ -33,7 +33,7 @@ namespace acid
 		alDeleteBuffers(1, &m_buffer);
 	}
 
-	unsigned int SoundBuffer::LoadBufferWav(const std::string &filename)
+	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -51,7 +51,7 @@ namespace acid
 		char chunkId[5] = "\0";
 
 		// Read header.
-		unsigned int size;
+		uint32_t size;
 
 		file.read(chunkId, 4);
 		file.read(reinterpret_cast<char *>(&size), 4);
@@ -107,7 +107,7 @@ namespace acid
 		return buffer;
 	}
 
-	unsigned int SoundBuffer::LoadBufferOgg(const std::string &filename)
+	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{

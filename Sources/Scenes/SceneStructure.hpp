@@ -34,7 +34,7 @@ namespace acid
 
 		void Clear() override;
 
-		unsigned int GetSize() override { return m_objects.size(); }
+		uint32_t GetSize() override { return m_objects.size(); }
 
 		std::vector<GameObject *> GetAll() override { return m_objects; }
 

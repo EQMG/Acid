@@ -10,7 +10,7 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelSphere> Resource(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius)
+		static std::shared_ptr<ModelSphere> Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 		{
 			auto resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
 
@@ -33,11 +33,11 @@ namespace acid
 			return Resource(latitudeBands, longitudeBands, radius);
 		}
 
-		ModelSphere(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
+		ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 
 		~ModelSphere();
 
 	private:
-		static std::string ToFilename(const unsigned int &latitudeBands, const unsigned int &longitudeBands, const float &radius);
+		static std::string ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 	};
 }

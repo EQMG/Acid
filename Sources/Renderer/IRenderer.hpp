@@ -3,7 +3,7 @@
 #include "Display/Display.hpp"
 #include "Scenes/ICamera.hpp"
 #include "Maths/Vector4.hpp"
-#include "Buffers/CommandBuffer.hpp"
+#include "Display/Command/CommandBuffer.hpp"
 #include "Pipelines/PipelineCreate.hpp"
 #include "Renderer.hpp"
 

@@ -12,7 +12,7 @@ namespace acid
 
 	void VertexSkinData::AddJointEffect(const int &jointId, const float &weight)
 	{
-		for (unsigned int i = 0; i < m_weights.size(); i++)
+		for (uint32_t i = 0; i < m_weights.size(); i++)
 		{
 			if (weight > m_weights.at(i))
 			{
@@ -26,7 +26,7 @@ namespace acid
 		m_weights.emplace_back(weight);
 	}
 
-	void VertexSkinData::LimitJointNumber(const unsigned int &max)
+	void VertexSkinData::LimitJointNumber(const uint32_t &max)
 	{
 		if (m_jointIds.size() > max)
 		{
@@ -41,7 +41,7 @@ namespace acid
 		}
 	}
 
-	void VertexSkinData::FillEmptyWeights(const unsigned int &max)
+	void VertexSkinData::FillEmptyWeights(const uint32_t &max)
 	{
 		while (m_jointIds.size() < max)
 		{
@@ -54,7 +54,7 @@ namespace acid
 	{
 		float total = 0.0f;
 
-		for (unsigned int i = 0; i < topWeightsArray.size(); i++)
+		for (uint32_t i = 0; i < topWeightsArray.size(); i++)
 		{
 			topWeightsArray[i] = m_weights.at(i);
 			total += topWeightsArray.at(i);
@@ -73,7 +73,7 @@ namespace acid
 		}
 	}
 
-	void VertexSkinData::RemoveExcessJointIds(const unsigned int &max)
+	void VertexSkinData::RemoveExcessJointIds(const uint32_t &max)
 	{
 		while (m_jointIds.size() > max)
 		{

@@ -92,7 +92,7 @@ namespace acid
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (unsigned int i = 0; i < m_rows.size(); i++)
+		for (uint32_t i = 0; i < m_rows.size(); i++)
 		{
 			RowCsv row = m_rows.at(i);
 			result.emplace(row.GetElements().at(0), row.GetElements().at(1));
@@ -106,7 +106,7 @@ namespace acid
 		m_rows.emplace_back(RowCsv({key, value}));
 	}
 
-	RowCsv FileCsv::GetRow(const unsigned int &index)
+	RowCsv FileCsv::GetRow(const uint32_t &index)
 	{
 		return m_rows.at(index);
 	}
@@ -116,7 +116,7 @@ namespace acid
 		m_rows.emplace_back(row);
 	}
 
-	void FileCsv::SetRow(const RowCsv &row, const unsigned int &index)
+	void FileCsv::SetRow(const RowCsv &row, const uint32_t &index)
 	{
 		if (m_rows.size() <= index)
 		{

@@ -5,10 +5,10 @@
 
 namespace acid
 {
-	const unsigned int FontMetafile::PAD_TOP = 0;
-	const unsigned int FontMetafile::PAD_LEFT = 1;
-	const unsigned int FontMetafile::PAD_BOTTOM = 2;
-	const unsigned int FontMetafile::PAD_RIGHT = 3;
+	const uint32_t FontMetafile::PAD_TOP = 0;
+	const uint32_t FontMetafile::PAD_LEFT = 1;
+	const uint32_t FontMetafile::PAD_BOTTOM = 2;
+	const uint32_t FontMetafile::PAD_RIGHT = 3;
 	const int FontMetafile::DESIRED_PADDING = 8;
 
 	const std::string FontMetafile::SPLITTER = " ";

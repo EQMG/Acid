@@ -59,7 +59,7 @@ namespace acid
 		return nullptr;
 	}
 
-	float IManagerRender::GetStageKey(const unsigned int &renderpass, const uint32_t &subpass)
+	float IManagerRender::GetStageKey(const uint32_t &renderpass, const uint32_t &subpass)
 	{
 		return static_cast<float>(renderpass) + (static_cast<float>(subpass) / 100.0f);
 	}

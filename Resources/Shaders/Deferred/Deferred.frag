@@ -37,7 +37,7 @@ layout(set = 0, binding = 3) uniform sampler2D samplerColour;
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
-layout(set = 0, binding = 7) uniform sampler2D samplerBrdflut;
+layout(set = 0, binding = 7) uniform sampler2D samplerBrdf;
 layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
 
 layout(location = 0) in vec2 fragmentUv;
@@ -140,7 +140,7 @@ void main()
 		}*/
 
 #ifdef USE_IBL
-        irradiance += ibl_irradiance(samplerIbl, samplerBrdflut, N, V, roughness, metallic, textureColour.rgb);
+        irradiance += ibl_irradiance(samplerIbl, samplerBrdf, N, V, roughness, metallic, textureColour.rgb);
 #endif
 
         outColour = vec4(irradiance, 1.0f);
@@ -166,6 +166,7 @@ void main()
 	}
 
 //	outColour = vec4(integrate_brdf(fragmentUv.x, fragmentUv.y), 0.0f, 1.0f);
+//	outColour = texture(samplerBrdf, fragmentUv);
 
 	vec2 sizeColour = textureSize(samplerColour, 0);
 	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);

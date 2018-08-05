@@ -19,6 +19,8 @@ namespace acid
 	public:
 		UniformHandler(const bool &multipipeline = false);
 
+		UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+
 		~UniformHandler();
 
 		template<typename T>

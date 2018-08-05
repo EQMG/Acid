@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Display/Display.hpp"
-#include "Buffers/CommandBuffer.hpp"
+#include "Display/Command/CommandBuffer.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "RenderStage.hpp"
@@ -60,13 +60,13 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to use. </param>
 		/// <param name="i"> The index of the render pass being rendered. </param>
 		/// <returns> VK_SUCCESS on success. </returns>
-		bool StartRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i);
+		bool StartRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i);
 
 		/// <summary>
 		/// Ends the renderpass.
 		/// </summary>
 		/// <param name="commandBuffer"> The command buffer to use. </param>
-		void EndRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i);
+		void EndRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i);
 
 		/// <summary>
 		/// Starts the next render subpass.
@@ -90,7 +90,7 @@ namespace acid
 
 		std::vector<RenderStage *> GetRenderStages() const { return m_renderStages; }
 
-		RenderStage *GetRenderStage(const unsigned int &i) const { return m_renderStages.at(i); }
+		RenderStage *GetRenderStage(const uint32_t &i) const { return m_renderStages.at(i); }
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 
@@ -108,6 +108,6 @@ namespace acid
 
 		void CreatePipelineCache();
 
-		void RecreatePass(const int &i);
+		void RecreatePass(const uint32_t &i);
 	};
 }

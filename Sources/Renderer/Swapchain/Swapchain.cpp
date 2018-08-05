@@ -1,7 +1,5 @@
 ﻿#include "Swapchain.hpp"
 
-#include "Renderer/Queue/QueueFamily.hpp"
-
 namespace acid
 {
 	Swapchain::Swapchain(const VkExtent2D &extent) :
@@ -18,7 +16,7 @@ namespace acid
 		auto surface = Display::Get()->GetVkSurface();
 		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
 		auto surfaceCapabilities = Display::Get()->GetVkSurfaceCapabilities();
-		auto indices = QueueFamily::FindQueueFamilies(surface);
+		auto queueIndices = Display::Get()->GetVkQueueIndices();
 
 		m_extent = extent;
 
@@ -63,23 +61,23 @@ namespace acid
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (indices.GetGraphicsFamily() != indices.GetTransferFamily())
+		if (queueIndices.GetGraphicsFamily() != queueIndices.GetTransferFamily())
 		{
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(indices.GetArray().size());
-			swapchainCreateInfo.pQueueFamilyIndices = indices.GetArray().data();
+			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueIndices.GetArray().size());
+			swapchainCreateInfo.pQueueFamilyIndices = queueIndices.GetArray().data();
 		}
 		else
 		{
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
-		Display::ErrorVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, allocator, &m_swapchain));
+		Display::CheckVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, allocator, &m_swapchain));
 
-		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
+		Display::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 		m_swapchainImages.resize(m_swapchainImageCount);
 		m_swapchainImageViews.resize(m_swapchainImageCount);
-		Display::ErrorVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchainImages.data()));
+		Display::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchainImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
@@ -99,7 +97,7 @@ namespace acid
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_swapchainImageViews.at(i)));
+			Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_swapchainImageViews.at(i)));
 		}
 	}
 

@@ -183,9 +183,9 @@ namespace acid
 		return -1;
 	}
 
-	unsigned int ShaderProgram::GetLastDescriptorBinding() const
+	uint32_t ShaderProgram::GetLastDescriptorBinding() const
 	{
-		unsigned int binding = 0;
+		uint32_t binding = 0;
 
 		for (auto &descriptor : m_descriptors)
 		{
@@ -448,7 +448,7 @@ namespace acid
 		shaderModuleCreateInfo.pCode = spirv.data();
 
 		VkShaderModule shaderModule = VK_NULL_HANDLE;
-		Display::ErrorVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, allocator, &shaderModule));
+		Display::CheckVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, allocator, &shaderModule));
 		return shaderModule;
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffers/CommandBuffer.hpp"
+#include "Display/Command/CommandBuffer.hpp"
 #include "IPipeline.hpp"
 
 namespace acid
@@ -28,9 +28,7 @@ namespace acid
 
 		~Compute();
 
-		void BindPipeline(const CommandBuffer &commandBuffer) const;
-
-		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width = 3200, const uint32_t &height = 2400, const uint32_t &workgroupSize = 32) const;
+		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &groupCountX, const uint32_t &groupCountY, const uint32_t &groupCountZ = 1) const;
 
 		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
 
@@ -41,6 +39,8 @@ namespace acid
 		VkPipeline GetVkPipeline() const override { return m_pipeline; }
 
 		VkPipelineLayout GetVkPipelineLayout() const override { return m_pipelineLayout; }
+
+		virtual VkPipelineBindPoint GetVkPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_COMPUTE; }
 	private:
 		void CreateShaderProgram();
 
