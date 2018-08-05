@@ -4,9 +4,9 @@
 
 namespace acid
 {
-	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines) :
-		m_filename(ToFilename(graphicsStage, pipelineCreate, defines)),
-		m_pipeline(Pipeline(graphicsStage, pipelineCreate, defines))
+	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
+		m_filename(ToFilename(graphicsStage, pipelineCreate)),
+		m_pipeline(Pipeline(graphicsStage, pipelineCreate))
 	{
 	}
 
@@ -14,7 +14,7 @@ namespace acid
 	{
 	}
 
-	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
+	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 	{
 		std::stringstream result;
 		result << "Material_";
@@ -26,7 +26,7 @@ namespace acid
 			result << stage << "_";
 		}
 
-		for (auto &element : defines)
+		for (auto &element : pipelineCreate.GetDefines())
 		{
 			result << element.GetName() << "=";
 			result << element.GetValue() << "_";

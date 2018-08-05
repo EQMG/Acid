@@ -2,6 +2,7 @@
 
 #include "Display/Command/CommandBuffer.hpp"
 #include "IPipeline.hpp"
+#include "PipelineCreate.hpp"
 
 namespace acid
 {
@@ -12,7 +13,7 @@ namespace acid
 		public IPipeline
 	{
 	private:
-		std::string m_shaderStage;
+		ComputeCreate m_computeCreate;
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
 
 		VkShaderModule m_shaderModule;
@@ -24,11 +25,17 @@ namespace acid
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
 	public:
-		Compute(const std::string &shaderStage);
+		/// <summary>
+		/// Creates a new compute pipeline.
+		/// </summary>
+		/// <param name="pipelineCreate"> The compute pipelines creation info. </param>
+		Compute(const ComputeCreate &computeCreate);
 
 		~Compute();
 
-		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &groupCountX, const uint32_t &groupCountY, const uint32_t &groupCountZ = 1) const;
+		ComputeCreate GetComputeCreate() const { return m_computeCreate; }
+
+		void CmdRender(const CommandBuffer &commandBuffer) const;
 
 		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
 

@@ -40,7 +40,7 @@ namespace acid
 
 		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
 		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
-			mesh->GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines());
+			mesh->GetVertexInput(), PIPELINE_MODE_MRT, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK, GetDefines()));
 	}
 
 	void MaterialDefault::Update()

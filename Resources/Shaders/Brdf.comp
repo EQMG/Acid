@@ -1,6 +1,7 @@
 #version 450
+#extension GL_ARB_separate_shader_objects : enable
 
-layout(local_size_x = 16, local_size_y = 16) in;
+layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_z = 1) in;
 
 layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outColour;
 
@@ -9,6 +10,11 @@ const float pi = 3.1415926535897932384626433832795f;
 
 void main()
 {
-	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
-	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(uv.x, uv.y, 0.0f, 1.0f)); // vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f)
+    if (gl_GlobalInvocationID.x >= WIDTH || gl_GlobalInvocationID.y >= HEIGHT)
+    {
+        return;
+    }
+
+	vec2 uv = (vec2(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y) + vec2(0.5f, 0.5f)) / vec2(WIDTH, HEIGHT);
+	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f));
 }
