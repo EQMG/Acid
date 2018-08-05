@@ -117,15 +117,19 @@ namespace acid
 		PipelineMode m_pipelineMode;
 		PipelinePolygonMode m_polygonMode;
 		PipelineCullMode m_cullMode;
+
+		std::vector<PipelineDefine> m_defines;
 	public:
 
-		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput,
-					   const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelinePolygonMode &polygonMode = PipelinePolygonMode::PIPELINE_POLYGON_MODE_FILL, const PipelineCullMode &cullMode = PipelineCullMode::PIPELINE_CULL_MODE_BACK) :
+		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON,
+						const PipelinePolygonMode &polygonMode = PipelinePolygonMode::PIPELINE_POLYGON_MODE_FILL,
+					   	const PipelineCullMode &cullMode = PipelineCullMode::PIPELINE_CULL_MODE_BACK, const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInput(vertexInput),
 			m_pipelineMode(pipelineMode),
 			m_polygonMode(polygonMode),
-			m_cullMode(cullMode)
+			m_cullMode(cullMode),
+			m_defines(defines)
 		{
 			for (auto &shaderStage : m_shaderStages)
 			{
@@ -141,6 +145,43 @@ namespace acid
 
 		PipelinePolygonMode GetPolygonMode() const { return m_polygonMode; }
 
-		PipelineCullMode GetCullModeF() const { return m_cullMode; }
+		PipelineCullMode GetCullMode() const { return m_cullMode; }
+
+		std::vector<PipelineDefine> GetDefines() const { return m_defines; }
+	};
+
+	class ACID_EXPORT ComputeCreate
+	{
+	private:
+		std::string m_shaderStage;
+		uint32_t m_width;
+		uint32_t m_height;
+		uint32_t m_workgroupSize;
+
+		std::vector<PipelineDefine> m_defines;
+	public:
+
+		ComputeCreate(const std::string &shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize,
+						const std::vector<PipelineDefine> &defines = {}) :
+			m_shaderStage(Files::SearchFile(shaderStage)),
+			m_width(width),
+			m_height(height),
+			m_workgroupSize(workgroupSize),
+			m_defines(defines)
+		{
+			m_defines.emplace_back(PipelineDefine("WIDTH", std::to_string(m_width)));
+			m_defines.emplace_back(PipelineDefine("HEIGHT", std::to_string(m_height)));
+			m_defines.emplace_back(PipelineDefine("WORKGROUP_SIZE", std::to_string(m_workgroupSize)));
+		}
+
+		std::string GetShaderStage() const { return m_shaderStage; }
+
+		uint32_t GetWidth() const { return m_width; }
+
+		uint32_t GetHeight() const { return m_height; }
+
+		uint32_t GetWorkgroupSize() const { return m_workgroupSize; }
+
+		std::vector<PipelineDefine> GetDefines() const { return m_defines; }
 	};
 }

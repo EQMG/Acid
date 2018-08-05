@@ -35,5 +35,7 @@ namespace acid
 		Fog GetFog() const { return m_fog; }
 
 		void SetFog(const Fog &fog) { m_fog = fog; }
+	private:
+		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 	};
 }

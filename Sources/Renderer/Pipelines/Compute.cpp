@@ -6,10 +6,10 @@
 
 namespace acid
 {
-	Compute::Compute(const std::string &shaderStage) :
+	Compute::Compute(const ComputeCreate &computeCreate) :
 		IPipeline(),
-		m_shaderStage(Files::SearchFile(shaderStage)),
-		m_shaderProgram(std::make_shared<ShaderProgram>(shaderStage)),
+		m_computeCreate(computeCreate),
+		m_shaderProgram(std::make_shared<ShaderProgram>(m_computeCreate.GetShaderStage())),
 		m_shaderModule(VK_NULL_HANDLE),
 		m_shaderStageCreateInfo({}),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -30,7 +30,7 @@ namespace acid
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
 	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
-		fprintf(stdout, "Compute pipeline '%s' created in %fms\n", m_shaderStage.c_str(), debugEnd - debugStart);
+		fprintf(stdout, "Compute pipeline '%s' created in %fms\n", m_computeCreate.GetShaderStage().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -49,9 +49,11 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
 	}
 
-	void Compute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &groupCountX, const uint32_t &groupCountY, const uint32_t &groupCountZ) const
+	void Compute::CmdRender(const CommandBuffer &commandBuffer) const
 	{
-		vkCmdDispatch(commandBuffer.GetVkCommandBuffer(), groupCountX, groupCountY, groupCountZ);
+		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetWidth()) / float(m_computeCreate.GetWorkgroupSize())));
+		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetHeight()) / float(m_computeCreate.GetWorkgroupSize())));
+		vkCmdDispatch(commandBuffer.GetVkCommandBuffer(), groupCountX, groupCountY, 1);
 	}
 
 	void Compute::CreateShaderProgram()
@@ -59,18 +61,18 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-	//	for (auto &define : m_defines)
-	//	{
-	//		defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
-	//	}
-
-		if (!FileSystem::FileExists(m_shaderStage))
+		for (auto &define : m_computeCreate.GetDefines())
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", m_shaderStage.c_str());
+			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
+		}
+
+		if (!FileSystem::FileExists(m_computeCreate.GetShaderStage()))
+		{
+			fprintf(stderr, "File does not exist: '%s'\n", m_computeCreate.GetShaderStage().c_str());
 			throw std::runtime_error("Could not create pipeline, missing shader stage!");
 		}
 
-		auto fileLoaded = FileSystem::ReadTextFile(m_shaderStage);
+		auto fileLoaded = FileSystem::ReadTextFile(m_computeCreate.GetShaderStage());
 
 		if (!fileLoaded.has_value())
 		{
@@ -80,7 +82,7 @@ namespace acid
 		auto shaderCode = ShaderProgram::InsertDefineBlock(fileLoaded.value(), defineBlock.str());
 		shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
 
-		VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(m_shaderStage);
+		VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(m_computeCreate.GetShaderStage());
 		m_shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
 
 		m_shaderStageCreateInfo = {};

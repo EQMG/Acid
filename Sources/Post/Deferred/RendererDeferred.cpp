@@ -24,32 +24,11 @@ namespace acid
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines())),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
-		m_brdf(std::make_shared<Texture>(512, 512, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT)), // Texture::Resource("BrdfLut.png")
+		m_brdf(ComputeBrdf(512)), // Texture::Resource("BrdfLut.png")
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
-		{
-			// Creates the pipeline.
-			CommandBuffer commandBuffer = CommandBuffer(true, COMMAND_BUFFER_LEVEL_PRIMARY, COMMAND_QUEUE_COMPUTE);
-			Compute compute = Compute("Shaders/Brdf.comp");
-
-			// Bind the pipeline.
-			compute.BindPipeline(commandBuffer);
-
-			// Updates descriptors.
-			DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-			descriptorSet.Push("outColour", m_brdf);
-			descriptorSet.Update(compute);
-
-			// Runs the compute pipeline.
-			descriptorSet.BindDescriptor(commandBuffer);
-			uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(512) / float(16)));
-			uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(512) / float(16)));
-			compute.CmdRender(commandBuffer, groupCountX, groupCountY, 1);
-			commandBuffer.End();
-		 	commandBuffer.Submit();
-		}
 	}
 
 	RendererDeferred::~RendererDeferred()
@@ -138,6 +117,30 @@ namespace acid
 		std::vector<PipelineDefine> result = {};
 		result.emplace_back(PipelineDefine("USE_IBL", "TRUE"));
 		result.emplace_back(PipelineDefine("MAX_LIGHTS", std::to_string(MAX_LIGHTS)));
+		return result;
+	}
+
+	std::shared_ptr<Texture> RendererDeferred::ComputeBrdf(const uint32_t &size)
+	{
+		auto result = std::make_shared<Texture>(size, size, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT);
+
+		// Creates the pipeline.
+		CommandBuffer commandBuffer = CommandBuffer(true, COMMAND_BUFFER_LEVEL_PRIMARY, COMMAND_QUEUE_COMPUTE);
+		Compute compute = Compute(ComputeCreate("Shaders/Brdf.comp", 512, 512, 16, {}));
+
+		// Bind the pipeline.
+		compute.BindPipeline(commandBuffer);
+
+		// Updates descriptors.
+		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+		descriptorSet.Push("outColour", result);
+		descriptorSet.Update(compute);
+
+		// Runs the compute pipeline.
+		descriptorSet.BindDescriptor(commandBuffer);
+		compute.CmdRender(commandBuffer);
+		commandBuffer.End();
+		commandBuffer.Submit();
 		return result;
 	}
 }

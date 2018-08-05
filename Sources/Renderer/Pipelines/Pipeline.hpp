@@ -22,7 +22,6 @@ namespace acid
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
-		std::vector<PipelineDefine> m_defines;
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
@@ -48,8 +47,7 @@ namespace acid
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreate"> The pipelines creation info. </param>
-		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines = {});
+		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
 		/// <summary>
 		/// Deconstructor for the pipeline.

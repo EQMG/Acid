@@ -17,21 +17,21 @@ namespace acid
 		std::string m_filename;
 		Pipeline m_pipeline;
 	public:
-		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines)
+		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 		{
-			auto resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate, defines));
+			auto resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate));
 
 			if (resource != nullptr)
 			{
 				return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 			}
 
-			auto result = std::make_shared<PipelineMaterial>(graphicsStage, pipelineCreate, defines);
+			auto result = std::make_shared<PipelineMaterial>(graphicsStage, pipelineCreate);
 			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 			return result;
 		}
 
-		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines);
+		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
 		~PipelineMaterial();
 
@@ -40,6 +40,6 @@ namespace acid
 		Pipeline &GetPipeline() { return m_pipeline; }
 
 	private:
-		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines);
+		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 	};
 }

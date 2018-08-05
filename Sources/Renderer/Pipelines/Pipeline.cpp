@@ -10,11 +10,10 @@ namespace acid
 		VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate, const std::vector<PipelineDefine> &defines) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
 		IPipeline(),
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
-		m_defines(defines),
 		m_shaderProgram(std::make_shared<ShaderProgram>(pipelineCreate.GetShaderStages().back())),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
@@ -101,7 +100,7 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-		for (auto &define : m_defines)
+		for (auto &define : m_pipelineCreate.GetDefines())
 		{
 			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
 		}
@@ -208,7 +207,7 @@ namespace acid
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 		m_rasterizationState.polygonMode = static_cast<VkPolygonMode>(m_pipelineCreate.GetPolygonMode());
-		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreate.GetCullModeF());
+		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreate.GetCullMode());
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
