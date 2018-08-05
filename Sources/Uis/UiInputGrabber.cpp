@@ -23,7 +23,7 @@ namespace acid
 
 		if (Joysticks::Get()->IsConnected(m_joystick))
 		{
-			for (unsigned int i = 0; i < Joysticks::Get()->GetCountButtons(m_joystick); i++)
+			for (uint32_t i = 0; i < Joysticks::Get()->GetCountButtons(m_joystick); i++)
 			{
 				if (Joysticks::Get()->GetButton(m_joystick, i))
 				{

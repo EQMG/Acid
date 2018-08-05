@@ -65,7 +65,7 @@ namespace acid
 	{
 	}
 
-	void Model::CmdRender(const CommandBuffer &commandBuffer, const unsigned int &instances)
+	void Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances)
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{

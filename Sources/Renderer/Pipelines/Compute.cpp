@@ -17,17 +17,29 @@ namespace acid
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE)
 	{
+#if ACID_VERBOSE
+		float debugStart = Engine::Get()->GetTimeMs();
+#endif
+
 		CreateShaderProgram();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreatePipelineLayout();
 		CreatePipelineCompute();
+
+#if ACID_VERBOSE
+		float debugEnd = Engine::Get()->GetTimeMs();
+	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
+		fprintf(stdout, "Compute pipeline '%s' created in %fms\n", m_shaderStage.c_str(), debugEnd - debugStart);
+#endif
 	}
 
 	Compute::~Compute()
 	{
 		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+
+		vkDeviceWaitIdle(logicalDevice);
 
 		vkDestroyShaderModule(logicalDevice, m_shaderModule, allocator);
 
@@ -37,16 +49,9 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
 	}
 
-	void Compute::BindPipeline(const CommandBuffer &commandBuffer) const
+	void Compute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &groupCountX, const uint32_t &groupCountY, const uint32_t &groupCountZ) const
 	{
-		vkCmdBindPipeline(commandBuffer.GetVkCommandBuffer(), VK_PIPELINE_BIND_POINT_COMPUTE, m_pipeline);
-	}
-
-	void Compute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize) const
-	{
-		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(width / float(workgroupSize)));
-		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(height / float(workgroupSize)));
-		vkCmdDispatch(commandBuffer.GetVkCommandBuffer(), groupCountX, groupCountY, 1);
+		vkCmdDispatch(commandBuffer.GetVkCommandBuffer(), groupCountX, groupCountY, groupCountZ);
 	}
 
 	void Compute::CreateShaderProgram()
@@ -105,7 +110,7 @@ namespace acid
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
+		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
 	}
 
 	void Compute::CreateDescriptorPool()
@@ -125,10 +130,10 @@ namespace acid
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 2048; // Arbitrary number.
+		descriptorPoolCreateInfo.maxSets = 64; // Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
+		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
 	}
 
 	void Compute::CreatePipelineLayout()
@@ -142,7 +147,7 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
+		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
 	}
 
 	void Compute::CreatePipelineCompute()

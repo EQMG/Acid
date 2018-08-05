@@ -43,7 +43,7 @@ namespace acid
 
 		ACID_HIDDEN static std::string StringifyResultAl(const int &result);
 
-		ACID_HIDDEN static void ErrorAl(const int &result);
+		ACID_HIDDEN static void CheckAl(const int &result);
 
 		ACID_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }
 

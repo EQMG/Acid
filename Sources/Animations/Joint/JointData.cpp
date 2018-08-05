@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	JointData::JointData(const unsigned int &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
+	JointData::JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
 		m_index(index),
 		m_nameId(nameId),
 		m_bindLocalTransform(bindLocalTransform)

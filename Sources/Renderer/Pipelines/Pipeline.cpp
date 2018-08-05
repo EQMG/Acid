@@ -65,7 +65,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
+	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
 		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -86,17 +86,12 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
 	}
 
-	void Pipeline::BindPipeline(const CommandBuffer &commandBuffer) const
-	{
-		vkCmdBindPipeline(commandBuffer.GetVkCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
-	}
-
 	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
-	Texture *Pipeline::GetTexture(const unsigned int &i, const int &stage) const
+	Texture *Pipeline::GetTexture(const uint32_t &i, const int &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
 	}
@@ -163,7 +158,7 @@ namespace acid
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
+		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
 	}
 
 	void Pipeline::CreateDescriptorPool()
@@ -186,7 +181,7 @@ namespace acid
 		descriptorPoolCreateInfo.maxSets = 16384; // Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
+		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
 	}
 
 	void Pipeline::CreatePipelineLayout()
@@ -200,7 +195,7 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
+		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
@@ -312,7 +307,7 @@ namespace acid
 		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
-		Display::ErrorVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, allocator, &m_pipeline));
+		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, allocator, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelinePolygonNoDepth()

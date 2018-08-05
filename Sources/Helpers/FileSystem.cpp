@@ -138,8 +138,8 @@ namespace acid
 
 	std::string FileSystem::FindName(const std::string &filepath)
 	{
-		unsigned int lastSep = filepath.find_last_of("\\/") + 1;
-		unsigned int lastDot = filepath.find_last_of('.');
+		uint32_t lastSep = filepath.find_last_of("\\/") + 1;
+		uint32_t lastDot = filepath.find_last_of('.');
 		return filepath.substr(lastSep, lastDot - lastSep);
 	}
 

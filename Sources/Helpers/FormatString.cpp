@@ -59,7 +59,7 @@ namespace acid
 
 	int FormatString::FindCharPos(const std::string &str, const char &c)
 	{
-		for (unsigned int i = 0; i < str.length(); i++)
+		for (uint32_t i = 0; i < str.length(); i++)
 		{
 			if (str.at(i) == c)
 			{
@@ -87,7 +87,7 @@ namespace acid
 		return result;
 	}
 
-	std::string FormatString::Substring(const std::string &str, const unsigned int &start, const unsigned int &end)
+	std::string FormatString::Substring(const std::string &str, const uint32_t &start, const uint32_t &end)
 	{
 		std::string result = str;
 		result = result.substr(start, end - start);

@@ -54,7 +54,7 @@ namespace acid
 		/// Gets the size of this structure.
 		/// </summary>
 		/// <returns> The structures size. </returns>
-		virtual unsigned int GetSize() = 0;
+		virtual uint32_t GetSize() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in the spatial structure.

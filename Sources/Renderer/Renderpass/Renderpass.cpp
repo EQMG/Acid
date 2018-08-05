@@ -127,7 +127,7 @@ namespace acid
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 		renderPassCreateInfo.pDependencies = dependencies.data();
 
-		Display::ErrorVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, allocator, &m_renderPass));
+		Display::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, allocator, &m_renderPass));
 	}
 
 	Renderpass::~Renderpass()

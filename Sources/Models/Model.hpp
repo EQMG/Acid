@@ -51,7 +51,7 @@ namespace acid
 		/// </summary>
 		~Model();
 
-		void CmdRender(const CommandBuffer &commandBuffer, const unsigned int &instances = 1);
+		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
 
 		std::string GetName() override { return m_filename; }
 

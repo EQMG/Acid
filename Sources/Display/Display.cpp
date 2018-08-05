@@ -20,7 +20,7 @@ namespace acid
 
 	void CallbackError(int error, const char *description)
 	{
-		Display::ErrorGlfw(error);
+		Display::CheckGlfw(error);
 		fprintf(stderr, "GLFW error: %s, %i\n", description, error);
 	}
 
@@ -64,7 +64,7 @@ namespace acid
 			Display::Get()->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
-		Display::ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
+		Display::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
 	void CallbackFrame(GLFWwindow *window, int width, int height)
@@ -137,12 +137,13 @@ namespace acid
 		m_surfaceCapabilities({}),
 		m_surfaceFormat({}),
 		m_logicalDevice(VK_NULL_HANDLE),
-		m_queue(VK_NULL_HANDLE),
+		m_queueGraphics(VK_NULL_HANDLE),
+		m_queueCompute(VK_NULL_HANDLE),
 		m_physicalDevice(VK_NULL_HANDLE),
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
 		m_physicalDeviceMemoryProperties({}),
-		m_graphicsFamilyIndex(0)
+		m_queueIndices(QueueIndices())
 	{
 		CreateGlfw();
 		SetupLayers();
@@ -295,7 +296,7 @@ namespace acid
 		}
 	}
 
-	void Display::ErrorGlfw(const int &result)
+	void Display::CheckGlfw(const int &result)
 	{
 		if (result == GLFW_TRUE)
 		{
@@ -366,7 +367,7 @@ namespace acid
 		}
 	}
 
-	void Display::ErrorVk(const VkResult &result)
+	void Display::CheckVk(const VkResult &result)
 	{
 		if (result >= 0)
 		{
@@ -500,7 +501,7 @@ namespace acid
 	void Display::SetupExtensions()
 	{
 		// Sets up the extensions.
-		unsigned int glfwExtensionCount = 0;
+		uint32_t glfwExtensionCount = 0;
 		const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
 		for (uint32_t i = 0; i < glfwExtensionCount; i++)
@@ -533,7 +534,7 @@ namespace acid
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		ErrorVk(vkCreateInstance(&instanceCreateInfo, m_allocator, &m_instance));
+		CheckVk(vkCreateInstance(&instanceCreateInfo, m_allocator, &m_instance));
 	}
 
 	void Display::CreateDebugCallback()
@@ -549,7 +550,7 @@ namespace acid
 			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 			debugReportCallbackCreateInfo.pUserData = nullptr;
 
-			ErrorVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, m_allocator, &m_debugReportCallback));
+			CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, m_allocator, &m_debugReportCallback));
 		}
 	}
 
@@ -573,23 +574,9 @@ namespace acid
 
 		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
 
-		uint32_t deviceQueueFamilyPropertyCount;
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
-		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
+		m_queueIndices = QueueIndices(m_physicalDevice);
 
-		bool foundQueueFamily = false;
-
-		for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
-		{
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				m_graphicsFamilyIndex = i;
-				foundQueueFamily = true;
-			}
-		}
-
-		if (!foundQueueFamily)
+		if (m_queueIndices.GetGraphicsFamily() == -1)
 		{
 			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
 		}
@@ -670,11 +657,11 @@ namespace acid
 
 	void Display::CreateLogicalDevice()
 	{
-		float queuePriorities[] = {1.0f};
+		float queuePriorities[] = {1.0f, 1.0f};
 		VkDeviceQueueCreateInfo deviceQueueCreateInfo = {};
 		deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		deviceQueueCreateInfo.queueFamilyIndex = m_graphicsFamilyIndex;
-		deviceQueueCreateInfo.queueCount = 1;
+		deviceQueueCreateInfo.queueFamilyIndex = m_queueIndices.GetGraphicsFamily();
+		deviceQueueCreateInfo.queueCount = 2;
 		deviceQueueCreateInfo.pQueuePriorities = queuePriorities;
 
 		VkPhysicalDeviceFeatures physicalDeviceFeatures = {};
@@ -683,6 +670,7 @@ namespace acid
 		physicalDeviceFeatures.shaderCullDistance = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
+		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -694,20 +682,21 @@ namespace acid
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
-		ErrorVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, m_allocator, &m_logicalDevice));
+		CheckVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, m_allocator, &m_logicalDevice));
 
-		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamilyIndex, 0, &m_queue);
+		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetGraphicsFamily(), 0, &m_queueGraphics);
+		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetComputeFamily(), 0, &m_queueCompute);
 	}
 
 	void Display::CreateSurface()
 	{
 		// Creates the WSI Vulkan surface.
-		ErrorVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
+		CheckVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
-		ErrorVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
+		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
 
 		VkBool32 physicalDeviceSurfaceSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_graphicsFamilyIndex, m_surface, &physicalDeviceSurfaceSupport);
+		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_queueIndices.GetGraphicsFamily(), m_surface, &physicalDeviceSurfaceSupport);
 
 		if (!physicalDeviceSurfaceSupport)
 		{
@@ -731,7 +720,7 @@ namespace acid
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
 	{
 #if ACID_VERBOSE
-		fprintf(stdout, "-- Selected Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		fprintf(stdout, "-- Selected Display: '%s' --\n", physicalDeviceProperties.deviceName);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{

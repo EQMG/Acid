@@ -16,7 +16,7 @@ namespace acid
 		}
 	}
 
-	void CallbackChar(GLFWwindow *window, unsigned int codepoint)
+	void CallbackChar(GLFWwindow *window, uint32_t codepoint)
 	{
 		Keyboard::Get()->m_char = static_cast<char>(codepoint);
 	}
@@ -27,7 +27,7 @@ namespace acid
 		m_char(0)
 	{
 		// Sets the default state of the keys to released.
-		for (unsigned int i = 0; i < KEY_END_RANGE; i++)
+		for (uint32_t i = 0; i < KEY_END_RANGE; i++)
 		{
 			m_keyboardKeys[i] = false;
 		}

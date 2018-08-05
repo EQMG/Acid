@@ -41,7 +41,7 @@ namespace acid
 		auto rawTimes = FormatString::Split(timeData->GetValue(), " ");
 		auto times = std::vector<float>(rawTimes.size());
 
-		for (unsigned int i = 0; i < times.size(); i++)
+		for (uint32_t i = 0; i < times.size(); i++)
 		{
 			times[i] = std::stof(rawTimes[i]);
 		}
@@ -86,11 +86,11 @@ namespace acid
 
 	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
 	{
-		for (unsigned int i = 0; i < m_keyframeData.size(); i++)
+		for (uint32_t i = 0; i < m_keyframeData.size(); i++)
 		{
 			Matrix4 transform = Matrix4();
 
-			for (unsigned int j = 0; j < 16; j++)
+			for (uint32_t j = 0; j < 16; j++)
 			{
 				transform.m_linear[j] = std::stof(rawData[i * 16 + j]);
 			}

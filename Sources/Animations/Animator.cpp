@@ -53,7 +53,7 @@ namespace acid
 		Keyframe *previousFrame = allFrames[0];
 		Keyframe *nextFrame = allFrames[0];
 
-		for (unsigned int i = 1; i < allFrames.size(); i++)
+		for (uint32_t i = 1; i < allFrames.size(); i++)
 		{
 			nextFrame = allFrames[i];
 

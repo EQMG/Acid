@@ -10,7 +10,7 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks)
+		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 		{
 			auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks));
 
@@ -35,11 +35,11 @@ namespace acid
 			return Resource(radiusBase, radiusTop, height, slices, stacks);
 		}
 
-		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks);
+		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 
 		~ModelCylinder();
 
 	private:
-		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks);
+		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 	};
 }

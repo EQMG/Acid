@@ -212,7 +212,7 @@ namespace acid
 
 		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
 
-		unsigned int GetLastDescriptorBinding() const;
+		uint32_t GetLastDescriptorBinding() const;
 
 		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
 

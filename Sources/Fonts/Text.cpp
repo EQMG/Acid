@@ -191,7 +191,7 @@ namespace acid
 		auto formattedText = FormatString::Replace(m_string, "\t", "    ");
 		auto textLines = FormatString::Split(formattedText, "\n", true);
 
-		for (unsigned int i = 0; i < textLines.size(); i++)
+		for (uint32_t i = 0; i < textLines.size(); i++)
 		{
 			if (textLines.at(i).empty())
 			{

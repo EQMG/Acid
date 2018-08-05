@@ -7,6 +7,7 @@ namespace acid
 	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pipelineLayout(pipeline.GetVkPipelineLayout()),
+		m_pipelineBindPoint(pipeline.GetVkPipelineBindPoint()),
 		m_descriptorPool(pipeline.GetVkDescriptorPool()),
 		m_descriptorSet(VK_NULL_HANDLE)
 	{
@@ -22,7 +23,7 @@ namespace acid
 		descriptorSetAllocateInfo.pSetLayouts = layouts;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::ErrorVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
+		Display::CheckVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 
 	DescriptorSet::~DescriptorSet()
@@ -39,7 +40,7 @@ namespace acid
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
 
-		for (unsigned int i = 0; i < descriptors.size(); i++)
+		for (uint32_t i = 0; i < descriptors.size(); i++)
 		{
 			if (descriptors.at(i) != nullptr)
 			{
@@ -53,6 +54,6 @@ namespace acid
 	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
 		VkDescriptorSet descriptors[1] = {m_descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer.GetVkCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer.GetVkCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
 	}
 }

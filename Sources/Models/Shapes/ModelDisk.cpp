@@ -5,19 +5,19 @@
 
 namespace acid
 {
-	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops) :
+	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
 		Model()
 	{
 		std::vector<IVertex *> vertices = std::vector<IVertex *>();
 		std::vector<uint32_t> indices = std::vector<uint32_t>();
 
-		for (unsigned int i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < slices; i++)
 		{
 			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
 			float alpha = iDivSlices * 2.0f * PI;
 			float xDir = cos(alpha), yDir = sin(alpha);
 
-			for (unsigned int j = 0; j < loops + 1; j++)
+			for (uint32_t j = 0; j < loops + 1; j++)
 			{
 				float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
 				float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
@@ -36,9 +36,9 @@ namespace acid
 			}
 		}
 
-		for (unsigned int i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < slices; i++)
 		{
-			for (unsigned int j = 0; j < loops; j++)
+			for (uint32_t j = 0; j < loops; j++)
 			{
 				uint32_t first = i * (loops + 1) + j;
 				uint32_t second = (first + loops + 1) % (slices * (loops + 1));
@@ -61,7 +61,7 @@ namespace acid
 	{
 	}
 
-	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
+	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
 		return "Disk_" + std::to_string(innerRadius) + "_" + std::to_string(outerRadius) + "_" +
 			std::to_string(slices) + "_" + std::to_string(loops);

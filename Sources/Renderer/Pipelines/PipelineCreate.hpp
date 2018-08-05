@@ -34,16 +34,16 @@ namespace acid
 	class ACID_EXPORT GraphicsStage
 	{
 	private:
-		unsigned int m_renderpass;
+		uint32_t m_renderpass;
 		uint32_t m_subpass;
 	public:
-		GraphicsStage(const unsigned int &renderpass, const uint32_t &subpass) :
+		GraphicsStage(const uint32_t &renderpass, const uint32_t &subpass) :
 			m_renderpass(renderpass),
 			m_subpass(subpass)
 		{
 		}
 
-		unsigned int GetRenderpass() const { return m_renderpass; }
+		uint32_t GetRenderpass() const { return m_renderpass; }
 
 		uint32_t GetSubpass() const { return m_subpass; }
 	};

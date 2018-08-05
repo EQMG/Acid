@@ -2,7 +2,7 @@
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
-layout(rg16, set = 0, binding = 0) uniform writeonly image2D outColour;
+layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outColour;
 
 const float pi = 3.1415926535897932384626433832795f;
 #include "Shaders/Lighting.glsl"
@@ -10,5 +10,5 @@ const float pi = 3.1415926535897932384626433832795f;
 void main()
 {
 	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
-	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(integrate_brdf(uv.x, uv.y), 0.0f, 0.0f));
+	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(uv.x, uv.y, 0.0f, 1.0f)); // vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f)
 }

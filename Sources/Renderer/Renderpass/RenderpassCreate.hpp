@@ -86,12 +86,12 @@ namespace acid
 	class ACID_EXPORT Attachment
 	{
 	private:
-		unsigned int m_binding;
+		uint32_t m_binding;
 		AttachmentType m_type;
 		AttachmentFormat m_format;
 		Colour m_clearColour;
 	public:
-		Attachment(const unsigned int &binding, const AttachmentType &type, const AttachmentFormat &format = FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
+		Attachment(const uint32_t &binding, const AttachmentType &type, const AttachmentFormat &format = FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
 			m_binding(binding),
 			m_type(type),
 			m_format(format),
@@ -99,7 +99,7 @@ namespace acid
 		{
 		}
 
-		unsigned int GetBinding() const { return m_binding; }
+		uint32_t GetBinding() const { return m_binding; }
 
 		AttachmentType GetType() const { return m_type; }
 

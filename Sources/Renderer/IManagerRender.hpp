@@ -93,7 +93,7 @@ namespace acid
 			return nullptr;
 		}
 
-		float GetStageKey(const unsigned int &renderpass, const uint32_t &subpass);
+		float GetStageKey(const uint32_t &renderpass, const uint32_t &subpass);
 
 		float GetStageKey(const GraphicsStage &graphicsStage);
 	};

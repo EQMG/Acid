@@ -27,7 +27,7 @@ namespace acid
 	class ACID_EXPORT Joint
 	{
 	private:
-		unsigned int m_index;
+		uint32_t m_index;
 		std::string m_name;
 		std::vector<Joint *> m_children;
 
@@ -41,7 +41,7 @@ namespace acid
 		/// <param name="index"> The joint's index (ID). </param>
 		/// <param name="name"> The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to. </param>
 		/// <param name="bindLocalTransform"> The bone-space transform of the joint in the bind position. </param>
-		Joint(const unsigned int &index, const std::string &name, const Matrix4 &bindLocalTransform);
+		Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform);
 
 		~Joint();
 
@@ -61,9 +61,9 @@ namespace acid
 		/// <param name="parentBindTransform"> The model-space bind transform of the parent joint. </param>
 		void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
-		unsigned int GetIndex() const { return m_index; }
+		uint32_t GetIndex() const { return m_index; }
 
-		void SetIndex(const unsigned int &index) { m_index = index; }
+		void SetIndex(const uint32_t &index) { m_index = index; }
 
 		const std::string &GetName() const { return m_name; }
 

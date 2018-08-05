@@ -56,11 +56,11 @@ namespace acid
 
 		size_t GetRowCount() const { return m_rows.size(); }
 
-		RowCsv GetRow(const unsigned int &index);
+		RowCsv GetRow(const uint32_t &index);
 
 		void PushRow(const RowCsv &row);
 
-		void SetRow(const RowCsv &row, const unsigned int &index);
+		void SetRow(const RowCsv &row, const uint32_t &index);
 
 	private:
 		void Verify();

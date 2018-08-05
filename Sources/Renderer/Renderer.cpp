@@ -26,9 +26,9 @@ namespace acid
 	{
 		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto queue = Display::Get()->GetVkQueue();
+		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
-		vkQueueWaitIdle(queue);
+		vkQueueWaitIdle(queueGraphics);
 
 		delete m_managerRender;
 
@@ -124,7 +124,7 @@ namespace acid
 		}
 
 		vkDeviceWaitIdle(Display::Get()->GetVkLogicalDevice());
-		vkQueueWaitIdle(Display::Get()->GetVkQueue());
+		vkQueueWaitIdle(Display::Get()->GetVkQueueGraphics());
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -132,7 +132,7 @@ namespace acid
 #endif
 	}
 
-	bool Renderer::StartRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i)
+	bool Renderer::StartRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i)
 	{
 		auto renderStage = GetRenderStage(i);
 
@@ -143,9 +143,9 @@ namespace acid
 		}
 
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto queue = Display::Get()->GetVkQueue();
+		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
-		Display::ErrorVk(vkQueueWaitIdle(queue));
+		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
 
 		if (renderStage->HasSwapchain())
 		{
@@ -162,16 +162,16 @@ namespace acid
 				throw std::runtime_error("Renderer failed to acquire swapchain image!");
 			}
 
-			Display::ErrorVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
 
-			Display::ErrorVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 		}
 
 		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
 		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT;
 
-		Display::ErrorVk(vkBeginCommandBuffer(commandBuffer.GetVkCommandBuffer(), &commandBufferBeginInfo));
+		Display::CheckVk(vkBeginCommandBuffer(commandBuffer.GetVkCommandBuffer(), &commandBufferBeginInfo));
 
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
@@ -208,13 +208,13 @@ namespace acid
 		return true;
 	}
 
-	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const unsigned int &i)
+	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i)
 	{
 		auto renderStage = GetRenderStage(i);
-		auto queue = Display::Get()->GetVkQueue();
+		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
 		vkCmdEndRenderPass(commandBuffer.GetVkCommandBuffer());
-		Display::ErrorVk(vkEndCommandBuffer(commandBuffer.GetVkCommandBuffer()));
+		Display::CheckVk(vkEndCommandBuffer(commandBuffer.GetVkCommandBuffer()));
 
 		VkCommandBuffer commandBuffers = commandBuffer.GetVkCommandBuffer();
 
@@ -229,14 +229,14 @@ namespace acid
 			submitInfo.pSignalSemaphores = &m_semaphore;
 		}
 
-		const VkResult queueSubmitResult = vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE);
+		const VkResult queueSubmitResult = vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE);
 
 		if (queueSubmitResult != VK_SUCCESS)
 		{
 			throw std::runtime_error("Renderer failed to acquire swapchain image!");
 		}
 
-		Display::ErrorVk(vkQueueWaitIdle(queue));
+		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
 
 		if (!renderStage->HasSwapchain())
 		{
@@ -256,7 +256,7 @@ namespace acid
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &result;
 
-		const VkResult queuePresentResult = vkQueuePresentKHR(queue, &presentInfo);
+		const VkResult queuePresentResult = vkQueuePresentKHR(queueGraphics, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
 		{
@@ -264,8 +264,8 @@ namespace acid
 			return;
 		}
 
-		Display::ErrorVk(result);
-		vkQueueWaitIdle(queue);
+		Display::CheckVk(result);
+		vkQueueWaitIdle(queueGraphics);
 	}
 
 	void Renderer::NextSubpass(const CommandBuffer &commandBuffer)
@@ -317,14 +317,14 @@ namespace acid
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		Display::ErrorVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, allocator, &m_semaphore));
+		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, allocator, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetVkGraphicsFamilyIndex();
+		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetVkQueueIndices().GetGraphicsFamily();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
-		Display::ErrorVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, allocator, &m_commandPool));
+		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, allocator, &m_commandPool));
 
 		m_commandBuffer = new CommandBuffer(false);
 	}
@@ -337,19 +337,19 @@ namespace acid
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 
-		Display::ErrorVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, allocator, &m_pipelineCache));
+		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, allocator, &m_pipelineCache));
 	}
 
-	void Renderer::RecreatePass(const int &i)
+	void Renderer::RecreatePass(const uint32_t &i)
 	{
-		auto queue = Display::Get()->GetVkQueue();
+		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 		auto renderStage = GetRenderStage(i);
 
 		const VkExtent2D displayExtent2D = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+			Display::Get()->GetWidth(), Display::Get()->GetHeight()
 		};
 
-		Display::ErrorVk(vkQueueWaitIdle(queue));
+		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
 
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
 		{

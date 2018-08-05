@@ -61,7 +61,7 @@ namespace acid
 		return child;
 	}
 
-	LoadedValue *LoadedValue::GetChild(const unsigned int &index, const bool &addIfNull, const bool &reportError)
+	LoadedValue *LoadedValue::GetChild(const uint32_t &index, const bool &addIfNull, const bool &reportError)
 	{
 		if (m_children.size() >= index)
 		{

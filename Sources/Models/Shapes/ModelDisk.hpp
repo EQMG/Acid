@@ -10,7 +10,7 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelDisk> Resource(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops)
+		static std::shared_ptr<ModelDisk> Resource(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 		{
 			auto resource = Resources::Get()->Get(ToFilename(innerRadius, outerRadius, slices, loops));
 
@@ -34,11 +34,11 @@ namespace acid
 			return Resource(innerRadius, outerRadius, slices, loops);
 		}
 
-		ModelDisk(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops);
+		ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
 
 		~ModelDisk();
 
 	private:
-		static std::string ToFilename(const float &innerRadius, const float &outerRadius, const unsigned int &slices, const unsigned int &loops);
+		static std::string ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
 	};
 }

@@ -18,7 +18,7 @@ namespace acid
 		Pipeline m_pipeline;
 		std::shared_ptr<Model> m_model;
 
-		std::shared_ptr<Texture> m_brdflut;
+		std::shared_ptr<Texture> m_brdf;
 
 		Fog m_fog;
 	public:

@@ -62,7 +62,7 @@ namespace acid
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			Display::ErrorVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, allocator, &m_framebuffers.at(i)));
+			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, allocator, &m_framebuffers.at(i)));
 		}
 	}
 

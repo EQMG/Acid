@@ -39,7 +39,7 @@ namespace acid
 
 		Matrix4 transform = Matrix4();
 
-		for (unsigned int i = 0; i < matrixData.size(); i++)
+		for (uint32_t i = 0; i < matrixData.size(); i++)
 		{
 			transform.m_linear[i] = std::stof(matrixData[i]);
 		}
@@ -58,7 +58,7 @@ namespace acid
 
 	int SkeletonLoader::GetBoneIndex(const std::string &name)
 	{
-		for (unsigned int i = 0; i < m_boneOrder.size(); i++)
+		for (uint32_t i = 0; i < m_boneOrder.size(); i++)
 		{
 			if (m_boneOrder[i] == name)
 			{

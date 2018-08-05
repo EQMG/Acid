@@ -68,7 +68,7 @@ namespace acid
 		imageCreateInfo.pQueueFamilyIndices = nullptr;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-		Display::ErrorVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &m_image));
+		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &m_image));
 
 		VkMemoryRequirements imageMemoryRequirements = {};
 		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
@@ -80,9 +80,9 @@ namespace acid
 		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = memoryTypeIndex;
 
-		Display::ErrorVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_imageMemory));
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &m_imageMemory));
 
-		Display::ErrorVk(vkBindImageMemory(logicalDevice, m_image, m_imageMemory, 0));
+		Display::CheckVk(vkBindImageMemory(logicalDevice, m_image, m_imageMemory, 0));
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -100,7 +100,7 @@ namespace acid
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-		Display::ErrorVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_imageView));
+		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_imageView));
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -117,7 +117,7 @@ namespace acid
 		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 
-		Display::ErrorVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, allocator, &m_sampler));
+		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, allocator, &m_sampler));
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;

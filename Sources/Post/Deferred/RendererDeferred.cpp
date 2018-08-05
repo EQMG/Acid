@@ -26,25 +26,30 @@ namespace acid
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK), GetDefines())),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
-		m_brdflut(Texture::Resource("BrdfLut.png")),
+		m_brdf(std::make_shared<Texture>(512, 512, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT)), // Texture::Resource("BrdfLut.png")
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
-		/*{
-			CommandBuffer commandBuffer = CommandBuffer();
+		{
+			// Creates the pipeline.
+			CommandBuffer commandBuffer = CommandBuffer(true, COMMAND_BUFFER_LEVEL_PRIMARY, COMMAND_QUEUE_COMPUTE);
 			Compute compute = Compute("Shaders/Brdf.comp");
 
-			DescriptorsHandler descriptors = DescriptorsHandler(compute);
-		//	descriptors.Push("writeColour", m_brdflut);
-			descriptors.Update(compute);
-
-			// Runs the compute pipeline.
+			// Bind the pipeline.
 			compute.BindPipeline(commandBuffer);
 
-			m_descriptorSet.BindDescriptor(commandBuffer);
-			compute.CmdRender(commandBuffer);
+			// Updates descriptors.
+			DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+			descriptorSet.Push("outColour", m_brdf);
+			descriptorSet.Update(compute);
 
+			// Runs the compute pipeline.
+			descriptorSet.BindDescriptor(commandBuffer);
+			uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(512) / float(16)));
+			uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(512) / float(16)));
+			compute.CmdRender(commandBuffer, groupCountX, groupCountY, 1);
 			commandBuffer.End();
-		}*/
+		 	commandBuffer.Submit();
+		}
 	}
 
 	RendererDeferred::~RendererDeferred()
@@ -112,7 +117,7 @@ namespace acid
 		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3));
 		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
-		m_descriptorSet.Push("samplerBrdflut", m_brdflut);
+		m_descriptorSet.Push("samplerBrdf", m_brdf);
 		m_descriptorSet.Push("samplerIbl", ibl);
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 

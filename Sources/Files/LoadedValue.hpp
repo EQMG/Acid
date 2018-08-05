@@ -36,7 +36,7 @@ namespace acid
 
 		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false, const bool &reportError = true);
 
-		LoadedValue *GetChild(const unsigned int &index, const bool &addIfNull = false, const bool &reportError = true);
+		LoadedValue *GetChild(const uint32_t &index, const bool &addIfNull = false, const bool &reportError = true);
 
 		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true);
 

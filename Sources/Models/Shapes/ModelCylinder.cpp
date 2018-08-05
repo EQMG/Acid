@@ -5,20 +5,20 @@
 
 namespace acid
 {
-	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks) :
+	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
 		Model()
 	{
 		auto vertices = std::vector<IVertex *>();
 		auto indices = std::vector<uint32_t>();
 
-		for (unsigned int i = 0; i < slices + 1; i++)
+		for (uint32_t i = 0; i < slices + 1; i++)
 		{
 			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
 			float alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * PI;
 			float xDir = std::cos(alpha);
 			float zDir = std::sin(alpha);
 
-			for (unsigned int j = 0; j < stacks + 1; j++)
+			for (uint32_t j = 0; j < stacks + 1; j++)
 			{
 				float jDivStacks = static_cast<float>(j) / static_cast<float>(stacks);
 				float radius = radiusBase * (1.0f - jDivStacks) + radiusTop * jDivStacks;
@@ -37,9 +37,9 @@ namespace acid
 			}
 		}
 
-		for (unsigned int i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < slices; i++)
 		{
-			for (unsigned int j = 0; j < stacks; j++)
+			for (uint32_t j = 0; j < stacks; j++)
 			{
 				uint32_t first = j + ((stacks + 1) * i);
 				uint32_t second = j + ((stacks + 1) * (i + 1));
@@ -62,7 +62,7 @@ namespace acid
 	{
 	}
 
-	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const unsigned int &slices, const unsigned int &stacks)
+	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
 		return "Cylinder_" + std::to_string(radiusBase) + "_" + std::to_string(radiusTop) + "_" + std::to_string(height) + "_" +
 			std::to_string(slices) + "_" + std::to_string(stacks);
