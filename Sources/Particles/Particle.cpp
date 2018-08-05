@@ -55,7 +55,7 @@ namespace acid
 			return;
 		}
 
-		int stageCount = static_cast<int>(pow(m_particleType->GetTexture()->GetNumberOfRows(), 2));
+		int stageCount = static_cast<int>(pow(m_particleType->GetNumberOfRows(), 2));
 		float atlasProgression = lifeFactor * stageCount;
 		int index1 = static_cast<int>(std::floor(atlasProgression));
 		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
@@ -72,11 +72,11 @@ namespace acid
 
 	Vector2 Particle::CalculateTextureOffset(const int &index) const
 	{
-		int column = index % m_particleType->GetTexture()->GetNumberOfRows();
-		int row = index / m_particleType->GetTexture()->GetNumberOfRows();
+		int column = index % m_particleType->GetNumberOfRows();
+		int row = index / m_particleType->GetNumberOfRows();
 		Vector2 result = Vector2();
-		result.m_x = static_cast<float>(column) / m_particleType->GetTexture()->GetNumberOfRows();
-		result.m_y = static_cast<float>(row) / m_particleType->GetTexture()->GetNumberOfRows();
+		result.m_x = static_cast<float>(column) / m_particleType->GetNumberOfRows();
+		result.m_y = static_cast<float>(row) / m_particleType->GetNumberOfRows();
 		return result;
 	}
 }

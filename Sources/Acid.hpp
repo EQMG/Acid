@@ -26,7 +26,7 @@
 #include "Audio/stb_vorbis.h"
 #include "Display/Command/CommandBuffer.hpp"
 #include "Display/Display.hpp"
-#include "Device/Queue/QueueIndices.hpp"
+#include "Display/Queue/QueueIndices.hpp"
 #include "Engine/Engine.hpp"
 #include "Engine/Exports.hpp"
 #include "Engine/IModule.hpp"

@@ -17,7 +17,6 @@ namespace acid
 
 		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto surface = Display::Get()->GetVkSurface();
 		auto queueIndices = Display::Get()->GetVkQueueIndices();
 
 		VkBufferCreateInfo bufferCreateInfo = {};

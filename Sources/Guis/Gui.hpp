@@ -21,7 +21,8 @@ namespace acid
 
 		std::shared_ptr<Model> m_model;
 		std::shared_ptr<Texture> m_texture;
-		int m_selectedRow;
+		uint32_t m_numberOfRows;
+		uint32_t m_selectedRow;
 
 		Vector2 m_atlasOffset;
 		Colour m_colourOffset;
@@ -31,8 +32,7 @@ namespace acid
 		/// </summary>
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
-		/// <param name="selectedRow"> The default row of the texture to render from. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow);
+		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
@@ -47,9 +47,13 @@ namespace acid
 
 		void SetTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
-		int GetSelectedRow() const { return m_selectedRow; }
+		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 
-		void SetSelectedRow(const int &selectedRow) { m_selectedRow = selectedRow; }
+		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+
+		uint32_t GetSelectedRow() const { return m_selectedRow; }
+
+		void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
 
 		Vector2 GetAtlasOffset() const { return m_atlasOffset; }
 

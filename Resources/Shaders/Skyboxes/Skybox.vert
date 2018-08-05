@@ -29,8 +29,13 @@ out gl_PerVertex
 void main() 
 {
 	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0f);
+
+	mat4 viewStatic = mat4(scene.view);
+	viewStatic[3][0] = 0.0f;
+	viewStatic[3][1] = 0.0f;
+	viewStatic[3][2] = 0.0f;
 	
-    gl_Position = scene.projection * scene.view * worldPosition;
+    gl_Position = scene.projection * viewStatic * worldPosition;
 	
 	fragmentUv = vertexPosition;
 	fragmentHeight = worldPosition.y;

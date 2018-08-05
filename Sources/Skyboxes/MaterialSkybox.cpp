@@ -27,7 +27,6 @@ namespace acid
 
 	void MaterialSkybox::Update()
 	{
-		GetGameObject()->GetTransform().SetPosition(Scenes::Get()->GetCamera()->GetPosition());
 	}
 
 	void MaterialSkybox::Load(LoadedValue *value)

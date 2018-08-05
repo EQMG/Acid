@@ -22,12 +22,10 @@ namespace acid
 	private:
 		std::string m_filename;
 
-		bool m_hasAlpha;
 		bool m_repeatEdges;
 		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
-		uint32_t m_numberOfRows;
 
 		int32_t m_components;
 		int32_t m_width, m_height;
@@ -57,13 +55,12 @@ namespace acid
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
-		Texture(const std::string &filename, const bool &hasAlpha = false, const bool &repeatEdges = false, const bool &mipmap = true,
-				const bool &anisotropic = true, const bool &nearest = false, const uint32_t &numberOfRows = 1);
+		Texture(const std::string &filename, const bool &repeatEdges = false, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
 		/// </summary>
-		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+		Texture(const int32_t &width, const int32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
@@ -74,31 +71,15 @@ namespace acid
 
 		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
+		unsigned char *CopyPixels();
+
 		std::string GetName() override { return m_filename; };
 
-		/// <summary>
-		/// Gets if the texture has alpha.
-		/// </summary>
-		/// <returns> If the texture has alpha. </returns>
-		bool HasAlpha() const { return m_hasAlpha; }
+		int32_t GetComponents() const { return m_components; }
 
-		/// <summary>
-		/// Sets if the texture has alpha.
-		/// </summary>
-		/// <param name="hasAlpha"> If the texture has alpha. </param>
-		void SetHasAlpha(const bool &hasAlpha) { m_hasAlpha = hasAlpha; }
+		int32_t GetWidth() const { return m_width; }
 
-		/// <summary>
-		/// Gets the number of texture rows.
-		/// </summary>
-		/// <returns> The number of texture rows. </returns>
-		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
-
-		/// <summary>
-		/// Sets the number of texture rows.
-		/// </summary>
-		/// <param name="numberOfRows"> The number of texture rows. </param>
-		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+		int32_t GetHeight() const { return m_height; }
 
 		VkImage GetImage() const { return m_image; }
 

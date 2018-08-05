@@ -17,7 +17,7 @@ namespace test
 					const float size = 0.09f;
 					float x = i * (size + 0.02f);
 					float y = j * (size + 0.02f);
-					Gui *gui = new Gui(uiInventory, Vector3(x + 0.1f, y + 0.15f, RelativeNone), Vector3(size, size, RelativeScreen), Vector2(0.5f, 0.5f), textureWhite, 1);
+					Gui *gui = new Gui(uiInventory, Vector3(x + 0.1f, y + 0.15f, RelativeNone), Vector3(size, size, RelativeScreen), Vector2(0.5f, 0.5f), textureWhite);
 	
 					if (j == 0)
 					{

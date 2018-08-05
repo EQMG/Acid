@@ -1,6 +1,6 @@
 {
   "Mesh": {
-    "Model": "Sphere_6_6_1.0"
+    "Model": "Sphere_10_10_1.0"
   },
   "MaterialSkybox": {
     "Cubemap Texture": "Objects/SkyboxChapel",

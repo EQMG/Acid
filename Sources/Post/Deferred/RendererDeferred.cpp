@@ -2,6 +2,7 @@
 
 #include "Scenes/Scenes.hpp"
 #include "Lights/Light.hpp"
+#include "Helpers/FileSystem.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
 #include "Renderer/Pipelines/Compute.hpp"
@@ -141,6 +142,26 @@ namespace acid
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
 		commandBuffer.Submit();
+
+		// Saves the brdf texture.
+		{
+			// Crashes.
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+			FileSystem::ClearFile(filename);
+			unsigned char *pixels = result->CopyPixels();
+			Texture::WritePixels(filename, pixels, result->GetWidth(), result->GetHeight(), result->GetComponents());
+			delete[] pixels;
+		}
+		{
+			// Generates noise.
+			auto test = Texture::Resource("Undefined.png");
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+			FileSystem::ClearFile(filename);
+			unsigned char *pixels = test->CopyPixels();
+			Texture::WritePixels(filename, pixels, test->GetWidth(), test->GetHeight(), test->GetComponents());
+			delete[] pixels;
+		}
+
 		return result;
 	}
 }

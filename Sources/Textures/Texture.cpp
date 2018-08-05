@@ -12,17 +12,15 @@ namespace acid
 	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;
 
-	Texture::Texture(const std::string &filename, const bool &hasAlpha, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest, const uint32_t &numberOfRows) :
+	Texture::Texture(const std::string &filename, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest) :
 		IResource(),
 		Buffer(LoadSize(filename), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
 		m_filename(filename),
-		m_hasAlpha(hasAlpha),
 		m_repeatEdges(repeatEdges),
 		m_mipLevels(1),
 		m_anisotropic(anisotropic),
 		m_nearest(nearest),
-		m_numberOfRows(numberOfRows),
 		m_components(0),
 		m_width(0),
 		m_height(0),
@@ -80,17 +78,15 @@ namespace acid
 #endif
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels) :
+	Texture::Texture(const int32_t &width, const int32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels) :
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
 		m_filename(""),
-		m_hasAlpha(false),
 		m_repeatEdges(false),
 		m_mipLevels(1),
 		m_anisotropic(false),
 		m_nearest(false),
-		m_numberOfRows(1),
 		m_components(4),
 		m_width(width),
 		m_height(height),
@@ -109,7 +105,7 @@ namespace acid
 		{
 			pixels = new float[width * height]();
 
-			for (uint32_t i = 0; i < width * height; i++)
+			for (int32_t i = 0; i < width * height; i++)
 			{
 				pixels[i] = 0.0f;
 			}
@@ -176,6 +172,28 @@ namespace acid
 		descriptorWrite.pImageInfo = &m_imageInfo;
 
 		return descriptorWrite;
+	}
+
+	unsigned char *Texture::CopyPixels()
+	{
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+
+		VkImageSubresource imageSubresource = {};
+		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageSubresource.mipLevel = 0;
+		imageSubresource.arrayLayer = 0;
+
+		VkSubresourceLayout subresourceLayout;
+		vkGetImageSubresourceLayout(logicalDevice, m_image, &imageSubresource, &subresourceLayout);
+
+		unsigned char *pixels = new unsigned char[subresourceLayout.size];
+
+		void *data;
+		vkMapMemory(logicalDevice, m_bufferMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
+		memcpy(pixels, data, static_cast<size_t>(subresourceLayout.size));
+		vkUnmapMemory(logicalDevice, m_bufferMemory);
+
+		return pixels;
 	}
 
 	VkDeviceSize Texture::LoadSize(const std::string &filepath)
@@ -266,7 +284,7 @@ namespace acid
 
 	bool Texture::WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components)
 	{
-		int result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
+		int result = stbi_write_png(filename.c_str(), width, height, components, data, 0);
 		return result == 1;
 	}
 
