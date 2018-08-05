@@ -26,14 +26,14 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Gradient.png"), 1);
+		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Gradient.png"));
 		m_barBackground->SetScissor(Vector4(0.0f, 0.0f, 1.0f, 0.125f));
 		m_barBackground->SetColourOffset(Colour("#2969B0"));
 
 		m_barTitle = new Text(this, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Testing", FontType::Resource("Fonts/ProximaNova", "Bold"), JUSTIFY_LEFT, 1.0f, 0.001f);
 		m_barCreatedBy = new Text(this, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", FontType::Resource("Fonts/ProximaNova", "Light"), JUSTIFY_LEFT, 1.0f, 0.0013f);
 
-		m_tabPuck = new Gui(this, UiBound(Vector2(0.0f, 0.875f), "BottomLeft", false, true, Vector2(0.0f, 0.01f)), Texture::Resource("Guis/White.png"), 1);
+		m_tabPuck = new Gui(this, UiBound(Vector2(0.0f, 0.875f), "BottomLeft", false, true, Vector2(0.0f, 0.01f)), Texture::Resource("Guis/White.png"));
 		m_tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		float tabXOffset = 0.35f;

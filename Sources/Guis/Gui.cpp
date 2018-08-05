@@ -4,13 +4,14 @@
 
 namespace acid
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const int &selectedRow) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
 		m_model(ModelRectangle::Resource(0.0f, 1.0f)),
 		m_texture(texture),
-		m_selectedRow(selectedRow),
+		m_numberOfRows(1),
+		m_selectedRow(0),
 		m_atlasOffset(Vector2()),
 		m_colourOffset(Colour(1.0f, 1.0f, 1.0f, 1.0f))
 	{
@@ -22,7 +23,7 @@ namespace acid
 
 	void Gui::UpdateObject()
 	{
-		int numberOfRows = m_texture != nullptr ? m_texture->GetNumberOfRows() : 1;
+		int numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
 		int column = m_selectedRow % numberOfRows;
 		int row = m_selectedRow / numberOfRows;
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
@@ -31,7 +32,7 @@ namespace acid
 		m_uniformObject.Push("transform", GetScreenTransform());
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
-		m_uniformObject.Push("atlasRows", static_cast<float>(m_texture->GetNumberOfRows()));
+		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
