@@ -12,7 +12,6 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
@@ -60,7 +59,7 @@ namespace acid
 
 		// Create the image.
 		VkImage dstImage;
-		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &dstImage));
+		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &dstImage));
 
 		// Create memory to back up the image.
 		VkMemoryRequirements memoryRequirements;
@@ -73,7 +72,7 @@ namespace acid
 
 		// Memory must be host visible to copy from.
 		memoryAllocateInfo.memoryTypeIndex = Renderer::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &dstImageMemory));
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &dstImageMemory));
 		Display::CheckVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
 		// Do the actual blit from the swapchain image to our host visible destination image.
@@ -197,8 +196,8 @@ namespace acid
 
 		// Clean up resources.
 		vkUnmapMemory(logicalDevice, dstImageMemory);
-		vkFreeMemory(logicalDevice, dstImageMemory, allocator);
-		vkDestroyImage(logicalDevice, dstImage, allocator);
+		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
+		vkDestroyImage(logicalDevice, dstImage, nullptr);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

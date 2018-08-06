@@ -71,18 +71,17 @@ namespace acid
 
 	Pipeline::~Pipeline()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &shaderModule : m_modules)
 		{
-			vkDestroyShaderModule(logicalDevice, shaderModule, allocator);
+			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, allocator);
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, allocator);
-		vkDestroyPipeline(logicalDevice, m_pipeline, allocator);
-		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
+		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
+		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
+		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
 	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const
@@ -141,7 +140,6 @@ namespace acid
 
 	void Pipeline::CreateDescriptorLayout()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
@@ -157,12 +155,11 @@ namespace acid
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
+		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void Pipeline::CreateDescriptorPool()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
@@ -180,12 +177,11 @@ namespace acid
 		descriptorPoolCreateInfo.maxSets = 16384; // Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
+		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void Pipeline::CreatePipelineLayout()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
@@ -194,7 +190,7 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
+		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
@@ -260,7 +256,7 @@ namespace acid
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.sampleShadingEnable = VK_FALSE;
-		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT; // Display::Get()->GetVkMsaaSamples()
 		m_multisampleState.minSampleShading = 0.0f;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -270,7 +266,6 @@ namespace acid
 
 	void Pipeline::CreatePipelinePolygon()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
@@ -306,7 +301,7 @@ namespace acid
 		pipelineCreateInfo.pStages = m_stages.data();
 
 		// Create the graphics pipeline.
-		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, allocator, &m_pipeline));
+		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void Pipeline::CreatePipelinePolygonNoDepth()

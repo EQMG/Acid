@@ -46,14 +46,16 @@ namespace acid
 
 		VkDebugReportCallbackEXT m_debugReportCallback;
 
-		VkAllocationCallbacks *m_allocator;
 		VkInstance m_instance;
 		VkSurfaceKHR m_surface;
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
 		VkSurfaceFormatKHR m_surfaceFormat;
 		VkDevice m_logicalDevice;
 		VkQueue m_queueGraphics;
+		VkQueue m_queuePresent;
 		VkQueue m_queueCompute;
+
+		VkSampleCountFlagBits m_msaaSamples;
 
 		VkPhysicalDevice m_physicalDevice;
 		VkPhysicalDeviceProperties m_physicalDeviceProperties;
@@ -242,8 +244,6 @@ namespace acid
 
 		ACID_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
 
-		VkAllocationCallbacks *GetVkAllocator() const { return m_allocator; }
-
 		VkInstance GetVkInstance() const { return m_instance; }
 
 		VkSurfaceKHR GetVkSurface() const { return m_surface; }
@@ -256,7 +256,11 @@ namespace acid
 
 		VkQueue GetVkQueueGraphics() const { return m_queueGraphics; }
 
+		VkQueue GetVkQueuePresent() const { return m_queuePresent; }
+
 		VkQueue GetVkQueueCompute() const { return m_queueCompute; }
+
+		VkSampleCountFlagBits GetVkMsaaSamples() const { return m_msaaSamples; }
 
 		VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
 
@@ -278,15 +282,17 @@ namespace acid
 
 		void CreateDebugCallback();
 
-		void CreatePhysicalDevice();
-
 		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
 		int ScorePhysicalDevice(const VkPhysicalDevice &device);
 
-		void CreateLogicalDevice();
+		VkSampleCountFlagBits GetMaxUsableSampleCount();
+
+		void CreatePhysicalDevice();
 
 		void CreateSurface();
+
+		void CreateLogicalDevice();
 
 		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
 

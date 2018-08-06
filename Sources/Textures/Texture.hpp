@@ -26,6 +26,7 @@ namespace acid
 		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
+		VkSampleCountFlagBits m_samples;
 
 		int32_t m_components;
 		int32_t m_width, m_height;
@@ -55,7 +56,7 @@ namespace acid
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
-		Texture(const std::string &filename, const bool &repeatEdges = false, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
+		Texture(const std::string &filename, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
@@ -102,7 +103,7 @@ namespace acid
 
 		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
 
-		static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
+		static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
 
 		static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
@@ -110,7 +111,7 @@ namespace acid
 
 		static void CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
-		static void CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler);
+		static void CreateImageSampler(const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler);
 
 		static void CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount = 1);
 	};
