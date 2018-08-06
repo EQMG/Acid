@@ -1,10 +1,11 @@
 #pragma once
 
 #include <vector>
-#include "Renderer/IRenderer.hpp"
-#include "Renderer/Buffers/UniformBuffer.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Particles.hpp"
 
 namespace acid

@@ -1,10 +1,9 @@
 #pragma once
 
+#include <BulletCollision/CollisionShapes/btConvexHullShape.h>
+#include "Collider.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Collider.hpp"
-
-class btConvexHullShape;
 
 namespace acid
 {
@@ -30,7 +29,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderConvexHull"; };
 
-		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		uint32_t GetPoints() const { return m_points; }
 

@@ -99,7 +99,7 @@ add_subdirectory(Sources)
 
 # Testing Sources
 if(ACID_BUILD_TESTING)
-	add_subdirectory(Tests/TestDeferred)
+	add_subdirectory(Tests/TestPhysics)
 	add_subdirectory(Tests/TestGuis)
 	add_subdirectory(Tests/TestMaths)
 endif()

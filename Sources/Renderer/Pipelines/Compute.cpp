@@ -1,6 +1,7 @@
 #include "Compute.hpp"
 
 #include <cmath>
+#include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -36,7 +37,7 @@ namespace acid
 
 	Compute::~Compute()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
@@ -52,7 +53,7 @@ namespace acid
 	{
 		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetWidth()) / float(m_computeCreate.GetWorkgroupSize())));
 		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetHeight()) / float(m_computeCreate.GetWorkgroupSize())));
-		vkCmdDispatch(commandBuffer.GetVkCommandBuffer(), groupCountX, groupCountY, 1);
+		vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
 	}
 
 	void Compute::CreateShaderProgram()
@@ -95,7 +96,7 @@ namespace acid
 
 	void Compute::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
@@ -114,7 +115,7 @@ namespace acid
 
 	void Compute::CreateDescriptorPool()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
@@ -135,7 +136,7 @@ namespace acid
 
 	void Compute::CreatePipelineLayout()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -147,8 +148,8 @@ namespace acid
 
 	void Compute::CreatePipelineCompute()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkComputePipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;

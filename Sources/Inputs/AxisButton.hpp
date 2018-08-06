@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IButton.hpp"
 #include "IAxis.hpp"
+#include "IButton.hpp"
 
 namespace acid
 {

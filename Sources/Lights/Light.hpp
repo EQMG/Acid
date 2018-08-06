@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
-#include "Objects/IComponent.hpp"
-#include "Objects/GameObject.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
+#include "Objects/GameObject.hpp"
+#include "Objects/IComponent.hpp"
 
 namespace acid
 {

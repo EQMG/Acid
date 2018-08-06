@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
+#include <BulletCollision/CollisionShapes/btCapsuleShape.h>
 #include "Collider.hpp"
-
-class btCapsuleShape;
+#include "Maths/Vector3.hpp"
 
 namespace acid
 {
@@ -29,7 +28,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderCapsule"; };
 
-		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 

@@ -1,8 +1,8 @@
 ﻿#include "UiInputGrabber.hpp"
 
 #include "Inputs/Keyboard.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -97,7 +97,7 @@ namespace acid
 		return std::to_string(value);
 	}
 
-	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const FontJustify &justify) :
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const TextJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), FontType::Resource("Fonts/Candara", "Regular"), justify, 0.36f)),
 		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"), 1)),

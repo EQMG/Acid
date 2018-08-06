@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Objects/IComponent.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "PipelineMaterial.hpp"
 

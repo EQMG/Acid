@@ -1,5 +1,6 @@
 ﻿#include "Renderpass.hpp"
 
+#include "Display/Display.hpp"
 #include "Renderer/Swapchain/DepthStencil.hpp"
 
 namespace acid
@@ -7,7 +8,7 @@ namespace acid
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Attachments,
 		std::vector<VkAttachmentDescription> attachments = {};
@@ -16,7 +17,7 @@ namespace acid
 		{
 			VkAttachmentDescription attachment = {};
 			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
-		//	attachment.samples = Display::Get()->GetVkMsaaSamples();
+		//	attachment.samples = Display::Get()->GetMsaaSamples();
 			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -31,7 +32,7 @@ namespace acid
 				break;
 			case ATTACHMENT_DEPTH:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				attachment.format = depthStencil.GetVkFormat();
+				attachment.format = depthStencil.GetFormat();
 				break;
 			case ATTACHMENT_SWAPCHAIN:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
@@ -132,7 +133,7 @@ namespace acid
 
 	Renderpass::~Renderpass()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}

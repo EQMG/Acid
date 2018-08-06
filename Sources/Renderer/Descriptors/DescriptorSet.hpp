@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
 #include <map>
-#include "Display/Display.hpp"
+#include <string>
+#include <vulkan/vulkan.h>
 #include "Display/Command/CommandBuffer.hpp"
 #include "Renderer/Pipelines/IPipeline.hpp"
 #include "Renderer/Pipelines/PipelineCreate.hpp"
@@ -29,6 +29,6 @@ namespace acid
 
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 
-		VkDescriptorSet GetVkDescriptorSet() const { return m_descriptorSet; }
+		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
 	};
 }

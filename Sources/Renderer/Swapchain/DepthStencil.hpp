@@ -22,14 +22,14 @@ namespace acid
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		VkImage GetVkImage() const { return m_image; }
+		VkImage GetImage() const { return m_image; }
 
-		VkDeviceMemory GetVkImageMemory() const { return m_imageMemory; }
+		VkDeviceMemory GetImageMemory() const { return m_imageMemory; }
 
-		VkImageView GetVkImageView() const { return m_imageView; }
+		VkImageView GetImageView() const { return m_imageView; }
 
-		VkFormat GetVkFormat() const { return m_format; }
+		VkFormat GetFormat() const { return m_format; }
 	};
 }

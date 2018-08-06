@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType, const FontJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType, const TextJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -78,7 +78,7 @@ namespace acid
 		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_y);
 		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_z);
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_w);
-		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
+		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);

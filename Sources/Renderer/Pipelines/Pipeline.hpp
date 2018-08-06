@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 #include "Textures/Texture.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
 #include "PipelineCreate.hpp"
 #include "ShaderProgram.hpp"
 
@@ -64,15 +62,15 @@ namespace acid
 
 		Texture *GetTexture(const uint32_t &i, const int &stage = -1) const;
 
-		VkDescriptorSetLayout GetVkDescriptorSetLayout() const override { return m_descriptorSetLayout; }
+		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetVkDescriptorPool() const override { return m_descriptorPool; }
+		VkDescriptorPool GetDescriptorPool() const override { return m_descriptorPool; }
 
-		VkPipeline GetVkPipeline() const override { return m_pipeline; }
+		VkPipeline GetPipeline() const override { return m_pipeline; }
 
-		VkPipelineLayout GetVkPipelineLayout() const override { return m_pipelineLayout; }
+		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
 
-		virtual VkPipelineBindPoint GetVkPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
+		virtual VkPipelineBindPoint GetPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
 	private:
 		void CreateShaderProgram();
 

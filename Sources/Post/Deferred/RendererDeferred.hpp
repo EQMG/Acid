@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Lights/Fog.hpp"
-#include "Renderer/IRenderer.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Cubemap.hpp"
 
 namespace acid

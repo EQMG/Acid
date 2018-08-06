@@ -1,6 +1,6 @@
 ﻿#include "Buffer.hpp"
 
-#include "Display/Queue/QueueIndices.hpp"
+#include "Display/Display.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -15,8 +15,8 @@ namespace acid
 			return;
 		}
 
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto queueIndices = Display::Get()->GetVkQueueIndices();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto queueIndices = Display::Get()->GetQueueIndices();
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -44,7 +44,7 @@ namespace acid
 
 	Buffer::~Buffer()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
@@ -52,7 +52,7 @@ namespace acid
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
 	{
-		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
 		vkGetPhysicalDeviceMemoryProperties(physicalDevice, &physicalDeviceMemoryProperties);
@@ -77,7 +77,7 @@ namespace acid
 
 		VkBufferCopy copyRegion = {};
 		copyRegion.size = size;
-		vkCmdCopyBuffer(commandBuffer.GetVkCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
+		vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
 
 		commandBuffer.End();
 		commandBuffer.Submit();

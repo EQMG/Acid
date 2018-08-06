@@ -1,11 +1,10 @@
 #pragma once
 
-#include <string>
 #include <functional>
 #include <map>
+#include <string>
 #include "Engine/Exports.hpp"
 #include "Files/LoadedValue.hpp"
-#include "Helpers/FormatString.hpp"
 
 namespace acid
 {

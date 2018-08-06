@@ -1,11 +1,11 @@
 #include "Vector3.hpp"
 
 #include <cassert>
-#include "Maths.hpp"
 #include "Colour.hpp"
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"
 #include "Vector2.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {

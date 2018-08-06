@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Maths/Matrix4.hpp"
 #include "JointData.hpp"
+#include "Maths/Matrix4.hpp"
 
 namespace acid
 {

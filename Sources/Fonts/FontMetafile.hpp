@@ -1,12 +1,12 @@
 ﻿#pragma once
 
+#include <map>
+#include <optional>
 #include <string>
 #include <vector>
-#include <optional>
-#include <map>
 #include "Files/Files.hpp"
-#include "Resources/Resources.hpp"
 #include "FontCharacter.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {

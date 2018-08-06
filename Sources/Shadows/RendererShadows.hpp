@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Renderer/IRenderer.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/IRenderer.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Shadows.hpp"
 
 namespace acid

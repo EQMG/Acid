@@ -1,6 +1,5 @@
 #include "ColliderSphere.hpp"
 
-#include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid

@@ -1,4 +1,4 @@
-set(TESTDEFERED_HEADERS_
+set(TESTPHYSICS_HEADERS_
         "Skybox/CelestialBody.hpp"
         "Skybox/SkyboxCycle.hpp"
         "Configs/ConfigManager.hpp"
@@ -11,8 +11,8 @@ set(TESTDEFERED_HEADERS_
         "World/World.hpp"
         )
 
-set(TESTDEFERED_SOURCES_
-        "TestDeferred.rc"
+set(TESTPHYSICS_SOURCES_
+        "TestPhysics.rc"
         "Skybox/CelestialBody.cpp"
         "Skybox/SkyboxCycle.cpp"
         "Configs/ConfigManager.cpp"
@@ -26,10 +26,10 @@ set(TESTDEFERED_SOURCES_
         "World/World.cpp"
         )
 
-source_group("Header Files" FILES ${TESTDEFERED_HEADERS_})
-source_group("Source Files" FILES ${TESTDEFERED_SOURCES_})
+source_group("Header Files" FILES ${TESTPHYSICS_HEADERS_})
+source_group("Source Files" FILES ${TESTPHYSICS_SOURCES_})
 
-set(TESTDEFERED_SOURCES
-        ${TESTDEFERED_HEADERS_}
-        ${TESTDEFERED_SOURCES_}
+set(TESTPHYSICS_SOURCES
+        ${TESTPHYSICS_HEADERS_}
+        ${TESTPHYSICS_SOURCES_}
         )

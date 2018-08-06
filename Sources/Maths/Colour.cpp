@@ -1,9 +1,9 @@
 #include "Colour.hpp"
 
 #include <cassert>
-#include "Maths.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {

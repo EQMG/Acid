@@ -5,9 +5,9 @@ namespace acid
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
 		IComponent(),
 		m_colour(colour),
-		m_position(Vector3()),
 		m_offset(offset),
-		m_radius(radius)
+		m_radius(radius),
+		m_position(Vector3())
 	{
 	}
 

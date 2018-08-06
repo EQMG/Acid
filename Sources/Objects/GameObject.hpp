@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 #include "Engine/Exports.hpp"
-#include "Scenes/ISpatialStructure.hpp"
 #include "Maths/Transform.hpp"
+#include "Scenes/ISpatialStructure.hpp"
 #include "IComponent.hpp"
 
 namespace acid

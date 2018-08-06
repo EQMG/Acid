@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
 #include <cstdint>
-#include "Maths/Vector3.hpp"
+#include <vector>
 #include "Animations/Skin/VertexSkinData.hpp"
+#include "Maths/Vector3.hpp"
 
 namespace acid
 {

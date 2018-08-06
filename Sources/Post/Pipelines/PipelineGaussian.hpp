@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Post/Filters/FilterBlurVertical.hpp"
 #include "Post/Filters/FilterBlurHorizontal.hpp"
+#include "Post/Filters/FilterBlurVertical.hpp"
 #include "Post/IPostPipeline.hpp"
 
 namespace acid

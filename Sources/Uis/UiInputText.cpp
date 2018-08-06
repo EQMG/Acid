@@ -1,8 +1,8 @@
 ﻿#include "UiInputText.hpp"
 
 #include "Inputs/Keyboard.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
 	const float UiInputText::SCALE_SELECTED = 1.8f;
 	const Colour UiInputText::COLOUR_NORMAL = Colour("#000000");
 
-	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify) :
+	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const TextJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), prefix + value, FontType::Resource("Fonts/Candara", "Regular"), justify, 0.36f)),
 		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"))),

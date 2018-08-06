@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "Joysticks.hpp"
 #include "IAxis.hpp"
+#include "Joysticks.hpp"
 
 namespace acid
 {

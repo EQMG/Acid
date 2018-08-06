@@ -9,8 +9,7 @@ namespace acid
 	FileXml::FileXml(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(new LoadedValue(nullptr, "?xml", "", {{"version",  "1.0"},
-													   {"encoding", "utf-8"}}))
+		m_parent(new LoadedValue(nullptr, "?xml", "", {{"version",  "1.0"}, {"encoding", "utf-8"}}))
 	{
 	}
 

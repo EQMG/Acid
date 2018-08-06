@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-#include <vector>
 #include <algorithm>
-#include "ISpatialStructure.hpp"
+#include <vector>
 #include "Objects/GameObject.hpp"
 #include "Objects/IComponent.hpp"
 #include "Physics/Rigidbody.hpp"
+#include "ISpatialStructure.hpp"
 
 namespace acid
 {

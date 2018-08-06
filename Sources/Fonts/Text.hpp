@@ -5,18 +5,20 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Uis/UiObject.hpp"
 #include "Uis/Uis.hpp"
-#include "FontType.hpp"
 #include "FontLine.hpp"
+#include "FontType.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// A enum that represents how a font will be justified.
+	/// A enum that represents how the text will be justified.
 	/// </summary>
-	enum FontJustify
+	enum TextJustify
 	{
 		JUSTIFY_LEFT = 0,
 		JUSTIFY_CENTRE = 1,
@@ -38,7 +40,7 @@ namespace acid
 
 		std::string m_string;
 		std::string m_newString;
-		FontJustify m_justify;
+		TextJustify m_justify;
 
 		std::shared_ptr<FontType> m_fontType;
 		float m_maxWidth;
@@ -68,7 +70,7 @@ namespace acid
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const FontJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const TextJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -101,7 +103,7 @@ namespace acid
 		/// Gets how the text should justify.
 		/// </summary>
 		/// <returns> How the text should justify. </returns>
-		FontJustify GetTextJustify() const { return m_justify; }
+		TextJustify GetTextJustify() const { return m_justify; }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.

@@ -1,6 +1,5 @@
 #include "ColliderHeightfield.hpp"
 
-#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid

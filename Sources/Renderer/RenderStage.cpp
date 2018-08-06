@@ -1,5 +1,7 @@
 #include "RenderStage.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
@@ -54,7 +56,7 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
 		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 
@@ -110,11 +112,11 @@ namespace acid
 
 	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
 	{
-		if (activeSwapchainImage > m_framebuffers->GetVkFramebuffers().size())
+		if (activeSwapchainImage > m_framebuffers->GetFramebuffers().size())
 		{
-			return m_framebuffers->GetVkFramebuffers().at(0);
+			return m_framebuffers->GetFramebuffers().at(0);
 		}
 
-		return m_framebuffers->GetVkFramebuffers().at(activeSwapchainImage);
+		return m_framebuffers->GetFramebuffers().at(activeSwapchainImage);
 	}
 }

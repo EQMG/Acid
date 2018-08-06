@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Textures/Cubemap.hpp"
 #include "Materials/IMaterial.hpp"
 #include "Maths/Colour.hpp"
+#include "Textures/Cubemap.hpp"
 
 namespace acid
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Joint/Joint.hpp"
 #include "Animation/Animation.hpp"
+#include "Joint/Joint.hpp"
 
 namespace acid
 {

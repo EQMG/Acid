@@ -1,16 +1,12 @@
 #pragma once
 
 #include <array>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
-#include "Display/Display.hpp"
+#include <SPIRV/GlslangToSpv.h>
+#include <vulkan/vulkan.h>
 #include "PipelineCreate.hpp"
-
-namespace glslang
-{
-	class TProgram;
-}
 
 namespace acid
 {

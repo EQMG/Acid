@@ -1,8 +1,9 @@
 ﻿#include "Pipeline.hpp"
 
-#include <SPIRV/GlslangToSpv.h>
+#include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
+#include <SPIRV/GlslangToSpv.h>
 
 namespace acid
 {
@@ -71,7 +72,7 @@ namespace acid
 
 	Pipeline::~Pipeline()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
@@ -142,7 +143,7 @@ namespace acid
 
 	void Pipeline::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
 
@@ -161,7 +162,7 @@ namespace acid
 
 	void Pipeline::CreateDescriptorPool()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
 
@@ -182,7 +183,7 @@ namespace acid
 
 	void Pipeline::CreatePipelineLayout()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -201,8 +202,8 @@ namespace acid
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = static_cast<VkPolygonMode>(m_pipelineCreate.GetPolygonMode());
-		m_rasterizationState.cullMode = static_cast<VkCullModeFlags>(m_pipelineCreate.GetCullMode());
+		m_rasterizationState.polygonMode = m_pipelineCreate.GetPolygonMode();
+		m_rasterizationState.cullMode = m_pipelineCreate.GetCullMode();
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -255,7 +256,7 @@ namespace acid
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.sampleShadingEnable = VK_FALSE;
-		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT; // Display::Get()->GetVkMsaaSamples()
+		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT; // Display::Get()->GetMsaaSamples()
 		m_multisampleState.minSampleShading = 0.0f;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -265,8 +266,8 @@ namespace acid
 
 	void Pipeline::CreatePipelinePolygon()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
 		auto bindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions();
@@ -282,7 +283,7 @@ namespace acid
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetVkRenderpass();
+		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;

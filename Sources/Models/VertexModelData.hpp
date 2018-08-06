@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 #include "Maths/Vector3.hpp"
 
 namespace acid

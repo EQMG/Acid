@@ -69,18 +69,18 @@ namespace acid
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
-			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
 			VkDeviceSize offsets[] = {0};
-			vkCmdBindVertexBuffers(commandBuffer.GetVkCommandBuffer(), 0, 1, vertexBuffers, offsets);
-			vkCmdBindIndexBuffer(commandBuffer.GetVkCommandBuffer(), m_indexBuffer->GetVkBuffer(), 0, m_indexBuffer->GetIndexType());
-			vkCmdDrawIndexed(commandBuffer.GetVkCommandBuffer(), m_indexBuffer->GetIndexCount(), instances, 0, 0, 0);
+			vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, vertexBuffers, offsets);
+			vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_indexBuffer->GetBuffer(), 0, m_indexBuffer->GetIndexType());
+			vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_indexBuffer->GetIndexCount(), instances, 0, 0, 0);
 		}
 		else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
 		{
-			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetVkBuffer()};
+			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
 			VkDeviceSize offsets[] = {0};
-			vkCmdBindVertexBuffers(commandBuffer.GetVkCommandBuffer(), 0, 1, vertexBuffers, offsets);
-			vkCmdDraw(commandBuffer.GetVkCommandBuffer(), m_vertexBuffer->GetVertexCount(), instances, 0, 0);
+			vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, vertexBuffers, offsets);
+			vkCmdDraw(commandBuffer.GetCommandBuffer(), m_vertexBuffer->GetVertexCount(), instances, 0, 0);
 		}
 		else
 		{

@@ -1,7 +1,7 @@
 #include "MaterialSkybox.hpp"
 
-#include "Scenes/Scenes.hpp"
 #include "Models/VertexModel.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -13,7 +13,7 @@ namespace acid
 		m_fogColour(Colour()),
 		m_fogLimits(Vector2(-1000000.0f, -1000000.0f)),
 		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_FRONT, {})))
+			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {})))
 	{
 	}
 

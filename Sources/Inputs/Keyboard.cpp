@@ -1,7 +1,5 @@
 #include "Keyboard.hpp"
 
-#include <GLFW/glfw3.h>
-
 namespace acid
 {
 	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -33,8 +31,8 @@ namespace acid
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetGlfwWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetGlfwWindow(), CallbackChar);
+		glfwSetKeyCallback(Display::Get()->GetWindow(), CallbackKey);
+		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
 	}
 
 	Keyboard::~Keyboard()

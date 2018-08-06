@@ -1,12 +1,14 @@
 ﻿#include "VertexBuffer.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	VertexBuffer::VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, void *newData) :
 		Buffer(elementSize * vertexCount, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
 		m_vertexCount(static_cast<uint32_t>(vertexCount))
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Copies the vertex data to the buffer.
 		void *data;

@@ -4,13 +4,6 @@
 #define NOMINMAX
 #include <Windows.h>
 #endif
-#ifdef ACID_BUILD_MACOS
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#else
-#include <AL/al.h>
-#include <AL/alc.h>
-#endif
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 

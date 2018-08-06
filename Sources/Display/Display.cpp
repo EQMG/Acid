@@ -5,7 +5,6 @@
 #include <Windows.h>
 #endif
 #include <SPIRV/GlslangToSpv.h>
-#include <GLFW/glfw3.h>
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
@@ -629,7 +628,7 @@ namespace acid
 
 	VkSampleCountFlagBits Display::GetMaxUsableSampleCount()
 	{
-		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		VkPhysicalDeviceProperties physicalDeviceProperties;
 		vkGetPhysicalDeviceProperties(physicalDevice, &physicalDeviceProperties);

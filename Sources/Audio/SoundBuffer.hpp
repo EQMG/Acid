@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include "Files/Files.hpp"
-#include "Resources/Resources.hpp"
 #include "Maths/Vector3.hpp"
+#include "Resources/Resources.hpp"
 #include "Audio.hpp"
 
 namespace acid
@@ -17,7 +17,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		uint32_t m_buffer;
+		ALuint m_buffer;
 	public:
 		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename)
 		{
@@ -40,11 +40,11 @@ namespace acid
 
 		std::string GetName() override { return m_filename; };
 
-		uint32_t GetBuffer() const { return m_buffer; };
+		ALuint GetBuffer() const { return m_buffer; };
 
 	private:
-		static uint32_t LoadBufferWav(const std::string &filename);
+		static ALuint LoadBufferWav(const std::string &filename);
 
-		static uint32_t LoadBufferOgg(const std::string &filename);
+		static ALuint LoadBufferOgg(const std::string &filename);
 	};
 }

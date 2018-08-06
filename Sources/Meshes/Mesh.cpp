@@ -1,12 +1,12 @@
-#include <Helpers/FileSystem.hpp>
-#include <Models/Obj/ModelObj.hpp>
 #include "Mesh.hpp"
 
+#include "Helpers/FileSystem.hpp"
 #include "Models/Shapes/ModelCube.hpp"
 #include "Models/Shapes/ModelCylinder.hpp"
 #include "Models/Shapes/ModelDisk.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/Shapes/ModelSphere.hpp"
+#include "Models/Obj/ModelObj.hpp"
 
 namespace acid
 {

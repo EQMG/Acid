@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Engine/Engine.hpp"
-#include "Display/Display.hpp"
+#include <vulkan/vulkan.h>
 #include "Display/Command/CommandBuffer.hpp"
+#include "Engine/Engine.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
-#include "RenderStage.hpp"
 #include "IManagerRender.hpp"
+#include "RenderStage.hpp"
 
 namespace acid
 {
@@ -94,13 +94,13 @@ namespace acid
 
 		Swapchain *GetSwapchain() const { return m_swapchain; }
 
-		VkCommandPool GetVkCommandPool() const { return m_commandPool; }
+		VkCommandPool GetCommandPool() const { return m_commandPool; }
 
 		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer; }
 
-		uint32_t GetVkActiveSwapchainImage() const { return m_activeSwapchainImage; }
+		uint32_t GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
 
-		VkPipelineCache GetVkPipelineCache() const { return m_pipelineCache; }
+		VkPipelineCache GetPipelineCache() const { return m_pipelineCache; }
 	private:
 		void CreateFences();
 

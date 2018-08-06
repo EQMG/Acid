@@ -38,7 +38,7 @@ namespace test
 		}
 	}
 
-	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const FontJustify &justify)
+	Text *OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify)
 	{
 		Text *result = new Text(this, UiBound(Vector2(positionX, positionY), "BottomLeft", true), 1.1f, content, FontType::Resource("Fonts/ProximaNova", "Regular"), justify);
 		result->SetTextColour(Colour(1.0f, 1.0f, 1.0f));

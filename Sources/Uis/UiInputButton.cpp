@@ -1,7 +1,7 @@
 ﻿#include "UiInputButton.hpp"
 
-#include "Scenes/Scenes.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -10,7 +10,7 @@ namespace acid
 	const float UiInputButton::SCALE_SELECTED = 1.8f;
 	const Colour UiInputButton::COLOUR_NORMAL = Colour("#000000");
 
-	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string, const FontJustify &justify) :
+	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string, const TextJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(new Text(this, UiBound(position, "Centre", true), SCALE_NORMAL, string, FontType::Resource("Fonts/ProximaNova", "Regular"), justify, 0.36f)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, Vector2(0.36f, 0.05f)), Texture::Resource("Guis/Button.png"))),

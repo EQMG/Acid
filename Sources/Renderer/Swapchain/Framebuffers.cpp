@@ -1,5 +1,6 @@
 ﻿#include "Framebuffers.hpp"
 
+#include "Display/Display.hpp"
 #include "Renderer/Renderpass/Renderpass.hpp"
 #include "DepthStencil.hpp"
 
@@ -9,7 +10,7 @@ namespace acid
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
 		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
@@ -30,9 +31,9 @@ namespace acid
 			}
 		}
 
-		m_framebuffers.resize(swapchain.GetVkImageCount());
+		m_framebuffers.resize(swapchain.GetImageCount());
 
-		for (uint32_t i = 0; i < swapchain.GetVkImageCount(); i++)
+		for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
 		{
 			std::vector<VkImageView> attachments = {};
 
@@ -44,17 +45,17 @@ namespace acid
 					attachments.emplace_back(GetTexture(image.GetBinding())->GetImageView());
 					break;
 				case ATTACHMENT_DEPTH:
-					attachments.emplace_back(depthStencil.GetVkImageView());
+					attachments.emplace_back(depthStencil.GetImageView());
 					break;
 				case ATTACHMENT_SWAPCHAIN:
-					attachments.emplace_back(swapchain.GetVkImageViews().at(i));
+					attachments.emplace_back(swapchain.GetImageViews().at(i));
 					break;
 				}
 			}
 
 			VkFramebufferCreateInfo framebufferCreateInfo = {};
 			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferCreateInfo.renderPass = renderPass.GetVkRenderpass();
+			framebufferCreateInfo.renderPass = renderPass.GetRenderpass();
 			framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 			framebufferCreateInfo.pAttachments = attachments.data();
 			framebufferCreateInfo.width = extent.width;
@@ -67,7 +68,7 @@ namespace acid
 
 	Framebuffers::~Framebuffers()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		for (auto &attachment : m_imageAttachments)
 		{

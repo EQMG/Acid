@@ -1,10 +1,9 @@
 #pragma once
 
-#include <array>
-#include <memory>
 #include <chrono>
-#include "ModuleRegister.hpp"
+#include <memory>
 #include "IUpdater.hpp"
+#include "ModuleRegister.hpp"
 
 /// <summary>
 /// The base Acid namespace.
@@ -12,9 +11,7 @@
 namespace acid
 {
 	/// <summary>
-	/// A engine used for simplifying the creation of complicated applications. By using flexible Module loading and Extension injecting, it allows the engine to be used for Networking, Imaging, AIs, Games, and many more applications.
-	/// Start off by creating a new Engine object in your main thread, using Extensions in the constructor. By using Extensions: Modules can be required and therefor loaded into the engine.
-	/// Implementing interfaces like <seealso cref="Standards"/> with your extension can allow you do task specific things with your Extensions. After creating your Engine object call <seealso cref="#Run()"/> to start.
+	/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
 	/// </summary>
 	class ACID_EXPORT Engine
 	{

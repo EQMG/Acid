@@ -1,11 +1,11 @@
 #include "RendererDeferred.hpp"
 
-#include "Scenes/Scenes.hpp"
-#include "Lights/Light.hpp"
 #include "Helpers/FileSystem.hpp"
+#include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
 #include "Renderer/Pipelines/Compute.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
@@ -25,7 +25,7 @@ namespace acid
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_BACK, GetDefines()))),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(ComputeBrdf(512)), // Texture::Resource("BrdfLut.png")
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
