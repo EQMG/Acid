@@ -390,7 +390,6 @@ namespace acid
 
 	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag)
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		EShLanguage language = GetEshLanguage(stageFlag);
@@ -448,7 +447,7 @@ namespace acid
 		shaderModuleCreateInfo.pCode = spirv.data();
 
 		VkShaderModule shaderModule = VK_NULL_HANDLE;
-		Display::CheckVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, allocator, &shaderModule));
+		Display::CheckVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 		return shaderModule;
 	}
 

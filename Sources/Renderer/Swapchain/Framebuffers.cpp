@@ -9,7 +9,6 @@ namespace acid
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
@@ -62,13 +61,12 @@ namespace acid
 			framebufferCreateInfo.height = extent.height;
 			framebufferCreateInfo.layers = 1;
 
-			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, allocator, &m_framebuffers.at(i)));
+			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
 
 	Framebuffers::~Framebuffers()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &attachment : m_imageAttachments)
@@ -78,7 +76,7 @@ namespace acid
 
 		for (auto &framebuffer : m_framebuffers)
 		{
-			vkDestroyFramebuffer(logicalDevice, framebuffer, allocator);
+			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
 		}
 	}
 }

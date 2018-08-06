@@ -36,17 +36,16 @@ namespace acid
 
 	Compute::~Compute()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		vkDeviceWaitIdle(logicalDevice);
 
-		vkDestroyShaderModule(logicalDevice, m_shaderModule, allocator);
+		vkDestroyShaderModule(logicalDevice, m_shaderModule, nullptr);
 
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, allocator);
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, allocator);
-		vkDestroyPipeline(logicalDevice, m_pipeline, allocator);
-		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, allocator);
+		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
+		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
+		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
 	void Compute::CmdRender(const CommandBuffer &commandBuffer) const
@@ -96,7 +95,6 @@ namespace acid
 
 	void Compute::CreateDescriptorLayout()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
@@ -112,12 +110,11 @@ namespace acid
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, allocator, &m_descriptorSetLayout));
+		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void Compute::CreateDescriptorPool()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
@@ -132,15 +129,14 @@ namespace acid
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 64; // Arbitrary number.
+		descriptorPoolCreateInfo.maxSets = 64; // TODO: Arbitrary number.
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, allocator, &m_descriptorPool));
+		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void Compute::CreatePipelineLayout()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
@@ -149,12 +145,11 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
 		vkDeviceWaitIdle(logicalDevice);
-		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, allocator, &m_pipelineLayout));
+		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Compute::CreatePipelineCompute()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetVkPipelineCache();
 
@@ -165,6 +160,6 @@ namespace acid
 		pipelineCreateInfo.basePipelineIndex = -1;
 		pipelineCreateInfo.stage = m_shaderStageCreateInfo;
 
-		vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, allocator, &m_pipeline);
+		vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 	}
 }

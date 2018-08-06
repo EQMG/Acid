@@ -21,6 +21,7 @@ namespace acid
 		m_mipLevels(1),
 		m_anisotropic(anisotropic),
 		m_nearest(nearest),
+		m_samples(),
 		m_components(0),
 		m_width(0),
 		m_height(0),
@@ -45,30 +46,29 @@ namespace acid
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height, 1) : 1;
 
-		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging->GetVkBufferMemory(), 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging.GetVkBufferMemory(), 0, m_size, 0, &data);
 		memcpy(data, pixels, m_size);
-		vkUnmapMemory(logicalDevice, bufferStaging->GetVkBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging.GetVkBufferMemory());
 
-		CreateImage(m_width, m_height, 1, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetVkBuffer(), m_image);
-		CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels);
-		CreateImageSampler(m_anisotropic, m_nearest, m_mipLevels, m_sampler);
-		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView);
+		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT |
+			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
+		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
+		CopyBufferToImage(m_width, m_height, 1, bufferStaging.GetVkBuffer(), m_image, 1);
+		CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
+		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
+		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
+		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
 
-		Buffer::CopyBuffer(bufferStaging->GetVkBuffer(), m_buffer, m_size);
+		Buffer::CopyBuffer(bufferStaging.GetVkBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
 
-		delete bufferStaging;
 		DeletePixels(pixels);
 		m_filename = filename;
 
@@ -83,7 +83,7 @@ namespace acid
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
 		m_filename(""),
-		m_repeatEdges(false),
+		m_repeatEdges(true),
 		m_mipLevels(1),
 		m_anisotropic(false),
 		m_nearest(false),
@@ -116,13 +116,14 @@ namespace acid
 		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging->GetVkBufferMemory());
 
-		CreateImage(m_width, m_height, 1, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetVkBuffer(), m_image);
-		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1);
-		CreateImageSampler(m_anisotropic, m_nearest, m_mipLevels, m_sampler);
-		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView);
+		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
+			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
+		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
+		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetVkBuffer(), m_image, 1);
+	//	Texture::CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
+		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
+		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
+		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
 
 		Buffer::CopyBuffer(bufferStaging->GetVkBuffer(), GetVkBuffer(), m_size);
 
@@ -136,12 +137,11 @@ namespace acid
 
 	Texture::~Texture()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, allocator);
-		vkDestroyImageView(logicalDevice, m_imageView, allocator);
-		vkDestroyImage(logicalDevice, m_image, allocator);
+		vkDestroySampler(logicalDevice, m_sampler, nullptr);
+		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
+		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 
 	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
@@ -261,7 +261,6 @@ namespace acid
 		return data;
 	}
 
-
 	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
 	{
 		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
@@ -295,17 +294,16 @@ namespace acid
 
 	uint32_t Texture::GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth)
 	{
-		return (uint32_t) std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1;
+		return static_cast<uint32_t>(std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1);
 	}
 
-	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
+	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
+		imageCreateInfo.imageType = type;
 		imageCreateInfo.extent.width = width;
 		imageCreateInfo.extent.height = height;
 		imageCreateInfo.extent.depth = depth;
@@ -315,10 +313,10 @@ namespace acid
 		imageCreateInfo.tiling = tiling;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		imageCreateInfo.usage = usage;
-		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.samples = samples;
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, allocator, &image));
+		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &image));
 
 		VkMemoryRequirements memoryRequirements;
 		vkGetImageMemoryRequirements(logicalDevice, image, &memoryRequirements);
@@ -328,7 +326,7 @@ namespace acid
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);;
 
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, allocator, &imageMemory));
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
 
 		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
 	}
@@ -404,6 +402,11 @@ namespace acid
 
 	void Texture::CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
+		/*if (mipLevels == 1)
+		{
+			return;
+		}*/
+
 		CommandBuffer commandBuffer = CommandBuffer();
 
 		VkImageMemoryBarrier barrier = {};
@@ -478,18 +481,17 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void Texture::CreateImageSampler(const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
+	void Texture::CreateImageSampler(const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 		samplerCreateInfo.magFilter = nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
 		samplerCreateInfo.minFilter = nearest ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
-		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		samplerCreateInfo.addressModeU = repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		samplerCreateInfo.addressModeV = repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+		samplerCreateInfo.addressModeW = repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 		samplerCreateInfo.anisotropyEnable = anisotropic ? VK_TRUE : VK_FALSE;
 		samplerCreateInfo.maxAnisotropy = std::min(ANISOTROPY, Display::Get()->GetVkPhysicalDeviceProperties().limits.maxSamplerAnisotropy);
 		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
@@ -501,12 +503,11 @@ namespace acid
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 
-		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, allocator, &sampler));
+		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 	}
 
 	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
@@ -525,6 +526,6 @@ namespace acid
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		imageViewCreateInfo.subresourceRange.layerCount = layerCount;
 
-		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &imageView));
+		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
 	}
 }

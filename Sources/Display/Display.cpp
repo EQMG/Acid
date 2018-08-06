@@ -131,14 +131,15 @@ namespace acid
 		m_instanceExtensionList(std::vector<const char *>()),
 		m_deviceExtensionList(std::vector<const char *>()),
 		m_debugReportCallback(VK_NULL_HANDLE),
-		m_allocator(nullptr),
 		m_instance(VK_NULL_HANDLE),
 		m_surface(VK_NULL_HANDLE),
 		m_surfaceCapabilities({}),
 		m_surfaceFormat({}),
 		m_logicalDevice(VK_NULL_HANDLE),
 		m_queueGraphics(VK_NULL_HANDLE),
+		m_queuePresent(VK_NULL_HANDLE),
 		m_queueCompute(VK_NULL_HANDLE),
+		m_msaaSamples(VK_SAMPLE_COUNT_1_BIT),
 		m_physicalDevice(VK_NULL_HANDLE),
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
@@ -151,8 +152,8 @@ namespace acid
 		CreateInstance();
 		CreateDebugCallback();
 		CreatePhysicalDevice();
-		CreateLogicalDevice();
 		CreateSurface();
+		CreateLogicalDevice();
 
 		glslang::InitializeProcess();
 	}
@@ -168,11 +169,10 @@ namespace acid
 		glfwDestroyWindow(m_window);
 
 		// Destroys Vulkan.
-		vkDestroyDevice(m_logicalDevice, m_allocator);
-		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, m_allocator);
-		vkDestroySurfaceKHR(m_instance, m_surface, m_allocator);
-		vkDestroyInstance(m_instance, m_allocator);
-		delete m_allocator;
+		vkDestroyDevice(m_logicalDevice, nullptr);
+		FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
+		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
+		vkDestroyInstance(m_instance, nullptr);
 
 		// Terminate GLFW.
 		glfwTerminate();
@@ -534,7 +534,7 @@ namespace acid
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 
-		CheckVk(vkCreateInstance(&instanceCreateInfo, m_allocator, &m_instance));
+		CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
 	void Display::CreateDebugCallback()
@@ -550,35 +550,7 @@ namespace acid
 			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 			debugReportCallbackCreateInfo.pUserData = nullptr;
 
-			CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, m_allocator, &m_debugReportCallback));
-		}
-	}
-
-	void Display::CreatePhysicalDevice()
-	{
-		uint32_t physicalDeviceCount;
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
-		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
-
-		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
-
-		if (m_physicalDevice == nullptr)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
-		}
-
-		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
-		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
-		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
-
-		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
-
-		m_queueIndices = QueueIndices(m_physicalDevice);
-
-		if (m_queueIndices.GetGraphicsFamily() == -1)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+			CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
 		}
 	}
 
@@ -655,6 +627,83 @@ namespace acid
 		return score;
 	}
 
+	VkSampleCountFlagBits Display::GetMaxUsableSampleCount()
+	{
+		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
+
+		VkPhysicalDeviceProperties physicalDeviceProperties;
+		vkGetPhysicalDeviceProperties(physicalDevice, &physicalDeviceProperties);
+
+		VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
+		if (counts & VK_SAMPLE_COUNT_64_BIT) { return VK_SAMPLE_COUNT_64_BIT; }
+		if (counts & VK_SAMPLE_COUNT_32_BIT) { return VK_SAMPLE_COUNT_32_BIT; }
+		if (counts & VK_SAMPLE_COUNT_16_BIT) { return VK_SAMPLE_COUNT_16_BIT; }
+		if (counts & VK_SAMPLE_COUNT_8_BIT) { return VK_SAMPLE_COUNT_8_BIT; }
+		if (counts & VK_SAMPLE_COUNT_4_BIT) { return VK_SAMPLE_COUNT_4_BIT; }
+		if (counts & VK_SAMPLE_COUNT_2_BIT) { return VK_SAMPLE_COUNT_2_BIT; }
+
+		return VK_SAMPLE_COUNT_1_BIT;
+	}
+
+	void Display::CreatePhysicalDevice()
+	{
+		uint32_t physicalDeviceCount;
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
+		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
+
+		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
+
+		if (m_physicalDevice == nullptr)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
+		}
+
+		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
+		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
+
+		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
+
+		m_msaaSamples = GetMaxUsableSampleCount();
+	}
+
+	void Display::CreateSurface()
+	{
+		// Creates the WSI Vulkan surface.
+		CheckVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
+
+		m_queueIndices = QueueIndices(m_physicalDevice, m_surface);
+
+		if (m_queueIndices.GetGraphicsFamily() == -1)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		}
+
+		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
+
+		VkBool32 physicalDeviceSurfaceSupport = false;
+		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_queueIndices.GetGraphicsFamily(), m_surface, &physicalDeviceSurfaceSupport);
+
+		if (!physicalDeviceSurfaceSupport)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find a physical surface!");
+		}
+
+		uint32_t physicalDeviceFormatCount = 0;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
+		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, physicalDeviceFormats.data());
+
+		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
+		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
+
+		if (physicalDeviceFormats[0].format != VK_FORMAT_UNDEFINED)
+		{
+			m_surfaceFormat = physicalDeviceFormats[0];
+		}
+	}
+
 	void Display::CreateLogicalDevice()
 	{
 		float queuePriorities[] = {1.0f, 1.0f};
@@ -682,39 +731,11 @@ namespace acid
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
 
-		CheckVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, m_allocator, &m_logicalDevice));
+		CheckVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetGraphicsFamily(), 0, &m_queueGraphics);
+		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetPresentFamily(), 0, &m_queuePresent);
 		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetComputeFamily(), 0, &m_queueCompute);
-	}
-
-	void Display::CreateSurface()
-	{
-		// Creates the WSI Vulkan surface.
-		CheckVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
-
-		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
-
-		VkBool32 physicalDeviceSurfaceSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_queueIndices.GetGraphicsFamily(), m_surface, &physicalDeviceSurfaceSupport);
-
-		if (!physicalDeviceSurfaceSupport)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find a physical surface!");
-		}
-
-		uint32_t physicalDeviceFormatCount = 0;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
-		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, physicalDeviceFormats.data());
-
-		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
-		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-
-		if (physicalDeviceFormats[0].format != VK_FORMAT_UNDEFINED)
-		{
-			m_surfaceFormat = physicalDeviceFormats[0];
-		}
 	}
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)

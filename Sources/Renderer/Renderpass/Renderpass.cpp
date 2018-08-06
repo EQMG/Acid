@@ -7,7 +7,6 @@ namespace acid
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		// Attachments,
@@ -17,6 +16,7 @@ namespace acid
 		{
 			VkAttachmentDescription attachment = {};
 			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		//	attachment.samples = Display::Get()->GetVkMsaaSamples();
 			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -85,7 +85,7 @@ namespace acid
 			// Dependencies.
 			VkSubpassDependency subpassDependency = {};
 			subpassDependency.srcAccessMask = 0;
-			subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT; // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
 
 			if (renderpassCreate.GetSubpasses().size() == 1)
 			{
@@ -127,14 +127,13 @@ namespace acid
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 		renderPassCreateInfo.pDependencies = dependencies.data();
 
-		Display::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, allocator, &m_renderPass));
+		Display::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
 	Renderpass::~Renderpass()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
-		vkDestroyRenderPass(logicalDevice, m_renderPass, allocator);
+		vkDestroyRenderPass(logicalDevice, m_renderPass, nullptr);
 	}
 }

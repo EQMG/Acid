@@ -4,20 +4,19 @@
 
 namespace acid
 {
-	QueueIndices::QueueIndices(const int &graphicsFamily, const int &computeFamily, const int &transferFamily, const int &sparseFamily) :
+	QueueIndices::QueueIndices(const int &graphicsFamily, const int &presentFamily, const int &computeFamily) :
 		m_graphicsFamily(graphicsFamily),
+		m_presentFamily(presentFamily),
 		m_computeFamily(computeFamily),
-		m_transferFamily(transferFamily),
-		m_sparseFamily(sparseFamily),
-		m_array({static_cast<uint32_t>(m_graphicsFamily), static_cast<uint32_t>(m_computeFamily), static_cast<uint32_t>(m_transferFamily), static_cast<uint32_t>(m_sparseFamily)})
+		m_array(std::vector<uint32_t>())
 	{
 	}
 
-	QueueIndices::QueueIndices(const VkPhysicalDevice &physicalDevice) :
+	QueueIndices::QueueIndices(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface) :
 		m_graphicsFamily(-1),
+		m_presentFamily(-1),
 		m_computeFamily(-1),
-		m_transferFamily(-1),
-		m_sparseFamily(-1)
+		m_array(std::vector<uint32_t>())
 	{
 		uint32_t deviceQueueFamilyPropertyCount;
 		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
@@ -32,56 +31,13 @@ namespace acid
 				m_graphicsFamily = i;
 			}
 
-			// Check for compute support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT)
+			// Check for presentation support.
+			VkBool32 presentSupport = VK_FALSE;
+			vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, surface, &presentSupport);
+
+			if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)
 			{
-				m_computeFamily = i;
-			}
-
-			// Check for transfer support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
-			{
-				m_transferFamily = i;
-			}
-
-			// Check for sparse binding support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_SPARSE_BINDING_BIT)
-			{
-				m_sparseFamily = i;
-			}
-		}
-
-		m_array = {static_cast<uint32_t>(m_graphicsFamily), static_cast<uint32_t>(m_computeFamily), static_cast<uint32_t>(m_transferFamily), static_cast<uint32_t>(m_sparseFamily)};
-	}
-
-	QueueIndices::QueueIndices(const VkPhysicalDevice &physicalDevice, const VkSurfaceKHR &surface) :
-		m_graphicsFamily(-1),
-		m_computeFamily(-1),
-		m_transferFamily(-1),
-		m_sparseFamily(-1)
-	{
-		uint32_t deviceQueueFamilyPropertyCount;
-		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
-		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
-
-		for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
-		{
-			if (deviceQueueFamilyProperties[i].queueCount <= 0)
-			{
-				continue;
-			}
-
-			// Check for graphics and presentation support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
-			{
-				VkBool32 presentSupport;
-				vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, surface, &presentSupport);
-
-				if (presentSupport)
-				{
-					m_graphicsFamily = i;
-				}
+				m_presentFamily = i;
 			}
 
 			// Check for compute support.
@@ -90,19 +46,7 @@ namespace acid
 				m_computeFamily = i;
 			}
 
-			// Check for transfer support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
-			{
-				m_transferFamily = i;
-			}
-
-			// Check for sparse binding support.
-			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_SPARSE_BINDING_BIT)
-			{
-				m_sparseFamily = i;
-			}
-
-			if (m_graphicsFamily >= 0 && m_computeFamily >= 0 && m_transferFamily >= 0 && m_sparseFamily >= 0)
+			if (IsComplete())
 			{
 				break;
 			}
@@ -110,11 +54,29 @@ namespace acid
 			i++;
 		}
 
-		m_array = {static_cast<uint32_t>(m_graphicsFamily), static_cast<uint32_t>(m_computeFamily), static_cast<uint32_t>(m_transferFamily), static_cast<uint32_t>(m_sparseFamily)};
+		UpdateArray();
 	}
 
 	bool QueueIndices::IsComplete() const
 	{
-		return m_graphicsFamily >= 0 && m_computeFamily >= 0 && m_transferFamily >= 0 && m_sparseFamily >= 0;
+		return m_graphicsFamily >= 0 && m_presentFamily >= 0 && m_computeFamily >= 0;
+	}
+
+	void QueueIndices::UpdateArray()
+	{
+		if (m_graphicsFamily != -1)
+		{
+			m_array.emplace_back(m_graphicsFamily);
+		}
+
+		if (m_presentFamily != -1)
+		{
+			m_array.emplace_back(m_presentFamily);
+		}
+
+		if (m_computeFamily != -1)
+		{
+			m_array.emplace_back(m_computeFamily);
+		}
 	}
 }

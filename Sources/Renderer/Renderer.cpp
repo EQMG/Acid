@@ -24,7 +24,6 @@ namespace acid
 
 	Renderer::~Renderer()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
@@ -40,11 +39,11 @@ namespace acid
 		delete m_swapchain;
 		delete m_commandBuffer;
 
-		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, allocator);
+		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
-		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, allocator);
-		vkDestroySemaphore(logicalDevice, m_semaphore, allocator);
-		vkDestroyCommandPool(logicalDevice, m_commandPool, allocator);
+		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
+		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
+		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
 	}
 
 	void Renderer::Update()
@@ -212,6 +211,7 @@ namespace acid
 	{
 		auto renderStage = GetRenderStage(i);
 		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
+		auto presentQueue = Display::Get()->GetVkQueuePresent();
 
 		vkCmdEndRenderPass(commandBuffer.GetVkCommandBuffer());
 		Display::CheckVk(vkEndCommandBuffer(commandBuffer.GetVkCommandBuffer()));
@@ -256,7 +256,7 @@ namespace acid
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &result;
 
-		const VkResult queuePresentResult = vkQueuePresentKHR(queueGraphics, &presentInfo);
+		const VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
 		{
@@ -301,43 +301,40 @@ namespace acid
 
 	void Renderer::CreateFences()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		vkCreateFence(logicalDevice, &fenceCreateInfo, allocator, &m_fenceSwapchainImage);
+		vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
 	}
 
 	void Renderer::CreateCommandPool()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, allocator, &m_semaphore));
+		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetVkQueueIndices().GetGraphicsFamily();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
-		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, allocator, &m_commandPool));
+		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = new CommandBuffer(false);
 	}
 
 	void Renderer::CreatePipelineCache()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 
-		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, allocator, &m_pipelineCache));
+		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::RecreatePass(const uint32_t &i)

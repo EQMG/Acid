@@ -10,7 +10,6 @@ namespace acid
 		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
 		auto surface = Display::Get()->GetVkSurface();
@@ -61,18 +60,19 @@ namespace acid
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (queueIndices.GetGraphicsFamily() != queueIndices.GetTransferFamily())
+		if (queueIndices.GetGraphicsFamily() != queueIndices.GetPresentFamily())
 		{
+			std::array<uint32_t, 2> queueFamily = {queueIndices.GetGraphicsFamily(), queueIndices.GetPresentFamily()};
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueIndices.GetArray().size());
-			swapchainCreateInfo.pQueueFamilyIndices = queueIndices.GetArray().data();
+			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
+			swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
 		}
 		else
 		{
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
-		Display::CheckVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, allocator, &m_swapchain));
+		Display::CheckVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
 		Display::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
 		m_swapchainImages.resize(m_swapchainImageCount);
@@ -97,20 +97,19 @@ namespace acid
 			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
 			imageViewCreateInfo.subresourceRange.layerCount = 1;
 
-			Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, allocator, &m_swapchainImageViews.at(i)));
+			Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchainImageViews.at(i)));
 		}
 	}
 
 	Swapchain::~Swapchain()
 	{
-		auto allocator = Display::Get()->GetVkAllocator();
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
 		for (auto &imageView : m_swapchainImageViews)
 		{
-			vkDestroyImageView(logicalDevice, imageView, allocator);
+			vkDestroyImageView(logicalDevice, imageView, nullptr);
 		}
 
-		vkDestroySwapchainKHR(logicalDevice, m_swapchain, allocator);
+		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
 	}
 }

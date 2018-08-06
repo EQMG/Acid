@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <array>
+#include <vector>
 #include <vulkan/vulkan.h>
 #include "Engine/Exports.hpp"
 
@@ -13,19 +13,12 @@ namespace acid
 	{
 	private:
 		int m_graphicsFamily;
+		int m_presentFamily;
 		int m_computeFamily;
-		int m_transferFamily;
-		int m_sparseFamily;
 
-		std::array<uint32_t, 4> m_array;
+		std::vector<uint32_t> m_array;
 	public:
-		QueueIndices(const int &graphicsFamily = -1, const int &computeFamily = -1, const int &transferFamily = -1, const int &sparseFamily = -1);
-
-		/// <summary>
-		/// Finds a queue families of a physical device.
-		/// </summary>
-		/// <param name="surface"> The surface. </param>
-		QueueIndices(const VkPhysicalDevice &physicalDevice);
+		QueueIndices(const int &graphicsFamily = -1, const int &presentFamily = -1, const int &computeFamily = -1);
 
 		/// <summary>
 		/// Finds a queue families of a physical device.
@@ -42,12 +35,12 @@ namespace acid
 
 		int GetGraphicsFamily() const { return m_graphicsFamily; }
 
+		int GetPresentFamily() const { return m_presentFamily; }
+
 		int GetComputeFamily() const { return m_computeFamily; }
 
-		int GetTransferFamily() const { return m_transferFamily; }
-
-		int GetSparceFamily() const { return m_sparseFamily; }
-
-		std::array<uint32_t, 4> GetArray() const { return m_array; }
+		std::vector<uint32_t> GetArray() const { return m_array; }
+	private:
+		void UpdateArray();
 	};
 }
