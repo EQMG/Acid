@@ -126,7 +126,7 @@ namespace acid
 		auto result = std::make_shared<Texture>(size, size);
 
 		// Creates the pipeline.
-		CommandBuffer commandBuffer = CommandBuffer(true, COMMAND_BUFFER_LEVEL_PRIMARY, COMMAND_QUEUE_COMPUTE);
+		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_GRAPHICS_BIT);
 		Compute compute = Compute(ComputeCreate("Shaders/Brdf.comp", size, size, 16, {}));
 
 		// Bind the pipeline.

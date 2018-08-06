@@ -73,40 +73,13 @@ namespace acid
 
 	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto commandPool = Renderer::Get()->GetVkCommandPool();
-		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
-
-		// Makes a temporary command buffer for the memory transfer operation.
-		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
-		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		commandBufferAllocateInfo.commandPool = commandPool;
-		commandBufferAllocateInfo.commandBufferCount = 1;
-
-		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &commandBuffer);
-
-		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
-		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-		vkBeginCommandBuffer(commandBuffer, &commandBufferBeginInfo);
+		CommandBuffer commandBuffer = CommandBuffer();
 
 		VkBufferCopy copyRegion = {};
 		copyRegion.size = size;
-		vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+		vkCmdCopyBuffer(commandBuffer.GetVkCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
 
-		vkEndCommandBuffer(commandBuffer);
-
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffer;
-
-		vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(queueGraphics);
-
-		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &commandBuffer);
+		commandBuffer.End();
+		commandBuffer.Submit();
 	}
 }

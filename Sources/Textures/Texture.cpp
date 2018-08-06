@@ -180,7 +180,7 @@ namespace acid
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
-		Texture::CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height);
+		CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height);
 
 		VkImageSubresource imageSubresource = {};
 		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

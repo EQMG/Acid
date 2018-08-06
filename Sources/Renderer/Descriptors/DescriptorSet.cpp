@@ -22,7 +22,6 @@ namespace acid
 		descriptorSetAllocateInfo.descriptorSetCount = 1;
 		descriptorSetAllocateInfo.pSetLayouts = layouts;
 
-		vkDeviceWaitIdle(logicalDevice);
 		Display::CheckVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 

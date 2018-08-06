@@ -73,6 +73,8 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
+		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
+
 		for (auto &shaderModule : m_modules)
 		{
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
@@ -154,7 +156,6 @@ namespace acid
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
 		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 
-		vkDeviceWaitIdle(logicalDevice);
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
@@ -176,7 +177,6 @@ namespace acid
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
 		descriptorPoolCreateInfo.maxSets = 16384; // Arbitrary number.
 
-		vkDeviceWaitIdle(logicalDevice);
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
@@ -189,7 +189,6 @@ namespace acid
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 
-		vkDeviceWaitIdle(logicalDevice);
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
