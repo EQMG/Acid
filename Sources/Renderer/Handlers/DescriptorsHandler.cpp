@@ -14,7 +14,7 @@ namespace acid
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_descriptorSet(new DescriptorSet(pipeline)),
 		m_descriptors(std::vector<IDescriptor *>(m_shaderProgram->GetLastDescriptorBinding() + 1)),
-		m_changed(false)
+		m_changed(true)
 	{
 	}
 

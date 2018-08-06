@@ -174,7 +174,7 @@ namespace acid
 		return descriptorWrite;
 	}
 
-	unsigned char *Texture::CopyPixels()
+	uint8_t *Texture::CopyPixels()
 	{
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 
@@ -186,7 +186,7 @@ namespace acid
 		VkSubresourceLayout subresourceLayout;
 		vkGetImageSubresourceLayout(logicalDevice, m_image, &imageSubresource, &subresourceLayout);
 
-		unsigned char *pixels = new unsigned char[subresourceLayout.size];
+		uint8_t *pixels = new uint8_t[subresourceLayout.size];
 
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
@@ -236,7 +236,7 @@ namespace acid
 		return size;
 	}
 
-	unsigned char *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	uint8_t *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
@@ -262,7 +262,7 @@ namespace acid
 	}
 
 
-	unsigned char *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
 	{
 		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
 		stbi_uc *offset = pixels;
@@ -284,11 +284,11 @@ namespace acid
 
 	bool Texture::WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components)
 	{
-		int result = stbi_write_png(filename.c_str(), width, height, components, data, 0);
+		int result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
 		return result == 1;
 	}
 
-	void Texture::DeletePixels(unsigned char *pixels)
+	void Texture::DeletePixels(uint8_t *pixels)
 	{
 		stbi_image_free(pixels);
 	}

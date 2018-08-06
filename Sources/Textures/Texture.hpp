@@ -60,7 +60,8 @@ namespace acid
 		/// <summary>
 		/// A new texture object from a array of pixels.
 		/// </summary>
-		Texture(const int32_t &width, const int32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+		Texture(const int32_t &width, const int32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, float *pixels = nullptr);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
@@ -71,7 +72,7 @@ namespace acid
 
 		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		unsigned char *CopyPixels();
+		uint8_t *CopyPixels();
 
 		std::string GetName() override { return m_filename; };
 
@@ -91,13 +92,13 @@ namespace acid
 
 		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
 
-		static unsigned char *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+		static uint8_t *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 
-		static unsigned char *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
+		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
 
 		static bool WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components = 4);
 
-		static void DeletePixels(unsigned char *pixels);
+		static void DeletePixels(uint8_t *pixels);
 
 		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
 

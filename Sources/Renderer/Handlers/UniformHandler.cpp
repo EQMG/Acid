@@ -16,7 +16,7 @@ namespace acid
 		m_uniformBlock(uniformBlock),
 		m_uniformBuffer(new UniformBuffer(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()))),
 		m_data(malloc(static_cast<size_t>(m_uniformBlock->GetSize()))),
-		m_changed(false)
+		m_changed(true)
 	{
 	}
 

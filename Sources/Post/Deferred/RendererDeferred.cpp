@@ -123,11 +123,11 @@ namespace acid
 
 	std::shared_ptr<Texture> RendererDeferred::ComputeBrdf(const uint32_t &size)
 	{
-		auto result = std::make_shared<Texture>(size, size, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT);
+		auto result = std::make_shared<Texture>(size, size);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, COMMAND_BUFFER_LEVEL_PRIMARY, COMMAND_QUEUE_COMPUTE);
-		Compute compute = Compute(ComputeCreate("Shaders/Brdf.comp", 512, 512, 16, {}));
+		Compute compute = Compute(ComputeCreate("Shaders/Brdf.comp", size, size, 16, {}));
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
@@ -144,23 +144,11 @@ namespace acid
 		commandBuffer.Submit();
 
 		// Saves the brdf texture.
-		{
-			// Crashes.
-			std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
-			FileSystem::ClearFile(filename);
-			unsigned char *pixels = result->CopyPixels();
-			Texture::WritePixels(filename, pixels, result->GetWidth(), result->GetHeight(), result->GetComponents());
-			delete[] pixels;
-		}
-		{
-			// Generates noise.
-			auto test = Texture::Resource("Undefined.png");
-			std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
-			FileSystem::ClearFile(filename);
-			unsigned char *pixels = test->CopyPixels();
-			Texture::WritePixels(filename, pixels, test->GetWidth(), test->GetHeight(), test->GetComponents());
-			delete[] pixels;
-		}
+		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+		FileSystem::ClearFile(filename);
+		uint8_t *pixels = result->CopyPixels();
+		Texture::WritePixels(filename, pixels, result->GetWidth(), result->GetHeight(), result->GetComponents());
+		delete[] pixels;
 
 		return result;
 	}
