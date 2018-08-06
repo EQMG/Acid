@@ -5,35 +5,25 @@
 
 namespace acid
 {
-	enum CommandBufferLevel
-	{
-		COMMAND_BUFFER_LEVEL_PRIMARY = 0,
-		COMMAND_BUFFER_LEVEL_SECONDARY = 1
-	};
-
-	enum CommandQueueType
-	{
-		COMMAND_QUEUE_GRAPHICS = 0,
-		COMMAND_QUEUE_COMPUTE = 1
-	};
-
 	class ACID_EXPORT CommandBuffer
 	{
 	private:
-		CommandBufferLevel m_bufferLevel;
-		CommandQueueType m_queueType;
+		VkQueueFlagBits m_queueType;
+		VkCommandBufferLevel m_bufferLevel;
 		VkCommandBuffer m_commandBuffer;
 	public:
-		CommandBuffer(const bool &begin = true, const CommandBufferLevel &bufferLevel = CommandBufferLevel::COMMAND_BUFFER_LEVEL_PRIMARY, const CommandQueueType &queueType = COMMAND_QUEUE_GRAPHICS);
+		CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT, const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 		~CommandBuffer();
 
-		void Begin();
+		void Begin(const VkCommandBufferUsageFlags &usage = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT) const;
 
-		void End();
+		void End() const;
 
-		void Submit();
+		void Submit(const bool &waitFence = true, const VkSemaphore &semaphore = VK_NULL_HANDLE) const;
 
 		VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
+	private:
+		VkQueue GetQueue() const;
 	};
 }

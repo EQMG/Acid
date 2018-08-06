@@ -27,7 +27,7 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
 		auto queueGraphics = Display::Get()->GetVkQueueGraphics();
 
-		vkQueueWaitIdle(queueGraphics);
+		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
 
 		delete m_managerRender;
 
@@ -104,6 +104,8 @@ namespace acid
 
 	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
 	{
+		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+
 #if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
@@ -122,8 +124,7 @@ namespace acid
 			m_renderStages.emplace_back(renderStage);
 		}
 
-		vkDeviceWaitIdle(Display::Get()->GetVkLogicalDevice());
-		vkQueueWaitIdle(Display::Get()->GetVkQueueGraphics());
+		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -166,11 +167,7 @@ namespace acid
 			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 		}
 
-		VkCommandBufferBeginInfo commandBufferBeginInfo = {};
-		commandBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		commandBufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT;
-
-		Display::CheckVk(vkBeginCommandBuffer(commandBuffer.GetVkCommandBuffer(), &commandBufferBeginInfo));
+		commandBuffer.Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
 
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
@@ -214,29 +211,8 @@ namespace acid
 		auto presentQueue = Display::Get()->GetVkQueuePresent();
 
 		vkCmdEndRenderPass(commandBuffer.GetVkCommandBuffer());
-		Display::CheckVk(vkEndCommandBuffer(commandBuffer.GetVkCommandBuffer()));
-
-		VkCommandBuffer commandBuffers = commandBuffer.GetVkCommandBuffer();
-
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffers;
-
-		if (renderStage->HasSwapchain())
-		{
-			submitInfo.signalSemaphoreCount = 1;
-			submitInfo.pSignalSemaphores = &m_semaphore;
-		}
-
-		const VkResult queueSubmitResult = vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE);
-
-		if (queueSubmitResult != VK_SUCCESS)
-		{
-			throw std::runtime_error("Renderer failed to acquire swapchain image!");
-		}
-
-		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
+		commandBuffer.End();
+		commandBuffer.Submit(false, m_semaphore);
 
 		if (!renderStage->HasSwapchain())
 		{
@@ -245,7 +221,7 @@ namespace acid
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 
-		VkResult result = VK_RESULT_MAX_ENUM;
+		VkResult presentResult = VK_RESULT_MAX_ENUM;
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -254,7 +230,7 @@ namespace acid
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = m_swapchain->GetVkSwapchain();
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
-		presentInfo.pResults = &result;
+		presentInfo.pResults = &presentResult;
 
 		const VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
@@ -264,8 +240,8 @@ namespace acid
 			return;
 		}
 
-		Display::CheckVk(result);
-		vkQueueWaitIdle(queueGraphics);
+		Display::CheckVk(presentResult);
+		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
 	}
 
 	void Renderer::NextSubpass(const CommandBuffer &commandBuffer)

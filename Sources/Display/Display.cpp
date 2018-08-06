@@ -163,7 +163,7 @@ namespace acid
 		glslang::FinalizeProcess();
 
 		// Waits for the device to finish before destroying.
-		vkDeviceWaitIdle(m_logicalDevice);
+		Display::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
 
 		// Free the window callbacks and destroy the window.
 		glfwDestroyWindow(m_window);
