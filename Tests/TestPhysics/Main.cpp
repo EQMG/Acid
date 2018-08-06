@@ -1,18 +1,17 @@
 #include <iostream>
-#include <Animations/MeshAnimated.hpp>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include "World/World.hpp"
-#include "Skybox/CelestialBody.hpp"
-#include "Skybox/SkyboxCycle.hpp"
 #include "Configs/ConfigManager.hpp"
-#include "MainUpdater.hpp"
 #include "MainRenderer.hpp"
+#include "MainUpdater.hpp"
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
+#include "Skybox/CelestialBody.hpp"
+#include "Skybox/SkyboxCycle.hpp"
+#include "World/World.hpp"
 
 using namespace test;
 using namespace acid;
@@ -31,9 +30,6 @@ int main(int argc, char **argv)
 	auto engine = new Engine();
 	engine->SetUpdater(new MainUpdater());
 
-//	auto modelAnimated = new MeshAnimated("Objects/Animated/Model.dae");
-//	return 0;
-
 	// auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
@@ -47,7 +43,7 @@ int main(int argc, char **argv)
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
 
 	// Initializes modules.
-	Display::Get()->SetTitle("Test Deferred");
+	Display::Get()->SetTitle("Test Physics");
 	Display::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());

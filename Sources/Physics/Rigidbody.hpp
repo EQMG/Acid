@@ -1,15 +1,13 @@
 ﻿#pragma once
 
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <LinearMath/btDefaultMotionState.h>
 #include "Maths/Vector3.hpp"
-#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
+#include "Objects/IComponent.hpp"
 #include "Force.hpp"
-
-class btTransform;
-
-class btCollisionShape;
-
-class btRigidBody;
 
 namespace acid
 {
@@ -79,6 +77,6 @@ namespace acid
 
 		void SetAngularVelocity(const Vector3 &angularVelocity);
 	private:
-		ACID_HIDDEN static btRigidBody *CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape);
+		static btRigidBody *CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape);
 	};
 }

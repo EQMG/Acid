@@ -22,7 +22,7 @@ namespace acid
 
 		void Submit(const bool &waitFence = true, const VkSemaphore &semaphore = VK_NULL_HANDLE) const;
 
-		VkCommandBuffer GetVkCommandBuffer() const { return m_commandBuffer; }
+		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
 	private:
 		VkQueue GetQueue() const;
 	};

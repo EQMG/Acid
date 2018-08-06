@@ -1,11 +1,6 @@
 ﻿#include "Sound.hpp"
 
 #include <cmath>
-#ifdef ACID_BUILD_MACOS
-#include <OpenAL/al.h>
-#else
-#include <AL/al.h>
-#endif
 
 namespace acid
 {

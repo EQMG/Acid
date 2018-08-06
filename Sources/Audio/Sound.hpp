@@ -2,8 +2,8 @@
 
 #include <string>
 #include "Maths/Vector3.hpp"
-#include "Audio.hpp"
 #include "SoundBuffer.hpp"
+#include "Audio.hpp"
 
 namespace acid
 {
@@ -14,7 +14,7 @@ namespace acid
 	{
 	private:
 		std::shared_ptr<SoundBuffer> m_soundBuffer;
-		uint32_t m_source;
+		ALuint m_source;
 
 		bool m_playing;
 		float m_gain;

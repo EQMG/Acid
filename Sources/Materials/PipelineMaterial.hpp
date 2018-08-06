@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Resources/Resources.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Resources/Resources.hpp"
 #include "Textures/Texture.hpp"
 
 namespace acid

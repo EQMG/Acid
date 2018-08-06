@@ -1,5 +1,7 @@
 ﻿#include "IndexBuffer.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	IndexBuffer::IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData) :
@@ -7,7 +9,7 @@ namespace acid
 		m_indexType(indexType),
 		m_indexCount(static_cast<uint32_t>(indexCount))
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Copies the index data to the buffer.
 		void *data;

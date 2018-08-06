@@ -1,17 +1,12 @@
 #pragma once
 
 #include <optional>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Frustum.hpp"
 #include "Ray.hpp"
-
-class btCollisionShape;
-
-class btVector3;
-
-class btQuaternion;
 
 namespace acid
 {
@@ -42,7 +37,7 @@ namespace acid
 
 		virtual std::string GetName() const = 0;
 
-		ACID_HIDDEN virtual btCollisionShape *GetCollisionShape() const = 0;
+		virtual btCollisionShape *GetCollisionShape() const = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
@@ -58,12 +53,12 @@ namespace acid
 		/// <returns> If the shape is partially in the view frustum. </returns>
 		bool InFrustum(const Frustum &frustum);
 
-		ACID_HIDDEN static btVector3 Convert(const Vector3 &vector);
+		static btVector3 Convert(const Vector3 &vector);
 
-		ACID_HIDDEN static Vector3 Convert(const btVector3 &vector);
+		static Vector3 Convert(const btVector3 &vector);
 
-		ACID_HIDDEN static btQuaternion Convert(const Quaternion &quaternion);
+		static btQuaternion Convert(const Quaternion &quaternion);
 
-		ACID_HIDDEN static Quaternion Convert(const btQuaternion &quaternion);
+		static Quaternion Convert(const btQuaternion &quaternion);
 	};
 }

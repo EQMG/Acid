@@ -2,8 +2,8 @@
 
 #include "Engine/Engine.hpp"
 #include "Objects/ComponentRegister.hpp"
-#include "SceneStructure.hpp"
 #include "IScene.hpp"
+#include "SceneStructure.hpp"
 
 namespace acid
 {

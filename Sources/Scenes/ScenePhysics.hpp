@@ -1,16 +1,12 @@
 #pragma once
 
+#include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
+#include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
+#include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
+#include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Maths/Vector3.hpp"
-
-class btCollisionConfiguration;
-
-class btBroadphaseInterface;
-
-class btCollisionDispatcher;
-
-class btSequentialImpulseConstraintSolver;
-
-class btDiscreteDynamicsWorld;
 
 namespace acid
 {
@@ -37,6 +33,6 @@ namespace acid
 
 		void SetAirDensity(const float &airDensity);
 
-		ACID_HIDDEN btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
+		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld; }
 	};
 }

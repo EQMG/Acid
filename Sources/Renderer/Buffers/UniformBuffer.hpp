@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <vulkan/vulkan.h>
 #include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "Buffer.hpp"
@@ -21,6 +22,6 @@ namespace acid
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 	};
 }

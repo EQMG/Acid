@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "Keyboard.hpp"
 #include "IButton.hpp"
+#include "Keyboard.hpp"
 
 namespace acid
 {

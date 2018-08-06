@@ -2,8 +2,8 @@
 
 #include <string>
 #include "Maths/Colour.hpp"
-#include "Textures/Texture.hpp"
 #include "Resources/Resources.hpp"
+#include "Textures/Texture.hpp"
 
 namespace acid
 {

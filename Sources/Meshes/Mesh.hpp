@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
+#include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
 #include "Objects/IComponent.hpp"
-#include "Models/Model.hpp"
 
 namespace acid
 {

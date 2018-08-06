@@ -1,11 +1,13 @@
 #include "Texture.hpp"
 
-#include <cmath>
 #include <cassert>
-#include "Textures/stb_image.h"
-#include "Textures/stb_image_write.h"
-#include "Renderer/Renderer.hpp"
+#include <cmath>
+#include <stdexcept>
+#include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
+#include "Renderer/Renderer.hpp"
+#include "stb_image.h"
+#include "stb_image_write.h"
 
 namespace acid
 {
@@ -40,7 +42,7 @@ namespace acid
 			m_filename = Files::SearchFile(FALLBACK_PATH);
 		}
 
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
@@ -50,20 +52,20 @@ namespace acid
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetVkBufferMemory(), 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, m_size, 0, &data);
 		memcpy(data, pixels, m_size);
-		vkUnmapMemory(logicalDevice, bufferStaging.GetVkBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
 		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT |
 			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging.GetVkBuffer(), m_image, 1);
+		CopyBufferToImage(m_width, m_height, 1, bufferStaging.GetBuffer(), m_image, 1);
 		CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
 		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
 		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
 
-		Buffer::CopyBuffer(bufferStaging.GetVkBuffer(), m_buffer, m_size);
+		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -96,7 +98,7 @@ namespace acid
 		m_format(format),
 		m_imageInfo({})
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -112,20 +114,20 @@ namespace acid
 		}
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging->GetVkBufferMemory(), 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
 		memcpy(data, pixels, m_size);
-		vkUnmapMemory(logicalDevice, bufferStaging->GetVkBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
 		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
 			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetVkBuffer(), m_image, 1);
+		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetBuffer(), m_image, 1);
 	//	Texture::CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
 		TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
 		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
 		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
 
-		Buffer::CopyBuffer(bufferStaging->GetVkBuffer(), GetVkBuffer(), m_size);
+		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -137,7 +139,7 @@ namespace acid
 
 	Texture::~Texture()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
@@ -160,11 +162,11 @@ namespace acid
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet Texture::GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
+	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
 	{
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetVkDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -176,7 +178,7 @@ namespace acid
 
 	uint8_t *Texture::CopyPixels()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
@@ -203,7 +205,7 @@ namespace acid
 		return result;
 	}
 
-	VkDeviceSize Texture::LoadSize(const std::string &filepath)
+	int32_t Texture::LoadSize(const std::string &filepath)
 	{
 		int width;
 		int height;
@@ -229,14 +231,14 @@ namespace acid
 		return width * height * 4;
 	}
 
-	VkDeviceSize Texture::LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes)
+	int32_t Texture::LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes)
 	{
-		VkDeviceSize size = 0;
+		int32_t size = 0;
 
 		for (auto &suffix : fileSuffixes)
 		{
-			const std::string filepathSide = filename + "/" + suffix + fileExt;
-			const VkDeviceSize sizeSide = LoadSize(filepathSide);
+			std::string filepathSide = filename + "/" + suffix + fileExt;
+			int32_t sizeSide = LoadSize(filepathSide);
 			size += sizeSide;
 		}
 
@@ -306,7 +308,7 @@ namespace acid
 
 	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -380,7 +382,7 @@ namespace acid
 			throw std::invalid_argument("Unsupported texture layout transition!");
 		}
 
-		vkCmdPipelineBarrier(commandBuffer.GetVkCommandBuffer(), sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
+		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
 		commandBuffer.End();
 		commandBuffer.Submit();
@@ -401,7 +403,7 @@ namespace acid
 		region.imageOffset = {0, 0, 0};
 		region.imageExtent = {static_cast<uint32_t>(width), static_cast<uint32_t>(height), static_cast<uint32_t>(depth)};
 
-		vkCmdCopyBufferToImage(commandBuffer.GetVkCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+		vkCmdCopyBufferToImage(commandBuffer.GetCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
 		commandBuffer.End();
 		commandBuffer.Submit();
@@ -429,7 +431,7 @@ namespace acid
 			barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 			barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 
-			vkCmdPipelineBarrier(commandBuffer.GetVkCommandBuffer(),
+			vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(),
 				VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0,
 				0, nullptr,
 				0, nullptr,
@@ -449,7 +451,7 @@ namespace acid
 			blit.dstSubresource.baseArrayLayer = 0;
 			blit.dstSubresource.layerCount = layerCount;
 
-			vkCmdBlitImage(commandBuffer.GetVkCommandBuffer(),
+			vkCmdBlitImage(commandBuffer.GetCommandBuffer(),
 				image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
 				image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
 				1, &blit,
@@ -460,7 +462,7 @@ namespace acid
 			barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-			vkCmdPipelineBarrier(commandBuffer.GetVkCommandBuffer(),
+			vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(),
 				VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 				0, nullptr,
 				0, nullptr,
@@ -473,7 +475,7 @@ namespace acid
 		barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 		barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-		vkCmdPipelineBarrier(commandBuffer.GetVkCommandBuffer(),
+		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(),
 			VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 			0, nullptr,
 			0, nullptr,
@@ -485,7 +487,7 @@ namespace acid
 
 	void Texture::CreateImageSampler(const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -495,7 +497,7 @@ namespace acid
 		samplerCreateInfo.addressModeV = repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 		samplerCreateInfo.addressModeW = repeatEdges ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 		samplerCreateInfo.anisotropyEnable = anisotropic ? VK_TRUE : VK_FALSE;
-		samplerCreateInfo.maxAnisotropy = std::min(ANISOTROPY, Display::Get()->GetVkPhysicalDeviceProperties().limits.maxSamplerAnisotropy);
+		samplerCreateInfo.maxAnisotropy = std::min(ANISOTROPY, Display::Get()->GetPhysicalDeviceProperties().limits.maxSamplerAnisotropy);
 		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
 		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
 		samplerCreateInfo.compareEnable = VK_FALSE;
@@ -510,7 +512,7 @@ namespace acid
 
 	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -533,10 +535,10 @@ namespace acid
 
 	bool Texture::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
-		auto physicalDeviceMemoryProperties = Display::Get()->GetVkPhysicalDeviceMemoryProperties();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		auto physicalDeviceMemoryProperties = Display::Get()->GetPhysicalDeviceMemoryProperties();
 
 		// Checks blit swapchain support.
 		bool supportsBlit = true;
@@ -594,7 +596,7 @@ namespace acid
 
 		// Transition destination image to transfer destination layout.
 		InsertImageMemoryBarrier(
-			commandBuffer.GetVkCommandBuffer(),
+			commandBuffer.GetCommandBuffer(),
 			dstImage,
 			VK_ACCESS_TRANSFER_WRITE_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -606,7 +608,7 @@ namespace acid
 
 		// Transition swapchain image from present to transfer source layout
 		InsertImageMemoryBarrier(
-			commandBuffer.GetVkCommandBuffer(),
+			commandBuffer.GetCommandBuffer(),
 			srcImage,
 			VK_ACCESS_TRANSFER_READ_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -633,7 +635,7 @@ namespace acid
 			imageBlitRegion.dstOffsets[1] = blitSize;
 
 			// Issue the blit command
-			vkCmdBlitImage(commandBuffer.GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion, VK_FILTER_NEAREST);
+			vkCmdBlitImage(commandBuffer.GetCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion, VK_FILTER_NEAREST);
 		}
 		else
 		{
@@ -648,12 +650,12 @@ namespace acid
 			imageCopyRegion.extent.depth = 1;
 
 			// Issue the copy command.
-			vkCmdCopyImage(commandBuffer.GetVkCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
+			vkCmdCopyImage(commandBuffer.GetCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
 		}
 
 		// Transition destination image to general layout, which is the required layout for mapping the image memory later on
 		InsertImageMemoryBarrier(
-			commandBuffer.GetVkCommandBuffer(),
+			commandBuffer.GetCommandBuffer(),
 			dstImage,
 			VK_ACCESS_TRANSFER_WRITE_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,
@@ -665,7 +667,7 @@ namespace acid
 
 		// Transition back the swap chain image after the blit is done
 		InsertImageMemoryBarrier(
-			commandBuffer.GetVkCommandBuffer(),
+			commandBuffer.GetCommandBuffer(),
 			srcImage,
 			VK_ACCESS_TRANSFER_READ_BIT,
 			VK_ACCESS_MEMORY_READ_BIT,

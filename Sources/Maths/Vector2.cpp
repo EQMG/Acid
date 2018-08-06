@@ -1,8 +1,8 @@
 #include "Vector2.hpp"
 
 #include <cassert>
-#include "Maths.hpp"
 #include "Vector3.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Display/Display.hpp"
+#include <vulkan/vulkan.h>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 
 namespace acid
@@ -16,11 +16,11 @@ namespace acid
 
 		virtual ~Buffer();
 
-		VkDeviceSize GetVkSize() const { return m_size; }
+		VkDeviceSize GetSize() const { return m_size; }
 
-		VkBuffer GetVkBuffer() const { return m_buffer; }
+		VkBuffer GetBuffer() const { return m_buffer; }
 
-		VkDeviceMemory GetVkBufferMemory() const { return m_bufferMemory; }
+		VkDeviceMemory GetBufferMemory() const { return m_bufferMemory; }
 
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
 

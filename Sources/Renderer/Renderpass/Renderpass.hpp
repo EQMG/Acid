@@ -15,6 +15,6 @@ namespace acid
 
 		~Renderpass();
 
-		VkRenderPass GetVkRenderpass() const { return m_renderPass; }
+		VkRenderPass GetRenderpass() const { return m_renderPass; }
 	};
 }

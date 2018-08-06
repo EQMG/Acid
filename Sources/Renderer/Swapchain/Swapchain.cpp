@@ -1,5 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	Swapchain::Swapchain(const VkExtent2D &extent) :
@@ -10,12 +12,12 @@ namespace acid
 		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto physicalDevice = Display::Get()->GetVkPhysicalDevice();
-		auto surface = Display::Get()->GetVkSurface();
-		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
-		auto surfaceCapabilities = Display::Get()->GetVkSurfaceCapabilities();
-		auto queueIndices = Display::Get()->GetVkQueueIndices();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		auto surface = Display::Get()->GetSurface();
+		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		auto surfaceCapabilities = Display::Get()->GetSurfaceCapabilities();
+		auto queueIndices = Display::Get()->GetQueueIndices();
 
 		m_extent = extent;
 
@@ -103,7 +105,7 @@ namespace acid
 
 	Swapchain::~Swapchain()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		for (auto &imageView : m_swapchainImageViews)
 		{

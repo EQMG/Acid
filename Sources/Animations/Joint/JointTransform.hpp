@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Maths/Quaternion.hpp"
+#include "Maths/Vector3.hpp"
 #include "JointTransformData.hpp"
 
 namespace acid

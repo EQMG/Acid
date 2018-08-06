@@ -2,12 +2,11 @@
 
 #include <string>
 #include <vector>
-#include <stdexcept>
-#include "Display/Display.hpp"
+#include <vulkan/vulkan.h>
 #include "Files/Files.hpp"
-#include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
@@ -71,7 +70,7 @@ namespace acid
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		uint8_t *CopyPixels();
 
@@ -89,9 +88,9 @@ namespace acid
 
 		VkSampler GetSampler() const { return m_sampler; }
 
-		static VkDeviceSize LoadSize(const std::string &filepath);
+		static int32_t LoadSize(const std::string &filepath);
 
-		static VkDeviceSize LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
+		static int32_t LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
 
 		static uint8_t *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
 

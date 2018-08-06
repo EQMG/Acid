@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Animations/Skin/SkinLoader.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Animations/Skin/SkinLoader.hpp"
 #include "VertexAnimated.hpp"
 #include "VertexAnimatedData.hpp"
 

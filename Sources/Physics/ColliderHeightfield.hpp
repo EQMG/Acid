@@ -1,10 +1,9 @@
 #pragma once
 
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include "Collider.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Collider.hpp"
-
-class btHeightfieldTerrainShape;
 
 namespace acid
 {
@@ -30,7 +29,7 @@ namespace acid
 
 		std::string GetName() const override { return "ColliderHeightfield"; };
 
-		ACID_HIDDEN btCollisionShape *GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,
 						const void *heightfieldData, const float &heightScale,

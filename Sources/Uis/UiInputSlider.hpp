@@ -4,8 +4,8 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Maths/Timer.hpp"
-#include "Uis.hpp"
 #include "UiObject.hpp"
+#include "Uis.hpp"
 
 namespace acid
 {
@@ -33,7 +33,7 @@ namespace acid
 		Timer m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const FontJustify &justify);
+		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify);
 
 		~UiInputSlider();
 

@@ -1,6 +1,5 @@
 #include "Mouse.hpp"
 
-#include <GLFW/glfw3.h>
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
@@ -50,10 +49,10 @@ namespace acid
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Display::Get()->GetGlfwWindow(), CallbackScroll);
-		glfwSetMouseButtonCallback(Display::Get()->GetGlfwWindow(), CallbackMouseButton);
-		glfwSetCursorPosCallback(Display::Get()->GetGlfwWindow(), CallbackCursorPos);
-		glfwSetCursorEnterCallback(Display::Get()->GetGlfwWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(Display::Get()->GetWindow(), CallbackScroll);
+		glfwSetMouseButtonCallback(Display::Get()->GetWindow(), CallbackMouseButton);
+		glfwSetCursorPosCallback(Display::Get()->GetWindow(), CallbackCursorPos);
+		glfwSetCursorEnterCallback(Display::Get()->GetWindow(), CallbackCursorEnter);
 	}
 
 	Mouse::~Mouse()
@@ -114,7 +113,7 @@ namespace acid
 		image[0].height = height;
 
 		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-		glfwSetCursor(Display::Get()->GetGlfwWindow(), cursor);
+		glfwSetCursor(Display::Get()->GetWindow(), cursor);
 		Texture::DeletePixels(data);
 	}
 
@@ -122,11 +121,11 @@ namespace acid
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Display::Get()->GetGlfwWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Display::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Display::Get()->GetGlfwWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
+				glfwSetCursorPos(Display::Get()->GetWindow(), m_mousePositionX * Display::Get()->GetWidth(), m_mousePositionY * Display::Get()->GetHeight());
 			}
 		}
 
@@ -147,6 +146,6 @@ namespace acid
 	{
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
-		glfwSetCursorPos(Display::Get()->GetGlfwWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
+		glfwSetCursorPos(Display::Get()->GetWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
 	}
 }

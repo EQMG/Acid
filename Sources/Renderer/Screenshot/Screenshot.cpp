@@ -1,6 +1,8 @@
 #include "Screenshot.hpp"
 
 #include <algorithm>
+#include <vulkan/vulkan.h>
+#include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -12,14 +14,14 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto surfaceFormat = Display::Get()->GetVkSurfaceFormat();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		auto width = Display::Get()->GetWidth();
 		auto height = Display::Get()->GetHeight();
 
 		fprintf(stdout, "Saving screenshot to: '%s'\n", filename.c_str());
 
-		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetVkImages().at(Renderer::Get()->GetVkActiveSwapchainImage());
+		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
 		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height);

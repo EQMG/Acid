@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "Display/Display.hpp"
+#include <vulkan/vulkan.h>
 #include "Files/Files.hpp"
 
 namespace acid
@@ -14,21 +14,6 @@ namespace acid
 		PIPELINE_MODE_MRT = 2,
 		PIPELINE_MODE_MRT_NO_DEPTH = 3,
 		PIPELINE_MODE_COMPUTE = 4
-	};
-
-	enum PipelinePolygonMode
-	{
-		PIPELINE_POLYGON_MODE_FILL = 0,
-		PIPELINE_POLYGON_MODE_LINE = 1,
-		PIPELINE_POLYGON_MODE_POINT = 2,
-	};
-
-	enum PipelineCullMode
-	{
-		PIPELINE_CULL_MODE_NONE = 0,
-		PIPELINE_CULL_MODE_FRONT = 1,
-		PIPELINE_CULL_MODE_BACK = 2,
-		PIPELINE_CULL_MODE_ALL = 3,
 	};
 
 	class ACID_EXPORT GraphicsStage
@@ -115,15 +100,15 @@ namespace acid
 		VertexInput m_vertexInput;
 
 		PipelineMode m_pipelineMode;
-		PipelinePolygonMode m_polygonMode;
-		PipelineCullMode m_cullMode;
+
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullMode;
 
 		std::vector<PipelineDefine> m_defines;
 	public:
 
 		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON,
-						const PipelinePolygonMode &polygonMode = PipelinePolygonMode::PIPELINE_POLYGON_MODE_FILL,
-					   	const PipelineCullMode &cullMode = PipelineCullMode::PIPELINE_CULL_MODE_BACK, const std::vector<PipelineDefine> &defines = {}) :
+						const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInput(vertexInput),
 			m_pipelineMode(pipelineMode),
@@ -143,9 +128,9 @@ namespace acid
 
 		PipelineMode GetMode() const { return m_pipelineMode; }
 
-		PipelinePolygonMode GetPolygonMode() const { return m_polygonMode; }
+		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
 
-		PipelineCullMode GetCullMode() const { return m_cullMode; }
+		VkCullModeFlags GetCullMode() const { return m_cullMode; }
 
 		std::vector<PipelineDefine> GetDefines() const { return m_defines; }
 	};

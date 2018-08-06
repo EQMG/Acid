@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "Objects/IComponent.hpp"
 #include "Objects/GameObject.hpp"
+#include "Objects/IComponent.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid

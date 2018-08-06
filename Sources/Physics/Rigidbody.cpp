@@ -1,10 +1,6 @@
 ﻿#include "Rigidbody.hpp"
 
 #include <cassert>
-#include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Scenes.hpp"
 #include "Collider.hpp"
 

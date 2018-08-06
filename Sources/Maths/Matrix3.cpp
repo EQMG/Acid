@@ -1,8 +1,8 @@
 #include "Matrix3.hpp"
 
 #include <cassert>
-#include "Maths.hpp"
 #include "Matrix2.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {

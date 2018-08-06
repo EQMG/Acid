@@ -1,10 +1,13 @@
 #pragma once
 
+#ifdef ACID_BUILD_MACOS
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
 #include "Engine/Engine.hpp"
-
-typedef struct ALCdevice_struct ALCdevice;
-
-typedef struct ALCcontext_struct ALCcontext;
 
 namespace acid
 {
@@ -41,12 +44,12 @@ namespace acid
 
 		std::string GetName() const override { return "Audio"; };
 
-		ACID_HIDDEN static std::string StringifyResultAl(const int &result);
+		static std::string StringifyResultAl(const int &result);
 
-		ACID_HIDDEN static void CheckAl(const int &result);
+		static void CheckAl(const int &result);
 
-		ACID_HIDDEN ALCdevice *GetAlcDevice() const { return m_alDevice; }
+		ALCdevice *GetDevice() const { return m_alDevice; }
 
-		ACID_HIDDEN ALCcontext *GetAlcContext() const { return m_alContext; }
+		ALCcontext *GetContext() const { return m_alContext; }
 	};
 }

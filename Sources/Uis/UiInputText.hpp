@@ -31,7 +31,7 @@ namespace acid
 
 		std::function<void()> m_actionChange;
 	public:
-		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const FontJustify &justify);
+		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const TextJustify &justify);
 
 		~UiInputText();
 

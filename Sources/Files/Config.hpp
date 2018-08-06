@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
-#include <map>
 #include <functional>
+#include <map>
+#include <string>
 #include "Helpers/FormatString.hpp"
 #include "Tasks/Tasks.hpp"
-#include "IFile.hpp"
 #include "ConfigKey.hpp"
+#include "IFile.hpp"
 
 namespace acid
 {

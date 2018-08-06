@@ -1,12 +1,12 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 #include "Files/Files.hpp"
+#include "Files/IFile.hpp"
 #include "Helpers/FormatString.hpp"
 #include "Resources/Resources.hpp"
-#include "Files/IFile.hpp"
 
 namespace acid
 {

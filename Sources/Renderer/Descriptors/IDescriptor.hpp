@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "Display/Display.hpp"
 #include "DescriptorSet.hpp"
 
 namespace acid
@@ -17,6 +16,6 @@ namespace acid
 		{
 		}
 
-		virtual VkWriteDescriptorSet GetVkWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const = 0;
+		virtual VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const = 0;
 	};
 }

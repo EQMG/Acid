@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "Resources/Resources.hpp"
-#include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
+#include "Renderer/Buffers/VertexBuffer.hpp"
+#include "Resources/Resources.hpp"
 #include "IVertex.hpp"
 
 namespace acid

@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "Inputs/AxisJoystick.hpp"
-#include "Inputs/ButtonMouse.hpp"
 #include "Inputs/ButtonJoystick.hpp"
-#include "Uis/UiObject.hpp"
+#include "Inputs/ButtonMouse.hpp"
+#include "UiObject.hpp"
 
 namespace acid
 {

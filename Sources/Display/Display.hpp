@@ -1,9 +1,10 @@
 #pragma once
 
-#include <string>
 #include <cstring>
+#include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <GLFW/glfw3.h>
 #include "Engine/Engine.hpp"
 #include "Queue/QueueIndices.hpp"
 
@@ -204,9 +205,9 @@ namespace acid
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
-		ACID_HIDDEN static std::string StringifyResultGlfw(const int &result);
+		static std::string StringifyResultGlfw(const int &result);
 
-		ACID_HIDDEN static void CheckGlfw(const int &result);
+		static void CheckGlfw(const int &result);
 
 		static std::string StringifyResultVk(const VkResult &result);
 
@@ -242,35 +243,35 @@ namespace acid
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		ACID_HIDDEN GLFWwindow *GetGlfwWindow() const { return m_window; }
+		GLFWwindow *GetWindow() const { return m_window; }
 
-		VkInstance GetVkInstance() const { return m_instance; }
+		VkInstance GetInstance() const { return m_instance; }
 
-		VkSurfaceKHR GetVkSurface() const { return m_surface; }
+		VkSurfaceKHR GetSurface() const { return m_surface; }
 
-		VkSurfaceCapabilitiesKHR GetVkSurfaceCapabilities() const { return m_surfaceCapabilities; }
+		VkSurfaceCapabilitiesKHR GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
 
-		VkSurfaceFormatKHR GetVkSurfaceFormat() const { return m_surfaceFormat; }
+		VkSurfaceFormatKHR GetSurfaceFormat() const { return m_surfaceFormat; }
 
-		VkDevice GetVkLogicalDevice() const { return m_logicalDevice; }
+		VkDevice GetLogicalDevice() const { return m_logicalDevice; }
 
-		VkQueue GetVkQueueGraphics() const { return m_queueGraphics; }
+		VkQueue GetQueueGraphics() const { return m_queueGraphics; }
 
-		VkQueue GetVkQueuePresent() const { return m_queuePresent; }
+		VkQueue GetQueuePresent() const { return m_queuePresent; }
 
-		VkQueue GetVkQueueCompute() const { return m_queueCompute; }
+		VkQueue GetQueueCompute() const { return m_queueCompute; }
 
-		VkSampleCountFlagBits GetVkMsaaSamples() const { return m_msaaSamples; }
+		VkSampleCountFlagBits GetMsaaSamples() const { return m_msaaSamples; }
 
-		VkPhysicalDevice GetVkPhysicalDevice() const { return m_physicalDevice; }
+		VkPhysicalDevice GetPhysicalDevice() const { return m_physicalDevice; }
 
-		VkPhysicalDeviceProperties GetVkPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		VkPhysicalDeviceProperties GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
 
-		VkPhysicalDeviceFeatures GetVkPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		VkPhysicalDeviceFeatures GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
 
-		VkPhysicalDeviceMemoryProperties GetVkPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		QueueIndices GetVkQueueIndices() const { return m_queueIndices; }
+		QueueIndices GetQueueIndices() const { return m_queueIndices; }
 	private:
 		void CreateGlfw();
 

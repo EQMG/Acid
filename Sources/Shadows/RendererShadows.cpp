@@ -1,7 +1,7 @@
 #include "RendererShadows.hpp"
 
-#include "Scenes/Scenes.hpp"
 #include "Models/VertexModel.hpp"
+#include "Scenes/Scenes.hpp"
 #include "ShadowRender.hpp"
 
 namespace acid
@@ -9,7 +9,7 @@ namespace acid
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, PIPELINE_POLYGON_MODE_FILL, PIPELINE_CULL_MODE_FRONT, {}))),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {}))),
 		m_uniformScene(UniformHandler())
 	{
 	}

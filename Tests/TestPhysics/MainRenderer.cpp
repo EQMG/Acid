@@ -18,7 +18,7 @@ namespace test
 		{
 			4096, 4096, // width / height
 			{
-				Attachment(0, ATTACHMENT_IMAGE, FORMAT_R8_UNORM) // shadows
+				Attachment(0, ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM) // shadows
 			}, // images
 			{
 				SubpassType(0, {0})
@@ -30,9 +30,9 @@ namespace test
 			{
 				Attachment(0, ATTACHMENT_DEPTH), // depth
 				Attachment(1, ATTACHMENT_SWAPCHAIN), // swapchain
-				Attachment(2, ATTACHMENT_IMAGE, FORMAT_R8G8B8A8_UNORM), // colours
-				Attachment(3, ATTACHMENT_IMAGE, FORMAT_R16G16_UNORM), // normals
-				Attachment(4, ATTACHMENT_IMAGE, FORMAT_R8G8B8A8_UNORM) // materials
+				Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // colours
+				Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R16G16_UNORM), // normals
+				Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // materials
 			}, // images
 			{
 				SubpassType(0, {0, 2, 3, 4}),

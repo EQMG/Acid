@@ -19,19 +19,19 @@ namespace acid
 
 		void BindPipeline(const CommandBuffer &commandBuffer) const
 		{
-			vkCmdBindPipeline(commandBuffer.GetVkCommandBuffer(), GetVkPipelineBindPoint(), GetVkPipeline());
+			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
 		}
 
 		virtual std::shared_ptr<ShaderProgram> GetShaderProgram() const = 0;
 
-		virtual VkDescriptorSetLayout GetVkDescriptorSetLayout() const = 0;
+		virtual VkDescriptorSetLayout GetDescriptorSetLayout() const = 0;
 
-		virtual VkDescriptorPool GetVkDescriptorPool() const = 0;
+		virtual VkDescriptorPool GetDescriptorPool() const = 0;
 
-		virtual VkPipeline GetVkPipeline() const = 0;
+		virtual VkPipeline GetPipeline() const = 0;
 
-		virtual VkPipelineLayout GetVkPipelineLayout() const = 0;
+		virtual VkPipelineLayout GetPipelineLayout() const = 0;
 
-		virtual VkPipelineBindPoint GetVkPipelineBindPoint() const = 0;
+		virtual VkPipelineBindPoint GetPipelineBindPoint() const = 0;
 	};
 }

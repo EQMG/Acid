@@ -1,19 +1,20 @@
 #include "DescriptorSet.hpp"
 
+#include "Display/Display.hpp"
 #include "IDescriptor.hpp"
 
 namespace acid
 {
 	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
-		m_pipelineLayout(pipeline.GetVkPipelineLayout()),
-		m_pipelineBindPoint(pipeline.GetVkPipelineBindPoint()),
-		m_descriptorPool(pipeline.GetVkDescriptorPool()),
+		m_pipelineLayout(pipeline.GetPipelineLayout()),
+		m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
+		m_descriptorPool(pipeline.GetDescriptorPool()),
 		m_descriptorSet(VK_NULL_HANDLE)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkDescriptorSetLayout layouts[1] = {pipeline.GetVkDescriptorSetLayout()};
+		VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
 
 		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
 		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -27,7 +28,7 @@ namespace acid
 
 	DescriptorSet::~DescriptorSet()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkDescriptorSet descriptors[1] = {m_descriptorSet};
 		vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, descriptors);
@@ -35,7 +36,7 @@ namespace acid
 
 	void DescriptorSet::Update(const std::vector<IDescriptor *> &descriptors)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
 
@@ -43,7 +44,7 @@ namespace acid
 		{
 			if (descriptors.at(i) != nullptr)
 			{
-				descriptorWrites.emplace_back(descriptors.at(i)->GetVkWriteDescriptor(i, *this));
+				descriptorWrites.emplace_back(descriptors.at(i)->GetWriteDescriptor(i, *this));
 			}
 		}
 
@@ -53,6 +54,6 @@ namespace acid
 	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
 		VkDescriptorSet descriptors[1] = {m_descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer.GetVkCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
 	}
 }

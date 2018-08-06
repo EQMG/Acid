@@ -3,6 +3,8 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Textures/Texture.hpp"
 #include "Uis/UiObject.hpp"

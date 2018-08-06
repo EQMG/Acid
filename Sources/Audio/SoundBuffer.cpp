@@ -1,13 +1,8 @@
 #include "SoundBuffer.hpp"
 
 #include <fstream>
-#ifdef ACID_BUILD_MACOS
-#include <OpenAL/al.h>
-#else
-#include <AL/al.h>
-#endif
-#include "Audio/stb_vorbis.h"
 #include "Helpers/FileSystem.hpp"
+#include "stb_vorbis.h"
 
 namespace acid
 {
@@ -33,7 +28,7 @@ namespace acid
 		alDeleteBuffers(1, &m_buffer);
 	}
 
-	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
+	ALuint SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -51,7 +46,7 @@ namespace acid
 		char chunkId[5] = "\0";
 
 		// Read header.
-		uint32_t size;
+		ALuint size;
 
 		file.read(chunkId, 4);
 		file.read(reinterpret_cast<char *>(&size), 4);
@@ -107,7 +102,7 @@ namespace acid
 		return buffer;
 	}
 
-	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
+	ALuint SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{

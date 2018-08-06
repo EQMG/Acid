@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Display/Display.hpp"
+#include "Engine/Exports.hpp"
 
 namespace acid
 {
@@ -9,9 +9,9 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Takes a screenshot of the current image of the display and saves it into the screenshots folder a png image.
+		/// Takes a screenshot of the current image of the display and saves it into a image file.
 		/// </summary>
-		///	<param name="filename"> The new width in pixels. </param>
+		///	<param name="filename"> The file to save the screenshot to. </param>
 		static void Capture(const std::string &filename);
 	};
 }

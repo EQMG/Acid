@@ -1,8 +1,6 @@
 #pragma once
 
 #include <map>
-#include <string>
-#include <stdlib.h>
 #include "IModule.hpp"
 
 namespace acid

@@ -1,5 +1,7 @@
 ﻿#include "Gui.hpp"
 
+#include "Display/Display.hpp"
+
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid
@@ -59,7 +61,7 @@ namespace acid
 		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_y);
 		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_z);
 		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_w);
-		vkCmdSetScissor(commandBuffer.GetVkCommandBuffer(), 0, 1, &scissorRect);
+		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);

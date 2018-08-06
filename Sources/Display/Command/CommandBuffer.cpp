@@ -10,8 +10,8 @@ namespace acid
 		m_bufferLevel(bufferLevel),
 		m_commandBuffer(VK_NULL_HANDLE)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto commandPool = Renderer::Get()->GetCommandPool();
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -29,8 +29,8 @@ namespace acid
 
 	CommandBuffer::~CommandBuffer()
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
-		auto commandPool = Renderer::Get()->GetVkCommandPool();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto commandPool = Renderer::Get()->GetCommandPool();
 
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &m_commandBuffer);
 	}
@@ -51,7 +51,7 @@ namespace acid
 
 	void CommandBuffer::Submit(const bool &waitFence, const VkSemaphore &semaphore) const
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
 
 		VkSubmitInfo submitInfo = {};
@@ -91,9 +91,9 @@ namespace acid
 		switch (m_queueType)
 		{
 		case VK_QUEUE_GRAPHICS_BIT:
-			return Display::Get()->GetVkQueueGraphics();
+			return Display::Get()->GetQueueGraphics();
 		case VK_QUEUE_COMPUTE_BIT:
-			return Display::Get()->GetVkQueueCompute();
+			return Display::Get()->GetQueueCompute();
 		default:
 			return nullptr;
 		}

@@ -1,11 +1,12 @@
 #include "ShaderProgram.hpp"
 
 #include <SPIRV/GlslangToSpv.h>
+#include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
-#include "Textures/Texture.hpp"
-#include "Textures/Cubemap.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Textures/Cubemap.hpp"
+#include "Textures/Texture.hpp"
 
 namespace acid
 {
@@ -390,7 +391,7 @@ namespace acid
 
 	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag)
 	{
-		auto logicalDevice = Display::Get()->GetVkLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		EShLanguage language = GetEshLanguage(stageFlag);
 
