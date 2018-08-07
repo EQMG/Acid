@@ -67,7 +67,7 @@ namespace acid
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		std::string GetName() override { return m_filename; };
+		std::string GetFilename() override { return m_filename; };
 
 		std::string GetExtension() { return m_fileExt; };
 

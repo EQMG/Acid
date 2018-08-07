@@ -39,8 +39,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Particles"; };
-
 		void AddParticle(Particle *created);
 
 		/// <summary>

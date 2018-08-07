@@ -29,8 +29,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Files"; };
-
 		static std::vector<std::string> GetSearchPaths() { return SEARCH_PATHS; }
 
 		/// <summary>

@@ -31,8 +31,6 @@ namespace test
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "CelestialBody"; };
-
 		CelestialType GetType() const { return m_type; }
 
 		void SetType(const CelestialType &type) { m_type = type; }

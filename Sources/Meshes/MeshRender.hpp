@@ -26,8 +26,6 @@ namespace acid
 
 		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene);
 
-		std::string GetName() const override { return "MeshRender"; };
-
 		UniformHandler GetUniformObject() const { return m_uniformObject; }
 	};
 }

@@ -18,6 +18,6 @@ namespace acid
 
 	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)
 	{
-		return "ParticleType_" + texture->GetName() + "_" + std::to_string(numberOfRows) + "_" + colourOffset.GetHex() + "_" + std::to_string(lifeLength) + "_" + std::to_string(scale);
+		return "ParticleType_" + texture->GetFilename() + "_" + std::to_string(numberOfRows) + "_" + colourOffset.GetHex() + "_" + std::to_string(lifeLength) + "_" + std::to_string(scale);
 	}
 }

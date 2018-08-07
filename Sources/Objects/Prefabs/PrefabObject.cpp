@@ -4,6 +4,7 @@
 #include "Files/Xml/FileXml.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Objects/GameObject.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -42,7 +43,14 @@ namespace acid
 
 		for (auto &component : gameObject.GetComponents())
 		{
-			component->Write(m_parent->GetChild(component->GetName(), true));
+			auto componentName = Scenes::Get()->FindComponentName(component);
+
+			if (!componentName.has_value())
+			{
+				return;
+			}
+
+			component->Write(m_parent->GetChild(componentName.value(), true));
 		}
 	}
 

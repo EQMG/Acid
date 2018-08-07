@@ -40,8 +40,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "MeshAnimated"; };
-
 		std::shared_ptr<Model> GetModel() const override { return m_model; }
 
 		virtual VertexInput GetVertexInput() const { return VertexAnimated::GetVertexInput(); }

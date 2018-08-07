@@ -61,7 +61,7 @@ namespace acid
 		/// </summary>
 		~ParticleType();
 
-		std::string GetName() override { return m_filename; }
+		std::string GetFilename() override { return m_filename; }
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

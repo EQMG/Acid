@@ -77,8 +77,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Mouse"; };
-
 		/// <summary>
 		/// Gets the mouses custom mouse file.
 		/// </summary>

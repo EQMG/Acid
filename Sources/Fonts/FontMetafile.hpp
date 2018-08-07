@@ -70,7 +70,7 @@ namespace acid
 
 		std::optional<FontCharacter> GetCharacter(const int &ascii);
 
-		std::string GetName() override { return m_filename; }
+		std::string GetFilename() override { return m_filename; }
 
 		double GetSpaceWidth() const { return m_spaceWidth; }
 

@@ -53,7 +53,7 @@ namespace acid
 
 		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
 
-		std::string GetName() override { return m_filename; }
+		std::string GetFilename() override { return m_filename; }
 
 		Vector3 GetMinExtents() const { return m_minExtents; }
 

@@ -24,8 +24,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ColliderSphere"; };
-
 		btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }

@@ -121,8 +121,15 @@ namespace acid
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			if (*it != nullptr && (*it)->GetName() == name)
+			if (*it != nullptr)
 			{
+				auto componentName = Scenes::Get()->FindComponentName(*it);
+
+				if (componentName.has_value() && name == componentName.value())
+				{
+					continue;
+				}
+
 				(*it)->SetGameObject(nullptr);
 
 				m_components.erase(it);
@@ -133,7 +140,7 @@ namespace acid
 
 		return false;
 	}
-	
+
 	void GameObject::SetStructure(ISpatialStructure *structure)
 	{
 		if (m_structure != nullptr)

@@ -27,8 +27,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "Mesh"; };
-
 		virtual std::shared_ptr<Model> GetModel() const { return m_model; }
 
 		virtual VertexInput GetVertexInput() const { return VertexModel::GetVertexInput(); }

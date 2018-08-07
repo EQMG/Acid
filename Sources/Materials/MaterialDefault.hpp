@@ -48,8 +48,6 @@ namespace acid
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-		std::string GetName() const override { return "MaterialDefault"; };
-
 		std::vector<PipelineDefine> GetDefines();
 
 		Colour GetBaseColor() const { return m_baseColor; }

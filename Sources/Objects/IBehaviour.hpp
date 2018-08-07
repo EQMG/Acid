@@ -34,7 +34,5 @@ namespace acid
 		void Write(LoadedValue *destination) override
 		{
 		}
-
-		std::string GetName() const override { return "Behaviour"; };
 	};
 }

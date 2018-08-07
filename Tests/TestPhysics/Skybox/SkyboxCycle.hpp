@@ -24,7 +24,5 @@ namespace test
 		void Load(LoadedValue *value) override;
 
 		void Write(LoadedValue *destination) override;
-
-		std::string GetName() const override { return "SkyboxCycle"; };
 	};
 }

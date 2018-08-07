@@ -264,8 +264,8 @@ namespace acid
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.sampleShadingEnable = VK_FALSE;
-		m_multisampleState.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT; // Display::Get()->GetMsaaSamples()
-		m_multisampleState.minSampleShading = 0.0f;
+		m_multisampleState.rasterizationSamples = Display::Get()->GetMsaaSamples();
+		m_multisampleState.minSampleShading = 0.2f; // TODO
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();

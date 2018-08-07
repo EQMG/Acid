@@ -39,8 +39,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Scenes"; };
-
 		IScene *GetScene() const { return m_scene; }
 
 		void SetScene(IScene *scene);
@@ -67,6 +65,13 @@ namespace acid
 		/// <param name="name"> The components name. </param>
 		/// <returns> If the component was deregistered. </returns>
 		bool DeregisterComponent(const std::string &name) { return m_componentRegister.DeregisterComponent(name); }
+
+		/// <summary>
+		/// Finds the registered name to a component.
+		/// </summary>
+		/// <param name="compare"> The components to get the registered name of. </param>
+		/// <returns> The name registered to the component. </returns>
+		std::optional<std::string> FindComponentName(IComponent *compare) { return m_componentRegister.FindComponentName(compare); }
 
 		/// <summary>
 		/// Gets the current camera object.

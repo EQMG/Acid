@@ -27,8 +27,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ColliderHeightfield"; };
-
 		btCollisionShape *GetCollisionShape() const override;
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat) :
+	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
 		m_renderPass(VK_NULL_HANDLE)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -16,18 +16,17 @@ namespace acid
 		for (auto &image : renderpassCreate.GetImages())
 		{
 			VkAttachmentDescription attachment = {};
-			attachment.samples = VK_SAMPLE_COUNT_1_BIT;
-		//	attachment.samples = Display::Get()->GetMsaaSamples();
 			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attachment.samples = samples;
 			attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachment.format = static_cast<VkFormat>(image.GetFormat());
 				break;
 			case ATTACHMENT_DEPTH:
@@ -36,6 +35,8 @@ namespace acid
 				break;
 			case ATTACHMENT_SWAPCHAIN:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+				attachment.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				attachment.samples = VK_SAMPLE_COUNT_1_BIT;
 				attachment.format = surfaceFormat;
 				break;
 			}
@@ -52,6 +53,7 @@ namespace acid
 			// Attachments.
 			std::vector<VkAttachmentReference> subpassColourAttachments = {};
 			uint32_t depthAttachment = 9999;
+			uint32_t swapchainAttachment = 9999;
 
 			for (auto &attachment : subpassType.GetAttachments())
 			{
@@ -60,6 +62,12 @@ namespace acid
 					depthAttachment = attachment;
 					continue;
 				}
+
+				//if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_SWAPCHAIN) // TODO: MSAA
+				//{
+				//	swapchainAttachment = attachment;
+				//	continue;
+				//}
 
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;
@@ -75,10 +83,20 @@ namespace acid
 
 			if (depthAttachment != 9999)
 			{
-				VkAttachmentReference subpassDepthStencilAttachment = {};
-				subpassDepthStencilAttachment.attachment = depthAttachment;
-				subpassDepthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilAttachment;
+				VkAttachmentReference subpassDepthStencilReference = {};
+				subpassDepthStencilReference.attachment = depthAttachment;
+				subpassDepthStencilReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilReference;
+			}
+
+			if (swapchainAttachment != 9999)
+			{
+				VkAttachmentReference colourAttachmentResolveReference = {};
+				colourAttachmentResolveReference.attachment = swapchainAttachment;
+				colourAttachmentResolveReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+				subpassDescription.pResolveAttachments = &colourAttachmentResolveReference;
 			}
 
 			subpasses.emplace_back(subpassDescription);

@@ -33,8 +33,6 @@ namespace acid
 
 		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
 
-		std::string GetName() const override { return "ShadowRender"; };
-
 		UniformHandler GetUniformObject() const { return m_uniformObject; }
 	};
 }

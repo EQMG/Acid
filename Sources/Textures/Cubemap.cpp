@@ -43,10 +43,10 @@ namespace acid
 
 		Texture::CreateImage(m_width, m_height, m_depth, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
 		Texture::CopyBufferToImage(m_width, m_height, m_depth, bufferStaging->GetBuffer(), m_image, 6);
 		Texture::CreateMipmaps(m_image, m_width, m_height, m_depth, m_mipLevels, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
 		Texture::CreateImageSampler(true, true, false, m_mipLevels, m_sampler);
 		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_CUBE, m_format, m_mipLevels, m_imageView, 6);
 
@@ -107,10 +107,10 @@ namespace acid
 
 		Texture::CreateImage(m_width, m_height, m_depth, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, 6);
 		Texture::CopyBufferToImage(m_width, m_height, m_depth, bufferStaging->GetBuffer(), m_image, 6);
 	//	Texture::CreateMipmaps(m_image, m_width, m_height, m_depth, m_mipLevels, 6);
-		Texture::TransitionImageLayout(m_image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
 		Texture::CreateImageSampler(true, true, false, m_mipLevels, m_sampler);
 		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_CUBE, m_format, m_mipLevels, m_imageView, 6);
 

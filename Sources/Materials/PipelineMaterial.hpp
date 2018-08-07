@@ -35,7 +35,7 @@ namespace acid
 
 		~PipelineMaterial();
 
-		std::string GetName() override { return m_filename; }
+		std::string GetFilename() override { return m_filename; }
 
 		Pipeline &GetPipeline() { return m_pipeline; }
 

@@ -25,8 +25,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ColliderBox"; };
-
 		btCollisionShape *GetCollisionShape() const override;
 
 		Vector3 GetExtents() const { return m_extents; }

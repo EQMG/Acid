@@ -37,8 +37,6 @@ namespace acid
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-		std::string GetName() const override { return "MaterialSkybox"; };
-
 		std::shared_ptr<Cubemap> GetCubemap() const { return m_cubemap; }
 
 		void SetCubemap(std::shared_ptr<Cubemap> cubemap) { m_cubemap = cubemap; }

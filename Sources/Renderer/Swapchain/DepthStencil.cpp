@@ -6,15 +6,15 @@
 namespace acid
 {
 	std::vector<VkFormat> TRY_FORMATS =
-		{
-			VK_FORMAT_D32_SFLOAT_S8_UINT,
-			VK_FORMAT_D24_UNORM_S8_UINT,
-			VK_FORMAT_D16_UNORM_S8_UINT,
-			VK_FORMAT_D32_SFLOAT,
-			VK_FORMAT_D16_UNORM
-		};
+	{
+		VK_FORMAT_D32_SFLOAT_S8_UINT,
+		VK_FORMAT_D24_UNORM_S8_UINT,
+		VK_FORMAT_D16_UNORM_S8_UINT,
+		VK_FORMAT_D32_SFLOAT,
+		VK_FORMAT_D16_UNORM
+	};
 
-	DepthStencil::DepthStencil(const VkExtent3D &extent) :
+	DepthStencil::DepthStencil(const VkExtent3D &extent, const VkSampleCountFlagBits &samples) :
 		IDescriptor(),
 		m_image(VK_NULL_HANDLE),
 		m_imageMemory(VK_NULL_HANDLE),
@@ -60,7 +60,7 @@ namespace acid
 		imageCreateInfo.extent = extent;
 		imageCreateInfo.mipLevels = 1;
 		imageCreateInfo.arrayLayers = 1;
-		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.samples = samples;
 		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
 		imageCreateInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
