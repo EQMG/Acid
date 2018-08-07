@@ -1,11 +1,11 @@
 #include "DepthStencil.hpp"
 
 #include "Display/Display.hpp"
-#include "Renderer/Buffers/Buffer.hpp"
+#include "Textures/Texture.hpp"
 
 namespace acid
 {
-	std::vector<VkFormat> TRY_FORMATS =
+	static const std::vector<VkFormat> TRY_FORMATS =
 	{
 		VK_FORMAT_D32_SFLOAT_S8_UINT,
 		VK_FORMAT_D24_UNORM_S8_UINT,
@@ -23,7 +23,6 @@ namespace acid
 		m_format(VK_FORMAT_UNDEFINED),
 		m_imageInfo({})
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
 		for (auto &format : TRY_FORMATS)
@@ -52,72 +51,11 @@ namespace acid
 			throw std::runtime_error("Vulkan runtime error, depth stencil format not selected!");
 		}
 
-		VkImageCreateInfo imageCreateInfo = {};
-		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-		imageCreateInfo.flags = 0;
-		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
-		imageCreateInfo.format = m_format;
-		imageCreateInfo.extent = extent;
-		imageCreateInfo.mipLevels = 1;
-		imageCreateInfo.arrayLayers = 1;
-		imageCreateInfo.samples = samples;
-		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-		imageCreateInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		imageCreateInfo.queueFamilyIndexCount = VK_QUEUE_FAMILY_IGNORED;
-		imageCreateInfo.pQueueFamilyIndices = nullptr;
-		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-
-		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &m_image));
-
-		VkMemoryRequirements imageMemoryRequirements = {};
-		vkGetImageMemoryRequirements(logicalDevice, m_image, &imageMemoryRequirements);
-
-		const uint32_t memoryTypeIndex = Buffer::FindMemoryType(imageMemoryRequirements.memoryTypeBits,
-			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		VkMemoryAllocateInfo memoryAllocateInfo = {};
-		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		memoryAllocateInfo.allocationSize = imageMemoryRequirements.size;
-		memoryAllocateInfo.memoryTypeIndex = memoryTypeIndex;
-
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_imageMemory));
-
-		Display::CheckVk(vkBindImageMemory(logicalDevice, m_image, m_imageMemory, 0));
-
-		VkImageViewCreateInfo imageViewCreateInfo = {};
-		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		imageViewCreateInfo.image = m_image;
-		imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		imageViewCreateInfo.format = m_format;
-		imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-		imageViewCreateInfo.subresourceRange = {};
-		imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
-		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
-		imageViewCreateInfo.subresourceRange.levelCount = 1;
-		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
-		imageViewCreateInfo.subresourceRange.layerCount = 1;
-
-		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_imageView));
-
-		VkSamplerCreateInfo samplerCreateInfo = {};
-		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-		samplerCreateInfo.magFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.minFilter = VK_FILTER_LINEAR;
-		samplerCreateInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		samplerCreateInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		samplerCreateInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-		samplerCreateInfo.mipLodBias = 0.0f;
-		samplerCreateInfo.minLod = 0.0f;
-		samplerCreateInfo.maxLod = 1.0f;
-		samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-		samplerCreateInfo.compareOp = VK_COMPARE_OP_NEVER;
-		samplerCreateInfo.compareEnable = VK_FALSE;
-		samplerCreateInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-
-		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &m_sampler));
+		Texture::CreateImage(extent.width, extent.height, extent.depth, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+			m_image, m_imageMemory, 1);
+		Texture::CreateImageSampler(true, false, false, 1, m_sampler);
+		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, 1, m_imageView, 1);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
