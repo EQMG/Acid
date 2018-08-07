@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 #include "Files/Files.hpp"
-#include "FontCharacter.hpp"
 #include "Resources/Resources.hpp"
+#include "FontCharacter.hpp"
 
 namespace acid
 {

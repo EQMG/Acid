@@ -1,5 +1,7 @@
 #include "FilterBlurVertical.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	FilterBlurVertical::FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale) :

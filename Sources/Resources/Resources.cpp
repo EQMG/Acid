@@ -20,13 +20,16 @@ namespace acid
 		{
 			m_timerPurge.ResetStartTime();
 
-			for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
+			for (auto it = m_resources.begin(); it != m_resources.end();)
 			{
 				if ((*it).use_count() <= 1)
 				{
 					fprintf(stdout, "Resource '%s' erased\n", (*it)->GetName().c_str());
-					m_resources.erase(it);
+					it = m_resources.erase(it);
+					continue;
 				}
+
+				++it;
 			}
 		}
 	}

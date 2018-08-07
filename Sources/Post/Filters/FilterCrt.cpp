@@ -1,5 +1,7 @@
 #include "FilterCrt.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :

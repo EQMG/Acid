@@ -39,7 +39,7 @@ namespace acid
 		}
 	}
 
-	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag)
+	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
 	{
 		for (int i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 		{
@@ -270,7 +270,7 @@ namespace acid
 	}
 
 
-	EShLanguage GetEshLanguage(const VkShaderStageFlagBits &stageFlag)
+	EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
 	{
 		switch (stageFlag)
 		{
@@ -389,7 +389,7 @@ namespace acid
 		return resources;
 	}
 
-	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag)
+	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -533,13 +533,13 @@ namespace acid
 		return result.str();
 	}
 
-	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
 	{
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
 			if (uniformBlock->GetName() == program.getUniformBlockName(i))
 			{
-				uniformBlock->SetStageFlags(VK_SHADER_STAGE_ALL);
+				uniformBlock->SetStageFlags(uniformBlock->GetStageFlags() | stageFlag);
 				return;
 			}
 		}
@@ -547,7 +547,7 @@ namespace acid
 		m_uniformBlocks.emplace_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
 	}
 
-	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
 	{
 		if (program.getUniformBinding(i) == -1)
 		{
@@ -571,7 +571,7 @@ namespace acid
 		{
 			if (uniform->GetName() == program.getUniformName(i))
 			{
-				uniform->SetStageFlags(VK_SHADER_STAGE_ALL);
+				uniform->SetStageFlags(uniform->GetStageFlags() | stageFlag);
 				return;
 			}
 		}
@@ -579,7 +579,7 @@ namespace acid
 		m_uniforms.emplace_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 	}
 
-	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i)
+	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
 	{
 		for (auto &vertexAttribute : m_vertexAttributes)
 		{

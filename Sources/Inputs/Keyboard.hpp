@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "Display/Display.hpp"
 #include "Engine/Engine.hpp"
 

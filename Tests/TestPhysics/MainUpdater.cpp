@@ -20,6 +20,8 @@ namespace test
 
 	void MainUpdater::Update(const ModuleRegister &moduleRegister)
 	{
+	//	uint32_t objectsPerThread = static_cast<uint32_t>(std::ceil(float(moduleRegister.GetModuleCount()) / float(ThreadPool::HARDWARE_CONCURRENCY)));
+
 		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());
 
 		// Always-Update.

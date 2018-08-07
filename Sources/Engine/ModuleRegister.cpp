@@ -39,7 +39,6 @@ namespace acid
 		RegisterModule<Scenes>(UPDATE_NORMAL);
 		RegisterModule<Renderer>(UPDATE_RENDER);
 		RegisterModule<Resources>(UPDATE_PRE);
-		RegisterModule<Tasks>(UPDATE_ALWAYS);
 		RegisterModule<Events>(UPDATE_ALWAYS);
 		RegisterModule<Uis>(UPDATE_PRE);
 		RegisterModule<Particles>(UPDATE_NORMAL);

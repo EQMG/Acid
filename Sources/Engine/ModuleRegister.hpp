@@ -112,5 +112,7 @@ namespace acid
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
 		void RunUpdate(const ModuleUpdate &update) const;
+
+		uint32_t GetModuleCount() const { return m_modules.size(); }
 	};
 }

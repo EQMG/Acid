@@ -1,5 +1,7 @@
 #include "FilterBlurHorizontal.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	FilterBlurHorizontal::FilterBlurHorizontal(const GraphicsStage &graphicsStage, const float &scale) :
