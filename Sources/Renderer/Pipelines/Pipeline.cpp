@@ -287,7 +287,7 @@ namespace acid
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions().data();
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = bindingDescriptions.data();
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 

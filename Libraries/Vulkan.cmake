@@ -26,6 +26,7 @@ else()
 endif()
 
 set(VULKAN_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/vulkan/include" PARENT_SCOPE)
+message(STATUS "Found Vulkan: ${VULKAN_LIBRARY}")
 
 # Install
 if(ACID_INSTALL)

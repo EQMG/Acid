@@ -5,3 +5,5 @@ else()
 endif()
 
 find_library(OPENAL_LIBRARY NAMES openal OpenAL32 OpenAL PATHS "${PROJECT_SOURCE_DIR}/Libraries/openal/lib/" PARENT_SCOPE)
+
+message(STATUS "Found OpenAL: ${OPENAL_LIBRARY}")

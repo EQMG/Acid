@@ -50,31 +50,9 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Renderer"; };
-
 		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
-		/// <summary>
-		/// Starts a renderpass.
-		/// </summary>
-		/// <param name="commandBuffer"> The command buffer to use. </param>
-		/// <param name="i"> The index of the render pass being rendered. </param>
-		/// <returns> VK_SUCCESS on success. </returns>
-		bool StartRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i);
-
-		/// <summary>
-		/// Ends the renderpass.
-		/// </summary>
-		/// <param name="commandBuffer"> The command buffer to use. </param>
-		void EndRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i);
-
-		/// <summary>
-		/// Starts the next render subpass.
-		/// </summary>
-		/// <param name="commandBuffer"> The command buffer to use. </param>
-		void NextSubpass(const CommandBuffer &commandBuffer);
-
-		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
+		std::string GetName() const override { return "Renderer"; };
 
 		/// <summary>
 		/// Gets the renderer manager.
@@ -109,5 +87,9 @@ namespace acid
 		void CreatePipelineCache();
 
 		void RecreatePass(const uint32_t &i);
+
+		bool StartRenderpass(const uint32_t &i);
+
+		void EndRenderpass(const uint32_t &i);
 	};
 }

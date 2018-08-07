@@ -1,5 +1,5 @@
-include(FindVulkan.cmake)
-include(FindOpenAL.cmake)
+include(Vulkan.cmake)
+include(OpenAL.cmake)
 
 set(GLSLANG_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/glslang/" PARENT_SCOPE)
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")

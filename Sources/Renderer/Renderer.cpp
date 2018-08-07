@@ -37,7 +37,6 @@ namespace acid
 		}
 
 		delete m_swapchain;
-		delete m_commandBuffer;
 
 		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
@@ -55,7 +54,6 @@ namespace acid
 
 		m_managerRender->Update();
 
-		auto commandBuffer = Renderer::Get()->GetCommandBuffer();
 		auto camera = Scenes::Get()->GetCamera();
 		auto stages = m_managerRender->GetStages();
 		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +std::numeric_limits<float>::infinity());
@@ -63,7 +61,7 @@ namespace acid
 		for (uint32_t stage = 0; stage < m_renderStages.size(); stage++)
 		{
 			// Starts Rendering.
-			auto startResult = Renderer::Get()->StartRenderpass(*commandBuffer, stage);
+			auto startResult = Renderer::Get()->StartRenderpass(stage);
 
 			if (!startResult)
 			{
@@ -87,18 +85,18 @@ namespace acid
 							continue;
 						}
 
-						renderer->Render(*commandBuffer, clipPlane, *camera);
+						renderer->Render(m_commandBuffer, clipPlane, *camera);
 					}
 				}
 
 				if (subpass != subpassCount - 1)
 				{
-					Renderer::Get()->NextSubpass(*commandBuffer);
+					vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 				}
 			}
 
 			// Ends Rendering.
-			Renderer::Get()->EndRenderpass(*commandBuffer, stage);
+			Renderer::Get()->EndRenderpass(stage);
 		}
 	}
 
@@ -111,7 +109,7 @@ namespace acid
 #endif
 
 		const VkExtent2D displayExtent2D = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+				static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
 		};
 
 		m_renderStages.clear();
@@ -130,145 +128,6 @@ namespace acid
 		float debugEnd = Engine::Get()->GetTimeMs();
 		fprintf(stdout, "Renderpass created in %fms\n", debugEnd - debugStart);
 #endif
-	}
-
-	bool Renderer::StartRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i)
-	{
-		auto renderStage = GetRenderStage(i);
-
-		if (renderStage->IsOutOfDate(m_swapchain->GetExtent()))
-		{
-			RecreatePass(i);
-			return false;
-		}
-
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
-
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
-
-		if (renderStage->HasSwapchain())
-		{
-			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
-
-			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-			{
-				RecreatePass(i);
-				return false;
-			}
-
-			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
-			{
-				throw std::runtime_error("Renderer failed to acquire swapchain image!");
-			}
-
-			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
-
-			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
-		}
-
-		commandBuffer.Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
-
-		VkRect2D renderArea = {};
-		renderArea.offset.x = 0;
-		renderArea.offset.y = 0;
-		renderArea.extent.width = renderStage->GetWidth();
-		renderArea.extent.height = renderStage->GetHeight();
-
-		VkRenderPassBeginInfo renderPassBeginInfo = {};
-		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
-		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
-		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
-		renderPassBeginInfo.pClearValues = renderStage->GetClearValues().data();
-
-		vkCmdBeginRenderPass(commandBuffer.GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-		VkViewport viewport = {};
-		viewport.x = 0.0f;
-		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(renderStage->GetWidth());
-		viewport.height = static_cast<float>(renderStage->GetHeight());
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-		vkCmdSetViewport(commandBuffer.GetCommandBuffer(), 0, 1, &viewport);
-
-		VkRect2D scissor = {};
-		scissor.offset.x = 0;
-		scissor.offset.y = 0;
-		scissor.extent.width = renderStage->GetWidth();
-		scissor.extent.height = renderStage->GetHeight();
-		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissor);
-
-		return true;
-	}
-
-	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i)
-	{
-		auto renderStage = GetRenderStage(i);
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
-		auto presentQueue = Display::Get()->GetPresentQueue();
-
-		vkCmdEndRenderPass(commandBuffer.GetCommandBuffer());
-		commandBuffer.End();
-		commandBuffer.Submit(false, m_semaphore);
-
-		if (!renderStage->HasSwapchain())
-		{
-			return;
-		}
-
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
-
-		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
-
-		VkResult presentResult = VK_RESULT_MAX_ENUM;
-
-		VkPresentInfoKHR presentInfo = {};
-		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
-		presentInfo.pWaitSemaphores = waitSemaphores.data();
-		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
-		presentInfo.pImageIndices = &m_activeSwapchainImage;
-		presentInfo.pResults = &presentResult;
-
-		const VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
-
-		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
-		{
-			RecreatePass(i);
-			return;
-		}
-
-		Display::CheckVk(presentResult);
-		Display::CheckVk(vkQueueWaitIdle(presentQueue));
-	}
-
-	void Renderer::NextSubpass(const CommandBuffer &commandBuffer)
-	{
-		vkCmdNextSubpass(commandBuffer.GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
-	}
-
-	uint32_t Renderer::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
-	{
-		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
-		{
-			if (memoryRequirements->memoryTypeBits & (1 << i))
-			{
-				if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
-				{
-					return i;
-				}
-			}
-		}
-
-//#ifdef ACID_BUILD_WINDOWS
-//		MessageBox(nullptr, "Couldn't find proper memory type!", "Vulkan Error", 0);
-//#endif
-		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
-		return UINT32_MAX;
 	}
 
 	void Renderer::SetManager(IManagerRender *managerRender)
@@ -321,7 +180,7 @@ namespace acid
 		auto renderStage = GetRenderStage(i);
 
 		const VkExtent2D displayExtent2D = {
-			Display::Get()->GetWidth(), Display::Get()->GetHeight()
+				Display::Get()->GetWidth(), Display::Get()->GetHeight()
 		};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
@@ -336,5 +195,119 @@ namespace acid
 		}
 
 		renderStage->Rebuild(m_swapchain);
+	}
+
+	bool Renderer::StartRenderpass(const uint32_t &i)
+	{
+		auto renderStage = GetRenderStage(i);
+
+		if (renderStage->IsOutOfDate(m_swapchain->GetExtent()))
+		{
+			RecreatePass(i);
+			return false;
+		}
+
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+
+		if (renderStage->HasSwapchain())
+		{
+			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+
+			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+			{
+				RecreatePass(i);
+				return false;
+			}
+
+			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
+			{
+				throw std::runtime_error("Renderer failed to acquire swapchain image!");
+			}
+
+			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+
+			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+		}
+
+		m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
+
+		VkRect2D renderArea = {};
+		renderArea.offset.x = 0;
+		renderArea.offset.y = 0;
+		renderArea.extent.width = renderStage->GetWidth();
+		renderArea.extent.height = renderStage->GetHeight();
+
+		VkRenderPassBeginInfo renderPassBeginInfo = {};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
+		renderPassBeginInfo.renderArea = renderArea;
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
+		renderPassBeginInfo.pClearValues = renderStage->GetClearValues().data();
+
+		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+		VkViewport viewport = {};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = static_cast<float>(renderStage->GetWidth());
+		viewport.height = static_cast<float>(renderStage->GetHeight());
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+		vkCmdSetViewport(m_commandBuffer->GetCommandBuffer(), 0, 1, &viewport);
+
+		VkRect2D scissor = {};
+		scissor.offset.x = 0;
+		scissor.offset.y = 0;
+		scissor.extent.width = renderStage->GetWidth();
+		scissor.extent.height = renderStage->GetHeight();
+		vkCmdSetScissor(m_commandBuffer->GetCommandBuffer(), 0, 1, &scissor);
+
+		return true;
+	}
+
+	void Renderer::EndRenderpass(const uint32_t &i)
+	{
+		auto renderStage = GetRenderStage(i);
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+		auto presentQueue = Display::Get()->GetPresentQueue();
+
+		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
+		m_commandBuffer->End();
+		m_commandBuffer->Submit(false, renderStage->HasSwapchain() ? m_semaphore : VK_NULL_HANDLE);
+
+		if (!renderStage->HasSwapchain())
+		{
+			return;
+		}
+
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+
+		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
+
+		VkResult presentResult = VK_RESULT_MAX_ENUM;
+
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
+		presentInfo.pWaitSemaphores = waitSemaphores.data();
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
+		presentInfo.pImageIndices = &m_activeSwapchainImage;
+		presentInfo.pResults = &presentResult;
+
+		const VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
+
+		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
+		{
+			RecreatePass(i);
+			return;
+		}
+
+		Display::CheckVk(presentResult);
+		Display::CheckVk(vkQueueWaitIdle(presentQueue));
 	}
 }
