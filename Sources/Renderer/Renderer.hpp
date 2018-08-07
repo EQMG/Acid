@@ -53,6 +53,12 @@ namespace acid
 		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
 		/// <summary>
+		/// Takes a screenshot of the current image of the display and saves it into a image file.
+		/// </summary>
+		///	<param name="filename"> The file to save the screenshot to. </param>
+		void CaptureScreenshot(const std::string &filename);
+
+		/// <summary>
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>

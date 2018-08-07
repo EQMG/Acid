@@ -63,11 +63,11 @@ namespace acid
 					continue;
 				}
 
-				//if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_SWAPCHAIN) // TODO: MSAA
-				//{
-				//	swapchainAttachment = attachment;
-				//	continue;
-				//}
+			//	if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_SWAPCHAIN) // TODO: MSAA
+			//	{
+			//		swapchainAttachment = attachment;
+			//		continue;
+			//	}
 
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;

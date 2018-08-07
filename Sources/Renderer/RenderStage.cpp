@@ -64,7 +64,7 @@ namespace acid
 		if (m_hasDepth)
 		{
 			delete m_depthStencil;
-			m_depthStencil = new DepthStencil(extent3D, samples);
+			m_depthStencil = new DepthStencil(extent3D.width, extent3D.height, samples);
 		}
 
 		if (m_renderpass == nullptr)

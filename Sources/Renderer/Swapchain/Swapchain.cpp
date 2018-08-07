@@ -44,7 +44,6 @@ namespace acid
 
 		if (surfaceCapabilities.maxImageCount > 0 && m_swapchainImageCount > surfaceCapabilities.maxImageCount)
 		{
-
 			m_swapchainImageCount = surfaceCapabilities.maxImageCount;
 		}
 
@@ -84,23 +83,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
-			VkImageViewCreateInfo imageViewCreateInfo = {};
-			imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			imageViewCreateInfo.image = m_swapchainImages.at(i);
-			imageViewCreateInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-			imageViewCreateInfo.format = surfaceFormat.format;
-			imageViewCreateInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-			imageViewCreateInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-			imageViewCreateInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-			imageViewCreateInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-			imageViewCreateInfo.subresourceRange = {};
-			imageViewCreateInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
-			imageViewCreateInfo.subresourceRange.levelCount = 1;
-			imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
-			imageViewCreateInfo.subresourceRange.layerCount = 1;
-
-			Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &m_swapchainImageViews.at(i)));
+			Texture::CreateImageView(m_swapchainImages.at(i), m_swapchainImageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, 1, 1);
 		}
 	}
 

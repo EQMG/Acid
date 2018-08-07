@@ -10,7 +10,6 @@
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Renderer/Screenshot/Screenshot.hpp>
 #include <Physics/ColliderBox.hpp>
 #include <Physics/ColliderSphere.hpp>
 #include <Models/Shapes/ModelCube.hpp>
@@ -20,6 +19,7 @@
 #include <Particles/ParticleSystem.hpp>
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Shadows/ShadowRender.hpp>
+#include <Renderer/Renderer.hpp>
 #include "FpsCamera.hpp"
 
 namespace test
@@ -84,7 +84,7 @@ namespace test
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
-		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined.png"), 0.0f, 1.0f);
+		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
@@ -151,7 +151,7 @@ namespace test
 			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
 
 			m_soundScreenshot->Play();
-			Screenshot::Capture(filename);
+			Renderer::Get()->CaptureScreenshot(filename);
 		}
 
 		if (m_buttonExit->WasDown())

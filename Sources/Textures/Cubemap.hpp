@@ -19,10 +19,13 @@ namespace acid
 		std::string m_filename;
 		std::string m_fileExt;
 
+		bool m_repeatEdges;
 		uint32_t m_mipLevels;
+		bool m_anisotropic;
+		bool m_nearest;
 
-		int32_t m_components;
-		int32_t m_width, m_height, m_depth;
+		uint32_t m_components;
+		uint32_t m_width, m_height, m_depth;
 
 		VkImage m_image;
 		VkImageView m_imageView;
@@ -51,7 +54,13 @@ namespace acid
 		/// <summary>
 		/// A new cubemap object.
 		/// </summary>
-		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true);
+		/// <param name="filename"> The file base name (path without extension or face name).. </param>
+		/// <param name="fileExt"> The files extension type (ex .png). </param>
+		/// <param name="repeatEdges"> If UV coords will wrap if outside of edge bounds. </param>
+		/// <param name="mipmap"> If mipmaps will be used on the cubemap. </param>
+		/// <param name="anisotropic"> If anisotropic will be use on the cubemap. </param>
+		/// <param name="nearest"> If nearest filtering will be use on the cubemap. </param>
+		Cubemap(const std::string &filename, const std::string &fileExt, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
 		/// A new cubemap object from a array of pixels.
@@ -71,19 +80,18 @@ namespace acid
 
 		std::string GetExtension() { return m_fileExt; };
 
-		int32_t GetComponents() const { return m_components; }
+		uint32_t GetComponents() const { return m_components; }
 
-		int32_t GetWidth() const { return m_width; }
+		uint32_t GetWidth() const { return m_width; }
 
-		int32_t GetHeight() const { return m_height; }
+		uint32_t GetHeight() const { return m_height; }
 
-		int32_t GetDepth() const { return m_depth; }
+		uint32_t GetDepth() const { return m_depth; }
 
 		VkImage GetImage() const { return m_image; }
 
 		VkImageView GetImageView() const { return m_imageView; }
 
 		VkSampler GetSampler() const { return m_sampler; }
-
 	};
 }

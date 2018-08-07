@@ -3,7 +3,9 @@
 #include <cmath>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
 namespace acid
@@ -20,7 +22,7 @@ namespace acid
 		m_mipLevels(1),
 		m_anisotropic(anisotropic),
 		m_nearest(nearest),
-		m_samples(),
+		m_samples(VK_SAMPLE_COUNT_1_BIT),
 		m_components(0),
 		m_width(0),
 		m_height(0),
@@ -53,14 +55,14 @@ namespace acid
 		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT |
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
+		CreateImage(m_image, m_bufferMemory, m_width, m_height, 1, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging.GetBuffer(), m_image, 1);
+		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1, 1);
 		CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
-		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
-		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
+		CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
+		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, 1);
 
 		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
@@ -77,7 +79,7 @@ namespace acid
 #endif
 	}
 
-	Texture::Texture(const int32_t &width, const int32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples, float *pixels) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples, float *pixels) :
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
@@ -115,14 +117,14 @@ namespace acid
 		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
 
-		CreateImage(m_width, m_height, 1, VK_IMAGE_TYPE_2D, samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL, usage | VK_IMAGE_USAGE_SAMPLED_BIT |
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_image, m_bufferMemory, 1);
+		CreateImage(m_image, m_bufferMemory, m_width, m_height, 1, VK_IMAGE_TYPE_2D, samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+			usage | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(m_width, m_height, 1, bufferStaging->GetBuffer(), m_image, 1);
+		CopyBufferToImage(bufferStaging->GetBuffer(), m_image, m_width, m_height, 1, 1);
 	//	Texture::CreateMipmaps(m_image, m_width, m_height, 1, m_mipLevels, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 1);
-		CreateImageSampler(m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels, m_sampler);
-		CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, m_imageView, 1);
+		CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
+		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, m_mipLevels, 1);
 
 		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);
 
@@ -257,7 +259,7 @@ namespace acid
 		return size;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filepath, int *width, int *height, int *components)
+	uint8_t *Texture::LoadPixels(const std::string &filepath, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
@@ -267,12 +269,12 @@ namespace acid
 
 		stbi_uc *data = nullptr;
 
-		if (stbi_info(filepath.c_str(), width, height, components) == 0)
+		if (stbi_info(filepath.c_str(), (int *)width, (int *)height, (int *)components) == 0)
 		{
 			assert(false && "Vulkan invalid texture file format.");
 		}
 
-		data = stbi_load(filepath.c_str(), width, height, components, STBI_rgb_alpha);
+		data = stbi_load(filepath.c_str(), (int *)width, (int *)height, (int *)components, STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
@@ -282,7 +284,7 @@ namespace acid
 		return data;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *depth, uint32_t *components)
 	{
 		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
 		stbi_uc *offset = pixels;
@@ -313,12 +315,12 @@ namespace acid
 		stbi_image_free(pixels);
 	}
 
-	uint32_t Texture::GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth)
+	uint32_t Texture::GetMipLevels(const uint32_t &width, const uint32_t &height, const uint32_t &depth)
 	{
 		return static_cast<uint32_t>(std::floor(std::log2(std::max(width, std::max(height, depth)))) + 1);
 	}
 
-	void Texture::CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers)
+	void Texture::CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -429,21 +431,13 @@ namespace acid
 			throw std::invalid_argument("unsupported layout transition!");
 		}
 
-		vkCmdPipelineBarrier(
-			commandBuffer.GetCommandBuffer(),
-			sourceStage, destinationStage,
-			0,
-			0, nullptr,
-			0, nullptr,
-			1, &barrier
-		);
-
+		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 
 		commandBuffer.End();
 		commandBuffer.Submit();
 	}
 
-	void Texture::CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount)
+	void Texture::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -464,7 +458,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void Texture::CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount)
+	void Texture::CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -540,7 +534,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void Texture::CreateImageSampler(const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler)
+	void Texture::CreateImageSampler(VkSampler &sampler, const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -565,7 +559,7 @@ namespace acid
 		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 	}
 
-	void Texture::CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount)
+	void Texture::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, const uint32_t &layerCount)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
