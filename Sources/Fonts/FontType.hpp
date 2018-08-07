@@ -53,7 +53,7 @@ namespace acid
 		/// </summary>
 		~FontType();
 
-		std::string GetName() override { return m_name; }
+		std::string GetFilename() override { return m_name; }
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

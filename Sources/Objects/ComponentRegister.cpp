@@ -51,7 +51,7 @@ namespace acid
 			return nullptr;
 		}
 
-		return ((*it).second)();
+		return ((*it).second).create();
 	}
 
 	bool ComponentRegister::DeregisterComponent(const std::string &name)
@@ -65,5 +65,18 @@ namespace acid
 
 		m_components.erase(component);
 		return true;
+	}
+
+	std::optional<std::string> ComponentRegister::FindComponentName(IComponent *compare)
+	{
+		for (auto &component : m_components)
+		{
+			if (component.second.isSame(compare))
+			{
+				return component.first;
+			}
+		}
+
+		return {};
 	}
 }

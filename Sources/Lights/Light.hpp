@@ -48,8 +48,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "Light"; };
-
 		Colour GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) { m_colour = colour; }

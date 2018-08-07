@@ -22,9 +22,6 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		//	auto commandBuffer = Renderer::Get()->GetCommandBuffer();
-		//	vkCmdUpdateBuffer(commandBuffer, m_buffer, 0, m_size, newData);
-
 		// Copies the data to the buffer.
 		void *data;
 		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);

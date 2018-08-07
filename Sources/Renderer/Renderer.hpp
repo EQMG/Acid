@@ -52,8 +52,6 @@ namespace acid
 
 		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
 
-		std::string GetName() const override { return "Renderer"; };
-
 		/// <summary>
 		/// Gets the renderer manager.
 		/// </summary>
@@ -91,5 +89,7 @@ namespace acid
 		bool StartRenderpass(const uint32_t &i);
 
 		void EndRenderpass(const uint32_t &i);
+
+		void NextSubpass();
 	};
 }

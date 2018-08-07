@@ -37,6 +37,7 @@ namespace acid
 		}
 
 		delete m_swapchain;
+		delete m_commandBuffer;
 
 		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
@@ -85,13 +86,13 @@ namespace acid
 							continue;
 						}
 
-						renderer->Render(m_commandBuffer, clipPlane, *camera);
+						renderer->Render(*m_commandBuffer, clipPlane, *camera);
 					}
 				}
 
 				if (subpass != subpassCount - 1)
 				{
-					vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
+					Renderer::Get()->NextSubpass();
 				}
 			}
 
@@ -109,7 +110,7 @@ namespace acid
 #endif
 
 		const VkExtent2D displayExtent2D = {
-				static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
+			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
 		};
 
 		m_renderStages.clear();
@@ -180,7 +181,7 @@ namespace acid
 		auto renderStage = GetRenderStage(i);
 
 		const VkExtent2D displayExtent2D = {
-				Display::Get()->GetWidth(), Display::Get()->GetHeight()
+			Display::Get()->GetWidth(), Display::Get()->GetHeight()
 		};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
@@ -276,15 +277,16 @@ namespace acid
 		auto presentQueue = Display::Get()->GetPresentQueue();
 
 		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
-		m_commandBuffer->End();
-		m_commandBuffer->Submit(false, renderStage->HasSwapchain() ? m_semaphore : VK_NULL_HANDLE);
 
 		if (!renderStage->HasSwapchain())
 		{
 			return;
 		}
 
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		m_commandBuffer->End();
+		m_commandBuffer->Submit(false, m_semaphore);
+
+	//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 
@@ -309,5 +311,10 @@ namespace acid
 
 		Display::CheckVk(presentResult);
 		Display::CheckVk(vkQueueWaitIdle(presentQueue));
+	}
+
+	void Renderer::NextSubpass()
+	{
+		vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 	}
 }

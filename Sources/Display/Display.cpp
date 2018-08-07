@@ -188,6 +188,23 @@ namespace acid
 		glfwPollEvents();;
 	}
 
+	uint32_t Display::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+	{
+		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
+		{
+			if (memoryRequirements->memoryTypeBits & (1 << i))
+			{
+				if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
+				{
+					return i;
+				}
+			}
+		}
+
+		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
+		return UINT32_MAX;
+	}
+
 	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
 	{
 		m_windowWidth = width;
@@ -383,23 +400,6 @@ namespace acid
 		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
 		throw std::runtime_error("Vulkan runtime error.");
-	}
-
-	uint32_t Display::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
-	{
-		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
-		{
-			if (memoryRequirements->memoryTypeBits & (1 << i))
-			{
-				if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
-				{
-					return i;
-				}
-			}
-		}
-
-		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
-		return UINT32_MAX;
 	}
 
 	void Display::CreateGlfw()
@@ -684,7 +684,7 @@ namespace acid
 
 		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
 
-		m_msaaSamples = GetMaxUsableSampleCount();
+	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
 
 	void Display::CreateSurface()
@@ -776,6 +776,7 @@ namespace acid
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
+		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
 
 		if (m_physicalDeviceFeatures.tessellationShader)
 		{

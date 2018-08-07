@@ -46,8 +46,6 @@ namespace test
 
 		void Update() override;
 
-		std::string GetName() const override { return "World"; };
-
 		float GetDayFactor() const;
 
 		float GetSunriseFactor() const;

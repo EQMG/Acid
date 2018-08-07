@@ -71,8 +71,6 @@ namespace acid
 		Vector3 GenerateRandomUnitVector() const;
 
 	public:
-		std::string GetName() const override { return "ParticleSystem"; };
-
 		void AddParticleType(std::shared_ptr<ParticleType> type);
 
 		bool RemoveParticleType(std::shared_ptr<ParticleType> type);

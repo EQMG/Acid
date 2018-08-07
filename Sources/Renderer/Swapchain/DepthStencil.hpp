@@ -16,7 +16,7 @@ namespace acid
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		DepthStencil(const VkExtent3D &extent);
+		DepthStencil(const VkExtent3D &extent, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~DepthStencil();
 

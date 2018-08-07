@@ -15,7 +15,7 @@ namespace acid
 		std::vector<Texture *> m_imageAttachments;
 		std::vector<VkFramebuffer> m_framebuffers;
 	public:
-		Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent);
+		Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Framebuffers();
 

@@ -5,14 +5,18 @@
 
 namespace acid
 {
+	struct ComponentCreate
+	{
+		std::function<IComponent *()> create;
+		std::function<bool(IComponent *)> isSame;
+	};
+
 	/// <summary>
 	/// A class that holds registerd components.
 	/// </summary>
 	class ACID_EXPORT ComponentRegister
 	{
 	private:
-		typedef std::function<IComponent *()> ComponentCreate;
-
 		std::map<std::string, ComponentCreate> m_components;
 	public:
 		/// <summary>
@@ -47,10 +51,17 @@ namespace acid
 				return;
 			}
 
-			m_components.emplace(name, ComponentCreate([]() -> IComponent *
+			ComponentCreate componentCreate = {};
+			componentCreate.create = []() -> IComponent *
 			{
 				return new T();
-			}));
+			};
+			componentCreate.isSame = [](IComponent *component) -> bool
+			{
+				return dynamic_cast<T *>(component) != nullptr;
+			};
+
+			m_components.emplace(name, componentCreate);
 		}
 
 		/// <summary>
@@ -59,5 +70,12 @@ namespace acid
 		/// <param name="name"> The components name. </param>
 		/// <returns> If the component was deregistered. </returns>
 		bool DeregisterComponent(const std::string &name);
+
+		/// <summary>
+		/// Finds the registered name to a component.
+		/// </summary>
+		/// <param name="compare"> The components to get the registered name of. </param>
+		/// <returns> The name registered to the component. </returns>
+		std::optional<std::string> FindComponentName(IComponent *compare);
 	};
 }

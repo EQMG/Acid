@@ -11,7 +11,7 @@ namespace acid
 	private:
 		VkRenderPass m_renderPass;
 	public:
-		Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat);
+		Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Renderpass();
 

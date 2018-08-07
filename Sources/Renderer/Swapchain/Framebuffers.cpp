@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent) :
+	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent, const VkSampleCountFlagBits &samples) :
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
@@ -20,7 +20,7 @@ namespace acid
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				m_imageAttachments.emplace_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT));
+				m_imageAttachments.emplace_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, samples));
 				break;
 			case ATTACHMENT_DEPTH:
 				m_imageAttachments.emplace_back(nullptr);

@@ -37,7 +37,7 @@ namespace acid
 
 	void MaterialSkybox::Write(LoadedValue *destination)
 	{
-		destination->GetChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetName());
+		destination->GetChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
 		destination->GetChild("Cubemap Extension", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
 		destination->GetChild("Sky Colour", true)->SetString(m_skyColour.GetHex());
 	}

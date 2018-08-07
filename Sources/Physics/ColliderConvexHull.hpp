@@ -27,8 +27,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "ColliderConvexHull"; };
-
 		btCollisionShape *GetCollisionShape() const override;
 
 		uint32_t GetPoints() const { return m_points; }

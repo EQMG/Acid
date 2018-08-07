@@ -59,20 +59,21 @@ namespace acid
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
 		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
+		auto samples = Display::Get()->GetMsaaSamples();
 
 		if (m_hasDepth)
 		{
 			delete m_depthStencil;
-			m_depthStencil = new DepthStencil(extent3D);
+			m_depthStencil = new DepthStencil(extent3D, samples);
 		}
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = new Renderpass(*m_renderpassCreate, *m_depthStencil, surfaceFormat.format);
+			m_renderpass = new Renderpass(*m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
 		}
 
 		delete m_framebuffers;
-		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D);
+		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D, samples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

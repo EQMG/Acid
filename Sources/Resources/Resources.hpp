@@ -39,8 +39,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Resources"; };
-
 		std::shared_ptr<IResource> Get(const std::string &filename);
 
 		void Add(std::shared_ptr<IResource> resource);

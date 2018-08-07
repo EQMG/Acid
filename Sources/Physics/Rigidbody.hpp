@@ -42,8 +42,6 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		std::string GetName() const override { return "Rigidbody"; };
-
 		void SetGravity(const Vector3 &gravity);
 
 		std::shared_ptr<Force> AddForce(const std::shared_ptr<Force> &force);

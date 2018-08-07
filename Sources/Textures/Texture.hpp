@@ -55,13 +55,25 @@ namespace acid
 		/// <summary>
 		/// A new texture object.
 		/// </summary>
+		/// <param name="filename"> The file to load the texture from. </param>
+		/// <param name="repeatEdges"> If UV coords will wrap if outside of edge bounds. </param>
+		/// <param name="mipmap"> If mipmaps will be used on the texture. </param>
+		/// <param name="anisotropic"> If anisotropic will be use on the texture. </param>
+		/// <param name="nearest"> If nearest filtering will be use on the texture. </param>
 		Texture(const std::string &filename, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
 		/// </summary>
+		/// <param name="width"> The textures width. </param>
+		/// <param name="height"> The textures height. </param>
+		/// <param name="format"> The textures format. </param>
+		/// <param name="imageLayout"> The textures image layout </param>
+		/// <param name="usage"> The textures image usage </param>
+		/// <param name="samples"> The amount of MSAA samples to use. </param>
+		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
 		Texture(const int32_t &width, const int32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, float *pixels = nullptr);
+			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, float *pixels = nullptr);
 
 		/// <summary>
 		/// Deconstructor for the texture object.
@@ -72,9 +84,19 @@ namespace acid
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
-		uint8_t *CopyPixels();
+		/// <summary>
+		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.
+		/// </summary>
+		/// <returns> A copy of the textures pixels. </returns>
+		uint8_t *GetPixels();
 
-		std::string GetName() override { return m_filename; };
+		/// <summary>
+		/// Copies the pixels into this textures memory.
+		/// </summary>
+		/// <param name="pixels"> The pixels to copy to the image. </param>
+		void SetPixels(uint8_t *pixels);
+
+		std::string GetFilename() override { return m_filename; };
 
 		int32_t GetComponents() const { return m_components; }
 
@@ -104,7 +126,9 @@ namespace acid
 
 		static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
 
-		static void TransitionImageLayout(const VkImage &image, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static bool HasStencilComponent(const VkFormat &format);
+
+		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
 		static void CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount = 1);
 

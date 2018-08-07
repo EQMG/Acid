@@ -42,8 +42,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Audio"; };
-
 		static std::string StringifyResultAl(const int &result);
 
 		static void CheckAl(const int &result);

@@ -16,6 +16,6 @@ namespace acid
 		{
 		}
 
-		virtual std::string GetName() = 0;
+		virtual std::string GetFilename() = 0;
 	};
 }

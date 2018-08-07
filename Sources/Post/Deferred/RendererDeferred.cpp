@@ -146,7 +146,7 @@ namespace acid
 		// Saves the brdf texture.
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
-		uint8_t *pixels = result->CopyPixels();
+		uint8_t *pixels = result->GetPixels();
 		Texture::WritePixels(filename, pixels, result->GetWidth(), result->GetHeight(), result->GetComponents());
 		delete[] pixels;
 

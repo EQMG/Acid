@@ -38,7 +38,7 @@ namespace acid
 
 		~SoundBuffer();
 
-		std::string GetName() override { return m_filename; };
+		std::string GetFilename() override { return m_filename; };
 
 		ALuint GetBuffer() const { return m_buffer; };
 

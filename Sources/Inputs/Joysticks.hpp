@@ -75,8 +75,6 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Joysticks"; };
-
 		/// <summary>
 		/// Determines if the joystick is connected
 		/// </summary>

@@ -106,7 +106,7 @@ namespace acid
 
 		void Update() override;
 
-		std::string GetName() const override { return "Display"; };
+		uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the width of the display in pixels.
@@ -212,8 +212,6 @@ namespace acid
 		static std::string StringifyResultVk(const VkResult &result);
 
 		static void CheckVk(const VkResult &result);
-
-		static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets if the display is closed.

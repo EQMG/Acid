@@ -35,8 +35,6 @@ namespace acid
 
 		virtual void Write(LoadedValue *destination) = 0;
 
-		virtual std::string GetName() const = 0;
-
 		virtual btCollisionShape *GetCollisionShape() const = 0;
 
 		/// <summary>
