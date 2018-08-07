@@ -350,7 +350,7 @@ namespace acid
 
 		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
 
-		vkBindImageMemory(logicalDevice, image, imageMemory, 0);
+		Display::CheckVk(vkBindImageMemory(logicalDevice, image, imageMemory, 0));
 	}
 
 	bool Texture::HasStencilComponent(const VkFormat &format)
