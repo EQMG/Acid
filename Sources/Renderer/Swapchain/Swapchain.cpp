@@ -17,7 +17,8 @@ namespace acid
 		auto surface = Display::Get()->GetSurface();
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		auto surfaceCapabilities = Display::Get()->GetSurfaceCapabilities();
-		auto queueIndices = Display::Get()->GetQueueIndices();
+		auto graphicsFamily = Display::Get()->GetGraphicsFamily();
+		auto presentFamily = Display::Get()->GetPresentFamily();
 
 		m_extent = extent;
 
@@ -62,9 +63,9 @@ namespace acid
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (queueIndices.GetGraphicsFamily() != queueIndices.GetPresentFamily())
+		if (graphicsFamily != presentFamily)
 		{
-			std::array<uint32_t, 2> queueFamily = {queueIndices.GetGraphicsFamily(), queueIndices.GetPresentFamily()};
+			std::array<uint32_t, 2> queueFamily = {graphicsFamily, presentFamily};
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 			swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();

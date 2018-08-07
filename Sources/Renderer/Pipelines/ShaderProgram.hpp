@@ -18,9 +18,9 @@ namespace acid
 		int m_offset;
 		int m_size;
 		int m_glType;
-		VkShaderStageFlagBits m_stageFlags;
+		VkShaderStageFlags m_stageFlags;
 	public:
-		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &glType, const VkShaderStageFlagBits &stageFlags) :
+		Uniform(const std::string &name, const int &binding, const int &offset, const int &size, const int &glType, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_offset(offset),
@@ -44,9 +44,9 @@ namespace acid
 
 		int GetGlType() const { return m_glType; }
 
-		VkShaderStageFlagBits GetStageFlags() const { return m_stageFlags; }
+		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
 
-		void SetStageFlags(const VkShaderStageFlagBits &stageFlags) { m_stageFlags = stageFlags; }
+		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
 		bool operator==(const Uniform &other) const
 		{
@@ -72,10 +72,10 @@ namespace acid
 		std::string m_name;
 		int m_binding;
 		int m_size;
-		VkShaderStageFlagBits m_stageFlags;
+		VkShaderStageFlags m_stageFlags;
 		std::vector<Uniform *> *m_uniforms;
 	public:
-		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlagBits &stageFlags) :
+		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
@@ -121,9 +121,9 @@ namespace acid
 
 		int GetSize() const { return m_size; }
 
-		VkShaderStageFlagBits GetStageFlags() const { return m_stageFlags; }
+		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
 
-		void SetStageFlags(const VkShaderStageFlagBits &stageFlags) { m_stageFlags = stageFlags; }
+		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
 		std::vector<Uniform *> *GetUniforms() const { return m_uniforms; }
 
@@ -188,7 +188,7 @@ namespace acid
 
 		~ShaderProgram();
 
-		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag);
+		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag);
 
 		std::string GetName() const { return m_name; }
 
@@ -218,15 +218,15 @@ namespace acid
 
 		static std::string ProcessIncludes(const std::string &shaderCode);
 
-		VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlagBits &stageFlag);
+		VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag);
 
 		std::string ToString() const;
 
 	private:
-		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i);
 
-		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i);
 
-		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlagBits &stageFlag, const int &i);
+		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i);
 	};
 }

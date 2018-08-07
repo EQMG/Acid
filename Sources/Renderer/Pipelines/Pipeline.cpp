@@ -29,7 +29,8 @@ namespace acid
 		m_depthStencilState({}),
 		m_viewportState({}),
 		m_multisampleState({}),
-		m_dynamicState({})
+		m_dynamicState({}),
+		m_tessellationState({})
 	{
 #if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
@@ -185,10 +186,17 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+	//	VkPushConstantRange pushConstantRange = {};
+	//	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+	//	pushConstantRange.offset = sizeof(pushConstants);
+	//	pushConstantRange.size = 0;
+
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
+	//	pipelineLayoutCreateInfo.pushConstantRangeCount = 1;
+	//	pipelineLayoutCreateInfo.pPushConstantRanges = &pushConstantRange;
 
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
@@ -262,6 +270,9 @@ namespace acid
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
+
+		m_tessellationState.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO;
+		m_tessellationState.patchControlPoints = 3;
 	}
 
 	void Pipeline::CreatePipelinePolygon()
@@ -295,6 +306,7 @@ namespace acid
 		pipelineCreateInfo.pViewportState = &m_viewportState;
 		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
 		pipelineCreateInfo.pDynamicState = &m_dynamicState;
+		pipelineCreateInfo.pTessellationState = &m_tessellationState;
 
 		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());

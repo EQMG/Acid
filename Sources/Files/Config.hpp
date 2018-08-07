@@ -2,9 +2,9 @@
 
 #include <functional>
 #include <map>
+#include <memory>
 #include <string>
 #include "Helpers/FormatString.hpp"
-#include "Tasks/Tasks.hpp"
 #include "ConfigKey.hpp"
 #include "IFile.hpp"
 

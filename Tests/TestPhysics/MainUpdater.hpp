@@ -3,6 +3,7 @@
 #include <Engine/IUpdater.hpp>
 #include <Maths/Delta.hpp>
 #include <Maths/Timer.hpp>
+#include <Threads/ThreadPool.hpp>
 
 using namespace acid;
 

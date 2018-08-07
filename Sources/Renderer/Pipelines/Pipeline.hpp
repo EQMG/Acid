@@ -39,6 +39,7 @@ namespace acid
 		VkPipelineViewportStateCreateInfo m_viewportState;
 		VkPipelineMultisampleStateCreateInfo m_multisampleState;
 		VkPipelineDynamicStateCreateInfo m_dynamicState;
+		VkPipelineTessellationStateCreateInfo m_tessellationState;
 	public:
 		/// <summary>
 		/// Creates a new pipeline.

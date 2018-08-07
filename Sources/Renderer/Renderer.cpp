@@ -25,9 +25,9 @@ namespace acid
 	Renderer::~Renderer()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto queueGraphics = Display::Get()->GetQueueGraphics();
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 
-		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		delete m_managerRender;
 
@@ -143,9 +143,9 @@ namespace acid
 		}
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto queueGraphics = Display::Get()->GetQueueGraphics();
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 
-		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage->HasSwapchain())
 		{
@@ -207,8 +207,8 @@ namespace acid
 	void Renderer::EndRenderpass(const CommandBuffer &commandBuffer, const uint32_t &i)
 	{
 		auto renderStage = GetRenderStage(i);
-		auto queueGraphics = Display::Get()->GetQueueGraphics();
-		auto presentQueue = Display::Get()->GetQueuePresent();
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+		auto presentQueue = Display::Get()->GetPresentQueue();
 
 		vkCmdEndRenderPass(commandBuffer.GetCommandBuffer());
 		commandBuffer.End();
@@ -218,6 +218,8 @@ namespace acid
 		{
 			return;
 		}
+
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 
@@ -241,7 +243,7 @@ namespace acid
 		}
 
 		Display::CheckVk(presentResult);
-		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
+		Display::CheckVk(vkQueueWaitIdle(presentQueue));
 	}
 
 	void Renderer::NextSubpass(const CommandBuffer &commandBuffer)
@@ -295,7 +297,7 @@ namespace acid
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetQueueIndices().GetGraphicsFamily();
+		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamily();
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
@@ -315,14 +317,14 @@ namespace acid
 
 	void Renderer::RecreatePass(const uint32_t &i)
 	{
-		auto queueGraphics = Display::Get()->GetQueueGraphics();
+		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 		auto renderStage = GetRenderStage(i);
 
 		const VkExtent2D displayExtent2D = {
 			Display::Get()->GetWidth(), Display::Get()->GetHeight()
 		};
 
-		Display::CheckVk(vkQueueWaitIdle(queueGraphics));
+		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
 		{

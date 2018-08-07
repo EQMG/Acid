@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Display/Command/CommandBuffer.hpp"
-#include "Display/Display.hpp"
+#include "Renderer/Commands/CommandBuffer.hpp"
 #include "Maths/Vector4.hpp"
 #include "Pipelines/PipelineCreate.hpp"
 #include "Scenes/ICamera.hpp"

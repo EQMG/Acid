@@ -135,15 +135,17 @@ namespace acid
 		m_surfaceCapabilities({}),
 		m_surfaceFormat({}),
 		m_logicalDevice(VK_NULL_HANDLE),
-		m_queueGraphics(VK_NULL_HANDLE),
-		m_queuePresent(VK_NULL_HANDLE),
-		m_queueCompute(VK_NULL_HANDLE),
 		m_msaaSamples(VK_SAMPLE_COUNT_1_BIT),
 		m_physicalDevice(VK_NULL_HANDLE),
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
 		m_physicalDeviceMemoryProperties({}),
-		m_queueIndices(QueueIndices())
+		m_graphicsFamily(0),
+		m_presentFamily(0),
+		m_computeFamily(0),
+		m_graphicsQueue(VK_NULL_HANDLE),
+		m_presentQueue(VK_NULL_HANDLE),
+		m_computeQueue(VK_NULL_HANDLE)
 	{
 		CreateGlfw();
 		SetupLayers();
@@ -152,6 +154,7 @@ namespace acid
 		CreateDebugCallback();
 		CreatePhysicalDevice();
 		CreateSurface();
+		CreateQueueIndices();
 		CreateLogicalDevice();
 
 		glslang::InitializeProcess();
@@ -672,22 +675,7 @@ namespace acid
 		// Creates the WSI Vulkan surface.
 		CheckVk(glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface));
 
-		m_queueIndices = QueueIndices(m_physicalDevice, m_surface);
-
-		if (m_queueIndices.GetGraphicsFamily() == -1)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
-		}
-
 		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities));
-
-		VkBool32 physicalDeviceSurfaceSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, m_queueIndices.GetGraphicsFamily(), m_surface, &physicalDeviceSurfaceSupport);
-
-		if (!physicalDeviceSurfaceSupport)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find a physical surface!");
-		}
 
 		uint32_t physicalDeviceFormatCount = 0;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, nullptr);
@@ -703,12 +691,63 @@ namespace acid
 		}
 	}
 
+	void Display::CreateQueueIndices()
+	{
+		uint32_t deviceQueueFamilyPropertyCount;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
+		std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
+
+		int32_t graphicsFamily = -1;
+		int32_t presentFamily = -1;
+		int32_t computeFamily = -1;
+
+		for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
+		{
+			// Check for graphics support.
+			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			{
+				graphicsFamily = i;
+				m_graphicsFamily = i;
+			}
+
+			// Check for presentation support.
+			VkBool32 presentSupport = VK_FALSE;
+			vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_surface, &presentSupport);
+
+			if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)
+			{
+				presentFamily = i;
+				m_presentFamily = i;
+			}
+
+			// Check for compute support.
+			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT)
+			{
+				computeFamily = i;
+				m_computeFamily = i;
+			}
+
+			if (graphicsFamily != -1 && presentFamily != -1 && computeFamily != -1)
+			{
+				break;
+			}
+
+			i++;
+		}
+
+		if (graphicsFamily == -1)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+		}
+	}
+
 	void Display::CreateLogicalDevice()
 	{
 		float queuePriorities[] = {1.0f, 1.0f};
 		VkDeviceQueueCreateInfo deviceQueueCreateInfo = {};
 		deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		deviceQueueCreateInfo.queueFamilyIndex = m_queueIndices.GetGraphicsFamily();
+		deviceQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
 		deviceQueueCreateInfo.queueCount = 2;
 		deviceQueueCreateInfo.pQueuePriorities = queuePriorities;
 
@@ -719,6 +758,16 @@ namespace acid
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
+		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
+
+		if (m_physicalDeviceFeatures.tessellationShader)
+		{
+			physicalDeviceFeatures.tessellationShader = VK_TRUE;
+		}
+		else
+		{
+			fprintf(stderr, "Selected GPU does not support tessellation shaders!");
+		}
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -732,9 +781,9 @@ namespace acid
 
 		CheckVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
-		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetGraphicsFamily(), 0, &m_queueGraphics);
-		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetPresentFamily(), 0, &m_queuePresent);
-		vkGetDeviceQueue(m_logicalDevice, m_queueIndices.GetComputeFamily(), 0, &m_queueCompute);
+		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
+		vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);
+		vkGetDeviceQueue(m_logicalDevice, m_computeFamily, 0, &m_computeQueue);
 	}
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)

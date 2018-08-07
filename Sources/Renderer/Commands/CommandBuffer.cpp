@@ -91,9 +91,9 @@ namespace acid
 		switch (m_queueType)
 		{
 		case VK_QUEUE_GRAPHICS_BIT:
-			return Display::Get()->GetQueueGraphics();
+			return Display::Get()->GetGraphicsQueue();
 		case VK_QUEUE_COMPUTE_BIT:
-			return Display::Get()->GetQueueCompute();
+			return Display::Get()->GetComputeQueue();
 		default:
 			return nullptr;
 		}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Display/Command/CommandBuffer.hpp"
+#include "Renderer/Commands/CommandBuffer.hpp"
 #include "IPipeline.hpp"
 #include "PipelineCreate.hpp"
 

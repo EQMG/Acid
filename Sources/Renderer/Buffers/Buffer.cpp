@@ -16,15 +16,19 @@ namespace acid
 		}
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto queueIndices = Display::Get()->GetQueueIndices();
+		auto graphicsFamily = Display::Get()->GetGraphicsFamily();
+		auto presentFamily = Display::Get()->GetPresentFamily();
+		auto computeFamily = Display::Get()->GetComputeFamily();
+
+		std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueIndices.GetArray().size());
-		bufferCreateInfo.pQueueFamilyIndices = queueIndices.GetArray().data();
+		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
+		bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
 
 		Display::CheckVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 

@@ -6,9 +6,6 @@
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 #include "Engine/Engine.hpp"
-#include "Queue/QueueIndices.hpp"
-
-class GLFWwindow;
 
 namespace acid
 {
@@ -52,9 +49,6 @@ namespace acid
 		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
 		VkSurfaceFormatKHR m_surfaceFormat;
 		VkDevice m_logicalDevice;
-		VkQueue m_queueGraphics;
-		VkQueue m_queuePresent;
-		VkQueue m_queueCompute;
 
 		VkSampleCountFlagBits m_msaaSamples;
 
@@ -62,7 +56,13 @@ namespace acid
 		VkPhysicalDeviceProperties m_physicalDeviceProperties;
 		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
-		QueueIndices m_queueIndices;
+
+		uint32_t m_graphicsFamily;
+		uint32_t m_presentFamily;
+		uint32_t m_computeFamily;
+		VkQueue m_graphicsQueue;
+		VkQueue m_presentQueue;
+		VkQueue m_computeQueue;
 
 		friend void CallbackError(int error, const char *description);
 
@@ -255,12 +255,6 @@ namespace acid
 
 		VkDevice GetLogicalDevice() const { return m_logicalDevice; }
 
-		VkQueue GetQueueGraphics() const { return m_queueGraphics; }
-
-		VkQueue GetQueuePresent() const { return m_queuePresent; }
-
-		VkQueue GetQueueCompute() const { return m_queueCompute; }
-
 		VkSampleCountFlagBits GetMsaaSamples() const { return m_msaaSamples; }
 
 		VkPhysicalDevice GetPhysicalDevice() const { return m_physicalDevice; }
@@ -271,7 +265,17 @@ namespace acid
 
 		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		QueueIndices GetQueueIndices() const { return m_queueIndices; }
+		VkQueue GetGraphicsQueue() const { return m_graphicsQueue; }
+
+		VkQueue GetPresentQueue() const { return m_presentQueue; }
+
+		VkQueue GetComputeQueue() const { return m_computeQueue; }
+
+		uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
+
+		uint32_t GetPresentFamily() const { return m_presentFamily; }
+
+		uint32_t GetComputeFamily() const { return m_computeFamily; }
 	private:
 		void CreateGlfw();
 
@@ -292,6 +296,8 @@ namespace acid
 		void CreatePhysicalDevice();
 
 		void CreateSurface();
+
+		void CreateQueueIndices();
 
 		void CreateLogicalDevice();
 
