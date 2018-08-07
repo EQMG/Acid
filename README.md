@@ -92,7 +92,7 @@ This is a list of current features in Acid:
  * C# generated files
  * Networking (WIP)
  * Resource packaging (WIP)
- * Steam integration (WIP
+ * Steam integration (WIP)
 
 ## Dependencies
 Acid uses the following libraries:

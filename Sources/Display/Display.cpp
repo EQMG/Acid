@@ -385,6 +385,23 @@ namespace acid
 		throw std::runtime_error("Vulkan runtime error.");
 	}
 
+	uint32_t Display::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+	{
+		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
+		{
+			if (memoryRequirements->memoryTypeBits & (1 << i))
+			{
+				if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
+				{
+					return i;
+				}
+			}
+		}
+
+		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
+		return UINT32_MAX;
+	}
+
 	void Display::CreateGlfw()
 	{
 		// Set the error error callback
@@ -430,7 +447,7 @@ namespace acid
 		glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
 		glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
-		// glfwWindowHint(GLFW_DECORATED, GL_FALSE); // Borderless window.
+	//	glfwWindowHint(GLFW_DECORATED, GL_FALSE); // Borderless window.
 
 		// Create a windowed mode window and its OpenGL context.
 		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);

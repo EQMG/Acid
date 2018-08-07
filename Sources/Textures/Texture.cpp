@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Renderer/Renderer.hpp"
 #include "stb_image.h"
 #include "stb_image_write.h"
 
@@ -312,6 +311,7 @@ namespace acid
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+	//	imageCreateInfo.flags = arrayLayers == 6 ? VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT : 0;
 		imageCreateInfo.imageType = type;
 		imageCreateInfo.extent.width = width;
 		imageCreateInfo.extent.height = height;
@@ -587,7 +587,7 @@ namespace acid
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 
 		// Memory must be host visible to copy from.
-		memoryAllocateInfo.memoryTypeIndex = Renderer::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		memoryAllocateInfo.memoryTypeIndex = Display::FindMemoryTypeIndex(&physicalDeviceMemoryProperties, &memoryRequirements, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &dstImageMemory));
 		Display::CheckVk(vkBindImageMemory(logicalDevice, dstImage, dstImageMemory, 0));
 
