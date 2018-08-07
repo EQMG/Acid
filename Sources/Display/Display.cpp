@@ -229,10 +229,10 @@ namespace acid
 			return;
 		}
 
-		int width = 0;
-		int height = 0;
-		int components = 0;
-		auto data = Texture::LoadPixels(m_iconPath, &width, &height, &components);
+		uint32_t width = 0;
+		uint32_t height = 0;
+		uint32_t components = 0;
+		uint8_t *data = Texture::LoadPixels(m_iconPath, &width, &height, &components);
 
 		if (data == nullptr)
 		{
@@ -424,7 +424,6 @@ namespace acid
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
-		glfwWindowHint(GLFW_SAMPLES, 4); // Adds MSAA to this window/
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Disable context creation.
 

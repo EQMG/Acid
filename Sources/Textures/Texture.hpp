@@ -27,8 +27,8 @@ namespace acid
 		bool m_nearest;
 		VkSampleCountFlagBits m_samples;
 
-		int32_t m_components;
-		int32_t m_width, m_height;
+		uint32_t m_components;
+		uint32_t m_width, m_height;
 
 		VkImage m_image;
 		VkImageView m_imageView;
@@ -72,7 +72,7 @@ namespace acid
 		/// <param name="usage"> The textures image usage </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
-		Texture(const int32_t &width, const int32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, float *pixels = nullptr);
 
 		/// <summary>
@@ -98,11 +98,11 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; };
 
-		int32_t GetComponents() const { return m_components; }
+		uint32_t GetComponents() const { return m_components; }
 
-		int32_t GetWidth() const { return m_width; }
+		uint32_t GetWidth() const { return m_width; }
 
-		int32_t GetHeight() const { return m_height; }
+		uint32_t GetHeight() const { return m_height; }
 
 		VkImage GetImage() const { return m_image; }
 
@@ -114,29 +114,29 @@ namespace acid
 
 		static int32_t LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
 
-		static uint8_t *LoadPixels(const std::string &filepath, int *width, int *height, int *components);
+		static uint8_t *LoadPixels(const std::string &filepath, uint32_t *width, uint32_t *height, uint32_t *components);
 
-		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, int *width, int *height, int *depth, int *components);
+		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *depth, uint32_t *components);
 
 		static bool WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components = 4);
 
 		static void DeletePixels(uint8_t *pixels);
 
-		static uint32_t GetMipLevels(const int32_t &width, const int32_t &height, const int32_t &depth);
+		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height, const uint32_t &depth);
 
-		static void CreateImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &arrayLayers = 1);
+		static void CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers = 1);
 
 		static bool HasStencilComponent(const VkFormat &format);
 
 		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
-		static void CopyBufferToImage(const int32_t &width, const int32_t &height, const int32_t &depth, const VkBuffer &buffer, const VkImage &image, const uint32_t &layerCount = 1);
+		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &layerCount = 1);
 
-		static void CreateMipmaps(const VkImage &image, const int32_t &width, const int32_t &height, const int32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
-		static void CreateImageSampler(const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels, VkSampler &sampler);
+		static void CreateImageSampler(VkSampler &sampler, const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels);
 
-		static void CreateImageView(const VkImage &image, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, VkImageView &imageView, const uint32_t &layerCount = 1);
+		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
 
 		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height);
 

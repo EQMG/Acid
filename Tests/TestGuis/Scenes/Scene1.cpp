@@ -5,7 +5,7 @@
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
-#include <Renderer/Screenshot/Screenshot.hpp>
+#include <Renderer/Renderer.hpp>
 #include "FixedCamera.hpp"
 
 namespace test
@@ -61,7 +61,7 @@ namespace test
 		if (m_buttonScreenshot->WasDown())
 		{
 			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
-			Screenshot::Capture(filename);
+			Renderer::Get()->CaptureScreenshot(filename);
 		}
 
 		if (m_buttonExit->WasDown())

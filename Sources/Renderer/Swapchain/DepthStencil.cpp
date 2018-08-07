@@ -1,7 +1,6 @@
 #include "DepthStencil.hpp"
 
 #include "Display/Display.hpp"
-#include "Textures/Texture.hpp"
 
 namespace acid
 {
@@ -14,10 +13,12 @@ namespace acid
 		VK_FORMAT_D16_UNORM
 	};
 
-	DepthStencil::DepthStencil(const VkExtent3D &extent, const VkSampleCountFlagBits &samples) :
+	DepthStencil::DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples) :
+		Buffer(width * height *4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
+		m_width(width),
+		m_height(height),
 		m_image(VK_NULL_HANDLE),
-		m_imageMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_UNDEFINED),
@@ -51,11 +52,10 @@ namespace acid
 			throw std::runtime_error("Vulkan runtime error, depth stencil format not selected!");
 		}
 
-		Texture::CreateImage(extent.width, extent.height, extent.depth, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-			m_image, m_imageMemory, 1);
-		Texture::CreateImageSampler(true, false, false, 1, m_sampler);
-		Texture::CreateImageView(m_image, VK_IMAGE_VIEW_TYPE_2D, m_format, 1, m_imageView, 1);
+		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, 1, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
+			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
+		Texture::CreateImageSampler(m_sampler, true, false, false, 1);
+		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, 1, 1);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
@@ -68,7 +68,6 @@ namespace acid
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkFreeMemory(logicalDevice, m_imageMemory, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 

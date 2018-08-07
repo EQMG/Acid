@@ -96,10 +96,10 @@ namespace acid
 			return;
 		}
 
-		int width = 0;
-		int height = 0;
-		int components = 0;
-		auto data = Texture::LoadPixels(m_mousePath.c_str(), &width, &height, &components);
+		uint32_t width = 0;
+		uint32_t height = 0;
+		uint32_t components = 0;
+		uint8_t *data = Texture::LoadPixels(m_mousePath, &width, &height, &components);
 
 		if (data == nullptr)
 		{
