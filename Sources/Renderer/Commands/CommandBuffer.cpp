@@ -8,7 +8,8 @@ namespace acid
 	CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
 		m_queueType(queueType),
 		m_bufferLevel(bufferLevel),
-		m_commandBuffer(VK_NULL_HANDLE)
+		m_commandBuffer(VK_NULL_HANDLE),
+		m_running(false)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
@@ -35,21 +36,23 @@ namespace acid
 		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &m_commandBuffer);
 	}
 
-	void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage) const
+	void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
 	{
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = usage;
 
 		Display::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
+		m_running = true;
 	}
 
-	void CommandBuffer::End() const
+	void CommandBuffer::End()
 	{
 		Display::CheckVk(vkEndCommandBuffer(m_commandBuffer));
+		m_running = false;
 	}
 
-	void CommandBuffer::Submit(const bool &waitFence, const VkSemaphore &semaphore) const
+	void CommandBuffer::Submit(const bool &waitFence, const VkSemaphore &semaphore)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();

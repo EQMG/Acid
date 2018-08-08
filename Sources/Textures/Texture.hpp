@@ -124,21 +124,21 @@ namespace acid
 
 		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height, const uint32_t &depth);
 
-		static void CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers = 1);
+		static void CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
 
 		static bool HasStencilComponent(const VkFormat &format);
 
-		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &oldLayout, const VkImageLayout &newLayout, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &layerCount);
 
-		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &layerCount = 1);
+		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &layerCount);
 
-		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const uint32_t &mipLevels, const uint32_t &layerCount);
 
 		static void CreateImageSampler(VkSampler &sampler, const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels);
 
-		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const uint32_t &mipLevels, const uint32_t &layerCount = 1);
+		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &layerCount);
 
-		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height);
+		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const uint32_t &depth, const bool &srcSwapchain);
 
 		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask,
 											 const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,

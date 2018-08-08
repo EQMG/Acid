@@ -83,7 +83,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
-			Texture::CreateImageView(m_swapchainImages.at(i), m_swapchainImageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, 1, 1);
+			Texture::CreateImageView(m_swapchainImages.at(i), m_swapchainImageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 1);
 		}
 	}
 

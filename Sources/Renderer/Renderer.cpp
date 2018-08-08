@@ -148,7 +148,7 @@ namespace acid
 		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
-		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height);
+		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height, 1, true);
 
 		// Get layout of the image (including row pitch).
 		VkImageSubresource subResource{};
@@ -293,7 +293,10 @@ namespace acid
 			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 		}
 
-		m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
+		if (!m_commandBuffer->IsRunning())
+		{
+			m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
+		}
 
 		VkRect2D renderArea = {};
 		renderArea.offset.x = 0;
@@ -333,7 +336,6 @@ namespace acid
 	void Renderer::EndRenderpass(const uint32_t &i)
 	{
 		auto renderStage = GetRenderStage(i);
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 		auto presentQueue = Display::Get()->GetPresentQueue();
 
 		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());

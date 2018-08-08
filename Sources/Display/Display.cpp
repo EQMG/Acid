@@ -572,6 +572,29 @@ namespace acid
 		}
 	}
 
+	void Display::CreatePhysicalDevice()
+	{
+		uint32_t physicalDeviceCount;
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
+		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
+
+		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
+
+		if (m_physicalDevice == nullptr)
+		{
+			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
+		}
+
+		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
+		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
+		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
+
+		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
+
+		//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
+	}
+
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
 	{
 		// Maps to hold devices and sort by rank.
@@ -661,29 +684,6 @@ namespace acid
 		if (counts & VK_SAMPLE_COUNT_2_BIT) { return VK_SAMPLE_COUNT_2_BIT; }
 
 		return VK_SAMPLE_COUNT_1_BIT;
-	}
-
-	void Display::CreatePhysicalDevice()
-	{
-		uint32_t physicalDeviceCount;
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, nullptr);
-		std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
-		vkEnumeratePhysicalDevices(m_instance, &physicalDeviceCount, physicalDevices.data());
-
-		m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
-
-		if (m_physicalDevice == nullptr)
-		{
-			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
-		}
-
-		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
-		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
-		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
-
-		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
-
-	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
 
 	void Display::CreateSurface()
@@ -776,6 +776,7 @@ namespace acid
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
+		physicalDeviceFeatures.geometryShader = VK_TRUE;
 
 		if (m_physicalDeviceFeatures.tessellationShader)
 		{

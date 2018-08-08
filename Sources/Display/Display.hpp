@@ -287,13 +287,13 @@ namespace acid
 
 		void CreateDebugCallback();
 
+		void CreatePhysicalDevice();
+
 		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
 		int ScorePhysicalDevice(const VkPhysicalDevice &device);
 
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
-
-		void CreatePhysicalDevice();
 
 		void CreateSurface();
 
