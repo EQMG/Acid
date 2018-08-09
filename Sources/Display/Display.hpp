@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include <GLFW/glfw3.h>
 #include "Engine/Engine.hpp"
+
+class GLFWwindow;
 
 namespace acid
 {
@@ -205,9 +206,9 @@ namespace acid
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
-		static std::string StringifyResultGlfw(const int &result);
+		ACID_HIDDEN static std::string StringifyResultGlfw(const int &result);
 
-		static void CheckGlfw(const int &result);
+		ACID_HIDDEN static void CheckGlfw(const int &result);
 
 		static std::string StringifyResultVk(const VkResult &result);
 
@@ -243,7 +244,7 @@ namespace acid
 		/// <returns> If the window is minimized. </returns>
 		bool IsIconified() const { return m_iconified; }
 
-		GLFWwindow *GetWindow() const { return m_window; }
+		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
 		VkInstance GetInstance() const { return m_instance; }
 

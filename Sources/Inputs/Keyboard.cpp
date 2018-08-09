@@ -1,5 +1,7 @@
 #include "Keyboard.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace acid
 {
 	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)

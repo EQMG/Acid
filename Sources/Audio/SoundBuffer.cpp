@@ -1,5 +1,10 @@
 #include "SoundBuffer.hpp"
 
+#ifdef ACID_BUILD_MACOS
+#include <OpenAL/al.h>
+#else
+#include <AL/al.h>
+#endif
 #include <fstream>
 #include "Helpers/FileSystem.hpp"
 #include "stb_vorbis.h"
@@ -28,7 +33,7 @@ namespace acid
 		alDeleteBuffers(1, &m_buffer);
 	}
 
-	ALuint SoundBuffer::LoadBufferWav(const std::string &filename)
+	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -46,7 +51,7 @@ namespace acid
 		char chunkId[5] = "\0";
 
 		// Read header.
-		ALuint size;
+		uint32_t size;
 
 		file.read(chunkId, 4);
 		file.read(reinterpret_cast<char *>(&size), 4);
@@ -93,7 +98,7 @@ namespace acid
 
 		file.close();
 
-		ALuint buffer;
+		uint32_t buffer;
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
 
@@ -102,7 +107,7 @@ namespace acid
 		return buffer;
 	}
 
-	ALuint SoundBuffer::LoadBufferOgg(const std::string &filename)
+	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
@@ -131,7 +136,7 @@ namespace acid
 		file.close();
 		//	LogOpenAlSound(filename, sourceInfo);
 
-		ALuint buffer;
+		uint32_t buffer;
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
 

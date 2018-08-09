@@ -110,9 +110,7 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		const VkExtent2D displayExtent2D = {
-			static_cast<uint32_t>(Display::Get()->GetWidth()), static_cast<uint32_t>(Display::Get()->GetHeight())
-		};
+		VkExtent2D displayExtent2D = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
 
 		m_renderStages.clear();
 		m_swapchain = new Swapchain(displayExtent2D);
@@ -171,7 +169,7 @@ namespace acid
 		// Check if source is BGR.
 		if (!supportsBlit)
 		{
-			std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
+			std::vector<VkFormat> formatsBGR = {VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM};
 			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surfaceFormat.format) != formatsBGR.end();
 		}
 
@@ -240,9 +238,7 @@ namespace acid
 		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 		auto renderStage = GetRenderStage(i);
 
-		const VkExtent2D displayExtent2D = {
-			Display::Get()->GetWidth(), Display::Get()->GetHeight()
-		};
+		VkExtent2D displayExtent2D = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -348,7 +344,7 @@ namespace acid
 		m_commandBuffer->End();
 		m_commandBuffer->Submit(false, m_semaphore);
 
-	//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 

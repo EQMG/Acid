@@ -33,7 +33,7 @@ namespace acid
 				m_hasDepth = true;
 				break;
 			case ATTACHMENT_SWAPCHAIN:
-				clearValue.color = {{0.0f, 0.0f, 0.0f, 0.0f}};
+				clearValue.color = {{0.0f, 0.0f, 0.0f, 1.0f}};
 				m_hasSwapchain = true;
 				break;
 			}
@@ -57,9 +57,10 @@ namespace acid
 #endif
 
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		const VkExtent2D extent2D = {GetWidth(), GetHeight()};
-		const VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 		auto samples = Display::Get()->GetMsaaSamples();
+
+		VkExtent2D extent2D = {GetWidth(), GetHeight()};
+		VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
 
 		if (m_hasDepth)
 		{
@@ -88,7 +89,7 @@ namespace acid
 			return m_renderpassCreate->GetWidth();
 		}
 
-		return static_cast<uint32_t>(Display::Get()->GetWidth());
+		return Display::Get()->GetWidth();
 	}
 
 	uint32_t RenderStage::GetHeight() const
@@ -98,7 +99,7 @@ namespace acid
 			return m_renderpassCreate->GetHeight();
 		}
 
-		return static_cast<uint32_t>(Display::Get()->GetHeight());
+		return Display::Get()->GetHeight();
 	}
 
 	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D)

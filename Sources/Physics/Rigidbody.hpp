@@ -1,13 +1,15 @@
 ﻿#pragma once
 
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <LinearMath/btDefaultMotionState.h>
 #include "Maths/Vector3.hpp"
 #include "Objects/GameObject.hpp"
 #include "Objects/IComponent.hpp"
 #include "Force.hpp"
+
+class btTransform;
+
+class btCollisionShape;
+
+class btRigidBody;
 
 namespace acid
 {
