@@ -1,5 +1,7 @@
 #include "Joysticks.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace acid
 {
 	Joysticks::Joysticks() :

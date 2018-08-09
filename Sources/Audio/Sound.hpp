@@ -14,7 +14,7 @@ namespace acid
 	{
 	private:
 		std::shared_ptr<SoundBuffer> m_soundBuffer;
-		ALuint m_source;
+		uint32_t m_source;
 
 		bool m_playing;
 		float m_gain;

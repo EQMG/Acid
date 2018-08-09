@@ -1,12 +1,17 @@
 #pragma once
 
 #include <optional>
-#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
 #include "Frustum.hpp"
 #include "Ray.hpp"
+
+class btCollisionShape;
+
+class btVector3;
+
+class btQuaternion;
 
 namespace acid
 {

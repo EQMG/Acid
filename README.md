@@ -124,7 +124,7 @@ On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (
 
 Ensure you are using a compiler with full c++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
-On Linux a GCC/Clang compiler is required, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
+On Linux a GCC/Clang compiler is required with c++17 support, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
 
 Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
 

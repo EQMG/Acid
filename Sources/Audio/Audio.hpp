@@ -1,13 +1,10 @@
 #pragma once
 
-#ifdef ACID_BUILD_MACOS
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#else
-#include <AL/al.h>
-#include <AL/alc.h>
-#endif
 #include "Engine/Engine.hpp"
+
+typedef struct ALCdevice_struct ALCdevice;
+
+typedef struct ALCcontext_struct ALCcontext;
 
 namespace acid
 {
@@ -42,12 +39,12 @@ namespace acid
 
 		void Update() override;
 
-		static std::string StringifyResultAl(const int &result);
+		ACID_HIDDEN static std::string StringifyResultAl(const int &result);
 
-		static void CheckAl(const int &result);
+		ACID_HIDDEN static void CheckAl(const int &result);
 
-		ALCdevice *GetDevice() const { return m_alDevice; }
+		ACID_HIDDEN ALCdevice *GetDevice() const { return m_alDevice; }
 
-		ALCcontext *GetContext() const { return m_alContext; }
+		ACID_HIDDEN ALCcontext *GetContext() const { return m_alContext; }
 	};
 }

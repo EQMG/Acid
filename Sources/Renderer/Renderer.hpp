@@ -62,7 +62,7 @@ namespace acid
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		IManagerRender *GetManager() const { return m_managerRender;  }
+		IManagerRender *GetManager() const { return m_managerRender; }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.

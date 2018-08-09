@@ -1,5 +1,6 @@
 #include "ColliderConvexHull.hpp"
 
+#include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Scenes.hpp"
 

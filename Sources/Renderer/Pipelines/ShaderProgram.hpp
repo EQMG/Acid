@@ -4,9 +4,13 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <SPIRV/GlslangToSpv.h>
 #include <vulkan/vulkan.h>
 #include "PipelineCreate.hpp"
+
+namespace glslang 
+{
+	class TProgram;
+}
 
 namespace acid
 {
@@ -188,8 +192,6 @@ namespace acid
 
 		~ShaderProgram();
 
-		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag);
-
 		std::string GetName() const { return m_name; }
 
 		bool ReportedNotFound(const std::string &name, const bool &reportIfFound);
@@ -223,6 +225,8 @@ namespace acid
 		std::string ToString() const;
 
 	private:
+		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag);
+
 		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i);
 
 		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i);

@@ -17,7 +17,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		ALuint m_buffer;
+		uint32_t m_buffer;
 	public:
 		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename)
 		{
@@ -40,11 +40,11 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; };
 
-		ALuint GetBuffer() const { return m_buffer; };
+		uint32_t GetBuffer() const { return m_buffer; };
 
 	private:
-		static ALuint LoadBufferWav(const std::string &filename);
+		static uint32_t LoadBufferWav(const std::string &filename);
 
-		static ALuint LoadBufferOgg(const std::string &filename);
+		static uint32_t LoadBufferOgg(const std::string &filename);
 	};
 }

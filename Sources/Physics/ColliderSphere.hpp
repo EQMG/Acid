@@ -1,7 +1,8 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include "Collider.hpp"
+
+class btSphereShape;
 
 namespace acid
 {

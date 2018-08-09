@@ -39,25 +39,6 @@ namespace acid
 		}
 	}
 
-	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
-	{
-		for (int i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
-		{
-			LoadUniformBlock(program, stageFlag, i);
-		}
-
-		for (int i = 0; i < program.getNumLiveUniformVariables(); i++)
-		{
-			LoadUniform(program, stageFlag, i);
-		}
-
-		for (int i = 0; i < program.getNumLiveAttributes(); i++)
-		{
-			LoadVertexAttribute(program, stageFlag, i);
-		}
-	}
-
-
 	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound)
 	{
 
@@ -79,33 +60,33 @@ namespace acid
 		// Sort uniforms by binding.
 		std::sort(m_uniforms.begin(), m_uniforms.end(),
 			[](Uniform *l, Uniform *r)
-			{
-				return l->GetBinding() < r->GetBinding();
-			});
+		{
+			return l->GetBinding() < r->GetBinding();
+		});
 
 		// Sort uniform blocks by binding.
 		std::sort(m_uniformBlocks.begin(), m_uniformBlocks.end(),
 			[](UniformBlock *l, UniformBlock *r)
-			{
-				return l->GetBinding() < r->GetBinding();
-			});
+		{
+			return l->GetBinding() < r->GetBinding();
+		});
 
 		// Sort uniform block uniforms by offsets.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
 			std::sort(uniformBlock->GetUniforms()->begin(), uniformBlock->GetUniforms()->end(),
 				[](Uniform *l, Uniform *r)
-				{
-					return l->GetOffset() < r->GetOffset();
-				});
+			{
+				return l->GetOffset() < r->GetOffset();
+			});
 		}
 
 		// Sort attributes by location.
 		std::sort(m_vertexAttributes.begin(), m_vertexAttributes.end(),
 			[](VertexAttribute *l, VertexAttribute *r)
-			{
-				return l->GetLocation() < r->GetLocation();
-			});
+		{
+			return l->GetLocation() < r->GetLocation();
+		});
 
 		// Process to descriptors.
 		for (auto &uniformBlock : m_uniformBlocks)
@@ -531,6 +512,24 @@ namespace acid
 		}
 
 		return result.str();
+	}
+
+	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
+	{
+		for (int i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
+		{
+			LoadUniformBlock(program, stageFlag, i);
+		}
+
+		for (int i = 0; i < program.getNumLiveUniformVariables(); i++)
+		{
+			LoadUniform(program, stageFlag, i);
+		}
+
+		for (int i = 0; i < program.getNumLiveAttributes(); i++)
+		{
+			LoadVertexAttribute(program, stageFlag, i);
+		}
 	}
 
 	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)

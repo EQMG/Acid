@@ -1,9 +1,10 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include "Collider.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
+
+class btHeightfieldTerrainShape;
 
 namespace acid
 {

@@ -1,8 +1,9 @@
 #pragma once
 
-#include <BulletCollision/CollisionShapes/btCapsuleShape.h>
 #include "Collider.hpp"
 #include "Maths/Vector3.hpp"
+
+class btCapsuleShape;
 
 namespace acid
 {

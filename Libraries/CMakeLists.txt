@@ -17,7 +17,7 @@ set(GLFW_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/glfw/include" PARENT_SCOPE
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
 set(GLFW_BUILD_TESTS OFF CACHE INTERNAL "Build the GLFW test programs")
 set(GLFW_BUILD_DOCS OFF CACHE INTERNAL "Build the GLFW documentation")
-set(GLFW_INSTALL ${FLOUNDER_INSTALL} CACHE INTERNAL "Generate installation target")
+set(GLFW_INSTALL OFF CACHE INTERNAL "Generate installation target")
 set(GLFW_VULKAN_STATIC OFF CACHE INTERNAL "Use the Vulkan loader statically linked into application")
 add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
 set(GLFW_LIBRARY "glfw" PARENT_SCOPE)

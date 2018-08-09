@@ -1,5 +1,6 @@
 #include "ColliderCylinder.hpp"
 
+#include <BulletCollision/CollisionShapes/btCylinderShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid

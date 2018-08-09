@@ -1,5 +1,6 @@
 #include "Mouse.hpp"
 
+#include <GLFW/glfw3.h>
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"

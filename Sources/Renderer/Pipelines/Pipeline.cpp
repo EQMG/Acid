@@ -1,9 +1,9 @@
 ﻿#include "Pipeline.hpp"
 
+#include <cassert>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
-#include <SPIRV/GlslangToSpv.h>
 
 namespace acid
 {
