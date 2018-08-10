@@ -1,11 +1,8 @@
 #pragma once
 
 #include <map>
-#include <string>
-#include <vulkan/vulkan.h>
 #include "Renderer/Commands/CommandBuffer.hpp"
 #include "Renderer/Pipelines/IPipeline.hpp"
-#include "Renderer/Pipelines/PipelineCreate.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 
 namespace acid

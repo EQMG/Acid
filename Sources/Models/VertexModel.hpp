@@ -3,7 +3,7 @@
 #include <vector>
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
-#include "Renderer/Pipelines/PipelineCreate.hpp"
+#include "Renderer/Pipelines/IPipeline.hpp"
 #include "IVertex.hpp"
 
 namespace acid

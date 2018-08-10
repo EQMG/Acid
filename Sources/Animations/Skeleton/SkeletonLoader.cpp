@@ -7,6 +7,7 @@ namespace acid
 	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
+		m_jointCount(0),
 		m_headJoint(nullptr)
 	{
 		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "id", "Armature");

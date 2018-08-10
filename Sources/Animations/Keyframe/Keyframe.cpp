@@ -9,7 +9,8 @@ namespace acid
 	}
 
 	Keyframe::Keyframe(const KeyframeData &data) :
-		m_timeStamp(data.GetTime())
+		m_timeStamp(data.GetTime()),
+		m_pose(std::map<std::string, JointTransform *>())
 	{
 		for (auto &jointData : data.GetJointTransforms())
 		{

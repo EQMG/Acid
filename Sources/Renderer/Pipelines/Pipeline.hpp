@@ -90,7 +90,5 @@ namespace acid
 		void CreatePipelineMrt();
 
 		void CreatePipelineMrtNoDepth();
-
-		void CreatePipelineCompute();
 	};
 }

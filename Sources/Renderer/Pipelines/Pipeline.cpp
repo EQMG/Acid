@@ -58,9 +58,6 @@ namespace acid
 		case PIPELINE_MODE_MRT_NO_DEPTH:
 			CreatePipelineMrtNoDepth();
 			break;
-		case PIPELINE_MODE_COMPUTE:
-			CreatePipelineCompute();
-			break;
 		default:
 			assert(false);
 			break;
@@ -375,11 +372,6 @@ namespace acid
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
 
-		CreatePipelinePolygon();
-	}
-
-	void Pipeline::CreatePipelineCompute()
-	{
 		CreatePipelinePolygon();
 	}
 }

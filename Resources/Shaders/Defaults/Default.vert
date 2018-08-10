@@ -24,7 +24,9 @@ layout(set = 0, binding = 1) uniform UboObject
 layout(set = 0, location = 0) in vec3 vertexPosition;
 layout(set = 0, location = 1) in vec2 vertexUv;
 layout(set = 0, location = 2) in vec3 vertexNormal;
+#ifdef NORMAL_MAPPING
 layout(set = 0, location = 3) in vec3 vertexTangent;
+#endif
 #ifdef ANIMATED
 layout(set = 0, location = 4) in vec3 vertexJointIds;
 layout(set = 0, location = 5) in vec3 vertexWeights;

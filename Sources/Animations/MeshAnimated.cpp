@@ -15,7 +15,8 @@ namespace acid
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animator(nullptr),
-		m_animation(nullptr)
+		m_animation(nullptr),
+		m_jointMatrices(std::vector<Matrix4>())
 	{
 		TrySetModel(m_filename);
 	}
@@ -76,7 +77,7 @@ namespace acid
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
 		m_headJoint = CreateJoints(skeletonLoader.GetHeadJoint());
-		m_headJoint->CalculateInverseBindTransform(Matrix4());
+		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
 		m_animator = new Animator(m_headJoint);
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_animations"),

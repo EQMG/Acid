@@ -5,7 +5,10 @@ namespace acid
 	Joint::Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform) :
 		m_index(index),
 		m_name(name),
-		m_localBindTransform(bindLocalTransform)
+		m_children(std::vector<Joint *>()),
+		m_localBindTransform(bindLocalTransform),
+		m_animatedTransform(Matrix4()),
+		m_inverseBindTransform(Matrix4())
 	{
 	}
 

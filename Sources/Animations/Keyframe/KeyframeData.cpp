@@ -3,7 +3,8 @@
 namespace acid
 {
 	KeyframeData::KeyframeData(const float &time) :
-		m_time(time)
+		m_time(time),
+		m_jointTransforms(std::vector<JointTransformData *>())
 	{
 	}
 
