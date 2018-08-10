@@ -25,7 +25,7 @@ namespace acid
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				clearValue.color = {{image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a}};
+				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
 				m_imageAttachments++;
 				break;
 			case ATTACHMENT_DEPTH:
@@ -33,7 +33,7 @@ namespace acid
 				m_hasDepth = true;
 				break;
 			case ATTACHMENT_SWAPCHAIN:
-				clearValue.color = {{0.0f, 0.0f, 0.0f, 0.0f}};
+				clearValue.color = {0.0f, 0.0f, 0.0f, 1.0f};
 				m_hasSwapchain = true;
 				break;
 			}
