@@ -44,9 +44,9 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
-		AddRenderer<RendererShadows>(GraphicsStage(0, 0))->SetEnabled(false);
+	//	AddRenderer<RendererShadows>(GraphicsStage(0, 0));
 		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
-		AddRenderer<RendererParticles>(GraphicsStage(1, 0));
+	//	AddRenderer<RendererParticles>(GraphicsStage(1, 0));
 		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
 		AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
 		AddRenderer<FilterLensflare>(GraphicsStage(1, 2))->SetEnabled(false);

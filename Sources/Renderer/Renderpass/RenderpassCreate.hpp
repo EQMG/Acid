@@ -11,7 +11,7 @@ namespace acid
 	{
 		ATTACHMENT_IMAGE = 0,
 		ATTACHMENT_DEPTH = 1,
-		ATTACHMENT_SWAPCHAIN = 2,
+		ATTACHMENT_SWAPCHAIN = 2
 	};
 
 	class ACID_EXPORT Attachment
@@ -43,17 +43,17 @@ namespace acid
 	{
 	private:
 		uint32_t m_binding;
-		std::vector<uint32_t> m_attachments;
+		std::vector<uint32_t> m_attachmentBindings;
 	public:
-		SubpassType(const uint32_t &binding, const std::vector<uint32_t> &attachments) :
+		SubpassType(const uint32_t &binding, const std::vector<uint32_t> &attachmentBindings) :
 			m_binding(binding),
-			m_attachments(std::vector<uint32_t>(attachments))
+			m_attachmentBindings(std::vector<uint32_t>(attachmentBindings))
 		{
 		}
 
 		uint32_t GetBinding() const { return m_binding; }
 
-		std::vector<uint32_t> GetAttachments() const { return m_attachments; }
+		std::vector<uint32_t> GetAttachmentBindings() const { return m_attachmentBindings; }
 	};
 
 	class ACID_EXPORT RenderpassCreate
@@ -84,5 +84,23 @@ namespace acid
 		std::vector<Attachment> GetImages() const { return m_images; }
 
 		std::vector<SubpassType> GetSubpasses() const { return m_subpasses; }
+
+		uint32_t GetAttachment(const uint32_t &binding) const
+		{
+			uint32_t attachment = 0;
+
+			for (auto &image : m_images)
+			{
+				if (image.GetBinding() == binding)
+				{
+					return attachment;
+				}
+
+				attachment++;
+			}
+
+			fprintf(stderr, "Filed to find a renderpass attachment bound to: %i\n", binding);
+			return 0;
+		}
 	};
 }

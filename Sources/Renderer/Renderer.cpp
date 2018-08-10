@@ -271,7 +271,7 @@ namespace acid
 
 		if (renderStage->HasSwapchain())
 		{
-			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), UINT64_MAX, VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
@@ -284,7 +284,7 @@ namespace acid
 				throw std::runtime_error("Renderer failed to acquire swapchain image!");
 			}
 
-			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, UINT64_MAX));
+			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
 			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
 		}
@@ -342,9 +342,9 @@ namespace acid
 		}
 
 		m_commandBuffer->End();
-		m_commandBuffer->Submit(false, m_semaphore);
+		m_commandBuffer->Submit(m_semaphore, VK_NULL_HANDLE, false);
 
-		//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+	//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 

@@ -51,35 +51,31 @@ namespace acid
 		for (auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
-			std::vector<VkAttachmentReference> subpassColourAttachments = {};
-			uint32_t depthAttachment = 9999;
-			uint32_t swapchainAttachment = 9999;
+			auto subpassColourAttachments = new std::vector<VkAttachmentReference>(); // FIXME: Fixes SEGFAULT on Linux.
 
-			for (auto &attachment : subpassType.GetAttachments())
+			uint32_t depthAttachment = 9999;
+
+			for (auto &attachmentBinding : subpassType.GetAttachmentBindings())
 			{
+				uint32_t attachment = renderpassCreate.GetAttachment(attachmentBinding);
+
 				if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_DEPTH)
 				{
 					depthAttachment = attachment;
 					continue;
 				}
 
-			//	if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_SWAPCHAIN) // TODO: MSAA
-			//	{
-			//		swapchainAttachment = attachment;
-			//		continue;
-			//	}
-
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				subpassColourAttachments.emplace_back(attachmentReference);
+				subpassColourAttachments->emplace_back(attachmentReference);
 			}
 
 			// Description.
 			VkSubpassDescription subpassDescription = {};
 			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments.size());
-			subpassDescription.pColorAttachments = subpassColourAttachments.data();
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size());
+			subpassDescription.pColorAttachments = subpassColourAttachments->data();
 
 			if (depthAttachment != 9999)
 			{
@@ -88,15 +84,6 @@ namespace acid
 				subpassDepthStencilReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
 				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilReference;
-			}
-
-			if (swapchainAttachment != 9999)
-			{
-				VkAttachmentReference colourAttachmentResolveReference = {};
-				colourAttachmentResolveReference.attachment = swapchainAttachment;
-				colourAttachmentResolveReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				subpassDescription.pResolveAttachments = &colourAttachmentResolveReference;
 			}
 
 			subpasses.emplace_back(subpassDescription);

@@ -4,9 +4,7 @@
 
 namespace acid
 {
-	RenderStage::RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate) :
-		m_lastWidth(renderpassCreate->GetWidth()),
-		m_lastHeight(renderpassCreate->GetHeight()),
+	RenderStage::RenderStage(const uint32_t &stageIndex, RenderpassCreate *renderpassCreate) :
 		m_stageIndex(stageIndex),
 		m_renderpassCreate(renderpassCreate),
 		m_depthStencil(nullptr),
@@ -16,7 +14,9 @@ namespace acid
 		m_imageAttachments(0),
 		m_hasDepth(false),
 		m_hasSwapchain(false),
-		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0)
+		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0),
+		m_lastWidth(renderpassCreate->GetWidth()),
+		m_lastHeight(renderpassCreate->GetHeight())
 	{
 		for (auto &image : renderpassCreate->GetImages())
 		{
@@ -33,7 +33,7 @@ namespace acid
 				m_hasDepth = true;
 				break;
 			case ATTACHMENT_SWAPCHAIN:
-				clearValue.color = {{0.0f, 0.0f, 0.0f, 1.0f}};
+				clearValue.color = {{0.0f, 0.0f, 0.0f, 0.0f}};
 				m_hasSwapchain = true;
 				break;
 			}
@@ -59,13 +59,10 @@ namespace acid
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		auto samples = Display::Get()->GetMsaaSamples();
 
-		VkExtent2D extent2D = {GetWidth(), GetHeight()};
-		VkExtent3D extent3D = {GetWidth(), GetHeight(), 1};
-
 		if (m_hasDepth)
 		{
 			delete m_depthStencil;
-			m_depthStencil = new DepthStencil(extent3D.width, extent3D.height, samples);
+			m_depthStencil = new DepthStencil(GetWidth(), GetHeight(), samples);
 		}
 
 		if (m_renderpass == nullptr)
@@ -74,7 +71,7 @@ namespace acid
 		}
 
 		delete m_framebuffers;
-		m_framebuffers = new Framebuffers(*m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, extent2D, samples);
+		m_framebuffers = new Framebuffers(GetWidth(), GetHeight(), *m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, samples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

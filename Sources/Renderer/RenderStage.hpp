@@ -11,10 +11,7 @@ namespace acid
 	class ACID_EXPORT RenderStage
 	{
 	private:
-		uint32_t m_lastWidth;
-		uint32_t m_lastHeight;
-
-		int m_stageIndex;
+		uint32_t m_stageIndex;
 		RenderpassCreate *m_renderpassCreate;
 
 		DepthStencil *m_depthStencil;
@@ -27,8 +24,11 @@ namespace acid
 		bool m_hasSwapchain;
 
 		bool m_fitDisplaySize;
+
+		uint32_t m_lastWidth;
+		uint32_t m_lastHeight;
 	public:
-		RenderStage(const int &stageIndex, RenderpassCreate *renderpassCreate);
+		RenderStage(const uint32_t &stageIndex, RenderpassCreate *renderpassCreate);
 
 		~RenderStage();
 

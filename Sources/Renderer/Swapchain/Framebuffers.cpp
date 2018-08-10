@@ -6,21 +6,21 @@
 
 namespace acid
 {
-	Framebuffers::Framebuffers(const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkExtent2D &extent, const VkSampleCountFlagBits &samples) :
+	Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples) :
 		m_imageAttachments(std::vector<Texture *>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		uint32_t width = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
-		uint32_t height = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
+		uint32_t textureWidth = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
+		uint32_t textureHeight = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
 
 		for (auto &image : renderpassCreate.GetImages())
 		{
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				m_imageAttachments.emplace_back(new Texture(width, height, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, samples));
+				m_imageAttachments.emplace_back(new Texture(textureWidth, textureHeight, static_cast<VkFormat>(image.GetFormat()), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, samples));
 				break;
 			case ATTACHMENT_DEPTH:
 				m_imageAttachments.emplace_back(nullptr);
@@ -58,8 +58,8 @@ namespace acid
 			framebufferCreateInfo.renderPass = renderPass.GetRenderpass();
 			framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 			framebufferCreateInfo.pAttachments = attachments.data();
-			framebufferCreateInfo.width = extent.width;
-			framebufferCreateInfo.height = extent.height;
+			framebufferCreateInfo.width = width;
+			framebufferCreateInfo.height = height;
 			framebufferCreateInfo.layers = 1;
 
 			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));

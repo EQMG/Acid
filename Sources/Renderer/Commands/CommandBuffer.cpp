@@ -52,7 +52,7 @@ namespace acid
 		m_running = false;
 	}
 
-	void CommandBuffer::Submit(const bool &waitFence, const VkSemaphore &semaphore)
+	void CommandBuffer::Submit(VkSemaphore signalSemaphore, VkFence fence, const bool &createFence)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
@@ -62,30 +62,39 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
-		if (semaphore != VK_NULL_HANDLE)
+		if (signalSemaphore != VK_NULL_HANDLE)
 		{
 			submitInfo.signalSemaphoreCount = 1;
-			submitInfo.pSignalSemaphores = &semaphore;
+			submitInfo.pSignalSemaphores = &signalSemaphore;
 		}
 
-		VkFenceCreateInfo fenceCreateInfo = {};
-		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		fenceCreateInfo.flags = 0;
+		bool createdFence = false;
 
-		VkFence fence = VK_NULL_HANDLE;
-
-		if (waitFence)
+		if (fence == VK_NULL_HANDLE && createFence)
 		{
+			VkFenceCreateInfo fenceCreateInfo = {};
+			fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+			fenceCreateInfo.flags = 0;
+
 			Display::CheckVk(vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &fence));
+			createdFence = true;
+		}
+
+		if (fence != VK_NULL_HANDLE)
+		{
+			Display::CheckVk(vkResetFences(logicalDevice, 1, &fence));
 		}
 
 		Display::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 
-		if (waitFence)
+		if (fence != VK_NULL_HANDLE)
 		{
-			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &fence, VK_TRUE, UINT64_MAX));
+			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-			vkDestroyFence(logicalDevice, fence, nullptr);
+			if (createdFence)
+			{
+				vkDestroyFence(logicalDevice, fence, nullptr);
+			}
 		}
 	}
 
