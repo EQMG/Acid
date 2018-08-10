@@ -21,7 +21,7 @@ namespace acid
 
 		void End();
 
-		void Submit(const bool &waitFence = true, const VkSemaphore &semaphore = VK_NULL_HANDLE);
+		void Submit(VkSemaphore signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE, const bool &createFence = true);
 
 		bool IsRunning() const { return m_running; }
 

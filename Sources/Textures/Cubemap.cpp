@@ -163,7 +163,7 @@ namespace acid
 
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		descriptorPoolSize.descriptorCount = 1;
+		descriptorPoolSize.descriptorCount = 64; // Arbitrary number.
 
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}

@@ -53,9 +53,11 @@ namespace acid
 		// Listener orientation.
 		Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
 		ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
-
 		alListenerfv(AL_ORIENTATION, orientation);
+
+#ifndef ACID_BUILD_LINUX
 		CheckAl(alGetError());
+#endif
 	}
 
 	std::string Audio::StringifyResultAl(const int &result)

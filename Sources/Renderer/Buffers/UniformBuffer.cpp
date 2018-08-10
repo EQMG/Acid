@@ -40,7 +40,7 @@ namespace acid
 
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descriptorPoolSize.descriptorCount = 1;
+		descriptorPoolSize.descriptorCount = 64; // Arbitrary number.
 
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}

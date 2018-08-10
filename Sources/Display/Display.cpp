@@ -186,7 +186,7 @@ namespace acid
 	void Display::Update()
 	{
 		// Polls for window events.
-		glfwPollEvents();;
+		glfwPollEvents();
 	}
 
 	uint32_t Display::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
@@ -593,7 +593,7 @@ namespace acid
 
 		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
 
-		//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
+	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
@@ -796,12 +796,10 @@ namespace acid
 		physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
 		physicalDeviceFeatures.shaderClipDistance = VK_TRUE;
 		physicalDeviceFeatures.shaderCullDistance = VK_TRUE;
-		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
-		physicalDeviceFeatures.geometryShader = VK_TRUE;
 
 		if (m_physicalDeviceFeatures.tessellationShader)
 		{
@@ -810,6 +808,15 @@ namespace acid
 		else
 		{
 			fprintf(stderr, "Selected GPU does not support tessellation shaders!");
+		}
+
+		if (m_physicalDeviceFeatures.geometryShader)
+		{
+			physicalDeviceFeatures.geometryShader = VK_TRUE;
+		}
+		else
+		{
+			fprintf(stderr, "Selected GPU does not support geometry shaders!");
 		}
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
