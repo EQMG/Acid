@@ -51,7 +51,7 @@ namespace acid
 		for (auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
-			auto subpassColourAttachments = new std::vector<VkAttachmentReference>(); // FIXME: Fixes SEGFAULT on Linux.
+			auto subpassColourAttachments = new std::vector<VkAttachmentReference>(); // FIXME: Fixes a SEGFAULT on Linux.
 
 			uint32_t depthAttachment = 9999;
 
@@ -79,11 +79,11 @@ namespace acid
 
 			if (depthAttachment != 9999)
 			{
-				VkAttachmentReference subpassDepthStencilReference = {};
-				subpassDepthStencilReference.attachment = depthAttachment;
-				subpassDepthStencilReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				auto subpassDepthStencilReference = new VkAttachmentReference(); // FIXME: Fixes a SEGFAULT on Linux.
+				subpassDepthStencilReference->attachment = depthAttachment;
+				subpassDepthStencilReference->layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-				subpassDescription.pDepthStencilAttachment = &subpassDepthStencilReference;
+				subpassDescription.pDepthStencilAttachment = subpassDepthStencilReference;
 			}
 
 			subpasses.emplace_back(subpassDescription);

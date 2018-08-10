@@ -7,7 +7,7 @@
 namespace acid
 {
 	const Matrix3 Matrix3::IDENTITY = Matrix3(new float[9]{1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f});
-	const Matrix3 Matrix3::ZERO = Matrix3();
+	const Matrix3 Matrix3::ZERO = Matrix3(0.0f);
 
 	Matrix3::Matrix3(const float &diagonal)
 	{

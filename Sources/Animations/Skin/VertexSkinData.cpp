@@ -2,7 +2,9 @@
 
 namespace acid
 {
-	VertexSkinData::VertexSkinData()
+	VertexSkinData::VertexSkinData() :
+		m_jointIds(std::vector<int>()),
+		m_weights(std::vector<float>())
 	{
 	}
 

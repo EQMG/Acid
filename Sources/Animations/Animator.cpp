@@ -7,6 +7,7 @@ namespace acid
 {
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),
+		m_animationTime(0.0f),
 		m_currentAnimation(nullptr)
 	{
 	}

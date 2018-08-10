@@ -19,7 +19,6 @@ namespace acid
 
 		void BindPipeline(const CommandBuffer &commandBuffer) const
 		{
-		//	vkCmdPushConstants(commandBuffer.GetCommandBuffer(), GetPipelineLayout(), VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(pushConstants), pushConstants.data());
 			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
 		}
 
