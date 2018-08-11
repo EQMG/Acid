@@ -65,7 +65,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboObject", m_uniformObject);
-		m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
+		m_descriptorSet.Push("samplerAlbedo", m_fontType->GetTexture());
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 		if (!updateSuccess)

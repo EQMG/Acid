@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 struct Light
 {
@@ -30,29 +31,21 @@ layout(set = 0, binding = 0) uniform UboScene
 	int lightsCount;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 3) uniform sampler2D samplerColour;
+layout(set = 0, binding = 2) uniform sampler2D samplerPosition;
+layout(set = 0, binding = 3) uniform sampler2D samplerAlbedo;
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 layout(set = 0, binding = 7) uniform sampler2D samplerBrdf;
 layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
 
-layout(location = 0) in vec2 fragmentUv;
+layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outColour;
+layout(location = 0) out vec4 outAlbedo;
 
-#include "Shaders/Pipeline.glsl"
 #include "Shaders/Lighting.glsl"
-
-vec3 decodeWorldPosition(vec2 uv, float depth)
-{
-	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
-	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0);
-	return p.xyz / p.w;
-}
 
 float shadow(vec4 shadowCoords)
 {
@@ -87,63 +80,57 @@ float shadow(vec4 shadowCoords)
 
 void main()
 {
-	vec4 textureDepth = texture(samplerDepth, fragmentUv);
-	vec4 textureColour = texture(samplerColour, fragmentUv);
-	vec4 textureNormal = texture(samplerNormal, fragmentUv);
-	vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
-
-	vec3 worldPosition = decodeWorldPosition(fragmentUv, textureDepth.r);
+	vec3 worldPosition = texture(samplerPosition, inUv).rgb;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
-	float metallic = textureMaterial.r;
-	float roughness = textureMaterial.g;
-	bool ignoreFog = textureMaterial.b == (1.0f / 3.0f) || textureMaterial.b == (3.0f / 3.0f);
-	bool ignoreLighting = textureMaterial.b == (2.0f / 3.0f) || textureMaterial.b == (3.0f / 3.0f);
+	vec4 albedo = texture(samplerAlbedo, inUv);
+	vec3 normal = texture(samplerNormal, inUv).rgb;
+	vec3 material = texture(samplerMaterial, inUv).rgb;
 
-	outColour = vec4(textureColour.rgb, 1.0f);
+	float metallic = material.r;
+	float roughness = material.g;
+	bool ignoreFog = material.b == (1.0f / 3.0f) || material.b == (3.0f / 3.0f);
+	bool ignoreLighting = material.b == (2.0f / 3.0f) || material.b == (3.0f / 3.0f);
+
+	outAlbedo = vec4(albedo.rgb, 1.0f);
 
 	// Lighting.
-	if (!ignoreLighting && textureNormal.rgb != vec3(0.0f))
+	if (!ignoreLighting && normal != vec3(0.0f))
 	{
-        vec3 N = normalize(decodeNormal(textureNormal));
-        vec3 V = normalize(scene.cameraPosition - worldPosition);
-
 	    vec3 irradiance = vec3(0.0);
+        vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
 
 		// Point lights.
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-            // Calculate per-light radiance.
 			Light light = scene.lights[i];
 
-			// lightDirection dot viewDirection > 0
-    		vec3 L = light.position - worldPosition;
-    		float LD = length(L);
-    		L /= LD;
-    		float att = attenuation(0.1f * LD, light.radius);
+    		vec3 lightDir = light.position - worldPosition;
+    		float distance = length(lightDir);
+    		lightDir /= distance;
+
+    		float att = attenuation(distance, light.radius);
 
 			vec3 radiance = light.colour.rgb * att;
-			irradiance += radiance * L0(N, L, V, roughness, metallic, textureColour.rgb);
+			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
 		}
 
 		// Directional lights.
-		/*for (int i = 0; i < scene.lightsCount; i++)
+		for (int i = 0; i < scene.lightsCount; i++)
 		{
-            // Calculate per-light radiance.
 			Light light = scene.lights[i];
 
-			// lightDirection dot viewDirection > 0
-    		vec3 L = light.position;
+    		vec3 lightDir = light.position;
 
 			vec3 radiance = light.colour.rgb;
-			irradiance += radiance * L0(N, L, V, roughness, metallic, albedo);
-		}*/
+			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
+		}
 
 #ifdef USE_IBL
-        irradiance += ibl_irradiance(samplerIbl, samplerBrdf, N, V, roughness, metallic, textureColour.rgb);
+        irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, albedo.rgb);
 #endif
 
-        outColour = vec4(irradiance, 1.0f);
+        outAlbedo = vec4(irradiance, 1.0f);
 	}
 
 	// Shadows.
@@ -154,17 +141,17 @@ void main()
 		distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
 		distanceAway = distanceAway / scene.shadowTransition;
 		shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-		outColour *= shadow(shadowCoords);
+		outAlbedo *= shadow(shadowCoords);
 	}*/
 
 	// Fog.
-	if (!ignoreFog && textureNormal.rgb != vec3(0.0f))
+	if (!ignoreFog && normal != vec3(0.0f))
 	{
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
-		outColour = mix(scene.fogColour, outColour, fogFactor);
+		outAlbedo = mix(scene.fogColour, outAlbedo, fogFactor);
 	}
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
+	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
+	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
 }

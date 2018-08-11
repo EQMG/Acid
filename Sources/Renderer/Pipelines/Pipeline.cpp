@@ -237,33 +237,20 @@ namespace acid
 		m_colourBlendState.blendConstants[2] = 0.0f;
 		m_colourBlendState.blendConstants[3] = 0.0f;
 
-		VkStencilOpState stencilOpState = {};
-		stencilOpState.failOp = VK_STENCIL_OP_KEEP;
-		stencilOpState.passOp = VK_STENCIL_OP_KEEP;
-		stencilOpState.depthFailOp = VK_STENCIL_OP_KEEP;
-		stencilOpState.compareOp = VK_COMPARE_OP_ALWAYS;
-		stencilOpState.compareMask = 0b00000000;
-		stencilOpState.writeMask = 0b11111111;
-		stencilOpState.reference = 0b00000000;
-
 		m_depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
 		m_depthStencilState.depthTestEnable = VK_TRUE;
 		m_depthStencilState.depthWriteEnable = VK_TRUE;
-		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS;
-		m_depthStencilState.depthBoundsTestEnable = VK_FALSE;
-		m_depthStencilState.stencilTestEnable = VK_FALSE;
-		m_depthStencilState.front = stencilOpState;
-		m_depthStencilState.back = stencilOpState;
-		m_depthStencilState.minDepthBounds = 0.0f;
-		m_depthStencilState.maxDepthBounds = 1.0f;
+		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+		m_depthStencilState.front = m_depthStencilState.back;
+		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
 
 		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		m_viewportState.viewportCount = 1;
 		m_viewportState.scissorCount = 1;
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		m_multisampleState.sampleShadingEnable = VK_FALSE;
-		m_multisampleState.rasterizationSamples = Display::Get()->GetMsaaSamples();
+		m_multisampleState.rasterizationSamples =  Display::Get()->GetMsaaSamples();
+	//	m_multisampleState.alphaToCoverageEnable = VK_TRUE;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();
@@ -294,8 +281,8 @@ namespace acid
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 
 		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
 		pipelineCreateInfo.pRasterizationState = &m_rasterizationState;

@@ -1,3 +1,4 @@
+const float pi = 3.1415926535897932384626433832795f;
 const float epsilon = 0.001f;
 
 float sqr(float x)

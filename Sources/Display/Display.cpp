@@ -801,6 +801,19 @@ namespace acid
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
 
+		if (m_physicalDeviceFeatures.textureCompressionBC)
+		{
+			physicalDeviceFeatures.textureCompressionBC = VK_TRUE;
+		}
+		else if (m_physicalDeviceFeatures.textureCompressionASTC_LDR)
+		{
+			physicalDeviceFeatures.textureCompressionASTC_LDR = VK_TRUE;
+		}
+		else if (m_physicalDeviceFeatures.textureCompressionETC2)
+		{
+			physicalDeviceFeatures.textureCompressionETC2 = VK_TRUE;
+		}
+
 		if (m_physicalDeviceFeatures.tessellationShader)
 		{
 			physicalDeviceFeatures.tessellationShader = VK_TRUE;

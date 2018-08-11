@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 1) uniform UboObject
 {
@@ -8,7 +9,7 @@ layout(set = 0, binding = 1) uniform UboObject
 #endif
 	mat4 transform;
 
-	vec4 baseColor;
+	vec4 baseAlbedo;
 	float metallic;
 	float roughness;
 	float ignoreFog;
@@ -16,7 +17,7 @@ layout(set = 0, binding = 1) uniform UboObject
 } object;
 
 #ifdef COLOUR_MAPPING
-layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
+layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
 #endif
 #ifdef MATERIAL_MAPPING
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
@@ -25,31 +26,31 @@ layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 #endif
 
-layout(location = 0) in vec2 fragmentUv;
-layout(location = 1) in vec3 fragmentNormal;
+layout(location = 0) in vec3 inWorldPos;
+layout(location = 1) in vec2 inUv;
+layout(location = 2) in vec3 inNormal;
 #ifdef NORMAL_MAPPING
-layout(location = 2) in mat3 tangent;
+layout(location = 3) in vec3 inTangent;
 #endif
 
-layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec4 outMaterial;
-
-#include "Shaders/Pipeline.glsl"
+layout(location = 0) out vec4 outPosition;
+layout(location = 1) out vec4 outAlbedo;
+layout(location = 2) out vec4 outNormal;
+layout(location = 3) out vec4 outMaterial;
 
 void main()
 {
-	vec4 textureColour = object.baseColor;
-	vec3 unitNormal = normalize(fragmentNormal);
+	vec4 albedo = object.baseAlbedo;
+	vec3 unitNormal = inNormal;
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
 #ifdef COLOUR_MAPPING
-	textureColour = texture(samplerDiffuse, fragmentUv);
+	albedo = texture(samplerAlbedo, inUv);
 #endif
 
 #ifdef MATERIAL_MAPPING
-	vec4 textureMaterial = texture(samplerMaterial, fragmentUv);
+	vec4 textureMaterial = texture(samplerMaterial, inUv);
 	material.x *= textureMaterial.r;
 	material.y *= textureMaterial.g;
 
@@ -60,15 +61,18 @@ void main()
 #endif
 
 #ifdef NORMAL_MAPPING
-	vec4 textureNormal = texture(samplerNormal, fragmentUv);
-	unitNormal = textureNormal.rgb;
-    unitNormal = normalize(textureNormal.rgb * 2.0f - vec3(1.0f));
-    unitNormal = normalize(tangent * unitNormal);
+	vec3 N = normalize(inNormal);
+	N.y = -N.y;
+	vec3 T = normalize(inTangent);
+	vec3 B = cross(N, T);
+	mat3 TBN = mat3(T, B, N);
+	unitNormal = TBN * normalize(texture(samplerNormal, inUV).rgb * 2.0f - vec3(1.0f));
 #endif
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
-	outColour = textureColour;
-	outNormal = encodeNormal(unitNormal);
+	outPosition = vec4(inWorldPos, 1.0);
+	outAlbedo = albedo;
+	outNormal = vec4(unitNormal, 1.0f);
 	outMaterial = vec4(material, 1.0f);
 }

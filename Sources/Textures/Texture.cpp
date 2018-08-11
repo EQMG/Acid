@@ -87,7 +87,36 @@ namespace acid
 #endif
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples, float *pixels) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
+			IResource(),
+			Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
+			IDescriptor(),
+			m_filename(""),
+			m_repeatEdges(true),
+			m_mipLevels(1),
+			m_anisotropic(false),
+			m_nearest(false),
+			m_components(4),
+			m_width(width),
+			m_height(height),
+			m_image(VK_NULL_HANDLE),
+			m_imageView(VK_NULL_HANDLE),
+			m_sampler(VK_NULL_HANDLE),
+			m_format(format),
+			m_imageInfo({})
+	{
+		CreateImage(m_image, m_bufferMemory, m_width, m_height, 1, VK_IMAGE_TYPE_2D, samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		            usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
+		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
+		CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
+		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
+
+		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		m_imageInfo.imageView = m_imageView;
+		m_imageInfo.sampler = m_sampler;
+	}
+
+	Texture::Texture(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
 		IResource(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
@@ -109,16 +138,6 @@ namespace acid
 
 		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-		if (pixels == nullptr)
-		{
-			pixels = new float[width * height]();
-
-			for (int32_t i = 0; i < width * height; i++)
-			{
-				pixels[i] = 0.0f;
-			}
-		}
 
 		void *data;
 		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
@@ -356,7 +375,7 @@ namespace acid
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
-		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);;
+		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 
 		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
 

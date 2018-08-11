@@ -6,13 +6,13 @@
 
 namespace acid
 {
-	MaterialDefault::MaterialDefault(const Colour &baseColor, std::shared_ptr<Texture> diffuseTexture,
+	MaterialDefault::MaterialDefault(const Colour &baseAlbedo, std::shared_ptr<Texture> albedoTexture,
 									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
 		m_animated(false),
-		m_baseColor(baseColor),
-		m_diffuseTexture(diffuseTexture),
+		m_baseAlbedo(baseAlbedo),
+		m_albedoTexture(albedoTexture),
 		m_metallic(metallic),
 		m_roughness(roughness),
 		m_materialTexture(materialTexture),
@@ -49,8 +49,8 @@ namespace acid
 
 	void MaterialDefault::Load(LoadedValue *value)
 	{
-		m_baseColor = value->GetChild("Base Colour")->GetString();
-		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
+		m_baseAlbedo = value->GetChild("Base Albedo")->GetString();
+		TrySetAlbedoTexture(value->GetChild("Albedo Texture")->GetString());
 
 		m_metallic = value->GetChild("Metallic")->Get<float>();
 		m_roughness = value->GetChild("Roughness")->Get<float>();
@@ -64,8 +64,8 @@ namespace acid
 
 	void MaterialDefault::Write(LoadedValue *destination)
 	{
-		destination->GetChild("Base Colour", true)->SetString(m_baseColor.GetHex());
-		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		destination->GetChild("Base Albedo", true)->SetString(m_baseAlbedo.GetHex());
+		destination->GetChild("Albedo Texture", true)->SetString(m_albedoTexture == nullptr ? "" : m_albedoTexture->GetFilename());
 
 		destination->GetChild("Metallic", true)->Set(m_metallic);
 		destination->GetChild("Roughness", true)->Set(m_roughness);
@@ -87,7 +87,7 @@ namespace acid
 		}
 
 		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
-		uniformObject.Push("baseColor", m_baseColor);
+		uniformObject.Push("baseAlbedo", m_baseAlbedo);
 		uniformObject.Push("metallic", m_metallic);
 		uniformObject.Push("roughness", m_roughness);
 		uniformObject.Push("ignoreFog", static_cast<float>(m_ignoreFog));
@@ -96,7 +96,7 @@ namespace acid
 
 	void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 	{
-		descriptorSet.Push("samplerDiffuse", m_diffuseTexture);
+		descriptorSet.Push("samplerAlbedo", m_albedoTexture);
 		descriptorSet.Push("samplerMaterial", m_materialTexture);
 		descriptorSet.Push("samplerNormal", m_normalTexture);
 	}
@@ -105,7 +105,7 @@ namespace acid
 	{
 		std::vector<PipelineDefine> result = {};
 
-		if (m_diffuseTexture != nullptr)
+		if (m_albedoTexture != nullptr)
 		{
 			result.emplace_back(PipelineDefine("COLOUR_MAPPING", "TRUE"));
 		}

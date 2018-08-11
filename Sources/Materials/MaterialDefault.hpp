@@ -15,8 +15,8 @@ namespace acid
 	{
 	private:
 		bool m_animated;
-		Colour m_baseColor;
-		std::shared_ptr<Texture> m_diffuseTexture;
+		Colour m_baseAlbedo;
+		std::shared_ptr<Texture> m_albedoTexture;
 
 		float m_metallic;
 		float m_roughness;
@@ -29,7 +29,7 @@ namespace acid
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialDefault(const Colour &baseColor = Colour::WHITE, std::shared_ptr<Texture> diffuseTexture = nullptr,
+		MaterialDefault(const Colour &baseAlbedo = Colour::WHITE, std::shared_ptr<Texture> albedoTexture = nullptr,
 						const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Texture> materialTexture = nullptr, std::shared_ptr<Texture> normalTexture = nullptr,
 						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
 		);
@@ -50,19 +50,19 @@ namespace acid
 
 		std::vector<PipelineDefine> GetDefines();
 
-		Colour GetBaseColor() const { return m_baseColor; }
+		Colour GetBaseAlbedo() const { return m_baseAlbedo; }
 
-		void SetBaseColor(const Colour &baseColor) { m_baseColor = baseColor; }
+		void SetBaseAlbedo(const Colour &baseAlbedo) { m_baseAlbedo = baseAlbedo; }
 
-		std::shared_ptr<Texture> GetDiffuseTexture() const { return m_diffuseTexture; }
+		std::shared_ptr<Texture> GetAlbedoTexture() const { return m_albedoTexture; }
 
-		void SetDiffuseTexture(std::shared_ptr<Texture> diffuseTexture) { m_diffuseTexture = diffuseTexture; }
+		void SetAlbedoTexture(std::shared_ptr<Texture> albedoTexture) { m_albedoTexture = albedoTexture; }
 
-		void TrySetDiffuseTexture(const std::string &filename)
+		void TrySetAlbedoTexture(const std::string &filename)
 		{
 			if (!filename.empty())
 			{
-				m_diffuseTexture = Texture::Resource(filename);
+				m_albedoTexture = Texture::Resource(filename);
 			}
 		}
 

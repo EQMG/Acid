@@ -3,9 +3,8 @@
 
 layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_z = 1) in;
 
-layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outColour;
+layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outAlbedo;
 
-const float pi = 3.1415926535897932384626433832795f;
 #include "Shaders/Lighting.glsl"
 
 void main()
@@ -16,5 +15,5 @@ void main()
     }
 
 	vec2 uv = (vec2(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y) + vec2(0.5f, 0.5f)) / vec2(WIDTH, HEIGHT);
-	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f));
+	imageStore(outAlbedo, ivec2(gl_GlobalInvocationID.xy), vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f));
 }

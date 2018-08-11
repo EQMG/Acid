@@ -11,6 +11,8 @@
 #include <Shadows/RendererShadows.hpp>
 #include <Particles/RendererParticles.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
+#include <Post/Filters/FilterGrain.hpp>
+#include <Post/Filters/FilterTiltshift.hpp>
 
 namespace test
 {
@@ -30,12 +32,14 @@ namespace test
 			{
 				Attachment(0, ATTACHMENT_DEPTH), // depth
 				Attachment(1, ATTACHMENT_SWAPCHAIN), // swapchain
-				Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // colours
-				Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R16G16_UNORM), // normals
-				Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // materials
+				Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // positions (world-space)
+				Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // albedo
+				Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // normals (world-space)
+				Attachment(5, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // materials
+			//	Attachment(6, ATTACHMENT_RESOLVE) // resolve
 			}, // images
 			{
-				SubpassType(0, {0, 2, 3, 4}),
+				SubpassType(0, {0, 2, 3, 4, 5}),
 				SubpassType(1, {1}),
 				SubpassType(2, {1}),
 			} // subpasses
@@ -44,12 +48,12 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
-		AddRenderer<RendererShadows>(GraphicsStage(0, 0))->SetEnabled(false);
+	//	AddRenderer<RendererShadows>(GraphicsStage(0, 0));
 		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
-		AddRenderer<RendererParticles>(GraphicsStage(1, 0))->SetEnabled(false);
+	//	AddRenderer<RendererParticles>(GraphicsStage(1, 0));
 		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
-		AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-		AddRenderer<FilterLensflare>(GraphicsStage(1, 2))->SetEnabled(false);
+	//	AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
 	//	AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
