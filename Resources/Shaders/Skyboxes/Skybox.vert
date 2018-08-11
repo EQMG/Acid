@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 0) uniform UboScene 
 {
@@ -16,10 +17,11 @@ layout(set = 0, binding = 1) uniform UboObject
 	float blendFactor;
 } object;
 
-layout(set = 0, location = 0) in vec3 vertexPosition;
+layout(set = 0, location = 0) in vec3 inPosition;
 
-layout(location = 0) out vec3 fragmentUv;
-layout(location = 1) out float fragmentHeight;
+layout(location = 0) out vec3 outWorldPos;
+layout(location = 1) out vec3 outUv;
+layout(location = 2) out float outHeight;
 
 out gl_PerVertex 
 {
@@ -28,7 +30,7 @@ out gl_PerVertex
 
 void main() 
 {
-	vec4 worldPosition = object.transform * vec4(vertexPosition, 1.0f);
+	vec4 worldPosition = object.transform * vec4(inPosition, 1.0f);
 
 	mat4 viewStatic = mat4(scene.view);
 	viewStatic[3][0] = 0.0f;
@@ -36,7 +38,8 @@ void main()
 	viewStatic[3][2] = 0.0f;
 	
     gl_Position = scene.projection * viewStatic * worldPosition;
-	
-	fragmentUv = vertexPosition;
-	fragmentHeight = worldPosition.y;
+
+    outWorldPos = worldPosition.xyz;
+	outUv = inPosition;
+	outHeight = worldPosition.y;
 }

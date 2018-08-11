@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 1) uniform UboObject 
 {
@@ -12,24 +13,25 @@ layout(set = 0, binding = 1) uniform UboObject
 
 layout(set = 0, binding = 2) uniform samplerCube samplerCubemap;
 
-layout(location = 0) in vec3 fragmentUv;
-layout(location = 1) in float fragmentHeight;
+layout(location = 0) in vec3 inWorldPos;
+layout(location = 1) in vec3 inUv;
+layout(location = 2) in float inHeight;
 
-layout(location = 0) out vec4 outColour;
-layout(location = 1) out vec2 outNormal;
-layout(location = 2) out vec4 outMaterial;
-
-#include "Shaders/Pipeline.glsl"
+layout(location = 0) out vec4 outPosition;
+layout(location = 1) out vec4 outAlbedo;
+layout(location = 2) out vec4 outNormal;
+layout(location = 3) out vec4 outMaterial;
 
 void main() 
 {
-	vec3 cubemapNight = texture(samplerCubemap, fragmentUv).rgb;
-	vec3 cubemapColour = mix(object.skyColour.rgb, cubemapNight, object.blendFactor);
+	vec3 nightColour = texture(samplerCubemap, inUv).rgb;
+	vec3 albedo = mix(object.skyColour.rgb, nightColour, object.blendFactor);
 
-	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, fragmentHeight);
-    cubemapColour = mix(cubemapColour, object.fogColour.rgb, fadeFactor);
+	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, inHeight);
+    albedo = mix(albedo, object.fogColour.rgb, fadeFactor);
 
-	outColour = vec4(cubemapColour, 1.0f);
-	outNormal = vec2(0.0f);
-	outMaterial = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	outPosition = vec4(inWorldPos, 1.0);
+	outAlbedo = vec4(albedo, 1.0f);
+	outNormal = vec4(0.0f);
+	outMaterial = vec4(0.0f);
 }

@@ -7,9 +7,9 @@ namespace acid
 	static const std::vector<VkFormat> TRY_FORMATS =
 	{
 		VK_FORMAT_D32_SFLOAT_S8_UINT,
+		VK_FORMAT_D32_SFLOAT,
 		VK_FORMAT_D24_UNORM_S8_UINT,
 		VK_FORMAT_D16_UNORM_S8_UINT,
-		VK_FORMAT_D32_SFLOAT,
 		VK_FORMAT_D16_UNORM
 	};
 
@@ -31,20 +31,11 @@ namespace acid
 			VkFormatProperties formatProperties = {};
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);
 
-			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT &&
-				formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT)
+			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
 			{
 				m_format = format;
 				break;
 			}
-		}
-
-		if (m_format != VK_FORMAT_D32_SFLOAT_S8_UINT &&
-			m_format != VK_FORMAT_D24_UNORM_S8_UINT &&
-			m_format != VK_FORMAT_D16_UNORM_S8_UINT &&
-			m_format != VK_FORMAT_S8_UINT)
-		{
-			m_format = VK_FORMAT_UNDEFINED;
 		}
 
 		if (m_format == VK_FORMAT_UNDEFINED)
@@ -55,7 +46,7 @@ namespace acid
 		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, 1, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		Texture::CreateImageSampler(m_sampler, true, false, false, 1);
-		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 1);
+		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, 1, 1);
 
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;

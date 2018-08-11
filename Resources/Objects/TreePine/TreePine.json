@@ -19,8 +19,8 @@
     "Model": "Entities/TreePine/Model.obj"
   },
   "MaterialDefault": {
-    "Base Colour": "#1D611F",
-    "Diffuse Texture": "Entities/TreePine/Diffuse.png",
+    "Albedo Colour": "#1D611F",
+    "Albedo Texture": "Entities/TreePine/Albedo.png",
     "Metallic": 0.0,
     "Roughness": 0.0,
     "Material Texture": "",

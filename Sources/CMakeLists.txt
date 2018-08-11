@@ -4,7 +4,7 @@ include(CMakeSources.cmake)
 set(ACID_INCLUDES "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Acid ${LIB_TYPE} ${ACID_SOURCES})
-add_dependencies(Acid SPIRV BulletDynamics)
+add_dependencies(Acid glfw SPIRV BulletDynamics)
 
 set_target_properties(Acid PROPERTIES
         POSITION_INDEPENDENT_CODE ON
@@ -26,7 +26,7 @@ else()
 endif()
 
 target_include_directories(Acid PUBLIC ${VULKAN_INCLUDE_DIR} ${OPENAL_INCLUDE_DIR} ${GLSLANG_INCLUDE_DIRS} ${GLFW_INCLUDE_DIR} ${BULLET_INCLUDE_DIRS} ${ACID_INCLUDES})
-target_link_libraries(Acid PRIVATE ${VULKAN_LIBRARY} ${OPENAL_LIBRARY} ${GLSLANG_LIBRARIES} ${GLFW_LIBRARY} ${BULLET_LIBRARIES})
+target_link_libraries(Acid PUBLIC ${VULKAN_LIBRARY} ${OPENAL_LIBRARY} ${GLSLANG_LIBRARIES} ${GLFW_LIBRARY} ${BULLET_LIBRARIES})
 
 # Install
 if(ACID_INSTALL)

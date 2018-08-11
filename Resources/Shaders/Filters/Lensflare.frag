@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 0) uniform UboScene
 {
@@ -8,14 +9,14 @@ layout(set = 0, binding = 0) uniform UboScene
 	vec2 displaySize;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerColour;
+layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 
-layout(location = 0) in vec2 fragmentUv;
+layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outColour;
+layout(location = 0) out vec4 outAlbedo;
 
 bool insideScreen(vec2 test) 
 {
@@ -27,15 +28,13 @@ void main()
     vec2 sun2 = vec2(scene.sunPosition.x, scene.sunPosition.y);
 	vec2 sunCoord = (sun2 + 1.0f) / 2.0f;
 
-	vec4 textureColour = texture(samplerColour, fragmentUv);
-
 	float metallic = texture(samplerMaterial, sunCoord).r;
 	bool process = scene.sunPosition.z >= 0.0f && (metallic > 0.4f || !insideScreen(sunCoord));
 
-	vec2 uv = (fragmentUv - 0.5f) * (scene.displaySize.x / scene.displaySize.y);
+	vec2 uv = (inUv - 0.5f) * (scene.displaySize.x / scene.displaySize.y);
 
 	vec2 uvd = uv * length(uv);
-	vec3 colour = vec3(0.0f);
+	vec3 albedo = vec3(0.0f);
 
 	if (process) 
 	{
@@ -59,19 +58,19 @@ void main()
 		float f62 = max(0.01f - pow(length(uvx - 0.325f * sun2), 1.6f), 0.0f) * 3.0f;
 		float f63 = max(0.01f - pow(length(uvx - 0.35f * sun2), 1.6f), 0.0f) * 5.0f;
 
-		colour.r += f2 + f4 + f5 + f6;
-		colour.g += f22 + f42 + f52 + f62;
-		colour.b += f23 + f43 + f53 + f63;
+		albedo.r += f2 + f4 + f5 + f6;
+		albedo.g += f22 + f42 + f52 + f62;
+		albedo.b += f23 + f43 + f53 + f63;
 	}
 
 	// Hides flare when below a world height.
-	colour *= clamp(scene.worldHeight + 10.0f, 0.0f, 1.0f);
+	albedo *= clamp(scene.worldHeight + 10.0f, 0.0f, 1.0f);
 
 	// Adds a bit of darkining around the edge of the screen.
-	// colour = colour * 1.3f - vec3(length(uvd) * 0.05f);
+//  albedo = albedo * 1.3f - vec3(length(uvd) * 0.05f);
 
-	outColour = textureColour + vec4(colour, 0.0f);
+	outAlbedo = texture(samplerAlbedo, inUv) + vec4(albedo, 0.0f);
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
+	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
+	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
 }

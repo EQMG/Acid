@@ -63,7 +63,7 @@ namespace acid
 		Texture(const std::string &filename, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
-		/// A new texture object from a array of pixels.
+		/// A new empty texture object that can be used to render into.
 		/// </summary>
 		/// <param name="width"> The textures width. </param>
 		/// <param name="height"> The textures height. </param>
@@ -71,9 +71,21 @@ namespace acid
 		/// <param name="imageLayout"> The textures image layout </param>
 		/// <param name="usage"> The textures image usage </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
-		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
 		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, float *pixels = nullptr);
+		        const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+
+		/// <summary>
+		/// A new texture object from a array of pixels.
+		/// </summary>
+		/// <param name="width"> The textures width. </param>
+		/// <param name="height"> The textures height. </param>
+		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
+		/// <param name="format"> The textures format. </param>
+		/// <param name="imageLayout"> The textures image layout </param>
+		/// <param name="usage"> The textures image usage </param>
+		/// <param name="samples"> The amount of MSAA samples to use. </param>
+		Texture(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		/// <summary>
 		/// Deconstructor for the texture object.

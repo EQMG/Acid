@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 0) uniform UboObject
 {
@@ -10,20 +11,20 @@ layout(set = 0, binding = 0) uniform UboObject
 	float alpha;
 } object;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerColour;
+layout(set = 0, binding = 1) uniform sampler2D samplerAlbedo;
 
-layout(location = 0) in vec2 fragmentUv;
+layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outColour;
+layout(location = 0) out vec4 outAlbedo;
 
 void main() 
 {
-	outColour = texture(samplerColour, fragmentUv) * vec4(object.colourOffset.rgb, 1.0f);
-	outColour.a *= object.alpha;
+	outAlbedo = texture(samplerAlbedo, inUv) * vec4(object.colourOffset.rgb, 1.0f);
+	outAlbedo.a *= object.alpha;
 
-	if (outColour.a < 0.05f)
+	if (outAlbedo.a < 0.05f)
 	{
-		outColour = vec4(0.0f);
+		outAlbedo = vec4(0.0f);
 		discard;
 	}
 }

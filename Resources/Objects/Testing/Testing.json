@@ -20,8 +20,8 @@
     "Model": "Entities/Testing/Model.obj"
   },
   "MaterialDefault": {
-    "Base Colour": "#C7BEBE", 
-    "Diffuse Texture": "Entities/Testing/Diffuse.png",
+    "Albedo Colour": "#C7BEBE",
+    "Albedo Texture": "Entities/Testing/Albedo.png",
     "Metallic": 0.0, 
     "Roughness": 0.0, 
     "Material Texture": "Entities/Testing/Material.png",

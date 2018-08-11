@@ -1,35 +1,36 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
-
-const float FXAA_REDUCE_MIN = (1.0 / 128.0);
-const float FXAA_REDUCE_MUL = (1.0 / 8.0);
+#extension GL_ARB_shading_language_420pack : enable
 
 layout(set = 0, binding = 0) uniform UboScene 
 {
 	float spanMax;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerColour;
+layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
 
-layout(location = 0) in vec2 fragmentUv;
+layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outColour;
+layout(location = 0) out vec4 outAlbedo;
+
+const float reduceMin = 1.0f / 128.0f;
+const float reduceMul = 1.0f / 8.0f;
 
 void main() 
 {
-	ivec2 originalSize = textureSize(samplerColour, 0);
+	ivec2 originalSize = textureSize(samplerAlbedo, 0);
 	vec2 resolution = vec2(originalSize.x, originalSize.y);
 
-	vec2 inverseResolution = vec2(1.0 / resolution.x, 1.0 / resolution.y);
-	vec3 rgbNW = texture(samplerColour, fragmentUv + vec2(-1.0, -1.0) * inverseResolution).rgb;
-	vec3 rgbNE = texture(samplerColour, fragmentUv + vec2(1.0, -1.0) * inverseResolution).rgb;
-	vec3 rgbSW = texture(samplerColour, fragmentUv + vec2(-1.0, 1.0) * inverseResolution).rgb;
-	vec3 rgbSE = texture(samplerColour, fragmentUv + vec2(1.0, 1.0) * inverseResolution).rgb;
-	vec3 rgbM = texture(samplerColour, fragmentUv * inverseResolution).rgb;
+	vec2 inverseResolution = vec2(1.0f / resolution.x, 1.0f / resolution.y);
+	vec3 rgbNW = texture(samplerAlbedo, inUv + vec2(-1.0f, -1.0f) * inverseResolution).rgb;
+	vec3 rgbNE = texture(samplerAlbedo, inUv + vec2(1.0f, -1.0f) * inverseResolution).rgb;
+	vec3 rgbSW = texture(samplerAlbedo, inUv + vec2(-1.0f, 1.0f) * inverseResolution).rgb;
+	vec3 rgbSE = texture(samplerAlbedo, inUv + vec2(1.0f, 1.0f) * inverseResolution).rgb;
+	vec3 rgbM = texture(samplerAlbedo, inUv * inverseResolution).rgb;
 
-	vec3 luma = vec3(0.299, 0.587, 0.114);
+	vec3 luma = vec3(0.299f, 0.587f, 0.114f);
 	float lumaNW = dot(rgbNW, luma);
 	float lumaNE = dot(rgbNE, luma);
 	float lumaSW = dot(rgbSW, luma);
@@ -43,25 +44,25 @@ void main()
 	dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));
 	dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));
 
-	float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL), FXAA_REDUCE_MIN);
+	float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) * (0.25f * reduceMul), reduceMin);
 
-	float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);
+	float rcpDirMin = 1.0f / (min(abs(dir.x), abs(dir.y)) + dirReduce);
 
 	dir = min(vec2(scene.spanMax, scene.spanMax), max(vec2(-scene.spanMax, -scene.spanMax), dir * rcpDirMin)) * inverseResolution;
 
-  	vec3 rgbA = (1.0/2.0) * (texture(samplerColour, fragmentUv.xy + dir * (1.0/3.0 - 0.5)).xyz + texture(samplerColour, fragmentUv.xy + dir * (2.0/3.0 - 0.5)).xyz);
-  	vec3 rgbB = rgbA * (1.0/2.0) + (1.0/4.0) * (texture(samplerColour, fragmentUv.xy + dir * (0.0/3.0 - 0.5)).xyz + texture(samplerColour, fragmentUv.xy + dir * (3.0/3.0 - 0.5)).xyz);
+  	vec3 rgbA = (1.0f / 2.0f) * (texture(samplerAlbedo, inUv.xy + dir * (1.0f / 3.0f - 0.5f)).xyz + texture(samplerAlbedo, inUv.xy + dir * (2.0f / 3.0f - 0.5f)).xyz);
+  	vec3 rgbB = rgbA * (1.0f / 2.0f) + (1.0f / 4.0f) * (texture(samplerAlbedo, inUv.xy + dir * (0.0f / 3.0f - 0.5f)).xyz + texture(samplerAlbedo, inUv.xy + dir * (3.0f / 3.0f - 0.5f)).xyz);
   	float lumaB = dot(rgbB, luma);
 
 	if ((lumaB < lumaMin) || (lumaB > lumaMax)) 
 	{
-		outColour = vec4(rgbA, 1.0);
+		outAlbedo = vec4(rgbA, 1.0f);
 	} 
 	else
 	{
-		outColour = vec4(rgbB, 1.0);
+		outAlbedo = vec4(rgbB, 1.0f);
 	}
 	
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(fragmentUv * sizeColour), outColour);
+	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
+	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
 }

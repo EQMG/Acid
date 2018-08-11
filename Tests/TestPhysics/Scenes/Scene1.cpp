@@ -67,12 +67,13 @@ namespace test
 
 		// Skybox.
 		GameObject *skyboxObject = new GameObject("Objects/SkyboxChapel/SkyboxChapel.json", Transform(Vector3(), Vector3(), 2048.0f));
+	//	skyboxObject->GetComponent<MeshRender>()->SetEnabled(false);
 
 		// Animated.
 	//	GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
 	//	animatedObject->SetName("Animated");
 	//	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Albedo.png"), 0.7f, 0.6f);
 	//	animatedObject->AddComponent<MeshRender>();
 	//	animatedObject->AddComponent<ShadowRender>();
 
@@ -96,7 +97,7 @@ namespace test
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(0.5f);
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
+				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();
