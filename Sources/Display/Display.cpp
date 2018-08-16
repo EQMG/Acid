@@ -484,7 +484,9 @@ namespace acid
 		std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 		vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 
+#if ACID_VERBOSE
 		LogVulkanLayers(instanceLayerProperties, "Instance", false);
+#endif
 
 		// Sets up the layers.
 		if (m_validationLayers)
@@ -591,7 +593,7 @@ namespace acid
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
 
-		LogVulkanDevice(m_physicalDeviceProperties, m_physicalDeviceFeatures, m_physicalDeviceMemoryProperties);
+		fprintf(stdout, "Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
 
 	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
@@ -604,8 +606,6 @@ namespace acid
 		// Iterates through all devices and rate their suitability.
 		for (auto &device : devices)
 		{
-			VkPhysicalDeviceProperties deviceProperties;
-			vkGetPhysicalDeviceProperties(device, &deviceProperties);
 			int score = ScorePhysicalDevice(device);
 			rankedDevices.emplace(score, device);
 		}
@@ -656,6 +656,10 @@ namespace acid
 		VkPhysicalDeviceFeatures physicalDeviceFeatures;
 		vkGetPhysicalDeviceProperties(device, &physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
+
+#if ACID_VERBOSE
+		LogVulkanDevice(physicalDeviceProperties);
+#endif
 
 		// Adds a large score boost for discrete GPUs (dedicated graphics cards).
 		if (physicalDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
@@ -849,10 +853,10 @@ namespace acid
 		vkGetDeviceQueue(m_logicalDevice, m_computeFamily, 0, &m_computeQueue);
 	}
 
-	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties)
+	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties)
 	{
-#if ACID_VERBOSE
-		fprintf(stdout, "-- Selected Display: '%s' --\n", physicalDeviceProperties.deviceName);
+		fprintf(stdout, "-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		fprintf(stdout, "ID: %i\n", physicalDeviceProperties.deviceID);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
@@ -895,12 +899,10 @@ namespace acid
 		fprintf(stdout, "Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
 		fprintf(stdout, "Header Version: %i\n", VK_HEADER_VERSION);
 		fprintf(stdout, "-- Done --\n");
-#endif
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-#if ACID_VERBOSE
 		fprintf(stdout, "-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto &layer : layerProperties)
@@ -916,6 +918,5 @@ namespace acid
 		}
 
 		fprintf(stdout, "\n-- Done --\n");
-#endif
 	}
 }

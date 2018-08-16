@@ -15,7 +15,7 @@ namespace acid
 
 	struct DeferredLight // TODO: Replace struct with actual light object.
 	{
-		Colour colour;
+		Vector4 colour;
 		Vector3 position;
 		float radius;
 	};
@@ -62,8 +62,8 @@ namespace acid
 			}
 
 			DeferredLight lightObject = {};
-			lightObject.colour = light->GetColour();
 			lightObject.position = light->GetPosition();
+			lightObject.colour = light->GetColour();
 			lightObject.radius = light->GetRadius();
 			sceneLights.emplace_back(lightObject);
 

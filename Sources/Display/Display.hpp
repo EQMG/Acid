@@ -302,7 +302,7 @@ namespace acid
 
 		void CreateLogicalDevice();
 
-		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const VkPhysicalDeviceFeatures &physicalDeviceFeatures, const VkPhysicalDeviceMemoryProperties &physicalDeviceMemoryProperties);
+		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties);
 
 		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
 	};
