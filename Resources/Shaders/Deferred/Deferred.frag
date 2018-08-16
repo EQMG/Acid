@@ -106,17 +106,17 @@ void main()
 			Light light = scene.lights[i];
 
     		vec3 lightDir = light.position - worldPosition;
-    		float distance = length(lightDir);
-    		lightDir /= distance;
+    		float dist = length(lightDir);
+    		lightDir = normalize(lightDir);
 
-    		float att = attenuation(distance, light.radius);
+    		float atten = attenuation(dist, light.radius);
 
-			vec3 radiance = light.colour.rgb * att;
+			vec3 radiance = light.colour.rgb * atten;
 			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
 		}
 
 		// Directional lights.
-		for (int i = 0; i < scene.lightsCount; i++)
+		/*for (int i = 0; i < scene.lightsCount; i++)
 		{
 			Light light = scene.lights[i];
 
@@ -124,10 +124,10 @@ void main()
 
 			vec3 radiance = light.colour.rgb;
 			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
-		}
+		}*/
 
 #ifdef USE_IBL
-        irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, albedo.rgb);
+//      irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, albedo.rgb);
 #endif
 
         outAlbedo = vec4(irradiance, 1.0f);

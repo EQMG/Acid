@@ -87,7 +87,7 @@ namespace acid
 			// Dependencies.
 			VkSubpassDependency subpassDependency = {};
 			subpassDependency.srcAccessMask = 0;
-			subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT; // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
 			if (renderpassCreate.GetSubpasses().size() == 1)
 			{
