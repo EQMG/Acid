@@ -9,12 +9,12 @@ float sqr(float x)
 vec2 hammersley(uint i, uint N)
 {
 	uint bits = (i << 16u) | (i >> 16u);
-    bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
-    bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
-    bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
-    bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
+	bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
+	bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
+	bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
+	bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
 	float radical_inverse = float(bits) * 2.3283064365386963e-10f;
-    return vec2(float(i) / float(N), radical_inverse);
+	return vec2(float(i) / float(N), radical_inverse);
 }
 
 vec3 cube_dir(vec2 texCoord, uint side)
@@ -61,9 +61,9 @@ float G_GGX(float NoV, float NoL, float k)
 	return ggx_v * ggx_l;
 }
 
-vec3 approx_F0(float metallic, vec3 albedo)
+vec3 approx_F0(float metallic, vec3 colour)
 {
-	return mix(vec3(0.04), albedo, metallic);
+	return mix(vec3(0.04), colour, metallic);
 }
 
 vec3 F_Schlick(float NoV, vec3 F0)
@@ -94,7 +94,7 @@ float brdf_lambert()
 	return 1.0f / pi;
 }
 
-vec3 L0(vec3 N, vec3 L, vec3 V, float roughness, float metallic, vec3 albedo)
+vec3 L0(vec3 N, vec3 L, vec3 V, float roughness, float metallic, vec3 colour)
 {
 	vec3 H = normalize(L + V);
 	float NoH = max(0.0f, dot(N, H));
@@ -102,13 +102,13 @@ vec3 L0(vec3 N, vec3 L, vec3 V, float roughness, float metallic, vec3 albedo)
 	float NoL = max(0.0f, dot(N, L));
 	float HoV = max(0.0f, dot(H, V));
 
-	vec3 F = F_Schlick(HoV, approx_F0(metallic, albedo));
+	vec3 F = F_Schlick(HoV, approx_F0(metallic, colour));
 
 	vec3 kS = F;
 	vec3 kD = (vec3(1.0f) - kS) * (1.0f - metallic);
 
 	vec3 specular = kS * brdf_cook_torrance(NoH, NoV, NoL, roughness);
-	vec3 diffuse = kD * albedo * brdf_lambert();
+	vec3 diffuse = kD * colour * brdf_lambert();
 
 	return (diffuse + specular) * NoL;
 }
@@ -117,17 +117,17 @@ vec3 importance_sample_GGX(vec2 Xi, vec3 normal, float roughness)
 {
 	float a2 = sqr(sqr(roughness));
 
-    float phi = 2.0f * pi * Xi.x;
-    float cos_theta = sqrt((1.0f - Xi.y) / (1.0f + (a2 - 1.0f) * Xi.y));
-    float sin_theta = sqrt(1.0f - sqr(cos_theta));
+	float phi = 2.0f * pi * Xi.x;
+	float cos_theta = sqrt((1.0f - Xi.y) / (1.0f + (a2 - 1.0f) * Xi.y));
+	float sin_theta = sqrt(1.0f - sqr(cos_theta));
 
-    vec3 half_vec = vec3(cos(phi) * sin_theta, sin(phi) * sin_theta, cos_theta);
+	vec3 half_vec = vec3(cos(phi) * sin_theta, sin(phi) * sin_theta, cos_theta);
 
-    vec3 up = abs(normal.z) < 0.999f ? vec3(0.0f, 0.0f, 1.0f) : vec3(1.0f, 0.0f, 0.0f);
-    vec3 tangent = normalize(cross(up, normal));
-    vec3 bitangent = cross(normal, tangent);
+	vec3 up = abs(normal.z) < 0.999f ? vec3(0.0f, 0.0f, 1.0f) : vec3(1.0f, 0.0f, 0.0f);
+	vec3 tangent = normalize(cross(up, normal));
+	vec3 bitangent = cross(normal, tangent);
 
-    return normalize(tangent * half_vec.x + bitangent * half_vec.y + normal * half_vec.z);
+	return normalize(tangent * half_vec.x + bitangent * half_vec.y + normal * half_vec.z);
 }
 
 vec2 integrate_brdf(float NoV, float roughness)
@@ -163,16 +163,16 @@ vec2 integrate_brdf(float NoV, float roughness)
 	return integr / SAMPLE_COUNT;
 }
 
-vec3 ibl_irradiance(samplerCube probe, sampler2D brdf_lut, vec3 N, vec3 V, float roughness, float metallic, vec3 albedo)
+vec3 ibl_irradiance(samplerCube probe, sampler2D brdf_lut, vec3 N, vec3 V, float roughness, float metallic, vec3 colour)
 {
 	uint probe_mips = textureQueryLevels(probe);
 	float NoV = max(0.0f, dot(N, V));
 
-	vec3 kS = F_Schlick(NoV, approx_F0(metallic, albedo), roughness);
+	vec3 kS = F_Schlick(NoV, approx_F0(metallic, colour), roughness);
 	vec3 kD = (vec3(1.0f) - kS) * (1.0f - metallic);
 
 	vec3 irradiance = textureLod(probe, N, probe_mips - 1).rgb;
-	vec3 diffuse = kD * irradiance * albedo;
+	vec3 diffuse = kD * irradiance * colour;
 
 	vec3 reflected = reflect(-V, N);
 	vec2 brdf = texture(brdf_lut, vec2(NoV, roughness)).xy;

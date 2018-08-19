@@ -4,8 +4,8 @@
 		<Model>Sphere_18_18_1</Model>
 	</Mesh>
 	<MaterialDefault>
-		<Albedo_Colour>#DDE2FF</Albedo_Colour>
-		<Albedo_Texture></Albedo_Texture>
+		<Diffuse_Colour>#DDE2FF</Diffuse_Colour>
+		<Diffuse_Texture></Diffuse_Texture>
 		<Metallic>0.4</Metallic>
 		<Roughness>0.0</Roughness>
 		<Material_Texture></Material_Texture>

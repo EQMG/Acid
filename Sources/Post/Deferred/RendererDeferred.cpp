@@ -13,13 +13,6 @@ namespace acid
 {
 	const int RendererDeferred::MAX_LIGHTS = 64;
 
-	struct DeferredLight // TODO: Replace struct with actual light object.
-	{
-		Vector4 colour;
-		Vector3 position;
-		float radius;
-	};
-
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
@@ -42,40 +35,37 @@ namespace acid
 		auto ibl = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap(); // TODO: IBL cubemap.
 
 		// Updates uniforms.
-		std::vector<DeferredLight> sceneLights = {};
+		std::vector<Colour> lightColours = {};
+		std::vector<Vector3> lightPositions = {};
+		std::vector<float> lightRadii = {};
 
 		auto lights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
 		for (auto &light : lights)
 		{
-			//	auto position = *light->GetPosition();
-			//	float radius = light->GetRadius();
+		//	auto position = *light->GetPosition();
+		//	float radius = light->GetRadius();
 
-			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-			//	{
-			//		continue;
-			//	}
+		//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+		//	{
+		//		continue;
+		//	}
 
-			if (light->GetColour().LengthSquared() == 0.0f)
-			{
-				continue;
-			}
+			lightColours.emplace_back(light->GetColour());
+			lightPositions.emplace_back(light->GetPosition());
+			lightRadii.emplace_back(light->GetRadius());
 
-			DeferredLight lightObject = {};
-			lightObject.position = light->GetPosition();
-			lightObject.colour = light->GetColour();
-			lightObject.radius = light->GetRadius();
-			sceneLights.emplace_back(lightObject);
-
-			if (sceneLights.size() >= MAX_LIGHTS)
+			if (lightColours.size() >= MAX_LIGHTS)
 			{
 				break;
 			}
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("lights", *sceneLights.data());
-		m_uniformScene.Push("lightsCount", static_cast<int>(sceneLights.size()));
+		m_uniformScene.Push("lightColours", *lightColours.data());
+		m_uniformScene.Push("lightPositions", *lightPositions.data());
+		m_uniformScene.Push("lightRadii", *lightRadii.data());
+		m_uniformScene.Push("lightsCount", static_cast<int>(lightColours.size()));
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
@@ -91,9 +81,9 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
-		m_descriptorSet.Push("writeAlbedo", m_pipeline.GetTexture(3));
+		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(3));
 		m_descriptorSet.Push("samplerPosition", m_pipeline.GetTexture(2));
-		m_descriptorSet.Push("samplerAlbedo", m_pipeline.GetTexture(3));
+		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(3));
 		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(4));
 		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(5));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
@@ -134,7 +124,7 @@ namespace acid
 
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-		descriptorSet.Push("outAlbedo", result);
+		descriptorSet.Push("outColour", result);
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.

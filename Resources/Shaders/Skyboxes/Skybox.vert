@@ -37,9 +37,9 @@ void main()
 	viewStatic[3][1] = 0.0f;
 	viewStatic[3][2] = 0.0f;
 	
-    gl_Position = scene.projection * viewStatic * worldPosition;
+	gl_Position = scene.projection * viewStatic * worldPosition;
 
-    outWorldPos = worldPosition.xyz;
+	outWorldPos = worldPosition.xyz;
 	outWorldPos.y = -outWorldPos.y;
 	outUv = inPosition;
 	outHeight = worldPosition.y;

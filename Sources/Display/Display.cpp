@@ -12,7 +12,7 @@
 namespace acid
 {
 	static const std::vector<const char *> VALIDATION_LAYERS = {
-		"VK_LAYER_LUNARG_standard_validation" // , "VK_LAYER_RENDERDOC_Capture"
+		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
 	};
 	static const std::vector<const char *> DEVICE_EXTENSIONS = {
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -909,7 +909,7 @@ namespace acid
 		{
 			if (showDescription)
 			{
-				fprintf(stdout, "\n    %s   | %s, ", layer.layerName, layer.description);
+				fprintf(stdout, "\n	%s   | %s, ", layer.layerName, layer.description);
 			}
 			else
 			{

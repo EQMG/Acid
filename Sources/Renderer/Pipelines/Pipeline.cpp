@@ -65,7 +65,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
+		fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
 		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}

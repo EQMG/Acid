@@ -73,7 +73,7 @@ namespace test
 	//	GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
 	//	animatedObject->SetName("Animated");
 	//	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Albedo.png"), 0.7f, 0.6f);
+	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//	animatedObject->AddComponent<MeshRender>();
 	//	animatedObject->AddComponent<ShadowRender>();
 
@@ -81,8 +81,8 @@ namespace test
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
 
-        GameObject *light = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f)));
-        light->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
+		GameObject *light = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f)));
+		light->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
 
 		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
@@ -100,7 +100,7 @@ namespace test
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(0.5f);
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
+				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();

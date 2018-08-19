@@ -11,20 +11,20 @@ layout(set = 0, binding = 0) uniform UboObject
 	float alpha;
 } object;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerAlbedo;
+layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outAlbedo;
+layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	outAlbedo = texture(samplerAlbedo, inUv) * vec4(object.colourOffset.rgb, 1.0f);
-	outAlbedo.a *= object.alpha;
+	outColour = texture(samplerColour, inUv) * vec4(object.colourOffset.rgb, 1.0f);
+	outColour.a *= object.alpha;
 
-	if (outAlbedo.a < 0.05f)
+	if (outColour.a < 0.05f)
 	{
-		outAlbedo = vec4(0.0f);
+		outColour = vec4(0.0f);
 		discard;
 	}
 }

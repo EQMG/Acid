@@ -11,11 +11,11 @@ layout(set = 0, binding = 0) uniform UboScene
 layout(set = 0, binding = 1) uniform UboObject
 {
 #ifdef ANIMATED
-    mat4 jointTransforms[MAX_JOINTS];
+	mat4 jointTransforms[MAX_JOINTS];
 #endif
 	mat4 transform;
 
-	vec4 baseAlbedo;
+	vec4 baseDiffuse;
 	float metallic;
 	float roughness;
 	float ignoreFog;
@@ -42,24 +42,24 @@ layout(location = 3) out vec3 outTangent;
 
 out gl_PerVertex
 {
-    vec4 gl_Position;
+	vec4 gl_Position;
 };
 
 void main()
 {
 #ifdef ANIMATED
-    vec4 totalLocalPos = vec4(0.0f);
-    vec4 totalNormal = vec4(0.0f);
+	vec4 totalLocalPos = vec4(0.0f);
+	vec4 totalNormal = vec4(0.0f);
 
-    for (int i = 0; i < MAX_WEIGHTS; i++)
-    {
-        mat4 jointTransform = object.jointTransforms[int(inJointIds[i])];
-        vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
-        totalLocalPos += posePosition * inWeights[i];
+	for (int i = 0; i < MAX_WEIGHTS; i++)
+	{
+		mat4 jointTransform = object.jointTransforms[int(inJointIds[i])];
+		vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
+		totalLocalPos += posePosition * inWeights[i];
 
-        vec4 worldNormal = jointTransform * vec4(inNormal, 0.0f);
-        totalNormal += worldNormal * inWeights[i];
-    }
+		vec4 worldNormal = jointTransform * vec4(inNormal, 0.0f);
+		totalNormal += worldNormal * inWeights[i];
+	}
 #else
 	vec4 totalLocalPos = vec4(inPosition, 1.0f);
 	vec4 totalNormal = vec4(inNormal, 0.0f);
@@ -67,16 +67,16 @@ void main()
 
 	vec4 worldPosition = object.transform * totalLocalPos;
 
-    gl_Position = scene.projection * scene.view * worldPosition;
+	gl_Position = scene.projection * scene.view * worldPosition;
 
-    outWorldPos = worldPosition.xyz;
+	outWorldPos = worldPosition.xyz;
 	outWorldPos.y = -outWorldPos.y;
-    outUv = inUv;
+	outUv = inUv;
 	outNormal = normalize((object.transform * totalNormal).xyz);
 
 #ifdef NORMAL_MAPPING
-    mat3 mNormal = transpose(inverse(mat3(object.transform)));
-    outNormal = mNormal * normalize(inNormal);
-    outTangent = mNormal * normalize(inTangent);
+	mat3 mNormal = transpose(inverse(mat3(object.transform)));
+	outNormal = mNormal * normalize(inNormal);
+	outTangent = mNormal * normalize(inTangent);
 #endif
 }

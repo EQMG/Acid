@@ -7,23 +7,23 @@ layout(set = 0, binding = 0) uniform UboScene
 	float pixelSize;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
+layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outAlbedo;
+layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
+	vec2 sizeColour = textureSize(samplerColour, 0);
 	vec2 coord;
 
 	if (inUv.x < 1.0f)
 	{
-		float dx = scene.pixelSize * (1.0f / sizeAlbedo.x);
-		float dy = scene.pixelSize * (1.0f / sizeAlbedo.y);
+		float dx = scene.pixelSize * (1.0f / sizeColour.x);
+		float dy = scene.pixelSize * (1.0f / sizeColour.y);
 		coord.x = dx * floor(inUv.x / dx);
 		coord.y = dy * floor(inUv.y / dy);
 	} 
@@ -32,8 +32,8 @@ void main()
 		coord = inUv;
 	}
 
-	vec3 albedo = texture(samplerAlbedo, coord).rgb;
-	outAlbedo = vec4(albedo, 1.0f);
+	vec3 colour = texture(samplerColour, coord).rgb;
+	outColour = vec4(colour, 1.0f);
 
-	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
+	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
 }

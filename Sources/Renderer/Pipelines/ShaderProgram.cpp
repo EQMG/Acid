@@ -41,7 +41,6 @@ namespace acid
 
 	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound)
 	{
-
 		if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), name) == m_notFoundNames.end())
 		{
 			if (reportIfFound)
@@ -506,7 +505,7 @@ namespace acid
 
 				for (auto &uniform : *uniformBlock->GetUniforms())
 				{
-					result << "    - " << uniform->ToString() << " \n";
+					result << "	- " << uniform->ToString() << " \n";
 				}
 			}
 		}
