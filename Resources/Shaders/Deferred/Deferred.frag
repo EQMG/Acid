@@ -2,16 +2,11 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-struct Light
-{
-	vec4 colour;
-	vec3 position;
-	float radius;
-};
-
 layout(set = 0, binding = 0) uniform UboScene
 {
-	Light lights[MAX_LIGHTS];
+	vec4 lightColours[MAX_LIGHTS];
+	vec3 lightPositions[MAX_LIGHTS];
+	float lightRadii[MAX_LIGHTS];
 
 	mat4 projection;
 	mat4 view;
@@ -31,10 +26,10 @@ layout(set = 0, binding = 0) uniform UboScene
 	int lightsCount;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerPosition;
-layout(set = 0, binding = 3) uniform sampler2D samplerAlbedo;
+layout(set = 0, binding = 3) uniform sampler2D samplerDiffuse;
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
@@ -43,7 +38,7 @@ layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
 
 layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outAlbedo;
+layout(location = 0) out vec4 outColour;
 
 #include "Shaders/Lighting.glsl"
 
@@ -83,7 +78,7 @@ void main()
 	vec3 worldPosition = texture(samplerPosition, inUv).rgb;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
-	vec4 albedo = texture(samplerAlbedo, inUv);
+	vec4 diffuse = texture(samplerDiffuse, inUv);
 	vec3 normal = texture(samplerNormal, inUv).rgb;
 	vec3 material = texture(samplerMaterial, inUv).rgb;
 
@@ -92,45 +87,31 @@ void main()
 	bool ignoreFog = material.b == (1.0f / 3.0f) || material.b == (3.0f / 3.0f);
 	bool ignoreLighting = material.b == (2.0f / 3.0f) || material.b == (3.0f / 3.0f);
 
-	outAlbedo = vec4(albedo.rgb, 1.0f);
+	outColour = vec4(diffuse.rgb, 1.0f);
 
 	// Lighting.
 	if (!ignoreLighting && normal != vec3(0.0f))
 	{
-	    vec3 irradiance = vec3(0.0);
-        vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
+		vec3 irradiance = vec3(0.0);
+		vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
 
-		// Point lights.
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-			Light light = scene.lights[i];
+			vec3 lightDir = scene.lightPositions[i] - worldPosition;
+			float dist = length(lightDir);
+			lightDir = normalize(lightDir);
 
-    		vec3 lightDir = light.position - worldPosition;
-    		float dist = length(lightDir);
-    		lightDir = normalize(lightDir);
+			float atten = attenuation(dist, scene.lightRadii[i]);
+			vec3 radiance = scene.lightColours[i].rgb * atten;
 
-    		float atten = attenuation(dist, light.radius);
-
-			vec3 radiance = light.colour.rgb * atten;
-			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
+			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
 		}
 
-		// Directional lights.
-		/*for (int i = 0; i < scene.lightsCount; i++)
-		{
-			Light light = scene.lights[i];
-
-    		vec3 lightDir = light.position;
-
-			vec3 radiance = light.colour.rgb;
-			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, albedo.rgb);
-		}*/
-
 #ifdef USE_IBL
-//      irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, albedo.rgb);
+	//  irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
 #endif
 
-        outAlbedo = vec4(irradiance, 1.0f);
+		outColour = vec4(irradiance, 1.0f);
 	}
 
 	// Shadows.
@@ -141,7 +122,7 @@ void main()
 		distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
 		distanceAway = distanceAway / scene.shadowTransition;
 		shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-		outAlbedo *= shadow(shadowCoords);
+		outColour *= shadow(shadowCoords);
 	}*/
 
 	// Fog.
@@ -149,9 +130,9 @@ void main()
 	{
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
-		outAlbedo = mix(scene.fogColour, outAlbedo, fogFactor);
+		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
 
-	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
-	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
+	vec2 sizeColour = textureSize(samplerDiffuse, 0);
+	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
 }

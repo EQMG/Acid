@@ -4,12 +4,12 @@ namespace acid
 {
 	static std::map<std::string, Vector2> PIVOT_MAP = std::map<std::string, Vector2>
 		{
-			{"TopLeft",      Vector2(0.0f, 1.0f)},
-			{"TopCentre",    Vector2(0.5f, 1.0f)},
-			{"TopRight",     Vector2(1.0f, 1.0f)},
+			{"TopLeft",	  Vector2(0.0f, 1.0f)},
+			{"TopCentre",	Vector2(0.5f, 1.0f)},
+			{"TopRight",	 Vector2(1.0f, 1.0f)},
 
 			{"CentreLeft",   Vector2(0.0f, 0.5f)},
-			{"Centre",       Vector2(0.5f, 0.5f)},
+			{"Centre",	   Vector2(0.5f, 0.5f)},
 			{"CentreRight",  Vector2(1.0f, 0.5f)},
 
 			{"BottomLeft",   Vector2(0.0f, 0.0f)},

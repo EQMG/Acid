@@ -7,13 +7,13 @@ layout(set = 0, binding = 0) uniform UboScene
 	float moveIt;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeAlbedo;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
+layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outAlbedo;
+layout(location = 0) out vec4 outColour;
 
 const float pi = 3.141592653589793238462643f;
 const float di = 1.0f / 64.0f;
@@ -23,8 +23,8 @@ void main()
 	vec2 t0 = inUv;
 	t0.x += cos(2.0f * pi * inUv.y * 4.0f + scene.moveIt) * di;
 	t0.y += sin(2.0f * pi * inUv.x * 4.0f + scene.moveIt) * di;
-	outAlbedo = texture(samplerAlbedo, t0);
+	outColour = texture(samplerColour, t0);
 	
-	vec2 sizeAlbedo = textureSize(samplerAlbedo, 0);
-	imageStore(writeAlbedo, ivec2(inUv * sizeAlbedo), outAlbedo);
+	vec2 sizeColour = textureSize(samplerColour, 0);
+	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
 }

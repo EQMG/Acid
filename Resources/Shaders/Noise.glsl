@@ -1,12 +1,12 @@
 //
 // Description : Array and textureless GLSL 2D/3D/4D simplex
-//               noise functions.
-//      Author : Ian McEwan, Ashima Arts.
+//			   noise functions.
+//	  Author : Ian McEwan, Ashima Arts.
 //  Maintainer : ijm
-//     Lastmod : 20110822 (ijm)
-//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
-//               Distributed under the MIT License. See LICENSE file.
-//               https://github.com/ashima/webgl-noise
+//	 Lastmod : 20110822 (ijm)
+//	 License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//			   Distributed under the MIT License. See LICENSE file.
+//			   https://github.com/ashima/webgl-noise
 //
 
 vec3 mod2893(vec3 x) {
@@ -18,7 +18,7 @@ vec4 mod2893(vec4 x) {
 }
 
 vec4 permute3(vec4 x) {
-     return mod2893(((x*34.0)+1.0)*x);
+	 return mod2893(((x*34.0)+1.0)*x);
 }
 
 vec4 taylorInvSqrt3(vec4 r) {
@@ -45,14 +45,14 @@ float snoise(vec3 v) {
   //   x3 = x0 - 1.0 + 3.0 * C.xxx;
   vec3 x1 = x0 - i1 + C.xxx;
   vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
-  vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+  vec3 x3 = x0 - D.yyy;	  // -1.0+3.0*C.x = -0.5 = -D.y
 
 // Permutations
   i = mod2893(i);
   vec4 p = permute3( permute3( permute3(
-             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
-           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+			 i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+		   + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+		   + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
 
 // Gradients: 7x7 points over a square, mapped onto an octahedron.
 // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
@@ -62,7 +62,7 @@ float snoise(vec3 v) {
   vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
 
   vec4 x_ = floor(j * ns.z);
-  vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+  vec4 y_ = floor(j - 7.0 * x_ );	// mod(j,N)
 
   vec4 x = x_ *ns.x + ns.yyyy;
   vec4 y = y_ *ns.x + ns.yyyy;
@@ -96,13 +96,13 @@ float snoise(vec3 v) {
   vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
   m = m * m;
   return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
-                                dot(p2,x2), dot(p3,x3) ) );
+								dot(p2,x2), dot(p3,x3) ) );
 }
 
 float noise(vec3 position, int octaves, float frequency, float persistence) {
 	float total = 0.0;
 	float maxAmplitude = 0.0;
-    float amplitude = 1.0;
+	float amplitude = 1.0;
 	for (int i = 0; i < octaves; i++) {
 		total += snoise(position * frequency) * amplitude;
 		frequency *= 2.0;
@@ -115,7 +115,7 @@ float noise(vec3 position, int octaves, float frequency, float persistence) {
 float absNoise(vec3 position, int octaves, float frequency, float persistence) {
 	float total = 0.0;
 	float maxAmplitude = 0.0;
-    float amplitude = 1.0;
+	float amplitude = 1.0;
 	for (int i = 0; i < octaves; i++) {
 		total += abs(snoise(position * frequency)) * amplitude;
 		frequency *= 2.0;
@@ -128,7 +128,7 @@ float absNoise(vec3 position, int octaves, float frequency, float persistence) {
 float ridgedNoise(vec3 position, int octaves, float frequency, float persistence) {
 	float total = 0.0;
 	float maxAmplitude = 0.0;
-    float amplitude = 1.0;
+	float amplitude = 1.0;
 	for (int i = 0; i < octaves; i++) {
 		total += ((1.0 - abs(snoise(position * frequency))) * 2.0 - 1.0) * amplitude;
 		frequency *= 2.0;
@@ -140,10 +140,10 @@ float ridgedNoise(vec3 position, int octaves, float frequency, float persistence
 
 float squaredNoise(vec3 position, int octaves, float frequency, float persistence) {
 	float n = noise(position, octaves, frequency, persistence);
-    return n * n;
+	return n * n;
 }
 
 float cubedNoise(vec3 position, int octaves, float frequency, float persistence) {
 	float n = noise(position, octaves, frequency, persistence);
-    return n * n * n;
+	return n * n * n;
 }

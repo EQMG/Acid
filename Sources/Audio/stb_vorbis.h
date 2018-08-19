@@ -17,36 +17,36 @@
 //   - lossless sample-truncation at beginning ignored
 //   - cannot concatenate multiple vorbis streams
 //   - sample positions are 32-bit, limiting seekable 192Khz
-//       files to around 6 hours (Ogg supports 64-bit)
+//	   files to around 6 hours (Ogg supports 64-bit)
 //
 // Feature contributors:
-//    Dougall Johnson (sample-exact seeking)
+//	Dougall Johnson (sample-exact seeking)
 //
 // Bugfix/warning contributors:
-//    Terje Mathisen     Niklas Frykholm     Andy Hill
-//    Casey Muratori     John Bolton         Gargaj
-//    Laurent Gomila     Marc LeBlanc        Ronny Chevalier
-//    Bernhard Wodo      Evan Balster        alxprd@github
-//    Tom Beaumont       Ingo Leitgeb        Nicolas Guillemot
-//    Phillip Bennefall  Rohit               Thiago Goulart
-//    manxorist@github   saga musix          github:infatum
+//	Terje Mathisen	 Niklas Frykholm	 Andy Hill
+//	Casey Muratori	 John Bolton		 Gargaj
+//	Laurent Gomila	 Marc LeBlanc		Ronny Chevalier
+//	Bernhard Wodo	  Evan Balster		alxprd@github
+//	Tom Beaumont	   Ingo Leitgeb		Nicolas Guillemot
+//	Phillip Bennefall  Rohit			   Thiago Goulart
+//	manxorist@github   saga musix		  github:infatum
 //
 // Partial history:
-//    1.11    - 2017/07/23 - fix MinGW compilation
-//    1.10    - 2017/03/03 - more robust seeking; fix negative ilog(); clear error in open_memory
-//    1.09    - 2016/04/04 - back out 'truncation of last frame' fix from previous version
-//    1.08    - 2016/04/02 - warnings; setup memory leaks; truncation of last frame
-//    1.07    - 2015/01/16 - fixes for crashes on invalid files; warning fixes; const
-//    1.06    - 2015/08/31 - full, correct support for seeking API (Dougall Johnson)
-//                           some crash fixes when out of memory or with corrupt files
-//                           fix some inappropriately signed shifts
-//    1.05    - 2015/04/19 - don't define __forceinline if it's redundant
-//    1.04    - 2014/08/27 - fix missing const-correct case in API
-//    1.03    - 2014/08/07 - warning fixes
-//    1.02    - 2014/07/09 - declare qsort comparison as explicitly _cdecl in Windows
-//    1.01    - 2014/06/18 - fix stb_vorbis_get_samples_float (interleaved was correct)
-//    1.0     - 2014/05/26 - fix memory leaks; fix warnings; fix bugs in >2-channel;
-//                           (API change) report sample rate for decode-full-file funcs
+//	1.11	- 2017/07/23 - fix MinGW compilation
+//	1.10	- 2017/03/03 - more robust seeking; fix negative ilog(); clear error in open_memory
+//	1.09	- 2016/04/04 - back out 'truncation of last frame' fix from previous version
+//	1.08	- 2016/04/02 - warnings; setup memory leaks; truncation of last frame
+//	1.07	- 2015/01/16 - fixes for crashes on invalid files; warning fixes; const
+//	1.06	- 2015/08/31 - full, correct support for seeking API (Dougall Johnson)
+//						   some crash fixes when out of memory or with corrupt files
+//						   fix some inappropriately signed shifts
+//	1.05	- 2015/04/19 - don't define __forceinline if it's redundant
+//	1.04	- 2014/08/27 - fix missing const-correct case in API
+//	1.03	- 2014/08/07 - warning fixes
+//	1.02	- 2014/07/09 - declare qsort comparison as explicitly _cdecl in Windows
+//	1.01	- 2014/06/18 - fix stb_vorbis_get_samples_float (interleaved was correct)
+//	1.0	 - 2014/05/26 - fix memory leaks; fix warnings; fix bugs in >2-channel;
+//						   (API change) report sample rate for decode-full-file funcs
 //
 // See end of file for full version history.
 
@@ -165,29 +165,29 @@ extern stb_vorbis *stb_vorbis_open_pushdata(
 	int *error,
 	const stb_vorbis_alloc *alloc_buffer);
 // create a vorbis decoder by passing in the initial data block containing
-//    the ogg&vorbis headers (you don't need to do parse them, just provide
-//    the first N bytes of the file--you're told if it's not enough, see below)
+//	the ogg&vorbis headers (you don't need to do parse them, just provide
+//	the first N bytes of the file--you're told if it's not enough, see below)
 // on success, returns an stb_vorbis *, does not set error, returns the amount of
-//    data parsed/consumed on this call in *datablock_memory_consumed_in_bytes;
+//	data parsed/consumed on this call in *datablock_memory_consumed_in_bytes;
 // on failure, returns NULL on error and sets *error, does not change *datablock_memory_consumed
 // if returns NULL and *error is VORBIS_need_more_data, then the input block was
-//       incomplete and you need to pass in a larger block from the start of the file
+//	   incomplete and you need to pass in a larger block from the start of the file
 
 extern int stb_vorbis_decode_frame_pushdata(
 	stb_vorbis *f,
 	const unsigned char *datablock, int datablock_length_in_bytes,
-	int *channels,             // place to write number of float * buffers
-	float ***output,           // place to write float ** array of float * buffers
-	int *samples               // place to write number of output samples
+	int *channels,			 // place to write number of float * buffers
+	float ***output,		   // place to write float ** array of float * buffers
+	int *samples			   // place to write number of output samples
 );
 // decode a frame of audio sample data if possible from the passed-in data block
 //
 // return value: number of bytes we used from datablock
 //
 // possible cases:
-//     0 bytes used, 0 samples output (need more data)
-//     N bytes used, 0 samples output (resynching the stream, keep going)
-//     N bytes used, M samples output (one frame of data)
+//	 0 bytes used, 0 samples output (need more data)
+//	 N bytes used, 0 samples output (resynching the stream, keep going)
+//	 N bytes used, M samples output (one frame of data)
 // note that after opening a file, you will ALWAYS get one N-bytes,0-sample
 // frame, because Vorbis always "discards" the first frame.
 //
@@ -281,7 +281,7 @@ extern int stb_vorbis_seek_start(stb_vorbis *f);
 // this function is equivalent to stb_vorbis_seek(f,0)
 
 extern unsigned int stb_vorbis_stream_length_in_samples(stb_vorbis *f);
-extern float        stb_vorbis_stream_length_in_seconds(stb_vorbis *f);
+extern float		stb_vorbis_stream_length_in_seconds(stb_vorbis *f);
 // these functions return the total length of the vorbis stream
 
 extern int stb_vorbis_get_frame_float(stb_vorbis *f, int *channels, float ***output);
@@ -296,7 +296,7 @@ extern int stb_vorbis_get_frame_float(stb_vorbis *f, int *channels, float ***out
 
 #ifndef STB_VORBIS_NO_INTEGER_CONVERSION
 extern int stb_vorbis_get_frame_short_interleaved(stb_vorbis *f, int num_c, short *buffer, int num_shorts);
-extern int stb_vorbis_get_frame_short            (stb_vorbis *f, int num_c, short **buffer, int num_samples);
+extern int stb_vorbis_get_frame_short			(stb_vorbis *f, int num_c, short **buffer, int num_samples);
 #endif
 // decode the next frame and return the number of *samples* per channel.
 // Note that for interleaved data, you pass in the number of shorts (the
@@ -311,17 +311,17 @@ extern int stb_vorbis_get_frame_short            (stb_vorbis *f, int num_c, shor
 // per channel.
 
 // Channel coercion rules:
-//    Let M be the number of channels requested, and N the number of channels present,
-//    and Cn be the nth channel; let stereo L be the sum of all L and center channels,
-//    and stereo R be the sum of all R and center channels (channel assignment from the
-//    vorbis spec).
-//        M    N       output
-//        1    k      sum(Ck) for all k
-//        2    *      stereo L, stereo R
-//        k    l      k > l, the first l channels, then 0s
-//        k    l      k <= l, the first k channels
-//    Note that this is not _good_ surround etc. mixing at all! It's just so
-//    you get something useful.
+//	Let M be the number of channels requested, and N the number of channels present,
+//	and Cn be the nth channel; let stereo L be the sum of all L and center channels,
+//	and stereo R be the sum of all R and center channels (channel assignment from the
+//	vorbis spec).
+//		M	N	   output
+//		1	k	  sum(Ck) for all k
+//		2	*	  stereo L, stereo R
+//		k	l	  k > l, the first l channels, then 0s
+//		k	l	  k <= l, the first k channels
+//	Note that this is not _good_ surround etc. mixing at all! It's just so
+//	you get something useful.
 
 extern int stb_vorbis_get_samples_float_interleaved(stb_vorbis *f, int channels, float *buffer, int num_floats);
 extern int stb_vorbis_get_samples_float(stb_vorbis *f, int channels, float **buffer, int num_samples);
@@ -348,17 +348,17 @@ enum STBVorbisError
 {
 	VORBIS__no_error,
 
-	VORBIS_need_more_data=1,             // not a real error
+	VORBIS_need_more_data=1,			 // not a real error
 
-	VORBIS_invalid_api_mixing,           // can't mix API modes
-	VORBIS_outofmem,                     // not enough memory
-	VORBIS_feature_not_supported,        // uses floor 0
-	VORBIS_too_many_channels,            // STB_VORBIS_MAX_CHANNELS is too small
-	VORBIS_file_open_failure,            // fopen() failed
-	VORBIS_seek_without_length,          // can't seek in unknown-length file
+	VORBIS_invalid_api_mixing,		   // can't mix API modes
+	VORBIS_outofmem,					 // not enough memory
+	VORBIS_feature_not_supported,		// uses floor 0
+	VORBIS_too_many_channels,			// STB_VORBIS_MAX_CHANNELS is too small
+	VORBIS_file_open_failure,			// fopen() failed
+	VORBIS_seek_without_length,		  // can't seek in unknown-length file
 
-	VORBIS_unexpected_eof=10,            // file is truncated?
-	VORBIS_seek_invalid,                 // seek past EOF
+	VORBIS_unexpected_eof=10,			// file is truncated?
+	VORBIS_seek_invalid,				 // seek past EOF
 
 	// decoding errors (corrupt/invalid stream) -- you probably
 	// don't care about the exact details of these

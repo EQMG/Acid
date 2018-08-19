@@ -4,7 +4,7 @@ layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_
 
 layout(set = 0, binding = 0) uniform samplerCube samplerCubemap;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly imageCube outAlbedo;
+layout(rgba16f, set = 0, binding = 1) uniform writeonly imageCube outColour;
 
 #include "Shaders/Lighting.glsl"
 
@@ -12,10 +12,10 @@ const float roughness = 0.6f;
 
 void main()
 {
-    if (gl_GlobalInvocationID.x >= WIDTH || gl_GlobalInvocationID.y >= HEIGHT)
-    {
-        return;
-    }
+	if (gl_GlobalInvocationID.x >= WIDTH || gl_GlobalInvocationID.y >= HEIGHT)
+	{
+		return;
+	}
 
 	vec2 coord = ivec2(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y);
 	vec2 uv = (vec2(gl_GlobalInvocationID.x, gl_GlobalInvocationID.y) + vec2(0.5f, 0.5f)) / vec2(WIDTH, HEIGHT);
@@ -23,21 +23,21 @@ void main()
 	for (uint i = 0; i != 6; ++i)
 	{
 		vec3 localDir = normalize(cube_dir(uv, i));
-	    vec3 conv = vec3(0.0f);
+		vec3 conv = vec3(0.0f);
 
-	    if (roughness <= 0.0f)
-	    {
-	        conv = texture(samplerCubemap, localDir).rgb;
-	    }
-	    else if (roughness >= 1.0f)
-	    {
-	        conv = diffuse_convolution(samplerCubemap, localDir);
-	    }
-	    else
-	    {
-	        conv = specular_convolution(samplerCubemap, localDir, roughness);
-	    }
+		if (roughness <= 0.0f)
+		{
+			conv = texture(samplerCubemap, localDir).rgb;
+		}
+		else if (roughness >= 1.0f)
+		{
+			conv = diffuse_convolution(samplerCubemap, localDir);
+		}
+		else
+		{
+			conv = specular_convolution(samplerCubemap, localDir, roughness);
+		}
 
-		imageStore(outAlbedo, ivec3(coord, i), vec4(conv, 0.0f));
+		imageStore(outColour, ivec3(coord, i), vec4(conv, 0.0f));
 	}
 }

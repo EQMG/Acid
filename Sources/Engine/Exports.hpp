@@ -6,26 +6,26 @@
 
 #if ACID_BUILD_WINDOWS
 #  if ACID_BUILD_MSVC
-#    define ACID_ALIGN(x) _declspec(align(x))
-#    if defined(ACID_STATICLIB)
-#      define ACID_EXPORT
-#    else
-#      if defined(ACID_EXPORTS)
-#        define ACID_EXPORT __declspec(dllexport)
-#      else
-#        define ACID_EXPORT __declspec(dllimport)
-#      endif
+#	define ACID_ALIGN(x) _declspec(align(x))
+#	if defined(ACID_STATICLIB)
+#	  define ACID_EXPORT
+#	else
+#	  if defined(ACID_EXPORTS)
+#		define ACID_EXPORT __declspec(dllexport)
+#	  else
+#		define ACID_EXPORT __declspec(dllimport)
+#	  endif
 #	 endif
 #  else
-#    define ACID_ALIGN(x) __attribute__ ((aligned(x)))
-#    if defined(ACID_STATICLIB)
-#      define ACID_EXPORT
-#    else
-#      if defined(ACID_EXPORTS)
-#        define ACID_EXPORT __attribute__ ((dllexport))
-#      else
-#        define ACID_EXPORT __attribute__ ((dllimport))
-#      endif
+#	define ACID_ALIGN(x) __attribute__ ((aligned(x)))
+#	if defined(ACID_STATICLIB)
+#	  define ACID_EXPORT
+#	else
+#	  if defined(ACID_EXPORTS)
+#		define ACID_EXPORT __attribute__ ((dllexport))
+#	  else
+#		define ACID_EXPORT __attribute__ ((dllimport))
+#	  endif
 #	 endif
 #  endif
 #  define ACID_HIDDEN

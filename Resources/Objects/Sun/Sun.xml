@@ -4,8 +4,8 @@
 		<Model>Sphere_24_24_1.0</Model>
 	</Mesh>
 	<MaterialDefault>
-		<Albedo_Colour>#FFCC00</Albedo_Colour>
-		<Albedo_Texture></Albedo_Texture>
+		<Diffuse_Colour>#FFCC00</Diffuse_Colour>
+		<Diffuse_Texture></Diffuse_Texture>
 		<Metallic>1.0</Metallic>
 		<Roughness>0.0</Roughness>
 		<Material_Texture></Material_Texture>

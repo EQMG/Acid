@@ -65,7 +65,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboObject", m_uniformObject);
-		m_descriptorSet.Push("samplerAlbedo", m_fontType->GetTexture());
+		m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 		if (!updateSuccess)
@@ -188,7 +188,7 @@ namespace acid
 		auto currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 		auto currentWord = FontWord();
 
-		auto formattedText = FormatString::Replace(m_string, "\t", "    ");
+		auto formattedText = FormatString::Replace(m_string, "\t", "	");
 		auto textLines = FormatString::Split(formattedText, "\n", true);
 
 		for (uint32_t i = 0; i < textLines.size(); i++)

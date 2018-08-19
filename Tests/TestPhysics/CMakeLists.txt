@@ -10,8 +10,8 @@ add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
 #endif()
 
 set_target_properties(TestPhysics PROPERTIES
-                      POSITION_INDEPENDENT_CODE ON
-                      FOLDER "Acid")
+					POSITION_INDEPENDENT_CODE ON
+					FOLDER "Acid")
 
 add_dependencies(TestPhysics Acid)
 
@@ -20,13 +20,13 @@ target_link_libraries(TestPhysics PRIVATE Acid)
 
 # Install
 if(ACID_INSTALL)
-    install(DIRECTORY .
-            DESTINATION include
-            FILES_MATCHING PATTERN "*.h"
-            PATTERN "Private" EXCLUDE
-            )
+	install(DIRECTORY .
+			DESTINATION include
+			FILES_MATCHING PATTERN "*.h"
+			PATTERN "Private" EXCLUDE
+			)
 
-    install(TARGETS TestPhysics
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            )
+	install(TARGETS TestPhysics
+			RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+			)
 endif()

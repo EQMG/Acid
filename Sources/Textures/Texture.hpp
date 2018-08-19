@@ -72,7 +72,7 @@ namespace acid
 		/// <param name="usage"> The textures image usage </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		        const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.

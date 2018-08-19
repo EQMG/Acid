@@ -1,15 +1,15 @@
 set(TESTMATHS_HEADERS_
-        )
+		)
 
 set(TESTMATHS_SOURCES_
-        "TestMaths.rc"
-        "Main.cpp"
-        )
+		"TestMaths.rc"
+		"Main.cpp"
+		)
 
 source_group("Header Files" FILES ${TESTMATHS_HEADERS_})
 source_group("Source Files" FILES ${TESTMATHS_SOURCES_})
 
 set(TESTMATHS_SOURCES
-        ${TESTMATHS_HEADERS_}
-        ${TESTMATHS_SOURCES_}
-        )
+		${TESTMATHS_HEADERS_}
+		${TESTMATHS_SOURCES_}
+		)

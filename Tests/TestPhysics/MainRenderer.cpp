@@ -33,7 +33,7 @@ namespace test
 				Attachment(0, ATTACHMENT_DEPTH), // depth
 				Attachment(1, ATTACHMENT_SWAPCHAIN), // swapchain
 				Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // positions (world-space)
-				Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // albedo
+				Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // diffuse
 				Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // normals (world-space)
 				Attachment(5, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // materials
 			//	Attachment(6, ATTACHMENT_RESOLVE) // resolve

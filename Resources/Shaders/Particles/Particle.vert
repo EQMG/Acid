@@ -17,16 +17,16 @@ layout(location = 1) out vec2 outUv;
 
 out gl_PerVertex 
 {
-    vec4 gl_Position;
+	vec4 gl_Position;
 };
 
 void main() 
 {
 	vec4 worldPosition = inMvp * vec4(inPosition, 1.0f);
 
-    gl_Position = scene.projection * scene.view * worldPosition;
+	gl_Position = scene.projection * scene.view * worldPosition;
 
-    outWorldPos = worldPosition.xyz;
+	outWorldPos = worldPosition.xyz;
 	outWorldPos.y = -outWorldPos.y;
-    outUv = inUv;
+	outUv = inUv;
 }

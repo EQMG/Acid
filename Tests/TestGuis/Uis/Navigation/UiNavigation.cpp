@@ -8,11 +8,11 @@
 namespace test
 {
 	const std::vector<std::pair<std::string, Colour>> TABS = {
-		{"Play",         Colour("#B8312F")},
-		{"News",         Colour("#2969af")},
+		{"Play",		 Colour("#B8312F")},
+		{"News",		 Colour("#2969af")},
 		{"Achievements", Colour("#41A85F")},
-		{"Settings",     Colour("#475577")},
-		{"Exit",         Colour("#75706B")}
+		{"Settings",	 Colour("#475577")},
+		{"Exit",		 Colour("#75706B")}
 	};
 
 	UiNavigation::UiNavigation(UiObject *parent) :

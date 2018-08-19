@@ -5,19 +5,19 @@
 layout(set = 0, binding = 1) uniform UboObject
 {
 #ifdef ANIMATED
-    mat4 jointTransforms[MAX_JOINTS];
+	mat4 jointTransforms[MAX_JOINTS];
 #endif
 	mat4 transform;
 
-	vec4 baseAlbedo;
+	vec4 baseDiffuse;
 	float metallic;
 	float roughness;
 	float ignoreFog;
 	float ignoreLighting;
 } object;
 
-#ifdef COLOUR_MAPPING
-layout(set = 0, binding = 2) uniform sampler2D samplerAlbedo;
+#ifdef DIFFUSE_MAPPING
+layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 #endif
 #ifdef MATERIAL_MAPPING
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
@@ -34,19 +34,19 @@ layout(location = 3) in vec3 inTangent;
 #endif
 
 layout(location = 0) out vec4 outPosition;
-layout(location = 1) out vec4 outAlbedo;
+layout(location = 1) out vec4 outDiffuse;
 layout(location = 2) out vec4 outNormal;
 layout(location = 3) out vec4 outMaterial;
 
 void main()
 {
-	vec4 albedo = object.baseAlbedo;
+	vec4 diffuse = object.baseDiffuse;
 	vec3 unitNormal = inNormal;
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
-#ifdef COLOUR_MAPPING
-	albedo = texture(samplerAlbedo, inUv);
+#ifdef DIFFUSE_MAPPING
+	diffuse = texture(samplerDiffuse, inUv);
 #endif
 
 #ifdef MATERIAL_MAPPING
@@ -56,8 +56,8 @@ void main()
 
 	if (textureMaterial.b > 0.5f)
 	{
-        glowing = 1.0f;
-    }
+		glowing = 1.0f;
+	}
 #endif
 
 #ifdef NORMAL_MAPPING
@@ -72,7 +72,7 @@ void main()
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
 	outPosition = vec4(inWorldPos, 1.0);
-	outAlbedo = albedo;
+	outDiffuse = diffuse;
 	outNormal = vec4(unitNormal, 1.0f);
 	outMaterial = vec4(material, 1.0f);
 }
