@@ -25,9 +25,9 @@ namespace acid
 
 		m_pipeline.BindPipeline(commandBuffer);
 
-		auto renderList = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
+		auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
-		for (auto &shadowRender : renderList)
+		for (auto &shadowRender : sceneShadowRenders)
 		{
 			shadowRender->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}

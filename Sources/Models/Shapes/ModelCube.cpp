@@ -8,38 +8,44 @@ namespace acid
 		Model()
 	{
 		std::vector<IVertex *> vertices = {
-			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
-			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.66f), Vector3(0.0f, 0.0f, -1.0f)),
-			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.0f, 0.33f), Vector3(0.0f, 0.0f, -1.0f)),
-			new VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.25f, 0.33f), Vector3(0.0f, 0.0f, -1.0f)),
-
-			new VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.66f), Vector3(0.0f, 0.0f, 1.0f)),
-			new VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.5f, 0.33f), Vector3(0.0f, 0.0f, 1.0f)),
-			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.66f), Vector3(0.0f, 0.0f, 1.0f)),
-			new VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.75f, 0.33f), Vector3(0.0f, 0.0f, 1.0f)),
-
-			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.66f), Vector3(0.0f, 1.0f, 0.0f)),
-			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(1.0f, 0.33f), Vector3(0.0f, 1.0f, 0.0f)),
-
-			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.25f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)),
-			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.5f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)),
-
-			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.25f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
-			new VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.5f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.625f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.625f, 0.75f), Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.625f, 0.25f), Vector3(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.5f), Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.625f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.75f), Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.5f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.125f, 0.25f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.125f, 0.5f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.875f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.625f, 0.25f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.625f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2(0.625f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2(0.625f, 0.5f), Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2(0.625f, 0.25f), Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.625f, 0.0f), Vector3(0.0f, 0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
+			new VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
+			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.875f, 0.25f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
 		};
 		std::vector<uint32_t> indices = {
-			0, 2, 1, // Front
-			1, 2, 3,
-			4, 5, 6, // Back
-			5, 7, 6,
-			6, 7, 8, // Top
-			7, 9, 8,
-			1, 3, 4, // Bottom
-			3, 5, 4,
-			1, 11, 10, // Left
-			1, 4, 11,
-			3, 12, 5, // Right
-			5, 12, 13
+			1, 2, 0, // Front
+			3, 6, 8,
+			7, 4, 9, // Back
+			5, 10, 11,
+			12, 13, 14, // Top
+			15, 16, 17,
+			1, 18, 2, // Bottom
+			3, 19, 6,
+			7, 20, 4, // Left
+			5, 21, 10,
+			12, 22, 13, // Right
+			15, 23, 16,
 		};
 
 		for (auto &vertex : vertices)

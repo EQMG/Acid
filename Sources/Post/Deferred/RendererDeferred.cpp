@@ -31,17 +31,16 @@ namespace acid
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		auto skyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-		auto ibl = (skyboxRender == nullptr) ? nullptr : skyboxRender->GetCubemap(); // TODO: IBL cubemap.
+		auto seneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
+		auto ibl = (seneSkyboxRender == nullptr) ? nullptr : seneSkyboxRender->GetCubemap(); // TODO: IBL cubemap.
 
 		// Updates uniforms.
 		std::vector<Colour> lightColours = {};
-		std::vector<Vector3> lightPositions = {};
-		std::vector<float> lightRadii = {};
+		std::vector<Vector4> lightPositions = {};
 
-		auto lights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
+		auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
-		for (auto &light : lights)
+		for (auto &light : sceneLights)
 		{
 		//	auto position = *light->GetPosition();
 		//	float radius = light->GetRadius();
@@ -52,8 +51,7 @@ namespace acid
 		//	}
 
 			lightColours.emplace_back(light->GetColour());
-			lightPositions.emplace_back(light->GetPosition());
-			lightRadii.emplace_back(light->GetRadius());
+			lightPositions.emplace_back(Vector4(light->GetPosition(), light->GetRadius()));
 
 			if (lightColours.size() >= MAX_LIGHTS)
 			{
@@ -64,7 +62,6 @@ namespace acid
 		// Updates uniforms.
 		m_uniformScene.Push("lightColours", *lightColours.data());
 		m_uniformScene.Push("lightPositions", *lightPositions.data());
-		m_uniformScene.Push("lightRadii", *lightRadii.data());
 		m_uniformScene.Push("lightsCount", static_cast<int>(lightColours.size()));
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
@@ -81,11 +78,10 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
-		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(3));
-		m_descriptorSet.Push("samplerPosition", m_pipeline.GetTexture(2));
-		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(3));
-		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(4));
-		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(5));
+		m_descriptorSet.Push("samplerPosition", m_pipeline.GetTexture(1, 1));
+		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(2, 1));
+		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3, 1));
+		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4, 1));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
 		m_descriptorSet.Push("samplerIbl", ibl);

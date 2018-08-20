@@ -19,25 +19,25 @@ vec2 hammersley(uint i, uint N)
 
 vec3 cube_dir(vec2 texCoord, uint side)
 {
-	vec2 tex = texCoord * 2.f - 1.0f;
-	if(side == 0) return vec3(1.0f, -tex.y, -tex.x); // Front.
-	if(side == 1) return vec3(-1.0f, -tex.y, tex.x); // Back,
-	if(side == 2) return vec3(tex.x, 1.0f, tex.y); // Right.
-	if(side == 3) return vec3(tex.x, -1.0f, -tex.y); // Left.
-	if(side == 4) return vec3(tex.x, -tex.y, 1.0f); // Top.
-	if(side == 5) return vec3(-tex.x, -tex.y, -1.0f); // Bottom.
+	vec2 tex = texCoord * 2.0f - 1.0f;
+	if(side == 0) return vec3(1.0f, -tex.y, -tex.x); // Front
+	if(side == 1) return vec3(-1.0f, -tex.y, tex.x); // Back
+	if(side == 2) return vec3(tex.x, 1.0f, tex.y); // Right
+	if(side == 3) return vec3(tex.x, -1.0f, -tex.y); // Left
+	if(side == 4) return vec3(tex.x, -tex.y, 1.0f); // Top
+	if(side == 5) return vec3(-tex.x, -tex.y, -1.0f); // Bottom
 	return vec3(1.0);
 }
 
 float attenuation(float distance, float radius)
 {
-	if (radius > 0.0f)
+	if (radius <= 0.0f)
 	{
-		float x = min(distance, radius);
-		return sqr(1.0f - sqr(sqr(x / radius))) / (sqr(x) + 1.0f);
+		return 1.0f;
 	}
 
-	return 1.0f;
+	float x = min(distance, radius);
+	return sqr(1.0f - sqr(sqr(x / radius))) / (sqr(x) + 1.0f);
 }
 
 float D_GGX(float NoH, float roughness)
@@ -46,7 +46,6 @@ float D_GGX(float NoH, float roughness)
 	float denom = sqr(sqr(NoH) * (a2 - 1.0f) + 1.0f) * pi;
 	return a2 / denom;
 }
-
 
 float G_sub_GGX(float NoV, float k)
 {
@@ -63,7 +62,7 @@ float G_GGX(float NoV, float NoL, float k)
 
 vec3 approx_F0(float metallic, vec3 colour)
 {
-	return mix(vec3(0.04), colour, metallic);
+	return mix(vec3(0.04f), colour, metallic);
 }
 
 vec3 F_Schlick(float NoV, vec3 F0)
@@ -142,8 +141,8 @@ vec2 integrate_brdf(float NoV, float roughness)
 	for (uint i = 0; i != SAMPLE_COUNT; ++i)
 	{
 		vec2 Xi = hammersley(i, SAMPLE_COUNT);
-		vec3 H  = importance_sample_GGX(Xi, N, roughness);
-		vec3 L  = normalize(2.0f * dot(V, H) * H - V);
+		vec3 H = importance_sample_GGX(Xi, N, roughness);
+		vec3 L = normalize(2.0f * dot(V, H) * H - V);
 
 		float NoL = max(0.0f, L.z);
 		float NoH = max(0.0f, H.z);
@@ -215,8 +214,8 @@ vec3 specular_convolution(samplerCube envmap, vec3 N, float roughness)
 	for (uint i = 0; i != SAMPLE_COUNT; ++i)
 	{
 		vec2 Xi = hammersley(i, SAMPLE_COUNT);
-		vec3 H  = importance_sample_GGX(Xi, N, roughness);
-		vec3 L  = normalize(2.0f * dot(V, H) * H - V);
+		vec3 H = importance_sample_GGX(Xi, N, roughness);
+		vec3 L = normalize(2.0f * dot(V, H) * H - V);
 		float NoL = max(0.0f, dot(N, L));
 
 		if (NoL > 0.0f)

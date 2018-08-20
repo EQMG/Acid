@@ -5,36 +5,33 @@
 layout(set = 0, binding = 0) uniform UboScene
 {
 	vec4 lightColours[MAX_LIGHTS];
-	vec3 lightPositions[MAX_LIGHTS];
-	float lightRadii[MAX_LIGHTS];
+	vec4 lightPositions[MAX_LIGHTS];
 
 	mat4 projection;
 	mat4 view;
-	mat4 shadowSpace;
+//	mat4 shadowSpace;
 
 	vec4 fogColour;
 	vec3 cameraPosition;
 	float fogDensity;
 	float fogGradient;
 
-	float shadowDistance;
-	float shadowTransition;
-	float shadowBias;
-	float shadowDarkness;
-	int shadowPCF;
+//	float shadowDistance;
+//	float shadowTransition;
+//	float shadowBias;
+//	float shadowDarkness;
+//	int shadowPCF;
 
 	int lightsCount;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
-
-layout(set = 0, binding = 2) uniform sampler2D samplerPosition;
-layout(set = 0, binding = 3) uniform sampler2D samplerDiffuse;
-layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
-layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
-layout(set = 0, binding = 7) uniform sampler2D samplerBrdf;
-layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
+layout(set = 0, binding = 1) uniform sampler2D samplerPosition;
+layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
+layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 4) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 5) uniform sampler2D samplerShadows;
+layout(set = 0, binding = 6) uniform sampler2D samplerBrdf;
+layout(set = 0, binding = 7) uniform samplerCube samplerIbl;
 
 layout(location = 0) in vec2 inUv;
 
@@ -42,7 +39,7 @@ layout(location = 0) out vec4 outColour;
 
 #include "Shaders/Lighting.glsl"
 
-float shadow(vec4 shadowCoords)
+/*float shadow(vec4 shadowCoords)
 {
 	float total = 0.0f;
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
@@ -71,7 +68,7 @@ float shadow(vec4 shadowCoords)
    // }
 
 	return 1.0f - total;
-}
+}*/
 
 void main()
 {
@@ -92,16 +89,16 @@ void main()
 	// Lighting.
 	if (!ignoreLighting && normal != vec3(0.0f))
 	{
-		vec3 irradiance = vec3(0.0);
+		vec3 irradiance = vec3(0.0f);
 		vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
 
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-			vec3 lightDir = scene.lightPositions[i] - worldPosition;
+			vec3 lightDir = scene.lightPositions[i].xyz - worldPosition;
 			float dist = length(lightDir);
-			lightDir = normalize(lightDir);
+			lightDir /= dist;
 
-			float atten = attenuation(dist, scene.lightRadii[i]);
+			float atten = attenuation(dist, scene.lightPositions[i].w);
 			vec3 radiance = scene.lightColours[i].rgb * atten;
 
 			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
@@ -132,7 +129,4 @@ void main()
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
-
-	vec2 sizeColour = textureSize(samplerDiffuse, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
 }

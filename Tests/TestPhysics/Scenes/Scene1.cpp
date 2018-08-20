@@ -79,10 +79,10 @@ namespace test
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
-		sun->AddComponent<Light>(Colour::WHITE, -1.0f);
+		sun->AddComponent<Light>(Colour::WHITE);
 
-		GameObject *light = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f)));
-		light->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
+	//	GameObject *light = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f)));
+	//	light->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
 
 		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
@@ -137,6 +137,7 @@ namespace test
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
+			sphere->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
 		}
 
 		if (m_buttonFullscreen->WasDown())

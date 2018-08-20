@@ -71,7 +71,7 @@ void main()
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
-	outPosition = vec4(inWorldPos, 1.0);
+	outPosition = vec4(inWorldPos, 1.0f);
 	outDiffuse = diffuse;
 	outNormal = vec4(unitNormal, 1.0f);
 	outMaterial = vec4(material, 1.0f);

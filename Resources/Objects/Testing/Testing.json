@@ -31,7 +31,7 @@
     "Ignore Fog": false
   },
   "Light": {
-    "Colour": "#3319CC", 
+    "Colour": "#3319CC",
     "Radius": 1.33, 
     "Offset": {
       "x": 0.0, 
