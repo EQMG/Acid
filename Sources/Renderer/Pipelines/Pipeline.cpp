@@ -65,7 +65,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
+	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
 		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -313,10 +313,13 @@ namespace acid
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass())->GetImageAttachments(); i++)
+		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+		uint32_t attachmentCount = renderStage->GetAttachmentCount(m_graphicsStage.GetSubpass());
+
+		for (uint32_t i = 0; i < attachmentCount; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
-			blendAttachmentState.blendEnable = VK_FALSE; // TODO: Configurable alpha blending.
+			blendAttachmentState.blendEnable = VK_TRUE;
 			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
@@ -338,10 +341,13 @@ namespace acid
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		for (uint32_t i = 0; i < Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass())->GetImageAttachments(); i++)
+		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+		uint32_t attachmentCount = renderStage->GetAttachmentCount(m_graphicsStage.GetSubpass());
+
+		for (uint32_t i = 0; i < attachmentCount; i++)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
-			blendAttachmentState.blendEnable = VK_FALSE;
+			blendAttachmentState.blendEnable = VK_TRUE;
 			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;

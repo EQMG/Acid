@@ -16,8 +16,10 @@ namespace acid
 		// Attachments,
 		for (auto &image : renderpassCreate.GetImages())
 		{
+			VkSampleCountFlagBits imageSamples = image.GetUseMsaa() ? samples : VK_SAMPLE_COUNT_1_BIT;
+
 			VkAttachmentDescription attachment = {};
-			attachment.samples = samples;
+			attachment.samples = imageSamples;
 			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
