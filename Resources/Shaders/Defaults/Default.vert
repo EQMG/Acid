@@ -70,7 +70,6 @@ void main()
 	gl_Position = scene.projection * scene.view * worldPosition;
 
 	outWorldPos = worldPosition.xyz;
-	outWorldPos.y = -outWorldPos.y;
 	outUv = inUv;
 	outNormal = normalize((object.transform * totalNormal).xyz);
 

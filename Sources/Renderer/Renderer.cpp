@@ -300,13 +300,15 @@ namespace acid
 		renderArea.extent.width = renderStage->GetWidth();
 		renderArea.extent.height = renderStage->GetHeight();
 
+		std::vector<VkClearValue> clearValues = renderStage->GetClearValues();
+
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
 		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(renderStage->GetClearValues().size());
-		renderPassBeginInfo.pClearValues = renderStage->GetClearValues().data();
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassBeginInfo.pClearValues = clearValues.data();
 
 		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 

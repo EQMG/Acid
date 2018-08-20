@@ -70,12 +70,12 @@ namespace test
 		CalculateHorizontalAngle();
 		CalculateVerticalAngle();
 
-		auto player = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>();
+		auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>();
 
-		if (player != nullptr)
+		if (scenePlayer != nullptr)
 		{
-			auto playerRotation = player->GetGameObject()->GetTransform().GetRotation();
-			auto playerPosition = player->GetGameObject()->GetTransform().GetPosition();
+			auto playerRotation = scenePlayer->GetGameObject()->GetTransform().GetRotation();
+			auto playerPosition = scenePlayer->GetGameObject()->GetTransform().GetPosition();
 
 			m_velocity = (playerPosition - m_targetPosition) / delta;
 			m_targetPosition = playerPosition + Vector3(0.0f, VIEW_HEIGHT, 0.0f);
