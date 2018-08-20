@@ -20,12 +20,14 @@ namespace acid
 		uint32_t m_binding;
 		AttachmentType m_type;
 		VkFormat m_format;
+		bool m_useMsaa;
 		Colour m_clearColour;
 	public:
-		Attachment(const uint32_t &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
+		Attachment(const uint32_t &binding, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const bool &useMsaa = false, const Colour &clearColour = Colour::BLACK) :
 			m_binding(binding),
 			m_type(type),
 			m_format(format),
+			m_useMsaa(useMsaa),
 			m_clearColour(clearColour)
 		{
 		}
@@ -35,6 +37,8 @@ namespace acid
 		AttachmentType GetType() const { return m_type; }
 
 		VkFormat GetFormat() const { return m_format; }
+
+		bool GetUseMsaa() const { return m_useMsaa; }
 
 		Colour GetClearColour() const { return m_clearColour; }
 	};

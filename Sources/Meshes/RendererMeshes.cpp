@@ -20,9 +20,9 @@ namespace acid
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 
-		auto seneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
+		auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 
-		for (auto &meshRender : seneMeshRenders)
+		for (auto &meshRender : sceneMeshRenders)
 		{
 			meshRender->CmdRender(commandBuffer, m_uniformScene);
 		}

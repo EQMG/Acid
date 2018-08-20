@@ -1,5 +1,6 @@
 #include "RenderStage.hpp"
 
+#include <algorithm>
 #include "Display/Display.hpp"
 
 namespace acid
@@ -11,7 +12,7 @@ namespace acid
 		m_renderpass(nullptr),
 		m_framebuffers(nullptr),
 		m_clearValues(std::vector<VkClearValue>()),
-		m_imageAttachments(0),
+		m_subpassAttachmentCount(std::vector<uint32_t>(renderpassCreate->GetSubpasses().size())),
 		m_hasDepth(false),
 		m_hasSwapchain(false),
 		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0),
@@ -26,7 +27,17 @@ namespace acid
 			{
 			case ATTACHMENT_IMAGE:
 				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
-				m_imageAttachments++;
+
+				for (auto &subpass : renderpassCreate->GetSubpasses())
+				{
+					auto subpassBindings = subpass.GetAttachmentBindings();
+
+					if (std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
+					{
+						m_subpassAttachmentCount[subpass.GetBinding()]++;
+					}
+				}
+
 				break;
 			case ATTACHMENT_DEPTH:
 				clearValue.depthStencil = {1.0f, 0};

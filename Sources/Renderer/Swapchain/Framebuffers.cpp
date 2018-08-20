@@ -17,10 +17,12 @@ namespace acid
 
 		for (auto &image : renderpassCreate.GetImages())
 		{
+			VkSampleCountFlagBits imageSamples = image.GetUseMsaa() ? samples : VK_SAMPLE_COUNT_1_BIT;
+
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				m_imageAttachments.emplace_back(new Texture(textureWidth, textureHeight, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, samples));
+				m_imageAttachments.emplace_back(new Texture(textureWidth, textureHeight, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, imageSamples));
 				break;
 			case ATTACHMENT_DEPTH:
 				m_imageAttachments.emplace_back(nullptr);

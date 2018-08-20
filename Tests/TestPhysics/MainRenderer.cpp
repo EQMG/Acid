@@ -32,45 +32,37 @@ namespace test
 		0, 0, // width, height
 		{
 			Attachment(0, ATTACHMENT_DEPTH), // depth
-			Attachment(1, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // positions (world-space)
-			Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // diffuse
-			Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT), // normals (world-space)
-			Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM), // materials
+			Attachment(1, ATTACHMENT_SWAPCHAIN), // swapchain
+			Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, true), // positions (world-space)
+			Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // diffuse
+			Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, true), // normals (world-space)
+			Attachment(5, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // materials
+			Attachment(6, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // resolved
 		}, // images
 		{
-			SubpassType(0, {0, 1, 2, 3, 4})
-		} // subpasses
-	};
-	RenderpassCreate *RENDERPASS_2_CREATE = new RenderpassCreate
-	{
-		0, 0, // width, height
-		{
-			Attachment(0, ATTACHMENT_SWAPCHAIN), // swapchain
-			Attachment(1, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // colour
-		}, // images
-		{
-			SubpassType(0, {1}),
-			SubpassType(1, {0})
+			SubpassType(0, {0, 2, 3, 4, 5}),
+			SubpassType(1, {6}),
+			SubpassType(2, {1})
 		} // subpasses
 	};
 
 	MainRenderer::MainRenderer() :
-		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE, RENDERPASS_2_CREATE})
+		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
 	//	AddRenderer<RendererShadows>(GraphicsStage(0, 0));
 
 		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
 	//	AddRenderer<RendererParticles>(GraphicsStage(1, 0));
 
-		AddRenderer<RendererDeferred>(GraphicsStage(2, 0));
-		AddRenderer<FilterDefault>(GraphicsStage(2, 1));
-	//	AddRenderer<FilterFxaa>(GraphicsStage(2, 1));
-	//	AddRenderer<FilterLensflare>(GraphicsStage(2, 1));
-	//	AddRenderer<FilterTiltshift>(GraphicsStage(2, 1));
-	//	AddRenderer<FilterGrain>(GraphicsStage(2, 1));
-	//	AddRenderer<PipelineGaussian>(GraphicsStage(2, 1));
-		AddRenderer<RendererGuis>(GraphicsStage(2, 1));
-		AddRenderer<RendererFonts>(GraphicsStage(2, 1));
+		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
+		AddRenderer<FilterDefault>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
+	//	AddRenderer<FilterGrain>(GraphicsStage(1, 2));
+	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
+		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
+		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}
 
 	MainRenderer::~MainRenderer()

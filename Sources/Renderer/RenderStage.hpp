@@ -19,7 +19,7 @@ namespace acid
 		Framebuffers *m_framebuffers;
 
 		std::vector<VkClearValue> m_clearValues;
-		uint32_t m_imageAttachments;
+		std::vector<uint32_t> m_subpassAttachmentCount;
 		bool m_hasDepth;
 		bool m_hasSwapchain;
 
@@ -52,7 +52,7 @@ namespace acid
 
 		std::vector<VkClearValue> GetClearValues() const { return m_clearValues; }
 
-		uint32_t GetImageAttachments() const { return m_imageAttachments; }
+		uint32_t GetAttachmentCount(const uint32_t &subpass) const { return m_subpassAttachmentCount[subpass]; }
 
 		bool HasDepth() const { return m_hasDepth; }
 
