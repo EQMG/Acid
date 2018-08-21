@@ -21,7 +21,7 @@ namespace acid
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(ComputeBrdf(512)), // Texture::Resource("BrdfLut.png")
-		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
+		m_skyFog(SkyFog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
 	}
 
@@ -66,10 +66,10 @@ namespace acid
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-		m_uniformScene.Push("fogColour", m_fog.GetColour());
+		m_uniformScene.Push("fogColour", m_skyFog.GetColour());
 		m_uniformScene.Push("cameraPosition", camera.GetPosition());
-		m_uniformScene.Push("fogDensity", m_fog.GetDensity());
-		m_uniformScene.Push("fogGradient", m_fog.GetGradient());
+		m_uniformScene.Push("fogDensity", m_skyFog.GetDensity());
+		m_uniformScene.Push("fogGradient", m_skyFog.GetGradient());
 		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
 		m_uniformScene.Push("shadowTransition", Shadows::Get()->GetShadowTransition());
 		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());
