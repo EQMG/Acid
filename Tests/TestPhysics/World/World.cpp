@@ -13,7 +13,7 @@ namespace test
 		IModule(),
 		m_driverDay(DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
-		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
+		m_skyFog(SkyFog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyboxRotation(Vector3()),
 		m_lightDirection(Vector3())
 	{
@@ -36,17 +36,17 @@ namespace test
 
 		Colour fogColour = FOG_COLOUR_SUNRISE.Interpolate(FOG_COLOUR_NIGHT, GetSunriseFactor());
 		fogColour = fogColour.Interpolate(FOG_COLOUR_DAY, GetShadowFactor());
-		m_fog.SetColour(fogColour);
-		m_fog.SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
-		m_fog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
-		m_fog.SetLowerLimit(0.0f);
-		m_fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
+		m_skyFog.SetColour(fogColour);
+		m_skyFog.SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
+		m_skyFog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
+		m_skyFog.SetLowerLimit(0.0f);
+		m_skyFog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
 		auto deferred = Renderer::Get()->GetManager()->GetRenderer<RendererDeferred>();
 
 		if (deferred != nullptr)
 		{
-			deferred->SetFog(m_fog);
+			deferred->SetSkyFog(m_skyFog);
 		}
 
 		if (Shadows::Get() != nullptr)
