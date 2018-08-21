@@ -4,7 +4,7 @@
 #include <Maths/Visual/DriverLinear.hpp>
 #include <Maths/Vector3.hpp>
 #include <Maths/Colour.hpp>
-#include <Lights/Fog.hpp>
+#include <Lights/SkyFog.hpp>
 
 using namespace acid;
 
@@ -20,7 +20,7 @@ namespace test
 		DriverLinear m_driverDay;
 		float m_factorDay;
 
-		Fog m_fog;
+		SkyFog m_skyFog;
 
 		Vector3 m_skyboxRotation;
 		Vector3 m_lightDirection;
@@ -54,7 +54,7 @@ namespace test
 
 		float GetStarIntensity() const;
 
-		Fog GetFog() const { return m_fog; }
+		SkyFog GetSkyFog() const { return m_skyFog; }
 
 		Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
 
