@@ -37,8 +37,8 @@ namespace test
 			GetGameObject()->GetTransform().SetRotation(skyboxRotation);
 			materialSkybox->SetSkyColour(SKYBOX_COLOUR_DAY);
 			materialSkybox->SetBlend(World::Get()->GetStarIntensity());
-			materialSkybox->SetFogColour(World::Get()->GetFog().GetColour());
-			materialSkybox->SetFogLimits(Vector2(World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()));
+			materialSkybox->SetFogColour(World::Get()->GetSkyFog().GetColour());
+			materialSkybox->SetFogLimits(Vector2(World::Get()->GetSkyFog().GetLowerLimit(), World::Get()->GetSkyFog().GetUpperLimit()));
 			return;
 		}
 
