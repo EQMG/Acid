@@ -1,8 +1,8 @@
-#include "Fog.hpp"
+#include "SkyFog.hpp"
 
 namespace acid
 {
-	Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
+	SkyFog::SkyFog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
 		m_colour(colour),
 		m_density(density),
 		m_gradient(gradient),
@@ -11,11 +11,11 @@ namespace acid
 	{
 	}
 
-	Fog::~Fog()
+	SkyFog::~SkyFog()
 	{
 	}
 
-	void Fog::Write(LoadedValue *destination)
+	void SkyFog::Write(LoadedValue *destination)
 	{
 		m_colour.Write(destination->GetChild("colour", true));
 		destination->SetChild<float>("density", m_density);
@@ -24,7 +24,7 @@ namespace acid
 		destination->SetChild<float>("upperLimit", m_upperLimit);
 	}
 
-	Fog &Fog::operator=(const Fog &other)
+	SkyFog &SkyFog::operator=(const SkyFog &other)
 	{
 		m_colour = other.m_colour;
 		m_density = other.m_density;
@@ -34,7 +34,7 @@ namespace acid
 		return *this;
 	}
 
-	Fog &Fog::operator=(LoadedValue *source)
+	SkyFog &SkyFog::operator=(LoadedValue *source)
 	{
 		m_colour = source->GetChild("colour");
 		m_density = source->GetChild("density")->Get<float>();

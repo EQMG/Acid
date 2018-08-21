@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Lights/Fog.hpp"
+#include "Lights/SkyFog.hpp"
 #include "Models/Model.hpp"
 #include "Renderer/IRenderer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
@@ -22,7 +22,7 @@ namespace acid
 
 		std::shared_ptr<Texture> m_brdf;
 
-		Fog m_fog;
+		SkyFog m_skyFog;
 	public:
 		static const int MAX_LIGHTS;
 
@@ -34,9 +34,9 @@ namespace acid
 
 		std::vector<PipelineDefine> GetDefines();
 
-		Fog GetFog() const { return m_fog; }
+		SkyFog GetSkyFog() const { return m_skyFog; }
 
-		void SetFog(const Fog &fog) { m_fog = fog; }
+		void SetSkyFog(const SkyFog &skyFog) { m_skyFog = skyFog; }
 	private:
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 	};
