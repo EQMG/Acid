@@ -7,13 +7,21 @@
 
 namespace acid
 {
+	enum MeshSort
+	{
+		SORT_NONE = 0,
+		SORT_FRONT = 1,
+		SORT_BACK = 2
+	};
+
 	class ACID_EXPORT RendererMeshes :
 		public IRenderer
 	{
 	private:
+		MeshSort m_meshSort;
 		UniformHandler m_uniformScene;
 	public:
-		RendererMeshes(const GraphicsStage &graphicsStage);
+		RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = SORT_NONE);
 
 		~RendererMeshes();
 
