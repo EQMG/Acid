@@ -1,6 +1,7 @@
 #include "MeshRender.hpp"
 
 #include "Objects/GameObject.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -32,7 +33,7 @@ namespace acid
 		material->PushUniforms(m_uniformObject);
 	}
 
-	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene)
+	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage)
 	{
 		// Checks if the mesh is in view.
 		/*auto shape = GetGameObject()->GetComponent<Collider>();
@@ -50,6 +51,11 @@ namespace acid
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (material == nullptr || mesh == nullptr || mesh->GetModel() == nullptr)
+		{
+			return;
+		}
+
+		if (material->GetMaterial()->GetPipeline().GetGraphicsStage() != graphicsStage)
 		{
 			return;
 		}
@@ -79,5 +85,15 @@ namespace acid
 
 	void MeshRender::Write(LoadedValue *destination)
 	{
+	}
+
+	bool MeshRender::operator<(const MeshRender &other) const
+	{
+		auto camera = Scenes::Get()->GetCamera();
+
+		float thisDistance2 = (camera->GetPosition() - GetGameObject()->GetTransform().GetPosition()).LengthSquared();
+		float otherDistance2 = (camera->GetPosition() - other.GetGameObject()->GetTransform().GetPosition()).LengthSquared();
+
+		return thisDistance2 > otherDistance2;
 	}
 }

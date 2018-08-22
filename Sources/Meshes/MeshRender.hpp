@@ -24,8 +24,10 @@ namespace acid
 
 		void Write(LoadedValue *destination) override;
 
-		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene);
+		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
 
 		UniformHandler GetUniformObject() const { return m_uniformObject; }
+
+		bool operator<(const MeshRender &other) const;
 	};
 }

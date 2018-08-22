@@ -31,6 +31,16 @@ namespace acid
 		uint32_t GetRenderpass() const { return m_renderpass; }
 
 		uint32_t GetSubpass() const { return m_subpass; }
+
+		bool operator==(const GraphicsStage &other) const
+		{
+			return m_renderpass == other.m_renderpass && m_subpass == other.m_subpass;
+		}
+
+		bool operator!=(const GraphicsStage &other) const
+		{
+			return !(*this == other);
+		}
 	};
 
 	class ACID_EXPORT VertexInput

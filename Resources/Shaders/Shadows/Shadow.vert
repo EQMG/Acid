@@ -5,7 +5,7 @@
 layout(set = 0, binding = 0) uniform UboScene
 {
 	mat4 projectionView;
-	vec3 cameraPosition;
+	vec3 cameraPos;
 } scene;
 
 layout(set = 0, binding = 1) uniform UboObject
