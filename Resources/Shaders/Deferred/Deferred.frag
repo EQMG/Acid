@@ -101,11 +101,11 @@ void main()
 			float atten = attenuation(dist, scene.lightPositions[i].w);
 			vec3 radiance = scene.lightColours[i].rgb * atten;
 
-			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
+			irradiance += radiance * L0(normalize(normal), lightDir, viewDir, roughness, metallic, diffuse.rgb);
 		}
 
 #ifdef USE_IBL
-	//  irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
+	//	irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normalize(normal), viewDir, roughness, metallic, diffuse.rgb);
 #endif
 
 		outColour = vec4(irradiance, 1.0f);

@@ -69,7 +69,7 @@
 #include "Inputs/Joysticks.hpp"
 #include "Inputs/Keyboard.hpp"
 #include "Inputs/Mouse.hpp"
-#include "Lights/SkyFog.hpp"
+#include "Lights/Fog.hpp"
 #include "Lights/Light.hpp"
 #include "Materials/IMaterial.hpp"
 #include "Materials/MaterialDefault.hpp"

@@ -15,7 +15,6 @@ layout(set = 0, binding = 2) uniform samplerCube samplerCubemap;
 
 layout(location = 0) in vec3 inWorldPos;
 layout(location = 1) in vec3 inUv;
-layout(location = 2) in float inHeight;
 
 layout(location = 0) out vec4 outPosition;
 layout(location = 1) out vec4 outDiffuse;
@@ -27,7 +26,7 @@ void main()
 	vec3 nightColour = texture(samplerCubemap, inUv).rgb;
 	vec3 colour = mix(object.skyColour.rgb, nightColour, object.blendFactor);
 
-	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, inHeight);
+	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, inWorldPos.y);
 	colour = mix(colour, object.fogColour.rgb, fadeFactor);
 
 	outPosition = vec4(inWorldPos, 1.0);

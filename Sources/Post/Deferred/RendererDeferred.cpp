@@ -11,7 +11,7 @@
 
 namespace acid
 {
-	const int RendererDeferred::MAX_LIGHTS = 64;
+	const uint32_t RendererDeferred::MAX_LIGHTS = 32;
 
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
@@ -21,7 +21,7 @@ namespace acid
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(ComputeBrdf(512)), // Texture::Resource("BrdfLut.png")
-		m_skyFog(SkyFog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
+		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
 	}
 
@@ -35,8 +35,9 @@ namespace acid
 		auto ibl = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap(); // TODO: IBL cubemap.
 
 		// Updates uniforms.
-		std::vector<Colour> lightColours = {};
-		std::vector<Vector4> lightPositions = {};
+		auto lightColours = std::vector<Colour>(MAX_LIGHTS);
+		auto lightPositions = std::vector<Vector4>(MAX_LIGHTS);
+		int32_t lightCount = 0;
 
 		auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
@@ -50,26 +51,27 @@ namespace acid
 		//		continue;
 		//	}
 
-			lightColours.emplace_back(light->GetColour());
-			lightPositions.emplace_back(Vector4(light->GetPosition(), light->GetRadius()));
+			lightColours[lightCount] = light->GetColour();
+			lightPositions[lightCount] = Vector4(light->GetPosition(), light->GetRadius());
+			lightCount++;
 
-			if (lightColours.size() >= MAX_LIGHTS)
+			if (lightCount >= MAX_LIGHTS)
 			{
 				break;
 			}
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("lightColours", *lightColours.data());
-		m_uniformScene.Push("lightPositions", *lightPositions.data());
-		m_uniformScene.Push("lightsCount", static_cast<int>(lightColours.size()));
+		m_uniformScene.Push("lightColours", *lightColours.data(), sizeof(Colour) * MAX_LIGHTS);
+		m_uniformScene.Push("lightPositions", *lightPositions.data(), sizeof(Vector4) * MAX_LIGHTS);
+		m_uniformScene.Push("lightsCount", lightCount);
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-		m_uniformScene.Push("fogColour", m_skyFog.GetColour());
+		m_uniformScene.Push("fogColour", m_fog.GetColour());
 		m_uniformScene.Push("cameraPosition", camera.GetPosition());
-		m_uniformScene.Push("fogDensity", m_skyFog.GetDensity());
-		m_uniformScene.Push("fogGradient", m_skyFog.GetGradient());
+		m_uniformScene.Push("fogDensity", m_fog.GetDensity());
+		m_uniformScene.Push("fogGradient", m_fog.GetGradient());
 		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
 		m_uniformScene.Push("shadowTransition", Shadows::Get()->GetShadowTransition());
 		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());
