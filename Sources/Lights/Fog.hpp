@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// Represents a hazy fog in the world.
 	/// </summary>
-	class ACID_EXPORT SkyFog
+	class ACID_EXPORT Fog
 	{
 	private:
 		Colour m_colour;
@@ -18,19 +18,19 @@ namespace acid
 		float m_upperLimit;
 	public:
 		/// <summary>
-		/// Creates a new SkyFog.
+		/// Creates a new Fog.
 		/// </summary>
-		/// <param name="colour"> The colour of the SkyFog. </param>
-		/// <param name="density"> How dense the SkyFog will be. </param>
-		/// <param name="gradient"> The gradient of the SkyFog. </param>
-		/// <param name="lowerLimit"> At what height will the skybox SkyFog begin to appear. </param>
-		/// <param name="upperLimit"> At what height will there be skybox no SkyFog. </param>
-		SkyFog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit);
+		/// <param name="colour"> The colour of the Fog. </param>
+		/// <param name="density"> How dense the Fog will be. </param>
+		/// <param name="gradient"> The gradient of the Fog. </param>
+		/// <param name="lowerLimit"> At what height will the skybox Fog begin to appear. </param>
+		/// <param name="upperLimit"> At what height will there be skybox no Fog. </param>
+		Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit);
 
 		/// <summary>
-		/// Deconstructor for SkyFog.
+		/// Deconstructor for Fog.
 		/// </summary>
-		~SkyFog();
+		~Fog();
 
 		Colour GetColour() const { return m_colour; }
 
@@ -58,8 +58,8 @@ namespace acid
 		/// <param name="destination"> The destination loaded value. </param>
 		void Write(LoadedValue *destination);
 
-		SkyFog &operator=(const SkyFog &other);
+		Fog &operator=(const Fog &other);
 
-		SkyFog &operator=(LoadedValue *value);
+		Fog &operator=(LoadedValue *value);
 	};
 }

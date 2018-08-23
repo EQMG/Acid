@@ -22,7 +22,6 @@ layout(set = 0, location = 0) in vec3 inPosition;
 
 layout(location = 0) out vec3 outWorldPos;
 layout(location = 1) out vec3 outUv;
-layout(location = 2) out float outHeight;
 
 out gl_PerVertex 
 {
@@ -41,7 +40,5 @@ void main()
 	gl_Position = scene.projection * viewStatic * worldPosition;
 
 	outWorldPos = worldPosition.xyz;
-	outWorldPos.y = -outWorldPos.y;
 	outUv = inPosition;
-	outHeight = worldPosition.y;
 }

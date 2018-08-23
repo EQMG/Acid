@@ -804,6 +804,7 @@ namespace acid
 		physicalDeviceFeatures.shaderCullDistance = VK_TRUE;
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
+		physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
 

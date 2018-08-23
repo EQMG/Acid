@@ -70,12 +70,14 @@ namespace test
 	//	skyboxObject->GetComponent<MeshRender>()->SetEnabled(false);
 
 		// Animated.
-	//	GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
-	//	animatedObject->SetName("Animated");
-	//	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-	//	animatedObject->AddComponent<MeshRender>();
-	//	animatedObject->AddComponent<ShadowRender>();
+#ifdef ACID_BUILD_WINDOWS
+		GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
+		animatedObject->SetName("Animated");
+		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+		animatedObject->AddComponent<MeshRender>();
+		animatedObject->AddComponent<ShadowRender>();
+#endif
 
 		// Entities.
 		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
@@ -137,7 +139,7 @@ namespace test
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
-			sphere->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
+			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 		}
 
 		if (m_buttonFullscreen->WasDown())

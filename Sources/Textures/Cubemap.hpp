@@ -25,7 +25,7 @@ namespace acid
 		bool m_nearest;
 
 		uint32_t m_components;
-		uint32_t m_width, m_height, m_depth;
+		uint32_t m_width, m_height;
 
 		VkImage m_image;
 		VkImageView m_imageView;
@@ -63,9 +63,29 @@ namespace acid
 		Cubemap(const std::string &filename, const std::string &fileExt, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
 
 		/// <summary>
+		/// A new empty cubemap object that can be used to render into.
+		/// </summary>
+		/// <param name="width"> The cubemaps width. </param>
+		/// <param name="height"> The cubemaps height. </param>
+		/// <param name="format"> The cubemaps format. </param>
+		/// <param name="imageLayout"> The cubemaps image layout </param>
+		/// <param name="usage"> The cubemaps image usage </param>
+		/// <param name="samples"> The amount of MSAA samples to use. </param>
+		Cubemap(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		        const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+
+		/// <summary>
 		/// A new cubemap object from a array of pixels.
 		/// </summary>
-		Cubemap(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, float *pixels = nullptr);
+		/// <param name="width"> The cubemaps width. </param>
+		/// <param name="height"> The cubemaps height. </param>
+		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
+		/// <param name="format"> The cubemaps format. </param>
+		/// <param name="imageLayout"> The cubemaps image layout </param>
+		/// <param name="usage"> The cubemaps image usage </param>
+		/// <param name="samples"> The amount of MSAA samples to use. </param>
+		Cubemap(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		/// <summary>
 		/// Deconstructor for the cubemap object.
@@ -85,8 +105,6 @@ namespace acid
 		uint32_t GetWidth() const { return m_width; }
 
 		uint32_t GetHeight() const { return m_height; }
-
-		uint32_t GetDepth() const { return m_depth; }
 
 		VkImage GetImage() const { return m_image; }
 

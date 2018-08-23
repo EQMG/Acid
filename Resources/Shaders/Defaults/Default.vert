@@ -49,34 +49,35 @@ out gl_PerVertex
 void main()
 {
 #ifdef ANIMATED
-	vec4 totalLocalPos = vec4(0.0f);
-	vec4 totalNormal = vec4(0.0f);
+	vec4 position = vec4(0.0f);
+	vec4 normal = vec4(0.0f);
 
 	for (int i = 0; i < MAX_WEIGHTS; i++)
 	{
 		mat4 jointTransform = object.jointTransforms[int(inJointIds[i])];
 		vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
-		totalLocalPos += posePosition * inWeights[i];
+		position += posePosition * inWeights[i];
 
 		vec4 worldNormal = jointTransform * vec4(inNormal, 0.0f);
-		totalNormal += worldNormal * inWeights[i];
+		normal += worldNormal * inWeights[i];
 	}
 #else
-	vec4 totalLocalPos = vec4(inPosition, 1.0f);
-	vec4 totalNormal = vec4(inNormal, 0.0f);
+	vec4 position = vec4(inPosition, 1.0f);
+	vec4 normal = vec4(inNormal, 0.0f);
 #endif
 
-	vec4 worldPosition = object.transform * totalLocalPos;
+	vec4 worldPosition = object.transform * position;
+	vec4 worldNormal = object.transform * normal;
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
 	outWorldPos = worldPosition.xyz;
 	outUv = inUv;
-	outNormal = normalize((object.transform * totalNormal).xyz);
+	outNormal = worldNormal.xyz;
 
 #ifdef NORMAL_MAPPING
-	mat3 mNormal = transpose(inverse(mat3(object.transform)));
-	outNormal = mNormal * normalize(inNormal);
-	outTangent = mNormal * normalize(inTangent);
+	mat3 matrixNormal = transpose(inverse(mat3(object.transform)));
+	outNormal = matrixNormal * normalize(inNormal);
+	outTangent = matrixNormal * normalize(inTangent);
 #endif
 }
