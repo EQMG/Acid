@@ -13,15 +13,17 @@ namespace acid
 	{
 	private:
 		static const float CHANGE_TIME;
+		static const float FONT_SIZE;
+		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
-		static const Colour COLOUR_NORMAL;
 
 		Text *m_text;
 		Gui *m_background;
 
 		std::string m_prefix;
 		std::string m_value;
+		int m_maxLength;
 
 		UiInputDelay m_inputDelay;
 		int m_lastKey;
@@ -31,7 +33,7 @@ namespace acid
 
 		std::function<void()> m_actionChange;
 	public:
-		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const TextJustify &justify);
+		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int &maxLength, const TextJustify &justify);
 
 		~UiInputText();
 

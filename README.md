@@ -131,7 +131,7 @@ Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
 
-Old resources have been removed from the main repo, resources for commits from before April 4 2018 can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Folder).
+Old resources have been removed from the main repo, resources for commits from before April 4 2018 can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Flounder).
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help.

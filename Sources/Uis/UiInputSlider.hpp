@@ -14,14 +14,17 @@ namespace acid
 	{
 	private:
 		static const float CHANGE_TIME;
+		static const float FONT_SIZE;
+		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
-		static const Colour COLOUR_NORMAL;
 
 		Text *m_text;
 		Gui *m_background;
 		Gui *m_slider;
 
+		std::string m_prefix;
+		int m_roundTo;
 		bool m_updating;
 		float m_progressMin;
 		float m_progressMax;
@@ -33,15 +36,15 @@ namespace acid
 		Timer m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify);
+		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify);
 
 		~UiInputSlider();
 
 		void UpdateObject() override;
 
-		std::string GetText() const { return m_text->GetString(); }
+		std::string GetPrefix() const { return m_prefix; }
 
-		void SetText(const std::string &string) const { m_text->SetString(string); }
+		void SetPrefix(const std::string &prefix);
 
 		float GetProgressMin() const { return m_progressMin; }
 
@@ -53,8 +56,10 @@ namespace acid
 
 		float GetValue() const { return m_value; }
 
-		void SetValue(const float &value) { m_value = (value - m_progressMin) / (m_progressMax - m_progressMin); }
+		void SetValue(const float &value);
 
 		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
+	private:
+		void UpdateText();
 	};
 }

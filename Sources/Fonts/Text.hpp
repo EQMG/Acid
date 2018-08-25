@@ -37,6 +37,7 @@ namespace acid
 		UniformHandler m_uniformObject;
 
 		Model *m_model;
+		uint32_t m_numberLines;
 
 		std::string m_string;
 		std::string m_newString;
@@ -86,6 +87,12 @@ namespace acid
 		/// </summary>
 		/// <returns> The model of the text. </returns>
 		Model *GetModel() const { return m_model; }
+
+		/// <summary>
+		/// Gets the number of lines in this text.
+		/// </summary>
+		/// <returns> The number of lines. </returns>
+		uint32_t GetNumberLines() const { return m_numberLines; }
 
 		/// <summary>
 		/// Gets the string of text represented.
@@ -258,6 +265,6 @@ namespace acid
 
 		void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices);
 
-		void NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices);
+		void NormalizeQuad(Vector2 &bounding, std::vector<IVertex *> &vertices);
 	};
 }
