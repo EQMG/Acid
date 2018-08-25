@@ -7,9 +7,10 @@
 namespace acid
 {
 	const float UiInputGrabber::CHANGE_TIME = 0.1f;
-	const float UiInputGrabber::SCALE_NORMAL = 1.6f;
-	const float UiInputGrabber::SCALE_SELECTED = 1.8f;
-	const Colour UiInputGrabber::COLOUR_NORMAL = Colour("#000000");
+	const float UiInputGrabber::FONT_SIZE = 1.7f;
+	const Vector2 UiInputGrabber::DIMENSION = Vector2(0.36f, 0.05f);
+	const float UiInputGrabber::SCALE_NORMAL = 1.0f;
+	const float UiInputGrabber::SCALE_SELECTED = 1.1f;
 
 	UiGrabberJoystick::UiGrabberJoystick(const JoystickPort &joystick) :
 		IUiGrabber(),
@@ -99,8 +100,8 @@ namespace acid
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const TextJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector3(0.5f, 0.5f, RelativeScreen), prefix + grabber->GetValue(value), FontType::Resource("Fonts/Candara", "Regular"), justify, 0.36f)),
-		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"), 1)),
+		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), justify, DIMENSION.m_x)),
+		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
@@ -133,14 +134,15 @@ namespace acid
 				m_value = key;
 				m_text->SetString(m_prefix + m_grabber->GetValue(m_value));
 
-				if (m_actionChange != 0)
+				if (m_actionChange != nullptr)
 				{
 					m_actionChange();
 				}
 
-				m_selected = false;
-				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 				Uis::Get()->GetSelector().CancelWasEvent();
+				m_selected = false;
 			}
 		}
 
@@ -148,39 +150,32 @@ namespace acid
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasLeftClick())
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_selected = true;
 
 			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 		else if (Uis::Get()->GetSelector().WasLeftClick() && m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_selected = false;
 		}
 
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
-
-		// Update the background colour.
-		auto primary = Scenes::Get()->GetScene()->GetUiColour();
-		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
-
-		// Update background size.
-		//m_background->GetDimensions()->Set(*m_text->GetDimensions());
-		//m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		//Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		//m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		//m_background->GetPosition()->Set(*m_text->GetPosition());
 	}
 
 	void UiInputGrabber::SetPrefix(const std::string &prefix)

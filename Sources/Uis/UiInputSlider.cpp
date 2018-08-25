@@ -6,21 +6,25 @@
 namespace acid
 {
 	const float UiInputSlider::CHANGE_TIME = 0.1f;
-	const float UiInputSlider::SCALE_NORMAL = 1.6f;
-	const float UiInputSlider::SCALE_SELECTED = 1.8f;
-	const Colour UiInputSlider::COLOUR_NORMAL = Colour("#000000");
+	const float UiInputSlider::FONT_SIZE = 1.7f;
+	const Vector2 UiInputSlider::DIMENSION = Vector2(0.36f, 0.05f);
+	const float UiInputSlider::SCALE_NORMAL = 1.0f;
+	const float UiInputSlider::SCALE_SELECTED = 1.1f;
 
-	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &string, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify) :
+	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), string, FontType::Resource("Fonts/Candara", "Regular"), justify, 0.36f)),
-		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"))),
-		m_slider(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"))),
+		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), justify, DIMENSION.m_x)),
+		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_slider(new Gui(this, UiBound(position, "CentreLeft", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_prefix(prefix),
+		m_roundTo(roundTo),
 		m_updating(false),
 		m_progressMin(progressMin),
 		m_progressMax(progressMax),
+		m_value(value),
 		m_mouseOver(false),
 		m_hasChange(false),
-		m_timerChange(Timer(0.2f)),
+		m_timerChange(Timer(0.4f)),
 		m_actionChange(nullptr)
 	{
 		SetValue(value);
@@ -39,24 +43,22 @@ namespace acid
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasLeftClick())
 		{
-			if (!m_updating)
-			{
-				m_updating = true;
-			}
-
-			m_hasChange = true;
-
-			//	float width = 2.0f * m_background->GetDimensions()->m_x * m_background->GetScreenTransform()->m_z / static_cast<float>(Display::Get()->GetAspectRatio());
-			//	float positionX = m_background->GetPosition()->m_x;
-			//	float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
-			//	m_value = 2.0f * cursorX / width;
-			//	m_value = (m_value + 1.0f) * 0.5f;
-
-			Uis::Get()->GetSelector().CancelWasEvent();
+			m_updating = true;
 		}
-		else
+		else if (!Uis::Get()->GetSelector().GetLeftClick())
 		{
 			m_updating = false;
+		}
+		else if (m_updating)
+		{
+			float width = m_background->GetScreenTransform().m_x / 2.0f;
+			float positionX = (m_background->GetScreenTransform().m_z + 1.0f) / 2.0f;
+			float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
+			m_value = cursorX / width;
+			m_value = Maths::Clamp(m_value, 0.0f, 1.0f);
+
+			m_hasChange = true;
+			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 
 		// Updates the listener.
@@ -67,6 +69,7 @@ namespace acid
 				m_actionChange();
 			}
 
+			UpdateText();
 			m_hasChange = false;
 			m_timerChange.ResetStartTime();
 		}
@@ -74,37 +77,46 @@ namespace acid
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
+			m_slider->SetScaleDriver<DriverSlide>(m_slider->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && !m_updating && m_mouseOver)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+			m_slider->SetScaleDriver<DriverSlide>(m_slider->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
 
-		// Update the background colour.
-		auto primary = Scenes::Get()->GetScene()->GetUiColour();
-		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
-		m_slider->SetColourOffset(Colour(1.0f - primary->m_r, 1.0f - primary->m_g, 1.0f - primary->m_b, 1.0f));
+		m_slider->GetRectangle().SetDimensions(Vector2(DIMENSION.m_x * m_value, 0.05f));
+		m_slider->GetRectangle().SetPosition(m_background->GetRectangle().GetPosition() - Vector2(DIMENSION.m_x / 3.0f * m_slider->GetScale(), 0.0f));
+	}
 
-		//	// Update background size.
-		//	m_background->GetDimensions()->Set(*m_text->GetDimensions());
-		//	m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		//	Vector3::Multiply(*m_text->GetDimensions(), *m_background->GetDimensions(), m_background->GetDimensions());
-		//	m_background->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		////	m_background->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
-		//	m_background->GetPosition()->Set(*m_text->GetPosition());
+	void UiInputSlider::SetPrefix(const std::string &prefix)
+	{
+		m_prefix = prefix;
+		UpdateText();
+	}
 
-		//	// Update slider size. (This is about the worst looking GUI code, but works well.)
-		//	m_slider->GetDimensions()->Set(*m_text->GetDimensions());
-		//	m_slider->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		//	Vector3::Multiply(*m_text->GetDimensions(), *m_slider->GetDimensions(), m_slider->GetDimensions());
-		//	m_slider->GetDimensions()->Scale(2.0f * m_text->GetScale());
-		////	m_slider->GetPositionOffsets()->Set(*m_text->GetPositionOffsets());
-		//	m_slider->GetPosition()->Set(*m_text->GetPosition());
-		////	m_slider->GetPositionOffsets()->m_x -= (m_slider->GetDimensions()->m_x / 2.0f);
-		//	m_slider->GetDimensions()->m_x *= m_value;
-		////	m_slider->GetPositionOffsets()->m_x += (m_slider->GetDimensions()->m_x / 2.0f);
+	void UiInputSlider::SetValue(const float &value)
+	{
+		m_value = (value - m_progressMin) / (m_progressMax - m_progressMin);
+		UpdateText();
+	}
+
+	void UiInputSlider::UpdateText()
+	{
+		float value = (m_value * (m_progressMax - m_progressMin)) + m_progressMin;
+		value = Maths::RoundToPlace(value, m_roundTo);
+
+		if (m_roundTo == 1)
+		{
+			m_text->SetString(m_prefix + std::to_string(static_cast<int>(value)));
+			return;
+		}
+
+		m_text->SetString(m_prefix + std::to_string(value));
 	}
 }

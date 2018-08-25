@@ -10,6 +10,7 @@ namespace acid
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
 		m_model(nullptr),
+		m_numberLines(0),
 		m_string(text),
 		m_newString(""),
 		m_justify(justify),
@@ -174,7 +175,7 @@ namespace acid
 
 		// Calculates the bounds and normalizes the vertices.
 		Vector2 bounding = Vector2();
-		NormalizeQuad(&bounding, vertices);
+		NormalizeQuad(bounding, vertices);
 
 		// Loads the mesh data.
 		delete m_model;
@@ -254,7 +255,7 @@ namespace acid
 	std::vector<IVertex *> Text::CreateQuad(const std::vector<FontLine> &lines)
 	{
 		auto vertices = std::vector<IVertex *>();
-		//m_numberLines = static_cast<int>(lines.size());
+		m_numberLines = static_cast<int>(lines.size());
 
 		double cursorX = 0.0;
 		double cursorY = 0.0;
@@ -296,7 +297,6 @@ namespace acid
 				}
 			}
 
-			cursorX = 0.0;
 			cursorY += m_leading + FontMetafile::LINE_HEIGHT;
 			lineOrder--;
 		}
@@ -330,7 +330,7 @@ namespace acid
 		vertices.emplace_back(vertex);
 	}
 
-	void Text::NormalizeQuad(Vector2 *bounding, std::vector<IVertex *> &vertices)
+	void Text::NormalizeQuad(Vector2 &bounding, std::vector<IVertex *> &vertices)
 	{
 		float minX = +INFINITY;
 		float minY = +INFINITY;
@@ -339,7 +339,7 @@ namespace acid
 
 		for (auto &vertex : vertices)
 		{
-			const Vector3 position = vertex->GetPosition();
+			Vector3 position = vertex->GetPosition();
 
 			if (position.m_x < minX)
 			{
@@ -360,15 +360,18 @@ namespace acid
 			}
 		}
 
-		// TODO: Ignore min values, they allow better alignment!
-		// maxY = static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY()) * object->m_numberLines;
-		*bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
-		maxX -= minX;
-		maxY -= minY;
+		if (m_justify == JUSTIFY_CENTRE)
+		{
+			minX = 0.0f;
+			maxX = m_maxWidth;
+		}
+
+	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 		for (auto &vertex : vertices)
 		{
-			Vector3 position = Vector3((vertex->GetPosition().m_x - minX) / maxX, (vertex->GetPosition().m_y - minY) / maxY, 0.0f);
+			Vector3 position = Vector3((vertex->GetPosition().m_x - minX) / (maxX - minX), (vertex->GetPosition().m_y - minY) / (maxY - minY), 0.0f);
 			vertex->SetPosition(position);
 		}
 	}

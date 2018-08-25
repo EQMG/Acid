@@ -7,16 +7,18 @@
 namespace acid
 {
 	const float UiInputText::CHANGE_TIME = 0.1f;
-	const float UiInputText::SCALE_NORMAL = 1.6f;
-	const float UiInputText::SCALE_SELECTED = 1.8f;
-	const Colour UiInputText::COLOUR_NORMAL = Colour("#000000");
+	const float UiInputText::FONT_SIZE = 1.7f;
+	const Vector2 UiInputText::DIMENSION = Vector2(0.36f, 0.05f);
+	const float UiInputText::SCALE_NORMAL = 1.0f;
+	const float UiInputText::SCALE_SELECTED = 1.1f;
 
-	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const TextJustify &justify) :
+	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int &maxLength, const TextJustify &justify) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(nullptr), //new Text(this, position, SCALE_NORMAL, Vector2(0.5f, 0.5f), prefix + value, FontType::Resource("Fonts/Candara", "Regular"), justify, 0.36f)),
-		m_background(nullptr), //new Gui(this, position, Vector3(1.0f, 1.0f, RelativeScreen), Vector2(0.5f, 0.5f), Texture::Resource("Guis/Button.png"))),
+		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + value, FontType::Resource("Fonts/ProximaNova", "Regular"), justify, DIMENSION.m_x)),
+		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_prefix(prefix),
 		m_value(value),
+		m_maxLength(maxLength),
 		m_inputDelay(UiInputDelay()),
 		m_lastKey(0),
 		m_selected(false),
@@ -38,8 +40,7 @@ namespace acid
 		{
 			int key = Keyboard::Get()->GetChar();
 
-			// TODO: Fix inputs that are not defined.
-			if (key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
+			if (m_value.length() < m_maxLength && key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
 			{
 				m_inputDelay.Update(true);
 
@@ -77,8 +78,9 @@ namespace acid
 			{
 				m_inputDelay.Update(true);
 
+				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 				m_selected = false;
-				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			}
 			else
 			{
@@ -91,39 +93,32 @@ namespace acid
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasLeftClick())
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_selected = true;
 
 			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 		else if (Uis::Get()->GetSelector().WasLeftClick() && m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_selected = false;
 		}
 
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver && !m_selected)
 		{
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
+			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
-
-		// Update the background colour.
-		auto primary = Scenes::Get()->GetScene()->GetUiColour();
-		m_background->SetColourOffset(COLOUR_NORMAL.Interpolate(*primary, (m_text->GetScale() - SCALE_NORMAL) / (SCALE_SELECTED - SCALE_NORMAL)));
-
-		// Update background size.
-		//*m_background->GetDimensions() = *m_text->GetDimensions();
-		//m_background->GetDimensions()->m_y = 0.5f * static_cast<float>(m_text->GetFontType()->GetMetadata()->GetMaxSizeY());
-		//*m_background->GetDimensions() = *m_text->GetDimensions() * *m_background->GetDimensions();
-		//*m_background->GetDimensions() *= 2.0f * m_text->GetScale();
-		//*m_background->GetPosition() = *m_text->GetPosition));
 	}
 
 	void UiInputText::SetPrefix(const std::string &prefix)
