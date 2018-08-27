@@ -2,6 +2,7 @@
 
 #include <functional>
 #include "Models/Model.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace acid
 {
@@ -11,18 +12,14 @@ namespace acid
 	private:
 		float m_sideLength;
 		float m_squareSize;
-		int m_vertexCount;
+		uint32_t m_vertexCount;
 		float m_textureScale;
 	public:
-		MeshPattern(const float &sideLength, const float &squareSize, const int &vertexCount, const float &textureScale);
+		MeshPattern(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
 
 	protected:
 		void GenerateMesh();
 
-		virtual Vector3 GetPosition(const float &x, const float &z);
-
-		virtual Vector3 GetNormal(const float &x, const float &z, const Vector3 &position);
-
-		virtual Vector3 GetColour(const Vector3 &position, const Vector3 &normal);
+		virtual VertexModel *GetVertex(const uint32_t &col, const uint32_t &row);
 	};
 }
