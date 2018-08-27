@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Renderer/Pipelines/IPipeline.hpp"
