@@ -11,6 +11,8 @@
 #include "Scenes/Scene1.hpp"
 #include "Skybox/CelestialBody.hpp"
 #include "Skybox/SkyboxCycle.hpp"
+#include "Terrain/MaterialTerrain.hpp"
+#include "Terrain/Terrain.hpp"
 #include "World/World.hpp"
 
 using namespace test;
@@ -41,6 +43,8 @@ int main(int argc, char **argv)
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
+	Scenes::Get()->RegisterComponent<MaterialTerrain>("MaterialTerrain");
+	Scenes::Get()->RegisterComponent<Terrain>("Terrain");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Physics");

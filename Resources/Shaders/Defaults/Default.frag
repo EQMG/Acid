@@ -41,7 +41,7 @@ layout(location = 3) out vec4 outMaterial;
 void main()
 {
 	vec4 diffuse = object.baseDiffuse;
-	vec3 unitNormal = inNormal;
+	vec3 normal = inNormal;
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
@@ -66,13 +66,13 @@ void main()
 	vec3 T = normalize(inTangent);
 	vec3 B = cross(N, T);
 	mat3 TBN = mat3(T, B, N);
-	unitNormal = TBN * normalize(texture(samplerNormal, inUV).rgb * 2.0f - vec3(1.0f));
+	normal = TBN * normalize(texture(samplerNormal, inUV).rgb * 2.0f - vec3(1.0f));
 #endif
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
 	outPosition = vec4(inWorldPos, 1.0f);
 	outDiffuse = diffuse;
-	outNormal = vec4(unitNormal, 1.0f);
+	outNormal = vec4(normal, 1.0f);
 	outMaterial = vec4(material, 1.0f);
 }

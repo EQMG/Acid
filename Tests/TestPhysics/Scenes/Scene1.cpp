@@ -20,6 +20,10 @@
 #include <Particles/Spawns/SpawnCircle.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Physics/ColliderHeightfield.hpp>
+#include <Terrain/Terrain.hpp>
+#include <Terrain/MaterialTerrain.hpp>
+#include <Physics/ColliderCapsule.hpp>
 #include "FpsCamera.hpp"
 
 namespace test
@@ -66,13 +70,15 @@ namespace test
 		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
-		GameObject *skyboxObject = new GameObject("Objects/SkyboxChapel/SkyboxChapel.json", Transform(Vector3(), Vector3(), 2048.0f));
+		GameObject *skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 	//	skyboxObject->GetComponent<MeshRender>()->SetEnabled(false);
 
 		// Animated.
 #ifdef ACID_BUILD_WINDOWS
-		GameObject *animatedObject = new GameObject(Transform(Vector3(), Vector3(), 0.25f));
+		GameObject *animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
 		animatedObject->SetName("Animated");
+		animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
+		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<MeshRender>();
@@ -80,19 +86,18 @@ namespace test
 #endif
 
 		// Entities.
-		GameObject *sun = new GameObject(Transform(Vector3(100.0f, 1000.0f, 8000.0f), Vector3(), 18.0f));
+		GameObject *sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE);
 
-	//	GameObject *light = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f)));
-	//	light->AddComponent<Light>(Colour::AQUA, 2.0f, Vector3::ZERO);
-
-		GameObject *plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
-		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
-		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
-		plane->AddComponent<MeshRender>();
-		plane->AddComponent<ShadowRender>();
+		GameObject *terrain = new GameObject(Transform());
+		terrain->AddComponent<Terrain>(125.0f, 2.0f);
+	//	terrain->AddComponent<ColliderHeightfield>();
+		terrain->AddComponent<ColliderBox>(Vector3(50.0f, 1.0f, 50.0f));
+		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
+		terrain->AddComponent<Mesh>();
+		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"));
+		terrain->AddComponent<MeshRender>();
+		terrain->AddComponent<ShadowRender>();
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -109,13 +114,13 @@ namespace test
 			}
 		}
 
-		GameObject *convex = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
-		convex->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
-		convex->AddComponent<ColliderConvexHull>();
-		convex->AddComponent<Rigidbody>(1.0f);
-		convex->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
-		convex->AddComponent<MeshRender>();
-		convex->AddComponent<ShadowRender>();
+		GameObject *teapot = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
+		teapot->AddComponent<ColliderConvexHull>();
+		teapot->AddComponent<Rigidbody>(1.0f);
+		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
+		teapot->AddComponent<MeshRender>();
+	//	teapot->AddComponent<ShadowRender>();
 
 		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
 			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::BLUE, 10.0f, 1.0f),
@@ -132,12 +137,14 @@ namespace test
 		{
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+
 			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
+			sphere->AddComponent<ShadowRender>();
 			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 		}
@@ -149,16 +156,13 @@ namespace test
 
 		if (m_buttonCaptureMouse->WasDown())
 		{
-			//	Scenes::Get()->SetScene(new Scene2());
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
 		}
 
 		if (m_buttonScreenshot->WasDown())
 		{
-			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
-
 			m_soundScreenshot->Play();
-			Renderer::Get()->CaptureScreenshot(filename);
+			Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::Get()->GetDateTime() + ".png");
 		}
 
 		if (m_buttonExit->WasDown())

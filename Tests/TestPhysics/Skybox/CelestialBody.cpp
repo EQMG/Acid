@@ -37,7 +37,7 @@ namespace test
 		case CELESTIAL_SUN:
 		{
 			Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
-			//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
+		//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
 			transform.SetPosition(sunPosition);
 
 			if (componentLight != nullptr)
@@ -59,7 +59,7 @@ namespace test
 		case CELESTIAL_MOON:
 		{
 			Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
-			//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
+		//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
 			transform.SetPosition(moonPosition);
 
 			if (componentLight != nullptr)

@@ -75,7 +75,7 @@ namespace acid
 
 		std::function<void()> m_actionChange;
 	public:
-		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber, const TextJustify &justify);
+		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber);
 
 		~UiInputGrabber();
 

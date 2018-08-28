@@ -9,18 +9,18 @@ layout(set = 0, binding = 0) uniform UboScene
 
 	mat4 projection;
 	mat4 view;
-//	mat4 shadowSpace;
+	mat4 shadowSpace;
 
 	vec4 fogColour;
 	vec3 cameraPosition;
 	float fogDensity;
 	float fogGradient;
 
-//	float shadowDistance;
-//	float shadowTransition;
-//	float shadowBias;
-//	float shadowDarkness;
-//	int shadowPCF;
+	float shadowDistance;
+	float shadowTransition;
+	float shadowBias;
+	float shadowDarkness;
+	int shadowPCF;
 
 	int lightsCount;
 } scene;
@@ -39,7 +39,7 @@ layout(location = 0) out vec4 outColour;
 
 #include "Shaders/Lighting.glsl"
 
-/*float shadow(vec4 shadowCoords)
+float shadow(vec4 shadowCoords)
 {
 	float total = 0.0f;
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
@@ -68,7 +68,7 @@ layout(location = 0) out vec4 outColour;
    // }
 
 	return 1.0f - total;
-}*/
+}
 
 void main()
 {
@@ -86,7 +86,6 @@ void main()
 
 	outColour = vec4(diffuse.rgb, 1.0f);
 
-	// Lighting.
 	if (!ignoreLighting && normal != vec3(0.0f))
 	{
 		vec3 irradiance = 0.05f * diffuse.rgb; // vec3(0.0f)
@@ -109,20 +108,18 @@ void main()
 #endif
 
 		outColour = vec4(irradiance, 1.0f);
+
+		/*if (scene.shadowDarkness >= 0.07f)
+		{
+			vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
+			float distanceAway = length(screenPosition.xyz);
+			distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
+			distanceAway = distanceAway / scene.shadowTransition;
+			shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
+			outColour *= shadow(shadowCoords);
+		}*/
 	}
 
-	// Shadows.
-	/*if (!ignoreLighting && scene.shadowDarkness >= 0.07f)
-	{
-		vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
-		float distanceAway = length(screenPosition.xyz);
-		distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
-		distanceAway = distanceAway / scene.shadowTransition;
-		shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-		outColour *= shadow(shadowCoords);
-	}*/
-
-	// Fog.
 	if (!ignoreFog && normal != vec3(0.0f))
 	{
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));

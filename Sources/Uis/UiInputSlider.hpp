@@ -36,7 +36,7 @@ namespace acid
 		Timer m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify);
+		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value);
 
 		~UiInputSlider();
 

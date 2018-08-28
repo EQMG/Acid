@@ -12,8 +12,9 @@ namespace test
 	{
 	private:
 		bool m_enableFog;
+		bool m_enableRotation;
 	public:
-		SkyboxCycle(const bool &enableFog = true);
+		SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
 
 		~SkyboxCycle();
 
