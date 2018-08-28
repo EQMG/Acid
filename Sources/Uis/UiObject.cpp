@@ -62,7 +62,7 @@ namespace acid
 
 		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
-		m_alpha = Maths::Clamp(m_alpha, 0.0f, 1.0f);
+		m_alpha = std::clamp(m_alpha, 0.0f, 1.0f);
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
 
 		if (IsVisible() && GetAlpha() != 0.0f)

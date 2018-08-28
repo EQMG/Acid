@@ -58,12 +58,15 @@ namespace acid
 		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
 		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
 
+		VkQueueFlags m_supportedQueues;
 		uint32_t m_graphicsFamily;
 		uint32_t m_presentFamily;
 		uint32_t m_computeFamily;
+		uint32_t m_transferFamily;
 		VkQueue m_graphicsQueue;
 		VkQueue m_presentQueue;
 		VkQueue m_computeQueue;
+		VkQueue m_transferQueue;
 
 		friend void CallbackError(int error, const char *description);
 
@@ -272,11 +275,15 @@ namespace acid
 
 		VkQueue GetComputeQueue() const { return m_computeQueue; }
 
+		VkQueue GetTransferQueue() const { return m_transferQueue; }
+
 		uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
 
 		uint32_t GetPresentFamily() const { return m_presentFamily; }
 
 		uint32_t GetComputeFamily() const { return m_computeFamily; }
+
+		uint32_t GetTransferFamily() const { return m_transferFamily; }
 	private:
 		void CreateGlfw();
 

@@ -143,12 +143,15 @@ namespace acid
 		m_physicalDeviceProperties({}),
 		m_physicalDeviceFeatures({}),
 		m_physicalDeviceMemoryProperties({}),
+		m_supportedQueues(0),
 		m_graphicsFamily(0),
 		m_presentFamily(0),
 		m_computeFamily(0),
+		m_transferFamily(0),
 		m_graphicsQueue(VK_NULL_HANDLE),
 		m_presentQueue(VK_NULL_HANDLE),
-		m_computeQueue(VK_NULL_HANDLE)
+		m_computeQueue(VK_NULL_HANDLE),
+		m_transferQueue(VK_NULL_HANDLE)
 	{
 		CreateGlfw();
 		SetupLayers();
@@ -748,6 +751,7 @@ namespace acid
 		int32_t graphicsFamily = -1;
 		int32_t presentFamily = -1;
 		int32_t computeFamily = -1;
+		int32_t transferFamily = -1;
 
 		for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
 		{
@@ -756,6 +760,7 @@ namespace acid
 			{
 				graphicsFamily = i;
 				m_graphicsFamily = i;
+				m_supportedQueues |= VK_QUEUE_GRAPHICS_BIT;
 			}
 
 			// Check for presentation support.
@@ -773,14 +778,21 @@ namespace acid
 			{
 				computeFamily = i;
 				m_computeFamily = i;
+				m_supportedQueues |= VK_QUEUE_COMPUTE_BIT;
 			}
 
-			if (graphicsFamily != -1 && presentFamily != -1 && computeFamily != -1)
+			// Check for transfer support.
+			if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
+			{
+				transferFamily = i;
+				m_transferFamily = i;
+				m_supportedQueues |= VK_QUEUE_TRANSFER_BIT;
+			}
+
+			if (graphicsFamily != -1 && presentFamily != -1 && computeFamily != -1 && transferFamily != -1)
 			{
 				break;
 			}
-
-			i++;
 		}
 
 		if (graphicsFamily == -1)
@@ -791,12 +803,50 @@ namespace acid
 
 	void Display::CreateLogicalDevice()
 	{
-		float queuePriorities[] = {1.0f, 1.0f};
-		VkDeviceQueueCreateInfo deviceQueueCreateInfo = {};
-		deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		deviceQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
-		deviceQueueCreateInfo.queueCount = 2;
-		deviceQueueCreateInfo.pQueuePriorities = queuePriorities;
+		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos{};
+		float queuePriorities[] = {0.0f};
+
+		if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
+		{
+			VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
+			graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
+			graphicsQueueCreateInfo.queueCount = 1;
+			graphicsQueueCreateInfo.pQueuePriorities = queuePriorities;
+			queueCreateInfos.emplace_back(graphicsQueueCreateInfo);
+		}
+		else
+		{
+			m_graphicsFamily = VK_NULL_HANDLE;
+		}
+
+		if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily)
+		{
+			VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
+			computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			computeQueueCreateInfo.queueFamilyIndex = m_computeFamily;
+			computeQueueCreateInfo.queueCount = 1;
+			computeQueueCreateInfo.pQueuePriorities = queuePriorities;
+			queueCreateInfos.emplace_back(computeQueueCreateInfo);
+		}
+		else
+		{
+			m_computeFamily = m_graphicsFamily;
+		}
+
+		if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily)
+		{
+			VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
+			transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			transferQueueCreateInfo.queueFamilyIndex = m_transferFamily;
+			transferQueueCreateInfo.queueCount = 1;
+			transferQueueCreateInfo.pQueuePriorities = queuePriorities;
+			queueCreateInfos.emplace_back(transferQueueCreateInfo);
+		}
+		else
+		{
+			m_transferFamily = m_graphicsFamily;
+		}
 
 		VkPhysicalDeviceFeatures physicalDeviceFeatures = {};
 		physicalDeviceFeatures.samplerAnisotropy = VK_TRUE;
@@ -842,8 +892,8 @@ namespace acid
 		VkDeviceCreateInfo deviceCreateInfo = {};
 		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		deviceCreateInfo.pEnabledFeatures = &physicalDeviceFeatures;
-		deviceCreateInfo.queueCreateInfoCount = 1;
-		deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
+		deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+		deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
 		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
 		deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
@@ -854,6 +904,7 @@ namespace acid
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
 		vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);
 		vkGetDeviceQueue(m_logicalDevice, m_computeFamily, 0, &m_computeQueue);
+		vkGetDeviceQueue(m_logicalDevice, m_transferFamily, 0, &m_transferQueue);
 	}
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties)

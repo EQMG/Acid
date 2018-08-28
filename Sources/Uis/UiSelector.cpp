@@ -37,8 +37,8 @@ namespace acid
 			{
 				m_cursorX += selectorJoystick.GetAxisX().GetAmount() * 0.75f * delta;
 				m_cursorY += selectorJoystick.GetAxisY().GetAmount() * 0.75f * delta;
-				m_cursorX = Maths::Clamp(m_cursorX, 0.0f, 1.0f);
-				m_cursorY = Maths::Clamp(m_cursorY, 0.0f, 1.0f);
+				m_cursorX = std::clamp(m_cursorX, 0.0f, 1.0f);
+				m_cursorY = std::clamp(m_cursorY, 0.0f, 1.0f);
 				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
 			}
 

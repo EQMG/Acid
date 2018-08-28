@@ -55,7 +55,7 @@ namespace acid
 			float positionX = (m_background->GetScreenTransform().m_z + 1.0f) / 2.0f;
 			float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
 			m_value = cursorX / width;
-			m_value = Maths::Clamp(m_value, 0.0f, 1.0f);
+			m_value = std::clamp(m_value, 0.0f, 1.0f);
 
 			m_hasChange = true;
 			Uis::Get()->GetSelector().CancelWasEvent();

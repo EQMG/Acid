@@ -77,7 +77,7 @@ namespace test
 #ifdef ACID_BUILD_WINDOWS
 		GameObject *animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
 		animatedObject->SetName("Animated");
-		animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
+	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
 		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
@@ -90,12 +90,11 @@ namespace test
 		sun->AddComponent<Light>(Colour::WHITE);
 
 		GameObject *terrain = new GameObject(Transform());
-		terrain->AddComponent<Terrain>(125.0f, 2.0f);
-	//	terrain->AddComponent<ColliderHeightfield>();
-		terrain->AddComponent<ColliderBox>(Vector3(50.0f, 1.0f, 50.0f));
+		terrain->AddComponent<Terrain>(150.0f, 2.0f);
+		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<Mesh>();
-		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"));
+		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"), Texture::Resource("Objects/Terrain/Rocks.png"));
 		terrain->AddComponent<MeshRender>();
 		terrain->AddComponent<ShadowRender>();
 
