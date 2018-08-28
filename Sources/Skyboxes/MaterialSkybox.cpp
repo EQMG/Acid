@@ -24,28 +24,6 @@ namespace acid
 
 	void MaterialSkybox::Start()
 	{
-		/*auto result = std::make_shared<Cubemap>(m_cubemap->GetWidth(), m_cubemap->GetHeight());
-
-		// Creates the pipeline.
-		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_GRAPHICS_BIT);
-		Compute compute = Compute(ComputeCreate("Shaders/Ibl.comp", result->GetWidth(), result->GetHeight(), 16, {}));
-
-		// Bind the pipeline.
-		compute.BindPipeline(commandBuffer);
-
-		// Updates descriptors.
-		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-		descriptorSet.Push("writeColour", result);
-		descriptorSet.Push("samplerColour", m_cubemap);
-		descriptorSet.Update(compute);
-
-		// Runs the compute pipeline.
-		descriptorSet.BindDescriptor(commandBuffer);
-		compute.CmdRender(commandBuffer);
-		commandBuffer.End();
-		commandBuffer.Submit();
-
-		m_cubemap = result;*/
 	}
 
 	void MaterialSkybox::Update()

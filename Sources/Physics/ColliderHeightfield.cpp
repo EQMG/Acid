@@ -47,6 +47,11 @@ namespace acid
 	{
 		delete m_shape;
 
+		if (heightfieldData == nullptr)
+		{
+			return;
+		}
+
 		m_shape = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData,
 			heightScale, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 	}

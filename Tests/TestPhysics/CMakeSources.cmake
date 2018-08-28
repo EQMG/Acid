@@ -1,20 +1,20 @@
 set(TESTPHYSICS_HEADERS_
-		"Skybox/CelestialBody.hpp"
-		"Skybox/SkyboxCycle.hpp"
 		"Configs/ConfigManager.hpp"
 		"MainRenderer.hpp"
 		"MainUpdater.hpp"
 		"Scenes/FpsCamera.hpp"
 		"Scenes/FpsPlayer.hpp"
 		"Scenes/Scene1.hpp"
+		"Skybox/CelestialBody.hpp"
+		"Skybox/SkyboxCycle.hpp"
+		"Terrain/MaterialTerrain.hpp"
+		"Terrain/MeshTerrain.hpp"
+		"Terrain/Terrain.hpp"
 		"Uis/OverlayDebug.hpp"
 		"World/World.hpp"
 		)
 
 set(TESTPHYSICS_SOURCES_
-		"TestPhysics.rc"
-		"Skybox/CelestialBody.cpp"
-		"Skybox/SkyboxCycle.cpp"
 		"Configs/ConfigManager.cpp"
 		"Main.cpp"
 		"MainRenderer.cpp"
@@ -22,6 +22,12 @@ set(TESTPHYSICS_SOURCES_
 		"Scenes/FpsCamera.cpp"
 		"Scenes/FpsPlayer.cpp"
 		"Scenes/Scene1.cpp"
+		"Skybox/CelestialBody.cpp"
+		"Skybox/SkyboxCycle.cpp"
+		"Terrain/MaterialTerrain.cpp"
+		"Terrain/MeshTerrain.cpp"
+		"Terrain/Terrain.cpp"
+		"TestPhysics.rc"
 		"Uis/OverlayDebug.cpp"
 		"World/World.cpp"
 		)

@@ -131,10 +131,10 @@ namespace acid
 		//m_worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-		//m_body->getMotionState()->setWorldTransform(*m_worldTransform);
+	//  m_body->getMotionState()->setWorldTransform(*m_worldTransform);
 		m_linearVelocity = Collider::Convert(m_body->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_body->getAngularVelocity());
-		//	m_body->setLinearVelocity(m_velocity);
+	//	m_body->setLinearVelocity(m_velocity);
 	}
 
 	void Rigidbody::Load(LoadedValue *value)

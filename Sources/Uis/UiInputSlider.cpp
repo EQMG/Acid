@@ -11,9 +11,9 @@ namespace acid
 	const float UiInputSlider::SCALE_NORMAL = 1.0f;
 	const float UiInputSlider::SCALE_SELECTED = 1.1f;
 
-	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value, const TextJustify &justify) :
+	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), justify, DIMENSION.m_x)),
+		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_slider(new Gui(this, UiBound(position, "CentreLeft", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_prefix(prefix),
@@ -24,7 +24,7 @@ namespace acid
 		m_value(value),
 		m_mouseOver(false),
 		m_hasChange(false),
-		m_timerChange(Timer(0.4f)),
+		m_timerChange(Timer(0.2f)),
 		m_actionChange(nullptr)
 	{
 		SetValue(value);
@@ -90,8 +90,9 @@ namespace acid
 			m_mouseOver = false;
 		}
 
+		float aspectRatio = Display::Get()->GetAspectRatio();
 		m_slider->GetRectangle().SetDimensions(Vector2(DIMENSION.m_x * m_value, 0.05f));
-		m_slider->GetRectangle().SetPosition(m_background->GetRectangle().GetPosition() - Vector2(DIMENSION.m_x / 3.0f * m_slider->GetScale(), 0.0f));
+		m_slider->GetRectangle().SetPosition(m_background->GetRectangle().GetPosition() - Vector2(DIMENSION.m_x / 2.0f / aspectRatio * m_slider->GetScale(), 0.0f));
 	}
 
 	void UiInputSlider::SetPrefix(const std::string &prefix)

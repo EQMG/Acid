@@ -8,7 +8,8 @@
     "Sky Colour": "#FFFFFF"
   },
   "SkyboxCycle": {
-    "Enable Fog": true
+    "Enable Fog": true,
+    "Enable Rotation": false
   },
   "MeshRender": {
   }

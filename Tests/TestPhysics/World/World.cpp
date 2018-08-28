@@ -31,7 +31,7 @@ namespace test
 
 		m_skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 
-		m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.2f, 0.0f, 0.5f));
+		m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.154303f, 0.771517f, -0.617213f));
 		m_lightDirection.Normalize();
 
 		Colour fogColour = FOG_COLOUR_SUNRISE.Interpolate(FOG_COLOUR_NIGHT, GetSunriseFactor());
