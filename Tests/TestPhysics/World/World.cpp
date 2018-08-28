@@ -66,16 +66,16 @@ namespace test
 
 	float World::GetSunriseFactor() const
 	{
-		return Maths::Clamp(-(std::sin(2.0f * PI * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
+		return std::clamp(-(std::sin(2.0f * PI * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 	}
 
 	float World::GetShadowFactor() const
 	{
-		return Maths::Clamp(1.7f * std::sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
+		return std::clamp(1.7f * std::sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
 	}
 
 	float World::GetStarIntensity() const
 	{
-		return Maths::Clamp(1.0f - GetShadowFactor(), 0.0f, 1.0f);
+		return std::clamp(1.0f - GetShadowFactor(), 0.0f, 1.0f);
 	}
 }

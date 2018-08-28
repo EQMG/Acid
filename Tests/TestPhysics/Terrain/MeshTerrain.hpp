@@ -2,9 +2,6 @@
 
 #include <Models/Shapes/MeshSimple.hpp>
 #include <Maths/Maths.hpp>
-#include <Maths/Matrix4.hpp>
-#include <Maths/Transform.hpp>
-#include <Noise/Noise.hpp>
 
 using namespace acid;
 
@@ -14,10 +11,9 @@ namespace test
 		public MeshSimple
 	{
 	private:
-		Noise *m_noise;
-		Matrix4 m_worldMatrix;
+		std::vector<float> m_heightmap;
 	public:
-		MeshTerrain(Noise *noise, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale, const Transform &transform);
+		MeshTerrain(const std::vector<float> &heightmap, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
 
 		~MeshTerrain();
 
@@ -26,5 +22,7 @@ namespace test
 		Vector3 GetPosition(const float &x, const float &z);
 
 		Vector3 GetNormal(const float &x, const float &z);
+
+		Colour GetColour(const Vector3 &normal);
 	};
 }

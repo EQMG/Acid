@@ -30,6 +30,6 @@ namespace acid
 			result += Joysticks::Get()->GetAxis(m_joystick, axis);
 		}
 
-		return Maths::Clamp(result, -1.0f, 1.0f) * (m_reverse ? -1.0f : 1.0f);
+		return std::clamp(result, -1.0f, 1.0f) * (m_reverse ? -1.0f : 1.0f);
 	}
 }

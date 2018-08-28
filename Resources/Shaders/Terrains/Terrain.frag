@@ -8,6 +8,7 @@ layout(set = 0, binding = 1) uniform UboObject
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerR;
+layout(set = 0, binding = 3) uniform sampler2D samplerG;
 
 layout(location = 0) in vec3 inWorldPos;
 layout(location = 1) in vec2 inUv;
@@ -23,6 +24,7 @@ void main()
 {
 	vec4 diffuse = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	diffuse.rgb += inTangent.r * texture(samplerR, inUv).rgb;
+	diffuse.rgb += inTangent.g * texture(samplerG, inUv).rgb;
 
 	outPosition = vec4(inWorldPos, 1.0f);
 	outDiffuse = diffuse;

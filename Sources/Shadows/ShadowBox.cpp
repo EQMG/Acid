@@ -210,9 +210,9 @@ namespace acid
 		Vector4 entityPos = m_lightViewMatrix.Transform(Vector4(position));
 
 		Vector3 closestPoint = Vector3();
-		closestPoint.m_x = Maths::Clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
-		closestPoint.m_y = Maths::Clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
-		closestPoint.m_z = Maths::Clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
+		closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
+		closestPoint.m_y = std::clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
+		closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
 
 		Vector3 centre = Vector3(entityPos);
 		Vector3 distance = centre - closestPoint;

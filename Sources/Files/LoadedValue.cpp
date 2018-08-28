@@ -1,5 +1,7 @@
 #include "LoadedValue.hpp"
 
+#include <ostream>
+
 namespace acid
 {
 	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
@@ -166,41 +168,5 @@ namespace acid
 	void LoadedValue::SetString(const std::string &data)
 	{
 		m_value = "\"" + data + "\"";
-	}
-
-	void LoadedValue::PrintDebug(LoadedValue *value, const bool &content, const int &level)
-	{
-		std::stringstream tabs;
-
-		for (int i = 0; i < level; i++)
-		{
-			tabs << "  ";
-		}
-
-		bool empty = value->GetName().empty() && level != 0;
-
-		if (!empty)
-		{
-			std::stringstream attributes;
-
-			for (auto &attribute : value->m_attributes)
-			{
-				attributes << attribute.first << "=\"" << attribute.second << "\" ";
-			}
-
-			if (content)
-			{
-				fprintf(stdout, "%s- '%s' (%s): '%s'\n", tabs.str().c_str(), value->GetName().c_str(), attributes.str().c_str(), value->GetValue().c_str());
-			}
-			else
-			{
-				fprintf(stdout, "%s- '%s' (%s)\n", tabs.str().c_str(), value->GetName().c_str(), attributes.str().c_str());
-			}
-		}
-
-		for (auto &child : value->GetChildren())
-		{
-			PrintDebug(child, content, empty ? level : level + 1);
-		}
 	}
 }

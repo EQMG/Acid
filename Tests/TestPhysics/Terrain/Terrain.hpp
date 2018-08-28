@@ -18,6 +18,9 @@ namespace test
 
 		float m_sideLength;
 		float m_squareSize;
+
+		float m_minHeight;
+		float m_maxHeight;
 	public:
 		Terrain(const float &sideLength = 200.0f, const float &squareSize = 2.0f);
 
@@ -34,5 +37,7 @@ namespace test
 		uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
 
 		float CalculateTextureScale(const float &sideLength);
+
+		std::vector<float> GenerateHeightmap(const uint32_t &vertexCount);
 	};
 }

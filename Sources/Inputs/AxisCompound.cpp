@@ -23,6 +23,6 @@ namespace acid
 			result += axis->GetAmount();
 		}
 
-		return Maths::Clamp(result, -1.0f, 1.0f);
+		return std::clamp(result, -1.0f, 1.0f);
 	}
 }

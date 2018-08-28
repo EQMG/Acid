@@ -2,11 +2,11 @@
 
 namespace test
 {
-	MeshTerrain::MeshTerrain(Noise *noise, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale, const Transform &transform) :
+	MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale) :
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
-		m_noise(noise),
-	    m_worldMatrix(transform.GetWorldMatrix())
+		m_heightmap(heightmap)
 	{
+		fprintf(stdout, "%i\n", (int)m_heightmap.size());
 		MeshSimple::GenerateMesh();
 	}
 
@@ -25,13 +25,21 @@ namespace test
 			static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount)
 		);
 		Vector3 normal = GetNormal(x, z);
-		Colour colour = Colour(1.0f, 0.0f, 0.0f);
+		Colour colour = GetColour(normal);
 		return new VertexModel(position, uv, normal, colour);
 	}
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
 	{
-		return Vector3(x, 30.0f * m_noise->GetValueFractal(x, z), z);
+		int32_t row = static_cast<int32_t>(((x * 2.0f) + m_sideLength) / m_squareSize);
+		int32_t col = static_cast<int32_t>(((z * 2.0f) + m_sideLength) / m_squareSize);
+
+		if(row < 0 || row >= m_vertexCount || col < 0 || col >= m_vertexCount)
+		{
+			return Vector3(x, 0.0f, z);
+		}
+
+		return Vector3(x, m_heightmap[row * m_vertexCount + col], z);
 	}
 
 	Vector3 MeshTerrain::GetNormal(const float &x, const float &z)
@@ -43,5 +51,11 @@ namespace test
 
 		Vector3 normal = (positionL - positionR).Cross(positionR - positionD);
 		return normal.Normalize();
+	}
+
+	Colour MeshTerrain::GetColour(const Vector3 &normal)
+	{
+		float factor = normal.Dot(Vector3::UP);
+		return Colour(1.0f, factor, 0.0f);
 	}
 }

@@ -15,8 +15,9 @@ namespace test
 		std::shared_ptr<PipelineMaterial> m_material;
 
 		std::shared_ptr<Texture> m_textureR;
+		std::shared_ptr<Texture> m_textureG;
 	public:
-		MaterialTerrain(std::shared_ptr<Texture> textureR = nullptr);
+		MaterialTerrain(std::shared_ptr<Texture> textureR = nullptr, std::shared_ptr<Texture> textureG = nullptr);
 
 		~MaterialTerrain();
 
@@ -41,6 +42,18 @@ namespace test
 			if (!filename.empty())
 			{
 				m_textureR = Texture::Resource(filename);
+			}
+		}
+
+		std::shared_ptr<Texture> GetTextureG() const { return m_textureG; }
+
+		void SetTextureG(std::shared_ptr<Texture> textureG) { m_textureG = textureG; }
+
+		void TrySetTextureG(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_textureG = Texture::Resource(filename);
 			}
 		}
 

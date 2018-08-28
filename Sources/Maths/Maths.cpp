@@ -75,23 +75,13 @@ namespace acid
 
 	float Maths::RoundToPlace(const float &value, const int &place)
 	{
-		float placeMul = static_cast<float>(std::pow(10.0f, place));
+		float placeMul = std::pow(10.0f, static_cast<float>(place));
 		return std::round(value * placeMul) / placeMul;
 	}
 
 	float Maths::Deadband(const float &min, const float &value)
 	{
 		return std::fabs(value) >= std::fabs(min) ? value : 0.0f;
-	}
-
-	float Maths::Clamp(const float &value, const float &min, const float &max)
-	{
-		return (value < min) ? min : (value > max) ? max : value;
-	}
-
-	float Maths::Limit(const float &value, const float &limit)
-	{
-		return value > limit ? limit : value;
 	}
 
 	bool Maths::AlmostEqual(const float &a, const float &b, const float &eps)
@@ -123,7 +113,7 @@ namespace acid
 
 	float Maths::SmoothlyStep(const float &edge0, const float &edge1, const float &x)
 	{
-		float s = Clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+		float s = std::clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 		return s * s * (3.0f - 2.0f * s);
 	}
 }

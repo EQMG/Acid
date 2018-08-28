@@ -18,7 +18,7 @@ namespace acid
 		std::string m_value;
 		std::map<std::string, std::string> m_attributes;
 	public:
-		LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes = {});
+		LoadedValue(LoadedValue *parent = nullptr, const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
 
 		~LoadedValue();
 
@@ -84,7 +84,5 @@ namespace acid
 		std::string GetString();
 
 		void SetString(const std::string &data);
-
-		static void PrintDebug(LoadedValue *value, const bool &content = true, const int &level = 0);
 	};
 }
