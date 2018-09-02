@@ -41,9 +41,9 @@ namespace acid
 
 		std::shared_ptr<IResource> Get(const std::string &filename);
 
-		void Add(std::shared_ptr<IResource> resource);
+		void Add(const std::shared_ptr<IResource> &resource);
 
-		bool Remove(std::shared_ptr<IResource> resource);
+		bool Remove(const std::shared_ptr<IResource> &resource);
 
 		bool Remove(const std::string &filename);
 	};

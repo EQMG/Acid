@@ -34,7 +34,7 @@ namespace acid
 		/// </summary>
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture);
+		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture);
 
 		/// <summary>
 		/// Deconstructor for the gui object.
@@ -47,7 +47,7 @@ namespace acid
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
-		void SetTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
+		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
 
 		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 

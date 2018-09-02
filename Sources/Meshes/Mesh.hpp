@@ -15,7 +15,7 @@ namespace acid
 		std::shared_ptr<Model> m_model;
 
 	public:
-		Mesh(std::shared_ptr<Model> model = nullptr);
+		Mesh(const std::shared_ptr<Model> &model = nullptr);
 
 		~Mesh();
 
@@ -31,7 +31,7 @@ namespace acid
 
 		virtual VertexInput GetVertexInput() const { return VertexModel::GetVertexInput(); }
 
-		virtual void SetModel(std::shared_ptr<Model> model) { m_model = model; }
+		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
 		virtual void TrySetModel(const std::string &filename);
 	};

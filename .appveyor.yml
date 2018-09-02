@@ -33,14 +33,12 @@ before_build:
   - cd C:\Projects\Acid
   - mkdir Build
   - cd Build
-  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DACID_INSTALL=OFF
-  - cmake --build . --config Release --target install
+  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
+  - cmake --build . --config Release
   - cd ../
   - mkdir Acid
-  - mkdir Acid\include
   - mkdir Demos
   - xcopy Build\Release\lib\Release Acid\ /s/h/e/k/f/c
-  - xcopy Build\Release\include Acid\include\ /s/h/e/k/f/c
   - xcopy Build\Release\bin\Release Demos\ /s/h/e/k/f/c
   - xcopy Resources Demos\Resources\Engine\ /s/h/e/k/f/c
 

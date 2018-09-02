@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),

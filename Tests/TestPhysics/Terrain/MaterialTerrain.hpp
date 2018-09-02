@@ -17,7 +17,7 @@ namespace test
 		std::shared_ptr<Texture> m_textureR;
 		std::shared_ptr<Texture> m_textureG;
 	public:
-		MaterialTerrain(std::shared_ptr<Texture> textureR = nullptr, std::shared_ptr<Texture> textureG = nullptr);
+		MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
 
 		~MaterialTerrain();
 
@@ -35,7 +35,7 @@ namespace test
 
 		std::shared_ptr<Texture> GetTextureR() const { return m_textureR; }
 
-		void SetTextureR(std::shared_ptr<Texture> textureR) { m_textureR = textureR; }
+		void SetTextureR(const std::shared_ptr<Texture> &textureR) { m_textureR = textureR; }
 
 		void TrySetTextureR(const std::string &filename)
 		{
@@ -47,7 +47,7 @@ namespace test
 
 		std::shared_ptr<Texture> GetTextureG() const { return m_textureG; }
 
-		void SetTextureG(std::shared_ptr<Texture> textureG) { m_textureG = textureG; }
+		void SetTextureG(const std::shared_ptr<Texture> &textureG) { m_textureG = textureG; }
 
 		void TrySetTextureG(const std::string &filename)
 		{

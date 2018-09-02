@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType, const TextJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType, const TextJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -94,14 +94,14 @@ namespace acid
 		}
 	}
 
-	void Text::SetBorderDriver(std::shared_ptr<IDriver> driver)
+	void Text::SetBorderDriver(const std::shared_ptr<IDriver> &driver)
 	{
 		m_borderDriver = driver;
 		m_solidBorder = true;
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowingDriver(std::shared_ptr<IDriver> driver)
+	void Text::SetGlowingDriver(const std::shared_ptr<IDriver> &driver)
 	{
 		m_glowDriver = driver;
 		m_solidBorder = false;

@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	MaterialSkybox::MaterialSkybox(std::shared_ptr<Cubemap> cubemap, const Colour &skyColour) :
+	MaterialSkybox::MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap, const Colour &skyColour) :
 		IMaterial(),
 		m_cubemap(cubemap),
 		m_skyColour(skyColour),

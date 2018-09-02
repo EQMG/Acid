@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	Config::Config(std::shared_ptr<IFile> file) :
+	Config::Config(const std::shared_ptr<IFile> &file) :
 		m_file(file),
 		m_values(std::map<std::string, std::shared_ptr<ConfigKey>>())
 	{

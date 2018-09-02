@@ -54,7 +54,7 @@ namespace acid
 		/// <param name="colourOffset"> The particles texture colour offset. </param>
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		ParticleType(std::shared_ptr<Texture> texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale);
+		ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale);
 
 		/// <summary>
 		/// Deconstructor for the particle type.
@@ -65,7 +65,7 @@ namespace acid
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
-		void SetTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
+		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
 
 		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 

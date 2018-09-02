@@ -29,8 +29,8 @@ namespace acid
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, std::shared_ptr<Texture> diffuseTexture = nullptr,
-						const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Texture> materialTexture = nullptr, std::shared_ptr<Texture> normalTexture = nullptr,
+		MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
+						const float &metallic = 0.0f, const float &roughness = 0.0f, const std::shared_ptr<Texture> &materialTexture = nullptr, const std::shared_ptr<Texture> &normalTexture = nullptr,
 						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false
 		);
 
@@ -56,7 +56,7 @@ namespace acid
 
 		std::shared_ptr<Texture> GetDiffuseTexture() const { return m_diffuseTexture; }
 
-		void SetDiffuseTexture(std::shared_ptr<Texture> colourTexture) { m_diffuseTexture = colourTexture; }
+		void SetDiffuseTexture(const std::shared_ptr<Texture> &diffuseTexture) { m_diffuseTexture = diffuseTexture; }
 
 		void TrySetDiffuseTexture(const std::string &filename)
 		{
@@ -76,7 +76,7 @@ namespace acid
 
 		std::shared_ptr<Texture> GetMaterialTexture() const { return m_materialTexture; }
 
-		void SetMaterialTexture(std::shared_ptr<Texture> materialTexture) { m_materialTexture = materialTexture; }
+		void SetMaterialTexture(const std::shared_ptr<Texture> &materialTexture) { m_materialTexture = materialTexture; }
 
 		void TrySetMaterialTexture(const std::string &filename)
 		{
@@ -88,7 +88,7 @@ namespace acid
 
 		std::shared_ptr<Texture> GetNormalTexture() const { return m_normalTexture; }
 
-		void SetNormalTexture(std::shared_ptr<Texture> normalTexture) { m_normalTexture = normalTexture; }
+		void SetNormalTexture(const std::shared_ptr<Texture> &normalTexture) { m_normalTexture = normalTexture; }
 
 		void TrySetNormalTexture(const std::string &filename)
 		{
