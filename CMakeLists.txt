@@ -1,8 +1,15 @@
 cmake_minimum_required(VERSION 3.1)
 project(Acid)
 
+set(ACID_VERSION "0.9.7")
+
 # Options
-option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+if(MSVC)
+	option(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+else()
+	option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+endif()
+
 option(ACID_INSTALL "Generate installation target" OFF)
 option(ACID_BUILD_TESTING "Build the Acid test programs" ON)
 option(ACID_SETUP_COMPILER "If Acid will set it's own compiler settings" ON)
@@ -49,6 +56,7 @@ if(ACID_SETUP_COMPILER)
 
 	if(MSVC)
 		add_definitions(-DACID_BUILD_MSVC)
+		add_definitions(-DNOMINMAX)
 		add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 		add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /std:c++17 /INCREMENTAL:NO /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP /W3 /wd4251")
@@ -59,6 +67,7 @@ if(ACID_SETUP_COMPILER)
 		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 			set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /OPT:ICF")
+			set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /OPT:ICF")
 		else()
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:SSE2")
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")

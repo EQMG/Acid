@@ -1,7 +1,6 @@
 #include "Display.hpp"
 
 #ifdef ACID_BUILD_WINDOWS
-#define NOMINMAX
 #include <Windows.h>
 #endif
 #include <GLFW/glfw3.h>

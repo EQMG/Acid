@@ -18,11 +18,7 @@
 using namespace test;
 using namespace acid;
 
-//#if (ACID_BUILD_RELEASE && ACID_BUILD_WINDOWS)
-//int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
-//#else
 int main(int argc, char **argv)
-//#endif
 {
 	// Registers file search paths.
 //	Files::AddSearchPath("Resources/Game");
