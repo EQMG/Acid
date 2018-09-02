@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include "IModule.hpp"
 
 namespace acid
@@ -11,7 +12,7 @@ namespace acid
 	class ACID_EXPORT ModuleRegister
 	{
 	private:
-		std::map<float, IModule *> m_modules;
+		std::map<float, std::shared_ptr<IModule>> m_modules;
 	public:
 		/// <summary>
 		/// Creates a new module register.
@@ -33,7 +34,7 @@ namespace acid
 		/// </summary>
 		/// <param name="module"> The module to find. </param>
 		/// <returns> If the module is in the registry. </returns>
-		bool ContainsModule(IModule *module) const;
+		bool ContainsModule(const std::shared_ptr<IModule> &module) const;
 
 		/// <summary>
 		/// Gets a module instance by type from the register.
@@ -41,11 +42,11 @@ namespace acid
 		/// <param name="T"> The module type to find. </param>
 		/// <returns> The found module. </returns>
 		template<typename T>
-		T *GetModule() const
+		std::shared_ptr<T> GetModule() const
 		{
 			for (auto &module : m_modules)
 			{
-				auto casted = dynamic_cast<T *>(module.second);
+				auto casted = std::dynamic_pointer_cast<T>(module.second);
 
 				if (casted != nullptr)
 				{
@@ -62,7 +63,7 @@ namespace acid
 		/// <param name="module"> The modules object. </param>
 		/// <param name="update"> The modules update type. </param>
 		/// <returns> The registered module. </returns>
-		IModule *RegisterModule(IModule *module, const ModuleUpdate &update);
+		std::shared_ptr<IModule> RegisterModule(const std::shared_ptr<IModule> &module, const ModuleUpdate &update);
 
 		/// <summary>
 		/// Registers a module with the register.
@@ -71,11 +72,12 @@ namespace acid
 		/// <param name="T"> The modules type. </param>
 		/// <returns> The registered module. </returns>
 		template<typename T>
-		T *RegisterModule(const ModuleUpdate &update)
+		std::shared_ptr<T> RegisterModule(const ModuleUpdate &update)
 		{
-			T *module = static_cast<T *>(malloc(sizeof(T)));
+			auto module = std::shared_ptr<T>(static_cast<T *>(malloc(sizeof(T))));
 			RegisterModule(module, update);
-			return new(module) T();
+			new(module.get()) T();
+			return module;
 		}
 
 		/// <summary>
@@ -83,7 +85,7 @@ namespace acid
 		/// </summary>
 		/// <param name="module"> The module to deregister. </param>
 		/// <returns> If the module was deregistered. </returns>
-		bool DeregisterModule(IModule *module);
+		bool DeregisterModule(const std::shared_ptr<IModule> &module);
 
 		/// <summary>
 		/// Removes a module by type from this game object.
@@ -95,7 +97,7 @@ namespace acid
 		{
 			for (auto &module : m_modules)
 			{
-				auto casted = dynamic_cast<T *>(module.second);
+				auto casted = std::dynamic_pointer_cast<T>(module.second);
 
 				if (casted != nullptr)
 				{
@@ -113,6 +115,6 @@ namespace acid
 		/// <param name="update"> The modules update type. </param>
 		void RunUpdate(const ModuleUpdate &update) const;
 
-		uint32_t GetModuleCount() const { return m_modules.size(); }
+		uint32_t GetModuleCount() const { return static_cast<uint32_t>(m_modules.size()); }
 	};
 }

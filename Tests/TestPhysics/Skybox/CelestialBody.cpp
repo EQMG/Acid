@@ -76,11 +76,11 @@ namespace test
 
 	void CelestialBody::Load(LoadedValue &value)
 	{
-		m_type = static_cast<CelestialType>(value.GetChild("Type")->Get<int>());
+		m_type = static_cast<CelestialType>(value.FindChild("Type")->Get<int>());
 	}
 
 	void CelestialBody::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Type", true)->Set(static_cast<int>(m_type));
+		destination.FindChild("Type", true)->Set(static_cast<int>(m_type));
 	}
 }

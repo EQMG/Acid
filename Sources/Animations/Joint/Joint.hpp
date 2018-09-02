@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "JointData.hpp"
 #include "Maths/Matrix4.hpp"
 
@@ -29,7 +30,7 @@ namespace acid
 	private:
 		uint32_t m_index;
 		std::string m_name;
-		std::vector<Joint *> m_children;
+		std::vector<std::shared_ptr<Joint>> m_children;
 
 		Matrix4 m_localBindTransform;
 		Matrix4 m_animatedTransform;
@@ -69,20 +70,20 @@ namespace acid
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		std::vector<Joint *> GetChildren() const { return m_children; }
+		std::vector<std::shared_ptr<Joint>> GetChildren() const { return m_children; }
 
 		/// <summary>
 		/// Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
 		/// which is why they are stored in a list (e.g. a "hand" joint may have multiple "finger" children joints).
 		/// </summary>
 		/// <param name="child"> The new child joint of this joint. </param>
-		void AddChild(Joint *child);
+		void AddChild(const std::shared_ptr<Joint> &child);
 
 		/// <summary>
 		/// Adds this joint to an array, they for each child calls the same method.
 		/// </summary>
 		/// <param name="joints"> The array to add this and children into. </param>
-		void AddSelfAndChildren(std::vector<Joint *> *children);
+		void AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> *children);
 
 		Matrix4 GetLocalBindTransform() const { return m_localBindTransform; }
 

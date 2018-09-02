@@ -16,7 +16,6 @@ namespace acid
 		m_friction(friction),
 		m_linearFactor(linearFactor),
 		m_angularFactor(angularFactor),
-		m_worldTransform(new btTransform()),
 		m_shape(nullptr),
 		m_body(nullptr),
 		m_linearVelocity(Vector3()),
@@ -26,16 +25,14 @@ namespace acid
 
 	Rigidbody::~Rigidbody()
 	{
-		btRigidBody *body = btRigidBody::upcast(m_body);
+		btRigidBody *body = btRigidBody::upcast(m_body.get());
 
 		if (body && body->getMotionState())
 		{
 			delete body->getMotionState();
 		}
 
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body);
-
-		delete m_body;
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body.get());
 	}
 
 	void Rigidbody::Start()
@@ -43,9 +40,10 @@ namespace acid
 		Vector3 position = GetGameObject()->GetTransform().GetPosition();
 		Quaternion rotation = GetGameObject()->GetTransform().GetRotation();
 
-		m_worldTransform->setIdentity();
-		m_worldTransform->setOrigin(Collider::Convert(position));
-		m_worldTransform->setRotation(Collider::Convert(rotation));
+		btTransform worldTransform = btTransform();
+		worldTransform.setIdentity();
+		worldTransform.setOrigin(Collider::Convert(position));
+		worldTransform.setRotation(Collider::Convert(rotation));
 
 		auto shape = GetGameObject()->GetComponent<Collider>();
 
@@ -53,8 +51,8 @@ namespace acid
 		{
 			m_shape = shape->GetCollisionShape();
 
-			m_body = CreateRigidBody(m_mass, *m_worldTransform, m_shape);
-			m_body->setWorldTransform(*m_worldTransform);
+			m_body = CreateRigidBody(m_mass, worldTransform, m_shape);
+			m_body->setWorldTransform(worldTransform);
 		//	m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
 			m_body->setFriction(m_friction);
 			m_body->setRollingFriction(m_friction);
@@ -62,7 +60,7 @@ namespace acid
 			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
-			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body);
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body.get());
 			m_body->activate(true);
 		}
 	}
@@ -82,7 +80,7 @@ namespace acid
 			if (m_shape != shape->GetCollisionShape())
 			{
 				m_shape = shape->GetCollisionShape();
-				m_body->setCollisionShape(m_shape);
+				m_body->setCollisionShape(m_shape.get());
 			}
 
 			if (m_mass != 0.0f)
@@ -126,31 +124,32 @@ namespace acid
 			transform.SetRotation(Vector3(pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG));
 		}
 
-		//m_worldTransform->setIdentity();
-		//m_worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));
-		//m_worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
+	//  worldTransform->setIdentity();
+	//  worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));
+	//  worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-	//  m_body->getMotionState()->setWorldTransform(*m_worldTransform);
+	//  m_body->getMotionState()->setWorldTransform(*worldTransform);
 		m_linearVelocity = Collider::Convert(m_body->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_body->getAngularVelocity());
-	//	m_body->setLinearVelocity(m_velocity);
+	//	m_body->setLinearVelocity(Collider::Convert(m_linearVelocity));
+	//	m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
 	void Rigidbody::Load(LoadedValue &value)
 	{
-		m_mass = value.GetChild("Mass")->Get<float>();
-		m_friction = value.GetChild("Friction")->Get<float>();
-		m_linearFactor = *value.GetChild("Linear Factor");
-		m_angularFactor = *value.GetChild("Angular Factor");
+		m_mass = value.FindChild("Mass")->Get<float>();
+		m_friction = value.FindChild("Friction")->Get<float>();
+		m_linearFactor = *value.FindChild("Linear Factor");
+		m_angularFactor = *value.FindChild("Angular Factor");
 	}
 
 	void Rigidbody::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Mass", true)->Set(m_mass);
-		destination.GetChild("Friction", true)->Set(m_friction);
-		m_linearFactor.Write(*destination.GetChild("Linear Factor", true));
-		m_angularFactor.Write(*destination.GetChild("Angular Factor", true));
+		destination.FindChild("Mass", true)->Set(m_mass);
+		destination.FindChild("Friction", true)->Set(m_friction);
+		m_linearFactor.Write(*destination.FindChild("Linear Factor", true));
+		m_angularFactor.Write(*destination.FindChild("Angular Factor", true));
 	}
 
 	void Rigidbody::SetGravity(const Vector3 &gravity)
@@ -219,7 +218,7 @@ namespace acid
 		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
-	btRigidBody *Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape)
+	std::shared_ptr<btRigidBody> Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, const std::shared_ptr<btCollisionShape> &shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 
@@ -233,10 +232,10 @@ namespace acid
 
 		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
-		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
-		btRigidBody *body = new btRigidBody(cInfo);
-		//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-		//	body->setUserIndex(-1);
+		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape.get(), localInertia);
+		auto body = std::make_shared<btRigidBody>(cInfo);
+	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
+	//	body->setUserIndex(-1);
 		return body;
 	}
 }

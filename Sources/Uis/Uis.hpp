@@ -20,7 +20,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Uis *Get()
+		static std::shared_ptr<Uis> Get()
 		{
 			return Engine::Get()->GetModule<Uis>();
 		}

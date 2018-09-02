@@ -32,6 +32,6 @@ namespace acid
 
 		virtual void SetFilename(const std::string &filename) = 0;
 
-		virtual LoadedValue *GetParent() const = 0;
+		virtual std::shared_ptr<LoadedValue> GetParent() const = 0;
 	};
 }

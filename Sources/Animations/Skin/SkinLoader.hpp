@@ -9,14 +9,14 @@ namespace acid
 	class ACID_EXPORT SkinLoader
 	{
 	private:
-		LoadedValue *m_skinData;
+		std::shared_ptr<LoadedValue> m_skinData;
 
 		int m_maxWeights;
 
 		std::vector<std::string> m_jointOrder;
 		std::vector<VertexSkinData *> m_verticesSkinData;
 	public:
-		SkinLoader(LoadedValue *libraryControllers, const int &maxWeights);
+		SkinLoader(const std::shared_ptr<LoadedValue> &libraryControllers, const int &maxWeights);
 
 		~SkinLoader();
 
@@ -29,8 +29,8 @@ namespace acid
 
 		std::vector<float> LoadWeights();
 
-		std::vector<int> GetEffectiveJointsCounts(LoadedValue *weightsDataNode);
+		std::vector<int> GetEffectiveJointsCounts(std::shared_ptr<LoadedValue> &weightsDataNode);
 
-		void GetSkinData(LoadedValue *weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights);
+		void GetSkinData(std::shared_ptr<LoadedValue> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights);
 	};
 }

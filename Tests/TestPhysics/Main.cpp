@@ -6,7 +6,6 @@
 #include <Scenes/Scenes.hpp>
 #include "Configs/ConfigManager.hpp"
 #include "MainRenderer.hpp"
-#include "MainUpdater.hpp"
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
 #include "Skybox/CelestialBody.hpp"
@@ -24,9 +23,8 @@ int main(int argc, char **argv)
 //	Files::AddSearchPath("Resources/Game");
 	Files::AddSearchPath("Resources/Engine");
 
-	// Creates the engine and updater objects.
-	auto engine = new Engine();
-	engine->SetUpdater(new MainUpdater());
+	// Creates the engine.
+	auto engine = std::make_shared<Engine>();
 
 	// auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
@@ -51,7 +49,6 @@ int main(int argc, char **argv)
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
-	delete engine;
 
 	// Pauses the console.
 	std::cin.get();

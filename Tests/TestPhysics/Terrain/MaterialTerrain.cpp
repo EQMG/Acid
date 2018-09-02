@@ -28,14 +28,14 @@ namespace test
 
 	void MaterialTerrain::Load(LoadedValue &value)
 	{
-		TrySetTextureR(value.GetChild("Texture R")->GetString());
-		TrySetTextureR(value.GetChild("Texture G")->GetString());
+		TrySetTextureR(value.FindChild("Texture R")->GetString());
+		TrySetTextureR(value.FindChild("Texture G")->GetString());
 	}
 
 	void MaterialTerrain::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Texture R", true)->SetString(m_textureR == nullptr ? "" : m_textureR->GetFilename());
-		destination.GetChild("Texture G", true)->SetString(m_textureG == nullptr ? "" : m_textureG->GetFilename());
+		destination.FindChild("Texture R", true)->SetString(m_textureR == nullptr ? "" : m_textureR->GetFilename());
+		destination.FindChild("Texture G", true)->SetString(m_textureG == nullptr ? "" : m_textureG->GetFilename());
 	}
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)

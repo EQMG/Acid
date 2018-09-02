@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCylinder::ColliderCylinder(const float &radius, const float &height) :
 		Collider(),
-		m_shape(new btCylinderShape(btVector3(radius, height / 2.0f, radius))),
+		m_shape(std::make_shared<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),
 		m_radius(radius),
 		m_height(height)
 	{
@@ -15,7 +15,6 @@ namespace acid
 
 	ColliderCylinder::~ColliderCylinder()
 	{
-		delete m_shape;
 	}
 
 	void ColliderCylinder::Start()
@@ -24,22 +23,22 @@ namespace acid
 
 	void ColliderCylinder::Update()
 	{
-		//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
+	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
 	}
 
 	void ColliderCylinder::Load(LoadedValue &value)
 	{
-		m_radius = value.GetChild("Radius")->Get<float>();
-		m_height = value.GetChild("Height")->Get<float>();
+		m_radius = value.FindChild("Radius")->Get<float>();
+		m_height = value.FindChild("Height")->Get<float>();
 	}
 
 	void ColliderCylinder::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Radius", true)->Set(m_radius);
-		destination.GetChild("Height", true)->Set(m_height);
+		destination.FindChild("Radius", true)->Set(m_radius);
+		destination.FindChild("Height", true)->Set(m_height);
 	}
 
-	btCollisionShape *ColliderCylinder::GetCollisionShape() const
+	std::shared_ptr<btCollisionShape> ColliderCylinder::GetCollisionShape() const
 	{
 		return m_shape;
 	}

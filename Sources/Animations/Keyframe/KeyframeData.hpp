@@ -9,7 +9,7 @@ namespace acid
 	{
 	private:
 		float m_time;
-		std::vector<JointTransformData *> m_jointTransforms;
+		std::vector<JointTransformData> m_jointTransforms;
 	public:
 		KeyframeData(const float &time);
 
@@ -17,8 +17,8 @@ namespace acid
 
 		float GetTime() const { return m_time; }
 
-		std::vector<JointTransformData *> GetJointTransforms() const { return m_jointTransforms; }
+		std::vector<JointTransformData> GetJointTransforms() const { return m_jointTransforms; }
 
-		void AddJointTransform(JointTransformData *transform);
+		void AddJointTransform(const JointTransformData &transform);
 	};
 }

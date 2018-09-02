@@ -7,19 +7,19 @@ namespace acid
 	class ACID_EXPORT AnimationLoader
 	{
 	private:
-		LoadedValue *m_libraryAnimations;
-		LoadedValue *m_libraryVisualScenes;
+		std::shared_ptr<LoadedValue> m_libraryAnimations;
+		std::shared_ptr<LoadedValue> m_libraryVisualScenes;
 
 		float m_lengthSeconds;
-		std::vector<KeyframeData *> m_keyframeData;
+		std::vector<KeyframeData> m_keyframeData;
 	public:
-		AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes);
+		AnimationLoader(const std::shared_ptr<LoadedValue> &libraryAnimations, const std::shared_ptr<LoadedValue> &libraryVisualScenes);
 
 		~AnimationLoader();
 
 		float GetLengthSeconds() const { return m_lengthSeconds; }
 
-		std::vector<KeyframeData *> GetKeyframeData() const { return m_keyframeData; }
+		std::vector<KeyframeData> GetKeyframeData() const { return m_keyframeData; }
 	private:
 		std::string FindRootJointName();
 
@@ -27,11 +27,11 @@ namespace acid
 
 		void CreateKeyframeData(const std::vector<float> &times);
 
-		void LoadJointTransforms(LoadedValue *jointData, const std::string &rootNodeId);
+		void LoadJointTransforms(std::shared_ptr<LoadedValue> &jointData, const std::string &rootNodeId);
 
-		std::string GetDataId(LoadedValue *jointData);
+		std::string GetDataId(std::shared_ptr<LoadedValue> &jointData);
 
-		std::string GetJointName(LoadedValue *jointData);
+		std::string GetJointName(std::shared_ptr<LoadedValue> &jointData);
 
 		void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
 	};

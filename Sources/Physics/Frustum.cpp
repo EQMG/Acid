@@ -2,13 +2,18 @@
 
 #include <array>
 #include <cmath>
-#include "Helpers/SquareArray.hpp"
 
 namespace acid
 {
 	Frustum::Frustum() :
-		m_frustumArray(SquareArray::FloatArray(6, 4))
+		m_frustumArray(nullptr)
 	{
+		m_frustumArray = new float *[6];
+
+		for (int i = 0; i < 6; i++)
+		{
+			m_frustumArray[i] = new float[4];
+		}
 	}
 
 	Frustum::~Frustum()

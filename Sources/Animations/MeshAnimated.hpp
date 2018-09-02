@@ -20,9 +20,9 @@ namespace acid
 		std::string m_filename;
 
 		std::shared_ptr<Model> m_model;
-		Joint *m_headJoint;
-		Animator *m_animator;
-		Animation *m_animation;
+		std::shared_ptr<Joint> m_headJoint;
+		std::shared_ptr<Animator> m_animator;
+		std::shared_ptr<Animation> m_animation;
 
 		std::vector<Matrix4> m_jointMatrices;
 	public:
@@ -51,7 +51,7 @@ namespace acid
 		std::vector<Matrix4> GetJointTransforms() const { return m_jointMatrices; }
 
 	private:
-		Joint *CreateJoints(JointData *data);
+		std::shared_ptr<Joint> CreateJoints(JointData *data);
 
 		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 	};

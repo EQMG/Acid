@@ -93,7 +93,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Display *Get()
+		static std::shared_ptr<Display> Get()
 		{
 			return Engine::Get()->GetModule<Display>();
 		}

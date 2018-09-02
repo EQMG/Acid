@@ -44,12 +44,12 @@ namespace acid
 
 	void Mesh::Load(LoadedValue &value)
 	{
-		TrySetModel(value.GetChild("Model")->GetString());
+		TrySetModel(value.FindChild("Model")->GetString());
 	}
 
 	void Mesh::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
+		destination.FindChild("Model", true)->SetString(m_model == nullptr ? "" : m_model->GetFilename());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)

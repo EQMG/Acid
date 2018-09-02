@@ -14,7 +14,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		LoadedValue *m_parent;
+		std::shared_ptr<LoadedValue> m_parent;
 	public:
 		FileJson(const std::string &filename);
 
@@ -34,9 +34,9 @@ namespace acid
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		LoadedValue *GetParent() const override { return m_parent; }
+		std::shared_ptr<LoadedValue> GetParent() const override { return m_parent; }
 
-		LoadedValue *GetChild(const std::string &name) const { return m_parent->GetChild(name); }
+		std::shared_ptr<LoadedValue> GetChild(const std::string &name) const { return m_parent->FindChild(name); }
 	private:
 		void Verify();
 	};

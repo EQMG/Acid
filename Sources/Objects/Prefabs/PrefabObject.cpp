@@ -29,7 +29,7 @@ namespace acid
 		{
 			m_file = std::make_shared<FileXml>(filename);
 			m_file->Load();
-			m_parent = m_file->GetParent()->GetChild("GameObjectDefinition");
+			m_parent = m_file->GetParent()->FindChild("GameObjectDefinition");
 		}
 	}
 
@@ -50,7 +50,7 @@ namespace acid
 				return;
 			}
 
-			component->Write(*m_parent->GetChild(*componentName, true));
+			component->Write(*m_parent->FindChild(*componentName, true));
 		}
 	}
 

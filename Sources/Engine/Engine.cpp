@@ -10,7 +10,7 @@ namespace acid
 		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
 		m_moduleRegister(ModuleRegister()),
-		m_updater(nullptr),
+		m_moduleUpdater(ModuleUpdater()),
 		m_fpsLimit(-1.0f),
 		m_initialized(false),
 		m_running(true),
@@ -26,14 +26,14 @@ namespace acid
 
 	Engine::~Engine()
 	{
-		delete m_updater;
 	}
 
-	int Engine::Run() const
+	int Engine::Run()
 	{
 		while (m_running)
 		{
-			m_updater->Update(m_moduleRegister);
+			// TODO: Catch exceptions.
+			m_moduleUpdater.Update(m_moduleRegister);
 		}
 
 		return EXIT_SUCCESS;

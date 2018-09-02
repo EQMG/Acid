@@ -8,13 +8,12 @@ namespace acid
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(new LoadedValue(nullptr, "", ""))
+		m_parent(std::make_shared<LoadedValue>("", ""))
 	{
 	}
 
 	FileJson::~FileJson()
 	{
-		delete m_parent;
 	}
 
 	void FileJson::Load()
@@ -141,15 +140,15 @@ namespace acid
 
 	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
 	{
-		auto exiting = m_parent->GetChild(key, false, false);
+		auto exiting = m_parent->FindChild(key, false, false);
 
-		if (exiting != nullptr)
+		if (exiting)
 		{
 			exiting->SetValue(value);
 			return;
 		}
 
-		auto newChild = new LoadedValue(m_parent, key, value);
+		auto newChild = std::make_shared<LoadedValue>(key, value);
 		m_parent->GetChildren().emplace_back(newChild);
 	}
 

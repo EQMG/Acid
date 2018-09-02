@@ -60,7 +60,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Mouse *Get()
+		static std::shared_ptr<Mouse> Get()
 		{
 			return Engine::Get()->GetModule<Mouse>();
 		}

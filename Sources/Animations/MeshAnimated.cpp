@@ -23,9 +23,6 @@ namespace acid
 
 	MeshAnimated::~MeshAnimated()
 	{
-		delete m_headJoint;
-		delete m_animation;
-		delete m_animator;
 	}
 
 	void MeshAnimated::Update()
@@ -40,26 +37,22 @@ namespace acid
 			m_jointMatrices.clear();
 			m_jointMatrices.resize(MAX_JOINTS);
 			AddJointsToArray(*m_headJoint, m_jointMatrices);
-			//	m_jointMatrices.shrink_to_fit();
+		//	m_jointMatrices.shrink_to_fit();
 		}
 	}
 
 	void MeshAnimated::Load(LoadedValue &value)
 	{
-		TrySetModel(value.GetChild("Model")->GetString());
+		TrySetModel(value.FindChild("Model")->GetString());
 	}
 
 	void MeshAnimated::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Model", true)->SetString(m_filename);
+		destination.FindChild("Model", true)->SetString(m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
-		delete m_animation;
-		delete m_headJoint;
-		delete m_animator;
-
 		if (!FileSystem::FileExists(filename))
 		{
 			fprintf(stderr, "Animation file does not exist: '%s'\n", m_filename.c_str());
@@ -69,33 +62,35 @@ namespace acid
 		FileXml file = FileXml(filename);
 		file.Load();
 
-		SkinLoader skinLoader = SkinLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"), skinLoader.GetJointOrder());
-		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_geometries"), skinLoader.GetVerticesSkinData());
+		SkinLoader skinLoader = SkinLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_controllers"), MAX_WEIGHTS);
+		SkeletonLoader skeletonLoader = SkeletonLoader(
+			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
+		GeometryLoader geometryLoader = GeometryLoader(
+			file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVerticesSkinData());
 
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
 		m_headJoint = CreateJoints(skeletonLoader.GetHeadJoint());
 		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
-		m_animator = new Animator(m_headJoint);
+		m_animator = std::make_shared<Animator>(m_headJoint);
 
-		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->GetChild("COLLADA")->GetChild("library_animations"),
-			file.GetParent()->GetChild("COLLADA")->GetChild("library_visual_scenes"));
-		m_animation = new Animation(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframeData());
+		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_animations"),
+			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"));
+		m_animation = std::make_shared<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframeData());
 		m_animator->DoAnimation(m_animation);
 	}
 
-	Joint *MeshAnimated::CreateJoints(JointData *data)
+	std::shared_ptr<Joint> MeshAnimated::CreateJoints(JointData *data)
 	{
-		Joint *j = new Joint(data->GetIndex(), data->GetNameId(), data->GetBindLocalTransform());
+		auto joint = std::make_shared<Joint>(data->GetIndex(), data->GetNameId(), data->GetBindLocalTransform());
 
 		for (auto &child : data->GetChildren())
 		{
-			j->AddChild(CreateJoints(child));
+			joint->AddChild(CreateJoints(child));
 		}
 
-		return j;
+		return joint;
 	}
 
 	void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices)

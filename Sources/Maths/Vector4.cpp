@@ -198,10 +198,10 @@ namespace acid
 
 	Vector4 &Vector4::operator=(LoadedValue &value)
 	{
-		m_x = value.GetChild("x")->Get<float>();
-		m_y = value.GetChild("y")->Get<float>();
-		m_z = value.GetChild("z")->Get<float>();
-		m_w = value.GetChild("w")->Get<float>();
+		m_x = value.FindChild("x")->Get<float>();
+		m_y = value.FindChild("y")->Get<float>();
+		m_z = value.FindChild("z")->Get<float>();
+		m_w = value.FindChild("w")->Get<float>();
 		return *this;
 	}
 

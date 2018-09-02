@@ -23,16 +23,16 @@ namespace acid
 	class ACID_EXPORT Animator
 	{
 	private:
-		Joint *m_rootJoint;
+		std::shared_ptr<Joint> m_rootJoint;
 
 		float m_animationTime;
-		Animation *m_currentAnimation;
+		std::shared_ptr<Animation> m_currentAnimation;
 	public:
 		/// <summary>
 		/// Creates a new animator.
 		/// </summary>
 		/// <param name="rootJoint"> The root joint of the joint hierarchy which makes up the "skeleton" of the entity. </param>
-		Animator(Joint *rootJoint);
+		Animator(const std::shared_ptr<Joint> &rootJoint);
 
 		~Animator();
 
@@ -74,7 +74,7 @@ namespace acid
 		/// then the next keyframe is used as both the previous and next keyframe. The reverse happens if there is no next keyframe.
 		/// </summary>
 		/// <returns> The previous and next keyframes, in an array which therefore will always have a length of 2. </returns>
-		std::vector<Keyframe *> GetPreviousAndNextFrames();
+		std::array<Keyframe, 2> GetPreviousAndNextFrames();
 
 		/// <summary>
 		/// Calculates how far between the previous and next keyframe the current animation time is, and returns it as a value between 0 and 1.
@@ -122,14 +122,14 @@ namespace acid
 		/// <param name="currentPose"> A map of the local-space transforms for all the joints for the desired pose. The map is indexed by the name of the joint which the transform corresponds to. </param>
 		/// <param name="joint"> The current joint which the pose should be applied to. </param>
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
-		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint *joint, const Matrix4 &parentTransform);
+		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, const std::shared_ptr<Joint> &joint, const Matrix4 &parentTransform);
 
-		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
+		std::shared_ptr<Animation> GetCurrentAnimation() const { return m_currentAnimation; }
 
 		/// <summary>
 		/// Indicates that the entity should carry out the given animation. Resets the animation time so that the new animation starts from the beginning.
 		/// </summary>
 		/// <param name="animation"> The new animation to carry out. </param>
-		void DoAnimation(Animation *animation);
+		void DoAnimation(const std::shared_ptr<Animation> &animation);
 	};
 }

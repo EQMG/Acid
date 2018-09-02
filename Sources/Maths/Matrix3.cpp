@@ -240,9 +240,9 @@ namespace acid
 
 	void Matrix3::Write(LoadedValue &destination)
 	{
-		m_rows[0].Write(*destination.GetChild("m0", true));
-		m_rows[1].Write(*destination.GetChild("m1", true));
-		m_rows[2].Write(*destination.GetChild("m2", true));
+		m_rows[0].Write(*destination.FindChild("m0", true));
+		m_rows[1].Write(*destination.FindChild("m1", true));
+		m_rows[2].Write(*destination.FindChild("m2", true));
 	}
 
 	Matrix3 &Matrix3::operator=(const Matrix3 &other)
@@ -263,9 +263,9 @@ namespace acid
 
 	Matrix3 &Matrix3::operator=(LoadedValue &value)
 	{
-		m_rows[0] = *value.GetChild("m0");
-		m_rows[1] = *value.GetChild("m1");
-		m_rows[2] = *value.GetChild("m2");
+		m_rows[0] = *value.FindChild("m0");
+		m_rows[1] = *value.FindChild("m1");
+		m_rows[2] = *value.FindChild("m2");
 		return *this;
 	}
 
