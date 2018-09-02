@@ -56,10 +56,10 @@ namespace acid
 		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(LoadedValue &destination);
 
 		Fog &operator=(const Fog &other);
 
-		Fog &operator=(LoadedValue *value);
+		Fog &operator=(LoadedValue &value);
 	};
 }

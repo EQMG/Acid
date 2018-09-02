@@ -41,4 +41,14 @@ namespace acid
 			m_mouseOver = false;
 		}
 	}
+
+	bool UiInputButton::OnActionMouse(const MouseButton &button)
+	{
+		if (button == MOUSE_BUTTON_LEFT)
+		{
+
+		}
+
+		return false;
+	}
 }

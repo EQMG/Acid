@@ -161,12 +161,12 @@ namespace acid
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
-	void Vector4::Write(LoadedValue *destination)
+	void Vector4::Write(LoadedValue &destination)
 	{
-		destination->SetChild<float>("x", m_x);
-		destination->SetChild<float>("y", m_y);
-		destination->SetChild<float>("z", m_z);
-		destination->SetChild<float>("w", m_w);
+		destination.SetChild<float>("x", m_x);
+		destination.SetChild<float>("y", m_y);
+		destination.SetChild<float>("z", m_z);
+		destination.SetChild<float>("w", m_w);
 	}
 
 	Vector4 &Vector4::operator=(const Vector4 &other)
@@ -196,12 +196,12 @@ namespace acid
 		return *this;
 	}
 
-	Vector4 &Vector4::operator=(LoadedValue *source)
+	Vector4 &Vector4::operator=(LoadedValue &value)
 	{
-		m_x = source->GetChild("x")->Get<float>();
-		m_y = source->GetChild("y")->Get<float>();
-		m_z = source->GetChild("z")->Get<float>();
-		m_w = source->GetChild("w")->Get<float>();
+		m_x = value.GetChild("x")->Get<float>();
+		m_y = value.GetChild("y")->Get<float>();
+		m_z = value.GetChild("z")->Get<float>();
+		m_w = value.GetChild("w")->Get<float>();
 		return *this;
 	}
 

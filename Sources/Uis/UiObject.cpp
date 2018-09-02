@@ -17,8 +17,7 @@ namespace acid
 		m_alpha(1.0f),
 		m_scaleDriver(new DriverConstant(1.0f)),
 		m_scale(1.0f),
-		m_actionLeft(nullptr),
-		m_actionRight(nullptr)
+		m_actionClick(nullptr)
 	{
 		if (parent != nullptr)
 		{
@@ -42,17 +41,22 @@ namespace acid
 	void UiObject::Update()
 	{
 		// Click updates.
-		if (m_actionLeft != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector().WasLeftClick() &&
-			Uis::Get()->GetSelector().IsSelected(*this))
+		if (GetAlpha() == 1.0f && Uis::Get()->GetSelector().IsSelected(*this))
 		{
-			m_actionLeft();
-			Uis::Get()->GetSelector().CancelWasEvent();
-		}
-		else if (m_actionRight != nullptr && GetAlpha() == 1.0f && Uis::Get()->GetSelector().WasRightClick() &&
-			Uis::Get()->GetSelector().IsSelected(*this))
-		{
-			m_actionRight();
-			Uis::Get()->GetSelector().CancelWasEvent();
+			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			{
+				if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
+				{
+					bool actionMouse = OnActionMouse(static_cast<MouseButton>(i));
+					bool actionClick = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
+
+					if (actionMouse || actionClick)
+					{
+						Uis::Get()->GetSelector().CancelWasEvent();
+						break;
+					}
+				}
+			}
 		}
 
 		for (auto &child : m_children)
@@ -86,7 +90,11 @@ namespace acid
 
 	void UiObject::UpdateObject()
 	{
-		// Pure virtual function.
+	}
+
+	bool UiObject::OnActionMouse(const MouseButton &button)
+	{
+		return false;
 	}
 
 	bool UiObject::RemoveChild(UiObject *child)

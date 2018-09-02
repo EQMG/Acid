@@ -28,11 +28,11 @@ namespace acid
 	{
 	}
 
-	void ColliderHeightfield::Load(LoadedValue *value)
+	void ColliderHeightfield::Load(LoadedValue &value)
 	{
 	}
 
-	void ColliderHeightfield::Write(LoadedValue *destination)
+	void ColliderHeightfield::Write(LoadedValue &destination)
 	{
 	}
 

@@ -81,6 +81,8 @@ namespace acid
 
 		void UpdateObject() override;
 
+		bool OnActionMouse(const MouseButton &button) override;
+
 		std::string GetPrefix() const { return m_prefix; }
 
 		void SetPrefix(const std::string &prefix);

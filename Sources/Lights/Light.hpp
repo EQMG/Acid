@@ -44,9 +44,9 @@ namespace acid
 
 		void Update() override;
 
-		void Load(LoadedValue *value) override;
+		void Load(LoadedValue &value) override;
 
-		void Write(LoadedValue *destination) override;
+		void Write(LoadedValue &destination) override;
 
 		Colour GetColour() const { return m_colour; }
 
@@ -64,6 +64,6 @@ namespace acid
 
 		Light &operator=(const Light &other);
 
-		Light &operator=(LoadedValue *value);
+		Light &operator=(LoadedValue &value);
 	};
 }

@@ -12,7 +12,7 @@ namespace acid
 	{
 	private:
 		uint32_t m_stageIndex;
-		RenderpassCreate *m_renderpassCreate;
+		RenderpassCreate m_renderpassCreate;
 
 		DepthStencil *m_depthStencil;
 		Renderpass *m_renderpass;
@@ -28,19 +28,21 @@ namespace acid
 		uint32_t m_lastWidth;
 		uint32_t m_lastHeight;
 	public:
-		RenderStage(const uint32_t &stageIndex, RenderpassCreate *renderpassCreate);
+		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate);
 
 		~RenderStage();
 
 		void Rebuild(Swapchain *swapchain);
 
-		uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate->GetSubpasses().size()); };
+		uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate.GetSubpasses().size()); };
 
 		uint32_t GetWidth() const;
 
 		uint32_t GetHeight() const;
 
 		bool IsOutOfDate(const VkExtent2D &extent2D);
+
+		RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
 
 		DepthStencil *GetDepthStencil() const { return m_depthStencil; };
 

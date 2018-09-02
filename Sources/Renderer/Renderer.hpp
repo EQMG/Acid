@@ -50,7 +50,7 @@ namespace acid
 
 		void Update() override;
 
-		void CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates);
+		void CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates);
 
 		/// <summary>
 		/// Takes a screenshot of the current image of the display and saves it into a image file.

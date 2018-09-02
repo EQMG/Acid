@@ -13,7 +13,7 @@ namespace acid
 	class ACID_EXPORT ThreadPool
 	{
 	private:
-		std::vector<Thread *> m_threads; // TODO: std::unique_ptr
+		std::vector<std::unique_ptr<Thread>> m_threads;
 	public:
 		static const uint32_t HARDWARE_CONCURRENCY;
 
@@ -26,6 +26,6 @@ namespace acid
 		/// </summary>
 		void Wait();
 
-		std::vector<Thread *> &GetThreads() { return m_threads; }
+		std::vector<std::unique_ptr<Thread>> &GetThreads() { return m_threads; }
 	};
 }

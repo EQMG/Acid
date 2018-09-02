@@ -210,7 +210,7 @@ namespace acid
 		/// Saves this quaternion into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(LoadedValue &destination);
 
 		float GetX() const { return m_x; }
 
@@ -234,7 +234,7 @@ namespace acid
 
 		Quaternion &operator=(const Matrix4 &other);
 
-		Quaternion &operator=(LoadedValue *value);
+		Quaternion &operator=(LoadedValue &value);
 
 		bool operator==(const Quaternion &other) const;
 

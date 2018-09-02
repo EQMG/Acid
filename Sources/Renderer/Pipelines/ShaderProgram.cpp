@@ -237,9 +237,9 @@ namespace acid
 				path = FormatString::Trim(path);
 				auto included = FileSystem::ReadTextFile(Files::SearchFile(path));
 
-				if (included.has_value())
+				if (included)
 				{
-					result << "\n" << included.value() << "\n";
+					result << "\n" << *included << "\n";
 				}
 
 				continue;

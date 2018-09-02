@@ -5,13 +5,16 @@ namespace acid
 	UiSelector::UiSelector() :
 		m_cursorX(0.0f),
 		m_cursorY(0.0f),
-		m_leftClick(false),
-		m_rightClick(false),
-		m_leftWasClick(false),
-		m_rightWasClick(false),
-		m_mouseLeft(ButtonMouse({MOUSE_BUTTON_LEFT})),
-		m_mouseRight(ButtonMouse({MOUSE_BUTTON_RIGHT}))
+		m_selectorMice(std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE>())
 	{
+		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		{
+			UiSelectorMouse selectorMouse = UiSelectorMouse();
+			selectorMouse.m_mouseButton = static_cast<MouseButton>(i);
+			selectorMouse.m_isDown = false;
+			selectorMouse.m_wasDown = false;
+			m_selectorMice[i] = selectorMouse;
+		}
 	}
 
 	UiSelector::~UiSelector()
@@ -22,18 +25,13 @@ namespace acid
 	{
 		float delta = Engine::Get()->GetDelta();
 
-		m_leftClick = m_mouseLeft.IsDown();
-		m_rightClick = m_mouseRight.IsDown();
-		m_leftWasClick = m_mouseLeft.WasDown();
-		m_rightWasClick = m_mouseRight.WasDown();
-
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();
 
-		if (Joysticks::Get()->IsConnected(selectorJoystick.GetJoystick()) && paused)
+		if (Joysticks::Get()->IsConnected(selectorJoystick.GetJoystick()))
 		{
-			if (std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisX().GetAmount())) > 0.0f ||
-				std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisY().GetAmount())) > 0.0f)
+			if (paused && (std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisX().GetAmount())) > 0.0f ||
+				std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisY().GetAmount())) > 0.0f))
 			{
 				m_cursorX += selectorJoystick.GetAxisX().GetAmount() * 0.75f * delta;
 				m_cursorY += selectorJoystick.GetAxisY().GetAmount() * 0.75f * delta;
@@ -42,10 +40,26 @@ namespace acid
 				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
 			}
 
-			m_leftClick = m_leftClick || selectorJoystick.GetClickLeft().IsDown();
-			m_rightClick = m_rightClick || selectorJoystick.GetClickRight().IsDown();
-			m_leftWasClick = m_leftWasClick || selectorJoystick.GetClickLeft().WasDown();
-			m_rightWasClick = m_rightWasClick || selectorJoystick.GetClickRight().WasDown();
+			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			{
+				auto buttonJoystick = selectorJoystick.GetInputButton(m_selectorMice[i].m_mouseButton);
+				bool isDown = Mouse::Get()->GetButton(m_selectorMice[i].m_mouseButton) || (buttonJoystick ? buttonJoystick->IsDown() : false);
+
+				if (i == MOUSE_BUTTON_LEFT)
+				{
+					m_selectorMice[i].m_wasDown = !m_selectorMice[i].m_isDown && isDown;
+					m_selectorMice[i].m_isDown = isDown;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			{
+				bool isDown = Mouse::Get()->GetButton(m_selectorMice[i].m_mouseButton);
+				m_selectorMice[i].m_wasDown = !m_selectorMice[i].m_isDown && isDown;
+				m_selectorMice[i].m_isDown = isDown;
+			}
 		}
 	}
 
@@ -69,7 +83,9 @@ namespace acid
 
 	void UiSelector::CancelWasEvent()
 	{
-		m_leftWasClick = false;
-		m_rightWasClick = false;
+		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		{
+			m_selectorMice[i].m_wasDown = false;
+		}
 	}
 }

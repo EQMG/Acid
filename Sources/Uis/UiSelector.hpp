@@ -1,8 +1,10 @@
 ﻿#pragma once
 
+#include <array>
+#include <optional>
 #include "Inputs/AxisJoystick.hpp"
 #include "Inputs/ButtonJoystick.hpp"
-#include "Inputs/ButtonMouse.hpp"
+#include "Inputs/Mouse.hpp"
 #include "UiObject.hpp"
 
 namespace acid
@@ -11,18 +13,20 @@ namespace acid
 	{
 	private:
 		JoystickPort m_joystick;
-		ButtonJoystick m_clickLeft;
-		ButtonJoystick m_clickRight;
 		AxisJoystick m_axisX;
 		AxisJoystick m_axisY;
+		std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE> m_inputButtons;
 	public:
-		SelectorJoystick(const JoystickPort &joystick = JOYSTICK_END_RANGE, const uint32_t &joystickLeftClick = 0, const uint32_t &joystickRightClick = 1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1) :
+		SelectorJoystick(const JoystickPort &joystick = JOYSTICK_1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1, const std::vector<uint32_t> &inputButtons = {0, 1}) :
 			m_joystick(joystick),
-			m_clickLeft(ButtonJoystick(joystick, {joystickLeftClick})),
-			m_clickRight(ButtonJoystick(joystick, {joystickRightClick})),
 			m_axisX(AxisJoystick(joystick, {joystickAxisX})),
-			m_axisY(AxisJoystick(joystick, {joystickAxisY}))
+			m_axisY(AxisJoystick(joystick, {joystickAxisY})),
+			m_inputButtons(std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE>())
 		{
+			for (auto &inputButton : inputButtons)
+			{
+				m_inputButtons[inputButton] = ButtonJoystick(joystick, {inputButton});
+			}
 		}
 
 		~SelectorJoystick()
@@ -33,14 +37,6 @@ namespace acid
 
 		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
 
-		ButtonJoystick GetClickLeft() const { return m_clickLeft; }
-
-		void SetClickLeft(const ButtonJoystick &clickLeft) { m_clickLeft = clickLeft; }
-
-		ButtonJoystick GetClickRight() const { return m_clickRight; }
-
-		void SetClickRight(const ButtonJoystick &clickRight) { m_clickRight = clickRight; }
-
 		AxisJoystick GetAxisX() const { return m_axisX; }
 
 		void SetAxisX(const AxisJoystick &axisX) { m_axisX = axisX; }
@@ -48,6 +44,17 @@ namespace acid
 		AxisJoystick GetAxisY() const { return m_axisY; }
 
 		void SetAxisY(const AxisJoystick &axisY) { m_axisY = axisY; }
+
+		std::optional<ButtonJoystick> GetInputButton(const MouseButton &button) const { return m_inputButtons[button]; }
+
+		void SetInputButton(const MouseButton &button, const ButtonJoystick &inputButton) { m_inputButtons[button] = inputButton; }
+	};
+
+	struct UiSelectorMouse
+	{
+		MouseButton m_mouseButton;
+		bool m_isDown;
+		bool m_wasDown;
 	};
 
 	/// <summary>
@@ -59,13 +66,7 @@ namespace acid
 		float m_cursorX;
 		float m_cursorY;
 
-		bool m_leftClick;
-		bool m_rightClick;
-		bool m_leftWasClick;
-		bool m_rightWasClick;
-
-		ButtonMouse m_mouseLeft;
-		ButtonMouse m_mouseRight;
+		std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
 	public:
 		UiSelector();
 
@@ -87,12 +88,8 @@ namespace acid
 
 		float GetCursorY() const { return m_cursorY; }
 
-		bool GetLeftClick() const { return m_leftClick; }
+		bool IsDown(const MouseButton &button) const { return m_selectorMice[button].m_isDown; }
 
-		bool GetRightClick() const { return m_rightClick; }
-
-		bool WasLeftClick() const { return m_leftWasClick; }
-
-		bool WasRightClick() const { return m_rightWasClick; }
+		bool WasDown(const MouseButton &button) const { return m_selectorMice[button].m_wasDown; }
 	};
 }

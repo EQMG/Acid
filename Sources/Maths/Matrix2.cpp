@@ -222,10 +222,10 @@ namespace acid
 		return result;
 	}
 
-	void Matrix2::Write(LoadedValue *destination)
+	void Matrix2::Write(LoadedValue &destination)
 	{
-		m_rows[0].Write(destination->GetChild("m0", true));
-		m_rows[1].Write(destination->GetChild("m1", true));
+		m_rows[0].Write(*destination.GetChild("m0", true));
+		m_rows[1].Write(*destination.GetChild("m1", true));
 	}
 
 	Matrix2 &Matrix2::operator=(const Matrix2 &other)
@@ -244,10 +244,10 @@ namespace acid
 		return *this;
 	}
 
-	Matrix2 &Matrix2::operator=(LoadedValue *source)
+	Matrix2 &Matrix2::operator=(LoadedValue &value)
 	{
-		m_rows[0] = source->GetChild("m0");
-		m_rows[1] = source->GetChild("m1");
+		m_rows[0] = *value.GetChild("m0");
+		m_rows[1] = *value.GetChild("m1");
 		return *this;
 	}
 

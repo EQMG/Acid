@@ -25,11 +25,11 @@ namespace acid
 		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 	}
 
-	void ShadowRender::Load(LoadedValue *value)
+	void ShadowRender::Load(LoadedValue &value)
 	{
 	}
 
-	void ShadowRender::Write(LoadedValue *destination)
+	void ShadowRender::Write(LoadedValue &destination)
 	{
 	}
 

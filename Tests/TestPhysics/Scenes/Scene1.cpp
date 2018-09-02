@@ -39,7 +39,7 @@ namespace test
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg")),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
+		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
@@ -121,6 +121,7 @@ namespace test
 		teapot->AddComponent<MeshRender>();
 	//	teapot->AddComponent<ShadowRender>();
 
+	//	GameObject *system1 = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 10.0f, 0.0f)));
 		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
 			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::BLUE, 10.0f, 1.0f),
 			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::YELLOW, 6.0f, 3.0f),

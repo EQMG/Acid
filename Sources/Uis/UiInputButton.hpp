@@ -28,6 +28,8 @@ namespace acid
 
 		void UpdateObject() override;
 
+		bool OnActionMouse(const MouseButton &button) override;
+
 		std::string GetText() const { return m_text->GetString(); }
 
 		void SetText(const std::string &string) const { m_text->SetString(string); }

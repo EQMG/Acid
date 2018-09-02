@@ -57,15 +57,15 @@ namespace test
 		}
 	}
 
-	void SkyboxCycle::Load(LoadedValue *value)
+	void SkyboxCycle::Load(LoadedValue &value)
 	{
-		m_enableFog = value->GetChild("Enable Fog")->Get<bool>();
-		m_enableRotation = value->GetChild("Enable Rotation")->Get<bool>();
+		m_enableFog = value.GetChild("Enable Fog")->Get<bool>();
+		m_enableRotation = value.GetChild("Enable Rotation")->Get<bool>();
 	}
 
-	void SkyboxCycle::Write(LoadedValue *destination)
+	void SkyboxCycle::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Enable Fog", true)->Set((int) m_enableFog);
-		destination->GetChild("Enable Rotation", true)->Set((int) m_enableRotation);
+		destination.GetChild("Enable Fog", true)->Set(static_cast<int>(m_enableFog));
+		destination.GetChild("Enable Rotation", true)->Set(static_cast<int>(m_enableRotation));
 	}
 }

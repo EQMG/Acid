@@ -30,17 +30,17 @@ namespace acid
 	{
 	}
 
-	void MaterialSkybox::Load(LoadedValue *value)
+	void MaterialSkybox::Load(LoadedValue &value)
 	{
-		TrySetCubemap(value->GetChild("Cubemap Texture")->GetString(), value->GetChild("Cubemap Extension")->GetString());
-		m_skyColour = value->GetChild("Sky Colour")->GetString();
+		TrySetCubemap(value.GetChild("Cubemap Texture")->GetString(), value.GetChild("Cubemap Extension")->GetString());
+		m_skyColour = value.GetChild("Sky Colour")->GetString();
 	}
 
-	void MaterialSkybox::Write(LoadedValue *destination)
+	void MaterialSkybox::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
-		destination->GetChild("Cubemap Extension", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
-		destination->GetChild("Sky Colour", true)->SetString(m_skyColour.GetHex());
+		destination.GetChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
+		destination.GetChild("Cubemap Extension", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
+		destination.GetChild("Sky Colour", true)->SetString(m_skyColour.GetHex());
 	}
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)

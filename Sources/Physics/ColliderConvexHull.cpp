@@ -60,11 +60,11 @@ namespace acid
 		}
 	}
 
-	void ColliderConvexHull::Load(LoadedValue *value)
+	void ColliderConvexHull::Load(LoadedValue &value)
 	{
 	}
 
-	void ColliderConvexHull::Write(LoadedValue *destination)
+	void ColliderConvexHull::Write(LoadedValue &destination)
 	{
 	}
 

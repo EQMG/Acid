@@ -18,7 +18,7 @@ namespace test
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
 		m_primaryColour(new Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, 0, 1)),
+		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_buttonPause((new ButtonCompound({
 			new ButtonKeyboard({KEY_ESCAPE}),
 			new ButtonJoystick(JOYSTICK_1, {7})

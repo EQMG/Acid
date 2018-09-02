@@ -292,7 +292,7 @@ namespace acid
 		/// Saves this vector into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(LoadedValue &destination);
 
 		float GetX() const { return m_x; }
 
@@ -314,7 +314,7 @@ namespace acid
 
 		Vector3 &operator=(const Colour &other);
 
-		Vector3 &operator=(LoadedValue *value);
+		Vector3 &operator=(LoadedValue &value);
 
 		bool operator==(const Vector3 &other) const;
 

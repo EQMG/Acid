@@ -74,12 +74,12 @@ namespace acid
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_computeCreate.GetShaderStage());
 
-		if (!fileLoaded.has_value())
+		if (!fileLoaded)
 		{
 			return;
 		}
 
-		auto shaderCode = ShaderProgram::InsertDefineBlock(fileLoaded.value(), defineBlock.str());
+		auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());
 		shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
 
 		VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(m_computeCreate.GetShaderStage());

@@ -50,22 +50,22 @@ namespace acid
 		}
 	}
 
-	void ParticleSystem::Load(LoadedValue *value)
+	void ParticleSystem::Load(LoadedValue &value)
 	{
 	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
 	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
-		m_pps = value->GetChild("PPS")->Get<float>();
-		m_averageSpeed = value->GetChild("Average Speed")->Get<float>();
-		m_gravityEffect = value->GetChild("Gravity Effect")->Get<float>();
-		m_systemOffset = value->GetChild("Offset");
+		m_pps = value.GetChild("PPS")->Get<float>();
+		m_averageSpeed = value.GetChild("Average Speed")->Get<float>();
+		m_gravityEffect = value.GetChild("Gravity Effect")->Get<float>();
+		m_systemOffset = *value.GetChild("Offset");
 	}
 
-	void ParticleSystem::Write(LoadedValue *destination)
+	void ParticleSystem::Write(LoadedValue &destination)
 	{
-		destination->GetChild("PPS", true)->Set(m_pps);
-		destination->GetChild("Average Speed", true)->Set(m_averageSpeed);
-		destination->GetChild("Gravity Effect", true)->Set(m_gravityEffect);
-		m_systemOffset.Write(destination->GetChild("Offset", true));
+		destination.GetChild("PPS", true)->Set(m_pps);
+		destination.GetChild("Average Speed", true)->Set(m_averageSpeed);
+		destination.GetChild("Gravity Effect", true)->Set(m_gravityEffect);
+		m_systemOffset.Write(*destination.GetChild("Offset", true));
 	}
 
 	Particle *ParticleSystem::EmitParticle()

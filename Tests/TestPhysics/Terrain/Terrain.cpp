@@ -55,11 +55,11 @@ namespace test
 	{
 	}
 
-	void Terrain::Load(LoadedValue *value)
+	void Terrain::Load(LoadedValue &value)
 	{
 	}
 
-	void Terrain::Write(LoadedValue *destination)
+	void Terrain::Write(LoadedValue &destination)
 	{
 	}
 

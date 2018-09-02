@@ -137,6 +137,7 @@ Old resources have been removed from the main repo, resources for commits from b
 You can contribute to Acid in any way you want, we are always looking for help.
 
 ## Support
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
+
 If you like what I am doing in this project, please consider donating.
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/mattparks5855)

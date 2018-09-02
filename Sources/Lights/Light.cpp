@@ -33,18 +33,18 @@ namespace acid
 		m_position = GetGameObject()->GetTransform().GetPosition() + m_offset;
 	}
 
-	void Light::Load(LoadedValue *value)
+	void Light::Load(LoadedValue &value)
 	{
-		m_colour = value->GetChild("Colour")->GetString();
-		m_offset = value->GetChild("Offset");
-		m_radius = value->GetChild("Radius")->Get<float>();
+		m_colour = value.GetChild("Colour")->GetString();
+		m_offset = *value.GetChild("Offset");
+		m_radius = value.GetChild("Radius")->Get<float>();
 	}
 
-	void Light::Write(LoadedValue *destination)
+	void Light::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Colour", true)->SetString(m_colour.GetHex());
-		m_offset.Write(destination->GetChild("Offset", true));
-		destination->GetChild("Radius", true)->Set(m_radius);
+		destination.GetChild("Colour", true)->SetString(m_colour.GetHex());
+		m_offset.Write(*destination.GetChild("Offset", true));
+		destination.GetChild("Radius", true)->Set(m_radius);
 	}
 
 	Light &Light::operator=(const Light &other)
@@ -55,11 +55,9 @@ namespace acid
 		return *this;
 	}
 
-	Light &Light::operator=(LoadedValue *source)
+	Light &Light::operator=(LoadedValue &value)
 	{
-		m_colour = source->GetChild("colour");
-		m_offset = source->GetChild("offset");
-		m_radius = source->GetChild("radius")->Get<float>();
+		Load(value);
 		return *this;
 	}
 }

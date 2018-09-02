@@ -220,9 +220,9 @@ namespace acid
 
 				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
 
-				if (character.has_value())
+				if (character)
 				{
-					currentWord.AddCharacter(character.value(), m_kerning);
+					currentWord.AddCharacter(*character, m_kerning);
 				}
 			}
 

@@ -41,11 +41,11 @@ namespace acid
 	{
 		// Click updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector().WasLeftClick())
+			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
 		{
 			m_updating = true;
 		}
-		else if (!Uis::Get()->GetSelector().GetLeftClick())
+		else if (!Uis::Get()->GetSelector().IsDown(MOUSE_BUTTON_LEFT))
 		{
 			m_updating = false;
 		}

@@ -27,16 +27,16 @@ namespace acid
 		//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height, m_radius)); // TODO
 	}
 
-	void ColliderCapsule::Load(LoadedValue *value)
+	void ColliderCapsule::Load(LoadedValue &value)
 	{
-		m_radius = value->GetChild("Radius")->Get<float>();
-		m_height = value->GetChild("Height")->Get<float>();
+		m_radius = value.GetChild("Radius")->Get<float>();
+		m_height = value.GetChild("Height")->Get<float>();
 	}
 
-	void ColliderCapsule::Write(LoadedValue *destination)
+	void ColliderCapsule::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Radius", true)->Set(m_radius);
-		destination->GetChild("Height", true)->Set(m_height);
+		destination.GetChild("Radius", true)->Set(m_radius);
+		destination.GetChild("Height", true)->Set(m_height);
 	}
 
 	btCollisionShape *ColliderCapsule::GetCollisionShape() const

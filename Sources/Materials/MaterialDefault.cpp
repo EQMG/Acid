@@ -47,34 +47,34 @@ namespace acid
 	{
 	}
 
-	void MaterialDefault::Load(LoadedValue *value)
+	void MaterialDefault::Load(LoadedValue &value)
 	{
-		m_baseDiffuse = value->GetChild("Base Diffuse")->GetString();
-		TrySetDiffuseTexture(value->GetChild("Diffuse Texture")->GetString());
+		m_baseDiffuse = value.GetChild("Base Diffuse")->GetString();
+		TrySetDiffuseTexture(value.GetChild("Diffuse Texture")->GetString());
 
-		m_metallic = value->GetChild("Metallic")->Get<float>();
-		m_roughness = value->GetChild("Roughness")->Get<float>();
-		TrySetMaterialTexture(value->GetChild("Material Texture")->GetString());
-		TrySetNormalTexture(value->GetChild("Normal Texture")->GetString());
+		m_metallic = value.GetChild("Metallic")->Get<float>();
+		m_roughness = value.GetChild("Roughness")->Get<float>();
+		TrySetMaterialTexture(value.GetChild("Material Texture")->GetString());
+		TrySetNormalTexture(value.GetChild("Normal Texture")->GetString());
 
-		m_castsShadows = value->GetChild("Casts Shadows")->Get<bool>();
-		m_ignoreLighting = value->GetChild("Ignore Lighting")->Get<bool>();
-		m_ignoreFog = value->GetChild("Ignore Fog")->Get<bool>();
+		m_castsShadows = value.GetChild("Casts Shadows")->Get<bool>();
+		m_ignoreLighting = value.GetChild("Ignore Lighting")->Get<bool>();
+		m_ignoreFog = value.GetChild("Ignore Fog")->Get<bool>();
 	}
 
-	void MaterialDefault::Write(LoadedValue *destination)
+	void MaterialDefault::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Base Diffuse", true)->SetString(m_baseDiffuse.GetHex());
-		destination->GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		destination.GetChild("Base Diffuse", true)->SetString(m_baseDiffuse.GetHex());
+		destination.GetChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
 
-		destination->GetChild("Metallic", true)->Set(m_metallic);
-		destination->GetChild("Roughness", true)->Set(m_roughness);
-		destination->GetChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
-		destination->GetChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
+		destination.GetChild("Metallic", true)->Set(m_metallic);
+		destination.GetChild("Roughness", true)->Set(m_roughness);
+		destination.GetChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
+		destination.GetChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
 
-		destination->GetChild("Casts Shadows", true)->Set(m_castsShadows);
-		destination->GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
-		destination->GetChild("Ignore Fog", true)->Set(m_ignoreFog);
+		destination.GetChild("Casts Shadows", true)->Set(m_castsShadows);
+		destination.GetChild("Ignore Lighting", true)->Set(m_ignoreLighting);
+		destination.GetChild("Ignore Fog", true)->Set(m_ignoreFog);
 	}
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)

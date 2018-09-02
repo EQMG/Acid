@@ -36,9 +36,9 @@ namespace acid
 
 		void Update() override = 0;
 
-		virtual void Load(LoadedValue *value) = 0;
+		virtual void Load(LoadedValue &value) = 0;
 
-		virtual void Write(LoadedValue *destination) = 0;
+		virtual void Write(LoadedValue &destination) = 0;
 
 		virtual btCollisionShape *GetCollisionShape() const = 0;
 

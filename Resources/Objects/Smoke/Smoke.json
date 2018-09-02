@@ -1,0 +1,43 @@
+{
+  "ParticleSystem": {
+	"Types": [
+	  {
+		"Texture": "Particles/Circular.png",
+		"Number Of Rows": 4,
+		"Colour Offset": "#0000ff",
+		"Life Length": 10.0,
+		"Scale": 1.0
+	  },
+	  {
+		"Texture": "Particles/Circular.png",
+		"Number Of Rows": 4,
+		"Colour Offset": "#ffff00",
+		"Life Length": 6.0,
+		"Scale": 3.0
+	  },
+	  {
+		"Texture": "Particles/Circular.png",
+		"Number Of Rows": 4,
+		"Colour Offset": "#ff0000",
+		"Life Length": 8.0,
+		"Scale": 2.0
+	  }
+	],
+	"Spawn Circle": {
+	  "Radius": 2.0,
+	  "Heading": {
+		"x": 0.0,
+		"y": 1.0,
+		"z": 0.0
+	  }
+	},
+	"PPS": 50.0,
+	"Average Speed": 0.3,
+	"Gravity Effect": 1.0,
+	"System Offset": {
+	  "x": 0.0,
+	  "y": 1.0,
+	  "z": 0.0
+	}
+  }
+}
