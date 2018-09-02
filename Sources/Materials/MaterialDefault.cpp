@@ -6,8 +6,8 @@
 
 namespace acid
 {
-	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Texture> diffuseTexture,
-									 const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture,
+	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, const std::shared_ptr<Texture> &diffuseTexture,
+									 const float &metallic, const float &roughness, const std::shared_ptr<Texture> &materialTexture, const std::shared_ptr<Texture> &normalTexture,
 									 const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		IMaterial(),
 		m_animated(false),

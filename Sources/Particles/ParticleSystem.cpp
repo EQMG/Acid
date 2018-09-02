@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, std::shared_ptr<ISpawnParticle> spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, const std::shared_ptr<ISpawnParticle> &spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		IComponent(),
 		m_types(types),
 		m_spawn(spawn),
@@ -127,7 +127,7 @@ namespace acid
 		return Vector3(x, y, z);
 	}
 
-	void ParticleSystem::AddParticleType(std::shared_ptr<ParticleType> type)
+	void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
 	{
 		if (std::find(m_types.begin(), m_types.end(), type) != m_types.end())
 		{
@@ -137,7 +137,7 @@ namespace acid
 		m_types.emplace_back(type);
 	}
 
-	bool ParticleSystem::RemoveParticleType(std::shared_ptr<ParticleType> type)
+	bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &type)
 	{
 		for (auto it = m_types.begin(); it != m_types.end(); ++it)
 		{

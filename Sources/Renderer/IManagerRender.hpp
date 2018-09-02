@@ -61,7 +61,7 @@ namespace acid
 			return alternative;
 		}
 
-		std::shared_ptr<IRenderer> AddRenderer(std::shared_ptr<IRenderer> renderer);
+		std::shared_ptr<IRenderer> AddRenderer(const std::shared_ptr<IRenderer> &renderer);
 
 		template<typename T, typename... Args>
 		std::shared_ptr<T> AddRenderer(Args &&... args)
@@ -71,7 +71,7 @@ namespace acid
 			return created;
 		}
 
-		std::shared_ptr<IRenderer> RemoveRenderer(std::shared_ptr<IRenderer> renderer);
+		std::shared_ptr<IRenderer> RemoveRenderer(const std::shared_ptr<IRenderer> &renderer);
 
 		template<typename T>
 		std::shared_ptr<T> RemoveRenderer()

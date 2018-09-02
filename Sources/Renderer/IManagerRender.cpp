@@ -14,7 +14,7 @@ namespace acid
 	{
 	}
 
-	std::shared_ptr<IRenderer> IManagerRender::AddRenderer(std::shared_ptr<IRenderer> renderer)
+	std::shared_ptr<IRenderer> IManagerRender::AddRenderer(const std::shared_ptr<IRenderer> &renderer)
 	{
 		if (renderer == nullptr)
 		{
@@ -37,7 +37,7 @@ namespace acid
 		return renderer;
 	}
 
-	std::shared_ptr<IRenderer> IManagerRender::RemoveRenderer(std::shared_ptr<IRenderer> renderer)
+	std::shared_ptr<IRenderer> IManagerRender::RemoveRenderer(const std::shared_ptr<IRenderer> &renderer)
 	{
 		for (auto &stage : m_stages)
 		{

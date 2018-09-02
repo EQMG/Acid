@@ -71,7 +71,7 @@ namespace acid
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, std::shared_ptr<FontType> fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const TextJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const TextJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		/// <summary>
 		/// Deconstructor for the text.
@@ -188,7 +188,7 @@ namespace acid
 		/// Sets the border driver, will disable glowing.
 		/// </summary>
 		/// <param name="driver"> The new border driver. </param>
-		void SetBorderDriver(std::shared_ptr<IDriver> driver);
+		void SetBorderDriver(const std::shared_ptr<IDriver> &driver);
 
 		/// <summary>
 		/// Sets a new border driver from a type, will disable glowing.
@@ -202,7 +202,7 @@ namespace acid
 		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="driver"> The new glow driver. </param>
-		void SetGlowingDriver(std::shared_ptr<IDriver> driver);
+		void SetGlowingDriver(const std::shared_ptr<IDriver> &driver);
 
 		/// <summary>
 		/// Sets a new glow driver from a type, will disable solid borders.

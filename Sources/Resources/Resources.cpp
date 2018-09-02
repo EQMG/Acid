@@ -49,7 +49,7 @@ namespace acid
 		return nullptr;
 	}
 
-	void Resources::Add(std::shared_ptr<IResource> resource)
+	void Resources::Add(const std::shared_ptr<IResource> &resource)
 	{
 		if (std::find(m_resources.begin(), m_resources.end(), resource) != m_resources.end())
 		{
@@ -59,7 +59,7 @@ namespace acid
 		m_resources.emplace_back(resource);
 	}
 
-	bool Resources::Remove(std::shared_ptr<IResource> resource)
+	bool Resources::Remove(const std::shared_ptr<IResource> &resource)
 	{
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{

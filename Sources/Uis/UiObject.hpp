@@ -114,7 +114,7 @@ namespace acid
 		/// Sets the alpha driver.
 		/// </summary>
 		/// <param name="driver"> The new alpha driver. </param>
-		void SetAlphaDriver(std::shared_ptr<IDriver> alphaDriver) { m_alphaDriver = alphaDriver; }
+		void SetAlphaDriver(const std::shared_ptr<IDriver> &alphaDriver) { m_alphaDriver = alphaDriver; }
 
 		/// <summary>
 		/// Sets a new alpha driver from a type.
@@ -130,7 +130,7 @@ namespace acid
 		/// Sets the scale driver.
 		/// </summary>
 		/// <param name="driver"> The new scale driver. </param>
-		void SetScaleDriver(std::shared_ptr<IDriver> scaleDriver) { m_scaleDriver = scaleDriver; }
+		void SetScaleDriver(const std::shared_ptr<IDriver> &scaleDriver) { m_scaleDriver = scaleDriver; }
 
 		/// <summary>
 		/// Sets a new scale driver from a type.

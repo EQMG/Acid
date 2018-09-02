@@ -19,7 +19,7 @@ namespace acid
 #define CONFIG_GET(f) (std::function<std::string()>([&]() -> std::string { return std::to_string(f); }))
 #define CONFIG_SET(t, f) (std::function<void(t)>([&](const t &v) -> void { f; }))
 
-		Config(std::shared_ptr<IFile> file);
+		Config(const std::shared_ptr<IFile> &file);
 
 		~Config();
 

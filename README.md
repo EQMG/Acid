@@ -116,17 +116,17 @@ Acid uses the following libraries:
 Acid is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
 
 ## Developer Setup
-Once Acid is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on CMake to generate IDE/make files.
+Once Acid is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on [CMake](https://cmake.org/download/) to generate IDE/make files.
 
-The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) is required to develop and run Acid.
+The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) is required to develop and run Acid, ensure you have these installed and up to date.
 
-On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. Install the latest [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and Acid should compile properly. Run Scripts/generate_vs.bat and an environment will be setup in Build.
+On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. The workspace can be opened as a cmake folder in VS.
 
-Ensure you are using a compiler with full c++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
+Ensure you are using a compiler with full C++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
-On Linux a GCC/Clang compiler is required with c++17 support, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
+On Linux a GCC/Clang compiler is required with C++17 support, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
 
-Setup on MacOS is similar to the setup on Linux, except MoltenVK is used instead of Vulkan.
+Setup on MacOS is similar to the setup on Linux.
 
 ## Resources
 Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
@@ -135,3 +135,8 @@ Old resources have been removed from the main repo, resources for commits from b
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help.
+
+## Support
+If you like what I am doing in this project, please consider donating.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/mattparks5855)

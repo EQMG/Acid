@@ -44,7 +44,7 @@ namespace acid
 
 		virtual VertexInput GetVertexInput() const { return VertexAnimated::GetVertexInput(); }
 
-		void SetModel(std::shared_ptr<Model> model) override { m_model = model; }
+		void SetModel(const std::shared_ptr<Model> &model) override { m_model = model; }
 
 		void TrySetModel(const std::string &filename) override;
 

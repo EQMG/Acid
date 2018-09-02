@@ -21,7 +21,7 @@ namespace acid
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
+		MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
 
 		~MaterialSkybox();
 
@@ -39,7 +39,7 @@ namespace acid
 
 		std::shared_ptr<Cubemap> GetCubemap() const { return m_cubemap; }
 
-		void SetCubemap(std::shared_ptr<Cubemap> cubemap) { m_cubemap = cubemap; }
+		void SetCubemap(const std::shared_ptr<Cubemap> &cubemap) { m_cubemap = cubemap; }
 
 		void TrySetCubemap(const std::string &filename, const std::string &fileExt)
 		{

@@ -34,13 +34,13 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IEvent> Events::AddEvent(std::shared_ptr<IEvent> event)
+	std::shared_ptr<IEvent> Events::AddEvent(const std::shared_ptr<IEvent> &event)
 	{
 		m_events.emplace_back(event);
 		return event;
 	}
 
-	std::shared_ptr<IEvent> Events::RemoveEvent(std::shared_ptr<IEvent> event)
+	std::shared_ptr<IEvent> Events::RemoveEvent(const std::shared_ptr<IEvent> &event)
 	{
 		for (auto it = m_events.begin(); it != m_events.end(); ++it)
 		{

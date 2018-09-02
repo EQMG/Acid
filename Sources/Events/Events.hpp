@@ -41,7 +41,7 @@ namespace acid
 		/// </summary>
 		/// <param name="event"> The event to add. </param>
 		/// <returns> The added event. </returns>
-		std::shared_ptr<IEvent> AddEvent(std::shared_ptr<IEvent> event);
+		std::shared_ptr<IEvent> AddEvent(const std::shared_ptr<IEvent> &event);
 
 		/// <summary>
 		/// Adds an event to the listening list.
@@ -56,6 +56,6 @@ namespace acid
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
 		/// <returns> The removed event. </returns>
-		std::shared_ptr<IEvent> RemoveEvent(std::shared_ptr<IEvent> event);
+		std::shared_ptr<IEvent> RemoveEvent(const std::shared_ptr<IEvent> &event);
 	};
 }
