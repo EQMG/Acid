@@ -4,13 +4,13 @@
 
 namespace acid
 {
-	AnimationLoader::AnimationLoader(LoadedValue *libraryAnimations, LoadedValue *libraryVisualScenes) :
+	AnimationLoader::AnimationLoader(const std::shared_ptr<LoadedValue> &libraryAnimations, const std::shared_ptr<LoadedValue> &libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
 		m_libraryVisualScenes(libraryVisualScenes),
 		m_lengthSeconds(0.0f),
-		m_keyframeData(std::vector<KeyframeData *>())
+		m_keyframeData(std::vector<KeyframeData>())
 	{
-		auto animationNodes = m_libraryAnimations->GetChildren("animation");
+		auto animationNodes = m_libraryAnimations->FindChildren("animation");
 
 		std::string rootNode = FindRootJointName();
 		auto times = GetKeyTimes();
@@ -25,21 +25,17 @@ namespace acid
 
 	AnimationLoader::~AnimationLoader()
 	{
-		for (auto &keyframeData : m_keyframeData)
-		{
-			delete keyframeData;
-		}
 	}
 
 	std::string AnimationLoader::FindRootJointName()
 	{
-		LoadedValue *skeleton = m_libraryVisualScenes->GetChild("visual_scene")->GetChildWithAttribute("node", "id", "Armature");
-		return skeleton->GetChild("node")->GetAttribute("id");
+		auto skeleton = m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
+		return skeleton->FindChild("node")->FindAttribute("id");
 	}
 
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
-		LoadedValue *timeData = m_libraryAnimations->GetChild("animation")->GetChild("source")->GetChild("float_array");
+		auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
 		auto rawTimes = FormatString::Split(timeData->GetValue(), " ");
 		auto times = std::vector<float>(rawTimes.size());
 
@@ -55,33 +51,32 @@ namespace acid
 	{
 		for (auto &time : times)
 		{
-			m_keyframeData.emplace_back(new KeyframeData(time));
+			m_keyframeData.emplace_back(KeyframeData(time));
 		}
 	}
 
-	void AnimationLoader::LoadJointTransforms(LoadedValue *jointData, const std::string &rootNodeId)
+	void AnimationLoader::LoadJointTransforms(std::shared_ptr<LoadedValue> &jointData, const std::string &rootNodeId)
 	{
 		std::string jointNameId = GetJointName(jointData);
 		std::string dataId = GetDataId(jointData);
 
-		LoadedValue *transformData = jointData->GetChildWithAttribute("source", "id", dataId);
+		auto transformData = jointData->FindChildWithAttribute("source", "id", dataId);
 
-		std::string data = transformData->GetChild("float_array")->GetValue();
+		std::string data = transformData->FindChild("float_array")->GetValue();
 		auto splitData = FormatString::Split(data, " ");
 		ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 	}
 
-	std::string AnimationLoader::GetDataId(LoadedValue *jointData)
+	std::string AnimationLoader::GetDataId(std::shared_ptr<LoadedValue> &jointData)
 	{
-		LoadedValue *node = jointData->GetChild("sampler")->GetChildWithAttribute("input", "semantic", "OUTPUT");
-
-		return node->GetAttribute("source").substr(1);
+		auto node = jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT");
+		return node->FindAttribute("source").substr(1);
 	}
 
-	std::string AnimationLoader::GetJointName(LoadedValue *jointData)
+	std::string AnimationLoader::GetJointName(std::shared_ptr<LoadedValue> &jointData)
 	{
-		auto channelNode = jointData->GetChild("channel");
-		std::string data = channelNode->GetAttribute("target");
+		auto channelNode = jointData->FindChild("channel");
+		std::string data = channelNode->FindAttribute("target");
 		auto splitData = FormatString::Split(data, "/");
 		return splitData[0];
 	}
@@ -105,7 +100,7 @@ namespace acid
 				transform = MeshAnimated::CORRECTION * transform;
 			}
 
-			m_keyframeData[i]->AddJointTransform(new JointTransformData(jointName, transform));
+			m_keyframeData[i].AddJointTransform(JointTransformData(jointName, transform));
 		}
 	}
 }

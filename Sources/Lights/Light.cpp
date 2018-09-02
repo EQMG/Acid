@@ -35,16 +35,16 @@ namespace acid
 
 	void Light::Load(LoadedValue &value)
 	{
-		m_colour = value.GetChild("Colour")->GetString();
-		m_offset = *value.GetChild("Offset");
-		m_radius = value.GetChild("Radius")->Get<float>();
+		m_colour = value.FindChild("Colour")->GetString();
+		m_offset = *value.FindChild("Offset");
+		m_radius = value.FindChild("Radius")->Get<float>();
 	}
 
 	void Light::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Colour", true)->SetString(m_colour.GetHex());
-		m_offset.Write(*destination.GetChild("Offset", true));
-		destination.GetChild("Radius", true)->Set(m_radius);
+		destination.FindChild("Colour", true)->SetString(m_colour.GetHex());
+		m_offset.Write(*destination.FindChild("Offset", true));
+		destination.FindChild("Radius", true)->Set(m_radius);
 	}
 
 	Light &Light::operator=(const Light &other)

@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height) :
 		Collider(),
-		m_shape(new btCapsuleShape(radius, height)),
+		m_shape(std::make_shared<btCapsuleShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)
 	{
@@ -15,7 +15,6 @@ namespace acid
 
 	ColliderCapsule::~ColliderCapsule()
 	{
-		delete m_shape;
 	}
 
 	void ColliderCapsule::Start()
@@ -29,17 +28,17 @@ namespace acid
 
 	void ColliderCapsule::Load(LoadedValue &value)
 	{
-		m_radius = value.GetChild("Radius")->Get<float>();
-		m_height = value.GetChild("Height")->Get<float>();
+		m_radius = value.FindChild("Radius")->Get<float>();
+		m_height = value.FindChild("Height")->Get<float>();
 	}
 
 	void ColliderCapsule::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Radius", true)->Set(m_radius);
-		destination.GetChild("Height", true)->Set(m_height);
+		destination.FindChild("Radius", true)->Set(m_radius);
+		destination.FindChild("Height", true)->Set(m_height);
 	}
 
-	btCollisionShape *ColliderCapsule::GetCollisionShape() const
+	std::shared_ptr<btCollisionShape> ColliderCapsule::GetCollisionShape() const
 	{
 		return m_shape;
 	}

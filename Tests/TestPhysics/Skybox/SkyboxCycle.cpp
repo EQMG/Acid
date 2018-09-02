@@ -59,13 +59,13 @@ namespace test
 
 	void SkyboxCycle::Load(LoadedValue &value)
 	{
-		m_enableFog = value.GetChild("Enable Fog")->Get<bool>();
-		m_enableRotation = value.GetChild("Enable Rotation")->Get<bool>();
+		m_enableFog = value.FindChild("Enable Fog")->Get<bool>();
+		m_enableRotation = value.FindChild("Enable Rotation")->Get<bool>();
 	}
 
 	void SkyboxCycle::Write(LoadedValue &destination)
 	{
-		destination.GetChild("Enable Fog", true)->Set(static_cast<int>(m_enableFog));
-		destination.GetChild("Enable Rotation", true)->Set(static_cast<int>(m_enableRotation));
+		destination.FindChild("Enable Fog", true)->Set(static_cast<int>(m_enableFog));
+		destination.FindChild("Enable Rotation", true)->Set(static_cast<int>(m_enableRotation));
 	}
 }

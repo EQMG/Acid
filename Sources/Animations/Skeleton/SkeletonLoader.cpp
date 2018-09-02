@@ -4,14 +4,14 @@
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(LoadedValue *libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(const std::shared_ptr<LoadedValue> &libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
 		m_headJoint(nullptr)
 	{
-		m_armatureData = libraryControllers->GetChild("visual_scene")->GetChildWithAttribute("node", "id", "Armature");
-		auto headNode = m_armatureData->GetChild("node");
+		m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
+		auto headNode = m_armatureData->FindChild("node");
 		m_headJoint = LoadJointData(headNode, true);
 	}
 
@@ -20,11 +20,11 @@ namespace acid
 		delete m_headJoint;
 	}
 
-	JointData *SkeletonLoader::LoadJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(std::shared_ptr<LoadedValue> &jointNode, const bool &isRoot)
 	{
 		JointData *joint = ExtractMainJointData(jointNode, isRoot);
 
-		for (auto &childNode : jointNode->GetChildren("node"))
+		for (auto &childNode : jointNode->FindChildren("node"))
 		{
 			joint->AddChild(LoadJointData(childNode, false));
 		}
@@ -32,11 +32,11 @@ namespace acid
 		return joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(LoadedValue *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(std::shared_ptr<LoadedValue> &jointNode, const bool &isRoot)
 	{
-		std::string nameId = jointNode->GetAttribute("id");
+		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);
-		auto matrixData = FormatString::Split(jointNode->GetChild("matrix")->GetValue(), " ");
+		auto matrixData = FormatString::Split(jointNode->FindChild("matrix")->GetValue(), " ");
 
 		Matrix4 transform = Matrix4();
 

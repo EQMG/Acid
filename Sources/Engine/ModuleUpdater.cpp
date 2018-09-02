@@ -1,12 +1,11 @@
-#include "MainUpdater.hpp"
+#include "ModuleUpdater.hpp"
 
-#include <Engine/Engine.hpp>
-#include <Maths/Maths.hpp>
+#include "Engine/Engine.hpp"
+#include "Maths/Maths.hpp"
 
-namespace test
+namespace acid
 {
-	MainUpdater::MainUpdater() :
-		IUpdater(),
+	ModuleUpdater::ModuleUpdater() :
 		m_deltaUpdate(Delta()),
 		m_deltaRender(Delta()),
 		m_timerUpdate(Timer(1.0f / 66.0f)),
@@ -14,11 +13,11 @@ namespace test
 	{
 	}
 
-	MainUpdater::~MainUpdater()
+	ModuleUpdater::~ModuleUpdater()
 	{
 	}
 
-	void MainUpdater::Update(const ModuleRegister &moduleRegister)
+	void ModuleUpdater::Update(const ModuleRegister &moduleRegister)
 	{
 		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());
 

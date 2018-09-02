@@ -5,7 +5,7 @@ namespace acid
 	Joint::Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform) :
 		m_index(index),
 		m_name(name),
-		m_children(std::vector<Joint *>()),
+		m_children(std::vector<std::shared_ptr<Joint>>()),
 		m_localBindTransform(bindLocalTransform),
 		m_animatedTransform(Matrix4()),
 		m_inverseBindTransform(Matrix4())
@@ -14,10 +14,6 @@ namespace acid
 
 	Joint::~Joint()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
 	void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
@@ -31,12 +27,12 @@ namespace acid
 		}
 	}
 
-	void Joint::AddChild(Joint *child)
+	void Joint::AddChild(const std::shared_ptr<Joint> &child)
 	{
 		m_children.emplace_back(child);
 	}
 
-	void Joint::AddSelfAndChildren(std::vector<Joint *> *children)
+	void Joint::AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> *children)
 	{
 		children->emplace_back(this);
 

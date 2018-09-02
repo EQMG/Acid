@@ -1,46 +1,49 @@
 #pragma once
 
 #include "Exports.hpp"
+#include "Maths/Delta.hpp"
+#include "Maths/Timer.hpp"
 #include "ModuleRegister.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// A class used to define how the engine will run updates and timings.
+	/// A class used to define how the engine will run updates and timings on modules.
 	/// </summary>
-	class ACID_EXPORT IUpdater
+	class ModuleUpdater
 	{
+	private:
+		Delta m_deltaUpdate;
+		Delta m_deltaRender;
+		Timer m_timerUpdate;
+		Timer m_timerRender;
 	public:
 		/// <summary>
 		/// Creates a new updater.
 		/// </summary>
-		IUpdater()
-		{
-		}
+		ModuleUpdater();
 
 		/// <summary>
 		/// Deconstructor for the updater.
 		/// </summary>
-		virtual ~IUpdater()
-		{
-		}
+		~ModuleUpdater();
 
 		/// <summary>
 		/// Updates all modules in order.
 		/// </summary>
 		/// <returns> The module register. </returns>
-		virtual void Update(const ModuleRegister &moduleRegister) = 0;
+		void Update(const ModuleRegister &moduleRegister);
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		virtual float GetDelta() = 0;
+		float GetDelta() { return m_deltaUpdate.GetChange(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		virtual float GetDeltaRender() = 0;
+		float GetDeltaRender() { return m_deltaRender.GetChange(); }
 	};
 }

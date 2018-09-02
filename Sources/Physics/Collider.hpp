@@ -40,7 +40,7 @@ namespace acid
 
 		virtual void Write(LoadedValue &destination) = 0;
 
-		virtual btCollisionShape *GetCollisionShape() const = 0;
+		virtual std::shared_ptr<btCollisionShape> GetCollisionShape() const = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.

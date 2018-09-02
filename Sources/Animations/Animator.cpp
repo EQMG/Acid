@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	Animator::Animator(Joint *rootJoint) :
+	Animator::Animator(const std::shared_ptr<Joint> &rootJoint) :
 		m_rootJoint(rootJoint),
 		m_animationTime(0.0f),
 		m_currentAnimation(nullptr)
@@ -14,9 +14,6 @@ namespace acid
 
 	Animator::~Animator()
 	{
-		delete m_rootJoint;
-
-		delete m_currentAnimation;
 	}
 
 	void Animator::Update()
@@ -44,21 +41,21 @@ namespace acid
 	std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose()
 	{
 		auto frames = GetPreviousAndNextFrames();
-		float progression = CalculateProgression(*frames[0], *frames[1]);
-		return InterpolatePoses(*frames[0], *frames[1], progression);
+		float progression = CalculateProgression(frames[0], frames[1]);
+		return InterpolatePoses(frames[0], frames[1], progression);
 	}
 
-	std::vector<Keyframe *> Animator::GetPreviousAndNextFrames()
+	std::array<Keyframe, 2> Animator::GetPreviousAndNextFrames()
 	{
 		auto allFrames = m_currentAnimation->GetKeyframes();
-		Keyframe *previousFrame = allFrames[0];
-		Keyframe *nextFrame = allFrames[0];
+		Keyframe previousFrame = allFrames[0];
+		Keyframe nextFrame = allFrames[0];
 
 		for (uint32_t i = 1; i < allFrames.size(); i++)
 		{
 			nextFrame = allFrames[i];
 
-			if (nextFrame->GetTimeStamp() > m_animationTime)
+			if (nextFrame.GetTimeStamp() > m_animationTime)
 			{
 				break;
 			}
@@ -82,16 +79,16 @@ namespace acid
 
 		for (auto &joint : previousFrame.GetPose())
 		{
-			JointTransform *previousTransform = previousFrame.GetPose().find(joint.first)->second;
-			JointTransform *nextTransform = nextFrame.GetPose().find(joint.first)->second;
-			JointTransform currentTransform = JointTransform::Interpolate(*previousTransform, *nextTransform, progression);
+			JointTransform previousTransform = previousFrame.GetPose().find(joint.first)->second;
+			JointTransform nextTransform = nextFrame.GetPose().find(joint.first)->second;
+			JointTransform currentTransform = JointTransform::Interpolate(previousTransform, nextTransform, progression);
 			currentPose.emplace(joint.first, currentTransform.GetLocalTransform());
 		}
 
 		return currentPose;
 	}
 
-	void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint *joint, const Matrix4 &parentTransform)
+	void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, const std::shared_ptr<Joint> &joint, const Matrix4 &parentTransform)
 	{
 		Matrix4 currentLocalTransform = currentPose.find(joint->GetName())->second;
 		Matrix4 currentTransform = parentTransform * currentLocalTransform;
@@ -105,7 +102,7 @@ namespace acid
 		joint->SetAnimatedTransform(currentTransform);
 	}
 
-	void Animator::DoAnimation(Animation *animation)
+	void Animator::DoAnimation(const std::shared_ptr<Animation> &animation)
 	{
 		m_animationTime = 0.0f;
 		m_currentAnimation = animation;

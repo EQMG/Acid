@@ -1,29 +1,33 @@
 #include "LoadedValue.hpp"
 
+#include <algorithm>
 #include <ostream>
 
 namespace acid
 {
-	LoadedValue::LoadedValue(LoadedValue *parent, const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
-		m_parent(parent),
-		m_children(std::vector<LoadedValue *>()),
+	LoadedValue::LoadedValue(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
+		m_children(std::vector<std::shared_ptr<LoadedValue>>()),
 		m_name(FormatString::RemoveAll(name, '\"')),
 		m_value(value),
 		m_attributes(attributes)
 	{
 	}
 
-	LoadedValue::~LoadedValue()
+	LoadedValue::LoadedValue(const LoadedValue &source) :
+		m_children(source.m_children),
+		m_name(source.m_name),
+		m_value(source.m_value),
+		m_attributes(source.m_attributes)
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
-	std::vector<LoadedValue *> LoadedValue::GetChildren(const std::string &name)
+	LoadedValue::~LoadedValue()
 	{
-		auto result = std::vector<LoadedValue *>();
+	}
+
+	std::vector<std::shared_ptr<LoadedValue>> LoadedValue::FindChildren(const std::string &name) const
+	{
+		auto result = std::vector<std::shared_ptr<LoadedValue>>();
 
 		for (auto &child : m_children)
 		{
@@ -36,7 +40,8 @@ namespace acid
 		return result;
 	}
 
-	LoadedValue *LoadedValue::GetChild(const std::string &name, const bool &addIfNull, const bool &reportError)
+	std::shared_ptr<LoadedValue> LoadedValue::FindChild(const std::string &name, const bool &addIfNull,
+	                                                    const bool &reportError)
 	{
 		std::string nameNoSpaces = FormatString::Replace(name, " ", "_");
 
@@ -58,33 +63,31 @@ namespace acid
 			return nullptr;
 		}
 
-		auto child = new LoadedValue(this, name, "");
+		auto child = std::make_shared<LoadedValue>(name, "");
 		m_children.emplace_back(child);
 		return child;
 	}
 
-	LoadedValue *LoadedValue::GetChild(const uint32_t &index, const bool &addIfNull, const bool &reportError)
+	std::shared_ptr<LoadedValue> LoadedValue::FindChild(const uint32_t &index, const bool &reportError) const
 	{
 		if (m_children.size() >= index)
 		{
 			return m_children.at(index);
 		}
 
-		// TODO
-		//if (!addIfNull)
-		//{
 		if (reportError)
 		{
 			fprintf(stderr, "Could not find child in loaded value '%s' at '%i'\n", m_name.c_str(), index);
 		}
 
 		return nullptr;
-		//}
 	}
 
-	LoadedValue *LoadedValue::GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError)
+	std::shared_ptr<LoadedValue> LoadedValue::FindChildWithAttribute(const std::string &childName,
+	                                                                 const std::string &attribute,
+	                                                                 const std::string &value, const bool &reportError) const
 	{
-		auto children = GetChildren(childName);
+		auto children = FindChildren(childName);
 
 		if (children.empty())
 		{
@@ -93,7 +96,7 @@ namespace acid
 
 		for (auto &child : children)
 		{
-			std::string attrib = child->GetAttribute(attribute);
+			std::string attrib = child->FindAttribute(attribute);
 
 			if (attrib == value)
 			{
@@ -109,9 +112,9 @@ namespace acid
 		return nullptr;
 	}
 
-	void LoadedValue::AddChild(LoadedValue *value)
+	void LoadedValue::AddChild(const std::shared_ptr<LoadedValue> &value)
 	{
-		auto child = GetChild(value->m_name);
+		auto child = FindChild(value->m_name);
 
 		if (child != nullptr)
 		{
@@ -119,11 +122,16 @@ namespace acid
 			return;
 		}
 
-		child = value;
-		m_children.emplace_back(child);
+		m_children.emplace_back(value);
 	}
 
-	std::string LoadedValue::GetAttribute(const std::string &attribute) const
+	bool LoadedValue::RemoveChild(const std::shared_ptr<LoadedValue> &value)
+	{
+		m_children.erase(std::remove(m_children.begin(), m_children.end(), value), m_children.end());
+		return true;
+	}
+
+	std::string LoadedValue::FindAttribute(const std::string &attribute) const
 	{
 		auto it = m_attributes.find(attribute);
 

@@ -18,7 +18,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Files *Get()
+		static std::shared_ptr<Files> Get()
 		{
 			return Engine::Get()->GetModule<Files>();
 		}

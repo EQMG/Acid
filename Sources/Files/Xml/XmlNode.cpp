@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void XmlNode::AppendData(LoadedValue *loadedValue, std::stringstream &builder, const int &indentation)
+	void XmlNode::AppendData(const std::shared_ptr<LoadedValue> &loadedValue, std::stringstream &builder, const int &indentation)
 	{
 		std::stringstream indents;
 
@@ -74,7 +74,7 @@ namespace acid
 		builder << "</" << loadedValue->GetName() << ">\n";
 	}
 
-	LoadedValue *XmlNode::Convert(const XmlNode &source, LoadedValue *parent, const bool &isTopSection)
+	std::shared_ptr<LoadedValue> &XmlNode::Convert(const XmlNode &source, std::shared_ptr<LoadedValue> &parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
@@ -136,7 +136,7 @@ namespace acid
 
 		if (!isTopSection)
 		{
-			thisValue = new LoadedValue(parent, name, source.m_content, parseAttributes);
+			thisValue = std::make_shared<LoadedValue>(name, source.m_content, parseAttributes);
 			parent->GetChildren().emplace_back(thisValue);
 		}
 		else

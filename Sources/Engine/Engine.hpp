@@ -2,8 +2,8 @@
 
 #include <chrono>
 #include <memory>
-#include "IUpdater.hpp"
 #include "ModuleRegister.hpp"
+#include "ModuleUpdater.hpp"
 
 /// <summary>
 /// The base Acid namespace.
@@ -25,8 +25,8 @@ namespace acid
 		float m_timeOffset;
 
 		ModuleRegister m_moduleRegister;
+		ModuleUpdater m_moduleUpdater;
 
-		IUpdater *m_updater;
 		float m_fpsLimit;
 
 		bool m_initialized;
@@ -57,19 +57,7 @@ namespace acid
 		/// The update function for the updater.
 		/// </summary>
 		/// <returns> EXIT_SUCCESS or EXIT_FAILURE. </returns>
-		int Run() const;
-
-		/// <summary>
-		/// Gets the current updater.
-		/// </summary>
-		/// <returns> The current updater. </returns>
-		IUpdater *GetUpdater() const { return m_updater; }
-
-		/// <summary>
-		/// Loads the updater into the engine.
-		/// </summary>
-		/// <param name="updater"> The updater. </param>
-		void SetUpdater(IUpdater *updater) { m_updater = updater; }
+		int Run();
 
 		/// <summary>
 		/// Gets a module instance by type.
@@ -77,7 +65,7 @@ namespace acid
 		/// <param name="T"> The module type to find. </param>
 		/// <returns> The found module. </returns>
 		template<typename T>
-		T *GetModule() const { return m_moduleRegister.GetModule<T>(); }
+		std::shared_ptr<T> GetModule() const { return m_moduleRegister.GetModule<T>(); }
 
 		/// <summary>
 		/// Registers a module with the register.
@@ -86,7 +74,7 @@ namespace acid
 		/// <param name="T"> The type of module to register. </param>
 		/// <returns> The registered module. </returns>
 		template<typename T>
-		T *RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
+		std::shared_ptr<T> RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
 
 		/// <summary>
 		/// Deregisters a module.
@@ -124,13 +112,13 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() { return m_updater->GetDelta(); }
+		float GetDelta() { return m_moduleUpdater.GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() { return m_updater->GetDeltaRender(); }
+		float GetDeltaRender() { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.

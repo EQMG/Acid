@@ -46,9 +46,9 @@ namespace acid
 
 	void Transform::Write(LoadedValue &destination)
 	{
-		m_position.Write(*destination.GetChild("position", true));
-		m_rotation.Write(*destination.GetChild("rotation", true));
-		m_scaling.Write(*destination.GetChild("scaling", true));
+		m_position.Write(*destination.FindChild("position", true));
+		m_rotation.Write(*destination.FindChild("rotation", true));
+		m_scaling.Write(*destination.FindChild("scaling", true));
 	}
 
 	Transform &Transform::operator=(const Transform &other)
@@ -61,9 +61,9 @@ namespace acid
 
 	Transform &Transform::operator=(LoadedValue &value)
 	{
-		m_position = *value.GetChild("position");
-		m_rotation = *value.GetChild("rotation");
-		m_scaling = *value.GetChild("scaling");
+		m_position = *value.FindChild("position");
+		m_rotation = *value.FindChild("rotation");
+		m_scaling = *value.FindChild("scaling");
 		return *this;
 	}
 

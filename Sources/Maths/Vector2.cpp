@@ -199,8 +199,8 @@ namespace acid
 
 	Vector2 &Vector2::operator=(LoadedValue &value)
 	{
-		m_x = value.GetChild("x")->Get<float>();
-		m_y = value.GetChild("y")->Get<float>();
+		m_x = value.FindChild("x")->Get<float>();
+		m_y = value.FindChild("y")->Get<float>();
 		return *this;
 	}
 

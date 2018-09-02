@@ -9,13 +9,12 @@ namespace acid
 	FileXml::FileXml(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(new LoadedValue(nullptr, "?xml", "", {{"version",  "1.0"}, {"encoding", "utf-8"}}))
+		m_parent(std::make_shared<LoadedValue>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
 	{
 	}
 
 	FileXml::~FileXml()
 	{
-		delete m_parent;
 	}
 
 	void FileXml::Load()
@@ -132,7 +131,7 @@ namespace acid
 	{
 		auto result = std::map<std::string, std::string>();
 
-		for (auto &child : m_parent->GetChild("Configuration", true)->GetChildren())
+		for (auto &child : m_parent->FindChild("Configuration", true)->GetChildren())
 		{
 			if (child->GetValue().empty())
 			{
@@ -148,8 +147,8 @@ namespace acid
 	void FileXml::ConfigPushValue(const std::string &key, const std::string &value)
 	{
 		std::string keyNoSpaces = FormatString::Replace(key, " ", "_");
-		auto child = m_parent->GetChild("Configuration", true);
-		auto exiting = child->GetChild(keyNoSpaces, false, false);
+		auto child = m_parent->FindChild("Configuration", true);
+		auto exiting = child->FindChild(keyNoSpaces, false, false);
 
 		if (exiting != nullptr)
 		{
@@ -157,7 +156,7 @@ namespace acid
 			return;
 		}
 
-		auto newChild = new LoadedValue(child, keyNoSpaces, value);
+		auto newChild = std::make_shared<LoadedValue>(keyNoSpaces, value);
 		child->GetChildren().emplace_back(newChild);
 	}
 

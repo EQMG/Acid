@@ -14,16 +14,16 @@ namespace acid
 	private:
 		float m_length;
 
-		std::vector<Keyframe *> m_keyframes;
+		std::vector<Keyframe> m_keyframes;
 	public:
 		/// <summary>
 		/// Creates a new animation.
 		/// </summary>
 		/// <param name="lengthInSeconds"> The length of the animation in seconds. </param>
 		/// <param name="frames"> All the keyframes for the animation, ordered by time of appearance in the animation. </param>
-		Animation(const float &length, const std::vector<Keyframe *> &keyframes);
+		Animation(const float &length, const std::vector<Keyframe> &keyframes);
 
-		Animation(const float &length, const std::vector<KeyframeData *> &keyframeData);
+		Animation(const float &length, const std::vector<KeyframeData> &keyframeData);
 
 		~Animation();
 
@@ -38,6 +38,6 @@ namespace acid
 		/// keyframes in the animation (first keyframe of the animation in array position 0).
 		/// </summary>
 		/// <returns> The array of the animation's keyframes. </returns>
-		std::vector<Keyframe *> GetKeyframes() const { return m_keyframes; }
+		std::vector<Keyframe> GetKeyframes() const { return m_keyframes; }
 	};
 }

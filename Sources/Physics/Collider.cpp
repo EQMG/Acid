@@ -15,7 +15,7 @@ namespace acid
 
 	bool Collider::InFrustum(const Frustum &frustum)
 	{
-		btCollisionShape *shape = GetCollisionShape();
+		auto shape = GetCollisionShape();
 
 		if (shape == nullptr)
 		{

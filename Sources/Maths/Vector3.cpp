@@ -347,9 +347,9 @@ namespace acid
 
 	Vector3 &Vector3::operator=(LoadedValue &value)
 	{
-		m_x = value.GetChild("x")->Get<float>();
-		m_y = value.GetChild("y")->Get<float>();
-		m_z = value.GetChild("z")->Get<float>();
+		m_x = value.FindChild("x")->Get<float>();
+		m_y = value.FindChild("y")->Get<float>();
+		m_z = value.FindChild("z")->Get<float>();
 		return *this;
 	}
 

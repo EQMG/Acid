@@ -18,14 +18,14 @@ namespace acid
 	{
 	private:
 		float m_timeStamp;
-		std::map<std::string, JointTransform *> m_pose;
+		std::map<std::string, JointTransform> m_pose;
 	public:
 		/// <summary>
 		/// Creates a new keyframe at a timestamp.
 		/// </summary>
 		/// <param name="timeStamp"> The time (in seconds) that this keyframe occurs during the animation. </param>
 		/// <param name="jointKeyFrames"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
-		Keyframe(const float &timeStamp, const std::map<std::string, JointTransform *> &pose);
+		Keyframe(const float &timeStamp, const std::map<std::string, JointTransform> &pose);
 
 		Keyframe(const KeyframeData &data);
 
@@ -42,6 +42,6 @@ namespace acid
 		/// indexed by the name of the joint that they correspond to.
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
-		std::map<std::string, JointTransform *> GetPose() const { return m_pose; }
+		std::map<std::string, JointTransform> GetPose() const { return m_pose; }
 	};
 }

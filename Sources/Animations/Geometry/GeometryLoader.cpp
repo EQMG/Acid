@@ -4,8 +4,8 @@
 
 namespace acid
 {
-	GeometryLoader::GeometryLoader(LoadedValue *libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
-		m_meshData(libraryGeometries->GetChild("geometry")->GetChild("mesh")),
+	GeometryLoader::GeometryLoader(const std::shared_ptr<LoadedValue> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
+		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<VertexAnimatedData *>()),
 		m_uvsList(std::vector<Vector2>()),
@@ -44,9 +44,10 @@ namespace acid
 
 	void GeometryLoader::LoadVertices()
 	{
-		std::string positionsSource = m_meshData->GetChild("vertices")->GetChild("input")->GetAttribute("source").substr(1);
-		LoadedValue *positionsData = m_meshData->GetChildWithAttribute("source", "id", positionsSource)->GetChild("float_array");
-		uint32_t positionsCount = std::stoi(positionsData->GetAttribute("count"));
+		std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
+		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild(
+			"float_array");
+		uint32_t positionsCount = std::stoi(positionsData->FindAttribute("count"));
 		auto positionsRawData = FormatString::Split(positionsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
@@ -61,9 +62,11 @@ namespace acid
 
 	void GeometryLoader::LoadUvs()
 	{
-		std::string uvsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "semantic", "TEXCOORD")->GetAttribute("source").substr(1);
-		LoadedValue *uvsData = m_meshData->GetChildWithAttribute("source", "id", uvsSource)->GetChild("float_array");
-		uint32_t uvsCount = std::stoi(uvsData->GetAttribute("count"));
+		std::string uvsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic",
+		                                                                                  "TEXCOORD")->FindAttribute(
+			"source").substr(1);
+		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
+		uint32_t uvsCount = std::stoi(uvsData->FindAttribute("count"));
 		auto uvsRawData = FormatString::Split(uvsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
@@ -75,9 +78,11 @@ namespace acid
 
 	void GeometryLoader::LoadNormals()
 	{
-		std::string normalsSource = m_meshData->GetChild("polylist")->GetChildWithAttribute("input", "semantic", "NORMAL")->GetAttribute("source").substr(1);
-		LoadedValue *normalsData = m_meshData->GetChildWithAttribute("source", "id", normalsSource)->GetChild("float_array");
-		uint32_t normalsCount = std::stoi(normalsData->GetAttribute("count"));
+		std::string normalsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic",
+		                                                                                      "NORMAL")->FindAttribute(
+			"source").substr(1);
+		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
+		uint32_t normalsCount = std::stoi(normalsData->FindAttribute("count"));
 		auto normalsRawData = FormatString::Split(normalsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
@@ -90,8 +95,8 @@ namespace acid
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int indexCount = m_meshData->GetChild("polylist")->GetChildren("input").size();
-		auto indexRawData = FormatString::Split(m_meshData->GetChild("polylist")->GetChild("p")->GetValue(), " ");
+		int indexCount = m_meshData->FindChild("polylist")->FindChildren("input").size();
+		auto indexRawData = FormatString::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{

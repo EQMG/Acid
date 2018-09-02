@@ -12,7 +12,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btHeightfieldTerrainShape *m_shape;
+		std::shared_ptr<btHeightfieldTerrainShape> m_shape;
 	public:
 		ColliderHeightfield(const int &heightStickWidth = 100, const int &heightStickLength = 100,
 							const void *heightfieldData = nullptr, const float &heightScale = 1.0f,
@@ -28,7 +28,7 @@ namespace acid
 
 		void Write(LoadedValue &destination) override;
 
-		btCollisionShape *GetCollisionShape() const override;
+		std::shared_ptr<btCollisionShape> GetCollisionShape() const override;
 
 		void Initialize(const int &heightStickWidth, const int &heightStickLength,
 						const void *heightfieldData, const float &heightScale,

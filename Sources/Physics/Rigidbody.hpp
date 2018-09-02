@@ -22,9 +22,8 @@ namespace acid
 		Vector3 m_linearFactor;
 		Vector3 m_angularFactor;
 
-		btTransform *m_worldTransform;
-		btCollisionShape *m_shape;
-		btRigidBody *m_body;
+		std::shared_ptr<btCollisionShape> m_shape;
+		std::shared_ptr<btRigidBody> m_body;
 
 		std::vector<std::shared_ptr<Force>> m_forces;
 
@@ -77,6 +76,6 @@ namespace acid
 
 		void SetAngularVelocity(const Vector3 &angularVelocity);
 	private:
-		static btRigidBody *CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape *shape);
+		static std::shared_ptr<btRigidBody> CreateRigidBody(float mass, const btTransform &startTransform, const std::shared_ptr<btCollisionShape> &shape);
 	};
 }

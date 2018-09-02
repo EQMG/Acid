@@ -186,10 +186,10 @@ namespace acid
 
 	Colour &Colour::operator=(LoadedValue &value)
 	{
-		m_r = value.GetChild("r")->Get<float>();
-		m_g = value.GetChild("g")->Get<float>();
-		m_b = value.GetChild("b")->Get<float>();
-		m_a = value.GetChild("a")->Get<float>();
+		m_r = value.FindChild("r")->Get<float>();
+		m_g = value.FindChild("g")->Get<float>();
+		m_b = value.FindChild("b")->Get<float>();
+		m_a = value.FindChild("a")->Get<float>();
 		return *this;
 	}
 

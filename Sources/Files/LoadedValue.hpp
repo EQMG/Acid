@@ -2,6 +2,8 @@
 
 #include <map>
 #include <string>
+#include <memory>
+#include <optional>
 #include <utility>
 #include <vector>
 #include "Helpers/FormatString.hpp"
@@ -11,14 +13,15 @@ namespace acid
 	class ACID_EXPORT LoadedValue
 	{
 	private:
-		LoadedValue *m_parent;
-		std::vector<LoadedValue *> m_children;
+		std::vector<std::shared_ptr<LoadedValue>> m_children;
 
 		std::string m_name;
 		std::string m_value;
 		std::map<std::string, std::string> m_attributes;
 	public:
-		LoadedValue(LoadedValue *parent = nullptr, const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+		LoadedValue(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+
+		LoadedValue(const LoadedValue &source);
 
 		~LoadedValue();
 
@@ -30,19 +33,39 @@ namespace acid
 
 		void SetValue(const std::string &data) { m_value = data; }
 
-		std::vector<LoadedValue *> &GetChildren() { return m_children; }
+		std::vector<std::shared_ptr<LoadedValue>> &GetChildren() { return m_children; }
 
-		std::vector<LoadedValue *> GetChildren(const std::string &name);
+		std::vector<std::shared_ptr<LoadedValue>> FindChildren(const std::string &name) const;
 
-		LoadedValue *GetChild(const std::string &name, const bool &addIfNull = false, const bool &reportError = true);
+		std::shared_ptr<LoadedValue> FindChild(const std::string &name, const bool &addIfNull = false,
+		                                       const bool &reportError = true);
 
-		LoadedValue *GetChild(const uint32_t &index, const bool &addIfNull = false, const bool &reportError = true);
+		std::shared_ptr<LoadedValue> FindChild(const uint32_t &index, const bool &reportError = true) const;
 
-		LoadedValue *GetChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true);
+		std::shared_ptr<LoadedValue> FindChildWithAttribute(const std::string &childName, const std::string &attribute,
+		                                                    const std::string &value, const bool &reportError = true) const;
 
 		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
 
-		std::string GetAttribute(const std::string &attribute) const;
+		void AddChild(const std::shared_ptr<LoadedValue> &value);
+
+		bool RemoveChild(const std::shared_ptr<LoadedValue> &value);
+
+		template<typename T>
+		void SetChild(const std::string &name, const T &value)
+		{
+			std::string strValue = std::to_string(value);
+			auto child = FindChild(name);
+
+			if (child)
+			{
+				child = std::make_shared<LoadedValue>(name, strValue);
+				m_children.emplace_back(child);
+				return;
+			}
+
+			child->m_value = strValue;
+		}
 
 		void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }
 
@@ -50,23 +73,7 @@ namespace acid
 
 		bool RemoveAttribute(const std::string &attribute);
 
-		void AddChild(LoadedValue *value);
-
-		template<typename T>
-		void SetChild(const std::string &name, const T &value)
-		{
-			std::string strValue = std::to_string(value);
-			auto child = GetChild(name);
-
-			if (child == nullptr)
-			{
-				child = new LoadedValue(this, name, strValue);
-				m_children.emplace_back(child);
-				return;
-			}
-
-			child->m_value = strValue;
-		}
+		std::string FindAttribute(const std::string &attribute) const;
 
 		template<typename T>
 		T Get()

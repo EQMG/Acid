@@ -16,16 +16,12 @@
 namespace acid
 {
 	ModuleRegister::ModuleRegister() :
-		m_modules(std::map<float, IModule *>())
+		m_modules(std::map<float, std::shared_ptr<IModule>>())
 	{
 	}
 
 	ModuleRegister::~ModuleRegister()
 	{
-		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
-		{
-			delete (*it).second;
-		}
 	}
 
 	void ModuleRegister::FillRegister()
@@ -45,7 +41,7 @@ namespace acid
 		RegisterModule<Shadows>(UPDATE_NORMAL);
 	}
 
-	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update)
+	std::shared_ptr<IModule> ModuleRegister::RegisterModule(const std::shared_ptr<IModule> &module, const ModuleUpdate &update)
 	{
 		if (ContainsModule(module))
 		{
@@ -58,7 +54,7 @@ namespace acid
 		return module;
 	}
 
-	bool ModuleRegister::ContainsModule(IModule *module) const
+	bool ModuleRegister::ContainsModule(const std::shared_ptr<IModule> &module) const
 	{
 		for (auto &module1 : m_modules)
 		{
@@ -71,7 +67,7 @@ namespace acid
 		return false;
 	}
 
-	bool ModuleRegister::DeregisterModule(IModule *module)
+	bool ModuleRegister::DeregisterModule(const std::shared_ptr<IModule> &module)
 	{
 		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
@@ -81,7 +77,7 @@ namespace acid
 			}
 
 			m_modules.erase(it);
-			delete (*it).second;
+		//	delete (*it).second;
 			return true;
 		}
 

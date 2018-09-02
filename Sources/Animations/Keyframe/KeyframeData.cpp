@@ -4,7 +4,7 @@ namespace acid
 {
 	KeyframeData::KeyframeData(const float &time) :
 		m_time(time),
-		m_jointTransforms(std::vector<JointTransformData *>())
+		m_jointTransforms(std::vector<JointTransformData>())
 	{
 	}
 
@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void KeyframeData::AddJointTransform(JointTransformData *transform)
+	void KeyframeData::AddJointTransform(const JointTransformData &transform)
 	{
 		m_jointTransforms.emplace_back(transform);
 	}

@@ -22,7 +22,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Scenes *Get()
+		static std::shared_ptr<Scenes> Get()
 		{
 			return Engine::Get()->GetModule<Scenes>();
 		}

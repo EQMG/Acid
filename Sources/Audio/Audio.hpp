@@ -22,7 +22,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Audio *Get()
+		static std::shared_ptr<Audio> Get()
 		{
 			return Engine::Get()->GetModule<Audio>();
 		}
