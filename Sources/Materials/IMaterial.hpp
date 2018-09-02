@@ -28,9 +28,9 @@ namespace acid
 
 		virtual void Update() override = 0;
 
-		virtual void Load(LoadedValue *value) override = 0;
+		virtual void Load(LoadedValue &value) override = 0;
 
-		virtual void Write(LoadedValue *destination) override = 0;
+		virtual void Write(LoadedValue &destination) override = 0;
 
 		virtual void PushUniforms(UniformHandler &uniformObject) = 0;
 

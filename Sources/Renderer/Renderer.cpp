@@ -102,7 +102,7 @@ namespace acid
 		}
 	}
 
-	void Renderer::CreateRenderpass(std::vector<RenderpassCreate *> renderpassCreates)
+	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 

@@ -293,12 +293,12 @@ namespace acid
 		);
 	}
 
-	void Quaternion::Write(LoadedValue *destination)
+	void Quaternion::Write(LoadedValue &destination)
 	{
-		destination->SetChild<float>("x", m_x);
-		destination->SetChild<float>("y", m_y);
-		destination->SetChild<float>("z", m_z);
-		destination->SetChild<float>("w", m_w);
+		destination.SetChild<float>("x", m_x);
+		destination.SetChild<float>("y", m_y);
+		destination.SetChild<float>("z", m_z);
+		destination.SetChild<float>("w", m_w);
 	}
 
 	Quaternion &Quaternion::operator=(const Quaternion &other)
@@ -369,12 +369,12 @@ namespace acid
 		return *this;
 	}
 
-	Quaternion &Quaternion::operator=(LoadedValue *source)
+	Quaternion &Quaternion::operator=(LoadedValue &value)
 	{
-		m_x = source->GetChild("x")->Get<float>();
-		m_y = source->GetChild("y")->Get<float>();
-		m_z = source->GetChild("z")->Get<float>();
-		m_w = source->GetChild("w")->Get<float>();
+		m_x = value.GetChild("x")->Get<float>();
+		m_y = value.GetChild("y")->Get<float>();
+		m_z = value.GetChild("z")->Get<float>();
+		m_w = value.GetChild("w")->Get<float>();
 		return *this;
 	}
 

@@ -8,7 +8,7 @@ namespace acid
 	{
 		for (uint32_t i = 0; i < threadCount; i++)
 		{
-			m_threads.emplace_back(new Thread()); // std::make_unique<Thread>()
+			m_threads.emplace_back(std::make_unique<Thread>());
 		}
 	}
 

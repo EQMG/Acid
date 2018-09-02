@@ -27,9 +27,9 @@ namespace acid
 
 		void Update() override;
 
-		void Load(LoadedValue *value) override;
+		void Load(LoadedValue &value) override;
 
-		void Write(LoadedValue *destination) override;
+		void Write(LoadedValue &destination) override;
 
 		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
 

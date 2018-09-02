@@ -139,29 +139,30 @@ namespace acid
 
 	std::string Colour::GetHex() const
 	{
-		std::string result = "#";
+		std::stringstream result;
+		result << "#";
 
 		char r[255];
 		snprintf(r, 255, "%.2X", static_cast<int>(m_r * 255.0f));
-		result.append(r);
+		result << r;
 
 		char g[255];
 		snprintf(g, 255, "%.2X", static_cast<int>(m_g * 255.0f));
-		result.append(g);
+		result << g;
 
 		char b[255];
 		snprintf(b, 255, "%.2X", static_cast<int>(m_b * 255.0f));
-		result.append(b);
+		result << b;
 
-		return result;
+		return result.str();
 	}
 
-	void Colour::Write(LoadedValue *destination)
+	void Colour::Write(LoadedValue &destination)
 	{
-		destination->SetChild<float>("r", m_r);
-		destination->SetChild<float>("g", m_g);
-		destination->SetChild<float>("b", m_b);
-		destination->SetChild<float>("a", m_a);
+		destination.SetChild<float>("r", m_r);
+		destination.SetChild<float>("g", m_g);
+		destination.SetChild<float>("b", m_b);
+		destination.SetChild<float>("a", m_a);
 	}
 
 	Colour &Colour::operator=(const Colour &other)
@@ -183,12 +184,12 @@ namespace acid
 		return *this;
 	}
 
-	Colour &Colour::operator=(LoadedValue *source)
+	Colour &Colour::operator=(LoadedValue &value)
 	{
-		m_r = source->GetChild("r")->Get<float>();
-		m_g = source->GetChild("g")->Get<float>();
-		m_b = source->GetChild("b")->Get<float>();
-		m_a = source->GetChild("a")->Get<float>();
+		m_r = value.GetChild("r")->Get<float>();
+		m_g = value.GetChild("g")->Get<float>();
+		m_b = value.GetChild("b")->Get<float>();
+		m_a = value.GetChild("a")->Get<float>();
 		return *this;
 	}
 

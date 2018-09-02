@@ -177,10 +177,10 @@ namespace acid
 		return Vector2(x, y);
 	}
 
-	void Vector2::Write(LoadedValue *destination)
+	void Vector2::Write(LoadedValue &destination)
 	{
-		destination->SetChild<float>("x", m_x);
-		destination->SetChild<float>("y", m_y);
+		destination.SetChild<float>("x", m_x);
+		destination.SetChild<float>("y", m_y);
 	}
 
 	Vector2 &Vector2::operator=(const Vector2 &other)
@@ -197,10 +197,10 @@ namespace acid
 		return *this;
 	}
 
-	Vector2 &Vector2::operator=(LoadedValue *source)
+	Vector2 &Vector2::operator=(LoadedValue &value)
 	{
-		m_x = source->GetChild("x")->Get<float>();
-		m_y = source->GetChild("y")->Get<float>();
+		m_x = value.GetChild("x")->Get<float>();
+		m_y = value.GetChild("y")->Get<float>();
 		return *this;
 	}
 

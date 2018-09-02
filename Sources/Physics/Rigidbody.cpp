@@ -137,20 +137,20 @@ namespace acid
 	//	m_body->setLinearVelocity(m_velocity);
 	}
 
-	void Rigidbody::Load(LoadedValue *value)
+	void Rigidbody::Load(LoadedValue &value)
 	{
-		m_mass = value->GetChild("Mass")->Get<float>();
-		m_friction = value->GetChild("Friction")->Get<float>();
-		m_linearFactor = value->GetChild("Linear Factor");
-		m_angularFactor = value->GetChild("Angular Factor");
+		m_mass = value.GetChild("Mass")->Get<float>();
+		m_friction = value.GetChild("Friction")->Get<float>();
+		m_linearFactor = *value.GetChild("Linear Factor");
+		m_angularFactor = *value.GetChild("Angular Factor");
 	}
 
-	void Rigidbody::Write(LoadedValue *destination)
+	void Rigidbody::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Mass", true)->Set(m_mass);
-		destination->GetChild("Friction", true)->Set(m_friction);
-		m_linearFactor.Write(destination->GetChild("Linear Factor", true));
-		m_angularFactor.Write(destination->GetChild("Angular Factor", true));
+		destination.GetChild("Mass", true)->Set(m_mass);
+		destination.GetChild("Friction", true)->Set(m_friction);
+		m_linearFactor.Write(*destination.GetChild("Linear Factor", true));
+		m_angularFactor.Write(*destination.GetChild("Angular Factor", true));
 	}
 
 	void Rigidbody::SetGravity(const Vector3 &gravity)

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	IManagerRender::IManagerRender(const std::vector<RenderpassCreate *> &renderpassCreate) :
+	IManagerRender::IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate) :
 		m_stages(std::map<float, std::vector<std::shared_ptr<IRenderer>>>())
 	{
 		Renderer::Get()->CreateRenderpass(renderpassCreate);

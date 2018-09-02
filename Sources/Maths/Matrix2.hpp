@@ -133,13 +133,13 @@ namespace acid
 		/// Saves this matrix into a loaded value.
 		/// </summary>
 		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue *destination);
+		void Write(LoadedValue &destination);
 
 		Matrix2 &operator=(const Matrix2 &other);
 
 		Matrix2 &operator=(const float array[4]);
 
-		Matrix2 &operator=(LoadedValue *value);
+		Matrix2 &operator=(LoadedValue &value);
 
 		bool operator==(const Matrix2 &other) const;
 

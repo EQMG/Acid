@@ -8,12 +8,10 @@ namespace acid
 	{
 		if (key < 0 || key > Key::KEY_END_RANGE)
 		{
-			fprintf(stderr, "Invalid action attempted with key: '%i'\n", key);
+			return;
 		}
-		else
-		{
-			Keyboard::Get()->m_keyboardKeys[key] = action != GLFW_RELEASE;
-		}
+
+		Keyboard::Get()->m_keyboardKeys[key] = action != GLFW_RELEASE;
 	}
 
 	void CallbackChar(GLFWwindow *window, uint32_t codepoint)

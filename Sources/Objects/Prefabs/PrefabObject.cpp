@@ -45,12 +45,12 @@ namespace acid
 		{
 			auto componentName = Scenes::Get()->FindComponentName(component);
 
-			if (!componentName.has_value())
+			if (!componentName)
 			{
 				return;
 			}
 
-			component->Write(m_parent->GetChild(componentName.value(), true));
+			component->Write(*m_parent->GetChild(*componentName, true));
 		}
 	}
 

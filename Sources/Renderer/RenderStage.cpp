@@ -5,21 +5,21 @@
 
 namespace acid
 {
-	RenderStage::RenderStage(const uint32_t &stageIndex, RenderpassCreate *renderpassCreate) :
+	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate) :
 		m_stageIndex(stageIndex),
-		m_renderpassCreate(renderpassCreate),
+		m_renderpassCreate(std::move(renderpassCreate)),
 		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
 		m_framebuffers(nullptr),
 		m_clearValues(std::vector<VkClearValue>()),
-		m_subpassAttachmentCount(std::vector<uint32_t>(renderpassCreate->GetSubpasses().size())),
+		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
 		m_hasDepth(false),
 		m_hasSwapchain(false),
-		m_fitDisplaySize(m_renderpassCreate->GetHeight() == 0),
-		m_lastWidth(renderpassCreate->GetWidth()),
-		m_lastHeight(renderpassCreate->GetHeight())
+		m_fitDisplaySize(m_renderpassCreate.GetHeight() == 0),
+		m_lastWidth(m_renderpassCreate.GetWidth()),
+		m_lastHeight(m_renderpassCreate.GetHeight())
 	{
-		for (auto &image : renderpassCreate->GetImages())
+		for (auto &image : m_renderpassCreate.GetImages())
 		{
 			VkClearValue clearValue = {};
 
@@ -28,7 +28,7 @@ namespace acid
 			case ATTACHMENT_IMAGE:
 				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
 
-				for (auto &subpass : renderpassCreate->GetSubpasses())
+				for (auto &subpass : m_renderpassCreate.GetSubpasses())
 				{
 					auto subpassBindings = subpass.GetAttachmentBindings();
 
@@ -55,7 +55,6 @@ namespace acid
 
 	RenderStage::~RenderStage()
 	{
-		delete m_renderpassCreate;
 		delete m_depthStencil;
 		delete m_renderpass;
 		delete m_framebuffers;
@@ -78,11 +77,11 @@ namespace acid
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = new Renderpass(*m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
+			m_renderpass = new Renderpass(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
 		}
 
 		delete m_framebuffers;
-		m_framebuffers = new Framebuffers(GetWidth(), GetHeight(), *m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, samples);
+		m_framebuffers = new Framebuffers(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, samples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -94,7 +93,7 @@ namespace acid
 	{
 		if (!m_fitDisplaySize)
 		{
-			return m_renderpassCreate->GetWidth();
+			return m_renderpassCreate.GetWidth();
 		}
 
 		return Display::Get()->GetWidth();
@@ -104,7 +103,7 @@ namespace acid
 	{
 		if (!m_fitDisplaySize)
 		{
-			return m_renderpassCreate->GetHeight();
+			return m_renderpassCreate.GetHeight();
 		}
 
 		return Display::Get()->GetHeight();

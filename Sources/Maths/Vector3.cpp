@@ -306,11 +306,11 @@ namespace acid
 		return Vector3(direction);
 	}
 
-	void Vector3::Write(LoadedValue *destination)
+	void Vector3::Write(LoadedValue &destination)
 	{
-		destination->SetChild<float>("x", m_x);
-		destination->SetChild<float>("y", m_y);
-		destination->SetChild<float>("z", m_z);
+		destination.SetChild<float>("x", m_x);
+		destination.SetChild<float>("y", m_y);
+		destination.SetChild<float>("z", m_z);
 	}
 
 	Vector3 &Vector3::operator=(const Vector3 &other)
@@ -345,11 +345,11 @@ namespace acid
 		return *this;
 	}
 
-	Vector3 &Vector3::operator=(LoadedValue *source)
+	Vector3 &Vector3::operator=(LoadedValue &value)
 	{
-		m_x = source->GetChild("x")->Get<float>();
-		m_y = source->GetChild("y")->Get<float>();
-		m_z = source->GetChild("z")->Get<float>();
+		m_x = value.GetChild("x")->Get<float>();
+		m_y = value.GetChild("y")->Get<float>();
+		m_z = value.GetChild("z")->Get<float>();
 		return *this;
 	}
 

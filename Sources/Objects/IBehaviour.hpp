@@ -27,11 +27,11 @@ namespace acid
 		{
 		}
 
-		void Load(LoadedValue *value) override
+		void Load(LoadedValue &value) override
 		{
 		}
 
-		void Write(LoadedValue *destination) override
+		void Write(LoadedValue &destination) override
 		{
 		}
 	};

@@ -32,9 +32,9 @@ namespace acid
 
 		virtual void Update() = 0;
 
-		virtual void Load(LoadedValue *value) = 0;
+		virtual void Load(LoadedValue &value) = 0;
 
-		virtual void Write(LoadedValue *destination) = 0;
+		virtual void Write(LoadedValue &destination) = 0;
 
 		GameObject *GetGameObject() const { return m_gameObject; }
 

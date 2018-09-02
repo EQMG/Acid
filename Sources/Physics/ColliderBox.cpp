@@ -26,14 +26,14 @@ namespace acid
 		//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
-	void ColliderBox::Load(LoadedValue *value)
+	void ColliderBox::Load(LoadedValue &value)
 	{
-		m_extents = value->GetChild("Extents");
+		m_extents = *value.GetChild("Extents");
 	}
 
-	void ColliderBox::Write(LoadedValue *destination)
+	void ColliderBox::Write(LoadedValue &destination)
 	{
-		m_extents.Write(destination->GetChild("Extents", true));
+		m_extents.Write(*destination.GetChild("Extents", true));
 	}
 
 	btCollisionShape *ColliderBox::GetCollisionShape() const

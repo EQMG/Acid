@@ -30,9 +30,9 @@ namespace test
 
 		void Update() override;
 
-		void Load(LoadedValue *value) override;
+		void Load(LoadedValue &value) override;
 
-		void Write(LoadedValue *destination) override;
+		void Write(LoadedValue &destination) override;
 	private:
 		uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
 

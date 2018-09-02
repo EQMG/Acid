@@ -117,12 +117,12 @@ namespace acid
 
 			auto fileLoaded = FileSystem::ReadTextFile(shaderStage);
 
-			if (!fileLoaded.has_value())
+			if (!fileLoaded)
 			{
 				continue;
 			}
 
-			auto shaderCode = ShaderProgram::InsertDefineBlock(fileLoaded.value(), defineBlock.str());
+			auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());
 			shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
 
 			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);

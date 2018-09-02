@@ -15,13 +15,13 @@ namespace acid
 	{
 	}
 
-	void Fog::Write(LoadedValue *destination)
+	void Fog::Write(LoadedValue &destination)
 	{
-		m_colour.Write(destination->GetChild("colour", true));
-		destination->SetChild<float>("density", m_density);
-		destination->SetChild<float>("gradient", m_gradient);
-		destination->SetChild<float>("lowerLimit", m_lowerLimit);
-		destination->SetChild<float>("upperLimit", m_upperLimit);
+		destination.GetChild("colour", true)->SetString(m_colour.GetHex());
+		destination.SetChild<float>("density", m_density);
+		destination.SetChild<float>("gradient", m_gradient);
+		destination.SetChild<float>("lowerLimit", m_lowerLimit);
+		destination.SetChild<float>("upperLimit", m_upperLimit);
 	}
 
 	Fog &Fog::operator=(const Fog &other)
@@ -34,13 +34,13 @@ namespace acid
 		return *this;
 	}
 
-	Fog &Fog::operator=(LoadedValue *source)
+	Fog &Fog::operator=(LoadedValue &value)
 	{
-		m_colour = source->GetChild("colour");
-		m_density = source->GetChild("density")->Get<float>();
-		m_gradient = source->GetChild("gradient")->Get<float>();
-		m_lowerLimit = source->GetChild("lowerLimit")->Get<float>();
-		m_upperLimit = source->GetChild("upperLimit")->Get<float>();
+		m_colour = value.GetChild("colour")->GetString();
+		m_density = value.GetChild("density")->Get<float>();
+		m_gradient = value.GetChild("gradient")->Get<float>();
+		m_lowerLimit = value.GetChild("lowerLimit")->Get<float>();
+		m_upperLimit = value.GetChild("upperLimit")->Get<float>();
 		return *this;
 	}
 }

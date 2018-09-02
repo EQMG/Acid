@@ -34,7 +34,7 @@ namespace acid
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
 
-		if (!fileLoaded.has_value())
+		if (!fileLoaded)
 		{
 			return;
 		}
@@ -43,7 +43,7 @@ namespace acid
 		std::stringstream summation;
 		bool end = false;
 
-		for (auto it = fileLoaded.value().begin(); it != fileLoaded.value().end(); ++it)
+		for (auto it = fileLoaded->begin(); it != fileLoaded->end(); ++it)
 		{
 			if (*it == '<')
 			{

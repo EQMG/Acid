@@ -20,7 +20,7 @@ namespace acid
 		/// <summary>
 		/// Creates a new master renderer.
 		/// </summary>
-		IManagerRender(const std::vector<RenderpassCreate *> &renderpassCreate);
+		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate);
 
 		/// <summary>
 		/// Deconstructor for the master renderer.

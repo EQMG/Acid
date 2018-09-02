@@ -30,7 +30,7 @@ namespace acid
 				{
 					if (i == 0)
 					{
-						if (Uis::Get()->GetSelector().WasLeftClick() && Uis::Get()->GetSelector().IsSelected(*object))
+						if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && Uis::Get()->GetSelector().IsSelected(*object))
 						{
 							key = i;
 						}
@@ -78,7 +78,7 @@ namespace acid
 			{
 				if (i == 0)
 				{
-					if (Uis::Get()->GetSelector().WasLeftClick() && Uis::Get()->GetSelector().IsSelected(*object))
+					if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && Uis::Get()->GetSelector().IsSelected(*object))
 					{
 						key = i;
 					}
@@ -148,7 +148,7 @@ namespace acid
 
 		// Click updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector().WasLeftClick())
+			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
@@ -156,7 +156,7 @@ namespace acid
 
 			Uis::Get()->GetSelector().CancelWasEvent();
 		}
-		else if (Uis::Get()->GetSelector().WasLeftClick() && m_selected)
+		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
@@ -176,6 +176,11 @@ namespace acid
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
+	}
+
+	bool UiInputGrabber::OnActionMouse(const MouseButton &button)
+	{
+		return false;
 	}
 
 	void UiInputGrabber::SetPrefix(const std::string &prefix)

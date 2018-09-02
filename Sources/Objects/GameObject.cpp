@@ -44,7 +44,7 @@ namespace acid
 				continue;
 			}
 
-			component->Load(value);
+			component->Load(*value);
 			AddComponent(component);
 		}
 
@@ -125,7 +125,7 @@ namespace acid
 			{
 				auto componentName = Scenes::Get()->FindComponentName(*it);
 
-				if (componentName.has_value() && name == componentName.value())
+				if (componentName && name == *componentName)
 				{
 					continue;
 				}

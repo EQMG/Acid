@@ -3,6 +3,7 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include "Inputs/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Maths/Vector4.hpp"
@@ -35,8 +36,7 @@ namespace acid
 		std::shared_ptr<IDriver> m_scaleDriver;
 		float m_scale;
 
-		std::function<void()> m_actionLeft;
-		std::function<void()> m_actionRight;
+		std::function<bool(MouseButton)> m_actionClick;
 	public:
 		/// <summary>
 		/// Creates a new screen object.
@@ -59,6 +59,13 @@ namespace acid
 		/// Updates the implementation.
 		/// </summary>
 		virtual void UpdateObject();
+
+		/// <summary>
+		/// Called on mouse click along with 'm_actionClick'.
+		/// </summary>
+		/// <param name="button"> The mouse button clicked. </param>
+		/// <returns> If this will cancel all events. </returns>
+		virtual bool OnActionMouse(const MouseButton &button);
 
 		/// <summary>
 		/// Disowns a child from this screen objects children list.
@@ -142,8 +149,6 @@ namespace acid
 
 		float GetScale() const { return m_scale; }
 
-		void SetActionLeft(std::function<void()> action) { m_actionLeft = action; }
-
-		void SetActionRight(std::function<void()> action) { m_actionRight = action; }
+		void SetActionClick(const std::function<bool(MouseButton)> &actionClick) { m_actionClick = actionClick; }
 	};
 }

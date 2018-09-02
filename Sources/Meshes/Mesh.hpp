@@ -23,9 +23,9 @@ namespace acid
 
 		void Update() override;
 
-		void Load(LoadedValue *value) override;
+		void Load(LoadedValue &value) override;
 
-		void Write(LoadedValue *destination) override;
+		void Write(LoadedValue &destination) override;
 
 		virtual std::shared_ptr<Model> GetModel() const { return m_model; }
 

@@ -44,14 +44,14 @@ namespace acid
 		}
 	}
 
-	void MeshAnimated::Load(LoadedValue *value)
+	void MeshAnimated::Load(LoadedValue &value)
 	{
-		TrySetModel(value->GetChild("Model")->GetString());
+		TrySetModel(value.GetChild("Model")->GetString());
 	}
 
-	void MeshAnimated::Write(LoadedValue *destination)
+	void MeshAnimated::Write(LoadedValue &destination)
 	{
-		destination->GetChild("Model", true)->SetString(m_filename);
+		destination.GetChild("Model", true)->SetString(m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)

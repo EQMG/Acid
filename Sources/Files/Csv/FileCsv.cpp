@@ -31,12 +31,12 @@ namespace acid
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
 
-		if (!fileLoaded.has_value())
+		if (!fileLoaded)
 		{
 			return;
 		}
 
-		auto lines = FormatString::Split(fileLoaded.value(), "\n", true);
+		auto lines = FormatString::Split(*fileLoaded, "\n", true);
 
 		for (auto &line : lines)
 		{

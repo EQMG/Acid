@@ -33,7 +33,7 @@ namespace acid
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
 
-		if (!fileLoaded.has_value())
+		if (!fileLoaded)
 		{
 			return;
 		}
@@ -41,7 +41,7 @@ namespace acid
 		JsonSection *currentSection = nullptr;
 		std::stringstream summation;
 
-		for (char &c : fileLoaded.value())
+		for (char &c : *fileLoaded)
 		{
 			if (c == '{' || c == '[')
 			{
