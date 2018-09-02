@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "Engine/Exports.hpp"
 #include "Thread.hpp"
@@ -12,7 +13,7 @@ namespace acid
 	class ACID_EXPORT ThreadPool
 	{
 	private:
-		std::vector<std::unique_ptr<Thread>> m_threads;
+		std::vector<Thread *> m_threads; // TODO: std::unique_ptr
 	public:
 		static const uint32_t HARDWARE_CONCURRENCY;
 
@@ -25,6 +26,6 @@ namespace acid
 		/// </summary>
 		void Wait();
 
-		std::vector<std::unique_ptr<Thread>> &GetThreads() { return m_threads; }
+		std::vector<Thread *> &GetThreads() { return m_threads; }
 	};
 }

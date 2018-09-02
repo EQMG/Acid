@@ -8,7 +8,6 @@
 #include <AL/alc.h>
 #endif
 #ifdef ACID_BUILD_WINDOWS
-#define NOMINMAX
 #include <Windows.h>
 #endif
 #include "Helpers/FileSystem.hpp"

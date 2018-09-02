@@ -1,6 +1,8 @@
 include(FindVulkan.cmake)
 include(FindOpenAL.cmake)
 
+set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "Use MSVC Runtime Library DLL (/MD or /MDd)")
+
 set(GLSLANG_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/glslang/" PARENT_SCOPE)
 set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
 set(BUILD_TESTING OFF CACHE INTERNAL "Enables test builds")
@@ -28,8 +30,6 @@ set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 if(MSVC)
 	set(BUILD_SHARED_LIBS OFF)
 endif()
-
-set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "Use MSVC Runtime Library DLL (/MD or /MDd)")
 
 set(BULLET_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src" PARENT_SCOPE)
 set(INSTALL_LIBS OFF CACHE INTERNAL "Set when you want to install libraries")

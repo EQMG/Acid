@@ -34,7 +34,7 @@ namespace test
 		int32_t row = static_cast<int32_t>(((x * 2.0f) + m_sideLength) / m_squareSize);
 		int32_t col = static_cast<int32_t>(((z * 2.0f) + m_sideLength) / m_squareSize);
 
-		if(row < 0 || row >= m_vertexCount || col < 0 || col >= m_vertexCount)
+		if (row < 0 || row >= m_vertexCount || col < 0 || col >= m_vertexCount)
 		{
 			return Vector3(x, 0.0f, z);
 		}
@@ -55,7 +55,6 @@ namespace test
 
 	Colour MeshTerrain::GetColour(const Vector3 &normal)
 	{
-		float factor = normal.Dot(Vector3::UP);
-		return Colour(1.0f, factor, 0.0f);
+		return Colour(1.0f, 0.0f, 0.0f, 0.0f);
 	}
 }

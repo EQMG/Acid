@@ -88,7 +88,7 @@ void main()
 
 	if (!ignoreLighting && normal != vec3(0.0f))
 	{
-		vec3 irradiance = 0.05f * diffuse.rgb; // vec3(0.0f)
+		vec3 irradiance = 0.1f * diffuse.rgb; // vec3(0.0f)
 		vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
 
 		for (int i = 0; i < scene.lightsCount; i++)

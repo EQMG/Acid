@@ -77,9 +77,9 @@ script:
 - cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DACID_INSTALL=OFF -DBUILD_SHARED_LIBS=ON -DACID_BUILD_TESTING=ON
+      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
     else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Release -DACID_INSTALL=OFF -DBUILD_SHARED_LIBS=ON -DACID_BUILD_TESTING=ON
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Release
     fi
 - ls
 - |
