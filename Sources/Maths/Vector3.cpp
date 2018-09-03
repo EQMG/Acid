@@ -306,11 +306,18 @@ namespace acid
 		return Vector3(direction);
 	}
 
-	void Vector3::Write(LoadedValue &destination)
+	void Vector3::Decode(const Serialized &serialized)
 	{
-		destination.SetChild<float>("x", m_x);
-		destination.SetChild<float>("y", m_y);
-		destination.SetChild<float>("z", m_z);
+		m_x = serialized.GetChild<float>("x");
+		m_y = serialized.GetChild<float>("y");
+		m_z = serialized.GetChild<float>("z");
+	}
+
+	void Vector3::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<float>("x", m_x);
+		serialized.SetChild<float>("y", m_y);
+		serialized.SetChild<float>("z", m_z);
 	}
 
 	Vector3 &Vector3::operator=(const Vector3 &other)
@@ -342,14 +349,6 @@ namespace acid
 		m_x = other.m_r;
 		m_y = other.m_g;
 		m_z = other.m_b;
-		return *this;
-	}
-
-	Vector3 &Vector3::operator=(LoadedValue &value)
-	{
-		m_x = value.FindChild("x")->Get<float>();
-		m_y = value.FindChild("y")->Get<float>();
-		m_z = value.FindChild("z")->Get<float>();
 		return *this;
 	}
 

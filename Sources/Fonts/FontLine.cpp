@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	FontLine::FontLine(const double &spaceWidth, const double &maxLength) :
+	FontLine::FontLine(const float &spaceWidth, const float &maxLength) :
 		m_maxLength(maxLength),
 		m_spaceSize(spaceWidth),
 		m_words(std::vector<FontWord>()),
@@ -17,7 +17,7 @@ namespace acid
 
 	bool FontLine::AddWord(const FontWord &word)
 	{
-		double additionalLength = word.GetWidth();
+		float additionalLength = word.GetWidth();
 		additionalLength += !m_words.empty() ? m_spaceSize : 0.0;
 
 		if (m_currentLineLength + additionalLength <= m_maxLength)

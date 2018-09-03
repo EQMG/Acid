@@ -14,7 +14,7 @@ namespace acid
 	{
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
-		DescriptorSet *m_descriptorSet;
+		std::shared_ptr<DescriptorSet> m_descriptorSet;
 		std::vector<IDescriptor *> m_descriptors;
 		bool m_changed;
 	public:
@@ -40,6 +40,6 @@ namespace acid
 
 		void BindDescriptor(const CommandBuffer &commandBuffer) { m_descriptorSet->BindDescriptor(commandBuffer); }
 
-		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet; }
+		std::shared_ptr<DescriptorSet> GetDescriptorSet() const { return m_descriptorSet; }
 	};
 }

@@ -59,11 +59,11 @@ namespace acid
 		}
 	}
 
-	void ColliderConvexHull::Load(LoadedValue &value)
+	void ColliderConvexHull::Decode(const Serialized &serialized)
 	{
 	}
 
-	void ColliderConvexHull::Write(LoadedValue &destination)
+	void ColliderConvexHull::Encode(Serialized &serialized) const
 	{
 	}
 

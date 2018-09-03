@@ -257,8 +257,8 @@ namespace acid
 		auto vertices = std::vector<IVertex *>();
 		m_numberLines = static_cast<int>(lines.size());
 
-		double cursorX = 0.0;
-		double cursorY = 0.0;
+		float cursorX = 0.0;
+		float cursorY = 0.0;
 		int lineOrder = static_cast<int>(lines.size());
 
 		for (auto &line : lines)
@@ -304,17 +304,17 @@ namespace acid
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices)
+	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices)
 	{
-		double vertexX = cursorX + character.GetOffsetX();
-		double vertexY = cursorY + character.GetOffsetY();
-		double vertexMaxX = vertexX + character.GetSizeX();
-		double vertexMaxY = vertexY + character.GetSizeY();
+		float vertexX = cursorX + character.GetOffsetX();
+		float vertexY = cursorY + character.GetOffsetY();
+		float vertexMaxX = vertexX + character.GetSizeX();
+		float vertexMaxY = vertexY + character.GetSizeY();
 
-		double textureX = character.GetTextureCoordX();
-		double textureY = character.GetTextureCoordY();
-		double textureMaxX = character.GetMaxTextureCoordX();
-		double textureMaxY = character.GetMaxTextureCoordY();
+		float textureX = character.GetTextureCoordX();
+		float textureY = character.GetTextureCoordY();
+		float textureMaxX = character.GetMaxTextureCoordX();
+		float textureMaxY = character.GetMaxTextureCoordY();
 
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
@@ -324,7 +324,7 @@ namespace acid
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 
-	void Text::AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices)
+	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<IVertex *> &vertices)
 	{
 		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 		vertices.emplace_back(vertex);

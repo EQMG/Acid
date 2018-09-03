@@ -55,11 +55,11 @@ namespace test
 	{
 	}
 
-	void Terrain::Load(LoadedValue &value)
+	void Terrain::Decode(const Serialized &serialized)
 	{
 	}
 
-	void Terrain::Write(LoadedValue &destination)
+	void Terrain::Encode(Serialized &serialized) const
 	{
 	}
 

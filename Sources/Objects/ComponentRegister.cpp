@@ -41,7 +41,7 @@ namespace acid
 	{
 	}
 
-	IComponent *ComponentRegister::CreateComponent(const std::string &name)
+	std::shared_ptr<IComponent> ComponentRegister::CreateComponent(const std::string &name)
 	{
 		auto it = m_components.find(name);
 
@@ -51,7 +51,7 @@ namespace acid
 			return nullptr;
 		}
 
-		return ((*it).second).create();
+		return ((*it).second).m_create();
 	}
 
 	bool ComponentRegister::DeregisterComponent(const std::string &name)
@@ -67,11 +67,11 @@ namespace acid
 		return true;
 	}
 
-	std::optional<std::string> ComponentRegister::FindComponentName(IComponent *compare)
+	std::optional<std::string> ComponentRegister::FindComponentName(const std::shared_ptr<IComponent> &compare)
 	{
 		for (auto &component : m_components)
 		{
-			if (component.second.isSame(compare))
+			if (component.second.m_isSame(compare))
 			{
 				return component.first;
 			}

@@ -66,7 +66,7 @@ namespace acid
 
 		void SetIndex(const uint32_t &index) { m_index = index; }
 
-		const std::string &GetName() const { return m_name; }
+		std::string GetName() const { return m_name; }
 
 		void SetName(const std::string &name) { m_name = name; }
 

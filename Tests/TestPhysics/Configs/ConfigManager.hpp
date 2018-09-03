@@ -6,16 +6,17 @@ using namespace acid;
 
 namespace test
 {
-	class ConfigManager
+	class ConfigManager :
+		public Config
 	{
 	private:
-		Config m_configAudio;
-		Config m_configGraphics;
 	public:
 		ConfigManager();
 
 		~ConfigManager();
 
-		void Save();
+		void Decode(Serialized &serialized) override;
+
+		void Encode(Serialized &serialized) const override;
 	};
 }

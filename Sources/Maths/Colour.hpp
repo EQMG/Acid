@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Files/LoadedValue.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -173,12 +173,6 @@ namespace acid
 		/// <returns> The hex code. </returns>
 		std::string GetHex() const;
 
-		/// <summary>
-		/// Saves this vector into a loaded value.
-		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue &destination);
-
 		float GetR() const { return m_r; }
 
 		void SetR(const float &r) { m_r = r; }
@@ -195,11 +189,13 @@ namespace acid
 
 		void SetA(const float &a) { m_a = a; }
 
+		void Decode(const Serialized &serialized);
+
+		void Encode(Serialized &serialized) const;
+
 		Colour &operator=(const Colour &other);
 
 		Colour &operator=(const std::string &hex);
-
-		Colour &operator=(LoadedValue &value);
 
 		bool operator==(const Colour &other) const;
 
@@ -261,7 +257,7 @@ namespace acid
 
 		Colour &operator/=(float value);
 
-		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &vector);
+		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 
 		std::string ToString() const;
 	};

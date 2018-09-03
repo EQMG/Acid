@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void XmlNode::AppendData(const std::shared_ptr<LoadedValue> &loadedValue, std::stringstream &builder, const int &indentation)
+	void XmlNode::AppendData(const std::shared_ptr<Serialized> &Serialized, std::stringstream &builder, const int &indentation)
 	{
 		std::stringstream indents;
 
@@ -28,9 +28,9 @@ namespace acid
 		}
 
 		std::stringstream nameAttributes;
-		nameAttributes << loadedValue->GetName();
+		nameAttributes << Serialized->GetName();
 
-		for (auto &attribute : loadedValue->GetAttributes())
+		for (auto &attribute : Serialized->GetAttributes())
 		{
 			nameAttributes << " " << attribute.first << "=\"" << attribute.second << "\"";
 		}
@@ -39,11 +39,11 @@ namespace acid
 
 		builder << indents.str();
 
-		if (loadedValue->GetName()[0] == '?')
+		if (Serialized->GetName()[0] == '?')
 		{
 			builder << "<" << nameAndAttribs << "?>\n";
 
-			for (auto &child : loadedValue->GetChildren())
+			for (auto &child : Serialized->GetChildren())
 			{
 				AppendData(child, builder, indentation);
 			}
@@ -51,19 +51,19 @@ namespace acid
 			return;
 		}
 
-		if (loadedValue->GetChildren().empty() && loadedValue->GetValue().empty())
+		if (Serialized->GetChildren().empty() && Serialized->GetValue().empty())
 		{
 			builder << "<" << nameAndAttribs << "/>\n";
 			return;
 		}
 
-		builder << "<" << nameAndAttribs << ">" << loadedValue->GetValue();
+		builder << "<" << nameAndAttribs << ">" << Serialized->GetValue();
 
-		if (!loadedValue->GetChildren().empty())
+		if (!Serialized->GetChildren().empty())
 		{
 			builder << "\n";
 
-			for (auto &child : loadedValue->GetChildren())
+			for (auto &child : Serialized->GetChildren())
 			{
 				AppendData(child, builder, indentation + 1);
 			}
@@ -71,10 +71,10 @@ namespace acid
 			builder << indents.str();
 		}
 
-		builder << "</" << loadedValue->GetName() << ">\n";
+		builder << "</" << Serialized->GetName() << ">\n";
 	}
 
-	std::shared_ptr<LoadedValue> &XmlNode::Convert(const XmlNode &source, std::shared_ptr<LoadedValue> &parent, const bool &isTopSection)
+	std::shared_ptr<Serialized> &XmlNode::Convert(const XmlNode &source, std::shared_ptr<Serialized> &parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
@@ -136,7 +136,7 @@ namespace acid
 
 		if (!isTopSection)
 		{
-			thisValue = std::make_shared<LoadedValue>(name, source.m_content, parseAttributes);
+			thisValue = std::make_shared<Serialized>(name, source.m_content, parseAttributes);
 			parent->GetChildren().emplace_back(thisValue);
 		}
 		else

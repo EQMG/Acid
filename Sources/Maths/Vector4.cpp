@@ -161,12 +161,20 @@ namespace acid
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
-	void Vector4::Write(LoadedValue &destination)
+	void Vector4::Decode(const Serialized &serialized)
 	{
-		destination.SetChild<float>("x", m_x);
-		destination.SetChild<float>("y", m_y);
-		destination.SetChild<float>("z", m_z);
-		destination.SetChild<float>("w", m_w);
+		m_x = serialized.GetChild<float>("x");
+		m_y = serialized.GetChild<float>("y");
+		m_z = serialized.GetChild<float>("z");
+		m_w = serialized.GetChild<float>("w");
+	}
+
+	void Vector4::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<float>("x", m_x);
+		serialized.SetChild<float>("y", m_y);
+		serialized.SetChild<float>("z", m_z);
+		serialized.SetChild<float>("w", m_w);
 	}
 
 	Vector4 &Vector4::operator=(const Vector4 &other)
@@ -193,15 +201,6 @@ namespace acid
 		m_y = other.m_g;
 		m_z = other.m_b;
 		m_w = other.m_a;
-		return *this;
-	}
-
-	Vector4 &Vector4::operator=(LoadedValue &value)
-	{
-		m_x = value.FindChild("x")->Get<float>();
-		m_y = value.FindChild("y")->Get<float>();
-		m_z = value.FindChild("z")->Get<float>();
-		m_w = value.FindChild("w")->Get<float>();
 		return *this;
 	}
 

@@ -59,9 +59,9 @@ namespace acid
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
-		DepthStencil *GetDepthStencil(const int &stage = -1) const;
+		std::shared_ptr<DepthStencil> GetDepthStencil(const int &stage = -1) const;
 
-		Texture *GetTexture(const uint32_t &i, const int &stage = -1) const;
+		std::shared_ptr<Texture> GetTexture(const uint32_t &index, const int &stage = -1) const;
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

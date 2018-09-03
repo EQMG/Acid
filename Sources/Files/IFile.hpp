@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "LoadedValue.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -24,14 +24,10 @@ namespace acid
 
 		virtual void Clear() = 0;
 
-		virtual std::map<std::string, std::string> ConfigReadValues() = 0;
-
-		virtual void ConfigPushValue(const std::string &key, const std::string &value) = 0;
-
 		virtual std::string GetFilename() const = 0;
 
 		virtual void SetFilename(const std::string &filename) = 0;
 
-		virtual std::shared_ptr<LoadedValue> GetParent() const = 0;
+		virtual std::shared_ptr<Serialized> GetParent() const = 0;
 	};
 }

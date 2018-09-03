@@ -25,14 +25,14 @@ namespace acid
 		m_shape->setUnscaledRadius(m_radius);
 	}
 
-	void ColliderSphere::Load(LoadedValue &value)
+	void ColliderSphere::Decode(const Serialized &serialized)
 	{
-		m_radius = value.FindChild("Radius")->Get<float>();
+		m_radius = serialized.GetChild<float>("Radius");
 	}
 
-	void ColliderSphere::Write(LoadedValue &destination)
+	void ColliderSphere::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Radius", true)->Set(m_radius);
+		serialized.SetChild<float>("Radius", m_radius);
 	}
 
 	std::shared_ptr<btCollisionShape> ColliderSphere::GetCollisionShape() const

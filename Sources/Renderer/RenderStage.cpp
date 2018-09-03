@@ -55,12 +55,9 @@ namespace acid
 
 	RenderStage::~RenderStage()
 	{
-		delete m_depthStencil;
-		delete m_renderpass;
-		delete m_framebuffers;
 	}
 
-	void RenderStage::Rebuild(Swapchain *swapchain)
+	void RenderStage::Rebuild(const Swapchain &swapchain)
 	{
 #if ACID_VERBOSE
 		float debugStart = Engine::Get()->GetTimeMs();
@@ -71,17 +68,15 @@ namespace acid
 
 		if (m_hasDepth)
 		{
-			delete m_depthStencil;
-			m_depthStencil = new DepthStencil(GetWidth(), GetHeight(), samples);
+			m_depthStencil = std::make_shared<DepthStencil>(GetWidth(), GetHeight(), samples);
 		}
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = new Renderpass(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
+			m_renderpass = std::make_shared<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
 		}
 
-		delete m_framebuffers;
-		m_framebuffers = new Framebuffers(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, *swapchain, *m_depthStencil, samples);
+		m_framebuffers = std::make_shared<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, samples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

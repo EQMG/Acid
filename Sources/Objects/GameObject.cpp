@@ -8,15 +8,15 @@ namespace acid
 {
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
-		m_transform(Transform(transform)),
-		m_components(std::vector<IComponent *>()),
+		m_transform(transform),
+		m_components(std::vector<std::shared_ptr<IComponent>>()),
 		m_structure(structure),
 		m_parent(nullptr),
 		m_removed(false)
 	{
 		if (m_structure == nullptr)
 		{
-			m_structure = Scenes::Get()->GetStructure();
+			m_structure = Scenes::Get()->GetStructure().get();
 		}
 
 		if (m_structure != nullptr)
@@ -44,7 +44,7 @@ namespace acid
 				continue;
 			}
 
-			component->Load(*value);
+			component->Decode(*value);
 			AddComponent(component);
 		}
 
@@ -54,11 +54,6 @@ namespace acid
 	GameObject::~GameObject()
 	{
 		StructureRemove();
-
-		for (auto &component : m_components)
-		{
-			delete component;
-		}
 	}
 
 	void GameObject::Update()
@@ -88,7 +83,7 @@ namespace acid
 		}
 	}
 
-	IComponent *GameObject::AddComponent(IComponent *component)
+	std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComponent> &component)
 	{
 		if (component == nullptr)
 		{
@@ -100,7 +95,7 @@ namespace acid
 		return component;
 	}
 
-	bool GameObject::RemoveComponent(IComponent *component)
+	bool GameObject::RemoveComponent(const std::shared_ptr<IComponent> &component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
@@ -109,7 +104,7 @@ namespace acid
 				(*it)->SetGameObject(nullptr);
 
 				m_components.erase(it);
-				delete *it;
+			//	delete *it;
 				return true;
 			}
 		}
@@ -133,7 +128,7 @@ namespace acid
 				(*it)->SetGameObject(nullptr);
 
 				m_components.erase(it);
-				delete *it;
+			//	delete *it;
 				return true;
 			}
 		}

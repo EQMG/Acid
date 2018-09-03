@@ -79,11 +79,11 @@ namespace acid
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 
-	void MeshRender::Load(LoadedValue &value)
+	void MeshRender::Decode(const Serialized &serialized)
 	{
 	}
 
-	void MeshRender::Write(LoadedValue &destination)
+	void MeshRender::Encode(Serialized &serialized) const
 	{
 	}
 

@@ -44,11 +44,18 @@ namespace acid
 		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation, Vector3::ZERO);
 	}
 
-	void Transform::Write(LoadedValue &destination)
+	void Transform::Decode(const Serialized &serialized)
 	{
-		m_position.Write(*destination.FindChild("position", true));
-		m_rotation.Write(*destination.FindChild("rotation", true));
-		m_scaling.Write(*destination.FindChild("scaling", true));
+		m_position = serialized.GetChild<Vector3>("Position");
+		m_rotation = serialized.GetChild<Vector3>("Rotation");
+		m_scaling = serialized.GetChild<Vector3>("Scaling");
+	}
+
+	void Transform::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<Vector3>("Position", m_position);
+		serialized.SetChild<Vector3>("Rotation", m_rotation);
+		serialized.SetChild<Vector3>("Scaling", m_scaling);
 	}
 
 	Transform &Transform::operator=(const Transform &other)
@@ -56,14 +63,6 @@ namespace acid
 		m_position = other.m_position;
 		m_rotation = other.m_rotation;
 		m_scaling = other.m_scaling;
-		return *this;
-	}
-
-	Transform &Transform::operator=(LoadedValue &value)
-	{
-		m_position = *value.FindChild("position");
-		m_rotation = *value.FindChild("rotation");
-		m_scaling = *value.FindChild("scaling");
 		return *this;
 	}
 
@@ -75,5 +74,18 @@ namespace acid
 	bool Transform::operator!=(const Transform &other) const
 	{
 		return !(*this == other);
+	}
+
+	std::ostream &operator<<(std::ostream &stream, const Transform &transform)
+	{
+		stream << transform.ToString();
+		return stream;
+	}
+
+	std::string Transform::ToString() const
+	{
+		std::stringstream result;
+		result << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
+		return result.str();
 	}
 }

@@ -8,7 +8,7 @@ namespace acid
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(std::make_shared<LoadedValue>("", ""))
+		m_parent(std::make_shared<Serialized>("", ""))
 	{
 	}
 
@@ -119,37 +119,6 @@ namespace acid
 	void FileJson::Clear()
 	{
 		m_parent->GetChildren().clear();
-	}
-
-	std::map<std::string, std::string> FileJson::ConfigReadValues()
-	{
-		auto result = std::map<std::string, std::string>();
-
-		for (auto &child : m_parent->GetChildren())
-		{
-			if (child->GetValue().empty())
-			{
-				continue;
-			}
-
-			result.emplace(child->GetName(), child->GetValue());
-		}
-
-		return result;
-	}
-
-	void FileJson::ConfigPushValue(const std::string &key, const std::string &value)
-	{
-		auto exiting = m_parent->FindChild(key, false, false);
-
-		if (exiting)
-		{
-			exiting->SetValue(value);
-			return;
-		}
-
-		auto newChild = std::make_shared<LoadedValue>(key, value);
-		m_parent->GetChildren().emplace_back(newChild);
 	}
 
 	void FileJson::Verify()

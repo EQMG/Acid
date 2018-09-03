@@ -36,18 +36,11 @@ namespace acid
 
 		void Update() override = 0;
 
-		virtual void Load(LoadedValue &value) = 0;
+		virtual void Decode(const Serialized &serialized) override = 0;
 
-		virtual void Write(LoadedValue &destination) = 0;
+		virtual void Encode(Serialized &serialized) const override = 0;
 
 		virtual std::shared_ptr<btCollisionShape> GetCollisionShape() const = 0;
-
-		/// <summary>
-		/// Tests whether a ray is intersecting this shape.
-		/// </summary>
-		/// <param name="ray"> The ray being tested for intersection. </param>
-		/// <returns> If the ray intersects, relative intersect location. </returns>
-		//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 		/// <summary>
 		/// Gets if the shape is partially in the view frustum.
@@ -55,6 +48,13 @@ namespace acid
 		/// <param name="frustum"> The view frustum. </param>
 		/// <returns> If the shape is partially in the view frustum. </returns>
 		bool InFrustum(const Frustum &frustum);
+
+		/// <summary>
+		/// Tests whether a ray is intersecting this shape.
+		/// </summary>
+		/// <param name="ray"> The ray being tested for intersection. </param>
+		/// <returns> If the ray intersects, relative intersect location. </returns>
+	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 		static btVector3 Convert(const Vector3 &vector);
 

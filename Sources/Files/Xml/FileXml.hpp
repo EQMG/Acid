@@ -4,7 +4,6 @@
 #include <utility>
 #include <vector>
 #include "Files/IFile.hpp"
-#include "Files/LoadedValue.hpp"
 
 namespace acid
 {
@@ -13,7 +12,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		std::shared_ptr<LoadedValue> m_parent;
+		std::shared_ptr<Serialized> m_parent;
 	public:
 		FileXml(const std::string &filename);
 
@@ -25,17 +24,13 @@ namespace acid
 
 		void Clear() override;
 
-		std::map<std::string, std::string> ConfigReadValues() override;
-
-		void ConfigPushValue(const std::string &key, const std::string &value) override;
-
 		std::string GetFilename() const override { return m_filename; }
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		std::shared_ptr<LoadedValue> GetParent() const override { return m_parent; }
+		std::shared_ptr<Serialized> GetParent() const override { return m_parent; }
 
-		std::shared_ptr<LoadedValue> GetChild(const std::string &name) const { return m_parent->FindChild(name); }
+		std::shared_ptr<Serialized> GetChild(const std::string &name) const { return m_parent->FindChild(name); }
 	private:
 		void Verify();
 	};

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	AnimationLoader::AnimationLoader(const std::shared_ptr<LoadedValue> &libraryAnimations, const std::shared_ptr<LoadedValue> &libraryVisualScenes) :
+	AnimationLoader::AnimationLoader(const std::shared_ptr<Serialized> &libraryAnimations, const std::shared_ptr<Serialized> &libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
 		m_libraryVisualScenes(libraryVisualScenes),
 		m_lengthSeconds(0.0f),
@@ -55,7 +55,7 @@ namespace acid
 		}
 	}
 
-	void AnimationLoader::LoadJointTransforms(std::shared_ptr<LoadedValue> &jointData, const std::string &rootNodeId)
+	void AnimationLoader::LoadJointTransforms(std::shared_ptr<Serialized> &jointData, const std::string &rootNodeId)
 	{
 		std::string jointNameId = GetJointName(jointData);
 		std::string dataId = GetDataId(jointData);
@@ -67,13 +67,13 @@ namespace acid
 		ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 	}
 
-	std::string AnimationLoader::GetDataId(std::shared_ptr<LoadedValue> &jointData)
+	std::string AnimationLoader::GetDataId(std::shared_ptr<Serialized> &jointData)
 	{
 		auto node = jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT");
 		return node->FindAttribute("source").substr(1);
 	}
 
-	std::string AnimationLoader::GetJointName(std::shared_ptr<LoadedValue> &jointData)
+	std::string AnimationLoader::GetJointName(std::shared_ptr<Serialized> &jointData)
 	{
 		auto channelNode = jointData->FindChild("channel");
 		std::string data = channelNode->FindAttribute("target");

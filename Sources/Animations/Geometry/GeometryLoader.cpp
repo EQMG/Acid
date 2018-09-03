@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	GeometryLoader::GeometryLoader(const std::shared_ptr<LoadedValue> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
+	GeometryLoader::GeometryLoader(const std::shared_ptr<Serialized> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<VertexAnimatedData *>()),
@@ -95,19 +95,19 @@ namespace acid
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int indexCount = m_meshData->FindChild("polylist")->FindChildren("input").size();
+		int32_t indexCount = m_meshData->FindChild("polylist")->FindChildren("input").size();
 		auto indexRawData = FormatString::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			int positionIndex = std::stoi(indexRawData[i * indexCount]);
-			int normalIndex = std::stoi(indexRawData[i * indexCount + 1]);
-			int uvIndex = std::stoi(indexRawData[i * indexCount + 2]);
+			int32_t positionIndex = std::stoi(indexRawData[i * indexCount]);
+			int32_t normalIndex = std::stoi(indexRawData[i * indexCount + 1]);
+			int32_t uvIndex = std::stoi(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}
 
-	VertexAnimatedData *GeometryLoader::ProcessVertex(const int &positionIndex, const int &normalIndex, const int &uvIndex)
+	VertexAnimatedData *GeometryLoader::ProcessVertex(const int32_t &positionIndex, const int32_t &normalIndex, const int32_t &uvIndex)
 	{
 		auto currentVertex = m_positionsList[positionIndex];
 
@@ -124,7 +124,7 @@ namespace acid
 		}
 	}
 
-	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int &newUvIndex, const int &newNormalIndex)
+	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int32_t &newUvIndex, const int32_t &newNormalIndex)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
 		{

@@ -21,7 +21,7 @@ namespace acid
 		{
 			m_max = time;
 			return m_start + time * (m_end - m_start);
-			//	return Maths::CosInterpolate(m_start, m_end, time);
+		//	return Maths::CosInterpolate(m_start, m_end, time);
 		}
 
 		m_reachedTarget = true;

@@ -12,7 +12,7 @@ namespace acid
 	{
 	private:
 		std::vector<FontCharacter> m_characters;
-		double m_width;
+		float m_width;
 	public:
 		/// <summary>
 		/// Creates a new word.
@@ -34,6 +34,6 @@ namespace acid
 
 		std::vector<FontCharacter> GetCharacters() const { return m_characters; }
 
-		double GetWidth() const { return m_width; }
+		float GetWidth() const { return m_width; }
 	};
 }

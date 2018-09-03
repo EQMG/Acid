@@ -30,17 +30,17 @@ namespace acid
 	{
 	}
 
-	void MaterialSkybox::Load(LoadedValue &value)
+	void MaterialSkybox::Decode(const Serialized &serialized)
 	{
-		TrySetCubemap(value.FindChild("Cubemap Texture")->GetString(), value.FindChild("Cubemap Extension")->GetString());
-		m_skyColour = value.FindChild("Sky Colour")->GetString();
+		TrySetCubemap(serialized.GetChild<std::string>("Cubemap Texture"), serialized.GetChild<std::string>("Cubemap Extension"));
+		m_skyColour = serialized.GetChild<Colour>("Sky Colour");
 	}
 
-	void MaterialSkybox::Write(LoadedValue &destination)
+	void MaterialSkybox::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Cubemap Texture", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
-		destination.FindChild("Cubemap Extension", true)->SetString(m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
-		destination.FindChild("Sky Colour", true)->SetString(m_skyColour.GetHex());
+		serialized.SetChild<std::string>("Cubemap Texture", m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
+		serialized.SetChild<std::string>("Cubemap Extension", m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
+		serialized.SetChild<Colour>("Sky Colour", m_skyColour.GetHex());
 	}
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)

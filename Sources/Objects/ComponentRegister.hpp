@@ -9,8 +9,8 @@ namespace acid
 {
 	struct ComponentCreate
 	{
-		std::function<IComponent *()> create;
-		std::function<bool(IComponent *)> isSame;
+		std::function<std::shared_ptr<IComponent>()> m_create;
+		std::function<bool(std::shared_ptr<IComponent>)> m_isSame;
 	};
 
 	/// <summary>
@@ -36,7 +36,7 @@ namespace acid
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		IComponent *CreateComponent(const std::string &name);
+		std::shared_ptr<IComponent> CreateComponent(const std::string &name);
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -54,13 +54,13 @@ namespace acid
 			}
 
 			ComponentCreate componentCreate = {};
-			componentCreate.create = []() -> IComponent *
+			componentCreate.m_create = []() -> std::shared_ptr<IComponent>
 			{
-				return new T();
+				return std::make_shared<T>();
 			};
-			componentCreate.isSame = [](IComponent *component) -> bool
+			componentCreate.m_isSame = [](std::shared_ptr<IComponent> component) -> bool
 			{
-				return dynamic_cast<T *>(component) != nullptr;
+				return std::dynamic_pointer_cast<T>(component) != nullptr;
 			};
 
 			m_components.emplace(name, componentCreate);
@@ -78,6 +78,6 @@ namespace acid
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindComponentName(IComponent *compare);
+		std::optional<std::string> FindComponentName(const std::shared_ptr<IComponent> &compare);
 	};
 }

@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	// Creates the engine.
 	auto engine = std::make_shared<Engine>();
 
-	// auto configManager = std::make_shared<ConfigManager>();
+	auto configManager = std::make_shared<ConfigManager>();
 	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
@@ -51,6 +51,6 @@ int main(int argc, char **argv)
 	auto exitCode = engine->Run();
 
 	// Pauses the console.
-	std::cin.get();
+//	std::cin.get();
 	return exitCode;
 }

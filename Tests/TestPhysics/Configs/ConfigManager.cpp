@@ -2,27 +2,18 @@
 
 #include <Display/Display.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Files/Xml/FileXml.hpp>
+#include <Files/Json/FileJson.hpp>
 #include <Events/Events.hpp>
 #include <Events/EventTime.hpp>
+#include <Audio/Audio.hpp>
 
 namespace test
 {
 	ConfigManager::ConfigManager() :
-		m_configAudio(Config(std::make_shared<FileXml>(FileSystem::GetWorkingDirectory() + "/Configs/Audio.xml"))),
-		m_configGraphics(Config(std::make_shared<FileXml>(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.xml")))
+		Config(std::make_shared<FileJson>(FileSystem::GetWorkingDirectory() + "/Config.json"))
 	{
-		FileSystem::CreateFolder("Configs");
-
-		m_configAudio.Load();
-		m_configAudio.Link<float>("Master Volume", 1.0f, nullptr, nullptr);
-
-		m_configGraphics.Load();
-		m_configGraphics.Link<int>("Display Width", 1080, CONFIG_GET(Display::Get()->GetWindowWidth()), CONFIG_SET(int, Display::Get()->SetWidth(v)));
-		m_configGraphics.Link<int>("Display Height", 720, CONFIG_GET(Display::Get()->GetWindowHeight()), CONFIG_SET(int, Display::Get()->SetHeight(v)));
-		m_configGraphics.Link<float>("Fps Limit", 0.0f, CONFIG_GET(Engine::Get()->GetFpsLimit()), CONFIG_SET(float, Engine::Get()->SetFpsLimit(v)));
-		m_configGraphics.Link<bool>("Is Antialiasing", true, CONFIG_GET(Display::Get()->IsAntialiasing()), CONFIG_SET(bool, Display::Get()->SetAntialiasing(v)));
-		m_configGraphics.Link<bool>("Is Fullscreen", false, CONFIG_GET(Display::Get()->IsFullscreen()), CONFIG_SET(bool, Display::Get()->SetFullscreen(v)));
+	//	FileSystem::CreateFolder("Configs");
+		Load();
 
 		Events::Get()->AddEvent<EventTime>(2.5f, false, [&]() -> void
 		{
@@ -35,10 +26,25 @@ namespace test
 		Save();
 	}
 
-	void ConfigManager::Save()
+	void ConfigManager::Decode(Serialized &serialized)
 	{
-		fprintf(stdout, "Saving config manager\n");
-		m_configAudio.Save();
-		m_configGraphics.Save();
+	//	Audio::Get()->SetVolume(serialized.GetChild<float>("Master Volume", 1.0f));
+
+		Display::Get()->SetWidth(serialized.GetChild<uint32_t>("Display Width", 1080));
+		Display::Get()->SetHeight(serialized.GetChild<uint32_t>("Display Height", 720));
+		Engine::Get()->SetFpsLimit(serialized.GetChild<float>("Fps Limit", 0.0f));
+		Display::Get()->SetAntialiasing(serialized.GetChild<bool>("Is Antialiasing", true));
+		Display::Get()->SetAntialiasing(serialized.GetChild<bool>("Is Fullscreen", false));
+	}
+
+	void ConfigManager::Encode(Serialized &serialized) const
+	{
+	//	serialized.SetChild<float>("Master Volume", Audio::Get()->GetVolume());
+
+		serialized.SetChild<uint32_t>("Display Width", Display::Get()->GetWidth());
+		serialized.SetChild<uint32_t>("Display Height", Display::Get()->GetHeight());
+		serialized.SetChild<float>("Fps Limit", Engine::Get()->GetFpsLimit());
+		serialized.SetChild<bool>("Is Antialiasing", Display::Get()->IsAntialiasing());
+		serialized.SetChild<bool>("Is Fullscreen", Display::Get()->IsAntialiasing());
 	}
 }

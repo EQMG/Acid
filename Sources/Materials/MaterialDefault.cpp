@@ -38,7 +38,7 @@ namespace acid
 			return;
 		}
 
-		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
+		m_animated = std::dynamic_pointer_cast<MeshAnimated>(mesh) != nullptr;
 		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 			mesh->GetVertexInput(), PIPELINE_MODE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()));
 	}
@@ -47,34 +47,34 @@ namespace acid
 	{
 	}
 
-	void MaterialDefault::Load(LoadedValue &value)
+	void MaterialDefault::Decode(const Serialized &serialized)
 	{
-		m_baseDiffuse = value.FindChild("Base Diffuse")->GetString();
-		TrySetDiffuseTexture(value.FindChild("Diffuse Texture")->GetString());
+		m_baseDiffuse = serialized.GetChild<Colour>("Base Diffuse");
+		TrySetDiffuseTexture(serialized.GetChild<std::string>("Diffuse Texture"));
 
-		m_metallic = value.FindChild("Metallic")->Get<float>();
-		m_roughness = value.FindChild("Roughness")->Get<float>();
-		TrySetMaterialTexture(value.FindChild("Material Texture")->GetString());
-		TrySetNormalTexture(value.FindChild("Normal Texture")->GetString());
+		m_metallic = serialized.GetChild<float>("Metallic");
+		m_roughness = serialized.GetChild<float>("Roughness");
+		TrySetMaterialTexture(serialized.GetChild<std::string>("Material Texture"));
+		TrySetNormalTexture(serialized.GetChild<std::string>("Normal Texture"));
 
-		m_castsShadows = value.FindChild("Casts Shadows")->Get<bool>();
-		m_ignoreLighting = value.FindChild("Ignore Lighting")->Get<bool>();
-		m_ignoreFog = value.FindChild("Ignore Fog")->Get<bool>();
+		m_castsShadows = serialized.GetChild<bool>("Casts Shadows");
+		m_ignoreLighting = serialized.GetChild<bool>("Ignore Lighting");
+		m_ignoreFog = serialized.GetChild<bool>("Ignore Fog");
 	}
 
-	void MaterialDefault::Write(LoadedValue &destination)
+	void MaterialDefault::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Base Diffuse", true)->SetString(m_baseDiffuse.GetHex());
-		destination.FindChild("Diffuse Texture", true)->SetString(m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		serialized.SetChild<Colour>("Base Diffuse", m_baseDiffuse);
+		serialized.SetChild<std::string>("Diffuse Texture", m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
 
-		destination.FindChild("Metallic", true)->Set(m_metallic);
-		destination.FindChild("Roughness", true)->Set(m_roughness);
-		destination.FindChild("Material Texture", true)->SetString(m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
-		destination.FindChild("Normal Texture", true)->SetString(m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
+		serialized.SetChild<float>("Metallic", m_metallic);
+		serialized.SetChild<float>("Roughness", m_roughness);
+		serialized.SetChild<std::string>("Material Texture", m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
+		serialized.SetChild<std::string>("Normal Texture", m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
 
-		destination.FindChild("Casts Shadows", true)->Set(m_castsShadows);
-		destination.FindChild("Ignore Lighting", true)->Set(m_ignoreLighting);
-		destination.FindChild("Ignore Fog", true)->Set(m_ignoreFog);
+		serialized.SetChild<bool>("Casts Shadows", m_castsShadows);
+		serialized.SetChild<bool>("Ignore Lighting", m_ignoreLighting);
+		serialized.SetChild<bool>("Ignore Fog", m_ignoreFog);
 	}
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)

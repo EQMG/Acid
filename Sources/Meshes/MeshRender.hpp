@@ -20,9 +20,9 @@ namespace acid
 
 		void Update() override;
 
-		void Load(LoadedValue &value) override;
+		void Decode(const Serialized &serialized) override;
 
-		void Write(LoadedValue &destination) override;
+		void Encode(Serialized &serialized) const override;
 
 		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
 

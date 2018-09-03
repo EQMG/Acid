@@ -38,7 +38,7 @@ namespace test
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg")),
-		m_primaryColour(new Colour("#e74c3c")),
+		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
@@ -55,7 +55,6 @@ namespace test
 		delete m_buttonScreenshot;
 		delete m_buttonExit;
 
-		delete m_primaryColour;
 		delete m_selectorJoystick;
 		delete m_uiStartLogo;
 		delete m_overlayDebug;
@@ -179,7 +178,7 @@ namespace test
 		}
 	}
 
-	bool Scene1::IsGamePaused()
+	bool Scene1::IsGamePaused() const
 	{
 		return m_uiStartLogo->IsStarting();
 	}

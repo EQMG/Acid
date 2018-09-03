@@ -12,14 +12,14 @@ namespace acid
 	{
 	private:
 		bool m_multipipeline;
-		UniformBlock *m_uniformBlock;
-		UniformBuffer *m_uniformBuffer;
+		std::shared_ptr<UniformBlock> m_uniformBlock;
+		std::shared_ptr<UniformBuffer> m_uniformBuffer;
 		void *m_data;
 		bool m_changed;
 	public:
 		UniformHandler(const bool &multipipeline = false);
 
-		UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		UniformHandler(const std::shared_ptr<UniformBlock> &uniformBlock, const bool &multipipeline = false);
 
 		~UniformHandler();
 
@@ -61,8 +61,8 @@ namespace acid
 			Push(object, static_cast<size_t>(uniform->GetOffset()), realSize);
 		}
 
-		bool Update(UniformBlock *uniformBlock);
+		bool Update(const std::shared_ptr<UniformBlock> &uniformBlock);
 
-		UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer; }
+		std::shared_ptr<UniformBuffer> GetUniformBuffer() const { return m_uniformBuffer; }
 	};
 }

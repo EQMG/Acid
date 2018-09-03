@@ -18,7 +18,7 @@ namespace acid
 	private:
 		std::string m_name;
 		Transform m_transform;
-		std::vector<IComponent *> m_components;
+		std::vector<std::shared_ptr<IComponent>> m_components;
 		ISpatialStructure *m_structure;
 		GameObject *m_parent;
 		bool m_removed;
@@ -35,7 +35,7 @@ namespace acid
 		/// Gets all components attached to this game object.
 		/// </summary>
 		/// <returns> The list of components. </returns>
-		std::vector<IComponent *> GetComponents() const { return m_components; }
+		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
 
 		/// <summary>
 		/// Gets a component by type.
@@ -43,13 +43,13 @@ namespace acid
 		/// <param name="T"> The component type to find. </param>
 		/// <returns> The found component. </returns>
 		template<typename T>
-		T *GetComponent(const bool &allowDisabled = false)
+		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
 		{
-			T *alternative = nullptr;
+			std::shared_ptr<T> alternative = nullptr;
 
 			for (auto &component : m_components)
 			{
-				auto casted = dynamic_cast<T *>(component);
+				auto casted = std::dynamic_pointer_cast<T>(component);
 
 				if (casted != nullptr)
 				{
@@ -71,7 +71,7 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to add. </param>
 		/// <returns> The added component. </returns>
-		IComponent *AddComponent(IComponent *component);
+		std::shared_ptr<IComponent> AddComponent(const std::shared_ptr<IComponent> &component);
 
 		/// <summary>
 		/// Creates a component by type to be added this game object.
@@ -80,9 +80,9 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added component. </returns>
 		template<typename T, typename... Args>
-		T *AddComponent(Args &&... args)
+		std::shared_ptr<T> AddComponent(Args &&... args)
 		{
-			auto created = new T(std::forward<Args>(args)...);
+			auto created = std::make_shared<T>(std::forward<Args>(args)...);
 			AddComponent(created);
 			return created;
 		}
@@ -92,7 +92,7 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to remove. </param>
 		/// <returns> If the component was removed. </returns>
-		bool RemoveComponent(IComponent *component);
+		bool RemoveComponent(const std::shared_ptr<IComponent> &component);
 
 		/// <summary>
 		/// Removes a component from this game object.
@@ -111,12 +111,12 @@ namespace acid
 		{
 			for (auto &component : m_components)
 			{
-				auto casted = dynamic_cast<T *>(component);
+				auto casted = std::dynamic_pointer_cast<T>(component);
 
 				if (casted != nullptr)
 				{
 					RemoveComponent(component);
-					delete component;
+				//	delete component;
 					return true;
 				}
 			}

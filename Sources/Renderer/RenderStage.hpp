@@ -14,9 +14,9 @@ namespace acid
 		uint32_t m_stageIndex;
 		RenderpassCreate m_renderpassCreate;
 
-		DepthStencil *m_depthStencil;
-		Renderpass *m_renderpass;
-		Framebuffers *m_framebuffers;
+		std::shared_ptr<DepthStencil> m_depthStencil;
+		std::shared_ptr<Renderpass> m_renderpass;
+		std::shared_ptr<Framebuffers> m_framebuffers;
 
 		std::vector<VkClearValue> m_clearValues;
 		std::vector<uint32_t> m_subpassAttachmentCount;
@@ -32,7 +32,7 @@ namespace acid
 
 		~RenderStage();
 
-		void Rebuild(Swapchain *swapchain);
+		void Rebuild(const Swapchain &swapchain);
 
 		uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate.GetSubpasses().size()); };
 
@@ -44,11 +44,11 @@ namespace acid
 
 		RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
 
-		DepthStencil *GetDepthStencil() const { return m_depthStencil; };
+		std::shared_ptr<DepthStencil> GetDepthStencil() const { return m_depthStencil; };
 
-		Renderpass *GetRenderpass() const { return m_renderpass; };
+		std::shared_ptr<Renderpass> GetRenderpass() const { return m_renderpass; };
 
-		Framebuffers *GetFramebuffers() const { return m_framebuffers; };
+		std::shared_ptr<Framebuffers> GetFramebuffers() const { return m_framebuffers; };
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 

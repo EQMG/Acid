@@ -50,7 +50,7 @@ namespace acid
 				return;
 			}
 
-			component->Write(*m_parent->FindChild(*componentName, true));
+			component->Encode(*m_parent->FindChildSafe(*componentName));
 		}
 	}
 

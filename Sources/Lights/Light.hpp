@@ -44,9 +44,9 @@ namespace acid
 
 		void Update() override;
 
-		void Load(LoadedValue &value) override;
+		void Decode(const Serialized &serialized) override;
 
-		void Write(LoadedValue &destination) override;
+		void Encode(Serialized &serialized) const override;
 
 		Colour GetColour() const { return m_colour; }
 
@@ -61,9 +61,5 @@ namespace acid
 		void SetOffset(const Vector3 &offset) { m_offset = offset; }
 
 		Vector3 GetPosition() const { return m_position; }
-
-		Light &operator=(const Light &other);
-
-		Light &operator=(LoadedValue &value);
 	};
 }

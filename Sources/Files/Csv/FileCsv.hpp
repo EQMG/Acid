@@ -40,15 +40,11 @@ namespace acid
 
 		void Clear() override;
 
-		std::map<std::string, std::string> ConfigReadValues() override;
-
-		void ConfigPushValue(const std::string &key, const std::string &value) override;
-
 		std::string GetFilename() const override { return m_filename; }
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		std::shared_ptr<LoadedValue> GetParent() const override { return nullptr; }
+		std::shared_ptr<Serialized> GetParent() const override { return nullptr; }
 
 		char GetDelimiter() const { return m_delimiter; }
 

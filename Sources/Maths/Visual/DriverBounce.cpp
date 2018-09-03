@@ -16,7 +16,7 @@ namespace acid
 
 	float DriverBounce::Calculate(const float &time)
 	{
-		float value = 0.5f + sin(PI * 2.0f * time) * 0.5f;
+		float value = 0.5f + std::sin(PI * 2.0f * time) * 0.5f;
 
 		if (GetActualTime() > m_length / 2.0f)
 		{

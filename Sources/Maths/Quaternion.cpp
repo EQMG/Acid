@@ -293,12 +293,20 @@ namespace acid
 		);
 	}
 
-	void Quaternion::Write(LoadedValue &destination)
+	void Quaternion::Decode(const Serialized &serialized)
 	{
-		destination.SetChild<float>("x", m_x);
-		destination.SetChild<float>("y", m_y);
-		destination.SetChild<float>("z", m_z);
-		destination.SetChild<float>("w", m_w);
+		m_x = serialized.GetChild<float>("x");
+		m_y = serialized.GetChild<float>("y");
+		m_z = serialized.GetChild<float>("z");
+		m_w = serialized.GetChild<float>("w");
+	}
+
+	void Quaternion::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<float>("x", m_x);
+		serialized.SetChild<float>("y", m_y);
+		serialized.SetChild<float>("z", m_z);
+		serialized.SetChild<float>("w", m_w);
 	}
 
 	Quaternion &Quaternion::operator=(const Quaternion &other)
@@ -366,15 +374,6 @@ namespace acid
 			m_z = z4 / 4.0f;
 		}
 
-		return *this;
-	}
-
-	Quaternion &Quaternion::operator=(LoadedValue &value)
-	{
-		m_x = value.FindChild("x")->Get<float>();
-		m_y = value.FindChild("y")->Get<float>();
-		m_z = value.FindChild("z")->Get<float>();
-		m_w = value.FindChild("w")->Get<float>();
 		return *this;
 	}
 

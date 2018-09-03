@@ -22,6 +22,10 @@ namespace acid
 
 	ModuleRegister::~ModuleRegister()
 	{
+		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
+		{
+			delete (*it).second.get();
+		}
 	}
 
 	void ModuleRegister::FillRegister()
