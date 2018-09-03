@@ -126,7 +126,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Renderpass created in %fms\n", debugEnd - debugStart);
+		Log::Out( "Renderpass created in %fms\n", debugEnd - debugStart);
 #endif
 	}
 
@@ -141,7 +141,7 @@ namespace acid
 		auto width = Display::Get()->GetWidth();
 		auto height = Display::Get()->GetHeight();
 
-		fprintf(stdout, "Saving screenshot to: '%s'\n", filename.c_str());
+		Log::Out( "Saving screenshot to: '%s'\n", filename.c_str());
 
 		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
 		VkImage dstImage;
@@ -185,7 +185,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -245,7 +245,7 @@ namespace acid
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
 #if ACID_VERBOSE
-			fprintf(stdout, "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
+			Log::Out( "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
 #endif
 		//	delete m_swapchain;
 			m_swapchain = std::make_shared<Swapchain>(displayExtent);

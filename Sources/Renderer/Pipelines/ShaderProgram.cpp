@@ -381,21 +381,21 @@ namespace acid
 
 	//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
 	//	{
-	//		fprintf(stderr, "SPRIV shader preprocess failed!\n");
+	//		Log::Error("SPRIV shader preprocess failed!\n");
 	//	}
 
 		if (!shader.parse(&resources, 100, false, messages))
 		{
-			fprintf(stdout, "%s\n", shader.getInfoLog());
-			fprintf(stdout, "%s\n", shader.getInfoDebugLog());
-			fprintf(stderr, "SPRIV shader compile failed!\n");
+			Log::Out( "%s\n", shader.getInfoLog());
+			Log::Out( "%s\n", shader.getInfoDebugLog());
+			Log::Error("SPRIV shader compile failed!\n");
 		}
 
 		program.addShader(&shader);
 
 		if (!program.link(messages) || !program.mapIO())
 		{
-			fprintf(stderr, "Error while linking shader program.\n");
+			Log::Error("Error while linking shader program.\n");
 		}
 
 		program.buildReflection();

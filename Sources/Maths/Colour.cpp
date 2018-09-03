@@ -157,14 +157,14 @@ namespace acid
 		return result.str();
 	}
 
-	void Colour::Decode(const Serialized &serialized)
+	void Colour::Decode(const Node &node)
 	{
-		*this = serialized.Get<std::string>();
+		*this = node.Get<std::string>();
 	}
 
-	void Colour::Encode(Serialized &serialized) const
+	void Colour::Encode(Node &node) const
 	{
-		serialized.Set<std::string>(GetHex());
+		node.Set<std::string>(GetHex());
 	}
 
 	Colour &Colour::operator=(const Colour &other)

@@ -467,20 +467,20 @@ namespace acid
 		return result;
 	}
 
-	void Matrix4::Decode(const Serialized &serialized)
+	void Matrix4::Decode(const Node &node)
 	{
-		m_rows[0] = serialized.GetChild<Vector4>("m0");
-		m_rows[1] = serialized.GetChild<Vector4>("m1");
-		m_rows[2] = serialized.GetChild<Vector4>("m2");
-		m_rows[3] = serialized.GetChild<Vector4>("m3");
+		m_rows[0] = node.GetChild<Vector4>("m0");
+		m_rows[1] = node.GetChild<Vector4>("m1");
+		m_rows[2] = node.GetChild<Vector4>("m2");
+		m_rows[3] = node.GetChild<Vector4>("m3");
 	}
 
-	void Matrix4::Encode(Serialized &serialized) const
+	void Matrix4::Encode(Node &node) const
 	{
-		serialized.SetChild<Vector4>("m0", m_rows[0]);
-		serialized.SetChild<Vector4>("m1", m_rows[1]);
-		serialized.SetChild<Vector4>("m2", m_rows[2]);
-		serialized.SetChild<Vector4>("m3", m_rows[3]);
+		node.SetChild<Vector4>("m0", m_rows[0]);
+		node.SetChild<Vector4>("m1", m_rows[1]);
+		node.SetChild<Vector4>("m2", m_rows[2]);
+		node.SetChild<Vector4>("m3", m_rows[3]);
 	}
 
 	Matrix4 &Matrix4::operator=(const Matrix4 &other)

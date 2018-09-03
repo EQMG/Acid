@@ -161,20 +161,20 @@ namespace acid
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
-	void Vector4::Decode(const Serialized &serialized)
+	void Vector4::Decode(const Node &node)
 	{
-		m_x = serialized.GetChild<float>("x");
-		m_y = serialized.GetChild<float>("y");
-		m_z = serialized.GetChild<float>("z");
-		m_w = serialized.GetChild<float>("w");
+		m_x = node.GetChild<float>("x");
+		m_y = node.GetChild<float>("y");
+		m_z = node.GetChild<float>("z");
+		m_w = node.GetChild<float>("w");
 	}
 
-	void Vector4::Encode(Serialized &serialized) const
+	void Vector4::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("x", m_x);
-		serialized.SetChild<float>("y", m_y);
-		serialized.SetChild<float>("z", m_z);
-		serialized.SetChild<float>("w", m_w);
+		node.SetChild<float>("x", m_x);
+		node.SetChild<float>("y", m_y);
+		node.SetChild<float>("z", m_z);
+		node.SetChild<float>("w", m_w);
 	}
 
 	Vector4 &Vector4::operator=(const Vector4 &other)

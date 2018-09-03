@@ -44,7 +44,7 @@ namespace acid
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		std::shared_ptr<Serialized> GetParent() const override { return nullptr; }
+		std::shared_ptr<Node> GetParent() const override { return nullptr; }
 
 		char GetDelimiter() const { return m_delimiter; }
 

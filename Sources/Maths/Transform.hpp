@@ -3,7 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -62,9 +62,9 @@ namespace acid
 
 		void SetScaling(const Vector3 &scaling) { m_scaling = scaling; }
 
-		void Decode(const Serialized &serialized);
+		void Decode(const Node &node);
 
-		void Encode(Serialized &serialized) const;
+		void Encode(Node &node) const;
 
 		Transform &operator=(const Transform &other);
 

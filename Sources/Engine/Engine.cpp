@@ -26,9 +26,10 @@ namespace acid
 
 	Engine::~Engine()
 	{
+		Log::CreateLog("Logs/" + ((m_error ? "Crashes/" : "") + GetDateTime()) + ".log");
 	}
 
-	int Engine::Run()
+	int32_t Engine::Run()
 	{
 		while (m_running)
 		{

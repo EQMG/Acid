@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine.
-	auto engine = std::make_shared<Engine>();
+	auto engine = std::make_unique<Engine>();
 
 	// Registers modules.
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the game loop.
-	auto exitCode = engine->Run();
+	int32_t exitCode = engine->Run();
 
 	// Pauses the console.
 	std::cin.get();

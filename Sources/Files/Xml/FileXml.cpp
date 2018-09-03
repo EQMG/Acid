@@ -9,7 +9,7 @@ namespace acid
 	FileXml::FileXml(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(std::make_shared<Serialized>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
+		m_parent(std::make_shared<Node>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
 	{
 	}
 
@@ -25,7 +25,7 @@ namespace acid
 
 		if (!FileSystem::FileExists(m_filename))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
+			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
 			return;
 		}
 
@@ -99,7 +99,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Xml '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Xml '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -118,7 +118,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Xml '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Xml '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

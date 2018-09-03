@@ -21,9 +21,9 @@ namespace acid
 
 		void Update() override;
 
-		void Decode(const Serialized &serialized) override;
+		void Decode(const Node &node) override;
 
-		void Encode(Serialized &serialized) const override;
+		void Encode(Node &node) const override;
 
 		std::shared_ptr<btCollisionShape> GetCollisionShape() const override;
 

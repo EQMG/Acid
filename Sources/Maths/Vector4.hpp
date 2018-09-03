@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -203,9 +203,9 @@ namespace acid
 
 		void SetW(const float &w) { m_w = w; }
 
-		void Decode(const Serialized &serialized);
+		void Decode(const Node &node);
 
-		void Encode(Serialized &serialized) const;
+		void Encode(Node &node) const;
 
 		Vector4 &operator=(const Vector4 &other);
 

@@ -25,7 +25,7 @@ namespace acid
 				if ((*it).use_count() <= 1)
 				{
 #if ACID_VERBOSE
-					fprintf(stdout, "Resource '%s' erased\n", (*it)->GetFilename().c_str());
+					Log::Out( "Resource '%s' erased\n", (*it)->GetFilename().c_str());
 #endif
 					it = m_resources.erase(it);
 					continue;

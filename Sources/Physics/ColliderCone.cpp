@@ -27,16 +27,16 @@ namespace acid
 		m_shape->setHeight(m_height);
 	}
 
-	void ColliderCone::Decode(const Serialized &serialized)
+	void ColliderCone::Decode(const Node &node)
 	{
-		m_radius = serialized.GetChild<float>("Radius");
-		m_height = serialized.GetChild<float>("Height");
+		m_radius = node.GetChild<float>("Radius");
+		m_height = node.GetChild<float>("Height");
 	}
 
-	void ColliderCone::Encode(Serialized &serialized) const
+	void ColliderCone::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("Radius", m_radius);
-		serialized.SetChild<float>("Height", m_height);
+		node.SetChild<float>("Radius", m_radius);
+		node.SetChild<float>("Height", m_height);
 	}
 
 	std::shared_ptr<btCollisionShape> ColliderCone::GetCollisionShape() const

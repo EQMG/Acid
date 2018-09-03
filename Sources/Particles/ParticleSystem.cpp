@@ -50,22 +50,22 @@ namespace acid
 		}
 	}
 
-	void ParticleSystem::Decode(const Serialized &serialized)
+	void ParticleSystem::Decode(const Node &node)
 	{
 	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
 	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
-		m_pps = serialized.GetChild<float>("PPS");
-		m_averageSpeed = serialized.GetChild<float>("Average Speed");
-		m_gravityEffect = serialized.GetChild<float>("Gravity Effect");
-		m_systemOffset = serialized.GetChild<Vector3>("Offset");
+		m_pps = node.GetChild<float>("PPS");
+		m_averageSpeed = node.GetChild<float>("Average Speed");
+		m_gravityEffect = node.GetChild<float>("Gravity Effect");
+		m_systemOffset = node.GetChild<Vector3>("Offset");
 	}
 
-	void ParticleSystem::Encode(Serialized &serialized) const
+	void ParticleSystem::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("PPS", m_pps);
-		serialized.SetChild<float>("Average Speed", m_averageSpeed);
-		serialized.SetChild<float>("Gravity Effect", m_gravityEffect);
-		serialized.SetChild<Vector3>("Offset", m_systemOffset);
+		node.SetChild<float>("PPS", m_pps);
+		node.SetChild<float>("Average Speed", m_averageSpeed);
+		node.SetChild<float>("Gravity Effect", m_gravityEffect);
+		node.SetChild<Vector3>("Offset", m_systemOffset);
 	}
 
 	Particle *ParticleSystem::EmitParticle()

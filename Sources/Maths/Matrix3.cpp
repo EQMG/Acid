@@ -238,18 +238,18 @@ namespace acid
 		return result;
 	}
 
-	void Matrix3::Decode(const Serialized &serialized)
+	void Matrix3::Decode(const Node &node)
 	{
-		m_rows[0] = serialized.GetChild<Vector3>("m0");
-		m_rows[1] = serialized.GetChild<Vector3>("m1");
-		m_rows[2] = serialized.GetChild<Vector3>("m2");
+		m_rows[0] = node.GetChild<Vector3>("m0");
+		m_rows[1] = node.GetChild<Vector3>("m1");
+		m_rows[2] = node.GetChild<Vector3>("m2");
 	}
 
-	void Matrix3::Encode(Serialized &serialized) const
+	void Matrix3::Encode(Node &node) const
 	{
-		serialized.SetChild<Vector3>("m0", m_rows[0]);
-		serialized.SetChild<Vector3>("m1", m_rows[1]);
-		serialized.SetChild<Vector3>("m2", m_rows[2]);
+		node.SetChild<Vector3>("m0", m_rows[0]);
+		node.SetChild<Vector3>("m1", m_rows[1]);
+		node.SetChild<Vector3>("m2", m_rows[2]);
 	}
 
 	Matrix3 &Matrix3::operator=(const Matrix3 &other)

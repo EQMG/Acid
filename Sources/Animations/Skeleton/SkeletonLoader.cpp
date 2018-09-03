@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(const std::shared_ptr<Serialized> &libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(const std::shared_ptr<Node> &libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
@@ -20,7 +20,7 @@ namespace acid
 		delete m_headJoint;
 	}
 
-	JointData *SkeletonLoader::LoadJointData(std::shared_ptr<Serialized> &jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot)
 	{
 		JointData *joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -32,7 +32,7 @@ namespace acid
 		return joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(std::shared_ptr<Serialized> &jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);

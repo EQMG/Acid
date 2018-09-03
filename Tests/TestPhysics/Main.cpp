@@ -24,10 +24,10 @@ int main(int argc, char **argv)
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine.
-	auto engine = std::make_shared<Engine>();
+	auto engine = std::make_unique<Engine>();
 
-	auto configManager = std::make_shared<ConfigManager>();
-	fprintf(stdout, "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	auto configManager = std::make_unique<ConfigManager>();
+	Log::Out( "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
 	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the game loop.
-	auto exitCode = engine->Run();
+	int32_t exitCode = engine->Run();
 
 	// Pauses the console.
 //	std::cin.get();

@@ -34,7 +34,7 @@ namespace test
 
 		if (mesh == nullptr)
 		{
-			fprintf(stderr, "Terrain must be attached to a object with a mesh!");
+			Log::Error("Terrain must be attached to a object with a mesh!");
 			return;
 		}
 
@@ -55,11 +55,11 @@ namespace test
 	{
 	}
 
-	void Terrain::Decode(const Serialized &serialized)
+	void Terrain::Decode(const Node &node)
 	{
 	}
 
-	void Terrain::Encode(Serialized &serialized) const
+	void Terrain::Encode(Node &node) const
 	{
 	}
 

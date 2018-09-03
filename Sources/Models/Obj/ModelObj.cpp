@@ -58,7 +58,7 @@ namespace acid
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || FormatString::Contains(line, "//"))
 					{
-						fprintf(stderr, "Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", filename.c_str());
+						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", filename.c_str());
 						throw std::runtime_error("Model loading error.");
 					}
 
@@ -79,7 +79,7 @@ namespace acid
 				}
 				else
 				{
-					fprintf(stderr, "OBJ '%s' unknown line: '%s'\n", filename.c_str(), line.c_str());
+					Log::Error("OBJ '%s' unknown line: '%s'\n", filename.c_str(), line.c_str());
 				}
 			}
 		}
@@ -116,7 +116,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 
 		Model::Set(vertices, indices, filename);

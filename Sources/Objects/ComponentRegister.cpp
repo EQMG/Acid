@@ -47,7 +47,7 @@ namespace acid
 
 		if (it == m_components.end())
 		{
-			fprintf(stderr, "Could not find registered component: '%s'\n", name.c_str());
+			Log::Error("Could not find registered component: '%s'\n", name.c_str());
 			return nullptr;
 		}
 

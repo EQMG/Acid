@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Animations/Keyframe/Keyframe.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {

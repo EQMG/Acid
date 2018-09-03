@@ -186,7 +186,7 @@
 #include "Scenes/ScenePhysics.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Scenes/SceneStructure.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 #include "Shadows/RendererShadows.hpp"
 #include "Shadows/ShadowBox.hpp"
 #include "Shadows/ShadowRender.hpp"

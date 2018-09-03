@@ -65,8 +65,8 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-	//	fprintf(stdout, "%s", m_shaderProgram->ToString().c_str());
-		fprintf(stdout, "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
+	//	Log::Out( "%s", m_shaderProgram->ToString().c_str());
+		Log::Out( "Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -111,7 +111,7 @@ namespace acid
 		{
 			if (!FileSystem::FileExists(shaderStage))
 			{
-				fprintf(stderr, "File does not exist: '%s'\n", shaderStage.c_str());
+				Log::Error("File does not exist: '%s'\n", shaderStage.c_str());
 				throw std::runtime_error("Could not create pipeline, missing shader stage!");
 			}
 

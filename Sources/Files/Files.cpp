@@ -13,7 +13,7 @@ namespace acid
 		{
 			if (!FileSystem::FolderExists(search))
 			{
-				fprintf(stderr, "File search path does not exist: '%s'\n", search.c_str());
+				Log::Error("File search path does not exist: '%s'\n", search.c_str());
 			}
 		}*/
 	}
@@ -48,7 +48,7 @@ namespace acid
 			}
 		}
 
-		fprintf(stderr, "Failed to locate: '%s'\n", filename.c_str());
-		return ""; // TODO: Use std::optional<std::string>.
+		Log::Error("Failed to locate: '%s'\n", filename.c_str());
+		return filename;
 	}
 }

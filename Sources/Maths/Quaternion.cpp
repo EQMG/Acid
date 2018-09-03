@@ -293,20 +293,20 @@ namespace acid
 		);
 	}
 
-	void Quaternion::Decode(const Serialized &serialized)
+	void Quaternion::Decode(const Node &node)
 	{
-		m_x = serialized.GetChild<float>("x");
-		m_y = serialized.GetChild<float>("y");
-		m_z = serialized.GetChild<float>("z");
-		m_w = serialized.GetChild<float>("w");
+		m_x = node.GetChild<float>("x");
+		m_y = node.GetChild<float>("y");
+		m_z = node.GetChild<float>("z");
+		m_w = node.GetChild<float>("w");
 	}
 
-	void Quaternion::Encode(Serialized &serialized) const
+	void Quaternion::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("x", m_x);
-		serialized.SetChild<float>("y", m_y);
-		serialized.SetChild<float>("z", m_z);
-		serialized.SetChild<float>("w", m_w);
+		node.SetChild<float>("x", m_x);
+		node.SetChild<float>("y", m_y);
+		node.SetChild<float>("z", m_z);
+		node.SetChild<float>("w", m_w);
 	}
 
 	Quaternion &Quaternion::operator=(const Quaternion &other)

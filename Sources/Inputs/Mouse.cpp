@@ -104,7 +104,7 @@ namespace acid
 
 		if (data == nullptr)
 		{
-			fprintf(stderr, "Unable to load texture: '%s'.\n", m_mousePath.c_str());
+			Log::Error("Unable to load texture: '%s'.\n", m_mousePath.c_str());
 			return;
 		}
 

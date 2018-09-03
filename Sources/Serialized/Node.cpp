@@ -1,19 +1,20 @@
-#include "Serialized.hpp"
+#include "Node.hpp"
 
 #include <algorithm>
 #include <ostream>
+#include "Engine/Log.hpp"
 
 namespace acid
 {
-	Serialized::Serialized(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
-		m_name(FormatString::RemoveAll(name, '\"')),
-		m_value(value),
-		m_children(std::vector<std::shared_ptr<Serialized>>()),
+	Node::Node(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
+		m_name(FormatString::Trim(FormatString::RemoveAll(name, '\"'))),
+		m_value(FormatString::Trim(value)),
+		m_children(std::vector<std::shared_ptr<Node>>()),
 		m_attributes(attributes)
 	{
 	}
 
-	Serialized::Serialized(const Serialized &source) :
+	Node::Node(const Node &source) :
 		m_name(source.m_name),
 		m_value(source.m_value),
 		m_children(source.m_children),
@@ -21,21 +22,21 @@ namespace acid
 	{
 	}
 
-	Serialized::~Serialized()
+	Node::~Node()
 	{
 	}
 
-	std::string Serialized::GetString() const
+	std::string Node::GetString() const
 	{
 		return FormatString::RemoveAll(m_value, '\"');
 	}
 
-	void Serialized::SetString(const std::string &data)
+	void Node::SetString(const std::string &data)
 	{
 		m_value = "\"" + data + "\"";
 	}
 
-	std::shared_ptr<Serialized> Serialized::AddChild(const std::shared_ptr<Serialized> &value)
+	std::shared_ptr<Node> Node::AddChild(const std::shared_ptr<Node> &value)
 	{
 		auto child = FindChild(value->m_name);
 
@@ -49,15 +50,15 @@ namespace acid
 		return value;
 	}
 
-	bool Serialized::RemoveChild(const std::shared_ptr<Serialized> &value)
+	bool Node::RemoveChild(const std::shared_ptr<Node> &value)
 	{
 		m_children.erase(std::remove(m_children.begin(), m_children.end(), value), m_children.end());
 		return true;
 	}
 
-	std::vector<std::shared_ptr<Serialized>> Serialized::FindChildren(const std::string &name) const
+	std::vector<std::shared_ptr<Node>> Node::FindChildren(const std::string &name) const
 	{
-		auto result = std::vector<std::shared_ptr<Serialized>>();
+		auto result = std::vector<std::shared_ptr<Node>>();
 
 		for (auto &child : m_children)
 		{
@@ -70,7 +71,7 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<Serialized> Serialized::FindChild(const std::string &name) const
+	std::shared_ptr<Node> Node::FindChild(const std::string &name) const
 	{
 		std::string nameNoSpaces = FormatString::Replace(name, " ", "_");
 
@@ -85,7 +86,7 @@ namespace acid
 		return {};
 	}
 
-	std::shared_ptr<Serialized> Serialized::FindChildSafe(const std::string &name)
+	std::shared_ptr<Node> Node::FindChildSafe(const std::string &name)
 	{
 		auto child = FindChild(name);
 
@@ -94,12 +95,12 @@ namespace acid
 			return child;
 		}
 
-		child = std::make_shared<Serialized>(name, "");
+		child = std::make_shared<Node>(name, "");
 		m_children.emplace_back(child);
 		return child;
 	}
 
-	std::shared_ptr<Serialized> Serialized::FindChildWithAttribute(const std::string &childName, const std::string &attribute,
+	std::shared_ptr<Node> Node::FindChildWithAttribute(const std::string &childName, const std::string &attribute,
 	                                   const std::string &value, const bool &reportError) const
 	{
 		auto children = FindChildren(childName);
@@ -121,13 +122,13 @@ namespace acid
 
 		if (reportError)
 		{
-			fprintf(stderr, "Could not find child in loaded value '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
+			Log::Error("Could not find child in loaded value '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
 		}
 
 		return nullptr;
 	}
 
-	void Serialized::AddAttribute(const std::string &attribute, const std::string &value)
+	void Node::AddAttribute(const std::string &attribute, const std::string &value)
 	{
 		auto it = m_attributes.find(attribute);
 
@@ -139,7 +140,7 @@ namespace acid
 		(*it).second = value;
 	}
 
-	bool Serialized::RemoveAttribute(const std::string &attribute)
+	bool Node::RemoveAttribute(const std::string &attribute)
 	{
 		auto it = m_attributes.find(attribute);
 
@@ -152,7 +153,7 @@ namespace acid
 		return false;
 	}
 
-	std::string Serialized::FindAttribute(const std::string &attribute) const
+	std::string Node::FindAttribute(const std::string &attribute) const
 	{
 		auto it = m_attributes.find(attribute);
 

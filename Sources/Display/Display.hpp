@@ -68,19 +68,19 @@ namespace acid
 		VkQueue m_computeQueue;
 		VkQueue m_transferQueue;
 
-		friend void CallbackError(int error, const char *description);
+		friend void CallbackError(int32_t error, const char *description);
 
 		friend void CallbackClose(GLFWwindow *window);
 
-		friend void CallbackFocus(GLFWwindow *window, int focused);
+		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
 
-		friend void CallbackPosition(GLFWwindow *window, int xpos, int ypos);
+		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
 
-		friend void CallbackSize(GLFWwindow *window, int width, int height);
+		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
 
-		friend void CallbackFrame(GLFWwindow *window, int width, int height);
+		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 
-		friend void CallbackIconify(GLFWwindow *window, int iconified);
+		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 
@@ -209,9 +209,9 @@ namespace acid
 		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
 		void SetFullscreen(const bool &fullscreen);
 
-		ACID_HIDDEN static std::string StringifyResultGlfw(const int &result);
+		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
-		ACID_HIDDEN static void CheckGlfw(const int &result);
+		ACID_HIDDEN static void CheckGlfw(const int32_t &result);
 
 		static std::string StringifyResultVk(const VkResult &result);
 
@@ -299,7 +299,7 @@ namespace acid
 
 		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
-		int ScorePhysicalDevice(const VkPhysicalDevice &device);
+		int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
 
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
 

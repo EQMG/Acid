@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "Engine/Exports.hpp"
+#include "Engine/Log.hpp"
 
 namespace acid
 {
@@ -92,7 +93,7 @@ namespace acid
 				{
 					if (ferror(fp))
 					{
-						fprintf(stderr, "Error reading file: '%s'\n", filepath.c_str());
+						Log::Error("Error reading file: '%s'\n", filepath.c_str());
 						return {};
 					}
 				}
@@ -100,7 +101,7 @@ namespace acid
 				{
 					if (sizeof(T) != 1 && (ftell(fp) % sizeof(T)))
 					{
-						fprintf(stderr, "Corrupted word found in file: '%s'\n", filepath.c_str());
+						Log::Error("Corrupted word found in file: '%s'\n", filepath.c_str());
 						return {};
 					}
 				}
@@ -112,7 +113,7 @@ namespace acid
 			}
 			else
 			{
-				fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+				Log::Error("File does not exist: '%s'\n", filepath.c_str());
 				return {};
 			}
 
@@ -136,7 +137,7 @@ namespace acid
 
 				if (data.size() != written)
 				{
-					fprintf(stderr, "Could not write to file: '%s'\n", filepath.c_str());
+					Log::Error("Could not write to file: '%s'\n", filepath.c_str());
 					return false;
 				}
 
@@ -147,7 +148,7 @@ namespace acid
 			}
 			else
 			{
-				fprintf(stderr, "File could not be opened: '%s'\n", filepath.c_str());
+				Log::Error("File could not be opened: '%s'\n", filepath.c_str());
 				return false;
 			}
 

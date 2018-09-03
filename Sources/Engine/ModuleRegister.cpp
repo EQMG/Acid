@@ -1,5 +1,6 @@
 #include "ModuleRegister.hpp"
 
+#include "Log.hpp"
 #include "Audio/Audio.hpp"
 #include "Display/Display.hpp"
 #include "Events/Events.hpp"
@@ -49,7 +50,7 @@ namespace acid
 	{
 		if (ContainsModule(module))
 		{
-			fprintf(stderr, "Module '%i' is already registered!\n", update);
+			Log::Error("Module '%i' is already registered!\n", update);
 			return nullptr;
 		}
 

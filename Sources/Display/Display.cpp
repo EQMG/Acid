@@ -19,10 +19,10 @@ namespace acid
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
-	void CallbackError(int error, const char *description)
+	void CallbackError(int32_t error, const char *description)
 	{
 		Display::CheckGlfw(error);
-		fprintf(stderr, "GLFW error: %s, %i\n", description, error);
+		Log::Error("GLFW error: %s, %i\n", description, error);
 	}
 
 	void CallbackClose(GLFWwindow *window)
@@ -31,12 +31,12 @@ namespace acid
 		Engine::Get()->RequestClose(false);
 	}
 
-	void CallbackFocus(GLFWwindow *window, int focused)
+	void CallbackFocus(GLFWwindow *window, int32_t focused)
 	{
 		Display::Get()->m_focused = static_cast<bool>(focused);
 	}
 
-	void CallbackPosition(GLFWwindow *window, int xpos, int ypos)
+	void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 	{
 		if (!Display::Get()->m_fullscreen)
 		{
@@ -45,7 +45,7 @@ namespace acid
 		}
 	}
 
-	void CallbackSize(GLFWwindow *window, int width, int height)
+	void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 	{
 		if (width <= 0 || height <= 0)
 		{
@@ -68,19 +68,19 @@ namespace acid
 		Display::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(Display::Get()->m_physicalDevice, Display::Get()->m_surface, &Display::Get()->m_surfaceCapabilities));
 	}
 
-	void CallbackFrame(GLFWwindow *window, int width, int height)
+	void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 	{
 		Display::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	}
 
-	void CallbackIconify(GLFWwindow *window, int iconified)
+	void CallbackIconify(GLFWwindow *window, int32_t iconified)
 	{
 		Display::Get()->m_iconified = iconified == GLFW_TRUE;
 	}
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
 	{
-		fprintf(stderr, "%s\n", pMessage);
+		Log::Error("%s\n", pMessage);
 		return static_cast<VkBool32>(false);
 	}
 
@@ -241,7 +241,7 @@ namespace acid
 
 		if (data == nullptr)
 		{
-			fprintf(stderr, "Unable to load texture: '%s'\n", m_iconPath.c_str());
+			Log::Error("Unable to load texture: '%s'\n", m_iconPath.c_str());
 			return;
 		}
 
@@ -289,7 +289,7 @@ namespace acid
 		}
 	}
 
-	std::string Display::StringifyResultGlfw(const int &result)
+	std::string Display::StringifyResultGlfw(const int32_t &result)
 	{
 		switch (result)
 		{
@@ -320,7 +320,7 @@ namespace acid
 		}
 	}
 
-	void Display::CheckGlfw(const int &result)
+	void Display::CheckGlfw(const int32_t &result)
 	{
 		if (result == GLFW_TRUE)
 		{
@@ -329,7 +329,7 @@ namespace acid
 
 		std::string failure = StringifyResultGlfw(result);
 
-		fprintf(stderr, "GLFW error: %s, %i\n", failure.c_str(), result);
+		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
 #endif
@@ -400,7 +400,7 @@ namespace acid
 
 		std::string failure = StringifyResultVk(result);
 
-		fprintf(stderr, "Vulkan error: %s, %i\n", failure.c_str(), result);
+		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
@@ -415,14 +415,14 @@ namespace acid
 		// Initialize the GLFW library.
 		if (glfwInit() == GLFW_FALSE)
 		{
-			fprintf(stderr, "GLFW error: Failed to initialize!\n");
+			Log::Error("GLFW error: Failed to initialize!\n");
 			throw std::runtime_error("GLFW runtime error.");
 		}
 
 		// Checks Vulkan support on GLFW.
 		if (glfwVulkanSupported() == GLFW_FALSE)
 		{
-			fprintf(stderr, "GLFW error: Failed to find Vulkan support!\n");
+			Log::Error("GLFW error: Failed to find Vulkan support!\n");
 			throw std::runtime_error("GLFW runtime error.");
 		}
 
@@ -510,7 +510,7 @@ namespace acid
 
 				if (!layerFound)
 				{
-					fprintf(stderr, "Vulkan validation layer not found: '%s'\n", layerName);
+					Log::Error("Vulkan validation layer not found: '%s'\n", layerName);
 				}
 
 				m_instanceLayerList.emplace_back(layerName);
@@ -597,7 +597,7 @@ namespace acid
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
 
-		fprintf(stdout, "Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
+		Log::Out( "Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
 
 	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
@@ -605,12 +605,12 @@ namespace acid
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
 	{
 		// Maps to hold devices and sort by rank.
-		std::multimap<int, VkPhysicalDevice> rankedDevices;
+		std::multimap<int32_t, VkPhysicalDevice> rankedDevices;
 
 		// Iterates through all devices and rate their suitability.
 		for (auto &device : devices)
 		{
-			int score = ScorePhysicalDevice(device);
+			int32_t score = ScorePhysicalDevice(device);
 			rankedDevices.emplace(score, device);
 		}
 
@@ -623,9 +623,9 @@ namespace acid
 		return nullptr;
 	}
 
-	int Display::ScorePhysicalDevice(const VkPhysicalDevice &device)
+	int32_t Display::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	{
-		int score = 0;
+		int32_t score = 0;
 
 		// Checks if the requested extensions are supported.
 		uint32_t extensionPropertyCount;
@@ -876,7 +876,7 @@ namespace acid
 		}
 		else
 		{
-			fprintf(stderr, "Selected GPU does not support tessellation shaders!");
+			Log::Error("Selected GPU does not support tessellation shaders!");
 		}
 
 		if (m_physicalDeviceFeatures.geometryShader)
@@ -885,7 +885,7 @@ namespace acid
 		}
 		else
 		{
-			fprintf(stderr, "Selected GPU does not support geometry shaders!");
+			Log::Error("Selected GPU does not support geometry shaders!");
 		}
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
@@ -908,40 +908,40 @@ namespace acid
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties)
 	{
-		fprintf(stdout, "-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
-		fprintf(stdout, "ID: %i\n", physicalDeviceProperties.deviceID);
+		Log::Out( "-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		Log::Out( "ID: %i\n", physicalDeviceProperties.deviceID);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
 		case 1:
-			fprintf(stdout, "Type: Integrated\n");
+			Log::Out( "Type: Integrated\n");
 			break;
 		case 2:
-			fprintf(stdout, "Type: Discrete\n");
+			Log::Out( "Type: Discrete\n");
 			break;
 		case 3:
-			fprintf(stdout, "Type: Virtual\n");
+			Log::Out( "Type: Virtual\n");
 			break;
 		case 4:
-			fprintf(stdout, "Type: CPU\n");
+			Log::Out( "Type: CPU\n");
 			break;
 		default:
-			fprintf(stdout, "Type: Other (%x)\n", physicalDeviceProperties.deviceType);
+			Log::Out( "Type: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)
 		{
 		case 0x8086:
-			fprintf(stdout, "Vendor: Intel\n");
+			Log::Out( "Vendor: Intel\n");
 			break;
 		case 0x10DE:
-			fprintf(stdout, "Vendor: NVIDIA\n");
+			Log::Out( "Vendor: NVIDIA\n");
 			break;
 		case 0x1002:
-			fprintf(stdout, "Vendor: AMD\n");
+			Log::Out( "Vendor: AMD\n");
 			break;
 		default:
-			fprintf(stdout, "Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+			Log::Out( "Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
 		}
 
 		uint32_t supportedVersion[] = {
@@ -949,27 +949,27 @@ namespace acid
 			VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 		};
-		fprintf(stdout, "Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
-		fprintf(stdout, "Header Version: %i\n", VK_HEADER_VERSION);
-		fprintf(stdout, "-- Done --\n");
+		Log::Out( "Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		Log::Out( "Header Version: %i\n", VK_HEADER_VERSION);
+		Log::Out( "-- Done --\n");
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-		fprintf(stdout, "-- Avalable Layers For: '%s' --\n", type.c_str());
+		Log::Out( "-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto &layer : layerProperties)
 		{
 			if (showDescription)
 			{
-				fprintf(stdout, "\n	%s   | %s, ", layer.layerName, layer.description);
+				Log::Out( "\n	%s   | %s, ", layer.layerName, layer.description);
 			}
 			else
 			{
-				fprintf(stdout, "%s, ", layer.layerName);
+				Log::Out( "%s, ", layer.layerName);
 			}
 		}
 
-		fprintf(stdout, "\n-- Done --\n");
+		Log::Out( "\n-- Done --\n");
 	}
 }

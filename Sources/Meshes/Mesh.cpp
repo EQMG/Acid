@@ -42,14 +42,14 @@ namespace acid
 		}*/
 	}
 
-	void Mesh::Decode(const Serialized &serialized)
+	void Mesh::Decode(const Node &node)
 	{
-		TrySetModel(serialized.GetChild<std::string>("Model"));
+		TrySetModel(node.GetChild<std::string>("Model"));
 	}
 
-	void Mesh::Encode(Serialized &serialized) const
+	void Mesh::Encode(Node &node) const
 	{
-		serialized.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
+		node.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)
@@ -98,6 +98,6 @@ namespace acid
 			return;
 		}
 
-		fprintf(stderr, "Could not determine mesh model type: '%s'\n", filename.c_str());
+		Log::Error("Could not determine mesh model type: '%s'\n", filename.c_str());
 	}
 }

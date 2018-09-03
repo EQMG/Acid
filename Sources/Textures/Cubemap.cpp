@@ -71,7 +71,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

@@ -177,16 +177,16 @@ namespace acid
 		return Vector2(x, y);
 	}
 
-	void Vector2::Decode(const Serialized &serialized)
+	void Vector2::Decode(const Node &node)
 	{
-		m_x = serialized.GetChild<float>("x");
-		m_y = serialized.GetChild<float>("y");
+		m_x = node.GetChild<float>("x");
+		m_y = node.GetChild<float>("y");
 	}
 
-	void Vector2::Encode(Serialized &serialized) const
+	void Vector2::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("x", m_x);
-		serialized.SetChild<float>("y", m_y);
+		node.SetChild<float>("x", m_x);
+		node.SetChild<float>("y", m_y);
 	}
 
 	Vector2 &Vector2::operator=(const Vector2 &other)
