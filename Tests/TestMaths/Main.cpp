@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Engine/Log.hpp>
 #include <Maths/Maths.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Matrix2.hpp>
