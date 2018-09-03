@@ -11,7 +11,7 @@ namespace acid
 	class ACID_EXPORT GeometryLoader
 	{
 	private:
-		std::shared_ptr<Serialized> m_meshData;
+		std::shared_ptr<Node> m_meshData;
 
 		std::vector<VertexSkinData *> m_vertexWeights;
 
@@ -22,7 +22,7 @@ namespace acid
 		std::vector<IVertex *> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
-		GeometryLoader(const std::shared_ptr<Serialized> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
+		GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
 
 		~GeometryLoader();
 

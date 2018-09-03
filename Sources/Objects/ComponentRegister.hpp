@@ -3,6 +3,7 @@
 #include <functional>
 #include <memory>
 #include <optional>
+#include "Engine/Log.hpp"
 #include "IComponent.hpp"
 
 namespace acid
@@ -49,7 +50,7 @@ namespace acid
 		{
 			if (m_components.find(name) != m_components.end())
 			{
-				fprintf(stderr, "Component '%s' is already registered!\n", name.c_str());
+				Log::Error("Component '%s' is already registered!\n", name.c_str());
 				return;
 			}
 

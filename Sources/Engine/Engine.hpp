@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <memory>
+#include "Log.hpp"
 #include "ModuleRegister.hpp"
 #include "ModuleUpdater.hpp"
 
@@ -57,7 +58,7 @@ namespace acid
 		/// The update function for the updater.
 		/// </summary>
 		/// <returns> EXIT_SUCCESS or EXIT_FAILURE. </returns>
-		int Run();
+		int32_t Run();
 
 		/// <summary>
 		/// Gets a module instance by type.
@@ -160,6 +161,6 @@ namespace acid
 		/// Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
 		/// </summary>
 		/// <returns> The date time as a string. </returns>
-		std::string GetDateTime();
+		static std::string GetDateTime();
 	};
 }

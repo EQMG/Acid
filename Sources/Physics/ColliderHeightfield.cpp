@@ -27,11 +27,11 @@ namespace acid
 	{
 	}
 
-	void ColliderHeightfield::Decode(const Serialized &serialized)
+	void ColliderHeightfield::Decode(const Node &node)
 	{
 	}
 
-	void ColliderHeightfield::Encode(Serialized &serialized) const
+	void ColliderHeightfield::Encode(Node &node) const
 	{
 	}
 

@@ -17,6 +17,8 @@ namespace acid
 	private:
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;
+
+		float m_volume;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -46,5 +48,9 @@ namespace acid
 		ACID_HIDDEN ALCdevice *GetDevice() const { return m_alDevice; }
 
 		ACID_HIDDEN ALCcontext *GetContext() const { return m_alContext; }
+
+		float GetVolume() const { return m_volume; }
+
+		void SetVolume(const float &volume) { m_volume = volume; }
 	};
 }

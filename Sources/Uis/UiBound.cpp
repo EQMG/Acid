@@ -1,21 +1,23 @@
 #include "UiBound.hpp"
 
+#include "Engine/Log.hpp"
+
 namespace acid
 {
 	static std::map<std::string, Vector2> PIVOT_MAP = std::map<std::string, Vector2>
-		{
-			{"TopLeft",	  Vector2(0.0f, 1.0f)},
-			{"TopCentre",	Vector2(0.5f, 1.0f)},
-			{"TopRight",	 Vector2(1.0f, 1.0f)},
+	{
+		{"TopLeft",	  Vector2(0.0f, 1.0f)},
+		{"TopCentre",	Vector2(0.5f, 1.0f)},
+		{"TopRight",	 Vector2(1.0f, 1.0f)},
 
-			{"CentreLeft",   Vector2(0.0f, 0.5f)},
-			{"Centre",	   Vector2(0.5f, 0.5f)},
-			{"CentreRight",  Vector2(1.0f, 0.5f)},
+		{"CentreLeft",   Vector2(0.0f, 0.5f)},
+		{"Centre",	   Vector2(0.5f, 0.5f)},
+		{"CentreRight",  Vector2(1.0f, 0.5f)},
 
-			{"BottomLeft",   Vector2(0.0f, 0.0f)},
-			{"BottomCentre", Vector2(0.5f, 0.0f)},
-			{"BottomRight",  Vector2(1.0f, 0.0f)},
-		};
+		{"BottomLeft",   Vector2(0.0f, 0.0f)},
+		{"BottomCentre", Vector2(0.5f, 0.0f)},
+		{"BottomRight",  Vector2(1.0f, 0.0f)},
+	};
 
 	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
 		m_position(Vector2(position)),
@@ -66,7 +68,7 @@ namespace acid
 		if (it == PIVOT_MAP.end())
 		{
 #if ACID_VERBOSE
-			fprintf(stderr, "Could not find a UiBound pivot from key: %s", key.c_str());
+			Log::Error("Could not find a UiBound pivot from key: %s", key.c_str());
 #endif
 			return Vector2(0.0f, 1.0f);
 		}

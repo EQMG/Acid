@@ -136,20 +136,20 @@ namespace acid
 	//	m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
-	void Rigidbody::Decode(const Serialized &serialized)
+	void Rigidbody::Decode(const Node &node)
 	{
-		m_mass = serialized.GetChild<float>("Mass");
-		m_friction = serialized.GetChild<float>("Friction");
-		m_linearFactor = serialized.GetChild<Vector3>("Linear Factor");
-		m_angularFactor = serialized.GetChild<Vector3>("Angular Factor");
+		m_mass = node.GetChild<float>("Mass");
+		m_friction = node.GetChild<float>("Friction");
+		m_linearFactor = node.GetChild<Vector3>("Linear Factor");
+		m_angularFactor = node.GetChild<Vector3>("Angular Factor");
 	}
 
-	void Rigidbody::Encode(Serialized &serialized) const
+	void Rigidbody::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("Mass", m_mass);
-		serialized.SetChild<float>("Friction", m_friction);
-		serialized.SetChild<Vector3>("Linear Factor", m_linearFactor);
-		serialized.SetChild<Vector3>("Angular Factor", m_angularFactor);
+		node.SetChild<float>("Mass", m_mass);
+		node.SetChild<float>("Friction", m_friction);
+		node.SetChild<Vector3>("Linear Factor", m_linearFactor);
+		node.SetChild<Vector3>("Angular Factor", m_angularFactor);
 	}
 
 	void Rigidbody::SetGravity(const Vector3 &gravity)

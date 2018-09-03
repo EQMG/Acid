@@ -1,22 +1,23 @@
 #pragma once
 
-#include <Files/Config.hpp>
+#include <Files/IFile.hpp>
 
 using namespace acid;
 
 namespace test
 {
-	class ConfigManager :
-		public Config
+	class ConfigManager
 	{
 	private:
+		std::unique_ptr<IFile> m_audio;
+		std::unique_ptr<IFile> m_graphics;
 	public:
 		ConfigManager();
 
 		~ConfigManager();
 
-		void Decode(Serialized &serialized) override;
+		void Load();
 
-		void Encode(Serialized &serialized) const override;
+		void Save();
 	};
 }

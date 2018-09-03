@@ -45,7 +45,7 @@ namespace acid
 #ifdef ACID_VERBOSE
 			//	if (m_shaderProgram->ReportedNotFound(uniformName, true)) // TODO
 			//	{
-			//		fprintf(stderr, "Could not find uniform attribute in uniform '%s' of name '%s'\n", m_uniformBlock->GetName().c_str(), uniformName.c_str());
+			//		Log::Error("Could not find uniform attribute in uniform '%s' of name '%s'\n", m_uniformBlock->GetName().c_str(), uniformName.c_str());
 			//	}
 #endif
 				return;

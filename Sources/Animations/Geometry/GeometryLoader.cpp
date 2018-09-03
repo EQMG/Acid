@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	GeometryLoader::GeometryLoader(const std::shared_ptr<Serialized> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
+	GeometryLoader::GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<VertexAnimatedData *>()),

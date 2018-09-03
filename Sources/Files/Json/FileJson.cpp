@@ -8,7 +8,7 @@ namespace acid
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(std::make_shared<Serialized>("", ""))
+		m_parent(std::make_shared<Node>("", ""))
 	{
 	}
 
@@ -24,7 +24,7 @@ namespace acid
 
 		if (!FileSystem::FileExists(m_filename))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", m_filename.c_str());
+			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
 			return;
 		}
 
@@ -93,7 +93,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -112,7 +112,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Json '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Json '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

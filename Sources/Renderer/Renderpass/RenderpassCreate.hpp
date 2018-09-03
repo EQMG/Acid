@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include "Engine/Log.hpp"
 #include "Maths/Colour.hpp"
 
 namespace acid
@@ -103,7 +104,7 @@ namespace acid
 				attachment++;
 			}
 
-			fprintf(stderr, "Filed to find a renderpass attachment bound to: %i\n", binding);
+			Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
 			return 0;
 		}
 	};

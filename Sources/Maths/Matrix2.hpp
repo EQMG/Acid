@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Vector2.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -130,9 +130,9 @@ namespace acid
 		/// <returns> The submatrix. </returns>
 		float GetSubmatrix(const int &row, const int &col) const;
 
-		void Decode(const Serialized &serialized);
+		void Decode(const Node &node);
 
-		void Encode(Serialized &serialized) const;
+		void Encode(Node &node) const;
 
 		Matrix2 &operator=(const Matrix2 &other);
 

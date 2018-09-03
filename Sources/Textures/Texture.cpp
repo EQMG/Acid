@@ -37,7 +37,7 @@ namespace acid
 
 		if (!FileSystem::FileExists(filename))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
+			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			m_filename = Files::SearchFile(FALLBACK_PATH);
 		}
 
@@ -83,7 +83,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		fprintf(stdout, "Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out( "Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -254,7 +254,7 @@ namespace acid
 
 		if (!FileSystem::FileExists(filepath))
 		{
-			//	fprintf(stdout, "File does not exist: '%s'\n", filepath.c_str());
+			//	Log::Out( "File does not exist: '%s'\n", filepath.c_str());
 
 			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
 			{
@@ -290,7 +290,7 @@ namespace acid
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+			Log::Error("File does not exist: '%s'\n", filepath.c_str());
 			return nullptr;
 		}
 
@@ -305,7 +305,7 @@ namespace acid
 
 		if (data == nullptr)
 		{
-			fprintf(stderr, "Unable to load texture: '%s'\n", filepath.c_str());
+			Log::Error("Unable to load texture: '%s'\n", filepath.c_str());
 		}
 
 		return data;

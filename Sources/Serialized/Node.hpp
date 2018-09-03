@@ -9,19 +9,19 @@
 
 namespace acid
 {
-	class ACID_EXPORT Serialized
+	class ACID_EXPORT Node
 	{
 	protected:
 		std::string m_name;
 		std::string m_value;
-		std::vector<std::shared_ptr<Serialized>> m_children;
+		std::vector<std::shared_ptr<Node>> m_children;
 		std::map<std::string, std::string> m_attributes;
 	public:
-		Serialized(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+		Node(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
 
-		Serialized(const Serialized &source);
+		Node(const Node &source);
 
-		~Serialized();
+		~Node();
 
 		std::string GetName() const { return m_name; }
 
@@ -35,19 +35,21 @@ namespace acid
 
 		void SetString(const std::string &data);
 
-		std::vector<std::shared_ptr<Serialized>> &GetChildren() { return m_children; }
+		std::vector<std::shared_ptr<Node>> &GetChildren() { return m_children; }
 
-		std::shared_ptr<Serialized> AddChild(const std::shared_ptr<Serialized> &value);
+		uint32_t GetChildCount() const { return static_cast<uint32_t>(m_children.size()); }
 
-		bool RemoveChild(const std::shared_ptr<Serialized> &value);
+		std::shared_ptr<Node> AddChild(const std::shared_ptr<Node> &value);
 
-		std::vector<std::shared_ptr<Serialized>> FindChildren(const std::string &name) const;
+		bool RemoveChild(const std::shared_ptr<Node> &value);
 
-		std::shared_ptr<Serialized> FindChild(const std::string &name) const;
+		std::vector<std::shared_ptr<Node>> FindChildren(const std::string &name) const;
 
-		std::shared_ptr<Serialized> FindChildSafe(const std::string &name);
+		std::shared_ptr<Node> FindChild(const std::string &name) const;
 
-		std::shared_ptr<Serialized> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
+		std::shared_ptr<Node> FindChildSafe(const std::string &name);
+
+		std::shared_ptr<Node> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
 		template<typename T>
 		T GetChild(const std::string &name) const
@@ -69,7 +71,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = AddChild(std::make_shared<Serialized>(name));
+				child = AddChild(std::make_shared<Node>(name));
 				child->Set(value);
 			}
 
@@ -83,7 +85,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = std::make_shared<Serialized>(name, "");
+				child = std::make_shared<Node>(name, "");
 				m_children.emplace_back(child);
 			}
 
@@ -97,21 +99,15 @@ namespace acid
 			{
 				return GetString();
 			}
-			else if constexpr(std::is_enum_v<T>)
-			{
-				std::string data = GetValue();
-				return static_cast<T>(FormatString::ConvertTo<int32_t>(data));
-			}
 			else if constexpr(std::is_class_v<T>)
 			{
 				T result = T();
-				result.Decode(*this); // Unsafe, unchecked.
+				result.Decode(*this); // FIXME: Unsafe, unchecked.
 				return result;
 			}
 			else
 			{
-				std::string data = GetValue();
-				return FormatString::ConvertTo<T>(data);
+				return FormatString::FromString<T>(m_value);
 			}
 		}
 
@@ -122,21 +118,19 @@ namespace acid
 			{
 				SetString(value);
 			}
-			else if constexpr(std::is_enum_v<T>) // TODO: Move into ConvertTo and to_string.
-			{
-				SetValue(std::to_string(static_cast<int32_t>(value)));
-			}
 			else if constexpr(std::is_class_v<T>)
 			{
-				value.Encode(*this);
+				value.Encode(*this); // FIXME: Unsafe, unchecked.
 			}
 			else
 			{
-				SetValue(std::to_string(value));
+				SetValue(FormatString::ToString(value));
 			}
 		}
 
-		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
+		std::map<std::string, std::string> &GetAttributes() { return m_attributes; }
+
+		uint32_t GetAttributeCount() const { return static_cast<uint32_t>(m_attributes.size()); }
 
 		void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {

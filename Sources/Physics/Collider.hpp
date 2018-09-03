@@ -36,9 +36,9 @@ namespace acid
 
 		void Update() override = 0;
 
-		virtual void Decode(const Serialized &serialized) override = 0;
+		virtual void Decode(const Node &node) override = 0;
 
-		virtual void Encode(Serialized &serialized) const override = 0;
+		virtual void Encode(Node &node) const override = 0;
 
 		virtual std::shared_ptr<btCollisionShape> GetCollisionShape() const = 0;
 

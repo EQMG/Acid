@@ -26,16 +26,16 @@ namespace acid
 		//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height, m_radius)); // TODO
 	}
 
-	void ColliderCapsule::Decode(const Serialized &serialized)
+	void ColliderCapsule::Decode(const Node &node)
 	{
-		m_radius = serialized.GetChild<float>("Radius");
-		m_height = serialized.GetChild<float>("Height");
+		m_radius = node.GetChild<float>("Radius");
+		m_height = node.GetChild<float>("Height");
 	}
 
-	void ColliderCapsule::Encode(Serialized &serialized) const
+	void ColliderCapsule::Encode(Node &node) const
 	{
-		serialized.SetChild<float>("Radius", m_radius);
-		serialized.SetChild<float>("Height", m_height);
+		node.SetChild<float>("Radius", m_radius);
+		node.SetChild<float>("Height", m_height);
 	}
 
 	std::shared_ptr<btCollisionShape> ColliderCapsule::GetCollisionShape() const

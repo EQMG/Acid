@@ -2,7 +2,7 @@
 
 #include "Engine/Exports.hpp"
 #include "Maths/Colour.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -59,9 +59,9 @@ namespace acid
 
 		void SetUpperLimit(const float &upperLimit) { m_upperLimit = upperLimit; }
 
-		void Decode(const Serialized &serialized);
+		void Decode(const Node &node);
 
-		void Encode(Serialized &serialized) const;
+		void Encode(Node &node) const;
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
 

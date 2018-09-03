@@ -222,16 +222,16 @@ namespace acid
 		return result;
 	}
 
-	void Matrix2::Decode(const Serialized &serialized)
+	void Matrix2::Decode(const Node &node)
 	{
-		m_rows[0] = serialized.GetChild<Vector2>("m0");
-		m_rows[1] = serialized.GetChild<Vector2>("m1");
+		m_rows[0] = node.GetChild<Vector2>("m0");
+		m_rows[1] = node.GetChild<Vector2>("m1");
 	}
 
-	void Matrix2::Encode(Serialized &serialized) const
+	void Matrix2::Encode(Node &node) const
 	{
-		serialized.SetChild<Vector2>("m0", m_rows[0]);
-		serialized.SetChild<Vector2>("m1", m_rows[1]);
+		node.SetChild<Vector2>("m0", m_rows[0]);
+		node.SetChild<Vector2>("m1", m_rows[1]);
 	}
 
 	Matrix2 &Matrix2::operator=(const Matrix2 &other)

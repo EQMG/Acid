@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	SkinLoader::SkinLoader(const std::shared_ptr<Serialized> &libraryControllers, const int &maxWeights) :
+	SkinLoader::SkinLoader(const std::shared_ptr<Node> &libraryControllers, const int &maxWeights) :
 		m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
 		m_maxWeights(maxWeights),
 		m_jointOrder(std::vector<std::string>()),
@@ -50,7 +50,7 @@ namespace acid
 		return weights;
 	}
 
-	std::vector<int> SkinLoader::GetEffectiveJointsCounts(std::shared_ptr<Serialized> &weightsDataNode)
+	std::vector<int> SkinLoader::GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode)
 	{
 		auto rawData = FormatString::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
 		auto counts = std::vector<int>(rawData.size());
@@ -63,7 +63,7 @@ namespace acid
 		return counts;
 	}
 
-	void SkinLoader::GetSkinData(std::shared_ptr<Serialized> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
+	void SkinLoader::GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = FormatString::Split(weightsDataNode->FindChild("v")->GetString(), " ");
 		int pointer = 0;

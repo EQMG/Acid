@@ -57,15 +57,15 @@ namespace test
 		}
 	}
 
-	void SkyboxCycle::Decode(const Serialized &serialized)
+	void SkyboxCycle::Decode(const Node &node)
 	{
-		m_enableFog = serialized.GetChild<bool>("Enable Fog");
-		m_enableRotation = serialized.GetChild<bool>("Enable Rotation");
+		m_enableFog = node.GetChild<bool>("Enable Fog");
+		m_enableRotation = node.GetChild<bool>("Enable Rotation");
 	}
 
-	void SkyboxCycle::Encode(Serialized &serialized) const
+	void SkyboxCycle::Encode(Node &node) const
 	{
-		serialized.SetChild<bool>("Enable Fog", m_enableFog);
-		serialized.SetChild<bool>("Enable Rotation", m_enableRotation);
+		node.SetChild<bool>("Enable Fog", m_enableFog);
+		node.SetChild<bool>("Enable Rotation", m_enableRotation);
 	}
 }

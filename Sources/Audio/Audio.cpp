@@ -18,7 +18,8 @@ namespace acid
 	Audio::Audio() :
 		IModule(),
 		m_alDevice(nullptr),
-		m_alContext(nullptr)
+		m_alContext(nullptr),
+		m_volume(0.0f)
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);
@@ -53,6 +54,9 @@ namespace acid
 		Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
 		ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
 		alListenerfv(AL_ORIENTATION, orientation);
+
+		// Master volume.
+	//	alListenerf(AL_GAIN, m_volume);
 
 #ifndef ACID_BUILD_LINUX
 		CheckAl(alGetError());
@@ -89,7 +93,7 @@ namespace acid
 
 		std::string failure = StringifyResultAl(result);
 
-		fprintf(stderr, "OpenAL error: %s, %i\n", failure.c_str(), result);
+		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
 #endif

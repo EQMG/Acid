@@ -41,21 +41,21 @@ namespace acid
 		}
 	}
 
-	void MeshAnimated::Decode(const Serialized &serialized)
+	void MeshAnimated::Decode(const Node &node)
 	{
-		TrySetModel(serialized.GetChild<std::string>("Model"));
+		TrySetModel(node.GetChild<std::string>("Model"));
 	}
 
-	void MeshAnimated::Encode(Serialized &serialized) const
+	void MeshAnimated::Encode(Node &node) const
 	{
-		serialized.SetChild<std::string>("Model", m_filename);
+		node.SetChild<std::string>("Model", m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			fprintf(stderr, "Animation file does not exist: '%s'\n", m_filename.c_str());
+			Log::Error("Animation file does not exist: '%s'\n", m_filename.c_str());
 			return;
 		}
 

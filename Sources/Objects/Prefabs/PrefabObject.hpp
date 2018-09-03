@@ -21,7 +21,7 @@ namespace acid
 	private:
 		std::string m_filename;
 		std::shared_ptr<IFile> m_file;
-		std::shared_ptr<Serialized> m_parent;
+		std::shared_ptr<Node> m_parent;
 	public:
 		static std::shared_ptr<PrefabObject> Resource(const std::string &filename)
 		{
@@ -52,6 +52,6 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; }
 
-		std::shared_ptr<Serialized> GetParent() const { return m_parent; }
+		std::shared_ptr<Node> GetParent() const { return m_parent; }
 	};
 }

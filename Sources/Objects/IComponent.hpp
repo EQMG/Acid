@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Serialized.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -32,9 +32,9 @@ namespace acid
 
 		virtual void Update() = 0;
 
-		virtual void Decode(const Serialized &serialized) = 0;
+		virtual void Decode(const Node &node) = 0;
 
-		virtual void Encode(Serialized &serialized) const = 0;
+		virtual void Encode(Node &node) const = 0;
 
 		GameObject *GetGameObject() const { return m_gameObject; }
 

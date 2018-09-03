@@ -44,18 +44,18 @@ namespace acid
 		return Matrix4::TransformationMatrix(Vector3::ZERO, m_rotation, Vector3::ZERO);
 	}
 
-	void Transform::Decode(const Serialized &serialized)
+	void Transform::Decode(const Node &node)
 	{
-		m_position = serialized.GetChild<Vector3>("Position");
-		m_rotation = serialized.GetChild<Vector3>("Rotation");
-		m_scaling = serialized.GetChild<Vector3>("Scaling");
+		m_position = node.GetChild<Vector3>("Position");
+		m_rotation = node.GetChild<Vector3>("Rotation");
+		m_scaling = node.GetChild<Vector3>("Scaling");
 	}
 
-	void Transform::Encode(Serialized &serialized) const
+	void Transform::Encode(Node &node) const
 	{
-		serialized.SetChild<Vector3>("Position", m_position);
-		serialized.SetChild<Vector3>("Rotation", m_rotation);
-		serialized.SetChild<Vector3>("Scaling", m_scaling);
+		node.SetChild<Vector3>("Position", m_position);
+		node.SetChild<Vector3>("Rotation", m_rotation);
+		node.SetChild<Vector3>("Scaling", m_scaling);
 	}
 
 	Transform &Transform::operator=(const Transform &other)

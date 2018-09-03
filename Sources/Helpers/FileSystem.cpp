@@ -84,7 +84,7 @@ namespace acid
 	{
 		if (!FileSystem::FileExists(filepath))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", filepath.c_str());
+			Log::Error("File does not exist: '%s'\n", filepath.c_str());
 			return {};
 		}
 
@@ -92,7 +92,7 @@ namespace acid
 
 		if (file == nullptr)
 		{
-			fprintf(stderr, "Could not open file: '%s'\n", filepath.c_str());
+			Log::Error("Could not open file: '%s'\n", filepath.c_str());
 			return {};
 		}
 

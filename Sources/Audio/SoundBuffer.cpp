@@ -37,7 +37,7 @@ namespace acid
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
+			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return 0;
 		}
 
@@ -111,7 +111,7 @@ namespace acid
 	{
 		if (!FileSystem::FileExists(filename))
 		{
-			fprintf(stderr, "File does not exist: '%s'\n", filename.c_str());
+			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};
 		}
 
@@ -130,7 +130,7 @@ namespace acid
 
 		if (size == -1)
 		{
-			fprintf(stderr, "Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());
+			Log::Error("Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());
 		}
 
 		file.close();

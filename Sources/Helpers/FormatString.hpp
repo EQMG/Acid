@@ -113,11 +113,30 @@ namespace acid
 		static std::string Uppercase(const std::string &str);
 
 		template<typename T>
-		static T ConvertTo(const std::string &str)
+		static std::string ToString(const T &val)
 		{
-			if (typeid(T) == typeid(bool))
+			if constexpr(std::is_enum_v<T>)
 			{
-				return Trim(Lowercase(str)) == "true" || ConvertTo<int>(str) == 1;
+				return std::to_string(static_cast<int32_t>(val));
+			}
+			else if constexpr(std::is_same_v<bool, T>)
+			{
+				return val ? "true" : "false";
+			}
+
+			return std::to_string(val);
+		}
+
+		template<typename T>
+		static T FromString(const std::string &str)
+		{
+			if constexpr(std::is_enum_v<T>)
+			{
+				return static_cast<T>(FromString<int32_t>(str));
+			}
+			else if constexpr(std::is_same_v<bool, T>)
+			{
+				return Trim(Lowercase(str)) == "true" || FromString<int32_t>(str) == 1;
 			}
 
 			std::istringstream ss(str);
