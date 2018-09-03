@@ -12,18 +12,18 @@
 namespace acid
 {
 	ScenePhysics::ScenePhysics() :
-		m_collisionConfiguration(new btSoftBodyRigidBodyCollisionConfiguration()),
-		m_broadphase(new btDbvtBroadphase()),
-		m_dispatcher(new btCollisionDispatcher(m_collisionConfiguration)),
-		m_solver(new btSequentialImpulseConstraintSolver()),
-		m_dynamicsWorld(new btSoftRigidDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration))
+		m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
+		m_broadphase(std::make_unique<btDbvtBroadphase>()),
+		m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
+		m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
+		m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get()))
 	{
 		m_dynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
 		m_dynamicsWorld->getSolverInfo().m_solverMode |= SOLVER_RANDMIZE_ORDER;
 		m_dynamicsWorld->getDispatchInfo().m_enableSatConvex = true;
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = true;
 
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = 1.0f;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
@@ -43,12 +43,6 @@ namespace acid
 			m_dynamicsWorld->removeCollisionObject(obj);
 			delete obj;
 		}
-
-		delete m_collisionConfiguration;
-		delete m_dispatcher;
-		delete m_broadphase;
-		delete m_solver;
-		delete m_dynamicsWorld;
 	}
 
 	void ScenePhysics::Update()
@@ -68,13 +62,13 @@ namespace acid
 
 	float ScenePhysics::GetAirDensity() const
 	{
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		return softDynamicsWorld->getWorldInfo().air_density;
 	}
 
 	void ScenePhysics::SetAirDensity(const float &airDensity)
 	{
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld);
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = airDensity;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}

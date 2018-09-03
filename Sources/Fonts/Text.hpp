@@ -261,9 +261,9 @@ namespace acid
 
 		std::vector<IVertex *> CreateQuad(const std::vector<FontLine> &lines);
 
-		void AddVerticesForCharacter(const double &cursorX, const double &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
+		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
 
-		void AddVertex(const double &vx, const double &vy, const double &tx, const double &ty, std::vector<IVertex *> &vertices);
+		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<IVertex *> &vertices);
 
 		void NormalizeQuad(Vector2 &bounding, std::vector<IVertex *> &vertices);
 	};

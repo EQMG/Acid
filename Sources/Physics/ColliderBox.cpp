@@ -25,14 +25,14 @@ namespace acid
 	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
-	void ColliderBox::Load(LoadedValue &value)
+	void ColliderBox::Decode(const Serialized &serialized)
 	{
-		m_extents = *value.FindChild("Extents");
+		m_extents = serialized.GetChild<Vector3>("Extents");
 	}
 
-	void ColliderBox::Write(LoadedValue &destination)
+	void ColliderBox::Encode(Serialized &serialized) const
 	{
-		m_extents.Write(*destination.FindChild("Extents", true));
+		serialized.SetChild<Vector3>("Extents", m_extents);
 	}
 
 	std::shared_ptr<btCollisionShape> ColliderBox::GetCollisionShape() const

@@ -13,7 +13,7 @@ Acid is licensed under MIT, we are open to contributions use the 'Developer Setu
 ## Builds
 Windows   [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 
-Linux   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
+Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
 # Code snippets
 ```cpp
@@ -60,10 +60,6 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
 Metrics   [Code metrics](https://equilibrium-games.github.io/Acid-Docs/loc/LocMetrics.html)
 
 Website   [Learn more](https://equilibrium.games)
-
-## Platforms
-Acid currently can be run on the following platforms:
- * Windows, Linux, MacOS
 
 ## Features
 This is a list of current features in Acid:

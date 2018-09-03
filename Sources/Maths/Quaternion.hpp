@@ -4,6 +4,7 @@
 #include <string>
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -206,12 +207,6 @@ namespace acid
 		/// <returns> The euler angle representation of this quaternion. </returns>
 		Vector3 ToEuler() const;
 
-		/// <summary>
-		/// Saves this quaternion into a loaded value.
-		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue &destination);
-
 		float GetX() const { return m_x; }
 
 		void SetX(const float &x) { m_x = x; }
@@ -228,13 +223,15 @@ namespace acid
 
 		void SetW(const float &w) { m_w = w; }
 
+		void Decode(const Serialized &serialized);
+
+		void Encode(Serialized &serialized) const;
+
 		Quaternion &operator=(const Quaternion &other);
 
 		Quaternion &operator=(const Vector3 &other);
 
 		Quaternion &operator=(const Matrix4 &other);
-
-		Quaternion &operator=(LoadedValue &value);
 
 		bool operator==(const Quaternion &other) const;
 

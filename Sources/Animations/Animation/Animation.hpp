@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Animations/Keyframe/Keyframe.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -13,7 +14,6 @@ namespace acid
 	{
 	private:
 		float m_length;
-
 		std::vector<Keyframe> m_keyframes;
 	public:
 		/// <summary>

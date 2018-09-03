@@ -87,14 +87,14 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	DepthStencil *Pipeline::GetDepthStencil(const int &stage) const
+	std::shared_ptr<DepthStencil> Pipeline::GetDepthStencil(const int &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
-	Texture *Pipeline::GetTexture(const uint32_t &i, const int &stage) const
+	std::shared_ptr<Texture> Pipeline::GetTexture(const uint32_t &index, const int &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetTexture(i);
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
 	}
 
 	void Pipeline::CreateShaderProgram()

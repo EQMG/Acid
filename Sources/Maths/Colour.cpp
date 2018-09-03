@@ -157,12 +157,14 @@ namespace acid
 		return result.str();
 	}
 
-	void Colour::Write(LoadedValue &destination)
+	void Colour::Decode(const Serialized &serialized)
 	{
-		destination.SetChild<float>("r", m_r);
-		destination.SetChild<float>("g", m_g);
-		destination.SetChild<float>("b", m_b);
-		destination.SetChild<float>("a", m_a);
+		*this = serialized.Get<std::string>();
+	}
+
+	void Colour::Encode(Serialized &serialized) const
+	{
+		serialized.Set<std::string>(GetHex());
 	}
 
 	Colour &Colour::operator=(const Colour &other)
@@ -181,15 +183,6 @@ namespace acid
 		m_r = static_cast<float>(r) / 255.0f;
 		m_g = static_cast<float>(g) / 255.0f;
 		m_b = static_cast<float>(b) / 255.0f;
-		return *this;
-	}
-
-	Colour &Colour::operator=(LoadedValue &value)
-	{
-		m_r = value.FindChild("r")->Get<float>();
-		m_g = value.FindChild("g")->Get<float>();
-		m_b = value.FindChild("b")->Get<float>();
-		m_a = value.FindChild("a")->Get<float>();
 		return *this;
 	}
 
@@ -345,9 +338,9 @@ namespace acid
 		return *this = Divide(Colour(value, value, value, value));
 	}
 
-	std::ostream &operator<<(std::ostream &stream, const Colour &vector)
+	std::ostream &operator<<(std::ostream &stream, const Colour &colour)
 	{
-		stream << vector.ToString();
+		stream << colour.ToString();
 		return stream;
 	}
 

@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void JsonSection::AppendData(const std::shared_ptr<LoadedValue> &loadedValue, std::stringstream &builder, const int &indentation, const bool &end)
+	void JsonSection::AppendData(const std::shared_ptr<Serialized> &Serialized, std::stringstream &builder, const int &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
@@ -29,17 +29,17 @@ namespace acid
 
 		builder << indents.str();
 
-		if (loadedValue->GetName().empty())
+		if (Serialized->GetName().empty())
 		{
 			builder << "{\n";
 		}
-		else if (loadedValue->GetValue().empty())
+		else if (Serialized->GetValue().empty())
 		{
-			builder << "\"" << loadedValue->GetName() << "\": {\n";
+			builder << "\"" << Serialized->GetName() << "\": {\n";
 		}
 		else
 		{
-			builder << "\"" << loadedValue->GetName() + "\": " << loadedValue->GetValue();
+			builder << "\"" << Serialized->GetName() + "\": " << Serialized->GetValue();
 
 			if (!end)
 			{
@@ -49,16 +49,16 @@ namespace acid
 			builder << "\n";
 		}
 
-		for (auto &child : loadedValue->GetChildren())
+		for (auto &child : Serialized->GetChildren())
 		{
-			AppendData(child, builder, indentation + 1, child == loadedValue->GetChildren().back());
+			AppendData(child, builder, indentation + 1, child == Serialized->GetChildren().back());
 		}
 
-		if (loadedValue->GetName().empty())
+		if (Serialized->GetName().empty())
 		{
 			builder << indents.str() << "}\n";
 		}
-		else if (loadedValue->GetValue().empty())
+		else if (Serialized->GetValue().empty())
 		{
 			builder << indents.str();
 
@@ -73,13 +73,13 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<LoadedValue> JsonSection::Convert(const JsonSection &source, std::shared_ptr<LoadedValue> &parent, const bool &isTopSection)
+	std::shared_ptr<Serialized> JsonSection::Convert(const JsonSection &source, std::shared_ptr<Serialized> &parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = std::make_shared<LoadedValue>(source.m_name, "");
+			thisValue = std::make_shared<Serialized>(source.m_name, "");
 			parent->GetChildren().emplace_back(thisValue);
 		}
 
@@ -95,7 +95,7 @@ namespace acid
 			}
 
 			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
-			auto newChild = std::make_shared<LoadedValue>(name, dataSplit.at(1));
+			auto newChild = std::make_shared<Serialized>(name, dataSplit.at(1));
 			thisValue->GetChildren().emplace_back(newChild);
 		}
 

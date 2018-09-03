@@ -15,7 +15,7 @@ namespace acid
 
 	float DriverSinwave::Calculate(const float &time)
 	{
-		float value = 0.5f + sin(2.0f * PI * time) * 0.5f;
+		float value = 0.5f + std::sin(2.0f * PI * time) * 0.5f;
 		return m_min + value * m_amplitude;
 	}
 }

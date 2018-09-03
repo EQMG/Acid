@@ -3,6 +3,7 @@
 #include <array>
 #include <sstream>
 #include <string>
+#include <memory>
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "PipelineCreate.hpp"
@@ -77,25 +78,24 @@ namespace acid
 		int m_binding;
 		int m_size;
 		VkShaderStageFlags m_stageFlags;
-		std::vector<Uniform *> *m_uniforms;
+		std::vector<std::shared_ptr<Uniform>> m_uniforms;
 	public:
 		UniformBlock(const std::string &name, const int &binding, const int &size, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
-			m_uniforms(new std::vector<Uniform *>())
+			m_uniforms(std::vector<std::shared_ptr<Uniform>>())
 		{
 		}
 
 		~UniformBlock()
 		{
-			delete m_uniforms;
 		}
 
-		void AddUniform(Uniform *uniform)
+		void AddUniform(const std::shared_ptr<Uniform> &uniform)
 		{
-			for (auto &u : *m_uniforms)
+			for (auto &u : m_uniforms)
 			{
 				if (*u == *uniform)
 				{
@@ -103,12 +103,12 @@ namespace acid
 				}
 			}
 
-			m_uniforms->emplace_back(uniform);
+			m_uniforms.emplace_back(uniform);
 		}
 
-		Uniform *GetUniform(const std::string &uniformName)
+		std::shared_ptr<Uniform> GetUniform(const std::string &uniformName)
 		{
-			for (auto &uniform : *m_uniforms)
+			for (auto &uniform : m_uniforms)
 			{
 				if (uniform->GetName() == uniformName)
 				{
@@ -129,7 +129,7 @@ namespace acid
 
 		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
-		std::vector<Uniform *> *GetUniforms() const { return m_uniforms; }
+		std::vector<std::shared_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
 
 		std::string ToString() const
 		{
@@ -179,9 +179,9 @@ namespace acid
 	{
 	private:
 		std::string m_name;
-		std::vector<Uniform *> m_uniforms;
-		std::vector<UniformBlock *> m_uniformBlocks;
-		std::vector<VertexAttribute *> m_vertexAttributes;
+		std::vector<std::shared_ptr<Uniform>> m_uniforms;
+		std::vector<std::shared_ptr<UniformBlock>> m_uniformBlocks;
+		std::vector<std::shared_ptr<VertexAttribute>> m_vertexAttributes;
 
 		std::vector<DescriptorType> m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
@@ -200,13 +200,13 @@ namespace acid
 
 		VkFormat GlTypeToVk(const int &type);
 
-		int GetDescriptorLocation(const std::string &descriptor);
+		int32_t GetDescriptorLocation(const std::string &descriptor);
 
-		Uniform *GetUniform(const std::string &uniformName);
+		std::shared_ptr<Uniform> GetUniform(const std::string &uniformName);
 
-		UniformBlock *GetUniformBlock(const std::string &blockName);
+		std::shared_ptr<UniformBlock> GetUniformBlock(const std::string &blockName);
 
-		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
+		std::shared_ptr<VertexAttribute> GetVertexAttribute(const std::string &attributeName);
 
 		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
 

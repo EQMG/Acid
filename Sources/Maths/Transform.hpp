@@ -3,6 +3,7 @@
 #include "Engine/Exports.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -49,12 +50,6 @@ namespace acid
 
 		Matrix4 GetModelMatrix() const;
 
-		/// <summary>
-		/// Saves this transform into a loaded value.
-		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue &destination);
-
 		Vector3 GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector3 &position) { m_position = position; }
@@ -67,12 +62,18 @@ namespace acid
 
 		void SetScaling(const Vector3 &scaling) { m_scaling = scaling; }
 
-		Transform &operator=(const Transform &other);
+		void Decode(const Serialized &serialized);
 
-		Transform &operator=(LoadedValue &value);
+		void Encode(Serialized &serialized) const;
+
+		Transform &operator=(const Transform &other);
 
 		bool operator==(const Transform &other) const;
 
 		bool operator!=(const Transform &other) const;
+
+		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
+
+		std::string ToString() const;
 	};
 }

@@ -467,12 +467,20 @@ namespace acid
 		return result;
 	}
 
-	void Matrix4::Write(LoadedValue &destination)
+	void Matrix4::Decode(const Serialized &serialized)
 	{
-		m_rows[0].Write(*destination.FindChild("m0", true));
-		m_rows[1].Write(*destination.FindChild("m1", true));
-		m_rows[2].Write(*destination.FindChild("m2", true));
-		m_rows[3].Write(*destination.FindChild("m3", true));
+		m_rows[0] = serialized.GetChild<Vector4>("m0");
+		m_rows[1] = serialized.GetChild<Vector4>("m1");
+		m_rows[2] = serialized.GetChild<Vector4>("m2");
+		m_rows[3] = serialized.GetChild<Vector4>("m3");
+	}
+
+	void Matrix4::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<Vector4>("m0", m_rows[0]);
+		serialized.SetChild<Vector4>("m1", m_rows[1]);
+		serialized.SetChild<Vector4>("m2", m_rows[2]);
+		serialized.SetChild<Vector4>("m3", m_rows[3]);
 	}
 
 	Matrix4 &Matrix4::operator=(const Matrix4 &other)
@@ -488,15 +496,6 @@ namespace acid
 	Matrix4 &Matrix4::operator=(const float *array)
 	{
 		memcpy(m_rows, array, 4 * 4 * sizeof(float));
-		return *this;
-	}
-
-	Matrix4 &Matrix4::operator=(LoadedValue &value)
-	{
-		m_rows[0] = *value.FindChild("m0");
-		m_rows[1] = *value.FindChild("m1");
-		m_rows[2] = *value.FindChild("m2");
-		m_rows[3] = *value.FindChild("m3");
 		return *this;
 	}
 

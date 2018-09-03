@@ -21,14 +21,14 @@ namespace acid
 		std::map<std::string, std::string> m_values;
 
 		std::string m_filename;
-		double m_verticalPerPixelSize;
-		double m_horizontalPerPixelSize;
+		float m_verticalPerPixelSize;
+		float m_horizontalPerPixelSize;
 		int m_imageWidth;
-		double m_spaceWidth;
+		float m_spaceWidth;
 		std::vector<int> m_padding;
 		int m_paddingWidth;
 		int m_paddingHeight;
-		double m_maxSizeY;
+		float m_maxSizeY;
 	public:
 		static std::shared_ptr<FontMetafile> Resource(const std::string &filename)
 		{
@@ -54,7 +54,7 @@ namespace acid
 		static const std::string SPLITTER;
 		static const std::string NUMBER_SEPARATOR;
 
-		static const double LINE_HEIGHT;
+		static const float LINE_HEIGHT;
 		static const int SPACE_ASCII;
 
 		/// <summary>
@@ -72,9 +72,9 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; }
 
-		double GetSpaceWidth() const { return m_spaceWidth; }
+		float GetSpaceWidth() const { return m_spaceWidth; }
 
-		double GetMaxSizeY() const { return m_maxSizeY; }
+		float GetMaxSizeY() const { return m_maxSizeY; }
 	private:
 		/// <summary>
 		/// Read in the next line and store the variable values.

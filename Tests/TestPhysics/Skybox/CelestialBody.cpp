@@ -74,13 +74,13 @@ namespace test
 		}
 	}
 
-	void CelestialBody::Load(LoadedValue &value)
+	void CelestialBody::Decode(const Serialized &serialized)
 	{
-		m_type = static_cast<CelestialType>(value.FindChild("Type")->Get<int>());
+		m_type = serialized.GetChild<CelestialType>("Type");
 	}
 
-	void CelestialBody::Write(LoadedValue &destination)
+	void CelestialBody::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Type", true)->Set(static_cast<int>(m_type));
+		serialized.SetChild<CelestialType>("Type", m_type);
 	}
 }

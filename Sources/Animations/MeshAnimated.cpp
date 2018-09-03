@@ -41,14 +41,14 @@ namespace acid
 		}
 	}
 
-	void MeshAnimated::Load(LoadedValue &value)
+	void MeshAnimated::Decode(const Serialized &serialized)
 	{
-		TrySetModel(value.FindChild("Model")->GetString());
+		TrySetModel(serialized.GetChild<std::string>("Model"));
 	}
 
-	void MeshAnimated::Write(LoadedValue &destination)
+	void MeshAnimated::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Model", true)->SetString(m_filename);
+		serialized.SetChild<std::string>("Model", m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)

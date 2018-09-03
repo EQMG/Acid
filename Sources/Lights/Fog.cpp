@@ -11,36 +11,47 @@ namespace acid
 	{
 	}
 
+	Fog::Fog(const Fog &source) :
+		m_colour(source.m_colour),
+		m_density(source.m_density),
+		m_gradient(source.m_gradient),
+		m_lowerLimit(source.m_lowerLimit),
+		m_upperLimit(source.m_upperLimit)
+	{
+	}
+
 	Fog::~Fog()
 	{
 	}
 
-	void Fog::Write(LoadedValue &destination)
+	void Fog::Decode(const Serialized &serialized)
 	{
-		destination.FindChild("colour", true)->SetString(m_colour.GetHex());
-		destination.SetChild<float>("density", m_density);
-		destination.SetChild<float>("gradient", m_gradient);
-		destination.SetChild<float>("lowerLimit", m_lowerLimit);
-		destination.SetChild<float>("upperLimit", m_upperLimit);
+		m_colour = serialized.GetChild<Colour>("Colour");
+		m_density = serialized.GetChild<float>("Density");
+		m_gradient = serialized.GetChild<float>("Gradient");
+		m_lowerLimit = serialized.GetChild<float>("Lower Limit");
+		m_upperLimit = serialized.GetChild<float>("Upper Limit");
 	}
 
-	Fog &Fog::operator=(const Fog &other)
+	void Fog::Encode(Serialized &serialized) const
 	{
-		m_colour = other.m_colour;
-		m_density = other.m_density;
-		m_gradient = other.m_gradient;
-		m_lowerLimit = other.m_lowerLimit;
-		m_upperLimit = other.m_upperLimit;
-		return *this;
+		serialized.SetChild<Colour>("Colour", m_colour);
+		serialized.SetChild<float>("Density", m_density);
+		serialized.SetChild<float>("Gradient", m_gradient);
+		serialized.SetChild<float>("Lower Limit", m_lowerLimit);
+		serialized.SetChild<float>("Upper Limit", m_upperLimit);
 	}
 
-	Fog &Fog::operator=(LoadedValue &value)
+	std::ostream &operator<<(std::ostream &stream, const Fog &colour)
 	{
-		m_colour = value.FindChild("colour")->GetString();
-		m_density = value.FindChild("density")->Get<float>();
-		m_gradient = value.FindChild("gradient")->Get<float>();
-		m_lowerLimit = value.FindChild("lowerLimit")->Get<float>();
-		m_upperLimit = value.FindChild("upperLimit")->Get<float>();
-		return *this;
+		stream << colour.ToString();
+		return stream;
+	}
+
+	std::string Fog::ToString() const
+	{
+		std::stringstream result;
+		result << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
+		return result.str();
 	}
 }

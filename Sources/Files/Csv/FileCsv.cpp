@@ -88,24 +88,6 @@ namespace acid
 		m_rows.clear();
 	}
 
-	std::map<std::string, std::string> FileCsv::ConfigReadValues()
-	{
-		auto result = std::map<std::string, std::string>();
-
-		for (uint32_t i = 0; i < m_rows.size(); i++)
-		{
-			RowCsv row = m_rows.at(i);
-			result.emplace(row.GetElements().at(0), row.GetElements().at(1));
-		}
-
-		return result;
-	}
-
-	void FileCsv::ConfigPushValue(const std::string &key, const std::string &value)
-	{
-		m_rows.emplace_back(RowCsv({key, value}));
-	}
-
 	RowCsv FileCsv::GetRow(const uint32_t &index)
 	{
 		return m_rows.at(index);

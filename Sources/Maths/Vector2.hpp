@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Files/LoadedValue.hpp"
+#include "Serialized/Serialized.hpp"
 
 namespace acid
 {
@@ -216,12 +216,6 @@ namespace acid
 		/// <returns> The cartesian coordinates (x, y). </returns>
 		Vector2 PolarToCartesian() const;
 
-		/// <summary>
-		/// Saves this vector into a loaded value.
-		/// </summary>
-		/// <param name="destination"> The destination loaded value. </param>
-		void Write(LoadedValue &destination);
-
 		float GetX() const { return m_x; }
 
 		void SetX(const float &x) { m_x = x; }
@@ -230,11 +224,13 @@ namespace acid
 
 		void SetY(const float &y) { m_y = y; }
 
+		void Decode(const Serialized &serialized);
+
+		void Encode(Serialized &serialized) const;
+
 		Vector2 &operator=(const Vector2 &other);
 
 		Vector2 &operator=(const Vector3 &other);
-
-		Vector2 &operator=(LoadedValue &value);
 
 		bool operator==(const Vector2 &other) const;
 

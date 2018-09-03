@@ -177,10 +177,16 @@ namespace acid
 		return Vector2(x, y);
 	}
 
-	void Vector2::Write(LoadedValue &destination)
+	void Vector2::Decode(const Serialized &serialized)
 	{
-		destination.SetChild<float>("x", m_x);
-		destination.SetChild<float>("y", m_y);
+		m_x = serialized.GetChild<float>("x");
+		m_y = serialized.GetChild<float>("y");
+	}
+
+	void Vector2::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<float>("x", m_x);
+		serialized.SetChild<float>("y", m_y);
 	}
 
 	Vector2 &Vector2::operator=(const Vector2 &other)
@@ -194,13 +200,6 @@ namespace acid
 	{
 		m_x = other.m_x;
 		m_y = other.m_y;
-		return *this;
-	}
-
-	Vector2 &Vector2::operator=(LoadedValue &value)
-	{
-		m_x = value.FindChild("x")->Get<float>();
-		m_y = value.FindChild("y")->Get<float>();
 		return *this;
 	}
 

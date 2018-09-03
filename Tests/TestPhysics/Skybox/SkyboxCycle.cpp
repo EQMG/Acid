@@ -57,15 +57,15 @@ namespace test
 		}
 	}
 
-	void SkyboxCycle::Load(LoadedValue &value)
+	void SkyboxCycle::Decode(const Serialized &serialized)
 	{
-		m_enableFog = value.FindChild("Enable Fog")->Get<bool>();
-		m_enableRotation = value.FindChild("Enable Rotation")->Get<bool>();
+		m_enableFog = serialized.GetChild<bool>("Enable Fog");
+		m_enableRotation = serialized.GetChild<bool>("Enable Rotation");
 	}
 
-	void SkyboxCycle::Write(LoadedValue &destination)
+	void SkyboxCycle::Encode(Serialized &serialized) const
 	{
-		destination.FindChild("Enable Fog", true)->Set(static_cast<int>(m_enableFog));
-		destination.FindChild("Enable Rotation", true)->Set(static_cast<int>(m_enableRotation));
+		serialized.SetChild<bool>("Enable Fog", m_enableFog);
+		serialized.SetChild<bool>("Enable Rotation", m_enableRotation);
 	}
 }

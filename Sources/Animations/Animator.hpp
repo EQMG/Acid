@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "Animation/Animation.hpp"
 #include "Joint/Joint.hpp"
 

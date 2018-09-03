@@ -18,7 +18,7 @@ namespace test
 		IButton *m_buttonScreenshot;
 		IButton *m_buttonExit;
 
-		Colour *m_primaryColour;
+		Colour m_primaryColour;
 		SelectorJoystick *m_selectorJoystick;
 
 		IButton *m_buttonPause;
@@ -35,9 +35,9 @@ namespace test
 
 		void Update() override;
 
-		bool IsGamePaused() override;
+		bool IsGamePaused() const override;
 
-		Colour *GetUiColour() const override { return m_primaryColour; }
+		Colour GetUiColour() const override { return m_primaryColour; }
 
 		SelectorJoystick *GetSelectorJoystick() const override { return m_selectorJoystick; };
 	private:

@@ -7,13 +7,13 @@ namespace acid
 	class ACID_EXPORT AnimationLoader
 	{
 	private:
-		std::shared_ptr<LoadedValue> m_libraryAnimations;
-		std::shared_ptr<LoadedValue> m_libraryVisualScenes;
+		std::shared_ptr<Serialized> m_libraryAnimations;
+		std::shared_ptr<Serialized> m_libraryVisualScenes;
 
 		float m_lengthSeconds;
 		std::vector<KeyframeData> m_keyframeData;
 	public:
-		AnimationLoader(const std::shared_ptr<LoadedValue> &libraryAnimations, const std::shared_ptr<LoadedValue> &libraryVisualScenes);
+		AnimationLoader(const std::shared_ptr<Serialized> &libraryAnimations, const std::shared_ptr<Serialized> &libraryVisualScenes);
 
 		~AnimationLoader();
 
@@ -27,11 +27,11 @@ namespace acid
 
 		void CreateKeyframeData(const std::vector<float> &times);
 
-		void LoadJointTransforms(std::shared_ptr<LoadedValue> &jointData, const std::string &rootNodeId);
+		void LoadJointTransforms(std::shared_ptr<Serialized> &jointData, const std::string &rootNodeId);
 
-		std::string GetDataId(std::shared_ptr<LoadedValue> &jointData);
+		std::string GetDataId(std::shared_ptr<Serialized> &jointData);
 
-		std::string GetJointName(std::shared_ptr<LoadedValue> &jointData);
+		std::string GetJointName(std::shared_ptr<Serialized> &jointData);
 
 		void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
 	};

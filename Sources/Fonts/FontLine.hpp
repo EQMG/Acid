@@ -10,19 +10,19 @@ namespace acid
 	class ACID_EXPORT FontLine
 	{
 	private:
-		double m_maxLength;
-		double m_spaceSize;
+		float m_maxLength;
+		float m_spaceSize;
 
 		std::vector<FontWord> m_words;
-		double m_currentWordsLength;
-		double m_currentLineLength;
+		float m_currentWordsLength;
+		float m_currentLineLength;
 	public:
 		/// <summary>
 		/// Creates a new line.
 		/// </summary>
 		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
 		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
-		FontLine(const double &spaceWidth, const double &maxLength);
+		FontLine(const float &spaceWidth, const float &maxLength);
 
 		/// <summary>
 		/// Deconstructor for the line.
@@ -36,14 +36,14 @@ namespace acid
 		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
 		bool AddWord(const FontWord &word);
 
-		double GetMaxLength() const { return m_maxLength; }
+		float GetMaxLength() const { return m_maxLength; }
 
-		double GetSpaceSize() const { return m_spaceSize; }
+		float GetSpaceSize() const { return m_spaceSize; }
 
 		std::vector<FontWord> GetWords() const { return m_words; }
 
-		double GetCurrentWordsLength() const { return m_currentWordsLength; }
+		float GetCurrentWordsLength() const { return m_currentWordsLength; }
 
-		double GetCurrentLineLength() const { return m_currentLineLength; }
+		float GetCurrentLineLength() const { return m_currentLineLength; }
 	};
 }

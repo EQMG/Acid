@@ -17,7 +17,7 @@ namespace test
 		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
-		m_primaryColour(new Colour("#e74c3c")),
+		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_buttonPause((new ButtonCompound({
 			new ButtonKeyboard({KEY_ESCAPE}),
@@ -38,7 +38,6 @@ namespace test
 		delete m_buttonScreenshot;
 		delete m_buttonExit;
 
-		delete m_primaryColour;
 		delete m_selectorJoystick;
 
 		delete m_buttonPause;
@@ -78,7 +77,7 @@ namespace test
 		{
 			m_uiStartLogo->SetAlphaDriver<DriverConstant>(0.0f);
 			m_overlayDebug->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
-			//m_uiNavigation->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, SLIDE_TIME);
+		//  m_uiNavigation->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, SLIDE_TIME);
 			m_uiStartLogo->SetStarting(false);
 
 			TogglePause(); // TODO: Automatic testing.
@@ -86,7 +85,7 @@ namespace test
 	}
 
 
-	bool Scene1::IsGamePaused()
+	bool Scene1::IsGamePaused() const
 	{
 		return m_uiStartLogo->IsStarting() || m_uiNavigation->GetAlpha() != 0.0f;
 	}

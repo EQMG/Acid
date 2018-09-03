@@ -48,7 +48,7 @@ namespace acid
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		IComponent *CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
+		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -71,7 +71,7 @@ namespace acid
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindComponentName(IComponent *compare) { return m_componentRegister.FindComponentName(compare); }
+		std::optional<std::string> FindComponentName(const std::shared_ptr<IComponent> &compare) { return m_componentRegister.FindComponentName(compare); }
 
 		/// <summary>
 		/// Gets the current camera object.
@@ -82,19 +82,19 @@ namespace acid
 		/// <summary>
 		/// Gets the scene physics system.
 		/// </summary>
-		/// <returns> The scenes physics syste,. </returns>
-		ScenePhysics *GetPhysics() const { return m_scene->GetPhysics(); }
+		/// <returns> The scenes physics system. </returns>
+		std::unique_ptr<ScenePhysics> const &GetPhysics() const { return m_scene->GetPhysics(); }
 
 		/// <summary>
 		/// Gets the scene object structure.
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
-		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
+		std::unique_ptr<SceneStructure> const &GetStructure() const { return m_scene->GetStructure(); }
 
 		/// <summary>
 		/// Gets if the scene is paused.
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
-		bool IsGamePaused() { return m_scene->IsGamePaused(); }
+		bool IsGamePaused() const { return m_scene->IsGamePaused(); }
 	};
 }

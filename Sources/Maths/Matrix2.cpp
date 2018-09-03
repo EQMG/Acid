@@ -222,10 +222,16 @@ namespace acid
 		return result;
 	}
 
-	void Matrix2::Write(LoadedValue &destination)
+	void Matrix2::Decode(const Serialized &serialized)
 	{
-		m_rows[0].Write(*destination.FindChild("m0", true));
-		m_rows[1].Write(*destination.FindChild("m1", true));
+		m_rows[0] = serialized.GetChild<Vector2>("m0");
+		m_rows[1] = serialized.GetChild<Vector2>("m1");
+	}
+
+	void Matrix2::Encode(Serialized &serialized) const
+	{
+		serialized.SetChild<Vector2>("m0", m_rows[0]);
+		serialized.SetChild<Vector2>("m1", m_rows[1]);
 	}
 
 	Matrix2 &Matrix2::operator=(const Matrix2 &other)
@@ -241,13 +247,6 @@ namespace acid
 	Matrix2 &Matrix2::operator=(const float *array)
 	{
 		memcpy(m_rows, array, 2 * 2 * sizeof(float));
-		return *this;
-	}
-
-	Matrix2 &Matrix2::operator=(LoadedValue &value)
-	{
-		m_rows[0] = *value.FindChild("m0");
-		m_rows[1] = *value.FindChild("m1");
 		return *this;
 	}
 

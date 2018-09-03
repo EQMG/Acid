@@ -14,7 +14,7 @@ namespace test
 		m_width(m_text->GetRectangle().m_dimensions.m_x * 1.6f),
 		m_soundClick(new Sound("Sounds/Button1.ogg", 0.9f))
 	{
-		this->SetActionClick([&](MouseButton button)
+		this->SetActionClick([&](MouseButton button) -> bool
 		{
 			if (button == MOUSE_BUTTON_LEFT)
 			{

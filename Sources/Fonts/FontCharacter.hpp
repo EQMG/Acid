@@ -11,15 +11,15 @@ namespace acid
 	{
 	private:
 		int m_id;
-		double m_textureCoordX;
-		double m_textureCoordY;
-		double m_maxTextureCoordX;
-		double m_maxTextureCoordY;
-		double m_offsetX;
-		double m_offsetY;
-		double m_sizeX;
-		double m_sizeY;
-		double m_advanceX;
+		float m_textureCoordX;
+		float m_textureCoordY;
+		float m_maxTextureCoordX;
+		float m_maxTextureCoordY;
+		float m_offsetX;
+		float m_offsetY;
+		float m_sizeX;
+		float m_sizeY;
+		float m_advanceX;
 	public:
 		/// <summary>
 		/// Creates a new character.
@@ -34,7 +34,7 @@ namespace acid
 		/// <param name="sizeX"> The width of the character's quad in screen space. </param>
 		/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
-		FontCharacter(const int &id, const double &textureCoordX, const double &textureCoordY, const double &textureSizeX, const double &textureSizeY, const double &offsetX, const double &offsetY, const double &sizeX, const double &sizeY, const double &advanceX);
+		FontCharacter(const int &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX);
 
 		/// <summary>
 		/// Deconstructor for the character.
@@ -43,22 +43,22 @@ namespace acid
 
 		int GetId() const { return m_id; }
 
-		double GetTextureCoordX() const { return m_textureCoordX; }
+		float GetTextureCoordX() const { return m_textureCoordX; }
 
-		double GetTextureCoordY() const { return m_textureCoordY; }
+		float GetTextureCoordY() const { return m_textureCoordY; }
 
-		double GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
+		float GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
 
-		double GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
+		float GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
 
-		double GetOffsetX() const { return m_offsetX; }
+		float GetOffsetX() const { return m_offsetX; }
 
-		double GetOffsetY() const { return m_offsetY; }
+		float GetOffsetY() const { return m_offsetY; }
 
-		double GetSizeX() const { return m_sizeX; }
+		float GetSizeX() const { return m_sizeX; }
 
-		double GetSizeY() const { return m_sizeY; }
+		float GetSizeY() const { return m_sizeY; }
 
-		double GetAdvanceX() const { return m_advanceX; }
+		float GetAdvanceX() const { return m_advanceX; }
 	};
 }

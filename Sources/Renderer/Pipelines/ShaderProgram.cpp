@@ -12,9 +12,9 @@ namespace acid
 {
 	ShaderProgram::ShaderProgram(const std::string &name) :
 		m_name(name),
-		m_uniforms(std::vector<Uniform *>()),
-		m_uniformBlocks(std::vector<UniformBlock *>()),
-		m_vertexAttributes(std::vector<VertexAttribute *>()),
+		m_uniforms(std::vector<std::shared_ptr<Uniform>>()),
+		m_uniformBlocks(std::vector<std::shared_ptr<UniformBlock>>()),
+		m_vertexAttributes(std::vector<std::shared_ptr<VertexAttribute>>()),
 		m_descriptors(std::vector<DescriptorType>()),
 		m_attributeDescriptions(std::vector<VkVertexInputAttributeDescription>()),
 		m_notFoundNames(std::vector<std::string>())
@@ -23,20 +23,6 @@ namespace acid
 
 	ShaderProgram::~ShaderProgram()
 	{
-		for (auto &uniform : m_uniforms)
-		{
-			delete uniform;
-		}
-
-		for (auto &uniformBlock : m_uniformBlocks)
-		{
-			delete uniformBlock;
-		}
-
-		for (auto &vertexAttribute : m_vertexAttributes)
-		{
-			delete vertexAttribute;
-		}
 	}
 
 	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound)
@@ -58,14 +44,14 @@ namespace acid
 	{
 		// Sort uniforms by binding.
 		std::sort(m_uniforms.begin(), m_uniforms.end(),
-			[](Uniform *l, Uniform *r)
+			[](std::shared_ptr<Uniform> l, std::shared_ptr<Uniform> r)
 		{
 			return l->GetBinding() < r->GetBinding();
 		});
 
 		// Sort uniform blocks by binding.
 		std::sort(m_uniformBlocks.begin(), m_uniformBlocks.end(),
-			[](UniformBlock *l, UniformBlock *r)
+			[](std::shared_ptr<UniformBlock> l, std::shared_ptr<UniformBlock> r)
 		{
 			return l->GetBinding() < r->GetBinding();
 		});
@@ -73,8 +59,8 @@ namespace acid
 		// Sort uniform block uniforms by offsets.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
-			std::sort(uniformBlock->GetUniforms()->begin(), uniformBlock->GetUniforms()->end(),
-				[](Uniform *l, Uniform *r)
+			std::sort(uniformBlock->GetUniforms().begin(), uniformBlock->GetUniforms().end(),
+				[](std::shared_ptr<Uniform> l, std::shared_ptr<Uniform> r)
 			{
 				return l->GetOffset() < r->GetOffset();
 			});
@@ -82,7 +68,7 @@ namespace acid
 
 		// Sort attributes by location.
 		std::sort(m_vertexAttributes.begin(), m_vertexAttributes.end(),
-			[](VertexAttribute *l, VertexAttribute *r)
+			[](std::shared_ptr<VertexAttribute> l, std::shared_ptr<VertexAttribute> r)
 		{
 			return l->GetLocation() < r->GetLocation();
 		});
@@ -143,7 +129,7 @@ namespace acid
 		}
 	}
 
-	int ShaderProgram::GetDescriptorLocation(const std::string &descriptor)
+	int32_t ShaderProgram::GetDescriptorLocation(const std::string &descriptor)
 	{
 		for (auto &uniform : m_uniforms)
 		{
@@ -434,7 +420,7 @@ namespace acid
 		return shaderModule;
 	}
 
-	Uniform *ShaderProgram::GetUniform(const std::string &uniformName)
+	std::shared_ptr<Uniform> ShaderProgram::GetUniform(const std::string &uniformName)
 	{
 		for (auto &uniform : m_uniforms)
 		{
@@ -447,7 +433,7 @@ namespace acid
 		return nullptr;
 	}
 
-	UniformBlock *ShaderProgram::GetUniformBlock(const std::string &blockName)
+	std::shared_ptr<UniformBlock> ShaderProgram::GetUniformBlock(const std::string &blockName)
 	{
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
@@ -460,7 +446,7 @@ namespace acid
 		return nullptr;
 	}
 
-	VertexAttribute *ShaderProgram::GetVertexAttribute(const std::string &attributeName)
+	std::shared_ptr<VertexAttribute> ShaderProgram::GetVertexAttribute(const std::string &attributeName)
 	{
 		for (auto &attribute : m_vertexAttributes)
 		{
@@ -505,7 +491,7 @@ namespace acid
 			{
 				result << "  - " << uniformBlock->ToString() << " \n";
 
-				for (auto &uniform : *uniformBlock->GetUniforms())
+				for (auto &uniform : uniformBlock->GetUniforms())
 				{
 					result << "	- " << uniform->ToString() << " \n";
 				}
@@ -544,7 +530,7 @@ namespace acid
 			}
 		}
 
-		m_uniformBlocks.emplace_back(new UniformBlock(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
+		m_uniformBlocks.emplace_back(std::make_shared<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
@@ -559,7 +545,7 @@ namespace acid
 				{
 					if (uniformBlock->GetName() == splitName.at(0))
 					{
-						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
+						uniformBlock->AddUniform(std::make_shared<Uniform>(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
 							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
 						return;
 					}
@@ -576,7 +562,7 @@ namespace acid
 			}
 		}
 
-		m_uniforms.emplace_back(new Uniform(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
+		m_uniforms.emplace_back(std::make_shared<Uniform>(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
@@ -589,7 +575,7 @@ namespace acid
 			}
 		}
 
-		m_vertexAttributes.emplace_back(new VertexAttribute(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
+		m_vertexAttributes.emplace_back(std::make_shared<VertexAttribute>(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
 			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 }

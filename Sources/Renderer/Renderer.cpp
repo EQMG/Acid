@@ -9,7 +9,7 @@ namespace acid
 	Renderer::Renderer() :
 		IModule(),
 		m_managerRender(nullptr),
-		m_renderStages(std::vector<RenderStage *>()),
+		m_renderStages(std::vector<std::shared_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
 		m_activeSwapchainImage(UINT32_MAX),
@@ -32,13 +32,13 @@ namespace acid
 
 		delete m_managerRender;
 
-		for (auto &renderStage : m_renderStages)
-		{
-			delete renderStage;
-		}
+	//	for (auto &renderStage : m_renderStages)
+	//	{
+	//		delete renderStage;
+	//	}
 
-		delete m_swapchain;
-		delete m_commandBuffer;
+	//	delete m_swapchain;
+	//	delete m_commandBuffer;
 
 		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
@@ -110,15 +110,15 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		VkExtent2D displayExtent2D = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
+		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
 
 		m_renderStages.clear();
-		m_swapchain = new Swapchain(displayExtent2D);
+		m_swapchain = std::make_shared<Swapchain>(displayExtent);
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
-			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate);
-			renderStage->Rebuild(m_swapchain);
+			auto renderStage = std::make_shared<RenderStage>(m_renderStages.size(), renderpassCreate);
+			renderStage->Rebuild(*m_swapchain);
 			m_renderStages.emplace_back(renderStage);
 		}
 
@@ -220,7 +220,7 @@ namespace acid
 
 		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
-		m_commandBuffer = new CommandBuffer(false);
+		m_commandBuffer = std::make_shared<CommandBuffer>(false);
 	}
 
 	void Renderer::CreatePipelineCache()
@@ -238,20 +238,20 @@ namespace acid
 		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 		auto renderStage = GetRenderStage(i);
 
-		VkExtent2D displayExtent2D = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
+		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent2D))
+		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
 #if ACID_VERBOSE
-			fprintf(stdout, "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent2D.width, displayExtent2D.height);
+			fprintf(stdout, "Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
 #endif
-			delete m_swapchain;
-			m_swapchain = new Swapchain(displayExtent2D);
+		//	delete m_swapchain;
+			m_swapchain = std::make_shared<Swapchain>(displayExtent);
 		}
 
-		renderStage->Rebuild(m_swapchain);
+		renderStage->Rebuild(*m_swapchain);
 	}
 
 	bool Renderer::StartRenderpass(const uint32_t &i)
@@ -271,7 +271,7 @@ namespace acid
 
 		if (renderStage->HasSwapchain())
 		{
-			const VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
