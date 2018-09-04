@@ -1,10 +1,10 @@
-#include "FormatString.hpp"
+#include "String.hpp"
 
 #include <algorithm>
 
 namespace acid
 {
-	std::vector<std::string> FormatString::Split(const std::string &str, const std::string &sep, const bool &trim)
+	std::vector<std::string> String::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
 		char *copy = (char *) malloc(strlen(str.c_str()) + 1);
 		strcpy(copy, str.c_str());
@@ -29,7 +29,7 @@ namespace acid
 		return arr;
 	}
 
-	bool FormatString::StartsWith(const std::string &str, const std::string &token)
+	bool String::StartsWith(const std::string &str, const std::string &token)
 	{
 		if (str.length() < token.length())
 		{
@@ -39,12 +39,12 @@ namespace acid
 		return str.compare(0, token.length(), token) == 0;
 	}
 
-	bool FormatString::Contains(const std::string &str, const std::string &token)
+	bool String::Contains(const std::string &str, const std::string &token)
 	{
 		return str.find(token) != std::string::npos;
 	}
 
-	bool FormatString::IsInteger(const std::string &str)
+	bool String::IsInteger(const std::string &str)
 	{
 		if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+')))
 		{
@@ -57,7 +57,7 @@ namespace acid
 		return *p == 0;
 	}
 
-	int FormatString::FindCharPos(const std::string &str, const char &c)
+	int String::FindCharPos(const std::string &str, const char &c)
 	{
 		for (uint32_t i = 0; i < str.length(); i++)
 		{
@@ -70,7 +70,7 @@ namespace acid
 		return -1;
 	}
 
-	std::string FormatString::Trim(const std::string &str, const std::string &whitespace)
+	std::string String::Trim(const std::string &str, const std::string &whitespace)
 	{
 		auto strBegin = str.find_first_not_of(whitespace);
 
@@ -87,21 +87,21 @@ namespace acid
 		return result;
 	}
 
-	std::string FormatString::Substring(const std::string &str, const uint32_t &start, const uint32_t &end)
+	std::string String::Substring(const std::string &str, const uint32_t &start, const uint32_t &end)
 	{
 		std::string result = str;
 		result = result.substr(start, end - start);
 		return result;
 	}
 
-	std::string FormatString::RemoveAll(const std::string &str, const char &token)
+	std::string String::RemoveAll(const std::string &str, const char &token)
 	{
 		std::string result = str;
 		result.erase(remove(result.begin(), result.end(), token), result.end());
 		return result;
 	}
 
-	std::string FormatString::RemoveLast(const std::string &str, const char &token)
+	std::string String::RemoveLast(const std::string &str, const char &token)
 	{
 		std::string result = str;
 
@@ -118,7 +118,7 @@ namespace acid
 		return result;
 	}
 
-	std::string FormatString::Replace(const std::string &str, const std::string &token, const std::string &to)
+	std::string String::Replace(const std::string &str, const std::string &token, const std::string &to)
 	{
 		std::string result = str;
 		const size_t startPos = result.find(token);
@@ -132,14 +132,14 @@ namespace acid
 		return result;
 	}
 
-	std::string FormatString::Lowercase(const std::string &str)
+	std::string String::Lowercase(const std::string &str)
 	{
 		std::string result = str;
 		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
 		return result;
 	}
 
-	std::string FormatString::Uppercase(const std::string &str)
+	std::string String::Uppercase(const std::string &str)
 	{
 		std::string result = str;
 		std::transform(result.begin(), result.end(), result.begin(), ::toupper);

@@ -34,7 +34,7 @@ namespace acid
 			return;
 		}
 
-		auto lines = FormatString::Split(*fileLoaded, "\n");
+		auto lines = String::Split(*fileLoaded, "\n");
 
 		auto indicesList = std::vector<uint32_t>();
 		auto verticesList = std::vector<VertexModelData *>();
@@ -43,7 +43,7 @@ namespace acid
 
 		for (auto &line : lines)
 		{
-			auto split = FormatString::Split(line, " ", true);
+			auto split = String::Split(line, " ", true);
 
 			if (!split.empty())
 			{
@@ -72,20 +72,20 @@ namespace acid
 				else if (prefix == "f")
 				{
 					// The split length of 3 faced + 1 for the f prefix.
-					if (split.size() != 4 || FormatString::Contains(line, "//"))
+					if (split.size() != 4 || String::Contains(line, "//"))
 					{
 						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", filename.c_str());
 						throw std::runtime_error("Model loading error.");
 					}
 
-					auto vertex1 = FormatString::Split(split[1], "/");
-					auto vertex2 = FormatString::Split(split[2], "/");
-					auto vertex3 = FormatString::Split(split[3], "/");
+					auto vertex1 = String::Split(split[1], "/");
+					auto vertex2 = String::Split(split[2], "/");
+					auto vertex3 = String::Split(split[3], "/");
 
-					VertexModelData *v0 = ProcessDataVertex(Vector3(std::stof(vertex1[0]), std::stof(vertex1[1]), std::stof(vertex1[2])), &verticesList, &indicesList);
-					VertexModelData *v1 = ProcessDataVertex(Vector3(std::stof(vertex2[0]), std::stof(vertex2[1]), std::stof(vertex2[2])), &verticesList, &indicesList);
-					VertexModelData *v2 = ProcessDataVertex(Vector3(std::stof(vertex3[0]), std::stof(vertex3[1]), std::stof(vertex3[2])), &verticesList, &indicesList);
-					CalculateTangents(v0, v1, v2, &uvsList);
+					VertexModelData *v0 = ProcessDataVertex(Vector3(std::stof(vertex1[0]), std::stof(vertex1[1]), std::stof(vertex1[2])), verticesList, indicesList);
+					VertexModelData *v1 = ProcessDataVertex(Vector3(std::stof(vertex2[0]), std::stof(vertex2[1]), std::stof(vertex2[2])), verticesList, indicesList);
+					VertexModelData *v2 = ProcessDataVertex(Vector3(std::stof(vertex3[0]), std::stof(vertex3[1]), std::stof(vertex3[2])), verticesList, indicesList);
+					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
 				{
@@ -142,29 +142,29 @@ namespace acid
 	{
 	}
 
-	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices)
+	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices)
 	{
 		int index = static_cast<int>(vertex.m_x) - 1;
 		int textureIndex = static_cast<int>(vertex.m_y) - 1;
 		int normalIndex = static_cast<int>(vertex.m_z) - 1;
-		VertexModelData *currentVertex = (*vertices)[index];
+		VertexModelData *currentVertex = vertices[index];
 
 		if (!currentVertex->IsSet())
 		{
 			currentVertex->SetUvIndex(textureIndex);
 			currentVertex->SetNormalIndex(normalIndex);
-			indices->emplace_back(index);
+			indices.emplace_back(index);
 			return currentVertex;
 		}
 
-		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, indices, vertices);
+		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, vertices, indices);
 	}
 
-	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexModelData *> *vertices)
+	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{
-			indices->emplace_back(previousVertex->GetIndex());
+			indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
 
@@ -172,23 +172,23 @@ namespace acid
 
 		if (anotherVertex != nullptr)
 		{
-			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, indices, vertices);
+			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, vertices, indices);
 		}
 
-		VertexModelData *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices->size()), previousVertex->GetPosition());
+		VertexModelData *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices.size()), previousVertex->GetPosition());
 		duplicateVertex->SetUvIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
-		vertices->emplace_back(duplicateVertex);
-		indices->emplace_back(duplicateVertex->GetIndex());
+		vertices.emplace_back(duplicateVertex);
+		indices.emplace_back(duplicateVertex->GetIndex());
 		return duplicateVertex;
 	}
 
-	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs)
+	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs)
 	{
-		Vector2 uv0 = (*uvs)[v0->GetUvIndex()];
-		Vector2 uv1 = (*uvs)[v1->GetUvIndex()];
-		Vector2 uv2 = (*uvs)[v2->GetUvIndex()];
+		Vector2 uv0 = uvs[v0->GetUvIndex()];
+		Vector2 uv1 = uvs[v1->GetUvIndex()];
+		Vector2 uv2 = uvs[v2->GetUvIndex()];
 
 		Vector2 deltaUv1 = uv1 - uv0;
 		Vector2 deltaUv2 = uv2 - uv0;

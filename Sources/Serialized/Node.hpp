@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 #include "Engine/Exports.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 
 namespace acid
 {
@@ -107,7 +107,7 @@ namespace acid
 			}
 			else
 			{
-				return FormatString::FromString<T>(m_value);
+				return String::FromString<T>(m_value);
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace acid
 			}
 			else
 			{
-				SetValue(FormatString::ToString<T>(value));
+				SetValue(String::ToString<T>(value));
 			}
 		}
 

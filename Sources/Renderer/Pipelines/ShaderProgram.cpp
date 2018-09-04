@@ -3,7 +3,7 @@
 #include <SPIRV/GlslangToSpv.h>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Textures/Cubemap.hpp"
 #include "Textures/Texture.hpp"
@@ -167,7 +167,7 @@ namespace acid
 
 	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
 	{
-		std::string fileExt = FormatString::Lowercase(FileSystem::FindExt(filename));
+		std::string fileExt = String::Lowercase(FileSystem::FindExt(filename));
 
 		if (fileExt == "comp")
 		{
@@ -210,17 +210,17 @@ namespace acid
 
 	std::string ShaderProgram::ProcessIncludes(const std::string &shaderCode)
 	{
-		auto lines = FormatString::Split(shaderCode, "\n", true);
+		auto lines = String::Split(shaderCode, "\n", true);
 
 		std::stringstream result;
 
 		for (auto &line : lines)
 		{
-			if (FormatString::Contains(line, "#include"))
+			if (String::Contains(line, "#include"))
 			{
-				std::string path = FormatString::Replace(line, "#include", "");
-				path = FormatString::RemoveAll(path, '\"');
-				path = FormatString::Trim(path);
+				std::string path = String::Replace(line, "#include", "");
+				path = String::RemoveAll(path, '\"');
+				path = String::Trim(path);
 				auto included = FileSystem::ReadTextFile(Files::SearchFile(path));
 
 				if (included)
@@ -537,7 +537,7 @@ namespace acid
 	{
 		if (program.getUniformBinding(i) == -1)
 		{
-			auto splitName = FormatString::Split(program.getUniformName(i), ".");
+			auto splitName = String::Split(program.getUniformName(i), ".");
 
 			if (splitName.size() == 2)
 			{

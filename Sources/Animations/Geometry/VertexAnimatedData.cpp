@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	const uint32_t VertexAnimatedData::NO_INDEX = static_cast<uint32_t>(-1);
+	const int32_t VertexAnimatedData::NO_INDEX = -1;
 
 	VertexAnimatedData::VertexAnimatedData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
@@ -10,9 +10,6 @@ namespace acid
 		m_normalIndex(NO_INDEX),
 		m_duplicateVertex(nullptr),
 		m_index(index),
-		m_length(position.Length()),
-		m_tangents(std::vector<Vector3 *>()),
-		m_averagedTangent(Vector3()),
 		m_skinData(nullptr)
 	{
 	}
@@ -21,32 +18,9 @@ namespace acid
 	{
 	}
 
-	void VertexAnimatedData::AddTangent(Vector3 *tangent)
-	{
-		m_tangents.emplace_back(tangent);
-	}
-
-	void VertexAnimatedData::AverageTangents()
-	{
-		if (m_tangents.empty())
-		{
-			return;
-		}
-
-		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
-		{
-			m_averagedTangent += *(*it);
-		}
-
-		if (m_averagedTangent.Length() > 0.0f)
-		{
-			m_averagedTangent.Normalize();
-		}
-	}
-
 	bool VertexAnimatedData::IsSet() const
 	{
-		return (static_cast<uint32_t>(m_uvIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
+		return m_uvIndex != NO_INDEX && m_normalIndex != NO_INDEX;
 	}
 
 	bool VertexAnimatedData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const

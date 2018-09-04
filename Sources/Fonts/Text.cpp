@@ -189,8 +189,8 @@ namespace acid
 		auto currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 		auto currentWord = FontWord();
 
-		auto formattedText = FormatString::Replace(m_string, "\t", "	");
-		auto textLines = FormatString::Split(formattedText, "\n", true);
+		auto formattedText = String::Replace(m_string, "\t", "	");
+		auto textLines = String::Split(formattedText, "\n", true);
 
 		for (uint32_t i = 0; i < textLines.size(); i++)
 		{

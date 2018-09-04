@@ -22,12 +22,12 @@ namespace acid
 
 	std::shared_ptr<ModelCylinder> ModelCylinder::Resource(const std::string &data)
 	{
-		auto split = FormatString::Split(data, "_");
-		float radiusBase = static_cast<float>(atof(split[1].c_str()));
-		float radiusTop = static_cast<float>(atof(split[2].c_str()));
-		float height = static_cast<float>(atof(split[3].c_str()));
-		uint32_t slices = atoi(split[4].c_str());
-		uint32_t stacks = atoi(split[5].c_str());
+		auto split = String::Split(data, "_");
+		float radiusBase = String::FromString<float>(split[1]);
+		float radiusTop = String::FromString<float>(split[2]);
+		float height = String::FromString<float>(split[3]);
+		uint32_t slices = String::FromString<uint32_t>(split[4]);
+		uint32_t stacks = String::FromString<uint32_t>(split[5]);
 		return Resource(radiusBase, radiusTop, height, slices, stacks);
 	}
 

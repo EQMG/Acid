@@ -4,7 +4,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Serialized/Node.hpp"
 
 namespace acid

@@ -36,7 +36,7 @@ namespace acid
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);
-		auto matrixData = FormatString::Split(jointNode->FindChild("matrix")->GetValue(), " ");
+		auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), " ");
 
 		Matrix4 transform = Matrix4();
 

@@ -7,8 +7,8 @@
 namespace acid
 {
 	Node::Node(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
-		m_name(FormatString::Trim(FormatString::RemoveAll(name, '\"'))),
-		m_value(FormatString::Trim(value)),
+		m_name(String::Trim(String::RemoveAll(name, '\"'))),
+		m_value(String::Trim(value)),
 		m_children(std::vector<std::shared_ptr<Node>>()),
 		m_attributes(attributes)
 	{
@@ -28,7 +28,7 @@ namespace acid
 
 	std::string Node::GetString() const
 	{
-		return FormatString::RemoveAll(m_value, '\"'); // FIXME: Just first and last.
+		return String::RemoveAll(m_value, '\"'); // FIXME: Just first and last.
 	}
 
 	void Node::SetString(const std::string &data)
@@ -73,7 +73,7 @@ namespace acid
 
 	std::shared_ptr<Node> Node::FindChild(const std::string &name, const bool &reportError) const
 	{
-		std::string nameNoSpaces = FormatString::Replace(name, " ", "_");
+		std::string nameNoSpaces = String::Replace(name, " ", "_");
 
 		for (auto &child : m_children)
 		{

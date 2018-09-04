@@ -36,11 +36,11 @@ namespace acid
 			return;
 		}
 
-		auto lines = FormatString::Split(*fileLoaded, "\n", true);
+		auto lines = String::Split(*fileLoaded, "\n", true);
 
 		for (auto &line : lines)
 		{
-			RowCsv row = RowCsv(FormatString::Split(line, std::string(1, m_delimiter), true));
+			RowCsv row = RowCsv(String::Split(line, std::string(1, m_delimiter), true));
 			m_rows.emplace_back(row);
 		}
 

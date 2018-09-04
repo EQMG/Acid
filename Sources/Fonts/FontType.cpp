@@ -20,7 +20,7 @@ namespace acid
 
 	std::shared_ptr<FontType> FontType::Resource(const std::string &data)
 	{
-		auto split = FormatString::Split(data, "_");
+		auto split = String::Split(data, "_");
 		std::string filename = split[1];
 		std::string fontStyle = split[2];
 		return Resource(filename, fontStyle);

@@ -5,7 +5,7 @@
 #include <vector>
 #include "Files/Files.hpp"
 #include "Files/IFile.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/IResource.hpp"
 
 namespace acid

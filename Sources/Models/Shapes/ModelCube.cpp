@@ -21,17 +21,17 @@ namespace acid
 
 	std::shared_ptr<ModelCube> ModelCube::Resource(const std::string &data)
 	{
-		auto split = FormatString::Split(data, "_");
-		float width = static_cast<float>(atof(split[1].c_str()));
-		float height = static_cast<float>(atof(split[2].c_str()));
-		float depth = static_cast<float>(atof(split[3].c_str()));
+		auto split = String::Split(data, "_");
+		float width = String::FromString<float>(split[1]);
+		float height = String::FromString<float>(split[2]);
+		float depth = String::FromString<float>(split[3]);
 		return Resource(width, height, depth);
 	}
 
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
-		std::vector<IVertex *> vertices = {
+		auto vertices = std::vector<IVertex *>{
 			new VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.625f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			new VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
@@ -57,7 +57,7 @@ namespace acid
 			new VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
 			new VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.875f, 0.25f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
 		};
-		std::vector<uint32_t> indices = {
+		auto indices = std::vector<uint32_t>{
 			1, 2, 0, // Front
 			3, 6, 8,
 			7, 4, 9, // Back

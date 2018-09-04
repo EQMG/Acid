@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Models/Model.hpp"
 
 namespace acid

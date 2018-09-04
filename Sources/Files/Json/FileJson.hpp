@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 #include "Files/IFile.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "JsonSection.hpp"
 
 namespace acid
