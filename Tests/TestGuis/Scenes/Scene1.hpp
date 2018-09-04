@@ -16,13 +16,12 @@ namespace test
 	private:
 		IButton *m_buttonFullscreen;
 		IButton *m_buttonScreenshot;
+		IButton *m_buttonPause;
 		IButton *m_buttonExit;
 
 		Colour m_primaryColour;
-		SelectorJoystick *m_selectorJoystick;
-
-		IButton *m_buttonPause;
-
+		SelectorJoystick m_selectorJoystick;
+		
 		UiStartLogo *m_uiStartLogo;
 		OverlayDebug *m_overlayDebug;
 		UiNavigation *m_uiNavigation;
@@ -39,7 +38,7 @@ namespace test
 
 		Colour GetUiColour() const override { return m_primaryColour; }
 
-		SelectorJoystick *GetSelectorJoystick() const override { return m_selectorJoystick; };
+		SelectorJoystick GetSelectorJoystick() const override { return m_selectorJoystick; };
 	private:
 		void TogglePause();
 	};

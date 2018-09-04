@@ -1,12 +1,17 @@
-shallow_clone: true
+version: 0.9.8{build}
 
 build:
-  project: "Build\\Acid.sln"
   parallel: true
   verbosity: normal
 
 image:
   - Visual Studio 2017
+
+clone_folder: c:\projects\Acid
+
+shallow_clone: false
+
+clone_depth: 5
 
 platform: 
   - x64
@@ -15,6 +20,7 @@ configuration:
   - Release
 
 install:
+  - git submodule update --init --recursive
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
   - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
@@ -23,29 +29,25 @@ install:
   - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake
   - set PATH=C:\Projects\deps\cmake\bin;%PATH%
   - cmake --version
-
-before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
 
 build_script:
-  - cd C:\Projects\Acid
-  - git submodule init
-  - git submodule update
+  - cd c:\projects\Acid
   - mkdir Build
   - cd Build
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=%CONFIGURATION%
   - cmake --build . --config %CONFIGURATION%
+  - cd ../
 
-after_test:
-  - cd C:\Projects\Acid
-  - mkdir Acid
-  - mkdir Demos
-  - xcopy Build\Release\lib\Release Acid\ /s/h/e/k/f/c
-  - xcopy Build\Release\bin\Release Demos\ /s/h/e/k/f/c
-  - xcopy Resources Demos\Resources\Engine\ /s/h/e/k/f/c
+after_build:
+  - mkdir Artifacts\Acid
+  - mkdir Artifacts\Demos
+  - xcopy Build\%CONFIGURATION%\lib\%CONFIGURATION% Artifacts\Acid\ /s/h/e/k/f/c
+  - xcopy Build\%CONFIGURATION%\bin\%CONFIGURATION% Artifacts\Demos\ /s/h/e/k/f/c
+  - xcopy Resources Artifacts\Demos\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Demos\
+  - path: Artifacts\Demos\
     name: Acid Demos
-  - path: Acid\
+  - path: Artifacts\Acid\
     name: Acid

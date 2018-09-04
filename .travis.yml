@@ -10,18 +10,19 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - g++-7
-        - xorg-dev 
+        - tree
+        - xorg-dev
         - libglu1-mesa-dev
         - libopenal1
         - libopenal-dev
-        artifacts:
-          paths: Build/Release/
     language: cpp
     compiler: gcc
     env:
     - COMPILER=g++-7
     - GSL_CXX_STANDARD=17
+    - BUILD_TYPE=Release
     before_install:
+    - sudo apt-get update -qq
     - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
@@ -39,7 +40,8 @@ matrix:
           key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
         - clang-6.0
-        - libc++-dev
+        - g++-7
+        - tree
         - xorg-dev
         - libglu1-mesa-dev
         - libopenal1
@@ -48,24 +50,29 @@ matrix:
     compiler: clang
     env:
     - COMPILER=clang++-6.0
-    - COMPILER_FLAGS=-stdlib=libc++
     - GSL_CXX_STANDARD=17
+    - BUILD_TYPE=Release
     before_install:
+    - sudo apt-get update -qq
     - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
     - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-6.0 1000
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
-  # XCode 9.4
+    - clang --version
+  # XCode 10.0
   - os: osx
-    osx_image: xcode9.4
+    osx_image: xcode10
     sudo: required
     language: cpp
     compiler: clang
     env:
     - COMPILER=clang++
     - GSL_CXX_STANDARD=17
+    - BUILD_TYPE=Release
     before_install:
     - brew update
+    - brew install tree
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
@@ -77,15 +84,15 @@ script:
 - cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Release
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     fi
-- ls
+- tree -d
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make all
     else
-      xcodebuild -target Acid -configuration Release
+      xcodebuild -target Acid -configuration $BUILD_TYPE
     fi
 - cd ../
