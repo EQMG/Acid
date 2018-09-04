@@ -13,6 +13,9 @@
 
 namespace acid
 {
+	/// <summary>
+	/// This class represents an animated armature with a skin mesh.
+	/// </summary>
 	class ACID_EXPORT MeshAnimated :
 		public Mesh
 	{

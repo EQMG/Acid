@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	void CallbackKey(GLFWwindow *window, int key, int scancode, int action, int mods)
+	void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
 	{
 		if (key < 0 || key > Key::KEY_END_RANGE)
 		{

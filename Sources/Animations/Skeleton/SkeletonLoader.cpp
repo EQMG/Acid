@@ -42,7 +42,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < matrixData.size(); i++)
 		{
-			transform.m_linear[i] = std::stof(matrixData[i]);
+			transform.m_linear[i] = String::FromString<float>(matrixData[i]);
 		}
 
 		transform = transform.Transpose();

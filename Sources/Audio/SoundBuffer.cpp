@@ -109,16 +109,14 @@ namespace acid
 
 		chunkId[4] = '\0';
 
-		unsigned char *data = new unsigned char[size];
-		file.read(reinterpret_cast<char *>(data), size);
+		std::unique_ptr<unsigned char[]> data(new unsigned char[size]);
+		file.read(reinterpret_cast<char *>(data.get()), size);
 
 		file.close();
 
 		uint32_t buffer;
 		alGenBuffers(1, &buffer);
-		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
-
-		delete[] data;
+		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data.get(), size, samplesPerSec);
 
 		return buffer;
 	}
@@ -132,7 +130,6 @@ namespace acid
 		}
 
 		std::ifstream file(filename.c_str(), std::ifstream::binary);
-		//	SoundSourceInfo sourceInfo = {};
 
 		if (!file.is_open())
 		{
@@ -150,7 +147,6 @@ namespace acid
 		}
 
 		file.close();
-		//	LogOpenAlSound(filename, sourceInfo);
 
 		uint32_t buffer;
 		alGenBuffers(1, &buffer);

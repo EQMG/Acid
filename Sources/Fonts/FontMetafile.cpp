@@ -10,13 +10,13 @@ namespace acid
 	const uint32_t FontMetafile::PAD_LEFT = 1;
 	const uint32_t FontMetafile::PAD_BOTTOM = 2;
 	const uint32_t FontMetafile::PAD_RIGHT = 3;
-	const int FontMetafile::DESIRED_PADDING = 8;
+	const int32_t FontMetafile::DESIRED_PADDING = 8;
 
 	const std::string FontMetafile::SPLITTER = " ";
 	const std::string FontMetafile::NUMBER_SEPARATOR = ",";
 
 	const float FontMetafile::LINE_HEIGHT = 0.03f;
-	const int FontMetafile::SPACE_ASCII = 32;
+	const int32_t FontMetafile::SPACE_ASCII = 32;
 
 	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
 	{
@@ -35,14 +35,14 @@ namespace acid
 
 	FontMetafile::FontMetafile(const std::string &filename) :
 		IResource(),
-		m_metadata(std::map<int, FontCharacter>()),
+		m_metadata(std::map<int32_t, FontCharacter>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),
 		m_verticalPerPixelSize(0.0),
 		m_horizontalPerPixelSize(0.0),
 		m_imageWidth(0),
 		m_spaceWidth(0.0),
-		m_padding(std::vector<int>()),
+		m_padding(std::vector<int32_t>()),
 		m_paddingWidth(0),
 		m_paddingHeight(0),
 		m_maxSizeY(0.0)
@@ -128,7 +128,7 @@ namespace acid
 
 	void FontMetafile::LoadCharacterData()
 	{
-		int id = GetValueOfVariable("id");
+		int32_t id = GetValueOfVariable("id");
 
 		if (id == SPACE_ASCII)
 		{
@@ -138,8 +138,8 @@ namespace acid
 
 		float xTextureCoord = (static_cast<float>(GetValueOfVariable("x")) + (m_padding.at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
 		float yTextureCoord = (static_cast<float>(GetValueOfVariable("y")) + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
-		int width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
-		int height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
+		int32_t width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
+		int32_t height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
 		float quadWidth = width * m_horizontalPerPixelSize;
 		float quadHeight = height * m_verticalPerPixelSize;
 		float xTexSize = static_cast<float>(width) / m_imageWidth;
@@ -159,19 +159,19 @@ namespace acid
 
 	int FontMetafile::GetValueOfVariable(const std::string &variable)
 	{
-		return std::stoi(m_values.at(variable));
+		return String::FromString<int32_t>(m_values.at(variable));
 	}
 
-	std::vector<int> FontMetafile::GetValuesOfVariable(const std::string &variable)
+	std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 	{
 		auto numbers = String::Split(m_values.at(variable), NUMBER_SEPARATOR);
-		auto result = std::vector<int>();
+		auto result = std::vector<int32_t>();
 
-		int i = 0;
+		int32_t i = 0;
 
 		for (auto &number : numbers)
 		{
-			result.emplace_back(std::stoi(number));
+			result.emplace_back(String::FromString<int32_t>(number));
 			i++;
 		}
 

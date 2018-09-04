@@ -102,6 +102,6 @@ namespace acid
 		/// The UI selector for a joystick.
 		/// </summary>
 		/// <returns> The joystick selector. </returns>
-		virtual SelectorJoystick *GetSelectorJoystick() const = 0;
+		virtual SelectorJoystick GetSelectorJoystick() const = 0;
 	};
 }

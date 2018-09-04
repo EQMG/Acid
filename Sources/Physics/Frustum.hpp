@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "Maths/Matrix4.hpp"
 
 namespace acid
@@ -10,7 +11,7 @@ namespace acid
 	class ACID_EXPORT Frustum
 	{
 	private:
-		float **m_frustumArray;
+		std::array<std::array<float, 6>, 4> m_frustum;
 	public:
 		/// <summary>
 		/// Creates a new frustum.

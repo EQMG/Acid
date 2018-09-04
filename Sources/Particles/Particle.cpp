@@ -55,10 +55,10 @@ namespace acid
 			return;
 		}
 
-		int stageCount = static_cast<int>(pow(m_particleType->GetNumberOfRows(), 2));
+		int32_t stageCount = static_cast<int32_t>(pow(m_particleType->GetNumberOfRows(), 2));
 		float atlasProgression = lifeFactor * stageCount;
-		int index1 = static_cast<int>(std::floor(atlasProgression));
-		int index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
+		int32_t index1 = static_cast<int32_t>(std::floor(atlasProgression));
+		int32_t index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 		m_textureBlendFactor = std::fmod(atlasProgression, 1.0f);
 		m_textureOffset1 = CalculateTextureOffset(index1);

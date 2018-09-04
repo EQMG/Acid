@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	SkinLoader::SkinLoader(const std::shared_ptr<Node> &libraryControllers, const int &maxWeights) :
+	SkinLoader::SkinLoader(const std::shared_ptr<Node> &libraryControllers, const int32_t &maxWeights) :
 		m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
 		m_maxWeights(maxWeights),
 		m_jointOrder(std::vector<std::string>()),
@@ -35,8 +35,7 @@ namespace acid
 	std::vector<float> SkinLoader::LoadWeights()
 	{
 		auto inputNode = m_skinData->FindChild("vertex_weights");
-		std::string weightsDataId = inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute(
-			"source").substr(1);
+		std::string weightsDataId = inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute("source").substr(1);
 		auto weightsNode = m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array");
 
 		auto rawData = String::Split(weightsNode->GetValue(), " ");
@@ -44,38 +43,38 @@ namespace acid
 
 		for (uint32_t i = 0; i < weights.size(); i++)
 		{
-			weights[i] = std::stof(rawData[i]);
+			weights[i] = String::FromString<float>(rawData[i]);
 		}
 
 		return weights;
 	}
 
-	std::vector<int> SkinLoader::GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode)
+	std::vector<int32_t> SkinLoader::GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
-		auto counts = std::vector<int>(rawData.size());
+		auto counts = std::vector<int32_t>(rawData.size());
 
 		for (uint32_t i = 0; i < rawData.size(); i++)
 		{
-			counts[i] = std::stoi(rawData[i]);
+			counts[i] = String::FromString<int32_t>(rawData[i]);
 		}
 
 		return counts;
 	}
 
-	void SkinLoader::GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
+	void SkinLoader::GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int32_t> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("v")->GetString(), " ");
-		int pointer = 0;
+		int32_t pointer = 0;
 
 		for (auto count : counts)
 		{
 			auto skinData = new VertexSkinData();
 
-			for (int i = 0; i < count; i++)
+			for (uint32_t i = 0; i < count; i++)
 			{
-				int jointId = std::stoi(rawData[pointer++]);
-				int weightId = std::stoi(rawData[pointer++]);
+				int32_t jointId = String::FromString<int32_t>(rawData[pointer++]);
+				int32_t weightId = String::FromString<int32_t>(rawData[pointer++]);
 				skinData->AddJointEffect(jointId, weights[weightId]);
 			}
 

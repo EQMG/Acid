@@ -12,7 +12,7 @@ namespace acid
 		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
 	}
 
-	void CallbackMouseButton(GLFWwindow *window, int button, int action, int mods)
+	void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods)
 	{
 		Mouse::Get()->m_mouseButtons[button] = action != GLFW_RELEASE;
 	}
@@ -23,7 +23,7 @@ namespace acid
 		Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Display::Get()->GetHeight()));
 	}
 
-	void CallbackCursorEnter(GLFWwindow *window, int entered)
+	void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 	{
 		Mouse::Get()->m_displaySelected = static_cast<bool>(entered);
 	}
@@ -44,7 +44,7 @@ namespace acid
 		m_cursorDisabled(false)
 	{
 		// Sets the default state of the buttons to released.
-		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
 			m_mouseButtons[i] = false;
 		}

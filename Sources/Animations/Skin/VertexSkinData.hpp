@@ -8,7 +8,7 @@ namespace acid
 	class ACID_EXPORT VertexSkinData
 	{
 	private:
-		std::vector<int> m_jointIds;
+		std::vector<int32_t> m_jointIds;
 		std::vector<float> m_weights;
 	public:
 		VertexSkinData();
@@ -27,7 +27,7 @@ namespace acid
 
 		void RemoveExcessJointIds(const uint32_t &max);
 
-		std::vector<int> GetJointIds() const { return m_jointIds; }
+		std::vector<int32_t> GetJointIds() const { return m_jointIds; }
 
 		std::vector<float> GetWeights() const { return m_weights; }
 	};

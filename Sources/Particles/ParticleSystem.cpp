@@ -119,7 +119,7 @@ namespace acid
 		velocity = velocity.Normalize();
 		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedError, 1.0f + m_speedError));
 
-		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int>(m_types.size())))));
+		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int32_t>(m_types.size())))));
 		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleError, 1.0f + m_scaleError));
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeError, 1.0f + m_lifeError));
 		Vector3 spawnPos = Vector3();

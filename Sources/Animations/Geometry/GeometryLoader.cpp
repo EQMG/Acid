@@ -44,14 +44,13 @@ namespace acid
 	void GeometryLoader::LoadVertices()
 	{
 		std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
-		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild(
-			"float_array");
-		uint32_t positionsCount = std::stoi(positionsData->FindAttribute("count"));
+		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
+		uint32_t positionsCount = String::FromString<uint32_t>(positionsData->FindAttribute("count"));
 		auto positionsRawData = String::Split(positionsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
 		{
-			Vector4 position = Vector4(std::stof(positionsRawData[i * 3]), std::stof(positionsRawData[i * 3 + 1]), std::stof(positionsRawData[i * 3 + 2]), 1.0f);
+			Vector4 position = Vector4(String::FromString<float>(positionsRawData[i * 3]), String::FromString<float>(positionsRawData[i * 3 + 1]), String::FromString<float>(positionsRawData[i * 3 + 2]), 1.0f);
 			position = MeshAnimated::CORRECTION.Transform(position);
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
@@ -61,32 +60,28 @@ namespace acid
 
 	void GeometryLoader::LoadUvs()
 	{
-		std::string uvsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic",
-		                                                                                  "TEXCOORD")->FindAttribute(
-			"source").substr(1);
+		std::string uvsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
 		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
-		uint32_t uvsCount = std::stoi(uvsData->FindAttribute("count"));
+		uint32_t uvsCount = String::FromString<uint32_t>(uvsData->FindAttribute("count"));
 		auto uvsRawData = String::Split(uvsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
 		{
-			Vector2 uv = Vector2(std::stof(uvsRawData[i * 2]), 1.0f - std::stof(uvsRawData[i * 2 + 1]));
+			Vector2 uv = Vector2(String::FromString<float>(uvsRawData[i * 2]), 1.0f - String::FromString<float>(uvsRawData[i * 2 + 1]));
 			m_uvsList.emplace_back(uv);
 		}
 	}
 
 	void GeometryLoader::LoadNormals()
 	{
-		std::string normalsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic",
-		                                                                                      "NORMAL")->FindAttribute(
-			"source").substr(1);
+		std::string normalsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
 		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
-		uint32_t normalsCount = std::stoi(normalsData->FindAttribute("count"));
+		uint32_t normalsCount = String::FromString<uint32_t>(normalsData->FindAttribute("count"));
 		auto normalsRawData = String::Split(normalsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
-			Vector3 normal = Vector3(std::stof(normalsRawData[i * 3]), std::stof(normalsRawData[i * 3 + 1]), std::stof(normalsRawData[i * 3 + 2]));
+			Vector3 normal = Vector3(String::FromString<float>(normalsRawData[i * 3]), String::FromString<float>(normalsRawData[i * 3 + 1]), String::FromString<float>(normalsRawData[i * 3 + 2]));
 			normal = MeshAnimated::CORRECTION.Transform(normal);
 			m_normalsList.emplace_back(normal);
 		}
@@ -99,9 +94,9 @@ namespace acid
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			int32_t positionIndex = std::stoi(indexRawData[i * indexCount]);
-			int32_t normalIndex = std::stoi(indexRawData[i * indexCount + 1]);
-			int32_t uvIndex = std::stoi(indexRawData[i * indexCount + 2]);
+			int32_t positionIndex = String::FromString<int32_t>(indexRawData[i * indexCount]);
+			int32_t normalIndex = String::FromString<int32_t>(indexRawData[i * indexCount + 1]);
+			int32_t uvIndex = String::FromString<int32_t>(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}
