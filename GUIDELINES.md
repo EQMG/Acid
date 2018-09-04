@@ -1,15 +1,18 @@
 # Acid Guidelines 
-July 25, 2018
+September 4, 2018
  
-This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE](LICENSE) file. For more about the project read our read more on our [README](README) file. 
- 
+This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](LICENSE.md) file. For more about the project read our read more on our [README.md](README.md) file.
+
+You may also import default settings for [CLion](Documents/CLion-Settings.jar), or [Visual Studio Resharper](Documents/Resharper.DotSettings).
+
 # Introduction 
-This is a set of guidelines for Acid C++17, .NET 4.6.2, and GLSL 450. Our guideline is setup for the best code performance, documentation, uniformaty, and readability. 
+This is a set of guidelines for Acid C++17, and GLSL 450. Our guideline is setup for the best code performance, documentation, uniformaty, and readability.
 
 # Example: Example.hpp
 ```cpp
 #include <vector>
 
+#include <LibraryClass.hpp>
 #include "ProjectClass.hpp"
 
 namespace Examples
@@ -17,7 +20,7 @@ namespace Examples
 	enum Enable
 	{
 		ENABLE_ON = 0,
-		ENABLE_OFF = 1,
+		ENABLE_OFF = 1
 	}
 
 	/// <summary>
@@ -26,11 +29,10 @@ namespace Examples
 	class Example
 	{
 	private:
-		int m_x;
-		std::vector<int> *m_list;
-	public:
+		uint32_t m_x;
 		float m_y;
-		
+		std::vector<int16_t> m_list;
+	public:
 		Example(const int &x = 0);
 
 		~Example();
@@ -42,11 +44,15 @@ namespace Examples
 		/// <returns> If there was a error (result does not equal 0). </returns>
 		int DoStuff(const bool &doThing);
 
-		int GetX() const { return m_x; }
+		uint32_t GetX() const { return m_x; }
 	
-		void SetX(const int &x) { m_x = x; }
+		void SetX(const uint32_t &x) { m_x = x; }
 
-		bool IsEmpty() const { return m_list->size() == 0; }
+		float GetY() const { return m_y; }
+
+		void SetY(const float &y) { m_y = y; }
+
+		bool IsListEmpty() const { return m_list.empty(); }
 	}
 }
 ```
@@ -61,31 +67,30 @@ namespace Examples
 {
 	Example::Example(const int &x) :
 		m_x(x),
-		m_list(new std::vector<int>()),
-		m_y(-1.0f)
+        m_y(-1.0f),
+		m_list(std::vector<int16_t>())
 	{
 	}
 	
 	Example::~Example()
 	{
-		delete m_list;
 	}
 
 	int Example::DoStuff(const bool &doThing)
 	{
-		m_list->push_back(m_x + m_list->size());
-		Logger->Warning("X: %i", m_x);
+		m_list.emplace_back(m_x + m_list.size());
+		fprintf(stdout, "X: %i\n", m_x);
 
 		if (doThing)
 		{
-			for (auto item : *m_list)
+			for (auto item : m_list)
 			{
-				Logger->Log("Item: %i", m_x);
+				fprintf(stdout, "Item: %i\n", m_x);
 			}
 		}
 		else
 		{
-			Logger->Error("doThing is false!");
+			fprintf(stdout, "doThing is false!\n");
 			return 1;
 		}
 
@@ -116,8 +121,9 @@ Our date format is day.month.year, for example December 1st 2017 is written as '
 ```glsl
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+#extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboObject 
+layout(set = 0, binding = 0) uniform UboObject
 {
 	float passedValue;
 } object;
@@ -126,11 +132,6 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outColour = vec4(passedValue, 0.0, 0.0, 1.0);
+	outColour = vec4(object.passedValue, 0.0, 0.0, 1.0);
 }
-```
-
-# C#
-```cs
-// TODO
 ```

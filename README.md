@@ -6,9 +6,9 @@ Acid is a high speed, modular, light game framework written in C++17 providing m
 
 The Vulkan API is used as the only rendering API; therefore, Vulkan structs and commands can be used directly in games. Acid allows for direct usage of Vulkan API calls but provides more than enough function to where this type of usage can be avoided.
 
-Features are broken down into modules, modules can be added or removed from Acid with ease, and modules are easy to create. Vulkan is the only supported rendering API; however, APIs like Molten are supported through libraries, eventually, OpenGL and DirectX will be supported in this way.
+Features are broken down into modules, modules can be added or removed from Acid with ease. Vulkan is the only supported rendering API; however, APIs like Metal are supported through libraries like MoltenVK. Eventually OpenGL and DirectX will be supported in this way.
 
-Acid is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the README to get started with Acid, and if you want to know about our code style read GUIDELINES.
+Acid is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the [README.md](README.md) to get started with Acid, and if you want to know about our code style read [GUIDELINES.md](GUIDELINES.md).
 
 ## Builds
 Windows   [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
@@ -26,7 +26,7 @@ auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 // Imports a model.
 auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
 
-// Plays a 3D sound, at the origin, at half volume.
+// Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
 auto jump = Sound("Sounds/Jump.ogg", 0.5f);
 jump.SetPosition(Vector3::ZERO);
 jump.Play();
@@ -66,11 +66,11 @@ This is a list of current features in Acid:
  * On the fly GLSL to SPIR-V compiler
  * Modular rendering and compute pipeline
  * Deferred PBR+IBL rendering
- * Bullet physics engine
+ * Bullet physics
  * Frustum and Occlusion culling
  * Resource management
  * Event and tasks systems
- * Resource path searches, and packing
+ * Resource path searches, and packaging
  * GUI and font rendering
  * Particle effect systems
  * Audio and music
@@ -81,13 +81,11 @@ This is a list of current features in Acid:
  * Model file loading (OBJ)
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * Config and class loading/saving (CSV, JSON, XML)
  * GameObject prefab loading/saving (JSON, XML)
  * Visual drivers and maths classes
  * Flexible input classes
  * C# generated files
  * Networking (WIP)
- * Resource packaging (WIP)
  * Steam integration (WIP)
 
 ## Dependencies
@@ -125,7 +123,7 @@ On Linux a GCC/Clang compiler is required with C++17 support, each package liste
 Setup on MacOS is similar to the setup on Linux.
 
 ## Resources
-Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `.sh`.
+Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `Scripts/link_resources.sh`.
 
 Old resources have been removed from the main repo, resources for commits from before April 4 2018 can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Flounder).
 
