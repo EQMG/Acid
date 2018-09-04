@@ -6,7 +6,7 @@ namespace test
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
 		m_heightmap(heightmap)
 	{
-		Log::Out( "%i\n", (int)m_heightmap.size());
+		Log::Out("%i\n", (int)m_heightmap.size());
 		MeshSimple::GenerateMesh();
 	}
 

@@ -37,16 +37,19 @@ namespace acid
 			return;
 		}
 
-		auto gameObjects = m_scene->GetStructure()->GetAll();
+		auto &gameObjects = m_scene->GetStructure()->GetAll();
 
-		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
+		for (auto it = gameObjects.begin(); it != gameObjects.end();)
 		{
-			if ((*it) == nullptr)
+			(*it)->Update();
+
+			if ((*it)->IsRemoved())
 			{
+				it = gameObjects.erase(it);
 				continue;
 			}
 
-			(*it)->Update();
+			++it;
 		}
 
 		if (m_scene->GetCamera() == nullptr)

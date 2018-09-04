@@ -1,9 +1,25 @@
 #include "ModelObj.hpp"
 
 #include "Helpers/FileSystem.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
+	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
+	{
+		std::string realFilename = Files::SearchFile(filename);
+		auto resource = Resources::Get()->Get(realFilename);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ModelObj>(resource);
+		}
+
+		auto result = std::make_shared<ModelObj>(realFilename);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
+
 	ModelObj::ModelObj(const std::string &filename) :
 		Model()
 	{
@@ -116,12 +132,15 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out( "Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
+		Log::Out("Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 
 		Model::Set(vertices, indices, filename);
 	}
 
+	ModelObj::~ModelObj()
+	{
+	}
 
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices)
 	{

@@ -11,7 +11,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		std::shared_ptr<btCylinderShape> m_shape;
+		btCylinderShape *m_shape;
 		float m_radius;
 		float m_height;
 	public:
@@ -27,7 +27,7 @@ namespace acid
 
 		void Encode(Node &node) const override;
 
-		std::shared_ptr<btCollisionShape> GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 

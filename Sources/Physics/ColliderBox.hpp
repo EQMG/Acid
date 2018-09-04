@@ -11,7 +11,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		std::shared_ptr<btBoxShape> m_shape;
+		btBoxShape* m_shape;
 		Vector3 m_extents;
 	public:
 		ColliderBox(const Vector3 &extents = Vector3::ONE);
@@ -26,7 +26,7 @@ namespace acid
 
 		void Encode(Node &node) const override;
 
-		std::shared_ptr<btCollisionShape> GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		Vector3 GetExtents() const { return m_extents; }
 

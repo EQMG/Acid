@@ -12,20 +12,33 @@ namespace acid
 	/// <summary>
 	/// A class that represents a structured game object.
 	/// </summary>
-	class ACID_EXPORT GameObject :
-		public std::enable_shared_from_this<GameObject>
+	class ACID_EXPORT GameObject
 	{
 	private:
 		std::string m_name;
 		Transform m_transform;
 		std::vector<std::shared_ptr<IComponent>> m_components;
-		ISpatialStructure *m_structure;
-		GameObject *m_parent;
+		std::weak_ptr<GameObject> m_parent;
 		bool m_removed;
 	public:
-		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
+		/// <summary>
+		/// Will create a new Game Object and store it into a structure.
+		/// </summary>
+		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
+		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
+		static std::shared_ptr<GameObject> Resource(const Transform &transform, ISpatialStructure *structure = nullptr);
 
-		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
+		/// <summary>
+		/// Will create a new Game Object and store it into a structure.
+		/// </summary>
+		/// <param name="filepath"> The file to load the component data from. </param>
+		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
+		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
+		static std::shared_ptr<GameObject> Resource(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
+
+		GameObject(const Transform &transform);
+
+		GameObject(const std::string &filepath, const Transform &transform);
 
 		virtual ~GameObject();
 
@@ -116,7 +129,6 @@ namespace acid
 				if (casted != nullptr)
 				{
 					RemoveComponent(component);
-				//	delete component;
 					return true;
 				}
 			}
@@ -130,18 +142,12 @@ namespace acid
 
 		Transform &GetTransform() { return m_transform; }
 
-		void SetTransform(const Transform &transform) { m_transform = transform; }
+		std::weak_ptr<GameObject> GetParent() const { return m_parent; }
 
-		ISpatialStructure *GetStructure() const { return m_structure; }
-
-		void SetStructure(ISpatialStructure *structure);
+		void SetParent(const std::shared_ptr<GameObject> &parent) { m_parent = parent; }
 
 		bool IsRemoved() const { return m_removed; }
 
-		GameObject *GetParent() const { return m_parent; }
-
-		void SetParent(GameObject *parent) { m_parent = parent; }
-
-		void StructureRemove();
+		void SetRemoved(const bool &removed) { m_removed = removed; }
 	};
 }

@@ -6,7 +6,7 @@
 #include "Files/Files.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 
 namespace acid
 {
@@ -37,20 +37,11 @@ namespace acid
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		static std::shared_ptr<Texture> Resource(const std::string &filename)
-		{
-			std::string realFilename = Files::SearchFile(filename);
-			auto resource = Resources::Get()->Get(realFilename);
-
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<Texture>(resource);
-			}
-
-			auto result = std::make_shared<Texture>(realFilename);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
+		/// <summary>
+		/// Will find an existing texture with the same filename, or create a new texture.
+		/// </summary>
+		/// <param name="filename"> The file to load the texture from. </param>
+		static std::shared_ptr<Texture> Resource(const std::string &filename);
 
 		/// <summary>
 		/// A new texture object.

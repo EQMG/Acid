@@ -4,7 +4,7 @@
 #include <vector>
 #include "Files/Files.hpp"
 #include "Maths/Vector3.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 #include "Audio.hpp"
 
 namespace acid
@@ -19,23 +19,21 @@ namespace acid
 		std::string m_filename;
 		uint32_t m_buffer;
 	public:
-		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename)
-		{
-			std::string realFilename = Files::SearchFile(filename);
-			auto resource = Resources::Get()->Get(realFilename);
+		/// <summary>
+		/// Will find an existing sound buffer with the same filename, or create a new sound buffer.
+		/// </summary>
+		/// <param name="filename"> The file to load the sound buffer from. </param>
+		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename);
 
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<SoundBuffer>(resource);
-			}
-
-			auto result = std::make_shared<SoundBuffer>(realFilename);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
-
+		/// <summary>
+		/// Creates a new sound buffer.
+		/// </summary>
+		/// <param name="filename"> The file to load the sound buffer from. </param>
 		SoundBuffer(const std::string &filename);
 
+		/// <summary>
+		/// Deconstructor for the sound buffer.
+		/// </summary>
 		~SoundBuffer();
 
 		std::string GetFilename() override { return m_filename; };

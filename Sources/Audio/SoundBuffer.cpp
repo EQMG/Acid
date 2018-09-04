@@ -7,10 +7,26 @@
 #endif
 #include <fstream>
 #include "Helpers/FileSystem.hpp"
+#include "Resources/Resources.hpp"
 #include "stb_vorbis.h"
 
 namespace acid
 {
+	std::shared_ptr<SoundBuffer> SoundBuffer::Resource(const std::string &filename)
+	{
+		std::string realFilename = Files::SearchFile(filename);
+		auto resource = Resources::Get()->Get(realFilename);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<SoundBuffer>(resource);
+		}
+
+		auto result = std::make_shared<SoundBuffer>(realFilename);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
+
 	SoundBuffer::SoundBuffer(const std::string &filename) :
 		IResource(),
 		m_filename(filename),

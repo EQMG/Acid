@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCone::ColliderCone(const float &radius, const float &height) :
 		Collider(),
-		m_shape(std::make_shared<btConeShape>(radius, height)),
+		m_shape(new btConeShape(radius, height)),
 		m_radius(radius),
 		m_height(height)
 	{
@@ -15,6 +15,7 @@ namespace acid
 
 	ColliderCone::~ColliderCone()
 	{
+		delete m_shape;
 	}
 
 	void ColliderCone::Start()
@@ -39,7 +40,7 @@ namespace acid
 		node.SetChild<float>("Height", m_height);
 	}
 
-	std::shared_ptr<btCollisionShape> ColliderCone::GetCollisionShape() const
+	btCollisionShape *ColliderCone::GetCollisionShape() const
 	{
 		return m_shape;
 	}

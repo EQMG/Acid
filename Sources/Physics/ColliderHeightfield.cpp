@@ -17,6 +17,7 @@ namespace acid
 
 	ColliderHeightfield::~ColliderHeightfield()
 	{
+		delete m_shape;
 	}
 
 	void ColliderHeightfield::Start()
@@ -35,7 +36,7 @@ namespace acid
 	{
 	}
 
-	std::shared_ptr<btCollisionShape> ColliderHeightfield::GetCollisionShape() const
+	btCollisionShape *ColliderHeightfield::GetCollisionShape() const
 	{
 		return m_shape;
 	}
@@ -49,7 +50,8 @@ namespace acid
 			return;
 		}
 
-		m_shape = std::make_shared<btHeightfieldTerrainShape>(heightStickWidth, heightStickLength, heightfieldData,
+		delete m_shape;
+		m_shape = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData,
 			heightScale, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 	}
 }

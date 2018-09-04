@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Helpers/FormatString.hpp"
+#include "Resources/IResource.hpp"
 #include "Texture.hpp"
 
 namespace acid
@@ -34,27 +35,17 @@ namespace acid
 
 		VkDescriptorImageInfo m_imageInfo;
 	public:
-		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt)
-		{
-			std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
-			std::string realFilename = Files::SearchFile(filename + suffixToken);
-			realFilename = FormatString::Replace(realFilename, suffixToken, "");
-			auto resource = Resources::Get()->Get(realFilename);
-
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<Cubemap>(resource);
-			}
-
-			auto result = std::make_shared<Cubemap>(realFilename, fileExt);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
+		/// <summary>
+		/// Will find an existing cubemap with the same filename, or create a new cubemap.
+		/// </summary>
+		/// <param name="filename"> The file base name (path without extension or face name). </param>
+		/// <param name="fileExt"> The files extension type (ex .png). </param>
+		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt);
 
 		/// <summary>
 		/// A new cubemap object.
 		/// </summary>
-		/// <param name="filename"> The file base name (path without extension or face name).. </param>
+		/// <param name="filename"> The file base name (path without extension or face name). </param>
 		/// <param name="fileExt"> The files extension type (ex .png). </param>
 		/// <param name="repeatEdges"> If UV coords will wrap if outside of edge bounds. </param>
 		/// <param name="mipmap"> If mipmaps will be used on the cubemap. </param>

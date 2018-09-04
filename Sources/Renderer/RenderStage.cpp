@@ -80,7 +80,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out( "Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
+		Log::Out("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
 #endif
 	}
 

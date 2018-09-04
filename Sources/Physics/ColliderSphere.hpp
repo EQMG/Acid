@@ -10,7 +10,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		std::shared_ptr<btSphereShape> m_shape;
+		btSphereShape *m_shape;
 		float m_radius;
 	public:
 		ColliderSphere(const float &radius = 1.0f);
@@ -25,7 +25,7 @@ namespace acid
 
 		void Encode(Node &node) const override;
 
-		std::shared_ptr<btCollisionShape> GetCollisionShape() const override;
+		btCollisionShape *GetCollisionShape() const override;
 
 		float GetRadius() const { return m_radius; }
 

@@ -2,7 +2,7 @@
 
 #include "Models/Model.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
 
 namespace acid
@@ -17,22 +17,23 @@ namespace acid
 		std::string m_filename;
 		Pipeline m_pipeline;
 	public:
-		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
-		{
-			auto resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate));
+		/// <summary>
+		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
+		/// </summary>
+		/// <param name="graphicsStage"> Stage the pipeline will be executed on. </param>
+		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
+		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<PipelineMaterial>(resource);
-			}
-
-			auto result = std::make_shared<PipelineMaterial>(graphicsStage, pipelineCreate);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
-
+		/// <summary>
+		/// Creates a new material pipeline.
+		/// </summary>
+		/// <param name="graphicsStage"> Stage the pipeline will be executed on. </param>
+		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
 		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
+		/// <summary>
+		/// Deconstructor for the material pipeline.
+		/// </summary>
 		~PipelineMaterial();
 
 		std::string GetFilename() override { return m_filename; }

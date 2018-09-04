@@ -2,10 +2,28 @@
 
 #include <cmath>
 #include "Display/Display.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
 	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+
+	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileExt)
+	{
+		std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
+		std::string realFilename = Files::SearchFile(filename + suffixToken);
+		realFilename = FormatString::Replace(realFilename, suffixToken, "");
+		auto resource = Resources::Get()->Get(realFilename);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<Cubemap>(resource);
+		}
+
+		auto result = std::make_shared<Cubemap>(realFilename, fileExt);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest) :
 		IResource(),
@@ -71,7 +89,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out( "Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

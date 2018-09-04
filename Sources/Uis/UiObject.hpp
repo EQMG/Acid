@@ -53,7 +53,8 @@ namespace acid
 		/// <summary>
 		/// Updates this screen object and the extended object.
 		/// </summary>
-		void Update();
+		/// <param name="list"> The list to add to. </param>
+		void Update(std::vector<UiObject *> &list);
 
 		/// <summary>
 		/// Updates the implementation.
@@ -72,14 +73,6 @@ namespace acid
 		/// </summary>
 		/// <param name="child"> The child to disown. </param>
 		bool RemoveChild(UiObject *child);
-
-		/// <summary>
-		/// Adds this object and its children to a list.
-		/// </summary>
-		/// <param name="list"> The list to add to.
-		/// </param>
-		/// <returns> The list that has been added to. </returns>
-		std::vector<UiObject *> *GetAll(std::vector<UiObject *> *list);
 
 		/// <summary>
 		/// Gets the parent object.

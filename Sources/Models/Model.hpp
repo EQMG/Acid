@@ -4,7 +4,7 @@
 #include <vector>
 #include "Renderer/Buffers/IndexBuffer.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 #include "IVertex.hpp"
 
 namespace acid

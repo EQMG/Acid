@@ -1,7 +1,34 @@
 ﻿#include "ParticleType.hpp"
 
+#include "Resources/Resources.hpp"
+
 namespace acid
 {
+	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)
+	{
+		auto resource = Resources::Get()->Get(ToFilename(texture, numberOfRows, colourOffset, lifeLength, scale));
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ParticleType>(resource);
+		}
+
+		auto result = std::make_shared<ParticleType>(texture, numberOfRows, colourOffset, lifeLength, scale);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
+
+	std::shared_ptr<ParticleType> ParticleType::Resource(const std::string &data)
+	{
+		auto split = FormatString::Split(data, "_");
+		auto texture = Texture::Resource(split[1]);
+		uint32_t numberOfRows = static_cast<uint32_t>(atof(split[2].c_str()));
+		Colour colourOffset = Colour(split[3]);
+		float lifeLength = static_cast<float>(atof(split[4].c_str()));
+		float scale = static_cast<float>(atof(split[5].c_str()));
+		return Resource(texture, numberOfRows, colourOffset, lifeLength, scale);
+	}
+
 	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale) :
 		m_filename(ToFilename(texture, numberOfRows, colourOffset, lifeLength, scale)),
 		m_texture(texture),

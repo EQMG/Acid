@@ -38,30 +38,35 @@ namespace acid
 		}
 	}
 
-	void UiObject::Update()
+	void UiObject::Update(std::vector<UiObject *> &list)
 	{
 		// Click updates.
-		if (GetAlpha() == 1.0f && Uis::Get()->GetSelector().IsSelected(*this))
+		if (IsVisible())
 		{
-			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			if (Uis::Get()->GetSelector().IsSelected(*this))
 			{
-				if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
+				for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 				{
-					bool actionMouse = OnActionMouse(static_cast<MouseButton>(i));
-					bool actionClick = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
-
-					if (actionMouse || actionClick)
+					if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
 					{
-						Uis::Get()->GetSelector().CancelWasEvent();
-						break;
+						bool actionMouse = OnActionMouse(static_cast<MouseButton>(i));
+						bool actionClick = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
+
+						if (actionMouse || actionClick)
+						{
+							Uis::Get()->GetSelector().CancelWasEvent();
+							break;
+						}
 					}
 				}
 			}
+
+			list.emplace_back(this);
 		}
 
 		for (auto &child : m_children)
 		{
-			child->Update();
+			child->Update(list);
 		}
 
 		// Alpha and scale updates.
@@ -109,21 +114,6 @@ namespace acid
 		}
 
 		return false;
-	}
-
-	std::vector<UiObject *> *UiObject::GetAll(std::vector<UiObject *> *list)
-	{
-		if (IsVisible())
-		{
-			list->emplace_back(this);
-
-			for (auto &child : m_children)
-			{
-				child->GetAll(list);
-			}
-		}
-
-		return list;
 	}
 
 	void UiObject::SetParent(UiObject *parent)

@@ -30,8 +30,8 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-	//	Log::Out( "%s", m_shaderProgram->ToString().c_str());
-		Log::Out( "Compute pipeline '%s' created in %fms\n", m_computeCreate.GetShaderStage().c_str(), debugEnd - debugStart);
+	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
+		Log::Out("Compute pipeline '%s' created in %fms\n", m_computeCreate.GetShaderStage().c_str(), debugEnd - debugStart);
 #endif
 	}
 

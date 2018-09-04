@@ -26,7 +26,6 @@ namespace acid
 			m_selector.Update(Scenes::Get()->IsGamePaused(), *Scenes::Get()->GetScene()->GetSelectorJoystick());
 		}
 
-		m_container->Update();
-		m_container->GetAll(&m_objects);
+		m_container->Update(m_objects);
 	}
 }

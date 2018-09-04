@@ -40,7 +40,7 @@ namespace acid
 
 		virtual void Encode(Node &node) const override = 0;
 
-		virtual std::shared_ptr<btCollisionShape> GetCollisionShape() const = 0;
+		virtual btCollisionShape* GetCollisionShape() const = 0;
 
 		/// <summary>
 		/// Gets if the shape is partially in the view frustum.

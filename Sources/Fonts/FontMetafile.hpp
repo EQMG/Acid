@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "Files/Files.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 #include "FontCharacter.hpp"
 
 namespace acid
@@ -30,21 +30,6 @@ namespace acid
 		int m_paddingHeight;
 		float m_maxSizeY;
 	public:
-		static std::shared_ptr<FontMetafile> Resource(const std::string &filename)
-		{
-			std::string realFilename = Files::SearchFile(filename);
-			auto resource = Resources::Get()->Get(realFilename);
-
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<FontMetafile>(resource);
-			}
-
-			auto result = std::make_shared<FontMetafile>(realFilename);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
-
 		static const uint32_t PAD_TOP;
 		static const uint32_t PAD_LEFT;
 		static const uint32_t PAD_BOTTOM;
@@ -56,6 +41,12 @@ namespace acid
 
 		static const float LINE_HEIGHT;
 		static const int SPACE_ASCII;
+
+		/// <summary>
+		/// Will find an existing metafile with the same filename, or create a new metafile.
+		/// </summary>
+		/// <param name="filename"> The file to load the metafile from. </param>
+		static std::shared_ptr<FontMetafile> Resource(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new meta file.

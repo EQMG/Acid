@@ -386,8 +386,8 @@ namespace acid
 
 		if (!shader.parse(&resources, 100, false, messages))
 		{
-			Log::Out( "%s\n", shader.getInfoLog());
-			Log::Out( "%s\n", shader.getInfoDebugLog());
+			Log::Out("%s\n", shader.getInfoLog());
+			Log::Out("%s\n", shader.getInfoDebugLog());
 			Log::Error("SPRIV shader compile failed!\n");
 		}
 

@@ -2,6 +2,7 @@
 
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/FormatString.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
@@ -16,6 +17,21 @@ namespace acid
 
 	const float FontMetafile::LINE_HEIGHT = 0.03f;
 	const int FontMetafile::SPACE_ASCII = 32;
+
+	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
+	{
+		std::string realFilename = Files::SearchFile(filename);
+		auto resource = Resources::Get()->Get(realFilename);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<FontMetafile>(resource);
+		}
+
+		auto result = std::make_shared<FontMetafile>(realFilename);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
 
 	FontMetafile::FontMetafile(const std::string &filename) :
 		IResource(),
