@@ -1,6 +1,6 @@
 matrix:
   include:
-    # GCC 7
+  # GCC 7
   - os: linux
     dist: trusty
     sudo: required
@@ -27,48 +27,48 @@ matrix:
     - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Clang 6.0
-#  - os: linux
-#    dist: trusty
-#    sudo: required
-#    addons: &clang60
-#      apt:
-#        sources:
-#        - ubuntu-toolchain-r-test
-#        - llvm-toolchain-trusty-6.0
-#        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-#          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-#        packages:
-#        - clang-6.0
-#        - libc++-dev
-#        - xorg-dev
-#        - libglu1-mesa-dev
-#        - libopenal1
-#        - libopenal-dev
-#    language: cpp
-#    compiler: clang
-#    env:
-#    - COMPILER=clang++-6.0
-#    - COMPILER_FLAGS=-stdlib=libc++
-#    - GSL_CXX_STANDARD=17
-#    before_install:
-#    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-#    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-#    - sudo apt-get -qq update
-#    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
+  - os: linux
+    dist: trusty
+    sudo: required
+    addons: &clang60
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - llvm-toolchain-trusty-6.0
+        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
+          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+        packages:
+        - clang-6.0
+        - libc++-dev
+        - xorg-dev
+        - libglu1-mesa-dev
+        - libopenal1
+        - libopenal-dev
+    language: cpp
+    compiler: clang
+    env:
+    - COMPILER=clang++-6.0
+    - COMPILER_FLAGS=-stdlib=libc++
+    - GSL_CXX_STANDARD=17
+    before_install:
+    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
+    - sudo apt-get -qq update
+    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
   # XCode 9.4
-#  - os: osx
-#    osx_image: xcode9.4
-#    sudo: required
-#    language: cpp
-#    compiler: clang
-#    env:
-#    - COMPILER=clang++
-#    - GSL_CXX_STANDARD=17
-#    before_install:
-#    - brew update
-#    - brew install openal-soft
-#    - brew install glfw3
-#    - brew install cmake || brew upgrade cmake
+  - os: osx
+    osx_image: xcode9.4
+    sudo: required
+    language: cpp
+    compiler: clang
+    env:
+    - COMPILER=clang++
+    - GSL_CXX_STANDARD=17
+    before_install:
+    - brew update
+    - brew install openal-soft
+    - brew install glfw3 --HEAD
+    - brew install cmake || brew upgrade cmake
 
 script:
 - cd $TRAVIS_BUILD_DIR

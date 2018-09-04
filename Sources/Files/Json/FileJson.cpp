@@ -56,7 +56,7 @@ namespace acid
 				{
 					auto contentSplit = String::Split(summation.str(), "\"");
 
-					if (static_cast<int>(contentSplit.size()) - 2 >= 0)
+					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
 					{
 						name = contentSplit.at(contentSplit.size() - 2);
 					}

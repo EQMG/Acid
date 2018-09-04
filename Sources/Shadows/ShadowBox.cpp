@@ -68,7 +68,7 @@ namespace acid
 
 		auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
-		for (int i = 0; i < 8; i++)
+		for (uint32_t i = 0; i < 8; i++)
 		{
 			Vector4 point = points[i];
 

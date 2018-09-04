@@ -41,8 +41,8 @@ namespace acid
 
 		const float *m_axes;
 		const unsigned char *m_buttons;
-		int m_axeCount;
-		int m_buttonCount;
+		uint32_t m_axeCount;
+		uint32_t m_buttonCount;
 	};
 
 	/// <summary>
@@ -110,13 +110,13 @@ namespace acid
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		uint32_t GetCountButtons(const JoystickPort &port) const { return static_cast<uint32_t>(m_connected.at(port).m_buttonCount); }
+		uint32_t GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		uint32_t GetCountAxes(const JoystickPort &port) const { return static_cast<uint32_t>(m_connected.at(port).m_axeCount); }
+		uint32_t GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
 	};
 }

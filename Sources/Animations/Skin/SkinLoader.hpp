@@ -11,12 +11,12 @@ namespace acid
 	private:
 		std::shared_ptr<Node> m_skinData;
 
-		int m_maxWeights;
+		int32_t m_maxWeights;
 
 		std::vector<std::string> m_jointOrder;
 		std::vector<VertexSkinData *> m_verticesSkinData;
 	public:
-		SkinLoader(const std::shared_ptr<Node> &libraryControllers, const int &maxWeights);
+		SkinLoader(const std::shared_ptr<Node> &libraryControllers, const int32_t &maxWeights);
 
 		~SkinLoader();
 
@@ -29,8 +29,8 @@ namespace acid
 
 		std::vector<float> LoadWeights();
 
-		std::vector<int> GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode);
+		std::vector<int32_t> GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode);
 
-		void GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights);
+		void GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int32_t> &counts, const std::vector<float> &weights);
 	};
 }

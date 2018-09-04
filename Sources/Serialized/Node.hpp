@@ -9,6 +9,9 @@
 
 namespace acid
 {
+	/// <summary>
+	/// A class that is used to represent a tree of values, used in file-object serialization.
+	/// </summary>
 	class ACID_EXPORT Node
 	{
 	protected:

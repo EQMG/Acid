@@ -59,7 +59,7 @@ namespace acid
 		/// calculated by interpolating between the previous and next keyframe.
 		/// </para>
 		/// <para>
-		/// This method first finds the preious and next keyframe, calculates how far
+		/// This method first finds the previous and next keyframe, calculates how far
 		/// between the two the current animation is, and then calculated the pose
 		/// for the current animation time by interpolating between the transforms at
 		/// those keyframes.

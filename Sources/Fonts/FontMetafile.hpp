@@ -17,7 +17,7 @@ namespace acid
 		public IResource
 	{
 	private:
-		std::map<int, FontCharacter> m_metadata;
+		std::map<int32_t, FontCharacter> m_metadata;
 		std::map<std::string, std::string> m_values;
 
 		std::string m_filename;
@@ -25,7 +25,7 @@ namespace acid
 		float m_horizontalPerPixelSize;
 		int m_imageWidth;
 		float m_spaceWidth;
-		std::vector<int> m_padding;
+		std::vector<int32_t> m_padding;
 		int m_paddingWidth;
 		int m_paddingHeight;
 		float m_maxSizeY;
@@ -34,13 +34,13 @@ namespace acid
 		static const uint32_t PAD_LEFT;
 		static const uint32_t PAD_BOTTOM;
 		static const uint32_t PAD_RIGHT;
-		static const int DESIRED_PADDING;
+		static const int32_t DESIRED_PADDING;
 
 		static const std::string SPLITTER;
 		static const std::string NUMBER_SEPARATOR;
 
 		static const float LINE_HEIGHT;
-		static const int SPACE_ASCII;
+		static const int32_t SPACE_ASCII;
 
 		/// <summary>
 		/// Will find an existing metafile with the same filename, or create a new metafile.
@@ -96,7 +96,7 @@ namespace acid
 		/// <param name="variable"> The name of the variable.
 		/// </param>
 		/// <returns> The value of the variable. </returns>
-		int GetValueOfVariable(const std::string &variable);
+		int32_t GetValueOfVariable(const std::string &variable);
 
 		/// <summary>
 		/// Gets the array of ints associated with a variable on the current line.
@@ -104,6 +104,6 @@ namespace acid
 		/// <param name="variable"> The name of the variable.
 		/// </param>
 		/// <returns> The int array of values associated with the variable. </returns>
-		std::vector<int> GetValuesOfVariable(const std::string &variable);
+		std::vector<int32_t> GetValuesOfVariable(const std::string &variable);
 	};
 }

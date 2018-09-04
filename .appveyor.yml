@@ -12,7 +12,6 @@ platform:
   - x64
 
 configuration:
-  - Debug
   - Release
 
 install:
@@ -29,6 +28,7 @@ before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
 
 build_script:
+  - cd C:\Projects\Acid
   - git submodule init
   - git submodule update
   - mkdir Build

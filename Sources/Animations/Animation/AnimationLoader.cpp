@@ -41,7 +41,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < times.size(); i++)
 		{
-			times[i] = std::stof(rawTimes[i]);
+			times[i] = String::FromString<float>(rawTimes[i]);
 		}
 
 		return times;
@@ -89,7 +89,7 @@ namespace acid
 
 			for (uint32_t j = 0; j < 16; j++)
 			{
-				transform.m_linear[j] = std::stof(rawData[i * 16 + j]);
+				transform.m_linear[j] = String::FromString<float>(rawData[i * 16 + j]);
 			}
 
 			transform = transform.Transpose();

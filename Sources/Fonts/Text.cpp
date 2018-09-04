@@ -255,27 +255,27 @@ namespace acid
 	std::vector<IVertex *> Text::CreateQuad(const std::vector<FontLine> &lines)
 	{
 		auto vertices = std::vector<IVertex *>();
-		m_numberLines = static_cast<int>(lines.size());
+		m_numberLines = static_cast<uint32_t>(lines.size());
 
-		float cursorX = 0.0;
-		float cursorY = 0.0;
-		int lineOrder = static_cast<int>(lines.size());
+		float cursorX = 0.0f;
+		float cursorY = 0.0f;
+		int32_t lineOrder = static_cast<int32_t>(lines.size());
 
 		for (auto &line : lines)
 		{
 			switch (m_justify)
 			{
 			case JUSTIFY_LEFT:
-				cursorX = 0.0;
+				cursorX = 0.0f;
 				break;
 			case JUSTIFY_CENTRE:
-				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0;
+				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0f;
 				break;
 			case JUSTIFY_RIGHT:
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
 			case JUSTIFY_FULLY:
-				cursorX = 0.0;
+				cursorX = 0.0f;
 				break;
 			}
 

@@ -82,8 +82,8 @@ namespace acid
 		/// <summary>
 		/// Adds this joint to an array, they for each child calls the same method.
 		/// </summary>
-		/// <param name="joints"> The array to add this and children into. </param>
-		void AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> *children);
+		/// <param name="children"> The array to add this and children into. </param>
+		void AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> &children);
 
 		Matrix4 GetLocalBindTransform() const { return m_localBindTransform; }
 

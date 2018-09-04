@@ -32,11 +32,11 @@ namespace acid
 		m_children.emplace_back(child);
 	}
 
-	void Joint::AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> *children)
+	void Joint::AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> &children)
 	{
-		children->emplace_back(this);
+		children.emplace_back(this);
 
-		for (auto &child : *children)
+		for (auto &child : children)
 		{
 			child->AddSelfAndChildren(children);
 		}

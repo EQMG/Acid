@@ -49,11 +49,11 @@ namespace acid
 
 		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
 
-		friend void CallbackMouseButton(GLFWwindow *window, int button, int action, int mods);
+		friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
 
 		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
 
-		friend void CallbackCursorEnter(GLFWwindow *window, int entered);
+		friend void CallbackCursorEnter(GLFWwindow *window, int32_t entered);
 
 	public:
 		/// <summary>

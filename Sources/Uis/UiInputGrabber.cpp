@@ -72,7 +72,7 @@ namespace acid
 	{
 		int key = -1;
 
-		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
 			if (Mouse::Get()->GetButton((MouseButton) i))
 			{

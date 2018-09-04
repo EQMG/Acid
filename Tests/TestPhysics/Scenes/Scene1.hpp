@@ -19,10 +19,10 @@ namespace test
 		IButton *m_buttonCaptureMouse;
 		IButton *m_buttonScreenshot;
 		IButton *m_buttonExit;
-		Sound *m_soundScreenshot;
+		Sound m_soundScreenshot;
 
 		Colour m_primaryColour;
-		SelectorJoystick *m_selectorJoystick;
+		SelectorJoystick m_selectorJoystick;
 
 		UiStartLogo *m_uiStartLogo;
 		OverlayDebug *m_overlayDebug;
@@ -39,6 +39,6 @@ namespace test
 
 		Colour GetUiColour() const override { return m_primaryColour; }
 
-		SelectorJoystick *GetSelectorJoystick() const override { return m_selectorJoystick; };
+		SelectorJoystick GetSelectorJoystick() const override { return m_selectorJoystick; };
 	};
 }

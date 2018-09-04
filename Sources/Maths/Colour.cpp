@@ -143,15 +143,15 @@ namespace acid
 		result << "#";
 
 		char r[255];
-		snprintf(r, 255, "%.2X", static_cast<int>(m_r * 255.0f));
+		snprintf(r, 255, "%.2X", static_cast<int32_t>(m_r * 255.0f));
 		result << r;
 
 		char g[255];
-		snprintf(g, 255, "%.2X", static_cast<int>(m_g * 255.0f));
+		snprintf(g, 255, "%.2X", static_cast<int32_t>(m_g * 255.0f));
 		result << g;
 
 		char b[255];
-		snprintf(b, 255, "%.2X", static_cast<int>(m_b * 255.0f));
+		snprintf(b, 255, "%.2X", static_cast<int32_t>(m_b * 255.0f));
 		result << b;
 
 		return result.str();

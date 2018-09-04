@@ -93,7 +93,7 @@ namespace acid
 	{
 		for (auto &module : m_modules)
 		{
-			if (static_cast<int>(std::floor(module.first)) == update)
+			if (static_cast<int32_t>(std::floor(module.first)) == update)
 			{
 				module.second->Update();
 			}

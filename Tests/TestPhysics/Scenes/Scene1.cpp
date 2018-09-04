@@ -37,9 +37,9 @@ namespace test
 		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
 		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
-		m_soundScreenshot(new Sound("Sounds/Screenshot.ogg")),
+		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_primaryColour(Colour("#e74c3c")),
-		m_selectorJoystick(new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
 		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
 	{
@@ -55,7 +55,6 @@ namespace test
 		delete m_buttonScreenshot;
 		delete m_buttonExit;
 
-		delete m_selectorJoystick;
 		delete m_uiStartLogo;
 		delete m_overlayDebug;
 	}
@@ -152,7 +151,7 @@ namespace test
 
 		if (m_buttonScreenshot->WasDown())
 		{
-			m_soundScreenshot->Play();
+			m_soundScreenshot.Play();
 			Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::Get()->GetDateTime() + ".png");
 		}
 

@@ -34,8 +34,12 @@ namespace acid
 					joystick.m_name = glfwGetJoystickName(joystick.m_port);
 				}
 
-				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &joystick.m_axeCount);
-				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &joystick.m_buttonCount);
+				int axeCount = 0;
+				int buttonCount = 0;
+				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &axeCount);
+				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &buttonCount);
+				joystick.m_axeCount = static_cast<uint32_t>(axeCount);
+				joystick.m_buttonCount = static_cast<uint32_t>(buttonCount);
 			}
 			else
 			{
