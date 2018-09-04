@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
 #include "Models/VertexModelData.hpp"
@@ -32,10 +32,10 @@ namespace acid
 		/// </summary>
 		~ModelObj();
 	private:
-		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices);
+		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
 
-		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<uint32_t> *indices, std::vector<VertexModelData *> *vertices);
+		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
 
-		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> *uvs);
+		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);
 	};
 }

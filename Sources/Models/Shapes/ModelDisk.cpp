@@ -22,19 +22,19 @@ namespace acid
 
 	std::shared_ptr<ModelDisk> ModelDisk::Resource(const std::string &data)
 	{
-		auto split = FormatString::Split(data, "_");
-		float innerRadius = static_cast<float>(atof(split[1].c_str()));
-		float outerRadius = static_cast<float>(atof(split[2].c_str()));
-		uint32_t slices = atoi(split[3].c_str());
-		uint32_t loops = atoi(split[4].c_str());
+		auto split = String::Split(data, "_");
+		float innerRadius = String::FromString<float>(split[1]);
+		float outerRadius = String::FromString<float>(split[2]);
+		uint32_t slices = String::FromString<uint32_t>(split[3]);
+		uint32_t loops = String::FromString<uint32_t>(split[4]);
 		return Resource(innerRadius, outerRadius, slices, loops);
 	}
 
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
 		Model()
 	{
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
+		auto vertices = std::vector<IVertex *>();
+		auto indices = std::vector<uint32_t>();
 
 		for (uint32_t i = 0; i < slices; i++)
 		{

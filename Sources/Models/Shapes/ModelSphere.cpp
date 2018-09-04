@@ -22,18 +22,18 @@ namespace acid
 
 	std::shared_ptr<ModelSphere> ModelSphere::Resource(const std::string &data)
 	{
-		auto split = FormatString::Split(data, "_");
-		uint32_t latitudeBands = atoi(split[1].c_str());
-		uint32_t longitudeBands = atoi(split[2].c_str());
-		float radius = static_cast<float>(atof(split[3].c_str()));
+		auto split = String::Split(data, "_");
+		uint32_t latitudeBands = String::FromString<uint32_t>(split[1]);
+		uint32_t longitudeBands = String::FromString<uint32_t>(split[2]);
+		float radius = String::FromString<float>(split[3]);
 		return Resource(latitudeBands, longitudeBands, radius);
 	}
 
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
 		Model()
 	{
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
+		auto vertices = std::vector<IVertex *>();
+		auto indices = std::vector<uint32_t>();
 
 		for (uint32_t i = 0; i < longitudeBands + 1; i++)
 		{

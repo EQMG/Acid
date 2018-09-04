@@ -59,7 +59,7 @@ namespace acid
 		}
 
 		// TODO: Modularize.
-		auto split = FormatString::Split(filename, "_");
+		auto split = String::Split(filename, "_");
 
 		if (!split.empty() && split[0] == "Cube")
 		{

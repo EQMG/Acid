@@ -10,19 +10,15 @@ namespace acid
 	class ACID_EXPORT VertexAnimatedData
 	{
 	private:
-		static const uint32_t NO_INDEX;
+		static const int32_t NO_INDEX;
 
 		Vector3 m_position;
 
-		int m_uvIndex;
-		int m_normalIndex;
+		int32_t m_uvIndex;
+		int32_t m_normalIndex;
 		VertexAnimatedData *m_duplicateVertex;
 
 		uint32_t m_index;
-		float m_length;
-
-		std::vector<Vector3 *> m_tangents;
-		Vector3 m_averagedTangent;
 
 		VertexSkinData *m_skinData;
 	public:
@@ -45,14 +41,6 @@ namespace acid
 		void SetDuplicateVertex(VertexAnimatedData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
 		uint32_t GetIndex() const { return m_index; }
-
-		float GetLength() const { return m_length; }
-
-		void AddTangent(Vector3 *tangent);
-
-		void AverageTangents();
-
-		Vector3 GetAverageTangent() const { return m_averagedTangent; }
 
 		bool IsSet() const;
 

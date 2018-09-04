@@ -35,7 +35,7 @@ namespace acid
 			nameAttributes << " " << attribute.first << "=\"" << attribute.second << "\"";
 		}
 
-		std::string nameAndAttribs = FormatString::Trim(nameAttributes.str());
+		std::string nameAndAttribs = String::Trim(nameAttributes.str());
 
 		builder << indents.str();
 
@@ -78,18 +78,18 @@ namespace acid
 	{
 		auto thisValue = parent;
 
-		int firstSpace = FormatString::FindCharPos(source.m_attributes, ' ');
-		std::string name = FormatString::Substring(source.m_attributes, 0, firstSpace);
-		name = FormatString::Trim(name);
-		std::string attributes = FormatString::Substring(source.m_attributes, firstSpace + 1, source.m_attributes.size());
-		attributes = FormatString::Trim(attributes);
+		int firstSpace = String::FindCharPos(source.m_attributes, ' ');
+		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
+		name = String::Trim(name);
+		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, source.m_attributes.size());
+		attributes = String::Trim(attributes);
 
 		if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')
 		{
 			attributes.pop_back();
 		}
 
-		attributes = FormatString::Trim(attributes);
+		attributes = String::Trim(attributes);
 
 		std::map<std::string, std::string> parseAttributes = {};
 
@@ -111,7 +111,7 @@ namespace acid
 						continue;
 					}
 
-					parseAttributes.emplace(FormatString::Trim(currentKey), FormatString::Trim(summation));
+					parseAttributes.emplace(String::Trim(currentKey), String::Trim(summation));
 					currentKey.clear();
 					summation.clear();
 					break;

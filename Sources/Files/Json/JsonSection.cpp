@@ -83,11 +83,11 @@ namespace acid
 			parent->AddChild(thisValue);
 		}
 
-		auto contentSplit = FormatString::Split(source.m_content, ",", true);
+		auto contentSplit = String::Split(source.m_content, ",", true);
 
 		for (auto &data : contentSplit)
 		{
-			auto dataSplit = FormatString::Split(data, ":", true);
+			auto dataSplit = String::Split(data, ":", true);
 
 			if (dataSplit.size() != 2 || dataSplit.at(0).empty() || dataSplit.at(1).empty())
 			{

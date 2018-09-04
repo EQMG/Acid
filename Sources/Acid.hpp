@@ -53,7 +53,7 @@
 #include "Guis/Gui.hpp"
 #include "Guis/RendererGuis.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Inputs/AxisButton.hpp"
 #include "Inputs/AxisCompound.hpp"
 #include "Inputs/AxisJoystick.hpp"

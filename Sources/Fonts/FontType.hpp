@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
 #include "FontMetafile.hpp"

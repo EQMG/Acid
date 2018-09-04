@@ -54,7 +54,7 @@ namespace acid
 
 				if (!summation.str().empty())
 				{
-					auto contentSplit = FormatString::Split(summation.str(), "\"");
+					auto contentSplit = String::Split(summation.str(), "\"");
 
 					if (static_cast<int>(contentSplit.size()) - 2 >= 0)
 					{

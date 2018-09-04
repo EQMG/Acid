@@ -36,7 +36,7 @@ namespace acid
 	std::vector<float> AnimationLoader::GetKeyTimes()
 	{
 		auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
-		auto rawTimes = FormatString::Split(timeData->GetValue(), " ");
+		auto rawTimes = String::Split(timeData->GetValue(), " ");
 		auto times = std::vector<float>(rawTimes.size());
 
 		for (uint32_t i = 0; i < times.size(); i++)
@@ -63,7 +63,7 @@ namespace acid
 		auto transformData = jointData->FindChildWithAttribute("source", "id", dataId);
 
 		std::string data = transformData->FindChild("float_array")->GetValue();
-		auto splitData = FormatString::Split(data, " ");
+		auto splitData = String::Split(data, " ");
 		ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 	}
 
@@ -77,7 +77,7 @@ namespace acid
 	{
 		auto channelNode = jointData->FindChild("channel");
 		std::string data = channelNode->FindAttribute("target");
-		auto splitData = FormatString::Split(data, "/");
+		auto splitData = String::Split(data, "/");
 		return splitData[0];
 	}
 

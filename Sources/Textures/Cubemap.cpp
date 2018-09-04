@@ -12,7 +12,7 @@ namespace acid
 	{
 		std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
 		std::string realFilename = Files::SearchFile(filename + suffixToken);
-		realFilename = FormatString::Replace(realFilename, suffixToken, "");
+		realFilename = String::Replace(realFilename, suffixToken, "");
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)

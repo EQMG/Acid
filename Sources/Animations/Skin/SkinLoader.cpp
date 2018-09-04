@@ -29,7 +29,7 @@ namespace acid
 		std::string jointDataId = inputNode->FindChildWithAttribute("input", "semantic", "JOINT")->FindAttribute(
 			"source").substr(1);
 		auto jointsNode = m_skinData->FindChildWithAttribute("source", "id", jointDataId)->FindChild("Name_array");
-		m_jointOrder = FormatString::Split(jointsNode->GetValue(), " ");
+		m_jointOrder = String::Split(jointsNode->GetValue(), " ");
 	}
 
 	std::vector<float> SkinLoader::LoadWeights()
@@ -39,7 +39,7 @@ namespace acid
 			"source").substr(1);
 		auto weightsNode = m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array");
 
-		auto rawData = FormatString::Split(weightsNode->GetValue(), " ");
+		auto rawData = String::Split(weightsNode->GetValue(), " ");
 		auto weights = std::vector<float>(rawData.size());
 
 		for (uint32_t i = 0; i < weights.size(); i++)
@@ -52,7 +52,7 @@ namespace acid
 
 	std::vector<int> SkinLoader::GetEffectiveJointsCounts(std::shared_ptr<Node> &weightsDataNode)
 	{
-		auto rawData = FormatString::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
+		auto rawData = String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
 		auto counts = std::vector<int>(rawData.size());
 
 		for (uint32_t i = 0; i < rawData.size(); i++)
@@ -65,7 +65,7 @@ namespace acid
 
 	void SkinLoader::GetSkinData(std::shared_ptr<Node> &weightsDataNode, const std::vector<int> &counts, const std::vector<float> &weights)
 	{
-		auto rawData = FormatString::Split(weightsDataNode->FindChild("v")->GetString(), " ");
+		auto rawData = String::Split(weightsDataNode->FindChild("v")->GetString(), " ");
 		int pointer = 0;
 
 		for (auto count : counts)

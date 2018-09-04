@@ -1,7 +1,7 @@
 ﻿#include "FontMetafile.hpp"
 
 #include "Helpers/FileSystem.hpp"
-#include "Helpers/FormatString.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 
 namespace acid
@@ -54,21 +54,21 @@ namespace acid
 			return;
 		}
 
-		auto lines = FormatString::Split(*fileLoaded, "\n");
+		auto lines = String::Split(*fileLoaded, "\n");
 
 		for (auto &line : lines)
 		{
 			ProcessNextLine(line);
 
-			if (FormatString::Contains(line, "info"))
+			if (String::Contains(line, "info"))
 			{
 				LoadPaddingData();
 			}
-			else if (FormatString::Contains(line, "common"))
+			else if (String::Contains(line, "common"))
 			{
 				LoadLineSizes();
 			}
-			else if (FormatString::Contains(line, "char") && !FormatString::Contains(line, "chars"))
+			else if (String::Contains(line, "char") && !String::Contains(line, "chars"))
 			{
 				LoadCharacterData();
 			}
@@ -94,11 +94,11 @@ namespace acid
 	void FontMetafile::ProcessNextLine(const std::string &line)
 	{
 		m_values.clear();
-		auto parts = FormatString::Split(line, SPLITTER);
+		auto parts = String::Split(line, SPLITTER);
 
 		for (auto &part : parts)
 		{
-			auto pairs = FormatString::Split(part, "=");
+			auto pairs = String::Split(part, "=");
 
 			if (pairs.size() == 2)
 			{
@@ -164,7 +164,7 @@ namespace acid
 
 	std::vector<int> FontMetafile::GetValuesOfVariable(const std::string &variable)
 	{
-		auto numbers = FormatString::Split(m_values.at(variable), NUMBER_SEPARATOR);
+		auto numbers = String::Split(m_values.at(variable), NUMBER_SEPARATOR);
 		auto result = std::vector<int>();
 
 		int i = 0;

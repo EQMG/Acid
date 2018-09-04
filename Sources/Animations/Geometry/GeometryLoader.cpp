@@ -24,14 +24,13 @@ namespace acid
 			Vector3 position = current->GetPosition();
 			Vector2 textures = m_uvsList.at(current->GetUvIndex());
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
-			Vector3 tangent = current->GetAverageTangent();
+			Vector3 tangent = Vector3::ZERO;
 
 			VertexSkinData *skin = current->GetSkinData();
 			Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
 			Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
 
 			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent, jointIds, weights);
-
 			m_vertices.emplace_back(vertex);
 
 			delete current;
@@ -48,7 +47,7 @@ namespace acid
 		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild(
 			"float_array");
 		uint32_t positionsCount = std::stoi(positionsData->FindAttribute("count"));
-		auto positionsRawData = FormatString::Split(positionsData->GetValue(), " ");
+		auto positionsRawData = String::Split(positionsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
 		{
@@ -67,7 +66,7 @@ namespace acid
 			"source").substr(1);
 		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
 		uint32_t uvsCount = std::stoi(uvsData->FindAttribute("count"));
-		auto uvsRawData = FormatString::Split(uvsData->GetValue(), " ");
+		auto uvsRawData = String::Split(uvsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
 		{
@@ -83,7 +82,7 @@ namespace acid
 			"source").substr(1);
 		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
 		uint32_t normalsCount = std::stoi(normalsData->FindAttribute("count"));
-		auto normalsRawData = FormatString::Split(normalsData->GetValue(), " ");
+		auto normalsRawData = String::Split(normalsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
@@ -96,7 +95,7 @@ namespace acid
 	void GeometryLoader::AssembleVertices()
 	{
 		int32_t indexCount = m_meshData->FindChild("polylist")->FindChildren("input").size();
-		auto indexRawData = FormatString::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
+		auto indexRawData = String::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
@@ -166,8 +165,6 @@ namespace acid
 	{
 		for (auto &vertex : m_positionsList)
 		{
-			vertex->AverageTangents();
-
 			if (!vertex->IsSet())
 			{
 				vertex->SetUvIndex(0);
