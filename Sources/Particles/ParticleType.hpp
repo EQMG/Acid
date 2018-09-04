@@ -54,18 +54,36 @@ namespace acid
 		/// <param name="colourOffset"> The particles texture colour offset. </param>
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale);
+		ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &scale = 1.0f);
+
+		/// <summary>
+		/// Creates a new particle type.
+		/// </summary>
+		/// <param name="source"> Creates this particle type out of a existing one. </param>
+		ParticleType(const ParticleType &source);
 
 		/// <summary>
 		/// Deconstructor for the particle type.
 		/// </summary>
 		~ParticleType();
 
+		void Decode(const Node &node);
+
+		void Encode(Node &node) const;
+
 		std::string GetFilename() override { return m_filename; }
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
 		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
+
+		void TrySetTexture(const std::string &filename)
+		{
+			if (!filename.empty())
+			{
+				m_texture = Texture::Resource(filename);
+			}
+		}
 
 		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 

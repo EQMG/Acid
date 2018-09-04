@@ -22,6 +22,8 @@ namespace acid
 
 	std::string ModelRectangle::ToFilename(const float &min, const float &max)
 	{
-		return "Rectangle_" + std::to_string(min) + "_" + std::to_string(max);
+		std::stringstream result;
+		result << "Rectangle_" << min << "_" << max;
+		return result.str();
 	}
 }

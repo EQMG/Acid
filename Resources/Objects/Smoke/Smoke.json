@@ -23,7 +23,8 @@
 		"Scale": 2.0
 	  }
 	],
-	"Spawn Circle": {
+	"Spawn": {
+	  "Type": "SpawnCircle",
 	  "Radius": 2.0,
 	  "Heading": {
 		"x": 0.0,

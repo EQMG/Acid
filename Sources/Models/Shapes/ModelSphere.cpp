@@ -62,7 +62,8 @@ namespace acid
 
 	std::string ModelSphere::ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
-		return "Sphere_" + std::to_string(latitudeBands) + "_" + std::to_string(longitudeBands) + "_" +
-			std::to_string(radius);
+		std::stringstream result;
+		result << "Sphere_" << latitudeBands << "_" << longitudeBands << "_" << radius;
+		return result.str();
 	}
 }

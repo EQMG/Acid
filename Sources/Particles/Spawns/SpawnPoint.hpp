@@ -14,6 +14,10 @@ namespace acid
 
 		~SpawnPoint();
 
+		void Decode(const Node &node) override;
+
+		void Encode(Node &node) const override;
+
 		Vector3 GetBaseSpawnPosition() override;
 
 		Vector3 GetPoint() const { return m_point; }

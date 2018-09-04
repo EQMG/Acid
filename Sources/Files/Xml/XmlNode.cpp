@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void XmlNode::AppendData(const std::shared_ptr<Node> &Serialized, std::stringstream &builder, const int &indentation)
+	void XmlNode::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation)
 	{
 		std::stringstream indents;
 
@@ -28,9 +28,9 @@ namespace acid
 		}
 
 		std::stringstream nameAttributes;
-		nameAttributes << Serialized->GetName();
+		nameAttributes << source->GetName();
 
-		for (auto &attribute : Serialized->GetAttributes())
+		for (auto &attribute : source->GetAttributes())
 		{
 			nameAttributes << " " << attribute.first << "=\"" << attribute.second << "\"";
 		}
@@ -39,11 +39,11 @@ namespace acid
 
 		builder << indents.str();
 
-		if (Serialized->GetName()[0] == '?')
+		if (source->GetName()[0] == '?')
 		{
 			builder << "<" << nameAndAttribs << "?>\n";
 
-			for (auto &child : Serialized->GetChildren())
+			for (auto &child : source->GetChildren())
 			{
 				AppendData(child, builder, indentation);
 			}
@@ -51,19 +51,19 @@ namespace acid
 			return;
 		}
 
-		if (Serialized->GetChildren().empty() && Serialized->GetValue().empty())
+		if (source->GetChildren().empty() && source->GetValue().empty())
 		{
 			builder << "<" << nameAndAttribs << "/>\n";
 			return;
 		}
 
-		builder << "<" << nameAndAttribs << ">" << Serialized->GetValue();
+		builder << "<" << nameAndAttribs << ">" << source->GetValue();
 
-		if (!Serialized->GetChildren().empty())
+		if (!source->GetChildren().empty())
 		{
 			builder << "\n";
 
-			for (auto &child : Serialized->GetChildren())
+			for (auto &child : source->GetChildren())
 			{
 				AppendData(child, builder, indentation + 1);
 			}
@@ -71,7 +71,7 @@ namespace acid
 			builder << indents.str();
 		}
 
-		builder << "</" << Serialized->GetName() << ">\n";
+		builder << "</" << source->GetName() << ">\n";
 	}
 
 	std::shared_ptr<Node> &XmlNode::Convert(const XmlNode &source, std::shared_ptr<Node> &parent, const bool &isTopSection)
@@ -137,7 +137,7 @@ namespace acid
 		if (!isTopSection)
 		{
 			thisValue = std::make_shared<Node>(name, source.m_content, parseAttributes);
-			parent->GetChildren().emplace_back(thisValue);
+			parent->AddChild(thisValue);
 		}
 		else
 		{

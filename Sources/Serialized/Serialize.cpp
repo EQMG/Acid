@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	std::string Serialize::Encode(Node &node)
+	std::string Serialize::Encode(const Node &node)
 	{
 		std::stringstream result;
 		EncodeStream(node, result);
@@ -20,7 +20,7 @@ namespace acid
 		return Node(); // TODO: Implement.
 	}
 
-	void Serialize::EncodeStream(Node &node, std::stringstream &ss)
+	void Serialize::EncodeStream(const Node &node, std::stringstream &ss)
 	{
 		EncodePropsFlags props = PROP_NONE;
 

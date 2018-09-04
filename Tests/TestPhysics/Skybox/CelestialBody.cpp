@@ -76,7 +76,7 @@ namespace test
 
 	void CelestialBody::Decode(const Node &node)
 	{
-	//	m_type = node.GetChild<CelestialType>("Type");
+	//	m_type = node.GetChild<CelestialType>("Type"); // TODO: Node child enum type.
 	}
 
 	void CelestialBody::Encode(Node &node) const

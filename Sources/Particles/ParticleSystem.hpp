@@ -79,6 +79,8 @@ namespace acid
 
 		void SetSpawn(const std::shared_ptr<ISpawnParticle> &spawn) { m_spawn = spawn; }
 
+		void TrySetSpawn(const Node &spawnNode);
+
 		float GetPps() const { return m_pps; }
 
 		void SetPps(const float &pps) { m_pps = pps; }

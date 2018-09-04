@@ -136,7 +136,7 @@ namespace acid
 			}
 			else if constexpr(std::is_same_v<bool, T>)
 			{
-				return Trim(Lowercase(str)) == "true" || FromString<int32_t>(str) == 1;
+				return Lowercase(str) == "true" || FromString<int32_t>(str) == 1;
 			}
 
 			std::istringstream ss(str);

@@ -64,7 +64,8 @@ namespace acid
 
 	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		return "Cylinder_" + std::to_string(radiusBase) + "_" + std::to_string(radiusTop) + "_" + std::to_string(height) + "_" +
-			std::to_string(slices) + "_" + std::to_string(stacks);
+		std::stringstream result;
+		result << "Cylinder_" << radiusBase << "_" << radiusTop << "_" << height << "_" << slices << "_" << stacks;
+		return result.str();
 	}
 }
