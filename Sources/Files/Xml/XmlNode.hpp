@@ -36,7 +36,7 @@ namespace acid
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(const std::shared_ptr<Node> &Serialized, std::stringstream &builder, const int &indentation);
+		static void AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation);
 
 		static std::shared_ptr<Node> &Convert(const XmlNode &source, std::shared_ptr<Node> &parent, const bool &isTopSection);
 	};

@@ -50,7 +50,15 @@ namespace acid
 				return;
 			}
 
-			component->Encode(*m_parent->FindChildSafe(*componentName));
+			auto child = m_parent->FindChild(*componentName);
+
+			if (child == nullptr)
+			{
+				child = std::make_shared<Node>(*componentName);
+				m_parent->AddChild(child);
+			}
+
+			component->Encode(*child);
 		}
 	}
 

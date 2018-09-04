@@ -28,7 +28,7 @@ namespace acid
 			return;
 		}
 
-		m_parent->GetChildren().clear();
+		m_parent->ClearChildren();
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
 
@@ -118,7 +118,7 @@ namespace acid
 
 	void FileJson::Clear()
 	{
-		m_parent->GetChildren().clear();
+		m_parent->ClearChildren();
 	}
 
 	void FileJson::Verify()

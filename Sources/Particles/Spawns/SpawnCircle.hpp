@@ -12,9 +12,13 @@ namespace acid
 		Vector3 m_heading;
 		Vector3 m_spawnPosition;
 	public:
-		SpawnCircle(const float &radius, const Vector3 &heading);
+		SpawnCircle(const float &radius = 1.0f, const Vector3 &heading = Vector3::UP);
 
 		~SpawnCircle();
+
+		void Decode(const Node &node) override;
+
+		void Encode(Node &node) const override;
 
 		Vector3 GetBaseSpawnPosition() override;
 

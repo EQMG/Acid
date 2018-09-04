@@ -16,6 +16,19 @@ namespace acid
 	{
 	}
 
+	void SpawnLine::Decode(const Node &node)
+	{
+		m_length = node.GetChild<float>("Length");
+		m_axis = node.GetChild<Vector3>("Axis");
+	}
+
+	void SpawnLine::Encode(Node &node) const
+	{
+		node.SetChild<std::string>("Type", "SpawnLine");
+		node.SetChild<float>("Length", m_length);
+		node.SetChild<Vector3>("Axis", m_axis);
+	}
+
 	Vector3 SpawnLine::GetBaseSpawnPosition()
 	{
 		m_spawnPosition = m_axis;

@@ -18,10 +18,10 @@ namespace acid
 	class ACID_EXPORT Serialize
 	{
 	public:
-		static std::string Encode(Node &node);
+		static std::string Encode(const Node &node);
 
 		static Node Decode(const std::string &value);
 	private:
-		static void EncodeStream(Node &node, std::stringstream &ss);
+		static void EncodeStream(const Node &node, std::stringstream &ss);
 	};
 }

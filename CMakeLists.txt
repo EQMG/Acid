@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(Acid)
 
-set(ACID_VERSION "0.9.7")
+set(ACID_VERSION "0.9.8")
 
 # Options
 if(MSVC)

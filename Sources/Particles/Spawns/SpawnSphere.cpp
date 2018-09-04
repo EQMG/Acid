@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	SpawnSphere::SpawnSphere(const float &radius, const Vector3 &heading) :
+	SpawnSphere::SpawnSphere(const float &radius) :
 		ISpawnParticle(),
 		m_radius(radius),
 		m_spawnPosition(Vector3())
@@ -14,6 +14,17 @@ namespace acid
 
 	SpawnSphere::~SpawnSphere()
 	{
+	}
+
+	void SpawnSphere::Decode(const Node &node)
+	{
+		m_radius = node.GetChild<float>("Radius");
+	}
+
+	void SpawnSphere::Encode(Node &node) const
+	{
+		node.SetChild<std::string>("Type", "SpawnSphere");
+		node.SetChild<float>("Radius", m_radius);
 	}
 
 	Vector3 SpawnSphere::GetBaseSpawnPosition()

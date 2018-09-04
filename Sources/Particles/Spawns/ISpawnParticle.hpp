@@ -24,6 +24,10 @@ namespace acid
 		{
 		}
 
+		virtual void Decode(const Node &node) = 0;
+
+		virtual void Encode(Node &node) const = 0;
+
 		/// <summary>
 		/// Gets the base spawn position.
 		/// </summary>

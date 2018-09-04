@@ -63,7 +63,8 @@ namespace acid
 
 	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		return "Disk_" + std::to_string(innerRadius) + "_" + std::to_string(outerRadius) + "_" +
-			std::to_string(slices) + "_" + std::to_string(loops);
+		std::stringstream result;
+		result << "Disk_" << innerRadius << "_" << outerRadius << "_" << slices << "_" << loops;
+		return result.str();
 	}
 }

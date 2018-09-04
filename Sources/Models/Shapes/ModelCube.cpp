@@ -58,6 +58,8 @@ namespace acid
 
 	std::string ModelCube::ToFilename(const float &width, const float &height, const float &depth)
 	{
-		return "Cube_" + std::to_string(width) + "_" + std::to_string(height) + "_" + std::to_string(depth);
+		std::stringstream result;
+		result << "Cube_" << width << "_" << height << "_" << depth;
+		return result.str();
 	}
 }

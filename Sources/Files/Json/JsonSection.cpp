@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void JsonSection::AppendData(const std::shared_ptr<Node> &Serialized, std::stringstream &builder, const int &indentation, const bool &end)
+	void JsonSection::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
@@ -29,17 +29,17 @@ namespace acid
 
 		builder << indents.str();
 
-		if (Serialized->GetName().empty())
+		if (source->GetName().empty())
 		{
 			builder << "{\n";
 		}
-		else if (Serialized->GetValue().empty())
+		else if (source->GetValue().empty())
 		{
-			builder << "\"" << Serialized->GetName() << "\": {\n";
+			builder << "\"" << source->GetName() << "\": {\n";
 		}
 		else
 		{
-			builder << "\"" << Serialized->GetName() + "\": " << Serialized->GetValue();
+			builder << "\"" << source->GetName() + "\": " << source->GetValue();
 
 			if (!end)
 			{
@@ -49,16 +49,16 @@ namespace acid
 			builder << "\n";
 		}
 
-		for (auto &child : Serialized->GetChildren())
+		for (auto &child : source->GetChildren())
 		{
-			AppendData(child, builder, indentation + 1, child == Serialized->GetChildren().back());
+			AppendData(child, builder, indentation + 1, child == source->GetChildren().back());
 		}
 
-		if (Serialized->GetName().empty())
+		if (source->GetName().empty())
 		{
 			builder << indents.str() << "}\n";
 		}
-		else if (Serialized->GetValue().empty())
+		else if (source->GetValue().empty())
 		{
 			builder << indents.str();
 
@@ -80,7 +80,7 @@ namespace acid
 		if (!isTopSection)
 		{
 			thisValue = std::make_shared<Node>(source.m_name, "");
-			parent->GetChildren().emplace_back(thisValue);
+			parent->AddChild(thisValue);
 		}
 
 		auto contentSplit = FormatString::Split(source.m_content, ",", true);
@@ -96,7 +96,7 @@ namespace acid
 
 			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
 			auto newChild = std::make_shared<Node>(name, dataSplit.at(1));
-			thisValue->GetChildren().emplace_back(newChild);
+			thisValue->AddChild(newChild);
 		}
 
 		for (auto &child : source.m_children)

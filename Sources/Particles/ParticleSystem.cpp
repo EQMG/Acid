@@ -1,6 +1,10 @@
 ﻿#include "ParticleSystem.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Particles/Spawns/SpawnCircle.hpp"
+#include "Particles/Spawns/SpawnLine.hpp"
+#include "Particles/Spawns/SpawnPoint.hpp"
+#include "Particles/Spawns/SpawnSphere.hpp"
 #include "Particles.hpp"
 
 namespace acid
@@ -52,8 +56,15 @@ namespace acid
 
 	void ParticleSystem::Decode(const Node &node)
 	{
-	//	Link<std::vector<ParticleType *>>(0, "Types", LINK_GET(GetTypes()), LINK_SET(std::vector<ParticleType *>, SetTypes(v)));
-	//	Link<ISpawnParticle *>(1, "Spawn", LINK_GET(GetSpawn()), LINK_SET(ISpawnParticle *, SetSpawn(v)));
+		for (auto &typeNode : node.FindChild("Types")->GetChildren())
+		{
+			ParticleType temp = ParticleType();
+			temp.Decode(*typeNode);
+			m_types.emplace_back(ParticleType::Resource(temp.GetFilename()));
+		}
+
+		TrySetSpawn(*node.FindChild("Spawn"));
+
 		m_pps = node.GetChild<float>("PPS");
 		m_averageSpeed = node.GetChild<float>("Average Speed");
 		m_gravityEffect = node.GetChild<float>("Gravity Effect");
@@ -62,10 +73,25 @@ namespace acid
 
 	void ParticleSystem::Encode(Node &node) const
 	{
+		auto typesNode = node.FindChild("Types");
+
+		if (typesNode == nullptr)
+		{
+			typesNode = node.AddChild(std::make_shared<Node>("Types"));
+		}
+
+		for (auto &type : m_types)
+		{
+			type->Encode(*typesNode->AddChild(std::make_shared<Node>()));
+		}
+
+		node.SetChild<ISpawnParticle>("Spawn", *m_spawn);
+
 		node.SetChild<float>("PPS", m_pps);
 		node.SetChild<float>("Average Speed", m_averageSpeed);
 		node.SetChild<float>("Gravity Effect", m_gravityEffect);
 		node.SetChild<Vector3>("Offset", m_systemOffset);
+		// TODO: m_randomRotation, m_direction, m_directionDeviation, m_speedError, m_lifeError, m_scaleError
 	}
 
 	Particle *ParticleSystem::EmitParticle()
@@ -149,6 +175,41 @@ namespace acid
 		}
 
 		return false;
+	}
+
+	void ParticleSystem::TrySetSpawn(const Node &spawnNode)
+	{
+		std::string spawnName = spawnNode.GetChild<std::string>("Type");
+
+		if (spawnName == "SpawnCircle")
+		{
+			m_spawn = std::make_shared<SpawnCircle>();
+			m_spawn->Decode(spawnNode);
+			return;
+		}
+
+		if (spawnName == "SpawnLine")
+		{
+			m_spawn = std::make_shared<SpawnLine>();
+			m_spawn->Decode(spawnNode);
+			return;
+		}
+
+		if (spawnName == "SpawnPoint")
+		{
+			m_spawn = std::make_shared<SpawnPoint>();
+			m_spawn->Decode(spawnNode);
+			return;
+		}
+
+		if (spawnName == "SpawnSphere")
+		{
+			m_spawn = std::make_shared<SpawnSphere>();
+			m_spawn->Decode(spawnNode);
+			return;
+		}
+
+		Log::Error("Could not determine particle spawn type: '%s'\n", spawnName.c_str());
 	}
 
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)

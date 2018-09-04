@@ -35,9 +35,11 @@ namespace acid
 
 		void SetString(const std::string &data);
 
-		std::vector<std::shared_ptr<Node>> &GetChildren() { return m_children; }
+		std::vector<std::shared_ptr<Node>> GetChildren() const { return m_children; }
 
 		uint32_t GetChildCount() const { return static_cast<uint32_t>(m_children.size()); }
+
+		void ClearChildren() { m_children.clear(); }
 
 		std::shared_ptr<Node> AddChild(const std::shared_ptr<Node> &value);
 
@@ -45,9 +47,7 @@ namespace acid
 
 		std::vector<std::shared_ptr<Node>> FindChildren(const std::string &name) const;
 
-		std::shared_ptr<Node> FindChild(const std::string &name) const;
-
-		std::shared_ptr<Node> FindChildSafe(const std::string &name);
+		std::shared_ptr<Node> FindChild(const std::string &name, const bool &reportError = true) const;
 
 		std::shared_ptr<Node> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
@@ -124,11 +124,11 @@ namespace acid
 			}
 			else
 			{
-				SetValue(FormatString::ToString(value));
+				SetValue(FormatString::ToString<T>(value));
 			}
 		}
 
-		std::map<std::string, std::string> &GetAttributes() { return m_attributes; }
+		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
 
 		uint32_t GetAttributeCount() const { return static_cast<uint32_t>(m_attributes.size()); }
 

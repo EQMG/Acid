@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="256px">
 
-[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
+[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
 
 Acid is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.
 
@@ -131,9 +131,3 @@ Old resources have been removed from the main repo, resources for commits from b
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help.
-
-## Support
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
-
-If you like what I am doing in this project, please consider donating.
-

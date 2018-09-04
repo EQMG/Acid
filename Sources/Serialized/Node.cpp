@@ -28,7 +28,7 @@ namespace acid
 
 	std::string Node::GetString() const
 	{
-		return FormatString::RemoveAll(m_value, '\"');
+		return FormatString::RemoveAll(m_value, '\"'); // FIXME: Just first and last.
 	}
 
 	void Node::SetString(const std::string &data)
@@ -38,13 +38,13 @@ namespace acid
 
 	std::shared_ptr<Node> Node::AddChild(const std::shared_ptr<Node> &value)
 	{
-		auto child = FindChild(value->m_name);
+		/*auto child = FindChild(value->m_name);
 
 		if (child != nullptr)
 		{
 			child->m_value = value->m_value;
 			return child;
-		}
+		}*/
 
 		m_children.emplace_back(value);
 		return value;
@@ -71,7 +71,7 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<Node> Node::FindChild(const std::string &name) const
+	std::shared_ptr<Node> Node::FindChild(const std::string &name, const bool &reportError) const
 	{
 		std::string nameNoSpaces = FormatString::Replace(name, " ", "_");
 
@@ -83,25 +83,15 @@ namespace acid
 			}
 		}
 
-		return {};
-	}
-
-	std::shared_ptr<Node> Node::FindChildSafe(const std::string &name)
-	{
-		auto child = FindChild(name);
-
-		if (child != nullptr)
+		if (reportError)
 		{
-			return child;
+			Log::Error("Could not find child in node by name '%s'\n", m_name.c_str());
 		}
 
-		child = std::make_shared<Node>(name, "");
-		m_children.emplace_back(child);
-		return child;
+		return nullptr;
 	}
 
-	std::shared_ptr<Node> Node::FindChildWithAttribute(const std::string &childName, const std::string &attribute,
-	                                   const std::string &value, const bool &reportError) const
+	std::shared_ptr<Node> Node::FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError) const
 	{
 		auto children = FindChildren(childName);
 
@@ -122,7 +112,7 @@ namespace acid
 
 		if (reportError)
 		{
-			Log::Error("Could not find child in loaded value '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
+			Log::Error("Could not find child in node '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
 		}
 
 		return nullptr;
