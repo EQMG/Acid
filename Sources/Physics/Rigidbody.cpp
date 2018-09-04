@@ -25,14 +25,15 @@ namespace acid
 
 	Rigidbody::~Rigidbody()
 	{
-		btRigidBody *body = btRigidBody::upcast(m_body.get());
+		btRigidBody *body = btRigidBody::upcast(m_body);
 
 		if (body && body->getMotionState())
 		{
 			delete body->getMotionState();
 		}
 
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body.get());
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body);
+		delete m_body;
 	}
 
 	void Rigidbody::Start()
@@ -60,7 +61,7 @@ namespace acid
 			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
-			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body.get());
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body);
 			m_body->activate(true);
 		}
 	}
@@ -80,7 +81,7 @@ namespace acid
 			if (m_shape != shape->GetCollisionShape())
 			{
 				m_shape = shape->GetCollisionShape();
-				m_body->setCollisionShape(m_shape.get());
+				m_body->setCollisionShape(m_shape);
 			}
 
 			if (m_mass != 0.0f)
@@ -218,7 +219,7 @@ namespace acid
 		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
-	std::shared_ptr<btRigidBody> Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, const std::shared_ptr<btCollisionShape> &shape)
+	btRigidBody* Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 
@@ -232,8 +233,8 @@ namespace acid
 
 		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
-		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape.get(), localInertia);
-		auto body = std::make_shared<btRigidBody>(cInfo);
+		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
+		auto body = new btRigidBody(cInfo);
 	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 	//	body->setUserIndex(-1);
 		return body;

@@ -11,6 +11,10 @@ namespace acid
 	{
 	}
 
+	MeshPattern::~MeshPattern()
+	{
+	}
+
 	void MeshPattern::GenerateMesh()
 	{
 		auto vertices = std::vector<IVertex *>();

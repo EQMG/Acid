@@ -7,6 +7,13 @@
 
 namespace acid
 {
+	enum SoundType
+	{
+		TYPE_GENERAL = 0,
+		TYPE_SOUND = 1,
+		TYPE_MUSIC = 2
+	};
+
 	/// <summary>
 	/// Class that represents a loaded sound.
 	/// </summary>

@@ -22,7 +22,6 @@ namespace acid
 
 	void Mesh::Start()
 	{
-
 	}
 
 	void Mesh::Update()

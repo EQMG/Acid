@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Maths/Colour.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
 
 namespace acid
@@ -21,30 +21,21 @@ namespace acid
 		float m_lifeLength;
 		float m_scale;
 	public:
-		static std::shared_ptr<ParticleType> Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)
-		{
-			auto resource = Resources::Get()->Get(ToFilename(texture, numberOfRows, colourOffset, lifeLength, scale));
+		/// <summary>
+		/// Will find an existing particle type with the same filename, or create a new particle type.
+		/// </summary>
+		/// <param name="texture"> The particles texture. </param>
+		/// <param name="numberOfRows"> The number of texture rows. </param>
+		/// <param name="colourOffset"> The particles texture colour offset. </param>
+		/// <param name="lifeLength"> The averaged life length for the particle. </param>
+		/// <param name="scale"> The averaged scale for the particle. </param>
+		static std::shared_ptr<ParticleType> Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale);
 
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<ParticleType>(resource);
-			}
-
-			auto result = std::make_shared<ParticleType>(texture, numberOfRows, colourOffset, lifeLength, scale);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
-
-		static std::shared_ptr<ParticleType> Resource(const std::string &data)
-		{
-			auto split = FormatString::Split(data, "_");
-			auto texture = Texture::Resource(split[1].c_str());
-			uint32_t numberOfRows = static_cast<uint32_t>(atof(split[2].c_str()));
-			Colour colourOffset = Colour(split[3].c_str());
-			float lifeLength = static_cast<float>(atof(split[4].c_str()));
-			float scale = static_cast<float>(atof(split[5].c_str()));
-			return Resource(texture, numberOfRows, colourOffset, lifeLength, scale);
-		}
+		/// <summary>
+		/// Will find an existing particle type with the same filename, or create a new particle type.
+		/// </summary>
+		/// <param name="data"> The combined data for the particle type. </param>
+		static std::shared_ptr<ParticleType> Resource(const std::string &data);
 
 		/// <summary>
 		/// Creates a new particle type.

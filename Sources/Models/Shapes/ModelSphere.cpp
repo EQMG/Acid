@@ -1,10 +1,34 @@
 #include "ModelSphere.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Resources/Resources.hpp"
 #include "Models/VertexModel.hpp"
 
 namespace acid
 {
+	std::shared_ptr<ModelSphere> ModelSphere::Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
+	{
+		auto resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ModelSphere>(resource);
+		}
+
+		auto result = std::make_shared<ModelSphere>(latitudeBands, longitudeBands, radius);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
+
+	std::shared_ptr<ModelSphere> ModelSphere::Resource(const std::string &data)
+	{
+		auto split = FormatString::Split(data, "_");
+		uint32_t latitudeBands = atoi(split[1].c_str());
+		uint32_t longitudeBands = atoi(split[2].c_str());
+		float radius = static_cast<float>(atof(split[3].c_str()));
+		return Resource(latitudeBands, longitudeBands, radius);
+	}
+
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
 		Model()
 	{

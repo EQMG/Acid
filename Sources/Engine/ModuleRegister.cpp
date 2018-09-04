@@ -10,6 +10,7 @@
 #include "Inputs/Mouse.hpp"
 #include "Particles/Particles.hpp"
 #include "Renderer/Renderer.hpp"
+#include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Uis/Uis.hpp"
@@ -82,7 +83,6 @@ namespace acid
 			}
 
 			m_modules.erase(it);
-		//	delete (*it).second;
 			return true;
 		}
 

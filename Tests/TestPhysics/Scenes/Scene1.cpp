@@ -66,53 +66,52 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		GameObject *playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		auto playerObject = GameObject::Resource("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
-		GameObject *skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
-	//	skyboxObject->GetComponent<MeshRender>()->SetEnabled(false);
+		auto skyboxObject = GameObject::Resource("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated.
 #ifdef ACID_BUILD_WINDOWS
-		GameObject *animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
+		auto animatedObject = GameObject::Resource(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
 		animatedObject->SetName("Animated");
 	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
 		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<MeshRender>();
-		animatedObject->AddComponent<ShadowRender>();
+	//	animatedObject->AddComponent<ShadowRender>();
 #endif
 
 		// Entities.
-		GameObject *sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
+		auto sun = GameObject::Resource(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE);
 
-		GameObject *terrain = new GameObject(Transform());
+		auto terrain = GameObject::Resource(Transform());
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<Mesh>();
 		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"), Texture::Resource("Objects/Terrain/Rocks.png"));
 		terrain->AddComponent<MeshRender>();
-		terrain->AddComponent<ShadowRender>();
+	//	terrain->AddComponent<ShadowRender>();
 
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				GameObject *sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
+				auto sphere = GameObject::Resource(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(0.5f);
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-				sphere->AddComponent<ShadowRender>();
+			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
 
-		GameObject *teapot = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		auto teapot = GameObject::Resource(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rigidbody>(1.0f);
@@ -120,14 +119,7 @@ namespace test
 		teapot->AddComponent<MeshRender>();
 	//	teapot->AddComponent<ShadowRender>();
 
-	//	GameObject *system1 = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 10.0f, 0.0f)));
-		/*auto system1Types = std::vector<std::shared_ptr<ParticleType>>{
-			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::BLUE, 10.0f, 1.0f),
-			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::YELLOW, 6.0f, 3.0f),
-			ParticleType::Resource(Texture::Resource("Particles/Circular.png"), 4, Colour::RED, 8.0f, 2.0f)
-		};
-		GameObject *system1 = new GameObject(Transform(Vector3(0.0f, 10.0f, 0.0f)));
-		system1->AddComponent<ParticleSystem>(system1Types, std::make_shared<SpawnCircle>(2.0f, Vector3::UP), 50.0f, 0.3f, 1.0f, Vector3::ZERO);*/
+	//	auto system1 = GameObject::Create("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 10.0f, 0.0f)));
 	}
 
 	void Scene1::Update()
@@ -137,7 +129,7 @@ namespace test
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-			GameObject *sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
+			auto sphere = GameObject::Resource(Transform(cameraPosition, Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);

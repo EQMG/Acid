@@ -7,13 +7,14 @@ namespace acid
 {
 	ColliderSphere::ColliderSphere(const float &radius) :
 		Collider(),
-		m_shape(std::make_shared<btSphereShape>(radius)),
+		m_shape(new btSphereShape(radius)),
 		m_radius(radius)
 	{
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
+		delete m_shape;
 	}
 
 	void ColliderSphere::Start()
@@ -35,7 +36,7 @@ namespace acid
 		node.SetChild<float>("Radius", m_radius);
 	}
 
-	std::shared_ptr<btCollisionShape> ColliderSphere::GetCollisionShape() const
+	btCollisionShape *ColliderSphere::GetCollisionShape() const
 	{
 		return m_shape;
 	}

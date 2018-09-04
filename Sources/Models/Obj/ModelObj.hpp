@@ -8,27 +8,29 @@
 
 namespace acid
 {
+	/// <summary>
+	/// Class that represents a loaded OBJ model.
+	/// </summary>
 	class ACID_EXPORT ModelObj :
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelObj> Resource(const std::string &filename)
-		{
-			std::string realFilename = Files::SearchFile(filename);
-			auto resource = Resources::Get()->Get(realFilename);
+		/// <summary>
+		/// Will find an existing OBJ model with the same filename, or create a new OBJ model.
+		/// </summary>
+		/// <param name="filename"> The file to load the OBJ model from. </param>
+		static std::shared_ptr<ModelObj> Resource(const std::string &filename);
 
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<ModelObj>(resource);
-			}
-
-			auto result = std::make_shared<ModelObj>(realFilename);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
-
+		/// <summary>
+		/// Creates a new OBJ model.
+		/// </summary>
+		/// <param name="filename"> The file to load the model from. </param>
 		ModelObj(const std::string &filename);
 
+		/// <summary>
+		/// Deconstructor for the OBJ model.
+		/// </summary>
+		~ModelObj();
 	private:
 		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> *vertices, std::vector<uint32_t> *indices);
 

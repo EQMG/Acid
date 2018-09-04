@@ -6,7 +6,7 @@
 #include "Files/Files.hpp"
 #include "Files/IFile.hpp"
 #include "Helpers/FormatString.hpp"
-#include "Resources/Resources.hpp"
+#include "Resources/IResource.hpp"
 
 namespace acid
 {
@@ -23,20 +23,11 @@ namespace acid
 		std::shared_ptr<IFile> m_file;
 		std::shared_ptr<Node> m_parent;
 	public:
-		static std::shared_ptr<PrefabObject> Resource(const std::string &filename)
-		{
-			std::string realFilename = Files::SearchFile(filename);
-			auto resource = Resources::Get()->Get(realFilename);
-
-			if (resource != nullptr)
-			{
-				return std::dynamic_pointer_cast<PrefabObject>(resource);
-			}
-
-			auto result = std::make_shared<PrefabObject>(realFilename);
-			Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
-			return result;
-		}
+		/// <summary>
+		/// Will find an existing prefab object with the same filename, or create a new prefab object.
+		/// </summary>
+		/// <param name="filename"> The file to load the prefab object from. </param>
+		static std::shared_ptr<PrefabObject> Resource(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new entity prefab.

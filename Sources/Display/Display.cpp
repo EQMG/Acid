@@ -597,7 +597,7 @@ namespace acid
 		vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_physicalDeviceFeatures);
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_physicalDeviceMemoryProperties);
 
-		Log::Out( "Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
+		Log::Out("Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
 
 	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
 	}
@@ -908,40 +908,40 @@ namespace acid
 
 	void Display::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties)
 	{
-		Log::Out( "-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
-		Log::Out( "ID: %i\n", physicalDeviceProperties.deviceID);
+		Log::Out("-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
+		Log::Out("ID: %i\n", physicalDeviceProperties.deviceID);
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
 		case 1:
-			Log::Out( "Type: Integrated\n");
+			Log::Out("Type: Integrated\n");
 			break;
 		case 2:
-			Log::Out( "Type: Discrete\n");
+			Log::Out("Type: Discrete\n");
 			break;
 		case 3:
-			Log::Out( "Type: Virtual\n");
+			Log::Out("Type: Virtual\n");
 			break;
 		case 4:
-			Log::Out( "Type: CPU\n");
+			Log::Out("Type: CPU\n");
 			break;
 		default:
-			Log::Out( "Type: Other (%x)\n", physicalDeviceProperties.deviceType);
+			Log::Out("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)
 		{
 		case 0x8086:
-			Log::Out( "Vendor: Intel\n");
+			Log::Out("Vendor: Intel\n");
 			break;
 		case 0x10DE:
-			Log::Out( "Vendor: NVIDIA\n");
+			Log::Out("Vendor: NVIDIA\n");
 			break;
 		case 0x1002:
-			Log::Out( "Vendor: AMD\n");
+			Log::Out("Vendor: AMD\n");
 			break;
 		default:
-			Log::Out( "Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+			Log::Out("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
 		}
 
 		uint32_t supportedVersion[] = {
@@ -949,27 +949,27 @@ namespace acid
 			VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 			VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 		};
-		Log::Out( "Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
-		Log::Out( "Header Version: %i\n", VK_HEADER_VERSION);
-		Log::Out( "-- Done --\n");
+		Log::Out("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
+		Log::Out("Header Version: %i\n", VK_HEADER_VERSION);
+		Log::Out("-- Done --\n");
 	}
 
 	void Display::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-		Log::Out( "-- Avalable Layers For: '%s' --\n", type.c_str());
+		Log::Out("-- Avalable Layers For: '%s' --\n", type.c_str());
 
 		for (auto &layer : layerProperties)
 		{
 			if (showDescription)
 			{
-				Log::Out( "\n	%s   | %s, ", layer.layerName, layer.description);
+				Log::Out("\n	%s   | %s, ", layer.layerName, layer.description);
 			}
 			else
 			{
-				Log::Out( "%s, ", layer.layerName);
+				Log::Out("%s, ", layer.layerName);
 			}
 		}
 
-		Log::Out( "\n-- Done --\n");
+		Log::Out("\n-- Done --\n");
 	}
 }

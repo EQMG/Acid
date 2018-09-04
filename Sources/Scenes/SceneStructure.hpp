@@ -16,7 +16,7 @@ namespace acid
 		public ISpatialStructure
 	{
 	private:
-		std::vector<GameObject *> m_objects;
+		std::vector<std::shared_ptr<GameObject>> m_objects;
 	public:
 		/// <summary>
 		/// Creates a new basic structure.
@@ -28,21 +28,21 @@ namespace acid
 		/// </summary>
 		~SceneStructure();
 
-		void Add(GameObject *object) override;
+		void Add(const std::shared_ptr<GameObject> &object) override;
 
-		bool Remove(GameObject *object) override;
+		bool Remove(const std::shared_ptr<GameObject> &object) override;
 
 		void Clear() override;
 
 		uint32_t GetSize() override { return static_cast<uint32_t>(m_objects.size()); }
 
-		std::vector<GameObject *> GetAll() override { return m_objects; }
+		std::vector<std::shared_ptr<GameObject>> &GetAll() override { return m_objects; }
 
-		std::vector<GameObject *> QueryAll() override;
+		std::vector<std::shared_ptr<GameObject>> QueryAll() override;
 
-		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
+		std::vector<std::shared_ptr<GameObject>> QueryFrustum(const Frustum &range) override;
 
-	//	std::vector<GameObject *> QueryBounding(Collider *range) override;
+	//	std::vector<std::shared_ptr<GameObject>> QueryBounding(Collider *range) override;
 
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
@@ -98,6 +98,6 @@ namespace acid
 			return nullptr;
 		}
 
-		bool Contains(GameObject *object) override;
+		bool Contains(const std::shared_ptr<GameObject> &object) override;
 	};
 }

@@ -1,9 +1,33 @@
 #include "ModelCube.hpp"
 
+#include "Resources/Resources.hpp"
 #include "Models/VertexModel.hpp"
 
 namespace acid
 {
+	std::shared_ptr<ModelCube> ModelCube::Resource(const float &width, const float &height, const float &depth)
+	{
+		auto resource = Resources::Get()->Get(ToFilename(width, height, depth));
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ModelCube>(resource);
+		}
+
+		auto result = std::make_shared<ModelCube>(width, height, depth);
+		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		return result;
+	}
+
+	std::shared_ptr<ModelCube> ModelCube::Resource(const std::string &data)
+	{
+		auto split = FormatString::Split(data, "_");
+		float width = static_cast<float>(atof(split[1].c_str()));
+		float height = static_cast<float>(atof(split[2].c_str()));
+		float depth = static_cast<float>(atof(split[3].c_str()));
+		return Resource(width, height, depth);
+	}
+
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
@@ -54,6 +78,10 @@ namespace acid
 		}
 
 		Model::Set(vertices, indices, ToFilename(width, height, depth));
+	}
+
+	ModelCube::~ModelCube()
+	{
 	}
 
 	std::string ModelCube::ToFilename(const float &width, const float &height, const float &depth)

@@ -46,7 +46,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out( "Csv '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out("Csv '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 
@@ -79,7 +79,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out( "Csv '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		Log::Out("Csv '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
 

@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	auto engine = std::make_unique<Engine>();
 
 	auto configManager = std::make_unique<ConfigManager>();
-	Log::Out( "Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
 	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);
