@@ -37,8 +37,6 @@ namespace acid
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
 		FontCharacter(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX);
 
-		~FontCharacter();
-
 		int32_t GetId() const { return m_id; }
 
 		float GetTextureCoordX() const { return m_textureCoordX; }

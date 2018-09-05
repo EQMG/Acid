@@ -24,6 +24,7 @@
 #include <Terrain/Terrain.hpp>
 #include <Terrain/MaterialTerrain.hpp>
 #include <Physics/ColliderCapsule.hpp>
+#include <Uis/Uis.hpp>
 #include "FpsCamera.hpp"
 
 namespace test

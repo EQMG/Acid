@@ -1,5 +1,7 @@
 #include "JsonSection.hpp"
 
+#include "Helpers/String.hpp"
+
 namespace acid
 {
 	JsonSection::JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :

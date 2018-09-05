@@ -19,8 +19,6 @@ namespace acid
 		/// </summary>
 		FontWord();
 
-		~FontWord();
-
 		/// <summary>
 		/// Adds a character to the end of the current word and increases the screen-space width of the word.
 		/// </summary>

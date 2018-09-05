@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	FontWord::~FontWord()
-	{
-	}
-
 	bool FontWord::AddCharacter(const FontCharacter &character, const float &kerning)
 	{
 		m_characters.emplace_back(character);

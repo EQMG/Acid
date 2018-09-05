@@ -24,8 +24,6 @@ namespace acid
 		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
 		FontLine(const float &spaceWidth, const float &maxLength);
 
-		~FontLine();
-
 		/// <summary>
 		/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
 		/// </summary>

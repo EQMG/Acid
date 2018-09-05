@@ -1,12 +1,12 @@
 #include "FileJson.hpp"
 
 #include "Engine/Engine.hpp"
+#include "Helpers/String.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
 {
 	FileJson::FileJson(const std::string &filename) :
-		IFile(),
 		m_filename(filename),
 		m_parent(std::make_shared<Metadata>("", ""))
 	{

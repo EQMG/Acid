@@ -14,8 +14,6 @@ namespace acid
 	public:
 		RendererFonts(const GraphicsStage &graphicsStage);
 
-		~RendererFonts();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

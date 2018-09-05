@@ -6,7 +6,6 @@
 namespace acid
 {
 	FileCsv::FileCsv(const std::string &filename, const char &delimiter) :
-		IFile(),
 		m_filename(filename),
 		m_delimiter(delimiter),
 		m_rows(std::vector<RowCsv>())
