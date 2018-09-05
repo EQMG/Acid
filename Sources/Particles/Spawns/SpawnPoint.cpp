@@ -11,15 +11,15 @@ namespace acid
 	{
 	}
 
-	void SpawnPoint::Decode(const Node &node)
+	void SpawnPoint::Decode(const Metadata &metadata)
 	{
-		m_point = node.GetChild<Vector3>("Point");
+		m_point = metadata.GetChild<Vector3>("Point");
 	}
 
-	void SpawnPoint::Encode(Node &node) const
+	void SpawnPoint::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Type", "SpawnPoint");
-		node.SetChild<Vector3>("Point", m_point);
+		metadata.SetChild<std::string>("Type", "SpawnPoint");
+		metadata.SetChild<Vector3>("Point", m_point);
 	}
 
 	Vector3 SpawnPoint::GetBaseSpawnPosition()

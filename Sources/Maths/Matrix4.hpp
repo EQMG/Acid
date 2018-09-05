@@ -4,7 +4,7 @@
 #include <string>
 #include "Vector3.hpp"
 #include "Vector4.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -245,9 +245,9 @@ namespace acid
 		/// <returns> Returns the transformation matrix. </returns>
 		static Matrix4 LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up = Vector3::UP);
 
-		void Decode(const Node &node);
+		void Decode(const Metadata &metadata);
 
-		void Encode(Node &node) const;
+		void Encode(Metadata &metadata) const;
 
 		bool operator==(const Matrix4 &other) const;
 

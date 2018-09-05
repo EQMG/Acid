@@ -4,43 +4,43 @@
 
 namespace acid
 {
-	std::string Serialize::Encode(const Node &node)
+	std::string Serialize::Encode(const Metadata &metadata)
 	{
 		std::stringstream result;
-		EncodeStream(node, result);
+		EncodeStream(metadata, result);
 		return result.str();
 	}
 
-	Node Serialize::Decode(const std::string &value)
+	Metadata Serialize::Decode(const std::string &value)
 	{
 	//	ColliderCapsule,[(Radius,0.2,3),(Height,1.8,3),],5
 	//	Rigidbody,[(Mass,1.0,3),(Friction,0.4,3),(Linear_Factor,[(x,0.0,3),(y,0.0,3),(z,0.0,3),],5),(Angular_Factor,[(x,0.0,3),(y,0.0,3),(z,0.0,3),],5),],5
 	//	FpsPlayer,1
 	//	Mesh,[(Model,"Sphere_10_10_1.0",3),],5
-		return Node(); // TODO: Implement.
+		return Metadata(); // TODO: Implement.
 	}
 
-	void Serialize::EncodeStream(const Node &node, std::stringstream &ss)
+	void Serialize::EncodeStream(const Metadata &metadata, std::stringstream &ss)
 	{
 		EncodePropsFlags props = PROP_NONE;
 
-		if (!node.GetName().empty())
+		if (!metadata.GetName().empty())
 		{
-			ss << node.GetName() << ",";
+			ss << metadata.GetName() << ",";
 			props |= PROP_NAME;
 		}
 
-		if (!node.GetValue().empty())
+		if (!metadata.GetValue().empty())
 		{
-			ss << node.GetValue() << ",";
+			ss << metadata.GetValue() << ",";
 			props |= PROP_VALUE;
 		}
 
-		if (node.GetChildCount() != 0)
+		if (metadata.GetChildCount() != 0)
 		{
 			ss << "[";
 
-			for (auto &child : node.GetChildren())
+			for (auto &child : metadata.GetChildren())
 			{
 				ss << "(";
 				EncodeStream(*child, ss);
@@ -51,11 +51,11 @@ namespace acid
 			props |= PROP_CHILDREN;
 		}
 
-		if (node.GetAttributeCount() != 0)
+		if (metadata.GetAttributeCount() != 0)
 		{
 			ss << "[";
 
-			for (auto &attribute : node.GetAttributes())
+			for (auto &attribute : metadata.GetAttributes())
 			{
 				ss << attribute.first << "," << attribute.second;
 			}

@@ -161,14 +161,14 @@ namespace acid
 		return result.str();
 	}
 
-	void Colour::Decode(const Node &node)
+	void Colour::Decode(const Metadata &metadata)
 	{
-		*this = node.Get<std::string>();
+		*this = metadata.Get<std::string>();
 	}
 
-	void Colour::Encode(Node &node) const
+	void Colour::Encode(Metadata &metadata) const
 	{
-		node.Set<std::string>(GetHex());
+		metadata.Set<std::string>(GetHex());
 	}
 
 	bool Colour::operator==(const Colour &other) const

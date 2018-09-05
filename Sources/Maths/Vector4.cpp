@@ -161,20 +161,20 @@ namespace acid
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
-	void Vector4::Decode(const Node &node)
+	void Vector4::Decode(const Metadata &metadata)
 	{
-		m_x = node.GetChild<float>("x");
-		m_y = node.GetChild<float>("y");
-		m_z = node.GetChild<float>("z");
-		m_w = node.GetChild<float>("w");
+		m_x = metadata.GetChild<float>("x");
+		m_y = metadata.GetChild<float>("y");
+		m_z = metadata.GetChild<float>("z");
+		m_w = metadata.GetChild<float>("w");
 	}
 
-	void Vector4::Encode(Node &node) const
+	void Vector4::Encode(Metadata &metadata) const
 	{
-		node.SetChild<float>("x", m_x);
-		node.SetChild<float>("y", m_y);
-		node.SetChild<float>("z", m_z);
-		node.SetChild<float>("w", m_w);
+		metadata.SetChild<float>("x", m_x);
+		metadata.SetChild<float>("y", m_y);
+		metadata.SetChild<float>("z", m_z);
+		metadata.SetChild<float>("w", m_w);
 	}
 
 	bool Vector4::operator==(const Vector4 &other) const

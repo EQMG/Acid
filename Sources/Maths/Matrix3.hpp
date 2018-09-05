@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Vector3.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -136,9 +136,9 @@ namespace acid
 		/// <returns> The submatrix. </returns>
 		Matrix2 GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
-		void Decode(const Node &node);
+		void Decode(const Metadata &metadata);
 
-		void Encode(Node &node) const;
+		void Encode(Metadata &metadata) const;
 
 		bool operator==(const Matrix3 &other) const;
 

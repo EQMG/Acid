@@ -31,17 +31,17 @@ namespace acid
 		m_position = GetGameObject()->GetTransform().GetPosition() + m_offset;
 	}
 
-	void Light::Decode(const Node &node)
+	void Light::Decode(const Metadata &metadata)
 	{
-		m_colour = node.GetChild<Colour>("Colour");
-		m_offset = node.GetChild<Vector3>("Offset");
-		m_radius = node.GetChild<float>("Radius");
+		m_colour = metadata.GetChild<Colour>("Colour");
+		m_offset = metadata.GetChild<Vector3>("Offset");
+		m_radius = metadata.GetChild<float>("Radius");
 	}
 
-	void Light::Encode(Node &node) const
+	void Light::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Colour>("Colour", m_colour);
-		node.SetChild<Vector3>("Offset", m_offset);
-		node.SetChild<float>("Radius", m_radius);
+		metadata.SetChild<Colour>("Colour", m_colour);
+		metadata.SetChild<Vector3>("Offset", m_offset);
+		metadata.SetChild<float>("Radius", m_radius);
 	}
 }

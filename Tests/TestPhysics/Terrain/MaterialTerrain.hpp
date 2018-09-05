@@ -25,9 +25,9 @@ namespace test
 
 		void Update() override;
 
-		void Decode(const Node &node) override;
+		void Decode(const Metadata &metadata) override;
 
-		void Encode(Node &node) const override;
+		void Encode(Metadata &metadata) const override;
 
 		void PushUniforms(UniformHandler &uniformObject) override;
 

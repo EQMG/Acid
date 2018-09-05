@@ -54,11 +54,11 @@ namespace test
 	{
 	}
 
-	void Terrain::Decode(const Node &node)
+	void Terrain::Decode(const Metadata &metadata)
 	{
 	}
 
-	void Terrain::Encode(Node &node) const
+	void Terrain::Encode(Metadata &metadata) const
 	{
 	}
 

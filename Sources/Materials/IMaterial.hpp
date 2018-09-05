@@ -19,9 +19,9 @@ namespace acid
 
 		virtual void Update() override = 0;
 
-		virtual void Decode(const Node &node) override = 0;
+		virtual void Decode(const Metadata &metadata) override = 0;
 
-		virtual void Encode(Node &node) const override = 0;
+		virtual void Encode(Metadata &metadata) const override = 0;
 
 		virtual void PushUniforms(UniformHandler &uniformObject) = 0;
 

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(const std::shared_ptr<Node> &libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(const std::shared_ptr<Metadata> &libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
@@ -19,7 +19,7 @@ namespace acid
 	{
 	}
 
-	std::shared_ptr<JointData> SkeletonLoader::LoadJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot)
+	std::shared_ptr<JointData> SkeletonLoader::LoadJointData(const std::shared_ptr<Metadata> &jointNode, const bool &isRoot)
 	{
 		auto joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -31,7 +31,7 @@ namespace acid
 		return joint;
 	}
 
-	std::shared_ptr<JointData> SkeletonLoader::ExtractMainJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot)
+	std::shared_ptr<JointData> SkeletonLoader::ExtractMainJointData(const std::shared_ptr<Metadata> &jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);

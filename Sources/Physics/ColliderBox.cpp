@@ -26,14 +26,14 @@ namespace acid
 	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
-	void ColliderBox::Decode(const Node &node)
+	void ColliderBox::Decode(const Metadata &metadata)
 	{
-		m_extents = node.GetChild<Vector3>("Extents");
+		m_extents = metadata.GetChild<Vector3>("Extents");
 	}
 
-	void ColliderBox::Encode(Node &node) const
+	void ColliderBox::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Vector3>("Extents", m_extents);
+		metadata.SetChild<Vector3>("Extents", m_extents);
 	}
 
 	btCollisionShape *ColliderBox::GetCollisionShape() const

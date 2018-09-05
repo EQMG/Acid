@@ -306,18 +306,18 @@ namespace acid
 		return Vector3(direction);
 	}
 
-	void Vector3::Decode(const Node &node)
+	void Vector3::Decode(const Metadata &metadata)
 	{
-		m_x = node.GetChild<float>("x");
-		m_y = node.GetChild<float>("y");
-		m_z = node.GetChild<float>("z");
+		m_x = metadata.GetChild<float>("x");
+		m_y = metadata.GetChild<float>("y");
+		m_z = metadata.GetChild<float>("z");
 	}
 
-	void Vector3::Encode(Node &node) const
+	void Vector3::Encode(Metadata &metadata) const
 	{
-		node.SetChild<float>("x", m_x);
-		node.SetChild<float>("y", m_y);
-		node.SetChild<float>("z", m_z);
+		metadata.SetChild<float>("x", m_x);
+		metadata.SetChild<float>("y", m_y);
+		metadata.SetChild<float>("z", m_z);
 	}
 
 	bool Vector3::operator==(const Vector3 &other) const

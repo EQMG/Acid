@@ -40,14 +40,14 @@ namespace acid
 		}*/
 	}
 
-	void Mesh::Decode(const Node &node)
+	void Mesh::Decode(const Metadata &metadata)
 	{
-		TrySetModel(node.GetChild<std::string>("Model"));
+		TrySetModel(metadata.GetChild<std::string>("Model"));
 	}
 
-	void Mesh::Encode(Node &node) const
+	void Mesh::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
+		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)

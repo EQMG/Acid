@@ -55,9 +55,9 @@ namespace acid
 
 		void Update() override;
 
-		void Decode(const Node &node) override;
+		void Decode(const Metadata &metadata) override;
 
-		void Encode(Node &node) const override;
+		void Encode(Metadata &metadata) const override;
 
 	private:
 		std::optional<Particle> EmitParticle();
@@ -77,7 +77,7 @@ namespace acid
 
 		void SetSpawn(const std::shared_ptr<ISpawnParticle> &spawn) { m_spawn = spawn; }
 
-		void TrySetSpawn(const Node &spawnNode);
+		void TrySetSpawn(const Metadata &spawnNode);
 
 		float GetPps() const { return m_pps; }
 

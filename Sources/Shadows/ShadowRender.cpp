@@ -24,11 +24,11 @@ namespace acid
 		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
 	}
 
-	void ShadowRender::Decode(const Node &node)
+	void ShadowRender::Decode(const Metadata &metadata)
 	{
 	}
 
-	void ShadowRender::Encode(Node &node) const
+	void ShadowRender::Encode(Metadata &metadata) const
 	{
 	}
 

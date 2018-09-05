@@ -28,11 +28,11 @@ namespace acid
 	{
 	}
 
-	void ColliderHeightfield::Decode(const Node &node)
+	void ColliderHeightfield::Decode(const Metadata &metadata)
 	{
 	}
 
-	void ColliderHeightfield::Encode(Node &node) const
+	void ColliderHeightfield::Encode(Metadata &metadata) const
 	{
 	}
 

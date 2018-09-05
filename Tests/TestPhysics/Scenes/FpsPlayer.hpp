@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/IBehaviour.hpp>
 #include <Objects/GameObject.hpp>
+#include <Objects/IComponent.hpp>
 #include <Inputs/IAxis.hpp>
 #include <Inputs/IButton.hpp>
 
@@ -10,7 +10,7 @@ using namespace acid;
 namespace test
 {
 	class FpsPlayer :
-		public IBehaviour
+		public IComponent
 	{
 	private:
 		Vector3 m_velocity;

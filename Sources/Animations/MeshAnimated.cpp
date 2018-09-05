@@ -41,14 +41,14 @@ namespace acid
 		}
 	}
 
-	void MeshAnimated::Decode(const Node &node)
+	void MeshAnimated::Decode(const Metadata &metadata)
 	{
-		TrySetModel(node.GetChild<std::string>("Model"));
+		TrySetModel(metadata.GetChild<std::string>("Model"));
 	}
 
-	void MeshAnimated::Encode(Node &node) const
+	void MeshAnimated::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Model", m_filename);
+		metadata.SetChild<std::string>("Model", m_filename);
 	}
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
