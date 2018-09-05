@@ -13,17 +13,17 @@ namespace acid
 	{
 	}
 
-	void SpawnCircle::Decode(const Node &node)
+	void SpawnCircle::Decode(const Metadata &metadata)
 	{
-		m_radius = node.GetChild<float>("Radius");
-		m_heading = node.GetChild<Vector3>("Heading");
+		m_radius = metadata.GetChild<float>("Radius");
+		m_heading = metadata.GetChild<Vector3>("Heading");
 	}
 
-	void SpawnCircle::Encode(Node &node) const
+	void SpawnCircle::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Type", "SpawnCircle");
-		node.SetChild<float>("Radius", m_radius);
-		node.SetChild<Vector3>("Heading", m_heading);
+		metadata.SetChild<std::string>("Type", "SpawnCircle");
+		metadata.SetChild<float>("Radius", m_radius);
+		metadata.SetChild<Vector3>("Heading", m_heading);
 	}
 
 	Vector3 SpawnCircle::GetBaseSpawnPosition()

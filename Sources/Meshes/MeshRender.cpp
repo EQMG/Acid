@@ -78,11 +78,11 @@ namespace acid
 		mesh->GetModel()->CmdRender(commandBuffer);
 	}
 
-	void MeshRender::Decode(const Node &node)
+	void MeshRender::Decode(const Metadata &metadata)
 	{
 	}
 
-	void MeshRender::Encode(Node &node) const
+	void MeshRender::Encode(Metadata &metadata) const
 	{
 	}
 

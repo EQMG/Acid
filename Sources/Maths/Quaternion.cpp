@@ -331,20 +331,20 @@ namespace acid
 		);
 	}
 
-	void Quaternion::Decode(const Node &node)
+	void Quaternion::Decode(const Metadata &metadata)
 	{
-		m_x = node.GetChild<float>("x");
-		m_y = node.GetChild<float>("y");
-		m_z = node.GetChild<float>("z");
-		m_w = node.GetChild<float>("w");
+		m_x = metadata.GetChild<float>("x");
+		m_y = metadata.GetChild<float>("y");
+		m_z = metadata.GetChild<float>("z");
+		m_w = metadata.GetChild<float>("w");
 	}
 
-	void Quaternion::Encode(Node &node) const
+	void Quaternion::Encode(Metadata &metadata) const
 	{
-		node.SetChild<float>("x", m_x);
-		node.SetChild<float>("y", m_y);
-		node.SetChild<float>("z", m_z);
-		node.SetChild<float>("w", m_w);
+		metadata.SetChild<float>("x", m_x);
+		metadata.SetChild<float>("y", m_y);
+		metadata.SetChild<float>("z", m_z);
+		metadata.SetChild<float>("w", m_w);
 	}
 
 	bool Quaternion::operator==(const Quaternion &other) const

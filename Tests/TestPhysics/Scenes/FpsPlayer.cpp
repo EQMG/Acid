@@ -22,7 +22,6 @@ namespace test
 	const Vector3 DAMP_NORMAL = Vector3(20.0f, 1.0f, 20.0f);
 
 	FpsPlayer::FpsPlayer() :
-		IBehaviour(),
 		m_velocity(Vector3()),
 		m_jumping(false),
 		m_noclipEnabled(false),

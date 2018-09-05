@@ -46,34 +46,34 @@ namespace acid
 	{
 	}
 
-	void MaterialDefault::Decode(const Node &node)
+	void MaterialDefault::Decode(const Metadata &metadata)
 	{
-		m_baseDiffuse = node.GetChild<Colour>("Base Diffuse");
-		TrySetDiffuseTexture(node.GetChild<std::string>("Diffuse Texture"));
+		m_baseDiffuse = metadata.GetChild<Colour>("Base Diffuse");
+		TrySetDiffuseTexture(metadata.GetChild<std::string>("Diffuse Texture"));
 
-		m_metallic = node.GetChild<float>("Metallic");
-		m_roughness = node.GetChild<float>("Roughness");
-		TrySetMaterialTexture(node.GetChild<std::string>("Material Texture"));
-		TrySetNormalTexture(node.GetChild<std::string>("Normal Texture"));
+		m_metallic = metadata.GetChild<float>("Metallic");
+		m_roughness = metadata.GetChild<float>("Roughness");
+		TrySetMaterialTexture(metadata.GetChild<std::string>("Material Texture"));
+		TrySetNormalTexture(metadata.GetChild<std::string>("Normal Texture"));
 
-		m_castsShadows = node.GetChild<bool>("Casts Shadows");
-		m_ignoreLighting = node.GetChild<bool>("Ignore Lighting");
-		m_ignoreFog = node.GetChild<bool>("Ignore Fog");
+		m_castsShadows = metadata.GetChild<bool>("Casts Shadows");
+		m_ignoreLighting = metadata.GetChild<bool>("Ignore Lighting");
+		m_ignoreFog = metadata.GetChild<bool>("Ignore Fog");
 	}
 
-	void MaterialDefault::Encode(Node &node) const
+	void MaterialDefault::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Colour>("Base Diffuse", m_baseDiffuse);
-		node.SetChild<std::string>("Diffuse Texture", m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		metadata.SetChild<Colour>("Base Diffuse", m_baseDiffuse);
+		metadata.SetChild<std::string>("Diffuse Texture", m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
 
-		node.SetChild<float>("Metallic", m_metallic);
-		node.SetChild<float>("Roughness", m_roughness);
-		node.SetChild<std::string>("Material Texture", m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
-		node.SetChild<std::string>("Normal Texture", m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
+		metadata.SetChild<float>("Metallic", m_metallic);
+		metadata.SetChild<float>("Roughness", m_roughness);
+		metadata.SetChild<std::string>("Material Texture", m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
+		metadata.SetChild<std::string>("Normal Texture", m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
 
-		node.SetChild<bool>("Casts Shadows", m_castsShadows);
-		node.SetChild<bool>("Ignore Lighting", m_ignoreLighting);
-		node.SetChild<bool>("Ignore Fog", m_ignoreFog);
+		metadata.SetChild<bool>("Casts Shadows", m_castsShadows);
+		metadata.SetChild<bool>("Ignore Lighting", m_ignoreLighting);
+		metadata.SetChild<bool>("Ignore Fog", m_ignoreFog);
 	}
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)

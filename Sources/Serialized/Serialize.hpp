@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Node.hpp"
+#include "Metadata.hpp"
 
 namespace acid
 {
@@ -18,10 +18,10 @@ namespace acid
 	class ACID_EXPORT Serialize
 	{
 	public:
-		static std::string Encode(const Node &node);
+		static std::string Encode(const Metadata &metadata);
 
-		static Node Decode(const std::string &value);
+		static Metadata Decode(const std::string &value);
 	private:
-		static void EncodeStream(const Node &node, std::stringstream &ss);
+		static void EncodeStream(const Metadata &metadata, std::stringstream &ss);
 	};
 }

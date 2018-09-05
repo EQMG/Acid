@@ -8,7 +8,7 @@ namespace acid
 	FileJson::FileJson(const std::string &filename) :
 		IFile(),
 		m_filename(filename),
-		m_parent(std::make_shared<Node>("", ""))
+		m_parent(std::make_shared<Metadata>("", ""))
 	{
 	}
 

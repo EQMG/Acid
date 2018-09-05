@@ -177,16 +177,16 @@ namespace acid
 		return Vector2(x, y);
 	}
 
-	void Vector2::Decode(const Node &node)
+	void Vector2::Decode(const Metadata &metadata)
 	{
-		m_x = node.GetChild<float>("x");
-		m_y = node.GetChild<float>("y");
+		m_x = metadata.GetChild<float>("x");
+		m_y = metadata.GetChild<float>("y");
 	}
 
-	void Vector2::Encode(Node &node) const
+	void Vector2::Encode(Metadata &metadata) const
 	{
-		node.SetChild<float>("x", m_x);
-		node.SetChild<float>("y", m_y);
+		metadata.SetChild<float>("x", m_x);
+		metadata.SetChild<float>("y", m_y);
 	}
 
 	bool Vector2::operator==(const Vector2 &other) const

@@ -60,11 +60,11 @@ namespace acid
 		}
 	}
 
-	void ColliderConvexHull::Decode(const Node &node)
+	void ColliderConvexHull::Decode(const Metadata &metadata)
 	{
 	}
 
-	void ColliderConvexHull::Encode(Node &node) const
+	void ColliderConvexHull::Encode(Metadata &metadata) const
 	{
 	}
 

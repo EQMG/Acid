@@ -29,17 +29,17 @@ namespace acid
 	{
 	}
 
-	void MaterialSkybox::Decode(const Node &node)
+	void MaterialSkybox::Decode(const Metadata &metadata)
 	{
-		TrySetCubemap(node.GetChild<std::string>("Cubemap Texture"), node.GetChild<std::string>("Cubemap Extension"));
-		m_skyColour = node.GetChild<Colour>("Sky Colour");
+		TrySetCubemap(metadata.GetChild<std::string>("Cubemap Texture"), metadata.GetChild<std::string>("Cubemap Extension"));
+		m_skyColour = metadata.GetChild<Colour>("Sky Colour");
 	}
 
-	void MaterialSkybox::Encode(Node &node) const
+	void MaterialSkybox::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Cubemap Texture", m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
-		node.SetChild<std::string>("Cubemap Extension", m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
-		node.SetChild<Colour>("Sky Colour", m_skyColour.GetHex());
+		metadata.SetChild<std::string>("Cubemap Texture", m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
+		metadata.SetChild<std::string>("Cubemap Extension", m_cubemap == nullptr ? "" : m_cubemap->GetExtension());
+		metadata.SetChild<Colour>("Sky Colour", m_skyColour.GetHex());
 	}
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)

@@ -3,7 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -297,9 +297,9 @@ namespace acid
 
 		void SetZ(const float &z) { m_z = z; }
 
-		void Decode(const Node &node);
+		void Decode(const Metadata &metadata);
 
-		void Encode(Node &node) const;
+		void Encode(Metadata &metadata) const;
 
 		bool operator==(const Vector3 &other) const;
 

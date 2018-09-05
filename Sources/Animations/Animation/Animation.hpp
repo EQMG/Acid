@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 #include "Animations/Keyframe/Keyframe.hpp"
 
 namespace acid

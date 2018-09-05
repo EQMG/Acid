@@ -222,16 +222,16 @@ namespace acid
 		return result;
 	}
 
-	void Matrix2::Decode(const Node &node)
+	void Matrix2::Decode(const Metadata &metadata)
 	{
-		m_rows[0] = node.GetChild<Vector2>("m0");
-		m_rows[1] = node.GetChild<Vector2>("m1");
+		m_rows[0] = metadata.GetChild<Vector2>("m0");
+		m_rows[1] = metadata.GetChild<Vector2>("m1");
 	}
 
-	void Matrix2::Encode(Node &node) const
+	void Matrix2::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Vector2>("m0", m_rows[0]);
-		node.SetChild<Vector2>("m1", m_rows[1]);
+		metadata.SetChild<Vector2>("m0", m_rows[0]);
+		metadata.SetChild<Vector2>("m1", m_rows[1]);
 	}
 
 	bool Matrix2::operator==(const Matrix2 &other) const

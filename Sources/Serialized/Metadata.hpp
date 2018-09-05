@@ -12,19 +12,19 @@ namespace acid
 	/// <summary>
 	/// A class that is used to represent a tree of values, used in file-object serialization.
 	/// </summary>
-	class ACID_EXPORT Node
+	class ACID_EXPORT Metadata
 	{
 	protected:
 		std::string m_name;
 		std::string m_value;
-		std::vector<std::shared_ptr<Node>> m_children;
+		std::vector<std::shared_ptr<Metadata>> m_children;
 		std::map<std::string, std::string> m_attributes;
 	public:
-		Node(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+		Metadata(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
 
-		Node(const Node &source);
+		Metadata(const Metadata &source);
 
-		~Node();
+		~Metadata();
 
 		std::string GetName() const { return m_name; }
 
@@ -38,21 +38,21 @@ namespace acid
 
 		void SetString(const std::string &data);
 
-		std::vector<std::shared_ptr<Node>> GetChildren() const { return m_children; }
+		std::vector<std::shared_ptr<Metadata>> GetChildren() const { return m_children; }
 
 		uint32_t GetChildCount() const { return static_cast<uint32_t>(m_children.size()); }
 
 		void ClearChildren() { m_children.clear(); }
 
-		std::shared_ptr<Node> AddChild(const std::shared_ptr<Node> &value);
+		std::shared_ptr<Metadata> AddChild(const std::shared_ptr<Metadata> &value);
 
-		bool RemoveChild(const std::shared_ptr<Node> &value);
+		bool RemoveChild(const std::shared_ptr<Metadata> &value);
 
-		std::vector<std::shared_ptr<Node>> FindChildren(const std::string &name) const;
+		std::vector<std::shared_ptr<Metadata>> FindChildren(const std::string &name) const;
 
-		std::shared_ptr<Node> FindChild(const std::string &name, const bool &reportError = true) const;
+		std::shared_ptr<Metadata> FindChild(const std::string &name, const bool &reportError = true) const;
 
-		std::shared_ptr<Node> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
+		std::shared_ptr<Metadata> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
 		template<typename T>
 		T GetChild(const std::string &name) const
@@ -74,7 +74,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = AddChild(std::make_shared<Node>(name));
+				child = AddChild(std::make_shared<Metadata>(name));
 				child->Set(value);
 			}
 
@@ -88,7 +88,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = std::make_shared<Node>(name, "");
+				child = std::make_shared<Metadata>(name, "");
 				m_children.emplace_back(child);
 			}
 

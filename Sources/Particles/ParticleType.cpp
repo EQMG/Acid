@@ -53,23 +53,23 @@ namespace acid
 	{
 	}
 
-	void ParticleType::Decode(const Node &node)
+	void ParticleType::Decode(const Metadata &metadata)
 	{
-		TrySetTexture(node.GetChild<std::string>("Texture"));
-		m_numberOfRows = node.GetChild<uint32_t>("Number Of Rows");
-		m_colourOffset = node.GetChild<Colour>("Colour Offset");
-		m_lifeLength = node.GetChild<float>("Life Length");
-		m_scale = node.GetChild<float>("Scale");
+		TrySetTexture(metadata.GetChild<std::string>("Texture"));
+		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
+		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
+		m_lifeLength = metadata.GetChild<float>("Life Length");
+		m_scale = metadata.GetChild<float>("Scale");
 		m_filename = ToFilename(m_texture, m_numberOfRows, m_colourOffset, m_lifeLength, m_scale);
 	}
 
-	void ParticleType::Encode(Node &node) const
+	void ParticleType::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetFilename());
-		node.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
-		node.SetChild<Colour>("Colour Offset", m_colourOffset);
-		node.SetChild<float>("Life Length", m_lifeLength);
-		node.SetChild<float>("Scale", m_scale);
+		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetFilename());
+		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
+		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
+		metadata.SetChild<float>("Life Length", m_lifeLength);
+		metadata.SetChild<float>("Scale", m_scale);
 	}
 
 	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)

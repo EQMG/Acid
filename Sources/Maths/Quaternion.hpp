@@ -4,7 +4,7 @@
 #include <string>
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -214,9 +214,9 @@ namespace acid
 
 		void SetW(const float &w) { m_w = w; }
 
-		void Decode(const Node &node);
+		void Decode(const Metadata &metadata);
 
-		void Encode(Node &node) const;
+		void Encode(Metadata &metadata) const;
 
 		bool operator==(const Quaternion &other) const;
 

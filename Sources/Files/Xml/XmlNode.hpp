@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 #include "Helpers/String.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -36,8 +36,8 @@ namespace acid
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int32_t &indentation);
+		static void AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation);
 
-		static std::shared_ptr<Node> &Convert(const XmlNode &source, std::shared_ptr<Node> &parent, const bool &isTopSection);
+		static std::shared_ptr<Metadata> &Convert(const XmlNode &source, std::shared_ptr<Metadata> &parent, const bool &isTopSection);
 	};
 }

@@ -15,15 +15,15 @@ namespace acid
 	{
 	}
 
-	void SpawnSphere::Decode(const Node &node)
+	void SpawnSphere::Decode(const Metadata &metadata)
 	{
-		m_radius = node.GetChild<float>("Radius");
+		m_radius = metadata.GetChild<float>("Radius");
 	}
 
-	void SpawnSphere::Encode(Node &node) const
+	void SpawnSphere::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Type", "SpawnSphere");
-		node.SetChild<float>("Radius", m_radius);
+		metadata.SetChild<std::string>("Type", "SpawnSphere");
+		metadata.SetChild<float>("Radius", m_radius);
 	}
 
 	Vector3 SpawnSphere::GetBaseSpawnPosition()

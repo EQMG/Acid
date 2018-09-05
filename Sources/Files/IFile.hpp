@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Node.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -28,6 +28,6 @@ namespace acid
 
 		virtual void SetFilename(const std::string &filename) = 0;
 
-		virtual std::shared_ptr<Node> GetParent() const = 0;
+		virtual std::shared_ptr<Metadata> GetParent() const = 0;
 	};
 }

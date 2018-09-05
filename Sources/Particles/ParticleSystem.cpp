@@ -57,43 +57,43 @@ namespace acid
 		}
 	}
 
-	void ParticleSystem::Decode(const Node &node)
+	void ParticleSystem::Decode(const Metadata &metadata)
 	{
-		for (auto &typeNode : node.FindChild("Types")->GetChildren())
+		for (auto &typeNode : metadata.FindChild("Types")->GetChildren())
 		{
 			ParticleType temp = ParticleType();
 			temp.Decode(*typeNode);
 			m_types.emplace_back(ParticleType::Resource(temp.GetFilename()));
 		}
 
-		TrySetSpawn(*node.FindChild("Spawn"));
+		TrySetSpawn(*metadata.FindChild("Spawn"));
 
-		m_pps = node.GetChild<float>("PPS");
-		m_averageSpeed = node.GetChild<float>("Average Speed");
-		m_gravityEffect = node.GetChild<float>("Gravity Effect");
-		m_systemOffset = node.GetChild<Vector3>("Offset");
+		m_pps = metadata.GetChild<float>("PPS");
+		m_averageSpeed = metadata.GetChild<float>("Average Speed");
+		m_gravityEffect = metadata.GetChild<float>("Gravity Effect");
+		m_systemOffset = metadata.GetChild<Vector3>("Offset");
 	}
 
-	void ParticleSystem::Encode(Node &node) const
+	void ParticleSystem::Encode(Metadata &metadata) const
 	{
-		auto typesNode = node.FindChild("Types");
+		auto typesNode = metadata.FindChild("Types");
 
 		if (typesNode == nullptr)
 		{
-			typesNode = node.AddChild(std::make_shared<Node>("Types"));
+			typesNode = metadata.AddChild(std::make_shared<Metadata>("Types"));
 		}
 
 		for (auto &type : m_types)
 		{
-			type->Encode(*typesNode->AddChild(std::make_shared<Node>()));
+			type->Encode(*typesNode->AddChild(std::make_shared<Metadata>()));
 		}
 
-		node.SetChild<ISpawnParticle>("Spawn", *m_spawn);
+		metadata.SetChild<ISpawnParticle>("Spawn", *m_spawn);
 
-		node.SetChild<float>("PPS", m_pps);
-		node.SetChild<float>("Average Speed", m_averageSpeed);
-		node.SetChild<float>("Gravity Effect", m_gravityEffect);
-		node.SetChild<Vector3>("Offset", m_systemOffset);
+		metadata.SetChild<float>("PPS", m_pps);
+		metadata.SetChild<float>("Average Speed", m_averageSpeed);
+		metadata.SetChild<float>("Gravity Effect", m_gravityEffect);
+		metadata.SetChild<Vector3>("Offset", m_systemOffset);
 		// TODO: m_randomRotation, m_direction, m_directionDeviation, m_speedError, m_lifeError, m_scaleError
 	}
 
@@ -180,7 +180,7 @@ namespace acid
 		return false;
 	}
 
-	void ParticleSystem::TrySetSpawn(const Node &spawnNode)
+	void ParticleSystem::TrySetSpawn(const Metadata &spawnNode)
 	{
 		std::string spawnName = spawnNode.GetChild<std::string>("Type");
 

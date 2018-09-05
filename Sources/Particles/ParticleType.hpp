@@ -55,9 +55,9 @@ namespace acid
 
 		~ParticleType();
 
-		void Decode(const Node &node);
+		void Decode(const Metadata &metadata);
 
-		void Encode(Node &node) const;
+		void Encode(Metadata &metadata) const;
 
 		std::string GetFilename() override { return m_filename; }
 

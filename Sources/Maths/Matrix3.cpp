@@ -238,18 +238,18 @@ namespace acid
 		return result;
 	}
 
-	void Matrix3::Decode(const Node &node)
+	void Matrix3::Decode(const Metadata &metadata)
 	{
-		m_rows[0] = node.GetChild<Vector3>("m0");
-		m_rows[1] = node.GetChild<Vector3>("m1");
-		m_rows[2] = node.GetChild<Vector3>("m2");
+		m_rows[0] = metadata.GetChild<Vector3>("m0");
+		m_rows[1] = metadata.GetChild<Vector3>("m1");
+		m_rows[2] = metadata.GetChild<Vector3>("m2");
 	}
 
-	void Matrix3::Encode(Node &node) const
+	void Matrix3::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Vector3>("m0", m_rows[0]);
-		node.SetChild<Vector3>("m1", m_rows[1]);
-		node.SetChild<Vector3>("m2", m_rows[2]);
+		metadata.SetChild<Vector3>("m0", m_rows[0]);
+		metadata.SetChild<Vector3>("m1", m_rows[1]);
+		metadata.SetChild<Vector3>("m2", m_rows[2]);
 	}
 
 	bool Matrix3::operator==(const Matrix3 &other) const

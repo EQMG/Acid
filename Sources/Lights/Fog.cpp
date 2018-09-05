@@ -24,22 +24,22 @@ namespace acid
 	{
 	}
 
-	void Fog::Decode(const Node &node)
+	void Fog::Decode(const Metadata &metadata)
 	{
-		m_colour = node.GetChild<Colour>("Colour");
-		m_density = node.GetChild<float>("Density");
-		m_gradient = node.GetChild<float>("Gradient");
-		m_lowerLimit = node.GetChild<float>("Lower Limit");
-		m_upperLimit = node.GetChild<float>("Upper Limit");
+		m_colour = metadata.GetChild<Colour>("Colour");
+		m_density = metadata.GetChild<float>("Density");
+		m_gradient = metadata.GetChild<float>("Gradient");
+		m_lowerLimit = metadata.GetChild<float>("Lower Limit");
+		m_upperLimit = metadata.GetChild<float>("Upper Limit");
 	}
 
-	void Fog::Encode(Node &node) const
+	void Fog::Encode(Metadata &metadata) const
 	{
-		node.SetChild<Colour>("Colour", m_colour);
-		node.SetChild<float>("Density", m_density);
-		node.SetChild<float>("Gradient", m_gradient);
-		node.SetChild<float>("Lower Limit", m_lowerLimit);
-		node.SetChild<float>("Upper Limit", m_upperLimit);
+		metadata.SetChild<Colour>("Colour", m_colour);
+		metadata.SetChild<float>("Density", m_density);
+		metadata.SetChild<float>("Gradient", m_gradient);
+		metadata.SetChild<float>("Lower Limit", m_lowerLimit);
+		metadata.SetChild<float>("Upper Limit", m_upperLimit);
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Fog &colour)

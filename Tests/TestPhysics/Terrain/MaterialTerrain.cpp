@@ -26,16 +26,16 @@ namespace test
 	{
 	}
 
-	void MaterialTerrain::Decode(const Node &node)
+	void MaterialTerrain::Decode(const Metadata &metadata)
 	{
-		TrySetTextureR(node.GetChild<std::string>("Texture R"));
-		TrySetTextureR(node.GetChild<std::string>("Texture G"));
+		TrySetTextureR(metadata.GetChild<std::string>("Texture R"));
+		TrySetTextureR(metadata.GetChild<std::string>("Texture G"));
 	}
 
-	void MaterialTerrain::Encode(Node &node) const
+	void MaterialTerrain::Encode(Metadata &metadata) const
 	{
-		node.SetChild<std::string>("Texture R", m_textureR == nullptr ? "" : m_textureR->GetFilename());
-		node.SetChild<std::string>("Texture G", m_textureG == nullptr ? "" : m_textureG->GetFilename());
+		metadata.SetChild<std::string>("Texture R", m_textureR == nullptr ? "" : m_textureR->GetFilename());
+		metadata.SetChild<std::string>("Texture G", m_textureG == nullptr ? "" : m_textureG->GetFilename());
 	}
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)

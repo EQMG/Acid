@@ -10,9 +10,9 @@ namespace acid
 	class ACID_EXPORT ISpawnParticle
 	{
 	public:
-		virtual void Decode(const Node &node) = 0;
+		virtual void Decode(const Metadata &metadata) = 0;
 
-		virtual void Encode(Node &node) const = 0;
+		virtual void Encode(Metadata &metadata) const = 0;
 
 		/// <summary>
 		/// Gets the base spawn position.

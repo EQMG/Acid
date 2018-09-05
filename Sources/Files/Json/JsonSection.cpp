@@ -18,7 +18,7 @@ namespace acid
 		}
 	}
 
-	void JsonSection::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
+	void JsonSection::AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
@@ -73,13 +73,13 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<Node> JsonSection::Convert(const JsonSection &source, std::shared_ptr<Node> &parent, const bool &isTopSection)
+	std::shared_ptr<Metadata> JsonSection::Convert(const JsonSection &source, std::shared_ptr<Metadata> &parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = std::make_shared<Node>(source.m_name, "");
+			thisValue = std::make_shared<Metadata>(source.m_name, "");
 			parent->AddChild(thisValue);
 		}
 
@@ -95,7 +95,7 @@ namespace acid
 			}
 
 			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
-			auto newChild = std::make_shared<Node>(name, dataSplit.at(1));
+			auto newChild = std::make_shared<Metadata>(name, dataSplit.at(1));
 			thisValue->AddChild(newChild);
 		}
 

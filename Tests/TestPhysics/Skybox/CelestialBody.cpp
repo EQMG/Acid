@@ -74,13 +74,13 @@ namespace test
 		}
 	}
 
-	void CelestialBody::Decode(const Node &node)
+	void CelestialBody::Decode(const Metadata &metadata)
 	{
-	//	m_type = node.GetChild<CelestialType>("Type"); // TODO: Node child enum type.
+	//	m_type = metadata.GetChild<CelestialType>("Type"); // TODO: Node child enum type.
 	}
 
-	void CelestialBody::Encode(Node &node) const
+	void CelestialBody::Encode(Metadata &metadata) const
 	{
-	//	node.SetChild<CelestialType>("Type", m_type);
+	//	metadata.SetChild<CelestialType>("Type", m_type);
 	}
 }
