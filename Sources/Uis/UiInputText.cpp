@@ -3,6 +3,7 @@
 #include "Inputs/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Uis.hpp"
 
 namespace acid
 {

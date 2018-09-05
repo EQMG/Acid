@@ -10,14 +10,6 @@ namespace acid
 	class ACID_EXPORT IFile
 	{
 	public:
-		IFile()
-		{
-		};
-
-		virtual ~IFile()
-		{
-		};
-
 		virtual void Load() = 0;
 
 		virtual void Save() = 0;

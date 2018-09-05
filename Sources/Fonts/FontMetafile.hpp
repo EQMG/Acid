@@ -54,8 +54,6 @@ namespace acid
 		/// <param name="filepath"> The font file to load from. </param>
 		FontMetafile(const std::string &filename);
 
-		~FontMetafile();
-
 		std::optional<FontCharacter> GetCharacter(const int32_t &ascii);
 
 		std::string GetFilename() override { return m_filename; }

@@ -1,5 +1,7 @@
 #include "XmlNode.hpp"
 
+#include "Helpers/String.hpp"
+
 namespace acid
 {
 	XmlNode::XmlNode(XmlNode *parent, const std::string &attributes, const std::string &content) :
@@ -95,8 +97,8 @@ namespace acid
 
 		if (!attributes.empty())
 		{
-			std::string currentKey = "";
-			std::string summation = "";
+			std::string currentKey;
+			std::string summation;
 
 			for (char &c : attributes)
 			{

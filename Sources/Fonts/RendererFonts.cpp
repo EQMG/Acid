@@ -1,6 +1,7 @@
 #include "RendererFonts.hpp"
 
 #include "Models/VertexModel.hpp"
+#include "Uis/Uis.hpp"
 
 namespace acid
 {
@@ -8,10 +9,6 @@ namespace acid
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"},
 			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})))
-	{
-	}
-
-	RendererFonts::~RendererFonts()
 	{
 	}
 

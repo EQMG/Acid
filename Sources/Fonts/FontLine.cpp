@@ -11,14 +11,10 @@ namespace acid
 	{
 	}
 
-	FontLine::~FontLine()
-	{
-	}
-
 	bool FontLine::AddWord(const FontWord &word)
 	{
 		float additionalLength = word.GetWidth();
-		additionalLength += !m_words.empty() ? m_spaceSize : 0.0;
+		additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
 
 		if (m_currentLineLength + additionalLength <= m_maxLength)
 		{

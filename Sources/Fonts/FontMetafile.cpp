@@ -34,18 +34,17 @@ namespace acid
 	}
 
 	FontMetafile::FontMetafile(const std::string &filename) :
-		IResource(),
 		m_metadata(std::map<int32_t, FontCharacter>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),
-		m_verticalPerPixelSize(0.0),
-		m_horizontalPerPixelSize(0.0),
+		m_verticalPerPixelSize(0.0f),
+		m_horizontalPerPixelSize(0.0f),
 		m_imageWidth(0),
-		m_spaceWidth(0.0),
+		m_spaceWidth(0.0f),
 		m_padding(std::vector<int32_t>()),
 		m_paddingWidth(0),
 		m_paddingHeight(0),
-		m_maxSizeY(0.0)
+		m_maxSizeY(0.0f)
 	{
 		auto fileLoaded = FileSystem::ReadTextFile(filename);
 
@@ -73,10 +72,6 @@ namespace acid
 				LoadCharacterData();
 			}
 		}
-	}
-
-	FontMetafile::~FontMetafile()
-	{
 	}
 
 	std::optional<FontCharacter> FontMetafile::GetCharacter(const int32_t &ascii)

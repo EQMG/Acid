@@ -3,6 +3,7 @@
 #include <functional>
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
+#include "Uis/Uis.hpp"
 #include "UiInputDelay.hpp"
 #include "UiObject.hpp"
 

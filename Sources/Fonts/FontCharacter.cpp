@@ -15,8 +15,4 @@ namespace acid
 		m_advanceX(advanceX)
 	{
 	}
-
-	FontCharacter::~FontCharacter()
-	{
-	}
 }

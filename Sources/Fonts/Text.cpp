@@ -31,10 +31,6 @@ namespace acid
 		LoadText();
 	}
 
-	Text::~Text()
-	{
-	}
-
 	void Text::UpdateObject()
 	{
 		if (IsLoaded() && !m_newString.empty())

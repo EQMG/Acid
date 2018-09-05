@@ -4,7 +4,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "Helpers/String.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid

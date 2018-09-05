@@ -6,6 +6,7 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Uis/Uis.hpp>
 #include "FixedCamera.hpp"
 
 namespace test

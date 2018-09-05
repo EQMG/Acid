@@ -7,7 +7,6 @@
 namespace acid
 {
 	FileXml::FileXml(const std::string &filename) :
-		IFile(),
 		m_filename(filename),
 		m_parent(std::make_shared<Metadata>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
 	{
