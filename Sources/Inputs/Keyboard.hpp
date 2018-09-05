@@ -154,20 +154,11 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Keyboard> Get()
-		{
-			return Engine::Get()->GetModule<Keyboard>();
-		}
+		static std::shared_ptr<Keyboard> Get() { return Engine::Get()->GetModule<Keyboard>(); }
 
-		/// <summary>
-		/// Creates a new keyboard module.
-		/// </summary>
 		Keyboard();
 
-		/// <summary>
-		/// Deconstructor for the keyboard module.
-		/// </summary>
-		~Keyboard() override;
+		~Keyboard();
 
 		void Update() override;
 

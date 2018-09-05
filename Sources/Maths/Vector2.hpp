@@ -61,9 +61,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector2(const Vector3 &source);
 
-		/// <summary>
-		/// Deconstructor for Vector2.
-		/// </summary>
 		~Vector2();
 
 		/// <summary>
@@ -227,10 +224,6 @@ namespace acid
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Vector2 &operator=(const Vector2 &other);
-
-		Vector2 &operator=(const Vector3 &other);
 
 		bool operator==(const Vector2 &other) const;
 

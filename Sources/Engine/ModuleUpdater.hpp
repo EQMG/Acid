@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A class used to define how the engine will run updates and timings on modules.
 	/// </summary>
-	class ModuleUpdater
+	class ACID_EXPORT ModuleUpdater
 	{
 	private:
 		Delta m_deltaUpdate;
@@ -23,9 +23,6 @@ namespace acid
 		/// </summary>
 		ModuleUpdater();
 
-		/// <summary>
-		/// Deconstructor for the updater.
-		/// </summary>
 		~ModuleUpdater();
 
 		/// <summary>
@@ -38,12 +35,12 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() { return m_deltaUpdate.GetChange(); }
+		float GetDelta() const { return m_deltaUpdate.GetChange(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() { return m_deltaRender.GetChange(); }
+		float GetDeltaRender() const { return m_deltaRender.GetChange(); }
 	};
 }

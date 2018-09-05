@@ -19,20 +19,6 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new spatial structure.
-		/// </summary>
-		ISpatialStructure()
-		{
-		}
-
-		/// <summary>
-		/// Deconstructor for the spatial structure.
-		/// </summary>
-		virtual ~ISpatialStructure()
-		{
-		}
-
-		/// <summary>
 		/// Adds a new object to the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to add. </param>

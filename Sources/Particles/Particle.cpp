@@ -22,6 +22,24 @@ namespace acid
 	{
 	}
 
+	Particle::Particle(const Particle &source) :
+		m_particleType(source.m_particleType),
+		m_position(source.m_position),
+		m_velocity(source.m_velocity),
+		m_change(source.m_change),
+		m_textureOffset1(source.m_textureOffset1),
+		m_textureOffset2(source.m_textureOffset2),
+		m_lifeLength(source.m_lifeLength),
+		m_rotation(source.m_rotation),
+		m_scale(source.m_scale),
+		m_gravityEffect(source.m_gravityEffect),
+		m_elapsedTime(source.m_elapsedTime),
+		m_transparency(source.m_transparency),
+		m_textureBlendFactor(source.m_textureBlendFactor),
+		m_distanceToCamera(source.m_distanceToCamera)
+	{
+	}
+
 	Particle::~Particle()
 	{
 	}
@@ -70,10 +88,10 @@ namespace acid
 		return m_distanceToCamera > other.m_distanceToCamera;
 	}
 
-	Vector2 Particle::CalculateTextureOffset(const int &index) const
+	Vector2 Particle::CalculateTextureOffset(const int32_t &index) const
 	{
-		int column = index % m_particleType->GetNumberOfRows();
-		int row = index / m_particleType->GetNumberOfRows();
+		int32_t column = index % m_particleType->GetNumberOfRows();
+		int32_t row = index / m_particleType->GetNumberOfRows();
 		Vector2 result = Vector2();
 		result.m_x = static_cast<float>(column) / m_particleType->GetNumberOfRows();
 		result.m_y = static_cast<float>(row) / m_particleType->GetNumberOfRows();

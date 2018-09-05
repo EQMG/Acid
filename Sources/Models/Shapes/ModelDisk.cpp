@@ -23,10 +23,10 @@ namespace acid
 	std::shared_ptr<ModelDisk> ModelDisk::Resource(const std::string &data)
 	{
 		auto split = String::Split(data, "_");
-		float innerRadius = String::FromString<float>(split[1]);
-		float outerRadius = String::FromString<float>(split[2]);
-		uint32_t slices = String::FromString<uint32_t>(split[3]);
-		uint32_t loops = String::FromString<uint32_t>(split[4]);
+		float innerRadius = String::From<float>(split[1]);
+		float outerRadius = String::From<float>(split[2]);
+		uint32_t slices = String::From<uint32_t>(split[3]);
+		uint32_t loops = String::From<uint32_t>(split[4]);
 		return Resource(innerRadius, outerRadius, slices, loops);
 	}
 

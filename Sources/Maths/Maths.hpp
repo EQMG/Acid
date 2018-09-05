@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 #include <cmath>
 #include <cstdlib>
 #include "Engine/Exports.hpp"
@@ -76,7 +77,7 @@ namespace acid
 		/// <param name="value"> The value to round. </param>
 		/// <param name="place"> How many places after the decimal to round to. </param>
 		/// <returns> The rounded value. </returns>
-		static float RoundToPlace(const float &value, const int &place);
+		static float RoundToPlace(const float &value, const int32_t &place);
 
 		/// <summary>
 		/// Used to floor the value if less than the min.

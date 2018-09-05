@@ -14,21 +14,16 @@ namespace acid
 	{
 	private:
 		Timer m_timer;
-		bool m_repeat;
 		std::function<void()> m_onEvent;
+		bool m_repeat;
 	public:
 		/// <summary>
 		/// Creates a new time event.
 		/// </summary>
 		/// <param name="interval"> The amount of seconds in the future to run the event. </param>
-		/// <param name="repeat"> If the event will repeat after the first run. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
-		EventTime(const float &interval, const bool &repeat, const std::function<void()> &onEvent);
-
-		/// <summary>
-		/// Deconstructor for the timed event.
-		/// </summary>
-		~EventTime();
+		/// <param name="repeat"> If the event will repeat after the first run. </param>
+		EventTime(const float &interval, const std::function<void()> &onEvent, const bool &repeat = false);
 
 		bool EventTriggered() override;
 

@@ -13,7 +13,6 @@ namespace acid
 	{
 	private:
 		std::shared_ptr<Model> m_model;
-
 	public:
 		Mesh(const std::shared_ptr<Model> &model = nullptr);
 

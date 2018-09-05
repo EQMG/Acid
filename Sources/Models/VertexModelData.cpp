@@ -48,7 +48,7 @@ namespace acid
 		return (static_cast<uint32_t>(m_uvIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
 	}
 
-	bool VertexModelData::HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const
+	bool VertexModelData::HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const
 	{
 		return textureIndexOther == m_uvIndex && normalIndexOther == m_normalIndex;
 	}

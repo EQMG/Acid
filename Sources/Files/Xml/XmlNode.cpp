@@ -18,11 +18,11 @@ namespace acid
 		}
 	}
 
-	void XmlNode::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation)
+	void XmlNode::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int32_t &indentation)
 	{
 		std::stringstream indents;
 
-		for (int i = 0; i < indentation; i++)
+		for (int32_t i = 0; i < indentation; i++)
 		{
 			indents << "\t";
 		}
@@ -78,7 +78,7 @@ namespace acid
 	{
 		auto thisValue = parent;
 
-		int firstSpace = String::FindCharPos(source.m_attributes, ' ');
+		int32_t firstSpace = String::FindCharPos(source.m_attributes, ' ');
 		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
 		name = String::Trim(name);
 		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, source.m_attributes.size());

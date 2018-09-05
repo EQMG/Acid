@@ -27,9 +27,6 @@ namespace acid
 		/// </summary>
 		ComponentRegister();
 
-		/// <summary>
-		/// Deconstructor for the component register.
-		/// </summary>
 		~ComponentRegister();
 
 		/// <summary>

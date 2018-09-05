@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "Animations/Keyframe/Keyframe.hpp"
 #include "Serialized/Node.hpp"
+#include "Animations/Keyframe/Keyframe.hpp"
 
 namespace acid
 {
@@ -19,14 +19,14 @@ namespace acid
 		/// <summary>
 		/// Creates a new animation.
 		/// </summary>
-		/// <param name="lengthInSeconds"> The length of the animation in seconds. </param>
-		/// <param name="frames"> All the keyframes for the animation, ordered by time of appearance in the animation. </param>
+		/// <param name="length"> The length of the animation in seconds. </param>
+		/// <param name="keyframes"> All the keyframes for the animation, ordered by time of appearance in the animation. </param>
 		Animation(const float &length, const std::vector<Keyframe> &keyframes);
 
 		/// <summary>
 		/// Creates a new animation.
 		/// </summary>
-		/// <param name="lengthInSeconds"> The length of the animation in seconds. </param>
+		/// <param name="length"> The length of the animation in seconds. </param>
 		/// <param name="keyframeData"> All the keyframe data for the animation, ordered by time of appearance in the animation. </param>
 		Animation(const float &length, const std::vector<KeyframeData> &keyframeData);
 

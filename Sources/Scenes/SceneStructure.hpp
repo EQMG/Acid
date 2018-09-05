@@ -23,9 +23,6 @@ namespace acid
 		/// </summary>
 		SceneStructure();
 
-		/// <summary>
-		/// Deconstructor for the basic structure.
-		/// </summary>
 		~SceneStructure();
 
 		void Add(const std::shared_ptr<GameObject> &object) override;

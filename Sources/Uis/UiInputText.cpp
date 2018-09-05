@@ -12,7 +12,7 @@ namespace acid
 	const float UiInputText::SCALE_NORMAL = 1.0f;
 	const float UiInputText::SCALE_SELECTED = 1.1f;
 
-	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int &maxLength) :
+	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int32_t &maxLength) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + value, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
@@ -38,7 +38,7 @@ namespace acid
 	{
 		if (m_selected)
 		{
-			int key = Keyboard::Get()->GetChar();
+			int32_t key = Keyboard::Get()->GetChar();
 
 			if (m_value.length() < m_maxLength && key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
 			{

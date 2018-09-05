@@ -6,8 +6,8 @@
 namespace acid
 {
 	const Matrix4 MeshAnimated::CORRECTION = Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
-	const int MeshAnimated::MAX_JOINTS = 50;
-	const int MeshAnimated::MAX_WEIGHTS = 3;
+	const uint32_t MeshAnimated::MAX_JOINTS = 50;
+	const uint32_t MeshAnimated::MAX_WEIGHTS = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Mesh(),
@@ -63,15 +63,13 @@ namespace acid
 		file.Load();
 
 		SkinLoader skinLoader = SkinLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader skeletonLoader = SkeletonLoader(
-			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
-		GeometryLoader geometryLoader = GeometryLoader(
-			file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVerticesSkinData());
+		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
+		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVerticesSkinData());
 
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
-		m_headJoint = CreateJoints(skeletonLoader.GetHeadJoint());
+		m_headJoint = CreateJoints(*skeletonLoader.GetHeadJoint());
 		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
 		m_animator = std::make_shared<Animator>(m_headJoint);
 
@@ -81,13 +79,13 @@ namespace acid
 		m_animator->DoAnimation(m_animation);
 	}
 
-	std::shared_ptr<Joint> MeshAnimated::CreateJoints(JointData *data)
+	std::shared_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)
 	{
-		auto joint = std::make_shared<Joint>(data->GetIndex(), data->GetNameId(), data->GetBindLocalTransform());
+		auto joint = std::make_shared<Joint>(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
 
-		for (auto &child : data->GetChildren())
+		for (auto &child : data.GetChildren())
 		{
-			joint->AddChild(CreateJoints(child));
+			joint->AddChild(CreateJoints(*child));
 		}
 
 		return joint;

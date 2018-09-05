@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include "JointData.hpp"
 #include "Maths/Matrix4.hpp"
 
 namespace acid
@@ -56,7 +55,6 @@ namespace acid
 		/// and "localBindTransform" is the bone-space bind transform of this joint. It the calculates and stores the inverse of this model-space bind transform,
 		/// for use when calculating the final animation transform each frame. It then recursively calls the method for all of the children joints,
 		/// so that they too calculate and store their inverse bind-pose transform.
-		///
 		/// </para>
 		/// </summary>
 		/// <param name="parentBindTransform"> The model-space bind transform of the parent joint. </param>

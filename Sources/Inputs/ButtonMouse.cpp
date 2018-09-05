@@ -3,7 +3,6 @@
 namespace acid
 {
 	ButtonMouse::ButtonMouse(const std::vector<MouseButton> &buttons) :
-		IButton(),
 		m_buttons(buttons),
 		m_wasDown(false)
 	{

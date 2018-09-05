@@ -5,7 +5,6 @@
 namespace acid
 {
 	ShadowRender::ShadowRender() :
-		IComponent(),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler())
 	{

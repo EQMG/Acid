@@ -33,10 +33,9 @@ namespace acid
 		/// <param name="source"> Creates this rectangle out of a existing one. </param>
 		UiBound(const UiBound &source);
 
-		/// <summary>
-		/// Deconstructor for rectangle.
-		/// </summary>
 		~UiBound();
+
+		static Vector2 FindPivot(const std::string &key);
 
 		Vector2 GetPosition() const { return m_position; }
 
@@ -58,12 +57,8 @@ namespace acid
 
 		void SetDimensions(const Vector2 &dimensions) { m_dimensions = dimensions; }
 
-		UiBound &operator=(const UiBound &other);
-
 		bool operator==(const UiBound &other) const;
 
 		bool operator!=(const UiBound &other) const;
-
-		static Vector2 FindPivot(const std::string &key);
 	};
 }

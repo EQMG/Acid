@@ -32,11 +32,11 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(new FpsCamera()),
-		m_buttonSpawnSphere(new ButtonMouse({MOUSE_BUTTON_1})),
-		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
-		m_buttonCaptureMouse(new ButtonKeyboard({KEY_M, KEY_ESCAPE})),
-		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
-		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
+		m_buttonSpawnSphere(std::make_shared<ButtonMouse>(std::vector<MouseButton>{MOUSE_BUTTON_1})),
+		m_buttonFullscreen(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
+		m_buttonCaptureMouse(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_M, KEY_ESCAPE})),
+		m_buttonScreenshot(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
+		m_buttonExit(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
@@ -49,12 +49,6 @@ namespace test
 
 	Scene1::~Scene1()
 	{
-		delete m_buttonSpawnSphere;
-		delete m_buttonFullscreen;
-		delete m_buttonCaptureMouse;
-		delete m_buttonScreenshot;
-		delete m_buttonExit;
-
 		delete m_uiStartLogo;
 		delete m_overlayDebug;
 	}

@@ -60,9 +60,6 @@ namespace acid
 		/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
 		Matrix4(const Vector4 source[4]);
 
-		/// <summary>
-		/// Deconstructor for Matrix4.
-		/// </summary>
 		~Matrix4();
 
 		/// <summary>
@@ -171,7 +168,7 @@ namespace acid
 		/// Gets the submatrix of this matrix.
 		/// </summary>
 		/// <returns> The submatrix. </returns>
-		Matrix3 GetSubmatrix(const int &row, const int &col) const;
+		Matrix3 GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
 		/// <summary>
 		/// Creates a new transformation matrix for a object in 3d space.
@@ -251,10 +248,6 @@ namespace acid
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Matrix4 &operator=(const Matrix4 &other);
-
-		Matrix4 &operator=(const float array[16]);
 
 		bool operator==(const Matrix4 &other) const;
 

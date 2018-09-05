@@ -25,9 +25,6 @@ namespace acid
 		{
 		}
 
-		/// <summary>
-		/// Deconstructor for value driver.
-		/// </summary>
 		virtual ~IDriver()
 		{
 		}

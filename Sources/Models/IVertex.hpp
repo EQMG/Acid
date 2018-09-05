@@ -9,14 +9,6 @@ namespace acid
 	class ACID_EXPORT IVertex
 	{
 	public:
-		IVertex()
-		{
-		}
-
-		virtual ~IVertex()
-		{
-		}
-
 		virtual Vector3 GetPosition() const = 0;
 
 		virtual void SetPosition(const Vector3 &position) = 0;

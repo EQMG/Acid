@@ -26,34 +26,34 @@ namespace test
 		m_velocity(Vector3()),
 		m_jumping(false),
 		m_noclipEnabled(false),
-		m_inputForward(new AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard({KEY_S, KEY_DOWN}),
-				new ButtonKeyboard({KEY_W, KEY_UP})
+		m_inputForward(std::make_shared<AxisCompound>(std::vector<std::shared_ptr<IAxis>>{
+			std::make_shared<AxisButton>(
+				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_S, KEY_DOWN}),
+				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_W, KEY_UP})
 			),
-			new AxisJoystick(JOYSTICK_1, {1}, true)
+			std::make_shared<AxisJoystick>(JOYSTICK_1, std::vector<uint32_t>{1}, true)
 		})),
-		m_inputStrafe(new AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard({KEY_D, KEY_RIGHT}),
-				new ButtonKeyboard({KEY_A, KEY_LEFT})
+		m_inputStrafe(std::make_shared<AxisCompound>(std::vector<std::shared_ptr<IAxis>>{
+			std::make_shared<AxisButton>(
+				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_D, KEY_RIGHT}),
+				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_A, KEY_LEFT})
 			),
-			new AxisJoystick(JOYSTICK_1, {0}, true)
+			std::make_shared<AxisJoystick>(JOYSTICK_1, std::vector<uint32_t>{0}, true)
 		})),
-		m_inputSprint(new ButtonCompound({
-			new ButtonKeyboard({KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+		m_inputSprint(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
+			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
+			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_inputJump(new ButtonCompound({
-			new ButtonKeyboard({KEY_SPACE}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+		m_inputJump(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
+			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_SPACE}),
+			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_inputCrouch(new ButtonCompound({
-			new ButtonKeyboard({KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
-			new ButtonJoystick(JOYSTICK_1, {1})
+		m_inputCrouch(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
+			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
+			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_toggleNoclip(new ButtonCompound({
-			new ButtonKeyboard({KEY_N}),
+		m_toggleNoclip(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
+			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_N}),
 		})),
 		m_amountMove(Vector3()),
 		m_amountRotate(Vector3())
@@ -62,13 +62,6 @@ namespace test
 
 	FpsPlayer::~FpsPlayer()
 	{
-		delete m_inputForward;
-		delete m_inputStrafe;
-
-		delete m_inputSprint;
-		delete m_inputCrouch;
-		delete m_inputJump;
-		delete m_toggleNoclip;
 	}
 
 	void FpsPlayer::Update()

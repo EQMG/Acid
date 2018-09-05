@@ -22,9 +22,6 @@ namespace acid
 		/// <param name="length"> The time to go between values. </param>
 		DriverLinear(const float &startValue, const float &endValue, const float &length);
 
-		/// <summary>
-		/// Deconstructor for linear driver.
-		/// </summary>
 		~DriverLinear();
 
 	protected:

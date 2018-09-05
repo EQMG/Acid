@@ -5,7 +5,6 @@
 namespace acid
 {
 	Scenes::Scenes() :
-		IModule(),
 		m_scene(nullptr),
 		m_componentRegister(ComponentRegister())
 	{
@@ -58,11 +57,5 @@ namespace acid
 		}
 
 		m_scene->GetCamera()->Update();
-	}
-
-	void Scenes::SetScene(IScene *scene)
-	{
-		delete m_scene;
-		m_scene = scene;
 	}
 }

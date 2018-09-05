@@ -29,12 +29,29 @@ namespace acid
 
 	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
 	{
-		*this = Vector3(pitch, yaw, roll);
+		float halfPitch = pitch * DEG_TO_RAD * 0.5f;
+		float halfYaw = yaw * DEG_TO_RAD * 0.5f;
+		float halfRoll = roll * DEG_TO_RAD * 0.5f;
+
+		float cosYaw = std::cos(halfYaw);
+		float sinYaw = std::sin(halfYaw);
+		float cosPitch = std::cos(halfPitch);
+		float sinPitch = std::sin(halfPitch);
+		float cosRoll = std::cos(halfRoll);
+		float sinRoll = std::sin(halfRoll);
+
+		m_x = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
+		m_y = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
+		m_z = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+		m_w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
 	}
 
-	Quaternion::Quaternion(const Vector3 &source)
+	Quaternion::Quaternion(const Vector3 &source, const float &w) :
+		m_x(source.m_x),
+		m_y(source.m_y),
+		m_z(source.m_z),
+		m_w(w)
 	{
-		*this = source;
 	}
 
 	Quaternion::Quaternion(const Quaternion &source) :
@@ -47,19 +64,40 @@ namespace acid
 
 	Quaternion::Quaternion(const Matrix4 &source)
 	{
-		*this = source;
-	}
+		float diagonal = source[0][0] + source[1][1] + source[2][2];
 
-	Quaternion::Quaternion(const Vector3 &axis, const float &angle)
-	{
-		Vector3 normAxis = axis.Normalize();
-		float sinAngle = std::sin(angle * DEG_TO_RAD);
-		float cosAngle = std::cos(angle * DEG_TO_RAD);
-
-		m_w = cosAngle;
-		m_x = normAxis.m_x * sinAngle;
-		m_y = normAxis.m_y * sinAngle;
-		m_z = normAxis.m_z * sinAngle;
+		if (diagonal > 0.0f)
+		{
+			float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
+			m_w = w4 / 4.0f;
+			m_x = (source[2][1] - source[1][2]) / w4;
+			m_y = (source[0][2] - source[2][0]) / w4;
+			m_z = (source[1][0] - source[0][1]) / w4;
+		}
+		else if ((source[0][0] > source[1][1]) && (source[0][0] > source[2][2]))
+		{
+			float x4 = std::sqrt(1.0f + source[0][0] - source[1][1] - source[2][2]) * 2.0f;
+			m_w = (source[2][1] - source[1][2]) / x4;
+			m_x = x4 / 4.0f;
+			m_y = (source[0][1] + source[1][0]) / x4;
+			m_z = (source[0][2] + source[2][0]) / x4;
+		}
+		else if (source[1][1] > source[2][2])
+		{
+			float y4 = std::sqrt(1.0f + source[1][1] - source[0][0] - source[2][2]) * 2.0f;
+			m_w = (source[0][2] - source[2][0]) / y4;
+			m_x = (source[0][1] + source[1][0]) / y4;
+			m_y = y4 / 4.0f;
+			m_z = (source[1][2] + source[2][1]) / y4;
+		}
+		else
+		{
+			float z4 = std::sqrt(1.0f + source[2][2] - source[0][0] - source[1][1]) * 2.0f;
+			m_w = (source[1][0] - source[0][1]) / z4;
+			m_x = (source[0][2] + source[2][0]) / z4;
+			m_y = (source[1][2] + source[2][1]) / z4;
+			m_z = z4 / 4.0f;
+		}
 	}
 
 	Quaternion::Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ)
@@ -307,74 +345,6 @@ namespace acid
 		node.SetChild<float>("y", m_y);
 		node.SetChild<float>("z", m_z);
 		node.SetChild<float>("w", m_w);
-	}
-
-	Quaternion &Quaternion::operator=(const Quaternion &other)
-	{
-		m_x = other.m_x;
-		m_y = other.m_y;
-		m_z = other.m_z;
-		return *this;
-	}
-
-	Quaternion &Quaternion::operator=(const Vector3 &other)
-	{
-		float halfPitch = other.m_x * DEG_TO_RAD * 0.5f;
-		float halfYaw = other.m_y * DEG_TO_RAD * 0.5f;
-		float halfRoll = other.m_z * DEG_TO_RAD * 0.5f;
-
-		float cosYaw = std::cos(halfYaw);
-		float sinYaw = std::sin(halfYaw);
-		float cosPitch = std::cos(halfPitch);
-		float sinPitch = std::sin(halfPitch);
-		float cosRoll = std::cos(halfRoll);
-		float sinRoll = std::sin(halfRoll);
-
-		m_x = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
-		m_y = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
-		m_z = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
-		m_w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
-		return *this;
-	}
-
-	Quaternion &Quaternion::operator=(const Matrix4 &other)
-	{
-		float diagonal = other[0][0] + other[1][1] + other[2][2];
-
-		if (diagonal > 0.0f)
-		{
-			float w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
-			m_w = w4 / 4.0f;
-			m_x = (other[2][1] - other[1][2]) / w4;
-			m_y = (other[0][2] - other[2][0]) / w4;
-			m_z = (other[1][0] - other[0][1]) / w4;
-		}
-		else if ((other[0][0] > other[1][1]) && (other[0][0] > other[2][2]))
-		{
-			float x4 = std::sqrt(1.0f + other[0][0] - other[1][1] - other[2][2]) * 2.0f;
-			m_w = (other[2][1] - other[1][2]) / x4;
-			m_x = x4 / 4.0f;
-			m_y = (other[0][1] + other[1][0]) / x4;
-			m_z = (other[0][2] + other[2][0]) / x4;
-		}
-		else if (other[1][1] > other[2][2])
-		{
-			float y4 = std::sqrt(1.0f + other[1][1] - other[0][0] - other[2][2]) * 2.0f;
-			m_w = (other[0][2] - other[2][0]) / y4;
-			m_x = (other[0][1] + other[1][0]) / y4;
-			m_y = y4 / 4.0f;
-			m_z = (other[1][2] + other[2][1]) / y4;
-		}
-		else
-		{
-			float z4 = std::sqrt(1.0f + other[2][2] - other[0][0] - other[1][1]) * 2.0f;
-			m_w = (other[1][0] - other[0][1]) / z4;
-			m_x = (other[0][2] + other[2][0]) / z4;
-			m_y = (other[1][2] + other[2][1]) / z4;
-			m_z = z4 / 4.0f;
-		}
-
-		return *this;
 	}
 
 	bool Quaternion::operator==(const Quaternion &other) const

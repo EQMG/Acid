@@ -16,30 +16,21 @@ namespace acid
 	private:
 		static const float MAX_ELAPSED_TIME;
 
-		std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>> m_particles;
+		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Particles> Get()
-		{
-			return Engine::Get()->GetModule<Particles>();
-		}
+		static std::shared_ptr<Particles> Get() { return Engine::Get()->GetModule<Particles>(); }
 
-		/// <summary>
-		/// Creates a new particles module.
-		/// </summary>
 		Particles();
 
-		/// <summary>
-		/// Deconstructor for the particles module.
-		/// </summary>
 		~Particles();
 
 		void Update() override;
 
-		void AddParticle(Particle *created);
+		void AddParticle(const Particle &particle);
 
 		/// <summary>
 		/// Clears all particles from the scene.
@@ -50,6 +41,6 @@ namespace acid
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>> GetParticles() const { return m_particles; }
+		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> GetParticles() const { return m_particles; }
 	};
 }

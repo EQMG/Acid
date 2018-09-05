@@ -7,7 +7,7 @@ namespace acid
 		m_cursorY(0.0f),
 		m_selectorMice(std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE>())
 	{
-		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
 			UiSelectorMouse selectorMouse = UiSelectorMouse();
 			selectorMouse.m_mouseButton = static_cast<MouseButton>(i);
@@ -40,7 +40,7 @@ namespace acid
 				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
 			}
 
-			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 			{
 				auto buttonJoystick = selectorJoystick.GetInputButton(m_selectorMice[i].m_mouseButton);
 				bool isDown = Mouse::Get()->GetButton(m_selectorMice[i].m_mouseButton) || (buttonJoystick ? buttonJoystick->IsDown() : false);
@@ -54,7 +54,7 @@ namespace acid
 		}
 		else
 		{
-			for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 			{
 				bool isDown = Mouse::Get()->GetButton(m_selectorMice[i].m_mouseButton);
 				m_selectorMice[i].m_wasDown = !m_selectorMice[i].m_isDown && isDown;
@@ -83,7 +83,7 @@ namespace acid
 
 	void UiSelector::CancelWasEvent()
 	{
-		for (int i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
 			m_selectorMice[i].m_wasDown = false;
 		}

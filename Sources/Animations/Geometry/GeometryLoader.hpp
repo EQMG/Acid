@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Animations/Skin/SkinLoader.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
 #include "VertexAnimated.hpp"
@@ -13,7 +12,7 @@ namespace acid
 	private:
 		std::shared_ptr<Node> m_meshData;
 
-		std::vector<VertexSkinData *> m_vertexWeights;
+		std::vector<VertexSkinData> m_vertexWeights;
 
 		std::vector<VertexAnimatedData *> m_positionsList;
 		std::vector<Vector2> m_uvsList;
@@ -22,7 +21,7 @@ namespace acid
 		std::vector<IVertex *> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
-		GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights);
+		GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
 
 		~GeometryLoader();
 

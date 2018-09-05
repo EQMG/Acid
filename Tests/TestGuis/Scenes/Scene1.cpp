@@ -14,13 +14,13 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(new FixedCamera()),
-		m_buttonFullscreen(new ButtonKeyboard({KEY_F11})),
-		m_buttonScreenshot(new ButtonKeyboard({KEY_F12})),
-		m_buttonPause((new ButtonCompound({
-			new ButtonKeyboard({KEY_ESCAPE}),
-			new ButtonJoystick(JOYSTICK_1, {7})
-		}))),
-		m_buttonExit(new ButtonKeyboard({KEY_DELETE})),
+		m_buttonFullscreen(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
+		m_buttonScreenshot(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
+		m_buttonPause(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
+			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_ESCAPE}),
+			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{7})
+		})),
+		m_buttonExit(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
 		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
@@ -34,11 +34,6 @@ namespace test
 
 	Scene1::~Scene1()
 	{
-		delete m_buttonFullscreen;
-		delete m_buttonScreenshot;
-		delete m_buttonPause;
-		delete m_buttonExit;
-
 		delete m_uiStartLogo;
 		delete m_overlayDebug;
 		delete m_uiNavigation;

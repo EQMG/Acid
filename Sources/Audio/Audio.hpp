@@ -24,26 +24,17 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Audio> Get()
-		{
-			return Engine::Get()->GetModule<Audio>();
-		}
+		static std::shared_ptr<Audio> Get() { return Engine::Get()->GetModule<Audio>(); }
 
-		/// <summary>
-		/// Creates a new audio module.
-		/// </summary>
 		Audio();
 
-		/// <summary>
-		/// Deconstructor for the audio module.
-		/// </summary>
 		~Audio();
 
 		void Update() override;
 
-		ACID_HIDDEN static std::string StringifyResultAl(const int &result);
+		ACID_HIDDEN static std::string StringifyResultAl(const int32_t &result);
 
-		ACID_HIDDEN static void CheckAl(const int &result);
+		ACID_HIDDEN static void CheckAl(const int32_t &result);
 
 		ACID_HIDDEN ALCdevice *GetDevice() const { return m_alDevice; }
 

@@ -18,11 +18,11 @@ namespace acid
 		}
 	}
 
-	void JsonSection::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation, const bool &end)
+	void JsonSection::AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
-		for (int i = 0; i < indentation; i++)
+		for (int32_t i = 0; i < indentation; i++)
 		{
 			indents << "  ";
 		}

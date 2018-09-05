@@ -24,9 +24,6 @@ namespace acid
 		/// <param name="length"> The time to get to the end value. </param>
 		DriverSlide(const float &start, const float &end, const float &length);
 
-		/// <summary>
-		/// Deconstructor for slide driver.
-		/// </summary>
 		~DriverSlide();
 
 	protected:

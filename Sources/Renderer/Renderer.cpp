@@ -7,7 +7,6 @@
 namespace acid
 {
 	Renderer::Renderer() :
-		IModule(),
 		m_managerRender(nullptr),
 		m_renderStages(std::vector<std::shared_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
@@ -187,12 +186,6 @@ namespace acid
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
-	}
-
-	void Renderer::SetManager(IManagerRender *managerRender)
-	{
-		delete m_managerRender;
-		m_managerRender = managerRender;
 	}
 
 	void Renderer::CreateFences()

@@ -3,7 +3,6 @@
 namespace acid
 {
 	SpawnCircle::SpawnCircle(const float &radius, const Vector3 &heading) :
-		ISpawnParticle(),
 		m_radius(radius),
 		m_heading(heading.Normalize()),
 		m_spawnPosition(Vector3())

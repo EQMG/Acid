@@ -43,7 +43,11 @@ namespace acid
 
 	Colour::Colour(const std::string &hex, const float &a)
 	{
-		*this = hex;
+		int32_t r, g, b;
+		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
+		m_r = static_cast<float>(r) / 255.0f;
+		m_g = static_cast<float>(g) / 255.0f;
+		m_b = static_cast<float>(b) / 255.0f;
 		m_a = a;
 	}
 
@@ -165,25 +169,6 @@ namespace acid
 	void Colour::Encode(Node &node) const
 	{
 		node.Set<std::string>(GetHex());
-	}
-
-	Colour &Colour::operator=(const Colour &other)
-	{
-		m_r = other.m_r;
-		m_g = other.m_g;
-		m_b = other.m_b;
-		m_a = other.m_a;
-		return *this;
-	}
-
-	Colour &Colour::operator=(const std::string &hex)
-	{
-		int r, g, b;
-		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
-		m_r = static_cast<float>(r) / 255.0f;
-		m_g = static_cast<float>(g) / 255.0f;
-		m_b = static_cast<float>(b) / 255.0f;
-		return *this;
 	}
 
 	bool Colour::operator==(const Colour &other) const

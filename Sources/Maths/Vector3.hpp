@@ -83,9 +83,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing colour. </param>
 		Vector3(const Colour &source);
 
-		/// <summary>
-		/// Deconstructor for Vector3.
-		/// </summary>
 		~Vector3();
 
 		/// <summary>
@@ -299,14 +296,6 @@ namespace acid
 		float GetZ() const { return m_z; }
 
 		void SetZ(const float &z) { m_z = z; }
-
-		Vector3 &operator=(const Vector3 &other);
-
-		Vector3 &operator=(const Vector2 &other);
-
-		Vector3 &operator=(const Vector4 &other);
-
-		Vector3 &operator=(const Colour &other);
 
 		void Decode(const Node &node);
 

@@ -15,15 +15,6 @@ namespace acid
 		public IComponent
 	{
 	public:
-		IMaterial() :
-			IComponent()
-		{
-		}
-
-		virtual ~IMaterial()
-		{
-		}
-
 		virtual void Start() override = 0;
 
 		virtual void Update() override = 0;

@@ -3,7 +3,6 @@
 namespace acid
 {
 	VertexModel::VertexModel(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent) :
-		IVertex(),
 		m_position(position),
 		m_uv(uv),
 		m_normal(normal),
@@ -12,7 +11,6 @@ namespace acid
 	}
 
 	VertexModel::VertexModel(const VertexModel &source) :
-		IVertex(),
 		m_position(source.m_position),
 		m_uv(source.m_uv),
 		m_normal(source.m_normal),

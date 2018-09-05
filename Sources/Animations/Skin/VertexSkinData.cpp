@@ -3,7 +3,7 @@
 namespace acid
 {
 	VertexSkinData::VertexSkinData() :
-		m_jointIds(std::vector<int32_t>()),
+		m_jointIds(std::vector<uint32_t>()),
 		m_weights(std::vector<float>())
 	{
 	}
@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void VertexSkinData::AddJointEffect(const int32_t &jointId, const float &weight)
+	void VertexSkinData::AddJointEffect(const uint32_t &jointId, const float &weight)
 	{
 		for (uint32_t i = 0; i < m_weights.size(); i++)
 		{

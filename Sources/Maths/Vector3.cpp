@@ -320,38 +320,6 @@ namespace acid
 		node.SetChild<float>("z", m_z);
 	}
 
-	Vector3 &Vector3::operator=(const Vector3 &other)
-	{
-		m_x = other.m_x;
-		m_y = other.m_y;
-		m_z = other.m_z;
-		return *this;
-	}
-
-	Vector3 &Vector3::operator=(const Vector2 &other)
-	{
-		m_x = other.m_x;
-		m_y = other.m_y;
-		m_z = 0.0f;
-		return *this;
-	}
-
-	Vector3 &Vector3::operator=(const Vector4 &other)
-	{
-		m_x = other.m_x;
-		m_y = other.m_y;
-		m_z = other.m_z;
-		return *this;
-	}
-
-	Vector3 &Vector3::operator=(const Colour &other)
-	{
-		m_x = other.m_r;
-		m_y = other.m_g;
-		m_z = other.m_b;
-		return *this;
-	}
-
 	bool Vector3::operator==(const Vector3 &other) const
 	{
 		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z;

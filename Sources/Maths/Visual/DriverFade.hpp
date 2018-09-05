@@ -24,9 +24,6 @@ namespace acid
 		/// <param name="length"> The time taken to get to the end. </param>
 		DriverFade(const float &start, const float &end, const float &peak, const float &length);
 
-		/// <summary>
-		/// Deconstructor for fade driver.
-		/// </summary>
 		~DriverFade();
 
 		/// <summary>

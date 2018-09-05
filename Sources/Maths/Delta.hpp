@@ -20,9 +20,6 @@ namespace acid
 		/// </summary>
 		Delta();
 
-		/// <summary>
-		/// Deconstructor for the delta.
-		/// </summary>
 		~Delta();
 
 		/// <summary>

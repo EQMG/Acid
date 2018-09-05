@@ -36,7 +36,7 @@ namespace acid
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int &indentation, const bool &end = false);
+		static void AppendData(const std::shared_ptr<Node> &source, std::stringstream &builder, const int32_t &indentation, const bool &end = false);
 
 		static std::shared_ptr<Node> Convert(const JsonSection &source, std::shared_ptr<Node> &parent, const bool &isTopSection = true);
 	};

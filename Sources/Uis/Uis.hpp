@@ -20,19 +20,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Uis> Get()
-		{
-			return Engine::Get()->GetModule<Uis>();
-		}
+		static std::shared_ptr<Uis> Get() { return Engine::Get()->GetModule<Uis>(); }
 
-		/// <summary>
-		/// Creates a new uis module.
-		/// </summary>
 		Uis();
 
-		/// <summary>
-		/// Deconstructor for the uis module.
-		/// </summary>
 		~Uis();
 
 		void Update() override;

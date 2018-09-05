@@ -5,7 +5,6 @@
 namespace acid
 {
 	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &axes, const bool &reverse) :
-		IAxis(),
 		m_joystick(joystick),
 		m_axes(axes),
 		m_reverse(reverse)

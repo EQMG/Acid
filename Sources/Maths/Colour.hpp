@@ -87,9 +87,6 @@ namespace acid
 		/// <param name="source"> Creates this colour out of a existing vector. </param>
 		Colour(const Vector4 &source);
 
-		/// <summary>
-		/// Deconstructor for colour.
-		/// </summary>
 		~Colour();
 
 		/// <summary>
@@ -192,10 +189,6 @@ namespace acid
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Colour &operator=(const Colour &other);
-
-		Colour &operator=(const std::string &hex);
 
 		bool operator==(const Colour &other) const;
 

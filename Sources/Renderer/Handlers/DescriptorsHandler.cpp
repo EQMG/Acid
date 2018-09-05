@@ -29,7 +29,7 @@ namespace acid
 			return;
 		}
 
-		int location = m_shaderProgram->GetDescriptorLocation(descriptorName);
+		int32_t location = m_shaderProgram->GetDescriptorLocation(descriptorName);
 
 		if (location == -1)
 		{

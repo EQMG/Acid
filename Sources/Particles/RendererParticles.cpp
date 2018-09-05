@@ -48,9 +48,9 @@ namespace acid
 		}*/
 	}
 
-	Matrix4 RendererParticles::ModelMatrix(Particle *particle, const Matrix4 &viewMatrix)
+	Matrix4 RendererParticles::ModelMatrix(Particle &particle, const Matrix4 &viewMatrix)
 	{
-		Matrix4 modelMatrix = modelMatrix.Translate(particle->GetPosition());
+		Matrix4 modelMatrix = Matrix4::IDENTITY.Translate(particle.GetPosition());
 		modelMatrix[0][0] = viewMatrix[0][0];
 		modelMatrix[0][1] = viewMatrix[1][0];
 		modelMatrix[0][2] = viewMatrix[2][0];
@@ -60,8 +60,8 @@ namespace acid
 		modelMatrix[2][0] = viewMatrix[0][2];
 		modelMatrix[2][1] = viewMatrix[1][2];
 		modelMatrix[2][2] = viewMatrix[2][2];
-		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle->GetRotation()), Vector3::FRONT);
-		modelMatrix = modelMatrix.Scale(Vector3(particle->GetScale(), particle->GetScale(), particle->GetScale()));
+		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle.GetRotation()), Vector3::FRONT);
+		modelMatrix = modelMatrix.Scale(Vector3(particle.GetScale(), particle.GetScale(), particle.GetScale()));
 		return Matrix4();
 	}
 }

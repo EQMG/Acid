@@ -2,7 +2,6 @@
 
 #include <chrono>
 #include <memory>
-#include "Log.hpp"
 #include "ModuleRegister.hpp"
 #include "ModuleUpdater.hpp"
 
@@ -38,10 +37,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current engine instance. </returns>
-		static Engine *Get()
-		{
-			return INSTANCE;
-		}
+		static Engine *Get() { return INSTANCE; }
 
 		/// <summary>
 		/// Carries out the setup for basic engine components and the engine. Call <seealso cref="#run()"/> after creating a instance.
@@ -49,9 +45,6 @@ namespace acid
 		/// <param name="emptyRegister"> If the module register will start empty. </param>
 		Engine(const bool &emptyRegister = false);
 
-		/// <summary>
-		/// Deconstructor for the engine.
-		/// </summary>
 		~Engine();
 
 		/// <summary>
@@ -113,13 +106,13 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() { return m_moduleUpdater.GetDelta(); }
+		float GetDelta() const { return m_moduleUpdater.GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() { return m_moduleUpdater.GetDeltaRender(); }
+		float GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.

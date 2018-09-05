@@ -43,9 +43,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[row][col] + other[row][col];
 			}
@@ -58,9 +58,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[row][col] - other[row][col];
 			}
@@ -73,9 +73,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
 			}
@@ -88,7 +88,7 @@ namespace acid
 	{
 		Vector4 result = Vector4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
 			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 		}
@@ -100,9 +100,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2] + m_rows[3][col] / other[row][3];
 			}
@@ -115,7 +115,7 @@ namespace acid
 	{
 		Vector4 result = Vector4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
 			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 		}
@@ -127,7 +127,7 @@ namespace acid
 	{
 		Matrix4 result = Matrix4(*this);
 
-		for (int col = 0; col < 4; col++)
+		for (int32_t col = 0; col < 4; col++)
 		{
 			result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y;
 		}
@@ -139,7 +139,7 @@ namespace acid
 	{
 		Matrix4 result = Matrix4(*this);
 
-		for (int col = 0; col < 4; col++)
+		for (int32_t col = 0; col < 4; col++)
 		{
 			result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y + m_rows[2][col] * other.m_z;
 		}
@@ -151,9 +151,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4(*this);
 
-		for (int row = 0; row < 3; row++)
+		for (int32_t row = 0; row < 3; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] *= other[row];
 			}
@@ -166,9 +166,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4(*this);
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] *= other[row];
 			}
@@ -202,9 +202,9 @@ namespace acid
 		f[2][1] = yz * o - xs;
 		f[2][2] = axis.m_z * axis.m_z * o + c;
 
-		for (int row = 0; row < 3; row++)
+		for (int32_t row = 0; row < 3; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
 			}
@@ -217,9 +217,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = -m_rows[row][col];
 			}
@@ -235,9 +235,9 @@ namespace acid
 		float det = Determinant();
 		assert(det != 0.0f && "Determinant cannot be zero!");
 
-		for (int j = 0; j < 4; j++)
+		for (int32_t j = 0; j < 4; j++)
 		{
-			for (int i = 0; i < 4; i++)
+			for (int32_t i = 0; i < 4; i++)
 			{
 				// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
 				Matrix3 minorSubmatrix = GetSubmatrix(j, i);
@@ -258,9 +258,9 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		for (int row = 0; row < 4; row++)
+		for (int32_t row = 0; row < 4; row++)
 		{
-			for (int col = 0; col < 4; col++)
+			for (int32_t col = 0; col < 4; col++)
 			{
 				result[row][col] = m_rows[col][row];
 			}
@@ -273,7 +273,7 @@ namespace acid
 	{
 		float result = 0.0f;
 
-		for (int i = 0; i < 4; i++)
+		for (int32_t i = 0; i < 4; i++)
 		{
 			// Get minor of element [0][i].
 			Matrix3 minorSubmatrix = GetSubmatrix(0, i);
@@ -288,19 +288,19 @@ namespace acid
 		return result;
 	}
 
-	Matrix3 Matrix4::GetSubmatrix(const int &row, const int &col) const
+	Matrix3 Matrix4::GetSubmatrix(const int32_t &row, const int32_t &col) const
 	{
 		Matrix3 result = Matrix3();
-		int colCount = 0;
-		int rowCount = 0;
+		int32_t colCount = 0;
+		int32_t rowCount = 0;
 
-		for (int i = 0; i < 4; i++)
+		for (int32_t i = 0; i < 4; i++)
 		{
 			if (i != row)
 			{
 				colCount = 0;
 
-				for (int j = 0; j < 4; j++)
+				for (int32_t j = 0; j < 4; j++)
 				{
 					if (j != col)
 					{
@@ -481,22 +481,6 @@ namespace acid
 		node.SetChild<Vector4>("m1", m_rows[1]);
 		node.SetChild<Vector4>("m2", m_rows[2]);
 		node.SetChild<Vector4>("m3", m_rows[3]);
-	}
-
-	Matrix4 &Matrix4::operator=(const Matrix4 &other)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_rows[i] = other[i];
-		}
-
-		return *this;
-	}
-
-	Matrix4 &Matrix4::operator=(const float *array)
-	{
-		memcpy(m_rows, array, 4 * 4 * sizeof(float));
-		return *this;
 	}
 
 	bool Matrix4::operator==(const Matrix4 &other) const

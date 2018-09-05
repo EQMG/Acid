@@ -8,17 +8,7 @@ namespace acid
 	class ACID_EXPORT IBehaviour :
 		public IComponent
 	{
-	private:
 	public:
-		IBehaviour() :
-			IComponent()
-		{
-		}
-
-		virtual ~IBehaviour()
-		{
-		}
-
 		virtual void Start() override
 		{
 		}

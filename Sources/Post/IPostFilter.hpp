@@ -27,9 +27,6 @@ namespace acid
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
 		IPostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<PipelineDefine> &defines = {});
 
-		/// <summary>
-		/// Deconstructor for the post filter.
-		/// </summary>
 		virtual ~IPostFilter();
 
 		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override = 0;

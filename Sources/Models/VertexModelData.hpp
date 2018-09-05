@@ -13,8 +13,8 @@ namespace acid
 
 		Vector3 m_position;
 
-		int m_uvIndex;
-		int m_normalIndex;
+		int32_t m_uvIndex;
+		int32_t m_normalIndex;
 		VertexModelData *m_duplicateVertex;
 
 		uint32_t m_index;
@@ -29,13 +29,13 @@ namespace acid
 
 		Vector3 GetPosition() const { return m_position; }
 
-		int GetUvIndex() const { return m_uvIndex; }
+		int32_t GetUvIndex() const { return m_uvIndex; }
 
-		void SetUvIndex(const int &uvIndex) { m_uvIndex = uvIndex; }
+		void SetUvIndex(const int32_t &uvIndex) { m_uvIndex = uvIndex; }
 
-		int GetNormalIndex() const { return m_normalIndex; }
+		int32_t GetNormalIndex() const { return m_normalIndex; }
 
-		void SetNormalIndex(const int &normalIndex) { m_normalIndex = normalIndex; }
+		void SetNormalIndex(const int32_t &normalIndex) { m_normalIndex = normalIndex; }
 
 		VertexModelData *GetDuplicateVertex() const { return m_duplicateVertex; }
 
@@ -53,6 +53,6 @@ namespace acid
 
 		bool IsSet() const;
 
-		bool HasSameTextureAndNormal(const int &textureIndexOther, const int &normalIndexOther) const;
+		bool HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const;
 	};
 }

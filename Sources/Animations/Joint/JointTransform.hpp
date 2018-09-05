@@ -17,7 +17,6 @@ namespace acid
 	private:
 		Vector3 m_position;
 		Quaternion m_rotation;
-
 	public:
 		/// <summary>
 		/// Creates a new joint transformation.
@@ -41,7 +40,7 @@ namespace acid
 		/// The rotation is applied by first converting the quaternion into a rotation matrix, which is then multiplied with the transform matrix.
 		/// </summary>
 		/// <returns> The local-space transform as a matrix. </returns>
-		Matrix4 GetLocalTransform();
+		Matrix4 GetLocalTransform() const;
 
 		/// <summary>
 		/// Interpolates between two transforms based on the progression value.

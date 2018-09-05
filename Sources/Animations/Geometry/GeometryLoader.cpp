@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	GeometryLoader::GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData *> &vertexWeights) :
+	GeometryLoader::GeometryLoader(const std::shared_ptr<Node> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights) :
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
 		m_positionsList(std::vector<VertexAnimatedData *>()),
@@ -26,9 +26,9 @@ namespace acid
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
 			Vector3 tangent = Vector3::ZERO;
 
-			VertexSkinData *skin = current->GetSkinData();
-			Vector3 jointIds = Vector3(skin->GetJointIds()[0], skin->GetJointIds()[1], skin->GetJointIds()[2]);
-			Vector3 weights = Vector3(skin->GetWeights()[0], skin->GetWeights()[1], skin->GetWeights()[2]);
+			auto skinData = current->GetSkinData();
+			Vector3 jointIds = Vector3(skinData.GetJointIds()[0], skinData.GetJointIds()[1], skinData.GetJointIds()[2]);
+			Vector3 weights = Vector3(skinData.GetWeights()[0], skinData.GetWeights()[1], skinData.GetWeights()[2]);
 
 			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent, jointIds, weights);
 			m_vertices.emplace_back(vertex);
@@ -45,12 +45,14 @@ namespace acid
 	{
 		std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
 		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
-		uint32_t positionsCount = String::FromString<uint32_t>(positionsData->FindAttribute("count"));
+		uint32_t positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
 		auto positionsRawData = String::Split(positionsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
 		{
-			Vector4 position = Vector4(String::FromString<float>(positionsRawData[i * 3]), String::FromString<float>(positionsRawData[i * 3 + 1]), String::FromString<float>(positionsRawData[i * 3 + 2]), 1.0f);
+			Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]),
+			                           String::From<float>(positionsRawData[i * 3 + 1]),
+			                           String::From<float>(positionsRawData[i * 3 + 2]), 1.0f);
 			position = MeshAnimated::CORRECTION.Transform(position);
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
@@ -62,12 +64,13 @@ namespace acid
 	{
 		std::string uvsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
 		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
-		uint32_t uvsCount = String::FromString<uint32_t>(uvsData->FindAttribute("count"));
+		uint32_t uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
 		auto uvsRawData = String::Split(uvsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
 		{
-			Vector2 uv = Vector2(String::FromString<float>(uvsRawData[i * 2]), 1.0f - String::FromString<float>(uvsRawData[i * 2 + 1]));
+			Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f -
+				String::From<float>(uvsRawData[i * 2 + 1]));
 			m_uvsList.emplace_back(uv);
 		}
 	}
@@ -76,12 +79,14 @@ namespace acid
 	{
 		std::string normalsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
 		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
-		uint32_t normalsCount = String::FromString<uint32_t>(normalsData->FindAttribute("count"));
+		uint32_t normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
 		auto normalsRawData = String::Split(normalsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
-			Vector3 normal = Vector3(String::FromString<float>(normalsRawData[i * 3]), String::FromString<float>(normalsRawData[i * 3 + 1]), String::FromString<float>(normalsRawData[i * 3 + 2]));
+			Vector3 normal = Vector3(String::From<float>(normalsRawData[i * 3]),
+			                         String::From<float>(normalsRawData[i * 3 + 1]),
+			                         String::From<float>(normalsRawData[i * 3 + 2]));
 			normal = MeshAnimated::CORRECTION.Transform(normal);
 			m_normalsList.emplace_back(normal);
 		}
@@ -94,9 +99,9 @@ namespace acid
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			int32_t positionIndex = String::FromString<int32_t>(indexRawData[i * indexCount]);
-			int32_t normalIndex = String::FromString<int32_t>(indexRawData[i * indexCount + 1]);
-			int32_t uvIndex = String::FromString<int32_t>(indexRawData[i * indexCount + 2]);
+			int32_t positionIndex = String::From<int32_t>(indexRawData[i * indexCount]);
+			int32_t normalIndex = String::From<int32_t>(indexRawData[i * indexCount + 1]);
+			int32_t uvIndex = String::From<int32_t>(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}

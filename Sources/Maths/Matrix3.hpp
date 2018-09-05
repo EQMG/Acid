@@ -55,9 +55,6 @@ namespace acid
 		/// <param name="source"> Creates this matrix out of a 3 vector array. </param>
 		Matrix3(const Vector3 source[3]);
 
-		/// <summary>
-		/// Deconstructor for Matrix3.
-		/// </summary>
 		~Matrix3();
 
 		/// <summary>
@@ -137,15 +134,11 @@ namespace acid
 		/// Gets the submatrix of this matrix.
 		/// </summary>
 		/// <returns> The submatrix. </returns>
-		Matrix2 GetSubmatrix(const int &row, const int &col) const;
+		Matrix2 GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Matrix3 &operator=(const Matrix3 &other);
-
-		Matrix3 &operator=(const float array[9]);
 
 		bool operator==(const Matrix3 &other) const;
 

@@ -78,9 +78,6 @@ namespace acid
 		Cubemap(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
-		/// <summary>
-		/// Deconstructor for the cubemap object.
-		/// </summary>
 		~Cubemap();
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);

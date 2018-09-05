@@ -27,9 +27,6 @@ namespace acid
 		{
 		}
 
-		/// <summary>
-		/// Deconstructor for the renderer.
-		/// </summary>
 		virtual ~IRenderer()
 		{
 		}

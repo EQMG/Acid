@@ -4,8 +4,7 @@
 
 namespace acid
 {
-	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes) :
-		IAxis(),
+	AxisCompound::AxisCompound(const std::vector<std::shared_ptr<IAxis>> &axes) :
 		m_axes(axes)
 	{
 	}

@@ -11,7 +11,6 @@
 namespace acid
 {
 	Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3 &linearFactor, const Vector3 &angularFactor) :
-		IComponent(),
 		m_mass(mass),
 		m_friction(friction),
 		m_linearFactor(linearFactor),

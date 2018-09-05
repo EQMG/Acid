@@ -79,7 +79,7 @@ namespace acid
 	{
 	}
 
-	std::optional<FontCharacter> FontMetafile::GetCharacter(const int &ascii)
+	std::optional<FontCharacter> FontMetafile::GetCharacter(const int32_t &ascii)
 	{
 		auto it = m_metadata.find(ascii);
 
@@ -120,7 +120,7 @@ namespace acid
 
 	void FontMetafile::LoadLineSizes()
 	{
-		int lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
+		int32_t lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
 		m_verticalPerPixelSize = LINE_HEIGHT / static_cast<float>(lineHeightPixels);
 		m_horizontalPerPixelSize = m_verticalPerPixelSize;
 		m_imageWidth = GetValueOfVariable("scaleW");
@@ -157,9 +157,9 @@ namespace acid
 		m_metadata.emplace(character.GetId(), character);
 	}
 
-	int FontMetafile::GetValueOfVariable(const std::string &variable)
+	int32_t FontMetafile::GetValueOfVariable(const std::string &variable)
 	{
-		return String::FromString<int32_t>(m_values.at(variable));
+		return String::From<int32_t>(m_values.at(variable));
 	}
 
 	std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
@@ -171,7 +171,7 @@ namespace acid
 
 		for (auto &number : numbers)
 		{
-			result.emplace_back(String::FromString<int32_t>(number));
+			result.emplace_back(String::From<int32_t>(number));
 			i++;
 		}
 

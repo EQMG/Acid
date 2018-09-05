@@ -27,9 +27,6 @@ namespace acid
 		/// </summary>
 		Collider();
 
-		/// <summary>
-		/// Deconstructor for the shape.
-		/// </summary>
 		virtual ~Collider();
 
 		void Start() override = 0;

@@ -86,8 +86,8 @@ namespace acid
 		// Read first chunk content.
 		short formatTag;
 		short channels;
-		int samplesPerSec;
-		int averageBytesPerSec;
+		int32_t samplesPerSec;
+		int32_t averageBytesPerSec;
 		short blockAlign;
 		short bitsPerSample;
 
@@ -136,10 +136,10 @@ namespace acid
 			throw std::runtime_error("Load wav file failure: file couldn't be opened!");
 		}
 
-		int channels;
-		int samplesPerSec;
+		int32_t channels;
+		int32_t samplesPerSec;
 		short *data;
-		int size = stb_vorbis_decode_filename(filename.c_str(), &channels, &samplesPerSec, &data);
+		int32_t size = stb_vorbis_decode_filename(filename.c_str(), &channels, &samplesPerSec, &data);
 
 		if (size == -1)
 		{

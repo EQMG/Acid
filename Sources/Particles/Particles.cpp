@@ -7,8 +7,7 @@ namespace acid
 	const float Particles::MAX_ELAPSED_TIME = 5.0f;
 
 	Particles::Particles() :
-		IModule(),
-		m_particles(std::map<std::shared_ptr<ParticleType>, std::vector<Particle *>>())
+		m_particles(std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>())
 	{
 	}
 
@@ -27,11 +26,10 @@ namespace acid
 		{
 			for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
 			{
-				(*it1)->Update();
+				(*it1).Update();
 
-				if (!(*it1)->IsAlive())
+				if (!(*it1).IsAlive())
 				{
-					delete *it1;
 					it1 = (*it).second.erase(it1);
 					continue;
 				}
@@ -41,22 +39,17 @@ namespace acid
 		}
 	}
 
-	void Particles::AddParticle(Particle *created)
+	void Particles::AddParticle(const Particle &particle)
 	{
-		if (created == nullptr)
-		{
-			return;
-		}
-
-		auto it = m_particles.find(created->GetParticleType());
+		auto it = m_particles.find(particle.GetParticleType());
 
 		if (it == m_particles.end())
 		{
-			m_particles.emplace(created->GetParticleType(), std::vector<Particle *>());
-			it = m_particles.find(created->GetParticleType());
+			m_particles.emplace(particle.GetParticleType(), std::vector<Particle>());
+			it = m_particles.find(particle.GetParticleType());
 		}
 
-		(*it).second.emplace_back(created);
+		(*it).second.emplace_back(particle);
 	}
 
 	void Particles::Clear()

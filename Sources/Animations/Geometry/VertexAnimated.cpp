@@ -3,7 +3,6 @@
 namespace acid
 {
 	VertexAnimated::VertexAnimated(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent, const Vector3 &jointId, const Vector3 &vertexWeight) :
-		IVertex(),
 		m_position(position),
 		m_uv(uv),
 		m_normal(normal),
@@ -14,7 +13,6 @@ namespace acid
 	}
 
 	VertexAnimated::VertexAnimated(const VertexAnimated &source) :
-		IVertex(),
 		m_position(source.m_position),
 		m_uv(source.m_uv),
 		m_normal(source.m_normal),

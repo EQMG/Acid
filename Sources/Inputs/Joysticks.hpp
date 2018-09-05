@@ -58,19 +58,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Joysticks> Get()
-		{
-			return Engine::Get()->GetModule<Joysticks>();
-		}
+		static std::shared_ptr<Joysticks> Get() { return Engine::Get()->GetModule<Joysticks>(); }
 
-		/// <summary>
-		/// Creates a new joysticks module.
-		/// </summary>
 		Joysticks();
 
-		/// <summary>
-		/// Deconstructor for the joysticks module.
-		/// </summary>
 		~Joysticks();
 
 		void Update() override;

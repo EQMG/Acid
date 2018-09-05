@@ -6,19 +6,15 @@ namespace acid
 		m_index(index),
 		m_nameId(nameId),
 		m_bindLocalTransform(bindLocalTransform),
-		m_children(std::vector<JointData *>())
+		m_children(std::vector<std::shared_ptr<JointData>>())
 	{
 	}
 
 	JointData::~JointData()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
-	void JointData::AddChild(JointData *child)
+	void JointData::AddChild(const std::shared_ptr<JointData> &child)
 	{
 		m_children.emplace_back(child);
 	}

@@ -124,10 +124,10 @@ namespace test
 					m_currentTab->GetContent()->SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 0.1f);
 				}
 
-				Events::Get()->AddEvent<EventTime>(0.32f, false, [&]()
+				Events::Get()->AddEvent<EventTime>(0.32f, [&]()
 				{
 					m_targetTab->GetContent()->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, 0.1f);
-				});
+				}, false);
 			}
 		}
 	}

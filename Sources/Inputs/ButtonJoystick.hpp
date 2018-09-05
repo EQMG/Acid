@@ -18,15 +18,12 @@ namespace acid
 		bool m_wasDown;
 	public:
 		/// <summary>
-		/// Creates a new button joystick.
+		/// Creates a new joystick button.
 		/// </summary>
 		/// <param name="joystick"> The joystick port. </param>
 		/// <param name="buttons"> The buttons on the joystick being checked. </param>
 		ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons);
 
-		/// <summary>
-		/// Deconstructor for the button joystick.
-		/// </summary>
 		~ButtonJoystick();
 
 		bool IsDown() const override;

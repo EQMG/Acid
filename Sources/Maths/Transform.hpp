@@ -66,8 +66,6 @@ namespace acid
 
 		void Encode(Node &node) const;
 
-		Transform &operator=(const Transform &other);
-
 		bool operator==(const Transform &other) const;
 
 		bool operator!=(const Transform &other) const;

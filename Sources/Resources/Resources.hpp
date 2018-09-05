@@ -22,19 +22,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Resources> Get()
-		{
-			return Engine::Get()->GetModule<Resources>();
-		}
+		static std::shared_ptr<Resources> Get() { return Engine::Get()->GetModule<Resources>(); }
 
-		/// <summary>
-		/// Creates a new Resources module.
-		/// </summary>
 		Resources();
 
-		/// <summary>
-		/// Deconstructor for the Resources module.
-		/// </summary>
 		~Resources();
 
 		void Update() override;

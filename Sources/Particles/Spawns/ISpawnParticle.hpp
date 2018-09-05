@@ -10,20 +10,6 @@ namespace acid
 	class ACID_EXPORT ISpawnParticle
 	{
 	public:
-		/// <summary>
-		/// Creates a new particle spawn.
-		/// </summary>
-		ISpawnParticle()
-		{
-		}
-
-		/// <summary>
-		/// Deconstructor for the particle spawn.
-		/// </summary>
-		virtual ~ISpawnParticle()
-		{
-		}
-
 		virtual void Decode(const Node &node) = 0;
 
 		virtual void Encode(Node &node) const = 0;

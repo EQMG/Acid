@@ -24,7 +24,7 @@ namespace acid
 	{
 	}
 
-	Matrix4 JointTransform::GetLocalTransform()
+	Matrix4 JointTransform::GetLocalTransform() const
 	{
 		Matrix4 matrix = Matrix4();
 		matrix = matrix.Translate(m_position);

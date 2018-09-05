@@ -37,9 +37,6 @@ namespace acid
 		/// <param name="screenStart"> If useMouse is false then this will be used as the rays start. </param>
 		Ray(const bool &useMouse, const Vector2 &screenStart);
 
-		/// <summary>
-		/// Deconstructor for the ray.
-		/// </summary>
 		~Ray();
 
 		/// <summary>

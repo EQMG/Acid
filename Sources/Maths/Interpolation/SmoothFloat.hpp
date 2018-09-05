@@ -21,9 +21,6 @@ namespace acid
 		/// <param name="agility"> The agility for increasing actual. </param>
 		SmoothFloat(const float &initialValue, const float &agility);
 
-		/// <summary>
-		/// Deconstructor for smooth float.
-		/// </summary>
 		~SmoothFloat();
 
 		/// <summary>

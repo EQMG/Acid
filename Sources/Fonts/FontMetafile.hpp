@@ -23,11 +23,11 @@ namespace acid
 		std::string m_filename;
 		float m_verticalPerPixelSize;
 		float m_horizontalPerPixelSize;
-		int m_imageWidth;
+		int32_t m_imageWidth;
 		float m_spaceWidth;
 		std::vector<int32_t> m_padding;
-		int m_paddingWidth;
-		int m_paddingHeight;
+		int32_t m_paddingWidth;
+		int32_t m_paddingHeight;
 		float m_maxSizeY;
 	public:
 		static const uint32_t PAD_TOP;
@@ -54,12 +54,9 @@ namespace acid
 		/// <param name="filepath"> The font file to load from. </param>
 		FontMetafile(const std::string &filename);
 
-		/// <summary>
-		/// Deconstructor for the meta file.
-		/// </summary>
 		~FontMetafile();
 
-		std::optional<FontCharacter> GetCharacter(const int &ascii);
+		std::optional<FontCharacter> GetCharacter(const int32_t &ascii);
 
 		std::string GetFilename() override { return m_filename; }
 
@@ -103,7 +100,7 @@ namespace acid
 		/// </summary>
 		/// <param name="variable"> The name of the variable.
 		/// </param>
-		/// <returns> The int array of values associated with the variable. </returns>
+		/// <returns> The int32_t array of values associated with the variable. </returns>
 		std::vector<int32_t> GetValuesOfVariable(const std::string &variable);
 	};
 }

@@ -27,14 +27,11 @@ namespace acid
 		/// <param name="filename"> The file to load the model from. </param>
 		ModelObj(const std::string &filename);
 
-		/// <summary>
-		/// Deconstructor for the OBJ model.
-		/// </summary>
 		~ModelObj();
 	private:
 		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
 
-		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int &newTextureIndex, const int &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
+		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
 
 		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);
 	};
