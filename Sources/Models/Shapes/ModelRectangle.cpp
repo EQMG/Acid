@@ -22,8 +22,8 @@ namespace acid
 	std::shared_ptr<ModelRectangle> ModelRectangle::Resource(const std::string &data)
 	{
 		auto split = String::Split(data, "_");
-		float width = String::FromString<float>(split[1]);
-		float height = String::FromString<float>(split[2]);
+		float width = String::From<float>(split[1]);
+		float height = String::From<float>(split[2]);
 		return Resource(width, height);
 	}
 

@@ -67,7 +67,7 @@ namespace acid
 
 	bool FileSystem::CreateFolder(const std::string &path)
 	{
-		int nError = 0;
+		int32_t nError = 0;
 
 #ifdef ACID_BUILD_WINDOWS
 		nError = _mkdir(path.c_str());
@@ -97,7 +97,7 @@ namespace acid
 		}
 
 		fseek(file, 0, SEEK_END);
-		int length = ftell(file);
+		int32_t length = ftell(file);
 		assert(length < 100 * 1024 * 1024);
 		std::string result(length, 0);
 		fseek(file, 0, SEEK_SET);

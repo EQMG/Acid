@@ -54,7 +54,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="c"> The char to look for. </param>
 		/// <returns> The char index. </returns>
-		static int FindCharPos(const std::string &str, const char &c);
+		static int32_t FindCharPos(const std::string &str, const char &c);
 
 		/// <summary>
 		/// Trims the left and right side of a string of whitespace.
@@ -113,7 +113,7 @@ namespace acid
 		static std::string Uppercase(const std::string &str);
 
 		template<typename T>
-		static std::string ToString(const T &val)
+		static std::string To(const T &val)
 		{
 			if constexpr(std::is_enum_v<T>)
 			{
@@ -128,15 +128,15 @@ namespace acid
 		}
 
 		template<typename T>
-		static T FromString(const std::string &str)
+		static T From(const std::string &str)
 		{
 			if constexpr(std::is_enum_v<T>)
 			{
-				return static_cast<T>(FromString<int32_t>(str));
+				return static_cast<T>(From<int32_t>(str));
 			}
 			else if constexpr(std::is_same_v<bool, T>)
 			{
-				return Lowercase(str) == "true" || FromString<int32_t>(str) == 1;
+				return Lowercase(str) == "true" || From<int32_t>(str) == 1;
 			}
 
 			std::istringstream ss(str);

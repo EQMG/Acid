@@ -18,15 +18,12 @@ namespace acid
 		float m_currentLineLength;
 	public:
 		/// <summary>
-		/// Creates a new line.
+		/// Creates a new text line.
 		/// </summary>
 		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
 		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
 		FontLine(const float &spaceWidth, const float &maxLength);
 
-		/// <summary>
-		/// Deconstructor for the line.
-		/// </summary>
 		~FontLine();
 
 		/// <summary>

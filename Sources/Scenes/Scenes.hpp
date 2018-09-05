@@ -22,26 +22,32 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Scenes> Get()
-		{
-			return Engine::Get()->GetModule<Scenes>();
-		}
+		static std::shared_ptr<Scenes> Get() { return Engine::Get()->GetModule<Scenes>(); }
 
 		/// <summary>
 		/// Creates a new Scenes module.
 		/// </summary>
 		Scenes();
 
-		/// <summary>
-		/// Deconstructor for the Scenes module.
-		/// </summary>
 		~Scenes();
 
 		void Update() override;
 
+		/// <summary>
+		/// Gets the current scene.
+		/// </summary>
+		/// <returns> The current scene. </returns>
 		IScene *GetScene() const { return m_scene; }
 
-		void SetScene(IScene *scene);
+		/// <summary>
+		/// Sets the current scene to a new scene.
+		/// </summary>
+		/// <param name="scene"> The new scene. </param>
+		void SetScene(IScene *scene)
+		{
+			delete m_scene; // TODO: Cleanup.
+			m_scene = scene;
+		}
 
 		/// <summary>
 		/// Creates a new component from the register.

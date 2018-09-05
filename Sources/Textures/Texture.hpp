@@ -78,9 +78,6 @@ namespace acid
 		Texture(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
-		/// <summary>
-		/// Deconstructor for the texture object.
-		/// </summary>
 		~Texture();
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
@@ -121,7 +118,7 @@ namespace acid
 
 		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *components);
 
-		static bool WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components = 4);
+		static bool WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 
 		static void DeletePixels(uint8_t *pixels);
 

@@ -22,9 +22,6 @@ namespace acid
 		/// <param name="buttons"> The buttons on the mouse being checked. </param>
 		ButtonMouse(const std::vector<MouseButton> &buttons);
 
-		/// <summary>
-		/// Deconstructor for the button mouse.
-		/// </summary>
 		~ButtonMouse();
 
 		bool IsDown() const override;

@@ -5,10 +5,9 @@
 namespace acid
 {
 	Joysticks::Joysticks() :
-		IModule(),
 		m_connected(std::array<Joystick, JOYSTICK_END_RANGE>())
 	{
-		for (int i = 0; i < JOYSTICK_END_RANGE; i++)
+		for (int32_t i = 0; i < JOYSTICK_END_RANGE; i++)
 		{
 			Joystick joystick = Joystick();
 			joystick.m_port = static_cast<JoystickPort>(i);
@@ -34,8 +33,8 @@ namespace acid
 					joystick.m_name = glfwGetJoystickName(joystick.m_port);
 				}
 
-				int axeCount = 0;
-				int buttonCount = 0;
+				int32_t axeCount = 0;
+				int32_t buttonCount = 0;
 				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &axeCount);
 				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &buttonCount);
 				joystick.m_axeCount = static_cast<uint32_t>(axeCount);

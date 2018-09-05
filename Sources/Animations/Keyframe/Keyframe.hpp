@@ -24,9 +24,13 @@ namespace acid
 		/// Creates a new keyframe at a timestamp.
 		/// </summary>
 		/// <param name="timeStamp"> The time (in seconds) that this keyframe occurs during the animation. </param>
-		/// <param name="jointKeyFrames"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
+		/// <param name="pose"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
 		Keyframe(const float &timeStamp, const std::map<std::string, JointTransform> &pose);
 
+		/// <summary>
+		/// Creates a new keyframe at a timestamp.
+		/// </summary>
+		/// <param name="data"> The data to load the keyframe from. </param>
 		Keyframe(const KeyframeData &data);
 
 		~Keyframe();

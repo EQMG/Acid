@@ -3,7 +3,6 @@
 namespace acid
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
-		IComponent(),
 		m_colour(colour),
 		m_offset(offset),
 		m_radius(radius),
@@ -12,7 +11,6 @@ namespace acid
 	}
 
 	Light::Light(const Light &source) :
-		IComponent(),
 		m_colour(source.m_colour),
 		m_offset(source.m_offset),
 		m_radius(source.m_radius),

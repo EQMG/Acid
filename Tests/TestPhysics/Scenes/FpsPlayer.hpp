@@ -17,12 +17,12 @@ namespace test
 		bool m_jumping;
 		bool m_noclipEnabled;
 
-		IAxis *m_inputForward;
-		IAxis *m_inputStrafe;
-		IButton *m_inputSprint;
-		IButton *m_inputJump;
-		IButton *m_inputCrouch;
-		IButton *m_toggleNoclip;
+		std::shared_ptr<IAxis> m_inputForward;
+		std::shared_ptr<IAxis> m_inputStrafe;
+		std::shared_ptr<IButton> m_inputSprint;
+		std::shared_ptr<IButton> m_inputJump;
+		std::shared_ptr<IButton> m_inputCrouch;
+		std::shared_ptr<IButton> m_toggleNoclip;
 
 		Vector3 m_amountMove;
 		Vector3 m_amountRotate;

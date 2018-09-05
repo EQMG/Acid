@@ -3,7 +3,6 @@
 namespace acid
 {
 	ButtonKeyboard::ButtonKeyboard(const std::vector<Key> &keys) :
-		IButton(),
 		m_keys(keys),
 		m_wasDown(false)
 	{

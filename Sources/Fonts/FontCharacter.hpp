@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include "Engine/Exports.hpp"
 
 namespace acid
@@ -10,7 +11,7 @@ namespace acid
 	class ACID_EXPORT FontCharacter
 	{
 	private:
-		int m_id;
+		int32_t m_id;
 		float m_textureCoordX;
 		float m_textureCoordY;
 		float m_maxTextureCoordX;
@@ -34,14 +35,11 @@ namespace acid
 		/// <param name="sizeX"> The width of the character's quad in screen space. </param>
 		/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
-		FontCharacter(const int &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX);
+		FontCharacter(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX);
 
-		/// <summary>
-		/// Deconstructor for the character.
-		/// </summary>
 		~FontCharacter();
 
-		int GetId() const { return m_id; }
+		int32_t GetId() const { return m_id; }
 
 		float GetTextureCoordX() const { return m_textureCoordX; }
 

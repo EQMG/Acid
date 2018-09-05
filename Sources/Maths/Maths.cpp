@@ -73,7 +73,7 @@ namespace acid
 		return x;
 	}
 
-	float Maths::RoundToPlace(const float &value, const int &place)
+	float Maths::RoundToPlace(const float &value, const int32_t &place)
 	{
 		float placeMul = std::pow(10.0f, static_cast<float>(place));
 		return std::round(value * placeMul) / placeMul;

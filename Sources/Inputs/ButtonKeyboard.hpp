@@ -22,9 +22,6 @@ namespace acid
 		/// <param name="keys"> The keys on the keyboard being checked. </param>
 		ButtonKeyboard(const std::vector<Key> &keys);
 
-		/// <summary>
-		/// Deconstructor for the button keyboard.
-		/// </summary>
 		~ButtonKeyboard();
 
 		bool IsDown() const override;

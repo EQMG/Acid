@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "IButton.hpp"
 
@@ -12,19 +13,15 @@ namespace acid
 		public IButton
 	{
 	private:
-		std::vector<IButton *> m_buttons;
+		std::vector<std::shared_ptr<IButton>> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new compound button.
 		/// </summary>
-		/// <param name="n_args"> The number buttons being added. </param>
-		/// <param name="..."> The buttons on the being added. </param>
-		ButtonCompound(const std::vector<IButton *> &buttons);
+		/// <param name="buttons"> The buttons on the being added. </param>
+		ButtonCompound(const std::vector<std::shared_ptr<IButton>> &buttons);
 
-		/// <summary>
-		/// Deconstructor for the compound button.
-		/// </summary>
 		~ButtonCompound();
 
 		bool IsDown() const override;

@@ -16,7 +16,7 @@ namespace acid
 		Vector3 m_lightDirection;
 
 		uint32_t m_shadowSize;
-		int m_shadowPcf;
+		int32_t m_shadowPcf;
 		float m_shadowBias;
 		float m_shadowDarkness;
 		float m_shadowTransition;
@@ -30,19 +30,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Shadows> Get()
-		{
-			return Engine::Get()->GetModule<Shadows>();
-		}
+		static std::shared_ptr<Shadows> Get() { return Engine::Get()->GetModule<Shadows>(); }
 
-		/// <summary>
-		/// Creates a new shadows module.
-		/// </summary>
 		Shadows();
 
-		/// <summary>
-		/// Deconstructor for the shadows module.
-		/// </summary>
 		~Shadows();
 
 		void Update() override;
@@ -55,9 +46,9 @@ namespace acid
 
 		void SetShadowSize(const uint32_t &shadowSize) { m_shadowSize = shadowSize; }
 
-		int GetShadowPcf() const { return m_shadowPcf; }
+		int32_t GetShadowPcf() const { return m_shadowPcf; }
 
-		void SetShadowPcf(const int &shadowPcf) { m_shadowPcf = shadowPcf; }
+		void SetShadowPcf(const int32_t &shadowPcf) { m_shadowPcf = shadowPcf; }
 
 		float GetShadowBias() const { return m_shadowBias; }
 

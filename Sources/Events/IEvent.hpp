@@ -11,20 +11,6 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new event.
-		/// </summary>
-		IEvent()
-		{
-		}
-
-		/// <summary>
-		/// Deconstructor for the event.
-		/// </summary>
-		virtual ~IEvent()
-		{
-		}
-
-		/// <summary>
 		/// Gets if the event has occurred.
 		/// </summary>
 		/// <returns> The event has occurred. </returns>

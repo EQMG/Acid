@@ -24,7 +24,7 @@ namespace acid
 		Gui *m_slider;
 
 		std::string m_prefix;
-		int m_roundTo;
+		int32_t m_roundTo;
 		bool m_updating;
 		float m_progressMin;
 		float m_progressMax;
@@ -36,7 +36,7 @@ namespace acid
 		Timer m_timerChange;
 		std::function<void()> m_actionChange;
 	public:
-		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value);
+		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &roundTo, const float &progressMin, const float &progressMax, const float &value);
 
 		~UiInputSlider();
 

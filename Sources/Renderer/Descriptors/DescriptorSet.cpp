@@ -30,8 +30,7 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkDescriptorSet descriptors[1] = {m_descriptorSet};
-		vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, descriptors);
+		Display::CheckVk(vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, &m_descriptorSet));
 	}
 
 	void DescriptorSet::Update(const std::vector<IDescriptor *> &descriptors)

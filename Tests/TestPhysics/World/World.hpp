@@ -29,10 +29,7 @@ namespace test
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<World> Get()
-		{
-			return Engine::Get()->GetModule<World>();
-		}
+		inline static std::shared_ptr<World> Get() { return Engine::Get()->GetModule<World>(); }
 
 		/// <summary>
 		/// Creates a new worlds module.

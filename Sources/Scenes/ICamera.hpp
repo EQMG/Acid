@@ -15,20 +15,6 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new camera.
-		/// </summary>
-		ICamera()
-		{
-		}
-
-		/// <summary>
-		/// Deconstructor for the camera.
-		/// </summary>
-		virtual ~ICamera()
-		{
-		}
-
-		/// <summary>
 		/// Checks inputs and carries out smooth camera movement. Called before every frame.
 		/// </summary>
 		virtual void Update() = 0;

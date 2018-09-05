@@ -29,9 +29,8 @@ namespace acid
 	}
 
 	Mouse::Mouse() :
-		IModule(),
-		m_mousePath(""),
 		m_mouseButtons(std::array<bool, MOUSE_BUTTON_END_RANGE>()),
+		m_mousePath(""),
 		m_lastMousePositionX(0.0f),
 		m_lastMousePositionY(0.0f),
 		m_mousePositionX(0.0f),

@@ -10,7 +10,6 @@ namespace test
 	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
 
 	World::World() :
-		IModule(),
 		m_driverDay(DriverLinear(0.0f, 1.0f, 300.0f)),
 		m_factorDay(0.0f),
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),

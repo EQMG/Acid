@@ -25,9 +25,9 @@ namespace acid
 
 	void Gui::UpdateObject()
 	{
-		int numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
-		int column = m_selectedRow % numberOfRows;
-		int row = m_selectedRow / numberOfRows;
+		int32_t numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
+		int32_t column = m_selectedRow % numberOfRows;
+		int32_t row = m_selectedRow / numberOfRows;
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 		// Updates uniforms.

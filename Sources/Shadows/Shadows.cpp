@@ -5,7 +5,6 @@
 namespace acid
 {
 	Shadows::Shadows() :
-		IModule(),
 		m_lightDirection(Vector3(0.5f, 0.0f, 0.5f)),
 		m_shadowSize(8192),
 		m_shadowPcf(1),

@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include "IModule.hpp"
+#include "Log.hpp"
 
 namespace acid
 {
@@ -19,9 +20,6 @@ namespace acid
 		/// </summary>
 		ModuleRegister();
 
-		/// <summary>
-		/// Deconstructor for the module register.
-		/// </summary>
 		~ModuleRegister();
 
 		/// <summary>

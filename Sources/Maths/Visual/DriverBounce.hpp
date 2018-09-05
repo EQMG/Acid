@@ -23,9 +23,6 @@ namespace acid
 		/// <param name="length"> The length between two waves. </param>
 		DriverBounce(const float &start, const float &end, const float &length);
 
-		/// <summary>
-		/// Deconstructor for bounce driver.
-		/// </summary>
 		~DriverBounce();
 
 	protected:

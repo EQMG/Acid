@@ -41,26 +41,6 @@ namespace acid
 	{
 	}
 
-	UiBound &UiBound::operator=(const UiBound &other)
-	{
-		m_position = other.m_position;
-		m_reference = other.m_reference;
-		m_aspectPosition = other.m_aspectPosition;
-		m_aspectSize = other.m_aspectSize;
-		m_dimensions = other.m_dimensions;
-		return *this;
-	}
-
-	bool UiBound::operator==(const UiBound &other) const
-	{
-		return m_position == other.m_position && m_reference == other.m_reference && m_aspectPosition == other.m_aspectPosition && m_aspectSize == other.m_aspectSize && m_dimensions == other.m_dimensions;
-	}
-
-	bool UiBound::operator!=(const UiBound &other) const
-	{
-		return !(*this == other);
-	}
-
 	Vector2 UiBound::FindPivot(const std::string &key)
 	{
 		auto it = PIVOT_MAP.find(key);
@@ -74,5 +54,15 @@ namespace acid
 		}
 
 		return it->second;
+	}
+
+	bool UiBound::operator==(const UiBound &other) const
+	{
+		return m_position == other.m_position && m_reference == other.m_reference && m_aspectPosition == other.m_aspectPosition && m_aspectSize == other.m_aspectSize && m_dimensions == other.m_dimensions;
+	}
+
+	bool UiBound::operator!=(const UiBound &other) const
+	{
+		return !(*this == other);
 	}
 }

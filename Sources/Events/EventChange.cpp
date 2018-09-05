@@ -3,10 +3,10 @@
 namespace acid
 {
 	template<typename T>
-	EventChange<T>::EventChange(T *reference, const std::function<void()> &onEvent) :
-		IEvent(),
+	EventChange<T>::EventChange(T *reference, const std::function<void()> &onEvent, const bool &repeat) :
 		m_reference(reference),
-		m_onEvent(onEvent)
+		m_onEvent(onEvent),
+		m_repeat(repeat)
 	{
 	}
 

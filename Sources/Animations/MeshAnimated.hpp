@@ -30,8 +30,8 @@ namespace acid
 		std::vector<Matrix4> m_jointMatrices;
 	public:
 		static const Matrix4 CORRECTION;
-		static const int MAX_JOINTS;
-		static const int MAX_WEIGHTS;
+		static const uint32_t MAX_JOINTS;
+		static const uint32_t MAX_WEIGHTS;
 
 		MeshAnimated(const std::string &filename = "");
 
@@ -54,7 +54,7 @@ namespace acid
 		std::vector<Matrix4> GetJointTransforms() const { return m_jointMatrices; }
 
 	private:
-		std::shared_ptr<Joint> CreateJoints(JointData *data);
+		std::shared_ptr<Joint> CreateJoints(const JointData &data);
 
 		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 	};

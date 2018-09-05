@@ -134,7 +134,7 @@ namespace acid
 		m_maxExtents.m_y = -std::numeric_limits<float>::infinity();
 		m_maxExtents.m_z = -std::numeric_limits<float>::infinity();
 
-		int i = 0;
+		int32_t i = 0;
 
 		for (auto &vertex : vertices)
 		{

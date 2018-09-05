@@ -22,10 +22,10 @@ namespace acid
 	{
 		auto split = String::Split(data, "_");
 		auto texture = Texture::Resource(split[1]);
-		uint32_t numberOfRows = String::FromString<uint32_t>(split[2]);
+		uint32_t numberOfRows = String::From<uint32_t>(split[2]);
 		Colour colourOffset = Colour(split[3]);
-		float lifeLength = String::FromString<float>(split[4]);
-		float scale = String::FromString<float>(split[5]);
+		float lifeLength = String::From<float>(split[4]);
+		float scale = String::From<float>(split[5]);
 		return Resource(texture, numberOfRows, colourOffset, lifeLength, scale);
 	}
 

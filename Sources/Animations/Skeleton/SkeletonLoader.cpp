@@ -17,12 +17,11 @@ namespace acid
 
 	SkeletonLoader::~SkeletonLoader()
 	{
-		delete m_headJoint;
 	}
 
-	JointData *SkeletonLoader::LoadJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot)
+	std::shared_ptr<JointData> SkeletonLoader::LoadJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot)
 	{
-		JointData *joint = ExtractMainJointData(jointNode, isRoot);
+		auto joint = ExtractMainJointData(jointNode, isRoot);
 
 		for (auto &childNode : jointNode->FindChildren("node"))
 		{
@@ -32,7 +31,7 @@ namespace acid
 		return joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot)
+	std::shared_ptr<JointData> SkeletonLoader::ExtractMainJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);
@@ -42,7 +41,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < matrixData.size(); i++)
 		{
-			transform.m_linear[i] = String::FromString<float>(matrixData[i]);
+			transform.m_linear[i] = String::From<float>(matrixData[i]);
 		}
 
 		transform = transform.Transpose();
@@ -54,10 +53,10 @@ namespace acid
 		}
 
 		m_jointCount++;
-		return new JointData(index, nameId, transform);
+		return std::make_shared<JointData>(*index, nameId, transform);
 	}
 
-	int SkeletonLoader::GetBoneIndex(const std::string &name)
+	std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
 	{
 		for (uint32_t i = 0; i < m_boneOrder.size(); i++)
 		{
@@ -67,6 +66,6 @@ namespace acid
 			}
 		}
 
-		return -1;
+		return {};
 	}
 }

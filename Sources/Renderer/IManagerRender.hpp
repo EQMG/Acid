@@ -22,9 +22,6 @@ namespace acid
 		/// </summary>
 		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate);
 
-		/// <summary>
-		/// Deconstructor for the master renderer.
-		/// </summary>
 		virtual ~IManagerRender();
 
 		/// <summary>

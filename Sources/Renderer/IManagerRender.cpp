@@ -45,10 +45,10 @@ namespace acid
 			{
 				if (*it == renderer)
 				{
-					//	if (*it != nullptr)
-					//	{
-					//		(*it)->SetManager(nullptr);
-					//	}
+				//	if (*it != nullptr)
+				//	{
+				//		(*it)->SetManager(nullptr);
+				//	}
 
 					stage.second.erase(it);
 					return *it;

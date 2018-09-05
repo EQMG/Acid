@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	ColliderHeightfield::ColliderHeightfield(const int &heightStickWidth, const int &heightStickLength,
+	ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength,
 											 const void *heightfieldData, const float &heightScale,
 											 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges) :
 		Collider(),
@@ -41,7 +41,7 @@ namespace acid
 		return m_shape;
 	}
 
-	void ColliderHeightfield::Initialize(const int &heightStickWidth, const int &heightStickLength,
+	void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength,
 										 const void *heightfieldData, const float &heightScale,
 										 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges)
 	{

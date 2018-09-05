@@ -36,9 +36,6 @@ namespace acid
 		/// <param name="texture"> The objects texture. </param>
 		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture);
 
-		/// <summary>
-		/// Deconstructor for the gui object.
-		/// </summary>
 		~Gui();
 
 		void UpdateObject() override;

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Animations/Joint/Joint.hpp"
+#include <optional>
+#include "Animations/Joint/JointData.hpp"
 #include "Serialized/Node.hpp"
 
 namespace acid
@@ -12,21 +13,21 @@ namespace acid
 
 		std::vector<std::string> m_boneOrder;
 
-		int m_jointCount;
-		JointData *m_headJoint;
+		uint32_t m_jointCount;
+		std::shared_ptr<JointData> m_headJoint;
 	public:
 		SkeletonLoader(const std::shared_ptr<Node> &libraryControllers, const std::vector<std::string> &boneOrder);
 
 		~SkeletonLoader();
 
-		int GetJointCount() const { return m_jointCount; }
+		uint32_t GetJointCount() const { return m_jointCount; }
 
-		JointData *GetHeadJoint() const { return m_headJoint; }
+		std::shared_ptr<JointData> GetHeadJoint() const { return m_headJoint; }
 	private:
-		JointData *LoadJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot);
+		std::shared_ptr<JointData> LoadJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot);
 
-		JointData *ExtractMainJointData(std::shared_ptr<Node> &jointNode, const bool &isRoot);
+		std::shared_ptr<JointData> ExtractMainJointData(const std::shared_ptr<Node> &jointNode, const bool &isRoot);
 
-		int GetBoneIndex(const std::string &name);
+		std::optional<uint32_t> GetBoneIndex(const std::string &name);
 	};
 }

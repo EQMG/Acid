@@ -250,22 +250,22 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		Buffer *bufferStaging = new Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging->GetBufferMemory(), 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, m_size, 0, &data);
 		memcpy(data, pixels, m_size);
-		vkUnmapMemory(logicalDevice, bufferStaging->GetBufferMemory());
+		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		Buffer::CopyBuffer(bufferStaging->GetBuffer(), GetBuffer(), m_size);
+		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), m_size);
 	}
 
 	int32_t Texture::LoadSize(const std::string &filepath)
 	{
-		int width = 0;
-		int height = 0;
-		int components = 0;
+		int32_t width = 0;
+		int32_t height = 0;
+		int32_t components = 0;
 
 		if (!FileSystem::FileExists(filepath))
 		{
@@ -311,12 +311,12 @@ namespace acid
 
 		stbi_uc *data = nullptr;
 
-		if (stbi_info(filepath.c_str(), (int *)width, (int *)height, (int *)components) == 0)
+		if (stbi_info(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
 		{
 			assert(false && "Vulkan invalid texture file format.");
 		}
 
-		data = stbi_load(filepath.c_str(), (int *)width, (int *)height, (int *)components, STBI_rgb_alpha);
+		data = stbi_load(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
@@ -345,9 +345,9 @@ namespace acid
 		return pixels;
 	}
 
-	bool Texture::WritePixels(const std::string &filename, const void *data, const int &width, const int &height, const int &components)
+	bool Texture::WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components)
 	{
-		int result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
+		int32_t result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
 		return result == 1;
 	}
 

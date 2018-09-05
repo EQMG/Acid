@@ -1,5 +1,31 @@
-﻿#pragma once
+﻿//
+// MIT License
+//
+// Copyright(c) 2017 Jordan Peck
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
 
+#pragma once
+
+#include <cstdint>
+#include <memory>
 #include "Engine/Exports.hpp"
 
 namespace acid
@@ -54,15 +80,15 @@ namespace acid
 	class ACID_EXPORT Noise
 	{
 	private:
-		int m_seed;
-		unsigned char *m_perm;
-		unsigned char *m_perm12;
+		int32_t m_seed;
+		std::unique_ptr<uint8_t[]> m_perm;
+		std::unique_ptr<uint8_t[]> m_perm12;
 
 		float m_frequency;
 		NoiseInterp m_interp;
 		NoiseType m_noiseType;
 
-		int m_octaves;
+		int32_t m_octaves;
 		float m_lacunarity;
 		float m_gain;
 		NoiseFractal m_fractalType;
@@ -70,23 +96,23 @@ namespace acid
 
 		NoiseCellularFunc m_cellularDistanceFunction;
 		NoiseCellularReturn m_cellularReturnType;
-		Noise *m_cellularNoiseLookup;
-		int m_cellularDistanceIndex0;
-		int m_cellularDistanceIndex1;
+		std::unique_ptr<Noise> m_cellularNoiseLookup;
+		int32_t m_cellularDistanceIndex0;
+		int32_t m_cellularDistanceIndex1;
 		float m_cellularJitter;
 
 		float m_gradientPerturbAmp;
 	public:
-		Noise(const int &seed);
+		Noise(const int32_t &seed);
 
 		~Noise();
 
 		// Returns seed used for all noise types
-		int GetSeed() const { return m_seed; }
+		int32_t GetSeed() const { return m_seed; }
 
 		// Sets seed used for all noise types
 		// Default: 1337
-		void SetSeed(const int &seed);
+		void SetSeed(const int32_t &seed);
 
 		// Returns frequency used for all noise types
 		float GetFrequency() const { return m_frequency; }
@@ -115,11 +141,11 @@ namespace acid
 		void SetNoiseType(const NoiseType &noiseType) { m_noiseType = noiseType; }
 
 		// Returns octave count for all fractal noise types
-		int GetFractalOctaves() const { return m_octaves; }
+		int32_t GetFractalOctaves() const { return m_octaves; }
 
 		// Sets octave count for all fractal noise types
 		// Default: 3
-		void SetFractalOctaves(const int &octaves);
+		void SetFractalOctaves(const int32_t &octaves);
 
 		// Returns octave lacunarity for all fractal noise types
 		float GetFractalLacunarity() const { return m_lacunarity; }
@@ -158,25 +184,25 @@ namespace acid
 		void SetCellularReturnType(const NoiseCellularReturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
 
 		// Returns the noise used to calculate a cell value if the cellular return type is NoiseLookup
-		Noise *GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
+		std::unique_ptr<Noise> const &GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
 
 		// Noise used to calculate a cell value if cellular return type is NoiseLookup
 		// The lookup value is acquired through GetNoise() so ensure you SetNoiseType() on the noise lookup, value, Perlin or simplex is recommended
-		void SetCellularNoiseLookup(Noise *noise) { m_cellularNoiseLookup = noise; }
+		void SetCellularNoiseLookup(Noise *noise) { m_cellularNoiseLookup.reset(noise); }
 
 		// Returns the 2 distance indices used for distance2 return types
-		void GetCellularDistance2Indices(int &cellularDistanceIndex0, int &cellularDistanceIndex1) const;
+		void GetCellularDistance2Indices(int32_t &cellularDistanceIndex0, int32_t &cellularDistanceIndex1) const;
 
 		// Sets the 2 distance indices used for distance2 return types
 		// Default: 0, 1
 		// Note: index0 should be lower than index1
 		// Both indices must be >= 0, index1 must be < 4
-		void SetCellularDistance2Indices(const int &cellularDistanceIndex0, const int &cellularDistanceIndex1);
+		void SetCellularDistance2Indices(const int32_t &cellularDistanceIndex0, const int32_t &cellularDistanceIndex1);
 
-		// Returns the maximum distance a cellular point can move from its grid position
+		// Returns the maximum distance a cellular point32_t can move from its grid position
 		float GetCellularJitter() const { return m_cellularJitter; }
 
-		// Sets the maximum distance a cellular point can move from its grid position
+		// Sets the maximum distance a cellular point32_t can move from its grid position
 		// Setting this high will make artifacts more common
 		// Default: 0.45
 		void SetCellularJitter(const float &cellularJitter) { m_cellularJitter = cellularJitter; }
@@ -205,7 +231,7 @@ namespace acid
 
 		float GetWhiteNoise(float x, float y) const;
 
-		float GetWhiteNoiseInt(int x, int y) const;
+		float GetWhiteNoiseInt(int32_t x, int32_t y) const;
 
 		float GetCubic(float x, float y) const;
 
@@ -234,7 +260,7 @@ namespace acid
 
 		float GetWhiteNoise(float x, float y, float z) const;
 
-		float GetWhiteNoiseInt(int x, int y, int z) const;
+		float GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z) const;
 
 		float GetCubic(float x, float y, float z) const;
 
@@ -251,15 +277,15 @@ namespace acid
 
 		float GetWhiteNoise(float x, float y, float z, float w) const;
 
-		float GetWhiteNoiseInt(int x, int y, int z, int w) const;
+		float GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z, int32_t w) const;
 
 	private:
 		void CalculateFractalBounding();
 
 		// Helpers
-		static int FastFloor(const float &f);
+		static int32_t FastFloor(const float &f);
 
-		static int FastRound(const float &f);
+		static int32_t FastRound(const float &f);
 
 		static float Lerp(const float &a, const float &b, const float &t);
 
@@ -269,33 +295,33 @@ namespace acid
 
 		static float CubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t);
 
-		unsigned char Index2d12(const unsigned char &offset, const int &x, const int &y) const;
+		uint8_t Index2d12(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
 
-		unsigned char Index3d12(const unsigned char &offset, const int &x, const int &y, const int &z) const;
+		uint8_t Index3d12(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
 
-		unsigned char Index4d32(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const;
+		uint8_t Index4d32(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const;
 
-		unsigned char Index2d256(const unsigned char &offset, const int &x, const int &y) const;
+		uint8_t Index2d256(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
 
-		unsigned char Index3d256(const unsigned char &offset, const int &x, const int &y, const int &z) const;
+		uint8_t Index3d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
 
-		unsigned char Index4d256(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w) const;
+		uint8_t Index4d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const;
 
-		static float ValueCoord2d(const int &seed, const int &x, const int &y);
+		static float ValueCoord2d(const int32_t &seed, const int32_t &x, const int32_t &y);
 
-		static float ValueCoord3d(const int &seed, const int &x, const int &y, const int &z);
+		static float ValueCoord3d(const int32_t &seed, const int32_t &x, const int32_t &y, const int32_t &z);
 
-		static float ValueCoord4d(const int &seed, const int &x, const int &y, const int &z, const int &w);
+		static float ValueCoord4d(const int32_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w);
 
-		float ValueCoord2dFast(const unsigned char &offset, const int &x, const int &y) const;
+		float ValueCoord2dFast(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
 
-		float ValueCoord3dFast(const unsigned char &offset, const int &x, const int &y, const int &z) const;
+		float ValueCoord3dFast(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
 
-		float GradCoord2d(const unsigned char &offset, const int &x, const int &y, const float &xd, const float &yd) const;
+		float GradCoord2d(const uint8_t &offset, const int32_t &x, const int32_t &y, const float &xd, const float &yd) const;
 
-		float GradCoord3d(const unsigned char &offset, const int &x, const int &y, const int &z, const float &xd, const float &yd, const float &zd) const;
+		float GradCoord3d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const float &xd, const float &yd, const float &zd) const;
 
-		float GradCoord4d(const unsigned char &offset, const int &x, const int &y, const int &z, const int &w, const float &xd, const float &yd, const float &zd, const float &wd) const;
+		float GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd, const float &wd) const;
 
 		// 2D
 		float SingleValueFractalFbm(float x, float y) const;
@@ -304,7 +330,7 @@ namespace acid
 
 		float SingleValueFractalRigidMulti(float x, float y) const;
 
-		float SingleValue(const unsigned char &offset, const float &x, const float &y) const;
+		float SingleValue(const uint8_t &offset, const float &x, const float &y) const;
 
 		float SinglePerlinFractalFbm(float x, float y) const;
 
@@ -312,7 +338,7 @@ namespace acid
 
 		float SinglePerlinFractalRigidMulti(float x, float y) const;
 
-		float SinglePerlin(const unsigned char &offset, const float &x, const float &y) const;
+		float SinglePerlin(const uint8_t &offset, const float &x, const float &y) const;
 
 		float SingleSimplexFractalFbm(float x, float y) const;
 
@@ -322,7 +348,7 @@ namespace acid
 
 		float singleSimplexFractalBlend(float x, float y) const;
 
-		float SingleSimplex(const unsigned char &offset, const float &x, const float &y) const;
+		float SingleSimplex(const uint8_t &offset, const float &x, const float &y) const;
 
 		float SingleCubicFractalFbm(float x, float y) const;
 
@@ -330,13 +356,13 @@ namespace acid
 
 		float SingleCubicFractalRigidMulti(float x, float y) const;
 
-		float SingleCubic(const unsigned char &offset, const float &x, const float &y) const;
+		float SingleCubic(const uint8_t &offset, const float &x, const float &y) const;
 
 		float SingleCellular(const float &x, const float &y) const;
 
 		float SingleCellular2Edge(const float &x, const float &y) const;
 
-		void SingleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y) const;
+		void SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y) const;
 
 		//3D
 		float SingleValueFractalFbm(float x, float y, float z) const;
@@ -345,7 +371,7 @@ namespace acid
 
 		float SingleValueFractalRigidMulti(float x, float y, float z) const;
 
-		float SingleValue(const unsigned char &offset, const float &x, const float &y, const float &z) const;
+		float SingleValue(const uint8_t &offset, const float &x, const float &y, const float &z) const;
 
 		float SinglePerlinFractalFbm(float x, float y, float z) const;
 
@@ -353,7 +379,7 @@ namespace acid
 
 		float SinglePerlinFractalRigidMulti(float x, float y, float z) const;
 
-		float SinglePerlin(const unsigned char &offset, const float &x, const float &y, const float &z) const;
+		float SinglePerlin(const uint8_t &offset, const float &x, const float &y, const float &z) const;
 
 		float SingleSimplexFractalFbm(float x, float y, float z) const;
 
@@ -361,7 +387,7 @@ namespace acid
 
 		float SingleSimplexFractalRigidMulti(float x, float y, float z) const;
 
-		float SingleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z) const;
+		float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z) const;
 
 		float SingleCubicFractalFbm(float x, float y, float z) const;
 
@@ -369,15 +395,15 @@ namespace acid
 
 		float SingleCubicFractalRigidMulti(float x, float y, float z) const;
 
-		float SingleCubic(const unsigned char &offset, const float &x, const float &y, const float &z) const;
+		float SingleCubic(const uint8_t &offset, const float &x, const float &y, const float &z) const;
 
 		float SingleCellular(const float &x, const float &y, const float &z) const;
 
 		float SingleCellular2Edge(const float &x, const float &y, const float &z) const;
 
-		void SingleGradientPerturb(const unsigned char &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const;
+		void SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const;
 
 		//4D
-		float SingleSimplex(const unsigned char &offset, const float &x, const float &y, const float &z, const float &w) const;
+		float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const;
 	};
 }

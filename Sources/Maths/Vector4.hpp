@@ -68,9 +68,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing colour. </param>
 		Vector4(const Colour &source);
 
-		/// <summary>
-		/// Deconstructor for vector4.
-		/// </summary>
 		~Vector4();
 
 		/// <summary>
@@ -206,12 +203,6 @@ namespace acid
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Vector4 &operator=(const Vector4 &other);
-
-		Vector4 &operator=(const Vector3 &other);
-
-		Vector4 &operator=(const Colour &other);
 
 		bool operator==(const Vector4 &other) const;
 

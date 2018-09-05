@@ -61,7 +61,8 @@ namespace acid
 		/// Constructor for Quaternion.
 		/// </summary>
 		/// <param name="source"> Creates this quaternion out of a existing vector (pitch, yaw roll). </param>>
-		Quaternion(const Vector3 &source);
+		/// <param name="w"> Start w. </param>
+		Quaternion(const Vector3 &source, const float &w = 1.0f);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -78,21 +79,11 @@ namespace acid
 		/// <summary>
 		/// Constructor for Quaternion.
 		/// </summary>
-		/// <param name="axis"> The axis to create from. </param>
-		/// <param name="angle"> The angle to rotate the angle around. </param>
-		Quaternion(const Vector3 &axis, const float &angle);
-
-		/// <summary>
-		/// Constructor for Quaternion.
-		/// </summary>
 		/// <param name="axisX"> The X axis. </param>
 		/// <param name="axisY"> The Y axis. </param>
 		/// <param name="axisZ"> The Z axis. </param>
 		Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ);
 
-		/// <summary>
-		/// Deconstructor for Quaternion.
-		/// </summary>
 		~Quaternion();
 
 		/// <summary>
@@ -226,12 +217,6 @@ namespace acid
 		void Decode(const Node &node);
 
 		void Encode(Node &node) const;
-
-		Quaternion &operator=(const Quaternion &other);
-
-		Quaternion &operator=(const Vector3 &other);
-
-		Quaternion &operator=(const Matrix4 &other);
 
 		bool operator==(const Quaternion &other) const;
 

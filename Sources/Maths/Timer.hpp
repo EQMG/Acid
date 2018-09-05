@@ -19,9 +19,6 @@ namespace acid
 		/// <param name="interval"> The time between events (seconds). </param>
 		Timer(const float &interval);
 
-		/// <summary>
-		/// Deconstructor for the timer.
-		/// </summary>
 		~Timer();
 
 		/// <summary>

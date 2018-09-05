@@ -23,9 +23,9 @@ namespace acid
 	std::shared_ptr<ModelSphere> ModelSphere::Resource(const std::string &data)
 	{
 		auto split = String::Split(data, "_");
-		uint32_t latitudeBands = String::FromString<uint32_t>(split[1]);
-		uint32_t longitudeBands = String::FromString<uint32_t>(split[2]);
-		float radius = String::FromString<float>(split[3]);
+		uint32_t latitudeBands = String::From<uint32_t>(split[1]);
+		uint32_t longitudeBands = String::From<uint32_t>(split[2]);
+		float radius = String::From<float>(split[3]);
 		return Resource(latitudeBands, longitudeBands, radius);
 	}
 

@@ -35,9 +35,6 @@ namespace acid
 		/// <param name="source"> The source light object. </param>
 		Light(const Light &source);
 
-		/// <summary>
-		/// Deconstructor for light.
-		/// </summary>
 		~Light();
 
 		void Start() override;

@@ -53,9 +53,6 @@ namespace acid
 		/// <param name="source"> Creates this particle type out of a existing one. </param>
 		ParticleType(const ParticleType &source);
 
-		/// <summary>
-		/// Deconstructor for the particle type.
-		/// </summary>
 		~ParticleType();
 
 		void Decode(const Node &node);

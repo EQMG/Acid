@@ -11,7 +11,6 @@
 namespace acid
 {
 	Mesh::Mesh(const std::shared_ptr<Model> &model) :
-		IComponent(),
 		m_model(model)
 	{
 	}

@@ -33,19 +33,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Renderer> Get()
-		{
-			return Engine::Get()->GetModule<Renderer>();
-		}
+		static std::shared_ptr<Renderer> Get() { return Engine::Get()->GetModule<Renderer>(); }
 
-		/// <summary>
-		/// Creates a new renderer module.
-		/// </summary>
 		Renderer();
 
-		/// <summary>
-		/// Deconstructor for the renderer module.
-		/// </summary>
 		~Renderer();
 
 		void Update() override;
@@ -68,7 +59,11 @@ namespace acid
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		void SetManager(IManagerRender *managerRender);
+		void SetManager(IManagerRender *managerRender)
+		{
+			delete m_managerRender; // TODO: Cleanup.
+			m_managerRender = managerRender;
+		}
 
 		std::vector<std::shared_ptr<RenderStage>> GetRenderStages() const { return m_renderStages; }
 

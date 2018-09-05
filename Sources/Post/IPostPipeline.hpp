@@ -18,9 +18,6 @@ namespace acid
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		IPostPipeline(const GraphicsStage &graphicsStage);
 
-		/// <summary>
-		/// Deconstructor for the post pipeline.
-		/// </summary>
 		virtual ~IPostPipeline();
 
 		/// <summary>

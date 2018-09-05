@@ -38,9 +38,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = m_rows[row][col] + other[row][col];
 			}
@@ -53,9 +53,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = m_rows[row][col] - other[row][col];
 			}
@@ -68,9 +68,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1];
 			}
@@ -83,9 +83,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1];
 			}
@@ -98,7 +98,7 @@ namespace acid
 	{
 		Vector2 result = Vector2();
 
-		for (int row = 0; row < 3; row++)
+		for (int32_t row = 0; row < 3; row++)
 		{
 			result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y;
 		}
@@ -110,9 +110,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2(*this);
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] *= other[row];
 			}
@@ -125,9 +125,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = -m_rows[row][col];
 			}
@@ -143,9 +143,9 @@ namespace acid
 		float det = Determinant();
 		assert(det != 0.0f && "Determinant cannot be zero!");
 
-		for (int j = 0; j < 2; j++)
+		for (int32_t j = 0; j < 2; j++)
 		{
-			for (int i = 0; i < 2; i++)
+			for (int32_t i = 0; i < 2; i++)
 			{
 				// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
 				float minor = GetSubmatrix(j, i);
@@ -165,9 +165,9 @@ namespace acid
 	{
 		Matrix2 result = Matrix2();
 
-		for (int row = 0; row < 2; row++)
+		for (int32_t row = 0; row < 2; row++)
 		{
-			for (int col = 0; col < 2; col++)
+			for (int32_t col = 0; col < 2; col++)
 			{
 				result[row][col] = m_rows[col][row];
 			}
@@ -180,7 +180,7 @@ namespace acid
 	{
 		float result = 0.0f;
 
-		for (int i = 0; i < 2; i++)
+		for (int32_t i = 0; i < 2; i++)
 		{
 			// Get minor of element [0][i].
 			float minor = GetSubmatrix(0, i);
@@ -194,19 +194,19 @@ namespace acid
 		return result;
 	}
 
-	float Matrix2::GetSubmatrix(const int &row, const int &col) const
+	float Matrix2::GetSubmatrix(const int32_t &row, const int32_t &col) const
 	{
 		float result = 0.0f;
-		int colCount = 0;
-		int rowCount = 0;
+		int32_t colCount = 0;
+		int32_t rowCount = 0;
 
-		for (int i = 0; i < 2; i++)
+		for (int32_t i = 0; i < 2; i++)
 		{
 			if (i != row)
 			{
 				colCount = 0;
 
-				for (int j = 0; j < 2; j++)
+				for (int32_t j = 0; j < 2; j++)
 				{
 					if (j != col)
 					{
@@ -232,22 +232,6 @@ namespace acid
 	{
 		node.SetChild<Vector2>("m0", m_rows[0]);
 		node.SetChild<Vector2>("m1", m_rows[1]);
-	}
-
-	Matrix2 &Matrix2::operator=(const Matrix2 &other)
-	{
-		for (int i = 0; i < 2; i++)
-		{
-			m_rows[i] = other[i];
-		}
-
-		return *this;
-	}
-
-	Matrix2 &Matrix2::operator=(const float *array)
-	{
-		memcpy(m_rows, array, 2 * 2 * sizeof(float));
-		return *this;
 	}
 
 	bool Matrix2::operator==(const Matrix2 &other) const

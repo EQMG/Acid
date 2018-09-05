@@ -2,8 +2,7 @@
 
 namespace acid
 {
-	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
-		IButton(),
+	ButtonCompound::ButtonCompound(const std::vector<std::shared_ptr<IButton>> &buttons) :
 		m_buttons(buttons),
 		m_wasDown(false)
 	{
@@ -28,7 +27,7 @@ namespace acid
 
 	bool ButtonCompound::WasDown()
 	{
-		const bool stillDown = m_wasDown && IsDown();
+		bool stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

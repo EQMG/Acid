@@ -18,9 +18,9 @@ namespace acid
 	{
 	}
 
-	int UiGrabberJoystick::GetCurrent(Text *object)
+	int32_t UiGrabberJoystick::GetCurrent(Text *object)
 	{
-		int key = -1;
+		int32_t key = -1;
 
 		if (Joysticks::Get()->IsConnected(m_joystick))
 		{
@@ -46,14 +46,14 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberJoystick::GetValue(const int &value)
+	std::string UiGrabberJoystick::GetValue(const int32_t &value)
 	{
 		return std::to_string(value);
 	}
 
-	int UiGrabberKeyboard::GetCurrent(Text *object)
+	int32_t UiGrabberKeyboard::GetCurrent(Text *object)
 	{
-		int key = Keyboard::Get()->GetChar();
+		int32_t key = Keyboard::Get()->GetChar();
 
 		if (key == 0 || !Keyboard::Get()->GetKey((Key) toupper(key)))
 		{
@@ -63,14 +63,14 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberKeyboard::GetValue(const int &value)
+	std::string UiGrabberKeyboard::GetValue(const int32_t &value)
 	{
 		return std::string(1, static_cast<char>(value));
 	}
 
-	int UiGrabberMouse::GetCurrent(Text *object)
+	int32_t UiGrabberMouse::GetCurrent(Text *object)
 	{
-		int key = -1;
+		int32_t key = -1;
 
 		for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
@@ -93,12 +93,12 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberMouse::GetValue(const int &value)
+	std::string UiGrabberMouse::GetValue(const int32_t &value)
 	{
 		return std::to_string(value);
 	}
 
-	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber) :
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
@@ -127,7 +127,7 @@ namespace acid
 	{
 		if (m_selected)
 		{
-			int key = m_grabber->GetCurrent(m_text);
+			int32_t key = m_grabber->GetCurrent(m_text);
 
 			if (key != -1)
 			{
@@ -189,7 +189,7 @@ namespace acid
 		m_text->SetString(prefix + m_grabber->GetValue(m_value));
 	}
 
-	void UiInputGrabber::SetValue(const int &value)
+	void UiInputGrabber::SetValue(const int32_t &value)
 	{
 		m_value = value;
 		m_text->SetString(m_prefix + m_grabber->GetValue(value));

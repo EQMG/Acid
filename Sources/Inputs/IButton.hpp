@@ -11,20 +11,6 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new axis.
-		/// </summary>
-		IButton()
-		{
-		}
-
-		/// <summary>
-		/// Deconstructor for the axis.
-		/// </summary>
-		virtual ~IButton()
-		{
-		}
-
-		/// <summary>
 		/// Returns whether this button is currently pressed.
 		/// </summary>
 		/// <returns> True if the button is pressed, false otherwise. </returns>

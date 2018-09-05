@@ -46,9 +46,6 @@ namespace acid
 		/// <param name="name"> The model name. </param>
 		Model(std::vector<IVertex *> &vertices, const std::string &name = "");
 
-		/// <summary>
-		/// Deconstructor for the model.
-		/// </summary>
 		~Model();
 
 		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);

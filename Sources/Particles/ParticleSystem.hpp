@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
+#include <optional>
 #include "Maths/Vector3.hpp"
 #include "Objects/GameObject.hpp"
 #include "Objects/IComponent.hpp"
@@ -48,9 +49,6 @@ namespace acid
 		/// <param name="systemOffset"> The offset from the parents centre. </param>
 		ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = std::vector<std::shared_ptr<ParticleType>>(), const std::shared_ptr<ISpawnParticle> &spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &systemOffset = Vector3::ZERO);
 
-		/// <summary>
-		/// Deconstructor for the particle system.
-		/// </summary>
 		~ParticleSystem();
 
 		void Start() override;
@@ -62,7 +60,7 @@ namespace acid
 		void Encode(Node &node) const override;
 
 	private:
-		Particle *EmitParticle();
+		std::optional<Particle> EmitParticle();
 
 		float GenerateValue(const float &average, const float &errorMargin) const;
 

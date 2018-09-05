@@ -112,7 +112,7 @@ namespace acid
 		}
 	}
 
-	VkFormat ShaderProgram::GlTypeToVk(const int &type)
+	VkFormat ShaderProgram::GlTypeToVk(const int32_t &type)
 	{
 		switch (type)
 		{
@@ -503,23 +503,23 @@ namespace acid
 
 	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
 	{
-		for (int i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
+		for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 		{
 			LoadUniformBlock(program, stageFlag, i);
 		}
 
-		for (int i = 0; i < program.getNumLiveUniformVariables(); i++)
+		for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
 		{
 			LoadUniform(program, stageFlag, i);
 		}
 
-		for (int i = 0; i < program.getNumLiveAttributes(); i++)
+		for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
 		{
 			LoadVertexAttribute(program, stageFlag, i);
 		}
 	}
 
-	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
+	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
@@ -533,7 +533,7 @@ namespace acid
 		m_uniformBlocks.emplace_back(std::make_shared<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
 	}
 
-	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
+	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		if (program.getUniformBinding(i) == -1)
 		{
@@ -565,7 +565,7 @@ namespace acid
 		m_uniforms.emplace_back(std::make_shared<Uniform>(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
 	}
 
-	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int &i)
+	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		for (auto &vertexAttribute : m_vertexAttributes)
 		{

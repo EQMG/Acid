@@ -15,13 +15,10 @@ namespace acid
 		float m_width;
 	public:
 		/// <summary>
-		/// Creates a new word.
+		/// Creates a new text word.
 		/// </summary>
 		FontWord();
 
-		/// <summary>
-		/// Deconstructor for the word.
-		/// </summary>
 		~FontWord();
 
 		/// <summary>

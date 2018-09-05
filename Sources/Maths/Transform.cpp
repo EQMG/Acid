@@ -58,14 +58,6 @@ namespace acid
 		node.SetChild<Vector3>("Scaling", m_scaling);
 	}
 
-	Transform &Transform::operator=(const Transform &other)
-	{
-		m_position = other.m_position;
-		m_rotation = other.m_rotation;
-		m_scaling = other.m_scaling;
-		return *this;
-	}
-
 	bool Transform::operator==(const Transform &other) const
 	{
 		return m_position == other.m_position && m_rotation == other.m_rotation && m_scaling == other.m_scaling;

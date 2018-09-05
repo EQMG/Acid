@@ -22,9 +22,6 @@ namespace acid
 		/// <param name="length"> The length between two waves. </param>
 		DriverSinwave(const float &min, const float &max, const float &length);
 
-		/// <summary>
-		/// Deconstructor for sin wave driver.
-		/// </summary>
 		~DriverSinwave();
 
 	protected:

@@ -13,9 +13,9 @@ namespace acid
 	public:
 		virtual ~IUiGrabber() = default;
 
-		virtual int GetCurrent(Text *object) = 0;
+		virtual int32_t GetCurrent(Text *object) = 0;
 
-		virtual std::string GetValue(const int &value) = 0;
+		virtual std::string GetValue(const int32_t &value) = 0;
 	};
 
 	class ACID_EXPORT UiGrabberJoystick :
@@ -26,27 +26,27 @@ namespace acid
 	public:
 		UiGrabberJoystick(const JoystickPort &joystick);
 
-		int GetCurrent(Text *object) override;
+		int32_t GetCurrent(Text *object) override;
 
-		std::string GetValue(const int &value) override;
+		std::string GetValue(const int32_t &value) override;
 	};
 
 	class ACID_EXPORT UiGrabberKeyboard :
 		public IUiGrabber
 	{
 	public:
-		int GetCurrent(Text *object) override;
+		int32_t GetCurrent(Text *object) override;
 
-		std::string GetValue(const int &value) override;
+		std::string GetValue(const int32_t &value) override;
 	};
 
 	class ACID_EXPORT UiGrabberMouse :
 		public IUiGrabber
 	{
 	public:
-		int GetCurrent(Text *object) override;
+		int32_t GetCurrent(Text *object) override;
 
-		std::string GetValue(const int &value) override;
+		std::string GetValue(const int32_t &value) override;
 	};
 
 	class ACID_EXPORT UiInputGrabber :
@@ -65,17 +65,17 @@ namespace acid
 		IUiGrabber *m_grabber;
 
 		std::string m_prefix;
-		int m_value;
+		int32_t m_value;
 
 		UiInputDelay *m_inputDelay;
-		int m_lastKey;
+		int32_t m_lastKey;
 
 		bool m_selected;
 		bool m_mouseOver;
 
 		std::function<void()> m_actionChange;
 	public:
-		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &value, IUiGrabber *grabber);
+		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber);
 
 		~UiInputGrabber();
 
@@ -87,9 +87,9 @@ namespace acid
 
 		void SetPrefix(const std::string &prefix);
 
-		int GetValue() const { return m_value; }
+		int32_t GetValue() const { return m_value; }
 
-		void SetValue(const int &value);
+		void SetValue(const int32_t &value);
 
 		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
 	};

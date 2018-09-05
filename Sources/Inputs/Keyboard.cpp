@@ -20,7 +20,6 @@ namespace acid
 	}
 
 	Keyboard::Keyboard() :
-		IModule(),
 		m_keyboardKeys(std::array<bool, KEY_END_RANGE>()),
 		m_char(0)
 	{

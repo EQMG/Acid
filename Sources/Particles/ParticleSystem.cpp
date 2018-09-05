@@ -10,7 +10,6 @@
 namespace acid
 {
 	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, const std::shared_ptr<ISpawnParticle> &spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
-		IComponent(),
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
@@ -49,8 +48,12 @@ namespace acid
 		if (m_timePassed > 1.0f / m_pps)
 		{
 			auto created = EmitParticle();
-			Particles::Get()->AddParticle(created);
-			m_timePassed = 0.0f;
+
+			if (created)
+			{
+				Particles::Get()->AddParticle(*created);
+				m_timePassed = 0.0f;
+			}
 		}
 	}
 
@@ -94,11 +97,11 @@ namespace acid
 		// TODO: m_randomRotation, m_direction, m_directionDeviation, m_speedError, m_lifeError, m_scaleError
 	}
 
-	Particle *ParticleSystem::EmitParticle()
+	std::optional<Particle> ParticleSystem::EmitParticle()
 	{
 		if (m_spawn == nullptr)
 		{
-			return nullptr;
+			return {};
 		}
 
 		Vector3 velocity = Vector3();
@@ -125,7 +128,7 @@ namespace acid
 		Vector3 spawnPos = Vector3();
 		spawnPos = GetGameObject()->GetTransform().GetPosition() + m_systemOffset;
 		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
-		return new Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
+		return Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
 	}
 
 	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const

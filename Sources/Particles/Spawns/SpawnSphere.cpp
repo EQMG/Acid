@@ -6,7 +6,6 @@
 namespace acid
 {
 	SpawnSphere::SpawnSphere(const float &radius) :
-		ISpawnParticle(),
 		m_radius(radius),
 		m_spawnPosition(Vector3())
 	{

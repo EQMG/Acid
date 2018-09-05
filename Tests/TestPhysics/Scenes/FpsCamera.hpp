@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <Scenes/ICamera.hpp>
 #include <Inputs/AxisJoystick.hpp>
 #include <Inputs/ButtonMouse.hpp>
@@ -53,8 +54,8 @@ namespace test
 
 		float m_sensitivity;
 		MouseButton m_reangleButton;
-		AxisJoystick m_joystickVertical;
-		AxisJoystick m_joystickHorizontal;
+		std::shared_ptr<AxisJoystick> m_joystickVertical;
+		std::shared_ptr<AxisJoystick> m_joystickHorizontal;
 
 		bool m_paused;
 	public:

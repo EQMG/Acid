@@ -30,7 +30,7 @@ namespace acid
 
 	ScenePhysics::~ScenePhysics()
 	{
-		for (int i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		for (int32_t i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 		{
 			btCollisionObject *obj = m_dynamicsWorld->getCollisionObjectArray()[i];
 			btRigidBody *body = btRigidBody::upcast(obj);

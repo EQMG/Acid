@@ -16,7 +16,6 @@
 namespace acid
 {
 	Audio::Audio() :
-		IModule(),
 		m_alDevice(nullptr),
 		m_alContext(nullptr),
 		m_volume(0.0f)
@@ -60,7 +59,7 @@ namespace acid
 #endif
 	}
 
-	std::string Audio::StringifyResultAl(const int &result)
+	std::string Audio::StringifyResultAl(const int32_t &result)
 	{
 		switch (result)
 		{
@@ -81,7 +80,7 @@ namespace acid
 		}
 	}
 
-	void Audio::CheckAl(const int &result)
+	void Audio::CheckAl(const int32_t &result)
 	{
 		if (result == AL_NO_ERROR)
 		{

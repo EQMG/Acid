@@ -6,7 +6,7 @@
 namespace acid
 {
 	Frustum::Frustum() :
-		m_frustum(std::array<std::array<float, 6>, 4>())
+		m_frustum(std::array<std::array<float, 4>, 6>())
 	{
 	}
 
@@ -135,7 +135,7 @@ namespace acid
 		return true;
 	}
 
-	void Frustum::NormalizePlane(const int &side)
+	void Frustum::NormalizePlane(const int32_t &side)
 	{
 		float magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] +
 			m_frustum[side][1] * m_frustum[side][1] +

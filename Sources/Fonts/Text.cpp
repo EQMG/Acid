@@ -201,7 +201,7 @@ namespace acid
 
 			for (auto &c : textLines.at(i))
 			{
-				int ascii = static_cast<int>(c);
+				int32_t ascii = static_cast<int>(c);
 
 				if (ascii == FontMetafile::SPACE_ASCII)
 				{

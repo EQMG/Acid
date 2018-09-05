@@ -3,7 +3,6 @@
 namespace acid
 {
 	Events::Events() :
-		IModule(),
 		m_events(std::vector<std::shared_ptr<IEvent>>())
 	{
 	}

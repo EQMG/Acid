@@ -31,9 +31,6 @@ namespace acid
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
 		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
-		/// <summary>
-		/// Deconstructor for the material pipeline.
-		/// </summary>
 		~PipelineMaterial();
 
 		std::string GetFilename() override { return m_filename; }

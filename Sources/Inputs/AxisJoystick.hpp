@@ -25,9 +25,6 @@ namespace acid
 		/// <param name="reverse"> If the axis direction should be inverted. </param>
 		AxisJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &axes, const bool &reverse = false);
 
-		/// <summary>
-		/// Deconstructor for the axis joystick.
-		/// </summary>
 		~AxisJoystick();
 
 		float GetAmount() const override;

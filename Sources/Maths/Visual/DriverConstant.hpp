@@ -19,9 +19,6 @@ namespace acid
 		/// <param name="constant"> The constant value. </param>
 		DriverConstant(const float &constant);
 
-		/// <summary>
-		/// Deconstructor for constant driver.
-		/// </summary>
 		~DriverConstant();
 
 	protected:

@@ -6,7 +6,7 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace acid
 {
@@ -93,19 +93,10 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Display> Get()
-		{
-			return Engine::Get()->GetModule<Display>();
-		}
+		static std::shared_ptr<Display> Get() { return Engine::Get()->GetModule<Display>(); }
 
-		/// <summary>
-		/// Creates a new display module.
-		/// </summary>
 		Display();
 
-		/// <summary>
-		/// Deconstructor for the display module.
-		/// </summary>
 		~Display();
 
 		void Update() override;
@@ -233,13 +224,13 @@ namespace acid
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		int GetWindowXPos() const { return m_positionX; }
+		uint32_t GetWindowXPos() const { return m_positionX; }
 
 		/// <summary>
 		/// Gets the windows Y position of the display in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		int GetWindowYPos() const { return m_positionY; }
+		uint32_t GetWindowYPos() const { return m_positionY; }
 
 		/// <summary>
 		/// Gets the windows is minimized.

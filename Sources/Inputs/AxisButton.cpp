@@ -2,8 +2,7 @@
 
 namespace acid
 {
-	AxisButton::AxisButton(IButton *negative, IButton *positive) :
-		IAxis(),
+	AxisButton::AxisButton(const std::shared_ptr<IButton> &negative, const std::shared_ptr<IButton> &positive) :
 		m_negative(negative),
 		m_positive(positive)
 	{
@@ -11,8 +10,6 @@ namespace acid
 
 	AxisButton::~AxisButton()
 	{
-		delete m_negative;
-		delete m_positive;
 	}
 
 	float AxisButton::GetAmount() const

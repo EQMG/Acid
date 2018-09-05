@@ -16,10 +16,10 @@ namespace test
 		FileSystem::CreateFolder("Configs");
 		Load();
 
-		Events::Get()->AddEvent<EventTime>(2.5f, false, [&]() -> void
+		Events::Get()->AddEvent<EventTime>(2.5f, [&]() -> void
 		{
 			Save();
-		});
+		}, false);
 	}
 
 	ConfigManager::~ConfigManager()

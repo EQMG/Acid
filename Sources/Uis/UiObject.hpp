@@ -45,9 +45,6 @@ namespace acid
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		UiObject(UiObject *parent, const UiBound &rectangle);
 
-		/// <summary>
-		/// Deconstructor for the screen object.
-		/// </summary>
 		virtual ~UiObject();
 
 		/// <summary>

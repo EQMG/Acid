@@ -1,7 +1,6 @@
 #include "Terrain.hpp"
 
 #include <Meshes/Mesh.hpp>
-#include <Noise/Noise.hpp>
 #include <Physics/ColliderHeightfield.hpp>
 
 namespace test

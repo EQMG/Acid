@@ -31,9 +31,6 @@ namespace acid
 		/// <param name="filename"> The file to load the sound buffer from. </param>
 		SoundBuffer(const std::string &filename);
 
-		/// <summary>
-		/// Deconstructor for the sound buffer.
-		/// </summary>
 		~SoundBuffer();
 
 		std::string GetFilename() override { return m_filename; };

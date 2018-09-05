@@ -23,17 +23,17 @@ namespace acid
 
 		std::string m_prefix;
 		std::string m_value;
-		int m_maxLength;
+		int32_t m_maxLength;
 
 		UiInputDelay m_inputDelay;
-		int m_lastKey;
+		int32_t m_lastKey;
 
 		bool m_selected;
 		bool m_mouseOver;
 
 		std::function<void()> m_actionChange;
 	public:
-		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int &maxLength);
+		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int32_t &maxLength);
 
 		~UiInputText();
 

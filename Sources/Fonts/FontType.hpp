@@ -39,9 +39,6 @@ namespace acid
 		/// <param name="fontStyle"> The style selected to load as this type. </param>
 		FontType(const std::string &filename, const std::string &fontStyle);
 
-		/// <summary>
-		/// Deconstructor for the font type.
-		/// </summary>
 		~FontType();
 
 		std::string GetFilename() override { return m_name; }

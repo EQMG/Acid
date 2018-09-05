@@ -14,11 +14,11 @@ namespace test
 		public IScene
 	{
 	private:
-		IButton *m_buttonSpawnSphere;
-		IButton *m_buttonFullscreen;
-		IButton *m_buttonCaptureMouse;
-		IButton *m_buttonScreenshot;
-		IButton *m_buttonExit;
+		std::shared_ptr<IButton> m_buttonSpawnSphere;
+		std::shared_ptr<IButton> m_buttonFullscreen;
+		std::shared_ptr<IButton> m_buttonCaptureMouse;
+		std::shared_ptr<IButton> m_buttonScreenshot;
+		std::shared_ptr<IButton> m_buttonExit;
 		Sound m_soundScreenshot;
 
 		Colour m_primaryColour;

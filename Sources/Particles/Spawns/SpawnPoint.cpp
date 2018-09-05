@@ -3,7 +3,6 @@
 namespace acid
 {
 	SpawnPoint::SpawnPoint() :
-		ISpawnParticle(),
 		m_point(Vector3())
 	{
 	}

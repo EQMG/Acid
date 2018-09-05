@@ -31,9 +31,6 @@ namespace acid
 		{
 		}
 
-		/// <summary>
-		/// Deconstructor for the scene.
-		/// </summary>
 		virtual ~IScene()
 		{
 			delete m_camera;

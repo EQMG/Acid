@@ -11,7 +11,7 @@ namespace acid
 	const float UiInputSlider::SCALE_NORMAL = 1.0f;
 	const float UiInputSlider::SCALE_SELECTED = 1.1f;
 
-	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int &roundTo, const float &progressMin, const float &progressMax, const float &value) :
+	UiInputSlider::UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &roundTo, const float &progressMin, const float &progressMax, const float &value) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),

@@ -107,7 +107,6 @@ namespace acid
 	}
 
 	Display::Display() :
-		IModule(),
 		m_windowWidth(1080),
 		m_windowHeight(720),
 		m_fullscreenWidth(0),
@@ -263,7 +262,7 @@ namespace acid
 
 		m_fullscreen = fullscreen;
 
-		// int monitorCount;
+		// int32_t monitorCount;
 		// GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
 
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor(); // monitors[1];

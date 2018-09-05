@@ -24,6 +24,6 @@ namespace acid
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 	private:
-		Matrix4 ModelMatrix(Particle *particle, const Matrix4 &viewMatrix);
+		Matrix4 ModelMatrix(Particle &particle, const Matrix4 &viewMatrix);
 	};
 }

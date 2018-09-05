@@ -15,13 +15,13 @@ namespace acid
 		m_starting(true)
 	{
 #ifdef ACID_BUILD_DEBUG
-		Events::Get()->AddEvent<EventTime>(1.65f, false, [&]()
+		Events::Get()->AddEvent<EventTime>(1.65f, [&]()
 #else
-		Events::Get()->AddEvent<EventTime>(3.6f, false, [&]()
+		Events::Get()->AddEvent<EventTime>(3.6f, [&]()
 #endif
 		{
 			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 1.4f);
-		});
+		}, false);
 	}
 
 	UiStartLogo::~UiStartLogo()

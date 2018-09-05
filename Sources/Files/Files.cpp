@@ -1,5 +1,6 @@
 #include "Files.hpp"
 
+#include <ostream>
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
@@ -9,7 +10,7 @@ namespace acid
 	Files::Files() :
 		IModule()
 	{
-		/*for (auto &search : SEARCH_PATHS)
+		/*for (auto &search : SEARCH_PATHS) // TODO: Ensure paths exist, construct resource tree.
 		{
 			if (!FileSystem::FolderExists(search))
 			{
@@ -40,11 +41,12 @@ namespace acid
 
 		for (auto &search : SEARCH_PATHS)
 		{
-			std::string searchPath = search + "/" + filename;
+			std::stringstream searchPath;
+			searchPath << search << "/" << filename;
 
-			if (FileSystem::FileExists(searchPath))
+			if (FileSystem::FileExists(searchPath.str()))
 			{
-				return searchPath;
+				return searchPath.str();
 			}
 		}
 

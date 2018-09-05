@@ -6,7 +6,6 @@
 namespace acid
 {
 	MeshRender::MeshRender() :
-		IComponent(),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler())
 	{

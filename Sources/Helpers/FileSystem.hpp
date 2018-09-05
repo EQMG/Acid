@@ -77,7 +77,7 @@ namespace acid
 		{
 			std::vector<T> data = {};
 
-			const int bufferSize = 1024;
+			const int32_t bufferSize = 1024;
 			const bool useFile = filepath.c_str() && strcmp("-", filepath.c_str());
 
 			if (FILE *fp = (useFile ? fopen(filepath.c_str(), mode.c_str()) : stdin))

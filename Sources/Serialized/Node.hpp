@@ -110,7 +110,7 @@ namespace acid
 			}
 			else
 			{
-				return String::FromString<T>(m_value);
+				return String::From<T>(m_value);
 			}
 		}
 
@@ -127,7 +127,7 @@ namespace acid
 			}
 			else
 			{
-				SetValue(String::ToString<T>(value));
+				SetValue(String::To<T>(value));
 			}
 		}
 
