@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	Joint::~Joint()
-	{
-	}
-
 	void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
 	{
 		Matrix4 bindTransform = parentBindTransform * m_localBindTransform;

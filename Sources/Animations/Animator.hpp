@@ -35,8 +35,6 @@ namespace acid
 		/// <param name="rootJoint"> The root joint of the joint hierarchy which makes up the "skeleton" of the entity. </param>
 		Animator(const std::shared_ptr<Joint> &rootJoint);
 
-		~Animator();
-
 		/// <summary>
 		/// This method should be called each frame to update the animation currently being played. This increases the animation time (and loops it back to zero if necessary),
 		/// finds the pose that the entity should be in at that time of the animation, and then applied that pose to all the entity's joints.

@@ -1,58 +1,18 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="256px">
 
-[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
+[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
+[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
+[![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
+[![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
-Acid is a high speed, modular, light game framework written in C++17 providing multiple features such as cross-platform support.
+Acid is a high speed, cross-platform, game engine written in C++17. Features are broken down into modules, modules can be added or removed from Acid with ease.
 
-The Vulkan API is used as the only rendering API; therefore, Vulkan structs and commands can be used directly in games. Acid allows for direct usage of Vulkan API calls but provides more than enough function to where this type of usage can be avoided.
+Vulkan is used as the only rendering API, as a result Vulkan can be used directly in games, but should be avoided. Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK), eventually OpenGL and DirectX will be supported in a similar way.
 
-Features are broken down into modules, modules can be added or removed from Acid with ease. Vulkan is the only supported rendering API; however, APIs like Metal are supported through libraries like MoltenVK. Eventually OpenGL and DirectX will be supported in this way.
-
-Acid is licensed under MIT, we are open to contributions use the 'Developer Setup' section in the [README.md](README.md) to get started with Acid, and if you want to know about our code style read [GUIDELINES.md](GUIDELINES.md).
-
-## Builds
-Windows   [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
-
-Linux/MacOS   [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
-
-# Code snippets
-```cpp
-// Imports a 2D texture.
-auto guiBlack = Texture::Resource("Guis/Black.png");
-
-// Imports a 3D cubemap.
-auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
-
-// Imports a model.
-auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
-
-// Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
-auto jump = Sound("Sounds/Jump.ogg", 0.5f);
-jump.SetPosition(Vector3::ZERO);
-jump.Play();
-
-// Imports a game object.
-auto playerObject = GameObject::Resource("Objects/Player/Player.json", Transform());
-
-// Creates a game object.
-auto sphere = GameObject::Resource(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
-sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
-sphere->AddComponent<ShapeSphere>(2.0f);
-sphere->AddComponent<Rigidbody>(2.0f);
-sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
-    0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
-sphere->AddComponent<MeshRender>();
-
-// Vector maths.
-Vector2 a(3.0f, -7.2f);
-Vector2 b(-1.74f, 15.4f);
-Vector2 c = a * b;
-float dist = a.Distance(b);
-```
+Acid is licensed under MIT and is open to contributions, use the 'Compiling' section in the [README.md](README.md) to get started with Acid.
 
 ## Links
-Trello   [Board](https://trello.com/b/ZRvpbbYC)
-
 Readme   [Read more](https://equilibrium-games.github.io/Acid/)
 
 Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
@@ -60,6 +20,8 @@ Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
 Metrics   [Code metrics](https://equilibrium-games.github.io/Acid-Docs/loc/LocMetrics.html)
 
 Website   [Learn more](https://equilibrium.games)
+
+Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
 ## Features
 This is a list of current features in Acid:
@@ -96,6 +58,42 @@ Acid uses the following libraries:
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
+ * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation library
+
+# Code snippets
+```cpp
+// Imports a 2D texture.
+auto guiBlack = Texture::Resource("Guis/Black.png");
+
+// Imports a 3D cubemap.
+auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
+
+// Imports a model.
+auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
+
+// Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
+auto jump = Sound("Sounds/Jump.ogg", 0.5f);
+jump.SetPosition(Vector3::ZERO);
+jump.Play();
+
+// Imports a game object.
+auto playerObject = GameObject::Resource("Objects/Player/Player.json", Transform());
+
+// Creates a game object.
+auto sphere = GameObject::Resource(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
+sphere->AddComponent<ShapeSphere>(2.0f);
+sphere->AddComponent<Rigidbody>(2.0f);
+sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
+    0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
+sphere->AddComponent<MeshRender>();
+
+// Vector maths.
+Vector2 a(3.0f, -7.2f);
+Vector2 b(-1.74f, 15.4f);
+Vector2 c = a * b;
+float dist = a.Distance(b);
+```
 
 ## Screenshots
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot1.png" alt="Acid" width="600px">
@@ -106,26 +104,18 @@ Acid uses the following libraries:
 
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot4.png" alt="Acid" width="600px">
 
-## License
-Acid is released under the MIT licence, [LICENSE.md](LICENSE.md) for more details.
+## Compiling
+Once Acid is cloned run `git submodule update --init --recursive` in the Acid directory to update the submodules. All platforms depend on [CMake](https://cmake.org/download) to generate IDE/make files.
 
-## Developer Setup
-Once Acid is cloned run `git submodule update --init --recursive` to update the submodules needed to compile. All platforms depend on [CMake](https://cmake.org/download/) to generate IDE/make files.
+[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) are required to develop and run Acid.
 
-The [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) is required to develop and run Acid, ensure you have these installed and up to date.
+Ensure you are using a compiler with full C++17 support, on Windows it is recommend you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
-On Windows, Acid requires Visual Studios 2015 or later and the "Windows 10 SDK (10.0.15063.0) for UWP: C++". Use the VS installer and ensure "Desktop development with C++" and the Windows SDK is installed and up to date. The workspace can be opened as a cmake folder in VS.
+If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both "Desktop development with C++" and "Windows SDK" if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.
 
-Ensure you are using a compiler with full C++17 support, on Windows we recommend using MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
+On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html) so a Vulkan SDK is found.
 
-On Linux a GCC/Clang compiler is required with C++17 support, each package listed here is for Debian/Apt. Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html).
-
-Setup on MacOS is similar to the setup on Linux.
-
-## Resources
-Once CMake has loaded, link the Resources folder into the output directory using `Scripts/link_resources.bat` or `Scripts/link_resources.sh`.
-
-Old resources have been removed from the main repo, resources for commits from before April 4 2018 can be found on this fork: [https://github.com/mattparks/Flounder](https://github.com/mattparks/Flounder).
+Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 
 ## Contributing
-You can contribute to Acid in any way you want, we are always looking for help.
+You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acid's code style from the [GUIDELINES.md](GUIDELINES.md).

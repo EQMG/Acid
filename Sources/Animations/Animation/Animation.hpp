@@ -30,8 +30,6 @@ namespace acid
 		/// <param name="keyframeData"> All the keyframe data for the animation, ordered by time of appearance in the animation. </param>
 		Animation(const float &length, const std::vector<KeyframeData> &keyframeData);
 
-		~Animation();
-
 		/// <summary>
 		/// Gets the length of the animation in seconds.
 		/// </summary>

@@ -20,10 +20,6 @@ namespace acid
 	{
 	}
 
-	JointTransform::~JointTransform()
-	{
-	}
-
 	Matrix4 JointTransform::GetLocalTransform() const
 	{
 		Matrix4 matrix = Matrix4();

@@ -15,8 +15,6 @@ namespace acid
 	public:
 		AnimationLoader(const std::shared_ptr<Metadata> &libraryAnimations, const std::shared_ptr<Metadata> &libraryVisualScenes);
 
-		~AnimationLoader();
-
 		float GetLengthSeconds() const { return m_lengthSeconds; }
 
 		std::vector<KeyframeData> GetKeyframeData() const { return m_keyframeData; }

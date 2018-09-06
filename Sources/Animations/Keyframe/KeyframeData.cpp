@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	KeyframeData::~KeyframeData()
-	{
-	}
-
 	void KeyframeData::AddJointTransform(const JointTransformData &transform)
 	{
 		m_jointTransforms.emplace_back(transform);

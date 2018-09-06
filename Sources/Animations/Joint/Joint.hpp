@@ -36,14 +36,12 @@ namespace acid
 		Matrix4 m_inverseBindTransform;
 	public:
 		/// <summary>
-		/// Creates a new joint.
+		/// Creates a new skeleton joint.
 		/// </summary>
 		/// <param name="index"> The joint's index (ID). </param>
 		/// <param name="name"> The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to. </param>
 		/// <param name="bindLocalTransform"> The bone-space transform of the joint in the bind position. </param>
 		Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform);
-
-		~Joint();
 
 		/// <summary>
 		/// This is called during set-up, after the joints hierarchy has been created. This calculates the model-space bind transform of this joint like so:

@@ -21,10 +21,6 @@ namespace acid
 		TrySetModel(m_filename);
 	}
 
-	MeshAnimated::~MeshAnimated()
-	{
-	}
-
 	void MeshAnimated::Update()
 	{
 		if (m_animator != nullptr)

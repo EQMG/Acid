@@ -7,8 +7,4 @@ namespace acid
 		m_jointLocalTransform(jointLocalTransform)
 	{
 	}
-
-	JointTransformData::~JointTransformData()
-	{
-	}
 }

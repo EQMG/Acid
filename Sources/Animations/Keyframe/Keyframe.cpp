@@ -17,8 +17,4 @@ namespace acid
 			m_pose.emplace(jointData.GetJointNameId(), JointTransform(jointData));
 		}
 	}
-
-	Keyframe::~Keyframe()
-	{
-	}
 }

@@ -14,10 +14,6 @@ namespace acid
 	{
 	}
 
-	VertexAnimatedData::~VertexAnimatedData()
-	{
-	}
-
 	bool VertexAnimatedData::IsSet() const
 	{
 		return m_uvIndex != NO_INDEX && m_normalIndex != NO_INDEX;

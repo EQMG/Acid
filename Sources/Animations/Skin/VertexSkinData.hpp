@@ -14,8 +14,6 @@ namespace acid
 	public:
 		VertexSkinData();
 
-		~VertexSkinData();
-
 		void AddJointEffect(const uint32_t &jointId, const float &weight);
 
 		void LimitJointNumber(const uint32_t &max);

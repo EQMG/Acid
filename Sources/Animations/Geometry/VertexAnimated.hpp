@@ -23,8 +23,6 @@ namespace acid
 
 		VertexAnimated(const VertexAnimated &source);
 
-		~VertexAnimated();
-
 		Vector3 GetPosition() const override { return m_position; };
 
 		void SetPosition(const Vector3 &position) override { m_position = position; };

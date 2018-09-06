@@ -15,10 +15,6 @@ namespace acid
 		GetSkinData(weightsDataNode, effectorJointCounts, weights);
 	}
 
-	SkinLoader::~SkinLoader()
-	{
-	}
-
 	void SkinLoader::LoadJointsList()
 	{
 		auto inputNode = m_skinData->FindChild("vertex_weights");

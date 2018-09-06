@@ -18,8 +18,6 @@ namespace acid
 	public:
 		SkinLoader(const std::shared_ptr<Metadata> &libraryControllers, const uint32_t &maxWeights);
 
-		~SkinLoader();
-
 		std::vector<std::string> GetJointOrder() const { return m_jointOrder; }
 
 		std::vector<VertexSkinData> GetVerticesSkinData() const { return m_verticesSkinData; }

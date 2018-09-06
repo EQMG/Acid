@@ -22,10 +22,6 @@ namespace acid
 	{
 	}
 
-	VertexAnimated::~VertexAnimated()
-	{
-	}
-
 	void *VertexAnimated::GetData(std::vector<IVertex *> &vertices)
 	{
 		size_t dataSize = GetSize() * vertices.size();

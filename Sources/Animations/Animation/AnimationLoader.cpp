@@ -23,10 +23,6 @@ namespace acid
 		}
 	}
 
-	AnimationLoader::~AnimationLoader()
-	{
-	}
-
 	std::string AnimationLoader::FindRootJointName()
 	{
 		auto skeleton = m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");

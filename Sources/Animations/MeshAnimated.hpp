@@ -35,8 +35,6 @@ namespace acid
 
 		MeshAnimated(const std::string &filename = "");
 
-		~MeshAnimated();
-
 		void Update() override;
 
 		void Decode(const Metadata &metadata) override;

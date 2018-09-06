@@ -17,8 +17,4 @@ namespace acid
 			m_keyframes.emplace_back(Keyframe(frameData));
 		}
 	}
-
-	Animation::~Animation()
-	{
-	}
 }

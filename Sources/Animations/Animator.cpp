@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	Animator::~Animator()
-	{
-	}
-
 	void Animator::Update()
 	{
 		if (m_currentAnimation == nullptr)
