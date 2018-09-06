@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	VertexSkinData::~VertexSkinData()
-	{
-	}
-
 	void VertexSkinData::AddJointEffect(const uint32_t &jointId, const float &weight)
 	{
 		for (uint32_t i = 0; i < m_weights.size(); i++)

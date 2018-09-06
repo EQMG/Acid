@@ -23,8 +23,6 @@ namespace acid
 	public:
 		GeometryLoader(const std::shared_ptr<Metadata> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
 
-		~GeometryLoader();
-
 		std::vector<IVertex *> GetVertices() const { return m_vertices; }
 
 		std::vector<uint32_t> GetIndices() const { return m_indices; }

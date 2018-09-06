@@ -17,8 +17,6 @@ namespace acid
 	public:
 		JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform);
 
-		~JointData();
-
 		uint32_t GetIndex() const { return m_index; }
 
 		std::string GetNameId() const { return m_nameId; }

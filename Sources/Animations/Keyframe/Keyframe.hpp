@@ -33,8 +33,6 @@ namespace acid
 		/// <param name="data"> The data to load the keyframe from. </param>
 		Keyframe(const KeyframeData &data);
 
-		~Keyframe();
-
 		/// <summary>
 		/// Gets the time in seconds of the keyframe in the animation.
 		/// </summary>

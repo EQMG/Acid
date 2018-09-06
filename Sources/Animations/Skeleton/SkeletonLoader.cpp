@@ -15,10 +15,6 @@ namespace acid
 		m_headJoint = LoadJointData(headNode, true);
 	}
 
-	SkeletonLoader::~SkeletonLoader()
-	{
-	}
-
 	std::shared_ptr<JointData> SkeletonLoader::LoadJointData(const std::shared_ptr<Metadata> &jointNode, const bool &isRoot)
 	{
 		auto joint = ExtractMainJointData(jointNode, isRoot);

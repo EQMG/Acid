@@ -18,8 +18,6 @@ namespace acid
 	public:
 		SkeletonLoader(const std::shared_ptr<Metadata> &libraryControllers, const std::vector<std::string> &boneOrder);
 
-		~SkeletonLoader();
-
 		uint32_t GetJointCount() const { return m_jointCount; }
 
 		std::shared_ptr<JointData> GetHeadJoint() const { return m_headJoint; }

@@ -13,8 +13,6 @@ namespace acid
 	public:
 		KeyframeData(const float &time);
 
-		~KeyframeData();
-
 		float GetTime() const { return m_time; }
 
 		std::vector<JointTransformData> GetJointTransforms() const { return m_jointTransforms; }

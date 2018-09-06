@@ -33,8 +33,6 @@ namespace acid
 
 		JointTransform(const JointTransformData &data);
 
-		~JointTransform();
-
 		/// <summary>
 		/// In this method the local-space transform matrix is constructed by translating an identity matrix using the position variable and then applying the rotation.
 		/// The rotation is applied by first converting the quaternion into a rotation matrix, which is then multiplied with the transform matrix.

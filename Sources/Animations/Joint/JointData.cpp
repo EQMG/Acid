@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	JointData::~JointData()
-	{
-	}
-
 	void JointData::AddChild(const std::shared_ptr<JointData> &child)
 	{
 		m_children.emplace_back(child);

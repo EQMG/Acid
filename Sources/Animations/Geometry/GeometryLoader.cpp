@@ -37,10 +37,6 @@ namespace acid
 		}
 	}
 
-	GeometryLoader::~GeometryLoader()
-	{
-	}
-
 	void GeometryLoader::LoadVertices()
 	{
 		std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
