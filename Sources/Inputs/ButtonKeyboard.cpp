@@ -14,11 +14,6 @@ namespace acid
 
 	bool ButtonKeyboard::IsDown() const
 	{
-		if (Keyboard::Get() == nullptr)
-		{
-			return false;
-		}
-
 		for (auto &key : m_keys)
 		{
 			if (Keyboard::Get()->GetKey(key))

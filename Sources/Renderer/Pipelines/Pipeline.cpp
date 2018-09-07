@@ -87,7 +87,7 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	std::shared_ptr<DepthStencil> Pipeline::GetDepthStencil(const int32_t &stage) const
+	DepthStencil *Pipeline::GetDepthStencil(const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}

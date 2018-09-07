@@ -17,6 +17,7 @@ namespace acid
 		m_angularFactor(angularFactor),
 		m_shape(nullptr),
 		m_body(nullptr),
+		m_forces(std::vector<std::unique_ptr<Force>>()),
 		m_linearVelocity(Vector3()),
 		m_angularVelocity(Vector3())
 	{
@@ -50,7 +51,7 @@ namespace acid
 		{
 			m_shape = shape->GetCollisionShape();
 
-			m_body.reset(CreateRigidBody(m_mass, worldTransform, m_shape));
+			m_body = CreateRigidBody(m_mass, worldTransform, m_shape);
 			m_body->setWorldTransform(worldTransform);
 		//	m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
 			m_body->setFriction(m_friction);
@@ -156,7 +157,7 @@ namespace acid
 		m_body->setGravity(Collider::Convert(gravity));
 	}
 
-	std::shared_ptr<Force> Rigidbody::AddForce(const std::shared_ptr<Force> &force)
+	Force *Rigidbody::AddForce(Force *force)
 	{
 		m_forces.emplace_back(force);
 		return force;
@@ -173,7 +174,7 @@ namespace acid
 
 		bool isDynamic = m_mass != 0.0f;
 
-		btVector3 localInertia(0.0f, 0.0f, 0.0f);
+		btVector3 localInertia = btVector3(0.0f, 0.0f, 0.0f);
 
 		auto shape = GetGameObject()->GetComponent<Collider>();
 
@@ -217,7 +218,7 @@ namespace acid
 		m_body->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
-	btRigidBody* Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape)
+	std::unique_ptr<btRigidBody> Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 
@@ -232,7 +233,7 @@ namespace acid
 		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
 		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, myMotionState, shape, localInertia);
-		auto body = new btRigidBody(cInfo);
+		auto body = std::make_unique<btRigidBody>(cInfo);
 	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 	//	body->setUserIndex(-1);
 		return body;

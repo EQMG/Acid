@@ -32,7 +32,5 @@ namespace acid
 		void Encode(Metadata &metadata) const override;
 
 		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
-
-		UniformHandler GetUniformObject() const { return m_uniformObject; }
 	};
 }

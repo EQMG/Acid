@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, const std::shared_ptr<ISpawnParticle> &spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
@@ -186,28 +186,28 @@ namespace acid
 
 		if (spawnName == "SpawnCircle")
 		{
-			m_spawn = std::make_shared<SpawnCircle>();
+			m_spawn = std::make_unique<SpawnCircle>();
 			m_spawn->Decode(spawnNode);
 			return;
 		}
 
 		if (spawnName == "SpawnLine")
 		{
-			m_spawn = std::make_shared<SpawnLine>();
+			m_spawn = std::make_unique<SpawnLine>();
 			m_spawn->Decode(spawnNode);
 			return;
 		}
 
 		if (spawnName == "SpawnPoint")
 		{
-			m_spawn = std::make_shared<SpawnPoint>();
+			m_spawn = std::make_unique<SpawnPoint>();
 			m_spawn->Decode(spawnNode);
 			return;
 		}
 
 		if (spawnName == "SpawnSphere")
 		{
-			m_spawn = std::make_shared<SpawnSphere>();
+			m_spawn = std::make_unique<SpawnSphere>();
 			m_spawn->Decode(spawnNode);
 			return;
 		}

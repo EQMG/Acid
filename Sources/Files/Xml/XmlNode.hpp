@@ -12,7 +12,7 @@ namespace acid
 	{
 	private:
 		XmlNode *m_parent;
-		std::vector<XmlNode *> m_children;
+		std::vector<std::unique_ptr<XmlNode>> m_children;
 
 		std::string m_attributes;
 		std::string m_content;
@@ -23,7 +23,7 @@ namespace acid
 
 		XmlNode *GetParent() const { return m_parent; }
 
-		std::vector<XmlNode *> GetChildren() const { return m_children; }
+		std::vector<std::unique_ptr<XmlNode>> const &GetChildren() const { return m_children; }
 
 		void AddChild(XmlNode *child) { m_children.emplace_back(child); }
 

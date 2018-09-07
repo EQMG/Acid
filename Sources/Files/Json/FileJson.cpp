@@ -89,7 +89,6 @@ namespace acid
 		}
 
 		JsonSection::Convert(*currentSection, m_parent, true);
-		delete currentSection;
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

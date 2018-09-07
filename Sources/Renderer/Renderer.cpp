@@ -8,7 +8,7 @@ namespace acid
 {
 	Renderer::Renderer() :
 		m_managerRender(nullptr),
-		m_renderStages(std::vector<std::shared_ptr<RenderStage>>()),
+		m_renderStages(std::vector<std::unique_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
 		m_activeSwapchainImage(UINT32_MAX),
@@ -102,11 +102,11 @@ namespace acid
 		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
 
 		m_renderStages.clear();
-		m_swapchain = std::make_shared<Swapchain>(displayExtent);
+		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
-			auto renderStage = std::make_shared<RenderStage>(m_renderStages.size(), renderpassCreate);
+			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate);
 			renderStage->Rebuild(*m_swapchain);
 			m_renderStages.emplace_back(renderStage);
 		}
@@ -203,7 +203,7 @@ namespace acid
 
 		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
-		m_commandBuffer = std::make_shared<CommandBuffer>(false);
+		m_commandBuffer = std::make_unique<CommandBuffer>(false);
 	}
 
 	void Renderer::CreatePipelineCache()
@@ -230,7 +230,7 @@ namespace acid
 #if ACID_VERBOSE
 			Log::Out("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
 #endif
-			m_swapchain = std::make_shared<Swapchain>(displayExtent);
+			m_swapchain = std::make_unique<Swapchain>(displayExtent);
 		}
 
 		renderStage->Rebuild(*m_swapchain);

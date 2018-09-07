@@ -6,7 +6,7 @@ namespace acid
 {
 	JsonSection::JsonSection(JsonSection *parent, const std::string &name, const std::string &content) :
 		m_parent(parent),
-		m_children(std::vector<JsonSection *>()),
+		m_children(std::vector<std::unique_ptr<JsonSection>>()),
 		m_name(name),
 		m_content(content)
 	{
@@ -14,10 +14,6 @@ namespace acid
 
 	JsonSection::~JsonSection()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
 	}
 
 	void JsonSection::AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation, const bool &end)

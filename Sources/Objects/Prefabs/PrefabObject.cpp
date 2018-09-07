@@ -37,13 +37,13 @@ namespace acid
 
 		if (FileSystem::FindExt(filename) == "json")
 		{
-			m_file = std::make_shared<FileJson>(filename);
+			m_file = std::make_unique<FileJson>(filename);
 			m_file->Load();
 			m_parent = m_file->GetParent();
 		}
 		else if (FileSystem::FindExt(filename) == "xml")
 		{
-			m_file = std::make_shared<FileXml>(filename);
+			m_file = std::make_unique<FileXml>(filename);
 			m_file->Load();
 			m_parent = m_file->GetParent()->FindChild("GameObjectDefinition");
 		}

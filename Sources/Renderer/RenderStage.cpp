@@ -7,7 +7,7 @@ namespace acid
 {
 	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate) :
 		m_stageIndex(stageIndex),
-		m_renderpassCreate(std::move(renderpassCreate)),
+		m_renderpassCreate(renderpassCreate),
 		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
 		m_framebuffers(nullptr),
@@ -68,15 +68,15 @@ namespace acid
 
 		if (m_hasDepth)
 		{
-			m_depthStencil = std::make_shared<DepthStencil>(GetWidth(), GetHeight(), samples);
+			m_depthStencil = std::make_unique<DepthStencil>(GetWidth(), GetHeight(), samples);
 		}
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = std::make_shared<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
+			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
 		}
 
-		m_framebuffers = std::make_shared<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, samples);
+		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, samples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

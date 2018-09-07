@@ -15,7 +15,7 @@ namespace acid
 
 	bool ButtonJoystick::IsDown() const
 	{
-		if (Joysticks::Get() == nullptr || !Joysticks::Get()->IsConnected(m_joystick))
+		if (!Joysticks::Get()->IsConnected(m_joystick))
 		{
 			return false;
 		}

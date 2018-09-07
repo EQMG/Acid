@@ -3,7 +3,7 @@
 namespace acid
 {
 	Events::Events() :
-		m_events(std::vector<std::shared_ptr<IEvent>>())
+		m_events(std::vector<std::unique_ptr<IEvent>>())
 	{
 	}
 
@@ -33,23 +33,23 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IEvent> Events::AddEvent(const std::shared_ptr<IEvent> &event)
+	IEvent *Events::AddEvent(IEvent *event)
 	{
 		m_events.emplace_back(event);
 		return event;
 	}
 
-	std::shared_ptr<IEvent> Events::RemoveEvent(const std::shared_ptr<IEvent> &event)
+	bool Events::RemoveEvent(IEvent *event)
 	{
 		for (auto it = m_events.begin(); it != m_events.end(); ++it)
 		{
-			if (*it == event)
+			if ((*it).get() == event)
 			{
 				m_events.erase(it);
-				return *it;
+				return true;
 			}
 		}
 
-		return nullptr;
+		return false;
 	}
 }

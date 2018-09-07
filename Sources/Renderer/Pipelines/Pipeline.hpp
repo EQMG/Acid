@@ -56,7 +56,7 @@ namespace acid
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
-		std::shared_ptr<DepthStencil> GetDepthStencil(const int32_t &stage = -1) const;
+		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
 
 		std::shared_ptr<Texture> GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
 

@@ -14,11 +14,6 @@ namespace acid
 
 	bool ButtonMouse::IsDown() const
 	{
-		if (Mouse::Get() == nullptr)
-		{
-			return false;
-		}
-
 		for (auto &button : m_buttons)
 		{
 			if (Mouse::Get()->GetButton(button))

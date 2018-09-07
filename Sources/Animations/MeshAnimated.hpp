@@ -24,8 +24,8 @@ namespace acid
 
 		std::shared_ptr<Model> m_model;
 		std::shared_ptr<Joint> m_headJoint;
-		std::shared_ptr<Animator> m_animator;
-		std::shared_ptr<Animation> m_animation;
+		std::unique_ptr<Animator> m_animator;
+		std::unique_ptr<Animation> m_animation;
 
 		std::vector<Matrix4> m_jointMatrices;
 	public:

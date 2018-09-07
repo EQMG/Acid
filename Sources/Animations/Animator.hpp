@@ -27,7 +27,7 @@ namespace acid
 		std::shared_ptr<Joint> m_rootJoint;
 
 		float m_animationTime;
-		std::shared_ptr<Animation> m_currentAnimation;
+		Animation *m_currentAnimation;
 	public:
 		/// <summary>
 		/// Creates a new animator.
@@ -123,12 +123,12 @@ namespace acid
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
 		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, const std::shared_ptr<Joint> &joint, const Matrix4 &parentTransform);
 
-		std::shared_ptr<Animation> GetCurrentAnimation() const { return m_currentAnimation; }
+		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 
 		/// <summary>
 		/// Indicates that the entity should carry out the given animation. Resets the animation time so that the new animation starts from the beginning.
 		/// </summary>
 		/// <param name="animation"> The new animation to carry out. </param>
-		void DoAnimation(const std::shared_ptr<Animation> &animation);
+		void DoAnimation(Animation *animation);
 	};
 }
