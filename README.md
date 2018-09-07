@@ -1,6 +1,5 @@
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="256px">
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="300px">
 
-[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
 [![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)

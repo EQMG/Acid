@@ -7,12 +7,13 @@
 
 namespace test
 {
-	const std::vector<std::pair<std::string, Colour>> TABS = {
-		{"Play",		 Colour("#B8312F")},
-		{"News",		 Colour("#2969af")},
+	const std::vector<std::pair<std::string, Colour>> TABS =
+	{
+		{"Play", Colour("#B8312F")},
+		{"News", Colour("#2969af")},
 		{"Achievements", Colour("#41A85F")},
-		{"Settings",	 Colour("#475577")},
-		{"Exit",		 Colour("#75706B")}
+		{"Settings", Colour("#475577")},
+		{"Exit", Colour("#75706B")}
 	};
 
 	UiNavigation::UiNavigation(UiObject *parent) :
@@ -21,28 +22,28 @@ namespace test
 		m_barTitle(nullptr),
 		m_barCreatedBy(nullptr),
 		m_tabPuck(nullptr),
-		m_tabs(std::vector<UiTab *>()),
+		m_tabs(std::vector<std::unique_ptr<UiTab>>()),
 		m_driverTarget(nullptr),
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		m_barBackground = new Gui(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Gradient.png"));
+		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 1.0f), "TopCentre", true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Gradient.png"));
 		m_barBackground->SetScissor(Vector4(0.0f, 0.0f, 1.0f, 0.125f));
 		m_barBackground->SetColourOffset(Colour("#2969B0"));
 
-		m_barTitle = new Text(this, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Testing", FontType::Resource("Fonts/ProximaNova", "Bold"), JUSTIFY_LEFT, 1.0f, 0.001f);
-		m_barCreatedBy = new Text(this, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", FontType::Resource("Fonts/ProximaNova", "Light"), JUSTIFY_LEFT, 1.0f, 0.0013f);
+		m_barTitle = std::make_unique<Text>(this, UiBound(Vector2(0.01f, 0.99f), "TopLeft", false), 4.0f, "Testing", FontType::Resource("Fonts/ProximaNova", "Bold"), JUSTIFY_LEFT, 1.0f, 0.001f);
+		m_barCreatedBy = std::make_unique<Text>(this, UiBound(Vector2(0.02f, 0.915f), "TopLeft", false), 1.1f, "Created By: Equilibrium Games", FontType::Resource("Fonts/ProximaNova", "Light"), JUSTIFY_LEFT, 1.0f, 0.0013f);
 
-		m_tabPuck = new Gui(this, UiBound(Vector2(0.0f, 0.875f), "BottomLeft", false, true, Vector2(0.0f, 0.01f)), Texture::Resource("Guis/White.png"));
+		m_tabPuck = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.875f), "BottomLeft", false, true, Vector2(0.0f, 0.01f)), Texture::Resource("Guis/White.png"));
 		m_tabPuck->SetColourOffset(Colour("#386AB5"));
 
 		float tabXOffset = 0.35f;
-		unsigned int i = 0;
+		uint32_t i = 0;
 
 		for (auto &tabType : TABS)
 		{
 			UiBound rectangle = UiBound(Vector2(tabXOffset, 0.955f), "TopLeft", false);
-			UiTab *uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
+			auto uiTab = new UiTab(this, new ContentExit(this), rectangle, tabType.first, tabType.second);
 			tabXOffset += 0.03f + uiTab->GetWidth();
 			m_tabs.emplace_back(uiTab);
 
@@ -57,17 +58,6 @@ namespace test
 
 	UiNavigation::~UiNavigation()
 	{
-		delete m_barBackground;
-		delete m_barTitle;
-		delete m_barCreatedBy;
-		delete m_tabPuck;
-
-		for (auto &text : m_tabs)
-		{
-			delete text;
-		}
-
-		delete m_driverTarget;
 	}
 
 	void UiNavigation::UpdateObject()
@@ -94,7 +84,6 @@ namespace test
 			{
 				m_currentTab = m_targetTab;
 				m_targetTab = nullptr;
-				//	delete m_driverTarget;
 			}
 		}
 	}
@@ -106,7 +95,7 @@ namespace test
 			return;
 		}
 
-		for (UiTab *tab : m_tabs)
+		for (auto &tab : m_tabs)
 		{
 			if (tab->GetName() == tabName)
 			{
@@ -115,9 +104,8 @@ namespace test
 					continue;
 				}
 
-				delete m_driverTarget;
-				m_driverTarget = new DriverSlide(0.0f, 1.0f, 0.4f);
-				m_targetTab = tab;
+				m_driverTarget = std::make_unique<DriverSlide>(0.0f, 1.0f, 0.4f);
+				m_targetTab = tab.get();
 
 				if (m_currentTab != nullptr)
 				{

@@ -19,7 +19,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Events> Get() { return Engine::Get()->GetModule<Events>(); }
+		static Events *Get() { return Engine::Get()->GetModule<Events>(); }
 
 		Events();
 

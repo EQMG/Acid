@@ -15,18 +15,18 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(new FixedCamera()),
-		m_buttonFullscreen(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
-		m_buttonScreenshot(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
-		m_buttonPause(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
-			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_ESCAPE}),
-			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{7})
+		m_buttonFullscreen(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
+		m_buttonScreenshot(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
+		m_buttonPause(std::make_unique<ButtonCompound>(std::vector<IButton *>{
+			new ButtonKeyboard(std::vector<Key>{KEY_ESCAPE}),
+			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{7})
 		})),
-		m_buttonExit(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
+		m_buttonExit(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
 		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
-		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer())),
-		m_uiNavigation(new UiNavigation(Uis::Get()->GetContainer()))
+		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
+		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer())),
+		m_uiNavigation(std::make_unique<UiNavigation>(Uis::Get()->GetContainer()))
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
@@ -35,9 +35,6 @@ namespace test
 
 	Scene1::~Scene1()
 	{
-		delete m_uiStartLogo;
-		delete m_overlayDebug;
-		delete m_uiNavigation;
 	}
 
 	void Scene1::Start()

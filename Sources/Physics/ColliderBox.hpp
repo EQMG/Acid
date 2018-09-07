@@ -11,7 +11,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btBoxShape* m_shape;
+		std::unique_ptr<btBoxShape> m_shape;
 		Vector3 m_extents;
 	public:
 		ColliderBox(const Vector3 &extents = Vector3::ONE);

@@ -15,11 +15,11 @@ namespace test
 		public UiObject
 	{
 	private:
-		Gui *m_background;
-		UiInputButton *m_button1;
-		UiInputGrabber *m_input1;
-		UiInputSlider *m_slider1;
-		UiInputText *m_text1;
+		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<UiInputButton> m_button1;
+		std::unique_ptr<UiInputGrabber> m_input1;
+		std::unique_ptr<UiInputSlider> m_slider1;
+		std::unique_ptr<UiInputText> m_text1;
 	public:
 		ContentExit(UiObject *parent);
 

@@ -10,7 +10,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btSphereShape *m_shape;
+		std::unique_ptr<btSphereShape> m_shape;
 		float m_radius;
 	public:
 		ColliderSphere(const float &radius = 1.0f);

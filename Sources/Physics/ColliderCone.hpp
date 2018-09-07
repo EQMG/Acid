@@ -11,7 +11,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btConeShape *m_shape;
+		std::unique_ptr<btConeShape> m_shape;
 		float m_radius;
 		float m_height;
 	public:

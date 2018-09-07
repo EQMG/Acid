@@ -12,7 +12,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btHeightfieldTerrainShape *m_shape;
+		std::unique_ptr<btHeightfieldTerrainShape> m_shape;
 	public:
 		ColliderHeightfield(const int32_t &heightStickWidth = 100, const int32_t &heightStickLength = 100,
 							const void *heightfieldData = nullptr, const float &heightScale = 1.0f,

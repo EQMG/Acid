@@ -41,19 +41,6 @@ namespace acid
 	{
 	}
 
-	std::shared_ptr<IComponent> ComponentRegister::CreateComponent(const std::string &name)
-	{
-		auto it = m_components.find(name);
-
-		if (it == m_components.end())
-		{
-			Log::Error("Could not find registered component: '%s'\n", name.c_str());
-			return nullptr;
-		}
-
-		return ((*it).second).m_create();
-	}
-
 	bool ComponentRegister::DeregisterComponent(const std::string &name)
 	{
 		auto component = m_components.find(name);
@@ -67,7 +54,20 @@ namespace acid
 		return true;
 	}
 
-	std::optional<std::string> ComponentRegister::FindComponentName(const std::shared_ptr<IComponent> &compare)
+	IComponent *ComponentRegister::CreateComponent(const std::string &name)
+	{
+		auto it = m_components.find(name);
+
+		if (it == m_components.end())
+		{
+			Log::Error("Could not find registered component: '%s'\n", name.c_str());
+			return nullptr;
+		}
+
+		return ((*it).second).m_create();
+	}
+
+	std::optional<std::string> ComponentRegister::FindComponentName(IComponent *compare)
 	{
 		for (auto &component : m_components)
 		{

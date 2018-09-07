@@ -7,14 +7,13 @@ namespace acid
 {
 	ColliderSphere::ColliderSphere(const float &radius) :
 		Collider(),
-		m_shape(new btSphereShape(radius)),
+		m_shape(std::make_unique<btSphereShape>(radius)),
 		m_radius(radius)
 	{
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
-		delete m_shape;
 	}
 
 	void ColliderSphere::Start()
@@ -38,6 +37,6 @@ namespace acid
 
 	btCollisionShape *ColliderSphere::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 }

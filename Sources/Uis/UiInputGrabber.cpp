@@ -105,7 +105,6 @@ namespace acid
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
-		m_inputDelay(new UiInputDelay()),
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
@@ -117,10 +116,6 @@ namespace acid
 	{
 		delete m_text;
 		delete m_background;
-
-		delete m_grabber;
-
-		delete m_inputDelay;
 	}
 
 	void UiInputGrabber::UpdateObject()

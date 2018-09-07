@@ -14,7 +14,7 @@ namespace acid
 	class ACID_EXPORT IScene
 	{
 	private:
-		ICamera *m_camera;
+		std::unique_ptr<ICamera> m_camera;
 		std::unique_ptr<ScenePhysics> m_physics;
 		std::unique_ptr<SceneStructure> m_structure;
 		bool m_started;
@@ -31,11 +31,6 @@ namespace acid
 		{
 		}
 
-		virtual ~IScene()
-		{
-			delete m_camera;
-		}
-
 		virtual void Start() = 0;
 
 		/// <summary>
@@ -47,29 +42,25 @@ namespace acid
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		ICamera *GetCamera() const { return m_camera; }
+		ICamera *GetCamera() const { return m_camera.get(); }
 
 		/// <summary>
 		/// Sets the current camera to a new camera.
 		/// </summary>
 		/// <param name="camera"> The new camera. </param>
-		void SetCamera(ICamera *camera)
-		{
-			delete m_camera; // TODO: Cleanup.
-			m_camera = camera;
-		}
+		void SetCamera(ICamera *camera) { m_camera.reset(camera); }
 
 		/// <summary>
 		/// Gets the scene physics system.
 		/// </summary>
 		/// <returns> The scenes physics system. </returns>
-		std::unique_ptr<ScenePhysics> const &GetPhysics() const { return m_physics; }
+		ScenePhysics *GetPhysics() const { return m_physics.get(); }
 
 		/// <summary>
 		/// Gets the scene object structure.
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
-		std::unique_ptr<SceneStructure> const &GetStructure() const { return m_structure; }
+		SceneStructure *GetStructure() { return m_structure.get(); }
 
 		/// <summary>
 		/// Gets if this scene has started.

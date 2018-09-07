@@ -29,16 +29,6 @@ namespace acid
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-		delete m_managerRender;
-
-	//	for (auto &renderStage : m_renderStages)
-	//	{
-	//		delete renderStage;
-	//	}
-
-	//	delete m_swapchain;
-	//	delete m_commandBuffer;
-
 		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
 
 		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);

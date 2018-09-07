@@ -54,8 +54,8 @@ namespace test
 
 		float m_sensitivity;
 		MouseButton m_reangleButton;
-		std::shared_ptr<AxisJoystick> m_joystickVertical;
-		std::shared_ptr<AxisJoystick> m_joystickHorizontal;
+		AxisJoystick m_joystickVertical;
+		AxisJoystick m_joystickHorizontal;
 
 		bool m_paused;
 	public:

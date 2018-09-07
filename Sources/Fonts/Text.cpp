@@ -22,12 +22,12 @@ namespace acid
 		m_borderColour(Colour("#000000")),
 		m_solidBorder(false),
 		m_glowBorder(false),
-		m_glowDriver(std::make_shared<DriverConstant>(0.0f)),
+		m_glowDriver(std::make_unique<DriverConstant>(0.0f)),
 		m_glowSize(0.0f),
-		m_borderDriver(std::make_shared<DriverConstant>(0.0f)),
+		m_borderDriver(std::make_unique<DriverConstant>(0.0f)),
 		m_borderSize(0.0f)
 	{
-		SetScaleDriver(std::make_shared<DriverConstant>(fontSize));
+		SetScaleDriver<DriverConstant>(fontSize);
 		LoadText();
 	}
 
@@ -90,16 +90,16 @@ namespace acid
 		}
 	}
 
-	void Text::SetBorderDriver(const std::shared_ptr<IDriver> &driver)
+	void Text::SetBorderDriver(IDriver *driver)
 	{
-		m_borderDriver = driver;
+		m_borderDriver.reset(driver);
 		m_solidBorder = true;
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowingDriver(const std::shared_ptr<IDriver> &driver)
+	void Text::SetGlowingDriver(IDriver *driver)
 	{
-		m_glowDriver = driver;
+		m_glowDriver.reset(driver);
 		m_solidBorder = false;
 		m_glowBorder = true;
 	}
@@ -174,8 +174,7 @@ namespace acid
 		NormalizeQuad(bounding, vertices);
 
 		// Loads the mesh data.
-		delete m_model;
-		m_model = new Model(vertices);
+		m_model = std::make_unique<Model>(vertices);
 		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 

@@ -59,7 +59,7 @@ namespace acid
 
 		for (auto &component : gameObject.GetComponents())
 		{
-			auto componentName = Scenes::Get()->FindComponentName(component);
+			auto componentName = Scenes::Get()->FindComponentName(component.get());
 
 			if (!componentName)
 			{

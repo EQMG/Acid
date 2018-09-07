@@ -24,15 +24,14 @@ namespace acid
 
 	Rigidbody::~Rigidbody()
 	{
-		btRigidBody *body = btRigidBody::upcast(m_body);
+		btRigidBody *body = btRigidBody::upcast(m_body.get());
 
 		if (body && body->getMotionState())
 		{
 			delete body->getMotionState();
 		}
 
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body);
-		delete m_body;
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body.get());
 	}
 
 	void Rigidbody::Start()
@@ -51,7 +50,7 @@ namespace acid
 		{
 			m_shape = shape->GetCollisionShape();
 
-			m_body = CreateRigidBody(m_mass, worldTransform, m_shape);
+			m_body.reset(CreateRigidBody(m_mass, worldTransform, m_shape));
 			m_body->setWorldTransform(worldTransform);
 		//	m_body->setContactStiffnessAndDamping(1000.0f, 0.1f);
 			m_body->setFriction(m_friction);
@@ -60,7 +59,7 @@ namespace acid
 			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
-			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body);
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_body.get());
 			m_body->activate(true);
 		}
 	}

@@ -13,15 +13,15 @@ namespace acid
 		public IAxis
 	{
 	private:
-		std::shared_ptr<IButton> m_negative;
-		std::shared_ptr<IButton> m_positive;
+		std::unique_ptr<IButton> m_negative;
+		std::unique_ptr<IButton> m_positive;
 	public:
 		/// <summary>
 		/// Creates a new axis button.
 		/// </summary>
 		/// <param name="negative"> When this button is down, the axis is negative. </param>
 		/// <param name="positive"> When this button is down, the axis is positive. </param>
-		AxisButton(const std::shared_ptr<IButton> &negative, const std::shared_ptr<IButton> &positive);
+		AxisButton(IButton *negative, IButton *positive);
 
 		~AxisButton();
 

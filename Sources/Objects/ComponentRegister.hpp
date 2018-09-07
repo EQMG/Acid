@@ -10,8 +10,8 @@ namespace acid
 {
 	struct ComponentCreate
 	{
-		std::function<std::shared_ptr<IComponent>()> m_create;
-		std::function<bool(std::shared_ptr<IComponent>)> m_isSame;
+		std::function<IComponent *()> m_create;
+		std::function<bool(IComponent *)> m_isSame;
 	};
 
 	/// <summary>
@@ -30,13 +30,6 @@ namespace acid
 		~ComponentRegister();
 
 		/// <summary>
-		/// Creates a new component from the register.
-		/// </summary>
-		/// <param name="name"> The component name to create. </param>
-		/// <returns> The new component. </returns>
-		std::shared_ptr<IComponent> CreateComponent(const std::string &name);
-
-		/// <summary>
 		/// Registers a component with the register.
 		/// </summary>
 		/// <param name="update"> The components update type. </param>
@@ -52,13 +45,13 @@ namespace acid
 			}
 
 			ComponentCreate componentCreate = {};
-			componentCreate.m_create = []() -> std::shared_ptr<IComponent>
+			componentCreate.m_create = []() -> IComponent *
 			{
-				return std::make_shared<T>();
+				return new T();
 			};
-			componentCreate.m_isSame = [](std::shared_ptr<IComponent> component) -> bool
+			componentCreate.m_isSame = [](IComponent *component) -> bool
 			{
-				return std::dynamic_pointer_cast<T>(component) != nullptr;
+				return dynamic_cast<T *>(component) != nullptr;
 			};
 
 			m_components.emplace(name, componentCreate);
@@ -72,10 +65,17 @@ namespace acid
 		bool DeregisterComponent(const std::string &name);
 
 		/// <summary>
+		/// Creates a new component from the register.
+		/// </summary>
+		/// <param name="name"> The component name to create. </param>
+		/// <returns> The new component. </returns>
+		IComponent *CreateComponent(const std::string &name);
+
+		/// <summary>
 		/// Finds the registered name to a component.
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindComponentName(const std::shared_ptr<IComponent> &compare);
+		std::optional<std::string> FindComponentName(IComponent *compare);
 	};
 }

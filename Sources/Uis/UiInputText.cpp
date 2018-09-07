@@ -31,8 +31,6 @@ namespace acid
 
 	UiInputText::~UiInputText()
 	{
-		delete m_text;
-		delete m_background;
 	}
 
 	void UiInputText::UpdateObject()

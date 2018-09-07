@@ -41,7 +41,6 @@ namespace acid
 			}
 
 			m_dynamicsWorld->removeCollisionObject(obj);
-			delete obj;
 		}
 	}
 

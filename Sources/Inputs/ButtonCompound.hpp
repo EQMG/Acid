@@ -13,14 +13,14 @@ namespace acid
 		public IButton
 	{
 	private:
-		std::vector<std::shared_ptr<IButton>> m_buttons;
+		std::vector<std::unique_ptr<IButton>> m_buttons;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new compound button.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the being added. </param>
-		ButtonCompound(const std::vector<std::shared_ptr<IButton>> &buttons);
+		ButtonCompound(const std::vector<IButton *> &buttons);
 
 		~ButtonCompound();
 

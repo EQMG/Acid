@@ -63,12 +63,11 @@ namespace acid
 		Text *m_text;
 		Gui *m_background;
 
-		IUiGrabber *m_grabber;
+		std::unique_ptr<IUiGrabber> m_grabber;
 
 		std::string m_prefix;
 		int32_t m_value;
 
-		UiInputDelay *m_inputDelay;
 		int32_t m_lastKey;
 
 		bool m_selected;

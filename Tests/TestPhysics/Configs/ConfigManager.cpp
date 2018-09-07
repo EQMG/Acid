@@ -30,30 +30,30 @@ namespace test
 	void ConfigManager::Load()
 	{
 		m_audio->Load();
-		auto audioNode = m_audio->GetParent();
-		Audio::Get()->SetVolume(audioNode->GetChild<float>("Master Volume", 1.0f));
+		auto audioData = m_audio->GetParent();
+		Audio::Get()->SetVolume(audioData->GetChild<float>("Master Volume", 1.0f));
 
 		m_graphics->Load();
-		auto graphicsNode = m_graphics->GetParent();
-		Display::Get()->SetWidth(graphicsNode->GetChild<uint32_t>("Display Width", 1080));
-		Display::Get()->SetHeight(graphicsNode->GetChild<uint32_t>("Display Height", 720));
-		Engine::Get()->SetFpsLimit(graphicsNode->GetChild<float>("Fps Limit", 0.0f));
-		Display::Get()->SetAntialiasing(graphicsNode->GetChild<bool>("Is Antialiasing", true));
-		Display::Get()->SetAntialiasing(graphicsNode->GetChild<bool>("Is Fullscreen", false));
+		auto graphicsData = m_graphics->GetParent();
+		Display::Get()->SetWidth(graphicsData->GetChild<uint32_t>("Display Width", 1080));
+		Display::Get()->SetHeight(graphicsData->GetChild<uint32_t>("Display Height", 720));
+		Engine::Get()->SetFpsLimit(graphicsData->GetChild<float>("Fps Limit", 0.0f));
+		Display::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Is Antialiasing", true));
+		Display::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Is Fullscreen", false));
 	}
 
 	void ConfigManager::Save()
 	{
-		auto audioNode = m_audio->GetParent();
-		audioNode->SetChild<float>("Master Volume", Audio::Get()->GetVolume());
+		auto audioData = m_audio->GetParent();
+		audioData->SetChild<float>("Master Volume", Audio::Get()->GetVolume());
 		m_audio->Save();
 
-		auto graphicsNode = m_graphics->GetParent();
-		graphicsNode->SetChild<uint32_t>("Display Width", Display::Get()->GetWidth());
-		graphicsNode->SetChild<uint32_t>("Display Height", Display::Get()->GetHeight());
-		graphicsNode->SetChild<float>("Fps Limit", Engine::Get()->GetFpsLimit());
-		graphicsNode->SetChild<bool>("Is Antialiasing", Display::Get()->IsAntialiasing());
-		graphicsNode->SetChild<bool>("Is Fullscreen", Display::Get()->IsAntialiasing());
+		auto graphicsData = m_graphics->GetParent();
+		graphicsData->SetChild<uint32_t>("Display Width", Display::Get()->GetWidth());
+		graphicsData->SetChild<uint32_t>("Display Height", Display::Get()->GetHeight());
+		graphicsData->SetChild<float>("Fps Limit", Engine::Get()->GetFpsLimit());
+		graphicsData->SetChild<bool>("Is Antialiasing", Display::Get()->IsAntialiasing());
+		graphicsData->SetChild<bool>("Is Fullscreen", Display::Get()->IsAntialiasing());
 		m_graphics->Save();
 	}
 }

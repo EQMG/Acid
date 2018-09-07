@@ -7,15 +7,15 @@ namespace acid
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
-		m_children(std::vector<UiObject *>()),
+		m_children(std::vector<std::unique_ptr<UiObject>>()),
 		m_visible(true),
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_positionOffset(Vector2()),
 		m_screenTransform(Vector4()),
-		m_alphaDriver(new DriverConstant(1.0f)),
+		m_alphaDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_alpha(1.0f),
-		m_scaleDriver(new DriverConstant(1.0f)),
+		m_scaleDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_scale(1.0f),
 		m_actionClick(nullptr)
 	{
@@ -27,11 +27,6 @@ namespace acid
 
 	UiObject::~UiObject()
 	{
-		for (auto &child : m_children)
-		{
-			delete child;
-		}
-
 		if (m_parent != nullptr)
 		{
 			m_parent->RemoveChild(this);
@@ -102,11 +97,23 @@ namespace acid
 		return false;
 	}
 
+	void UiObject::SetParent(UiObject *parent)
+	{
+		m_parent->RemoveChild(this);
+		parent->AddChild(this);
+		m_parent = parent;
+	}
+
+	void UiObject::AddChild(UiObject *child)
+	{
+		m_children.emplace_back(child);
+	}
+
 	bool UiObject::RemoveChild(UiObject *child)
 	{
 		for (auto it = m_children.begin(); it != m_children.end(); ++it)
 		{
-			if (*it == child)
+			if ((*it).get() == child)
 			{
 				m_children.erase(it);
 				return true;
@@ -114,13 +121,6 @@ namespace acid
 		}
 
 		return false;
-	}
-
-	void UiObject::SetParent(UiObject *parent)
-	{
-		m_parent->RemoveChild(this);
-		parent->m_children.emplace_back(this);
-		m_parent = parent;
 	}
 
 	bool UiObject::IsVisible() const

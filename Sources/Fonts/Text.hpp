@@ -35,7 +35,7 @@ namespace acid
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;
 
-		Model *m_model;
+		std::unique_ptr<Model> m_model;
 		uint32_t m_numberLines;
 
 		std::string m_string;
@@ -52,10 +52,10 @@ namespace acid
 		bool m_solidBorder;
 		bool m_glowBorder;
 
-		std::shared_ptr<IDriver> m_glowDriver;
+		std::unique_ptr<IDriver> m_glowDriver;
 		float m_glowSize;
 
-		std::shared_ptr<IDriver> m_borderDriver;
+		std::unique_ptr<IDriver> m_borderDriver;
 		float m_borderSize;
 	public:
 		/// <summary>
@@ -80,7 +80,7 @@ namespace acid
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
 		/// <returns> The model of the text. </returns>
-		Model *GetModel() const { return m_model; }
+		Model *GetModel() const { return m_model.get(); }
 
 		/// <summary>
 		/// Gets the number of lines in this text.
@@ -182,7 +182,7 @@ namespace acid
 		/// Sets the border driver, will disable glowing.
 		/// </summary>
 		/// <param name="driver"> The new border driver. </param>
-		void SetBorderDriver(const std::shared_ptr<IDriver> &driver);
+		void SetBorderDriver(IDriver *driver);
 
 		/// <summary>
 		/// Sets a new border driver from a type, will disable glowing.
@@ -190,13 +190,13 @@ namespace acid
 		/// <param name="T"> The type of driver to set. </param>
 		/// <param name="args"> The type driver arguments. </param>
 		template<typename T, typename... Args>
-		void SetBorderDriver(Args &&... args) { SetBorderDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
+		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="driver"> The new glow driver. </param>
-		void SetGlowingDriver(const std::shared_ptr<IDriver> &driver);
+		void SetGlowingDriver(IDriver *driver);
 
 		/// <summary>
 		/// Sets a new glow driver from a type, will disable solid borders.
@@ -204,7 +204,7 @@ namespace acid
 		/// <param name="T"> The type of driver to set. </param>
 		/// <param name="args"> The type driver arguments. </param>
 		template<typename T, typename... Args>
-		void SetGlowingDriver(Args &&... args) { SetGlowingDriver(std::make_shared<T>(std::forward<Args>(args)...)); }
+		void SetGlowingDriver(Args &&... args) { SetGlowingDriver(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.

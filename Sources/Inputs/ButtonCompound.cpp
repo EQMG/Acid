@@ -2,10 +2,14 @@
 
 namespace acid
 {
-	ButtonCompound::ButtonCompound(const std::vector<std::shared_ptr<IButton>> &buttons) :
-		m_buttons(buttons),
+	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
+		m_buttons(std::vector<std::unique_ptr<IButton>>()),
 		m_wasDown(false)
 	{
+		for (auto &button : buttons)
+		{
+			m_buttons.emplace_back(button);
+		}
 	}
 
 	ButtonCompound::~ButtonCompound()

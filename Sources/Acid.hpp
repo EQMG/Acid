@@ -109,7 +109,6 @@
 #include "Noise/Noise.hpp"
 #include "Objects/ComponentRegister.hpp"
 #include "Objects/GameObject.hpp"
-#include "Objects/IBehaviour.hpp"
 #include "Objects/IComponent.hpp"
 #include "Objects/Prefabs/PrefabObject.hpp"
 #include "Particles/Particle.hpp"
