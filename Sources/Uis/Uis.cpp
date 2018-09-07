@@ -6,14 +6,13 @@ namespace acid
 {
 	Uis::Uis() :
 		m_selector(UiSelector()),
-		m_container(new UiObject(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
+		m_container(std::make_unique<UiObject>(nullptr, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f)))),
 		m_objects(std::vector<UiObject *>())
 	{
 	}
 
 	Uis::~Uis()
 	{
-		delete m_container;
 	}
 
 	void Uis::Update()

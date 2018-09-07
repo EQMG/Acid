@@ -17,7 +17,6 @@ namespace acid
 
 	ColliderHeightfield::~ColliderHeightfield()
 	{
-		delete m_shape;
 	}
 
 	void ColliderHeightfield::Start()
@@ -38,7 +37,7 @@ namespace acid
 
 	btCollisionShape *ColliderHeightfield::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 
 	void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength,
@@ -50,8 +49,7 @@ namespace acid
 			return;
 		}
 
-		delete m_shape;
-		m_shape = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData,
+		m_shape = std::make_unique<btHeightfieldTerrainShape>(heightStickWidth, heightStickLength, heightfieldData,
 			heightScale, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 	}
 }

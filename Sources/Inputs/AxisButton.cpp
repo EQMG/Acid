@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	AxisButton::AxisButton(const std::shared_ptr<IButton> &negative, const std::shared_ptr<IButton> &positive) :
+	AxisButton::AxisButton(IButton *negative, IButton *positive) :
 		m_negative(negative),
 		m_positive(positive)
 	{

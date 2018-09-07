@@ -59,7 +59,15 @@ namespace acid
 		/// <param name="T"> The module type to find. </param>
 		/// <returns> The found module. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetModule() const { return m_moduleRegister.GetModule<T>(); }
+		T *GetModule() const { return m_moduleRegister.GetModule<T>(); }
+
+		/// <summary>
+		/// Registers a module with the register.
+		/// </summary>
+		/// <param name="module"> The modules object. </param>
+		/// <param name="update"> The modules update type. </param>
+		/// <returns> The registered module. </returns>
+		IModule *RegisterModule(IModule *module, const ModuleUpdate &update) { return m_moduleRegister.RegisterModule(module, update); }
 
 		/// <summary>
 		/// Registers a module with the register.
@@ -68,7 +76,7 @@ namespace acid
 		/// <param name="T"> The type of module to register. </param>
 		/// <returns> The registered module. </returns>
 		template<typename T>
-		std::shared_ptr<T> RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
+		T *RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
 
 		/// <summary>
 		/// Deregisters a module.

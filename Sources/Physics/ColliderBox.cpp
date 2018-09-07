@@ -7,14 +7,13 @@ namespace acid
 {
 	ColliderBox::ColliderBox(const Vector3 &extents) :
 		Collider(),
-		m_shape(new btBoxShape(Collider::Convert(extents / 2.0f))),
+		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
 	}
 
 	ColliderBox::~ColliderBox()
 	{
-		delete m_shape;
 	}
 
 	void ColliderBox::Start()
@@ -38,6 +37,6 @@ namespace acid
 
 	btCollisionShape *ColliderBox::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 }

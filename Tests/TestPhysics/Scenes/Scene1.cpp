@@ -33,16 +33,16 @@ namespace test
 
 	Scene1::Scene1() :
 		IScene(new FpsCamera()),
-		m_buttonSpawnSphere(std::make_shared<ButtonMouse>(std::vector<MouseButton>{MOUSE_BUTTON_1})),
-		m_buttonFullscreen(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
-		m_buttonCaptureMouse(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_M, KEY_ESCAPE})),
-		m_buttonScreenshot(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
-		m_buttonExit(std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
+		m_buttonSpawnSphere(std::make_unique<ButtonMouse>(std::vector<MouseButton>{MOUSE_BUTTON_1})),
+		m_buttonFullscreen(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
+		m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_M, KEY_ESCAPE})),
+		m_buttonScreenshot(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
+		m_buttonExit(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_primaryColour(Colour("#e74c3c")),
 		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_uiStartLogo(new UiStartLogo(Uis::Get()->GetContainer())),
-		m_overlayDebug(new OverlayDebug(Uis::Get()->GetContainer()))
+		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
+		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
@@ -50,8 +50,6 @@ namespace test
 
 	Scene1::~Scene1()
 	{
-		delete m_uiStartLogo;
-		delete m_overlayDebug;
 	}
 
 	void Scene1::Start()
@@ -60,14 +58,14 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		auto playerObject = GameObject::Resource("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		auto playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
-		auto skyboxObject = GameObject::Resource("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
+		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated.
 #ifdef ACID_BUILD_WINDOWS
-		auto animatedObject = GameObject::Resource(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
+		auto animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
 		animatedObject->SetName("Animated");
 	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
 		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
@@ -78,10 +76,10 @@ namespace test
 #endif
 
 		// Entities.
-		auto sun = GameObject::Resource(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
+		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE);
 
-		auto terrain = GameObject::Resource(Transform());
+		auto terrain = new GameObject(Transform());
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
@@ -94,7 +92,7 @@ namespace test
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				auto sphere = GameObject::Resource(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
+				auto sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
 				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(0.5f);
@@ -105,7 +103,7 @@ namespace test
 			}
 		}
 
-		auto teapot = GameObject::Resource(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		auto teapot = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rigidbody>(1.0f);
@@ -123,7 +121,7 @@ namespace test
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-			auto sphere = GameObject::Resource(Transform(cameraPosition, Vector3(), 0.5f));
+			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);

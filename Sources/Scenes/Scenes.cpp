@@ -12,7 +12,6 @@ namespace acid
 
 	Scenes::~Scenes()
 	{
-		delete m_scene;
 	}
 
 	void Scenes::Update()

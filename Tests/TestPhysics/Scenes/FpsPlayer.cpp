@@ -1,13 +1,11 @@
 #include "FpsPlayer.hpp"
 
-#include <Inputs/AxisCompound.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/AxisButton.hpp>
-#include <Inputs/AxisJoystick.hpp>
-#include <Inputs/ButtonCompound.hpp>
-#include <Inputs/ButtonJoystick.hpp>
 #include <Uis/Uis.hpp>
 #include <Scenes/Scenes.hpp>
+
+#include <Inputs/AxisButton.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/AxisJoystick.hpp>
 
 namespace test
 {
@@ -25,34 +23,34 @@ namespace test
 		m_velocity(Vector3()),
 		m_jumping(false),
 		m_noclipEnabled(false),
-		m_inputForward(std::make_shared<AxisCompound>(std::vector<std::shared_ptr<IAxis>>{
-			std::make_shared<AxisButton>(
-				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_S, KEY_DOWN}),
-				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_W, KEY_UP})
+		m_inputForward(AxisCompound({
+			new AxisButton(
+				new ButtonKeyboard(std::vector<Key>{KEY_S, KEY_DOWN}),
+				new ButtonKeyboard(std::vector<Key>{KEY_W, KEY_UP})
 			),
-			std::make_shared<AxisJoystick>(JOYSTICK_1, std::vector<uint32_t>{1}, true)
+			new AxisJoystick(JOYSTICK_1, std::vector<uint32_t>{1}, true)
 		})),
-		m_inputStrafe(std::make_shared<AxisCompound>(std::vector<std::shared_ptr<IAxis>>{
-			std::make_shared<AxisButton>(
-				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_D, KEY_RIGHT}),
-				std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_A, KEY_LEFT})
+		m_inputStrafe(AxisCompound({
+			new AxisButton(
+				new ButtonKeyboard(std::vector<Key>{KEY_D, KEY_RIGHT}),
+				new ButtonKeyboard(std::vector<Key>{KEY_A, KEY_LEFT})
 			),
-			std::make_shared<AxisJoystick>(JOYSTICK_1, std::vector<uint32_t>{0}, true)
+			new AxisJoystick(JOYSTICK_1, std::vector<uint32_t>{0}, true)
 		})),
-		m_inputSprint(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
-			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
-			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
+		m_inputSprint(ButtonCompound({
+			new ButtonKeyboard(std::vector<Key>{KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
+			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_inputJump(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
-			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_SPACE}),
-			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
+		m_inputJump(ButtonCompound({
+			new ButtonKeyboard(std::vector<Key>{KEY_SPACE}),
+			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_inputCrouch(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
-			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
-			std::make_shared<ButtonJoystick>(JOYSTICK_1, std::vector<uint32_t>{1})
+		m_inputCrouch(ButtonCompound({
+			new ButtonKeyboard(std::vector<Key>{KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
+			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
 		})),
-		m_toggleNoclip(std::make_shared<ButtonCompound>(std::vector<std::shared_ptr<IButton>>{
-			std::make_shared<ButtonKeyboard>(std::vector<Key>{KEY_N}),
+		m_toggleNoclip(ButtonCompound({
+			new ButtonKeyboard(std::vector<Key>{KEY_N}),
 		})),
 		m_amountMove(Vector3()),
 		m_amountRotate(Vector3())
@@ -72,19 +70,19 @@ namespace test
 
 		if (!Scenes::Get()->IsGamePaused())
 		{
-			bool sprintDown = m_inputSprint->IsDown();
-			bool crouchDown = m_inputCrouch->IsDown();
+			bool sprintDown = m_inputSprint.IsDown();
+			bool crouchDown = m_inputCrouch.IsDown();
 
-			targetVelocity.m_z += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward->GetAmount();
-			targetVelocity.m_x += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe->GetAmount();
+			targetVelocity.m_z += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputForward.GetAmount();
+			targetVelocity.m_x += (sprintDown ? RUN_SPEED : crouchDown ? CROUCH_SPEED : WALK_SPEED) * m_inputStrafe.GetAmount();
 
 			if (m_noclipEnabled)
 			{
-				if (m_inputJump->IsDown())
+				if (m_inputJump.IsDown())
 				{
 					targetVelocity.m_y += sprintDown ? RUN_SPEED : WALK_SPEED;
 				}
-				else if (m_inputCrouch->IsDown())
+				else if (m_inputCrouch.IsDown())
 				{
 					targetVelocity.m_y += sprintDown ? -RUN_SPEED : -WALK_SPEED;
 				}
@@ -93,7 +91,7 @@ namespace test
 			}
 			else
 			{
-				if (m_inputJump->WasDown() && !m_jumping)
+				if (m_inputJump.WasDown() && !m_jumping)
 				{
 					targetVelocity.m_y += crouchDown ? CROUCH_JUMP_SPEED : JUMP_SPEED;
 					m_velocity.m_y += targetVelocity.m_y;
@@ -101,7 +99,7 @@ namespace test
 				}
 			}
 
-			if (m_toggleNoclip->WasDown())
+			if (m_toggleNoclip.WasDown())
 			{
 				targetVelocity *= 0.0f;
 				m_jumping = false;

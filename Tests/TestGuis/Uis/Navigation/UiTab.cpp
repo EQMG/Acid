@@ -10,17 +10,17 @@ namespace test
 		m_content(content),
 		m_name(name),
 		m_colour(colour),
-		m_text(new Text(this, rectangle, 1.6f, name, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_LEFT, 0.5f, 0.003f)),
+		m_text(std::make_unique<Text>(this, rectangle, 1.6f, name, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_LEFT, 0.5f, 0.003f)),
 		m_width(m_text->GetRectangle().m_dimensions.m_x * 1.6f),
-		m_soundClick(new Sound("Sounds/Button1.ogg", 0.9f))
+		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f))
 	{
 		this->SetActionClick([&](MouseButton button) -> bool
 		{
 			if (button == MOUSE_BUTTON_LEFT)
 			{
 				dynamic_cast<UiNavigation *>(GetParent())->SwitchTab(m_name);
-				m_soundClick->SetPitch(Maths::Random(0.3f, 0.7f));
-				m_soundClick->Play();
+				m_soundClick.SetPitch(Maths::Random(0.3f, 0.7f));
+				m_soundClick.Play();
 				return true;
 			}
 
@@ -31,9 +31,6 @@ namespace test
 
 	UiTab::~UiTab()
 	{
-		delete m_soundClick;
-		delete m_content;
-		delete m_text;
 	}
 
 	void UiTab::UpdateObject()

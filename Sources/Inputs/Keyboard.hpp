@@ -154,7 +154,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Keyboard> Get() { return Engine::Get()->GetModule<Keyboard>(); }
+		static Keyboard *Get() { return Engine::Get()->GetModule<Keyboard>(); }
 
 		Keyboard();
 

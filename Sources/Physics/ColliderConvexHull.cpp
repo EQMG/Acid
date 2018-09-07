@@ -22,7 +22,6 @@ namespace acid
 
 	ColliderConvexHull::~ColliderConvexHull()
 	{
-		delete m_shape;
 	}
 
 	void ColliderConvexHull::Start()
@@ -70,22 +69,19 @@ namespace acid
 
 	btCollisionShape *ColliderConvexHull::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 
 	void ColliderConvexHull::Initialize(const std::vector<float> &pointCloud)
 	{
-		delete m_shape;
-		m_points = 0;
-
 		if (pointCloud.empty())
 		{
 			return;
 		}
 
-		m_shape = new btConvexHullShape(pointCloud.data(), pointCloud.size() / 3, sizeof(float));
+		m_shape = std::make_unique<btConvexHullShape>(pointCloud.data(), pointCloud.size() / 3, sizeof(float));
 		m_shape->optimizeConvexHull();
 		m_shape->initializePolyhedralFeatures();
-		m_points = pointCloud.size() / 3;
+		m_points = static_cast<uint32_t>(pointCloud.size() / 3);
 	}
 }

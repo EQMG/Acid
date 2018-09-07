@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCone::ColliderCone(const float &radius, const float &height) :
 		Collider(),
-		m_shape(new btConeShape(radius, height)),
+		m_shape(std::make_unique<btConeShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)
 	{
@@ -15,7 +15,6 @@ namespace acid
 
 	ColliderCone::~ColliderCone()
 	{
-		delete m_shape;
 	}
 
 	void ColliderCone::Start()
@@ -42,6 +41,6 @@ namespace acid
 
 	btCollisionShape *ColliderCone::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 }

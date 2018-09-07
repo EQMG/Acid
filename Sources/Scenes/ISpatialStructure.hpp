@@ -22,14 +22,14 @@ namespace acid
 		/// Adds a new object to the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to add. </param>
-		virtual void Add(const std::shared_ptr<GameObject> &object) = 0;
+		virtual void Add(GameObject *object) = 0;
 
 		/// <summary>
 		/// Removes an object from the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
 		/// <returns> If the object was removed. </returns>
-		virtual bool Remove(const std::shared_ptr<GameObject> &object) = 0;
+		virtual bool Remove(GameObject *object) = 0;
 
 		/// <summary>
 		/// Removes all objects from the spatial structure..
@@ -47,14 +47,14 @@ namespace acid
 		/// </summary>
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<std::shared_ptr<GameObject>> &GetAll() = 0;
+		virtual std::vector<std::unique_ptr<GameObject>> &GetAll() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in the spatial structure.
 		/// </summary>
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<std::shared_ptr<GameObject>> QueryAll() = 0;
+		virtual std::vector<GameObject *> QueryAll() = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -62,7 +62,7 @@ namespace acid
 		/// <param name="range"> The frustum range of space being queried. </param>
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-		virtual std::vector<std::shared_ptr<GameObject>> QueryFrustum(const Frustum &range) = 0;
+		virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
 
 		/// <summary>
 		/// Returns a set of all objects in a specific range of the spatial structure.
@@ -71,7 +71,7 @@ namespace acid
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-	//	virtual std::vector<std::shared_ptr<GameObject>> QueryBounding(Collider *range) = 0;
+	//	virtual std::vector<GameObject *> QueryBounding(Collider *range) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.
@@ -79,6 +79,6 @@ namespace acid
 		/// <param name="object"> The object to check for.
 		/// </param>
 		/// <returns> If the structure contains the object. </returns>
-		virtual bool Contains(const std::shared_ptr<GameObject> &object) = 0;
+		virtual bool Contains(GameObject *object) = 0;
 	};
 }

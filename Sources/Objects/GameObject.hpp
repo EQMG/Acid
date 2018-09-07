@@ -17,38 +17,40 @@ namespace acid
 	private:
 		std::string m_name;
 		Transform m_transform;
-		std::vector<std::shared_ptr<IComponent>> m_components;
-		std::weak_ptr<GameObject> m_parent;
+		std::vector<std::unique_ptr<IComponent>> m_components;
+		GameObject *m_parent;
 		bool m_removed;
 	public:
 		/// <summary>
-		/// Will create a new Game Object and store it into a structure.
+		/// Creates a new Game Object and store it into a structure.
 		/// </summary>
 		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
-		static std::shared_ptr<GameObject> Resource(const Transform &transform, ISpatialStructure *structure = nullptr);
+		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		/// <summary>
-		/// Will create a new Game Object and store it into a structure.
+		/// Creates a new Game Object and store it into a structure.
 		/// </summary>
 		/// <param name="filepath"> The file to load the component data from. </param>
 		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
-		static std::shared_ptr<GameObject> Resource(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
+		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
 
-		GameObject(const Transform &transform);
+		~GameObject();
 
-		GameObject(const std::string &filepath, const Transform &transform);
-
-		virtual ~GameObject();
-
-		virtual void Update();
+		void Update();
 
 		/// <summary>
 		/// Gets all components attached to this game object.
 		/// </summary>
 		/// <returns> The list of components. </returns>
-		std::vector<std::shared_ptr<IComponent>> GetComponents() const { return m_components; }
+		std::vector<std::unique_ptr<IComponent>> const &GetComponents() const { return m_components; }
+
+		/// <summary>
+		/// Gets the count of components attached to this Game Object.
+		/// </summary>
+		/// <returns> The count of components. </returns>
+		uint32_t GetComponentCount() const { return static_cast<uint32_t>(m_components.size()); }
 
 		/// <summary>
 		/// Gets a component by type.
@@ -56,13 +58,13 @@ namespace acid
 		/// <param name="T"> The component type to find. </param>
 		/// <returns> The found component. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetComponent(const bool &allowDisabled = false)
+		T *GetComponent(const bool &allowDisabled = false)
 		{
-			std::shared_ptr<T> alternative = nullptr;
+			T *alternative = nullptr;
 
 			for (auto &component : m_components)
 			{
-				auto casted = std::dynamic_pointer_cast<T>(component);
+				auto casted = dynamic_cast<T *>(component.get());
 
 				if (casted != nullptr)
 				{
@@ -84,7 +86,7 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to add. </param>
 		/// <returns> The added component. </returns>
-		std::shared_ptr<IComponent> AddComponent(const std::shared_ptr<IComponent> &component);
+		IComponent *AddComponent(IComponent *component);
 
 		/// <summary>
 		/// Creates a component by type to be added this game object.
@@ -93,9 +95,9 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added component. </returns>
 		template<typename T, typename... Args>
-		std::shared_ptr<T> AddComponent(Args &&... args)
+		T *AddComponent(Args &&... args)
 		{
-			auto created = std::make_shared<T>(std::forward<Args>(args)...);
+			auto created = new T(std::forward<Args>(args)...);
 			AddComponent(created);
 			return created;
 		}
@@ -105,7 +107,7 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to remove. </param>
 		/// <returns> If the component was removed. </returns>
-		bool RemoveComponent(const std::shared_ptr<IComponent> &component);
+		bool RemoveComponent(IComponent *component);
 
 		/// <summary>
 		/// Removes a component from this game object.
@@ -124,11 +126,11 @@ namespace acid
 		{
 			for (auto &component : m_components)
 			{
-				auto casted = std::dynamic_pointer_cast<T>(component);
+				auto casted = dynamic_cast<T *>(component.get());
 
 				if (casted != nullptr)
 				{
-					RemoveComponent(component);
+					RemoveComponent(component.get());
 					return true;
 				}
 			}
@@ -142,9 +144,9 @@ namespace acid
 
 		Transform &GetTransform() { return m_transform; }
 
-		std::weak_ptr<GameObject> GetParent() const { return m_parent; }
+		GameObject *GetParent() const { return m_parent; }
 
-		void SetParent(const std::shared_ptr<GameObject> &parent) { m_parent = parent; }
+		void SetParent(GameObject *parent) { m_parent = parent; }
 
 		bool IsRemoved() const { return m_removed; }
 

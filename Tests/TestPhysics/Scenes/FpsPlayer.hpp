@@ -2,8 +2,8 @@
 
 #include <Objects/GameObject.hpp>
 #include <Objects/IComponent.hpp>
-#include <Inputs/IAxis.hpp>
-#include <Inputs/IButton.hpp>
+#include <Inputs/AxisCompound.hpp>
+#include <Inputs/ButtonCompound.hpp>
 
 using namespace acid;
 
@@ -17,12 +17,12 @@ namespace test
 		bool m_jumping;
 		bool m_noclipEnabled;
 
-		std::shared_ptr<IAxis> m_inputForward;
-		std::shared_ptr<IAxis> m_inputStrafe;
-		std::shared_ptr<IButton> m_inputSprint;
-		std::shared_ptr<IButton> m_inputJump;
-		std::shared_ptr<IButton> m_inputCrouch;
-		std::shared_ptr<IButton> m_toggleNoclip;
+		AxisCompound m_inputForward;
+		AxisCompound m_inputStrafe;
+		ButtonCompound m_inputSprint;
+		ButtonCompound m_inputJump;
+		ButtonCompound m_inputCrouch;
+		ButtonCompound m_toggleNoclip;
 
 		Vector3 m_amountMove;
 		Vector3 m_amountRotate;

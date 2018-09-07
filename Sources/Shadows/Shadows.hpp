@@ -30,7 +30,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Shadows> Get() { return Engine::Get()->GetModule<Shadows>(); }
+		static Shadows *Get() { return Engine::Get()->GetModule<Shadows>(); }
 
 		Shadows();
 

@@ -13,13 +13,13 @@ namespace test
 		public UiObject
 	{
 	private:
-		Gui *m_barBackground;
-		Text *m_barTitle;
-		Text *m_barCreatedBy;
-		Gui *m_tabPuck;
-		std::vector<UiTab *> m_tabs;
+		std::unique_ptr<Gui> m_barBackground;
+		std::unique_ptr<Text> m_barTitle;
+		std::unique_ptr<Text> m_barCreatedBy;
+		std::unique_ptr<Gui> m_tabPuck;
+		std::vector<std::unique_ptr<UiTab>> m_tabs;
 
-		IDriver *m_driverTarget;
+		std::unique_ptr<IDriver> m_driverTarget;
 		UiTab *m_currentTab;
 		UiTab *m_targetTab;
 	public:

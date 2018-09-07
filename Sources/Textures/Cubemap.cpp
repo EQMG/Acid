@@ -163,8 +163,6 @@ namespace acid
 		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
-
-		delete[] pixels;
 	}
 
 	Cubemap::~Cubemap()

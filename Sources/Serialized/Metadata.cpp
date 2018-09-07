@@ -84,7 +84,7 @@ namespace acid
 
 		if (reportError)
 		{
-			Log::Error("Could not find child in node by name '%s'\n", m_name.c_str());
+			Log::Error("Could not find child in metadata by name '%s'\n", m_name.c_str());
 		}
 
 		return nullptr;
@@ -111,7 +111,7 @@ namespace acid
 
 		if (reportError)
 		{
-			Log::Error("Could not find child in node '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
+			Log::Error("Could not find child in metadata '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
 		}
 
 		return nullptr;

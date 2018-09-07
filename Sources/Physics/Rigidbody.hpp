@@ -23,7 +23,7 @@ namespace acid
 		Vector3 m_angularFactor;
 
 		btCollisionShape* m_shape;
-		btRigidBody* m_body;
+		std::unique_ptr<btRigidBody> m_body;
 
 		std::vector<std::shared_ptr<Force>> m_forces;
 

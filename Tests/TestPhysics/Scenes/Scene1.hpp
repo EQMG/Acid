@@ -14,18 +14,18 @@ namespace test
 		public IScene
 	{
 	private:
-		std::shared_ptr<IButton> m_buttonSpawnSphere;
-		std::shared_ptr<IButton> m_buttonFullscreen;
-		std::shared_ptr<IButton> m_buttonCaptureMouse;
-		std::shared_ptr<IButton> m_buttonScreenshot;
-		std::shared_ptr<IButton> m_buttonExit;
+		std::unique_ptr<IButton> m_buttonSpawnSphere;
+		std::unique_ptr<IButton> m_buttonFullscreen;
+		std::unique_ptr<IButton> m_buttonCaptureMouse;
+		std::unique_ptr<IButton> m_buttonScreenshot;
+		std::unique_ptr<IButton> m_buttonExit;
 		Sound m_soundScreenshot;
 
 		Colour m_primaryColour;
 		SelectorJoystick m_selectorJoystick;
 
-		UiStartLogo *m_uiStartLogo;
-		OverlayDebug *m_overlayDebug;
+		std::unique_ptr<UiStartLogo> m_uiStartLogo;
+		std::unique_ptr<OverlayDebug> m_overlayDebug;
 	public:
 		Scene1();
 

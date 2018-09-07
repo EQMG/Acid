@@ -22,8 +22,6 @@ namespace acid
 
 	UiInputButton::~UiInputButton()
 	{
-		delete m_text;
-		delete m_background;
 	}
 
 	void UiInputButton::UpdateObject()

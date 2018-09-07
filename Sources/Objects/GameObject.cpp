@@ -6,55 +6,26 @@
 
 namespace acid
 {
-	std::shared_ptr<GameObject> GameObject::Resource(const Transform &transform, ISpatialStructure *structure)
+	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
+		m_name(""),
+		m_transform(transform),
+		m_components(std::vector<std::unique_ptr<IComponent>>()),
+		m_parent(nullptr),
+		m_removed(false)
 	{
 		if (structure == nullptr)
 		{
-			structure = Scenes::Get()->GetStructure().get();
+			structure = Scenes::Get()->GetStructure();
 		}
-
-		auto result = std::make_shared<GameObject>(transform);
 
 		if (structure != nullptr)
 		{
-			structure->Add(result);
+			structure->Add(this);
 		}
-
-		return result;
 	}
 
-	std::shared_ptr<GameObject> GameObject::Resource(const std::string &filepath, const Transform &transform, ISpatialStructure *structure)
-	{
-		if (structure == nullptr)
-		{
-			structure = Scenes::Get()->GetStructure().get();
-		}
-
-		auto result = std::make_shared<GameObject>(filepath, transform);
-
-		if (structure != nullptr)
-		{
-			structure->Add(result);
-		}
-
-		return result;
-	}
-
-	GameObject::GameObject(const Transform &transform) :
-		m_name(""),
-		m_transform(transform),
-		m_components(std::vector<std::shared_ptr<IComponent>>()),
-		m_parent(),
-		m_removed(false)
-	{
-	}
-
-	GameObject::GameObject(const std::string &filepath, const Transform &transform) :
-		m_name(""),
-		m_transform(transform),
-		m_components(std::vector<std::shared_ptr<IComponent>>()),
-		m_parent(),
-		m_removed(false)
+	GameObject::GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure) :
+		GameObject(transform, structure)
 	{
 		auto prefabObject = PrefabObject::Resource(filepath);
 
@@ -105,7 +76,7 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IComponent> GameObject::AddComponent(const std::shared_ptr<IComponent> &component)
+	IComponent *GameObject::AddComponent(IComponent *component)
 	{
 		if (component == nullptr)
 		{
@@ -117,11 +88,11 @@ namespace acid
 		return component;
 	}
 
-	bool GameObject::RemoveComponent(const std::shared_ptr<IComponent> &component)
+	bool GameObject::RemoveComponent(IComponent *component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			if (*it != nullptr && *it == component)
+			if (*it != nullptr && (*it).get() == component)
 			{
 				(*it)->SetGameObject(nullptr);
 
@@ -139,7 +110,7 @@ namespace acid
 		{
 			if (*it != nullptr)
 			{
-				auto componentName = Scenes::Get()->FindComponentName(*it);
+				auto componentName = Scenes::Get()->FindComponentName((*it).get());
 
 				if (componentName && name == *componentName)
 				{

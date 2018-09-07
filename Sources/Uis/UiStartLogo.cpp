@@ -26,9 +26,6 @@ namespace acid
 
 	UiStartLogo::~UiStartLogo()
 	{
-		delete m_guiBackground;
-		delete m_guiLogo;
-		delete m_textCopyright;
 	}
 
 	void UiStartLogo::UpdateObject()

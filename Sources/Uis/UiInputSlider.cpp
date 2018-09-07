@@ -32,9 +32,6 @@ namespace acid
 
 	UiInputSlider::~UiInputSlider()
 	{
-		delete m_text;
-		delete m_background;
-		delete m_slider;
 	}
 
 	void UiInputSlider::UpdateObject()

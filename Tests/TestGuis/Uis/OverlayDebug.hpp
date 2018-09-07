@@ -12,9 +12,9 @@ namespace test
 		public UiObject
 	{
 	private:
-		Text *m_textInfo;
-		Text *m_textFps;
-		Text *m_textUps;
+		std::unique_ptr<Text> m_textInfo;
+		std::unique_ptr<Text> m_textFps;
+		std::unique_ptr<Text> m_textUps;
 		Timer m_timerUpdate;
 	public:
 		OverlayDebug(UiObject *parent);
@@ -24,6 +24,6 @@ namespace test
 		virtual void UpdateObject() override;
 
 	private:
-		Text *CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify);
+		std::unique_ptr<Text> CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify);
 	};
 }

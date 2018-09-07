@@ -14,7 +14,7 @@ namespace acid
 		public IModule
 	{
 	private:
-		IManagerRender *m_managerRender;
+		std::unique_ptr<IManagerRender> m_managerRender;
 
 		std::vector<std::shared_ptr<RenderStage>> m_renderStages;
 
@@ -33,7 +33,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Renderer> Get() { return Engine::Get()->GetModule<Renderer>(); }
+		static Renderer *Get() { return Engine::Get()->GetModule<Renderer>(); }
 
 		Renderer();
 
@@ -53,17 +53,13 @@ namespace acid
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		IManagerRender *GetManager() const { return m_managerRender; }
+		IManagerRender *GetManager() const { return m_managerRender.get(); }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		void SetManager(IManagerRender *managerRender)
-		{
-			delete m_managerRender; // TODO: Cleanup.
-			m_managerRender = managerRender;
-		}
+		void SetManager(IManagerRender *managerRender) { m_managerRender.reset(managerRender); }
 
 		std::vector<std::shared_ptr<RenderStage>> GetRenderStages() const { return m_renderStages; }
 

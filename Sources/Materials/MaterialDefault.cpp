@@ -37,7 +37,7 @@ namespace acid
 			return;
 		}
 
-		m_animated = std::dynamic_pointer_cast<MeshAnimated>(mesh) != nullptr;
+		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
 		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 			mesh->GetVertexInput(), PIPELINE_MODE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()));
 	}

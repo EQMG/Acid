@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height) :
 		Collider(),
-		m_shape(new btCapsuleShape(radius, height)),
+		m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)
 	{
@@ -15,7 +15,6 @@ namespace acid
 
 	ColliderCapsule::~ColliderCapsule()
 	{
-		delete m_shape;
 	}
 
 	void ColliderCapsule::Start()
@@ -41,6 +40,6 @@ namespace acid
 
 	btCollisionShape *ColliderCapsule::GetCollisionShape() const
 	{
-		return m_shape;
+		return m_shape.get();
 	}
 }

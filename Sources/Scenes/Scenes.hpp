@@ -14,7 +14,7 @@ namespace acid
 		public IModule
 	{
 	private:
-		IScene *m_scene;
+		std::unique_ptr<IScene> m_scene;
 
 		ComponentRegister m_componentRegister;
 	public:
@@ -22,7 +22,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static std::shared_ptr<Scenes> Get() { return Engine::Get()->GetModule<Scenes>(); }
+		static Scenes *Get() { return Engine::Get()->GetModule<Scenes>(); }
 
 		/// <summary>
 		/// Creates a new Scenes module.
@@ -37,24 +37,13 @@ namespace acid
 		/// Gets the current scene.
 		/// </summary>
 		/// <returns> The current scene. </returns>
-		IScene *GetScene() const { return m_scene; }
+		IScene *GetScene() const { return m_scene.get(); }
 
 		/// <summary>
 		/// Sets the current scene to a new scene.
 		/// </summary>
 		/// <param name="scene"> The new scene. </param>
-		void SetScene(IScene *scene)
-		{
-			delete m_scene; // TODO: Cleanup.
-			m_scene = scene;
-		}
-
-		/// <summary>
-		/// Creates a new component from the register.
-		/// </summary>
-		/// <param name="name"> The component name to create. </param>
-		/// <returns> The new component. </returns>
-		std::shared_ptr<IComponent> CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
+		void SetScene(IScene *scene) { m_scene.reset(scene); }
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -73,11 +62,18 @@ namespace acid
 		bool DeregisterComponent(const std::string &name) { return m_componentRegister.DeregisterComponent(name); }
 
 		/// <summary>
+		/// Creates a new component from the register.
+		/// </summary>
+		/// <param name="name"> The component name to create. </param>
+		/// <returns> The new component. </returns>
+		IComponent *CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
+
+		/// <summary>
 		/// Finds the registered name to a component.
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindComponentName(const std::shared_ptr<IComponent> &compare) { return m_componentRegister.FindComponentName(compare); }
+		std::optional<std::string> FindComponentName(IComponent *compare) { return m_componentRegister.FindComponentName(compare); }
 
 		/// <summary>
 		/// Gets the current camera object.
@@ -89,13 +85,13 @@ namespace acid
 		/// Gets the scene physics system.
 		/// </summary>
 		/// <returns> The scenes physics system. </returns>
-		std::unique_ptr<ScenePhysics> const &GetPhysics() const { return m_scene->GetPhysics(); }
+		ScenePhysics *GetPhysics() const { return m_scene->GetPhysics(); }
 
 		/// <summary>
 		/// Gets the scene object structure.
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
-		std::unique_ptr<SceneStructure> const &GetStructure() const { return m_scene->GetStructure(); }
+		SceneStructure *GetStructure() const { return m_scene->GetStructure(); }
 
 		/// <summary>
 		/// Gets if the scene is paused.

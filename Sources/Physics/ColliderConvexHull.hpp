@@ -12,7 +12,7 @@ namespace acid
 		public Collider
 	{
 	private:
-		btConvexHullShape *m_shape;
+		std::unique_ptr<btConvexHullShape> m_shape;
 		std::shared_ptr<Model> m_model;
 		uint32_t m_points;
 	public:
