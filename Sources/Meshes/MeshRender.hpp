@@ -26,8 +26,6 @@ namespace acid
 
 		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
 
-		UniformHandler GetUniformObject() const { return m_uniformObject; }
-
 		bool operator<(const MeshRender &other) const;
 	};
 }

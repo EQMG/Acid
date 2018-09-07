@@ -1,6 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
 #include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -61,6 +62,11 @@ namespace acid
 		swapchainCreateInfo.presentMode = m_presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
+
+		if (Renderer::Get()->GetSwapchain() != nullptr)
+		{
+			swapchainCreateInfo.oldSwapchain = *Renderer::Get()->GetSwapchain()->GetSwapchain();
+		}
 
 		if (graphicsFamily != presentFamily)
 		{

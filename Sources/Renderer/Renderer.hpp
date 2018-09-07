@@ -16,9 +16,9 @@ namespace acid
 	private:
 		std::unique_ptr<IManagerRender> m_managerRender;
 
-		std::vector<std::shared_ptr<RenderStage>> m_renderStages;
+		std::vector<std::unique_ptr<RenderStage>> m_renderStages;
 
-		std::shared_ptr<Swapchain> m_swapchain;
+		std::unique_ptr<Swapchain> m_swapchain;
 		VkFence m_fenceSwapchainImage;
 		uint32_t m_activeSwapchainImage;
 
@@ -27,7 +27,7 @@ namespace acid
 		VkSemaphore m_semaphore;
 		VkCommandPool m_commandPool;
 
-		std::shared_ptr<CommandBuffer> m_commandBuffer;
+		std::unique_ptr<CommandBuffer> m_commandBuffer;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -61,15 +61,15 @@ namespace acid
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender.reset(managerRender); }
 
-		std::vector<std::shared_ptr<RenderStage>> GetRenderStages() const { return m_renderStages; }
+		std::vector<std::unique_ptr<RenderStage>> const &GetRenderStages() const { return m_renderStages; }
 
-		std::shared_ptr<RenderStage> GetRenderStage(const uint32_t &index) const { return m_renderStages.at(index); }
+		RenderStage *GetRenderStage(const uint32_t &index) const { return m_renderStages.at(index).get(); }
 
-		std::shared_ptr<Swapchain> GetSwapchain() const { return m_swapchain; }
+		Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 
 		VkCommandPool GetCommandPool() const { return m_commandPool; }
 
-		std::shared_ptr<CommandBuffer> GetCommandBuffer() const { return m_commandBuffer; }
+		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
 
 		uint32_t GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
 

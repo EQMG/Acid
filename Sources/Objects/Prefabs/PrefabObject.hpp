@@ -20,7 +20,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		std::shared_ptr<IFile> m_file;
+		std::unique_ptr<IFile> m_file;
 		std::shared_ptr<Metadata> m_parent;
 	public:
 		/// <summary>

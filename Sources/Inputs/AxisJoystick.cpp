@@ -17,7 +17,7 @@ namespace acid
 
 	float AxisJoystick::GetAmount() const
 	{
-		if (Joysticks::Get() == nullptr || !Joysticks::Get()->IsConnected(m_joystick))
+		if (!Joysticks::Get()->IsConnected(m_joystick))
 		{
 			return 0.0f;
 		}

@@ -44,13 +44,4 @@ namespace acid
 			assert(false && "Cannot render model, no buffers exist for it!");
 		}
 	}
-
-	float Model::GetRadius() const
-	{
-		float min0 = std::abs(m_minExtents.MaxComponent());
-		float min1 = std::abs(m_minExtents.MinComponent());
-		float max0 = std::abs(m_maxExtents.MaxComponent());
-		float max1 = std::abs(m_maxExtents.MinComponent());
-		return std::max(min0, std::max(min1, std::max(max0, max1)));
-	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <memory>
 #include "Renderer/Buffers/UniformBuffer.hpp"
 
 namespace acid
@@ -13,7 +14,7 @@ namespace acid
 	private:
 		bool m_multipipeline;
 		std::shared_ptr<UniformBlock> m_uniformBlock;
-		std::shared_ptr<UniformBuffer> m_uniformBuffer;
+		std::unique_ptr<UniformBuffer> m_uniformBuffer;
 		void *m_data;
 		bool m_changed;
 	public:
@@ -63,6 +64,6 @@ namespace acid
 
 		bool Update(const std::shared_ptr<UniformBlock> &uniformBlock);
 
-		std::shared_ptr<UniformBuffer> GetUniformBuffer() const { return m_uniformBuffer; }
+		UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
 	};
 }

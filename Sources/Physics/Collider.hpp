@@ -22,9 +22,6 @@ namespace acid
 		public IComponent
 	{
 	public:
-		/// <summary>
-		/// Creates a new shape.
-		/// </summary>
 		Collider();
 
 		virtual ~Collider();

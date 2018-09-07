@@ -14,7 +14,7 @@ namespace acid
 	UniformHandler::UniformHandler(const std::shared_ptr<UniformBlock> &uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
-		m_uniformBuffer(std::make_shared<UniformBuffer>(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()))),
+		m_uniformBuffer(std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()))),
 		m_data(malloc(static_cast<size_t>(m_uniformBlock->GetSize()))),
 		m_changed(true)
 	{
@@ -32,7 +32,7 @@ namespace acid
 			free(m_data);
 
 			m_uniformBlock = uniformBlock;
-			m_uniformBuffer = std::make_shared<UniformBuffer>(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()));
+			m_uniformBuffer = std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()));
 			m_data = malloc(static_cast<size_t>(m_uniformBlock->GetSize()));
 			m_changed = false;
 			return false;

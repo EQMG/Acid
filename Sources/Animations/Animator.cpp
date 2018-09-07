@@ -98,7 +98,7 @@ namespace acid
 		joint->SetAnimatedTransform(currentTransform);
 	}
 
-	void Animator::DoAnimation(const std::shared_ptr<Animation> &animation)
+	void Animator::DoAnimation(Animation *animation)
 	{
 		m_animationTime = 0.0f;
 		m_currentAnimation = animation;

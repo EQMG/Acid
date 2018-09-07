@@ -13,7 +13,7 @@ namespace acid
 		public IModule
 	{
 	private:
-		std::vector<std::shared_ptr<IEvent>> m_events;
+		std::vector<std::unique_ptr<IEvent>> m_events;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -32,7 +32,7 @@ namespace acid
 		/// </summary>
 		/// <param name="event"> The event to add. </param>
 		/// <returns> The added event. </returns>
-		std::shared_ptr<IEvent> AddEvent(const std::shared_ptr<IEvent> &event);
+		IEvent *AddEvent(IEvent *event);
 
 		/// <summary>
 		/// Adds an event to the listening list.
@@ -40,13 +40,13 @@ namespace acid
 		/// <param name="T"> The type of event to add. </param>
 		/// <param name="args"> The type event arguments. </param>
 		template<typename T, typename... Args>
-		void AddEvent(Args &&... args) { AddEvent(std::make_shared<T>(std::forward<Args>(args)...)); }
+		void AddEvent(Args &&... args) { AddEvent(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Removes a event to the listening list.
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
-		/// <returns> The removed event. </returns>
-		std::shared_ptr<IEvent> RemoveEvent(const std::shared_ptr<IEvent> &event);
+		/// <returns> If the event was removed. </returns>
+		bool RemoveEvent(IEvent *event);
 	};
 }

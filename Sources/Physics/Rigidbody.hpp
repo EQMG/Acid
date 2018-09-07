@@ -25,7 +25,7 @@ namespace acid
 		btCollisionShape* m_shape;
 		std::unique_ptr<btRigidBody> m_body;
 
-		std::vector<std::shared_ptr<Force>> m_forces;
+		std::vector<std::unique_ptr<Force>> m_forces;
 
 		Vector3 m_linearVelocity;
 		Vector3 m_angularVelocity;
@@ -44,10 +44,10 @@ namespace acid
 
 		void SetGravity(const Vector3 &gravity);
 
-		std::shared_ptr<Force> AddForce(const std::shared_ptr<Force> &force);
+		Force *AddForce(Force *force);
 
 		template<typename T, typename... Args>
-		std::shared_ptr<Force> AddForce(Args &&... args) { return AddForce(std::make_shared<T>(std::forward<Args>(args)...)); }
+		Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
 
 		void ClearForces();
 
@@ -75,6 +75,6 @@ namespace acid
 
 		void SetAngularVelocity(const Vector3 &angularVelocity);
 	private:
-		static btRigidBody* CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape);
+		static std::unique_ptr<btRigidBody> CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape);
 	};
 }

@@ -19,13 +19,14 @@ namespace acid
 	private:
 		std::string m_filename;
 
-		std::shared_ptr<VertexBuffer> m_vertexBuffer;
-		std::shared_ptr<IndexBuffer> m_indexBuffer;
+		std::unique_ptr<VertexBuffer> m_vertexBuffer;
+		std::unique_ptr<IndexBuffer> m_indexBuffer;
 
 		std::vector<float> m_pointCloud;
 
 		Vector3 m_minExtents;
 		Vector3 m_maxExtents;
+		float m_radius;
 	public:
 		/// <summary>
 		/// Creates a new empty model.
@@ -63,11 +64,11 @@ namespace acid
 
 		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
 
-		float GetRadius() const;
+		float GetRadius() const { return m_radius; }
 
-		std::shared_ptr<VertexBuffer> GetVertexBuffer() const { return m_vertexBuffer; }
+		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
 
-		std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return m_indexBuffer; }
+		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
 
 	protected:
 		template<typename T>
@@ -79,12 +80,12 @@ namespace acid
 
 			if (!vertices.empty())
 			{
-				m_vertexBuffer = std::make_shared<VertexBuffer>(sizeof(T), vertices.size(), vertices.data());
+				m_vertexBuffer = std::make_unique<VertexBuffer>(sizeof(T), vertices.size(), vertices.data());
 			}
 
 			if (!indices.empty())
 			{
-				m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(uint32_t), indices.size(), indices.data());
+				m_indexBuffer = std::make_unique<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(uint32_t), indices.size(), indices.data());
 			}
 
 			m_pointCloud = std::vector<float>(3 * vertices.size());
@@ -129,6 +130,12 @@ namespace acid
 
 				i++;
 			}
+
+			float min0 = std::abs(m_minExtents.MaxComponent());
+			float min1 = std::abs(m_minExtents.MinComponent());
+			float max0 = std::abs(m_maxExtents.MaxComponent());
+			float max1 = std::abs(m_maxExtents.MinComponent());
+			m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
 		}
 	};
 }

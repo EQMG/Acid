@@ -12,7 +12,7 @@ namespace acid
 	{
 	private:
 		JsonSection *m_parent;
-		std::vector<JsonSection *> m_children;
+		std::vector<std::unique_ptr<JsonSection>> m_children;
 
 		std::string m_name;
 		std::string m_content;
@@ -23,9 +23,9 @@ namespace acid
 
 		JsonSection *GetParent() const { return m_parent; }
 
-		std::vector<JsonSection *> GetChildren() const { return m_children; }
+		std::vector<std::unique_ptr<JsonSection>> const &GetChildren() const { return m_children; }
 
-		void AddChild(JsonSection * child) { m_children.emplace_back(child); }
+		void AddChild(JsonSection *child) { m_children.emplace_back(child); }
 
 		std::string GetName() const { return m_name; }
 
