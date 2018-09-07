@@ -100,8 +100,8 @@ namespace acid
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
-		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
+		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
@@ -114,15 +114,13 @@ namespace acid
 
 	UiInputGrabber::~UiInputGrabber()
 	{
-		delete m_text;
-		delete m_background;
 	}
 
 	void UiInputGrabber::UpdateObject()
 	{
 		if (m_selected)
 		{
-			int32_t key = m_grabber->GetCurrent(m_text);
+			int32_t key = m_grabber->GetCurrent(m_text.get());
 
 			if (key != -1)
 			{

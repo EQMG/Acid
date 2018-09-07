@@ -29,9 +29,9 @@ namespace acid
 
 		~ModelObj();
 	private:
-		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
+		VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
-		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices);
+		VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
 		void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);
 	};

@@ -21,6 +21,6 @@ namespace acid
 	protected:
 		void GenerateMesh();
 
-		virtual VertexModel *GetVertex(const uint32_t &col, const uint32_t &row);
+		virtual VertexModel GetVertex(const uint32_t &col, const uint32_t &row);
 	};
 }

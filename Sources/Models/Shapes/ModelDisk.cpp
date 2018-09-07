@@ -33,7 +33,7 @@ namespace acid
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
 		Model()
 	{
-		auto vertices = std::vector<IVertex *>();
+		auto vertices = std::vector<VertexModel>();
 		auto indices = std::vector<uint32_t>();
 
 		for (uint32_t i = 0; i < slices; i++)
@@ -47,17 +47,11 @@ namespace acid
 				float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
 				float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
 
-				VertexModel *vertex = new VertexModel();
-				vertex->m_normal.m_x = 0.0f;
-				vertex->m_normal.m_y = 1.0f;
-				vertex->m_normal.m_z = 0.0f;
-				vertex->m_uv.m_x = 1.0f - iDivSlices;
-				vertex->m_uv.m_y = 1.0f - jDivLoops;
-				vertex->m_position.m_x = radius * xDir;
-				vertex->m_position.m_y = 0.0f;
-				vertex->m_position.m_z = radius * yDir;
-
-				vertices.emplace_back(vertex);
+				Vector3 position = Vector3(radius * xDir, 0.0f, radius * yDir);
+				Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivLoops);
+				Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
+				Vector3 tangent = Vector3();
+				vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 			}
 		}
 
@@ -79,7 +73,7 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Set(vertices, indices, ToFilename(innerRadius, outerRadius, slices, loops));
+		Model::Initialize(vertices, indices, ToFilename(innerRadius, outerRadius, slices, loops));
 	}
 
 	ModelDisk::~ModelDisk()

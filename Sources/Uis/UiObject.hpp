@@ -5,7 +5,6 @@
 #include <vector>
 #include "Inputs/Mouse.hpp"
 #include "Maths/Vector2.hpp"
-#include "Maths/Vector3.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "UiBound.hpp"
@@ -117,7 +116,7 @@ namespace acid
 		/// <summary>
 		/// Sets the alpha driver.
 		/// </summary>
-		/// <param name="driver"> The new alpha driver. </param>
+		/// <param name="alphaDriver"> The new alpha driver. </param>
 		void SetAlphaDriver(IDriver *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
 		/// <summary>
@@ -133,7 +132,7 @@ namespace acid
 		/// <summary>
 		/// Sets the scale driver.
 		/// </summary>
-		/// <param name="driver"> The new scale driver. </param>
+		/// <param name="scaleDriver"> The new scale driver. </param>
 		void SetScaleDriver(IDriver *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
 		/// <summary>

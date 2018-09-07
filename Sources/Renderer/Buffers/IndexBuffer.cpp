@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	IndexBuffer::IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData) :
+	IndexBuffer::IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, const void *newData) :
 		Buffer(elementSize * indexCount, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
 		m_indexType(indexType),
 		m_indexCount(static_cast<uint32_t>(indexCount))

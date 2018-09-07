@@ -5,6 +5,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "Models/Model.hpp"
+#include "Models/VertexModel.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
@@ -127,7 +128,7 @@ namespace acid
 		/// <summary>
 		/// Sets the kerning (type character spacing multiplier) of this text.
 		/// </summary>
-		/// <param name="leading"> The new kerning. </param>
+		/// <param name="kerning"> The new kerning. </param>
 		void SetKerning(const float &kerning) { m_kerning = kerning; }
 
 		/// <summary>
@@ -181,8 +182,8 @@ namespace acid
 		/// <summary>
 		/// Sets the border driver, will disable glowing.
 		/// </summary>
-		/// <param name="driver"> The new border driver. </param>
-		void SetBorderDriver(IDriver *driver);
+		/// <param name="borderDriver"> The new border driver. </param>
+		void SetBorderDriver(IDriver *borderDriver);
 
 		/// <summary>
 		/// Sets a new border driver from a type, will disable glowing.
@@ -195,8 +196,8 @@ namespace acid
 		/// <summary>
 		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
-		/// <param name="driver"> The new glow driver. </param>
-		void SetGlowingDriver(IDriver *driver);
+		/// <param name="glowingDriver"> The new glow driver. </param>
+		void SetGlowingDriver(IDriver *glowingDriver);
 
 		/// <summary>
 		/// Sets a new glow driver from a type, will disable solid borders.
@@ -236,16 +237,16 @@ namespace acid
 		float CalculateAntialiasSize();
 
 		/// <summary>
-		/// Gets if the text has been loaded to OpenGL.
+		/// Gets if the text has been loaded to a model.
 		/// </summary>
-		/// <returns> If the text has been loaded to OpenGL. </returns>
+		/// <returns> If the text has been loaded to a model. </returns>
 		bool IsLoaded();
 
 	private:
 		/// <summary>
 		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
 		/// The vertex positions and texture coords and calculated based on the information from the font file.
-		/// Then takes the information about the vertices of all the quads and stores it in OpenGL.
+		/// Then takes the information about the vertices of all the quads and stores it in a model.
 		/// </summary>
 		void LoadText();
 
@@ -253,12 +254,12 @@ namespace acid
 
 		void CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord);
 
-		std::vector<IVertex *> CreateQuad(const std::vector<FontLine> &lines);
+		std::vector<VertexModel> CreateQuad(const std::vector<FontLine> &lines);
 
-		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices);
+		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<VertexModel> &vertices);
 
-		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<IVertex *> &vertices);
+		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
 
-		void NormalizeQuad(Vector2 &bounding, std::vector<IVertex *> &vertices);
+		void NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices);
 	};
 }

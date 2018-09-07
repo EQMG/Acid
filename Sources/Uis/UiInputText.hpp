@@ -18,8 +18,8 @@ namespace acid
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		Text *m_text;
-		Gui *m_background;
+		std::unique_ptr<Text> m_text;
+		std::unique_ptr<Gui> m_background;
 
 		std::string m_prefix;
 		std::string m_value;

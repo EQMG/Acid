@@ -37,7 +37,7 @@ namespace acid
 		auto lines = String::Split(*fileLoaded, "\n");
 
 		auto indicesList = std::vector<uint32_t>();
-		auto verticesList = std::vector<VertexModelData *>();
+		auto verticesList = std::vector<std::unique_ptr<VertexModelData>>();
 		auto uvsList = std::vector<Vector2>();
 		auto normalsList = std::vector<Vector3>();
 
@@ -55,8 +55,7 @@ namespace acid
 				}
 				else if (prefix == "v")
 				{
-					Vector3 vertex = Vector3(String::From<float>(split[1]), String::From<float>(split[2]),
-					                         String::From<float>(split[3]));
+					Vector3 vertex = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
 					VertexModelData *newVertex = new VertexModelData(static_cast<int>(verticesList.size()), vertex);
 					verticesList.emplace_back(newVertex);
 				}
@@ -67,8 +66,7 @@ namespace acid
 				}
 				else if (prefix == "vn")
 				{
-					Vector3 normal = Vector3(String::From<float>(split[1]), String::From<float>(split[2]),
-					                         String::From<float>(split[3]));
+					Vector3 normal = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
 					normalsList.emplace_back(normal);
 				}
 				else if (prefix == "f")
@@ -84,15 +82,9 @@ namespace acid
 					auto vertex2 = String::Split(split[2], "/");
 					auto vertex3 = String::Split(split[3], "/");
 
-					VertexModelData *v0 = ProcessDataVertex(Vector3(String::From<float>(vertex1[0]),
-					                                                String::From<float>(vertex1[1]),
-					                                                String::From<float>(vertex1[2])), verticesList, indicesList);
-					VertexModelData *v1 = ProcessDataVertex(Vector3(String::From<float>(vertex2[0]),
-					                                                String::From<float>(vertex2[1]),
-					                                                String::From<float>(vertex2[2])), verticesList, indicesList);
-					VertexModelData *v2 = ProcessDataVertex(Vector3(String::From<float>(vertex3[0]),
-					                                                String::From<float>(vertex3[1]),
-					                                                String::From<float>(vertex3[2])), verticesList, indicesList);
+					VertexModelData *v0 = ProcessDataVertex(Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]), String::From<float>(vertex1[2])), verticesList, indicesList);
+					VertexModelData *v1 = ProcessDataVertex(Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]), String::From<float>(vertex2[2])), verticesList, indicesList);
+					VertexModelData *v2 = ProcessDataVertex(Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]), String::From<float>(vertex3[2])), verticesList, indicesList);
 					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
@@ -120,22 +112,17 @@ namespace acid
 			}
 		}
 
-		std::vector<IVertex *> vertices = std::vector<IVertex *>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>();
+		std::vector<VertexModel> vertices = std::vector<VertexModel>();
+		std::vector<uint32_t> indices = std::vector<uint32_t>(indicesList);
 
-		indices.swap(indicesList);
-
-		// Turns the loaded data into a format that can be used by OpenGL.
+		// Turns the loaded data into a format that can be used by Acid models.
 		for (auto &current : verticesList)
 		{
 			Vector3 position = current->GetPosition();
-			Vector2 textures = uvsList[current->GetUvIndex()];
+			Vector2 uvs = uvsList[current->GetUvIndex()];
 			Vector3 normal = normalsList[current->GetNormalIndex()];
 			Vector3 tangent = current->GetAverageTangent();
-
-			vertices.emplace_back(new VertexModel(position, textures, normal, tangent));
-
-			delete current;
+			vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 		}
 
 #if ACID_VERBOSE
@@ -143,19 +130,19 @@ namespace acid
 		Log::Out("Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 
-		Model::Set(vertices, indices, filename);
+		Model::Initialize(vertices, indices, filename);
 	}
 
 	ModelObj::~ModelObj()
 	{
 	}
 
-	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices)
+	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
 		int32_t index = static_cast<int>(vertex.m_x) - 1;
 		int32_t textureIndex = static_cast<int>(vertex.m_y) - 1;
 		int32_t normalIndex = static_cast<int>(vertex.m_z) - 1;
-		VertexModelData *currentVertex = vertices[index];
+		auto currentVertex = vertices[index].get();
 
 		if (!currentVertex->IsSet())
 		{
@@ -168,7 +155,7 @@ namespace acid
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, vertices, indices);
 	}
 
-	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<VertexModelData *> &vertices, std::vector<uint32_t> &indices)
+	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{

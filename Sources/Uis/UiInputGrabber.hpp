@@ -4,7 +4,6 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/Uis.hpp"
-#include "UiInputDelay.hpp"
 #include "UiObject.hpp"
 
 namespace acid
@@ -60,8 +59,8 @@ namespace acid
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		Text *m_text;
-		Gui *m_background;
+		std::unique_ptr<Text> m_text;
+		std::unique_ptr<Gui> m_background;
 
 		std::unique_ptr<IUiGrabber> m_grabber;
 

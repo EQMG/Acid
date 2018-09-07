@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 
 namespace acid
@@ -14,7 +13,5 @@ namespace acid
 		virtual void SetPosition(const Vector3 &position) = 0;
 
 		virtual size_t GetSize() const = 0;
-
-		virtual void *GetData(std::vector<IVertex *> &vertices) = 0;
 	};
 }

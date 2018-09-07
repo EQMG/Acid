@@ -10,17 +10,17 @@ namespace acid
 		m_name(""),
 		m_transform(transform),
 		m_components(std::vector<std::unique_ptr<IComponent>>()),
-		m_parent(nullptr),
-		m_removed(false)
+		m_structure(structure),
+		m_parent(nullptr)
 	{
-		if (structure == nullptr)
+		if (m_structure == nullptr)
 		{
-			structure = Scenes::Get()->GetStructure();
+			m_structure = Scenes::Get()->GetStructure();
 		}
 
-		if (structure != nullptr)
+		if (m_structure != nullptr)
 		{
-			structure->Add(this);
+			m_structure->Add(this);
 		}
 	}
 
@@ -52,26 +52,27 @@ namespace acid
 
 	GameObject::~GameObject()
 	{
+		StructureRemove();
 	}
 
 	void GameObject::Update()
 	{
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		for (auto &component : m_components)
 		{
-			if ((*it) == nullptr || (*it)->GetGameObject() == nullptr)
+			if (component->GetGameObject() == nullptr)
 			{
-				continue;
+				component->SetGameObject(this);
 			}
 
-			if (!(*it)->IsStarted())
+			if (!component->IsStarted())
 			{
-				(*it)->Start();
-				(*it)->SetStarted(true);
+				component->Start();
+				component->SetStarted(true);
 			}
 
-			if ((*it)->IsEnabled())
+			if (component->IsEnabled())
 			{
-				(*it)->Update();
+				component->Update();
 			}
 		}
 	}
@@ -125,5 +126,27 @@ namespace acid
 		}
 
 		return false;
+	}
+
+	void GameObject::SetStructure(ISpatialStructure *structure)
+	{
+		if (m_structure != nullptr)
+		{
+			m_structure->Remove(this);
+		}
+
+		m_structure = structure;
+		m_structure->Add(this);
+	}
+
+	void GameObject::StructureRemove()
+	{
+		if (m_structure == nullptr)
+		{
+			return;
+		}
+
+		m_structure->Remove(this);
+		m_structure = nullptr;
 	}
 }

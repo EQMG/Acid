@@ -18,13 +18,13 @@ namespace acid
 		std::string m_name;
 		Transform m_transform;
 		std::vector<std::unique_ptr<IComponent>> m_components;
+		ISpatialStructure *m_structure;
 		GameObject *m_parent;
-		bool m_removed;
 	public:
 		/// <summary>
 		/// Creates a new Game Object and store it into a structure.
 		/// </summary>
-		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
+		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
 		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
@@ -32,7 +32,7 @@ namespace acid
 		/// Creates a new Game Object and store it into a structure.
 		/// </summary>
 		/// <param name="filepath"> The file to load the component data from. </param>
-		/// <param name="transform"> The objects inital world position, rotation, and scale. </param>
+		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
 		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
 
@@ -144,12 +144,14 @@ namespace acid
 
 		Transform &GetTransform() { return m_transform; }
 
+		ISpatialStructure *GetStructure() const { return m_structure; }
+
+		void SetStructure(ISpatialStructure *structure);
+
+		void StructureRemove();
+
 		GameObject *GetParent() const { return m_parent; }
 
 		void SetParent(GameObject *parent) { m_parent = parent; }
-
-		bool IsRemoved() const { return m_removed; }
-
-		void SetRemoved(const bool &removed) { m_removed = removed; }
 	};
 }

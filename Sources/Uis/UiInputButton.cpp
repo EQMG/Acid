@@ -14,8 +14,8 @@ namespace acid
 
 	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(new Text(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
-		m_background(new Gui(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
+		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_mouseOver(false)
 	{
 	}
@@ -45,7 +45,7 @@ namespace acid
 	{
 		if (button == MOUSE_BUTTON_LEFT)
 		{
-
+			// TODO: Click sound.
 		}
 
 		return false;

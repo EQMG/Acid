@@ -5,7 +5,6 @@
 #include "Guis/Gui.hpp"
 #include "Maths/Timer.hpp"
 #include "UiObject.hpp"
-#include "Uis.hpp"
 
 namespace acid
 {
@@ -19,9 +18,9 @@ namespace acid
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		Text *m_text;
-		Gui *m_background;
-		Gui *m_slider;
+		std::unique_ptr<Text> m_text;
+		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<Gui> m_slider;
 
 		std::string m_prefix;
 		int32_t m_roundTo;

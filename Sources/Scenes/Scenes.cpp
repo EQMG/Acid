@@ -37,17 +37,9 @@ namespace acid
 
 		auto &gameObjects = m_scene->GetStructure()->GetAll();
 
-		for (auto it = gameObjects.begin(); it != gameObjects.end();)
+		for (auto &gameObject : gameObjects)
 		{
-			(*it)->Update();
-
-			if ((*it)->IsRemoved())
-			{
-				it = gameObjects.erase(it);
-				continue;
-			}
-
-			++it;
+			gameObject->Update();
 		}
 
 		if (m_scene->GetCamera() == nullptr)

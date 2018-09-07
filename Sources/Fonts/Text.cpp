@@ -1,7 +1,6 @@
 ﻿#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
-#include "Models/VertexModel.hpp"
 
 namespace acid
 {
@@ -90,16 +89,16 @@ namespace acid
 		}
 	}
 
-	void Text::SetBorderDriver(IDriver *driver)
+	void Text::SetBorderDriver(IDriver *borderDriver)
 	{
-		m_borderDriver.reset(driver);
+		m_borderDriver.reset(borderDriver);
 		m_solidBorder = true;
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowingDriver(IDriver *driver)
+	void Text::SetGlowingDriver(IDriver *glowingDriver)
 	{
-		m_glowDriver.reset(driver);
+		m_glowDriver.reset(glowingDriver);
 		m_solidBorder = false;
 		m_glowBorder = true;
 	}
@@ -247,9 +246,9 @@ namespace acid
 		lines.emplace_back(currentLine);
 	}
 
-	std::vector<IVertex *> Text::CreateQuad(const std::vector<FontLine> &lines)
+	std::vector<VertexModel> Text::CreateQuad(const std::vector<FontLine> &lines)
 	{
-		auto vertices = std::vector<IVertex *>();
+		auto vertices = std::vector<VertexModel>();
 		m_numberLines = static_cast<uint32_t>(lines.size());
 
 		float cursorX = 0.0f;
@@ -299,7 +298,7 @@ namespace acid
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<IVertex *> &vertices)
+	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<VertexModel> &vertices)
 	{
 		float vertexX = cursorX + character.GetOffsetX();
 		float vertexY = cursorY + character.GetOffsetY();
@@ -319,22 +318,21 @@ namespace acid
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 
-	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<IVertex *> &vertices)
+	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
 	{
-		IVertex *vertex = new VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
-		vertices.emplace_back(vertex);
+		vertices.emplace_back(VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty))));
 	}
 
-	void Text::NormalizeQuad(Vector2 &bounding, std::vector<IVertex *> &vertices)
+	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices)
 	{
-		float minX = +INFINITY;
-		float minY = +INFINITY;
-		float maxX = -INFINITY;
-		float maxY = -INFINITY;
+		float minX = +std::numeric_limits<float>::infinity();
+		float minY = +std::numeric_limits<float>::infinity();
+		float maxX = -std::numeric_limits<float>::infinity();
+		float maxY = -std::numeric_limits<float>::infinity();
 
 		for (auto &vertex : vertices)
 		{
-			Vector3 position = vertex->GetPosition();
+			Vector3 position = vertex.GetPosition();
 
 			if (position.m_x < minX)
 			{
@@ -366,8 +364,8 @@ namespace acid
 
 		for (auto &vertex : vertices)
 		{
-			Vector3 position = Vector3((vertex->GetPosition().m_x - minX) / (maxX - minX), (vertex->GetPosition().m_y - minY) / (maxY - minY), 0.0f);
-			vertex->SetPosition(position);
+			Vector3 position = Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f);
+			vertex.SetPosition(position);
 		}
 	}
 }
