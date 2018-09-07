@@ -32,7 +32,7 @@ namespace acid
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
 		Model()
 	{
-		auto vertices = std::vector<IVertex *>();
+		auto vertices = std::vector<VertexModel>();
 		auto indices = std::vector<uint32_t>();
 
 		for (uint32_t i = 0; i < longitudeBands + 1; i++)
@@ -45,17 +45,11 @@ namespace acid
 				float jDivLat = static_cast<float>(j) / static_cast<float>(latitudeBands);
 				float phi = jDivLat * 2.0f * PI;
 
-				VertexModel *vertex = new VertexModel();
-				vertex->m_normal.m_x = std::cos(phi) * std::sin(theta);
-				vertex->m_normal.m_y = std::cos(theta);
-				vertex->m_normal.m_z = std::sin(phi) * std::sin(theta);
-				vertex->m_uv.m_x = 1.0f - jDivLat;
-				vertex->m_uv.m_y = 1.0f - iDivLong;
-				vertex->m_position.m_x = radius * vertex->m_normal.m_x;
-				vertex->m_position.m_y = radius * vertex->m_normal.m_y;
-				vertex->m_position.m_z = radius * vertex->m_normal.m_z;
-
-				vertices.emplace_back(vertex);
+				Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
+				Vector3 position = radius * normal;
+				Vector2 uvs = Vector2(1.0f - jDivLat, 1.0f - iDivLong);
+				Vector3 tangent = Vector3();
+				vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 			}
 		}
 
@@ -77,7 +71,7 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Set(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
+		Model::Initialize(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
 	}
 
 	ModelSphere::~ModelSphere()

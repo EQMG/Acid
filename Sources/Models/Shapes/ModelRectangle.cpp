@@ -30,18 +30,18 @@ namespace acid
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :
 		Model()
 	{
-		auto vertices = std::vector<IVertex *>{
-			new VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
-			new VertexModel(Vector3(max, min, 0.0f), Vector2(1.0f, 0.0f)),
-			new VertexModel(Vector3(max, max, 0.0f), Vector2(1.0f, 1.0f)),
-			new VertexModel(Vector3(min, max, 0.0f), Vector2(0.0f, 1.0f)),
+		auto vertices = std::vector<VertexModel>{
+			VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
+			VertexModel(Vector3(max, min, 0.0f), Vector2(1.0f, 0.0f)),
+			VertexModel(Vector3(max, max, 0.0f), Vector2(1.0f, 1.0f)),
+			VertexModel(Vector3(min, max, 0.0f), Vector2(0.0f, 1.0f)),
 		};
 		auto indices = std::vector<uint32_t>{
 			0, 3, 2,
 			2, 1, 0
 		};
 
-		Model::Set(vertices, indices, ToFilename(min, max));
+		Model::Initialize(vertices, indices, ToFilename(min, max));
 	}
 
 	ModelRectangle::~ModelRectangle()

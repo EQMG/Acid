@@ -53,11 +53,6 @@ namespace acid
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				if ((*it)->IsRemoved())
-				{
-					continue;
-				}
-
 				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr && (component->IsEnabled() || allowDisabled))
@@ -79,11 +74,6 @@ namespace acid
 		{
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				if ((*it)->IsRemoved())
-				{
-					continue;
-				}
-
 				auto component = (*it)->GetComponent<T>();
 
 				if (component != nullptr && (component->IsEnabled() || allowDisabled))

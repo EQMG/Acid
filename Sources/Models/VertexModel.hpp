@@ -12,12 +12,12 @@ namespace acid
 	class ACID_EXPORT VertexModel :
 		public IVertex
 	{
-	public:
+	private:
 		Vector3 m_position;
 		Vector2 m_uv;
 		Vector3 m_normal;
 		Vector3 m_tangent;
-
+	public:
 		VertexModel(const Vector3 &position = Vector3::ZERO, const Vector2 &uv = Vector2::ZERO, const Vector3 &normal = Vector3::ZERO, const Vector3 &tangent = Vector3::ZERO);
 
 		VertexModel(const VertexModel &source);
@@ -41,8 +41,6 @@ namespace acid
 		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
 
 		size_t GetSize() const override { return sizeof(VertexModel); }
-
-		void *GetData(std::vector<IVertex *> &vertices) override;
 
 		static VertexInput GetVertexInput();
 	};

@@ -452,7 +452,7 @@ namespace acid
 		glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
 	//	glfwWindowHint(GLFW_DECORATED, GL_FALSE); // Borderless window.
 
-		// Create a windowed mode window and its OpenGL context.
+		// Create a windowed mode window and its context.
 		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
 
 		// Gets any window errors.

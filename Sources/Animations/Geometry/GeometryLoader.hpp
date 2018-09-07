@@ -14,16 +14,16 @@ namespace acid
 
 		std::vector<VertexSkinData> m_vertexWeights;
 
-		std::vector<VertexAnimatedData *> m_positionsList;
+		std::vector<std::unique_ptr<VertexAnimatedData>> m_positionsList;
 		std::vector<Vector2> m_uvsList;
 		std::vector<Vector3> m_normalsList;
 
-		std::vector<IVertex *> m_vertices;
+		std::vector<VertexAnimated> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
 		GeometryLoader(const std::shared_ptr<Metadata> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
 
-		std::vector<IVertex *> GetVertices() const { return m_vertices; }
+		std::vector<VertexAnimated> GetVertices() const { return m_vertices; }
 
 		std::vector<uint32_t> GetIndices() const { return m_indices; }
 	private:

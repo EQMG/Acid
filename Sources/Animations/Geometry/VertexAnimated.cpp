@@ -22,22 +22,6 @@ namespace acid
 	{
 	}
 
-	void *VertexAnimated::GetData(std::vector<IVertex *> &vertices)
-	{
-		size_t dataSize = GetSize() * vertices.size();
-		void *data = new void *[dataSize];
-
-		auto thisVector = std::vector<VertexAnimated>();
-
-		for (auto &vertex : vertices)
-		{
-			thisVector.emplace_back(*((VertexAnimated *) vertex));
-		}
-
-		memcpy(data, thisVector.data(), dataSize);
-		return data;
-	}
-
 	VertexInput VertexAnimated::GetVertexInput()
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);

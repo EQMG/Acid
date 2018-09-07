@@ -22,22 +22,6 @@ namespace acid
 	{
 	}
 
-	void *VertexModel::GetData(std::vector<IVertex *> &vertices)
-	{
-		size_t dataSize = GetSize() * vertices.size();
-		void *data = new void *[dataSize];
-
-		std::vector<VertexModel> thisVector = std::vector<VertexModel>();
-
-		for (auto &vertex : vertices)
-		{
-			thisVector.emplace_back(*((VertexModel *) vertex));
-		}
-
-		memcpy(data, thisVector.data(), dataSize);
-		return data;
-	}
-
 	VertexInput VertexModel::GetVertexInput()
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);

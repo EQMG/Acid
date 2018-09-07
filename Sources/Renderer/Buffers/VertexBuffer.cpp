@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	VertexBuffer::VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, void *newData) :
+	VertexBuffer::VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, const void *newData) :
 		Buffer(elementSize * vertexCount, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
 		m_vertexCount(static_cast<uint32_t>(vertexCount))
 	{

@@ -1,6 +1,5 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid-03.png" alt="Acid" height="300px">
 
-[![Contribute!](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Equilibrium-Games/Acid/issues)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
@@ -59,7 +58,7 @@ Acid uses the following libraries:
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
  * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation library
 
-# Code snippets
+# Code Snippets
 ```cpp
 // Imports a 2D texture.
 auto guiBlack = Texture::Resource("Guis/Black.png");

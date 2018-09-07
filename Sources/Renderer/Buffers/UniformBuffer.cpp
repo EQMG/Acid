@@ -18,7 +18,7 @@ namespace acid
 	{
 	}
 
-	void UniformBuffer::Update(void *newData)
+	void UniformBuffer::Update(const void *newData)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 

@@ -11,7 +11,7 @@ namespace acid
 		VkIndexType m_indexType;
 		uint32_t m_indexCount;
 	public:
-		IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, void *newData);
+		IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, const void *newData);
 
 		~IndexBuffer();
 

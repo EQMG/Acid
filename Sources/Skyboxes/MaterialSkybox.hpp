@@ -2,6 +2,7 @@
 
 #include "Materials/IMaterial.hpp"
 #include "Maths/Colour.hpp"
+#include "Maths/Vector2.hpp"
 #include "Textures/Cubemap.hpp"
 
 namespace acid

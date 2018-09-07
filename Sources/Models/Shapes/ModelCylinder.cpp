@@ -34,7 +34,7 @@ namespace acid
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
 		Model()
 	{
-		auto vertices = std::vector<IVertex *>();
+		auto vertices = std::vector<VertexModel>();
 		auto indices = std::vector<uint32_t>();
 
 		for (uint32_t i = 0; i < slices + 1; i++)
@@ -49,17 +49,11 @@ namespace acid
 				float jDivStacks = static_cast<float>(j) / static_cast<float>(stacks);
 				float radius = radiusBase * (1.0f - jDivStacks) + radiusTop * jDivStacks;
 
-				VertexModel *vertex = new VertexModel();
-				vertex->m_position.m_x = xDir * radius;
-				vertex->m_position.m_y = jDivStacks * height - (height / 2.0f);
-				vertex->m_position.m_z = zDir * radius;
-				vertex->m_uv.m_x = 1.0f - iDivSlices;
-				vertex->m_uv.m_y = 1.0f - jDivStacks;
-				vertex->m_normal.m_x = xDir;
-				vertex->m_normal.m_y = 0.0f;
-				vertex->m_normal.m_z = zDir;
-
-				vertices.emplace_back(vertex);
+				Vector3 position = Vector3(xDir * radius, jDivStacks * height - (height / 2.0f), zDir * radius);
+				Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivStacks);
+				Vector3 normal = Vector3(xDir, 0.0f, zDir);
+				Vector3 tangent = Vector3();
+				vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 			}
 		}
 
@@ -81,7 +75,7 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Set(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks));
+		Model::Initialize(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks));
 	}
 
 	ModelCylinder::~ModelCylinder()

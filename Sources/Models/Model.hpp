@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "Maths/Vector3.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Resources/IResource.hpp"
@@ -34,17 +35,15 @@ namespace acid
 		/// <summary>
 		/// Creates a new model.
 		/// </summary>
+		/// <param name="T"> The vertex class that implements <seealso cref="IVertex"/>. </param>
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
-		/// <param name="name"> The model name. </param>
-		Model(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
-
-		/// <summary>
-		/// Creates a new model without indices.
-		/// </summary>
-		/// <param name="vertices"> The model vertices. </param>
-		/// <param name="name"> The model name. </param>
-		Model(std::vector<IVertex *> &vertices, const std::string &name = "");
+		template<typename T>
+		Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}, const std::string &name = "") :
+			Model()
+		{
+			Initialize(vertices, indices, name);
+		}
 
 		~Model();
 
@@ -71,9 +70,65 @@ namespace acid
 		std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return m_indexBuffer; }
 
 	protected:
-		void Set(std::vector<IVertex *> &vertices, std::vector<uint32_t> &indices, const std::string &name = "");
+		template<typename T>
+		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}, const std::string &name = "")
+		{
+			static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
 
-	private:
-		void CalculateBounds(const std::vector<IVertex *> &vertices);
+			m_filename = name;
+
+			if (!vertices.empty())
+			{
+				m_vertexBuffer = std::make_shared<VertexBuffer>(sizeof(T), vertices.size(), vertices.data());
+			}
+
+			if (!indices.empty())
+			{
+				m_indexBuffer = std::make_shared<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(uint32_t), indices.size(), indices.data());
+			}
+
+			m_pointCloud = std::vector<float>(3 * vertices.size());
+			m_minExtents = +std::numeric_limits<float>::infinity() * Vector3::ONE;
+			m_maxExtents = -std::numeric_limits<float>::infinity() * Vector3::ONE;
+
+			uint32_t i = 0;
+
+			for (auto &vertex : vertices)
+			{
+				Vector3 position = vertex.GetPosition();
+				m_pointCloud[i * 3] = position.m_x;
+				m_pointCloud[i * 3 + 1] = position.m_z;
+				m_pointCloud[i * 3 + 2] = position.m_y;
+
+				if (position.m_x < m_minExtents.m_x)
+				{
+					m_minExtents.m_x = position.m_x;
+				}
+				else if (position.m_x > m_maxExtents.m_x)
+				{
+					m_maxExtents.m_x = position.m_x;
+				}
+
+				if (position.m_y < m_minExtents.m_y)
+				{
+					m_minExtents.m_y = position.m_y;
+				}
+				else if (position.m_y > m_maxExtents.m_y)
+				{
+					m_maxExtents.m_y = position.m_y;
+				}
+
+				if (position.m_z < m_minExtents.m_z)
+				{
+					m_minExtents.m_z = position.m_z;
+				}
+				else if (position.m_z > m_maxExtents.m_z)
+				{
+					m_maxExtents.m_z = position.m_z;
+				}
+
+				i++;
+			}
+		}
 	};
 }

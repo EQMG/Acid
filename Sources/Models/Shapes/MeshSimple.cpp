@@ -17,7 +17,7 @@ namespace acid
 
 	void MeshSimple::GenerateMesh()
 	{
-		auto vertices = std::vector<IVertex *>();
+		auto vertices = std::vector<VertexModel>();
 		auto indices = std::vector<uint32_t>();
 
 		// Creates and stores vertices.
@@ -48,10 +48,10 @@ namespace acid
 			}
 		}
 
-		Model::Set(vertices, indices);
+		Model::Initialize(vertices, indices);
 	}
 
-	VertexModel *MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
+	VertexModel MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
 	{
 		float x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 		float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
@@ -63,6 +63,6 @@ namespace acid
 		);
 		Vector3 normal = Vector3::UP;
 		Colour colour = Colour::WHITE;
-		return new VertexModel(position, uv, normal, colour);
+		return VertexModel(position, uv, normal, colour);
 	}
 }

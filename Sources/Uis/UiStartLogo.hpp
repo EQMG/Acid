@@ -9,9 +9,9 @@ namespace acid
 		public UiObject
 	{
 	private:
-		Gui *m_guiBackground;
-		Gui *m_guiLogo;
-		Text *m_textCopyright;
+		std::unique_ptr<Gui> m_guiBackground;
+		std::unique_ptr<Gui> m_guiLogo;
+		std::unique_ptr<Text> m_textCopyright;
 		bool m_starting;
 	public:
 		UiStartLogo(UiObject *parent);

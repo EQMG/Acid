@@ -7,10 +7,10 @@ namespace acid
 	GeometryLoader::GeometryLoader(const std::shared_ptr<Metadata> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights) :
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<VertexAnimatedData *>()),
+		m_positionsList(std::vector<std::unique_ptr<VertexAnimatedData>>()),
 		m_uvsList(std::vector<Vector2>()),
 		m_normalsList(std::vector<Vector3>()),
-		m_vertices(std::vector<IVertex *>()),
+		m_vertices(std::vector<VertexAnimated>()),
 		m_indices(std::vector<uint32_t>())
 	{
 		LoadVertices();
@@ -30,10 +30,7 @@ namespace acid
 			Vector3 jointIds = Vector3(skinData.GetJointIds()[0], skinData.GetJointIds()[1], skinData.GetJointIds()[2]);
 			Vector3 weights = Vector3(skinData.GetWeights()[0], skinData.GetWeights()[1], skinData.GetWeights()[2]);
 
-			VertexAnimated *vertex = new VertexAnimated(position, textures, normal, tangent, jointIds, weights);
-			m_vertices.emplace_back(vertex);
-
-			delete current;
+			m_vertices.emplace_back(VertexAnimated(position, textures, normal, tangent, jointIds, weights));
 		}
 	}
 
@@ -46,9 +43,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
 		{
-			Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]),
-			                           String::From<float>(positionsRawData[i * 3 + 1]),
-			                           String::From<float>(positionsRawData[i * 3 + 2]), 1.0f);
+			Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]), 1.0f);
 			position = MeshAnimated::CORRECTION.Transform(position);
 			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
@@ -65,8 +60,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
 		{
-			Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f -
-				String::From<float>(uvsRawData[i * 2 + 1]));
+			Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
 			m_uvsList.emplace_back(uv);
 		}
 	}
@@ -80,9 +74,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
-			Vector3 normal = Vector3(String::From<float>(normalsRawData[i * 3]),
-			                         String::From<float>(normalsRawData[i * 3 + 1]),
-			                         String::From<float>(normalsRawData[i * 3 + 2]));
+			Vector3 normal = Vector3(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]));
 			normal = MeshAnimated::CORRECTION.Transform(normal);
 			m_normalsList.emplace_back(normal);
 		}
@@ -104,7 +96,7 @@ namespace acid
 
 	VertexAnimatedData *GeometryLoader::ProcessVertex(const int32_t &positionIndex, const int32_t &normalIndex, const int32_t &uvIndex)
 	{
-		auto currentVertex = m_positionsList[positionIndex];
+		auto currentVertex = m_positionsList[positionIndex].get();
 
 		if (!currentVertex->IsSet())
 		{
@@ -132,9 +124,9 @@ namespace acid
 
 			for (auto &position : m_positionsList)
 			{
-				if (position == previousVertex->GetDuplicateVertex())
+				if (position.get() == previousVertex->GetDuplicateVertex())
 				{
-					anotherVertex = position;
+					anotherVertex = position.get();
 					break;
 				}
 			}
@@ -145,7 +137,7 @@ namespace acid
 			}
 			else
 			{
-				auto duplicateVertex = new VertexAnimatedData(m_positionsList.size(), previousVertex->GetPosition());
+				auto duplicateVertex = new VertexAnimatedData(static_cast<uint32_t>(m_positionsList.size()), previousVertex->GetPosition());
 				duplicateVertex->SetUvIndex(newUvIndex);
 				duplicateVertex->SetNormalIndex(newNormalIndex);
 				duplicateVertex->SetSkinData(previousVertex->GetSkinData());

@@ -14,7 +14,7 @@ namespace test
 	{
 	}
 
-	VertexModel *MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
+	VertexModel MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
 	{
 		float x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 		float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
@@ -26,7 +26,7 @@ namespace test
 		);
 		Vector3 normal = GetNormal(x, z);
 		Colour colour = GetColour(normal);
-		return new VertexModel(position, uv, normal, colour);
+		return VertexModel(position, uv, normal, colour);
 	}
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
