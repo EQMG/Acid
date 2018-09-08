@@ -8,7 +8,7 @@ namespace acid
 {
 	FileJson::FileJson(const std::string &filename) :
 		m_filename(filename),
-		m_parent(std::make_shared<Metadata>("", ""))
+		m_parent(std::make_unique<Metadata>("", ""))
 	{
 	}
 
@@ -88,7 +88,7 @@ namespace acid
 			}
 		}
 
-		JsonSection::Convert(*currentSection, m_parent, true);
+		JsonSection::Convert(*currentSection, m_parent.get(), true);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -103,7 +103,7 @@ namespace acid
 #endif
 
 		std::stringstream data;
-		JsonSection::AppendData(m_parent, data, 0);
+		JsonSection::AppendData(*m_parent, data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);

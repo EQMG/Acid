@@ -27,7 +27,7 @@ namespace acid
 
 		XmlNode *GetParent() const { return m_parent; }
 
-		std::vector<std::unique_ptr<XmlNode>> const &GetChildren() const { return m_children; }
+		const std::vector<std::unique_ptr<XmlNode>> &GetChildren() const { return m_children; }
 
 		void AddChild(XmlNode *child) { m_children.emplace_back(child); }
 
@@ -39,8 +39,8 @@ namespace acid
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation);
+		static void AppendData(const Metadata &source, std::stringstream &builder, const int32_t &indentation);
 
-		static std::shared_ptr<Metadata> &Convert(const XmlNode &source, std::shared_ptr<Metadata> &parent, const bool &isTopSection);
+		static Metadata *Convert(const XmlNode &source, Metadata *parent, const bool &isTopSection);
 	};
 }

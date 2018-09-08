@@ -16,7 +16,7 @@ namespace acid
 	{
 	}
 
-	void JsonSection::AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
+	void JsonSection::AppendData(const Metadata &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
@@ -27,17 +27,17 @@ namespace acid
 
 		builder << indents.str();
 
-		if (source->GetName().empty())
+		if (source.GetName().empty())
 		{
 			builder << "{\n";
 		}
-		else if (source->GetValue().empty())
+		else if (source.GetValue().empty())
 		{
-			builder << "\"" << source->GetName() << "\": {\n";
+			builder << "\"" << source.GetName() << "\": {\n";
 		}
 		else
 		{
-			builder << "\"" << source->GetName() + "\": " << source->GetValue();
+			builder << "\"" << source.GetName() + "\": " << source.GetValue();
 
 			if (!end)
 			{
@@ -47,16 +47,16 @@ namespace acid
 			builder << "\n";
 		}
 
-		for (auto &child : source->GetChildren())
+		for (auto &child : source.GetChildren())
 		{
-			AppendData(child, builder, indentation + 1, child == source->GetChildren().back());
+			AppendData(*child, builder, indentation + 1, child == source.GetChildren().back());
 		}
 
-		if (source->GetName().empty())
+		if (source.GetName().empty())
 		{
 			builder << indents.str() << "}\n";
 		}
-		else if (source->GetValue().empty())
+		else if (source.GetValue().empty())
 		{
 			builder << indents.str();
 
@@ -71,13 +71,13 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<Metadata> JsonSection::Convert(const JsonSection &source, std::shared_ptr<Metadata> &parent, const bool &isTopSection)
+	Metadata *JsonSection::Convert(const JsonSection &source, Metadata *parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = std::make_shared<Metadata>(source.m_name, "");
+			thisValue = new Metadata(source.m_name, "");
 			parent->AddChild(thisValue);
 		}
 
@@ -93,7 +93,7 @@ namespace acid
 			}
 
 			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
-			auto newChild = std::make_shared<Metadata>(name, dataSplit.at(1));
+			auto newChild = new Metadata(name, dataSplit.at(1));
 			thisValue->AddChild(newChild);
 		}
 

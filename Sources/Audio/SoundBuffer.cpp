@@ -6,6 +6,7 @@
 #include <AL/al.h>
 #endif
 #include <fstream>
+#include "Files/Files.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.h"

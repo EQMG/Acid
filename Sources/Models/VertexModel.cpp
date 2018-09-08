@@ -10,18 +10,6 @@ namespace acid
 	{
 	}
 
-	VertexModel::VertexModel(const VertexModel &source) :
-		m_position(source.m_position),
-		m_uv(source.m_uv),
-		m_normal(source.m_normal),
-		m_tangent(source.m_tangent)
-	{
-	}
-
-	VertexModel::~VertexModel()
-	{
-	}
-
 	VertexInput VertexModel::GetVertexInput()
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);

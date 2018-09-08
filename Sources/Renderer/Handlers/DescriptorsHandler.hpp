@@ -13,8 +13,8 @@ namespace acid
 	class ACID_EXPORT DescriptorsHandler
 	{
 	private:
-		std::shared_ptr<ShaderProgram> m_shaderProgram;
-		std::shared_ptr<DescriptorSet> m_descriptorSet;
+		ShaderProgram *m_shaderProgram;
+		std::unique_ptr<DescriptorSet> m_descriptorSet;
 		std::vector<IDescriptor *> m_descriptors;
 		bool m_changed;
 	public:
@@ -40,6 +40,6 @@ namespace acid
 
 		void BindDescriptor(const CommandBuffer &commandBuffer) { m_descriptorSet->BindDescriptor(commandBuffer); }
 
-		std::shared_ptr<DescriptorSet> GetDescriptorSet() const { return m_descriptorSet; }
+		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
 	};
 }

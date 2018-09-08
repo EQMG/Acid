@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "Display/Display.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 
 namespace acid

@@ -1,26 +1,11 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include "Files/IFile.hpp"
+#include "RowCsv.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT RowCsv
-	{
-	private:
-		std::vector<std::string> m_elements;
-	public:
-		RowCsv(const std::vector<std::string> &elements) :
-			m_elements(std::vector<std::string>(elements))
-		{
-		}
-
-		std::vector<std::string> GetElements() const { return m_elements; }
-
-		void SetElements(const std::vector<std::string> &elements) { m_elements = elements; }
-	};
-
 	class ACID_EXPORT FileCsv :
 		public IFile
 	{
@@ -43,7 +28,7 @@ namespace acid
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		std::shared_ptr<Metadata> GetParent() const override { return nullptr; }
+		Metadata *GetParent() const override { return nullptr; }
 
 		char GetDelimiter() const { return m_delimiter; }
 
@@ -51,7 +36,7 @@ namespace acid
 
 		size_t GetRowCount() const { return m_rows.size(); }
 
-		RowCsv GetRow(const uint32_t &index);
+		RowCsv &GetRow(const uint32_t &index);
 
 		void PushRow(const RowCsv &row);
 

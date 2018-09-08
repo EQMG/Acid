@@ -17,7 +17,7 @@ namespace acid
 		IPipeline(),
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
-		m_shaderProgram(std::make_shared<ShaderProgram>(pipelineCreate.GetShaderStages().back())),
+		m_shaderProgram(std::make_unique<ShaderProgram>(pipelineCreate.GetShaderStages().back())),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_descriptorSetLayout(VK_NULL_HANDLE),

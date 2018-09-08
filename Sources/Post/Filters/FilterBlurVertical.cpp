@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FilterBlurVertical::~FilterBlurVertical()
-	{
-	}
-
 	void FilterBlurVertical::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_height = Display::Get()->GetHeight();

@@ -14,8 +14,6 @@ namespace acid
 	public:
 		FilterGrain(const GraphicsStage &graphicsStage);
 
-		~FilterGrain();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetStrength() const { return m_strength; }

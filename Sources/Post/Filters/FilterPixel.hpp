@@ -14,8 +14,6 @@ namespace acid
 	public:
 		FilterPixel(const GraphicsStage &graphicsStage);
 
-		~FilterPixel();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetPixelSize() const { return m_pixelSize; }

@@ -48,7 +48,7 @@ namespace acid
 		/// Gets all components attached to this game object.
 		/// </summary>
 		/// <returns> The list of components. </returns>
-		std::vector<std::unique_ptr<IComponent>> const &GetComponents() const { return m_components; }
+		const std::vector<std::unique_ptr<IComponent>> &GetComponents() const { return m_components; }
 
 		/// <summary>
 		/// Gets the count of components attached to this Game Object.
@@ -60,6 +60,7 @@ namespace acid
 		/// Gets a component by type.
 		/// </summary>
 		/// <param name="T"> The component type to find. </param>
+		/// <param name="allowDisabled"> If disabled components will be returned. </param>
 		/// <returns> The found component. </returns>
 		template<typename T>
 		T *GetComponent(const bool &allowDisabled = false)

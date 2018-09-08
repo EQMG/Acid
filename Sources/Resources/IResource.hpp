@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Engine/Exports.hpp"
 
 namespace acid
 {

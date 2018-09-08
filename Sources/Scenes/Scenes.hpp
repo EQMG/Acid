@@ -82,6 +82,12 @@ namespace acid
 		ICamera *GetCamera() const { return m_scene->GetCamera(); }
 
 		/// <summary>
+		/// Gets the joystick controlled UI selector.
+		/// </summary>
+		/// <returns> The joystick selector. </returns>
+		SelectorJoystick *GetSelectorJoystick() const { return m_scene->GetSelectorJoystick(); }
+
+		/// <summary>
 		/// Gets the scene physics system.
 		/// </summary>
 		/// <returns> The scenes physics system. </returns>
@@ -97,6 +103,6 @@ namespace acid
 		/// Gets if the scene is paused.
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
-		bool IsGamePaused() const { return m_scene->IsGamePaused(); }
+		bool IsPaused() const { return m_scene->IsPaused(); }
 	};
 }

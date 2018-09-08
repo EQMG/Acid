@@ -25,10 +25,6 @@ namespace acid
 	{
 	}
 
-	RendererDeferred::~RendererDeferred()
-	{
-	}
-
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		auto sceneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();

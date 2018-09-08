@@ -18,12 +18,7 @@ namespace acid
 	void Uis::Update()
 	{
 		m_objects.clear();
-
-		if (Scenes::Get()->GetScene() != nullptr)
-		{
-			m_selector.Update(Scenes::Get()->IsGamePaused(), Scenes::Get()->GetScene()->GetSelectorJoystick());
-		}
-
+		m_selector.Update(Scenes::Get()->IsPaused(), *Scenes::Get()->GetSelectorJoystick());
 		m_container->Update(m_objects);
 	}
 }

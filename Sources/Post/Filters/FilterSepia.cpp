@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterSepia::~FilterSepia()
-	{
-	}
-
 	void FilterSepia::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

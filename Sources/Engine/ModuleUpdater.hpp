@@ -18,12 +18,7 @@ namespace acid
 		Timer m_timerUpdate;
 		Timer m_timerRender;
 	public:
-		/// <summary>
-		/// Creates a new updater.
-		/// </summary>
 		ModuleUpdater();
-
-		~ModuleUpdater();
 
 		/// <summary>
 		/// Updates all modules in order.

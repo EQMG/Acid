@@ -76,7 +76,7 @@ namespace acid
 		/// <param name="parent"> The new parent object. </param>
 		void SetParent(UiObject *parent);
 
-		std::vector<std::unique_ptr<UiObject>> const &GetChildren() const { return m_children; }
+		const std::vector<std::unique_ptr<UiObject>> &GetChildren() const { return m_children; }
 
 		/// <summary>
 		/// Adds a child to this objects children.

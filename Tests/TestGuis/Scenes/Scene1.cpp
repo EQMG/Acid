@@ -1,8 +1,6 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
-#include <Inputs/ButtonCompound.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Renderer/Renderer.hpp>
@@ -14,16 +12,14 @@ namespace test
 	const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(new FixedCamera()),
-		m_buttonFullscreen(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
-		m_buttonScreenshot(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
-		m_buttonPause(std::make_unique<ButtonCompound>(std::vector<IButton *>{
+		IScene(new FixedCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		m_buttonFullscreen(ButtonKeyboard(std::vector<Key>{KEY_F11})),
+		m_buttonScreenshot(ButtonKeyboard(std::vector<Key>{KEY_F12})),
+		m_buttonPause(ButtonCompound({
 			new ButtonKeyboard(std::vector<Key>{KEY_ESCAPE}),
 			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{7})
 		})),
-		m_buttonExit(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
-		m_primaryColour(Colour("#e74c3c")),
-		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		m_buttonExit(ButtonKeyboard(std::vector<Key>{KEY_DELETE})),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer())),
 		m_uiNavigation(std::make_unique<UiNavigation>(Uis::Get()->GetContainer()))
@@ -43,23 +39,23 @@ namespace test
 
 	void Scene1::Update()
 	{
-		if (m_buttonFullscreen->WasDown())
+		if (m_buttonFullscreen.WasDown())
 		{
 			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
 		}
 
-		if (m_buttonScreenshot->WasDown())
+		if (m_buttonScreenshot.WasDown())
 		{
 			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
 			Renderer::Get()->CaptureScreenshot(filename);
 		}
 
-		if (m_buttonExit->WasDown())
+		if (m_buttonExit.WasDown())
 		{
 			Engine::Get()->RequestClose(false);
 		}
 
-		if (m_buttonPause->WasDown())
+		if (m_buttonPause.WasDown())
 		{
 			TogglePause();
 		}
@@ -75,7 +71,7 @@ namespace test
 	}
 
 
-	bool Scene1::IsGamePaused() const
+	bool Scene1::IsPaused() const
 	{
 		return m_uiStartLogo->IsStarting() || m_uiNavigation->GetAlpha() != 0.0f;
 	}
@@ -87,7 +83,7 @@ namespace test
 			return;
 		}
 
-		if (IsGamePaused())
+		if (IsPaused())
 		{
 			m_uiNavigation->SetAlphaDriver<DriverSlide>(m_uiNavigation->GetAlpha(), 0.0f, UI_SLIDE_TIME);
 		}

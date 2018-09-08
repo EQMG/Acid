@@ -58,7 +58,7 @@ namespace test
 	{
 		float delta = std::min(1.0f / 60.0f, Engine::Get()->GetDelta());
 
-		const bool newPaused = Scenes::Get()->IsGamePaused();
+		const bool newPaused = Scenes::Get()->IsPaused();
 
 		if (m_paused != newPaused)
 		{

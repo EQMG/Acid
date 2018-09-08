@@ -93,7 +93,7 @@ namespace acid
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			if (*it != nullptr && (*it).get() == component)
+			if ((*it).get() == component)
 			{
 				(*it)->SetGameObject(nullptr);
 
@@ -109,20 +109,17 @@ namespace acid
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			if (*it != nullptr)
+			auto componentName = Scenes::Get()->FindComponentName((*it).get());
+
+			if (componentName && name == *componentName)
 			{
-				auto componentName = Scenes::Get()->FindComponentName((*it).get());
-
-				if (componentName && name == *componentName)
-				{
-					continue;
-				}
-
-				(*it)->SetGameObject(nullptr);
-
-				m_components.erase(it);
-				return true;
+				continue;
 			}
+
+			(*it)->SetGameObject(nullptr);
+
+			m_components.erase(it);
+			return true;
 		}
 
 		return false;

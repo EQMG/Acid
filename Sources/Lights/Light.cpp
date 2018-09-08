@@ -1,5 +1,7 @@
 #include "Light.hpp"
 
+#include "Objects/GameObject.hpp"
+
 namespace acid
 {
 	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :

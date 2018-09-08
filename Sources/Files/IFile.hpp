@@ -20,6 +20,6 @@ namespace acid
 
 		virtual void SetFilename(const std::string &filename) = 0;
 
-		virtual std::shared_ptr<Metadata> GetParent() const = 0;
+		virtual Metadata *GetParent() const = 0;
 	};
 }

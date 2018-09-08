@@ -28,8 +28,6 @@ namespace acid
 
 		RendererDeferred(const GraphicsStage &graphicsStage);
 
-		~RendererDeferred();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		std::vector<PipelineDefine> GetDefines();

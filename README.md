@@ -75,10 +75,10 @@ jump.SetPosition(Vector3::ZERO);
 jump.Play();
 
 // Imports a game object.
-auto playerObject = GameObject::Resource("Objects/Player/Player.json", Transform());
+auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
 
 // Creates a game object.
-auto sphere = GameObject::Resource(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<ShapeSphere>(2.0f);
 sphere->AddComponent<Rigidbody>(2.0f);
@@ -111,7 +111,7 @@ Ensure you are using a compiler with full C++17 support, on Windows it is recomm
 
 If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both "Desktop development with C++" and "Windows SDK" if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.
 
-On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be available. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html) so a Vulkan SDK is found.
+On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installed. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html) so a Vulkan SDK is found.
 
 Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 

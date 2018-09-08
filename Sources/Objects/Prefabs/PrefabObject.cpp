@@ -70,7 +70,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = std::make_shared<Metadata>(*componentName);
+				child = new Metadata(*componentName);
 				m_parent->AddChild(child);
 			}
 

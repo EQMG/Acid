@@ -6,11 +6,11 @@ namespace acid
 		m_index(index),
 		m_nameId(nameId),
 		m_bindLocalTransform(bindLocalTransform),
-		m_children(std::vector<std::shared_ptr<JointData>>())
+		m_children(std::vector<std::unique_ptr<JointData>>())
 	{
 	}
 
-	void JointData::AddChild(const std::shared_ptr<JointData> &child)
+	void JointData::AddChild(JointData *child)
 	{
 		m_children.emplace_back(child);
 	}

@@ -15,8 +15,6 @@ namespace acid
 	public:
 		PipelineGaussian(const GraphicsStage &graphicsStage, const float &scale = 2.0f);
 
-		~PipelineGaussian();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

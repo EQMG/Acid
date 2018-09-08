@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	FilterGrain::~FilterGrain()
-	{
-	}
-
 	void FilterGrain::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

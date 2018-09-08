@@ -2,6 +2,7 @@
 
 #include <Post/Deferred/RendererDeferred.hpp>
 #include <Shadows/Shadows.hpp>
+#include <Renderer/Renderer.hpp>
 
 namespace test
 {

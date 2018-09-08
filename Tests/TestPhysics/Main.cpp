@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 	int32_t exitCode = engine->Run();
 
 	// Pauses the console.
-//	std::cin.get();
+	std::cout << "Press a enter to continue...";
+	std::cin.get();
 	return exitCode;
 }

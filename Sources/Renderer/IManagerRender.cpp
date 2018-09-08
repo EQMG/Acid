@@ -1,17 +1,14 @@
 #include "IManagerRender.hpp"
 
 #include "IRenderer.hpp"
+#include "Renderer.hpp"
 
 namespace acid
 {
 	IManagerRender::IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate) :
 		m_stages(std::map<float, std::vector<std::shared_ptr<IRenderer>>>())
 	{
-		Renderer::Get()->CreateRenderpass(renderpassCreate);
-	}
-
-	IManagerRender::~IManagerRender()
-	{
+		Renderer::Get()->CreateRenderpass(renderpassCreate); // TODO: Run when set in the Renderer.
 	}
 
 	std::shared_ptr<IRenderer> IManagerRender::AddRenderer(const std::shared_ptr<IRenderer> &renderer)

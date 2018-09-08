@@ -14,8 +14,6 @@ namespace acid
 	public:
 		FilterDarken(const GraphicsStage &graphicsStage);
 
-		~FilterDarken();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetFactor() const { return m_factor; }

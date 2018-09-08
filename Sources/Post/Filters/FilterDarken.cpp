@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	FilterDarken::~FilterDarken()
-	{
-	}
-
 	void FilterDarken::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

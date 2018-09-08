@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	FilterFxaa::~FilterFxaa()
-	{
-	}
-
 	void FilterFxaa::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

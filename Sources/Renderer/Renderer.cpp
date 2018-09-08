@@ -106,7 +106,7 @@ namespace acid
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
-			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate);
+			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate); // TODO: Clean up.
 			renderStage->Rebuild(*m_swapchain);
 			m_renderStages.emplace_back(renderStage);
 		}

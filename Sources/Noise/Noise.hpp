@@ -184,7 +184,7 @@ namespace acid
 		void SetCellularReturnType(const NoiseCellularReturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
 
 		// Returns the noise used to calculate a cell value if the cellular return type is NoiseLookup
-		std::unique_ptr<Noise> const &GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
+		const std::unique_ptr<Noise> &GetCellularNoiseLookup() const { return m_cellularNoiseLookup; }
 
 		// Noise used to calculate a cell value if cellular return type is NoiseLookup
 		// The lookup value is acquired through GetNoise() so ensure you SetNoiseType() on the noise lookup, value, Perlin or simplex is recommended

@@ -6,7 +6,6 @@
 namespace acid
 {
 	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
-		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),

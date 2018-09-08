@@ -68,7 +68,7 @@ namespace test
 
 		Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
 
-		if (!Scenes::Get()->IsGamePaused())
+		if (!Scenes::Get()->IsPaused())
 		{
 			bool sprintDown = m_inputSprint.IsDown();
 			bool crouchDown = m_inputCrouch.IsDown();

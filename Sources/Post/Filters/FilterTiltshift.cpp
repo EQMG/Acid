@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FilterTiltshift::~FilterTiltshift()
-	{
-	}
-
 	void FilterTiltshift::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

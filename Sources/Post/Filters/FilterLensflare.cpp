@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FilterLensflare::~FilterLensflare()
-	{
-	}
-
 	void FilterLensflare::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

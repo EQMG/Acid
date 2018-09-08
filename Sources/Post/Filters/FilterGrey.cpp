@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterGrey::~FilterGrey()
-	{
-	}
-
 	void FilterGrey::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

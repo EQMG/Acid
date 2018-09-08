@@ -10,7 +10,7 @@ namespace acid
 	Compute::Compute(const ComputeCreate &computeCreate) :
 		IPipeline(),
 		m_computeCreate(computeCreate),
-		m_shaderProgram(std::make_shared<ShaderProgram>(m_computeCreate.GetShaderStage())),
+		m_shaderProgram(std::make_unique<ShaderProgram>(m_computeCreate.GetShaderStage())),
 		m_shaderModule(VK_NULL_HANDLE),
 		m_shaderStageCreateInfo({}),
 		m_descriptorSetLayout(VK_NULL_HANDLE),

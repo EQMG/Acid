@@ -2,6 +2,7 @@
 
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Lights/Light.hpp>
+#include <Renderer/Renderer.hpp>
 #include "World/World.hpp"
 
 namespace test

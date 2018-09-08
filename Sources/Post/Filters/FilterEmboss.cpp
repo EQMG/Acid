@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterEmboss::~FilterEmboss()
-	{
-	}
-
 	void FilterEmboss::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

@@ -11,7 +11,5 @@ namespace acid
 		virtual Vector3 GetPosition() const = 0;
 
 		virtual void SetPosition(const Vector3 &position) = 0;
-
-		virtual size_t GetSize() const = 0;
 	};
 }

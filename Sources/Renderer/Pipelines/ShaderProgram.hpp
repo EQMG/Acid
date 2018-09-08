@@ -78,14 +78,14 @@ namespace acid
 		int32_t m_binding;
 		int32_t m_size;
 		VkShaderStageFlags m_stageFlags;
-		std::vector<std::shared_ptr<Uniform>> m_uniforms;
+		std::vector<std::unique_ptr<Uniform>> m_uniforms;
 	public:
 		UniformBlock(const std::string &name, const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
-			m_uniforms(std::vector<std::shared_ptr<Uniform>>())
+			m_uniforms(std::vector<std::unique_ptr<Uniform>>())
 		{
 		}
 
@@ -93,7 +93,11 @@ namespace acid
 		{
 		}
 
-		void AddUniform(const std::shared_ptr<Uniform> &uniform)
+		UniformBlock(const UniformBlock&) = delete; // FIXME: Temp Fix.
+
+		UniformBlock& operator=(UniformBlock&) = delete;
+
+		void AddUniform(Uniform *uniform)
 		{
 			for (auto &u : m_uniforms)
 			{
@@ -106,13 +110,13 @@ namespace acid
 			m_uniforms.emplace_back(uniform);
 		}
 
-		std::shared_ptr<Uniform> GetUniform(const std::string &uniformName)
+		Uniform *GetUniform(const std::string &uniformName)
 		{
 			for (auto &uniform : m_uniforms)
 			{
 				if (uniform->GetName() == uniformName)
 				{
-					return uniform;
+					return uniform.get();
 				}
 			}
 
@@ -129,7 +133,7 @@ namespace acid
 
 		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
-		std::vector<std::shared_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
+		std::vector<std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
 
 		std::string ToString() const
 		{
@@ -179,9 +183,9 @@ namespace acid
 	{
 	private:
 		std::string m_name;
-		std::vector<std::shared_ptr<Uniform>> m_uniforms;
-		std::vector<std::shared_ptr<UniformBlock>> m_uniformBlocks;
-		std::vector<std::shared_ptr<VertexAttribute>> m_vertexAttributes;
+		std::vector<std::unique_ptr<Uniform>> m_uniforms;
+		std::vector<std::unique_ptr<UniformBlock>> m_uniformBlocks;
+		std::vector<std::unique_ptr<VertexAttribute>> m_vertexAttributes;
 
 		std::vector<DescriptorType> m_descriptors;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
@@ -191,6 +195,10 @@ namespace acid
 		ShaderProgram(const std::string &name);
 
 		~ShaderProgram();
+
+		ShaderProgram(const ShaderProgram&) = delete; // FIXME: Temp Fix.
+
+		ShaderProgram& operator=(ShaderProgram&) = delete;
 
 		std::string GetName() const { return m_name; }
 
@@ -202,11 +210,11 @@ namespace acid
 
 		int32_t GetDescriptorLocation(const std::string &descriptor);
 
-		std::shared_ptr<Uniform> GetUniform(const std::string &uniformName);
+		Uniform *GetUniform(const std::string &uniformName);
 
-		std::shared_ptr<UniformBlock> GetUniformBlock(const std::string &blockName);
+		UniformBlock *GetUniformBlock(const std::string &blockName);
 
-		std::shared_ptr<VertexAttribute> GetVertexAttribute(const std::string &attributeName);
+		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
 
 		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
 

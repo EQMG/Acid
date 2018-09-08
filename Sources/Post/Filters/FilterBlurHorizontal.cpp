@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FilterBlurHorizontal::~FilterBlurHorizontal()
-	{
-	}
-
 	void FilterBlurHorizontal::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_width = Display::Get()->GetHeight();

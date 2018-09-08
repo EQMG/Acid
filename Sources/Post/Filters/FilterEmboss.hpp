@@ -10,8 +10,6 @@ namespace acid
 	public:
 		FilterEmboss(const GraphicsStage &graphicsStage);
 
-		~FilterEmboss();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

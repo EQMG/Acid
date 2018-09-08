@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(const std::shared_ptr<Metadata> &libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(Metadata *libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),
@@ -12,10 +12,10 @@ namespace acid
 	{
 		m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 		auto headNode = m_armatureData->FindChild("node");
-		m_headJoint = LoadJointData(headNode, true);
+		m_headJoint.reset(LoadJointData(headNode, true));
 	}
 
-	std::shared_ptr<JointData> SkeletonLoader::LoadJointData(const std::shared_ptr<Metadata> &jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(Metadata *jointNode, const bool &isRoot)
 	{
 		auto joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -27,7 +27,7 @@ namespace acid
 		return joint;
 	}
 
-	std::shared_ptr<JointData> SkeletonLoader::ExtractMainJointData(const std::shared_ptr<Metadata> &jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(Metadata *jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);
@@ -49,7 +49,7 @@ namespace acid
 		}
 
 		m_jointCount++;
-		return std::make_shared<JointData>(*index, nameId, transform);
+		return new JointData(*index, nameId, transform);
 	}
 
 	std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
