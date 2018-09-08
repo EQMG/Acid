@@ -81,6 +81,13 @@ namespace acid
 		/// <summary>
 		/// Deregisters a module.
 		/// </summary>
+		/// <param name="module"> The module to deregister. </param>
+		/// <returns> If the module was deregistered. </returns>
+		bool DeregisterModule(IModule *module) { return m_moduleRegister.DeregisterModule(module); }
+
+		/// <summary>
+		/// Deregisters a module.
+		/// </summary>
 		/// <param name="T"> The type of module to deregister. </param>
 		/// <returns> If the module was deregistered. </returns>
 		template<typename T>

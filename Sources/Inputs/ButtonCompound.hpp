@@ -24,6 +24,10 @@ namespace acid
 
 		~ButtonCompound();
 
+		ButtonCompound(const ButtonCompound&) = delete; // FIXME: Temp Fix.
+
+		ButtonCompound& operator=(const ButtonCompound&) = delete;
+
 		bool IsDown() const override;
 
 		bool WasDown() override;

@@ -10,10 +10,20 @@
 #include <Maths/Vector3.hpp>
 #include <Maths/Vector4.hpp>
 
+#include <Engine/Engine.hpp>
+
 using namespace acid;
 
 int main(int argc, char **argv)
 {
+	Engine engine = Engine(true);
+#if ACID_STATICLIB
+	Log::Out("ACID_STATICLIB\n");
+#elif ACID_EXPORTS
+	Log::Out("ACID_EXPORTS\n");
+#endif
+	Log::Out("Running: %i\n", (int)Engine::Get()->IsRunning());
+
 	{
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));

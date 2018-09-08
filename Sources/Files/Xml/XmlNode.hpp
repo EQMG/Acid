@@ -21,6 +21,10 @@ namespace acid
 
 		~XmlNode();
 
+		XmlNode(const XmlNode&) = delete; // FIXME: Temp Fix.
+
+		XmlNode& operator=(const XmlNode&) = delete;
+
 		XmlNode *GetParent() const { return m_parent; }
 
 		std::vector<std::unique_ptr<XmlNode>> const &GetChildren() const { return m_children; }

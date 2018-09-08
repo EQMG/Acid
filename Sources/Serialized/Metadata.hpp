@@ -20,7 +20,9 @@ namespace acid
 		std::vector<std::shared_ptr<Metadata>> m_children;
 		std::map<std::string, std::string> m_attributes;
 	public:
-		Metadata(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
+
+		Metadata(const std::string &name = "", const std::string &value = "");
 
 		Metadata(const Metadata &source);
 

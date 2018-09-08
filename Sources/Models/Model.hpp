@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <string>
 #include <vector>
 #include "Maths/Vector3.hpp"
@@ -89,8 +90,8 @@ namespace acid
 			}
 
 			m_pointCloud = std::vector<float>(3 * vertices.size());
-			m_minExtents = +std::numeric_limits<float>::infinity() * Vector3::ONE;
-			m_maxExtents = -std::numeric_limits<float>::infinity() * Vector3::ONE;
+			m_minExtents = Vector3::POSITIVE_INFINITY;
+			m_maxExtents = Vector3::NEGATIVE_INFINITY;
 
 			uint32_t i = 0;
 
