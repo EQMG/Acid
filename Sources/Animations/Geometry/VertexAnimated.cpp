@@ -12,16 +12,6 @@ namespace acid
 	{
 	}
 
-	VertexAnimated::VertexAnimated(const VertexAnimated &source) :
-		m_position(source.m_position),
-		m_uv(source.m_uv),
-		m_normal(source.m_normal),
-		m_tangent(source.m_tangent),
-		m_jointId(source.m_jointId),
-		m_vertexWeight(source.m_vertexWeight)
-	{
-	}
-
 	VertexInput VertexAnimated::GetVertexInput()
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);

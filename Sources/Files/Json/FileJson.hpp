@@ -12,7 +12,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		std::shared_ptr<Metadata> m_parent;
+		std::unique_ptr<Metadata> m_parent;
 	public:
 		FileJson(const std::string &filename);
 
@@ -28,9 +28,9 @@ namespace acid
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 
-		std::shared_ptr<Metadata> GetParent() const override { return m_parent; }
+		Metadata *GetParent() const override { return m_parent.get(); }
 
-		std::shared_ptr<Metadata> GetChild(const std::string &name) const { return m_parent->FindChild(name); }
+		Metadata *GetChild(const std::string &name) const { return m_parent->FindChild(name); }
 	private:
 		void Verify();
 	};

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <cstring>
 #include <vulkan/vulkan.h>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 

@@ -8,7 +8,7 @@ namespace acid
 {
 	FileXml::FileXml(const std::string &filename) :
 		m_filename(filename),
-		m_parent(std::make_shared<Metadata>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
+		m_parent(std::make_unique<Metadata>("?xml", "", std::map<std::string, std::string>{{"version",  "1.0"}, {"encoding", "utf-8"}}))
 	{
 	}
 
@@ -93,7 +93,7 @@ namespace acid
 			}
 		}
 
-		XmlNode::Convert(*currentSection, m_parent, true);
+		XmlNode::Convert(*currentSection, m_parent.get(), true);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
@@ -108,7 +108,7 @@ namespace acid
 #endif
 
 		std::stringstream data;
-		XmlNode::AppendData(m_parent, data, 0);
+		XmlNode::AppendData(*m_parent, data, 0);
 
 		Verify();
 		FileSystem::ClearFile(m_filename);

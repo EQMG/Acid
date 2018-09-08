@@ -8,7 +8,7 @@ namespace acid
 	Metadata::Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
 		m_name(String::Trim(String::RemoveAll(name, '\"'))),
 		m_value(String::Trim(value)),
-		m_children(std::vector<std::shared_ptr<Metadata>>()),
+		m_children(std::vector<std::unique_ptr<Metadata>>()),
 		m_attributes(attributes)
 	{
 	}
@@ -16,16 +16,8 @@ namespace acid
 	Metadata::Metadata(const std::string &name, const std::string &value) :
 		m_name(String::Trim(String::RemoveAll(name, '\"'))),
 		m_value(String::Trim(value)),
-		m_children(std::vector<std::shared_ptr<Metadata>>()),
+		m_children(std::vector<std::unique_ptr<Metadata>>()),
 		m_attributes(std::map<std::string, std::string>())
-	{
-	}
-
-	Metadata::Metadata(const Metadata &source) :
-		m_name(source.m_name),
-		m_value(source.m_value),
-		m_children(source.m_children),
-		m_attributes(source.m_attributes)
 	{
 	}
 
@@ -43,7 +35,7 @@ namespace acid
 		m_value = "\"" + data + "\"";
 	}
 
-	std::shared_ptr<Metadata> Metadata::AddChild(const std::shared_ptr<Metadata> &value)
+	Metadata *Metadata::AddChild(Metadata *child)
 	{
 		/*auto child = FindChild(value->m_name);
 
@@ -53,32 +45,40 @@ namespace acid
 			return child;
 		}*/
 
-		m_children.emplace_back(value);
-		return value;
+		m_children.emplace_back(child);
+		return child;
 	}
 
-	bool Metadata::RemoveChild(const std::shared_ptr<Metadata> &value)
+	bool Metadata::RemoveChild(Metadata *child)
 	{
-		m_children.erase(std::remove(m_children.begin(), m_children.end(), value), m_children.end());
-		return true;
+		for (auto it = m_children.begin(); it != m_children.end(); ++it)
+		{
+			if ((*it).get() == child)
+			{
+				m_children.erase(it);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	std::vector<std::shared_ptr<Metadata>> Metadata::FindChildren(const std::string &name) const
+	std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
 	{
-		auto result = std::vector<std::shared_ptr<Metadata>>();
+		auto result = std::vector<Metadata *>();
 
 		for (auto &child : m_children)
 		{
 			if (child->m_name == name)
 			{
-				result.push_back(child);
+				result.push_back(child.get());
 			}
 		}
 
 		return result;
 	}
 
-	std::shared_ptr<Metadata> Metadata::FindChild(const std::string &name, const bool &reportError) const
+	Metadata *Metadata::FindChild(const std::string &name, const bool &reportError) const
 	{
 		std::string nameNoSpaces = String::Replace(name, " ", "_");
 
@@ -86,19 +86,19 @@ namespace acid
 		{
 			if (child->m_name == name || child->m_name == nameNoSpaces)
 			{
-				return child;
+				return child.get();
 			}
 		}
 
 		if (reportError)
 		{
-			Log::Error("Could not find child in metadata by name '%s'\n", m_name.c_str());
+			Log::Error("Could not find child in metadata by name '%s'\n", name.c_str());
 		}
 
 		return nullptr;
 	}
 
-	std::shared_ptr<Metadata> Metadata::FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError) const
+	Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError) const
 	{
 		auto children = FindChildren(childName);
 
@@ -119,7 +119,7 @@ namespace acid
 
 		if (reportError)
 		{
-			Log::Error("Could not find child in metadata '%s' with '%s'\n", m_name.c_str(), attribute.c_str());
+			Log::Error("Could not find child in metadata '%s' with '%s'\n", childName.c_str(), attribute.c_str());
 		}
 
 		return nullptr;

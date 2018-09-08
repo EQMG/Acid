@@ -19,8 +19,6 @@ namespace acid
 	public:
 		FilterCrt(const GraphicsStage &graphicsStage);
 
-		~FilterCrt();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		Colour GetScreenColour() const { return m_screenColour; }

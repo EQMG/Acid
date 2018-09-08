@@ -15,6 +15,7 @@ namespace acid
 	{
 	private:
 		std::unique_ptr<ICamera> m_camera;
+		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
 		std::unique_ptr<ScenePhysics> m_physics;
 		std::unique_ptr<SceneStructure> m_structure;
 		bool m_started;
@@ -23,8 +24,10 @@ namespace acid
 		/// Creates a new scene.
 		/// </summary>
 		/// <param name="camera"> The scenes camera. </param>
-		IScene(ICamera *camera) :
+		/// <param name="selectorJoystick"> The joystick controlled UI selector. </param>
+		IScene(ICamera *camera, SelectorJoystick *selectorJoystick) :
 			m_camera(camera),
+			m_selectorJoystick(selectorJoystick),
 			m_physics(std::make_unique<ScenePhysics>()),
 			m_structure(std::make_unique<SceneStructure>()),
 			m_started(false)
@@ -51,6 +54,18 @@ namespace acid
 		void SetCamera(ICamera *camera) { m_camera.reset(camera); }
 
 		/// <summary>
+		/// Gets the joystick controlled UI selector.
+		/// </summary>
+		/// <returns> The joystick selector. </returns>
+		SelectorJoystick *GetSelectorJoystick() const { return m_selectorJoystick.get(); };
+
+		/// <summary>
+		/// Sets the joystick controlled UI selector.
+		/// </summary>
+		/// <param name="selectorJoystick"> The new joystick selector. </param>
+		void SetSelectorJoystick(SelectorJoystick *selectorJoystick) { m_selectorJoystick.reset(selectorJoystick); }
+
+		/// <summary>
 		/// Gets the scene physics system.
 		/// </summary>
 		/// <returns> The scenes physics system. </returns>
@@ -75,21 +90,9 @@ namespace acid
 		void SetStarted(const bool &started) { m_started = started; }
 
 		/// <summary>
-		/// Gets if the main menu is open.
+		/// Gets if the scene is paused.
 		/// </summary>
-		/// <returns> If the main menu is open. </returns>
-		virtual bool IsGamePaused() const = 0;
-
-		/// <summary>
-		/// The primary colour to be used in UI elements.
-		/// </summary>
-		/// <returns> The primary colour. </returns>
-		virtual Colour GetUiColour() const = 0;
-
-		/// <summary>
-		/// The UI selector for a joystick.
-		/// </summary>
-		/// <returns> The joystick selector. </returns>
-		virtual SelectorJoystick GetSelectorJoystick() const = 0;
+		/// <returns> If the scene is paused. </returns>
+		virtual bool IsPaused() const = 0;
 	};
 }

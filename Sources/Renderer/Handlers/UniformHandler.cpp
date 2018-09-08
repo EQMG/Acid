@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	UniformHandler::UniformHandler(const std::shared_ptr<UniformBlock> &uniformBlock, const bool &multipipeline) :
+	UniformHandler::UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
 		m_uniformBuffer(std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_uniformBlock->GetSize()))),
@@ -25,7 +25,7 @@ namespace acid
 		free(m_data);
 	}
 
-	bool UniformHandler::Update(const std::shared_ptr<UniformBlock> &uniformBlock)
+	bool UniformHandler::Update(UniformBlock *uniformBlock)
 	{
 		if ((m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{

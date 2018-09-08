@@ -27,7 +27,7 @@ namespace acid
 
 		JsonSection *GetParent() const { return m_parent; }
 
-		std::vector<std::unique_ptr<JsonSection>> const &GetChildren() const { return m_children; }
+		const std::vector<std::unique_ptr<JsonSection>> &GetChildren() const { return m_children; }
 
 		void AddChild(JsonSection *child) { m_children.emplace_back(child); }
 
@@ -39,8 +39,8 @@ namespace acid
 
 		void SetContent(const std::string &content) { m_content = content; }
 
-		static void AppendData(const std::shared_ptr<Metadata> &source, std::stringstream &builder, const int32_t &indentation, const bool &end = false);
+		static void AppendData(const Metadata &source, std::stringstream &builder, const int32_t &indentation, const bool &end = false);
 
-		static std::shared_ptr<Metadata> Convert(const JsonSection &source, std::shared_ptr<Metadata> &parent, const bool &isTopSection = true);
+		static Metadata *Convert(const JsonSection &source, Metadata *parent, const bool &isTopSection = true);
 	};
 }

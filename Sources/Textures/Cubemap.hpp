@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "Helpers/String.hpp"
 #include "Resources/IResource.hpp"
 #include "Texture.hpp"
 

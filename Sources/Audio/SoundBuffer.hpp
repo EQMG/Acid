@@ -1,8 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
-#include "Files/Files.hpp"
 #include "Maths/Vector3.hpp"
 #include "Resources/IResource.hpp"
 #include "Audio.hpp"

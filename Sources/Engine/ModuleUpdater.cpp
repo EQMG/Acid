@@ -13,10 +13,6 @@ namespace acid
 	{
 	}
 
-	ModuleUpdater::~ModuleUpdater()
-	{
-	}
-
 	void ModuleUpdater::Update(const ModuleRegister &moduleRegister)
 	{
 		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());

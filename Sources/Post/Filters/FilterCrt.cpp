@@ -15,10 +15,6 @@ namespace acid
 	{
 	}
 
-	FilterCrt::~FilterCrt()
-	{
-	}
-
 	void FilterCrt::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

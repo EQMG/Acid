@@ -10,8 +10,6 @@ namespace acid
 	public:
 		FilterTone(const GraphicsStage &graphicsStage);
 
-		~FilterTone();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

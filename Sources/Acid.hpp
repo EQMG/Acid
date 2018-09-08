@@ -37,6 +37,7 @@
 #include "Events/EventTime.hpp"
 #include "Events/IEvent.hpp"
 #include "Files/Csv/FileCsv.hpp"
+#include "Files/Csv/RowCsv.hpp"
 #include "Files/Files.hpp"
 #include "Files/IFile.hpp"
 #include "Files/Json/FileJson.hpp"

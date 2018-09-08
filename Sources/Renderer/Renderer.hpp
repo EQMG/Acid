@@ -61,7 +61,7 @@ namespace acid
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(IManagerRender *managerRender) { m_managerRender.reset(managerRender); }
 
-		std::vector<std::unique_ptr<RenderStage>> const &GetRenderStages() const { return m_renderStages; }
+		const std::vector<std::unique_ptr<RenderStage>> &GetRenderStages() const { return m_renderStages; }
 
 		RenderStage *GetRenderStage(const uint32_t &index) const { return m_renderStages.at(index).get(); }
 

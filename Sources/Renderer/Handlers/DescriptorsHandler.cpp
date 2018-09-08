@@ -12,7 +12,7 @@ namespace acid
 
 	DescriptorsHandler::DescriptorsHandler(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
-		m_descriptorSet(std::make_shared<DescriptorSet>(pipeline)),
+		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
 		m_descriptors(std::vector<IDescriptor *>(m_shaderProgram->GetLastDescriptorBinding() + 1)),
 		m_changed(true)
 	{
@@ -69,7 +69,7 @@ namespace acid
 
 			m_shaderProgram = pipeline.GetShaderProgram();
 			m_descriptors.resize(m_shaderProgram->GetLastDescriptorBinding() + 1);
-			m_descriptorSet = std::make_shared<DescriptorSet>(pipeline);
+			m_descriptorSet = std::make_unique<DescriptorSet>(pipeline);
 			m_changed = false;
 			return false;
 		}

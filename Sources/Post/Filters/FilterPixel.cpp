@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	FilterPixel::~FilterPixel()
-	{
-	}
-
 	void FilterPixel::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.

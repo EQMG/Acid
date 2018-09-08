@@ -10,22 +10,17 @@ namespace acid
 	class IRenderer;
 
 	/// <summary>
-	/// A extension used with IRenderer's to define a master renderer.
+	/// A object used to manage <seealso cref="IRenderer"/>s.
 	/// </summary>
 	class ACID_EXPORT IManagerRender
 	{
 	private:
 		std::map<float, std::vector<std::shared_ptr<IRenderer>>> m_stages;
 	public:
-		/// <summary>
-		/// Creates a new master renderer.
-		/// </summary>
 		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate);
 
-		virtual ~IManagerRender();
-
 		/// <summary>
-		/// Run when rendering the master renderer.
+		/// Run when updating the renderer manager.
 		/// </summary>
 		virtual void Update() = 0;
 

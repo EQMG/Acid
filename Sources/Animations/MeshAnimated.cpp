@@ -65,9 +65,9 @@ namespace acid
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
-		m_headJoint = CreateJoints(*skeletonLoader.GetHeadJoint());
+		m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
 		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
-		m_animator = std::make_unique<Animator>(m_headJoint);
+		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_animations"),
 			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"));
@@ -75,9 +75,9 @@ namespace acid
 		m_animator->DoAnimation(m_animation.get());
 	}
 
-	std::shared_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)
+	Joint *MeshAnimated::CreateJoints(const JointData &data)
 	{
-		auto joint = std::make_shared<Joint>(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
+		auto joint = new Joint(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
 
 		for (auto &child : data.GetChildren())
 		{

@@ -10,8 +10,6 @@ namespace acid
 	public:
 		FilterSepia(const GraphicsStage &graphicsStage);
 
-		~FilterSepia();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

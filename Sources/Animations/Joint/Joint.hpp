@@ -29,7 +29,7 @@ namespace acid
 	private:
 		uint32_t m_index;
 		std::string m_name;
-		std::vector<std::shared_ptr<Joint>> m_children;
+		std::vector<std::unique_ptr<Joint>> m_children;
 
 		Matrix4 m_localBindTransform;
 		Matrix4 m_animatedTransform;
@@ -42,6 +42,10 @@ namespace acid
 		/// <param name="name"> The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to. </param>
 		/// <param name="bindLocalTransform"> The bone-space transform of the joint in the bind position. </param>
 		Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform);
+
+		Joint(const Joint&) = delete; // FIXME: Temp Fix.
+
+		Joint& operator=(const Joint&) = delete;
 
 		/// <summary>
 		/// This is called during set-up, after the joints hierarchy has been created. This calculates the model-space bind transform of this joint like so:
@@ -66,20 +70,20 @@ namespace acid
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		std::vector<std::shared_ptr<Joint>> GetChildren() const { return m_children; }
+		const std::vector<std::unique_ptr<Joint>> &GetChildren() const { return m_children; }
 
 		/// <summary>
 		/// Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
 		/// which is why they are stored in a list (e.g. a "hand" joint may have multiple "finger" children joints).
 		/// </summary>
 		/// <param name="child"> The new child joint of this joint. </param>
-		void AddChild(const std::shared_ptr<Joint> &child);
+		void AddChild(Joint *child);
 
 		/// <summary>
 		/// Adds this joint to an array, they for each child calls the same method.
 		/// </summary>
 		/// <param name="children"> The array to add this and children into. </param>
-		void AddSelfAndChildren(std::vector<std::shared_ptr<Joint>> &children);
+		void AddSelfAndChildren(std::vector<Joint *> &children);
 
 		Matrix4 GetLocalBindTransform() const { return m_localBindTransform; }
 

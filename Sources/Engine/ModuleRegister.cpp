@@ -22,10 +22,6 @@ namespace acid
 	{
 	}
 
-	ModuleRegister::~ModuleRegister()
-	{
-	}
-
 	void ModuleRegister::FillRegister()
 	{
 		RegisterModule<Display>(UPDATE_POST);

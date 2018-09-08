@@ -17,16 +17,18 @@ namespace acid
 	protected:
 		std::string m_name;
 		std::string m_value;
-		std::vector<std::shared_ptr<Metadata>> m_children;
+		std::vector<std::unique_ptr<Metadata>> m_children;
 		std::map<std::string, std::string> m_attributes;
 	public:
 		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
 
 		Metadata(const std::string &name = "", const std::string &value = "");
 
-		Metadata(const Metadata &source);
-
 		~Metadata();
+
+		Metadata(const Metadata&) = delete; // FIXME: Temp Fix.
+
+		Metadata& operator=(const Metadata&) = delete;
 
 		std::string GetName() const { return m_name; }
 
@@ -40,21 +42,21 @@ namespace acid
 
 		void SetString(const std::string &data);
 
-		std::vector<std::shared_ptr<Metadata>> GetChildren() const { return m_children; }
+		const std::vector<std::unique_ptr<Metadata>> &GetChildren() const { return m_children; }
 
 		uint32_t GetChildCount() const { return static_cast<uint32_t>(m_children.size()); }
 
 		void ClearChildren() { m_children.clear(); }
 
-		std::shared_ptr<Metadata> AddChild(const std::shared_ptr<Metadata> &value);
+		Metadata *AddChild(Metadata *value);
 
-		bool RemoveChild(const std::shared_ptr<Metadata> &value);
+		bool RemoveChild(Metadata *child);
 
-		std::vector<std::shared_ptr<Metadata>> FindChildren(const std::string &name) const;
+		std::vector<Metadata *> FindChildren(const std::string &name) const;
 
-		std::shared_ptr<Metadata> FindChild(const std::string &name, const bool &reportError = true) const;
+		Metadata *FindChild(const std::string &name, const bool &reportError = true) const;
 
-		std::shared_ptr<Metadata> FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
+		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
 		template<typename T>
 		T GetChild(const std::string &name) const
@@ -76,7 +78,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = AddChild(std::make_shared<Metadata>(name));
+				child = AddChild(new Metadata(name));
 				child->Set(value);
 			}
 
@@ -90,7 +92,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = std::make_shared<Metadata>(name, "");
+				child = new Metadata(name, "");
 				m_children.emplace_back(child);
 			}
 

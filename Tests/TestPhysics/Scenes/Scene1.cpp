@@ -1,7 +1,6 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -32,15 +31,13 @@ namespace test
 	static const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		IScene(new FpsCamera()),
-		m_buttonSpawnSphere(std::make_unique<ButtonMouse>(std::vector<MouseButton>{MOUSE_BUTTON_1})),
-		m_buttonFullscreen(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F11})),
-		m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_M, KEY_ESCAPE})),
-		m_buttonScreenshot(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_F12})),
-		m_buttonExit(std::make_unique<ButtonKeyboard>(std::vector<Key>{KEY_DELETE})),
+		IScene(new FpsCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		m_buttonSpawnSphere(ButtonMouse({MOUSE_BUTTON_1})),
+		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
+		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
+		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
+		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
-		m_primaryColour(Colour("#e74c3c")),
-		m_selectorJoystick(SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
@@ -64,16 +61,14 @@ namespace test
 		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated.
-#ifdef ACID_BUILD_WINDOWS
-		auto animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
-		animatedObject->SetName("Animated");
-	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
-		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
-		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-		animatedObject->AddComponent<MeshRender>();
-	//	animatedObject->AddComponent<ShadowRender>();
-#endif
+//		auto animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
+//		animatedObject->SetName("Animated");
+//	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
+//		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
+//		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+//		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+//		animatedObject->AddComponent<MeshRender>();
+//	//	animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
@@ -116,7 +111,7 @@ namespace test
 
 	void Scene1::Update()
 	{
-		if (m_buttonSpawnSphere->WasDown())
+		if (m_buttonSpawnSphere.WasDown())
 		{
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -132,23 +127,23 @@ namespace test
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 		}
 
-		if (m_buttonFullscreen->WasDown())
+		if (m_buttonFullscreen.WasDown())
 		{
 			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
 		}
 
-		if (m_buttonCaptureMouse->WasDown())
+		if (m_buttonCaptureMouse.WasDown())
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
 		}
 
-		if (m_buttonScreenshot->WasDown())
+		if (m_buttonScreenshot.WasDown())
 		{
 			m_soundScreenshot.Play();
 			Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::Get()->GetDateTime() + ".png");
 		}
 
-		if (m_buttonExit->WasDown())
+		if (m_buttonExit.WasDown())
 		{
 			Engine::Get()->RequestClose(false);
 		}
@@ -162,7 +157,7 @@ namespace test
 		}
 	}
 
-	bool Scene1::IsGamePaused() const
+	bool Scene1::IsPaused() const
 	{
 		return m_uiStartLogo->IsStarting();
 	}

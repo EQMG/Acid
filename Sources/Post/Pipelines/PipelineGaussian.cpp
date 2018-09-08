@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	PipelineGaussian::~PipelineGaussian()
-	{
-	}
-
 	void PipelineGaussian::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_filterBlurVertical.Render(commandBuffer, clipPlane, camera);

@@ -10,8 +10,6 @@ namespace acid
 	public:
 		FilterGrey(const GraphicsStage &graphicsStage);
 
-		~FilterGrey();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

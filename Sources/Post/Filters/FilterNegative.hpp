@@ -10,8 +10,6 @@ namespace acid
 	public:
 		FilterNegative(const GraphicsStage &graphicsStage);
 
-		~FilterNegative();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterNegative::~FilterNegative()
-	{
-	}
-
 	void FilterNegative::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

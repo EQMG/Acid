@@ -15,8 +15,6 @@ namespace acid
 	public:
 		FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale = 2.0f);
 
-		~FilterBlurVertical();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

@@ -25,19 +25,6 @@ namespace acid
 
 	void Mesh::Update()
 	{
-		// TODO
-		/*if (m_model == nullptr || m_model->GetAabb() == nullptr)
-		{
-			return;
-		}
-
-		auto aabb = GetGameObject()->GetComponent<BoundingBox>();
-
-		if (aabb != m_model->GetAabb())
-		{
-			GetGameObject()->RemoveComponent(aabb);
-			GetGameObject()->AddComponent(m_model->GetAabb());
-		}*/
 	}
 
 	void Mesh::Decode(const Metadata &metadata)

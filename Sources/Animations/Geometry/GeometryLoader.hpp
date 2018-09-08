@@ -10,7 +10,7 @@ namespace acid
 	class ACID_EXPORT GeometryLoader
 	{
 	private:
-		std::shared_ptr<Metadata> m_meshData;
+		Metadata *m_meshData;
 
 		std::vector<VertexSkinData> m_vertexWeights;
 
@@ -21,7 +21,7 @@ namespace acid
 		std::vector<VertexAnimated> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
-		GeometryLoader(const std::shared_ptr<Metadata> &libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
+		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
 
 		GeometryLoader(const GeometryLoader&) = delete; // FIXME: Temp Fix.
 

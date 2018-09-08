@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterDefault::~FilterDefault()
-	{
-	}
-
 	void FilterDefault::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

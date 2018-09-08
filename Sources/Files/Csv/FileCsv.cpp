@@ -87,7 +87,7 @@ namespace acid
 		m_rows.clear();
 	}
 
-	RowCsv FileCsv::GetRow(const uint32_t &index)
+	RowCsv &FileCsv::GetRow(const uint32_t &index)
 	{
 		return m_rows.at(index);
 	}

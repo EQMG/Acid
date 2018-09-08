@@ -15,8 +15,6 @@ namespace acid
 	public:
 		FilterWobble(const GraphicsStage &graphicsStage);
 
-		~FilterWobble();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
 		float GetWobbleSpeed() const { return m_wobbleSpeed; }

@@ -38,6 +38,6 @@ namespace acid
 
 		void SetAirDensity(const float &airDensity);
 
-		std::unique_ptr<btDiscreteDynamicsWorld> const &GetDynamicsWorld() { return m_dynamicsWorld; }
+		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
 	};
 }

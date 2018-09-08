@@ -1,5 +1,6 @@
 #include "Display.hpp"
 
+#include <cstring>
 #ifdef ACID_BUILD_WINDOWS
 #include <Windows.h>
 #endif

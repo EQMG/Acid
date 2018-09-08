@@ -14,7 +14,7 @@ namespace acid
 	{
 	private:
 		ComputeCreate m_computeCreate;
-		std::shared_ptr<ShaderProgram> m_shaderProgram;
+		std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 		VkShaderModule m_shaderModule;
 		VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;
@@ -37,7 +37,7 @@ namespace acid
 
 		void CmdRender(const CommandBuffer &commandBuffer) const;
 
-		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
+		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

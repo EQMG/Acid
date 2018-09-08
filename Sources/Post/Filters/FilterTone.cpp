@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	FilterTone::~FilterTone()
-	{
-	}
-
 	void FilterTone::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.

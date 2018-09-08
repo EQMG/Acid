@@ -17,7 +17,7 @@ namespace acid
 
 	void Particles::Update()
 	{
-		if (Scenes::Get()->IsGamePaused())
+		if (Scenes::Get()->IsPaused())
 		{
 			return;
 		}

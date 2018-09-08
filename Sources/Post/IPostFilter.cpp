@@ -13,8 +13,4 @@ namespace acid
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f))
 	{
 	}
-
-	IPostFilter::~IPostFilter()
-	{
-	}
 }

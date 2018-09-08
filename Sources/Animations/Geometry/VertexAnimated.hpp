@@ -21,8 +21,6 @@ namespace acid
 	public:
 		VertexAnimated(const Vector3 &position = Vector3::ZERO, const Vector2 &uv = Vector2::ZERO, const Vector3 &normal = Vector3::ZERO, const Vector3 &tangent = Vector3::ZERO, const Vector3 &jointId = Vector3::ZERO, const Vector3 &vertexWeight = Vector3::ZERO);
 
-		VertexAnimated(const VertexAnimated &source);
-
 		Vector3 GetPosition() const override { return m_position; };
 
 		void SetPosition(const Vector3 &position) override { m_position = position; };
@@ -46,8 +44,6 @@ namespace acid
 		Vector3 GetVertexWeight() const { return m_vertexWeight; };
 
 		void SetVertexWeight(const Vector3 &vertexWeight) { m_vertexWeight = vertexWeight; };
-
-		size_t GetSize() const override { return sizeof(VertexAnimated); }
 
 		static VertexInput GetVertexInput();
 	};

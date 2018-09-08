@@ -24,7 +24,7 @@ namespace acid
 	class ACID_EXPORT Animator
 	{
 	private:
-		std::shared_ptr<Joint> m_rootJoint;
+		Joint *m_rootJoint;
 
 		float m_animationTime;
 		Animation *m_currentAnimation;
@@ -33,7 +33,7 @@ namespace acid
 		/// Creates a new animator.
 		/// </summary>
 		/// <param name="rootJoint"> The root joint of the joint hierarchy which makes up the "skeleton" of the entity. </param>
-		Animator(const std::shared_ptr<Joint> &rootJoint);
+		Animator(Joint *rootJoint);
 
 		/// <summary>
 		/// This method should be called each frame to update the animation currently being played. This increases the animation time (and loops it back to zero if necessary),
@@ -121,7 +121,7 @@ namespace acid
 		/// <param name="currentPose"> A map of the local-space transforms for all the joints for the desired pose. The map is indexed by the name of the joint which the transform corresponds to. </param>
 		/// <param name="joint"> The current joint which the pose should be applied to. </param>
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
-		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, const std::shared_ptr<Joint> &joint, const Matrix4 &parentTransform);
+		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform);
 
 		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 

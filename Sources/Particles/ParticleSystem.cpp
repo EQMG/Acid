@@ -80,12 +80,12 @@ namespace acid
 
 		if (typesNode == nullptr)
 		{
-			typesNode = metadata.AddChild(std::make_shared<Metadata>("Types"));
+			typesNode = metadata.AddChild(new Metadata("Types"));
 		}
 
 		for (auto &type : m_types)
 		{
-			type->Encode(*typesNode->AddChild(std::make_shared<Metadata>()));
+			type->Encode(*typesNode->AddChild(new Metadata()));
 		}
 
 		metadata.SetChild<ISpawnParticle>("Spawn", *m_spawn);
@@ -182,6 +182,7 @@ namespace acid
 
 	void ParticleSystem::TrySetSpawn(const Metadata &spawnNode)
 	{
+		// TODO: Modularize.
 		std::string spawnName = spawnNode.GetChild<std::string>("Type");
 
 		if (spawnName == "SpawnCircle")

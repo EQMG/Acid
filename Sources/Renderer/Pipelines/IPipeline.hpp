@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "Renderer/Commands/CommandBuffer.hpp"
 #include "ShaderProgram.hpp"
 
@@ -9,20 +8,12 @@ namespace acid
 	class ACID_EXPORT IPipeline
 	{
 	public:
-		IPipeline()
-		{
-		}
-
-		virtual ~IPipeline()
-		{
-		}
-
 		void BindPipeline(const CommandBuffer &commandBuffer) const
 		{
 			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
 		}
 
-		virtual std::shared_ptr<ShaderProgram> GetShaderProgram() const = 0;
+		virtual ShaderProgram *GetShaderProgram() const = 0;
 
 		virtual VkDescriptorSetLayout GetDescriptorSetLayout() const = 0;
 

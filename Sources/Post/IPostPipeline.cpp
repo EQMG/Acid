@@ -6,8 +6,4 @@ namespace acid
 		IRenderer(graphicsStage)
 	{
 	}
-
-	IPostPipeline::~IPostPipeline()
-	{
-	}
 }

@@ -2,6 +2,8 @@
 
 #include <Audio/Sound.hpp>
 #include <Inputs/IButton.hpp>
+#include <Inputs/ButtonMouse.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
 #include <Scenes/IScene.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
@@ -14,15 +16,12 @@ namespace test
 		public IScene
 	{
 	private:
-		std::unique_ptr<IButton> m_buttonSpawnSphere;
-		std::unique_ptr<IButton> m_buttonFullscreen;
-		std::unique_ptr<IButton> m_buttonCaptureMouse;
-		std::unique_ptr<IButton> m_buttonScreenshot;
-		std::unique_ptr<IButton> m_buttonExit;
+		ButtonMouse m_buttonSpawnSphere;
+		ButtonKeyboard m_buttonFullscreen;
+		ButtonKeyboard m_buttonCaptureMouse;
+		ButtonKeyboard m_buttonScreenshot;
+		ButtonKeyboard m_buttonExit;
 		Sound m_soundScreenshot;
-
-		Colour m_primaryColour;
-		SelectorJoystick m_selectorJoystick;
 
 		std::unique_ptr<UiStartLogo> m_uiStartLogo;
 		std::unique_ptr<OverlayDebug> m_overlayDebug;
@@ -35,10 +34,6 @@ namespace test
 
 		void Update() override;
 
-		bool IsGamePaused() const override;
-
-		Colour GetUiColour() const override { return m_primaryColour; }
-
-		SelectorJoystick GetSelectorJoystick() const override { return m_selectorJoystick; };
+		bool IsPaused() const override;
 	};
 }

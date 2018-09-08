@@ -20,7 +20,7 @@ namespace acid
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
-		std::shared_ptr<ShaderProgram> m_shaderProgram;
+		std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
@@ -52,7 +52,7 @@ namespace acid
 
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
-		std::shared_ptr<ShaderProgram> GetShaderProgram() const override { return m_shaderProgram; }
+		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 

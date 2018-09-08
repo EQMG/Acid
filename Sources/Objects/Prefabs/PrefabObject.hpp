@@ -21,7 +21,7 @@ namespace acid
 	private:
 		std::string m_filename;
 		std::unique_ptr<IFile> m_file;
-		std::shared_ptr<Metadata> m_parent;
+		Metadata *m_parent;
 	public:
 		/// <summary>
 		/// Will find an existing prefab object with the same filename, or create a new prefab object.
@@ -43,6 +43,6 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; }
 
-		std::shared_ptr<Metadata> GetParent() const { return m_parent; }
+		Metadata *GetParent() const { return m_parent; }
 	};
 }
