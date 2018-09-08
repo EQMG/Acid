@@ -22,6 +22,10 @@ namespace acid
 
 		~ModuleRegister();
 
+		ModuleRegister(const ModuleRegister&) = delete; // FIXME: Temp Fix.
+
+		ModuleRegister& operator=(const ModuleRegister&) = delete;
+
 		/// <summary>
 		/// Fills the module register with default modules.
 		/// </summary>

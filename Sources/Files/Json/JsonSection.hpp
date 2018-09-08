@@ -21,6 +21,10 @@ namespace acid
 
 		~JsonSection();
 
+		JsonSection(const JsonSection&) = delete; // FIXME: Temp Fix.
+
+		JsonSection& operator=(const JsonSection&) = delete;
+
 		JsonSection *GetParent() const { return m_parent; }
 
 		std::vector<std::unique_ptr<JsonSection>> const &GetChildren() const { return m_children; }

@@ -21,6 +21,10 @@ namespace acid
 
 		~ThreadPool();
 
+		ThreadPool(const ThreadPool&) = delete; // FIXME: Temp Fix.
+
+		ThreadPool& operator=(const ThreadPool&) = delete;
+
 		/// <summary>
 		/// Waits until all threads are finished.
 		/// </summary>

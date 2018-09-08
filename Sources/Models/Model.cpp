@@ -1,7 +1,6 @@
 #include "Model.hpp"
 
 #include <cassert>
-#include <cmath>
 
 namespace acid
 {

@@ -25,6 +25,10 @@ namespace acid
 
 		~SceneStructure();
 
+		SceneStructure(const SceneStructure&) = delete; // FIXME: Temp Fix.
+
+		SceneStructure& operator=(const SceneStructure&) = delete;
+
 		void Add(GameObject *object) override;
 
 		bool Remove(GameObject *object) override;

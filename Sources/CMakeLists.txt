@@ -23,7 +23,7 @@ set_target_properties(Acid PROPERTIES
 )
 
 if(BUILD_SHARED_LIBS)
-	target_compile_definitions(Acid PUBLIC "ACID_EXPORTS")
+	set_target_properties(Acid PROPERTIES DEFINE_SYMBOL "ACID_EXPORTS")
 
 	if(WIN32)
 		set_target_properties(Acid PROPERTIES PREFIX "")

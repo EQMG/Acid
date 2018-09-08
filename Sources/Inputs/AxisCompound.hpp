@@ -23,6 +23,10 @@ namespace acid
 
 		~AxisCompound();
 
+		AxisCompound(const AxisCompound&) = delete; // FIXME: Temp Fix.
+
+		AxisCompound& operator=(const AxisCompound&) = delete;
+
 		float GetAmount() const override;
 	};
 }

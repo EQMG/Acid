@@ -13,6 +13,14 @@ namespace acid
 	{
 	}
 
+	Metadata::Metadata(const std::string &name, const std::string &value) :
+		m_name(String::Trim(String::RemoveAll(name, '\"'))),
+		m_value(String::Trim(value)),
+		m_children(std::vector<std::shared_ptr<Metadata>>()),
+		m_attributes(std::map<std::string, std::string>())
+	{
+	}
+
 	Metadata::Metadata(const Metadata &source) :
 		m_name(source.m_name),
 		m_value(source.m_value),

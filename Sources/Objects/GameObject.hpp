@@ -38,6 +38,10 @@ namespace acid
 
 		~GameObject();
 
+		GameObject(const GameObject&) = delete; // FIXME: Temp Fix.
+
+		GameObject& operator=(const GameObject&) = delete;
+
 		void Update();
 
 		/// <summary>

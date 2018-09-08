@@ -25,6 +25,10 @@ namespace acid
 
 		~Events();
 
+		Events(const Events&) = delete; // FIXME: Temp Fix.
+
+		Events& operator=(const Events&) = delete;
+
 		void Update() override;
 
 		/// <summary>
