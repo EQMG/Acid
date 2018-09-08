@@ -3,10 +3,11 @@
 #include "Engine/Exports.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
+	class Metadata;
+
 	/// <summary>
 	/// Holds position, rotation, and scale components.
 	/// </summary>

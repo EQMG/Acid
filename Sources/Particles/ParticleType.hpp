@@ -4,6 +4,7 @@
 #include "Maths/Colour.hpp"
 #include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {

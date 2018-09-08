@@ -3,13 +3,14 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Vector3;
 
 	class Vector4;
+
+	class Metadata;
 
 	/// <summary>
 	/// Holds a RGBA colour.

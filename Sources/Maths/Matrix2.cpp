@@ -1,6 +1,7 @@
 #include "Matrix2.hpp"
 
 #include <cassert>
+#include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 
 namespace acid

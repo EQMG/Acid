@@ -1,6 +1,7 @@
 #include "Vector2.hpp"
 
 #include <cassert>
+#include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 #include "Maths.hpp"
 

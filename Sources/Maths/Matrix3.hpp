@@ -3,11 +3,12 @@
 #include <ostream>
 #include <string>
 #include "Vector3.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Matrix2;
+
+	class Metadata;
 
 	/// <summary>
 	/// Holds a row major 3x3 matrix.

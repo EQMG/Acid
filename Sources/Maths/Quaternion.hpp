@@ -4,11 +4,12 @@
 #include <string>
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Vector3;
+
+	class Metadata;
 
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.

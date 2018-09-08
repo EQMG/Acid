@@ -1,6 +1,7 @@
 #include "Matrix4.hpp"
 
 #include <cassert>
+#include "Serialized/Metadata.hpp"
 #include "Matrix3.hpp"
 #include "Quaternion.hpp"
 #include "Vector2.hpp"
