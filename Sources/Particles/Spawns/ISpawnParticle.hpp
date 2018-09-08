@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {

@@ -4,7 +4,6 @@
 #include <string>
 #include "Vector3.hpp"
 #include "Vector4.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -13,6 +12,8 @@ namespace acid
 	class Quaternion;
 
 	class Vector2;
+
+	class Metadata;
 
 	/// <summary>
 	/// Holds a row major 4x4 matrix.

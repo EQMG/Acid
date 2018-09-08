@@ -1,7 +1,5 @@
 #include "Engine.hpp"
 
-#include "Maths/Maths.hpp"
-
 namespace acid
 {
 	Engine *Engine::INSTANCE = nullptr;

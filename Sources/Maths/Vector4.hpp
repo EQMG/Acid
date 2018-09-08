@@ -3,13 +3,14 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Colour;
 
 	class Vector3;
+
+	class Metadata;
 
 	/// <summary>
 	/// Holds a 4-tuple vector.

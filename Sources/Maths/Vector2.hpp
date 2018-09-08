@@ -3,11 +3,12 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Vector3;
+
+	class Metadata;
 
 	/// <summary>
 	/// Holds a 2-tuple vector.

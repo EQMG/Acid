@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <memory>
+#include "Log.hpp"
 #include "ModuleRegister.hpp"
 #include "ModuleUpdater.hpp"
 

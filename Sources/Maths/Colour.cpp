@@ -1,6 +1,7 @@
 #include "Colour.hpp"
 
 #include <cassert>
+#include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 #include "Maths.hpp"

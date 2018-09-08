@@ -3,7 +3,6 @@
 #include <map>
 #include <memory>
 #include "IModule.hpp"
-#include "Log.hpp"
 
 namespace acid
 {

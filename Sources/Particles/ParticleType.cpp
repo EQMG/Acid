@@ -1,6 +1,7 @@
 ﻿#include "ParticleType.hpp"
 
 #include "Resources/Resources.hpp"
+#include "Helpers/String.hpp"
 
 namespace acid
 {

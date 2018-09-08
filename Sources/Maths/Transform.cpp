@@ -1,5 +1,7 @@
 ﻿#include "Transform.hpp"
 
+#include "Serialized/Metadata.hpp"
+
 namespace acid
 {
 	Transform::Transform() :
