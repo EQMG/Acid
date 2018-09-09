@@ -3,7 +3,6 @@
 #include "Models/Model.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Resources/IResource.hpp"
-#include "Textures/Texture.hpp"
 
 namespace acid
 {

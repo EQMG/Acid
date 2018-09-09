@@ -34,11 +34,10 @@ layout(set = 0, location = 4) in vec3 inJointIds;
 layout(set = 0, location = 5) in vec3 inWeights;
 #endif
 
-layout(location = 0) out vec3 outWorldPos;
-layout(location = 1) out vec2 outUv;
-layout(location = 2) out vec3 outNormal;
+layout(location = 0) out vec2 outUv;
+layout(location = 1) out vec3 outNormal;
 #ifdef NORMAL_MAPPING
-layout(location = 3) out vec3 outTangent;
+layout(location = 2) out vec3 outTangent;
 #endif
 
 out gl_PerVertex
@@ -67,13 +66,11 @@ void main()
 #endif
 
 	vec4 worldPosition = object.transform * position;
-	vec4 worldNormal = object.transform * normal;
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	outWorldPos = worldPosition.xyz;
 	outUv = inUv;
-	outNormal = worldNormal.xyz;
+	outNormal = normal.xyz;
 
 #ifdef NORMAL_MAPPING
 	mat3 matrixNormal = transpose(inverse(mat3(object.transform)));

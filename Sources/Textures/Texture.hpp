@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include "Files/Files.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Resources/IResource.hpp"
@@ -15,8 +14,8 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Texture :
 		public IResource,
-		public Buffer,
-		public IDescriptor
+		public IDescriptor,
+		public Buffer
 	{
 	private:
 		std::string m_filename;

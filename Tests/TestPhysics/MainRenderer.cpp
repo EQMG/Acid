@@ -33,15 +33,14 @@ namespace test
 		{
 			Attachment(0, ATTACHMENT_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, true), // depth
 			Attachment(1, ATTACHMENT_SWAPCHAIN), // swapchain
-			Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, true), // positions (world-space)
-			Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // diffuse
-			Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, true), // normals (world-space)
-			Attachment(5, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // materials
-			Attachment(6, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // resolved
+			Attachment(2, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // diffuse
+			Attachment(3, ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, true), // normals
+			Attachment(4, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, true), // materials
+			Attachment(5, ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM) // resolved
 		}, // images
 		{
-			SubpassType(0, {0, 2, 3, 4, 5}),
-			SubpassType(1, {6}),
+			SubpassType(0, {0, 2, 3, 4}),
+			SubpassType(1, {5}),
 			SubpassType(2, {1})
 		} // subpasses
 	};

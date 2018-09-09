@@ -4,6 +4,7 @@
 #include "Display/Display.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
+#include "Texture.hpp"
 
 namespace acid
 {
@@ -28,8 +29,8 @@ namespace acid
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &repeatEdges, const bool &mipmap, const bool &anisotropic, const bool &nearest) :
 		IResource(),
-		Buffer(Texture::LoadSize(filename, fileExt, SIDE_FILE_SUFFIXES), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
+		Buffer(Texture::LoadSize(filename, fileExt, SIDE_FILE_SUFFIXES), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(filename),
 		m_fileExt(fileExt),
 		m_repeatEdges(repeatEdges),
@@ -95,8 +96,8 @@ namespace acid
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
 		IResource(),
-		Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
+		Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
 		m_fileExt(""),
 		m_repeatEdges(true),
@@ -124,8 +125,8 @@ namespace acid
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
 		IResource(),
-		Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		IDescriptor(),
+		Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
 		m_fileExt(""),
 		m_repeatEdges(true),

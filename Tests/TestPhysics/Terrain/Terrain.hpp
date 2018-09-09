@@ -15,6 +15,7 @@ namespace test
 	{
 	private:
 		Noise m_noise;
+		std::vector<float> m_heightmap;
 
 		float m_sideLength;
 		float m_squareSize;

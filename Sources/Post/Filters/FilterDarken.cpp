@@ -16,8 +16,8 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
-		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(6));
-		m_descriptorSet.Push("samplerColour", m_pipeline.GetTexture(6));
+		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(5));
+		m_descriptorSet.Push("samplerColour", m_pipeline.GetTexture(5));
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)

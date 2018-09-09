@@ -5,14 +5,12 @@
 
 namespace acid
 {
-	ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength,
-											 const void *heightfieldData, const float &heightScale,
+	ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData,
 											 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges) :
 		Collider(),
 		m_shape(nullptr)
 	{
-		Initialize(heightStickWidth, heightStickLength, heightfieldData,
-			heightScale, minHeight, maxHeight, flipQuadEdges);
+		Initialize(heightStickWidth, heightStickLength, heightfieldData, minHeight, maxHeight, flipQuadEdges);
 	}
 
 	ColliderHeightfield::~ColliderHeightfield()
@@ -40,8 +38,7 @@ namespace acid
 		return m_shape.get();
 	}
 
-	void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength,
-										 const void *heightfieldData, const float &heightScale,
+	void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData,
 										 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges)
 	{
 		if (heightfieldData == nullptr)
@@ -50,6 +47,6 @@ namespace acid
 		}
 
 		m_shape = std::make_unique<btHeightfieldTerrainShape>(heightStickWidth, heightStickLength, heightfieldData,
-			heightScale, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
+			1.0f, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 	}
 }

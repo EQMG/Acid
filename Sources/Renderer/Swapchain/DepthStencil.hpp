@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Renderer/Descriptors/IDescriptor.hpp"
-#include "Textures/Texture.hpp"
+#include "Renderer/Buffers/Buffer.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT DepthStencil :
-		public Buffer,
-		public IDescriptor
+		public IDescriptor,
+		public Buffer
 	{
 	private:
 		uint32_t m_width, m_height;

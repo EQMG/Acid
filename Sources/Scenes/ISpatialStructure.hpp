@@ -47,13 +47,6 @@ namespace acid
 		/// </summary>
 		/// </param>
 		/// <returns> The list specified by of all objects. </returns>
-		virtual std::vector<std::unique_ptr<GameObject>> &GetAll() = 0;
-
-		/// <summary>
-		/// Returns a set of all objects in the spatial structure.
-		/// </summary>
-		/// </param>
-		/// <returns> The list specified by of all objects. </returns>
 		virtual std::vector<GameObject *> QueryAll() = 0;
 
 		/// <summary>

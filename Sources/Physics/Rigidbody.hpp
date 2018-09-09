@@ -13,12 +13,16 @@ class btRigidBody;
 
 namespace acid
 {
+	/// <summary>
+	/// Represents a object in a scene effected by physics.
+	/// </summary>
 	class ACID_EXPORT Rigidbody :
 		public IComponent
 	{
 	private:
 		float m_mass;
 		float m_friction;
+		Transform m_localTransform;
 		Vector3 m_linearFactor;
 		Vector3 m_angularFactor;
 
@@ -30,7 +34,15 @@ namespace acid
 		Vector3 m_linearVelocity;
 		Vector3 m_angularVelocity;
 	public:
-		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::ONE, const Vector3 &angularFactor = Vector3::ONE);
+		/// <summary>
+		/// Creates a new rigidbody.
+		/// </summary>
+		/// <param name="mass"> The mass of the object. </param>
+		/// <param name="friction"> The amount of surface friction. </param>
+		/// <param name="localTransform"> The parent offset of the body. </param>
+		/// <param name="linearFactor"> How effected each axis (XYZ) will be to linear movement. </param>
+		/// <param name="angularFactor"> How effected each axis (XYZ) will be to angular movement. </param>
+		Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Transform &localTransform = Transform::ZERO, const Vector3 &linearFactor = Vector3::ONE, const Vector3 &angularFactor = Vector3::ONE);
 
 		~Rigidbody();
 
@@ -58,6 +70,10 @@ namespace acid
 		float GetFriction() const { return m_friction; }
 
 		void SetFriction(const float &friction);
+
+		Transform &GetLocalTransform() { return m_localTransform; }
+
+		void SetLocalTransform(const Transform &localTransform);
 
 		Vector3 GetLinearFactor() const { return m_linearFactor; }
 

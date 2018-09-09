@@ -2,12 +2,14 @@
 
 #include <Meshes/Mesh.hpp>
 #include <Physics/ColliderHeightfield.hpp>
+#include <Physics/Rigidbody.hpp>
 
 namespace test
 {
 	Terrain::Terrain(const float &sideLength, const float &squareSize) :
 		IComponent(),
 		m_noise(Noise(25653345)),
+		m_heightmap(std::vector<float>()),
 		m_sideLength(sideLength),
 		m_squareSize(squareSize),
 		m_minHeight(+std::numeric_limits<float>::infinity()),
@@ -30,6 +32,7 @@ namespace test
 	{
 		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
 		auto colliderHeightfield = GetGameObject()->GetComponent<ColliderHeightfield>(true);
+		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>(true);
 
 		if (mesh == nullptr)
 		{
@@ -39,15 +42,17 @@ namespace test
 
 		uint32_t vertexCount = CalculateVertexCount(m_sideLength, m_squareSize);
 		float textureScale = CalculateTextureScale(m_sideLength);
-		std::vector<float> heightmap = GenerateHeightmap(vertexCount);
-		mesh->SetModel(std::make_shared<MeshTerrain>(heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
+		m_heightmap = GenerateHeightmap(vertexCount);
+		mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
 
-		/*if (colliderHeightfield == nullptr)
+		if (colliderHeightfield == nullptr)
 		{
 			return;
 		}
 
-		colliderHeightfield->Initialize(vertexCount, vertexCount, heightmap.data(), 1.0f, m_minHeight, m_maxHeight, false);*/
+		colliderHeightfield->Initialize(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
+	//	rigidbody->GetLocalTransform().SetPosition(Vector3(-m_sideLength / 2.0f, 0.0f, -m_sideLength / 2.0f));
+		rigidbody->GetLocalTransform().SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 	}
 
 	void Terrain::Update()
@@ -69,7 +74,7 @@ namespace test
 
 	float Terrain::CalculateTextureScale(const float &sideLength)
 	{
-		return 0.04f * sideLength;
+		return 0.08f * sideLength;
 	}
 
 	std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
@@ -83,7 +88,7 @@ namespace test
 			{
 				float x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 				float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
-				float height = 30.0f * m_noise.GetValueFractal(transform.GetPosition().m_x + x, transform.GetPosition().m_z + z);
+				float height = 16.0f * m_noise.GetValueFractal(transform.GetPosition().m_x + x, transform.GetPosition().m_z + z);
 				heightmap[row * vertexCount + col] = height;
 
 				if (height < m_minHeight)

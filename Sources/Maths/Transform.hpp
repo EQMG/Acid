@@ -18,6 +18,8 @@ namespace acid
 		Vector3 m_rotation;
 		Vector3 m_scaling;
 	public:
+		static const Transform ZERO;
+
 		/// <summary>
 		/// Constructor for Transform.
 		/// </summary>

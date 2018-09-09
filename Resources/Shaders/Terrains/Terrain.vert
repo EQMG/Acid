@@ -19,10 +19,9 @@ layout(set = 0, location = 1) in vec2 inUv;
 layout(set = 0, location = 2) in vec3 inNormal;
 layout(set = 0, location = 3) in vec3 inTangent;
 
-layout(location = 0) out vec3 outWorldPos;
-layout(location = 1) out vec2 outUv;
-layout(location = 2) out vec3 outNormal;
-layout(location = 3) out vec3 outTangent;
+layout(location = 0) out vec2 outUv;
+layout(location = 1) out vec3 outNormal;
+layout(location = 2) out vec3 outTangent;
 
 out gl_PerVertex
 {
@@ -32,12 +31,10 @@ out gl_PerVertex
 void main()
 {
 	vec4 worldPosition = object.transform * vec4(inPosition, 1.0f);
-	vec4 worldNormal = object.transform * vec4(inNormal, 0.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	outWorldPos = worldPosition.xyz;
 	outUv = inUv;
-	outNormal = worldNormal.xyz;
+	outNormal = inNormal;
 	outTangent = inTangent;
 }

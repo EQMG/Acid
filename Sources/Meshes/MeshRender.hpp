@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Materials/IMaterial.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Mesh.hpp"
 
 namespace acid

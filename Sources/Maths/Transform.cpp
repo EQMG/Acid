@@ -4,6 +4,8 @@
 
 namespace acid
 {
+	const Transform Transform::ZERO = Transform(Vector3::ZERO, Vector3::ZERO, Vector3::ONE);
+
 	Transform::Transform() :
 		m_position(Vector3()),
 		m_rotation(Vector3()),
@@ -50,7 +52,16 @@ namespace acid
 	{
 		m_position = metadata.GetChild<Vector3>("Position");
 		m_rotation = metadata.GetChild<Vector3>("Rotation");
-		m_scaling = metadata.GetChild<Vector3>("Scaling");
+
+		if (metadata.FindChild("Scale") != nullptr)
+		{
+			float scale = metadata.GetChild<float>("Scale");
+			m_scaling = Vector3(scale, scale, scale);
+		}
+		else
+		{
+			m_scaling = metadata.GetChild<Vector3>("Scaling");
+		}
 	}
 
 	void Transform::Encode(Metadata &metadata) const

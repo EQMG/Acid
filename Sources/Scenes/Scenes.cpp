@@ -35,7 +35,7 @@ namespace acid
 			return;
 		}
 
-		auto &gameObjects = m_scene->GetStructure()->GetAll();
+		auto gameObjects = m_scene->GetStructure()->QueryAll();
 
 		for (auto &gameObject : gameObjects)
 		{

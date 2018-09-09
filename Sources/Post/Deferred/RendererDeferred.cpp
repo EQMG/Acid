@@ -4,6 +4,7 @@
 #include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
+#include "Renderer/Swapchain/DepthStencil.hpp"
 #include "Renderer/Pipelines/Compute.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
@@ -76,10 +77,10 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
-		m_descriptorSet.Push("samplerPosition", m_pipeline.GetTexture(2));
-		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(3));
-		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(4));
-		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(5));
+		m_descriptorSet.Push("samplerDepth", m_pipeline.GetDepthStencil());
+		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(2));
+		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3));
+		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
 		m_descriptorSet.Push("samplerIbl", ibl);

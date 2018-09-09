@@ -17,11 +17,11 @@
 	<Light>
 		<Colour>#FFFFFF</Colour>
 		<Radius>-1.0</Radius>
-		<Offset>
+		<Local_Offset>
 			<x>0.0</x>
 			<y>0.0</y>
 			<z>0.0</z>
-		</Offset>
+		</Local_Offset>
 	</Light>
 	<CelestialBody>
 		<Type>0.0</Type>
