@@ -37,8 +37,6 @@ namespace acid
 
 		uint32_t GetSize() override { return static_cast<uint32_t>(m_objects.size()); }
 
-		std::vector<std::unique_ptr<GameObject>> &GetAll() override { return m_objects; }
-
 		std::vector<GameObject *> QueryAll() override;
 
 		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;

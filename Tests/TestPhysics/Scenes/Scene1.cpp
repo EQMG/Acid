@@ -24,6 +24,7 @@
 #include <Terrain/MaterialTerrain.hpp>
 #include <Physics/ColliderCapsule.hpp>
 #include <Uis/Uis.hpp>
+#include "Height/HeightDespawn.hpp"
 #include "FpsCamera.hpp"
 
 namespace test
@@ -74,6 +75,14 @@ namespace test
 		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE);
 
+		auto plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
+		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
+		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
+		plane->AddComponent<MeshRender>();
+		plane->AddComponent<ShadowRender>();
+
 		auto terrain = new GameObject(Transform());
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<ColliderHeightfield>();
@@ -117,6 +126,7 @@ namespace test
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
+		//	sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);

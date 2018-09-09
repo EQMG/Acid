@@ -14,18 +14,18 @@ namespace acid
 	{
 	private:
 		Colour m_colour;
-		Vector3 m_offset;
+		Vector3 m_position;
 		float m_radius;
 
-		Vector3 m_position;
+		Vector3 m_localOffset;
 	public:
 		/// <summary>
 		/// Creates a new point light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
-		/// <param name="offset"> The parent offset of the light. </param>
-		Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &offset = Vector3::ZERO);
+		/// <param name="localOffset"> The parent offset of the light. </param>
+		Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &localOffset = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new point light from a source object.
@@ -51,9 +51,9 @@ namespace acid
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Vector3 GetOffset() const { return m_offset; }
+		Vector3 GetLocalOffset() const { return m_localOffset; }
 
-		void SetOffset(const Vector3 &offset) { m_offset = offset; }
+		void SetLocalOffset(const Vector3 &localOffset) { m_localOffset = localOffset; }
 
 		Vector3 GetPosition() const { return m_position; }
 	};

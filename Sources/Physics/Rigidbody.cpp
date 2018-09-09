@@ -10,9 +10,10 @@
 
 namespace acid
 {
-	Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3 &linearFactor, const Vector3 &angularFactor) :
+	Rigidbody::Rigidbody(const float &mass, const float &friction, const Transform &localTransform, const Vector3 &linearFactor, const Vector3 &angularFactor) :
 		m_mass(mass),
 		m_friction(friction),
+		m_localTransform(localTransform),
 		m_linearFactor(linearFactor),
 		m_angularFactor(angularFactor),
 		m_shape(nullptr),
@@ -57,6 +58,7 @@ namespace acid
 			m_body->setFriction(m_friction);
 			m_body->setRollingFriction(m_friction);
 			m_body->setSpinningFriction(m_friction);
+			// TODO: Set local transform.
 			m_body->setLinearFactor(Collider::Convert(m_linearFactor));
 			m_body->setAngularFactor(Collider::Convert(m_angularFactor));
 			m_body->setUserPointer(GetGameObject());
@@ -128,7 +130,7 @@ namespace acid
 	//  worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));
 	//  worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
 
-		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
+		m_shape->setLocalScaling(Collider::Convert(m_localTransform.GetScaling() * transform.GetScaling()));
 	//  m_body->getMotionState()->setWorldTransform(*worldTransform);
 		m_linearVelocity = Collider::Convert(m_body->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_body->getAngularVelocity());
@@ -140,6 +142,7 @@ namespace acid
 	{
 		m_mass = metadata.GetChild<float>("Mass");
 		m_friction = metadata.GetChild<float>("Friction");
+		m_localTransform = metadata.GetChild<Transform>("Local Transform");
 		m_linearFactor = metadata.GetChild<Vector3>("Linear Factor");
 		m_angularFactor = metadata.GetChild<Vector3>("Angular Factor");
 	}
@@ -148,6 +151,7 @@ namespace acid
 	{
 		metadata.SetChild<float>("Mass", m_mass);
 		metadata.SetChild<float>("Friction", m_friction);
+		metadata.SetChild<Transform>("Local Transform", m_localTransform);
 		metadata.SetChild<Vector3>("Linear Factor", m_linearFactor);
 		metadata.SetChild<Vector3>("Angular Factor", m_angularFactor);
 	}
@@ -192,6 +196,12 @@ namespace acid
 		m_body->setFriction(m_friction);
 		m_body->setRollingFriction(m_friction);
 		m_body->setSpinningFriction(m_friction);
+	}
+
+	void Rigidbody::SetLocalTransform(const Transform &localTransform)
+	{
+		m_localTransform = localTransform;
+		// TODO: Set local transform.
 	}
 
 	void Rigidbody::SetLinearFactor(const Vector3 &linearFactor)

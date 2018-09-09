@@ -1,7 +1,11 @@
 ﻿#pragma once
 
+#include <string>
+#include <vector>
+#include <vulkan/vulkan.h>
+#include "Renderer/Buffers/Buffer.hpp"
+#include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Resources/IResource.hpp"
-#include "Texture.hpp"
 
 namespace acid
 {
@@ -10,8 +14,8 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Cubemap :
 		public IResource,
-		public Buffer,
-		public IDescriptor
+		public IDescriptor,
+		public Buffer
 	{
 	private:
 		static const std::vector<std::string> SIDE_FILE_SUFFIXES;

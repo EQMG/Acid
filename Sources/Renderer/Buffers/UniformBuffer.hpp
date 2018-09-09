@@ -8,8 +8,8 @@
 namespace acid
 {
 	class ACID_EXPORT UniformBuffer :
-		public Buffer,
-		public IDescriptor
+		public IDescriptor,
+		public Buffer
 	{
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;

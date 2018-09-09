@@ -16,16 +16,16 @@ layout(set = 0, binding = 0) uniform UboScene
 	float fogDensity;
 	float fogGradient;
 
-	float shadowDistance;
-	float shadowTransition;
-	float shadowBias;
-	float shadowDarkness;
-	int shadowPCF;
+//	float shadowDistance;
+//	float shadowTransition;
+//	float shadowBias;
+//	float shadowDarkness;
+//	int shadowPCF;
 
 	int lightsCount;
 } scene;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerPosition;
+layout(set = 0, binding = 1) uniform sampler2D samplerDepth;
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 4) uniform sampler2D samplerMaterial;
@@ -39,7 +39,14 @@ layout(location = 0) out vec4 outColour;
 
 #include "Shaders/Lighting.glsl"
 
-float shadow(vec4 shadowCoords)
+vec3 depthToWorld(vec2 uv, float depth)
+{
+	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
+	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0f);
+	return p.xyz / p.w;
+}
+
+/*float shadow(vec4 shadowCoords)
 {
 	float total = 0.0f;
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
@@ -68,11 +75,12 @@ float shadow(vec4 shadowCoords)
    // }
 
 	return 1.0f - total;
-}
+}*/
 
 void main()
 {
-	vec3 worldPosition = texture(samplerPosition, inUv).rgb;
+	float depth = texture(samplerDepth, inUv).r;
+	vec3 worldPosition = depthToWorld(inUv, depth).xyz;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
 	vec4 diffuse = texture(samplerDiffuse, inUv);
@@ -100,11 +108,11 @@ void main()
 			float atten = attenuation(dist, scene.lightPositions[i].w);
 			vec3 radiance = scene.lightColours[i].rgb * atten;
 
-			irradiance += radiance * L0(normalize(normal), lightDir, viewDir, roughness, metallic, diffuse.rgb);
+			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
 		}
 
 #ifdef USE_IBL
-	//	irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normalize(normal), viewDir, roughness, metallic, diffuse.rgb);
+	//	irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
 #endif
 
 		outColour = vec4(irradiance, 1.0f);

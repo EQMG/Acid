@@ -1,5 +1,6 @@
 #include "MeshRender.hpp"
 
+#include "Materials/IMaterial.hpp"
 #include "Objects/GameObject.hpp"
 #include "Scenes/Scenes.hpp"
 

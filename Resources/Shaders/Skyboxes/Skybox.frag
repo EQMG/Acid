@@ -16,10 +16,9 @@ layout(set = 0, binding = 2) uniform samplerCube samplerCubemap;
 layout(location = 0) in vec3 inWorldPos;
 layout(location = 1) in vec3 inUv;
 
-layout(location = 0) out vec4 outPosition;
-layout(location = 1) out vec4 outDiffuse;
-layout(location = 2) out vec4 outNormal;
-layout(location = 3) out vec4 outMaterial;
+layout(location = 0) out vec4 outDiffuse;
+layout(location = 1) out vec4 outNormal;
+layout(location = 2) out vec4 outMaterial;
 
 void main() 
 {
@@ -29,7 +28,6 @@ void main()
 	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, inWorldPos.y);
 	colour = mix(colour, object.fogColour.rgb, fadeFactor);
 
-	outPosition = vec4(inWorldPos, 1.0);
 	outDiffuse = vec4(colour, 1.0f);
 	outNormal = vec4(0.0f);
 	outMaterial = vec4(0.0f);

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "Renderer/Renderpass/RenderpassCreate.hpp"
-#include "Textures/Texture.hpp"
 
 namespace acid
 {
