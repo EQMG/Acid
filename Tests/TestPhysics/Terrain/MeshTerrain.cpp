@@ -39,7 +39,7 @@ namespace test
 			return Vector3(x, 0.0f, z);
 		}
 
-		return Vector3(x, m_heightmap[row * m_vertexCount + col], z);
+		return Vector3(x, m_heightmap[col * m_vertexCount + row], z);
 	}
 
 	Vector3 MeshTerrain::GetNormal(const float &x, const float &z)

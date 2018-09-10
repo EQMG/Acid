@@ -364,18 +364,19 @@ namespace acid
 		-0.4090169985f, -0.3599685311f,
 	};
 
-	Noise::Noise(const int32_t &seed) :
+	Noise::Noise(const int32_t &seed, const float &frequency, const NoiseInterp &interp, const NoiseType &noiseType, const int32_t &octaves,
+	             const float &lacunarity, const float &gain, const NoiseFractal &fractalType, const float &fractalBounding) :
 		m_seed(seed),
-		m_perm(new uint8_t[512]),
-		m_perm12(new uint8_t[512]),
-		m_frequency(0.01f),
-		m_interp(INTERP_QUINTIC),
-		m_noiseType(TYPE_SIMPLEX),
-		m_octaves(3),
-		m_lacunarity(2.0f),
-		m_gain(0.5f),
-		m_fractalType(FRACTAL_FBM),
-		m_fractalBounding(0.0f),
+		m_perm(std::unique_ptr<uint8_t[]>(new uint8_t[512])),
+		m_perm12(std::unique_ptr<uint8_t[]>(new uint8_t[512])),
+		m_frequency(frequency),
+		m_interp(interp),
+		m_noiseType(noiseType),
+		m_octaves(octaves),
+		m_lacunarity(lacunarity),
+		m_gain(gain),
+		m_fractalType(fractalType),
+		m_fractalBounding(fractalBounding),
 		m_cellularDistanceFunction(CELLULAR_EUCLIDEAN),
 		m_cellularReturnType(CELLULAR_CELLVALUE),
 		m_cellularNoiseLookup(nullptr),
@@ -386,10 +387,6 @@ namespace acid
 	{
 		SetSeed(seed);
 		CalculateFractalBounding();
-	}
-
-	Noise::~Noise()
-	{
 	}
 
 	void Noise::SetSeed(const int32_t &seed)

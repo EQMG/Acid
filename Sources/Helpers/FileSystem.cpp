@@ -1,4 +1,5 @@
 #include "FileSystem.hpp"
+#include "String.hpp"
 
 #include <cassert>
 #include <algorithm>
@@ -42,7 +43,7 @@ namespace acid
 			return false;
 		}
 
-		if (createFolders)
+		if (createFolders && String::Contains(filepath, "\\/"))
 		{
 			CreateFolder(filepath.substr(0, filepath.find_last_of("\\/")));
 		}
@@ -147,6 +148,6 @@ namespace acid
 	{
 		std::string result = filepath.substr(filepath.find_last_of('.') + 1, filepath.size());
 		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
-		return result;
+		return String::Lowercase(result);
 	}
 }

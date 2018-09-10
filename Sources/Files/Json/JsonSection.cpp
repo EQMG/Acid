@@ -22,7 +22,7 @@ namespace acid
 
 		for (int32_t i = 0; i < indentation; i++)
 		{
-			indents << "  ";
+			indents << "\t";
 		}
 
 		builder << indents.str();

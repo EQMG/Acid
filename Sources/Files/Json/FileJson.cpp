@@ -88,7 +88,10 @@ namespace acid
 			}
 		}
 
-		JsonSection::Convert(*currentSection, m_parent.get(), true);
+		if (currentSection != nullptr)
+		{
+			JsonSection::Convert(*currentSection, m_parent.get(), true);
+		}
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

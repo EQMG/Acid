@@ -10,7 +10,7 @@
 namespace acid
 {
 	/// <summary>
-	/// A class that represents a structured game object.
+	/// A class that represents a objects that acts as a component container.
 	/// </summary>
 	class ACID_EXPORT GameObject
 	{
@@ -22,14 +22,14 @@ namespace acid
 		GameObject *m_parent;
 	public:
 		/// <summary>
-		/// Creates a new Game Object and store it into a structure.
+		/// Creates a new Game Object and stores it into a structure.
 		/// </summary>
 		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
 		GameObject(const Transform &transform, ISpatialStructure *structure = nullptr);
 
 		/// <summary>
-		/// Creates a new Game Object and store it into a structure.
+		/// Creates a new Game Object and stores it into a structure.
 		/// </summary>
 		/// <param name="filepath"> The file to load the component data from. </param>
 		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>

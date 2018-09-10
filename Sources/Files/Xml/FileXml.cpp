@@ -93,7 +93,10 @@ namespace acid
 			}
 		}
 
-		XmlNode::Convert(*currentSection, m_parent.get(), true);
+		if (currentSection != nullptr)
+		{
+			XmlNode::Convert(*currentSection, m_parent.get(), true);
+		}
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
