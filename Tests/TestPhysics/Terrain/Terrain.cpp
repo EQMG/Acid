@@ -8,20 +8,13 @@ namespace test
 {
 	Terrain::Terrain(const float &sideLength, const float &squareSize) :
 		IComponent(),
-		m_noise(Noise(25653345)),
+		m_noise(Noise(25653345, 0.01f, INTERP_QUINTIC, TYPE_PERLINFRACTAL, 5, 2.0f, 0.5f, FRACTAL_FBM)),
 		m_heightmap(std::vector<float>()),
 		m_sideLength(sideLength),
 		m_squareSize(squareSize),
 		m_minHeight(+std::numeric_limits<float>::infinity()),
 		m_maxHeight(-std::numeric_limits<float>::infinity())
 	{
-		m_noise.SetNoiseType(NoiseType::TYPE_PERLINFRACTAL);
-		m_noise.SetFrequency(0.01f);
-		m_noise.SetInterp(NoiseInterp::INTERP_QUINTIC);
-		m_noise.SetFractalType(NoiseFractal::FRACTAL_FBM);
-		m_noise.SetFractalOctaves(5);
-		m_noise.SetFractalLacunarity(2.0f);
-		m_noise.SetFractalGain(0.5f);
 	}
 
 	Terrain::~Terrain()
@@ -51,7 +44,6 @@ namespace test
 		}
 
 		colliderHeightfield->Initialize(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
-	//	rigidbody->GetLocalTransform().SetPosition(Vector3(-m_sideLength / 2.0f, 0.0f, -m_sideLength / 2.0f));
 		rigidbody->GetLocalTransform().SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 	}
 

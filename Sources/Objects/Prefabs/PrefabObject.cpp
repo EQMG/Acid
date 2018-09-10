@@ -46,6 +46,11 @@ namespace acid
 			m_file = std::make_unique<FileXml>(filename);
 			m_file->Load();
 			m_parent = m_file->GetParent()->FindChild("GameObjectDefinition");
+
+			if (m_parent == nullptr)
+			{
+				m_parent = m_file->GetParent()->AddChild(new Metadata("GameObjectDefinition"));
+			}
 		}
 	}
 
@@ -55,7 +60,7 @@ namespace acid
 
 	void PrefabObject::Write(const GameObject &gameObject)
 	{
-		m_file->Clear();
+		m_parent->ClearChildren();
 
 		for (auto &component : gameObject.GetComponents())
 		{

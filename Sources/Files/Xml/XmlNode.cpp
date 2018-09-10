@@ -25,8 +25,10 @@ namespace acid
 			indents << "\t";
 		}
 
+		std::string name = String::Replace(source.GetName(), " ", "_");
+
 		std::stringstream nameAttributes;
-		nameAttributes << source.GetName();
+		nameAttributes << name;
 
 		for (auto &attribute : source.GetAttributes())
 		{
@@ -55,7 +57,7 @@ namespace acid
 			return;
 		}
 
-		builder << "<" << nameAndAttribs << ">" << source.GetValue();
+		builder << "<" << nameAndAttribs << ">" << source.GetString();
 
 		if (!source.GetChildren().empty())
 		{
@@ -69,7 +71,7 @@ namespace acid
 			builder << indents.str();
 		}
 
-		builder << "</" << source.GetName() << ">\n";
+		builder << "</" << name << ">\n";
 	}
 
 	Metadata *XmlNode::Convert(const XmlNode &source, Metadata *parent, const bool &isTopSection)

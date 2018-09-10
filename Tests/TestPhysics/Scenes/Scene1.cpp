@@ -24,6 +24,7 @@
 #include <Terrain/MaterialTerrain.hpp>
 #include <Physics/ColliderCapsule.hpp>
 #include <Uis/Uis.hpp>
+#include <Objects/Prefabs/PrefabObject.hpp>
 #include "Height/HeightDespawn.hpp"
 #include "FpsCamera.hpp"
 
@@ -82,6 +83,10 @@ namespace test
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
+
+		PrefabObject prefabPlane = PrefabObject("Plane.xml");
+		prefabPlane.Write(*plane);
+		prefabPlane.Save();
 
 		auto terrain = new GameObject(Transform());
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
