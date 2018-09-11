@@ -3,56 +3,57 @@
 namespace acid
 {
 	RendererRegister::RendererRegister() :
-		m_stages(std::map<float, std::vector<std::shared_ptr<IRenderer>>>())
+		m_stages(std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>>())
 	{
 	}
 
-	std::shared_ptr<IRenderer> RendererRegister::AddRenderer(const std::shared_ptr<IRenderer> &renderer)
+	IRenderer *RendererRegister::AddRenderer(IRenderer *renderer)
 	{
 		if (renderer == nullptr)
 		{
 			return nullptr;
 		}
 
-		float key = GetStageKey(renderer->GetGraphicsStage());
-		auto renderers = m_stages.find(key);
+		bool emplaced = false;
 
-		if (renderers != m_stages.end())
+		do 
 		{
-			(*renderers).second.emplace_back(renderer);
-		}
-		else
-		{
-			m_stages.emplace(key, std::vector<std::shared_ptr<IRenderer>>{renderer});
-		}
+			auto stage = m_stages.find(renderer->GetGraphicsStage());
+
+			if (stage == m_stages.end())
+			{
+				m_stages.emplace(renderer->GetGraphicsStage(), std::vector<std::unique_ptr<IRenderer>>());
+			}
+			else
+			{
+				(*stage).second.emplace_back(renderer);
+				emplaced = true;
+			}
+		} while (!emplaced);
 
 		return renderer;
 	}
 
-	bool RendererRegister::RemoveRenderer(const std::shared_ptr<IRenderer> &renderer)
+	bool RendererRegister::RemoveRenderer(IRenderer *renderer)
 	{
-		for (auto &[key, stage] : m_stages)
+		for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 		{
-			for (auto it = stage.begin(); it != stage.end(); ++it)
+			for (auto it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it)
 			{
-				if (*it == renderer)
+				if ((*it2).get() == renderer)
 				{
-					stage.erase(it);
+					(*it).second.erase(it2);
+
+					if ((*it).second.empty())
+					{
+						m_stages.erase(it);
+					}
+
 					return true;
 				}
 			}
 		}
 
 		return false;
-	}
-
-	float RendererRegister::GetStageKey(const uint32_t &renderpass, const uint32_t &subpass)
-	{
-		return static_cast<float>(renderpass) + (static_cast<float>(subpass) / 100.0f);
-	}
-
-	float RendererRegister::GetStageKey(const GraphicsStage &graphicsStage)
-	{
-		return GetStageKey(graphicsStage.GetRenderpass(), graphicsStage.GetSubpass());
 	}
 }

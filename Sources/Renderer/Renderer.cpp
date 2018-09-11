@@ -55,49 +55,66 @@ namespace acid
 		m_managerRender->Update();
 
 		auto camera = Scenes::Get()->GetCamera();
-		auto stages = m_rendererRegister.GetStages();
+		auto &stages = m_rendererRegister.GetStages();
 		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +std::numeric_limits<float>::infinity());
 
-		for (uint32_t stage = 0; stage < m_renderStages.size(); stage++)
+		if (stages.empty())
 		{
-			// Starts Rendering.
-			auto startResult = Renderer::Get()->StartRenderpass(stage);
+			return;
+		}
 
-			if (!startResult)
+		int32_t renderpass = -1;
+		int32_t subpass = 0;
+
+		for (auto &[key, renderers] : stages)
+		{
+			if (renderpass != key.GetRenderpass())
 			{
-				return;
-			}
-
-			// Renders subpasses.
-			uint32_t subpassCount = Renderer::Get()->GetRenderStage(stage)->SubpassCount();
-
-			for (uint32_t subpass = 0; subpass < subpassCount; subpass++)
-			{
-				float key = m_rendererRegister.GetStageKey(stage, subpass);
-				auto renderers = stages.find(key);
-
-				if (renderers != stages.end())
+				// Ends the previous renderpass.
+				if (renderpass != -1)
 				{
-					for (auto &renderer : (*renderers).second)
-					{
-						if (!renderer->IsEnabled())
-						{
-							continue;
-						}
-
-						renderer->Render(*m_commandBuffer, clipPlane, *camera);
-					}
+					EndRenderpass(renderpass);
 				}
 
-				if (subpass != subpassCount - 1)
+				renderpass = key.GetRenderpass();
+				subpass = 0;
+
+				// Starts the next renderpass.
+				auto startResult = StartRenderpass(renderpass);
+
+				if (!startResult)
+				{
+					return;
+				}
+			}
+
+			auto renderStage = GetRenderStage(renderpass);
+
+			// Changes the subpass.
+			if (subpass != key.GetSubpass())
+			{
+				if (subpass != renderStage->SubpassCount() - 1)
 				{
 					Renderer::Get()->NextSubpass();
 				}
+
+				subpass = key.GetSubpass();
 			}
 
-			// Ends Rendering.
-			Renderer::Get()->EndRenderpass(stage);
+			// Renders subpass renderers.
+			for (auto &renderer : renderers)
+			{
+				if (!renderer->IsEnabled())
+				{
+					continue;
+				}
+
+				renderer->Render(*m_commandBuffer, clipPlane, *camera);
+			}
 		}
+
+		// Ends the last renderpass.
+		EndRenderpass(renderpass);
 	}
 
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)

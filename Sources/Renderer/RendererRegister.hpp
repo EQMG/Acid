@@ -2,6 +2,7 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 #include "IRenderer.hpp"
 
 namespace acid
@@ -12,7 +13,7 @@ namespace acid
 	class ACID_EXPORT RendererRegister
 	{
 	private:
-		std::map<float, std::vector<std::shared_ptr<IRenderer>>> m_stages;
+		std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>> m_stages;
 	public:
 		RendererRegister();
 
@@ -20,7 +21,7 @@ namespace acid
 
 		RendererRegister& operator=(const RendererRegister&) = delete;
 
-		std::map<float, std::vector<std::shared_ptr<IRenderer>>> GetStages() const { return m_stages; }
+		const std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>> &GetStages() const { return m_stages; }
 
 		void Clear() { m_stages.clear(); }
 
@@ -31,15 +32,15 @@ namespace acid
 		/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
 		/// <returns> The found renderer. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetRenderer(const bool &allowDisabled = false)
+		T *GetRenderer(const bool &allowDisabled = false)
 		{
-			std::shared_ptr<T> alternative = nullptr;
+			T *alternative = nullptr;
 
-			for (auto &[key, stage] : m_stages)
+			for (auto &[key, renderers] : m_stages)
 			{
-				for (auto &renderer : stage)
+				for (auto &renderer : renderers)
 				{
-					auto casted = std::dynamic_pointer_cast<T>(renderer);
+					auto casted = dynamic_cast<T *>(renderer.get());
 
 					if (casted != nullptr)
 					{
@@ -62,7 +63,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to add. </param>
 		/// <returns> The added renderer. </returns>
-		std::shared_ptr<IRenderer> AddRenderer(const std::shared_ptr<IRenderer> &renderer);
+		IRenderer *AddRenderer(IRenderer *renderer);
 
 		/// <summary>
 		/// Creates a renderer by type to be added this register.
@@ -71,9 +72,9 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added renderer. </returns>
 		template<typename T, typename... Args>
-		std::shared_ptr<T> AddRenderer(Args &&... args)
+		T *AddRenderer(Args &&... args)
 		{
-			auto created = std::make_shared<T>(std::forward<Args>(args)...);
+			auto created = new T(std::forward<Args>(args)...);
 			AddRenderer(created);
 			return created;
 		}
@@ -83,7 +84,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to remove. </param>
 		/// <returns> If the renderer was removed. </returns>
-		bool RemoveRenderer(const std::shared_ptr<IRenderer> &renderer);
+		bool RemoveRenderer(IRenderer *renderer);
 
 		/// <summary>
 		/// Removes a renderer by type from this register.
@@ -93,25 +94,25 @@ namespace acid
 		template<typename T>
 		bool RemoveRenderer()
 		{
-			for (auto &stage : m_stages)
+			for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 			{
-				for (auto it = stage.second.begin(); it != stage.second.end(); ++it)
+				for (auto it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it)
 				{
-					auto casted = std::dynamic_pointer_cast<T>(*it);
+					auto casted = dynamic_cast<T *>((*it2).get());
 
 					if (casted != nullptr)
 					{
-						stage.second.erase(it);
+						(*it).second.erase(it2);
+
+						if ((*it).second.empty())
+						{
+							m_stages.erase(it);
+						}
+
 						return true;
 					}
 				}
 			}
-
-			return false;
 		}
-
-		float GetStageKey(const uint32_t &renderpass, const uint32_t &subpass);
-
-		float GetStageKey(const GraphicsStage &graphicsStage);
 	};
 }

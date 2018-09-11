@@ -129,13 +129,15 @@ namespace acid
 		template<typename T>
 		bool RemoveComponent()
 		{
-			for (auto &component : m_components)
+			for (auto it = m_components.begin(); it != m_components.end(); ++it)
 			{
-				auto casted = dynamic_cast<T *>(component.get());
+				auto casted = dynamic_cast<T *>((*it).get());
 
 				if (casted != nullptr)
 				{
-					RemoveComponent(component.get());
+					(*it)->SetGameObject(nullptr);
+
+					m_components.erase(it);
 					return true;
 				}
 			}

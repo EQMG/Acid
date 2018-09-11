@@ -47,8 +47,8 @@ namespace acid
 			return nullptr;
 		}
 
-		float offset = update + (0.01f * static_cast<float>(m_modules.size()));
-		m_modules.emplace(offset, module);
+		float key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
+		m_modules.emplace(key, module);
 		return module;
 	}
 

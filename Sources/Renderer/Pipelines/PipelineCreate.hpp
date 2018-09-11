@@ -41,6 +41,11 @@ namespace acid
 		{
 			return !(*this == other);
 		}
+
+		bool operator<(const GraphicsStage &other) const
+		{
+			return m_renderpass < other.m_renderpass || m_subpass < other.m_subpass;
+		}
 	};
 
 	class ACID_EXPORT VertexInput
