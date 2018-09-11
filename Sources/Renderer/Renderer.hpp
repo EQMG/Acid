@@ -71,14 +71,14 @@ namespace acid
 		/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
 		/// <returns> The found renderer. </returns>
 		template<typename T>
-		std::shared_ptr<T> GetRenderer(const bool &allowDisabled = false) { return m_rendererRegister.GetRenderer<T>(allowDisabled); }
+		T *GetRenderer(const bool &allowDisabled = false) { return m_rendererRegister.GetRenderer<T>(allowDisabled); }
 
 		/// <summary>
 		/// Adds a renderer to this register.
 		/// </summary>
 		/// <param name="renderer"> The renderer to add. </param>
 		/// <returns> The added renderer. </returns>
-		std::shared_ptr<IRenderer> AddRenderer(const std::shared_ptr<IRenderer> &renderer) { return m_rendererRegister.AddRenderer(renderer); }
+		IRenderer *AddRenderer(IRenderer *renderer) { return m_rendererRegister.AddRenderer(renderer); }
 
 		/// <summary>
 		/// Creates a renderer by type to be added this register.
@@ -87,14 +87,14 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added renderer. </returns>
 		template<typename T, typename... Args>
-		std::shared_ptr<T> AddRenderer(Args &&... args) { return m_rendererRegister.AddRenderer<T>(std::forward<Args>(args)...); }
+		T *AddRenderer(Args &&... args) { return m_rendererRegister.AddRenderer<T>(std::forward<Args>(args)...); }
 
 		/// <summary>
 		/// Removes a renderer from this register.
 		/// </summary>
 		/// <param name="renderer"> The renderer to remove. </param>
 		/// <returns> If the renderer was removed. </returns>
-		bool RemoveRenderer(const std::shared_ptr<IRenderer> &renderer) { return m_rendererRegister.RemoveRenderer(renderer); }
+		bool RemoveRenderer(IRenderer *renderer) { return m_rendererRegister.RemoveRenderer(renderer); }
 
 		/// <summary>
 		/// Removes a renderer by type from this register.
@@ -103,8 +103,6 @@ namespace acid
 		/// <returns> If the renderer was removed. </returns>
 		template<typename T>
 		bool RemoveRenderer() { return m_rendererRegister.RemoveRenderer<T>(); }
-
-		const std::vector<std::unique_ptr<RenderStage>> &GetRenderStages() const { return m_renderStages; }
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
