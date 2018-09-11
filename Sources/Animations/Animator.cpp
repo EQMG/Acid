@@ -73,12 +73,12 @@ namespace acid
 	{
 		auto currentPose = std::map<std::string, Matrix4>();
 
-		for (auto &joint : previousFrame.GetPose())
+		for (auto &[name, joint] : previousFrame.GetPose())
 		{
-			JointTransform previousTransform = previousFrame.GetPose().find(joint.first)->second;
-			JointTransform nextTransform = nextFrame.GetPose().find(joint.first)->second;
+			JointTransform previousTransform = previousFrame.GetPose().find(name)->second;
+			JointTransform nextTransform = nextFrame.GetPose().find(name)->second;
 			JointTransform currentTransform = JointTransform::Interpolate(previousTransform, nextTransform, progression);
-			currentPose.emplace(joint.first, currentTransform.GetLocalTransform());
+			currentPose.emplace(name, currentTransform.GetLocalTransform());
 		}
 
 		return currentPose;

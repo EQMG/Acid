@@ -55,9 +55,9 @@ namespace acid
 		{
 			ss << "[";
 
-			for (auto &attribute : metadata.GetAttributes())
+			for (auto &[name, value] : metadata.GetAttributes())
 			{
-				ss << attribute.first << "," << attribute.second;
+				ss << name << "," << value;
 			}
 
 			ss << "],";

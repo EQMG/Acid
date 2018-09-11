@@ -7,10 +7,9 @@ namespace test
 {
 	MaterialTerrain::MaterialTerrain(const std::shared_ptr<Texture> &textureR, const std::shared_ptr<Texture> &textureG) :
 		IMaterial(),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}))),
 		m_textureR(textureR),
-		m_textureG(textureG)
+		m_textureG(textureG),
+		m_material(nullptr)
 	{
 	}
 
@@ -20,6 +19,8 @@ namespace test
 
 	void MaterialTerrain::Start()
 	{
+		m_material = PipelineMaterial::Resource({ 1, 0 }, PipelineCreate({ "Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag" },
+			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}));
 	}
 
 	void MaterialTerrain::Update()

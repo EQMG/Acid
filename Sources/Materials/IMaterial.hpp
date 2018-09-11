@@ -26,6 +26,6 @@ namespace acid
 
 		virtual void PushDescriptors(DescriptorsHandler &descriptorSet) = 0;
 
-		virtual std::shared_ptr<PipelineMaterial> GetMaterial() const = 0;
+		virtual std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const = 0;
 	};
 }

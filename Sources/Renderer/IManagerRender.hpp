@@ -2,7 +2,6 @@
 
 #include <map>
 #include <memory>
-#include "Pipelines/PipelineCreate.hpp"
 #include "Renderpass/RenderpassCreate.hpp"
 
 namespace acid
@@ -15,78 +14,29 @@ namespace acid
 	class ACID_EXPORT IManagerRender
 	{
 	private:
-		std::map<float, std::vector<std::shared_ptr<IRenderer>>> m_stages;
+		std::vector<RenderpassCreate> m_renderpassCreates;
+		bool m_started;
 	public:
-		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreate);
+		/// <summary>
+		/// Creates a new render manager.
+		/// </summary>
+		/// <param name="renderpassCreates"> The renderpass pipeline to create for this manager. </param>
+		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreates);
+
+		/// <summary>
+		/// Run when starting the renderer manager.
+		/// </summary>
+		virtual void Start() = 0;
 
 		/// <summary>
 		/// Run when updating the renderer manager.
 		/// </summary>
 		virtual void Update() = 0;
 
-		std::map<float, std::vector<std::shared_ptr<IRenderer>>> GetStages() const { return m_stages; }
+		std::vector<RenderpassCreate> GetRenderpassCreates() const { return m_renderpassCreates; }
 
-		template<typename T>
-		std::shared_ptr<T> GetRenderer(const bool &allowDisabled = false)
-		{
-			std::shared_ptr<T> alternative = nullptr;
+		ACID_HIDDEN bool IsStarted() const { return m_started; };
 
-			for (auto &stage : m_stages)
-			{
-				for (auto &renderer : stage.second)
-				{
-					auto casted = std::dynamic_pointer_cast<T>(renderer);
-
-					if (casted != nullptr)
-					{
-						if (!allowDisabled && !casted->IsEnabled())
-						{
-							alternative = casted;
-							continue;
-						}
-
-						return casted;
-					}
-				}
-			}
-
-			return alternative;
-		}
-
-		std::shared_ptr<IRenderer> AddRenderer(const std::shared_ptr<IRenderer> &renderer);
-
-		template<typename T, typename... Args>
-		std::shared_ptr<T> AddRenderer(Args &&... args)
-		{
-			auto created = std::make_shared<T>(std::forward<Args>(args)...);
-			AddRenderer(created);
-			return created;
-		}
-
-		std::shared_ptr<IRenderer> RemoveRenderer(const std::shared_ptr<IRenderer> &renderer);
-
-		template<typename T>
-		std::shared_ptr<T> RemoveRenderer()
-		{
-			for (auto &stage : m_stages)
-			{
-				for (auto &renderer : stage.second)
-				{
-					auto casted = std::dynamic_pointer_cast<T>(renderer);
-
-					if (casted != nullptr)
-					{
-						RemoveRenderer(renderer);
-						return renderer;
-					}
-				}
-			}
-
-			return nullptr;
-		}
-
-		float GetStageKey(const uint32_t &renderpass, const uint32_t &subpass);
-
-		float GetStageKey(const GraphicsStage &graphicsStage);
+		ACID_HIDDEN void SetStarted(const bool &started) { m_started = started; }
 	};
 }

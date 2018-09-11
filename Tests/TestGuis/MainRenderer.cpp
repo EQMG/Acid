@@ -22,12 +22,12 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE})
 	{
-		AddRenderer<RendererGuis>(GraphicsStage(0, 0));
-		AddRenderer<RendererFonts>(GraphicsStage(0, 0));
 	}
 
-	MainRenderer::~MainRenderer()
+	void MainRenderer::Start()
 	{
+		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(0, 0));
+		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(0, 0));
 	}
 
 	void MainRenderer::Update()

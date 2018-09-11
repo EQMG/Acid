@@ -50,24 +50,32 @@ namespace acid
 		auto material = GetGameObject()->GetComponent<IMaterial>();
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
-		if (material == nullptr || mesh == nullptr || mesh->GetModel() == nullptr)
+		if (material == nullptr || mesh == nullptr)
 		{
 			return;
 		}
 
-		if (material->GetMaterial()->GetPipeline().GetGraphicsStage() != graphicsStage)
+		auto &meshModel = mesh->GetModel();
+		auto &materialPipeline = material->GetMaterialPipeline();
+
+		if (meshModel == nullptr || materialPipeline->GetGraphicsStage() != graphicsStage)
 		{
 			return;
 		}
 
 		// Binds the material pipeline.
-		material->GetMaterial()->GetPipeline().BindPipeline(commandBuffer);
+		bool bindSuccess = materialPipeline->BindPipeline(commandBuffer);
+
+		if (!bindSuccess)
+		{
+			return;
+		}
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("UboObject", m_uniformObject);
 		material->PushDescriptors(m_descriptorSet);
-		bool updateSuccess = m_descriptorSet.Update(material->GetMaterial()->GetPipeline());
+		bool updateSuccess = m_descriptorSet.Update(*materialPipeline->GetPipeline());
 
 		if (!updateSuccess)
 		{
@@ -76,7 +84,7 @@ namespace acid
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);
-		mesh->GetModel()->CmdRender(commandBuffer);
+		meshModel->CmdRender(commandBuffer);
 	}
 
 	void MeshRender::Decode(const Metadata &metadata)
