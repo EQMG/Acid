@@ -12,7 +12,7 @@ namespace test
 	public:
 		MainRenderer();
 
-		~MainRenderer();
+		void Start() override;
 
 		void Update() override;
 	};

@@ -7,6 +7,9 @@ namespace acid
 {
 	class GameObject;
 
+	/// <summary>
+	/// A class that represents a functional component attached to game object.
+	/// </summary>
 	class ACID_EXPORT IComponent
 	{
 	private:
@@ -21,24 +24,46 @@ namespace acid
 		{
 		}
 
+		/// <summary>
+		/// Run when starting the component if <seealso cref="#m_started"/> is false.
+		/// </summary>
 		virtual void Start()
 		{
 		}
 
+		/// <summary>
+		/// Run when updating the game object this is attached to.
+		/// </summary>
 		virtual void Update()
 		{
 		}
 
+		/// <summary>
+		/// Used to decode this component from a loaded data format.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode from. </param>
 		virtual void Decode(const Metadata &metadata)
 		{
 		}
 
+		/// <summary>
+		/// Used to encode this component into a data format.
+		/// </summary>
+		/// <param name="metadata"> The metadata to encode into. </param>
 		virtual void Encode(Metadata &metadata) const
 		{
 		}
 
+		/// <summary>
+		/// Gets the game object this components is attached to.
+		/// </summary>
+		/// <returns> The registered game object. </returns>
 		GameObject *GetGameObject() const { return m_gameObject; }
 
+		/// <summary>
+		/// Sets the game object this components is attached to.
+		/// </summary>
+		/// <param name="gameObject"> The new game object this is attached to. </param>
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
 
 		ACID_HIDDEN bool IsStarted() const { return m_started; };

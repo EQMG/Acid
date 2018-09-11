@@ -8,6 +8,7 @@ namespace acid
 {
 	Renderer::Renderer() :
 		m_managerRender(nullptr),
+		m_rendererRegister(RendererRegister()),
 		m_renderStages(std::vector<std::unique_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
 		m_fenceSwapchainImage(VK_NULL_HANDLE),
@@ -43,10 +44,18 @@ namespace acid
 			return;
 		}
 
+		if (!m_managerRender->IsStarted())
+		{
+			m_rendererRegister.Clear();
+			CreateRenderpass(m_managerRender->GetRenderpassCreates());
+			m_managerRender->Start();
+			m_managerRender->SetStarted(true);
+		}
+
 		m_managerRender->Update();
 
 		auto camera = Scenes::Get()->GetCamera();
-		auto stages = m_managerRender->GetStages();
+		auto stages = m_rendererRegister.GetStages();
 		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +std::numeric_limits<float>::infinity());
 
 		for (uint32_t stage = 0; stage < m_renderStages.size(); stage++)
@@ -64,7 +73,7 @@ namespace acid
 
 			for (uint32_t subpass = 0; subpass < subpassCount; subpass++)
 			{
-				float key = m_managerRender->GetStageKey(stage, subpass);
+				float key = m_rendererRegister.GetStageKey(stage, subpass);
 				auto renderers = stages.find(key);
 
 				if (renderers != stages.end())
@@ -176,6 +185,16 @@ namespace acid
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
+	}
+
+	RenderStage *Renderer::GetRenderStage(const uint32_t &index) const
+	{
+		if (m_renderStages.empty() || m_renderStages.size() < index)
+		{
+			return nullptr;
+		}
+
+		return m_renderStages.at(index).get();
 	}
 
 	void Renderer::CreateFences()

@@ -30,9 +30,9 @@ namespace acid
 		std::stringstream nameAttributes;
 		nameAttributes << name;
 
-		for (auto &attribute : source.GetAttributes())
+		for (auto &[name, value] : source.GetAttributes())
 		{
-			nameAttributes << " " << attribute.first << "=\"" << attribute.second << "\"";
+			nameAttributes << " " << name << "=\"" << value << "\"";
 		}
 
 		std::string nameAndAttribs = String::Trim(nameAttributes.str());

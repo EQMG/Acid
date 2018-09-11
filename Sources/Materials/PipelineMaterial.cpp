@@ -1,6 +1,7 @@
 #include "PipelineMaterial.hpp"
 
 #include "Resources/Resources.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -20,12 +21,29 @@ namespace acid
 
 	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
 		m_filename(ToFilename(graphicsStage, pipelineCreate)),
-		m_pipeline(Pipeline(graphicsStage, pipelineCreate))
+		m_graphicsStage(graphicsStage),
+		m_pipelineCreate(pipelineCreate),
+		m_renderStage(nullptr),
+		m_pipeline(nullptr)
 	{
 	}
 
-	PipelineMaterial::~PipelineMaterial()
+	bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 	{
+		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+
+		if (renderStage == nullptr)
+		{
+			return false;
+		}
+		else if (m_renderStage != renderStage)
+		{
+			m_renderStage = renderStage;
+			m_pipeline.reset(new Pipeline(m_graphicsStage, m_pipelineCreate));
+		}
+
+		m_pipeline->BindPipeline(commandBuffer);
+		return true;
 	}
 
 	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)

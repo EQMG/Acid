@@ -40,9 +40,9 @@ namespace acid
 		template<typename T>
 		T *GetModule() const
 		{
-			for (auto &module : m_modules)
+			for (auto &[key, module] : m_modules)
 			{
-				auto casted = dynamic_cast<T *>(module.second.get());
+				auto casted = dynamic_cast<T *>(module.get());
 
 				if (casted != nullptr)
 				{

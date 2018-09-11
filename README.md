@@ -25,7 +25,7 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC)
 This is a list of current features in Acid:
  * On the fly GLSL to SPIR-V compiler
  * Modular rendering and compute pipeline
- * Deferred PBR+IBL rendering
+ * Deferred PBR rendering
  * Bullet physics
  * Frustum and Occlusion culling
  * Resource management

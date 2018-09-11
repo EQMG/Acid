@@ -12,8 +12,7 @@ namespace acid
 		m_blend(1.0f),
 		m_fogColour(Colour()),
 		m_fogLimits(Vector2(-1000000.0f, -1000000.0f)),
-		m_material(PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {})))
+		m_material(nullptr)
 	{
 	}
 
@@ -23,6 +22,8 @@ namespace acid
 
 	void MaterialSkybox::Start()
 	{
+		m_material = PipelineMaterial::Resource({ 1, 0 }, PipelineCreate({ "Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag" },
+			VertexModel::GetVertexInput(), PIPELINE_MODE_MRT_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {}));
 	}
 
 	void MaterialSkybox::Update()

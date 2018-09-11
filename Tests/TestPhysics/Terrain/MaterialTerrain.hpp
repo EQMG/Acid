@@ -12,10 +12,10 @@ namespace test
 		public IMaterial
 	{
 	private:
-		std::shared_ptr<PipelineMaterial> m_material;
-
 		std::shared_ptr<Texture> m_textureR;
 		std::shared_ptr<Texture> m_textureG;
+
+		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
 
@@ -57,6 +57,6 @@ namespace test
 			}
 		}
 
-		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_material; }
 	};
 }

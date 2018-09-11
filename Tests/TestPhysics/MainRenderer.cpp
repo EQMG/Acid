@@ -48,24 +48,24 @@ namespace test
 	MainRenderer::MainRenderer() :
 		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
-	//	AddRenderer<RendererShadows>(GraphicsStage(0, 0));
-
-		AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
-	//	AddRenderer<RendererParticles>(GraphicsStage(1, 0));
-
-		AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
-		AddRenderer<FilterDefault>(GraphicsStage(1, 2));
-	//	AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-	//	AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
-	//	AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
-	//	AddRenderer<FilterGrain>(GraphicsStage(1, 2));
-	//	AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
-		AddRenderer<RendererGuis>(GraphicsStage(1, 2));
-		AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}
 
-	MainRenderer::~MainRenderer()
+	void MainRenderer::Start()
 	{
+	//	Renderer::Get()->AddRenderer<RendererShadows>(GraphicsStage(0, 0));
+
+		Renderer::Get()->AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
+	//	Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 0));
+
+		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
+		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}
 
 	void MainRenderer::Update()

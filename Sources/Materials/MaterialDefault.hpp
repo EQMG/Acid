@@ -109,6 +109,6 @@ namespace acid
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-		std::shared_ptr<PipelineMaterial> GetMaterial() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_material; }
 	};
 }

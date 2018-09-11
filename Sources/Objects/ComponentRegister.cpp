@@ -69,11 +69,11 @@ namespace acid
 
 	std::optional<std::string> ComponentRegister::FindComponentName(IComponent *compare)
 	{
-		for (auto &component : m_components)
+		for (auto &[name, component] : m_components)
 		{
-			if (component.second.m_isSame(compare))
+			if (component.m_isSame(compare))
 			{
-				return component.first;
+				return name;
 			}
 		}
 
