@@ -4,17 +4,20 @@
 
 layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inCoords1;
+layout(location = 1) in vec2 inCoords2;
+layout(location = 2) in vec3 inColourOffset;
+layout(location = 3) in float inBlendFactor;
+layout(location = 4) in float inTransparency;
 
-layout(location = 0) out vec4 outDiffuse;
-layout(location = 1) out vec4 outNormal;
-layout(location = 2) out vec4 outMaterial;
+layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	vec3 colour = texture(samplerColour, inUv).rgb;
+	vec4 colour1 = texture(samplerColour, inCoords1);
+	vec4 colour2 = texture(samplerColour, inCoords2);
 
-	outDiffuse = vec4(colour, 1.0f);
-	outNormal = vec4(0.0f);
-	outMaterial = vec4(0.0f);
+	outColour = mix(colour1, colour2, inBlendFactor);
+	outColour.rgb *= inColourOffset;
+	outColour.a -= inTransparency;
 }

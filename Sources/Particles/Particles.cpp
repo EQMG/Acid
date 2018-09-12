@@ -36,6 +36,8 @@ namespace acid
 
 				++it1;
 			}
+
+			std::sort((*it).second.begin(), (*it).second.end());
 		}
 	}
 

@@ -36,6 +36,6 @@ namespace acid
 
 		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
 
-		static VertexInput GetVertexInput();
+		static VertexInput GetVertexInput(const uint32_t &binding = 0);
 	};
 }

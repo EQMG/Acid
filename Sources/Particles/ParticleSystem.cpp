@@ -97,65 +97,6 @@ namespace acid
 		// TODO: m_randomRotation, m_direction, m_directionDeviation, m_speedError, m_lifeError, m_scaleError
 	}
 
-	std::optional<Particle> ParticleSystem::EmitParticle()
-	{
-		if (m_spawn == nullptr)
-		{
-			return {};
-		}
-
-		Vector3 velocity = Vector3();
-		float delta = Engine::Get()->GetDelta();
-		velocity = GetGameObject()->GetTransform().GetPosition() - m_lastPosition;
-		m_lastPosition = GetGameObject()->GetTransform().GetPosition();
-		velocity /= delta;
-
-		if (m_direction != 0.0f)
-		{
-			velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
-		}
-		else
-		{
-			velocity = GenerateRandomUnitVector();
-		}
-
-		velocity = velocity.Normalize();
-		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedError, 1.0f + m_speedError));
-
-		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int32_t>(m_types.size())))));
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeError, 1.0f + m_lifeError));
-		Vector3 spawnPos = Vector3();
-		spawnPos = GetGameObject()->GetTransform().GetPosition() + m_systemOffset;
-		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
-		return Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
-	}
-
-	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
-	{
-		return average + ((Maths::Random(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
-	}
-
-	float ParticleSystem::GenerateRotation() const
-	{
-		if (m_randomRotation)
-		{
-			return Maths::Random(0.0f, 360.0f);
-		}
-
-		return 0.0f;
-	}
-
-	Vector3 ParticleSystem::GenerateRandomUnitVector() const
-	{
-		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
-		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
-		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-		float x = rootOneMinusZSquared * std::cos(theta);
-		float y = rootOneMinusZSquared * std::sin(theta);
-		return Vector3(x, y, z);
-	}
-
 	void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
 	{
 		if (std::find(m_types.begin(), m_types.end(), type) != m_types.end())
@@ -220,5 +161,65 @@ namespace acid
 	{
 		m_direction = direction;
 		m_directionDeviation = deviation * PI;
+	}
+
+	std::optional<Particle> ParticleSystem::EmitParticle()
+	{
+		if (m_spawn == nullptr)
+		{
+			return {};
+		}
+
+		Vector3 velocity = Vector3();
+		float delta = Engine::Get()->GetDelta();
+		velocity = GetGameObject()->GetTransform().GetPosition() - m_lastPosition;
+		m_lastPosition = GetGameObject()->GetTransform().GetPosition();
+		velocity /= delta;
+
+		if (m_direction != 0.0f)
+		{
+			velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
+		}
+		else
+		{
+			velocity = GenerateRandomUnitVector();
+		}
+
+		velocity = velocity.Normalize();
+		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedError, 1.0f + m_speedError));
+
+		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int32_t>(m_types.size())))));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleError, 1.0f + m_scaleError));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeError, 1.0f + m_lifeError));
+
+		Vector3 spawnPos;
+		spawnPos = GetGameObject()->GetTransform().GetPosition() + m_systemOffset;
+		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
+		return Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
+	}
+
+	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
+	{
+		return average + ((Maths::Random(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
+	}
+
+	float ParticleSystem::GenerateRotation() const
+	{
+		if (m_randomRotation)
+		{
+			return Maths::Random(0.0f, 360.0f);
+		}
+
+		return 0.0f;
+	}
+
+	Vector3 ParticleSystem::GenerateRandomUnitVector() const
+	{
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
+		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+		float x = rootOneMinusZSquared * std::cos(theta);
+		float y = rootOneMinusZSquared * std::sin(theta);
+		return Vector3(x, y, z);
 	}
 }

@@ -63,24 +63,24 @@ namespace acid
 			return;
 		}
 
-		int32_t renderpass = -1;
-		int32_t subpass = 0;
+		std::optional<uint32_t> renderpass = {};
+		uint32_t subpass = 0;
 
 		for (auto &[key, renderers] : stages)
 		{
 			if (renderpass != key.GetRenderpass())
 			{
 				// Ends the previous renderpass.
-				if (renderpass != -1)
+				if (renderpass)
 				{
-					EndRenderpass(renderpass);
+					EndRenderpass(*renderpass);
 				}
 
 				renderpass = key.GetRenderpass();
 				subpass = 0;
 
 				// Starts the next renderpass.
-				auto startResult = StartRenderpass(renderpass);
+				auto startResult = StartRenderpass(*renderpass);
 
 				if (!startResult)
 				{
@@ -88,7 +88,7 @@ namespace acid
 				}
 			}
 
-			auto renderStage = GetRenderStage(renderpass);
+			auto renderStage = GetRenderStage(*renderpass);
 
 			// Changes the subpass.
 			if (subpass != key.GetSubpass())
@@ -114,7 +114,7 @@ namespace acid
 		}
 
 		// Ends the last renderpass.
-		EndRenderpass(renderpass);
+		EndRenderpass(*renderpass);
 	}
 
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)

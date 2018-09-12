@@ -74,7 +74,7 @@ namespace acid
 		template<typename T>
 		T GetChild(const std::string &name, const T &value)
 		{
-			auto child = FindChild(name);
+			auto child = FindChild(name, false);
 
 			if (child == nullptr)
 			{
@@ -88,7 +88,7 @@ namespace acid
 		template<typename T>
 		void SetChild(const std::string &name, const T &value)
 		{
-			auto child = FindChild(name);
+			auto child = FindChild(name, false);
 
 			if (child == nullptr)
 			{

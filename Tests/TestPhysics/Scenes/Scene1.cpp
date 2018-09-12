@@ -120,7 +120,7 @@ namespace test
 		teapot->AddComponent<MeshRender>();
 	//	teapot->AddComponent<ShadowRender>();
 
-	//	auto system1 = GameObject::Create("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 10.0f, 0.0f)));
+	//	auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 3.0f, -5.0f)));
 	}
 
 	void Scene1::Update()

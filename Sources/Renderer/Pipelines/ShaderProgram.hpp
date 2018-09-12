@@ -35,10 +35,6 @@ namespace acid
 		{
 		}
 
-		~Uniform()
-		{
-		}
-
 		std::string GetName() const { return m_name; }
 
 		int32_t GetBinding() const { return m_binding; }
@@ -86,10 +82,6 @@ namespace acid
 			m_size(size),
 			m_stageFlags(stageFlags),
 			m_uniforms(std::vector<std::unique_ptr<Uniform>>())
-		{
-		}
-
-		~UniformBlock()
 		{
 		}
 
@@ -159,10 +151,6 @@ namespace acid
 		{
 		}
 
-		~VertexAttribute()
-		{
-		}
-
 		std::string GetName() const { return m_name; }
 
 		int32_t GetLocation() const { return m_location; }
@@ -193,8 +181,6 @@ namespace acid
 		std::vector<std::string> m_notFoundNames;
 	public:
 		ShaderProgram(const std::string &name);
-
-		~ShaderProgram();
 
 		ShaderProgram(const ShaderProgram&) = delete; // FIXME: Temp Fix.
 
