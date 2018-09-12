@@ -11,8 +11,6 @@ namespace acid
 	class ACID_EXPORT IUiGrabber
 	{
 	public:
-		virtual ~IUiGrabber() = default;
-
 		virtual int32_t GetCurrent(Text *object) = 0;
 
 		virtual std::string GetValue(const int32_t &value) = 0;
@@ -75,8 +73,6 @@ namespace acid
 		std::function<void()> m_actionChange;
 	public:
 		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber);
-
-		~UiInputGrabber();
 
 		void UpdateObject() override;
 

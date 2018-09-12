@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	SmoothFloat::~SmoothFloat()
-	{
-	}
-
 	void SmoothFloat::Update(const float &delta)
 	{
 		float offset = m_target - m_actual;

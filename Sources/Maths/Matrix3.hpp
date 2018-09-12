@@ -56,8 +56,6 @@ namespace acid
 		/// <param name="source"> Creates this matrix out of a 3 vector array. </param>
 		Matrix3(const Vector3 source[3]);
 
-		~Matrix3();
-
 		/// <summary>
 		/// Adds this matrix to another matrix.
 		/// </summary>

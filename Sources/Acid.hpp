@@ -156,6 +156,7 @@
 #include "Post/Pipelines/PipelineGaussian.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
+#include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Commands/CommandBuffer.hpp"

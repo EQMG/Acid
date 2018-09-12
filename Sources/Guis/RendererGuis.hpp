@@ -13,8 +13,6 @@ namespace acid
 	public:
 		RendererGuis(const GraphicsStage &graphicsStage);
 
-		~RendererGuis();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

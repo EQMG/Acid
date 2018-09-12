@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	Collider::~Collider()
-	{
-	}
-
 	bool Collider::InFrustum(const Frustum &frustum)
 	{
 		auto shape = GetCollisionShape();

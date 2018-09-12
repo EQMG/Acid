@@ -24,8 +24,6 @@ namespace acid
 	public:
 		MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
 
-		~MaterialSkybox();
-
 		void Start() override;
 
 		void Update() override;

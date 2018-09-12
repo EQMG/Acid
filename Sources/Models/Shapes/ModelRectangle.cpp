@@ -44,10 +44,6 @@ namespace acid
 		Model::Initialize(vertices, indices, ToFilename(min, max));
 	}
 
-	ModelRectangle::~ModelRectangle()
-	{
-	}
-
 	std::string ModelRectangle::ToFilename(const float &min, const float &max)
 	{
 		std::stringstream result;

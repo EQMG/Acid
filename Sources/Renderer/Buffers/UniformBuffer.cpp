@@ -14,10 +14,6 @@ namespace acid
 		m_bufferInfo.range = m_size;
 	}
 
-	UniformBuffer::~UniformBuffer()
-	{
-	}
-
 	void UniformBuffer::Update(const void *newData)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();

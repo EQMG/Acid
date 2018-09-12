@@ -22,8 +22,6 @@ namespace acid
 
 		DescriptorsHandler(const IPipeline &pipeline);
 
-		~DescriptorsHandler();
-
 		void Push(const std::string &descriptorName, IDescriptor *descriptor);
 
 		void Push(const std::string &descriptorName, IDescriptor &descriptor) { Push(descriptorName, &descriptor); }

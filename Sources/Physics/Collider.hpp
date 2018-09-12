@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <memory>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 #include "Objects/IComponent.hpp"
@@ -23,8 +24,6 @@ namespace acid
 	{
 	public:
 		Collider();
-
-		virtual ~Collider();
 
 		void Start() override = 0;
 

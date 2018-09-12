@@ -23,10 +23,6 @@ namespace acid
 	{
 	}
 
-	MaterialDefault::~MaterialDefault()
-	{
-	}
-
 	void MaterialDefault::Start()
 	{
 		auto mesh = GetGameObject()->GetComponent<Mesh>(true);

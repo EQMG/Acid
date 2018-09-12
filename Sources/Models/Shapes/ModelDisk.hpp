@@ -15,8 +15,6 @@ namespace acid
 		static std::shared_ptr<ModelDisk> Resource(const std::string &data);
 
 		ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
-
-		~ModelDisk();
 	private:
 		static std::string ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
 	};

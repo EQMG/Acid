@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	SpawnCircle::~SpawnCircle()
-	{
-	}
-
 	void SpawnCircle::Decode(const Metadata &metadata)
 	{
 		m_radius = metadata.GetChild<float>("Radius");

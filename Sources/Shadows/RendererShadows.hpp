@@ -17,8 +17,6 @@ namespace acid
 	public:
 		RendererShadows(const GraphicsStage &graphicsStage);
 
-		~RendererShadows();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};
 }

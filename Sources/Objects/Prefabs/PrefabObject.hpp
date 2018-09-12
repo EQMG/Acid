@@ -35,8 +35,6 @@ namespace acid
 		/// <param name="filename"> The file name. </param>
 		PrefabObject(const std::string &filename);
 
-		~PrefabObject();
-
 		void Write(const GameObject &gameObject);
 
 		void Save();

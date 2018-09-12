@@ -26,8 +26,6 @@ namespace acid
 
 		Particles();
 
-		~Particles();
-
 		void Update() override;
 
 		void AddParticle(const Particle &particle);

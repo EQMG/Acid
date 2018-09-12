@@ -30,8 +30,6 @@ namespace acid
 	public:
 		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate);
 
-		~RenderStage();
-
 		void Rebuild(const Swapchain &swapchain);
 
 		uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate.GetSubpasses().size()); };

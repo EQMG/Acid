@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	Delta::~Delta()
-	{
-	}
-
 	void Delta::Update()
 	{
 		m_currentFrameTime = Engine::Get()->GetTime();

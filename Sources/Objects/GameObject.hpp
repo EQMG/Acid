@@ -36,9 +36,7 @@ namespace acid
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
 		GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure = nullptr);
 
-		~GameObject();
-
-		GameObject(const GameObject&) = delete; // FIXME: Temp Fix.
+		GameObject(const GameObject&) = delete; 
 
 		GameObject& operator=(const GameObject&) = delete;
 

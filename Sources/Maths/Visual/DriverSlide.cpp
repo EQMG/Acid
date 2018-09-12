@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	DriverSlide::~DriverSlide()
-	{
-	}
-
 	float DriverSlide::Calculate(const float &time)
 	{
 		if (!m_reachedTarget && time >= m_max)

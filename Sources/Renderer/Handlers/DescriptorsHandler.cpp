@@ -18,10 +18,6 @@ namespace acid
 	{
 	}
 
-	DescriptorsHandler::~DescriptorsHandler()
-	{
-	}
-
 	void DescriptorsHandler::Push(const std::string &descriptorName, IDescriptor *descriptor)
 	{
 		if (m_shaderProgram == nullptr)

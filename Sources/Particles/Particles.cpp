@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	Particles::~Particles()
-	{
-	}
-
 	void Particles::Update()
 	{
 		if (Scenes::Get()->IsPaused())

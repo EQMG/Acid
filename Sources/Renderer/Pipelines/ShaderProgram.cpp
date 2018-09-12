@@ -571,7 +571,7 @@ namespace acid
 			}
 		}
 
-		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutLocation,
-			sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
+		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutSet,
+			program.getAttributeTType(i)->getQualifier().layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 }

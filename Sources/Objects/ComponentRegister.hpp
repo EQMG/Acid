@@ -27,8 +27,6 @@ namespace acid
 		/// </summary>
 		ComponentRegister();
 
-		~ComponentRegister();
-
 		/// <summary>
 		/// Registers a component with the register.
 		/// </summary>

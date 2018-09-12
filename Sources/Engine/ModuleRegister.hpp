@@ -16,7 +16,7 @@ namespace acid
 	public:
 		ModuleRegister();
 
-		ModuleRegister(const ModuleRegister&) = delete; // FIXME: Temp Fix.
+		ModuleRegister(const ModuleRegister&) = delete;
 
 		ModuleRegister& operator=(const ModuleRegister&) = delete;
 

@@ -15,8 +15,6 @@ namespace acid
 	public:
 		MeshRender();
 
-		~MeshRender();
-
 		void Start() override;
 
 		void Update() override;

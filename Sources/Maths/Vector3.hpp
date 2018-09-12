@@ -84,8 +84,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing colour. </param>
 		Vector3(const Colour &source);
 
-		~Vector3();
-
 		/// <summary>
 		/// Adds this vector to another vector.
 		/// </summary>

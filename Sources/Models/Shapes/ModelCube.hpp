@@ -15,8 +15,6 @@ namespace acid
 		static std::shared_ptr<ModelCube> Resource(const std::string &data);
 
 		ModelCube(const float &width, const float &height, const float &depth);
-
-		~ModelCube();
 	private:
 		static std::string ToFilename(const float &width, const float &height, const float &depth);
 	};

@@ -25,10 +25,6 @@ namespace acid
 		{
 		}
 
-		virtual ~IDriver()
-		{
-		}
-
 		/// <summary>
 		/// Updates the driver with the passed time.
 		/// </summary>
@@ -42,7 +38,6 @@ namespace acid
 			float time = m_currentTime / m_length;
 			return Calculate(time);
 		}
-
 	protected:
 		/// <summary>
 		/// Calculates the new value.

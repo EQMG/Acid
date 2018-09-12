@@ -24,8 +24,6 @@ namespace acid
 
 		Uis();
 
-		~Uis();
-
 		void Update() override;
 
 		/// <summary>

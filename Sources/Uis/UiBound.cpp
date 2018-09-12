@@ -37,10 +37,6 @@ namespace acid
 	{
 	}
 
-	UiBound::~UiBound()
-	{
-	}
-
 	Vector2 UiBound::FindPivot(const std::string &key)
 	{
 		auto it = PIVOT_MAP.find(key);

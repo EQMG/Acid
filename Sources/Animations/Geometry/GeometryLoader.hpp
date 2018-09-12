@@ -23,7 +23,7 @@ namespace acid
 	public:
 		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
 
-		GeometryLoader(const GeometryLoader&) = delete; // FIXME: Temp Fix.
+		GeometryLoader(const GeometryLoader&) = delete; 
 
 		GeometryLoader& operator=(const GeometryLoader&) = delete;
 

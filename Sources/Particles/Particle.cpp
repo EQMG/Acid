@@ -40,10 +40,6 @@ namespace acid
 	{
 	}
 
-	Particle::~Particle()
-	{
-	}
-
 	void Particle::Update()
 	{
 		m_velocity.m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();

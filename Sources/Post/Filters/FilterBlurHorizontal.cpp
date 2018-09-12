@@ -14,7 +14,7 @@ namespace acid
 
 	void FilterBlurHorizontal::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		m_width = Display::Get()->GetHeight();
+		m_width = static_cast<float>(Display::Get()->GetHeight());
 
 		// Updates uniforms.
 		m_uniformScene.Push("width", m_width);

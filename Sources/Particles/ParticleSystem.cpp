@@ -28,10 +28,6 @@ namespace acid
 	{
 	}
 
-	ParticleSystem::~ParticleSystem()
-	{
-	}
-
 	void ParticleSystem::Start()
 	{
 	}

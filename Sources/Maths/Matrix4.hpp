@@ -61,8 +61,6 @@ namespace acid
 		/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
 		Matrix4(const Vector4 source[4]);
 
-		~Matrix4();
-
 		/// <summary>
 		/// Adds this matrix to another matrix.
 		/// </summary>

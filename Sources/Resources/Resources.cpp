@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	Resources::~Resources()
-	{
-	}
-
 	void Resources::Update()
 	{
 		if (m_timerPurge.IsPassedTime())

@@ -21,10 +21,6 @@ namespace acid
 	{
 	}
 
-	Metadata::~Metadata()
-	{
-	}
-
 	std::string Metadata::GetString() const
 	{
 		return String::RemoveAll(m_value, '\"'); // FIXME: Just first and last.

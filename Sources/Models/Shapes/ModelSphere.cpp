@@ -74,10 +74,6 @@ namespace acid
 		Model::Initialize(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
 	}
 
-	ModelSphere::~ModelSphere()
-	{
-	}
-
 	std::string ModelSphere::ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
 		std::stringstream result;

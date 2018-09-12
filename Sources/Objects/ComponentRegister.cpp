@@ -37,10 +37,6 @@ namespace acid
 		RegisterComponent<ShadowRender>("ShadowRender");
 	}
 
-	ComponentRegister::~ComponentRegister()
-	{
-	}
-
 	bool ComponentRegister::DeregisterComponent(const std::string &name)
 	{
 		auto component = m_components.find(name);

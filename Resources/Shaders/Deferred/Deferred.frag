@@ -2,10 +2,16 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
+struct Light
+{
+	vec4 colour;
+	vec3 position;
+	float radius;
+};
+
 layout(set = 0, binding = 0) uniform UboScene
 {
-	vec4 lightColours[MAX_LIGHTS];
-	vec4 lightPositions[MAX_LIGHTS];
+	Light lights[MAX_LIGHTS];
 
 	mat4 projection;
 	mat4 view;
@@ -101,12 +107,14 @@ void main()
 
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-			vec3 lightDir = scene.lightPositions[i].xyz - worldPosition;
+		    Light light = scene.lights[i];
+
+			vec3 lightDir = light.position - worldPosition;
 			float dist = length(lightDir);
 			lightDir /= dist;
 
-			float atten = attenuation(dist, scene.lightPositions[i].w);
-			vec3 radiance = scene.lightColours[i].rgb * atten;
+			float atten = attenuation(dist, light.radius);
+			vec3 radiance = light.colour.rgb * atten;
 
 			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
 		}

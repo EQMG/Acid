@@ -6,7 +6,7 @@ layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inCoords1;
 layout(location = 1) in vec2 inCoords2;
-layout(location = 2) in vec3 inColourOffset;
+layout(location = 2) in vec4 inColourOffset;
 layout(location = 3) in float inBlendFactor;
 layout(location = 4) in float inTransparency;
 
@@ -18,6 +18,6 @@ void main()
 	vec4 colour2 = texture(samplerColour, inCoords2);
 
 	outColour = mix(colour1, colour2, inBlendFactor);
-	outColour.rgb *= inColourOffset;
+	outColour *= inColourOffset;
 	outColour.a -= inTransparency;
 }

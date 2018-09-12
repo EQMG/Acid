@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	AxisJoystick::~AxisJoystick()
-	{
-	}
-
 	float AxisJoystick::GetAmount() const
 	{
 		if (!Joysticks::Get()->IsConnected(m_joystick))

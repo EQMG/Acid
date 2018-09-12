@@ -20,10 +20,6 @@ namespace acid
 	{
 	}
 
-	Light::~Light()
-	{
-	}
-
 	void Light::Start()
 	{
 	}

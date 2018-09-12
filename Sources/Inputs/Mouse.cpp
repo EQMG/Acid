@@ -55,10 +55,6 @@ namespace acid
 		glfwSetCursorEnterCallback(Display::Get()->GetWindow(), CallbackCursorEnter);
 	}
 
-	Mouse::~Mouse()
-	{
-	}
-
 	void Mouse::Update()
 	{
 		// Updates the mouses delta.

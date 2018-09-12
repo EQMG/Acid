@@ -19,10 +19,6 @@ namespace acid
 	{
 	}
 
-	Force::~Force()
-	{
-	}
-
 	void Force::Update()
 	{
 		m_timeLeft -= Engine::Get()->GetDelta();

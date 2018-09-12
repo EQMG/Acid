@@ -19,10 +19,6 @@ namespace acid
 	{
 	}
 
-	RendererParticles::~RendererParticles()
-	{
-	}
-
 	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
@@ -107,7 +103,7 @@ namespace acid
 		Vector3 blend = Vector3();
 		blend.m_x = particle.GetTextureBlendFactor();
 		blend.m_y = particle.GetTransparency();
-		blend.m_z = particle.GetParticleType()->GetNumberOfRows();
+		blend.m_z = static_cast<float>(particle.GetParticleType()->GetNumberOfRows());
 		instanceData.blend = blend;
 
 		return instanceData;
@@ -150,7 +146,7 @@ namespace acid
 		// Colour offset attribute.
 		attributeDescriptions[4].binding = 1;
 		attributeDescriptions[4].location = 8;
-		attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[4].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 		attributeDescriptions[4].offset = offsetof(ParticleData, colourOffset);
 
 		// UV1,UV2 offsets attribute.

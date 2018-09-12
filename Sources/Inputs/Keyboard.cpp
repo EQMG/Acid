@@ -34,10 +34,6 @@ namespace acid
 		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
 	}
 
-	Keyboard::~Keyboard()
-	{
-	}
-
 	void Keyboard::Update()
 	{
 	}

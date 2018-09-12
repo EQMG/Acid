@@ -21,8 +21,6 @@ namespace acid
 	public:
 		ShadowRender();
 
-		~ShadowRender();
-
 		void Start() override;
 
 		void Update() override;

@@ -19,9 +19,7 @@ namespace acid
 	public:
 		XmlNode(XmlNode *parent, const std::string &attributes, const std::string &content);
 
-		~XmlNode();
-
-		XmlNode(const XmlNode&) = delete; // FIXME: Temp Fix.
+		XmlNode(const XmlNode&) = delete;
 
 		XmlNode& operator=(const XmlNode&) = delete;
 

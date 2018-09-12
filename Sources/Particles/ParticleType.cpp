@@ -50,10 +50,6 @@ namespace acid
 	{
 	}
 
-	ParticleType::~ParticleType()
-	{
-	}
-
 	void ParticleType::Decode(const Metadata &metadata)
 	{
 		TrySetTexture(metadata.GetChild<std::string>("Texture"));

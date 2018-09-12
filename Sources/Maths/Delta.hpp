@@ -20,8 +20,6 @@ namespace acid
 		/// </summary>
 		Delta();
 
-		~Delta();
-
 		/// <summary>
 		/// Updates change and times.
 		/// </summary>

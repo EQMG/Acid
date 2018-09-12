@@ -158,8 +158,6 @@ namespace acid
 
 		Keyboard();
 
-		~Keyboard();
-
 		void Update() override;
 
 		/// <summary>

@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	Frustum::~Frustum()
-	{
-	}
-
 	void Frustum::Update(const Matrix4 &view, const Matrix4 &projection)
 	{
 		auto clip = std::array<float, 16>();

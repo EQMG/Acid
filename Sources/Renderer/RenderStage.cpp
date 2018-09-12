@@ -53,10 +53,6 @@ namespace acid
 		}
 	}
 
-	RenderStage::~RenderStage()
-	{
-	}
-
 	void RenderStage::Rebuild(const Swapchain &swapchain)
 	{
 #if ACID_VERBOSE

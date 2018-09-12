@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	Scenes::~Scenes()
-	{
-	}
-
 	void Scenes::Update()
 	{
 		if (m_scene == nullptr)

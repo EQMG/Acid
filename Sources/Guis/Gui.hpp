@@ -36,8 +36,6 @@ namespace acid
 		/// <param name="texture"> The objects texture. </param>
 		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture);
 
-		~Gui();
-
 		void UpdateObject() override;
 
 		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);

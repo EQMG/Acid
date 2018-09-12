@@ -49,8 +49,6 @@ namespace acid
 		/// <param name="systemOffset"> The offset from the parents centre. </param>
 		ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = std::vector<std::shared_ptr<ParticleType>>(), ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &systemOffset = Vector3::ZERO);
 
-		~ParticleSystem();
-
 		void Start() override;
 
 		void Update() override;

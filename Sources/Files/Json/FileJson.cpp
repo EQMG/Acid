@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FileJson::~FileJson()
-	{
-	}
-
 	void FileJson::Load()
 	{
 #if ACID_VERBOSE

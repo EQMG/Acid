@@ -17,10 +17,6 @@ namespace acid
 	{
 	}
 
-	Shadows::~Shadows()
-	{
-	}
-
 	void Shadows::Update()
 	{
 		if (Scenes::Get()->GetCamera() != nullptr)

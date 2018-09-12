@@ -50,8 +50,6 @@ namespace acid
 		/// <param name="source"> Creates this particle out of a existing one. </param>
 		Particle(const Particle &source);
 
-		~Particle();
-
 		/// <summary>
 		/// Updates the particle.
 		/// </summary>

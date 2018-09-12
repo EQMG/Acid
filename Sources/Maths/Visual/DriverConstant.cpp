@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	DriverConstant::~DriverConstant()
-	{
-	}
-
 	float DriverConstant::Calculate(const float &time)
 	{
 		return m_value;

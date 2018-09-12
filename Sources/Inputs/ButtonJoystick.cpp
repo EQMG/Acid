@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	ButtonJoystick::~ButtonJoystick()
-	{
-	}
-
 	bool ButtonJoystick::IsDown() const
 	{
 		if (!Joysticks::Get()->IsConnected(m_joystick))

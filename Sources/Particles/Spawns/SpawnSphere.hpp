@@ -13,8 +13,6 @@ namespace acid
 	public:
 		SpawnSphere(const float &radius = 1.0f);
 
-		~SpawnSphere();
-
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;

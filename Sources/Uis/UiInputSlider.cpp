@@ -31,10 +31,6 @@ namespace acid
 		SetValue(value);
 	}
 
-	UiInputSlider::~UiInputSlider()
-	{
-	}
-
 	void UiInputSlider::UpdateObject()
 	{
 		// Click updates.

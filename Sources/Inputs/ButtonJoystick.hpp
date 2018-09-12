@@ -24,8 +24,6 @@ namespace acid
 		/// <param name="buttons"> The buttons on the joystick being checked. </param>
 		ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons);
 
-		~ButtonJoystick();
-
 		bool IsDown() const override;
 
 		bool WasDown() override;

@@ -14,8 +14,6 @@ namespace acid
 	public:
 		SpawnCircle(const float &radius = 1.0f, const Vector3 &heading = Vector3::UP);
 
-		~SpawnCircle();
-
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;

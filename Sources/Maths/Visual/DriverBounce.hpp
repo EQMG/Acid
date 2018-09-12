@@ -22,9 +22,6 @@ namespace acid
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The length between two waves. </param>
 		DriverBounce(const float &start, const float &end, const float &length);
-
-		~DriverBounce();
-
 	protected:
 		float Calculate(const float &time) override;
 	};

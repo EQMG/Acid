@@ -23,9 +23,7 @@ namespace acid
 		/// </summary>
 		SceneStructure();
 
-		~SceneStructure();
-
-		SceneStructure(const SceneStructure&) = delete; // FIXME: Temp Fix.
+		SceneStructure(const SceneStructure&) = delete;
 
 		SceneStructure& operator=(const SceneStructure&) = delete;
 

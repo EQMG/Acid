@@ -17,10 +17,6 @@ namespace acid
 		}
 	}
 
-	UiSelector::~UiSelector()
-	{
-	}
-
 	void UiSelector::Update(const bool &paused, const SelectorJoystick &selectorJoystick)
 	{
 		float delta = Engine::Get()->GetDelta();

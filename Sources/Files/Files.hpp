@@ -22,8 +22,6 @@ namespace acid
 
 		Files();
 
-		~Files();
-
 		void Update() override;
 
 		static std::vector<std::string> GetSearchPaths() { return SEARCH_PATHS; }

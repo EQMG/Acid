@@ -47,8 +47,6 @@ namespace acid
 		/// <param name="scale"> The scale. </param>
 		Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
 
-		~Transform();
-
 		Matrix4 GetWorldMatrix() const;
 
 		Matrix4 GetModelMatrix() const;

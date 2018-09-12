@@ -15,10 +15,6 @@ namespace acid
 	{
 	}
 
-	Mesh::~Mesh()
-	{
-	}
-
 	void Mesh::Start()
 	{
 	}

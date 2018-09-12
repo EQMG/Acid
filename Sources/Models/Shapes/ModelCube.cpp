@@ -80,10 +80,6 @@ namespace acid
 		Model::Initialize(vertices, indices, ToFilename(width, height, depth));
 	}
 
-	ModelCube::~ModelCube()
-	{
-	}
-
 	std::string ModelCube::ToFilename(const float &width, const float &height, const float &depth)
 	{
 		std::stringstream result;

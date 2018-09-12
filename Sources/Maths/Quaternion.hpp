@@ -85,8 +85,6 @@ namespace acid
 		/// <param name="axisZ"> The Z axis. </param>
 		Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ);
 
-		~Quaternion();
-
 		/// <summary>
 		/// Adds this quaternion to another quaternion.
 		/// </summary>

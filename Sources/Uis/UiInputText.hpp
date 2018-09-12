@@ -35,8 +35,6 @@ namespace acid
 	public:
 		UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int32_t &maxLength);
 
-		~UiInputText();
-
 		void UpdateObject() override;
 
 		std::string GetPrefix() const { return m_prefix; }

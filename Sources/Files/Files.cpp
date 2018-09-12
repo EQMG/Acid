@@ -19,10 +19,6 @@ namespace acid
 		}*/
 	}
 
-	Files::~Files()
-	{
-	}
-
 	void Files::Update()
 	{
 	}

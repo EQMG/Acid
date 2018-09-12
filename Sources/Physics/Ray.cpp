@@ -18,10 +18,6 @@ namespace acid
 	{
 	}
 
-	Ray::~Ray()
-	{
-	}
-
 	void Ray::Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
 		m_origin = currentPosition;

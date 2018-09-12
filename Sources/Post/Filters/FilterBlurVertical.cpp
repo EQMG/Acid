@@ -14,7 +14,7 @@ namespace acid
 
 	void FilterBlurVertical::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		m_height = Display::Get()->GetHeight();
+		m_height = static_cast<float>(Display::Get()->GetHeight());
 
 		// Updates uniforms.
 		m_uniformScene.Push("height", m_height);

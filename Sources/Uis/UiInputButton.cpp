@@ -20,10 +20,6 @@ namespace acid
 	{
 	}
 
-	UiInputButton::~UiInputButton()
-	{
-	}
-
 	void UiInputButton::UpdateObject()
 	{
 		// Mouse over updates.
