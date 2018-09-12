@@ -80,6 +80,8 @@ namespace acid
 
 		void CreateAttributes();
 
+		void CreatePipeline();
+
 		void CreatePipelinePolygon();
 
 		void CreatePipelineMrt();

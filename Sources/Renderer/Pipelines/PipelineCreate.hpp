@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
@@ -57,46 +58,26 @@ namespace acid
 	class ACID_EXPORT VertexInput
 	{
 	private:
+		uint32_t m_binding;
 		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	public:
-		VertexInput(const std::vector<VkVertexInputBindingDescription> &bindingDescriptions, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions) :
+		VertexInput(const uint32_t &binding, const std::vector<VkVertexInputBindingDescription> &bindingDescriptions, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions) :
+			m_binding(binding),
 			m_bindingDescriptions(bindingDescriptions),
 			m_attributeDescriptions(attributeDescriptions)
 		{
 		}
 
+		uint32_t GetBinding() const { return m_binding; }
+
 		std::vector<VkVertexInputBindingDescription> GetBindingDescriptions() const { return m_bindingDescriptions; }
 
 		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
-		static VertexInput Combine(const VertexInput &left, const VertexInput &right)
+		bool operator<(const VertexInput &other) const
 		{
-			auto bindingDescriptions = std::vector<VkVertexInputBindingDescription>();
-
-			for (auto &binding : left.m_bindingDescriptions)
-			{
-				bindingDescriptions.emplace_back(binding);
-			}
-
-			for (auto &binding : right.m_bindingDescriptions)
-			{
-				bindingDescriptions.emplace_back(binding);
-			}
-
-			auto attributeDescriptions = std::vector<VkVertexInputAttributeDescription>();
-
-			for (auto &attribute : left.m_attributeDescriptions)
-			{
-				attributeDescriptions.emplace_back(attribute);
-			}
-
-			for (auto &attribute : right.m_attributeDescriptions)
-			{
-				attributeDescriptions.emplace_back(attribute);
-			}
-
-			return VertexInput(bindingDescriptions, attributeDescriptions);
+			return m_binding < other.m_binding;
 		}
 	};
 
@@ -147,7 +128,7 @@ namespace acid
 	{
 	private:
 		std::vector<std::string> m_shaderStages;
-		VertexInput m_vertexInput;
+		std::vector<VertexInput> m_vertexInputs;
 
 		PipelineMode m_pipelineMode;
 		PipelineDepth m_depthMode;
@@ -157,10 +138,10 @@ namespace acid
 		std::vector<PipelineDefine> m_defines;
 	public:
 
-		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
+		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
 						const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
-			m_vertexInput(vertexInput),
+			m_vertexInputs(vertexInputs),
 			m_pipelineMode(pipelineMode),
 			m_depthMode(depthMode),
 			m_polygonMode(polygonMode),
@@ -171,11 +152,13 @@ namespace acid
 			{
 				shaderStage = Files::SearchFile(shaderStage);
 			}
+
+			std::sort(m_vertexInputs.begin(), m_vertexInputs.end());
 		}
 
 		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
 
-		VertexInput GetVertexInput() const { return m_vertexInput; }
+		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
 
 		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
 

@@ -264,7 +264,7 @@ namespace acid
 		m_viewportState.scissorCount = 1;
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		m_multisampleState.rasterizationSamples =  Display::Get()->GetMsaaSamples();
+		m_multisampleState.rasterizationSamples = Display::Get()->GetMsaaSamples();
 	//	m_multisampleState.alphaToCoverageEnable = VK_TRUE;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -275,14 +275,34 @@ namespace acid
 		m_tessellationState.patchControlPoints = 3;
 	}
 
-	void Pipeline::CreatePipelinePolygon()
+	void Pipeline::CreatePipeline()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
-		auto bindingDescriptions = m_pipelineCreate.GetVertexInput().GetBindingDescriptions();
-		auto attributeDescriptions = m_pipelineCreate.GetVertexInput().GetAttributeDescriptions(); // m_shaderProgram->GetAttributeDescriptions()
+		auto bindingDescriptions = std::vector<VkVertexInputBindingDescription>();
+		auto attributeDescriptions = std::vector<VkVertexInputAttributeDescription>();
+		uint32_t lastAttribute = 0;
+
+		for (auto &vertexInput : m_pipelineCreate.GetVertexInputs())
+		{
+			for (auto &binding : vertexInput.GetBindingDescriptions())
+			{
+				bindingDescriptions.emplace_back(binding);
+			}
+
+			for (auto &attribute : vertexInput.GetAttributeDescriptions())
+			{
+				auto &newAttribute = attributeDescriptions.emplace_back(attribute);
+				newAttribute.location += lastAttribute;
+			}
+
+			if (!vertexInput.GetAttributeDescriptions().empty())
+			{
+				lastAttribute = attributeDescriptions.back().location + 1;
+			}
+		}
 
 		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
 		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -316,6 +336,11 @@ namespace acid
 		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
+	void Pipeline::CreatePipelinePolygon()
+	{
+		CreatePipeline();
+	}
+
 	void Pipeline::CreatePipelineMrt()
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
@@ -341,6 +366,6 @@ namespace acid
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
 
-		CreatePipelinePolygon();
+		CreatePipeline();
 	}
 }

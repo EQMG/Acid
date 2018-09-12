@@ -2,12 +2,30 @@
 
 #include <string>
 #include "Maths/Colour.hpp"
+#include "Maths/Vector4.hpp"
+#include "Maths/Vector3.hpp"
+#include "Models/Model.hpp"
+#include "Renderer/Buffers/InstanceBuffer.hpp"
+#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
 {
+	struct ParticleData
+	{
+		Vector4 mvp0;
+		Vector4 mvp1;
+		Vector4 mvp2;
+		Vector4 mvp3;
+		Colour colourOffset;
+		Vector4 offsets;
+		Vector3 blend;
+	};
+
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
@@ -17,11 +35,17 @@ namespace acid
 	private:
 		std::string m_filename;
 		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<Model> m_model;
 		uint32_t m_numberOfRows;
 		Colour m_colourOffset;
 		float m_lifeLength;
 		float m_scale;
+
+		InstanceBuffer m_instanceBuffer;
+		DescriptorsHandler m_descriptorSet;
 	public:
+		static const uint32_t MAX_TYPE_INSTANCES;
+
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
 		/// </summary>
@@ -48,15 +72,11 @@ namespace acid
 		/// <param name="scale"> The averaged scale for the particle. </param>
 		ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &scale = 1.0f);
 
-		/// <summary>
-		/// Creates a new particle type.
-		/// </summary>
-		/// <param name="source"> Creates this particle type out of a existing one. </param>
-		ParticleType(const ParticleType &source);
-
 		void Decode(const Metadata &metadata);
 
 		void Encode(Metadata &metadata) const;
+
+		void CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
 
 		std::string GetFilename() override { return m_filename; }
 
