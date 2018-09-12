@@ -40,7 +40,7 @@ namespace test
 		}, // images
 		{
 			SubpassType(0, {0, 2, 3, 4}),
-			SubpassType(1, {5}),
+			SubpassType(1, {0, 5}),
 			SubpassType(2, {1})
 		} // subpasses
 	};
@@ -55,9 +55,10 @@ namespace test
 	//	Renderer::Get()->AddRenderer<RendererShadows>(GraphicsStage(0, 0));
 
 		Renderer::Get()->AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
-	//	Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 0));
 
 		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1));
+	//	Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
+
 		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));

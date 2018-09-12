@@ -19,7 +19,7 @@ namespace acid
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(ComputeBrdf(512)), // Texture::Resource("BrdfLut.png")
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))

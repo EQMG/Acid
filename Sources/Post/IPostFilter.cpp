@@ -9,7 +9,7 @@ namespace acid
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate(shaderStages, VertexModel::GetVertexInput(),
-			PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, defines))),
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, defines))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f))
 	{
 	}

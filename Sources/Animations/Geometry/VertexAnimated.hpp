@@ -45,6 +45,6 @@ namespace acid
 
 		void SetVertexWeight(const Vector3 &vertexWeight) { m_vertexWeight = vertexWeight; };
 
-		static VertexInput GetVertexInput();
+		static VertexInput GetVertexInput(const uint32_t &binding = 0);
 	};
 }

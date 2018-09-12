@@ -44,19 +44,33 @@ namespace acid
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreate.GetMode())
+		switch (pipelineCreate.GetPipelineDepth())
+		{
+			case PIPELINE_DEPTH_NONE:
+				m_depthStencilState.depthTestEnable = VK_FALSE;
+				m_depthStencilState.depthWriteEnable = VK_FALSE;
+				break;
+			case PIPELINE_DEPTH_READ_WRITE:
+				m_depthStencilState.depthTestEnable = VK_TRUE;
+				m_depthStencilState.depthWriteEnable = VK_TRUE;
+				break;
+			case PIPELINE_DEPTH_READ:
+				m_depthStencilState.depthTestEnable = VK_TRUE;
+				m_depthStencilState.depthWriteEnable = VK_FALSE;
+				break;
+			case PIPELINE_DEPTH_WRITE:
+				m_depthStencilState.depthTestEnable = VK_FALSE;
+				m_depthStencilState.depthWriteEnable = VK_TRUE;
+				break;
+		}
+
+		switch (pipelineCreate.GetPipelineMode())
 		{
 		case PIPELINE_MODE_POLYGON:
 			CreatePipelinePolygon();
 			break;
-		case PIPELINE_MODE_POLYGON_NO_DEPTH:
-			CreatePipelinePolygonNoDepth();
-			break;
 		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
-			break;
-		case PIPELINE_MODE_MRT_NO_DEPTH:
-			CreatePipelineMrtNoDepth();
 			break;
 		default:
 			assert(false);
@@ -302,14 +316,6 @@ namespace acid
 		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
-	void Pipeline::CreatePipelinePolygonNoDepth()
-	{
-		m_depthStencilState.depthTestEnable = VK_FALSE;
-		m_depthStencilState.depthWriteEnable = VK_FALSE;
-
-		CreatePipelinePolygon();
-	}
-
 	void Pipeline::CreatePipelineMrt()
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
@@ -334,37 +340,6 @@ namespace acid
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
-
-		CreatePipelinePolygon();
-	}
-
-	void Pipeline::CreatePipelineMrtNoDepth()
-	{
-		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
-
-		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
-		uint32_t attachmentCount = renderStage->GetAttachmentCount(m_graphicsStage.GetSubpass());
-
-		for (uint32_t i = 0; i < attachmentCount; i++)
-		{
-			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
-			blendAttachmentState.blendEnable = VK_TRUE;
-			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-			blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-			blendAttachmentStates.emplace_back(blendAttachmentState);
-		}
-
-		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
-		m_colourBlendState.pAttachments = blendAttachmentStates.data();
-
-		m_depthStencilState.depthTestEnable = VK_FALSE;
-		m_depthStencilState.depthWriteEnable = VK_FALSE;
 
 		CreatePipelinePolygon();
 	}

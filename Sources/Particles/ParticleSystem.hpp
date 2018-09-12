@@ -59,16 +59,6 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-	private:
-		std::optional<Particle> EmitParticle();
-
-		float GenerateValue(const float &average, const float &errorMargin) const;
-
-		float GenerateRotation() const;
-
-		Vector3 GenerateRandomUnitVector() const;
-
-	public:
 		void AddParticleType(const std::shared_ptr<ParticleType> &type);
 
 		bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
@@ -118,5 +108,13 @@ namespace acid
 		bool GetPaused() const { return m_paused; }
 
 		void SetPaused(const bool &paused) { m_paused = paused; }
+	private:
+		std::optional<Particle> EmitParticle();
+
+		float GenerateValue(const float &average, const float &errorMargin) const;
+
+		float GenerateRotation() const;
+
+		Vector3 GenerateRandomUnitVector() const;
 	};
 }

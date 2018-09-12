@@ -9,7 +9,7 @@ namespace acid
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"},
-			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON_NO_DEPTH, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})))
+			VertexModel::GetVertexInput(), PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})))
 	{
 	}
 

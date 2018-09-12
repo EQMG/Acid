@@ -21,10 +21,6 @@ namespace acid
 	{
 	}
 
-	ShaderProgram::~ShaderProgram()
-	{
-	}
-
 	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound)
 	{
 		if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), name) == m_notFoundNames.end())

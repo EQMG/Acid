@@ -10,10 +10,16 @@ namespace acid
 	enum PipelineMode
 	{
 		PIPELINE_MODE_POLYGON = 0,
-		PIPELINE_MODE_POLYGON_NO_DEPTH = 1,
-		PIPELINE_MODE_MRT = 2,
-		PIPELINE_MODE_MRT_NO_DEPTH = 3,
-		PIPELINE_MODE_COMPUTE = 4
+		PIPELINE_MODE_MRT = 1,
+		PIPELINE_MODE_COMPUTE = 2
+	};
+
+	enum PipelineDepth
+	{
+		PIPELINE_DEPTH_NONE = 0,
+		PIPELINE_DEPTH_READ_WRITE = 1,
+		PIPELINE_DEPTH_READ = 2,
+		PIPELINE_DEPTH_WRITE = 3
 	};
 
 	class ACID_EXPORT GraphicsStage
@@ -63,6 +69,35 @@ namespace acid
 		std::vector<VkVertexInputBindingDescription> GetBindingDescriptions() const { return m_bindingDescriptions; }
 
 		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
+
+		static VertexInput Combine(const VertexInput &left, const VertexInput &right)
+		{
+			auto bindingDescriptions = std::vector<VkVertexInputBindingDescription>();
+
+			for (auto &binding : left.m_bindingDescriptions)
+			{
+				bindingDescriptions.emplace_back(binding);
+			}
+
+			for (auto &binding : right.m_bindingDescriptions)
+			{
+				bindingDescriptions.emplace_back(binding);
+			}
+
+			auto attributeDescriptions = std::vector<VkVertexInputAttributeDescription>();
+
+			for (auto &attribute : left.m_attributeDescriptions)
+			{
+				attributeDescriptions.emplace_back(attribute);
+			}
+
+			for (auto &attribute : right.m_attributeDescriptions)
+			{
+				attributeDescriptions.emplace_back(attribute);
+			}
+
+			return VertexInput(bindingDescriptions, attributeDescriptions);
+		}
 	};
 
 	class ACID_EXPORT DescriptorType
@@ -115,18 +150,19 @@ namespace acid
 		VertexInput m_vertexInput;
 
 		PipelineMode m_pipelineMode;
-
+		PipelineDepth m_depthMode;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
 
 		std::vector<PipelineDefine> m_defines;
 	public:
 
-		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON,
+		PipelineCreate(const std::vector<std::string> &shaderStages, const VertexInput &vertexInput, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
 						const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInput(vertexInput),
 			m_pipelineMode(pipelineMode),
+			m_depthMode(depthMode),
 			m_polygonMode(polygonMode),
 			m_cullMode(cullMode),
 			m_defines(defines)
@@ -141,7 +177,9 @@ namespace acid
 
 		VertexInput GetVertexInput() const { return m_vertexInput; }
 
-		PipelineMode GetMode() const { return m_pipelineMode; }
+		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+
+		PipelineDepth GetPipelineDepth() const { return m_depthMode; }
 
 		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
 

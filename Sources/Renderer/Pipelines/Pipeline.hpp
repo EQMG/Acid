@@ -82,10 +82,6 @@ namespace acid
 
 		void CreatePipelinePolygon();
 
-		void CreatePipelinePolygonNoDepth();
-
 		void CreatePipelineMrt();
-
-		void CreatePipelineMrtNoDepth();
 	};
 }
