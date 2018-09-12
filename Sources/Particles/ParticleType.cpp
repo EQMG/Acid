@@ -1,10 +1,13 @@
 ﻿#include "ParticleType.hpp"
 
 #include "Resources/Resources.hpp"
+#include "Models/Shapes/ModelRectangle.hpp"
 #include "Helpers/String.hpp"
 
 namespace acid
 {
+	const uint32_t ParticleType::MAX_TYPE_INSTANCES = 512;
+
 	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)
 	{
 		auto resource = Resources::Get()->Get(ToFilename(texture, numberOfRows, colourOffset, lifeLength, scale));
@@ -33,20 +36,13 @@ namespace acid
 	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale) :
 		m_filename(ToFilename(texture, numberOfRows, colourOffset, lifeLength, scale)),
 		m_texture(texture),
+		m_model(ModelRectangle::Resource(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
 		m_colourOffset(colourOffset),
 		m_lifeLength(lifeLength),
-		m_scale(scale)
-	{
-	}
-
-	ParticleType::ParticleType(const ParticleType &source) :
-		m_filename(source.m_filename),
-		m_texture(source.m_texture),
-		m_numberOfRows(source.m_numberOfRows),
-		m_colourOffset(source.m_colourOffset),
-		m_lifeLength(source.m_lifeLength),
-		m_scale(source.m_scale)
+		m_scale(scale),
+		m_instanceBuffer(InstanceBuffer(sizeof(ParticleData) * MAX_TYPE_INSTANCES)),
+		m_descriptorSet(DescriptorsHandler())
 	{
 	}
 
@@ -67,6 +63,30 @@ namespace acid
 		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
 		metadata.SetChild<float>("Life Length", m_lifeLength);
 		metadata.SetChild<float>("Scale", m_scale);
+	}
+
+	void ParticleType::CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
+	{
+		m_instanceBuffer.Update(instanceData.data());
+
+		// Updates descriptors.
+		m_descriptorSet.Push("UboScene", uniformScene);
+		m_descriptorSet.Push("samplerColour", m_texture);
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
+
+		if (!updateSuccess)
+		{
+			return;
+		}
+
+		// Draws the instanced objects.
+		m_descriptorSet.BindDescriptor(commandBuffer);
+
+		VkBuffer vertexBuffers[] = {m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer()};
+		VkDeviceSize offsets[] = {0, 0};
+		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 2, vertexBuffers, offsets);
+		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexBuffer()->GetIndexType());
+		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetIndexCount(), MAX_TYPE_INSTANCES, 0, 0, 0);
 	}
 
 	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)
