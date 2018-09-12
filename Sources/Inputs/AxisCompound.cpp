@@ -13,10 +13,6 @@ namespace acid
 		}
 	}
 
-	AxisCompound::~AxisCompound()
-	{
-	}
-
 	float AxisCompound::GetAmount() const
 	{
 		float result = 0.0f;

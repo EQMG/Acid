@@ -16,8 +16,6 @@ namespace acid
 	public:
 		FileCsv(const std::string &filename, const char &delimiter = ',');
 
-		~FileCsv();
-
 		void Load() override;
 
 		void Save() override;

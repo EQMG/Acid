@@ -17,7 +17,7 @@ namespace acid
 	public:
 		RendererRegister();
 
-		RendererRegister(const RendererRegister&) = delete; // FIXME: Temp Fix.
+		RendererRegister(const RendererRegister&) = delete; 
 
 		RendererRegister& operator=(const RendererRegister&) = delete;
 

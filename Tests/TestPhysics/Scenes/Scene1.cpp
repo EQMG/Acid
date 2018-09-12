@@ -25,6 +25,7 @@
 #include <Physics/ColliderCapsule.hpp>
 #include <Uis/Uis.hpp>
 #include <Objects/Prefabs/PrefabObject.hpp>
+#include <Helpers/FileSystem.hpp>
 #include "Height/HeightDespawn.hpp"
 #include "FpsCamera.hpp"
 
@@ -120,7 +121,7 @@ namespace test
 		teapot->AddComponent<MeshRender>();
 	//	teapot->AddComponent<ShadowRender>();
 
-	//	auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 3.0f, -5.0f)));
+		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 3.0f, -5.0f)));
 	}
 
 	void Scene1::Update()
@@ -155,7 +156,7 @@ namespace test
 		if (m_buttonScreenshot.WasDown())
 		{
 			m_soundScreenshot.Play();
-			Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::Get()->GetDateTime() + ".png");
+			Renderer::Get()->CaptureScreenshot(FileSystem::GetWorkingDirectory() + "/Screenshots/" + Engine::GetDateTime() + ".png");
 		}
 
 		if (m_buttonExit.WasDown())

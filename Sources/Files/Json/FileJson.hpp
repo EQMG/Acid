@@ -16,8 +16,6 @@ namespace acid
 	public:
 		FileJson(const std::string &filename);
 
-		~FileJson();
-
 		void Load() override;
 
 		void Save() override;

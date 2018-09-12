@@ -24,9 +24,7 @@ namespace acid
 
 		Metadata(const std::string &name = "", const std::string &value = "");
 
-		~Metadata();
-
-		Metadata(const Metadata&) = delete; // FIXME: Temp Fix.
+		Metadata(const Metadata&) = delete;
 
 		Metadata& operator=(const Metadata&) = delete;
 

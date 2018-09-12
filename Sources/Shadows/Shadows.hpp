@@ -34,8 +34,6 @@ namespace acid
 
 		Shadows();
 
-		~Shadows();
-
 		void Update() override;
 
 		Vector3 GetLightDirection() const { return m_lightDirection; }

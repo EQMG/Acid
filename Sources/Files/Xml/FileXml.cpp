@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FileXml::~FileXml()
-	{
-	}
-
 	void FileXml::Load()
 	{
 #if ACID_VERBOSE

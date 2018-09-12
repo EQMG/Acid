@@ -22,9 +22,7 @@ namespace acid
 		/// <param name="buttons"> The buttons on the being added. </param>
 		ButtonCompound(const std::vector<IButton *> &buttons);
 
-		~ButtonCompound();
-
-		ButtonCompound(const ButtonCompound&) = delete; // FIXME: Temp Fix.
+		ButtonCompound(const ButtonCompound&) = delete;
 
 		ButtonCompound& operator=(const ButtonCompound&) = delete;
 

@@ -40,10 +40,6 @@ namespace acid
 	{
 	}
 
-	Vector2::~Vector2()
-	{
-	}
-
 	Vector2 Vector2::Add(const Vector2 &other) const
 	{
 		return Vector2(m_x + other.m_x, m_y + other.m_y);

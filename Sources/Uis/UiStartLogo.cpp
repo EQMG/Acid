@@ -24,10 +24,6 @@ namespace acid
 		}, false);
 	}
 
-	UiStartLogo::~UiStartLogo()
-	{
-	}
-
 	void UiStartLogo::UpdateObject()
 	{
 		m_guiBackground->GetRectangle().m_dimensions.m_x = Display::Get()->GetAspectRatio();

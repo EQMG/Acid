@@ -25,8 +25,6 @@ namespace acid
 	public:
 		VertexModelData(const uint32_t &index, const Vector3 &position);
 
-		~VertexModelData();
-
 		Vector3 GetPosition() const { return m_position; }
 
 		int32_t GetUvIndex() const { return m_uvIndex; }

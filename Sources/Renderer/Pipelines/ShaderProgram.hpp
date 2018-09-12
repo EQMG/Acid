@@ -85,7 +85,7 @@ namespace acid
 		{
 		}
 
-		UniformBlock(const UniformBlock&) = delete; // FIXME: Temp Fix.
+		UniformBlock(const UniformBlock&) = delete; 
 
 		UniformBlock& operator=(UniformBlock&) = delete;
 
@@ -139,12 +139,14 @@ namespace acid
 	{
 	private:
 		std::string m_name;
+		int32_t m_set;
 		int32_t m_location;
 		int32_t m_size;
 		int32_t m_glType;
 	public:
-		VertexAttribute(const std::string &name, const int32_t &location, const int32_t &size, const int32_t &glType) :
+		VertexAttribute(const std::string &name, const int32_t &set, const int32_t &location, const int32_t &size, const int32_t &glType) :
 			m_name(name),
+			m_set(set),
 			m_location(location),
 			m_size(size),
 			m_glType(glType)
@@ -152,6 +154,8 @@ namespace acid
 		}
 
 		std::string GetName() const { return m_name; }
+
+		int32_t GetSet() const { return m_set; }
 
 		int32_t GetLocation() const { return m_location; }
 
@@ -162,7 +166,7 @@ namespace acid
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "VertexAttribute(name '" << m_name << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
+			result << "VertexAttribute(name '" << m_name << "', set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
 			return result.str();
 		}
 	};
@@ -182,7 +186,7 @@ namespace acid
 	public:
 		ShaderProgram(const std::string &name);
 
-		ShaderProgram(const ShaderProgram&) = delete; // FIXME: Temp Fix.
+		ShaderProgram(const ShaderProgram&) = delete;
 
 		ShaderProgram& operator=(ShaderProgram&) = delete;
 

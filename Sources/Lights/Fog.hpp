@@ -34,8 +34,6 @@ namespace acid
 		/// <param name="source"> Creates this fog out of a existing one. </param>
 		Fog(const Fog &source);
 
-		~Fog();
-
 		Colour GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) { m_colour = colour; }

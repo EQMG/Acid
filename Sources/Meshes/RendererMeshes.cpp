@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	RendererMeshes::~RendererMeshes()
-	{
-	}
-
 	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());

@@ -16,8 +16,6 @@ namespace acid
 
 		Force(const Vector3 &force, const float &time, const Vector3 &position = Vector3::ZERO);
 
-		~Force();
-
 		void Update();
 
 		bool IsExpired() const { return !m_neverExpires && m_timeLeft <= 0.0f; }

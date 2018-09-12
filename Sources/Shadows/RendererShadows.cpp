@@ -14,10 +14,6 @@ namespace acid
 	{
 	}
 
-	RendererShadows::~RendererShadows()
-	{
-	}
-
 	void RendererShadows::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_uniformScene.Push("projectionView", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix());

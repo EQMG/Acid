@@ -19,9 +19,7 @@ namespace acid
 	public:
 		JsonSection(JsonSection *parent, const std::string &name, const std::string &content);
 
-		~JsonSection();
-
-		JsonSection(const JsonSection&) = delete; // FIXME: Temp Fix.
+		JsonSection(const JsonSection&) = delete;
 
 		JsonSection& operator=(const JsonSection&) = delete;
 

@@ -15,8 +15,6 @@ namespace acid
 	public:
 		FileXml(const std::string &filename);
 
-		~FileXml();
-
 		void Load() override;
 
 		void Save() override;

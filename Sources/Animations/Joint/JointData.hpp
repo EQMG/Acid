@@ -18,7 +18,7 @@ namespace acid
 	public:
 		JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform);
 
-		JointData(const JointData&) = delete; // FIXME: Temp Fix.
+		JointData(const JointData&) = delete; 
 
 		JointData& operator=(const JointData&) = delete;
 

@@ -44,7 +44,7 @@ namespace acid
 		/// <param name="bindLocalTransform"> The bone-space transform of the joint in the bind position. </param>
 		Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform);
 
-		Joint(const Joint&) = delete; // FIXME: Temp Fix.
+		Joint(const Joint&) = delete;
 
 		Joint& operator=(const Joint&) = delete;
 

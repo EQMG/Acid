@@ -23,9 +23,6 @@ namespace acid
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The time to get to the end value. </param>
 		DriverSlide(const float &start, const float &end, const float &length);
-
-		~DriverSlide();
-
 	protected:
 		float Calculate(const float &time) override;
 	};

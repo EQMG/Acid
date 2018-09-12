@@ -23,8 +23,6 @@ namespace acid
 		/// <param name="positive"> When this button is down, the axis is positive. </param>
 		AxisButton(IButton *negative, IButton *positive);
 
-		~AxisButton();
-
 		float GetAmount() const override;
 	};
 }

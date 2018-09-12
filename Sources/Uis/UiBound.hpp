@@ -33,8 +33,6 @@ namespace acid
 		/// <param name="source"> Creates this rectangle out of a existing one. </param>
 		UiBound(const UiBound &source);
 
-		~UiBound();
-
 		static Vector2 FindPivot(const std::string &key);
 
 		Vector2 GetPosition() const { return m_position; }

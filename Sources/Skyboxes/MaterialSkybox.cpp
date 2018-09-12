@@ -16,10 +16,6 @@ namespace acid
 	{
 	}
 
-	MaterialSkybox::~MaterialSkybox()
-	{
-	}
-
 	void MaterialSkybox::Start()
 	{
 		m_material = PipelineMaterial::Resource({ 1, 0 }, PipelineCreate({ "Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag" },

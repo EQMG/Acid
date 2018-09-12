@@ -14,6 +14,13 @@ namespace acid
 {
 	const uint32_t RendererDeferred::MAX_LIGHTS = 32;
 
+	struct DeferredLight
+	{
+		Colour m_colour;
+		Vector3 m_position;
+		float m_radius;
+	};
+
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
@@ -32,8 +39,7 @@ namespace acid
 		auto ibl = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap(); // TODO: IBL cubemap.
 
 		// Updates uniforms.
-		auto lightColours = std::vector<Colour>(MAX_LIGHTS);
-		auto lightPositions = std::vector<Vector4>(MAX_LIGHTS);
+		auto deferredLights = std::vector<DeferredLight>(MAX_LIGHTS);
 		int32_t lightCount = 0;
 
 		auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
@@ -48,8 +54,11 @@ namespace acid
 		//		continue;
 		//	}
 
-			lightColours[lightCount] = light->GetColour();
-			lightPositions[lightCount] = Vector4(light->GetPosition(), light->GetRadius());
+			DeferredLight deferredLight = {};
+			deferredLight.m_colour = light->GetColour();
+			deferredLight.m_position = light->GetPosition();
+			deferredLight.m_radius = light->GetRadius();
+			deferredLights[lightCount] = deferredLight;
 			lightCount++;
 
 			if (lightCount >= MAX_LIGHTS)
@@ -59,8 +68,7 @@ namespace acid
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("lightColours", *lightColours.data(), sizeof(Colour) * MAX_LIGHTS);
-		m_uniformScene.Push("lightPositions", *lightPositions.data(), sizeof(Vector4) * MAX_LIGHTS);
+		m_uniformScene.Push("lights", *deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 		m_uniformScene.Push("lightsCount", lightCount);
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());

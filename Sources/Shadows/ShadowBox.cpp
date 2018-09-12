@@ -25,10 +25,6 @@ namespace acid
 	{
 	}
 
-	ShadowBox::~ShadowBox()
-	{
-	}
-
 	void ShadowBox::Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
 		m_lightDirection = lightPosition.Normalize();

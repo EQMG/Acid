@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	InstanceBuffer::~InstanceBuffer()
-	{
-	}
-
 	void InstanceBuffer::Update(const void *newData)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();

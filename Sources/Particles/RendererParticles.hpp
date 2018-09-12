@@ -17,7 +17,7 @@ namespace acid
 		Vector4 mvp1;
 		Vector4 mvp2;
 		Vector4 mvp3;
-		Vector3 colourOffset;
+		Colour colourOffset;
 		Vector4 offsets;
 		Vector3 blend;
 	};
@@ -36,10 +36,7 @@ namespace acid
 	public:
 		RendererParticles(const GraphicsStage &graphicsStage);
 
-		~RendererParticles();
-
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
-
 	private:
 		ParticleData GetInstanceData(Particle &particle, const Matrix4 &viewMatrix);
 

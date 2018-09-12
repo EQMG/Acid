@@ -16,10 +16,6 @@ namespace acid
 	{
 	}
 
-	VertexModelData::~VertexModelData()
-	{
-	}
-
 	void VertexModelData::AddTangent(const Vector3 &tangent)
 	{
 		m_tangents.emplace_back(tangent);

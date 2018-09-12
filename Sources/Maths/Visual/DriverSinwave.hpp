@@ -21,9 +21,6 @@ namespace acid
 		/// <param name="max"> The max value. </param>
 		/// <param name="length"> The length between two waves. </param>
 		DriverSinwave(const float &min, const float &max, const float &length);
-
-		~DriverSinwave();
-
 	protected:
 		float Calculate(const float &time) override;
 	};

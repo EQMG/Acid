@@ -54,8 +54,6 @@ namespace acid
 		/// <param name="source"> Creates this matrix out of a 2 vector array. </param>
 		Matrix2(const Vector2 source[2]);
 
-		~Matrix2();
-
 		/// <summary>
 		/// Adds this matrix to another matrix.
 		/// </summary>

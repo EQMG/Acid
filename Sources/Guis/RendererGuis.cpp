@@ -13,10 +13,6 @@ namespace acid
 	{
 	}
 
-	RendererGuis::~RendererGuis()
-	{
-	}
-
 	void RendererGuis::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		m_pipeline.BindPipeline(commandBuffer);

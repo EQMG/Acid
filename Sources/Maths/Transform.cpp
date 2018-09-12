@@ -34,10 +34,6 @@ namespace acid
 	{
 	}
 
-	Transform::~Transform()
-	{
-	}
-
 	Matrix4 Transform::GetWorldMatrix() const
 	{
 		return Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);

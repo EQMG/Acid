@@ -21,8 +21,6 @@ namespace acid
 		/// <param name="agility"> The agility for increasing actual. </param>
 		SmoothFloat(const float &initialValue, const float &agility);
 
-		~SmoothFloat();
-
 		/// <summary>
 		/// Updates the driver with the passed time.
 		/// </summary>

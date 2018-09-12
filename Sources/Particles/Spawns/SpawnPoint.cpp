@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	SpawnPoint::~SpawnPoint()
-	{
-	}
-
 	void SpawnPoint::Decode(const Metadata &metadata)
 	{
 		m_point = metadata.GetChild<Vector3>("Point");

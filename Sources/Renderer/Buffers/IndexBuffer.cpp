@@ -17,8 +17,4 @@ namespace acid
 		memcpy(data, newData, static_cast<size_t>(m_size));
 		vkUnmapMemory(logicalDevice, m_bufferMemory);
 	}
-
-	IndexBuffer::~IndexBuffer()
-	{
-	}
 }

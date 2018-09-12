@@ -14,8 +14,6 @@ namespace acid
 		static std::shared_ptr<ModelRectangle> Resource(const std::string &data);
 
 		ModelRectangle(const float &width, const float &height);
-
-		~ModelRectangle();
 	private:
 		static std::string ToFilename(const float &min, const float &max);
 	};

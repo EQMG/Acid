@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	ShadowRender::~ShadowRender()
-	{
-	}
-
 	void ShadowRender::Start()
 	{
 	}

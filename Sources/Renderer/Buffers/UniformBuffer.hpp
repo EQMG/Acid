@@ -16,8 +16,6 @@ namespace acid
 	public:
 		UniformBuffer(const VkDeviceSize &size);
 
-		~UniformBuffer();
-
 		void Update(const void *newData);
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);

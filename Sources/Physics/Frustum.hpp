@@ -18,8 +18,6 @@ namespace acid
 		/// </summary>
 		Frustum();
 
-		~Frustum();
-
 		/// <summary>
 		/// Updates a frustum from the view and projection matrix.
 		/// </summary>

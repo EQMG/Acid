@@ -15,8 +15,6 @@ namespace acid
 		static std::shared_ptr<ModelSphere> Resource(const std::string &data);
 
 		ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
-
-		~ModelSphere();
 	private:
 		static std::string ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 	};

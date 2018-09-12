@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	SpawnLine::~SpawnLine()
-	{
-	}
-
 	void SpawnLine::Decode(const Metadata &metadata)
 	{
 		m_length = metadata.GetChild<float>("Length");

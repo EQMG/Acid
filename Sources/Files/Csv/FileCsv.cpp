@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	FileCsv::~FileCsv()
-	{
-	}
-
 	void FileCsv::Load()
 	{
 #if ACID_VERBOSE

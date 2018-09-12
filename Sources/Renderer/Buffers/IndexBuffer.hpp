@@ -13,8 +13,6 @@ namespace acid
 	public:
 		IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const size_t &indexCount, const void *newData);
 
-		~IndexBuffer();
-
 		VkIndexType GetIndexType() const { return m_indexType; }
 
 		uint32_t GetIndexCount() const { return m_indexCount; }

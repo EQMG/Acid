@@ -45,7 +45,7 @@ namespace acid
 		{
 			Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]), 1.0f);
 			position = MeshAnimated::CORRECTION.Transform(position);
-			VertexAnimatedData *newVertex = new VertexAnimatedData(m_positionsList.size(), position);
+			VertexAnimatedData *newVertex = new VertexAnimatedData(static_cast<int32_t>(m_positionsList.size()), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
 			m_positionsList.emplace_back(newVertex);
 		}
@@ -82,7 +82,7 @@ namespace acid
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int32_t indexCount = m_meshData->FindChild("polylist")->FindChildren("input").size();
+		int32_t indexCount = static_cast<int32_t>(m_meshData->FindChild("polylist")->FindChildren("input").size());
 		auto indexRawData = String::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)

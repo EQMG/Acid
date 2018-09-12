@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	DriverLinear::~DriverLinear()
-	{
-	}
-
 	float DriverLinear::Calculate(const float &time)
 	{
 		return m_startValue + time * m_difference;

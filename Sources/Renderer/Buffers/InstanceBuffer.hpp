@@ -12,8 +12,6 @@ namespace acid
 	public:
 		InstanceBuffer(const VkDeviceSize &size);
 
-		~InstanceBuffer();
-
 		void Update(const void *newData);
 	};
 }

@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	DriverFade::~DriverFade()
-	{
-	}
-
 	float DriverFade::Calculate(const float &time)
 	{
 		if (time < m_start)

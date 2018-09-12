@@ -7,20 +7,6 @@
 		"Colour Offset": "#0000ff",
 		"Life Length": 10.0,
 		"Scale": 1.0
-	  },
-	  {
-		"Texture": "Particles/Circular.png",
-		"Number Of Rows": 4,
-		"Colour Offset": "#ffff00",
-		"Life Length": 6.0,
-		"Scale": 3.0
-	  },
-	  {
-		"Texture": "Particles/Circular.png",
-		"Number Of Rows": 4,
-		"Colour Offset": "#ff0000",
-		"Life Length": 8.0,
-		"Scale": 2.0
 	  }
 	],
 	"Spawn": {

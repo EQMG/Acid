@@ -29,10 +29,6 @@ namespace acid
 		m_background->SetColourOffset(Colour());
 	}
 
-	UiInputText::~UiInputText()
-	{
-	}
-
 	void UiInputText::UpdateObject()
 	{
 		if (m_selected)

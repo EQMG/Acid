@@ -9,21 +9,15 @@ layout(set = 0, binding = 0) uniform UboScene
 	vec3 cameraPos;
 } scene;
 
-// Vertex attributes
-layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec2 inUv;
-layout(location = 2) in vec3 inNormal;
-layout(location = 3) in vec3 inTangent;
-
-// Instanced attributes
-layout(location = 4) in mat4 inMvp;
-layout(location = 8) in vec3 inColourOffset;
-layout(location = 9) in vec4 inOffsets;
-layout(location = 10) in vec3 inBlend;
+layout(set = 0, location = 0) in vec3 inPosition;
+layout(set = 1, location = 4) in mat4 inMvp;
+layout(set = 1, location = 8) in vec4 inColourOffset;
+layout(set = 1, location = 9) in vec4 inOffsets;
+layout(set = 1, location = 10) in vec3 inBlend;
 
 layout(location = 0) out vec2 outCoords1;
 layout(location = 1) out vec2 outCoords2;
-layout(location = 2) out vec3 outColourOffset;
+layout(location = 2) out vec4 outColourOffset;
 layout(location = 3) out float outBlendFactor;
 layout(location = 4) out float outTransparency;
 

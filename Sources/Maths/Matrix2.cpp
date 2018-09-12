@@ -31,10 +31,6 @@ namespace acid
 		memcpy(m_rows, source, 2 * sizeof(Vector2));
 	}
 
-	Matrix2::~Matrix2()
-	{
-	}
-
 	Matrix2 Matrix2::Add(const Matrix2 &other) const
 	{
 		Matrix2 result = Matrix2();

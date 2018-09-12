@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	ButtonKeyboard::~ButtonKeyboard()
-	{
-	}
-
 	bool ButtonKeyboard::IsDown() const
 	{
 		for (auto &key : m_keys)

@@ -7,10 +7,6 @@ namespace acid
 	{
 	}
 
-	Events::~Events()
-	{
-	}
-
 	void Events::Update()
 	{
 		for (auto it = m_events.begin(); it != m_events.end();)

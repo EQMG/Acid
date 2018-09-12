@@ -9,10 +9,6 @@ namespace acid
 	{
 	}
 
-	UiInputDelay::~UiInputDelay()
-	{
-	}
-
 	void UiInputDelay::Update(const bool &keyIsDown)
 	{
 		if (keyIsDown)

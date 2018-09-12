@@ -16,8 +16,6 @@ namespace acid
 		float m_textureScale;
 	public:
 		MeshSimple(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
-
-		~MeshSimple();
 	protected:
 		void GenerateMesh();
 

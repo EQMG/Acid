@@ -12,10 +12,6 @@ namespace acid
 		}
 	}
 
-	ThreadPool::~ThreadPool()
-	{
-	}
-
 	void ThreadPool::Wait()
 	{
 		for (auto &thread : m_threads)

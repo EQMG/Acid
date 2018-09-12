@@ -29,8 +29,6 @@ namespace acid
 		/// </summary>
 		Scenes();
 
-		~Scenes();
-
 		void Update() override;
 
 		/// <summary>

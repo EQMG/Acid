@@ -12,8 +12,6 @@ namespace acid
 	public:
 		VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, const void *newData);
 
-		~VertexBuffer();
-
 		uint32_t GetVertexCount() const { return m_vertexCount; }
 	};
 }

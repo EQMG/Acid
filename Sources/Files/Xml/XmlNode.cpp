@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	XmlNode::~XmlNode()
-	{
-	}
-
 	void XmlNode::AppendData(const Metadata &source, std::stringstream &builder, const int32_t &indentation)
 	{
 		std::stringstream indents;
@@ -81,7 +77,7 @@ namespace acid
 		int32_t firstSpace = String::FindCharPos(source.m_attributes, ' ');
 		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
 		name = String::Trim(name);
-		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, source.m_attributes.size());
+		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, static_cast<int32_t>(source.m_attributes.size()));
 		attributes = String::Trim(attributes);
 
 		if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')

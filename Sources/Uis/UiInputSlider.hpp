@@ -37,8 +37,6 @@ namespace acid
 	public:
 		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &roundTo, const float &progressMin, const float &progressMax, const float &value);
 
-		~UiInputSlider();
-
 		void UpdateObject() override;
 
 		std::string GetPrefix() const { return m_prefix; }

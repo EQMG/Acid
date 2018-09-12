@@ -15,8 +15,6 @@ namespace acid
 		static std::shared_ptr<ModelCylinder> Resource(const std::string &data);
 
 		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
-
-		~ModelCylinder();
 	private:
 		static std::string ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 	};

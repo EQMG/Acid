@@ -24,8 +24,6 @@ namespace acid
 	public:
 		UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string);
 
-		~UiInputButton();
-
 		void UpdateObject() override;
 
 		bool OnActionMouse(const MouseButton &button) override;

@@ -62,8 +62,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing one. </param>
 		Vector2(const Vector3 &source);
 
-		~Vector2();
-
 		/// <summary>
 		/// Adds this vector to another vector.
 		/// </summary>

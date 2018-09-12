@@ -13,8 +13,6 @@ namespace acid
 	public:
 		UiInputDelay();
 
-		~UiInputDelay();
-
 		void Update(const bool &keyIsDown);
 
 		bool CanInput();

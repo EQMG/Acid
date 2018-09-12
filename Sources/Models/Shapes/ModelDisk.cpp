@@ -76,10 +76,6 @@ namespace acid
 		Model::Initialize(vertices, indices, ToFilename(innerRadius, outerRadius, slices, loops));
 	}
 
-	ModelDisk::~ModelDisk()
-	{
-	}
-
 	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
 		std::stringstream result;

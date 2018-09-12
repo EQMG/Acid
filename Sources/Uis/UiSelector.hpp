@@ -29,10 +29,6 @@ namespace acid
 			}
 		}
 
-		~SelectorJoystick()
-		{
-		}
-
 		JoystickPort GetJoystick() const { return m_joystick; }
 
 		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
@@ -69,8 +65,6 @@ namespace acid
 		std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
 	public:
 		UiSelector();
-
-		~UiSelector();
 
 		void Update(const bool &paused, const SelectorJoystick &selectorJoystick);
 

@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	Uis::~Uis()
-	{
-	}
-
 	void Uis::Update()
 	{
 		m_objects.clear();

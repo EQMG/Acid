@@ -10,10 +10,6 @@ namespace acid
 	{
 	}
 
-	SceneStructure::~SceneStructure()
-	{
-	}
-
 	void SceneStructure::Add(GameObject *object)
 	{
 		m_objects.emplace_back(object);

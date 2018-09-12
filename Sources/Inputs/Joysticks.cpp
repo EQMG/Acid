@@ -16,10 +16,6 @@ namespace acid
 		}
 	}
 
-	Joysticks::~Joysticks()
-	{
-	}
-
 	void Joysticks::Update()
 	{
 		for (auto &joystick : m_connected)

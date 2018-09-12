@@ -50,11 +50,6 @@ namespace acid
 		m_name = FileSystem::FindName(filepath);
 	}
 
-	GameObject::~GameObject()
-	{
-		StructureRemove();
-	}
-
 	void GameObject::Update()
 	{
 		for (auto &component : m_components)

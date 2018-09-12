@@ -36,8 +36,6 @@ namespace acid
 		/// </summary>
 		ShadowBox();
 
-		~ShadowBox();
-
 		/// <summary>
 		/// Updates the bounds of the shadow box based on the light direction and the camera's view frustum.
 		/// Will make sure that the box covers the smallest area possible while still ensuring that everything.

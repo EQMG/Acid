@@ -18,9 +18,6 @@ namespace acid
 		/// </summary>
 		/// <param name="constant"> The constant value. </param>
 		DriverConstant(const float &constant);
-
-		~DriverConstant();
-
 	protected:
 		float Calculate(const float &time) override;
 	};

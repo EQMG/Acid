@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	MeshRender::~MeshRender()
-	{
-	}
-
 	void MeshRender::Start()
 	{
 	}

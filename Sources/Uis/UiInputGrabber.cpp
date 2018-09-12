@@ -112,10 +112,6 @@ namespace acid
 	{
 	}
 
-	UiInputGrabber::~UiInputGrabber()
-	{
-	}
-
 	void UiInputGrabber::UpdateObject()
 	{
 		if (m_selected)

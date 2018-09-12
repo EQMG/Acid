@@ -43,9 +43,14 @@ namespace acid
 			return false;
 		}
 
-		if (createFolders && String::Contains(filepath, "\\/"))
+		if (createFolders)
 		{
-			CreateFolder(filepath.substr(0, filepath.find_last_of("\\/")));
+			auto lastPos = filepath.find_last_of("\\/");
+
+			if (lastPos != std::string::npos)
+			{
+				CreateFolder(filepath.substr(0, lastPos));
+			}
 		}
 
 		FILE *file = fopen(filepath.c_str(), "rb+");
@@ -139,8 +144,8 @@ namespace acid
 
 	std::string FileSystem::FindName(const std::string &filepath)
 	{
-		uint32_t lastSep = filepath.find_last_of("\\/") + 1;
-		uint32_t lastDot = filepath.find_last_of('.');
+		uint32_t lastSep = static_cast<uint32_t>(filepath.find_last_of("\\/") + 1);
+		uint32_t lastDot = static_cast<uint32_t>(filepath.find_last_of('.'));
 		return filepath.substr(lastSep, lastDot - lastSep);
 	}
 

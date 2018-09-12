@@ -14,10 +14,6 @@ namespace acid
 		}
 	}
 
-	Timer::~Timer()
-	{
-	}
-
 	bool Timer::IsPassedTime() const
 	{
 		return Engine::Get()->GetTimeMs() - m_startTime >= m_interval;

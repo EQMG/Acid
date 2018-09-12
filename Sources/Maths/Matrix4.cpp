@@ -36,10 +36,6 @@ namespace acid
 		memcpy(m_rows, source, 4 * sizeof(Vector4));
 	}
 
-	Matrix4::~Matrix4()
-	{
-	}
-
 	Matrix4 Matrix4::Add(const Matrix4 &other) const
 	{
 		Matrix4 result = Matrix4();

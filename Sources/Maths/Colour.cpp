@@ -76,10 +76,6 @@ namespace acid
 	{
 	}
 
-	Colour::~Colour()
-	{
-	}
-
 	Colour Colour::Add(const Colour &other) const
 	{
 		return Colour(m_r + other.m_r, m_g + other.m_g, m_b + other.m_b, m_a + other.m_a);

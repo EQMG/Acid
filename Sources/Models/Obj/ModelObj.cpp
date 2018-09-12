@@ -133,10 +133,6 @@ namespace acid
 		Model::Initialize(vertices, indices, filename);
 	}
 
-	ModelObj::~ModelObj()
-	{
-	}
-
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
 		int32_t index = static_cast<int>(vertex.m_x) - 1;

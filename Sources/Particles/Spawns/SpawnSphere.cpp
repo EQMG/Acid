@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	SpawnSphere::~SpawnSphere()
-	{
-	}
-
 	void SpawnSphere::Decode(const Metadata &metadata)
 	{
 		m_radius = metadata.GetChild<float>("Radius");

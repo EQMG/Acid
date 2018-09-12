@@ -54,8 +54,6 @@ namespace acid
 		/// <param name="source"> Creates this particle type out of a existing one. </param>
 		ParticleType(const ParticleType &source);
 
-		~ParticleType();
-
 		void Decode(const Metadata &metadata);
 
 		void Encode(Metadata &metadata) const;

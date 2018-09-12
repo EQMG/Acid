@@ -64,8 +64,6 @@ namespace acid
 
 		Mouse();
 
-		~Mouse();
-
 		void Update() override;
 
 		/// <summary>

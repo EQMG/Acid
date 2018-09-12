@@ -78,10 +78,6 @@ namespace acid
 		Model::Initialize(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks));
 	}
 
-	ModelCylinder::~ModelCylinder()
-	{
-	}
-
 	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
 		std::stringstream result;

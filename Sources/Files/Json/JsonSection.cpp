@@ -12,10 +12,6 @@ namespace acid
 	{
 	}
 
-	JsonSection::~JsonSection()
-	{
-	}
-
 	void JsonSection::AppendData(const Metadata &source, std::stringstream &builder, const int32_t &indentation, const bool &end)
 	{
 		std::stringstream indents;

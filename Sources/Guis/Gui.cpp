@@ -19,10 +19,6 @@ namespace acid
 	{
 	}
 
-	Gui::~Gui()
-	{
-	}
-
 	void Gui::UpdateObject()
 	{
 		int32_t numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;

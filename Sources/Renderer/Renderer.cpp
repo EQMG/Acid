@@ -132,7 +132,7 @@ namespace acid
 
 		for (auto &renderpassCreate : renderpassCreates)
 		{
-			auto renderStage = new RenderStage(m_renderStages.size(), renderpassCreate); // TODO: Clean up.
+			auto renderStage = new RenderStage(static_cast<uint32_t>(m_renderStages.size()), renderpassCreate); // TODO: Clean up.
 			renderStage->Rebuild(*m_swapchain);
 			m_renderStages.emplace_back(renderStage);
 		}
@@ -188,10 +188,27 @@ namespace acid
 			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surfaceFormat.format) != formatsBGR.end();
 		}
 
-		// TODO: If colourSwizzle then swap B and R values.
+		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subResourceLayout.size));
+
+		if (colourSwizzle)
+		{
+			for (uint32_t i = 0; i < width * height; i++)
+			{
+				uint8_t *pixelOffset = (uint8_t *) data + (i * 4);
+
+				pixels.get()[i * 4] = pixelOffset[2];
+				pixels.get()[i * 4 + 1] = pixelOffset[1];
+				pixels.get()[i * 4 + 2] = pixelOffset[0];
+				pixels.get()[i * 4 + 3] = pixelOffset[3];
+			}
+		}
+		else
+		{
+			memcpy(pixels.get(), (uint8_t *) data, subResourceLayout.size);
+		}
 
 		// Writes the image.
-		Texture::WritePixels(filename, data, width, height, 4);
+		Texture::WritePixels(filename, pixels.get(), width, height, 4);
 
 		// Clean up resources.
 		vkUnmapMemory(logicalDevice, dstImageMemory);

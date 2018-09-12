@@ -8,10 +8,6 @@ namespace acid
 	{
 	}
 
-	AxisButton::~AxisButton()
-	{
-	}
-
 	float AxisButton::GetAmount() const
 	{
 		float result = 0.0f;

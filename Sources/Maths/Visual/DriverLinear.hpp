@@ -21,9 +21,6 @@ namespace acid
 		/// <param name="endValue"> The end value. </param>
 		/// <param name="length"> The time to go between values. </param>
 		DriverLinear(const float &startValue, const float &endValue, const float &length);
-
-		~DriverLinear();
-
 	protected:
 		float Calculate(const float &time) override;
 	};

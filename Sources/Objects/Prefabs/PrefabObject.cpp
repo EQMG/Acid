@@ -54,10 +54,6 @@ namespace acid
 		}
 	}
 
-	PrefabObject::~PrefabObject()
-	{
-	}
-
 	void PrefabObject::Write(const GameObject &gameObject)
 	{
 		m_parent->ClearChildren();
@@ -71,7 +67,7 @@ namespace acid
 				return;
 			}
 
-			auto child = m_parent->FindChild(*componentName);
+			auto child = m_parent->FindChild(*componentName, false);
 
 			if (child == nullptr)
 			{

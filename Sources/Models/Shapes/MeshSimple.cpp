@@ -11,10 +11,6 @@ namespace acid
 	{
 	}
 
-	MeshSimple::~MeshSimple()
-	{
-	}
-
 	void MeshSimple::GenerateMesh()
 	{
 		auto vertices = std::vector<VertexModel>();

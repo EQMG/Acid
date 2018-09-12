@@ -16,8 +16,6 @@ namespace acid
 	public:
 		UiStartLogo(UiObject *parent);
 
-		~UiStartLogo();
-
 		void UpdateObject() override;
 
 		bool IsStarting() const { return m_starting; }

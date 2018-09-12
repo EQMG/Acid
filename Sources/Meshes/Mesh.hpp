@@ -16,8 +16,6 @@ namespace acid
 	public:
 		Mesh(const std::shared_ptr<Model> &model = nullptr);
 
-		~Mesh();
-
 		void Start() override;
 
 		void Update() override;

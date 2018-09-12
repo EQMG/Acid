@@ -22,10 +22,6 @@ namespace acid
 	{
 	}
 
-	Fog::~Fog()
-	{
-	}
-
 	void Fog::Decode(const Metadata &metadata)
 	{
 		m_colour = metadata.GetChild<Colour>("Colour");
