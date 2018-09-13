@@ -3,6 +3,7 @@
 #include "Resources/Resources.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Helpers/String.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -41,7 +42,7 @@ namespace acid
 		m_colourOffset(colourOffset),
 		m_lifeLength(lifeLength),
 		m_scale(scale),
-		m_instanceBuffer(InstanceBuffer(sizeof(ParticleData) * MAX_TYPE_INSTANCES)),
+		m_storageBuffer(StorageHandler()),
 		m_descriptorSet(DescriptorsHandler())
 	{
 	}
@@ -65,12 +66,13 @@ namespace acid
 		metadata.SetChild<float>("Scale", m_scale);
 	}
 
-	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
+	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
 	{
-		m_instanceBuffer.Update(instanceData.data());
+		m_storageBuffer.Push("data", *instanceData.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
+		m_descriptorSet.Push("Instances", m_storageBuffer);
 		m_descriptorSet.Push("samplerColour", m_texture);
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
@@ -82,11 +84,7 @@ namespace acid
 		// Draws the instanced objects.
 		m_descriptorSet.BindDescriptor(commandBuffer);
 
-		VkBuffer vertexBuffers[] = {m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer()};
-		VkDeviceSize offsets[] = {0, 0};
-		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 2, vertexBuffers, offsets);
-		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexBuffer()->GetIndexType());
-		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetIndexCount(), MAX_TYPE_INSTANCES, 0, 0, 0);
+		m_model->CmdRender(commandBuffer, static_cast<uint32_t>(instanceData.size()));
 		return true;
 	}
 

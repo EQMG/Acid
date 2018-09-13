@@ -23,7 +23,19 @@ namespace acid
 
 	std::string Metadata::GetString() const
 	{
-		return String::RemoveAll(m_value, '\"'); // FIXME: Just first and last.
+		std::string string = m_value;
+
+		if (string.front() == '\"')
+		{
+			string.erase(0, 1);
+		}
+
+		if (string.back() == '\"')
+		{
+			string.pop_back();
+		}
+
+		return string;
 	}
 
 	void Metadata::SetString(const std::string &data)

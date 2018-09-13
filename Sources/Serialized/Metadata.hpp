@@ -107,7 +107,7 @@ namespace acid
 			else if constexpr(std::is_class_v<T>)
 			{
 				T result = T();
-				result.Decode(*this); // FIXME: Unsafe, unchecked.
+				result.Decode(*this);
 				return result;
 			}
 			else
@@ -125,7 +125,7 @@ namespace acid
 			}
 			else if constexpr(std::is_class_v<T>)
 			{
-				value.Encode(*this); // FIXME: Unsafe, unchecked.
+				value.Encode(*this);
 			}
 			else
 			{

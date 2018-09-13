@@ -113,8 +113,8 @@ namespace acid
 		if (m_animated)
 		{
 			result.emplace_back(PipelineDefine("ANIMATED", "TRUE"));
-			result.emplace_back(PipelineDefine("MAX_JOINTS", std::to_string(MeshAnimated::MAX_JOINTS)));
-			result.emplace_back(PipelineDefine("MAX_WEIGHTS", std::to_string(MeshAnimated::MAX_WEIGHTS)));
+			result.emplace_back(PipelineDefine("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS)));
+			result.emplace_back(PipelineDefine("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS)));
 		}
 
 		/*if (m_normalTexture != nullptr)

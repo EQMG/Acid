@@ -23,7 +23,7 @@ namespace acid
 
 		VkDeviceMemory GetBufferMemory() const { return m_bufferMemory; }
 
-		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties);
+		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
 		static void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
 	};

@@ -16,12 +16,24 @@ namespace acid
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f)),
 		m_mouseOver(false)
 	{
 	}
 
 	void UiInputButton::UpdateObject()
 	{
+		// Click updates.
+		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
+		    Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
+		{
+			if (!m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+		}
+
 		// Mouse over updates.
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver)
 		{
@@ -35,15 +47,5 @@ namespace acid
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
-	}
-
-	bool UiInputButton::OnActionMouse(const MouseButton &button)
-	{
-		if (button == MOUSE_BUTTON_LEFT)
-		{
-			// TODO: Click sound.
-		}
-
-		return false;
 	}
 }

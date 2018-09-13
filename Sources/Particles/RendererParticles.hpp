@@ -20,7 +20,5 @@ namespace acid
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	private:
 		ParticleData GetInstanceData(Particle &particle, const Matrix4 &viewMatrix);
-
-		static VertexInput GetVertexInput(const uint32_t &binding = 1);
 	};
 }

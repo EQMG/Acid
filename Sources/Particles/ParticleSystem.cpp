@@ -20,9 +20,9 @@ namespace acid
 		m_systemOffset(systemOffset),
 		m_direction(Vector3()),
 		m_directionDeviation(0.0f),
-		m_speedError(0.0f),
-		m_lifeError(0.0f),
-		m_scaleError(0.0f),
+		m_speedDeviation(0.0f),
+		m_lifeDeviation(0.0f),
+		m_scaleDeviation(0.0f),
 		m_timePassed(0.0f),
 		m_paused(false)
 	{
@@ -68,6 +68,12 @@ namespace acid
 		m_averageSpeed = metadata.GetChild<float>("Average Speed");
 		m_gravityEffect = metadata.GetChild<float>("Gravity Effect");
 		m_systemOffset = metadata.GetChild<Vector3>("Offset");
+		m_randomRotation = metadata.GetChild<bool>("Random Rotation");
+		m_direction = metadata.GetChild<Vector3>("Direction");
+		m_directionDeviation = metadata.GetChild<float>("Direction Deviation");
+		m_speedDeviation = metadata.GetChild<float>("Speed Deviation");
+		m_lifeDeviation = metadata.GetChild<float>("Life Deviation");
+		m_scaleDeviation = metadata.GetChild<float>("Scale Deviation");
 	}
 
 	void ParticleSystem::Encode(Metadata &metadata) const
@@ -90,7 +96,12 @@ namespace acid
 		metadata.SetChild<float>("Average Speed", m_averageSpeed);
 		metadata.SetChild<float>("Gravity Effect", m_gravityEffect);
 		metadata.SetChild<Vector3>("Offset", m_systemOffset);
-		// TODO: m_randomRotation, m_direction, m_directionDeviation, m_speedError, m_lifeError, m_scaleError
+		metadata.SetChild<bool>("Random Rotation", m_randomRotation);
+		metadata.SetChild<Vector3>("Direction", m_direction);
+		metadata.SetChild<float>("Direction Deviation", m_directionDeviation);
+		metadata.SetChild<float>("Speed Deviation", m_speedDeviation);
+		metadata.SetChild<float>("Life Deviation", m_lifeDeviation);
+		metadata.SetChild<float>("Scale Deviation", m_scaleDeviation);
 	}
 
 	void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
@@ -182,11 +193,11 @@ namespace acid
 		}
 
 		velocity = velocity.Normalize();
-		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedError, 1.0f + m_speedError));
+		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedDeviation, 1.0f + m_speedDeviation));
 
 		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int32_t>(m_types.size())))));
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleError, 1.0f + m_scaleError));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeError, 1.0f + m_lifeError));
+		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleDeviation, 1.0f + m_scaleDeviation));
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeDeviation, 1.0f + m_lifeDeviation));
 
 		Vector3 spawnPos;
 		spawnPos = GetGameObject()->GetTransform().GetPosition() + m_systemOffset;

@@ -54,7 +54,7 @@ namespace acid
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
 	}
 
-	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &properties)
+	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 	{
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
@@ -63,9 +63,13 @@ namespace acid
 
 		for (uint32_t i = 0; i < physicalDeviceMemoryProperties.memoryTypeCount; i++)
 		{
-			// If typefilter has a bit set to 1 and it contains the properties we indicated.
-			if ((typeFilter & (1 << i)) &&
-				(physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
+			uint32_t memoryTypeBits = 1 << i;
+			bool isRequiredMemoryType = typeFilter & memoryTypeBits;
+
+			VkMemoryPropertyFlags properties = physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags;
+			bool hasRequiredProperties = (properties & requiredProperties) == requiredProperties;
+
+			if (isRequiredMemoryType && hasRequiredProperties)
 			{
 				return i;
 			}

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <functional>
+#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "UiObject.hpp"
@@ -19,14 +20,13 @@ namespace acid
 
 		std::unique_ptr<Text> m_text;
 		std::unique_ptr<Gui> m_background;
+		Sound m_soundClick;
 
 		bool m_mouseOver;
 	public:
 		UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string);
 
 		void UpdateObject() override;
-
-		bool OnActionMouse(const MouseButton &button) override;
 
 		std::string GetText() const { return m_text->GetString(); }
 

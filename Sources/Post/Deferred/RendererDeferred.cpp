@@ -84,7 +84,7 @@ namespace acid
 		m_uniformScene.Push("shadowPCF", Shadows::Get()->GetShadowPcf());
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("UboScene", m_uniformScene);
 		m_descriptorSet.Push("samplerDepth", m_pipeline.GetDepthStencil());
 		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(2));
 		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3));
@@ -110,7 +110,7 @@ namespace acid
 	{
 		std::vector<PipelineDefine> result = {};
 		result.emplace_back(PipelineDefine("USE_IBL", "TRUE"));
-		result.emplace_back(PipelineDefine("MAX_LIGHTS", std::to_string(MAX_LIGHTS)));
+		result.emplace_back(PipelineDefine("MAX_LIGHTS", String::To(MAX_LIGHTS)));
 		return result;
 	}
 
