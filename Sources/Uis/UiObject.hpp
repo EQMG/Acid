@@ -58,13 +58,6 @@ namespace acid
 		virtual void UpdateObject();
 
 		/// <summary>
-		/// Called on mouse click along with 'm_actionClick'.
-		/// </summary>
-		/// <param name="button"> The mouse button clicked. </param>
-		/// <returns> If this will cancel all events. </returns>
-		virtual bool OnActionMouse(const MouseButton &button);
-
-		/// <summary>
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>

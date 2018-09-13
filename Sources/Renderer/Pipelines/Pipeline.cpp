@@ -79,7 +79,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
+		Log::Out("%s", m_shaderProgram->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -190,7 +190,7 @@ namespace acid
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
 		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 4098; // Arbitrary number.
+		descriptorPoolCreateInfo.maxSets = 1024; // TODO: Arbitrary number.
 
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
@@ -199,17 +199,32 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-	//	VkPushConstantRange pushConstantRange = {};
-	//	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-	//	pushConstantRange.offset = sizeof(pushConstants);
-	//	pushConstantRange.size = 0;
+		std::vector<VkPushConstantRange> pushConstantRanges = {};
+		uint32_t currentOffset = 0;
+
+		for (auto &uniformBlock : m_shaderProgram->GetUniformBlocks())
+		{
+			if (uniformBlock->GetType() != BLOCK_PUSH)
+			{
+				continue;
+			}
+
+			VkPushConstantRange pushConstantRange = {};
+			pushConstantRange.stageFlags = uniformBlock->GetStageFlags();
+			pushConstantRange.offset = currentOffset;
+			pushConstantRange.size = static_cast<uint32_t>(uniformBlock->GetSize());
+
+			pushConstantRanges.emplace_back(pushConstantRange);
+
+			currentOffset += pushConstantRange.size;
+		}
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
-	//	pipelineLayoutCreateInfo.pushConstantRangeCount = 1;
-	//	pipelineLayoutCreateInfo.pPushConstantRanges = &pushConstantRange;
+		pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
+		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
 
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
@@ -294,6 +309,22 @@ namespace acid
 
 			for (auto &attribute : vertexInput.GetAttributeDescriptions())
 			{
+				bool shaderContains = false;
+
+				for (auto &shaderAttribute : m_shaderProgram->GetVertexAttributes())
+				{
+					if (attribute.location + lastAttribute == shaderAttribute->GetLocation())
+					{
+						shaderContains = true;
+						break;
+					}
+				}
+
+				if (!shaderContains)
+				{
+					continue;
+				}
+
 				auto &newAttribute = attributeDescriptions.emplace_back(attribute);
 				newAttribute.location += lastAttribute;
 			}

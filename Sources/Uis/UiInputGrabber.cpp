@@ -48,7 +48,7 @@ namespace acid
 
 	std::string UiGrabberJoystick::GetValue(const int32_t &value)
 	{
-		return std::to_string(value);
+		return String::To(value);
 	}
 
 	int32_t UiGrabberKeyboard::GetCurrent(Text *object)
@@ -95,13 +95,14 @@ namespace acid
 
 	std::string UiGrabberMouse::GetValue(const int32_t &value)
 	{
-		return std::to_string(value);
+		return String::To(value);
 	}
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber) :
 		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),
@@ -132,6 +133,9 @@ namespace acid
 				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 				Uis::Get()->GetSelector().CancelWasEvent();
 				m_selected = false;
+
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
 			}
 		}
 
@@ -143,6 +147,9 @@ namespace acid
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_selected = true;
 
+			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+			m_soundClick.Play();
+
 			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
@@ -150,6 +157,9 @@ namespace acid
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_selected = false;
+
+			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+			m_soundClick.Play();
 		}
 
 		// Mouse over updates.
@@ -165,11 +175,6 @@ namespace acid
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_mouseOver = false;
 		}
-	}
-
-	bool UiInputGrabber::OnActionMouse(const MouseButton &button)
-	{
-		return false;
 	}
 
 	void UiInputGrabber::SetPrefix(const std::string &prefix)

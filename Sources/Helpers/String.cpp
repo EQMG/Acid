@@ -105,7 +105,6 @@ namespace acid
 	{
 		std::string result = str;
 
-		// TODO: Optimise better.
 		for (auto it = result.end(); it != result.begin(); --it)
 		{
 			if ((*it) == token)

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <functional>
+#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/Uis.hpp"
@@ -59,6 +60,7 @@ namespace acid
 
 		std::unique_ptr<Text> m_text;
 		std::unique_ptr<Gui> m_background;
+		Sound m_soundClick;
 
 		std::unique_ptr<IUiGrabber> m_grabber;
 
@@ -75,8 +77,6 @@ namespace acid
 		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber);
 
 		void UpdateObject() override;
-
-		bool OnActionMouse(const MouseButton &button) override;
 
 		std::string GetPrefix() const { return m_prefix; }
 

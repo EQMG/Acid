@@ -12,7 +12,6 @@ namespace acid
 	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
 		m_soundBuffer(SoundBuffer::Resource(filename)),
 		m_source(0),
-		m_playing(false),
 		m_gain(gain),
 		m_pitch(pitch)
 	{
@@ -35,45 +34,47 @@ namespace acid
 	{
 		alSourcei(m_source, AL_LOOPING, loop);
 		alSourcePlay(m_source);
-		m_playing = true;
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::Pause()
 	{
-		if (!m_playing)
+		if (!IsPlaying())
 		{
 			return;
 		}
 
 		alSourcePause(m_source);
-		m_playing = false;
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::Resume()
 	{
-		if (m_playing)
+		if (IsPlaying())
 		{
 			return;
 		}
 
-		alSourcei(m_source, AL_LOOPING, false);
 		alSourcePlay(m_source);
-		m_playing = true;
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::Stop()
 	{
-		if (!m_playing)
+		if (!IsPlaying())
 		{
 			return;
 		}
 
 		alSourceStop(m_source);
-		m_playing = false;
 		Audio::CheckAl(alGetError());
+	}
+
+	bool Sound::IsPlaying()
+	{
+		ALenum state;
+		alGetSourcei(m_source, AL_SOURCE_STATE, &state);
+		return state == AL_PLAYING;
 	}
 
 	void Sound::SetPosition(const Vector3 &position)

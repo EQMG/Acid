@@ -44,10 +44,9 @@ namespace acid
 				{
 					if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
 					{
-						bool actionMouse = OnActionMouse(static_cast<MouseButton>(i));
-						bool actionClick = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
+						bool cancelWas = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
 
-						if (actionMouse || actionClick)
+						if (cancelWas)
 						{
 							Uis::Get()->GetSelector().CancelWasEvent();
 							break;
@@ -90,11 +89,6 @@ namespace acid
 
 	void UiObject::UpdateObject()
 	{
-	}
-
-	bool UiObject::OnActionMouse(const MouseButton &button)
-	{
-		return false;
 	}
 
 	void UiObject::SetParent(UiObject *parent)

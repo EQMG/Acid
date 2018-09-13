@@ -4,6 +4,7 @@
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/String.hpp"
+#include "Renderer/Buffers/StorageBuffer.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Textures/Cubemap.hpp"
 #include "Textures/Texture.hpp"
@@ -69,10 +70,25 @@ namespace acid
 			return l->GetLocation() < r->GetLocation();
 		});
 
+		uint32_t setCount = 64; // TODO: Arbitrary number.
+
 		// Process to descriptors.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
-			m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags()));
+			switch (uniformBlock->GetType())
+			{
+				case BLOCK_UNIFORM:
+					m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags(), setCount));
+					break;
+				case BLOCK_STORAGE:
+					m_descriptors.emplace_back(StorageBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags(), setCount));
+					break;
+				case BLOCK_PUSH:
+					// Push constants are described in the pipeline.
+					break;
+				default:
+					break;
+			}
 		}
 
 		for (auto &uniform : m_uniforms)
@@ -81,11 +97,11 @@ namespace acid
 			{
 			case 0x8B5E:
 			case 0x904D:
-				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
+				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
 				break;
 			case 0x8B60:
 			case 0x904E:
-				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags()));
+				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
 				break;
 			default:
 				break;
@@ -526,7 +542,19 @@ namespace acid
 			}
 		}
 
-		m_uniformBlocks.emplace_back(std::make_unique<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag));
+		UniformBlockType type = BLOCK_UNIFORM;
+
+		if (strcmp(program.getUniformBlockTType(i)->getStorageQualifierString(), "buffer") == 0)
+		{
+			type = BLOCK_STORAGE;
+		}
+
+		if (program.getUniformBlockTType(i)->getQualifier().layoutPushConstant)
+		{
+			type = BLOCK_PUSH;
+		}
+
+		m_uniformBlocks.emplace_back(std::make_unique<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
 	}
 
 	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)

@@ -8,11 +8,21 @@ layout(set = 0, binding = 0) uniform UboScene
 	mat4 view;
 } scene;
 
+struct Instance
+{
+    mat4 mvp;
+    vec4 colourOffset;
+    vec4 offsets;
+    vec3 blend;
+    float _padding;
+};
+
+layout(set = 0, binding = 1) buffer Instances
+{
+    Instance data[MAX_INSTANCES];
+} instances;
+
 layout(set = 0, location = 0) in vec3 inPosition;
-layout(set = 1, location = 4) in mat4 inMvp;
-layout(set = 1, location = 8) in vec4 inColourOffset;
-layout(set = 1, location = 9) in vec4 inOffsets;
-layout(set = 1, location = 10) in vec3 inBlend;
 
 layout(location = 0) out vec2 outCoords1;
 layout(location = 1) out vec2 outCoords2;
@@ -27,17 +37,19 @@ out gl_PerVertex
 
 void main() 
 {
-	vec4 worldPosition = inMvp * vec4(inPosition, 1.0f);
+    Instance instance = instances.data[gl_InstanceIndex];
+
+	vec4 worldPosition = instance.mvp * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
 	vec2 uv = inPosition.xy + vec2(0.5f, 0.5f);
 	uv.y = 1.0f - uv.y;
-	uv /= inBlend.z;
+	uv /= instance.blend.z;
 
-    outColourOffset = inColourOffset;
-	outCoords1 = uv + inOffsets.xy;
-	outCoords2 = uv + inOffsets.zw;
-	outBlendFactor = inBlend.x;
-	outTransparency = inBlend.y;
+    outColourOffset = instance.colourOffset;
+	outCoords1 = uv + instance.offsets.xy;
+	outCoords2 = uv + instance.offsets.zw;
+	outBlendFactor = instance.blend.x;
+	outTransparency = instance.blend.y;
 }

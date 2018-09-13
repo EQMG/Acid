@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include "Helpers/String.hpp"
 #include "Files/Files.hpp"
 
 namespace acid
@@ -11,8 +12,7 @@ namespace acid
 	enum PipelineMode
 	{
 		PIPELINE_MODE_POLYGON = 0,
-		PIPELINE_MODE_MRT = 1,
-		PIPELINE_MODE_COMPUTE = 2
+		PIPELINE_MODE_MRT = 1
 	};
 
 	enum PipelineDepth
@@ -190,9 +190,9 @@ namespace acid
 			m_workgroupSize(workgroupSize),
 			m_defines(defines)
 		{
-			m_defines.emplace_back(PipelineDefine("WIDTH", std::to_string(m_width)));
-			m_defines.emplace_back(PipelineDefine("HEIGHT", std::to_string(m_height)));
-			m_defines.emplace_back(PipelineDefine("WORKGROUP_SIZE", std::to_string(m_workgroupSize)));
+			m_defines.emplace_back(PipelineDefine("WIDTH", String::To(m_width)));
+			m_defines.emplace_back(PipelineDefine("HEIGHT", String::To(m_height)));
+			m_defines.emplace_back(PipelineDefine("WORKGROUP_SIZE", String::To(m_workgroupSize)));
 		}
 
 		std::string GetShaderStage() const { return m_shaderStage; }

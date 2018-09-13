@@ -57,6 +57,27 @@ namespace acid
 		Push(descriptorName, uniformHandler->GetUniformBuffer());
 	}
 
+	void DescriptorsHandler::Push(const std::string &descriptorName, StorageHandler *storageHandler)
+	{
+		if (m_shaderProgram == nullptr)
+		{
+			return;
+		}
+
+		storageHandler->Update(m_shaderProgram->GetUniformBlock(descriptorName));
+		Push(descriptorName, storageHandler->GetStorageBuffer());
+	}
+
+	void DescriptorsHandler::Push(const std::string &descriptorName, PushHandler *pushHandler)
+	{
+		if (m_shaderProgram == nullptr)
+		{
+			return;
+		}
+
+		pushHandler->Update(m_shaderProgram->GetUniformBlock(descriptorName));
+	}
+
 	bool DescriptorsHandler::Update(const IPipeline &pipeline)
 	{
 		if (m_shaderProgram != pipeline.GetShaderProgram())
@@ -77,5 +98,10 @@ namespace acid
 		}
 
 		return true;
+	}
+
+	void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer)
+	{
+		m_descriptorSet->BindDescriptor(commandBuffer);
 	}
 }

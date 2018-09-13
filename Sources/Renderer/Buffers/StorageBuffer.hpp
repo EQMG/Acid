@@ -7,14 +7,14 @@
 
 namespace acid
 {
-	class ACID_EXPORT UniformBuffer :
+	class ACID_EXPORT StorageBuffer :
 		public IDescriptor,
 		public Buffer
 	{
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;
 	public:
-		UniformBuffer(const VkDeviceSize &size);
+		StorageBuffer(const VkDeviceSize &size);
 
 		void Update(const void *newData);
 

@@ -176,7 +176,7 @@ namespace acid
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 
-	DescriptorType Cubemap::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage)
+	DescriptorType Cubemap::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
@@ -187,7 +187,7 @@ namespace acid
 
 		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		descriptorPoolSize.descriptorCount = 64; // Arbitrary number.
+		descriptorPoolSize.descriptorCount = count;
 
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}

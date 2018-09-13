@@ -17,6 +17,7 @@ namespace acid
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
 		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + value, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f)),
 		m_prefix(prefix),
 		m_value(value),
 		m_maxLength(maxLength),
@@ -76,6 +77,9 @@ namespace acid
 				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 				m_selected = false;
+
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
 			}
 			else
 			{
@@ -92,6 +96,9 @@ namespace acid
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_selected = true;
 
+			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+			m_soundClick.Play();
+
 			Uis::Get()->GetSelector().CancelWasEvent();
 		}
 		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
@@ -99,6 +106,9 @@ namespace acid
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
 			m_selected = false;
+
+			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+			m_soundClick.Play();
 		}
 
 		// Mouse over updates.

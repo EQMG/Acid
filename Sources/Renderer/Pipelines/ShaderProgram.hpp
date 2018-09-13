@@ -67,6 +67,13 @@ namespace acid
 		}
 	};
 
+	enum UniformBlockType
+	{
+		BLOCK_UNIFORM = 0,
+		BLOCK_STORAGE = 1,
+		BLOCK_PUSH = 2
+	};
+
 	class ACID_EXPORT UniformBlock
 	{
 	private:
@@ -74,13 +81,15 @@ namespace acid
 		int32_t m_binding;
 		int32_t m_size;
 		VkShaderStageFlags m_stageFlags;
+		UniformBlockType m_type;
 		std::vector<std::unique_ptr<Uniform>> m_uniforms;
 	public:
-		UniformBlock(const std::string &name, const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags) :
+		UniformBlock(const std::string &name, const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const UniformBlockType &type) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
+			m_type(type),
 			m_uniforms(std::vector<std::unique_ptr<Uniform>>())
 		{
 		}
@@ -125,12 +134,14 @@ namespace acid
 
 		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
+		UniformBlockType GetType() const { return m_type; }
+
 		std::vector<std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
 
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "UniformBlock(name '" << m_name << "', binding " << m_binding << ", size " << m_size << ")";
+			result << "UniformBlock(name '" << m_name << "', binding " << m_binding << ", size " << m_size << ", type " << m_type << ")";
 			return result.str();
 		}
 	};
@@ -205,6 +216,12 @@ namespace acid
 		UniformBlock *GetUniformBlock(const std::string &blockName);
 
 		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
+
+		const std::vector<std::unique_ptr<Uniform>> &GetUniforms() const { return m_uniforms; };
+
+		const std::vector<std::unique_ptr<UniformBlock>> &GetUniformBlocks() const { return m_uniformBlocks; };
+
+		const std::vector<std::unique_ptr<VertexAttribute>> &GetVertexAttributes() const { return m_vertexAttributes; };
 
 		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
 

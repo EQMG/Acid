@@ -6,9 +6,7 @@
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Resources/IResource.hpp"
 #include "Textures/Texture.hpp"
@@ -22,6 +20,7 @@ namespace acid
 		Colour colourOffset;
 		Vector4 offsets;
 		Vector3 blend;
+		float _padding;
 	};
 
 	/// <summary>
@@ -39,7 +38,7 @@ namespace acid
 		float m_lifeLength;
 		float m_scale;
 
-		InstanceBuffer m_instanceBuffer;
+		StorageHandler m_storageBuffer;
 		DescriptorsHandler m_descriptorSet;
 	public:
 		static const uint32_t MAX_TYPE_INSTANCES;
@@ -74,7 +73,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
+		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
 
 		std::string GetFilename() override { return m_filename; }
 

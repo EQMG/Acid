@@ -31,9 +31,9 @@ namespace acid
 		Vector3 m_systemOffset;
 		Vector3 m_direction;
 		float m_directionDeviation;
-		float m_speedError;
-		float m_lifeError;
-		float m_scaleError;
+		float m_speedDeviation;
+		float m_lifeDeviation;
+		float m_scaleDeviation;
 
 		float m_timePassed;
 		bool m_paused;
@@ -91,17 +91,17 @@ namespace acid
 
 		void SetDirection(const Vector3 &direction, const float &deviation);
 
-		float GetSpeedError() const { return m_speedError; }
+		float GetSpeedDeviation() const { return m_speedDeviation; }
 
-		void SetSpeedError(const float &speedError) { m_speedError = speedError; }
+		void SetSpeedDeviation(const float &speedDeviation) { m_speedDeviation = speedDeviation; }
 
-		float GetLifeError() const { return m_lifeError; }
+		float GetLifeDeviation() const { return m_lifeDeviation; }
 
-		void SetLifeError(const float &lifeError) { m_lifeError = lifeError; }
+		void SetLifeDeviation(const float &lifeDeviation) { m_lifeDeviation = lifeDeviation; }
 
-		float GetScaleError() const { return m_scaleError; }
+		float GetScaleDeviation() const { return m_scaleDeviation; }
 
-		void SetScaleError(const float &scaleError) { m_scaleError = scaleError; }
+		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
 		bool GetPaused() const { return m_paused; }
 

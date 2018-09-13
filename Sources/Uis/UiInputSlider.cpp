@@ -17,6 +17,7 @@ namespace acid
 		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
 		m_slider(std::make_unique<Gui>(this, UiBound(position, "CentreLeft", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f)),
 		m_prefix(prefix),
 		m_roundTo(roundTo),
 		m_updating(false),
@@ -37,10 +38,22 @@ namespace acid
 		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
 		{
+			if (!m_updating && !m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+
 			m_updating = true;
 		}
 		else if (!Uis::Get()->GetSelector().IsDown(MOUSE_BUTTON_LEFT))
 		{
+			if (m_updating && !m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+
 			m_updating = false;
 		}
 		else if (m_updating)
@@ -108,10 +121,10 @@ namespace acid
 
 		if (m_roundTo == 1)
 		{
-			m_text->SetString(m_prefix + std::to_string(static_cast<int>(value)));
+			m_text->SetString(m_prefix + String::To(static_cast<int>(value)));
 			return;
 		}
 
-		m_text->SetString(m_prefix + std::to_string(value));
+		m_text->SetString(m_prefix + String::To(value));
 	}
 }
