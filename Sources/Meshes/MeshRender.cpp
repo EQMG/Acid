@@ -1,6 +1,7 @@
 #include "MeshRender.hpp"
 
 #include "Materials/IMaterial.hpp"
+#include "Physics/Rigidbody.hpp"
 #include "Objects/GameObject.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -29,18 +30,18 @@ namespace acid
 		material->PushUniforms(m_uniformObject);
 	}
 
-	void MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage)
+	bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage)
 	{
 		// Checks if the mesh is in view.
-		/*auto shape = GetGameObject()->GetComponent<Collider>();
+		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
 
-		if (shape != nullptr)
+		if (rigidbody != nullptr)
 		{
-			if (!shape->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
+			if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 			{
-				return;
+				return false;
 			}
-		}*/
+		}
 
 		// Gets required components.
 		auto material = GetGameObject()->GetComponent<IMaterial>();
@@ -48,7 +49,7 @@ namespace acid
 
 		if (material == nullptr || mesh == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		auto meshModel = mesh->GetModel();
@@ -56,7 +57,7 @@ namespace acid
 
 		if (meshModel == nullptr || materialPipeline->GetGraphicsStage() != graphicsStage)
 		{
-			return;
+			return false;
 		}
 
 		// Binds the material pipeline.
@@ -64,7 +65,7 @@ namespace acid
 
 		if (!bindSuccess)
 		{
-			return;
+			return false;
 		}
 
 		// Updates descriptors.
@@ -75,12 +76,13 @@ namespace acid
 
 		if (!updateSuccess)
 		{
-			return;
+			return false;
 		}
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);
 		meshModel->CmdRender(commandBuffer);
+		return true;
 	}
 
 	void MeshRender::Decode(const Metadata &metadata)

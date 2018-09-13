@@ -65,7 +65,7 @@ namespace acid
 		metadata.SetChild<float>("Scale", m_scale);
 	}
 
-	void ParticleType::CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
+	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
 	{
 		m_instanceBuffer.Update(instanceData.data());
 
@@ -76,7 +76,7 @@ namespace acid
 
 		if (!updateSuccess)
 		{
-			return;
+			return false;
 		}
 
 		// Draws the instanced objects.
@@ -87,6 +87,7 @@ namespace acid
 		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 2, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexBuffer()->GetIndexType());
 		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetIndexCount(), MAX_TYPE_INSTANCES, 0, 0, 0);
+		return true;
 	}
 
 	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &scale)

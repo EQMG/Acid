@@ -47,7 +47,7 @@ namespace acid
 			Initialize(vertices, indices, name);
 		}
 
-		void CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
+		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
 
 		std::string GetFilename() override { return m_filename; }
 

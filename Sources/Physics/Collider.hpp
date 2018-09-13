@@ -36,13 +36,6 @@ namespace acid
 		virtual btCollisionShape* GetCollisionShape() const = 0;
 
 		/// <summary>
-		/// Gets if the shape is partially in the view frustum.
-		/// </summary>
-		/// <param name="frustum"> The view frustum. </param>
-		/// <returns> If the shape is partially in the view frustum. </returns>
-		bool InFrustum(const Frustum &frustum);
-
-		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
 		/// </summary>
 		/// <param name="ray"> The ray being tested for intersection. </param>

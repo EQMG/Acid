@@ -17,7 +17,6 @@ namespace acid
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
-		m_uniformScene.Push("cameraPos", camera.GetPosition());
 
 		auto particles = Particles::Get()->GetParticles();
 
@@ -31,6 +30,11 @@ namespace acid
 
 			for (auto &particle : particles)
 			{
+				if (!camera.GetViewFrustum().SphereInFrustum(particle.GetPosition(), particle.GetScale()))
+				{
+					continue;
+				}
+
 				instanceData[i] = GetInstanceData(particle, camera.GetViewMatrix());
 				i++;
 
@@ -60,10 +64,7 @@ namespace acid
 		modelMatrix[2][2] = viewMatrix[2][2];
 		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle.GetRotation()), Vector3::FRONT);
 		modelMatrix = modelMatrix.Scale(Vector3(particle.GetScale(), particle.GetScale(), particle.GetScale()));
-		instanceData.mvp0 = modelMatrix.m_rows[0];
-		instanceData.mvp1 = modelMatrix.m_rows[1];
-		instanceData.mvp2 = modelMatrix.m_rows[2];
-		instanceData.mvp3 = modelMatrix.m_rows[3];
+		instanceData.mvp = modelMatrix;
 
 		instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
 
@@ -97,25 +98,25 @@ namespace acid
 		attributeDescriptions[0].binding = binding;
 		attributeDescriptions[0].location = 0;
 		attributeDescriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(ParticleData, mvp0);
+		attributeDescriptions[0].offset = offsetof(ParticleData, mvp.m_rows[0]);
 
 		// MVP row 2 attribute.
 		attributeDescriptions[1].binding = binding;
 		attributeDescriptions[1].location = 1;
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		attributeDescriptions[1].offset = offsetof(ParticleData, mvp1);
+		attributeDescriptions[1].offset = offsetof(ParticleData, mvp.m_rows[1]);
 
 		// MVP row 3 attribute.
 		attributeDescriptions[2].binding = binding;
 		attributeDescriptions[2].location = 2;
 		attributeDescriptions[2].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		attributeDescriptions[2].offset = offsetof(ParticleData, mvp2);
+		attributeDescriptions[2].offset = offsetof(ParticleData, mvp.m_rows[2]);
 
 		// MVP row 4 attribute.
 		attributeDescriptions[3].binding = binding;
 		attributeDescriptions[3].location = 3;
 		attributeDescriptions[3].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		attributeDescriptions[3].offset = offsetof(ParticleData, mvp3);
+		attributeDescriptions[3].offset = offsetof(ParticleData, mvp.m_rows[3]);
 
 		// Colour offset attribute.
 		attributeDescriptions[4].binding = binding;

@@ -156,6 +156,14 @@ namespace acid
 		metadata.SetChild<Vector3>("Angular Factor", m_angularFactor);
 	}
 
+	bool Rigidbody::InFrustum(const Frustum &frustum)
+	{
+		btVector3 min = btVector3();
+		btVector3 max = btVector3();
+		m_body->getAabb(min, max);
+		return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
+	}
+
 	void Rigidbody::SetGravity(const Vector3 &gravity)
 	{
 		m_body->setGravity(Collider::Convert(gravity));

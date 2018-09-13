@@ -28,14 +28,14 @@ namespace acid
 	{
 	}
 
-	void ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
+	bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		// Updates descriptors.
@@ -45,11 +45,12 @@ namespace acid
 
 		if (!updateSuccess)
 		{
-			return;
+			return false;
 		}
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);
 		mesh->GetModel()->CmdRender(commandBuffer);
+		return true;
 	}
 }

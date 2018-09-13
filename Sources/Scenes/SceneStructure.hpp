@@ -39,7 +39,9 @@ namespace acid
 
 		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
 
-	//	std::vector<GameObject *> QueryBounding(Collider *range) override;
+	//	std::vector<GameObject *> QuerySphere(const Vector3 &centre, const Vector3 &radius) override;
+
+	//	std::vector<GameObject *> QueryCube(const Vector3 &min, const Vector3 &max) override;
 
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.

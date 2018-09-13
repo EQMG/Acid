@@ -1,6 +1,6 @@
 ﻿#include "SceneStructure.hpp"
 
-#include "Physics/Collider.hpp"
+#include "Physics/Rigidbody.hpp"
 
 namespace acid
 {
@@ -54,9 +54,9 @@ namespace acid
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
-			auto collider = (*it)->GetComponent<Collider>();
+			auto rigidbody = (*it)->GetComponent<Rigidbody>();
 
-			if (collider == nullptr || collider->InFrustum(range))
+			if (rigidbody == nullptr || rigidbody->InFrustum(range))
 			{
 				result.emplace_back((*it).get());
 			}
@@ -65,22 +65,14 @@ namespace acid
 		return result;
 	}
 
-	/*std::vector<GameObject *> SceneStructure::QueryBounding(Collider *range)
+	/*std::vector<GameObject *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)
 	{
-		auto result = std::vector<GameObject *>();
+		return std::vector<GameObject *>();
+	}*/
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
-		{
-			auto gameObject = std::dynamic_pointer_cast<GameObject>(*it);
-			auto collider = gameObject->GetComponent<Collider>();
-
-			if (collider == nullptr || range->Intersects(*collider).IsIntersection() || range->Contains(*collider))
-			{
-				result.emplace_back((*it).get());
-			}
-		}
-
-		return result;
+	/*std::vector<GameObject *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max)
+	{
+		return std::vector<GameObject *>();
 	}*/
 
 	bool SceneStructure::Contains(GameObject *object)
