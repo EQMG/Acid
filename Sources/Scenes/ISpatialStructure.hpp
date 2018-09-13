@@ -50,7 +50,7 @@ namespace acid
 		virtual std::vector<GameObject *> QueryAll() = 0;
 
 		/// <summary>
-		/// Returns a set of all objects in a specific range of the spatial structure.
+		/// Returns a set of all objects in a spatial objects contained in a frustum.
 		/// </summary>
 		/// <param name="range"> The frustum range of space being queried. </param>
 		/// </param>
@@ -58,13 +58,24 @@ namespace acid
 		virtual std::vector<GameObject *> QueryFrustum(const Frustum &range) = 0;
 
 		/// <summary>
-		/// Returns a set of all objects in a specific range of the spatial structure.
+		/// Returns a set of all objects in a spatial objects contained in a sphere.
 		/// </summary>
-		/// <param name="range"> The shape range of space being queried. </param>
+		/// <param name="centre"> The centre of the sphere. </param>
+		/// <param name="radius"> The spheres radius. </param>
 		/// <param name="result"> The list to store the data into.
 		/// </param>
 		/// <returns> The list of all object in range. </returns>
-	//	virtual std::vector<GameObject *> QueryBounding(Collider *range) = 0;
+	//	virtual std::vector<GameObject *> QuerySphere(const Vector3 &centre, const Vector3 &radius) = 0;
+
+		/// <summary>
+		/// Returns a set of all objects in a spatial objects contained in a cube.
+		/// </summary>
+		/// <param name="min"> The minimum point of the cube. </param>
+		/// <param name="max"> The maximum point of the cube. </param>
+		/// <param name="result"> The list to store the data into.
+		/// </param>
+		/// <returns> The list of all object in range. </returns>
+	//	virtual std::vector<GameObject *> QueryCube(const Vector3 &min, const Vector3 &max) = 0;
 
 		/// <summary>
 		/// If the structure contains the object.

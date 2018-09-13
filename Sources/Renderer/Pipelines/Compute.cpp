@@ -49,11 +49,12 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	void Compute::CmdRender(const CommandBuffer &commandBuffer) const
+	bool Compute::CmdRender(const CommandBuffer &commandBuffer) const
 	{
 		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetWidth()) / float(m_computeCreate.GetWorkgroupSize())));
 		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetHeight()) / float(m_computeCreate.GetWorkgroupSize())));
 		vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
+		return true;
 	}
 
 	void Compute::CreateShaderProgram()

@@ -23,7 +23,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		void CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
+		bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
 
 		bool operator<(const MeshRender &other) const;
 	};

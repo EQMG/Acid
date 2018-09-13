@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Maths/Colour.hpp"
+#include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
@@ -17,10 +18,7 @@ namespace acid
 {
 	struct ParticleData
 	{
-		Vector4 mvp0;
-		Vector4 mvp1;
-		Vector4 mvp2;
-		Vector4 mvp3;
+		Matrix4 mvp;
 		Colour colourOffset;
 		Vector4 offsets;
 		Vector3 blend;
@@ -76,7 +74,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		void CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
+		bool CmdRender(const CommandBuffer &commandBuffer, Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
 
 		std::string GetFilename() override { return m_filename; }
 

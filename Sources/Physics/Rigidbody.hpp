@@ -54,6 +54,13 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
+		/// <summary>
+		/// Gets if the shape is partially in the view frustum.
+		/// </summary>
+		/// <param name="frustum"> The view frustum. </param>
+		/// <returns> If the shape is partially in the view frustum. </returns>
+		bool InFrustum(const Frustum &frustum);
+
 		void SetGravity(const Vector3 &gravity);
 
 		Force *AddForce(Force *force);

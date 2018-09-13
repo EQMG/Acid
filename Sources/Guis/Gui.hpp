@@ -38,7 +38,7 @@ namespace acid
 
 		void UpdateObject() override;
 
-		void CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
+		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

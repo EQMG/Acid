@@ -35,7 +35,7 @@ namespace acid
 
 		ComputeCreate GetComputeCreate() const { return m_computeCreate; }
 
-		void CmdRender(const CommandBuffer &commandBuffer) const;
+		bool CmdRender(const CommandBuffer &commandBuffer) const;
 
 		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 

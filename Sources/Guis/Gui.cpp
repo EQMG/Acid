@@ -34,12 +34,12 @@ namespace acid
 		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
-	void Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
+	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
 		// Gets if this should be rendered.
 		if (!IsVisible() || GetAlpha() == 0.0f)
 		{
-			return;
+			return false;
 		}
 
 		// Updates descriptors.
@@ -49,7 +49,7 @@ namespace acid
 
 		if (!updateSuccess)
 		{
-			return;
+			return false;
 		}
 
 		VkRect2D scissorRect = {};
@@ -62,5 +62,6 @@ namespace acid
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
+		return true;
 	}
 }

@@ -17,7 +17,7 @@ namespace acid
 	{
 	}
 
-	void Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances)
+	bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances)
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{
@@ -37,6 +37,9 @@ namespace acid
 		else
 		{
 			assert(false && "Cannot render model, no buffers exist for it!");
+			return false;
 		}
+
+		return true;
 	}
 }
