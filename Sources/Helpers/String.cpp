@@ -117,7 +117,21 @@ namespace acid
 		return result;
 	}
 
-	std::string String::Replace(const std::string &str, const std::string &token, const std::string &to)
+	std::string String::ReplaceAll(const std::string &str, const std::string &token, const std::string &to)
+	{
+		std::string result = str;
+		size_t pos = result.find(token);
+
+		while (pos != std::string::npos)
+		{
+			result.replace(pos, token.size(), to);
+			pos = result.find(token, pos + token.size());
+		}
+
+		return result;
+	}
+
+	std::string String::ReplaceFirst(const std::string &str, const std::string &token, const std::string &to)
 	{
 		std::string result = str;
 		const size_t startPos = result.find(token);

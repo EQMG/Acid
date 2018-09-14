@@ -27,6 +27,8 @@ namespace acid
 		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
+		VkImageLayout m_imageLayout;
+		VkSampleCountFlagBits m_samples;
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
@@ -88,6 +90,8 @@ namespace acid
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
 		std::string GetFilename() override { return m_filename; };
+
+		VkImageLayout GetImageLayout() const { return m_imageLayout; }
 
 		std::string GetExtension() { return m_fileExt; };
 

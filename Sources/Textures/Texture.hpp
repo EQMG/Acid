@@ -24,6 +24,7 @@ namespace acid
 		uint32_t m_mipLevels;
 		bool m_anisotropic;
 		bool m_nearest;
+		VkImageLayout m_imageLayout;
 		VkSampleCountFlagBits m_samples;
 
 		uint32_t m_components;
@@ -97,13 +98,15 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; };
 
+		VkImageLayout GetImageLayout() const { return m_imageLayout; }
+
 		uint32_t GetComponents() const { return m_components; }
 
 		uint32_t GetWidth() const { return m_width; }
 
 		uint32_t GetHeight() const { return m_height; }
 
-		VkImage GetImage() const { return m_image; }
+		VkImage GetImage() { return m_image; }
 
 		VkImageView GetImageView() const { return m_imageView; }
 
@@ -131,7 +134,7 @@ namespace acid
 
 		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &layerCount);
 
-		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &mipLevels, const uint32_t &layerCount);
+		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &layerCount);
 
 		static void CreateImageSampler(VkSampler &sampler, const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels);
 

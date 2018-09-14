@@ -58,7 +58,7 @@ namespace acid
 
 		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
 
-		std::shared_ptr<Texture> GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
+		Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

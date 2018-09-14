@@ -29,7 +29,7 @@ namespace acid
 			switch (image.GetType())
 			{
 			case ATTACHMENT_IMAGE:
-				attachment.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				attachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachment.format = image.GetFormat();
 				break;
 			case ATTACHMENT_DEPTH:
