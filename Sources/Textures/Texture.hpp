@@ -20,12 +20,12 @@ namespace acid
 	private:
 		std::string m_filename;
 
-		bool m_repeatEdges;
-		uint32_t m_mipLevels;
+		VkFilter m_filter;
+		VkSamplerAddressMode m_addressMode;
 		bool m_anisotropic;
-		bool m_nearest;
-		VkImageLayout m_imageLayout;
+		uint32_t m_mipLevels;
 		VkSampleCountFlagBits m_samples;
+		VkImageLayout m_imageLayout;
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
@@ -47,11 +47,11 @@ namespace acid
 		/// A new texture object.
 		/// </summary>
 		/// <param name="filename"> The file to load the texture from. </param>
-		/// <param name="repeatEdges"> If UV coords will wrap if outside of edge bounds. </param>
-		/// <param name="mipmap"> If mipmaps will be used on the texture. </param>
-		/// <param name="anisotropic"> If anisotropic will be use on the texture. </param>
-		/// <param name="nearest"> If nearest filtering will be use on the texture. </param>
-		Texture(const std::string &filename, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
+		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
+		Texture(const std::string &filename, const bool &mipmap = true, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true);
 
 		/// <summary>
 		/// A new empty texture object that can be used to render into.
@@ -136,7 +136,7 @@ namespace acid
 
 		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &layerCount);
 
-		static void CreateImageSampler(VkSampler &sampler, const bool &repeatEdges, const bool &anisotropic, const bool &nearest, const uint32_t &mipLevels);
+		static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels);
 
 		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &layerCount);
 

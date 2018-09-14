@@ -23,12 +23,12 @@ namespace acid
 		std::string m_filename;
 		std::string m_fileExt;
 
-		bool m_repeatEdges;
-		uint32_t m_mipLevels;
+		VkFilter m_filter;
+		VkSamplerAddressMode m_addressMode;
 		bool m_anisotropic;
-		bool m_nearest;
-		VkImageLayout m_imageLayout;
+		uint32_t m_mipLevels;
 		VkSampleCountFlagBits m_samples;
+		VkImageLayout m_imageLayout;
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
@@ -52,11 +52,11 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
 		/// <param name="fileExt"> The files extension type (ex .png). </param>
-		/// <param name="repeatEdges"> If UV coords will wrap if outside of edge bounds. </param>
-		/// <param name="mipmap"> If mipmaps will be used on the cubemap. </param>
-		/// <param name="anisotropic"> If anisotropic will be use on the cubemap. </param>
-		/// <param name="nearest"> If nearest filtering will be use on the cubemap. </param>
-		Cubemap(const std::string &filename, const std::string &fileExt, const bool &repeatEdges = true, const bool &mipmap = true, const bool &anisotropic = true, const bool &nearest = false);
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
+		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
+		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true);
 
 		/// <summary>
 		/// A new empty cubemap object that can be used to render into.
