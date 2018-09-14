@@ -63,6 +63,16 @@ namespace acid
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
+		if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT)
+		{
+			swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+		}
+
+		if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_DST_BIT)
+		{
+			swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+		}
+
 		if (Renderer::Get()->GetSwapchain() != nullptr)
 		{
 			swapchainCreateInfo.oldSwapchain = *Renderer::Get()->GetSwapchain()->GetSwapchain();
