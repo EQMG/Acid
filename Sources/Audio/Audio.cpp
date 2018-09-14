@@ -1,5 +1,6 @@
 #include "Audio.hpp"
 
+#include <cassert>
 #ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -90,6 +91,7 @@ namespace acid
 		std::string failure = StringifyResultAl(result);
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
+		assert("OpenAL error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
 #endif

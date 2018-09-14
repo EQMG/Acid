@@ -116,4 +116,4 @@ On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installe
 Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 
 ## Contributing
-You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acid's code style from the [GUIDELINES.md](GUIDELINES.md).
+You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acid's code style from the [Documents/GUIDELINES.md](Documents/GUIDELINES.md).

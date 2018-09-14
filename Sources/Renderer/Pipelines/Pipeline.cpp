@@ -79,7 +79,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out("%s", m_shaderProgram->ToString().c_str());
+	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -95,10 +95,10 @@ namespace acid
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
 
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
 		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 	}
 
 	DepthStencil *Pipeline::GetDepthStencil(const int32_t &stage) const
@@ -106,7 +106,7 @@ namespace acid
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
-	std::shared_ptr<Texture> Pipeline::GetTexture(const uint32_t &index, const int32_t &stage) const
+	Texture *Pipeline::GetTexture(const uint32_t &index, const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
 	}

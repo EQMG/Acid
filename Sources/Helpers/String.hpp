@@ -96,7 +96,16 @@ namespace acid
 		/// <param name="token"> The token. </param>
 		/// <param name="to"> The string to replace the tokens with. </param>
 		/// <returns> The string with the tokens replaced. </returns>
-		static std::string Replace(const std::string &str, const std::string &token, const std::string &to);
+		static std::string ReplaceAll(const std::string &str, const std::string &token, const std::string &to);
+
+		/// <summary>
+		/// Replaces the first token from a string.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <param name="token"> The token. </param>
+		/// <param name="to"> The string to replace the tokens with. </param>
+		/// <returns> The string with the tokens replaced. </returns>
+		static std::string ReplaceFirst(const std::string &str, const std::string &token, const std::string &to);
 
 		/// <summary>
 		/// Lowercases a string.

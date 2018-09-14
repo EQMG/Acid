@@ -15,6 +15,10 @@ namespace acid
 	{
 		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
 	};
+	static const std::vector<const char *> INSTANCE_EXTENSIONS =
+	{
+		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
+	};
 	static const std::vector<const char *> DEVICE_EXTENSIONS =
 	{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -330,6 +334,7 @@ namespace acid
 		std::string failure = StringifyResultGlfw(result);
 
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
+		assert("GLFW error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
 #endif
@@ -401,6 +406,7 @@ namespace acid
 		std::string failure = StringifyResultVk(result);
 
 		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
+		assert("Vulkan error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
@@ -534,6 +540,11 @@ namespace acid
 			m_instanceExtensionList.emplace_back(glfwExtensions[i]);
 		}
 
+		for (auto &instanceExtension : INSTANCE_EXTENSIONS)
+		{
+			m_instanceExtensionList.emplace_back(instanceExtension);
+		}
+
 		if (m_validationLayers)
 		{
 			m_instanceExtensionList.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
@@ -569,8 +580,7 @@ namespace acid
 			VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
 			debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 			debugReportCallbackCreateInfo.pNext = nullptr;
-			debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT |
-				VK_DEBUG_REPORT_WARNING_BIT_EXT |
+			debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT |
 				VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 			debugReportCallbackCreateInfo.pUserData = nullptr;

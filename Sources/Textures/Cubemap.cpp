@@ -14,7 +14,7 @@ namespace acid
 	{
 		std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
 		std::string realFilename = Files::SearchFile(filename + suffixToken);
-		realFilename = String::Replace(realFilename, suffixToken, "");
+		realFilename = String::ReplaceAll(realFilename, suffixToken, "");
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -37,6 +37,8 @@ namespace acid
 		m_mipLevels(1),
 		m_anisotropic(anisotropic),
 		m_nearest(nearest),
+		m_imageLayout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+		m_samples(VK_SAMPLE_COUNT_1_BIT),
 		m_components(0),
 		m_width(0),
 		m_height(0),
@@ -63,18 +65,18 @@ namespace acid
 		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, VK_SAMPLE_COUNT_1_BIT, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
 		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 6);
 		Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 6);
 
 		if (mipmap)
 		{
-			Texture::CreateMipmaps(m_image, m_width, m_height, m_mipLevels, 6);
+			Texture::CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 6);
 		}
 		else
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 6);
 		}
 
 		Texture::CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
@@ -82,7 +84,7 @@ namespace acid
 
 		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
-		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
 
@@ -104,6 +106,8 @@ namespace acid
 		m_mipLevels(1),
 		m_anisotropic(false),
 		m_nearest(false),
+		m_imageLayout(imageLayout),
+		m_samples(samples),
 		m_components(4),
 		m_width(width),
 		m_height(height),
@@ -112,13 +116,13 @@ namespace acid
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
-		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_imageLayout, m_mipLevels, 6);
 		Texture::CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
 		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 6);
 
-		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
 	}
@@ -133,6 +137,8 @@ namespace acid
 		m_mipLevels(1),
 		m_anisotropic(false),
 		m_nearest(false),
+		m_imageLayout(imageLayout),
+		m_samples(samples),
 		m_components(4),
 		m_width(width),
 		m_height(height),
@@ -151,18 +157,18 @@ namespace acid
 		memcpy(data, pixels, m_size);
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
 		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 6);
 		Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 6);
 	//	Texture::CreateMipmaps(m_image, m_width, m_height, m_mipLevels, 6);
-		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, m_mipLevels, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 6);
 		Texture::CreateImageSampler(m_sampler, m_repeatEdges, m_anisotropic, m_nearest, m_mipLevels);
-		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, m_mipLevels, VK_IMAGE_ASPECT_COLOR_BIT, 6);
+		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 6);
 
 		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
-		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
 	}

@@ -21,7 +21,7 @@ namespace acid
 			indents << "\t";
 		}
 
-		std::string name = String::Replace(source.GetName(), " ", "_");
+		std::string name = String::ReplaceAll(source.GetName(), " ", "_");
 
 		std::stringstream nameAttributes;
 		nameAttributes << name;

@@ -13,17 +13,21 @@ namespace acid
 	class ACID_EXPORT Framebuffers
 	{
 	private:
-		std::vector<std::shared_ptr<Texture>> m_imageAttachments;
+		std::vector<std::unique_ptr<Texture>> m_imageAttachments;
 
 		std::vector<VkFramebuffer> m_framebuffers;
 	public:
 		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
+		Framebuffers(const Framebuffers&) = delete; 
+
 		~Framebuffers();
 
-		std::vector<std::shared_ptr<Texture>> GetImageAttachments() const { return m_imageAttachments; }
+		Framebuffers& operator=(const Framebuffers&) = delete;
 
-		std::shared_ptr<Texture> GetAttachment(const uint32_t &index) const { return m_imageAttachments.at(index); }
+		const std::vector<std::unique_ptr<Texture>> &GetImageAttachments() const { return m_imageAttachments; }
+
+		Texture *GetAttachment(const uint32_t &index) const { return m_imageAttachments.at(index).get(); }
 
 		std::vector<VkFramebuffer> GetFramebuffers() const { return m_framebuffers; }
 	};

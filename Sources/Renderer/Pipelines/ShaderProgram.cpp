@@ -230,7 +230,7 @@ namespace acid
 		{
 			if (String::Contains(line, "#include"))
 			{
-				std::string path = String::Replace(line, "#include", "");
+				std::string path = String::ReplaceFirst(line, "#include", "");
 				path = String::RemoveAll(path, '\"');
 				path = String::Trim(path);
 				auto included = FileSystem::ReadTextFile(Files::SearchFile(path));

@@ -88,7 +88,7 @@ namespace acid
 
 	Metadata *Metadata::FindChild(const std::string &name, const bool &reportError) const
 	{
-		std::string nameNoSpaces = String::Replace(name, " ", "_");
+		std::string nameNoSpaces = String::ReplaceAll(name, " ", "_");
 
 		for (auto &child : m_children)
 		{
