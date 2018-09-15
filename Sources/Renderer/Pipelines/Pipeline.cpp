@@ -278,9 +278,12 @@ namespace acid
 		m_viewportState.viewportCount = 1;
 		m_viewportState.scissorCount = 1;
 
+		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+		bool multisampled = renderStage->IsMultisampled(m_graphicsStage.GetSubpass());
+
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		m_multisampleState.rasterizationSamples = Display::Get()->GetMsaaSamples();
-	//	m_multisampleState.alphaToCoverageEnable = VK_TRUE;
+		m_multisampleState.sampleShadingEnable = VK_FALSE;
+		m_multisampleState.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();

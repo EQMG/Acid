@@ -91,9 +91,19 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; };
 
-		VkImageLayout GetImageLayout() const { return m_imageLayout; }
-
 		std::string GetExtension() { return m_fileExt; };
+
+		VkFilter GetFilter() const { return m_filter; }
+
+		VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
+
+		bool IsAnisotropic() const { return m_anisotropic; }
+
+		uint32_t GetMipLevels() const { return m_mipLevels; }
+
+		VkSampleCountFlagBits GetSamples() const { return m_samples; }
+
+		VkImageLayout GetImageLayout() const { return m_imageLayout; }
 
 		uint32_t GetComponents() const { return m_components; }
 

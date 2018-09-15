@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <vulkan/vulkan.h>
 #include "Renderpass/Renderpass.hpp"
 #include "Swapchain/DepthStencil.hpp"
@@ -20,8 +21,9 @@ namespace acid
 
 		std::vector<VkClearValue> m_clearValues;
 		std::vector<uint32_t> m_subpassAttachmentCount;
-		bool m_hasDepth;
-		bool m_hasSwapchain;
+		std::optional<Attachment> m_depthAttachment;
+		std::optional<Attachment> m_swapchainAttachment;
+		std::vector<bool> m_subpassMultisampled;
 
 		bool m_fitDisplaySize;
 
@@ -54,9 +56,11 @@ namespace acid
 
 		uint32_t GetAttachmentCount(const uint32_t &subpass) const { return m_subpassAttachmentCount[subpass]; }
 
-		bool HasDepth() const { return m_hasDepth; }
+		bool HasDepth() const { return m_depthAttachment.has_value(); }
 
-		bool HasSwapchain() const { return m_hasSwapchain; }
+		bool HasSwapchain() const { return m_swapchainAttachment.has_value(); }
+
+		bool IsMultisampled(const uint32_t &subpass) const { return m_subpassMultisampled[subpass]; }
 
 		bool FitDisplaySize() const { return m_fitDisplaySize; }
 	};

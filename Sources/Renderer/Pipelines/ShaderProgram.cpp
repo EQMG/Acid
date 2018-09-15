@@ -95,12 +95,14 @@ namespace acid
 		{
 			switch (uniform->GetGlType())
 			{
-			case 0x8B5E:
-			case 0x904D:
+			case 0x8B5E: // GL_SAMPLER_2D
+			case 0x904D: // GL_IMAGE_2D
+			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
+			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
 				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
 				break;
-			case 0x8B60:
-			case 0x904E:
+			case 0x8B60: // GL_SAMPLER_CUBE
+			case 0x9050: // GL_IMAGE_CUBE
 				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
 				break;
 			default:
@@ -128,14 +130,30 @@ namespace acid
 	{
 		switch (type)
 		{
-		case 0x1406:
+		case 0x1406: // GL_FLOAT
 			return VK_FORMAT_R32_SFLOAT;
-		case 0x8B50:
+		case 0x8B50: // GL_FLOAT_VEC2
 			return VK_FORMAT_R32G32_SFLOAT;
-		case 0x8B51:
+		case 0x8B51: // GL_FLOAT_VEC3
 			return VK_FORMAT_R32G32B32_SFLOAT;
-		case 0x8B52:
+		case 0x8B52: // GL_FLOAT_VEC4
 			return VK_FORMAT_R32G32B32A32_SFLOAT;
+		case 0x1404: // GL_INT
+			return VK_FORMAT_R32_SINT;
+		case 0x8B53: // GL_INT_VEC2
+			return VK_FORMAT_R32G32_SINT;
+		case 0x8B54: // GL_INT_VEC3
+			return VK_FORMAT_R32G32B32_SINT;
+		case 0x8B55: // GL_INT_VEC4
+			return VK_FORMAT_R32G32B32A32_SINT;
+		case 0x1405: // GL_UNSIGNED_INT
+			return VK_FORMAT_R32_SINT;
+		case 0x8DC6: // GL_UNSIGNED_INT_VEC2
+			return VK_FORMAT_R32G32_SINT;
+		case 0x8DC7: // GL_UNSIGNED_INT_VEC3
+			return VK_FORMAT_R32G32B32_SINT;
+		case 0x8DC8: // GL_UNSIGNED_INT_VEC4
+			return VK_FORMAT_R32G32B32A32_SINT;
 		default:
 			return VK_FORMAT_UNDEFINED;
 		}

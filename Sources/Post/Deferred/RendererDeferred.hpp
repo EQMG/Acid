@@ -22,6 +22,9 @@ namespace acid
 
 		std::shared_ptr<Texture> m_brdf;
 
+		std::shared_ptr<Cubemap> m_skybox;
+		std::shared_ptr<Cubemap> m_ibl;
+
 		Fog m_fog;
 	public:
 		static const uint32_t MAX_LIGHTS;
@@ -37,5 +40,7 @@ namespace acid
 		void SetFog(const Fog &fog) { m_fog = fog; }
 	private:
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
+
+		static std::shared_ptr<Cubemap> ComputeIbl(const std::shared_ptr<acid::Cubemap> &source);
 	};
 }

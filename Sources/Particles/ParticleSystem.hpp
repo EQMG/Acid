@@ -79,7 +79,7 @@ namespace acid
 
 		void SetGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
 
-		bool GetRandomRotation() const { return m_randomRotation; }
+		bool IsRandomRotation() const { return m_randomRotation; }
 
 		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
@@ -103,7 +103,7 @@ namespace acid
 
 		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
-		bool GetPaused() const { return m_paused; }
+		bool IsPaused() const { return m_paused; }
 
 		void SetPaused(const bool &paused) { m_paused = paused; }
 	private:
