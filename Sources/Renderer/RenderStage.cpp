@@ -13,8 +13,9 @@ namespace acid
 		m_framebuffers(nullptr),
 		m_clearValues(std::vector<VkClearValue>()),
 		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
-		m_hasDepth(false),
-		m_hasSwapchain(false),
+		m_depthAttachment({}),
+		m_swapchainAttachment({}),
+		m_subpassMultisampled(std::vector<bool>(m_renderpassCreate.GetSubpasses().size())),
 		m_fitDisplaySize(m_renderpassCreate.GetHeight() == 0),
 		m_lastWidth(m_renderpassCreate.GetWidth()),
 		m_lastHeight(m_renderpassCreate.GetHeight())
@@ -35,17 +36,22 @@ namespace acid
 					if (std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
 					{
 						m_subpassAttachmentCount[subpass.GetBinding()]++;
+
+						if (image.IsMultisampled())
+						{
+							m_subpassMultisampled[subpass.GetBinding()] = true;
+						}
 					}
 				}
 
 				break;
 			case ATTACHMENT_DEPTH:
 				clearValue.depthStencil = {1.0f, 0};
-				m_hasDepth = true;
+				m_depthAttachment = image;
 				break;
 			case ATTACHMENT_SWAPCHAIN:
 				clearValue.color = {0.0f, 0.0f, 0.0f, 1.0f};
-				m_hasSwapchain = true;
+				m_swapchainAttachment = image;
 				break;
 			}
 
@@ -60,19 +66,19 @@ namespace acid
 #endif
 
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		auto samples = Display::Get()->GetMsaaSamples();
+		auto msaaSamples = Display::Get()->GetMsaaSamples();
 
-		if (m_hasDepth)
+		if (m_depthAttachment)
 		{
-			m_depthStencil = std::make_unique<DepthStencil>(GetWidth(), GetHeight(), samples);
+			m_depthStencil = std::make_unique<DepthStencil>(GetWidth(), GetHeight(), m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 		}
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, samples);
+			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, msaaSamples);
 		}
 
-		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, samples);
+		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();

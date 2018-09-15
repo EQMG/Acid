@@ -29,6 +29,8 @@ namespace acid
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(ComputeBrdf(512)),
+		m_skybox(nullptr),
+		m_ibl(nullptr),
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
 	}
@@ -36,7 +38,13 @@ namespace acid
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		auto sceneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-		auto ibl = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap(); // TODO: IBL cubemap.
+		auto skybox = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap();
+
+		if (m_skybox != skybox)
+		{
+			m_skybox = skybox;
+			m_ibl = ComputeIbl(m_skybox);
+		}
 
 		// Updates uniforms.
 		auto deferredLights = std::vector<DeferredLight>(MAX_LIGHTS);
@@ -91,7 +99,7 @@ namespace acid
 		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
 		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
-		m_descriptorSet.Push("samplerIbl", ibl);
+		m_descriptorSet.Push("samplerIbl", m_ibl);
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)
@@ -143,6 +151,37 @@ namespace acid
 		std::unique_ptr<uint8_t[]> pixels(result->GetPixels());
 		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
 #endif
+
+		return result;
+	}
+
+	std::shared_ptr<Cubemap> RendererDeferred::ComputeIbl(const std::shared_ptr<acid::Cubemap> &source)
+	{
+		if (source == nullptr)
+		{
+			return nullptr;
+		}
+
+		auto result = std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight());
+
+		// Creates the pipeline.
+		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
+		Compute compute = Compute(ComputeCreate("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16, {}));
+
+		// Bind the pipeline.
+		compute.BindPipeline(commandBuffer);
+
+		// Updates descriptors.
+		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+		descriptorSet.Push("outColour", result);
+		descriptorSet.Push("samplerColour", source);
+		descriptorSet.Update(compute);
+
+		// Runs the compute pipeline.
+		descriptorSet.BindDescriptor(commandBuffer);
+		compute.CmdRender(commandBuffer);
+		commandBuffer.End();
+		commandBuffer.Submit();
 
 		return result;
 	}

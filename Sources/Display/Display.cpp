@@ -609,7 +609,7 @@ namespace acid
 
 		Log::Out("Selected Physical Device: '%s', %i\n", m_physicalDeviceProperties.deviceName, m_physicalDeviceProperties.deviceID);
 
-	//	m_msaaSamples = GetMaxUsableSampleCount(); // TODO: MSAA
+		m_msaaSamples = GetMaxUsableSampleCount();
 	}
 
 	VkPhysicalDevice Display::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)

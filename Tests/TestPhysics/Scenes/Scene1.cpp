@@ -83,7 +83,7 @@ namespace test
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
-		plane->AddComponent<ShadowRender>();
+	//	plane->AddComponent<ShadowRender>();
 
 		PrefabObject prefabPlane = PrefabObject("Plane.xml");
 		prefabPlane.Write(*plane);
@@ -96,7 +96,7 @@ namespace test
 		terrain->AddComponent<Mesh>();
 		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"), Texture::Resource("Objects/Terrain/Rocks.png"));
 		terrain->AddComponent<MeshRender>();
-		terrain->AddComponent<ShadowRender>();
+	//	terrain->AddComponent<ShadowRender>();
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -109,7 +109,7 @@ namespace test
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-				sphere->AddComponent<ShadowRender>();
+			//	sphere->AddComponent<ShadowRender>();
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace test
 		teapot->AddComponent<Rigidbody>(1.0f);
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		teapot->AddComponent<MeshRender>();
-		teapot->AddComponent<ShadowRender>();
+	//	teapot->AddComponent<ShadowRender>();
 
 		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 3.0f, -5.0f)));
 
@@ -142,7 +142,7 @@ namespace test
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
-			sphere->AddComponent<ShadowRender>();
+		//	sphere->AddComponent<ShadowRender>();
 			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 		}

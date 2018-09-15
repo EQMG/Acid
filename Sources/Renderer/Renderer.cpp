@@ -93,7 +93,14 @@ namespace acid
 			// Changes the subpass.
 			if (subpass != key.GetSubpass())
 			{
-				if (subpass != renderStage->SubpassCount() - 1)
+				uint32_t difference = key.GetSubpass() - subpass;
+
+				if (subpass == renderStage->SubpassCount() - 1)
+				{
+					difference -= 1;
+				}
+
+				for (uint32_t d = 0; d < difference; d++)
 				{
 					Renderer::Get()->NextSubpass();
 				}

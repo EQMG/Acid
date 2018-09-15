@@ -17,7 +17,7 @@ namespace acid
 
 		for (auto &image : renderpassCreate.GetImages())
 		{
-			VkSampleCountFlagBits imageSamples = image.GetUseMsaa() ? samples : VK_SAMPLE_COUNT_1_BIT;
+			VkSampleCountFlagBits imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 
 			switch (image.GetType())
 			{
