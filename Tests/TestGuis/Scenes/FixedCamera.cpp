@@ -20,14 +20,8 @@ namespace test
 	{
 	}
 
-	FixedCamera::~FixedCamera()
-	{
-	}
-
 	void FixedCamera::Update()
 	{
-	//	float delta = std::min(1.0f / 60.0f, Engine::Get()->GetDelta());
-
 		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
 		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 

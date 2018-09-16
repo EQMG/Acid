@@ -29,10 +29,6 @@ namespace test
 		m_content->SetAlphaDriver<DriverConstant>(0.0f);
 	}
 
-	UiTab::~UiTab()
-	{
-	}
-
 	void UiTab::UpdateObject()
 	{
 		GetRectangle().m_position.m_y = 1.0f;

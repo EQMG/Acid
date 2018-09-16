@@ -48,10 +48,6 @@ namespace test
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
 	}
 
-	Scene1::~Scene1()
-	{
-	}
-
 	void Scene1::Start()
 	{
 		GetPhysics()->SetGravity(Vector3(0.0f, -9.81f, 0.0f));

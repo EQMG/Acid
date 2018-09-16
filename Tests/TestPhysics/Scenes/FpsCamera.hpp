@@ -61,8 +61,6 @@ namespace test
 	public:
 		FpsCamera();
 
-		~FpsCamera();
-
 		void Update() override;
 
 	private:

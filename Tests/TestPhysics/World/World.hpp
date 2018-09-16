@@ -33,8 +33,6 @@ namespace test
 
 		World();
 
-		~World();
-
 		void Update() override;
 
 		float GetDayFactor() const;

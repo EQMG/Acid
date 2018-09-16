@@ -22,11 +22,6 @@ namespace test
 		}, false);
 	}
 
-	ConfigManager::~ConfigManager()
-	{
-		Save();
-	}
-
 	void ConfigManager::Load()
 	{
 		m_audio->Load();

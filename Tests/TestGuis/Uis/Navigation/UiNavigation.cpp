@@ -56,10 +56,6 @@ namespace test
 		}
 	}
 
-	UiNavigation::~UiNavigation()
-	{
-	}
-
 	void UiNavigation::UpdateObject()
 	{
 		if (m_driverTarget != nullptr && m_targetTab != nullptr)

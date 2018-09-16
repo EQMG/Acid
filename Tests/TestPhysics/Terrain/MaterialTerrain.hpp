@@ -19,8 +19,6 @@ namespace test
 	public:
 		MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
 
-		~MaterialTerrain();
-
 		void Start() override;
 
 		void Update() override;

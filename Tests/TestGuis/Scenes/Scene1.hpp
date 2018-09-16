@@ -26,8 +26,6 @@ namespace test
 	public:
 		Scene1();
 
-		~Scene1();
-
 		void Start() override;
 
 		void Update() override;

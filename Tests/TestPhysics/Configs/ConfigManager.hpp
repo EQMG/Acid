@@ -14,8 +14,6 @@ namespace test
 	public:
 		ConfigManager();
 
-		~ConfigManager();
-
 		void Load();
 
 		void Save();

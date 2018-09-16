@@ -49,6 +49,7 @@ int main(int argc, char **argv)
 
 	// Runs the game loop.
 	int32_t exitCode = engine->Run();
+	configManager->Save();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

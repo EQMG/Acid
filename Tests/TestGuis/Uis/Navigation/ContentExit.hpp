@@ -23,9 +23,6 @@ namespace test
 	public:
 		ContentExit(UiObject *parent);
 
-		~ContentExit();
-
 		void UpdateObject() override;
-
 	};
 }

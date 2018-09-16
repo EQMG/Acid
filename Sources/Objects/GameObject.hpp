@@ -149,6 +149,8 @@ namespace acid
 
 		Transform &GetTransform() { return m_transform; }
 
+		void SetTransform(const Transform &transform) { m_transform = transform; }
+
 		ISpatialStructure *GetStructure() const { return m_structure; }
 
 		void SetStructure(ISpatialStructure *structure);
