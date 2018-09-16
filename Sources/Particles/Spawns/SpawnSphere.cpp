@@ -22,7 +22,7 @@ namespace acid
 		metadata.SetChild<float>("Radius", m_radius);
 	}
 
-	Vector3 SpawnSphere::GetBaseSpawnPosition()
+	Vector3 SpawnSphere::GeneratePosition()
 	{
 		m_spawnPosition = Vector3::RandomUnitVector();
 

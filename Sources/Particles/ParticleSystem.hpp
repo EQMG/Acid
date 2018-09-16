@@ -28,11 +28,12 @@ namespace acid
 
 		Vector3 m_lastPosition;
 
-		Vector3 m_systemOffset;
+		Vector3 m_localOffset;
 		Vector3 m_direction;
 		float m_directionDeviation;
 		float m_speedDeviation;
 		float m_lifeDeviation;
+		float m_stageDeviation;
 		float m_scaleDeviation;
 
 		float m_timePassed;
@@ -46,8 +47,8 @@ namespace acid
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="averageSpeed"> Particle average speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
-		/// <param name="systemOffset"> The offset from the parents centre. </param>
-		ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = std::vector<std::shared_ptr<ParticleType>>(), ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &systemOffset = Vector3::ZERO);
+		/// <param name="localOffset"> The offset from the game objects centre. </param>
+		ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = std::vector<std::shared_ptr<ParticleType>>(), ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &localOffset = Vector3::ZERO);
 
 		void Start() override;
 
@@ -83,9 +84,9 @@ namespace acid
 
 		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-		Vector3 GetOffsetCentre() const { return m_systemOffset; }
+		Vector3 GetLocalOffset() const { return m_localOffset; }
 
-		void SetOffsetCentre(const Vector3 &systemOffsetCentre) { m_systemOffset = systemOffsetCentre; }
+		void SetLocalOffset(const Vector3 &localOffset) { m_localOffset = localOffset; }
 
 		Vector3 GetDirection() const { return m_direction; }
 
@@ -99,6 +100,10 @@ namespace acid
 
 		void SetLifeDeviation(const float &lifeDeviation) { m_lifeDeviation = lifeDeviation; }
 
+		float GetStageDeviation() const { return m_stageDeviation; }
+
+		void SetStageDeviation(const float &stageDeviation) { m_stageDeviation = stageDeviation; }
+
 		float GetScaleDeviation() const { return m_scaleDeviation; }
 
 		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
@@ -109,7 +114,7 @@ namespace acid
 	private:
 		std::optional<Particle> EmitParticle();
 
-		float GenerateValue(const float &average, const float &errorMargin) const;
+		float GenerateValue(const float &average, const float &errorPercent) const;
 
 		float GenerateRotation() const;
 

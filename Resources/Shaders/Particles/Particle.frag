@@ -19,5 +19,5 @@ void main()
 
 	outColour = mix(colour1, colour2, inBlendFactor);
 	outColour *= inColourOffset;
-	outColour.a -= inTransparency;
+	outColour.a *= inTransparency;
 }

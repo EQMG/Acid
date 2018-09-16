@@ -21,15 +21,28 @@ namespace acid
 			indents << "\t";
 		}
 
+		char openBrace = '[';
+		char closeBrace = ']';
+
+		for (auto &child : source.GetChildren())
+		{
+			if (!child->GetName().empty())
+			{
+				openBrace = '{';
+				closeBrace = '}';
+				break;
+			}
+		}
+
 		builder << indents.str();
 
 		if (source.GetName().empty())
 		{
-			builder << "{\n";
+			builder << openBrace << "\n";
 		}
 		else if (source.GetValue().empty())
 		{
-			builder << "\"" << source.GetName() << "\": {\n";
+			builder << "\"" << source.GetName() << "\": " << openBrace << "\n";
 		}
 		else
 		{
@@ -48,21 +61,17 @@ namespace acid
 			AppendData(*child, builder, indentation + 1, child == source.GetChildren().back());
 		}
 
-		if (source.GetName().empty())
-		{
-			builder << indents.str() << "}\n";
-		}
-		else if (source.GetValue().empty())
+		if (source.GetValue().empty())
 		{
 			builder << indents.str();
 
 			if (end)
 			{
-				builder << "}\n";
+				builder << closeBrace << "\n";
 			}
 			else
 			{
-				builder << "},\n";
+				builder << closeBrace << ",\n";
 			}
 		}
 	}

@@ -18,7 +18,7 @@ namespace acid
 		metadata.SetChild<Vector3>("Point", m_point);
 	}
 
-	Vector3 SpawnPoint::GetBaseSpawnPosition()
+	Vector3 SpawnPoint::GeneratePosition()
 	{
 		return m_point;
 	}

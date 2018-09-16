@@ -23,6 +23,7 @@ namespace acid
 		Vector2 m_textureOffset2;
 
 		float m_lifeLength;
+		float m_stageCycles;
 		float m_rotation;
 		float m_scale;
 		float m_gravityEffect;
@@ -32,6 +33,8 @@ namespace acid
 		float m_textureBlendFactor;
 		float m_distanceToCamera;
 	public:
+		static const float FADE_TIME;
+
 		/// <summary>
 		/// Creates a new particle object.
 		/// </summary>
@@ -39,23 +42,18 @@ namespace acid
 		/// <param name="position"> The particles initial position. </param>
 		/// <param name="velocity"> The particles initial velocity. </param>
 		/// <param name="lifeLength"> The particles life length. </param>
+		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="rotation"> The particles rotation. </param>
 		/// <param name="scale"> The particles scale. </param>
 		/// <param name="gravityEffect"> The particles gravity effect. </param>
-		Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect);
-
-		/// <summary>
-		/// Creates a new particle object.
-		/// </summary>
-		/// <param name="source"> Creates this particle out of a existing one. </param>
-		Particle(const Particle &source);
+		Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles, const float &rotation, const float &scale, const float &gravityEffect);
 
 		/// <summary>
 		/// Updates the particle.
 		/// </summary>
 		void Update();
 
-		bool IsAlive() const { return m_transparency < 1.0f; }
+		bool IsAlive() const { return m_transparency > 0.0f; }
 
 		std::shared_ptr<ParticleType> GetParticleType() const { return m_particleType; }
 

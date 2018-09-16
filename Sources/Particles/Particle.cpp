@@ -4,7 +4,9 @@
 
 namespace acid
 {
-	Particle::Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &rotation, const float &scale, const float &gravityEffect) :
+	const float Particle::FADE_TIME = 1.0f;
+
+	Particle::Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles, const float &rotation, const float &scale, const float &gravityEffect) :
 		m_particleType(particleType),
 		m_position(position),
 		m_velocity(velocity),
@@ -12,31 +14,14 @@ namespace acid
 		m_textureOffset1(Vector2()),
 		m_textureOffset2(Vector2()),
 		m_lifeLength(lifeLength),
+		m_stageCycles(stageCycles),
 		m_rotation(rotation),
 		m_scale(scale),
 		m_gravityEffect(gravityEffect),
 		m_elapsedTime(0.0f),
-		m_transparency(0.0f),
+		m_transparency(1.0f),
 		m_textureBlendFactor(0.0f),
 		m_distanceToCamera(0.0f)
-	{
-	}
-
-	Particle::Particle(const Particle &source) :
-		m_particleType(source.m_particleType),
-		m_position(source.m_position),
-		m_velocity(source.m_velocity),
-		m_change(source.m_change),
-		m_textureOffset1(source.m_textureOffset1),
-		m_textureOffset2(source.m_textureOffset2),
-		m_lifeLength(source.m_lifeLength),
-		m_rotation(source.m_rotation),
-		m_scale(source.m_scale),
-		m_gravityEffect(source.m_gravityEffect),
-		m_elapsedTime(source.m_elapsedTime),
-		m_transparency(source.m_transparency),
-		m_textureBlendFactor(source.m_textureBlendFactor),
-		m_distanceToCamera(source.m_distanceToCamera)
 	{
 	}
 
@@ -49,9 +34,9 @@ namespace acid
 		m_position += m_change;
 		m_elapsedTime += Engine::Get()->GetDelta();
 
-		if (m_elapsedTime > m_lifeLength)
+		if (m_elapsedTime > m_lifeLength - FADE_TIME)
 		{
-			m_transparency += 1.0f * Engine::Get()->GetDelta();
+			m_transparency -= Engine::Get()->GetDelta() / FADE_TIME;
 		}
 
 		if (!IsAlive() || Scenes::Get()->GetCamera() == nullptr)
@@ -62,7 +47,7 @@ namespace acid
 		Vector3 cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - m_position;
 		m_distanceToCamera = cameraToParticle.LengthSquared();
 
-		float lifeFactor = m_elapsedTime / m_lifeLength;
+		float lifeFactor = m_stageCycles * m_elapsedTime / m_lifeLength;
 
 		if (m_particleType->GetTexture() == nullptr)
 		{

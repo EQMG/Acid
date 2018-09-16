@@ -18,7 +18,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		Vector3 GetBaseSpawnPosition() override;
+		Vector3 GeneratePosition() override;
 
 		float GetLength() const { return m_length; }
 
