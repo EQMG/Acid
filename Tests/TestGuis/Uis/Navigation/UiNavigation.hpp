@@ -25,8 +25,6 @@ namespace test
 	public:
 		UiNavigation(UiObject *parent);
 
-		~UiNavigation();
-
 		void UpdateObject() override;
 
 		void SwitchTab(const std::string &tabName);

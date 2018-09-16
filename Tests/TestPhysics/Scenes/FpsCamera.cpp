@@ -50,10 +50,6 @@ namespace test
 	{
 	}
 
-	FpsCamera::~FpsCamera()
-	{
-	}
-
 	void FpsCamera::Update()
 	{
 		float delta = std::min(1.0f / 60.0f, Engine::Get()->GetDelta());

@@ -25,8 +25,6 @@ namespace test
 	public:
 		Terrain(const float &sideLength = 200.0f, const float &squareSize = 2.0f);
 
-		~Terrain();
-
 		void Start() override;
 
 		void Update() override;

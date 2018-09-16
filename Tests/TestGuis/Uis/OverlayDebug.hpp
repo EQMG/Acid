@@ -19,10 +19,7 @@ namespace test
 	public:
 		OverlayDebug(UiObject *parent);
 
-		~OverlayDebug();
-
 		virtual void UpdateObject() override;
-
 	private:
 		std::unique_ptr<Text> CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify);
 	};

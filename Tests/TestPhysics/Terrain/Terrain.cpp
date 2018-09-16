@@ -7,17 +7,12 @@
 namespace test
 {
 	Terrain::Terrain(const float &sideLength, const float &squareSize) :
-		IComponent(),
 		m_noise(Noise(25653345, 0.01f, INTERP_QUINTIC, TYPE_PERLINFRACTAL, 5, 2.0f, 0.5f, FRACTAL_FBM)),
 		m_heightmap(std::vector<float>()),
 		m_sideLength(sideLength),
 		m_squareSize(squareSize),
 		m_minHeight(+std::numeric_limits<float>::infinity()),
 		m_maxHeight(-std::numeric_limits<float>::infinity())
-	{
-	}
-
-	Terrain::~Terrain()
 	{
 	}
 

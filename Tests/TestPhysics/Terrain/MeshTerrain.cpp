@@ -10,10 +10,6 @@ namespace test
 		MeshSimple::GenerateMesh();
 	}
 
-	MeshTerrain::~MeshTerrain()
-	{
-	}
-
 	VertexModel MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
 	{
 		float x = ((row * m_squareSize) - m_sideLength) / 2.0f;

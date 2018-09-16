@@ -12,10 +12,6 @@ namespace test
 	{
 	}
 
-	ContentExit::~ContentExit()
-	{
-	}
-
 	void ContentExit::UpdateObject()
 	{
 	}

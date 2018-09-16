@@ -18,10 +18,6 @@ namespace test
 	{
 	}
 
-	OverlayDebug::~OverlayDebug()
-	{
-	}
-
 	void OverlayDebug::UpdateObject()
 	{
 		if (m_timerUpdate.IsPassedTime())
@@ -39,19 +35,19 @@ namespace test
 					hour -= 24;
 				}
 
-				m_textTime->SetString("Time: " + std::to_string(hour) + ":" + std::to_string(minute));
+				m_textTime->SetString("Time: " + String::To(hour) + ":" + String::To(minute));
 			}
 
 			if (Scenes::Get()->GetCamera() != nullptr)
 			{
 				Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-				m_textPosition->SetString("POS: " + std::to_string(static_cast<int>(cameraPosition.m_x)) + ", " +
-					std::to_string(static_cast<int>(cameraPosition.m_y)) + ", " +
-					std::to_string(static_cast<int>(cameraPosition.m_z)));
+				m_textPosition->SetString("POS: " + String::To(static_cast<int>(cameraPosition.m_x)) + ", " +
+					String::To(static_cast<int>(cameraPosition.m_y)) + ", " +
+					String::To(static_cast<int>(cameraPosition.m_z)));
 			}
 
-			m_textFps->SetString("FPS: " + std::to_string(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
-			m_textUps->SetString("UPS: " + std::to_string(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
+			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
+			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
 		}
 	}
 

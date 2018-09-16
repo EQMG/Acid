@@ -23,8 +23,6 @@ namespace test
 	public:
 		UiTab(UiObject *parent, UiObject *content, const UiBound &rectangle, const std::string &name, const Colour &colour);
 
-		~UiTab();
-
 		void UpdateObject() override;
 
 		UiObject *GetContent() const { return m_content.get(); }

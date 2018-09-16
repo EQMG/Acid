@@ -21,8 +21,6 @@ namespace test
 	public:
 		CelestialBody(const CelestialType &type = CELESTIAL_SUN);
 
-		~CelestialBody();
-
 		void Start() override;
 
 		void Update() override;

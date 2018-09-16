@@ -29,10 +29,6 @@ namespace test
 		m_uiNavigation->SetAlphaDriver<DriverConstant>(0.0f);
 	}
 
-	Scene1::~Scene1()
-	{
-	}
-
 	void Scene1::Start()
 	{
 	}

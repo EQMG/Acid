@@ -12,8 +12,6 @@ namespace test
 	public:
 		UiInventory(UiObject *parent);
 
-		~UiInventory();
-
 		virtual void UpdateObject() override;
 	};
 }

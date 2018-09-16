@@ -13,10 +13,6 @@ namespace test
 	{
 	}
 
-	MaterialTerrain::~MaterialTerrain()
-	{
-	}
-
 	void MaterialTerrain::Start()
 	{
 		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {VertexModel::GetVertexInput()},

@@ -16,8 +16,6 @@ namespace test
 	public:
 		SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
 
-		~SkyboxCycle();
-
 		void Start() override;
 
 		void Update() override;

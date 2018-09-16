@@ -15,12 +15,7 @@ namespace test
 	static const Colour MOON_COLOUR_DAY = Colour("#000000");
 
 	CelestialBody::CelestialBody(const CelestialType &type) :
-		IComponent(),
 		m_type(type)
-	{
-	}
-
-	CelestialBody::~CelestialBody()
 	{
 	}
 

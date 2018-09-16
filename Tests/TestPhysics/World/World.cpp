@@ -20,10 +20,6 @@ namespace test
 		m_driverDay.Update(50.0f); // Starts during daytime.
 	}
 
-	World::~World()
-	{
-	}
-
 	void World::Update()
 	{
 		float delta = Engine::Get()->GetDelta();

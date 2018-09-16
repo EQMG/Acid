@@ -37,10 +37,6 @@ namespace test
 			uiInventory->SetVisible(false);*/
 	}
 
-	UiInventory::~UiInventory()
-	{
-	}
-
 	void UiInventory::UpdateObject()
 	{
 	}

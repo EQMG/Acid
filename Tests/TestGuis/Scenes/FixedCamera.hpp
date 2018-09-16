@@ -26,8 +26,6 @@ namespace test
 	public:
 		FixedCamera();
 
-		~FixedCamera();
-
 		void Update() override;
 
 		void ReflectView(const float &height) override;

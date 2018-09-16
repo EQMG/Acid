@@ -2,7 +2,6 @@
 
 #include <Uis/Uis.hpp>
 #include <Scenes/Scenes.hpp>
-
 #include <Inputs/AxisButton.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/AxisJoystick.hpp>
@@ -57,7 +56,7 @@ namespace test
 	{
 	}
 
-	FpsPlayer::~FpsPlayer()
+	void FpsPlayer::Start()
 	{
 	}
 
@@ -137,5 +136,13 @@ namespace test
 
 		GetGameObject()->GetTransform().SetPosition(newPosition);
 		GetGameObject()->GetTransform().SetRotation(newRotation);
+	}
+
+	void FpsPlayer::Decode(const Metadata &metadata)
+	{
+	}
+
+	void FpsPlayer::Encode(Metadata &metadata) const
+	{
 	}
 }

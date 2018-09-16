@@ -15,18 +15,14 @@ namespace test
 	{
 	}
 
-	OverlayDebug::~OverlayDebug()
-	{
-	}
-
 	void OverlayDebug::UpdateObject()
 	{
 		if (m_timerUpdate.IsPassedTime())
 		{
 			m_timerUpdate.ResetStartTime();
 
-			m_textFps->SetString("FPS: " + std::to_string(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
-			m_textUps->SetString("UPS: " + std::to_string(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
+			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
+			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
 		}
 	}
 
