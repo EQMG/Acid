@@ -4,22 +4,25 @@
 	  {
 		"Texture": "Particles/Circular.png",
 		"Number Of Rows": 4,
-		"Colour Offset": "#0000ff",
-		"Life Length": 6.0,
+		"Colour Offset": "#0000FF",
+		"Life Length": 3.0,
+		"Stage Cycles": 1.0,
 		"Scale": 0.5
 	  },
 	  {
 		"Texture": "Particles/Circular.png",
 		"Number Of Rows": 4,
-		"Colour Offset": "#ffff00",
-		"Life Length": 4.0,
+		"Colour Offset": "#FFFF00",
+		"Life Length": 2.0,
+		"Stage Cycles": 1.0,
 		"Scale": 1.0
 	  },
 	  {
 		"Texture": "Particles/Circular.png",
 		"Number Of Rows": 4,
-		"Colour Offset": "#ff0000",
-		"Life Length": 3.0,
+		"Colour Offset": "#FF0000",
+		"Life Length": 1.4,
+		"Stage Cycles": 1.0,
 		"Scale": 0.8
 	  }
 	],
@@ -35,10 +38,21 @@
 	"PPS": 10.0,
 	"Average Speed": 0.8,
 	"Gravity Effect": 0.1,
-	"System Offset": {
+	"Local Offset": {
 	  "x": 0.0,
 	  "y": 0.0,
 	  "z": 0.0
-	}
+	},
+	"Random Rotation": true,
+	"Direction": {
+	  "x": 0.0,
+	  "y": 1.0,
+	  "z": 0.0
+	},
+	"Direction Deviation": 0.2,
+	"Speed Deviation": 0.8,
+	"Life Deviation": 0.5,
+	"Stage Deviation": 0.0,
+	"Scale Deviation": 0.1
   }
 }

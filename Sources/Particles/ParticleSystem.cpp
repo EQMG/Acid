@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &systemOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &localOffset) :
 		m_types(types),
 		m_spawn(spawn),
 		m_pps(pps),
@@ -17,11 +17,12 @@ namespace acid
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
 		m_lastPosition(Vector3()),
-		m_systemOffset(systemOffset),
+		m_localOffset(localOffset),
 		m_direction(Vector3()),
 		m_directionDeviation(0.0f),
 		m_speedDeviation(0.0f),
 		m_lifeDeviation(0.0f),
+		m_stageDeviation(0.0f),
 		m_scaleDeviation(0.0f),
 		m_timePassed(0.0f),
 		m_paused(false)
@@ -67,12 +68,13 @@ namespace acid
 		m_pps = metadata.GetChild<float>("PPS");
 		m_averageSpeed = metadata.GetChild<float>("Average Speed");
 		m_gravityEffect = metadata.GetChild<float>("Gravity Effect");
-		m_systemOffset = metadata.GetChild<Vector3>("Offset");
+		m_localOffset = metadata.GetChild<Vector3>("Local Offset");
 		m_randomRotation = metadata.GetChild<bool>("Random Rotation");
 		m_direction = metadata.GetChild<Vector3>("Direction");
 		m_directionDeviation = metadata.GetChild<float>("Direction Deviation");
 		m_speedDeviation = metadata.GetChild<float>("Speed Deviation");
 		m_lifeDeviation = metadata.GetChild<float>("Life Deviation");
+		m_stageDeviation = metadata.GetChild<float>("Stage Deviation");
 		m_scaleDeviation = metadata.GetChild<float>("Scale Deviation");
 	}
 
@@ -95,12 +97,13 @@ namespace acid
 		metadata.SetChild<float>("PPS", m_pps);
 		metadata.SetChild<float>("Average Speed", m_averageSpeed);
 		metadata.SetChild<float>("Gravity Effect", m_gravityEffect);
-		metadata.SetChild<Vector3>("Offset", m_systemOffset);
+		metadata.SetChild<Vector3>("Local Offset", m_localOffset);
 		metadata.SetChild<bool>("Random Rotation", m_randomRotation);
 		metadata.SetChild<Vector3>("Direction", m_direction);
 		metadata.SetChild<float>("Direction Deviation", m_directionDeviation);
 		metadata.SetChild<float>("Speed Deviation", m_speedDeviation);
 		metadata.SetChild<float>("Life Deviation", m_lifeDeviation);
+		metadata.SetChild<float>("Stage Deviation", m_stageDeviation);
 		metadata.SetChild<float>("Scale Deviation", m_scaleDeviation);
 	}
 
@@ -193,21 +196,22 @@ namespace acid
 		}
 
 		velocity = velocity.Normalize();
-		velocity *= GenerateValue(m_averageSpeed, m_averageSpeed * Maths::Random(1.0f - m_speedDeviation, 1.0f + m_speedDeviation));
+		velocity *= GenerateValue(m_averageSpeed, m_speedDeviation);
 
-		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, static_cast<int32_t>(m_types.size())))));
-		float scale = GenerateValue(emitType->GetScale(), emitType->GetScale() * Maths::Random(1.0f - m_scaleDeviation, 1.0f + m_scaleDeviation));
-		float lifeLength = GenerateValue(emitType->GetLifeLength(), emitType->GetLifeLength() * Maths::Random(1.0f - m_lifeDeviation, 1.0f + m_lifeDeviation));
+		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0.0f, static_cast<float>(m_types.size())))));
+		float scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
+		float lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
+		float stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
 
-		Vector3 spawnPos;
-		spawnPos = GetGameObject()->GetTransform().GetPosition() + m_systemOffset;
-		spawnPos = spawnPos + m_spawn->GetBaseSpawnPosition();
-		return Particle(emitType, spawnPos, velocity, lifeLength, GenerateRotation(), scale, m_gravityEffect);
+		Vector3 spawnPos = GetGameObject()->GetTransform().GetPosition() + m_localOffset;
+		spawnPos = spawnPos + m_spawn->GeneratePosition();
+		return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
 	}
 
-	float ParticleSystem::GenerateValue(const float &average, const float &errorMargin) const
+	float ParticleSystem::GenerateValue(const float &average, const float &errorPercent) const
 	{
-		return average + ((Maths::Random(0.0f, 1.0f) - 0.5f) * 2.0f * errorMargin);
+		float error = Maths::Random(-1.0f, 1.0f) * errorPercent;
+		return average + (average * error);
 	}
 
 	float ParticleSystem::GenerateRotation() const

@@ -22,7 +22,7 @@ namespace acid
 		metadata.SetChild<Vector3>("Heading", m_heading);
 	}
 
-	Vector3 SpawnCircle::GetBaseSpawnPosition()
+	Vector3 SpawnCircle::GeneratePosition()
 	{
 		m_spawnPosition = Vector3::RandomPointOnCircle(m_heading, m_radius);
 		return m_spawnPosition;

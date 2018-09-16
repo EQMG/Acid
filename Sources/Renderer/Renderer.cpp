@@ -388,8 +388,6 @@ namespace acid
 		m_commandBuffer->End();
 		m_commandBuffer->Submit(m_semaphore, VK_NULL_HANDLE, false);
 
-	//	Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
-
 		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
 
 		VkResult presentResult = VK_RESULT_MAX_ENUM;
@@ -403,7 +401,7 @@ namespace acid
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &presentResult;
 
-		const VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
+		VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
 		{

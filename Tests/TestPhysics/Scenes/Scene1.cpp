@@ -121,9 +121,9 @@ namespace test
 		teapot->AddComponent<MeshRender>();
 	//	teapot->AddComponent<ShadowRender>();
 
-		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(0.0f, 3.0f, -5.0f)));
+		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
 
-		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.xml");
+		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.json");
 		prefabSmokeSystem.Write(*smokeSystem);
 		prefabSmokeSystem.Save();
 	}

@@ -24,7 +24,7 @@ namespace acid
 		metadata.SetChild<Vector3>("Axis", m_axis);
 	}
 
-	Vector3 SpawnLine::GetBaseSpawnPosition()
+	Vector3 SpawnLine::GeneratePosition()
 	{
 		m_spawnPosition = m_axis;
 		m_spawnPosition *= m_length;

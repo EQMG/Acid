@@ -16,9 +16,9 @@ namespace acid
 		virtual void Encode(Metadata &metadata) const = 0;
 
 		/// <summary>
-		/// Gets the base spawn position.
+		/// Creates a new particle position.
 		/// </summary>
-		/// <returns> The base spawn position. </returns>
-		virtual Vector3 GetBaseSpawnPosition() = 0;
+		/// <returns> The new particles position. </returns>
+		virtual Vector3 GeneratePosition() = 0;
 	};
 }
