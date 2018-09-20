@@ -2,15 +2,15 @@
 
 namespace acid
 {
-	DriverLinear::DriverLinear(const float &startValue, const float &endValue, const float &length) :
+	DriverLinear::DriverLinear(const float &start, const float &end, const float &length) :
 		IDriver(length),
-		m_startValue(startValue),
-		m_difference(endValue - startValue)
+		m_start(start),
+		m_end(end)
 	{
 	}
 
 	float DriverLinear::Calculate(const float &time)
 	{
-		return m_startValue + time * m_difference;
+		return m_start + time * (m_end - m_start);
 	}
 }

@@ -22,7 +22,7 @@ namespace acid
 	public:
 		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
 
-		Metadata(const std::string &name = "", const std::string &value = "");
+		explicit Metadata(const std::string &name = "", const std::string &value = "");
 
 		Metadata(const Metadata&) = delete;
 

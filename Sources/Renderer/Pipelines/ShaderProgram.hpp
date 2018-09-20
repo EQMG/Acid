@@ -195,7 +195,7 @@ namespace acid
 
 		std::vector<std::string> m_notFoundNames;
 	public:
-		ShaderProgram(const std::string &name);
+		explicit ShaderProgram(const std::string &name);
 
 		ShaderProgram(const ShaderProgram&) = delete;
 

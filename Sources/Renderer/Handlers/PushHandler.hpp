@@ -14,11 +14,11 @@ namespace acid
 	private:
 		bool m_multipipeline;
 		UniformBlock *m_uniformBlock;
-		void *m_data;
+		void *m_data; // TODO: Convert to unique_ptr
 	public:
-		PushHandler(const bool &multipipeline = false);
+		explicit PushHandler(const bool &multipipeline = false);
 
-		PushHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit PushHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		~PushHandler();
 

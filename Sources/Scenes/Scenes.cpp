@@ -26,23 +26,14 @@ namespace acid
 		m_scene->GetPhysics()->Update();
 		m_scene->Update();
 
-		if (m_scene->GetStructure() == nullptr)
+		if (m_scene->GetStructure() != nullptr)
 		{
-			return;
+			m_scene->GetStructure()->Update();
 		}
 
-		auto gameObjects = m_scene->GetStructure()->QueryAll();
-
-		for (auto &gameObject : gameObjects)
+		if (m_scene->GetCamera() != nullptr)
 		{
-			gameObject->Update();
+			m_scene->GetCamera()->Update();
 		}
-
-		if (m_scene->GetCamera() == nullptr)
-		{
-			return;
-		}
-
-		m_scene->GetCamera()->Update();
 	}
 }

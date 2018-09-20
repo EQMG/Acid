@@ -11,7 +11,8 @@ namespace acid
 		m_transform(transform),
 		m_components(std::vector<std::unique_ptr<IComponent>>()),
 		m_structure(structure),
-		m_parent(nullptr)
+		m_parent(nullptr),
+		m_removed(false)
 	{
 		if (m_structure == nullptr)
 		{
@@ -124,21 +125,13 @@ namespace acid
 	{
 		if (m_structure != nullptr)
 		{
-			m_structure->Remove(this);
+			m_structure->Move(this, structure);
+		}
+		else
+		{
+			m_structure->Add(this);
 		}
 
 		m_structure = structure;
-		m_structure->Add(this);
-	}
-
-	void GameObject::StructureRemove()
-	{
-		if (m_structure == nullptr)
-		{
-			return;
-		}
-
-		m_structure->Remove(this);
-		m_structure = nullptr;
 	}
 }

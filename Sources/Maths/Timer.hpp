@@ -17,7 +17,7 @@ namespace acid
 		/// Creates a new timer.
 		/// </summary>
 		/// <param name="interval"> The time between events (seconds). </param>
-		Timer(const float &interval);
+		explicit Timer(const float &interval);
 
 		/// <summary>
 		/// Gets if the interval has been passes for the timer.

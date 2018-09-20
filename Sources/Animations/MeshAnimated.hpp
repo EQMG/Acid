@@ -33,7 +33,7 @@ namespace acid
 		static const uint32_t MAX_JOINTS;
 		static const uint32_t MAX_WEIGHTS;
 
-		MeshAnimated(const std::string &filename = "");
+		explicit MeshAnimated(const std::string &filename = "");
 
 		void Update() override;
 

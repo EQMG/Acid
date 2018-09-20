@@ -20,7 +20,7 @@ namespace acid
 		/// Creates a new button mouse.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the mouse being checked. </param>
-		ButtonMouse(const std::vector<MouseButton> &buttons);
+		explicit ButtonMouse(const std::vector<MouseButton> &buttons);
 
 		bool IsDown() const override;
 

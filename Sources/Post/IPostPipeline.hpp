@@ -16,7 +16,10 @@ namespace acid
 		/// Creates a new post pipeline.
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
-		IPostPipeline(const GraphicsStage &graphicsStage);
+		explicit IPostPipeline(const GraphicsStage &graphicsStage) :
+			IRenderer(graphicsStage)
+		{
+		}
 
 		/// <summary>
 		/// Renders the post pipeline.

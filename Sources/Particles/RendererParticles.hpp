@@ -15,7 +15,7 @@ namespace acid
 		UniformHandler m_uniformScene;
 		Pipeline m_pipeline;
 	public:
-		RendererParticles(const GraphicsStage &graphicsStage);
+		explicit RendererParticles(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	private:

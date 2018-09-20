@@ -15,12 +15,12 @@ namespace acid
 		bool m_multipipeline;
 		UniformBlock *m_uniformBlock;
 		std::unique_ptr<UniformBuffer> m_uniformBuffer;
-		void *m_data;
+		void *m_data; // TODO: Convert to unique_ptr
 		bool m_changed;
 	public:
-		UniformHandler(const bool &multipipeline = false);
+		explicit UniformHandler(const bool &multipipeline = false);
 
-		UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		~UniformHandler();
 

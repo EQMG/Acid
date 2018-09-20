@@ -27,7 +27,7 @@ namespace acid
 		/// Creates a new sound buffer.
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
-		SoundBuffer(const std::string &filename);
+		explicit SoundBuffer(const std::string &filename);
 
 		~SoundBuffer();
 

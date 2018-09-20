@@ -74,7 +74,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
-			Vector3 normal = Vector3(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]));
+			Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]), 0.0f);
 			normal = MeshAnimated::CORRECTION.Transform(normal);
 			m_normalsList.emplace_back(normal);
 		}

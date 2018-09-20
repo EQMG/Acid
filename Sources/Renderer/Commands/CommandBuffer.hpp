@@ -13,7 +13,7 @@ namespace acid
 		VkCommandBuffer m_commandBuffer;
 		bool m_running;
 	public:
-		CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT, const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		explicit CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT, const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 		~CommandBuffer();
 

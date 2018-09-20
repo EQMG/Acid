@@ -15,7 +15,7 @@ namespace acid
 		float m_stepSize;
 		float m_steps;
 	public:
-		FilterTiltshift(const GraphicsStage &graphicsStage);
+		explicit FilterTiltshift(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

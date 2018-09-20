@@ -52,7 +52,7 @@ namespace acid
 		/// Creates a new meta file.
 		/// </summary>
 		/// <param name="filepath"> The font file to load from. </param>
-		FontMetafile(const std::string &filename);
+		explicit FontMetafile(const std::string &filename);
 
 		std::optional<FontCharacter> GetCharacter(const int32_t &ascii);
 

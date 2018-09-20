@@ -11,13 +11,25 @@ namespace acid
 		public IDriver
 	{
 	private:
-		float m_value;
+		float m_constant;
 	public:
 		/// <summary>
 		/// Creates a new constant driver.
 		/// </summary>
 		/// <param name="constant"> The constant value. </param>
-		DriverConstant(const float &constant);
+		explicit DriverConstant(const float &constant);
+
+		/// <summary>
+		/// Gets the constant.
+		/// </summary>
+		/// <returns> The constant. </returns>
+		float GetConstant() const { return m_constant; }
+
+		/// <summary>
+		/// Sets the constant.
+		/// </summary>
+		/// <param name="constant"> The new constant. </param>
+		void SetConstant(const float &constant) { m_constant = constant; };
 	protected:
 		float Calculate(const float &time) override;
 	};

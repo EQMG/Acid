@@ -10,11 +10,11 @@ namespace acid
 	{
 	private:
 		std::unique_ptr<Gui> m_guiBackground;
-		std::unique_ptr<Gui> m_guiLogo;
+		std::unique_ptr<Gui> m_guiLogoAcid;
 		std::unique_ptr<Text> m_textCopyright;
 		bool m_starting;
 	public:
-		UiStartLogo(UiObject *parent);
+		explicit UiStartLogo(UiObject *parent);
 
 		void UpdateObject() override;
 

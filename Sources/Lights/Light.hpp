@@ -25,7 +25,7 @@ namespace acid
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
 		/// <param name="localOffset"> The parent offset of the light. </param>
-		Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &localOffset = Vector3::ZERO);
+		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &localOffset = Vector3::ZERO);
 
 		/// <summary>
 		/// Creates a new point light from a source object.

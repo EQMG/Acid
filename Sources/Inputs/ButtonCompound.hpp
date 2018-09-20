@@ -20,7 +20,7 @@ namespace acid
 		/// Creates a new compound button.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the being added. </param>
-		ButtonCompound(const std::vector<IButton *> &buttons);
+		explicit ButtonCompound(const std::vector<IButton *> &buttons);
 
 		ButtonCompound(const ButtonCompound&) = delete;
 

@@ -114,7 +114,7 @@ namespace acid
 		/// <param name="lacunarity"> The lacunarity between octaves. </param>
 		/// <param name="fractalType"> The fractal noise type. </param>
 		/// <param name="fractalBounding"> The fractal bounding. </param>
-		Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const NoiseInterp &interp = INTERP_QUINTIC, const NoiseType &noiseType = TYPE_SIMPLEX, const int32_t &octaves = 3,
+		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const NoiseInterp &interp = INTERP_QUINTIC, const NoiseType &noiseType = TYPE_SIMPLEX, const int32_t &octaves = 3,
 		      const float &lacunarity = 2.0f, const float &gain = 0.5f, const NoiseFractal &fractalType = FRACTAL_FBM, const float &fractalBounding = 0.0f);
 
 		/// <summary>

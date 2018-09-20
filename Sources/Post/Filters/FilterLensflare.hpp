@@ -14,7 +14,7 @@ namespace acid
 		Vector3 m_sunPosition;
 		float m_sunHeight;
 	public:
-		FilterLensflare(const GraphicsStage &graphicsStage);
+		explicit FilterLensflare(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

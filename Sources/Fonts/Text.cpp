@@ -97,9 +97,9 @@ namespace acid
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowingDriver(IDriver *glowingDriver)
+	void Text::SetGlowDriver(IDriver *glowDriver)
 	{
-		m_glowDriver.reset(glowingDriver);
+		m_glowDriver.reset(glowDriver);
 		m_solidBorder = false;
 		m_glowBorder = true;
 	}

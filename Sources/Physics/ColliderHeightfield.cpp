@@ -7,7 +7,6 @@ namespace acid
 {
 	ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData,
 											 const float &minHeight, const float &maxHeight, const bool &flipQuadEdges) :
-		Collider(),
 		m_shape(nullptr)
 	{
 		Initialize(heightStickWidth, heightStickLength, heightfieldData, minHeight, maxHeight, flipQuadEdges);

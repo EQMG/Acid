@@ -33,7 +33,7 @@ namespace acid
 		/// Creates a new animator.
 		/// </summary>
 		/// <param name="rootJoint"> The root joint of the joint hierarchy which makes up the "skeleton" of the entity. </param>
-		Animator(Joint *rootJoint);
+		explicit Animator(Joint *rootJoint);
 
 		/// <summary>
 		/// This method should be called each frame to update the animation currently being played. This increases the animation time (and loops it back to zero if necessary),

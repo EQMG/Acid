@@ -56,7 +56,7 @@ namespace acid
 		/// <param name="filter"> The type of filtering will be use on the texture. </param>
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
-		Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap = true, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true);
+		explicit Cubemap(const std::string &filename, const std::string &fileExt = ".png", const bool &mipmap = true, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true);
 
 		/// <summary>
 		/// A new empty cubemap object that can be used to render into.

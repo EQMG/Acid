@@ -12,7 +12,7 @@ namespace acid
 
 		float m_factor;
 	public:
-		FilterDarken(const GraphicsStage &graphicsStage);
+		explicit FilterDarken(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

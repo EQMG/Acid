@@ -68,7 +68,7 @@ namespace acid
 
 		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
 
-		virtual VkPipelineBindPoint GetPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
+		VkPipelineBindPoint GetPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
 	private:
 		void CreateShaderProgram();
 

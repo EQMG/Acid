@@ -44,7 +44,7 @@ namespace acid
 
 	Colour::Colour(const std::string &hex, const float &a)
 	{
-		int32_t r, g, b;
+		uint32_t r, g, b;
 		sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
 		m_r = static_cast<float>(r) / 255.0f;
 		m_g = static_cast<float>(g) / 255.0f;
@@ -220,64 +220,64 @@ namespace acid
 		return m_elements[index];
 	}
 
-	Colour operator+(Colour left, const Colour &right)
+	Colour operator+(const Colour &left, const Colour &right)
 	{
 		return left.Add(right);
 	}
 
-	Colour operator-(Colour left, const Colour &right)
+	Colour operator-(const Colour &left, const Colour &right)
 	{
 		return left.Subtract(right);
 	}
 
-	Colour operator*(Colour left, const Colour &right)
+	Colour operator*(const Colour &left, const Colour &right)
 	{
 		return left.Multiply(right);
 	}
 
-	Colour operator/(Colour left, const Colour &right)
+	Colour operator/(const Colour &left, const Colour &right)
 	{
 		return left.Divide(right);
 	}
 
-	Colour operator+(Colour left, float value)
-	{
-		return left.Add(Colour(value, value, value, value));
-	}
-
-	Colour operator-(Colour left, float value)
-	{
-		return left.Subtract(Colour(value, value, value, value));
-	}
-
-	Colour operator*(Colour left, float value)
-	{
-		return left.Multiply(Colour(value, value, value, value));
-	}
-
-	Colour operator/(Colour left, float value)
-	{
-		return left.Divide(Colour(value, value, value, value));
-	}
-
-	Colour operator+(float value, Colour left)
+	Colour operator+(const float &value, const Colour &left)
 	{
 		return Colour(value, value, value, value).Add(left);
 	}
 
-	Colour operator-(float value, Colour left)
+	Colour operator-(const float &value, const Colour &left)
 	{
 		return Colour(value, value, value, value).Subtract(left);
 	}
 
-	Colour operator*(float value, Colour left)
+	Colour operator*(const float &value, const Colour &left)
 	{
 		return Colour(value, value, value, value).Multiply(left);
 	}
 
-	Colour operator/(float value, Colour left)
+	Colour operator/(const float &value, const Colour &left)
 	{
 		return Colour(value, value, value, value).Divide(left);
+	}
+
+	Colour operator+(const Colour &left, const float &value)
+	{
+		return left.Add(Colour(value, value, value, value));
+	}
+
+	Colour operator-(const Colour &left, const float &value)
+	{
+		return left.Subtract(Colour(value, value, value, value));
+	}
+
+	Colour operator*(const Colour &left, const float &value)
+	{
+		return left.Multiply(Colour(value, value, value, value));
+	}
+
+	Colour operator/(const Colour &left, const float &value)
+	{
+		return left.Divide(Colour(value, value, value, value));
 	}
 
 	Colour &Colour::operator+=(const Colour &other)
@@ -300,22 +300,22 @@ namespace acid
 		return *this = Divide(other);
 	}
 
-	Colour &Colour::operator+=(float value)
+	Colour &Colour::operator+=(const float &value)
 	{
 		return *this = Add(Colour(value, value, value, value));
 	}
 
-	Colour &Colour::operator-=(float value)
+	Colour &Colour::operator-=(const float &value)
 	{
 		return *this = Subtract(Colour(value, value, value, value));
 	}
 
-	Colour &Colour::operator*=(float value)
+	Colour &Colour::operator*=(const float &value)
 	{
 		return *this = Multiply(Colour(value, value, value, value));
 	}
 
-	Colour &Colour::operator/=(float value)
+	Colour &Colour::operator/=(const float &value)
 	{
 		return *this = Divide(Colour(value, value, value, value));
 	}

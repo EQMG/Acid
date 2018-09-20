@@ -12,7 +12,7 @@ namespace acid
 		Vector3 m_axis;
 		Vector3 m_spawnPosition;
 	public:
-		SpawnLine(const float &length = 1.0f, const Vector3 &axis = Vector3::RIGHT);
+		explicit SpawnLine(const float &length = 1.0f, const Vector3 &axis = Vector3::RIGHT);
 
 		void Decode(const Metadata &metadata) override;
 

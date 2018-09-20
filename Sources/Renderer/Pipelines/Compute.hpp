@@ -29,7 +29,7 @@ namespace acid
 		/// Creates a new compute pipeline.
 		/// </summary>
 		/// <param name="pipelineCreate"> The compute pipelines creation info. </param>
-		Compute(const ComputeCreate &computeCreate);
+		explicit Compute(const ComputeCreate &computeCreate);
 
 		~Compute();
 

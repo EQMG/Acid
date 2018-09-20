@@ -40,7 +40,7 @@ namespace acid
 
 	bool Keyboard::GetKey(const Key &key) const
 	{
-		if (key < 0 || key > KEY_END_RANGE)
+		if (key < 0 || key >= KEY_END_RANGE)
 		{
 			return false;
 		}

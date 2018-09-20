@@ -11,7 +11,7 @@ namespace acid
 		float m_radius;
 		Vector3 m_spawnPosition;
 	public:
-		SpawnSphere(const float &radius = 1.0f);
+		explicit SpawnSphere(const float &radius = 1.0f);
 
 		void Decode(const Metadata &metadata) override;
 

@@ -5,8 +5,7 @@ namespace acid
 	DriverBounce::DriverBounce(const float &start, const float &end, const float &length) :
 		IDriver(length),
 		m_start(start),
-		m_amplitude(end - start),
-		m_length(length)
+		m_end(end)
 	{
 	}
 
@@ -14,11 +13,11 @@ namespace acid
 	{
 		float value = 0.5f + std::sin(PI * 2.0f * time) * 0.5f;
 
-		if (GetActualTime() > m_length / 2.0f)
+		if (GetActualTime() > GetLength() / 2.0f)
 		{
 			value = 0.0f;
 		}
 
-		return m_start + value * m_amplitude;
+		return m_start + value * (m_end - m_start);
 	}
 }

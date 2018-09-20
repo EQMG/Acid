@@ -13,7 +13,7 @@ namespace acid
 		float m_wobbleSpeed;
 		float m_wobbleAmount;
 	public:
-		FilterWobble(const GraphicsStage &graphicsStage);
+		explicit FilterWobble(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

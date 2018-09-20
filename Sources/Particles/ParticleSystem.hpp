@@ -48,7 +48,7 @@ namespace acid
 		/// <param name="averageSpeed"> Particle average speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
 		/// <param name="localOffset"> The offset from the game objects centre. </param>
-		ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = std::vector<std::shared_ptr<ParticleType>>(), ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &localOffset = Vector3::ZERO);
+		explicit ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = {}, ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &localOffset = Vector3::ZERO);
 
 		void Start() override;
 

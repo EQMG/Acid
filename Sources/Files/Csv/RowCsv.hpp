@@ -11,7 +11,7 @@ namespace acid
 	private:
 		std::vector<std::string> m_elements;
 	public:
-		RowCsv(const std::vector<std::string> &elements);
+		explicit RowCsv(const std::vector<std::string> &elements);
 
 		std::vector<std::string> GetElements() const { return m_elements; }
 

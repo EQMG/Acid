@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(Acid)
 
-set(ACID_VERSION "0.9.8")
+set(ACID_VERSION "0.9.10")
 
 # Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)

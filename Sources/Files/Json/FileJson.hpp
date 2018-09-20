@@ -14,7 +14,7 @@ namespace acid
 		std::string m_filename;
 		std::unique_ptr<Metadata> m_parent;
 	public:
-		FileJson(const std::string &filename);
+		explicit FileJson(const std::string &filename);
 
 		void Load() override;
 

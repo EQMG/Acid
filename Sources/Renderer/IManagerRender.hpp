@@ -21,7 +21,7 @@ namespace acid
 		/// Creates a new render manager.
 		/// </summary>
 		/// <param name="renderpassCreates"> The renderpass pipeline to create for this manager. </param>
-		IManagerRender(const std::vector<RenderpassCreate> &renderpassCreates) :
+		explicit IManagerRender(const std::vector<RenderpassCreate> &renderpassCreates) :
 			m_renderpassCreates(renderpassCreates),
 			m_started(false)
 		{

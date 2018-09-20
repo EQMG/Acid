@@ -13,7 +13,7 @@ namespace acid
 		std::string m_filename;
 		std::unique_ptr<Metadata> m_parent;
 	public:
-		FileXml(const std::string &filename);
+		explicit FileXml(const std::string &filename);
 
 		void Load() override;
 

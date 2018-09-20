@@ -37,7 +37,7 @@ namespace acid
 		/// <param name="position"> The position. </param>
 		/// <param name="rotation"> The rotation. </param>
 		/// <param name="scaling"> The scaling. </param>
-		Transform(const Vector3 &position, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
+		explicit Transform(const Vector3 &position, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
 
 		/// <summary>
 		/// Constructor for Transform.

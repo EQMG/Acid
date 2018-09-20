@@ -21,7 +21,7 @@ namespace acid
 		MeshSort m_meshSort;
 		UniformHandler m_uniformScene;
 	public:
-		RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = SORT_NONE);
+		explicit RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = SORT_NONE);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

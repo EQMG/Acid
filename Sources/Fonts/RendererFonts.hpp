@@ -12,7 +12,7 @@ namespace acid
 	private:
 		Pipeline m_pipeline;
 	public:
-		RendererFonts(const GraphicsStage &graphicsStage);
+		explicit RendererFonts(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

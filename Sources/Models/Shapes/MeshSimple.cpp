@@ -59,6 +59,6 @@ namespace acid
 		);
 		Vector3 normal = Vector3::UP;
 		Colour colour = Colour::WHITE;
-		return VertexModel(position, uv, normal, colour);
+		return VertexModel(position, uv, normal, colour); 
 	}
 }

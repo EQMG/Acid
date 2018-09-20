@@ -15,10 +15,9 @@ namespace test
 
 	void HeightDespawn::Update()
 	{
-		// TODO: Fix crash...
 		if (GetGameObject()->GetTransform().GetPosition().m_y < m_removeHeight)
 		{
-			GetGameObject()->StructureRemove();
+			GetGameObject()->SetRemoved(true);
 		}
 	}
 

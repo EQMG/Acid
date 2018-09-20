@@ -29,7 +29,7 @@ namespace acid
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
+		explicit MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
 						const float &metallic = 0.0f, const float &roughness = 0.0f, const std::shared_ptr<Texture> &materialTexture = nullptr, const std::shared_ptr<Texture> &normalTexture = nullptr,
 						const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 

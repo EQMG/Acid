@@ -7,6 +7,7 @@ namespace acid
 	Force::Force(const Vector3 &force, const Vector3 &position) :
 		m_force(force),
 		m_neverExpires(true),
+		m_timeLeft(0.0f),
 		m_position(position)
 	{
 	}

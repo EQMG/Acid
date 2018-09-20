@@ -17,7 +17,7 @@ namespace acid
 		float m_scanLineSize;
 		float m_scanIntensity;
 	public:
-		FilterCrt(const GraphicsStage &graphicsStage);
+		explicit FilterCrt(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

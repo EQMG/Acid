@@ -53,13 +53,13 @@ namespace acid
 		/// Constructor for Matrix4.
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 16 element array. </param>
-		Matrix4(const float source[16]);
+		explicit Matrix4(const float source[16]);
 
 		/// <summary>
 		/// Constructor for Matrix4.
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
-		Matrix4(const Vector4 source[4]);
+		explicit Matrix4(const Vector4 source[4]);
 
 		/// <summary>
 		/// Adds this matrix to another matrix.

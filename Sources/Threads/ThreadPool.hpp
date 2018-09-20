@@ -17,7 +17,7 @@ namespace acid
 	public:
 		static const uint32_t HARDWARE_CONCURRENCY;
 
-		ThreadPool(const uint32_t &threadCount = HARDWARE_CONCURRENCY);
+		explicit ThreadPool(const uint32_t &threadCount = HARDWARE_CONCURRENCY);
 
 		ThreadPool(const ThreadPool&) = delete; 
 

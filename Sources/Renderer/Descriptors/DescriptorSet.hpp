@@ -16,7 +16,7 @@ namespace acid
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:
-		DescriptorSet(const IPipeline &pipeline);
+		explicit DescriptorSet(const IPipeline &pipeline);
 
 		~DescriptorSet();
 
