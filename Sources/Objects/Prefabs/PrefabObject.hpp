@@ -33,7 +33,7 @@ namespace acid
 		/// Creates a new entity prefab.
 		/// </summary>
 		/// <param name="filename"> The file name. </param>
-		PrefabObject(const std::string &filename);
+		explicit PrefabObject(const std::string &filename);
 
 		void Write(const GameObject &gameObject);
 

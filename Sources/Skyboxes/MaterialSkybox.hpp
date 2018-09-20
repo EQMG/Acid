@@ -22,7 +22,7 @@ namespace acid
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
+		explicit MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
 
 		void Start() override;
 

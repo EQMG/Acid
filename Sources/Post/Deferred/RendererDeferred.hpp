@@ -29,7 +29,7 @@ namespace acid
 	public:
 		static const uint32_t MAX_LIGHTS;
 
-		RendererDeferred(const GraphicsStage &graphicsStage);
+		explicit RendererDeferred(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

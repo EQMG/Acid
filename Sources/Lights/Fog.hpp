@@ -26,7 +26,7 @@ namespace acid
 		/// <param name="gradient"> The gradient of the Fog. </param>
 		/// <param name="lowerLimit"> At what height will the skybox Fog begin to appear. </param>
 		/// <param name="upperLimit"> At what height will there be skybox no Fog. </param>
-		Fog(const Colour &colour = Colour::WHITE, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
+		explicit Fog(const Colour &colour = Colour::WHITE, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
 
 		/// <summary>
 		/// Constructor for Fog.

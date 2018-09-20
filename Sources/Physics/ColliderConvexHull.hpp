@@ -16,7 +16,7 @@ namespace acid
 		std::shared_ptr<Model> m_model;
 		uint32_t m_points;
 	public:
-		ColliderConvexHull(const std::vector<float> &pointCloud = std::vector<float>());
+		explicit ColliderConvexHull(const std::vector<float> &pointCloud = {});
 
 		~ColliderConvexHull();
 

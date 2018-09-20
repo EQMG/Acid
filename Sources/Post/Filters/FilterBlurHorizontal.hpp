@@ -13,7 +13,7 @@ namespace acid
 		float m_scale;
 		float m_width;
 	public:
-		FilterBlurHorizontal(const GraphicsStage &graphicsStage, const float &scale = 2.0f);
+		explicit FilterBlurHorizontal(const GraphicsStage &graphicsStage, const float &scale = 2.0f);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

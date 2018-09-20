@@ -6,7 +6,6 @@
 namespace acid
 {
 	ColliderBox::ColliderBox(const Vector3 &extents) :
-		Collider(),
 		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{

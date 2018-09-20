@@ -11,7 +11,7 @@ namespace acid
 	private:
 		Pipeline m_pipeline;
 	public:
-		RendererGuis(const GraphicsStage &graphicsStage);
+		explicit RendererGuis(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

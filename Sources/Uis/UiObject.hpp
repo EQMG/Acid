@@ -44,7 +44,7 @@ namespace acid
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		UiObject(UiObject *parent, const UiBound &rectangle);
 
-		virtual ~UiObject();
+		~UiObject();
 
 		/// <summary>
 		/// Updates this screen object and the extended object.
@@ -106,6 +106,8 @@ namespace acid
 		/// <returns> The screen transform. </returns>
 		Vector4 GetScreenTransform() const { return m_screenTransform; }
 
+		IDriver *GetAlphaDriver() const { return m_alphaDriver.get(); }
+
 		/// <summary>
 		/// Sets the alpha driver.
 		/// </summary>
@@ -121,6 +123,8 @@ namespace acid
 		void SetAlphaDriver(Args &&... args) { SetAlphaDriver(new T(std::forward<Args>(args)...)); }
 
 		float GetAlpha() const;
+
+		IDriver *GetScaleDriver() const { return m_scaleDriver.get(); }
 
 		/// <summary>
 		/// Sets the scale driver.

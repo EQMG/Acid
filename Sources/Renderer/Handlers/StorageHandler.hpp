@@ -15,12 +15,12 @@ namespace acid
 		bool m_multipipeline;
 		UniformBlock *m_uniformBlock;
 		std::unique_ptr<StorageBuffer> m_storageBuffer;
-		void *m_data;
+		void *m_data; // TODO: Convert to unique_ptr
 		bool m_changed;
 	public:
-		StorageHandler(const bool &multipipeline = false);
+		explicit StorageHandler(const bool &multipipeline = false);
 
-		StorageHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit StorageHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		~StorageHandler();
 

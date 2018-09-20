@@ -29,9 +29,9 @@ namespace acid
 		/// Creates a new joint transformation.
 		/// </summary>
 		/// <param name="localTransform"> The joint's local-transform at a certain keyframe of an animation. </param>
-		JointTransform(const Matrix4 &localTransform);
+		explicit JointTransform(const Matrix4 &localTransform);
 
-		JointTransform(const JointTransformData &data);
+		explicit JointTransform(const JointTransformData &data);
 
 		/// <summary>
 		/// In this method the local-space transform matrix is constructed by translating an identity matrix using the position variable and then applying the rotation.

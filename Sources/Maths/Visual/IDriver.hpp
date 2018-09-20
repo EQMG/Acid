@@ -18,7 +18,7 @@ namespace acid
 		/// Creates a new driver with a length.
 		/// </summary>
 		/// <param name="length"> The drivers length. </param>
-		IDriver(const float &length) :
+		explicit IDriver(const float &length) :
 			m_length(length),
 			m_actualTime(0.0f),
 			m_currentTime(0.0f)
@@ -30,14 +30,26 @@ namespace acid
 		/// </summary>
 		/// <param name="delta"> The time between the last update. </param>
 		/// <returns> The calculated value. </returns>
-		float Update(const double &delta)
+		float Update(const float &delta)
 		{
-			m_actualTime += static_cast<float>(delta);
-			m_currentTime += static_cast<float>(delta);
+			m_actualTime += delta;
+			m_currentTime += delta;
 			m_currentTime = std::fmod(m_currentTime, m_length);
 			float time = m_currentTime / m_length;
 			return Calculate(time);
 		}
+
+		/// <summary>
+		/// Gets the length.
+		/// </summary>
+		/// <returns> The length. </returns>
+		float GetLength() const { return m_length; }
+
+		/// <summary>
+		/// Sets the length.
+		/// </summary>
+		/// <param name="length"> The new length. </param>
+		void SetLength(const float &length) { m_length = length; }
 	protected:
 		/// <summary>
 		/// Calculates the new value.

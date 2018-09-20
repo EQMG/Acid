@@ -6,7 +6,6 @@
 namespace acid
 {
 	ColliderSphere::ColliderSphere(const float &radius) :
-		Collider(),
 		m_shape(std::make_unique<btSphereShape>(radius)),
 		m_radius(radius)
 	{

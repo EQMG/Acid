@@ -26,7 +26,8 @@
 #include <Uis/Uis.hpp>
 #include <Objects/Prefabs/PrefabObject.hpp>
 #include <Helpers/FileSystem.hpp>
-#include "Height/HeightDespawn.hpp"
+#include "Behaviours/HeightDespawn.hpp"
+#include "Behaviours/NameTag.hpp"
 #include "FpsCamera.hpp"
 
 namespace test
@@ -132,7 +133,8 @@ namespace test
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
-		//	sphere->AddComponent<HeightDespawn>();
+			sphere->AddComponent<HeightDespawn>();
+			sphere->AddComponent<NameTag>(0.6f);
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);

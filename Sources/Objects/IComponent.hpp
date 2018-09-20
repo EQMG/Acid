@@ -17,7 +17,7 @@ namespace acid
 		bool m_started;
 		bool m_enabled;
 	public:
-		IComponent() :
+		explicit IComponent() :
 			m_gameObject(nullptr),
 			m_started(false),
 			m_enabled(true)

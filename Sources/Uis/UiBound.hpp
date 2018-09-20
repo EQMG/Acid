@@ -25,13 +25,7 @@ namespace acid
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
-		UiBound(const Vector2 &position, const std::string &reference = "TopLeft", const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
-
-		/// <summary>
-		/// Creates a new rectangle.
-		/// </summary>
-		/// <param name="source"> Creates this rectangle out of a existing one. </param>
-		UiBound(const UiBound &source);
+		explicit UiBound(const Vector2 &position, const std::string &reference = "TopLeft", const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		static Vector2 FindPivot(const std::string &key);
 

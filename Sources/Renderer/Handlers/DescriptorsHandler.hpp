@@ -22,7 +22,7 @@ namespace acid
 	public:
 		DescriptorsHandler();
 
-		DescriptorsHandler(const IPipeline &pipeline);
+		explicit DescriptorsHandler(const IPipeline &pipeline);
 
 		void Push(const std::string &descriptorName, IDescriptor *descriptor);
 

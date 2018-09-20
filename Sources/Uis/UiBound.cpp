@@ -6,17 +6,17 @@ namespace acid
 {
 	static std::map<std::string, Vector2> PIVOT_MAP = std::map<std::string, Vector2>
 	{
-		{"TopLeft",	  Vector2(0.0f, 1.0f)},
-		{"TopCentre",	Vector2(0.5f, 1.0f)},
-		{"TopRight",	 Vector2(1.0f, 1.0f)},
+		{"TopLeft", Vector2(0.0f, 1.0f)},
+		{"TopCentre", Vector2(0.5f, 1.0f)},
+		{"TopRight", Vector2(1.0f, 1.0f)},
 
-		{"CentreLeft",   Vector2(0.0f, 0.5f)},
-		{"Centre",	   Vector2(0.5f, 0.5f)},
-		{"CentreRight",  Vector2(1.0f, 0.5f)},
+		{"CentreLeft", Vector2(0.0f, 0.5f)},
+		{"Centre", Vector2(0.5f, 0.5f)},
+		{"CentreRight", Vector2(1.0f, 0.5f)},
 
-		{"BottomLeft",   Vector2(0.0f, 0.0f)},
+		{"BottomLeft", Vector2(0.0f, 0.0f)},
 		{"BottomCentre", Vector2(0.5f, 0.0f)},
-		{"BottomRight",  Vector2(1.0f, 0.0f)},
+		{"BottomRight", Vector2(1.0f, 0.0f)},
 	};
 
 	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
@@ -25,15 +25,6 @@ namespace acid
 		m_aspectPosition(aspectPosition),
 		m_aspectSize(aspectSize),
 		m_dimensions(Vector2(dimensions))
-	{
-	}
-
-	UiBound::UiBound(const UiBound &source) :
-		m_position(Vector2(source.m_position)),
-		m_reference(Vector2(source.m_reference)),
-		m_aspectPosition(source.m_aspectPosition),
-		m_aspectSize(source.m_aspectSize),
-		m_dimensions(Vector2(source.m_dimensions))
 	{
 	}
 

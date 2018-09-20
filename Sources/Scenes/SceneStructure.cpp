@@ -15,6 +15,11 @@ namespace acid
 		m_objects.emplace_back(object);
 	}
 
+	void SceneStructure::Add(std::unique_ptr<GameObject> object)
+	{
+		m_objects.emplace_back(std::move(object));
+	}
+
 	bool SceneStructure::Remove(GameObject *object)
 	{
 		for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
@@ -31,9 +36,41 @@ namespace acid
 		return false;
 	}
 
+	bool SceneStructure::Move(GameObject *object, ISpatialStructure *structure)
+	{
+		for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
+		{
+			if ((*it).get() != object)
+			{
+				continue;
+			}
+
+			structure->Add(std::move(*it));
+			m_objects.erase(it);
+			return true;
+		}
+
+		return false;
+	}
+
 	void SceneStructure::Clear()
 	{
 		m_objects.clear();
+	}
+
+	void SceneStructure::Update()
+	{
+		for (auto it = m_objects.begin(); it != m_objects.end();)
+		{
+			if ((*it)->IsRemoved())
+			{
+				m_objects.erase(it);
+				continue;
+			}
+
+			(*it)->Update();
+			++it;
+		}
 	}
 
 	std::vector<GameObject *> SceneStructure::QueryAll()
@@ -42,6 +79,11 @@ namespace acid
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
+			if ((*it)->IsRemoved())
+			{
+				continue;
+			}
+
 			result.emplace_back((*it).get());
 		}
 
@@ -54,6 +96,11 @@ namespace acid
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
+			if ((*it)->IsRemoved())
+			{
+				continue;
+			}
+
 			auto rigidbody = (*it)->GetComponent<Rigidbody>();
 
 			if (rigidbody == nullptr || rigidbody->InFrustum(range))

@@ -130,7 +130,7 @@ namespace acid
 
 	bool Mouse::GetButton(const MouseButton &mouseButton) const
 	{
-		if (mouseButton < 0 || mouseButton > MOUSE_BUTTON_END_RANGE)
+		if (mouseButton < 0 || mouseButton >= MOUSE_BUTTON_END_RANGE)
 		{
 			return false;
 		}

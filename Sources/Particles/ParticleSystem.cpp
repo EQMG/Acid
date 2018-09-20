@@ -56,11 +56,16 @@ namespace acid
 
 	void ParticleSystem::Decode(const Metadata &metadata)
 	{
-		for (auto &typeNode : metadata.FindChild("Types")->GetChildren())
+		auto typesNode = metadata.FindChild("Types");
+
+		if (typesNode != nullptr)
 		{
-			ParticleType temp = ParticleType();
-			temp.Decode(*typeNode);
-			m_types.emplace_back(ParticleType::Resource(temp.GetFilename()));
+			for (auto &typeNode : typesNode->GetChildren())
+			{
+				ParticleType temp = ParticleType();
+				temp.Decode(*typeNode);
+				m_types.emplace_back(ParticleType::Resource(temp.GetFilename()));
+			}
 		}
 
 		TrySetSpawn(*metadata.FindChild("Spawn"));
@@ -80,7 +85,7 @@ namespace acid
 
 	void ParticleSystem::Encode(Metadata &metadata) const
 	{
-		auto typesNode = metadata.FindChild("Types");
+		auto typesNode = metadata.FindChild("Types", false);
 
 		if (typesNode == nullptr)
 		{

@@ -6,7 +6,6 @@
 namespace acid
 {
 	ColliderCylinder::ColliderCylinder(const float &radius, const float &height) :
-		Collider(),
 		m_shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),
 		m_radius(radius),
 		m_height(height)

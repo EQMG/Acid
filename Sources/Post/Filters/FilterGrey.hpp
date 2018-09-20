@@ -8,7 +8,7 @@ namespace acid
 		public IPostFilter
 	{
 	public:
-		FilterGrey(const GraphicsStage &graphicsStage);
+		explicit FilterGrey(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

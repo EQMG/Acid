@@ -39,7 +39,7 @@ namespace acid
 		/// <summary>
 		/// Gets the end time.
 		/// </summary>
-		/// <returns> The ebd time. </returns>
+		/// <returns> The end time. </returns>
 		float GetEnd() const { return m_end; }
 
 		/// <summary>

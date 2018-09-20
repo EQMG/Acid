@@ -12,7 +12,7 @@ namespace acid
 
 		float m_strength;
 	public:
-		FilterGrain(const GraphicsStage &graphicsStage);
+		explicit FilterGrain(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

@@ -19,7 +19,7 @@ namespace acid
 		std::vector<std::unique_ptr<GameObject>> m_objects;
 	public:
 		/// <summary>
-		/// Creates a new basic structure.
+		/// Creates a new scene structure.
 		/// </summary>
 		SceneStructure();
 
@@ -29,9 +29,15 @@ namespace acid
 
 		void Add(GameObject *object) override;
 
+		void Add(std::unique_ptr<GameObject> object) override;
+
 		bool Remove(GameObject *object) override;
 
+		bool Move(GameObject *object, ISpatialStructure *structure) override;
+
 		void Clear() override;
+
+		void Update() override;
 
 		uint32_t GetSize() override { return static_cast<uint32_t>(m_objects.size()); }
 

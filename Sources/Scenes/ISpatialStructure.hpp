@@ -25,6 +25,12 @@ namespace acid
 		virtual void Add(GameObject *object) = 0;
 
 		/// <summary>
+		/// Adds a new object to the spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to add. </param>
+		virtual void Add(std::unique_ptr<GameObject> object) = 0;
+
+		/// <summary>
 		/// Removes an object from the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
@@ -32,9 +38,22 @@ namespace acid
 		virtual bool Remove(GameObject *object) = 0;
 
 		/// <summary>
+		/// Moves an object to another spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to remove. </param>
+		/// <param name="structure"> The structure to move to. </param>
+		/// <returns> If the object was moved. </returns>
+		virtual bool Move(GameObject *object, ISpatialStructure *structure) = 0;
+
+		/// <summary>
 		/// Removes all objects from the spatial structure..
 		/// </summary>
 		virtual void Clear() = 0;
+
+		/// <summary>
+		/// Updates all of the game object.
+		/// </summary>
+		virtual void Update() = 0;
 
 		/// <summary>
 		/// Gets the size of this structure.

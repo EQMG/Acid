@@ -52,7 +52,7 @@ namespace acid
 	{
 		ParticleData instanceData = {};
 
-		Matrix4 modelMatrix = Matrix4().Translate(particle.GetPosition());
+		Matrix4 modelMatrix = Matrix4::IDENTITY.Translate(particle.GetPosition());
 		modelMatrix[0][0] = viewMatrix[0][0];
 		modelMatrix[0][1] = viewMatrix[1][0];
 		modelMatrix[0][2] = viewMatrix[2][0];

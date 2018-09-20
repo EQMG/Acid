@@ -44,7 +44,7 @@ namespace acid
 		/// Carries out the setup for basic engine components and the engine. Call <seealso cref="#run()"/> after creating a instance.
 		/// </summary>
 		/// <param name="emptyRegister"> If the module register will start empty. </param>
-		Engine(const bool &emptyRegister = false);
+		explicit Engine(const bool &emptyRegister = false);
 
 		~Engine();
 

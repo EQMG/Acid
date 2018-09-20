@@ -13,7 +13,8 @@ namespace acid
 		m_indexBuffer(nullptr),
 		m_pointCloud(std::vector<float>()),
 		m_minExtents(Vector3()),
-		m_maxExtents(Vector3())
+		m_maxExtents(Vector3()),
+		m_radius(0.0f)
 	{
 	}
 

@@ -21,7 +21,7 @@ namespace acid
 	{
 		if (parent != nullptr)
 		{
-			parent->m_children.emplace_back(this);
+			parent->AddChild(this);
 		}
 	}
 

@@ -26,7 +26,7 @@ namespace acid
 		float m_gain;
 		float m_pitch;
 	public:
-		Sound(const std::string &filename, const float &gain = 1.0f, const float &pitch = 1.0f);
+		explicit Sound(const std::string &filename, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 		~Sound();
 

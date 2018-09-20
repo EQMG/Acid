@@ -14,7 +14,7 @@ namespace acid
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;
 	public:
-		UniformBuffer(const VkDeviceSize &size);
+		explicit UniformBuffer(const VkDeviceSize &size);
 
 		void Update(const void *newData);
 

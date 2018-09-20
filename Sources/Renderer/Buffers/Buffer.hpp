@@ -15,7 +15,7 @@ namespace acid
 	public:
 		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
-		virtual ~Buffer();
+		~Buffer();
 
 		VkDeviceSize GetSize() const { return m_size; }
 

@@ -6,7 +6,6 @@
 namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height) :
-		Collider(),
 		m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)

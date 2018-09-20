@@ -31,7 +31,7 @@ namespace acid
 		/// Creates a new keyframe at a timestamp.
 		/// </summary>
 		/// <param name="data"> The data to load the keyframe from. </param>
-		Keyframe(const KeyframeData &data);
+		explicit Keyframe(const KeyframeData &data);
 
 		/// <summary>
 		/// Gets the time in seconds of the keyframe in the animation.

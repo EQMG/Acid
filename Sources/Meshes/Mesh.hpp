@@ -14,7 +14,7 @@ namespace acid
 	private:
 		std::shared_ptr<Model> m_model;
 	public:
-		Mesh(const std::shared_ptr<Model> &model = nullptr);
+		explicit Mesh(const std::shared_ptr<Model> &model = nullptr);
 
 		void Start() override;
 

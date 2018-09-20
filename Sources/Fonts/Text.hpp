@@ -173,6 +173,8 @@ namespace acid
 		/// <returns> The border colour of the text. </returns>
 		Colour GetBorderColour() const { return m_borderColour; }
 
+		IDriver *GetBorderDriver() const { return m_borderDriver.get(); }
+
 		/// <summary>
 		/// Sets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
@@ -193,11 +195,13 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
+		IDriver *GetGlowDriver() const { return m_glowDriver.get(); }
+
 		/// <summary>
 		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
-		/// <param name="glowingDriver"> The new glow driver. </param>
-		void SetGlowingDriver(IDriver *glowingDriver);
+		/// <param name="glowDriver"> The new glow driver. </param>
+		void SetGlowDriver(IDriver *glowDriver);
 
 		/// <summary>
 		/// Sets a new glow driver from a type, will disable solid borders.
@@ -205,7 +209,7 @@ namespace acid
 		/// <param name="T"> The type of driver to set. </param>
 		/// <param name="args"> The type driver arguments. </param>
 		template<typename T, typename... Args>
-		void SetGlowingDriver(Args &&... args) { SetGlowingDriver(new T(std::forward<Args>(args)...)); }
+		void SetGlowDriver(Args &&... args) { SetGlowDriver(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.
@@ -241,7 +245,6 @@ namespace acid
 		/// </summary>
 		/// <returns> If the text has been loaded to a model. </returns>
 		bool IsLoaded();
-
 	private:
 		/// <summary>
 		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
