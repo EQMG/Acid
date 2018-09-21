@@ -19,7 +19,7 @@ namespace test
 	private:
 		CelestialType m_type;
 	public:
-		CelestialBody(const CelestialType &type = CELESTIAL_SUN);
+		explicit CelestialBody(const CelestialType &type = CELESTIAL_SUN);
 
 		void Start() override;
 

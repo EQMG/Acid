@@ -11,7 +11,6 @@ namespace acid
 		{
 			Joystick joystick = Joystick();
 			joystick.m_port = static_cast<JoystickPort>(i);
-			joystick.m_connected = false;
 			m_connected[i] = joystick;
 		}
 	}

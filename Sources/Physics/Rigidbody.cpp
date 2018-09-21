@@ -160,7 +160,12 @@ namespace acid
 	{
 		btVector3 min = btVector3();
 		btVector3 max = btVector3();
-		m_body->getAabb(min, max);
+
+		if (m_body != nullptr && m_shape != nullptr)
+		{
+			m_body->getAabb(min, max);
+		}
+
 		return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
 	}
 

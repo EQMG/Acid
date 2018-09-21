@@ -10,7 +10,7 @@ namespace test
 		public UiObject
 	{
 	public:
-		UiInventory(UiObject *parent);
+		explicit UiInventory(UiObject *parent);
 
 		virtual void UpdateObject() override;
 	};

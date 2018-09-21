@@ -17,7 +17,7 @@ namespace test
 
 		std::shared_ptr<PipelineMaterial> m_material;
 	public:
-		MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
+		explicit MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
 
 		void Start() override;
 

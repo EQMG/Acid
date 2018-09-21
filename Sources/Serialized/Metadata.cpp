@@ -25,6 +25,11 @@ namespace acid
 	{
 		std::string string = m_value;
 
+		if (string.empty())
+		{
+			return string;
+		}
+
 		if (string.front() == '\"')
 		{
 			string.erase(0, 1);

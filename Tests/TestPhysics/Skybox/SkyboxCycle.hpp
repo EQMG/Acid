@@ -14,7 +14,7 @@ namespace test
 		bool m_enableFog;
 		bool m_enableRotation;
 	public:
-		SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
+		explicit SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
 
 		void Start() override;
 

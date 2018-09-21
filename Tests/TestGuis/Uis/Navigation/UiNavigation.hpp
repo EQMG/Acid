@@ -23,7 +23,7 @@ namespace test
 		UiTab *m_currentTab;
 		UiTab *m_targetTab;
 	public:
-		UiNavigation(UiObject *parent);
+		explicit UiNavigation(UiObject *parent);
 
 		void UpdateObject() override;
 
