@@ -19,7 +19,7 @@ namespace test
 		static const float RANGE_OUTER;
 		static const float TEXT_SIZE;
 
-		NameTag(const float &heightOffset = 0.0f);
+		explicit NameTag(const float &heightOffset = 0.0f);
 
 		void Start() override;
 

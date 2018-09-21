@@ -64,7 +64,7 @@ namespace acid
 		{
 			if ((*it)->IsRemoved())
 			{
-				m_objects.erase(it);
+				it = m_objects.erase(it);
 				continue;
 			}
 

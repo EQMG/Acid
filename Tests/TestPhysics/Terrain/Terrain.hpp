@@ -23,7 +23,7 @@ namespace test
 		float m_minHeight;
 		float m_maxHeight;
 	public:
-		Terrain(const float &sideLength = 200.0f, const float &squareSize = 2.0f);
+		explicit Terrain(const float &sideLength = 200.0f, const float &squareSize = 2.0f);
 
 		void Start() override;
 

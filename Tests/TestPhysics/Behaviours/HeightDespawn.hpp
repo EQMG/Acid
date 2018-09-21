@@ -12,7 +12,7 @@ namespace test
 	private:
 		float m_removeHeight;
 	public:
-		HeightDespawn(const float &removeHeight = -100.0f);
+		explicit HeightDespawn(const float &removeHeight = -100.0f);
 
 		void Start() override;
 

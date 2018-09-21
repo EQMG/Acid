@@ -21,7 +21,7 @@ namespace test
 		std::unique_ptr<UiInputSlider> m_slider1;
 		std::unique_ptr<UiInputText> m_text1;
 	public:
-		ContentExit(UiObject *parent);
+		explicit ContentExit(UiObject *parent);
 
 		void UpdateObject() override;
 	};

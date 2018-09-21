@@ -16,11 +16,13 @@ namespace acid
 		GameObject *m_gameObject;
 		bool m_started;
 		bool m_enabled;
+		bool m_removed;
 	public:
 		explicit IComponent() :
 			m_gameObject(nullptr),
 			m_started(false),
-			m_enabled(true)
+			m_enabled(true),
+			m_removed(false)
 		{
 		}
 
@@ -73,5 +75,9 @@ namespace acid
 		bool IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
+
+		bool IsRemoved() const { return m_removed; }
+
+		void SetRemoved(const bool &removed) { m_removed = removed; }
 	};
 }

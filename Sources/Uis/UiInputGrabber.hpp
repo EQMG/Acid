@@ -23,7 +23,7 @@ namespace acid
 	private:
 		JoystickPort m_joystick;
 	public:
-		UiGrabberJoystick(const JoystickPort &joystick);
+		explicit UiGrabberJoystick(const JoystickPort &joystick);
 
 		int32_t GetCurrent(Text *object) override;
 

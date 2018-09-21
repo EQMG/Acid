@@ -53,23 +53,31 @@ namespace acid
 
 	void GameObject::Update()
 	{
-		for (auto &component : m_components)
+		for (auto it = m_components.begin(); it != m_components.end();)
 		{
-			if (component->GetGameObject() == nullptr)
+			if ((*it)->IsRemoved())
 			{
-				component->SetGameObject(this);
+				it = m_components.erase(it);
+				continue;
 			}
 
-			if (!component->IsStarted())
+			if ((*it)->GetGameObject() != this)
 			{
-				component->Start();
-				component->SetStarted(true);
+				(*it)->SetGameObject(this);
 			}
 
-			if (component->IsEnabled())
+			if (!(*it)->IsStarted())
 			{
-				component->Update();
+				(*it)->Start();
+				(*it)->SetStarted(true);
 			}
+
+			if ((*it)->IsEnabled())
+			{
+				(*it)->Update();
+			}
+
+			++it;
 		}
 	}
 

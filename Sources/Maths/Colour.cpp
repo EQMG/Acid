@@ -60,11 +60,11 @@ namespace acid
 	{
 	}
 
-	Colour::Colour(const Vector3 &source) :
+	Colour::Colour(const Vector3 &source, const float &a) :
 		m_r(source.m_x),
 		m_g(source.m_y),
 		m_b(source.m_z),
-		m_a(1.0f)
+		m_a(a)
 	{
 	}
 

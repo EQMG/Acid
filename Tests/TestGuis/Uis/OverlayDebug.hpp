@@ -17,7 +17,7 @@ namespace test
 		std::unique_ptr<Text> m_textUps;
 		Timer m_timerUpdate;
 	public:
-		OverlayDebug(UiObject *parent);
+		explicit OverlayDebug(UiObject *parent);
 
 		virtual void UpdateObject() override;
 	private:
