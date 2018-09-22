@@ -24,7 +24,7 @@ set(GLFW_VULKAN_STATIC OFF CACHE INTERNAL "Use the Vulkan loader statically link
 add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
 set(GLFW_LIBRARY "glfw" PARENT_SCOPE)
 
-# BUILD_PYBULLET is only ON until bullet can fix Windows shared builds.
+# TODO: Compile bullet dlls in MSVC. 
 set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 
 if(MSVC)

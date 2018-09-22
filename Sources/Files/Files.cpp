@@ -46,7 +46,7 @@ namespace acid
 			}
 		}
 
-		Log::Error("Failed to locate: '%s'\n", filename.c_str());
+	//	Log::Error("Failed to locate: '%s'\n", filename.c_str());
 		return filename;
 	}
 }
