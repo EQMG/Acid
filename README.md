@@ -23,6 +23,7 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
 ## Features
 This is a list of current features in Acid:
+ * Multiplatform (32bit and 64bit)
  * On the fly GLSL to SPIR-V compiler
  * Modular rendering and compute pipeline
  * Deferred PBR rendering

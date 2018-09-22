@@ -1,0 +1,599 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<depends_on path='/System/Library/Frameworks/CoreAudio.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreFoundation.framework'/>
+<depends_on path='/System/Library/Frameworks/AudioToolbox.framework'/>
+<depends_on path='/System/Library/Frameworks/AudioUnit.framework'/>
+<depends_on path='/System/Library/Frameworks/CoreServices.framework'/>
+<opaque name='ALCcontext' type='^{ALCcontext_struct=}'/>
+<opaque name='ALCdevice' type='^{ALCdevice_struct=}'/>
+<enum name='ALC_ALL_ATTRIBUTES' value='4099'/>
+<enum name='ALC_ALL_DEVICES_SPECIFIER' value='4115'/>
+<enum name='ALC_ASA_DISTORTION_ENABLE' value='1685284206'/>
+<enum name='ALC_ASA_DISTORTION_MIX' value='1685286264'/>
+<enum name='ALC_ASA_DISTORTION_ON' value='1685286766'/>
+<enum name='ALC_ASA_DISTORTION_PRESET' value='1685287027'/>
+<enum name='ALC_ASA_DISTORTION_TYPE' value='1685288048'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_AlienChatter' value='17'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_BitBrush' value='0'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_BrokenSpeaker' value='3'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_BufferBeats' value='1'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Cellphone' value='4'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_CosmicInteference' value='18'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Decimated1' value='5'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Decimated2' value='6'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Decimated3' value='7'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Decimated4' value='8'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_DistortedFunk' value='9'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_DistortionCubed' value='10'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_DistortionSquared' value='11'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Echo1' value='12'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Echo2' value='13'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_EchoTight1' value='14'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_EchoTight2' value='15'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_EverythingBroken' value='16'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_GoldenPi' value='19'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_LoFi' value='2'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_RadioTower' value='20'/>
+<enum name='ALC_ASA_DISTORTION_TYPE_Waves' value='21'/>
+<enum name='ALC_ASA_OBSTRUCTION' value='1868723060'/>
+<enum name='ALC_ASA_OCCLUSION' value='1868784492'/>
+<enum name='ALC_ASA_REVERB_EQ_BANDWITH' value='1920361826'/>
+<enum name='ALC_ASA_REVERB_EQ_FREQ' value='1920361830'/>
+<enum name='ALC_ASA_REVERB_EQ_GAIN' value='1920361831'/>
+<enum name='ALC_ASA_REVERB_GLOBAL_LEVEL' value='1920362348'/>
+<enum name='ALC_ASA_REVERB_ON' value='1920364398'/>
+<enum name='ALC_ASA_REVERB_PRESET' value='1920364659'/>
+<enum name='ALC_ASA_REVERB_QUALITY' value='1920364916'/>
+<enum name='ALC_ASA_REVERB_QUALITY_High' value='96'/>
+<enum name='ALC_ASA_REVERB_QUALITY_Low' value='32'/>
+<enum name='ALC_ASA_REVERB_QUALITY_Max' value='127'/>
+<enum name='ALC_ASA_REVERB_QUALITY_Medium' value='64'/>
+<enum name='ALC_ASA_REVERB_QUALITY_Min' value='0'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE' value='1920365172'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_Cathedral' value='8'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_LargeChamber' value='7'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_LargeHall' value='4'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_LargeHall2' value='12'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_LargeRoom' value='2'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_LargeRoom2' value='9'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_MediumChamber' value='6'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_MediumHall' value='3'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_MediumHall2' value='10'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_MediumHall3' value='11'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_MediumRoom' value='1'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_Plate' value='5'/>
+<enum name='ALC_ASA_REVERB_ROOM_TYPE_SmallRoom' value='0'/>
+<enum name='ALC_ASA_REVERB_SEND_LEVEL' value='1920365420'/>
+<enum name='ALC_ASA_ROGER_BEEP_ENABLE' value='1919051118'/>
+<enum name='ALC_ASA_ROGER_BEEP_GAIN' value='1919051630'/>
+<enum name='ALC_ASA_ROGER_BEEP_ON' value='1919053678'/>
+<enum name='ALC_ASA_ROGER_BEEP_PRESET' value='1919053939'/>
+<enum name='ALC_ASA_ROGER_BEEP_SENSITIVITY' value='1919054702'/>
+<enum name='ALC_ASA_ROGER_BEEP_SENSITIVITY_Heavy' value='2'/>
+<enum name='ALC_ASA_ROGER_BEEP_SENSITIVITY_Light' value='0'/>
+<enum name='ALC_ASA_ROGER_BEEP_SENSITIVITY_Medium' value='1'/>
+<enum name='ALC_ASA_ROGER_BEEP_TYPE' value='1919054960'/>
+<enum name='ALC_ASA_ROGER_BEEP_TYPE_quindartone' value='0'/>
+<enum name='ALC_ASA_ROGER_BEEP_TYPE_walkietalkie' value='2'/>
+<enum name='ALC_ASA_ROGER_BEEP_TYPE_whitenoise' value='1'/>
+<enum name='ALC_ATTRIBUTES_SIZE' value='4098'/>
+<enum name='ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER' value='785'/>
+<enum name='ALC_CAPTURE_DEVICE_SPECIFIER' value='784'/>
+<enum name='ALC_CAPTURE_SAMPLES' value='786'/>
+<enum name='ALC_DEFAULT_ALL_DEVICES_SPECIFIER' value='4114'/>
+<enum name='ALC_DEFAULT_DEVICE_SPECIFIER' value='4100'/>
+<enum name='ALC_DEVICE_SPECIFIER' value='4101'/>
+<enum name='ALC_EXTENSIONS' value='4102'/>
+<enum name='ALC_FALSE' value='0'/>
+<enum name='ALC_FREQUENCY' value='4103'/>
+<enum name='ALC_INVALID' value='0'/>
+<enum name='ALC_INVALID_CONTEXT' value='40962'/>
+<enum name='ALC_INVALID_DEVICE' value='40961'/>
+<enum name='ALC_INVALID_ENUM' value='40963'/>
+<enum name='ALC_INVALID_VALUE' value='40964'/>
+<enum name='ALC_MAC_OSX_CONVERT_DATA_UPON_LOADING' value='61441'/>
+<enum name='ALC_MAC_OSX_RENDER_CHANNEL_COUNT_MULTICHANNEL' value='1919118691'/>
+<enum name='ALC_MAC_OSX_RENDER_CHANNEL_COUNT_STEREO' value='1919120244'/>
+<enum name='ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_HIGH' value='1920034921'/>
+<enum name='ALC_MAC_OSX_SPATIAL_RENDERING_QUALITY_LOW' value='1919183983'/>
+<enum name='ALC_MAJOR_VERSION' value='4096'/>
+<enum name='ALC_MINOR_VERSION' value='4097'/>
+<enum name='ALC_MONO_SOURCES' value='4112'/>
+<enum name='ALC_NO_ERROR' value='0'/>
+<enum name='ALC_OUT_OF_MEMORY' value='40965'/>
+<enum name='ALC_REFRESH' value='4104'/>
+<enum name='ALC_STEREO_SOURCES' value='4113'/>
+<enum name='ALC_SYNC' value='4105'/>
+<enum name='ALC_TRUE' value='1'/>
+<enum name='ALC_VERSION_0_1' value='1'/>
+<enum name='AL_BITS' value='8194'/>
+<enum name='AL_BUFFER' value='4105'/>
+<enum name='AL_BUFFERS_PROCESSED' value='4118'/>
+<enum name='AL_BUFFERS_QUEUED' value='4117'/>
+<enum name='AL_BYTE_OFFSET' value='4134'/>
+<enum name='AL_CHANNELS' value='8195'/>
+<enum name='AL_CONE_INNER_ANGLE' value='4097'/>
+<enum name='AL_CONE_OUTER_ANGLE' value='4098'/>
+<enum name='AL_CONE_OUTER_GAIN' value='4130'/>
+<enum name='AL_DIRECTION' value='4101'/>
+<enum name='AL_DISTANCE_MODEL' value='53248'/>
+<enum name='AL_DOPPLER_FACTOR' value='49152'/>
+<enum name='AL_DOPPLER_VELOCITY' value='49153'/>
+<enum name='AL_EXPONENT_DISTANCE' value='53253'/>
+<enum name='AL_EXPONENT_DISTANCE_CLAMPED' value='53254'/>
+<enum name='AL_EXTENSIONS' value='45060'/>
+<enum name='AL_FALSE' value='0'/>
+<enum name='AL_FORMAT_MONO16' value='4353'/>
+<enum name='AL_FORMAT_MONO8' value='4352'/>
+<enum name='AL_FORMAT_STEREO16' value='4355'/>
+<enum name='AL_FORMAT_STEREO8' value='4354'/>
+<enum name='AL_FREQUENCY' value='8193'/>
+<enum name='AL_GAIN' value='4106'/>
+<enum name='AL_ILLEGAL_COMMAND' value='40964'/>
+<enum name='AL_ILLEGAL_ENUM' value='40962'/>
+<enum name='AL_INITIAL' value='4113'/>
+<enum name='AL_INVALID' value='-1'/>
+<enum name='AL_INVALID_ENUM' value='40962'/>
+<enum name='AL_INVALID_NAME' value='40961'/>
+<enum name='AL_INVALID_OPERATION' value='40964'/>
+<enum name='AL_INVALID_VALUE' value='40963'/>
+<enum name='AL_INVERSE_DISTANCE' value='53249'/>
+<enum name='AL_INVERSE_DISTANCE_CLAMPED' value='53250'/>
+<enum name='AL_LINEAR_DISTANCE' value='53251'/>
+<enum name='AL_LINEAR_DISTANCE_CLAMPED' value='53252'/>
+<enum name='AL_LOOPING' value='4103'/>
+<enum name='AL_MAX_DISTANCE' value='4131'/>
+<enum name='AL_MAX_GAIN' value='4110'/>
+<enum name='AL_MIN_GAIN' value='4109'/>
+<enum name='AL_NONE' value='0'/>
+<enum name='AL_NO_ERROR' value='0'/>
+<enum name='AL_ORIENTATION' value='4111'/>
+<enum name='AL_OUT_OF_MEMORY' value='40965'/>
+<enum name='AL_PAUSED' value='4115'/>
+<enum name='AL_PENDING' value='8209'/>
+<enum name='AL_PITCH' value='4099'/>
+<enum name='AL_PLAYING' value='4114'/>
+<enum name='AL_POSITION' value='4100'/>
+<enum name='AL_PROCESSED' value='8210'/>
+<enum name='AL_QUEUE_HAS_LOOPED' value='36864'/>
+<enum name='AL_REFERENCE_DISTANCE' value='4128'/>
+<enum name='AL_RENDERER' value='45059'/>
+<enum name='AL_ROLLOFF_FACTOR' value='4129'/>
+<enum name='AL_SAMPLE_OFFSET' value='4133'/>
+<enum name='AL_SEC_OFFSET' value='4132'/>
+<enum name='AL_SIZE' value='8196'/>
+<enum name='AL_SOURCE_RELATIVE' value='514'/>
+<enum name='AL_SOURCE_STATE' value='4112'/>
+<enum name='AL_SOURCE_TYPE' value='4135'/>
+<enum name='AL_SPEED_OF_SOUND' value='49155'/>
+<enum name='AL_STATIC' value='4136'/>
+<enum name='AL_STOPPED' value='4116'/>
+<enum name='AL_STREAMING' value='4137'/>
+<enum name='AL_TRUE' value='1'/>
+<enum name='AL_UNDETERMINED' value='4144'/>
+<enum name='AL_UNUSED' value='8208'/>
+<enum name='AL_VELOCITY' value='4102'/>
+<enum name='AL_VENDOR' value='45057'/>
+<enum name='AL_VERSION' value='45058'/>
+<function name='alBuffer3f'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+</function>
+<function name='alBuffer3i'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alBufferData'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^v'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alBufferf'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='f'/>
+</function>
+<function name='alBufferfv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alBufferi'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alBufferiv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alDeleteBuffers'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alDeleteSources'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alDisable'>
+<arg type='i'/>
+</function>
+<function name='alDistanceModel'>
+<arg type='i'/>
+</function>
+<function name='alDopplerFactor'>
+<arg type='f'/>
+</function>
+<function name='alDopplerVelocity'>
+<arg type='f'/>
+</function>
+<function name='alEnable'>
+<arg type='i'/>
+</function>
+<function name='alGenBuffers'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alGenSources'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alGetBoolean'>
+<arg type='i'/>
+<retval type='c'/>
+</function>
+<function name='alGetBooleanv'>
+<arg type='i'/>
+<arg type='*'/>
+</function>
+<function name='alGetBuffer3f'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+<arg type='^f'/>
+<arg type='^f'/>
+</function>
+<function name='alGetBuffer3i'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetBufferf'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetBufferfv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetBufferi'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetBufferiv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetDouble'>
+<arg type='i'/>
+<retval type='d'/>
+</function>
+<function name='alGetDoublev'>
+<arg type='i'/>
+<arg type='^d'/>
+</function>
+<function name='alGetEnumValue'>
+<arg type='*'/>
+<retval type='i'/>
+</function>
+<function name='alGetError'>
+<retval type='i'/>
+</function>
+<function name='alGetFloat'>
+<arg type='i'/>
+<retval type='f'/>
+</function>
+<function name='alGetFloatv'>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetInteger'>
+<arg type='i'/>
+<retval type='i'/>
+</function>
+<function name='alGetIntegerv'>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetListener3f'>
+<arg type='i'/>
+<arg type='^f'/>
+<arg type='^f'/>
+<arg type='^f'/>
+</function>
+<function name='alGetListener3i'>
+<arg type='i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetListenerf'>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetListenerfv'>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetListeneri'>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetListeneriv'>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetProcAddress'>
+<arg type='*'/>
+<retval type='^v'/>
+</function>
+<function name='alGetSource3f'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+<arg type='^f'/>
+<arg type='^f'/>
+</function>
+<function name='alGetSource3i'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetSourcef'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetSourcefv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alGetSourcei'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetSourceiv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alGetString'>
+<arg type='i'/>
+<retval type='*'/>
+</function>
+<function name='alIsBuffer'>
+<arg type='I'/>
+<retval type='c'/>
+</function>
+<function name='alIsEnabled'>
+<arg type='i'/>
+<retval type='c'/>
+</function>
+<function name='alIsExtensionPresent'>
+<arg type='*'/>
+<retval type='c'/>
+</function>
+<function name='alIsSource'>
+<arg type='I'/>
+<retval type='c'/>
+</function>
+<function name='alListener3f'>
+<arg type='i'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+</function>
+<function name='alListener3i'>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alListenerf'>
+<arg type='i'/>
+<arg type='f'/>
+</function>
+<function name='alListenerfv'>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alListeneri'>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alListeneriv'>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alSource3f'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+</function>
+<function name='alSource3i'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alSourcePause'>
+<arg type='I'/>
+</function>
+<function name='alSourcePausev'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourcePlay'>
+<arg type='I'/>
+</function>
+<function name='alSourcePlayv'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourceQueueBuffers'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourceRewind'>
+<arg type='I'/>
+</function>
+<function name='alSourceRewindv'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourceStop'>
+<arg type='I'/>
+</function>
+<function name='alSourceStopv'>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourceUnqueueBuffers'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^I'/>
+</function>
+<function name='alSourcef'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='f'/>
+</function>
+<function name='alSourcefv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^f'/>
+</function>
+<function name='alSourcei'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='i'/>
+</function>
+<function name='alSourceiv'>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alSpeedOfSound'>
+<arg type='f'/>
+</function>
+<function name='alcCaptureCloseDevice'>
+<arg type='^{ALCdevice_struct=}'/>
+<retval type='c'/>
+</function>
+<function name='alcCaptureOpenDevice'>
+<arg type='*'/>
+<arg type='I'/>
+<arg type='i'/>
+<arg type='i'/>
+<retval type='^{ALCdevice_struct=}'/>
+</function>
+<function name='alcCaptureSamples'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='^v'/>
+<arg type='i'/>
+</function>
+<function name='alcCaptureStart'>
+<arg type='^{ALCdevice_struct=}'/>
+</function>
+<function name='alcCaptureStop'>
+<arg type='^{ALCdevice_struct=}'/>
+</function>
+<function name='alcCloseDevice'>
+<arg type='^{ALCdevice_struct=}'/>
+<retval type='c'/>
+</function>
+<function name='alcCreateContext'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='^i'/>
+<retval type='^{ALCcontext_struct=}'/>
+</function>
+<function name='alcDestroyContext'>
+<arg type='^{ALCcontext_struct=}'/>
+</function>
+<function name='alcGetContextsDevice'>
+<arg type='^{ALCcontext_struct=}'/>
+<retval type='^{ALCdevice_struct=}'/>
+</function>
+<function name='alcGetCurrentContext'>
+<retval type='^{ALCcontext_struct=}'/>
+</function>
+<function name='alcGetEnumValue'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='*'/>
+<retval type='i'/>
+</function>
+<function name='alcGetError'>
+<arg type='^{ALCdevice_struct=}'/>
+<retval type='i'/>
+</function>
+<function name='alcGetIntegerv'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='i'/>
+<arg type='i'/>
+<arg type='^i'/>
+</function>
+<function name='alcGetProcAddress'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='*'/>
+<retval type='^v'/>
+</function>
+<function name='alcGetString'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='i'/>
+<retval type='*'/>
+</function>
+<function name='alcIsExtensionPresent'>
+<arg type='^{ALCdevice_struct=}'/>
+<arg type='*'/>
+<retval type='c'/>
+</function>
+<function name='alcMakeContextCurrent'>
+<arg type='^{ALCcontext_struct=}'/>
+<retval type='c'/>
+</function>
+<function name='alcOpenDevice'>
+<arg type='*'/>
+<retval type='^{ALCdevice_struct=}'/>
+</function>
+<function name='alcProcessContext'>
+<arg type='^{ALCcontext_struct=}'/>
+</function>
+<function name='alcSuspendContext'>
+<arg type='^{ALCcontext_struct=}'/>
+</function>
+</signatures>

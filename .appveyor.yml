@@ -40,14 +40,14 @@ build_script:
   - cd ../
 
 after_build:
-  - mkdir Artifacts\Acid
-  - mkdir Artifacts\Demos
-  - xcopy Build\%CONFIGURATION%\lib\%CONFIGURATION% Artifacts\Acid\ /s/h/e/k/f/c
-  - xcopy Build\%CONFIGURATION%\bin\%CONFIGURATION% Artifacts\Demos\ /s/h/e/k/f/c
-  - xcopy Resources Artifacts\Demos\Resources\Engine\ /s/h/e/k/f/c
+  - mkdir Artifacts\Acid_%platform%
+  - mkdir Artifacts\Demos_%platform%
+  - xcopy Build\%CONFIGURATION%\Lib\%CONFIGURATION% Artifacts\Acid_%platform%\ /s/h/e/k/f/c
+  - xcopy Build\%CONFIGURATION%\Bin\%CONFIGURATION% Artifacts\Demos_%platform%\ /s/h/e/k/f/c
+  - xcopy Resources Artifacts\Demos_%platform%\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Artifacts\Demos\
-    name: Acid Demos
-  - path: Artifacts\Acid\
-    name: Acid
+  - path: Artifacts\Acid_%platform%\
+    name: Acid (%platform%)
+  - path: Artifacts\Demos_%platform%\
+    name: Acid Demos (%platform%)

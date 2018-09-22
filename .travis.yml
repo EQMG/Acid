@@ -13,6 +13,8 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
+#        - libvulkan1
+#        - libvulkan-dev
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -23,9 +25,6 @@ matrix:
     - BUILD_TYPE=Release
     before_install:
     - sudo apt-get update -qq
-    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Clang 6.0
   - os: linux
@@ -44,6 +43,8 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
+#        - libvulkan1
+#        - libvulkan-dev
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -54,9 +55,6 @@ matrix:
     - BUILD_TYPE=Release
     before_install:
     - sudo apt-get update -qq
-    - echo "deb http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - echo "deb-src http://ppa.launchpad.net/keithw/glfw3/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/fillwave_ext.list
-    - sudo apt-get -qq update
     - sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-6.0 1000
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
     - clang --version
