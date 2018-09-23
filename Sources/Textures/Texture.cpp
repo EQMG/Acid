@@ -17,7 +17,7 @@ namespace acid
 
 	std::shared_ptr<Texture> Texture::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -53,10 +53,10 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::FileExists(m_filename))
+		if (!FileSystem::Exists(m_filename) || !FileSystem::IsFile(m_filename))
 		{
 			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
-			m_filename = Files::SearchFile(FALLBACK_PATH);
+			m_filename = Files::Search(FALLBACK_PATH);
 		}
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -275,15 +275,15 @@ namespace acid
 		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), m_size);
 	}
 
-	int32_t Texture::LoadSize(const std::string &filepath)
+	int32_t Texture::LoadSize(const std::string &filename)
 	{
 		int32_t width = 0;
 		int32_t height = 0;
 		int32_t components = 0;
 
-		if (!FileSystem::FileExists(filepath))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
-			//	Log::Out("File does not exist: '%s'\n", filepath.c_str());
+			//	Log::Out("File does not exist: '%s'\n", filename.c_str());
 
 			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
 			{
@@ -292,7 +292,7 @@ namespace acid
 		}
 		else
 		{
-			if (stbi_info(filepath.c_str(), &width, &height, &components) == 0)
+			if (stbi_info(filename.c_str(), &width, &height, &components) == 0)
 			{
 				assert(false && "Vulkan invalid texture file format.");
 			}
@@ -307,34 +307,34 @@ namespace acid
 
 		for (auto &suffix : fileSuffixes)
 		{
-			std::string filepathSide = filename + "/" + suffix + fileExt;
-			int32_t sizeSide = LoadSize(filepathSide);
+			std::string filenameSide = filename + "/" + suffix + fileExt;
+			int32_t sizeSide = LoadSize(filenameSide);
 			size += sizeSide;
 		}
 
 		return size;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filepath, uint32_t *width, uint32_t *height, uint32_t *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
-		if (!FileSystem::FileExists(filepath))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
-			Log::Error("File does not exist: '%s'\n", filepath.c_str());
+			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return nullptr;
 		}
 
 		stbi_uc *data = nullptr;
 
-		if (stbi_info(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
+		if (stbi_info(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
 		{
 			assert(false && "Vulkan invalid texture file format.");
 		}
 
-		data = stbi_load(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
+		data = stbi_load(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
-			Log::Error("Unable to load texture: '%s'\n", filepath.c_str());
+			Log::Error("Unable to load texture: '%s'\n", filename.c_str());
 		}
 
 		return data;
@@ -347,9 +347,9 @@ namespace acid
 
 		for (auto &suffix : fileSuffixes)
 		{
-			std::string filepathSide = filename + "/" + suffix + fileExt;
-			VkDeviceSize sizeSide = LoadSize(filepathSide);
-			stbi_uc *pixelsSide = LoadPixels(filepathSide, width, height, components);
+			std::string filenameSide = filename + "/" + suffix + fileExt;
+			VkDeviceSize sizeSide = LoadSize(filenameSide);
+			stbi_uc *pixelsSide = LoadPixels(filenameSide, width, height, components);
 
 			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;

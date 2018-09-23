@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)

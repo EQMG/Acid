@@ -25,10 +25,10 @@ namespace acid
 		}
 	}
 
-	GameObject::GameObject(const std::string &filepath, const Transform &transform, ISpatialStructure *structure) :
+	GameObject::GameObject(const std::string &filename, const Transform &transform, ISpatialStructure *structure) :
 		GameObject(transform, structure)
 	{
-		auto prefabObject = PrefabObject::Resource(filepath);
+		auto prefabObject = PrefabObject::Resource(filename);
 
 		for (auto &value : prefabObject->GetParent()->GetChildren())
 		{
@@ -48,7 +48,7 @@ namespace acid
 			AddComponent(component);
 		}
 
-		m_name = FileSystem::FindName(filepath);
+		m_name = FileSystem::FileName(filename);
 	}
 
 	void GameObject::Update()

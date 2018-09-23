@@ -9,6 +9,7 @@
 #include <fstream>
 #include "Files/Files.hpp"
 #include "Helpers/FileSystem.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.h"
 
@@ -16,7 +17,7 @@ namespace acid
 {
 	std::shared_ptr<SoundBuffer> SoundBuffer::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -34,11 +35,13 @@ namespace acid
 		m_filename(filename),
 		m_buffer(0)
 	{
-		if (FileSystem::FindExt(filename) == "wav")
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+
+		if (fileExt == ".wav")
 		{
 			m_buffer = LoadBufferWav(filename);
 		}
-		else if (FileSystem::FindExt(filename) == "ogg")
+		else if (fileExt == ".ogg")
 		{
 			m_buffer = LoadBufferOgg(filename);
 		}
@@ -53,7 +56,7 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
-		if (!FileSystem::FileExists(filename))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return 0;
@@ -125,7 +128,7 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
-		if (!FileSystem::FileExists(filename))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};

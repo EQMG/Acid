@@ -15,34 +15,71 @@ namespace acid
 	class ACID_EXPORT FileSystem
 	{
 	public:
+		static const std::string SEPARATOR;
+
 		/// <summary>
 		/// Gets if a file exists.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <returns> If the file exists. </returns>
-		static bool FileExists(const std::string &filepath);
+		static bool Exists(const std::string &path);
 
 		/// <summary>
-		/// Deletes a file.
+		/// Gets if a path is a file exists.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
-		/// <returns> If the file was deleted. </returns>
-		static bool DeleteFile(const std::string &filepath);
+		/// <param name="path"> The path. </param>
+		/// <returns> If the path is a file. </returns>
+		static bool IsFile(const std::string &path);
+
+		/// <summary>
+		/// Gets if a path is a directory exists.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		/// <returns> If the path is a directory. </returns>
+		static bool IsDirectory(const std::string &path);
+
+		/// <summary>
+		/// Gets if a path is readable.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		/// <returns> If the path is readable. </returns>
+		static bool IsReadable(const std::string &path);
+
+		/// <summary>
+		/// Gets if a path is writeable.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		/// <returns> If the path is writeable. </returns>
+		static bool IsWriteable(const std::string &path);
+
+		/// <summary>
+		/// Finds all the files in a path.
+		/// </summary>
+		/// <param name="path"> The path to search. </param>
+		/// <returns> The files found. </returns>
+		static std::vector<std::string> FilesInPath(const std::string &path);
+
+		/// <summary>
+		/// Deletes a path.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		/// <returns> If the path was deleted. </returns>
+		static bool DeletePath(const std::string &path);
 
 		/// <summary>
 		/// Creates a file, and the folder path.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <param name="createFolders"> If folders should also be created. </param>
 		/// <returns> If the file was created. </returns>
-		static bool CreateFile(const std::string &filepath, const bool &createFolders = true);
+		static bool CreateFile(const std::string &filename, const bool &createFolders = true);
 
 		/// <summary>
 		/// Clears the contents from a file.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <returns> If the file was cleared. </returns>
-		static bool ClearFile(const std::string &filepath);
+		static bool ClearFile(const std::string &filename);
 
 		/// <summary>
 		/// Creates a directory.
@@ -54,106 +91,33 @@ namespace acid
 		/// <summary>
 		/// Reads a text file into a string.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <returns> The string containing the read file. </returns>
-		static std::optional<std::string> ReadTextFile(const std::string &filepath);
+		static std::optional<std::string> ReadTextFile(const std::string &filename);
 
 		/// <summary>
 		/// Writes to a text file from a string.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <param name="data"> The text data. </param>
 		/// <returns> If the file was written to. </returns>
-		static bool WriteTextFile(const std::string &filepath, const std::string &data);
+		static bool WriteTextFile(const std::string &filename, const std::string &data);
 
 		/// <summary>
 		/// Reads a binary file into a char array.
 		/// </summary>
-		///	<param name="filepath"> The filepath. </param>
+		///	<param name="filename"> The filename. </param>
 		///	<param name="mode"> The read mode. </param>
 		/// <returns> The char array loaded from the file. </returns>
-		template<typename T>
-		static std::optional<std::vector<T>> ReadBinaryFile(const std::string &filepath, const std::string &mode = "rb")
-		{
-			std::vector<T> data = {};
-
-			const int32_t bufferSize = 1024;
-			const bool useFile = filepath.c_str() && strcmp("-", filepath.c_str());
-
-			if (FILE *fp = (useFile ? fopen(filepath.c_str(), mode.c_str()) : stdin))
-			{
-				T buf[bufferSize];
-
-				while (size_t len = fread(buf, sizeof(T), bufferSize, fp))
-				{
-					data.insert(data.end(), buf, buf + len);
-				}
-
-				if (ftell(fp) == -1L)
-				{
-					if (ferror(fp))
-					{
-						Log::Error("Error reading file: '%s'\n", filepath.c_str());
-						return {};
-					}
-				}
-				else
-				{
-					if (sizeof(T) != 1 && (ftell(fp) % sizeof(T)))
-					{
-						Log::Error("Corrupted word found in file: '%s'\n", filepath.c_str());
-						return {};
-					}
-				}
-
-				if (useFile)
-				{
-					fclose(fp);
-				}
-			}
-			else
-			{
-				Log::Error("File does not exist: '%s'\n", filepath.c_str());
-				return {};
-			}
-
-			return data;
-		}
+		static std::optional<std::vector<char>> ReadBinaryFile(const std::string &filename, const std::string &mode = "rb");
 
 		/// <summary>
 		/// Writes to a binary file from a char vector.
 		/// </summary>
-		/// <param name="filepath"> The filepath. </param>
+		/// <param name="filename"> The filename. </param>
 		/// <param name="data"> The binary data. </param>
 		/// <returns> If the file was written to. </returns>
-		template<typename T>
-		static bool WriteBinaryFile(const std::string &filepath, const std::vector<char> &data, const std::string &mode = "wb")
-		{
-			const bool useStdout = !filepath.c_str() || (filepath.c_str()[0] == '-' && filepath.c_str()[1] == '\0');
-
-			if (FILE *fp = (useStdout ? stdout : fopen(filepath.c_str(), mode.c_str())))
-			{
-				size_t written = fwrite(data.data(), sizeof(T), data.size(), fp);
-
-				if (data.size() != written)
-				{
-					Log::Error("Could not write to file: '%s'\n", filepath.c_str());
-					return false;
-				}
-
-				if (!useStdout)
-				{
-					fclose(fp);
-				}
-			}
-			else
-			{
-				Log::Error("File could not be opened: '%s'\n", filepath.c_str());
-				return false;
-			}
-
-			return true;
-		}
+		static bool WriteBinaryFile(const std::string &filename, const std::vector<char> &data, const std::string &mode = "wb");
 
 		/// <summary>
 		/// Gets the current working directory.
@@ -162,21 +126,24 @@ namespace acid
 		static std::string GetWorkingDirectory();
 
 		/// <summary>
-		/// Removes backslashes from directories.
+		/// Gets the parent directory of a path.
 		/// </summary>
-		/// <returns> The path with only forward slashes. </returns>
-		static std::string FixPaths(const std::string &filepath);
+		/// <param name="path"> The path to get the parent directory of. </param>
+		/// <returns> The parent directory. </returns>
+		static std::string ParentDirectory(const std::string &path);
 
 		/// <summary>
-		/// Gets the file name from the full path.
+		/// Gets the file name from a path.
 		/// </summary>
+		/// <param name="path"> The path to get the name of. </param>
 		/// <returns> The file name. </returns>
-		static std::string FindName(const std::string &filepath);
+		static std::string FileName(const std::string &path);
 
 		/// <summary>
-		/// Gets the file extension from the full path.
+		/// Gets the file suffix (extension) from a path.
 		/// </summary>
-		/// <returns> The file extension. </returns>
-		static std::string FindExt(const std::string &filepath);
+		/// <param name="path"> The path to get the suffix of. </param>
+		/// <returns> The file suffix. </returns>
+		static std::string FileSuffix(const std::string &path);
 	};
 }

@@ -73,7 +73,9 @@ namespace acid
 			return;
 		}
 
-		if (FileSystem::FindExt(filename) == "obj")
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+
+		if (fileExt == ".obj")
 		{
 			m_model = ModelObj::Resource(filename);
 			return;

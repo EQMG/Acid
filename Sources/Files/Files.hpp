@@ -33,10 +33,10 @@ namespace acid
 		static void AddSearchPath(const std::string &path);
 
 		/// <summary>
-		/// Find a file by partial path in a search path.
+		/// Find a real path by partial path in a search path.
 		/// </summary>
-		/// <param name="filename"> The filename to find. </param>
-		/// <returns> The path to the first file found. </returns>
-		static std::string SearchFile(const std::string &filename);
+		/// <param name="path"> The path to find. </param>
+		/// <returns> The path to the first found. </returns>
+		static std::string Search(const std::string &path);
 	};
 }

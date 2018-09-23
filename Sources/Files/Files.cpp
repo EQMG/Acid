@@ -12,7 +12,7 @@ namespace acid
 	{
 		/*for (auto &search : SEARCH_PATHS) // TODO: Ensure paths exist, construct resource tree.
 		{
-			if (!FileSystem::FolderExists(search))
+			if (!FileSystem::Exists(search) || !FileSystem::IsDirectory(m_filename))
 			{
 				Log::Error("File search path does not exist: '%s'\n", search.c_str());
 			}
@@ -28,25 +28,25 @@ namespace acid
 		SEARCH_PATHS.emplace_back(path);
 	}
 
-	std::string Files::SearchFile(const std::string &filename)
+	std::string Files::Search(const std::string &path)
 	{
-		if (FileSystem::FileExists(filename))
+		if (FileSystem::Exists(path))
 		{
-			return filename;
+			return path;
 		}
 
 		for (auto &search : SEARCH_PATHS)
 		{
 			std::stringstream searchPath;
-			searchPath << search << "/" << filename;
+			searchPath << search << "/" << path;
 
-			if (FileSystem::FileExists(searchPath.str()))
+			if (FileSystem::Exists(searchPath.str()))
 			{
 				return searchPath.str();
 			}
 		}
 
-	//	Log::Error("Failed to locate: '%s'\n", filename.c_str());
-		return filename;
+	//	Log::Error("Failed to locate: '%s'\n", path.c_str());
+		return path;
 	}
 }
