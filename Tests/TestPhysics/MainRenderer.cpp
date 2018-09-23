@@ -13,7 +13,10 @@
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Post/Filters/FilterGrain.hpp>
 #include <Post/Filters/FilterTiltshift.hpp>
+#include <Post/Filters/FilterSsao.hpp>
 #include <Post/Filters/FilterDefault.hpp>
+#include <Post/Filters/FilterVignette.hpp>
+#include <Inputs/Keyboard.hpp>
 
 namespace test
 {
@@ -64,6 +67,8 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
@@ -74,5 +79,7 @@ namespace test
 		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
 		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
 		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize());
+
+	//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	}
 }

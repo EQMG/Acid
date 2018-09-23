@@ -5,6 +5,7 @@
 #else
 #include <AL/al.h>
 #endif
+#include <cassert>
 #include <fstream>
 #include "Files/Files.hpp"
 #include "Helpers/FileSystem.hpp"
@@ -62,7 +63,7 @@ namespace acid
 
 		if (!file.is_open())
 		{
-			throw std::runtime_error("Load wav file failure: file couldn't be opened!");
+			assert(false && "Load wav file failure: file couldn't be opened!");
 		}
 
 		char chunkId[5] = "\0";
@@ -134,7 +135,7 @@ namespace acid
 
 		if (!file.is_open())
 		{
-			throw std::runtime_error("Load wav file failure: file couldn't be opened!");
+			assert(false && "Load wav file failure: file couldn't be opened!");
 		}
 
 		int32_t channels;

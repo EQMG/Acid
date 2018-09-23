@@ -33,12 +33,12 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
-		std::vector<PipelineDefine> GetDefines();
-
 		Fog GetFog() const { return m_fog; }
 
 		void SetFog(const Fog &fog) { m_fog = fog; }
 	private:
+		std::vector<PipelineDefine> GetDefines();
+
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 
 		static std::shared_ptr<Cubemap> ComputeIbl(const std::shared_ptr<acid::Cubemap> &source);

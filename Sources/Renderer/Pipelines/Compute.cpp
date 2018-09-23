@@ -1,6 +1,7 @@
 #include "Compute.hpp"
 
 #include <cmath>
+#include <cassert>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
@@ -51,8 +52,8 @@ namespace acid
 
 	bool Compute::CmdRender(const CommandBuffer &commandBuffer) const
 	{
-		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetWidth()) / float(m_computeCreate.GetWorkgroupSize())));
-		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(float(m_computeCreate.GetHeight()) / float(m_computeCreate.GetWorkgroupSize())));
+		uint32_t groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(m_computeCreate.GetWidth()) / static_cast<float>(m_computeCreate.GetWorkgroupSize())));
+		uint32_t groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(m_computeCreate.GetHeight()) / static_cast<float>(m_computeCreate.GetWorkgroupSize())));
 		vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
 		return true;
 	}
@@ -70,7 +71,7 @@ namespace acid
 		if (!FileSystem::FileExists(m_computeCreate.GetShaderStage()))
 		{
 			Log::Error("File does not exist: '%s'\n", m_computeCreate.GetShaderStage().c_str());
-			throw std::runtime_error("Could not create pipeline, missing shader stage!");
+			assert(false && "Could not create pipeline, missing shader stage!");
 		}
 
 		auto fileLoaded = FileSystem::ReadTextFile(m_computeCreate.GetShaderStage());
