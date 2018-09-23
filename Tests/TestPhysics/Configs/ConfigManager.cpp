@@ -10,10 +10,9 @@
 namespace test
 {
 	ConfigManager::ConfigManager() :
-		m_audio(std::make_unique<FileJson>(FileSystem::GetWorkingDirectory() + "/Configs/Audio.json")),
-		m_graphics(std::make_unique<FileJson>(FileSystem::GetWorkingDirectory() + "/Configs/Graphics.json"))
+		m_audio(std::make_unique<FileJson>("Configs/Audio.json")),
+		m_graphics(std::make_unique<FileJson>("Configs/Graphics.json"))
 	{
-		FileSystem::CreateFolder("Configs");
 		Load();
 
 		Events::Get()->AddEvent<EventTime>(2.5f, [&]() -> void

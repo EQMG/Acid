@@ -85,7 +85,7 @@ namespace acid
 	void Mouse::SetCustomMouse(const std::string &filename)
 	{
 		// Loads a custom cursor.
-		m_mousePath = Files::SearchFile(filename);
+		m_mousePath = Files::Search(filename);
 
 		if (m_mousePath.empty())
 		{

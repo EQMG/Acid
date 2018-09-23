@@ -20,7 +20,7 @@ namespace acid
 
 	void Log::CreateLog(const std::string &filename)
 	{
-		FileSystem::CreateFile(filename);
+		FileSystem::Create(filename);
 		FileSystem::WriteTextFile(filename, STREAM.str());
 	}
 }

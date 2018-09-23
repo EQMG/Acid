@@ -29,9 +29,7 @@ add_dependencies(TestMaths Acid)
 target_include_directories(TestMaths PUBLIC ${ACID_INCLUDE_DIR} ${TESTMATHS_INCLUDE_DIR})
 target_link_libraries(TestMaths PUBLIC Acid)
 
-if(MSVC)
-	set_target_properties(TestMaths PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
-elseif(UNIX AND APPLE)
+if(UNIX AND APPLE)
 	set_target_properties(TestMaths PROPERTIES
 		MACOSX_BUNDLE_BUNDLE_NAME "Test Maths"
 		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}

@@ -17,7 +17,7 @@ namespace acid
 
 	std::shared_ptr<Texture> Texture::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -53,10 +53,10 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::FileExists(m_filename))
+		if (!FileSystem::Exists(m_filename) || !FileSystem::IsFile(m_filename))
 		{
 			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
-			m_filename = Files::SearchFile(FALLBACK_PATH);
+			m_filename = Files::Search(FALLBACK_PATH);
 		}
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -105,13 +105,13 @@ namespace acid
 #endif
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
 		IResource(),
 		IDescriptor(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
-		m_filter(VK_FILTER_LINEAR),
-		m_addressMode(VK_SAMPLER_ADDRESS_MODE_REPEAT),
+		m_filter(filter),
+		m_addressMode(addressMode),
 		m_anisotropic(false),
 		m_mipLevels(1),
 		m_samples(samples),
@@ -136,13 +136,13 @@ namespace acid
 		m_imageInfo.sampler = m_sampler;
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkSampleCountFlagBits &samples) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
 		IResource(),
 		IDescriptor(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
-		m_filter(VK_FILTER_LINEAR),
-		m_addressMode(VK_SAMPLER_ADDRESS_MODE_REPEAT),
+		m_filter(filter),
+		m_addressMode(addressMode),
 		m_anisotropic(false),
 		m_mipLevels(1),
 		m_samples(samples),
@@ -158,6 +158,8 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
+		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
+
 		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -167,15 +169,23 @@ namespace acid
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
 		CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
+		            VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
 		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
-	//	Texture::CreateMipmaps(m_image, m_width, m_height, m_mipLevels, 1);
-		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 1);
+
+		if (mipmap)
+		{
+			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 1);
+		}
+		else
+		{
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 1);
+		}
+
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
 
-		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), m_size);
+		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -265,15 +275,15 @@ namespace acid
 		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), m_size);
 	}
 
-	int32_t Texture::LoadSize(const std::string &filepath)
+	int32_t Texture::LoadSize(const std::string &filename)
 	{
 		int32_t width = 0;
 		int32_t height = 0;
 		int32_t components = 0;
 
-		if (!FileSystem::FileExists(filepath))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
-			//	Log::Out("File does not exist: '%s'\n", filepath.c_str());
+			//	Log::Out("File does not exist: '%s'\n", filename.c_str());
 
 			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
 			{
@@ -282,7 +292,7 @@ namespace acid
 		}
 		else
 		{
-			if (stbi_info(filepath.c_str(), &width, &height, &components) == 0)
+			if (stbi_info(filename.c_str(), &width, &height, &components) == 0)
 			{
 				assert(false && "Vulkan invalid texture file format.");
 			}
@@ -297,34 +307,34 @@ namespace acid
 
 		for (auto &suffix : fileSuffixes)
 		{
-			std::string filepathSide = filename + "/" + suffix + fileExt;
-			int32_t sizeSide = LoadSize(filepathSide);
+			std::string filenameSide = filename + "/" + suffix + fileExt;
+			int32_t sizeSide = LoadSize(filenameSide);
 			size += sizeSide;
 		}
 
 		return size;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filepath, uint32_t *width, uint32_t *height, uint32_t *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
-		if (!FileSystem::FileExists(filepath))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
-			Log::Error("File does not exist: '%s'\n", filepath.c_str());
+			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return nullptr;
 		}
 
 		stbi_uc *data = nullptr;
 
-		if (stbi_info(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
+		if (stbi_info(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
 		{
 			assert(false && "Vulkan invalid texture file format.");
 		}
 
-		data = stbi_load(filepath.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
+		data = stbi_load(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
-			Log::Error("Unable to load texture: '%s'\n", filepath.c_str());
+			Log::Error("Unable to load texture: '%s'\n", filename.c_str());
 		}
 
 		return data;
@@ -337,9 +347,9 @@ namespace acid
 
 		for (auto &suffix : fileSuffixes)
 		{
-			std::string filepathSide = filename + "/" + suffix + fileExt;
-			VkDeviceSize sizeSide = LoadSize(filepathSide);
-			stbi_uc *pixelsSide = LoadPixels(filepathSide, width, height, components);
+			std::string filenameSide = filename + "/" + suffix + fileExt;
+			VkDeviceSize sizeSide = LoadSize(filenameSide);
+			stbi_uc *pixelsSide = LoadPixels(filenameSide, width, height, components);
 
 			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;
@@ -455,6 +465,14 @@ namespace acid
 			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
 			dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 		}
+		else if (srcImageLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && dstImageLayout == VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
+		{
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
+			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
+			dstStageMask = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		}
 		else if (srcImageLayout == VK_IMAGE_LAYOUT_UNDEFINED && dstImageLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
 		{
 			imageMemoryBarrier.srcAccessMask = 0;
@@ -473,7 +491,7 @@ namespace acid
 		}
 		else
 		{
-			throw std::invalid_argument("Unsupported imate layout transition!");
+			assert(false && "Unsupported imate layout transition!");
 		}
 
 		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);

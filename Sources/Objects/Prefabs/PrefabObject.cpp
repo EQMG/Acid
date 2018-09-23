@@ -11,7 +11,7 @@ namespace acid
 {
 	std::shared_ptr<PrefabObject> PrefabObject::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -30,18 +30,20 @@ namespace acid
 		m_file(nullptr),
 		m_parent(nullptr)
 	{
-		if (!FileSystem::FileExists(filename))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
-			FileSystem::CreateFile(filename);
+			FileSystem::Create(filename);
 		}
 
-		if (FileSystem::FindExt(filename) == "json")
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+
+		if (fileExt == ".json")
 		{
 			m_file = std::make_unique<FileJson>(filename);
 			m_file->Load();
 			m_parent = m_file->GetParent();
 		}
-		else if (FileSystem::FindExt(filename) == "xml")
+		else if (fileExt == ".xml")
 		{
 			m_file = std::make_unique<FileXml>(filename);
 			m_file->Load();

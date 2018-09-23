@@ -106,7 +106,16 @@ namespace acid
 		static float SmoothDamp(const float &current, const float &target, const float &rate);
 
 		/// <summary>
-		/// Interpolates two values by a blendFactor using linear interpolation.
+		/// Lerps two values by a factor.
+		/// </summary>
+		/// <param name="a"> The first value. </param>
+		/// <param name="b"> The second value. </param>
+		/// <param name="factor"> The factor value. </param>
+		/// <returns> Returns a lerped value. </returns>
+		static float Lerp(const float &a, const float &b, const float &factor);
+
+		/// <summary>
+		/// Interpolates two values by a factor using linear interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>
@@ -115,7 +124,7 @@ namespace acid
 		static float Interpolate(const float &a, const float &b, const float &blend);
 
 		/// <summary>
-		/// Interpolates two values by a blendFactor using cosine interpolation.
+		/// Interpolates two values by a factor using cosine interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>

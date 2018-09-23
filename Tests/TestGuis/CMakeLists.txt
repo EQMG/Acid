@@ -29,8 +29,8 @@ add_dependencies(TestGuis Acid)
 target_include_directories(TestGuis PUBLIC ${ACID_INCLUDE_DIR} ${TESTGUIS_INCLUDE_DIR})
 target_link_libraries(TestGuis PUBLIC Acid)
 
-if(MSVC)
-	set_target_properties(TestGuis PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
+if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set_target_properties(TestGuis PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
 elseif(UNIX AND APPLE)
 	set_target_properties(TestGuis PROPERTIES
 		MACOSX_BUNDLE_BUNDLE_NAME "Test Guis"
