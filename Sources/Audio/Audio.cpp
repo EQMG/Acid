@@ -91,10 +91,9 @@ namespace acid
 		std::string failure = StringifyResultAl(result);
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
-		assert("OpenAL error!");
+		assert(false && "OpenAL error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
 #endif
-		throw std::runtime_error("OpenAL runtime error.");
 	}
 }

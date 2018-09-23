@@ -123,10 +123,10 @@ namespace acid
 
 		for (auto &shaderStage : m_pipelineCreate.GetShaderStages())
 		{
-			if (!FileSystem::FileExists(shaderStage))
+			if (!FileSystem::Exists(shaderStage) || !FileSystem::IsFile(shaderStage))
 			{
 				Log::Error("File does not exist: '%s'\n", shaderStage.c_str());
-				throw std::runtime_error("Could not create pipeline, missing shader stage!");
+				assert(false && "Could not create pipeline, missing shader stage!");
 			}
 
 			auto fileLoaded = FileSystem::ReadTextFile(shaderStage);

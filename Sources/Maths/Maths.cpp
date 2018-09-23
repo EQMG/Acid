@@ -99,6 +99,11 @@ namespace acid
 		return current + ((target - current) * rate);
 	}
 
+	float Maths::Lerp(const float &a, const float &b, const float &factor)
+	{
+		return a + factor * (b - a);
+	}
+
 	float Maths::Interpolate(const float &a, const float &b, const float &blend)
 	{
 		return (a * (1.0f - blend)) + (b * blend);

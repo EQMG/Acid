@@ -20,7 +20,7 @@ namespace acid
 
 	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)

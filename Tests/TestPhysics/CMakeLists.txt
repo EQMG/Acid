@@ -29,8 +29,8 @@ add_dependencies(TestPhysics Acid)
 target_include_directories(TestPhysics PUBLIC ${ACID_INCLUDE_DIR} ${TESTPHYSICS_INCLUDE_DIR})
 target_link_libraries(TestPhysics PUBLIC Acid)
 
-if(MSVC)
-	set_target_properties(TestPhysics PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
+if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set_target_properties(TestPhysics PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
 elseif(UNIX AND APPLE)
 	set_target_properties(TestPhysics PROPERTIES
 		MACOSX_BUNDLE_BUNDLE_NAME "Test Physics"

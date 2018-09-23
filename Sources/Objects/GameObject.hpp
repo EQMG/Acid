@@ -32,10 +32,10 @@ namespace acid
 		/// <summary>
 		/// Creates a new Game Object and stores it into a structure.
 		/// </summary>
-		/// <param name="filepath"> The file to load the component data from. </param>
+		/// <param name="filename"> The file to load the component data from. </param>
 		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
 		/// <param name="structure"> The structure to store the object into, if null it will be stored in the scenes structure. </param>
-		explicit GameObject(const std::string &filepath, const Transform &transform = Transform::ZERO, ISpatialStructure *structure = nullptr);
+		explicit GameObject(const std::string &filename, const Transform &transform = Transform::ZERO, ISpatialStructure *structure = nullptr);
 
 		GameObject(const GameObject&) = delete; 
 

@@ -197,29 +197,29 @@ namespace acid
 
 	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
 	{
-		std::string fileExt = String::Lowercase(FileSystem::FindExt(filename));
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
 
-		if (fileExt == "comp")
+		if (fileExt == ".comp")
 		{
 			return VK_SHADER_STAGE_COMPUTE_BIT;
 		}
-		else if (fileExt == "vert")
+		else if (fileExt == ".vert")
 		{
 			return VK_SHADER_STAGE_VERTEX_BIT;
 		}
-		else if (fileExt == "tesc")
+		else if (fileExt == ".tesc")
 		{
 			return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
 		}
-		else if (fileExt == "tese")
+		else if (fileExt == ".tese")
 		{
 			return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
 		}
-		else if (fileExt == "geom")
+		else if (fileExt == ".geom")
 		{
 			return VK_SHADER_STAGE_GEOMETRY_BIT;
 		}
-		else if (fileExt == "frag")
+		else if (fileExt == ".frag")
 		{
 			return VK_SHADER_STAGE_FRAGMENT_BIT;
 		}
@@ -251,7 +251,7 @@ namespace acid
 				std::string path = String::ReplaceFirst(line, "#include", "");
 				path = String::RemoveAll(path, '\"');
 				path = String::Trim(path);
-				auto included = FileSystem::ReadTextFile(Files::SearchFile(path));
+				auto included = FileSystem::ReadTextFile(Files::Search(path));
 
 				if (included)
 				{

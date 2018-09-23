@@ -61,22 +61,28 @@ namespace acid
 		/// <param name="format"> The textures format. </param>
 		/// <param name="imageLayout"> The textures image layout </param>
 		/// <param name="usage"> The textures image usage </param>
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
 		/// </summary>
 		/// <param name="width"> The textures width. </param>
 		/// <param name="height"> The textures height. </param>
-		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels</param>
+		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
 		/// <param name="format"> The textures format. </param>
 		/// <param name="imageLayout"> The textures image layout </param>
 		/// <param name="usage"> The textures image usage </param>
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
-		Texture(const uint32_t &width, const uint32_t &height, float *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const bool &mipmap = false, const VkFilter &filter = VK_FILTER_LINEAR,
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Texture();
 
@@ -122,11 +128,11 @@ namespace acid
 
 		VkSampler GetSampler() const { return m_sampler; }
 
-		static int32_t LoadSize(const std::string &filepath);
+		static int32_t LoadSize(const std::string &filename);
 
 		static int32_t LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
 
-		static uint8_t *LoadPixels(const std::string &filepath, uint32_t *width, uint32_t *height, uint32_t *components);
+		static uint8_t *LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components);
 
 		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *components);
 

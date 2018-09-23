@@ -1,5 +1,6 @@
 #include "ModelObj.hpp"
 
+#include <cassert>
 #include "Helpers/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 
@@ -7,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::SearchFile(filename);
+		std::string realFilename = Files::Search(filename);
 		auto resource = Resources::Get()->Get(realFilename);
 
 		if (resource != nullptr)
@@ -74,8 +75,8 @@ namespace acid
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || String::Contains(line, "//"))
 					{
-						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped! The model will not be loaded.\n", filename.c_str());
-						throw std::runtime_error("Model loading error.");
+						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", filename.c_str());
+						assert(false && "Model loading error!");
 					}
 
 					auto vertex1 = String::Split(split[1], "/");

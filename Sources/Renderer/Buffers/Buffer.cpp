@@ -1,5 +1,6 @@
 ﻿#include "Buffer.hpp"
 
+#include <cassert>
 #include "Display/Display.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -75,7 +76,7 @@ namespace acid
 			}
 		}
 
-		throw std::runtime_error("Failed to find a valid memory type for buffer!");
+		assert(false && "Failed to find a valid memory type for buffer!");
 		return 0;
 	}
 

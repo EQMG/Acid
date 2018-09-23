@@ -1,5 +1,6 @@
 #include "DepthStencil.hpp"
 
+#include <cassert>
 #include "Display/Display.hpp"
 #include "Textures/Texture.hpp"
 
@@ -41,7 +42,7 @@ namespace acid
 
 		if (m_format == VK_FORMAT_UNDEFINED)
 		{
-			throw std::runtime_error("Vulkan runtime error, depth stencil format not selected!");
+			assert(false && "Vulkan runtime error, depth stencil format not selected!");
 		}
 
 		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
