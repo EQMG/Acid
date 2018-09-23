@@ -11,7 +11,7 @@ namespace acid
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Mesh(),
-		m_filename(Files::SearchFile(filename)),
+		m_filename(Files::Search(filename)),
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animator(nullptr),
@@ -49,7 +49,7 @@ namespace acid
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
-		if (!FileSystem::FileExists(filename))
+		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
 		{
 			Log::Error("Animation file does not exist: '%s'\n", m_filename.c_str());
 			return;

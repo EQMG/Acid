@@ -68,7 +68,7 @@ namespace acid
 			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
 		}
 
-		if (!FileSystem::FileExists(m_computeCreate.GetShaderStage()))
+		if (!FileSystem::Exists(m_computeCreate.GetShaderStage()) || !FileSystem::IsFile(m_computeCreate.GetShaderStage()))
 		{
 			Log::Error("File does not exist: '%s'\n", m_computeCreate.GetShaderStage().c_str());
 			assert(false && "Could not create pipeline, missing shader stage!");

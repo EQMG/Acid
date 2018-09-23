@@ -10,11 +10,29 @@
 #include <Maths/Vector3.hpp>
 #include <Maths/Vector4.hpp>
 
+#include <Files/Files.hpp>
+#include <Helpers/FileSystem.hpp>
+#include "Zip/Zipper.hpp"
+#include "Zip/Unzipper.hpp"
+
 using namespace acid;
 
 int main(int argc, char **argv)
 {
-	{
+	Files::AddSearchPath("Resources/Engine");
+
+	Zipper zipper = Zipper(FileSystem::GetWorkingDirectory() + "/Archive.zip", "hello");
+	zipper.Open();
+	zipper.Add(Files::Search("Shaders/Defaults/Default.frag"));
+	zipper.Close();
+
+//	Unzipper unzipper = Unzipper(Files::SearchFile("Test1.zip"));
+//	unzipper.Open();
+//	std::vector<ZipEntry> entries = unzipper.GetEntries();
+////	unzipper.ExtractToFile("Shaders/Defaults/Default.frag", FileSystem::GetWorkingDirectory() + "/Default.frag");
+//	unzipper.Close();
+
+	/*{
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
 		Log::Out("Matrix3 Size: %i\n", static_cast<int>(sizeof(Matrix3)));
@@ -69,10 +87,10 @@ int main(int argc, char **argv)
 		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
 		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		Log::Out("\n");
-	}
+	}*/
 
 	// Pauses the console.
-	std::cout << "Press enter to continue...";
-	std::cin.get();
+//	std::cout << "Press enter to continue...";
+//	std::cin.get();
 	return EXIT_SUCCESS;
 }

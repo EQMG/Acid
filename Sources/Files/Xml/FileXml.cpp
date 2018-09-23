@@ -18,7 +18,7 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::FileExists(m_filename))
+		if (!FileSystem::Exists(m_filename) || !FileSystem::IsFile(m_filename))
 		{
 			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
 			return;
@@ -126,7 +126,7 @@ namespace acid
 
 	void FileXml::Verify()
 	{
-		if (!FileSystem::FileExists(m_filename))
+		if (!FileSystem::Exists(m_filename))
 		{
 			FileSystem::CreateFile(m_filename);
 		}
