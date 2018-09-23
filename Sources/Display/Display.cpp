@@ -210,7 +210,7 @@ namespace acid
 			}
 		}
 
-		throw std::runtime_error("Vulkan runtime error, couldn't find proper memory type!");
+		assert(false && "Vulkan runtime error, couldn't find proper memory type!");
 		return UINT32_MAX;
 	}
 
@@ -334,11 +334,10 @@ namespace acid
 		std::string failure = StringifyResultGlfw(result);
 
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
-		assert("GLFW error!");
+		assert(false && "GLFW error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
 #endif
-		throw std::runtime_error("GLFW runtime error.");
 	}
 
 	std::string Display::StringifyResultVk(const VkResult &result)
@@ -406,11 +405,10 @@ namespace acid
 		std::string failure = StringifyResultVk(result);
 
 		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
-		assert("Vulkan error!");
+		assert(false && "Vulkan error!");
 #ifdef ACID_BUILD_WINDOWS
 		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
-		throw std::runtime_error("Vulkan runtime error.");
 	}
 
 	void Display::CreateGlfw()
@@ -422,14 +420,14 @@ namespace acid
 		if (glfwInit() == GLFW_FALSE)
 		{
 			Log::Error("GLFW error: Failed to initialize!\n");
-			throw std::runtime_error("GLFW runtime error.");
+			assert(false && "GLFW runtime error!");
 		}
 
 		// Checks Vulkan support on GLFW.
 		if (glfwVulkanSupported() == GLFW_FALSE)
 		{
 			Log::Error("GLFW error: Failed to find Vulkan support!\n");
-			throw std::runtime_error("GLFW runtime error.");
+			assert(false && "GLFW runtime error!");
 		}
 
 		// Configures the window.
@@ -466,7 +464,7 @@ namespace acid
 		if (m_window == nullptr)
 		{
 			glfwTerminate();
-			throw std::runtime_error("Filed to create the GLFW window!");
+			assert(false && "Filed to create the GLFW window!");
 		}
 
 		// Centre the window position.
@@ -600,7 +598,7 @@ namespace acid
 
 		if (m_physicalDevice == nullptr)
 		{
-			throw std::runtime_error("Vulkan runtime error, failed to find a suitable gpu!");
+			assert(false && "Vulkan runtime error, failed to find a suitable gpu!");
 		}
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_physicalDeviceProperties);
@@ -806,7 +804,7 @@ namespace acid
 
 		if (graphicsFamily == -1)
 		{
-			throw std::runtime_error("Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+			assert(false && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
 		}
 	}
 

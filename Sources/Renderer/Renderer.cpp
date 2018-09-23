@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 
+#include <cassert>
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 #include "IRenderer.hpp"
@@ -323,7 +324,7 @@ namespace acid
 
 			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 			{
-				throw std::runtime_error("Renderer failed to acquire swapchain image!");
+				assert(false && "Renderer failed to acquire swapchain image!");
 			}
 
 			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
