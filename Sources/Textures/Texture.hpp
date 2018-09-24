@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Resources/IResource.hpp"
 
@@ -14,8 +13,7 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Texture :
 		public IResource,
-		public IDescriptor,
-		public Buffer
+		public IDescriptor
 	{
 	private:
 		std::string m_filename;
@@ -31,6 +29,7 @@ namespace acid
 		uint32_t m_width, m_height;
 
 		VkImage m_image;
+		VkDeviceMemory m_deviceMemory;
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
@@ -134,7 +133,7 @@ namespace acid
 
 		static uint8_t *LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components);
 
-		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *components);
+		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, uint32_t *width, uint32_t *height, uint32_t *components);
 
 		static bool WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 

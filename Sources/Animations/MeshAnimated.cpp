@@ -49,7 +49,7 @@ namespace acid
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			Log::Error("Animation file does not exist: '%s'\n", m_filename.c_str());
 			return;

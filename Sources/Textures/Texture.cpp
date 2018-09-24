@@ -4,6 +4,7 @@
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Files/Files.hpp"
+#include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resources.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -33,7 +34,6 @@ namespace acid
 	Texture::Texture(const std::string &filename, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic) :
 		IResource(),
 		IDescriptor(),
-		Buffer(LoadSize(filename), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(filename),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -45,6 +45,7 @@ namespace acid
 		m_width(0),
 		m_height(0),
 		m_image(VK_NULL_HANDLE),
+		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
@@ -53,27 +54,27 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::Exists(m_filename) || !FileSystem::IsFile(m_filename))
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		if (!FileSystem::Exists(m_filename))
 		{
 			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
 			m_filename = Files::Search(FALLBACK_PATH);
 		}
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
-		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, m_size, 0, &data);
-		memcpy(data, pixels, m_size);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		memcpy(data, pixels, bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
 		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
@@ -89,8 +90,6 @@ namespace acid
 
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
-
-		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -108,7 +107,6 @@ namespace acid
 	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
 		IResource(),
 		IDescriptor(),
-		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -120,12 +118,13 @@ namespace acid
 		m_width(width),
 		m_height(height),
 		m_image(VK_NULL_HANDLE),
+		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format),
 		m_imageInfo({})
 	{
-		CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_imageLayout, m_mipLevels, 1);
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
@@ -139,7 +138,6 @@ namespace acid
 	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
 		IResource(),
 		IDescriptor(),
-		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -151,6 +149,7 @@ namespace acid
 		m_width(width),
 		m_height(height),
 		m_image(VK_NULL_HANDLE),
+		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format),
@@ -160,15 +159,15 @@ namespace acid
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
-		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, m_size, 0, &data);
-		memcpy(data, pixels, m_size);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		memcpy(data, pixels, bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-		CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 		            VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
 		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
@@ -185,8 +184,6 @@ namespace acid
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
 
-		Buffer::CopyBuffer(bufferStaging.GetBuffer(), m_buffer, m_size);
-
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
 		m_imageInfo.sampler = m_sampler;
@@ -198,6 +195,7 @@ namespace acid
 
 		vkDestroySampler(logicalDevice, m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
+		vkFreeMemory(logicalDevice, m_deviceMemory, nullptr);
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 
@@ -264,15 +262,13 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		Buffer bufferStaging = Buffer(m_size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, m_size, 0, &data);
-		memcpy(data, pixels, m_size);
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		memcpy(data, pixels, bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
-
-		Buffer::CopyBuffer(bufferStaging.GetBuffer(), GetBuffer(), m_size);
 	}
 
 	int32_t Texture::LoadSize(const std::string &filename)
@@ -281,7 +277,7 @@ namespace acid
 		int32_t height = 0;
 		int32_t components = 0;
 
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			//	Log::Out("File does not exist: '%s'\n", filename.c_str());
 
@@ -317,7 +313,7 @@ namespace acid
 
 	uint8_t *Texture::LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return nullptr;
@@ -340,16 +336,22 @@ namespace acid
 		return data;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, const size_t &bufferSize, uint32_t *width, uint32_t *height, uint32_t *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
-		stbi_uc *pixels = (stbi_uc *) malloc(bufferSize);
-		stbi_uc *offset = pixels;
+		stbi_uc *pixels = nullptr;
+		stbi_uc *offset = nullptr;
 
 		for (auto &suffix : fileSuffixes)
 		{
 			std::string filenameSide = filename + "/" + suffix + fileExt;
-			VkDeviceSize sizeSide = LoadSize(filenameSide);
+			int32_t sizeSide = LoadSize(filenameSide);
 			stbi_uc *pixelsSide = LoadPixels(filenameSide, width, height, components);
+
+			if (pixels == nullptr)
+			{
+				pixels = (stbi_uc *) malloc(*width * *height * 4 * fileSuffixes.size());
+				offset = pixels;
+			}
 
 			memcpy(offset, pixelsSide, sizeSide);
 			offset += sizeSide;
