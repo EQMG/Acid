@@ -10,12 +10,13 @@
 namespace acid
 {
 	/// <summary>
-	/// A helper for C++ files.
+	/// A helper for file creation, loading, writing, and more.
 	/// </summary>
 	class ACID_EXPORT FileSystem
 	{
 	public:
-		static const std::string SEPARATOR;
+		static const char SEPARATOR;
+		static const char ALT_SEPARATOR;
 
 		/// <summary>
 		/// Gets the current working directory.
@@ -137,5 +138,20 @@ namespace acid
 		/// <param name="path"> The path to get the suffix of. </param>
 		/// <returns> The file suffix. </returns>
 		static std::string FileSuffix(const std::string &path);
+
+		/// <summary>
+		/// Joins parts of a path together.
+		/// </summary>
+		/// <param name="parts"> The parts to join together. </param>
+		/// <returns> The joined path. </returns>
+		static std::string JoinPath(const std::vector<std::string> &parts);
+
+		/// <summary>
+		/// Splits a path by a system separator, will also use the alt separator.
+		/// </summary>
+		/// <param name="path"> The path to split. </param>
+		/// <param name="delim"> The separator to split by. </param>
+		/// <returns> The split path. </returns>
+		static std::vector<std::string> SplitPath(const std::string &path, const char &delim = SEPARATOR);
 	};
 }

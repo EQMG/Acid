@@ -13,7 +13,7 @@ set(ACID_SOURCES
 set(ACID_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Sources/")
 
 add_library(Acid ${LIB_TYPE} ${ACID_SOURCES})
-add_dependencies(Acid glfw SPIRV BulletDynamics libminizip)
+add_dependencies(Acid glfw SPIRV BulletDynamics)
 
 set_target_properties(Acid PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
@@ -38,8 +38,8 @@ else()
 	target_compile_definitions(Acid PUBLIC "ACID_STATICLIB")
 endif()
 
-target_include_directories(Acid PUBLIC ${VULKAN_INCLUDE_DIR} ${OPENAL_INCLUDE_DIR} ${GLSLANG_INCLUDE_DIR} ${GLFW_INCLUDE_DIR} ${BULLET_INCLUDE_DIR} ${MINIZIP_INCLUDE_DIR} ${ACID_INCLUDE_DIR})
-target_link_libraries(Acid PUBLIC ${VULKAN_LIBRARY} ${OPENAL_LIBRARY} ${GLSLANG_LIBRARIES} ${GLFW_LIBRARY} ${BULLET_LIBRARIES} ${MINIZIP_LIBRARY})
+target_include_directories(Acid PUBLIC ${VULKAN_INCLUDE_DIR} ${OPENAL_INCLUDE_DIR} ${GLSLANG_INCLUDE_DIR} ${GLFW_INCLUDE_DIR} ${BULLET_INCLUDE_DIR} ${ACID_INCLUDE_DIR})
+target_link_libraries(Acid PUBLIC ${VULKAN_LIBRARY} ${OPENAL_LIBRARY} ${GLSLANG_LIBRARIES} ${GLFW_LIBRARY} ${BULLET_LIBRARIES})
 
 # Install
 if(ACID_INSTALL)

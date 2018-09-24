@@ -21,14 +21,15 @@ typedef struct stat STAT;
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
-#include "String.hpp"
 
 namespace acid
 {
 #ifdef ACID_BUILD_WINDOWS
-	const std::string FileSystem::SEPARATOR = "\\";
+	const char FileSystem::SEPARATOR = '\\';
+	const char FileSystem::ALT_SEPARATOR = '/';
 #else
-	const std::string FileSystem::SEPARATOR = "/";
+	const char FileSystem::SEPARATOR = '/';
+	const char FileSystem::ALT_SEPARATOR = '\\';
 #endif
 
 	std::string FileSystem::GetWorkingDirectory()
@@ -130,8 +131,8 @@ namespace acid
 
 		if (lastFolderPos != std::string::npos)
 		{
-			std::string folderPath = String::Substring(path, 0, static_cast<uint32_t>(lastFolderPos));
-			auto splitFolders = String::Split(folderPath, "\\/");
+			std::string folderPath = path.substr(0, lastFolderPos);
+			auto splitFolders = SplitPath(folderPath);
 			std::stringstream appended;
 
 			for (auto &folder : splitFolders)
@@ -392,5 +393,61 @@ namespace acid
 		{
 			return path.substr(end);
 		}
+	}
+
+	std::string FileSystem::JoinPath(const std::vector<std::string> &parts)
+	{
+		std::string joined;
+		std::size_t i = 0;
+
+		for (auto &part : parts)
+		{
+			joined.append(part);
+
+			if (i++ != parts.size() - 1)
+			{
+				joined.append(1, '/');
+			}
+		}
+
+		return joined;
+	}
+
+	std::vector<std::string> FileSystem::SplitPath(const std::string &path, const char &delim)
+	{
+		std::vector<std::string> split;
+		std::string::size_type previous_index = 0;
+		auto separator_index = path.find(delim);
+
+		while (separator_index != std::string::npos)
+		{
+			auto part = path.substr(previous_index, separator_index - previous_index);
+
+			if (part != "..")
+			{
+				split.push_back(part);
+			}
+			else
+			{
+				split.pop_back();
+			}
+
+			previous_index = separator_index + 1;
+			separator_index = path.find(delim, previous_index);
+		}
+
+		split.push_back(path.substr(previous_index));
+
+		if(split.size() == 1 && delim == SEPARATOR)
+		{
+			auto alternative = SplitPath(path, ALT_SEPARATOR);
+
+			if (alternative.size() > 1)
+			{
+				return alternative;
+			}
+		}
+
+		return split;
 	}
 }
