@@ -121,7 +121,7 @@ namespace acid
 				continue;
 			}
 
-			std::string relPath = path + SEPARATOR + de->d_name;
+			std::string relPath = path + '/' + de->d_name;
 
 			if (IsDirectory(relPath))
 			{

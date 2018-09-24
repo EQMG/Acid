@@ -30,7 +30,7 @@ namespace acid
 		m_file(nullptr),
 		m_parent(nullptr)
 	{
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			FileSystem::Create(filename);
 		}

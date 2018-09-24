@@ -56,7 +56,7 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return 0;
@@ -128,7 +128,7 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename) || !FileSystem::IsFile(filename))
+		if (!FileSystem::Exists(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};

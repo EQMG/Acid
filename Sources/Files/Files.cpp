@@ -38,7 +38,7 @@ namespace acid
 		for (auto &search : SEARCH_PATHS)
 		{
 			std::stringstream searchPath;
-			searchPath << search << "/" << path;
+			searchPath << search << '/' << path;
 
 			if (FileSystem::Exists(searchPath.str()))
 			{

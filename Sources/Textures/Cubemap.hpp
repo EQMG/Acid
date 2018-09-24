@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Descriptors/IDescriptor.hpp"
 #include "Resources/IResource.hpp"
 
@@ -14,8 +13,7 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Cubemap :
 		public IResource,
-		public IDescriptor,
-		public Buffer
+		public IDescriptor
 	{
 	private:
 		static const std::vector<std::string> SIDE_FILE_SUFFIXES;
@@ -34,6 +32,7 @@ namespace acid
 		uint32_t m_width, m_height;
 
 		VkImage m_image;
+		VkDeviceMemory m_deviceMemory;
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
