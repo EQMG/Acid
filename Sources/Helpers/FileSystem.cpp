@@ -4,9 +4,11 @@
 #include <algorithm>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #ifdef ACID_BUILD_WINDOWS
 #include <io.h>
 #include <direct.h>
+#include "dirent.h"
 typedef struct _stat STAT;
 #define stat _stat
 #define S_IFREG _S_IFREG
@@ -21,6 +23,8 @@ typedef struct stat STAT;
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
+
+#include "String.hpp"
 
 namespace acid
 {
@@ -101,8 +105,7 @@ namespace acid
 	{
 		std::vector<std::string> result = {};
 
-		// TODO
-		/*struct dirent *de;
+		struct dirent *de;
 		DIR *dr = opendir(path.c_str());
 
 		if (dr == nullptr)
@@ -113,10 +116,25 @@ namespace acid
 
 		while ((de = readdir(dr)) != nullptr)
 		{
-			result.emplace_back(de->d_name);
+			if (String::RemoveAll(de->d_name, '.').empty())
+			{
+				continue;
+			}
+
+			std::string relPath = path + SEPARATOR + de->d_name;
+
+			if (IsDirectory(relPath))
+			{
+				auto filesInFound = FilesInPath(relPath);
+				result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+			}
+			else
+			{
+				result.emplace_back(relPath);
+			}
 		}
 
-		closedir(dr);*/
+		closedir(dr);
 		return result;
 	}
 
