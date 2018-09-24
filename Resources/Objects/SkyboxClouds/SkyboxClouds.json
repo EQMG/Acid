@@ -4,7 +4,7 @@
   },
   "MaterialSkybox": {
     "Cubemap Texture": "Objects/SkyboxClouds",
-    "Cubemap Extension": ".png",
+    "Cubemap Suffix": ".png",
     "Sky Colour": "#FFFFFF"
   },
   "SkyboxCycle": {

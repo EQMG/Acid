@@ -17,15 +17,14 @@ namespace acid
 {
 	std::shared_ptr<SoundBuffer> SoundBuffer::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::Search(filename);
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<SoundBuffer>(resource);
 		}
 
-		auto result = std::make_shared<SoundBuffer>(realFilename);
+		auto result = std::make_shared<SoundBuffer>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -35,15 +34,15 @@ namespace acid
 		m_filename(filename),
 		m_buffer(0)
 	{
-		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 		if (fileExt == ".wav")
 		{
-			m_buffer = LoadBufferWav(filename);
+			m_buffer = LoadBufferWav(m_filename);
 		}
 		else if (fileExt == ".ogg")
 		{
-			m_buffer = LoadBufferOgg(filename);
+			m_buffer = LoadBufferOgg(m_filename);
 		}
 
 		Audio::CheckAl(alGetError());
@@ -56,18 +55,16 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename))
+		auto fileLoaded = Files::Read(filename);
+
+		if (!fileLoaded)
 		{
-			Log::Error("File does not exist: '%s'\n", filename.c_str());
+			Log::Error("WAV file could not be loaded: '%s'\n", filename.c_str());
 			return 0;
 		}
 
-		std::ifstream file(filename.c_str(), std::ifstream::binary);
-
-		if (!file.is_open())
-		{
-			assert(false && "Load wav file failure: file couldn't be opened!");
-		}
+		std::stringstream file;
+		file << *fileLoaded;
 
 		char chunkId[5] = "\0";
 
@@ -117,8 +114,6 @@ namespace acid
 		std::unique_ptr<unsigned char[]> data(new unsigned char[size]);
 		file.read(reinterpret_cast<char *>(data.get()), size);
 
-		file.close();
-
 		uint32_t buffer;
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data.get(), size, samplesPerSec);
@@ -128,30 +123,23 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename))
-		{
-			Log::Error("File does not exist: '%s'\n", filename.c_str());
-			return {};
-		}
+		auto fileLoaded = Files::Read(filename);
 
-		std::ifstream file(filename.c_str(), std::ifstream::binary);
-
-		if (!file.is_open())
+		if (!fileLoaded)
 		{
-			assert(false && "Load wav file failure: file couldn't be opened!");
+			Log::Error("OGG file could not be loaded: '%s'\n", filename.c_str());
+			return 0;
 		}
 
 		int32_t channels;
 		int32_t samplesPerSec;
 		short *data;
-		int32_t size = stb_vorbis_decode_filename(filename.c_str(), &channels, &samplesPerSec, &data);
+		int32_t size = stb_vorbis_decode_memory((uint8_t*)fileLoaded->data(), (uint32_t)fileLoaded->size(), &channels, &samplesPerSec, &data);
 
 		if (size == -1)
 		{
 			Log::Error("Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());
 		}
-
-		file.close();
 
 		uint32_t buffer;
 		alGenBuffers(1, &buffer);

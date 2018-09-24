@@ -18,15 +18,14 @@ namespace acid
 
 	std::shared_ptr<Texture> Texture::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::Search(filename);
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Texture>(resource);
 		}
 
-		auto result = std::make_shared<Texture>(realFilename);
+		auto result = std::make_shared<Texture>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -55,12 +54,6 @@ namespace acid
 #endif
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		if (!FileSystem::Exists(m_filename))
-		{
-			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
-			m_filename = Files::Search(FALLBACK_PATH);
-		}
 
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
@@ -271,62 +264,22 @@ namespace acid
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 	}
 
-	int32_t Texture::LoadSize(const std::string &filename)
-	{
-		int32_t width = 0;
-		int32_t height = 0;
-		int32_t components = 0;
-
-		if (!FileSystem::Exists(filename))
-		{
-			//	Log::Out("File does not exist: '%s'\n", filename.c_str());
-
-			if (stbi_info(FALLBACK_PATH.c_str(), &width, &height, &components) == 0)
-			{
-				assert(false && "Vulkan invalid fallback texture file format.");
-			}
-		}
-		else
-		{
-			if (stbi_info(filename.c_str(), &width, &height, &components) == 0)
-			{
-				assert(false && "Vulkan invalid texture file format.");
-			}
-		}
-
-		return width * height * 4;
-	}
-
-	int32_t Texture::LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes)
-	{
-		int32_t size = 0;
-
-		for (auto &suffix : fileSuffixes)
-		{
-			std::string filenameSide = filename + "/" + suffix + fileExt;
-			int32_t sizeSide = LoadSize(filenameSide);
-			size += sizeSide;
-		}
-
-		return size;
-	}
-
 	uint8_t *Texture::LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
-		if (!FileSystem::Exists(filename))
+		auto fileLoaded = Files::Read(filename);
+
+		if (!fileLoaded)
 		{
-			Log::Error("File does not exist: '%s'\n", filename.c_str());
-			return nullptr;
+			if (filename == FALLBACK_PATH)
+			{
+				return nullptr;
+			}
+
+			Log::Error("Texture could not be loaded: '%s'\n", filename.c_str());
+			return LoadPixels(FALLBACK_PATH, width, height, components);
 		}
 
-		stbi_uc *data = nullptr;
-
-		if (stbi_info(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components) == 0)
-		{
-			assert(false && "Vulkan invalid texture file format.");
-		}
-
-		data = stbi_load(filename.c_str(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
+		stbi_uc *data = stbi_load_from_memory((uint8_t*)fileLoaded->data(), (uint32_t)fileLoaded->size(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
@@ -336,20 +289,20 @@ namespace acid
 		return data;
 	}
 
-	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, uint32_t *width, uint32_t *height, uint32_t *components)
+	uint8_t *Texture::LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t *width, uint32_t *height, uint32_t *components)
 	{
 		stbi_uc *pixels = nullptr;
 		stbi_uc *offset = nullptr;
 
-		for (auto &suffix : fileSuffixes)
+		for (auto &side : fileSides)
 		{
-			std::string filenameSide = filename + "/" + suffix + fileExt;
-			int32_t sizeSide = LoadSize(filenameSide);
+			std::string filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
 			stbi_uc *pixelsSide = LoadPixels(filenameSide, width, height, components);
+			int32_t sizeSide = *width * *height * 4;
 
 			if (pixels == nullptr)
 			{
-				pixels = (stbi_uc *) malloc(*width * *height * 4 * fileSuffixes.size());
+				pixels = (stbi_uc *) malloc(sizeSide * fileSides.size());
 				offset = pixels;
 			}
 

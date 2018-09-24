@@ -230,13 +230,7 @@ namespace acid
 
 	void Display::SetIcon(const std::string &filename)
 	{
-		// Loads a window icon for this display.
-		m_iconPath = Files::Search(filename);
-
-		if (m_iconPath.empty())
-		{
-			return;
-		}
+		m_iconPath = filename;
 
 		uint32_t width = 0;
 		uint32_t height = 0;
@@ -245,7 +239,6 @@ namespace acid
 
 		if (data == nullptr)
 		{
-			Log::Error("Unable to load texture: '%s'\n", m_iconPath.c_str());
 			return;
 		}
 

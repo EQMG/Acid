@@ -158,11 +158,4 @@ namespace acid
 		std::transform(result.begin(), result.end(), result.begin(), ::toupper);
 		return result;
 	}
-
-	std::string String::ToString(std::ostream &str)
-	{
-		std::ostringstream ss;
-		ss << str.rdbuf();
-		return ss.str();
-	}
 }

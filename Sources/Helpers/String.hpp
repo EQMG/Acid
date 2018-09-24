@@ -62,7 +62,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="whitespace"> The whitespace type. </param>
 		/// <returns> The trimmed string. </returns>
-		static std::string Trim(const std::string &str, const std::string &whitespace = " \t");
+		static std::string Trim(const std::string &str, const std::string &whitespace = " \t\n\r");
 
 		/// <summary>
 		/// Takes a substring of a string between two bounds.
@@ -122,20 +122,18 @@ namespace acid
 		static std::string Uppercase(const std::string &str);
 
 		/// <summary>
-		/// Converts a ostream to a string.
+		/// Converts a tyoe to a string.
 		/// </summary>
-		/// <param name="str)"> The stream. </param>
-		/// <returns> The string. </returns>
-		static std::string ToString(std::ostream& str);
-
+		/// <param name="val"> The value to convert. </param>
+		/// <returns> The value as a string. </returns>
 		template<typename T>
 		static std::string To(const T &val)
 		{
-			if constexpr(std::is_enum_v<T>)
+			if constexpr (std::is_enum_v<T>)
 			{
 				return std::to_string(static_cast<int32_t>(val));
 			}
-			else if constexpr(std::is_same_v<bool, T>)
+			else if constexpr (std::is_same_v<bool, T>)
 			{
 				return val ? "true" : "false";
 			}
@@ -146,11 +144,11 @@ namespace acid
 		template<typename T>
 		static T From(const std::string &str)
 		{
-			if constexpr(std::is_enum_v<T>)
+			if constexpr (std::is_enum_v<T>)
 			{
 				return static_cast<T>(From<int32_t>(str));
 			}
-			else if constexpr(std::is_same_v<bool, T>)
+			else if constexpr (std::is_same_v<bool, T>)
 			{
 				return Lowercase(str) == "true" || From<int32_t>(str) == 1;
 			}

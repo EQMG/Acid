@@ -123,17 +123,13 @@ namespace acid
 
 		for (auto &shaderStage : m_pipelineCreate.GetShaderStages())
 		{
-			if (!FileSystem::Exists(shaderStage))
-			{
-				Log::Error("File does not exist: '%s'\n", shaderStage.c_str());
-				assert(false && "Could not create pipeline, missing shader stage!");
-			}
-
-			auto fileLoaded = FileSystem::ReadTextFile(shaderStage);
+			auto fileLoaded = Files::Read(shaderStage);
 
 			if (!fileLoaded)
 			{
-				continue;
+				Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage.c_str());
+				assert(false && "Could not create pipeline, missing shader stage!");
+				return;
 			}
 
 			auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());

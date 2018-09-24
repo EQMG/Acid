@@ -8,15 +8,14 @@ namespace acid
 {
 	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::Search(filename);
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelObj>(resource);
 		}
 
-		auto result = std::make_shared<ModelObj>(realFilename);
+		auto result = std::make_shared<ModelObj>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -28,10 +27,11 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		auto fileLoaded = FileSystem::ReadTextFile(filename);
+		auto fileLoaded = Files::Read(filename);
 
 		if (!fileLoaded)
 		{
+			Log::Error("OBJ file could not be loaded: '%s'\n", filename.c_str());
 			return;
 		}
 
@@ -128,7 +128,7 @@ namespace acid
 
 #if ACID_VERBOSE
 		float debugEnd = Engine::Get()->GetTimeMs();
-		Log::Out("Obj '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
+		Log::Out("OBJ '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 
 		Model::Initialize(vertices, indices, filename);

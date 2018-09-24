@@ -84,13 +84,7 @@ namespace acid
 
 	void Mouse::SetCustomMouse(const std::string &filename)
 	{
-		// Loads a custom cursor.
-		m_mousePath = Files::Search(filename);
-
-		if (m_mousePath.empty())
-		{
-			return;
-		}
+		m_mousePath = filename;
 
 		uint32_t width = 0;
 		uint32_t height = 0;
@@ -99,7 +93,6 @@ namespace acid
 
 		if (data == nullptr)
 		{
-			Log::Error("Unable to load texture: '%s'.\n", m_mousePath.c_str());
 			return;
 		}
 

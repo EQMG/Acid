@@ -20,15 +20,14 @@ namespace acid
 
 	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::Search(filename);
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<FontMetafile>(resource);
 		}
 
-		auto result = std::make_shared<FontMetafile>(realFilename);
+		auto result = std::make_shared<FontMetafile>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -46,10 +45,11 @@ namespace acid
 		m_paddingHeight(0),
 		m_maxSizeY(0.0f)
 	{
-		auto fileLoaded = FileSystem::ReadTextFile(filename);
+		auto fileLoaded = Files::Read(m_filename);
 
 		if (!fileLoaded)
 		{
+			Log::Error("Font Metafile could not be loaded: '%s'\n", m_filename.c_str());
 			return;
 		}
 

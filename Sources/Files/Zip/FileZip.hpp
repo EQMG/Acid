@@ -59,7 +59,11 @@ namespace acid
 
 		explicit FileZip(const std::vector<unsigned char> &bytes);
 
+		FileZip(const FileZip&) = delete;
+
 		~FileZip();
+
+		FileZip& operator=(const FileZip&) = delete;
 
 		void Load(std::istream &stream);
 

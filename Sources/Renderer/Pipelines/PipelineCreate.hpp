@@ -148,11 +148,6 @@ namespace acid
 			m_cullMode(cullMode),
 			m_defines(defines)
 		{
-			for (auto &shaderStage : m_shaderStages)
-			{
-				shaderStage = Files::Search(shaderStage);
-			}
-
 			std::sort(m_vertexInputs.begin(), m_vertexInputs.end());
 		}
 
@@ -184,7 +179,7 @@ namespace acid
 
 		ComputeCreate(const std::string &shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize,
 						const std::vector<PipelineDefine> &defines = {}) :
-			m_shaderStage(Files::Search(shaderStage)),
+			m_shaderStage(shaderStage),
 			m_width(width),
 			m_height(height),
 			m_workgroupSize(workgroupSize),

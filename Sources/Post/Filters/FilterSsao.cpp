@@ -77,6 +77,5 @@ namespace acid
 		}
 
 		return std::make_shared<Texture>(size, size, ssaoNoise.data(), VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, false, VK_FILTER_NEAREST, VK_SAMPLER_ADDRESS_MODE_REPEAT);
-		//return std::make_shared<Texture>(Files::SearchFile("SsaoNoise.png"), false, VK_FILTER_NEAREST);
 	}
 }

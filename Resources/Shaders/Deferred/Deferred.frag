@@ -54,31 +54,24 @@ vec3 depthToWorld(vec2 uv, float depth)
 
 /*float shadow(vec4 shadowCoords)
 {
-	float total = 0.0f;
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
 	float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
 
-   // if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
-   // {
-		for (int x = -scene.shadowPCF; x <= scene.shadowPCF; x++)
+	float total = 0.0f;
+	
+	if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+	{
+		float shadowValue = texture(samplerShadows, shadowCoords.xy * sizeShadows).r;
+
+		if (shadowCoords.z < shadowValue + scene.shadowBias)
 		{
-			for (int y = -scene.shadowPCF; y <= scene.shadowPCF; y++)
-			{
-				float shadowValue = texture(samplerShadows, shadowCoords.xy + vec2(x, y) * sizeShadows).r;
-
-				if (shadowCoords.z < shadowValue + scene.shadowBias)
-				{
-					total += scene.shadowDarkness * shadowCoords.w;
-				}
-			}
+			total += scene.shadowDarkness * shadowCoords.w;
 		}
-
-		total /= totalTextels;
-   // }
-   // else
-   // {
-   //	 total = 0.0f;
-   // }
+	}
+	else
+	{
+		 total = 0.0f;
+	}
 
 	return 1.0f - total;
 }*/
@@ -107,7 +100,7 @@ void main()
 
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-		    Light light = scene.lights[i];
+			Light light = scene.lights[i];
 
 			vec3 lightDir = light.position - worldPosition;
 			float dist = length(lightDir);

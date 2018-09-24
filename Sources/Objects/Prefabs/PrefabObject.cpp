@@ -11,15 +11,14 @@ namespace acid
 {
 	std::shared_ptr<PrefabObject> PrefabObject::Resource(const std::string &filename)
 	{
-		std::string realFilename = Files::Search(filename);
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<PrefabObject>(resource);
 		}
 
-		auto result = std::make_shared<PrefabObject>(realFilename);
+		auto result = std::make_shared<PrefabObject>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -30,11 +29,6 @@ namespace acid
 		m_file(nullptr),
 		m_parent(nullptr)
 	{
-		if (!FileSystem::Exists(filename))
-		{
-			FileSystem::Create(filename);
-		}
-
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
 
 		if (fileExt == ".json")

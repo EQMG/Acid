@@ -1,6 +1,7 @@
 #include "FileXml.hpp"
 
 #include "Engine/Engine.hpp"
+#include "Files/Files.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "XmlNode.hpp"
 
@@ -18,18 +19,13 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::Exists(m_filename))
-		{
-			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
-			return;
-		}
-
 		m_parent->ClearChildren();
 
-		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
+		auto fileLoaded = Files::Read(m_filename);
 
 		if (!fileLoaded)
 		{
+			Log::Error("XML file could not be loaded: '%s'\n", m_filename.c_str());
 			return;
 		}
 

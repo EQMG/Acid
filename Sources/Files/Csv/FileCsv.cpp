@@ -1,6 +1,7 @@
 #include "FileCsv.hpp"
 
 #include "Engine/Engine.hpp"
+#include "Files/Files.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
@@ -18,16 +19,11 @@ namespace acid
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
-		if (!FileSystem::Exists(m_filename))
-		{
-			Log::Error("File does not exist: '%s'\n", m_filename.c_str());
-			return;
-		}
-
-		auto fileLoaded = FileSystem::ReadTextFile(m_filename);
+		auto fileLoaded = Files::Read(m_filename);
 
 		if (!fileLoaded)
 		{
+			Log::Error("CSV file could not be loaded: '%s'\n", m_filename.c_str());
 			return;
 		}
 

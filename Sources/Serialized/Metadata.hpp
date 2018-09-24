@@ -100,11 +100,11 @@ namespace acid
 		template<typename T>
 		T Get() const
 		{
-			if constexpr(std::is_same_v<std::string, T>)
+			if constexpr (std::is_same_v<std::string, T>)
 			{
 				return GetString();
 			}
-			else if constexpr(std::is_class_v<T>)
+			else if constexpr (std::is_class_v<T>)
 			{
 				T result = T();
 				result.Decode(*this);
@@ -119,11 +119,11 @@ namespace acid
 		template<typename T>
 		void Set(const T &value)
 		{
-			if constexpr(std::is_same_v<std::string, T>)
+			if constexpr (std::is_same_v<std::string, T>)
 			{
 				SetString(value);
 			}
-			else if constexpr(std::is_class_v<T>)
+			else if constexpr (std::is_class_v<T>)
 			{
 				value.Encode(*this);
 			}
