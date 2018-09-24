@@ -115,11 +115,18 @@ namespace acid
 		static std::string Lowercase(const std::string &str);
 
 		/// <summary>
-		/// uppercased a string.
+		/// Uppercases a string.
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> The uppercased string. </returns>
 		static std::string Uppercase(const std::string &str);
+
+		/// <summary>
+		/// Converts a ostream to a string.
+		/// </summary>
+		/// <param name="str)"> The stream. </param>
+		/// <returns> The string. </returns>
+		static std::string ToString(std::ostream& str);
 
 		template<typename T>
 		static std::string To(const T &val)
