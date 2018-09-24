@@ -68,16 +68,12 @@ namespace acid
 			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
 		}
 
-		if (!FileSystem::Exists(m_computeCreate.GetShaderStage()))
-		{
-			Log::Error("File does not exist: '%s'\n", m_computeCreate.GetShaderStage().c_str());
-			assert(false && "Could not create pipeline, missing shader stage!");
-		}
-
-		auto fileLoaded = FileSystem::ReadTextFile(m_computeCreate.GetShaderStage());
+		auto fileLoaded = Files::Read(m_computeCreate.GetShaderStage());
 
 		if (!fileLoaded)
 		{
+			Log::Error("Shader Stage could not be loaded: '%s'\n", m_computeCreate.GetShaderStage().c_str());
+			assert(false && "Could not create compute pipeline, missing shader stage!");
 			return;
 		}
 

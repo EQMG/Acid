@@ -9,30 +9,27 @@
 
 namespace acid
 {
-	const std::vector<std::string> Cubemap::SIDE_FILE_SUFFIXES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+	const std::vector<std::string> Cubemap::FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileExt)
 	{
-		std::string suffixToken = "/" + SIDE_FILE_SUFFIXES[0] + fileExt;
-		std::string realFilename = Files::Search(filename + suffixToken);
-		realFilename = String::ReplaceAll(realFilename, suffixToken, "");
-		auto resource = Resources::Get()->Get(realFilename);
+		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Cubemap>(resource);
 		}
 
-		auto result = std::make_shared<Cubemap>(realFilename, fileExt);
+		auto result = std::make_shared<Cubemap>(filename, fileExt);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
 
-	Cubemap::Cubemap(const std::string &filename, const std::string &fileExt, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic) :
+	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic) :
 		IResource(),
 		IDescriptor(),
 		m_filename(filename),
-		m_fileExt(fileExt),
+		m_fileSuffix(fileSuffix),
 		m_filter(filter),
 		m_addressMode(addressMode),
 		m_anisotropic(anisotropic),
@@ -54,7 +51,7 @@ namespace acid
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		auto pixels = Texture::LoadPixels(m_filename, m_fileExt, SIDE_FILE_SUFFIXES, &m_width, &m_height, &m_components);
+		auto pixels = Texture::LoadPixels(m_filename, m_fileSuffix, FILE_SIDES, &m_width, &m_height, &m_components);
 
 		m_mipLevels = mipmap ? Texture::GetMipLevels(m_width, m_height) : 1;
 
@@ -99,7 +96,7 @@ namespace acid
 		IResource(),
 		IDescriptor(),
 		m_filename(""),
-		m_fileExt(""),
+		m_fileSuffix(""),
 		m_filter(VK_FILTER_LINEAR),
 		m_addressMode(VK_SAMPLER_ADDRESS_MODE_REPEAT),
 		m_anisotropic(false),
@@ -130,7 +127,7 @@ namespace acid
 		IResource(),
 		IDescriptor(),
 		m_filename(""),
-		m_fileExt(""),
+		m_fileSuffix(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
 		m_anisotropic(false),

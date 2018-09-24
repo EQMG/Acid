@@ -127,13 +127,9 @@ namespace acid
 
 		VkSampler GetSampler() const { return m_sampler; }
 
-		static int32_t LoadSize(const std::string &filename);
-
-		static int32_t LoadSize(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes);
-
 		static uint8_t *LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components);
 
-		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileExt, const std::vector<std::string> &fileSuffixes, uint32_t *width, uint32_t *height, uint32_t *components);
+		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t *width, uint32_t *height, uint32_t *components);
 
 		static bool WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 

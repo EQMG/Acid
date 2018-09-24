@@ -4,9 +4,9 @@
 
 layout(set = 0, binding = 0) uniform UboScene
 {
-    float innerRadius;
-    float outerRadius;
-    float opacity;
+	float innerRadius;
+	float outerRadius;
+	float opacity;
 } scene;
 
 layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
@@ -21,7 +21,7 @@ void main()
 {
 	vec4 textureColour = texture(samplerColour, inUv);
 	outColour = textureColour;
-    outColour.rgb *= 1.0f - smoothstep(scene.innerRadius, scene.outerRadius, length(inUv - 0.5f));
+	outColour.rgb *= 1.0f - smoothstep(scene.innerRadius, scene.outerRadius, length(inUv - 0.5f));
 	outColour = mix(textureColour, outColour, scene.opacity);
 	
 	vec2 sizeColour = textureSize(samplerColour, 0);

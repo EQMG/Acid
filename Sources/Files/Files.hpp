@@ -1,7 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include <optional>
 #include "Engine/Engine.hpp"
+#include "Zip/FileZip.hpp"
 
 namespace acid
 {
@@ -13,6 +16,7 @@ namespace acid
 	{
 	private:
 		static std::vector<std::string> SEARCH_PATHS;
+		static std::vector<std::unique_ptr<FileZip>> SEARCH_ZIPS;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -33,10 +37,17 @@ namespace acid
 		static void AddSearchPath(const std::string &path);
 
 		/// <summary>
-		/// Find a real path by partial path in a search path.
+		/// Find a real or partial path in a search path.
 		/// </summary>
 		/// <param name="path"> The path to find. </param>
 		/// <returns> The path to the first found. </returns>
 		static std::string Search(const std::string &path);
+
+		/// <summary>
+		/// Reads a file found by real or partial path.
+		/// </summary>
+		/// <param name="path"> The path to read. </param>
+		/// <returns> The data read from the file. </returns>
+		static std::optional<std::string> Read(const std::string &path);
 	};
 }

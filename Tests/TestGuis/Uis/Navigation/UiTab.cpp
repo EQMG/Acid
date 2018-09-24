@@ -12,7 +12,7 @@ namespace test
 		m_colour(colour),
 		m_text(std::make_unique<Text>(this, rectangle, 1.6f, name, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_LEFT, 0.5f, 0.003f)),
 		m_width(m_text->GetRectangle().m_dimensions.m_x * 1.6f),
-		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f))
+		m_soundClick(Sound("Sounds/Button1.wav", 0.9f))
 	{
 		this->SetActionClick([&](MouseButton button) -> bool
 		{

@@ -69,7 +69,7 @@ void main()
 		offset.xyz /= offset.w;
 		offset.xyz = offset.xyz * 0.5f + 0.5f;
 
-        // Sample depth.
+		// Sample depth.
 		float sampleDepth = -linearDepth(texture(samplerDepth, offset.xy).r);
 
 		// Range check.

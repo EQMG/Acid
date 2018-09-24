@@ -248,16 +248,19 @@ namespace acid
 		{
 			if (String::Contains(line, "#include"))
 			{
-				std::string path = String::ReplaceFirst(line, "#include", "");
-				path = String::RemoveAll(path, '\"');
-				path = String::Trim(path);
-				auto included = FileSystem::ReadTextFile(Files::Search(path));
+				std::string filename = String::ReplaceFirst(line, "#include", "");
+				filename = String::RemoveAll(filename, '\"');
+				filename = String::Trim(filename);
 
-				if (included)
+				auto fileLoaded = Files::Read(filename);
+
+				if (!fileLoaded)
 				{
-					result << "\n" << *included << "\n";
+					Log::Error("Shader Include could not be loaded: '%s'\n", filename.c_str());
+					continue;
 				}
 
+				result << "\n" << *fileLoaded << "\n";
 				continue;
 			}
 
@@ -266,7 +269,6 @@ namespace acid
 
 		return result.str();
 	}
-
 
 	EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
 	{

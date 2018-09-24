@@ -16,10 +16,10 @@ namespace acid
 		public IDescriptor
 	{
 	private:
-		static const std::vector<std::string> SIDE_FILE_SUFFIXES;
+		static const std::vector<std::string> FILE_SIDES;
 
 		std::string m_filename;
-		std::string m_fileExt;
+		std::string m_fileSuffix;
 
 		VkFilter m_filter;
 		VkSamplerAddressMode m_addressMode;
@@ -43,8 +43,8 @@ namespace acid
 		/// Will find an existing cubemap with the same filename, or create a new cubemap.
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
-		/// <param name="fileExt"> The files extension type (ex .png). </param>
-		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileExt);
+		/// <param name="fileSuffix"> The files suffix type (ex .png). </param>
+		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileSuffix);
 
 		/// <summary>
 		/// A new cubemap object.
@@ -94,7 +94,7 @@ namespace acid
 
 		std::string GetFilename() override { return m_filename; };
 
-		std::string GetExtension() { return m_fileExt; };
+		std::string GetFileSuffix() { return m_fileSuffix; };
 
 		VkFilter GetFilter() const { return m_filter; }
 
