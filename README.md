@@ -56,7 +56,7 @@ Acid uses the following libraries:
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
- * [Miniz](https://code.google.com/archive/p/miniz/) - Zip file manipulation
+ * [PhysFS](https://icculus.org/physfs) - Archive file access
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
  * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation
 
