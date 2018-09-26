@@ -47,3 +47,10 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
 set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath" PARENT_SCOPE)
 
 set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
+
+set(PHYSFS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Libraries/physfs/src" PARENT_SCOPE)
+set(PHYSFS_BUILD_STATIC FALSE CACHE INTERNAL "Build static library") # physfs-static
+set(PHYSFS_BUILD_SHARED TRUE CACHE INTERNAL "Build shared library") # physfs
+set(PHYSFS_BUILD_TEST FALSE CACHE INTERNAL "Build stdio test program")
+add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
+set(PHYSFS_LIBRARY "physfs" PARENT_SCOPE)

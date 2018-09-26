@@ -4,7 +4,6 @@
 #include <iostream>
 #include <optional>
 #include "Engine/Engine.hpp"
-#include "Zip/FileZip.hpp"
 
 namespace acid
 {
@@ -14,9 +13,6 @@ namespace acid
 	class ACID_EXPORT Files :
 		public IModule
 	{
-	private:
-		static std::vector<std::string> SEARCH_PATHS;
-		static std::vector<std::unique_ptr<FileZip>> SEARCH_ZIPS;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -26,22 +22,27 @@ namespace acid
 
 		Files();
 
+		~Files();
+
 		void Update() override;
 
-		static std::vector<std::string> GetSearchPaths() { return SEARCH_PATHS; }
+		/// <summary>
+		/// Sets the base directory for the search path, called before any calls to <seealso cref="#AddSearchPath()"/>.
+		/// </summary>
+		/// <param name="argv0"> The first argument passed to mail. </param>
+		static void SetBaseDirectory(const char *argv0);
 
 		/// <summary>
-		/// Adds an file search path.
+		/// Adds an file search path, ensure <seealso cref="#SetBaseDirectory()"/> is called once before.
 		/// </summary>
-		/// <param name="path"> The task to add. </param>
+		/// <param name="path"> The path to add. </param>
 		static void AddSearchPath(const std::string &path);
 
 		/// <summary>
-		/// Find a real or partial path in a search path.
+		/// Removes a file search path.
 		/// </summary>
-		/// <param name="path"> The path to find. </param>
-		/// <returns> The path to the first found. </returns>
-		static std::string Search(const std::string &path);
+		/// <param name="path"> The path to remove. </param>
+		static void RemoveSearchPath(const std::string &path);
 
 		/// <summary>
 		/// Reads a file found by real or partial path.
