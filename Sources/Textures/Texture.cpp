@@ -30,7 +30,7 @@ namespace acid
 		return result;
 	}
 
-	Texture::Texture(const std::string &filename, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic) :
+	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
 		IResource(),
 		IDescriptor(),
 		m_filename(filename),
@@ -97,44 +97,14 @@ namespace acid
 #endif
 	}
 
-	Texture::Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
+	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
+					 const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 		IResource(),
 		IDescriptor(),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
-		m_anisotropic(false),
-		m_mipLevels(1),
-		m_samples(samples),
-		m_imageLayout(imageLayout),
-		m_components(4),
-		m_width(width),
-		m_height(height),
-		m_image(VK_NULL_HANDLE),
-		m_deviceMemory(VK_NULL_HANDLE),
-		m_imageView(VK_NULL_HANDLE),
-		m_sampler(VK_NULL_HANDLE),
-		m_format(format),
-		m_imageInfo({})
-	{
-		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
-		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_imageLayout, m_mipLevels, 1);
-		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
-
-		m_imageInfo.imageLayout = m_imageLayout;
-		m_imageInfo.imageView = m_imageView;
-		m_imageInfo.sampler = m_sampler;
-	}
-
-	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage, const bool &mipmap, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples) :
-		IResource(),
-		IDescriptor(),
-		m_filename(""),
-		m_filter(filter),
-		m_addressMode(addressMode),
-		m_anisotropic(false),
+		m_anisotropic(anisotropic),
 		m_mipLevels(1),
 		m_samples(samples),
 		m_imageLayout(imageLayout),
@@ -152,24 +122,29 @@ namespace acid
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
-		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
-		memcpy(data, pixels, bufferStaging.GetSize());
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
-
 		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-		            VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
-		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
+		            usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
+
+		if (pixels != nullptr)
+		{
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
+
+			Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+			void *data;
+			vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+			memcpy(data, pixels, bufferStaging.GetSize());
+			vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+
+			CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
+		}
 
 		if (mipmap)
 		{
 			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 1);
 		}
-		else
+		else if (pixels != nullptr)
 		{
 			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 1);
 		}

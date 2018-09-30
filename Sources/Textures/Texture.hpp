@@ -46,25 +46,12 @@ namespace acid
 		/// A new texture object.
 		/// </summary>
 		/// <param name="filename"> The file to load the texture from. </param>
-		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		/// <param name="filter"> The type of filtering will be use on the texture. </param>
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
-		explicit Texture(const std::string &filename, const bool &mipmap = true, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true);
-
-		/// <summary>
-		/// A new empty texture object that can be used to render into.
-		/// </summary>
-		/// <param name="width"> The textures width. </param>
-		/// <param name="height"> The textures height. </param>
-		/// <param name="format"> The textures format. </param>
-		/// <param name="imageLayout"> The textures image layout </param>
-		/// <param name="usage"> The textures image usage </param>
-		/// <param name="filter"> The type of filtering will be use on the texture. </param>
-		/// <param name="addressMode"> The sampler address mode to use. </param>
-		/// <param name="samples"> The amount of MSAA samples to use. </param>
-		Texture(const uint32_t &width, const uint32_t &height, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		explicit Texture(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		                 const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
@@ -75,13 +62,14 @@ namespace acid
 		/// <param name="format"> The textures format. </param>
 		/// <param name="imageLayout"> The textures image layout </param>
 		/// <param name="usage"> The textures image usage </param>
-		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		/// <param name="filter"> The type of filtering will be use on the texture. </param>
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
-		Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const bool &mipmap = false, const VkFilter &filter = VK_FILTER_LINEAR,
-			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		Texture(const uint32_t &width, const uint32_t &height, void *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+				const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
 		~Texture();
 
