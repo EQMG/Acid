@@ -70,7 +70,7 @@ namespace acid
 		std::vector<Attachment> m_images;
 		std::vector<SubpassType> m_subpasses;
 	public:
-		RenderpassCreate(const uint32_t &width, const uint32_t &height, const std::vector<Attachment> &images = std::vector<Attachment>(), const std::vector<SubpassType> &subpasses = std::vector<SubpassType>()) :
+		RenderpassCreate(const uint32_t &width, const uint32_t &height, const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}) :
 			m_width(width),
 			m_height(height),
 			m_images(images),

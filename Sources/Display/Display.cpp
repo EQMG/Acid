@@ -1,7 +1,7 @@
 #include "Display.hpp"
 
 #include <cstring>
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 #include <Windows.h>
 #endif
 #include <GLFW/glfw3.h>
@@ -328,7 +328,7 @@ namespace acid
 
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
 		assert(false && "GLFW error!");
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		MessageBox(nullptr, failure.c_str(), "GLFW Error", 0);
 #endif
 	}
@@ -399,7 +399,7 @@ namespace acid
 
 		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
 		assert(false && "Vulkan error!");
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		MessageBox(nullptr, failure.c_str(), "Vulkan Error", 0);
 #endif
 	}

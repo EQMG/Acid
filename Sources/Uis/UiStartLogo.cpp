@@ -14,7 +14,7 @@ namespace acid
 		m_textCopyright(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.6f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved. This product uses technology from Khronos Group, Bullet Physics, Nothings, and GLFW.", FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, 0.8f, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-#ifdef ACID_BUILD_DEBUG
+#if defined(ACID_BUILD_DEBUG)
 		Events::Get()->AddEvent<EventTime>(1.65f, [&]()
 #else
 		Events::Get()->AddEvent<EventTime>(3.6f, [&]()

@@ -1,14 +1,14 @@
 #include "Audio.hpp"
 
 #include <cassert>
-#ifdef ACID_BUILD_MACOS
+#if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
 #include <AL/al.h>
 #include <AL/alc.h>
 #endif
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 #include <Windows.h>
 #endif
 #include "Helpers/FileSystem.hpp"
@@ -92,7 +92,7 @@ namespace acid
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 		assert(false && "OpenAL error!");
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
 #endif
 	}

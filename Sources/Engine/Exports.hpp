@@ -4,22 +4,22 @@
 // Acid exports (prerequisites) file.
 //
 
-#if ACID_BUILD_WINDOWS
-#  if ACID_BUILD_MSVC
-#	if ACID_STATICLIB
+#if defined(ACID_BUILD_WINDOWS)
+#  ifdef ACID_BUILD_MSVC
+#	ifdef ACID_STATICLIB
 #	  define ACID_EXPORT
 #	else
-#	  if ACID_EXPORTS
+#	  ifdef ACID_EXPORTS
 #		define ACID_EXPORT __declspec(dllexport)
 #	  else
 #		define ACID_EXPORT __declspec(dllimport)
 #	  endif
 #	 endif
 #  else
-#	if ACID_STATICLIB
+#	ifdef ACID_STATICLIB
 #	  define ACID_EXPORT
 #	else
-#	  if ACID_EXPORTS
+#	  ifdef ACID_EXPORTS
 #		define ACID_EXPORT __attribute__ ((dllexport))
 #	  else
 #		define ACID_EXPORT __attribute__ ((dllimport))

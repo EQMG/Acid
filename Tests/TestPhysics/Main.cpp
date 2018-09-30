@@ -20,9 +20,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	// Registers file search paths.
-	Files::SetBaseDirectory(argv[0]);
 	Files::AddSearchPath("Resources/Engine");
-//	Files::AddSearchPath("data-1.zip");
 
 	// Creates the engine.
 	auto engine = std::make_unique<Engine>();

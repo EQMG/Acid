@@ -43,7 +43,7 @@ namespace acid
 		if (m_skybox != skybox)
 		{
 			m_skybox = skybox;
-			m_ibl = ComputeIbl(m_skybox);
+			m_ibl = m_skybox; // TODO: ComputeIbl(m_skybox);
 		}
 
 		// Updates uniforms.
@@ -162,7 +162,9 @@ namespace acid
 			return nullptr;
 		}
 
-		auto result = std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight());
+		auto result = std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), nullptr, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		                                        VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		                                        VK_SAMPLE_COUNT_1_BIT, true, true);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);

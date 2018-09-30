@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 #include <io.h>
 #include <direct.h>
 #include "dirent.h"
@@ -28,7 +28,7 @@ typedef struct stat STAT;
 
 namespace acid
 {
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 	const char FileSystem::SEPARATOR = '\\';
 	const char FileSystem::ALT_SEPARATOR = '/';
 #else
@@ -52,7 +52,7 @@ namespace acid
 			return false;
 		}
 
-#ifdef WIN32
+#if defined(ACID_BUILD_WINDOWS)
 		return (st.st_mode & S_IFREG) == S_IFREG || (st.st_mode & S_IFDIR) == S_IFDIR;
 #else
 		return S_ISREG(st.st_mode) || S_ISDIR(st.st_mode);
@@ -68,7 +68,7 @@ namespace acid
 			return false;
 		}
 
-#ifdef WIN32
+#if defined(ACID_BUILD_WINDOWS)
 		return (st.st_mode & S_IFREG) == S_IFREG;
 #else
 		return S_ISREG(st.st_mode);
@@ -84,7 +84,7 @@ namespace acid
 			return false;
 		}
 
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		return (st.st_mode & S_IFDIR) == S_IFDIR;
 #else
 		return S_ISDIR(st.st_mode);
@@ -159,7 +159,7 @@ namespace acid
 
 				if (!Exists(appended.str()) || !IsDirectory(appended.str()))
 				{
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 					mkdir(appended.str().c_str());
 #else
 					mkdir(appended.str().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
@@ -192,7 +192,7 @@ namespace acid
 		}
 		else if (IsFile(path))
 		{
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 			return ::remove(path.c_str()) == 0;
 #else
 			return ::remove(path.c_str()) == 0;
@@ -332,7 +332,7 @@ namespace acid
 			return path;
 		}
 
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		std::string::size_type end = path.find_last_of(SEPARATOR + "/");
 #else
 		std::string::size_type end = path.find_last_of(SEPARATOR);
@@ -340,7 +340,7 @@ namespace acid
 
 		if (end == path.length() - 1)
 		{
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 			end = path.find_last_of(SEPARATOR + "/", end);
 #else
 			end = path.find_last_of(SEPARATOR, end);
@@ -359,7 +359,7 @@ namespace acid
 	{
 		std::string::size_type start = path.find_last_of(SEPARATOR);
 
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
 		if (start == std::string::npos)
 		{
@@ -383,7 +383,7 @@ namespace acid
 	{
 		std::string::size_type start = path.find_last_of(SEPARATOR);
 
-#ifdef ACID_BUILD_WINDOWS
+#if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
 		if (start == std::string::npos)
 		{

@@ -1,0 +1,54 @@
+file(GLOB_RECURSE TESTPBR_HEADER_FILES
+	"*.h"
+	"*.hpp"
+)
+file(GLOB_RECURSE TESTPBR_SOURCE_FILES
+	"*.c"
+	"*.cpp"
+	"*.rc"
+)
+set(TESTPBR_SOURCES
+	${TESTPBR_HEADER_FILES}
+	${TESTPBR_SOURCE_FILES}
+)
+set(TESTPBR_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPBR/")
+
+if(ACID_BUILD_RELEASE AND WIN32)
+	add_executable(TestPBR WIN32 ${TESTPBR_SOURCES})
+else()
+	add_executable(TestPBR ${TESTPBR_SOURCES})
+endif()
+
+set_target_properties(TestPBR PROPERTIES
+	POSITION_INDEPENDENT_CODE ON
+	FOLDER "Acid"
+)
+
+add_dependencies(TestPBR Acid)
+
+target_include_directories(TestPBR PUBLIC ${ACID_INCLUDE_DIR} ${TESTPBR_INCLUDE_DIR})
+target_link_libraries(TestPBR PUBLIC Acid)
+
+if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set_target_properties(TestPBR PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
+elseif(UNIX AND APPLE)
+	set_target_properties(TestPBR PROPERTIES
+		MACOSX_BUNDLE_BUNDLE_NAME "Test Physics"
+		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
+		MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
+		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
+	)
+endif()
+
+# Install
+if(ACID_INSTALL)
+	install(DIRECTORY .
+		DESTINATION include
+		FILES_MATCHING PATTERN "*.h"
+		PATTERN "Private" EXCLUDE
+	)
+
+	install(TARGETS TestPBR
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+	)
+endif()
