@@ -43,7 +43,7 @@ namespace acid
 		if (m_skybox != skybox)
 		{
 			m_skybox = skybox;
-			m_ibl = m_skybox; // TODO: ComputeIbl(m_skybox);
+			m_ibl = ComputeIbl(m_skybox);
 		}
 
 		// Updates uniforms.
@@ -124,7 +124,7 @@ namespace acid
 
 	std::shared_ptr<Texture> RendererDeferred::ComputeBrdf(const uint32_t &size)
 	{
-		auto result = std::make_shared<Texture>(size, size);
+		auto result = std::make_shared<Texture>(size, size, nullptr);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -162,6 +162,8 @@ namespace acid
 			return nullptr;
 		}
 
+	//	auto result = std::make_shared<Cubemap>(source->GetFilename(), source->GetFileSuffix());
+
 		auto result = std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), nullptr, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 		                                        VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
 		                                        VK_SAMPLE_COUNT_1_BIT, true, true);
@@ -184,6 +186,18 @@ namespace acid
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
 		commandBuffer.Submit();
+
+#if ACID_VERBOSE
+		// Saves the ibl textures.
+		for (uint32_t i = 0; i < 6; i++)
+		{
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Face" + String::To(i) + ".png";
+			FileSystem::ClearFile(filename);
+			std::unique_ptr<uint8_t[]> pixels(source->GetPixels(i));
+			Texture::WritePixels(filename, pixels.get(), source->GetWidth(), source->GetHeight(),
+			                     source->GetComponents());
+		}
+#endif
 
 		return result;
 	}
