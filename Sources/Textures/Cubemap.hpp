@@ -82,6 +82,19 @@ namespace acid
 
 		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
 
+		/// <summary>
+		/// Gets a copy of the cubemaps pixels from memory, after usage is finished remember to delete the result.
+		/// </summary>
+		/// <param name="arrayLayer"> The layer to copy from. </param>
+		/// <returns> A copy of the cubemaps pixels. </returns>
+		uint8_t *GetPixels(const uint32_t &arrayLayer);
+
+		/// <summary>
+		/// Copies the pixels into this cubemaps memory.
+		/// </summary>
+		/// <param name="pixels"> The pixels to copy to the image. </param>
+		void SetPixels(uint8_t *pixels);
+
 		std::string GetFilename() override { return m_filename; };
 
 		std::string GetFileSuffix() { return m_fileSuffix; };

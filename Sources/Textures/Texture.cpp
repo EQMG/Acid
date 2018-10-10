@@ -69,20 +69,20 @@ namespace acid
 
 		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
-		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
+		TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 0, 1);
+		CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 1);
 
 		if (mipmap)
 		{
-			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 1);
+			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 0, 1);
 		}
 		else
 		{
-			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 1);
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 1);
 		}
 
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
+		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -125,32 +125,35 @@ namespace acid
 		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 		            usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 
+		if (pixels != nullptr || mipmap)
+		{
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 0, 1);
+		}
+
 		if (pixels != nullptr)
 		{
-			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 1);
-
 			Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
-			vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+			Display::CheckVk(vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
 			memcpy(data, pixels, bufferStaging.GetSize());
 			vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-			CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 1);
+			CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 1);
 		}
 
 		if (mipmap)
 		{
-			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 1);
+			CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 0, 1);
 		}
 		else if (pixels != nullptr)
 		{
-			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 1);
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 1);
 		}
 
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 1);
+		CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -203,7 +206,7 @@ namespace acid
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
-		CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height, false);
+		CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height, false, 0, 1);
 
 		VkImageSubresource imageSubresource = {};
 		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -345,7 +348,7 @@ namespace acid
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
-	void Texture::TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &layerCount)
+	void Texture::TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -373,7 +376,7 @@ namespace acid
 
 		imageMemoryBarrier.subresourceRange.baseMipLevel = 0;
 		imageMemoryBarrier.subresourceRange.levelCount = mipLevels;
-		imageMemoryBarrier.subresourceRange.baseArrayLayer = 0;
+		imageMemoryBarrier.subresourceRange.baseArrayLayer = baseArrayLayer;
 		imageMemoryBarrier.subresourceRange.layerCount = layerCount;
 
 		VkPipelineStageFlags srcStageMask;
@@ -430,7 +433,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void Texture::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &layerCount)
+	void Texture::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -440,7 +443,7 @@ namespace acid
 		region.bufferImageHeight = 0;
 		region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		region.imageSubresource.mipLevel = 0;
-		region.imageSubresource.baseArrayLayer = 0;
+		region.imageSubresource.baseArrayLayer = baseArrayLayer;
 		region.imageSubresource.layerCount = layerCount;
 		region.imageOffset = {0, 0, 0};
 		region.imageExtent = {width, height, 1};
@@ -451,7 +454,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void Texture::CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &layerCount)
+	void Texture::CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -461,9 +464,9 @@ namespace acid
 		barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 		barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		barrier.subresourceRange.baseArrayLayer = 0;
-		barrier.subresourceRange.layerCount = layerCount;
 		barrier.subresourceRange.levelCount = 1;
+		barrier.subresourceRange.baseArrayLayer = baseArrayLayer;
+		barrier.subresourceRange.layerCount = layerCount;
 
 		int32_t mipWidth = width;
 		int32_t mipHeight = height;
@@ -487,13 +490,13 @@ namespace acid
 			imageBlit.srcOffsets[1] = {mipWidth, mipHeight, 1};
 			imageBlit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			imageBlit.srcSubresource.mipLevel = i - 1;
-			imageBlit.srcSubresource.baseArrayLayer = 0;
+			imageBlit.srcSubresource.baseArrayLayer = baseArrayLayer;
 			imageBlit.srcSubresource.layerCount = layerCount;
 			imageBlit.dstOffsets[0] = {0, 0, 0};
 			imageBlit.dstOffsets[1] = {mipWidth > 1 ? mipWidth / 2 : 1, mipHeight > 1 ? mipHeight / 2 : 1, 1};
 			imageBlit.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			imageBlit.dstSubresource.mipLevel = i;
-			imageBlit.dstSubresource.baseArrayLayer = 0;
+			imageBlit.dstSubresource.baseArrayLayer = baseArrayLayer;
 			imageBlit.dstSubresource.layerCount = layerCount;
 
 			vkCmdBlitImage(commandBuffer.GetCommandBuffer(),
@@ -565,7 +568,7 @@ namespace acid
 		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 	}
 
-	void Texture::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &layerCount)
+	void Texture::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -582,13 +585,13 @@ namespace acid
 		imageViewCreateInfo.subresourceRange.aspectMask = imageAspect;
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 		imageViewCreateInfo.subresourceRange.levelCount = mipLevels;
-		imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
+		imageViewCreateInfo.subresourceRange.baseArrayLayer = baseArrayLayer;
 		imageViewCreateInfo.subresourceRange.layerCount = layerCount;
 
 		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
 	}
 
-	bool Texture::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain)
+	bool Texture::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
@@ -643,7 +646,7 @@ namespace acid
 				VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
-				VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1});
+				VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, baseArrayLayer, layerCount});
 		}
 
 		// If source and destination support blit we'll blit as this also does automatic format conversion (e.g. from BGR to RGB).
@@ -651,11 +654,13 @@ namespace acid
 		{
 			// Define the region to blit (we will blit the whole swapchain image).
 			VkOffset3D blitSize = {static_cast<int32_t>(width), static_cast<int32_t>(height), 1};
-			VkImageBlit imageBlitRegion{};
+			VkImageBlit imageBlitRegion = {};
 			imageBlitRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			imageBlitRegion.srcSubresource.baseArrayLayer = baseArrayLayer;
 			imageBlitRegion.srcSubresource.layerCount = 1;
 			imageBlitRegion.srcOffsets[1] = blitSize;
 			imageBlitRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			imageBlitRegion.dstSubresource.baseArrayLayer = 0;
 			imageBlitRegion.dstSubresource.layerCount = 1;
 			imageBlitRegion.dstOffsets[1] = blitSize;
 
@@ -665,10 +670,12 @@ namespace acid
 		else
 		{
 			// Otherwise use image copy (requires us to manually flip components).
-			VkImageCopy imageCopyRegion{};
+			VkImageCopy imageCopyRegion = {};
 			imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			imageCopyRegion.srcSubresource.baseArrayLayer = baseArrayLayer;
 			imageCopyRegion.srcSubresource.layerCount = 1;
 			imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			imageCopyRegion.dstSubresource.baseArrayLayer = 0;
 			imageCopyRegion.dstSubresource.layerCount = 1;
 			imageCopyRegion.extent.width = width;
 			imageCopyRegion.extent.height = height;
@@ -702,7 +709,7 @@ namespace acid
 				VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
-				VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1});
+				VkImageSubresourceRange{VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, baseArrayLayer, layerCount});
 		}
 
 		commandBuffer.End();

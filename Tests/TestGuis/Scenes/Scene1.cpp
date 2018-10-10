@@ -42,7 +42,7 @@ namespace test
 
 		if (m_buttonScreenshot.WasDown())
 		{
-			std::string filename = "Screenshots/" + Engine::Get()->GetDateTime() + ".png";
+			std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
 			Renderer::Get()->CaptureScreenshot(filename);
 		}
 
@@ -65,7 +65,6 @@ namespace test
 			TogglePause();
 		}
 	}
-
 
 	bool Scene1::IsPaused() const
 	{

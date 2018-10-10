@@ -66,20 +66,20 @@ namespace acid
 
 		Texture::CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
-		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 6);
-		Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 6);
+		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 0, 6);
+		Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 6);
 
 		if (mipmap)
 		{
-			Texture::CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 6);
+			Texture::CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 0, 6);
 		}
 		else
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 6);
 		}
 
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		Texture::CreateImageView(m_image, m_imageView,VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels,  6);
+		Texture::CreateImageView(m_image, m_imageView,VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -121,10 +121,13 @@ namespace acid
 		Texture::CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
 
+		if (pixels != nullptr || mipmap)
+		{
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 0, 6);
+		}
+
 		if (pixels != nullptr)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_mipLevels, 6);
-
 			Buffer bufferStaging = Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -133,20 +136,20 @@ namespace acid
 			memcpy(data, pixels, bufferStaging.GetSize());
 			vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 
-			Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 6);
+			Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 6);
 		}
 
 		if (mipmap)
 		{
-			Texture::CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 6);
+			Texture::CreateMipmaps(m_image, m_width, m_height, m_imageLayout, m_mipLevels, 0, 6);
 		}
 		else if (pixels != nullptr)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 6);
 		}
 
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 6);
+		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 
 		m_imageInfo.imageLayout = m_imageLayout;
 		m_imageInfo.imageView = m_imageView;
@@ -191,5 +194,47 @@ namespace acid
 		descriptorWrite.pImageInfo = &m_imageInfo;
 
 		return descriptorWrite;
+	}
+
+	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer)
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkImage dstImage;
+		VkDeviceMemory dstImageMemory;
+		Texture::CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height, false, arrayLayer, 6);
+
+		VkImageSubresource imageSubresource = {};
+		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageSubresource.mipLevel = 0;
+		imageSubresource.arrayLayer = 0;
+
+		VkSubresourceLayout subresourceLayout;
+		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
+
+		uint8_t *result = new uint8_t[subresourceLayout.size];
+
+		void *data;
+		vkMapMemory(logicalDevice, dstImageMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
+		memcpy(result, data, static_cast<size_t>(subresourceLayout.size));
+		vkUnmapMemory(logicalDevice, dstImageMemory);
+
+		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
+		vkDestroyImage(logicalDevice, dstImage, nullptr);
+
+		return result;
+	}
+
+	void Cubemap::SetPixels(uint8_t *pixels)
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+		void *data;
+		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		memcpy(data, pixels, bufferStaging.GetSize());
+		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
 	}
 }
