@@ -61,7 +61,7 @@ namespace acid
 
 	void RenderStage::Rebuild(const Swapchain &swapchain)
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -80,7 +80,7 @@ namespace acid
 
 		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
 #endif

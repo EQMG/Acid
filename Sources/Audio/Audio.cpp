@@ -9,7 +9,7 @@
 #include <AL/alc.h>
 #endif
 #if defined(ACID_BUILD_WINDOWS)
-#include <Windows.h>
+#include <windows.h>
 #endif
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"

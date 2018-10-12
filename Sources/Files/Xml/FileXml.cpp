@@ -15,7 +15,7 @@ namespace acid
 
 	void FileXml::Load()
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -90,7 +90,7 @@ namespace acid
 			XmlNode::Convert(*currentSection, m_parent.get(), true);
 		}
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Xml '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -98,7 +98,7 @@ namespace acid
 
 	void FileXml::Save()
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -109,7 +109,7 @@ namespace acid
 		FileSystem::ClearFile(m_filename);
 		FileSystem::WriteTextFile(m_filename, data.str());
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Xml '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif

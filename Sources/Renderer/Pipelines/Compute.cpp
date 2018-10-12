@@ -19,7 +19,7 @@ namespace acid
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE)
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -29,7 +29,7 @@ namespace acid
 		CreatePipelineLayout();
 		CreatePipelineCompute();
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
 		Log::Out("Compute pipeline '%s' created in %fms\n", m_computeCreate.GetShaderStage().c_str(), debugEnd - debugStart);

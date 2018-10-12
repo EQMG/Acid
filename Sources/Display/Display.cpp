@@ -2,7 +2,7 @@
 
 #include <cstring>
 #if defined(ACID_BUILD_WINDOWS)
-#include <Windows.h>
+#include <windows.h>
 #endif
 #include <GLFW/glfw3.h>
 #include <SPIRV/GlslangToSpv.h>
@@ -13,7 +13,7 @@ namespace acid
 {
 	static const std::vector<const char *> VALIDATION_LAYERS =
 	{
-		"VK_LAYER_LUNARG_standard_validation", "VK_LAYER_RENDERDOC_Capture"
+		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
 	};
 	static const std::vector<const char *> INSTANCE_EXTENSIONS =
 	{
@@ -268,7 +268,7 @@ namespace acid
 
 		if (fullscreen)
 		{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 			printf("Display is going fullscreen\n");
 #endif
 			m_fullscreenWidth = videoMode->width;
@@ -277,7 +277,7 @@ namespace acid
 		}
 		else
 		{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 			printf("Display is going windowed\n");
 #endif
 			m_positionX = (videoMode->width - m_windowWidth) / 2;
@@ -485,7 +485,7 @@ namespace acid
 		std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 		vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		LogVulkanLayers(instanceLayerProperties, "Instance", false);
 #endif
 
@@ -662,7 +662,7 @@ namespace acid
 		vkGetPhysicalDeviceProperties(device, &physicalDeviceProperties);
 		vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		LogVulkanDevice(physicalDeviceProperties);
 #endif
 

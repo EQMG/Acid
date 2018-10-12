@@ -3,7 +3,7 @@
 
 layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_z = 1) in;
 
-layout(rgba16f, set = 0, binding = 0) uniform writeonly imageCube outColour;
+layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outColour;
 
 layout(set = 0, binding = 1) uniform samplerCube samplerColour;
 
@@ -38,6 +38,6 @@ void main()
 			conv = specular_convolution(samplerColour, localDir, roughness);
 		}
 
-		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(conv, 1.0f));
+		imageStore(outColour, ivec2(gl_GlobalInvocationID.xy) + ivec2(0, HEIGHT * i), vec4(conv, 1.0f));
 	}
 }

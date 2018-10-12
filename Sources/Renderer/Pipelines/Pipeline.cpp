@@ -34,7 +34,7 @@ namespace acid
 		m_dynamicState({}),
 		m_tessellationState({})
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -77,7 +77,7 @@ namespace acid
 			break;
 		}
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);

@@ -116,7 +116,7 @@ add_subdirectory(Sources)
 
 # Testing Sources
 if(ACID_BUILD_TESTING)
-	add_subdirectory(Tests/TestGuis)
+	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)
 	add_subdirectory(Tests/TestPBR)
 	add_subdirectory(Tests/TestPhysics)

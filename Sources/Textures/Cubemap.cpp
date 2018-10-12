@@ -46,7 +46,7 @@ namespace acid
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -87,7 +87,7 @@ namespace acid
 
 		Texture::DeletePixels(pixels);
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -146,6 +146,10 @@ namespace acid
 		else if (pixels != nullptr)
 		{
 			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 6);
+		}
+		else
+		{
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_imageLayout, m_mipLevels, 0, 6);
 		}
 
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
@@ -221,6 +225,19 @@ namespace acid
 
 		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
+
+		return result;
+	}
+
+	uint8_t *Cubemap::GetPixels()
+	{
+		auto result = (uint8_t *) malloc(m_width * m_height * 4 * 6);
+
+		for (uint32_t i = 0; i < 6; i++)
+		{
+			auto sidePixels = GetPixels(i);
+			memcpy(&result[m_width * m_height * 4 * i], sidePixels, m_width * m_height * 4);
+		}
 
 		return result;
 	}
