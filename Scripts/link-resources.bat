@@ -27,10 +27,14 @@ mkdir Build\RelWithDebInfo\Bin\Resources
 mklink /J Build\RelWithDebInfo\Bin\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestPhysics\Resources\Engine (
-mklink /J Build\Tests\TestPhysics\Resources\Engine Resources
+IF EXIST Build\Tests\TestGUI\Resources\Engine (
+mklink /J Build\Tests\TestGUI\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestGuis\Resources\Engine (
-mklink /J Build\Tests\TestGuis\Resources\Engine Resources
+IF EXIST Build\Tests\TestPBR\Resources\Engine (
+mklink /J Build\Tests\TestPBR\Resources\Engine Resources
+)
+
+IF EXIST Build\Tests\TestPhysics\Resources\Engine (
+mklink /J Build\Tests\TestPhysics\Resources\Engine Resources
 )

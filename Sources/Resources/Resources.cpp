@@ -20,7 +20,7 @@ namespace acid
 			{
 				if ((*it).use_count() <= 1)
 				{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 					Log::Out("Resource '%s' erased\n", (*it)->GetFilename().c_str());
 #endif
 					it = m_resources.erase(it);

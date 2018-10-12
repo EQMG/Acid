@@ -129,7 +129,7 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -147,7 +147,7 @@ namespace acid
 
 		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Renderpass created in %fms\n", debugEnd - debugStart);
 #endif
@@ -155,7 +155,7 @@ namespace acid
 
 	void Renderer::CaptureScreenshot(const std::string &filename)
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -223,7 +223,7 @@ namespace acid
 		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
@@ -288,7 +288,7 @@ namespace acid
 
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 			Log::Out("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
 #endif
 			m_swapchain = std::make_unique<Swapchain>(displayExtent);

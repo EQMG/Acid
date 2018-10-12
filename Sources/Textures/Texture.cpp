@@ -49,7 +49,7 @@ namespace acid
 		m_format(VK_FORMAT_R8G8B8A8_UNORM),
 		m_imageInfo({})
 	{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugStart = Engine::Get()->GetTimeMs();
 #endif
 
@@ -91,7 +91,7 @@ namespace acid
 		DeletePixels(pixels);
 		m_filename = filename;
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
@@ -150,6 +150,10 @@ namespace acid
 		else if (pixels != nullptr)
 		{
 			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_imageLayout, m_mipLevels, 0, 1);
+		}
+		else
+		{
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_imageLayout, m_mipLevels, 0, 1);
 		}
 
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);

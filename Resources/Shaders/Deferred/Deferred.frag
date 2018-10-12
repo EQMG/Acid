@@ -113,7 +113,7 @@ void main()
 		}
 
 #ifdef USE_IBL
-		irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
+	//	irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
 #endif
 
 		outColour = vec4(irradiance, 1.0f);

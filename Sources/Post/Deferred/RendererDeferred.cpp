@@ -144,7 +144,7 @@ namespace acid
 		commandBuffer.End();
 		commandBuffer.Submit();
 
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 		// Saves the brdf texture.
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
@@ -162,11 +162,7 @@ namespace acid
 			return nullptr;
 		}
 
-	//	auto result = std::make_shared<Cubemap>(source->GetFilename(), source->GetFileSuffix());
-
-		auto result = std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), nullptr, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		                                        VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
-		                                        VK_SAMPLE_COUNT_1_BIT, true, true);
+		Texture convolution = Texture(source->GetWidth(), source->GetHeight() * 6);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -177,7 +173,7 @@ namespace acid
 
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-		descriptorSet.Push("outColour", result);
+		descriptorSet.Push("outColour", convolution);
 		descriptorSet.Push("samplerColour", source);
 		descriptorSet.Update(compute);
 
@@ -187,18 +183,16 @@ namespace acid
 		commandBuffer.End();
 		commandBuffer.Submit();
 
-#if ACID_VERBOSE
-		// Saves the ibl textures.
-		for (uint32_t i = 0; i < 6; i++)
-		{
-			std::string filename = FileSystem::GetWorkingDirectory() + "/Face" + String::To(i) + ".png";
-			FileSystem::ClearFile(filename);
-			std::unique_ptr<uint8_t[]> pixels(source->GetPixels(i));
-			Texture::WritePixels(filename, pixels.get(), source->GetWidth(), source->GetHeight(),
-			                     source->GetComponents());
-		}
+#if defined(ACID_VERBOSE)
+		// Saves the ibl texture.
+		std::string filename = FileSystem::GetWorkingDirectory() + "/IBL.png";
+		FileSystem::ClearFile(filename);
+		std::unique_ptr<uint8_t[]> pixels(convolution.GetPixels());
+		Texture::WritePixels(filename, pixels.get(), convolution.GetWidth(), convolution.GetHeight(), convolution.GetComponents());
 #endif
 
-		return result;
+		return std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), convolution.GetPixels(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		                                 VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		                                 VK_SAMPLE_COUNT_1_BIT, true, true);
 	}
 }

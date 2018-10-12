@@ -34,7 +34,7 @@ namespace acid
 
 		if (it == PIVOT_MAP.end())
 		{
-#if ACID_VERBOSE
+#if defined(ACID_VERBOSE)
 			Log::Error("Could not find a UiBound pivot from key: %s", key.c_str());
 #endif
 			return Vector2(0.0f, 1.0f);
