@@ -23,12 +23,20 @@ namespace acid
 		PIPELINE_DEPTH_WRITE = 3
 	};
 
+	/// <summary>
+	/// A object that represents position in the renderpass/subpass structure.
+	/// </summary>
 	class ACID_EXPORT GraphicsStage
 	{
 	private:
 		uint32_t m_renderpass;
 		uint32_t m_subpass;
 	public:
+		/// <summary>
+		/// Creates a new graphics stage.
+		/// </summary>
+		/// <param name="renderpass"> The renderpass. </param>
+		/// <param name="subpass"> The subpass. </param>
 		GraphicsStage(const uint32_t &renderpass, const uint32_t &subpass) :
 			m_renderpass(renderpass),
 			m_subpass(subpass)
@@ -137,7 +145,6 @@ namespace acid
 
 		std::vector<PipelineDefine> m_defines;
 	public:
-
 		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
 						const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
@@ -176,7 +183,6 @@ namespace acid
 
 		std::vector<PipelineDefine> m_defines;
 	public:
-
 		ComputeCreate(const std::string &shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize,
 						const std::vector<PipelineDefine> &defines = {}) :
 			m_shaderStage(shaderStage),

@@ -11,8 +11,8 @@ namespace test
 	{
 		0, 0, // width / height
 		{
-			Attachment(0, ATTACHMENT_DEPTH), // depth
-			Attachment(1, ATTACHMENT_SWAPCHAIN) // swapchain
+			Attachment(0, "depth", ATTACHMENT_DEPTH),
+			Attachment(1, "swapchain", ATTACHMENT_SWAPCHAIN)
 		}, // images
 		{
 			SubpassType(0, {1}),

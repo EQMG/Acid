@@ -6,6 +6,7 @@
 #include "Models/VertexModel.hpp"
 #include "Renderer/Swapchain/DepthStencil.hpp"
 #include "Renderer/Pipelines/Compute.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
@@ -93,11 +94,11 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", m_uniformScene);
-		m_descriptorSet.Push("samplerDepth", m_pipeline.GetDepthStencil());
-		m_descriptorSet.Push("samplerDiffuse", m_pipeline.GetTexture(2));
-		m_descriptorSet.Push("samplerNormal", m_pipeline.GetTexture(3));
-		m_descriptorSet.Push("samplerMaterial", m_pipeline.GetTexture(4));
-		m_descriptorSet.Push("samplerShadows", m_pipeline.GetTexture(0, 0));
+		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
+		m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
+		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normals"));
+		m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("materials"));
+		m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
 		m_descriptorSet.Push("samplerIbl", m_ibl);
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);

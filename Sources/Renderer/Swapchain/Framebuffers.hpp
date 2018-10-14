@@ -27,7 +27,7 @@ namespace acid
 
 		const std::vector<std::unique_ptr<Texture>> &GetImageAttachments() const { return m_imageAttachments; }
 
-		Texture *GetAttachment(const uint32_t &index) const { return m_imageAttachments.at(index).get(); }
+		Texture *GetAttachment(const uint32_t &index) const { return m_imageAttachments[index].get(); }
 
 		std::vector<VkFramebuffer> GetFramebuffers() const { return m_framebuffers; }
 	};

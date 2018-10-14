@@ -8,9 +8,10 @@ namespace acid
 	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate) :
 		m_stageIndex(stageIndex),
 		m_renderpassCreate(renderpassCreate),
-		m_depthStencil(nullptr),
 		m_renderpass(nullptr),
+		m_depthStencil(nullptr),
 		m_framebuffers(nullptr),
+		m_attachments(std::map<std::string, IDescriptor *>()),
 		m_clearValues(std::vector<VkClearValue>()),
 		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
 		m_depthAttachment({}),
@@ -80,6 +81,20 @@ namespace acid
 
 		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
 
+		m_attachments.clear();
+
+		for (auto &image : m_renderpassCreate.GetImages())
+		{
+			if (image.GetType() == ATTACHMENT_DEPTH)
+			{
+				m_attachments.emplace(image.GetName(), m_depthStencil.get());
+			}
+			else
+			{
+				m_attachments.emplace(image.GetName(), m_framebuffers->GetAttachment(image.GetBinding()));
+			}
+		}
+
 #if defined(ACID_VERBOSE)
 		float debugEnd = Engine::Get()->GetTimeMs();
 		Log::Out("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
@@ -114,6 +129,18 @@ namespace acid
 		m_lastWidth = currentWidth;
 		m_lastHeight = currentHeight;
 		return outOfDate;
+	}
+
+	IDescriptor *RenderStage::GetAttachment(const std::string &name) const
+	{
+		auto it = m_attachments.find(name);
+
+		if (it != m_attachments.end())
+		{
+			return it->second;
+		}
+
+		return nullptr;
 	}
 
 	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const

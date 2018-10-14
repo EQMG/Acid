@@ -1,6 +1,8 @@
 #pragma once
 
 #include <optional>
+#include <map>
+#include <vector>
 #include <vulkan/vulkan.h>
 #include "Renderpass/Renderpass.hpp"
 #include "Swapchain/DepthStencil.hpp"
@@ -15,9 +17,11 @@ namespace acid
 		uint32_t m_stageIndex;
 		RenderpassCreate m_renderpassCreate;
 
-		std::unique_ptr<DepthStencil> m_depthStencil;
 		std::unique_ptr<Renderpass> m_renderpass;
+		std::unique_ptr<DepthStencil> m_depthStencil;
 		std::unique_ptr<Framebuffers> m_framebuffers;
+
+		std::map<std::string, IDescriptor *> m_attachments;
 
 		std::vector<VkClearValue> m_clearValues;
 		std::vector<uint32_t> m_subpassAttachmentCount;
@@ -44,11 +48,13 @@ namespace acid
 
 		RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
 
-		DepthStencil *GetDepthStencil() const { return m_depthStencil.get(); };
-
 		Renderpass *GetRenderpass() const { return m_renderpass.get(); };
 
+		DepthStencil *GetDepthStencil() const { return m_depthStencil.get(); };
+
 		Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
+
+		IDescriptor *GetAttachment(const std::string &name) const;
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 
