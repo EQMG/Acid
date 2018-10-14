@@ -2,13 +2,14 @@
 
 #include "Models/Model.hpp"
 #include "Renderer/IRenderer.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// Represents a post effect shader and on application saves the result into a fbo.
+	/// Represents a post effect shader and on application saves the result into a FBO.
 	/// </summary>
 	class ACID_EXPORT IPostFilter :
 		public IRenderer
@@ -20,7 +21,7 @@ namespace acid
 		std::shared_ptr<Model> m_model;
 	public:
 		/// <summary>
-		/// Creates a new post effect filter
+		/// Creates a new post effect filter.
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="shaderStages"> The pipelines shader stages. </param>

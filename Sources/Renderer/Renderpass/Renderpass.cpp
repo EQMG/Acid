@@ -55,16 +55,22 @@ namespace acid
 
 			for (auto &attachmentBinding : subpassType.GetAttachmentBindings())
 			{
-				uint32_t attachment = renderpassCreate.GetAttachment(attachmentBinding);
+				auto attachment = renderpassCreate.GetAttachment(attachmentBinding);
 
-				if (renderpassCreate.GetImages().at(attachment).GetType() == ATTACHMENT_DEPTH)
+				if (!attachment)
 				{
-					depthAttachment = attachment;
+					Log::Error("Filed to find a renderpass attachment bound to: %i\n", attachmentBinding);
+					continue;
+				}
+
+				if (renderpassCreate.GetImages().at(*attachment).GetType() == ATTACHMENT_DEPTH)
+				{
+					depthAttachment = *attachment;
 					continue;
 				}
 
 				VkAttachmentReference attachmentReference = {};
-				attachmentReference.attachment = attachment;
+				attachmentReference.attachment = *attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				subpassColourAttachments->emplace_back(attachmentReference);
 			}

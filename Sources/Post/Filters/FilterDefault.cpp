@@ -10,8 +10,8 @@ namespace acid
 	void FilterDefault::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.
-		m_descriptorSet.Push("writeColour", m_pipeline.GetTexture(5));
-		m_descriptorSet.Push("samplerColour", m_pipeline.GetTexture(5));
+		m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
+		m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)

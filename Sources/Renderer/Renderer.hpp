@@ -106,6 +106,8 @@ namespace acid
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
+		IDescriptor *GetAttachment(const std::string &name) const;
+
 		Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 
 		VkCommandPool GetCommandPool() const { return m_commandPool; }

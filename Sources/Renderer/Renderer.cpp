@@ -239,6 +239,21 @@ namespace acid
 		return m_renderStages.at(index).get();
 	}
 
+	IDescriptor *Renderer::GetAttachment(const std::string &name) const
+	{
+		for (auto &renderStage : m_renderStages)
+		{
+			auto attachment = renderStage->GetAttachment(name);
+
+			if (attachment != nullptr)
+			{
+				return attachment;
+			}
+		}
+
+		return nullptr;
+	}
+
 	void Renderer::CreateFences()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
