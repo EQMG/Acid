@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Maths/Colour.hpp>
 #include <Materials/IMaterial.hpp>
 #include <Textures/Texture.hpp>
 

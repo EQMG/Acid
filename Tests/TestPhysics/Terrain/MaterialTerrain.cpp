@@ -6,7 +6,6 @@
 namespace test
 {
 	MaterialTerrain::MaterialTerrain(const std::shared_ptr<Texture> &textureR, const std::shared_ptr<Texture> &textureG) :
-		IMaterial(),
 		m_textureR(textureR),
 		m_textureG(textureG),
 		m_material(nullptr)

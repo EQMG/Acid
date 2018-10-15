@@ -16,17 +16,16 @@ namespace test
 {
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
-		4096, 4096, // width, height
 		{
 			Attachment(0, "shadows", ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM)
 		}, // images
 		{
 			SubpassType(0, {0})
-		} // subpasses
+		}, // subpasses
+		4096, 4096 // width, height
 	};
 	const RenderpassCreate RENDERPASS_1_CREATE = RenderpassCreate
 	{
-		0, 0, // width, height
 		{
 			Attachment(0, "depth", ATTACHMENT_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
 			Attachment(1, "swapchain", ATTACHMENT_SWAPCHAIN),

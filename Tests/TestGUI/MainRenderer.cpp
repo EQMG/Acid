@@ -9,7 +9,6 @@ namespace test
 {
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
-		0, 0, // width / height
 		{
 			Attachment(0, "depth", ATTACHMENT_DEPTH),
 			Attachment(1, "swapchain", ATTACHMENT_SWAPCHAIN)
