@@ -161,9 +161,9 @@ namespace acid
 		bool IsRunning() const { return m_running; }
 
 		/// <summary>
-		/// Requests the engine to delete and stop the gameloop.
+		/// Requests the engine to delete and stop the game-loop.
 		/// </summary>
-		/// <param name="error"> If a bad error occured. </param>
+		/// <param name="error"> If a bad error occurred. </param>
 		void RequestClose(const bool &error);
 
 		/// <summary>

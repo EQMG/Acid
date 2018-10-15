@@ -81,27 +81,19 @@ namespace acid
 	class ACID_EXPORT RenderpassCreate
 	{
 	private:
-		uint32_t m_width;
-		uint32_t m_height;
-
 		std::vector<Attachment> m_images;
 		std::vector<SubpassType> m_subpasses;
+		
+		uint32_t m_width;
+		uint32_t m_height;
 	public:
-		RenderpassCreate(const uint32_t &width, const uint32_t &height, const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}) :
-			m_width(width),
-			m_height(height),
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0) :
 			m_images(images),
-			m_subpasses(subpasses)
+			m_subpasses(subpasses),
+			m_width(width),
+			m_height(height)
 		{
 		}
-
-		uint32_t GetWidth() const { return m_width; }
-
-		void SetWidth(const uint32_t &width) { m_width = width; }
-
-		uint32_t GetHeight() const { return m_height; }
-
-		void SetHeight(const uint32_t &height) { m_height = height; }
 
 		std::vector<Attachment> GetImages() const { return m_images; }
 
@@ -142,5 +134,13 @@ namespace acid
 		//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
 			return {};
 		}
+		
+		uint32_t GetWidth() const { return m_width; }
+
+		void SetWidth(const uint32_t &width) { m_width = width; }
+
+		uint32_t GetHeight() const { return m_height; }
+
+		void SetHeight(const uint32_t &height) { m_height = height; }
 	};
 }
