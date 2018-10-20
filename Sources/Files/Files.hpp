@@ -13,8 +13,6 @@ namespace acid
 	class ACID_EXPORT Files :
 		public IModule
 	{
-	private:
-		static std::vector<std::string> SEARCH_PATHS;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -25,6 +23,12 @@ namespace acid
 		Files();
 
 		void Update() override;
+
+		/// <summary>
+		/// Sets the base directory for the search path, called before any calls to <seealso cref="#AddSearchPath()"/>.
+		/// </summary>
+		/// <param name="argv0"> The first argument passed to mail. </param>
+		static void SetBaseDirectory(const char *argv0);
 
 		/// <summary>
 		/// Adds an file search path, ensure <seealso cref="#SetBaseDirectory()"/> is called once before.

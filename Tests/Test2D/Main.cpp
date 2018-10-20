@@ -4,6 +4,7 @@
 #include <Scenes/Scenes.hpp>
 #include "Scenes/Player.hpp"
 #include "Scenes/Scene1.hpp"
+#include "Tiles/MaterialTile.hpp"
 #include "MainRenderer.hpp"
 
 using namespace test;
@@ -12,6 +13,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	// Registers file search paths.
+	Files::SetBaseDirectory(argv[0]);
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine.
@@ -21,6 +23,7 @@ int main(int argc, char **argv)
 
 	// Registers components.
 	Scenes::Get()->RegisterComponent<Player>("Player");
+	Scenes::Get()->RegisterComponent<MaterialTile>("MaterialTile");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test 2D");

@@ -72,7 +72,7 @@ namespace test
 					voxelChunk->SetName("Chunk_" + String::To(x) + "_" + String::To(y) + "_" + String::To(z));
 					voxelChunk->AddComponent<Mesh>();
 					voxelChunk->AddComponent<MaterialVoxel>();
-					voxelChunk->AddComponent<VoxelChunk>(MESH_SIMPLE, true);
+					voxelChunk->AddComponent<VoxelChunk>(MESHER_CULLED, true);
 					voxelChunk->AddComponent<MeshRender>();
 				}
 			}
