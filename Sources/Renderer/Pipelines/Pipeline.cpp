@@ -53,9 +53,6 @@ namespace acid
 		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
 			break;
-		case PIPELINE_MODE_SHADOW:
-			CreatePipelineShadow();
-			break;
 		default:
 			assert(false);
 			break;
@@ -398,20 +395,6 @@ namespace acid
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
-
-		CreatePipeline();
-	}
-
-	void Pipeline::CreatePipelineShadow()
-	{
-		m_rasterizationState.depthBiasEnable = VK_TRUE;
-
-		m_colourBlendState.attachmentCount = 0;
-		m_colourBlendState.pAttachments = nullptr;
-
-		m_dynamicStates.emplace_back(VK_DYNAMIC_STATE_DEPTH_BIAS);
-		m_dynamicState.pDynamicStates = m_dynamicStates.data();
-		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());
 
 		CreatePipeline();
 	}

@@ -23,7 +23,7 @@ namespace test
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
 		{
-			Attachment(0, "shadow", ATTACHMENT_DEPTH)
+			Attachment(0, "shadows", ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM)
 		}, // images
 		{
 			SubpassType(0, {0})
@@ -77,7 +77,7 @@ namespace test
 	{
 		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
 		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize());
+		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
 
 	//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	}

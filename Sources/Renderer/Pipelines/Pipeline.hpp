@@ -87,7 +87,5 @@ namespace acid
 		void CreatePipelinePolygon();
 
 		void CreatePipelineMrt();
-
-		void CreatePipelineShadow();
 	};
 }

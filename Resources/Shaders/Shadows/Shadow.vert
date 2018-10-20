@@ -4,8 +4,6 @@
 
 layout(set = 0, location = 0) in vec3 inPosition;
 
-layout (location = 0) out int outInstanceIndex;
-
 out gl_PerVertex 
 {
 	vec4 gl_Position;
@@ -13,6 +11,5 @@ out gl_PerVertex
 
 void main() 
 {
-	outInstanceIndex = gl_InstanceIndex;
-	gl_Position = inPos;
+	gl_Position = inPosition;
 }
