@@ -9,10 +9,10 @@ using namespace acid;
 
 namespace test
 {
-	enum ChunkMesh
+	enum ChunkMesher
 	{
-		MESH_GREEDY = 0,
-		MESH_SIMPLE = 1
+		MESHER_GREEDY = 0,
+		MESHER_CULLED = 1
 	};
 
 	class VoxelChunk :
@@ -20,7 +20,7 @@ namespace test
 	{
 	private:
 		std::vector<std::vector<std::vector<VoxelBlock>>> m_blocks;
-		ChunkMesh m_chunkMesh;
+		ChunkMesher m_mesher;
 		bool m_generate;
 		bool m_rebuild;
 	public:
@@ -29,7 +29,7 @@ namespace test
 		static const float VOXEL_SIZE;
 		static const Vector3 CHUNK_SIZE;
 
-		explicit VoxelChunk(const ChunkMesh &chunkMesh = ChunkMesh::MESH_GREEDY, const bool &generate = false);
+		explicit VoxelChunk(const ChunkMesher &mesher = MESHER_GREEDY, const bool &generate = false);
 
 		void Start() override;
 
@@ -55,7 +55,7 @@ namespace test
 
 		void CreateGreedyMesh(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices);
 
-		void CreateSimpleMesh(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices);
+		void CreateCulledMesh(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices);
 
 		std::string GetVoxelFace(const int32_t &x, const int32_t &y, const int32_t &z, const BlockFace &faceType);
 

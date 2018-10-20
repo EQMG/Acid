@@ -11,10 +11,10 @@ namespace test
 	const float VoxelChunk::VOXEL_SIZE = 1.0f;
 	const Vector3 VoxelChunk::CHUNK_SIZE = Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
-	VoxelChunk::VoxelChunk(const ChunkMesh &chunkMesh, const bool &generate) :
+	VoxelChunk::VoxelChunk(const ChunkMesher &mesher, const bool &generate) :
 		IComponent(),
 		m_blocks(std::vector<std::vector<std::vector<VoxelBlock>>>(CHUNK_WIDTH, std::vector<std::vector<VoxelBlock>>(CHUNK_WIDTH, std::vector<VoxelBlock>(CHUNK_HEIGHT)))),
-		m_chunkMesh(chunkMesh),
+		m_mesher(mesher),
 		m_generate(generate),
 		m_rebuild(true)
 	{
@@ -24,7 +24,7 @@ namespace test
 			{
 				for (uint32_t y = 0; y < CHUNK_HEIGHT; y++)
 				{
-					m_blocks.at(x).at(z).at(y) = VoxelBlock(this, VOXEL_SIZE * Vector3(x, y, z), "");
+					m_blocks.at(x).at(z).at(y).SetPosition(VOXEL_SIZE * Vector3(x, y, z));
 				}
 			}
 		}
@@ -161,13 +161,13 @@ namespace test
 		auto vertices = std::vector<VertexModel>();
 		auto indices = std::vector<uint32_t>();
 
-		switch (m_chunkMesh)
+		switch (m_mesher)
 		{
-			case MESH_GREEDY:
+			case MESHER_GREEDY:
 				CreateGreedyMesh(vertices, indices);
 				break;
-			case MESH_SIMPLE:
-				CreateSimpleMesh(vertices, indices);
+			case MESHER_CULLED:
+				CreateCulledMesh(vertices, indices);
 				break;
 		}
 
@@ -199,7 +199,7 @@ namespace test
 		uint32_t i, j, k, l, w, h, u, v, n;
 		BlockFace currentFace;
 
-		auto x = std::array<uint32_t, 3>();
+		auto x = std::array<int32_t, 3>();
 		auto q = std::array<uint32_t, 3>();
 		auto du = std::array<uint32_t, 3>();
 		auto dv = std::array<uint32_t, 3>();
@@ -351,7 +351,7 @@ namespace test
 		}
 	}
 
-	void VoxelChunk::CreateSimpleMesh(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices)
+	void VoxelChunk::CreateCulledMesh(std::vector<VertexModel> &vertices, std::vector<uint32_t> &indices)
 	{
 		uint32_t u, v;
 		BlockFace currentFace;

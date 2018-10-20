@@ -12,6 +12,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	// Registers file search paths.
+	Files::SetBaseDirectory(argv[0]);
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine.

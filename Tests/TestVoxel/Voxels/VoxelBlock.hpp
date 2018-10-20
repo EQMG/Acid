@@ -25,21 +25,21 @@ namespace test
 	private:
 		static std::map<std::string, Colour> BLOCK_COLOURS;
 
-		VoxelChunk *m_parent;
-
 		Vector3 m_position;
 		std::string m_type;
 	public:
-		explicit VoxelBlock(VoxelChunk *parent = nullptr, const Vector3 &position = Vector3::ZERO, const std::string &type = "");
-
-		void SetChanged();
+		explicit VoxelBlock(const Vector3 &position = Vector3::ZERO, const std::string &type = "");
 
 		Vector3 GetPosition() const { return m_position; }
+
+		void SetPosition(const Vector3 &position) { m_position = position; }
 
 		std::string GetType() const { return m_type; }
 
 		void SetType(const std::string &type) { m_type = type; }
 
 		static Colour FindColour(const std::string &key);
+
+		static void AddColour(const std::string &key, const Colour &colour);
 	};
 }

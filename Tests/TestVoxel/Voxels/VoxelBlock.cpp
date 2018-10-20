@@ -12,16 +12,10 @@ namespace test
 		{"Stone", Colour("#8B8D7A")},
 	};
 
-	VoxelBlock::VoxelBlock(VoxelChunk *parent, const Vector3 &position, const std::string &type) :
-		m_parent(parent),
+	VoxelBlock::VoxelBlock(const Vector3 &position, const std::string &type) :
 		m_position(position),
 		m_type(type)
 	{
-	}
-
-	void VoxelBlock::SetChanged()
-	{
-		m_parent->Rebuild();
 	}
 
 	Colour VoxelBlock::FindColour(const std::string &key)
@@ -39,5 +33,10 @@ namespace test
 		}
 
 		return it->second;
+	}
+
+	void VoxelBlock::AddColour(const std::string &key, const Colour &colour)
+	{
+		BLOCK_COLOURS.emplace(key, colour);
 	}
 }
