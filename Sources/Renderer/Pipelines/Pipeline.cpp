@@ -18,6 +18,7 @@ namespace acid
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
 		m_shaderProgram(std::make_unique<ShaderProgram>(pipelineCreate.GetShaderStages().back())),
+		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -44,26 +45,6 @@ namespace acid
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreate.GetPipelineDepth())
-		{
-			case PIPELINE_DEPTH_NONE:
-				m_depthStencilState.depthTestEnable = VK_FALSE;
-				m_depthStencilState.depthWriteEnable = VK_FALSE;
-				break;
-			case PIPELINE_DEPTH_READ_WRITE:
-				m_depthStencilState.depthTestEnable = VK_TRUE;
-				m_depthStencilState.depthWriteEnable = VK_TRUE;
-				break;
-			case PIPELINE_DEPTH_READ:
-				m_depthStencilState.depthTestEnable = VK_TRUE;
-				m_depthStencilState.depthWriteEnable = VK_FALSE;
-				break;
-			case PIPELINE_DEPTH_WRITE:
-				m_depthStencilState.depthTestEnable = VK_FALSE;
-				m_depthStencilState.depthWriteEnable = VK_TRUE;
-				break;
-		}
-
 		switch (pipelineCreate.GetPipelineMode())
 		{
 		case PIPELINE_MODE_POLYGON:
@@ -71,6 +52,9 @@ namespace acid
 			break;
 		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
+			break;
+		case PIPELINE_MODE_SHADOW:
+			CreatePipelineShadow();
 			break;
 		default:
 			assert(false);
@@ -264,8 +248,27 @@ namespace acid
 		m_colourBlendState.blendConstants[3] = 0.0f;
 
 		m_depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-		m_depthStencilState.depthTestEnable = VK_TRUE;
-		m_depthStencilState.depthWriteEnable = VK_TRUE;
+
+		switch (m_pipelineCreate.GetPipelineDepth())
+		{
+			case PIPELINE_DEPTH_NONE:
+				m_depthStencilState.depthTestEnable = VK_FALSE;
+				m_depthStencilState.depthWriteEnable = VK_FALSE;
+				break;
+			case PIPELINE_DEPTH_READ_WRITE:
+				m_depthStencilState.depthTestEnable = VK_TRUE;
+				m_depthStencilState.depthWriteEnable = VK_TRUE;
+				break;
+			case PIPELINE_DEPTH_READ:
+				m_depthStencilState.depthTestEnable = VK_TRUE;
+				m_depthStencilState.depthWriteEnable = VK_FALSE;
+				break;
+			case PIPELINE_DEPTH_WRITE:
+				m_depthStencilState.depthTestEnable = VK_FALSE;
+				m_depthStencilState.depthWriteEnable = VK_TRUE;
+				break;
+		}
+
 		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
 		m_depthStencilState.front = m_depthStencilState.back;
 		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
@@ -282,8 +285,8 @@ namespace acid
 		m_multisampleState.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-		m_dynamicState.pDynamicStates = DYNAMIC_STATES.data();
-		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(DYNAMIC_STATES.size());
+		m_dynamicState.pDynamicStates = m_dynamicStates.data();
+		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());
 
 		m_tessellationState.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO;
 		m_tessellationState.patchControlPoints = 3;
@@ -395,6 +398,20 @@ namespace acid
 
 		m_colourBlendState.attachmentCount = static_cast<uint32_t>(blendAttachmentStates.size());
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
+
+		CreatePipeline();
+	}
+
+	void Pipeline::CreatePipelineShadow()
+	{
+		m_rasterizationState.depthBiasEnable = VK_TRUE;
+
+		m_colourBlendState.attachmentCount = 0;
+		m_colourBlendState.pAttachments = nullptr;
+
+		m_dynamicStates.emplace_back(VK_DYNAMIC_STATE_DEPTH_BIAS);
+		m_dynamicState.pDynamicStates = m_dynamicStates.data();
+		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());
 
 		CreatePipeline();
 	}
