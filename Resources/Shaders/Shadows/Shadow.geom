@@ -2,21 +2,20 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout (triangles, invocations = NUM_CASCADES) in;
-layout (triangle_strip, max_vertices = 3) out;
+layout(triangles, invocations = NUM_CASCADES) in;
+layout(triangle_strip, max_vertices = 3) out;
 
 layout(set = 0, binding = 0) uniform UboScene
 {
-    mat4 projectionView[NUM_CASCADES];
+    mat4 cropMatrix[NUM_CASCADES];
 } scene;
 
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 transform;
-	vec4 instancePos[3];
 } object;
 
-layout (location = 0) in int inInstanceIndex[];
+//layout(location = 1) out int outSplit;
 
 out gl_PerVertex
 {
@@ -25,13 +24,11 @@ out gl_PerVertex
 
 void main()
 {
-	vec4 instancedPos = object.instancePos[inInstanceIndex[0]];
-
-	for (int i = 0; i < gl_in.length(); i++)
+	for (int i = 0; i < NUM_CASCADES; i++) // TODO: gl_in.length() (Might be two loops?)
 	{
-		gl_Layer = gl_InvocationID;
-		vec4 tmpPos = gl_in[i].gl_Position + instancedPos;
-		gl_Position = object.transform * scene.projectionView[gl_InvocationID] * tmpPos;
+		vec4 worldPosition = object.transform * gl_in[i].gl_Position;
+		gl_Position = scene.cropMatrix[i] * worldPosition;
+	//	outSplit = i;
 		EmitVertex();
 	}
 
