@@ -12,7 +12,8 @@ namespace acid
 	enum PipelineMode
 	{
 		PIPELINE_MODE_POLYGON = 0,
-		PIPELINE_MODE_MRT = 1
+		PIPELINE_MODE_MRT = 1,
+		PIPELINE_MODE_SHADOW = 2
 	};
 
 	enum PipelineDepth

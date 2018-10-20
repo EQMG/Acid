@@ -22,6 +22,8 @@ namespace acid
 		PipelineCreate m_pipelineCreate;
 		std::unique_ptr<ShaderProgram> m_shaderProgram;
 
+		std::vector<VkDynamicState> m_dynamicStates;
+
 		std::vector<VkShaderModule> m_modules;
 		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
 
@@ -85,5 +87,7 @@ namespace acid
 		void CreatePipelinePolygon();
 
 		void CreatePipelineMrt();
+
+		void CreatePipelineShadow();
 	};
 }

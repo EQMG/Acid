@@ -1,6 +1,7 @@
 #include "ShadowRender.hpp"
 
 #include "Meshes/Mesh.hpp"
+#include "RendererShadows.hpp"
 
 namespace acid
 {
@@ -16,8 +17,14 @@ namespace acid
 
 	void ShadowRender::Update()
 	{
+		auto instancePos = std::vector<Vector4>(3);
+		instancePos[0] = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+		instancePos[1] = Vector4(-4.0f, 0.0, -4.0f, 0.0f);
+		instancePos[2] = Vector4(4.0f, 0.0, -4.0f, 0.0f);
+
 		// Updates uniforms.
 		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
+		m_uniformObject.Push("instancePos", *instancePos.data(), sizeof(Vector4) * 3);
 	}
 
 	void ShadowRender::Decode(const Metadata &metadata)
@@ -50,7 +57,7 @@ namespace acid
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer);
-		mesh->GetModel()->CmdRender(commandBuffer);
+		mesh->GetModel()->CmdRender(commandBuffer, RendererShadows::NUM_CASCADES);
 		return true;
 	}
 }

@@ -23,7 +23,7 @@ namespace test
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
 		{
-			Attachment(0, "shadows", ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM)
+			Attachment(0, "shadow", ATTACHMENT_DEPTH)
 		}, // images
 		{
 			SubpassType(0, {0})
