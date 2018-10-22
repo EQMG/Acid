@@ -45,12 +45,12 @@ namespace acid
 	void MaterialDefault::Decode(const Metadata &metadata)
 	{
 		m_baseDiffuse = metadata.GetChild<Colour>("Base Diffuse");
-		TrySetDiffuseTexture(metadata.GetChild<std::string>("Diffuse Texture"));
+		m_diffuseTexture = Texture::Resource(metadata.GetChild<std::string>("Diffuse Texture"));
 
 		m_metallic = metadata.GetChild<float>("Metallic");
 		m_roughness = metadata.GetChild<float>("Roughness");
-		TrySetMaterialTexture(metadata.GetChild<std::string>("Material Texture"));
-		TrySetNormalTexture(metadata.GetChild<std::string>("Normal Texture"));
+		m_materialTexture = Texture::Resource(metadata.GetChild<std::string>("Material Texture"));
+		m_normalTexture = Texture::Resource(metadata.GetChild<std::string>("Normal Texture"));
 
 		m_castsShadows = metadata.GetChild<bool>("Casts Shadows");
 		m_ignoreLighting = metadata.GetChild<bool>("Ignore Lighting");

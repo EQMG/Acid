@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
-	Engine::Get()->RegisterModule<World>(UPDATE_NORMAL);
+	Engine::Get()->RegisterModule<World>(MODULE_UPDATE_NORMAL);
 //	Engine::Get()->DeregisterModule<Shadows>();
 
 	// Registers components.

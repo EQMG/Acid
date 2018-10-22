@@ -6,6 +6,11 @@ namespace acid
 {
 	std::shared_ptr<FontType> FontType::Resource(const std::string &filename, const std::string &fontStyle)
 	{
+		if (filename.empty())
+		{
+			return nullptr;
+		}
+
 		auto resource = Resources::Get()->Get(ToFilename(filename, fontStyle));
 
 		if (resource != nullptr)
@@ -20,6 +25,11 @@ namespace acid
 
 	std::shared_ptr<FontType> FontType::Resource(const std::string &data)
 	{
+		if (data.empty())
+		{
+			return nullptr;
+		}
+
 		auto split = String::Split(data, "_");
 		std::string filename = split[1];
 		std::string fontStyle = split[2];

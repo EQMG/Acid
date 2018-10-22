@@ -22,18 +22,18 @@ namespace acid
 
 	void Serialize::EncodeStream(const Metadata &metadata, std::stringstream &ss)
 	{
-		EncodePropsFlags props = PROP_NONE;
+		EncodePropsFlags props = ENCODE_PROP_NONE;
 
 		if (!metadata.GetName().empty())
 		{
 			ss << metadata.GetName() << ",";
-			props |= PROP_NAME;
+			props |= ENCODE_PROP_NAME;
 		}
 
 		if (!metadata.GetValue().empty())
 		{
 			ss << metadata.GetValue() << ",";
-			props |= PROP_VALUE;
+			props |= ENCODE_PROP_VALUE;
 		}
 
 		if (metadata.GetChildCount() != 0)
@@ -48,7 +48,7 @@ namespace acid
 			}
 
 			ss << "],";
-			props |= PROP_CHILDREN;
+			props |= ENCODE_PROP_CHILDREN;
 		}
 
 		if (metadata.GetAttributeCount() != 0)
@@ -61,7 +61,7 @@ namespace acid
 			}
 
 			ss << "],";
-			props |= PROP_ATTRIBUTES;
+			props |= ENCODE_PROP_ATTRIBUTES;
 		}
 
 		ss << props;

@@ -25,7 +25,9 @@ namespace test
 	{
 		m_audio->Load();
 		auto audioData = m_audio->GetParent();
-		Audio::Get()->SetVolume(audioData->GetChild<float>("Master Volume", 1.0f));
+		Audio::Get()->SetVolume(SOUND_TYPE_GENERAL, audioData->GetChild<float>("General Volume", 1.0f));
+		Audio::Get()->SetVolume(SOUND_TYPE_EFFECT, audioData->GetChild<float>("Effect Volume", 1.0f));
+		Audio::Get()->SetVolume(SOUND_TYPE_MUSIC, audioData->GetChild<float>("Music Volume", 1.0f));
 
 		m_graphics->Load();
 		auto graphicsData = m_graphics->GetParent();
@@ -39,7 +41,9 @@ namespace test
 	void ConfigManager::Save()
 	{
 		auto audioData = m_audio->GetParent();
-		audioData->SetChild<float>("Master Volume", Audio::Get()->GetVolume());
+		audioData->SetChild<float>("General Volume", Audio::Get()->GetVolume(SOUND_TYPE_GENERAL));
+		audioData->SetChild<float>("Effect Volume", Audio::Get()->GetVolume(SOUND_TYPE_EFFECT));
+		audioData->SetChild<float>("Music Volume", Audio::Get()->GetVolume(SOUND_TYPE_MUSIC));
 		m_audio->Save();
 
 		auto graphicsData = m_graphics->GetParent();

@@ -84,14 +84,6 @@ namespace acid
 
 		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
 
-		void TrySetTexture(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_texture = Texture::Resource(filename);
-			}
-		}
-
 		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 
 		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }

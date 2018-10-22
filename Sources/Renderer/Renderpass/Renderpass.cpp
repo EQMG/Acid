@@ -28,15 +28,15 @@ namespace acid
 
 			switch (image.GetType())
 			{
-			case ATTACHMENT_IMAGE:
+			case ATTACHMENT_TYPE_IMAGE:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				attachment.format = image.GetFormat();
 				break;
-			case ATTACHMENT_DEPTH:
+			case ATTACHMENT_TYPE_DEPTH:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				attachment.format = depthStencil.GetFormat();
 				break;
-			case ATTACHMENT_SWAPCHAIN:
+			case ATTACHMENT_TYPE_SWAPCHAIN:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 				attachment.format = surfaceFormat;
 				break;
@@ -63,7 +63,7 @@ namespace acid
 					continue;
 				}
 
-				if (renderpassCreate.GetImages().at(*attachment).GetType() == ATTACHMENT_DEPTH)
+				if (renderpassCreate.GetImages().at(*attachment).GetType() == ATTACHMENT_TYPE_DEPTH)
 				{
 					depthAttachment = *attachment;
 					continue;

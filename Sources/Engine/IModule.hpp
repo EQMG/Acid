@@ -9,11 +9,11 @@ namespace acid
 	/// </summary>
 	enum ModuleUpdate
 	{
-		UPDATE_ALWAYS = 0,
-		UPDATE_PRE = 1,
-		UPDATE_NORMAL = 2,
-		UPDATE_POST = 3,
-		UPDATE_RENDER = 4
+		MODULE_UPDATE_ALWAYS = 0,
+		MODULE_UPDATE_PRE = 1,
+		MODULE_UPDATE_NORMAL = 2,
+		MODULE_UPDATE_POST = 3,
+		MODULE_UPDATE_RENDER = 4
 	};
 
 	/// <summary>

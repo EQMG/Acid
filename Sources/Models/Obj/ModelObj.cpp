@@ -8,6 +8,11 @@ namespace acid
 {
 	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
 	{
+		if (filename.empty())
+		{
+			return nullptr;
+		}
+
 		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)

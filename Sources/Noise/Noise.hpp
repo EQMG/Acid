@@ -32,49 +32,49 @@ namespace acid
 {
 	enum NoiseType
 	{
-		TYPE_VALUE = 0,
-		TYPE_VALUEFRACTAL = 1,
-		TYPE_PERLIN = 2,
-		TYPE_PERLINFRACTAL = 3,
-		TYPE_SIMPLEX = 4,
-		TYPE_SIMPLEXFRACTAL = 5,
-		TYPE_CELLULAR = 6,
-		TYPE_WHITENOISE = 7,
-		TYPE_CUBIC = 8,
-		TYPE_CUBICFRACTAL = 9
+		NOISE_TYPE_VALUE = 0,
+		NOISE_TYPE_VALUEFRACTAL = 1,
+		NOISE_TYPE_PERLIN = 2,
+		NOISE_TYPE_PERLINFRACTAL = 3,
+		NOISE_TYPE_SIMPLEX = 4,
+		NOISE_TYPE_SIMPLEXFRACTAL = 5,
+		NOISE_TYPE_CELLULAR = 6,
+		NOISE_TYPE_WHITENOISE = 7,
+		NOISE_TYPE_CUBIC = 8,
+		NOISE_TYPE_CUBICFRACTAL = 9
 	};
 
 	enum NoiseInterp
 	{
-		INTERP_LINEAR = 0,
-		INTERP_HERMITE = 1,
-		INTERP_QUINTIC = 2
+		NOISE_INTERP_LINEAR = 0,
+		NOISE_INTERP_HERMITE = 1,
+		NOISE_INTERP_QUINTIC = 2
 	};
 
 	enum NoiseFractal
 	{
-		FRACTAL_FBM = 0,
-		FRACTAL_BILLOW = 1,
-		FRACTAL_RIGIDMULTI = 2
+		NOISE_FRACTAL_FBM = 0,
+		NOISE_FRACTAL_BILLOW = 1,
+		NOISE_FRACTAL_RIGIDMULTI = 2
 	};
 
 	enum NoiseCellularFunc
 	{
-		CELLULAR_EUCLIDEAN = 0,
-		CELLULAR_MANHATTAN = 1,
-		CELLULAR_NATURAL = 2
+		NOISE_CELLULAR_EUCLIDEAN = 0,
+		NOISE_CELLULAR_MANHATTAN = 1,
+		NOISE_CELLULAR_NATURAL = 2
 	};
 
 	enum NoiseCellularReturn
 	{
-		CELLULAR_CELLVALUE = 0,
-		CELLULAR_NOISELOOKUP = 1,
-		CELLULAR_DISTANCE = 2,
-		CELLULAR_DISTANCE2 = 3,
-		CELLULAR_DISTANCE2ADD = 4,
-		CELLULAR_DISTANCE2SUB = 5,
-		CELLULAR_DISTANCE2MUL = 6,
-		CELLULAR_DISTANCE2DIV = 7
+		NOISE_CELLULAR_CELLVALUE = 0,
+		NOISE_CELLULAR_NOISELOOKUP = 1,
+		NOISE_CELLULAR_DISTANCE = 2,
+		NOISE_CELLULAR_DISTANCE2 = 3,
+		NOISE_CELLULAR_DISTANCE2ADD = 4,
+		NOISE_CELLULAR_DISTANCE2SUB = 5,
+		NOISE_CELLULAR_DISTANCE2MUL = 6,
+		NOISE_CELLULAR_DISTANCE2DIV = 7
 	};
 
 	class ACID_EXPORT Noise
@@ -114,8 +114,8 @@ namespace acid
 		/// <param name="lacunarity"> The lacunarity between octaves. </param>
 		/// <param name="fractalType"> The fractal noise type. </param>
 		/// <param name="fractalBounding"> The fractal bounding. </param>
-		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const NoiseInterp &interp = INTERP_QUINTIC, const NoiseType &noiseType = TYPE_SIMPLEX, const int32_t &octaves = 3,
-		      const float &lacunarity = 2.0f, const float &gain = 0.5f, const NoiseFractal &fractalType = FRACTAL_FBM, const float &fractalBounding = 0.0f);
+		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const NoiseInterp &interp = NOISE_INTERP_QUINTIC, const NoiseType &noiseType = NOISE_TYPE_SIMPLEX, const int32_t &octaves = 3,
+		      const float &lacunarity = 2.0f, const float &gain = 0.5f, const NoiseFractal &fractalType = NOISE_FRACTAL_FBM, const float &fractalBounding = 0.0f);
 
 		/// <summary>
 		/// Gets the seed used for all noise types.

@@ -25,20 +25,20 @@ namespace acid
 
 	void ModuleRegister::FillRegister()
 	{
-		RegisterModule<Display>(UPDATE_POST);
-		RegisterModule<Joysticks>(UPDATE_PRE);
-		RegisterModule<Keyboard>(UPDATE_PRE);
-		RegisterModule<Mouse>(UPDATE_PRE);
-		RegisterModule<Audio>(UPDATE_PRE);
-		RegisterModule<Files>(UPDATE_PRE);
-		RegisterModule<Network>(UPDATE_NORMAL);
-		RegisterModule<Scenes>(UPDATE_NORMAL);
-		RegisterModule<Renderer>(UPDATE_RENDER);
-		RegisterModule<Resources>(UPDATE_PRE);
-		RegisterModule<Events>(UPDATE_ALWAYS);
-		RegisterModule<Uis>(UPDATE_PRE);
-		RegisterModule<Particles>(UPDATE_NORMAL);
-		RegisterModule<Shadows>(UPDATE_NORMAL);
+		RegisterModule<Display>(MODULE_UPDATE_POST);
+		RegisterModule<Joysticks>(MODULE_UPDATE_PRE);
+		RegisterModule<Keyboard>(MODULE_UPDATE_PRE);
+		RegisterModule<Mouse>(MODULE_UPDATE_PRE);
+		RegisterModule<Audio>(MODULE_UPDATE_PRE);
+		RegisterModule<Files>(MODULE_UPDATE_PRE);
+		RegisterModule<Network>(MODULE_UPDATE_NORMAL);
+		RegisterModule<Scenes>(MODULE_UPDATE_NORMAL);
+		RegisterModule<Renderer>(MODULE_UPDATE_RENDER);
+		RegisterModule<Resources>(MODULE_UPDATE_PRE);
+		RegisterModule<Events>(MODULE_UPDATE_ALWAYS);
+		RegisterModule<Uis>(MODULE_UPDATE_PRE);
+		RegisterModule<Particles>(MODULE_UPDATE_NORMAL);
+		RegisterModule<Shadows>(MODULE_UPDATE_NORMAL);
 	}
 
 	IModule *ModuleRegister::RegisterModule(IModule *module, const ModuleUpdate &update)

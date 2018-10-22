@@ -4,7 +4,6 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include "Configs/ConfigManager.hpp"
 #include "MainRenderer.hpp"
 #include "Scenes/FpsPlayer.hpp"
 #include "Scenes/Scene1.hpp"
@@ -23,9 +22,6 @@ int main(int argc, char **argv)
 	// Creates the engine.
 	auto engine = std::make_unique<Engine>();
 
-	auto configManager = std::make_unique<ConfigManager>();
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
-
 	// Registers modules.
 
 	// Registers components.
@@ -42,7 +38,6 @@ int main(int argc, char **argv)
 
 	// Runs the game loop.
 	int32_t exitCode = engine->Run();
-	configManager->Save();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

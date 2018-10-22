@@ -13,6 +13,11 @@ namespace acid
 
 	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileExt)
 	{
+		if (filename.empty())
+		{
+			return nullptr;
+		}
+
 		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)

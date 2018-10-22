@@ -66,7 +66,7 @@ namespace acid
 
 		void SetSpawn(ISpawnParticle *spawn) { m_spawn.reset(spawn); }
 
-		void TrySetSpawn(const Metadata &spawnNode);
+		void TrySetSpawn(const Metadata &spawnNode); // TODO: Remove
 
 		float GetPps() const { return m_pps; }
 

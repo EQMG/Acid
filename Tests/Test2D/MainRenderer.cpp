@@ -14,9 +14,9 @@ namespace test
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
 		{
-			Attachment(0, "depth", ATTACHMENT_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
-			Attachment(1, "swapchain", ATTACHMENT_SWAPCHAIN),
-			Attachment(2, "resolved", ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false, Colour::WHITE)
+			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
+			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN),
+			Attachment(2, "resolved", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false, Colour::WHITE)
 		}, // images
 		{
 			SubpassType(0, {0, 2}),

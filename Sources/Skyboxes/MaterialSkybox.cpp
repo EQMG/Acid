@@ -28,7 +28,7 @@ namespace acid
 
 	void MaterialSkybox::Decode(const Metadata &metadata)
 	{
-		TrySetCubemap(metadata.GetChild<std::string>("Cubemap Texture"), metadata.GetChild<std::string>("Cubemap Suffix"));
+		m_cubemap = Cubemap::Resource(metadata.GetChild<std::string>("Cubemap Texture"), metadata.GetChild<std::string>("Cubemap Suffix"));
 		m_skyColour = metadata.GetChild<Colour>("Sky Colour");
 	}
 

@@ -6,14 +6,19 @@
 #include <AL/al.h>
 #endif
 #include <cmath>
+#include "Objects/GameObject.hpp"
 
 namespace acid
 {
-	Sound::Sound(const std::string &filename, const float &gain, const float &pitch) :
+	Sound::Sound(const std::string &filename, const SoundType &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
 		m_soundBuffer(SoundBuffer::Resource(filename)),
 		m_source(0),
+		m_type(type),
 		m_gain(gain),
-		m_pitch(pitch)
+		m_pitch(pitch),
+		m_position(Vector3()),
+		m_direction(Vector3()),
+		m_velocity(Vector3())
 	{
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, m_soundBuffer->GetBuffer());
@@ -22,6 +27,11 @@ namespace acid
 
 		SetGain(gain);
 		SetPitch(pitch);
+
+		if (begin)
+		{
+			Play(loop);
+		}
 	}
 
 	Sound::~Sound()
@@ -30,11 +40,33 @@ namespace acid
 		Audio::CheckAl(alGetError());
 	}
 
+	void Sound::Start()
+	{
+	}
+
+	void Sound::Update()
+	{
+		Transform transform = GetGameObject()->GetTransform();
+		SetPosition(transform.GetPosition());
+	}
+
+	void Sound::Decode(const Metadata &metadata)
+	{
+		m_soundBuffer = SoundBuffer::Resource(metadata.GetChild<std::string>("Filename"));
+	}
+
+	void Sound::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_soundBuffer == nullptr ? "" : m_soundBuffer->GetFilename());
+	}
+
 	void Sound::Play(const bool &loop)
 	{
 		alSourcei(m_source, AL_LOOPING, loop);
 		alSourcePlay(m_source);
 		Audio::CheckAl(alGetError());
+
+		SetGain(m_gain);
 	}
 
 	void Sound::Pause()
@@ -79,34 +111,36 @@ namespace acid
 
 	void Sound::SetPosition(const Vector3 &position)
 	{
-		alSource3f(m_source, AL_POSITION, position.m_x, position.m_y, position.m_z);
+		m_position = position;
+		alSource3f(m_source, AL_POSITION, m_position.m_x, m_position.m_y, m_position.m_z);
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::SetDirection(const Vector3 &direction)
 	{
-		float data[3] = {direction.m_x, direction.m_y, direction.m_z};
-		alSourcefv(m_source, AL_DIRECTION, data);
+		m_direction = direction;
+		alSourcefv(m_source, AL_DIRECTION, m_direction.m_elements);
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::SetVelocity(const Vector3 &velocity)
 	{
-		alSource3f(m_source, AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
+		m_velocity = velocity;
+		alSource3f(m_source, AL_VELOCITY, m_velocity.m_x, m_velocity.m_y, m_velocity.m_z);
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::SetGain(const float &gain)
 	{
-		float eulerGain = std::pow(gain, 2.7183f);
-		alSourcef(m_source, AL_GAIN, eulerGain);
-		m_gain = eulerGain;
+		m_gain = gain;
+		alSourcef(m_source, AL_GAIN, std::pow(m_gain * Audio::Get()->GetVolume(m_type), 2.7183f));
 		Audio::CheckAl(alGetError());
 	}
 
 	void Sound::SetPitch(const float &pitch)
 	{
-		alSourcef(m_source, AL_PITCH, pitch);
 		m_pitch = pitch;
+		alSourcef(m_source, AL_PITCH, m_pitch);
+		Audio::CheckAl(alGetError());
 	}
 }

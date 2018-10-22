@@ -30,6 +30,6 @@ namespace acid
 
 		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
-		virtual void TrySetModel(const std::string &filename);
+		virtual void TrySetModel(const std::string &filename); // TODO: Remove
 	};
 }

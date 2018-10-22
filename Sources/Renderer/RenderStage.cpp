@@ -27,7 +27,7 @@ namespace acid
 
 			switch (image.GetType())
 			{
-			case ATTACHMENT_IMAGE:
+			case ATTACHMENT_TYPE_IMAGE:
 				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
 
 				for (auto &subpass : m_renderpassCreate.GetSubpasses())
@@ -46,11 +46,11 @@ namespace acid
 				}
 
 				break;
-			case ATTACHMENT_DEPTH:
+			case ATTACHMENT_TYPE_DEPTH:
 				clearValue.depthStencil = {1.0f, 0};
 				m_depthAttachment = image;
 				break;
-			case ATTACHMENT_SWAPCHAIN:
+			case ATTACHMENT_TYPE_SWAPCHAIN:
 				clearValue.color = {0.0f, 0.0f, 0.0f, 1.0f};
 				m_swapchainAttachment = image;
 				break;
@@ -85,7 +85,7 @@ namespace acid
 
 		for (auto &image : m_renderpassCreate.GetImages())
 		{
-			if (image.GetType() == ATTACHMENT_DEPTH)
+			if (image.GetType() == ATTACHMENT_TYPE_DEPTH)
 			{
 				m_attachments.emplace(image.GetName(), m_depthStencil.get());
 			}

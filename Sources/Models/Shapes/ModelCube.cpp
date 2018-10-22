@@ -21,6 +21,11 @@ namespace acid
 
 	std::shared_ptr<ModelCube> ModelCube::Resource(const std::string &data)
 	{
+		if (data.empty())
+		{
+			return nullptr;
+		}
+
 		auto split = String::Split(data, "_");
 		float width = String::From<float>(split[1]);
 		float height = String::From<float>(split[2]);

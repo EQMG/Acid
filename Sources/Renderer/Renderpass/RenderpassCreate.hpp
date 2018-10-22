@@ -11,9 +11,9 @@ namespace acid
 {
 	enum AttachmentType
 	{
-		ATTACHMENT_IMAGE = 0,
-		ATTACHMENT_DEPTH = 1,
-		ATTACHMENT_SWAPCHAIN = 2
+		ATTACHMENT_TYPE_IMAGE = 0,
+		ATTACHMENT_TYPE_DEPTH = 1,
+		ATTACHMENT_TYPE_SWAPCHAIN = 2
 	};
 
 	/// <summary>
