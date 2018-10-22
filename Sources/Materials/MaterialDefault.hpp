@@ -55,14 +55,6 @@ namespace acid
 
 		void SetDiffuseTexture(const std::shared_ptr<Texture> &diffuseTexture) { m_diffuseTexture = diffuseTexture; }
 
-		void TrySetDiffuseTexture(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_diffuseTexture = Texture::Resource(filename);
-			}
-		}
-
 		float GetMetallic() const { return m_metallic; }
 
 		void SetMetallic(const float &metallic) { m_metallic = metallic; }
@@ -75,25 +67,9 @@ namespace acid
 
 		void SetMaterialTexture(const std::shared_ptr<Texture> &materialTexture) { m_materialTexture = materialTexture; }
 
-		void TrySetMaterialTexture(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_materialTexture = Texture::Resource(filename);
-			}
-		}
-
 		std::shared_ptr<Texture> GetNormalTexture() const { return m_normalTexture; }
 
 		void SetNormalTexture(const std::shared_ptr<Texture> &normalTexture) { m_normalTexture = normalTexture; }
-
-		void TrySetNormalTexture(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_normalTexture = Texture::Resource(filename);
-			}
-		}
 
 		bool CastsShadows() const { return m_castsShadows; }
 

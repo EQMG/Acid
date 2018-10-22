@@ -377,8 +377,8 @@ namespace acid
 		m_gain(gain),
 		m_fractalType(fractalType),
 		m_fractalBounding(fractalBounding),
-		m_cellularDistanceFunction(CELLULAR_EUCLIDEAN),
-		m_cellularReturnType(CELLULAR_CELLVALUE),
+		m_cellularDistanceFunction(NOISE_CELLULAR_EUCLIDEAN),
+		m_cellularReturnType(NOISE_CELLULAR_CELLVALUE),
 		m_cellularNoiseLookup(nullptr),
 		m_cellularDistanceIndex0(0),
 		m_cellularDistanceIndex1(1),
@@ -451,11 +451,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleValueFractalFbm(x, y);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleValueFractalBillow(x, y);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleValueFractalRigidMulti(x, y);
 		default:
 			return 0.0f;
@@ -474,11 +474,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SinglePerlinFractalFbm(x, y);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SinglePerlinFractalBillow(x, y);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SinglePerlinFractalRigidMulti(x, y);
 		default:
 			return 0.0f;
@@ -497,11 +497,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleSimplexFractalFbm(x, y);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleSimplexFractalBillow(x, y);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleSimplexFractalRigidMulti(x, y);
 		default:
 			return 0.0f;
@@ -515,9 +515,9 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_CELLVALUE:
-		case CELLULAR_NOISELOOKUP:
-		case CELLULAR_DISTANCE:
+		case NOISE_CELLULAR_CELLVALUE:
+		case NOISE_CELLULAR_NOISELOOKUP:
+		case NOISE_CELLULAR_DISTANCE:
 			return SingleCellular(x, y);
 		default:
 			return SingleCellular2Edge(x, y);
@@ -551,11 +551,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleCubicFractalFbm(x, y);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleCubicFractalBillow(x, y);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleCubicFractalRigidMulti(x, y);
 		default:
 			return 0.0f;
@@ -569,64 +569,64 @@ namespace acid
 
 		switch (m_noiseType)
 		{
-		case TYPE_VALUE:
+		case NOISE_TYPE_VALUE:
 			return SingleValue(0, x, y);
-		case TYPE_VALUEFRACTAL:
+		case NOISE_TYPE_VALUEFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleValueFractalFbm(x, y);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleValueFractalBillow(x, y);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleValueFractalRigidMulti(x, y);
 			}
-		case TYPE_PERLIN:
+		case NOISE_TYPE_PERLIN:
 			return SinglePerlin(0, x, y);
-		case TYPE_PERLINFRACTAL:
+		case NOISE_TYPE_PERLINFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SinglePerlinFractalFbm(x, y);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SinglePerlinFractalBillow(x, y);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SinglePerlinFractalRigidMulti(x, y);
 			}
-		case TYPE_SIMPLEX:
+		case NOISE_TYPE_SIMPLEX:
 			return SingleSimplex(0, x, y);
-		case TYPE_SIMPLEXFRACTAL:
+		case NOISE_TYPE_SIMPLEXFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleSimplexFractalFbm(x, y);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleSimplexFractalBillow(x, y);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleSimplexFractalRigidMulti(x, y);
 			}
-		case TYPE_CELLULAR:
+		case NOISE_TYPE_CELLULAR:
 			switch (m_cellularReturnType)
 			{
-			case CELLULAR_CELLVALUE:
-			case CELLULAR_NOISELOOKUP:
-			case CELLULAR_DISTANCE:
+			case NOISE_CELLULAR_CELLVALUE:
+			case NOISE_CELLULAR_NOISELOOKUP:
+			case NOISE_CELLULAR_DISTANCE:
 				return SingleCellular(x, y);
 			default:
 				return SingleCellular2Edge(x, y);
 			}
-		case TYPE_WHITENOISE:
+		case NOISE_TYPE_WHITENOISE:
 			return GetWhiteNoise(x, y);
-		case TYPE_CUBIC:
+		case NOISE_TYPE_CUBIC:
 			return SingleCubic(0, x, y);
-		case TYPE_CUBICFRACTAL:
+		case NOISE_TYPE_CUBICFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleCubicFractalFbm(x, y);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleCubicFractalBillow(x, y);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleCubicFractalRigidMulti(x, y);
 			}
 		}
@@ -668,11 +668,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleValueFractalFbm(x, y, z);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleValueFractalBillow(x, y, z);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleValueFractalRigidMulti(x, y, z);
 		default:
 			return 0.0f;
@@ -692,11 +692,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SinglePerlinFractalFbm(x, y, z);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SinglePerlinFractalBillow(x, y, z);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SinglePerlinFractalRigidMulti(x, y, z);
 		default:
 			return 0.0f;
@@ -716,11 +716,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleSimplexFractalFbm(x, y, z);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleSimplexFractalBillow(x, y, z);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleSimplexFractalRigidMulti(x, y, z);
 		default:
 			return 0.0f;
@@ -735,9 +735,9 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_CELLVALUE:
-		case CELLULAR_NOISELOOKUP:
-		case CELLULAR_DISTANCE:
+		case NOISE_CELLULAR_CELLVALUE:
+		case NOISE_CELLULAR_NOISELOOKUP:
+		case NOISE_CELLULAR_DISTANCE:
 			return SingleCellular(x, y, z);
 		default:
 			return SingleCellular2Edge(x, y, z);
@@ -770,11 +770,11 @@ namespace acid
 
 		switch (m_fractalType)
 		{
-		case FRACTAL_FBM:
+		case NOISE_FRACTAL_FBM:
 			return SingleCubicFractalFbm(x, y, z);
-		case FRACTAL_BILLOW:
+		case NOISE_FRACTAL_BILLOW:
 			return SingleCubicFractalBillow(x, y, z);
-		case FRACTAL_RIGIDMULTI:
+		case NOISE_FRACTAL_RIGIDMULTI:
 			return SingleCubicFractalRigidMulti(x, y, z);
 		default:
 			return 0.0f;
@@ -789,70 +789,70 @@ namespace acid
 
 		switch (m_noiseType)
 		{
-		case TYPE_VALUE:
+		case NOISE_TYPE_VALUE:
 			return SingleValue(0, x, y, z);
-		case TYPE_VALUEFRACTAL:
+		case NOISE_TYPE_VALUEFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleValueFractalFbm(x, y, z);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleValueFractalBillow(x, y, z);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleValueFractalRigidMulti(x, y, z);
 			default:
 				return 0.0f;
 			}
-		case TYPE_PERLIN:
+		case NOISE_TYPE_PERLIN:
 			return SinglePerlin(0, x, y, z);
-		case TYPE_PERLINFRACTAL:
+		case NOISE_TYPE_PERLINFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SinglePerlinFractalFbm(x, y, z);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SinglePerlinFractalBillow(x, y, z);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SinglePerlinFractalRigidMulti(x, y, z);
 			default:
 				return 0.0f;
 			}
-		case TYPE_SIMPLEX:
+		case NOISE_TYPE_SIMPLEX:
 			return SingleSimplex(0, x, y, z);
-		case TYPE_SIMPLEXFRACTAL:
+		case NOISE_TYPE_SIMPLEXFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleSimplexFractalFbm(x, y, z);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleSimplexFractalBillow(x, y, z);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleSimplexFractalRigidMulti(x, y, z);
 			default:
 				return 0.0f;
 			}
-		case TYPE_CELLULAR:
+		case NOISE_TYPE_CELLULAR:
 			switch (m_cellularReturnType)
 			{
-			case CELLULAR_CELLVALUE:
-			case CELLULAR_NOISELOOKUP:
-			case CELLULAR_DISTANCE:
+			case NOISE_CELLULAR_CELLVALUE:
+			case NOISE_CELLULAR_NOISELOOKUP:
+			case NOISE_CELLULAR_DISTANCE:
 				return SingleCellular(x, y, z);
 			default:
 				return SingleCellular2Edge(x, y, z);
 			}
-		case TYPE_WHITENOISE:
+		case NOISE_TYPE_WHITENOISE:
 			return GetWhiteNoise(x, y, z);
-		case TYPE_CUBIC:
+		case NOISE_TYPE_CUBIC:
 			return SingleCubic(0, x, y, z);
-		case TYPE_CUBICFRACTAL:
+		case NOISE_TYPE_CUBICFRACTAL:
 			switch (m_fractalType)
 			{
-			case FRACTAL_FBM:
+			case NOISE_FRACTAL_FBM:
 				return SingleCubicFractalFbm(x, y, z);
-			case FRACTAL_BILLOW:
+			case NOISE_FRACTAL_BILLOW:
 				return SingleCubicFractalBillow(x, y, z);
-			case FRACTAL_RIGIDMULTI:
+			case NOISE_FRACTAL_RIGIDMULTI:
 				return SingleCubicFractalRigidMulti(x, y, z);
 			}
 		default:
@@ -1099,15 +1099,15 @@ namespace acid
 
 		switch (m_interp)
 		{
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = x - static_cast<float>(x0);
 			ys = y - static_cast<float>(y0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(x - static_cast<float>(x0));
 			ys = InterpHermite(y - static_cast<float>(y0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(x - static_cast<float>(x0));
 			ys = InterpQuintic(y - static_cast<float>(y0));
 			break;
@@ -1185,15 +1185,15 @@ namespace acid
 
 		switch (m_interp)
 		{
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = x - static_cast<float>(x0);
 			ys = y - static_cast<float>(y0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(x - static_cast<float>(x0));
 			ys = InterpHermite(y - static_cast<float>(y0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(x - static_cast<float>(x0));
 			ys = InterpQuintic(y - static_cast<float>(y0));
 			break;
@@ -1443,7 +1443,7 @@ namespace acid
 		switch (m_cellularDistanceFunction)
 		{
 		default:
-		case CELLULAR_EUCLIDEAN:
+		case NOISE_CELLULAR_EUCLIDEAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1464,7 +1464,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_MANHATTAN:
+		case NOISE_CELLULAR_MANHATTAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1485,7 +1485,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_NATURAL:
+		case NOISE_CELLULAR_NATURAL:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1512,15 +1512,15 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_CELLVALUE:
+		case NOISE_CELLULAR_CELLVALUE:
 			return ValueCoord2d(m_seed, xc, yc);
 
-		case CELLULAR_NOISELOOKUP:
+		case NOISE_CELLULAR_NOISELOOKUP:
 			assert(m_cellularNoiseLookup);
 
 			lutPos = Index2d256(0, xc, yc);
 			return m_cellularNoiseLookup->GetNoise(xc + CELL_2D_X[lutPos] * m_cellularJitter, yc + CELL_2D_Y[lutPos] * m_cellularJitter);
-		case CELLULAR_DISTANCE:
+		case NOISE_CELLULAR_DISTANCE:
 			return distance;
 		default:
 			return 0.0f;
@@ -1537,7 +1537,7 @@ namespace acid
 		switch (m_cellularDistanceFunction)
 		{
 		default:
-		case CELLULAR_EUCLIDEAN:
+		case NOISE_CELLULAR_EUCLIDEAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1558,7 +1558,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_MANHATTAN:
+		case NOISE_CELLULAR_MANHATTAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1579,7 +1579,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_NATURAL:
+		case NOISE_CELLULAR_NATURAL:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -1604,15 +1604,15 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_DISTANCE2:
+		case NOISE_CELLULAR_DISTANCE2:
 			return distance[m_cellularDistanceIndex1];
-		case CELLULAR_DISTANCE2ADD:
+		case NOISE_CELLULAR_DISTANCE2ADD:
 			return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2SUB:
+		case NOISE_CELLULAR_DISTANCE2SUB:
 			return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2MUL:
+		case NOISE_CELLULAR_DISTANCE2MUL:
 			return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2DIV:
+		case NOISE_CELLULAR_DISTANCE2DIV:
 			return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
 		default:
 			return 0.0f;
@@ -1634,15 +1634,15 @@ namespace acid
 		switch (m_interp)
 		{
 		default:
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = xf - static_cast<float>(x0);
 			ys = yf - static_cast<float>(y0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(xf - static_cast<float>(x0));
 			ys = InterpHermite(yf - static_cast<float>(y0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(xf - static_cast<float>(x0));
 			ys = InterpQuintic(yf - static_cast<float>(y0));
 			break;
@@ -1737,17 +1737,17 @@ namespace acid
 
 		switch (m_interp)
 		{
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = x - static_cast<float>(x0);
 			ys = y - static_cast<float>(y0);
 			zs = z - static_cast<float>(z0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(x - static_cast<float>(x0));
 			ys = InterpHermite(y - static_cast<float>(y0));
 			zs = InterpHermite(z - static_cast<float>(z0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(x - static_cast<float>(x0));
 			ys = InterpQuintic(y - static_cast<float>(y0));
 			zs = InterpQuintic(z - static_cast<float>(z0));
@@ -1837,17 +1837,17 @@ namespace acid
 
 		switch (m_interp)
 		{
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = x - static_cast<float>(x0);
 			ys = y - static_cast<float>(y0);
 			zs = z - static_cast<float>(z0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(x - static_cast<float>(x0));
 			ys = InterpHermite(y - static_cast<float>(y0));
 			zs = InterpHermite(z - static_cast<float>(z0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(x - static_cast<float>(x0));
 			ys = InterpQuintic(y - static_cast<float>(y0));
 			zs = InterpQuintic(z - static_cast<float>(z0));
@@ -2190,7 +2190,7 @@ namespace acid
 
 		switch (m_cellularDistanceFunction)
 		{
-		case CELLULAR_EUCLIDEAN:
+		case NOISE_CELLULAR_EUCLIDEAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2216,7 +2216,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_MANHATTAN:
+		case NOISE_CELLULAR_MANHATTAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2242,7 +2242,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_NATURAL:
+		case NOISE_CELLULAR_NATURAL:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2276,16 +2276,16 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_CELLVALUE:
+		case NOISE_CELLULAR_CELLVALUE:
 			return ValueCoord3d(m_seed, xc, yc, zc);
-		case CELLULAR_NOISELOOKUP:
+		case NOISE_CELLULAR_NOISELOOKUP:
 			assert(m_cellularNoiseLookup);
 
 			lutPos = Index3d256(0, xc, yc, zc);
 			return m_cellularNoiseLookup->GetNoise(
 				xc + CELL_3D_X[lutPos] * m_cellularJitter,
 				yc + CELL_3D_Y[lutPos] * m_cellularJitter, zc + CELL_3D_Z[lutPos] * m_cellularJitter);
-		case CELLULAR_DISTANCE:
+		case NOISE_CELLULAR_DISTANCE:
 			return distance;
 		default:
 			return 0.0f;
@@ -2302,7 +2302,7 @@ namespace acid
 
 		switch (m_cellularDistanceFunction)
 		{
-		case CELLULAR_EUCLIDEAN:
+		case NOISE_CELLULAR_EUCLIDEAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2327,7 +2327,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_MANHATTAN:
+		case NOISE_CELLULAR_MANHATTAN:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2352,7 +2352,7 @@ namespace acid
 				}
 			}
 			break;
-		case CELLULAR_NATURAL:
+		case NOISE_CELLULAR_NATURAL:
 			for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 			{
 				for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
@@ -2384,15 +2384,15 @@ namespace acid
 
 		switch (m_cellularReturnType)
 		{
-		case CELLULAR_DISTANCE2:
+		case NOISE_CELLULAR_DISTANCE2:
 			return distance[m_cellularDistanceIndex1];
-		case CELLULAR_DISTANCE2ADD:
+		case NOISE_CELLULAR_DISTANCE2ADD:
 			return distance[m_cellularDistanceIndex1] + distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2SUB:
+		case NOISE_CELLULAR_DISTANCE2SUB:
 			return distance[m_cellularDistanceIndex1] - distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2MUL:
+		case NOISE_CELLULAR_DISTANCE2MUL:
 			return distance[m_cellularDistanceIndex1] * distance[m_cellularDistanceIndex0];
-		case CELLULAR_DISTANCE2DIV:
+		case NOISE_CELLULAR_DISTANCE2DIV:
 			return distance[m_cellularDistanceIndex0] / distance[m_cellularDistanceIndex1];
 		default:
 			return 0.0f;
@@ -2417,17 +2417,17 @@ namespace acid
 		switch (m_interp)
 		{
 		default:
-		case INTERP_LINEAR:
+		case NOISE_INTERP_LINEAR:
 			xs = xf - static_cast<float>(x0);
 			ys = yf - static_cast<float>(y0);
 			zs = zf - static_cast<float>(z0);
 			break;
-		case INTERP_HERMITE:
+		case NOISE_INTERP_HERMITE:
 			xs = InterpHermite(xf - static_cast<float>(x0));
 			ys = InterpHermite(yf - static_cast<float>(y0));
 			zs = InterpHermite(zf - static_cast<float>(z0));
 			break;
-		case INTERP_QUINTIC:
+		case NOISE_INTERP_QUINTIC:
 			xs = InterpQuintic(xf - static_cast<float>(x0));
 			ys = InterpQuintic(yf - static_cast<float>(y0));
 			zs = InterpQuintic(zf - static_cast<float>(z0));

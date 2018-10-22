@@ -11,6 +11,11 @@ namespace acid
 {
 	std::shared_ptr<PrefabObject> PrefabObject::Resource(const std::string &filename)
 	{
+		if (filename.empty())
+		{
+			return nullptr;
+		}
+
 		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)

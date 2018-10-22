@@ -1,6 +1,7 @@
 #include "ShadowRender.hpp"
 
 #include "Meshes/Mesh.hpp"
+#include "Objects/GameObject.hpp"
 
 namespace acid
 {

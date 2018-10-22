@@ -20,6 +20,11 @@ namespace acid
 
 	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
 	{
+		if (filename.empty())
+		{
+			return nullptr;
+		}
+
 		auto resource = Resources::Get()->Get(filename);
 
 		if (resource != nullptr)

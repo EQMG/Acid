@@ -22,6 +22,11 @@ namespace acid
 
 	std::shared_ptr<ModelDisk> ModelDisk::Resource(const std::string &data)
 	{
+		if (data.empty())
+		{
+			return nullptr;
+		}
+
 		auto split = String::Split(data, "_");
 		float innerRadius = String::From<float>(split[1]);
 		float outerRadius = String::From<float>(split[2]);

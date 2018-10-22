@@ -23,7 +23,7 @@ namespace test
 	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
 	{
 		{
-			Attachment(0, "shadows", ATTACHMENT_IMAGE, VK_FORMAT_R8_UNORM)
+			Attachment(0, "shadows", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8_UNORM)
 		}, // images
 		{
 			SubpassType(0, {0})
@@ -33,12 +33,12 @@ namespace test
 	const RenderpassCreate RENDERPASS_1_CREATE = RenderpassCreate
 	{
 		{
-			Attachment(0, "depth", ATTACHMENT_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
-			Attachment(1, "swapchain", ATTACHMENT_SWAPCHAIN),
-			Attachment(2, "diffuse", ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
-			Attachment(3, "normals", ATTACHMENT_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, false),
-			Attachment(4, "materials", ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
-			Attachment(5, "resolved", ATTACHMENT_IMAGE, VK_FORMAT_R8G8B8A8_UNORM)
+			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
+			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN),
+			Attachment(2, "diffuse", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
+			Attachment(3, "normals", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, false),
+			Attachment(4, "materials", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
+			Attachment(5, "resolved", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM)
 		}, // images
 		{
 			SubpassType(0, {0, 2, 3, 4}),

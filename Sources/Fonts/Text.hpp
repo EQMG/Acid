@@ -20,10 +20,10 @@ namespace acid
 	/// </summary>
 	enum TextJustify
 	{
-		JUSTIFY_LEFT = 0,
-		JUSTIFY_CENTRE = 1,
-		JUSTIFY_RIGHT = 2,
-		JUSTIFY_FULLY = 3
+		TEXT_JUSTIFY_LEFT = 0,
+		TEXT_JUSTIFY_CENTRE = 1,
+		TEXT_JUSTIFY_RIGHT = 2,
+		TEXT_JUSTIFY_FULLY = 3
 	};
 
 	/// <summary>
@@ -71,7 +71,7 @@ namespace acid
 		/// <param name="maxWidth"> The maximum length of a line of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const TextJustify &justify = JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Resource("Fonts/ProximaNova", "Regular"), const TextJustify &justify = TEXT_JUSTIFY_LEFT, const float &maxWidth = 1.0f, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;
 

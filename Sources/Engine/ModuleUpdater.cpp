@@ -18,7 +18,7 @@ namespace acid
 		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());
 
 		// Always-Update.
-		moduleRegister.RunUpdate(UPDATE_ALWAYS);
+		moduleRegister.RunUpdate(MODULE_UPDATE_ALWAYS);
 
 		if (m_timerUpdate.IsPassedTime())
 		{
@@ -26,13 +26,13 @@ namespace acid
 			m_timerUpdate.ResetStartTime();
 
 			// Pre-Update.
-			moduleRegister.RunUpdate(UPDATE_PRE);
+			moduleRegister.RunUpdate(MODULE_UPDATE_PRE);
 
 			// Update.
-			moduleRegister.RunUpdate(UPDATE_NORMAL);
+			moduleRegister.RunUpdate(MODULE_UPDATE_NORMAL);
 
 			// Post-Update.
-			moduleRegister.RunUpdate(UPDATE_POST);
+			moduleRegister.RunUpdate(MODULE_UPDATE_POST);
 
 			// Updates the engines delta.
 			m_deltaUpdate.Update();
@@ -51,7 +51,7 @@ namespace acid
 			m_timerRender.ResetStartTime();
 
 			// Render
-			moduleRegister.RunUpdate(UPDATE_RENDER);
+			moduleRegister.RunUpdate(MODULE_UPDATE_RENDER);
 
 			// Updates the render delta, and render time extension.
 			m_deltaRender.Update();

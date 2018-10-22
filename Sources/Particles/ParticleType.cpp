@@ -51,7 +51,7 @@ namespace acid
 
 	void ParticleType::Decode(const Metadata &metadata)
 	{
-		TrySetTexture(metadata.GetChild<std::string>("Texture"));
+		m_texture = Texture::Resource(metadata.GetChild<std::string>("Texture"));
 		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
 		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
 		m_lifeLength = metadata.GetChild<float>("Life Length");

@@ -40,14 +40,6 @@ namespace acid
 
 		void SetCubemap(const std::shared_ptr<Cubemap> &cubemap) { m_cubemap = cubemap; }
 
-		void TrySetCubemap(const std::string &filename, const std::string &fileExt)
-		{
-			if (!filename.empty() && !fileExt.empty())
-			{
-				m_cubemap = Cubemap::Resource(filename, fileExt);
-			}
-		}
-
 		Colour GetSkyColour() const { return m_skyColour; }
 
 		void SetSkyColour(const Colour &skyColour) { m_skyColour = skyColour; }

@@ -19,7 +19,7 @@ namespace acid
 	Audio::Audio() :
 		m_alDevice(nullptr),
 		m_alContext(nullptr),
-		m_volume(0.0f)
+		m_volumes(std::map<SoundType, float>())
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);
@@ -95,5 +95,30 @@ namespace acid
 #if defined(ACID_BUILD_WINDOWS)
 		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
 #endif
+	}
+
+	float Audio::GetVolume(const SoundType &type) const
+	{
+		auto it = m_volumes.find(type);
+
+		if (it == m_volumes.end())
+		{
+			return 1.0f;
+		}
+
+		return it->second;
+	}
+
+	void Audio::SetVolume(const SoundType &type, const float &volume)
+	{
+		auto it = m_volumes.find(type);
+
+		if (it != m_volumes.end())
+		{
+			it->second = volume;
+			return;
+		}
+		
+		m_volumes.emplace(type, volume);
 	}
 }

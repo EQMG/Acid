@@ -13,7 +13,8 @@ namespace test
 
 	NameTag::NameTag(const float &heightOffset) :
 		m_heightOffset(heightOffset),
-		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), "Centre", true), TEXT_SIZE, "Undefined", FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE))
+		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), "Centre", true),
+			TEXT_SIZE, "Undefined", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE))
 	{
 		m_text->SetTextColour(Colour("#ffffff"));
 		m_text->SetBorderColour(Colour("#262626"));

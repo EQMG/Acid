@@ -260,16 +260,16 @@ namespace acid
 		{
 			switch (m_justify)
 			{
-			case JUSTIFY_LEFT:
+			case TEXT_JUSTIFY_LEFT:
 				cursorX = 0.0f;
 				break;
-			case JUSTIFY_CENTRE:
+			case TEXT_JUSTIFY_CENTRE:
 				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0f;
 				break;
-			case JUSTIFY_RIGHT:
+			case TEXT_JUSTIFY_RIGHT:
 				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
 				break;
-			case JUSTIFY_FULLY:
+			case TEXT_JUSTIFY_FULLY:
 				cursorX = 0.0f;
 				break;
 			}
@@ -282,7 +282,7 @@ namespace acid
 					cursorX += m_kerning + letter.GetAdvanceX();
 				}
 
-				if (m_justify == JUSTIFY_FULLY && lineOrder > 1)
+				if (m_justify == TEXT_JUSTIFY_FULLY && lineOrder > 1)
 				{
 					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
 				}
@@ -354,7 +354,7 @@ namespace acid
 			}
 		}
 
-		if (m_justify == JUSTIFY_CENTRE)
+		if (m_justify == TEXT_JUSTIFY_CENTRE)
 		{
 			minX = 0.0f;
 			maxX = m_maxWidth;

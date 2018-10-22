@@ -47,7 +47,7 @@ namespace acid
 
 		void SetModel(const std::shared_ptr<Model> &model) override { m_model = model; }
 
-		void TrySetModel(const std::string &filename) override;
+		void TrySetModel(const std::string &filename) override; // TODO: Remove
 
 		std::vector<Matrix4> GetJointTransforms() const { return m_jointMatrices; }
 

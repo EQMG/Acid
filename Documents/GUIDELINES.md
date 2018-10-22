@@ -1,5 +1,5 @@
 # Acid Guidelines 
-September 4, 2018
+October 21, 2018
  
 This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](LICENSE.md) file. For more about the project read our read more on our [README.md](README.md) file.
 

@@ -14,9 +14,9 @@ namespace acid
 
 	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), JUSTIFY_CENTRE, DIMENSION.m_x)),
+		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, DIMENSION.m_x)),
 		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
-		m_soundClick(Sound("Sounds/Button1.ogg", 0.9f)),
+		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_mouseOver(false)
 	{
 	}

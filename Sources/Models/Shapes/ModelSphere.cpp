@@ -22,6 +22,11 @@ namespace acid
 
 	std::shared_ptr<ModelSphere> ModelSphere::Resource(const std::string &data)
 	{
+		if (data.empty())
+		{
+			return nullptr;
+		}
+
 		auto split = String::Split(data, "_");
 		uint32_t latitudeBands = String::From<uint32_t>(split[1]);
 		uint32_t longitudeBands = String::From<uint32_t>(split[2]);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "Objects/GameObject.hpp"
 #include "Objects/IComponent.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"

@@ -9,9 +9,9 @@ namespace acid
 {
 	enum MeshSort
 	{
-		SORT_NONE = 0,
-		SORT_FRONT = 1,
-		SORT_BACK = 2
+		MESH_SORT_NONE = 0,
+		MESH_SORT_FRONT = 1,
+		MESH_SORT_BACK = 2
 	};
 
 	class ACID_EXPORT RendererMeshes :
@@ -21,7 +21,7 @@ namespace acid
 		MeshSort m_meshSort;
 		UniformHandler m_uniformScene;
 	public:
-		explicit RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = SORT_NONE);
+		explicit RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = MESH_SORT_NONE);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 	};

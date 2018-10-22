@@ -20,11 +20,11 @@ namespace acid
 
 		auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 
-		if (m_meshSort != SORT_NONE)
+		if (m_meshSort != MESH_SORT_NONE)
 		{
 			std::sort(sceneMeshRenders.begin(), sceneMeshRenders.end());
 
-			if (m_meshSort == SORT_FRONT)
+			if (m_meshSort == MESH_SORT_FRONT)
 			{
 				std::reverse(sceneMeshRenders.begin(), sceneMeshRenders.end());
 			}
