@@ -2,6 +2,7 @@
 
 #include "Renderer/IRenderer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 #include "Text.hpp"
 
 namespace acid
@@ -11,6 +12,7 @@ namespace acid
 	{
 	private:
 		Pipeline m_pipeline;
+		UniformHandler m_uniformScene;
 	public:
 		explicit RendererFonts(const GraphicsStage &graphicsStage);
 

@@ -2,9 +2,10 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboObject
+layout(set = 0, binding = 1) uniform UboObject
 {
-	vec4 transform;
+	mat4 worldTransform;
+	vec4 screenTransform;
 	vec4 colour;
 	vec4 borderColour;
 	vec2 borderSizes;
@@ -12,7 +13,7 @@ layout(set = 0, binding = 0) uniform UboObject
 	float alpha;
 } object;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerColour;
+layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 

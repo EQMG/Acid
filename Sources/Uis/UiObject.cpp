@@ -13,6 +13,7 @@ namespace acid
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_positionOffset(Vector2()),
 		m_screenTransform(Vector4()),
+		m_worldTransform({}),
 		m_alphaDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant>(1.0f)),

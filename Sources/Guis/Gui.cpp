@@ -26,15 +26,18 @@ namespace acid
 		int32_t row = m_selectedRow / numberOfRows;
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
+		Matrix4 worldTransform = GetWorldTransform() ? GetWorldTransform()->GetWorldMatrix() : Matrix4::IDENTITY;
+
 		// Updates uniforms.
-		m_uniformObject.Push("transform", GetScreenTransform());
+		m_uniformObject.Push("worldTransform", worldTransform);
+		m_uniformObject.Push("screenTransform", GetScreenTransform());
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
-	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
+	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
 		if (!IsVisible() || GetAlpha() == 0.0f)
@@ -43,6 +46,7 @@ namespace acid
 		}
 
 		// Updates descriptors.
+		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("UboObject", m_uniformObject);
 		m_descriptorSet.Push("samplerColour", m_texture);
 		bool updateSuccess = m_descriptorSet.Update(pipeline);

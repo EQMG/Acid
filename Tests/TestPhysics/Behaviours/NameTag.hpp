@@ -13,6 +13,7 @@ namespace test
 	private:
 		float m_heightOffset;
 
+		Transform m_transform;
 		std::unique_ptr<Text> m_text;
 	public:
 		static const float RANGE_INNER;

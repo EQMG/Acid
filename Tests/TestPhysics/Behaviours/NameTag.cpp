@@ -13,6 +13,7 @@ namespace test
 
 	NameTag::NameTag(const float &heightOffset) :
 		m_heightOffset(heightOffset),
+		m_transform(Transform()),
 		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), "Centre", true),
 			TEXT_SIZE, "Undefined", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE))
 	{
@@ -31,18 +32,11 @@ namespace test
 		Vector3 worldPosition = GetGameObject()->GetTransform().GetPosition();
 		worldPosition.m_y += m_heightOffset;
 
-		auto camera = Scenes::Get()->GetCamera();
-		Vector3 screenPosition = Matrix4::WorldToScreenSpace(worldPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());
-		screenPosition.m_x = (screenPosition.m_x + 1.0f) / 2.0f;
-		screenPosition.m_y = 1.0f - ((screenPosition.m_y + 1.0f) / 2.0f);
+	//	m_transform.SetPosition(worldPosition);
+	//	m_transform.SetRotation(Vector3::ZERO);
 
-		float scale = (RANGE_OUTER - screenPosition.m_z) / RANGE_OUTER;
-		float alpha = (RANGE_INNER - screenPosition.m_z) / (RANGE_OUTER - RANGE_INNER);
-
-		m_text->SetVisible(scale > 0.0f && screenPosition.m_z > 0.0f);
-		m_text->GetRectangle().SetPosition(screenPosition);
-		static_cast<DriverConstant *>(m_text->GetScaleDriver())->SetConstant(TEXT_SIZE * scale);
-		static_cast<DriverConstant *>(m_text->GetAlphaDriver())->SetConstant(alpha);
+	//	m_text->SetWorldTransform(m_transform);
+		m_text->GetRectangle().SetPosition(Vector2(0.5f, 0.5f));
 	}
 
 	void NameTag::Decode(const Metadata &metadata)

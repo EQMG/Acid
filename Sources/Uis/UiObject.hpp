@@ -1,11 +1,13 @@
 ﻿#pragma once
 
 #include <functional>
+#include <optional>
 #include <memory>
 #include <vector>
 #include "Inputs/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
+#include "Maths/Transform.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "UiBound.hpp"
 
@@ -28,6 +30,8 @@ namespace acid
 
 		Vector2 m_positionOffset;
 		Vector4 m_screenTransform;
+
+		std::optional<Transform> m_worldTransform;
 
 		std::unique_ptr<IDriver> m_alphaDriver;
 		float m_alpha;
@@ -105,6 +109,18 @@ namespace acid
 		/// </summary>
 		/// <returns> The screen transform. </returns>
 		Vector4 GetScreenTransform() const { return m_screenTransform; }
+
+		/// <summary>
+		/// Gets the world transform applied to the object, if has value.
+		/// </summary>
+		/// <returns> The world transform. </returns>
+		std::optional<Transform> GetWorldTransform() const { return m_worldTransform; }
+
+		/// <summary>
+		/// Sets the world transform applied to the object.
+		/// </summary>
+		/// <param name="transform"> The new world space transform. </param>
+		void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
 
 		IDriver *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
