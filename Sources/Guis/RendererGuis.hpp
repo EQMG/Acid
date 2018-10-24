@@ -2,6 +2,7 @@
 
 #include "Renderer/IRenderer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Handlers/UniformHandler.hpp"
 
 namespace acid
 {
@@ -10,6 +11,7 @@ namespace acid
 	{
 	private:
 		Pipeline m_pipeline;
+		UniformHandler m_uniformScene;
 	public:
 		explicit RendererGuis(const GraphicsStage &graphicsStage);
 

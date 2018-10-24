@@ -8,12 +8,16 @@ namespace acid
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})))
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}))),
+		m_uniformScene(UniformHandler())
 	{
 	}
 
 	void RendererFonts::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
+		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
+		m_uniformScene.Push("view", camera.GetViewMatrix());
+
 		m_pipeline.BindPipeline(commandBuffer);
 
 		for (auto &screenObject : Uis::Get()->GetObjects())
@@ -27,7 +31,7 @@ namespace acid
 
 			if (object != nullptr)
 			{
-				object->CmdRender(commandBuffer, m_pipeline);
+				object->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 			}
 		}
 	}

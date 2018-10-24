@@ -42,8 +42,11 @@ namespace acid
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 
+		Matrix4 worldTransform = GetWorldTransform() ? GetWorldTransform()->GetWorldMatrix() : Matrix4::IDENTITY;
+
 		// Updates uniforms.
-		m_uniformObject.Push("transform", GetScreenTransform());
+		m_uniformObject.Push("worldTransform", worldTransform);
+		m_uniformObject.Push("screenTransform", GetScreenTransform());
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
@@ -51,7 +54,7 @@ namespace acid
 		m_uniformObject.Push("alpha", GetAlpha());
 	}
 
-	bool Text::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
+	bool Text::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
 		if (m_model == nullptr || !IsVisible() || GetAlpha() == 0.0f)
@@ -60,6 +63,7 @@ namespace acid
 		}
 
 		// Updates descriptors.
+		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("UboObject", m_uniformObject);
 		m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
 		bool updateSuccess = m_descriptorSet.Update(pipeline);

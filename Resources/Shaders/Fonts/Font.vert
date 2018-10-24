@@ -2,9 +2,16 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboObject
+layout(set = 0, binding = 0) uniform UboScene
 {
-	vec4 transform;
+	mat4 projection;
+	mat4 view;
+} scene;
+
+layout(set = 0, binding = 1) uniform UboObject
+{
+	mat4 worldTransform;
+	vec4 screenTransform;
 	vec4 colour;
 	vec4 borderColour;
 	vec2 borderSizes;
@@ -24,7 +31,17 @@ out gl_PerVertex
 
 void main() 
 {
-	gl_Position = vec4((inPosition.xy * object.transform.xy) + object.transform.zw, 0.0f, 1.0f);
+	vec4 position = vec4((inPosition.xy * object.screenTransform.xy) + object.screenTransform.zw, 0.0f, 1.0f);
+//	vec4 worldPosition = object.worldTransform * position;
+
+//    if (object.worldTransform != mat4(1.0f))
+//    {
+//        gl_Position = scene.projection * scene.view * worldPosition;
+//    }
+//    else
+//    {
+        gl_Position = position;
+//    }
 
 	outUv = inUv;
 }

@@ -73,7 +73,7 @@ namespace acid
 		{
 			if (m_actionChange != nullptr)
 			{
-				m_actionChange();
+				m_actionChange(m_value);
 			}
 
 			UpdateText();

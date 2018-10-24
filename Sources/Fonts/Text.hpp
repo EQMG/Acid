@@ -75,7 +75,7 @@ namespace acid
 
 		void UpdateObject() override;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
+		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
 
 		/// <summary>
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
