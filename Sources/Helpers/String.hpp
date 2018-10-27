@@ -138,7 +138,7 @@ namespace acid
 				return val ? "true" : "false";
 			}
 
-			return std::to_string(val);
+			return std::to_string(static_cast<T>(val));
 		}
 
 		template<typename T>

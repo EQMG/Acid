@@ -11,7 +11,7 @@ namespace test
 		m_text1(std::make_unique<UiInputText>(m_background.get(), Vector2(0.65f, 0.38f), "Test Text: ", "Hello World", 14))
 	{
 		m_slider1->SetActionChange([](float value) {
-			Audio::Get()->SetVolume(SOUND_TYPE_EFFECT, value);
+			Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, value);
 		});
 	}
 

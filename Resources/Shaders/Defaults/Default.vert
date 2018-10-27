@@ -11,7 +11,7 @@ layout(set = 0, binding = 0) uniform UboScene
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-#ifdef ANIMATED
+#if ANIMATED
 	mat4 jointTransforms[MAX_JOINTS];
 #endif
 	mat4 transform;
@@ -26,17 +26,17 @@ layout(set = 0, binding = 1) uniform UboObject
 layout(set = 0, location = 0) in vec3 inPosition;
 layout(set = 0, location = 1) in vec2 inUv;
 layout(set = 0, location = 2) in vec3 inNormal;
-#ifdef NORMAL_MAPPING
+#if NORMAL_MAPPING
 layout(set = 0, location = 3) in vec3 inTangent;
 #endif
-#ifdef ANIMATED
+#if ANIMATED
 layout(set = 0, location = 4) in vec3 inJointIds;
 layout(set = 0, location = 5) in vec3 inWeights;
 #endif
 
 layout(location = 0) out vec2 outUv;
 layout(location = 1) out vec3 outNormal;
-#ifdef NORMAL_MAPPING
+#if NORMAL_MAPPING
 layout(location = 2) out vec3 outTangent;
 #endif
 
@@ -47,7 +47,7 @@ out gl_PerVertex
 
 void main()
 {
-#ifdef ANIMATED
+#if ANIMATED
 	vec4 position = vec4(0.0f);
 	vec4 normal = vec4(0.0f);
 
@@ -72,7 +72,7 @@ void main()
 	outUv = inUv;
 	outNormal = normal.xyz;
 
-#ifdef NORMAL_MAPPING
+#if NORMAL_MAPPING
 	mat3 matrixNormal = transpose(inverse(mat3(object.transform)));
 	outNormal = matrixNormal * normalize(inNormal);
 	outTangent = matrixNormal * normalize(inTangent);

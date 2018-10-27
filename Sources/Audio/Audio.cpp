@@ -19,7 +19,8 @@ namespace acid
 	Audio::Audio() :
 		m_alDevice(nullptr),
 		m_alContext(nullptr),
-		m_volumes(std::map<SoundType, float>())
+		m_masterGain(1.0f),
+		m_gains(std::map<SoundType, float>())
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);
@@ -41,6 +42,9 @@ namespace acid
 		{
 			return;
 		}
+
+		// Listener gain.
+		alListenerf(AL_GAIN, m_masterGain);
 
 		// Listener position.
 		Vector3 currentPosition = camera->GetPosition();
@@ -97,11 +101,11 @@ namespace acid
 #endif
 	}
 
-	float Audio::GetVolume(const SoundType &type) const
+	float Audio::GetTypeGain(const SoundType &type) const
 	{
-		auto it = m_volumes.find(type);
+		auto it = m_gains.find(type);
 
-		if (it == m_volumes.end())
+		if (it == m_gains.end())
 		{
 			return 1.0f;
 		}
@@ -109,16 +113,16 @@ namespace acid
 		return it->second;
 	}
 
-	void Audio::SetVolume(const SoundType &type, const float &volume)
+	void Audio::SetTypeGain(const SoundType &type, const float &volume)
 	{
-		auto it = m_volumes.find(type);
+		auto it = m_gains.find(type);
 
-		if (it != m_volumes.end())
+		if (it != m_gains.end())
 		{
 			it->second = volume;
 			return;
 		}
 		
-		m_volumes.emplace(type, volume);
+		m_gains.emplace(type, volume);
 	}
 }

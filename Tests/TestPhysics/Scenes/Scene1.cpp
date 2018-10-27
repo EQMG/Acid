@@ -135,15 +135,15 @@ namespace test
 
 			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
 			sphere->AddComponent<HeightDespawn>();
-			sphere->AddComponent<NameTag>(0.6f);
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
+			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
-			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
+			sphere->AddComponent<NameTag>(0.6f);
 		}
 
 		if (m_buttonFullscreen.WasDown())

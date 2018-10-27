@@ -30,7 +30,17 @@ out gl_PerVertex
 
 void main()
 {
-	gl_Position = vec4((inPosition.xy * object.screenTransform.xy) + object.screenTransform.zw, 0.0f, 1.0f);
+	vec4 position = vec4((inPosition.xy * object.screenTransform.xy) + object.screenTransform.zw, 0.0f, 1.0f);
+	vec4 worldPosition = object.worldTransform * position;
+
+	if (object.worldTransform != mat4(1.0f))
+	{
+		gl_Position = scene.projection * scene.view * worldPosition;
+	}
+	else
+	{
+		gl_Position = position;
+	}
 
 	outUv = (inUv.xy / object.atlasRows) + object.atlasOffset;
 }

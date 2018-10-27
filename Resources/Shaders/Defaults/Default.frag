@@ -4,7 +4,7 @@
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-#ifdef ANIMATED
+#if ANIMATED
 	mat4 jointTransforms[MAX_JOINTS];
 #endif
 	mat4 transform;
@@ -16,19 +16,19 @@ layout(set = 0, binding = 1) uniform UboObject
 	float ignoreLighting;
 } object;
 
-#ifdef DIFFUSE_MAPPING
+#if DIFFUSE_MAPPING
 layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 #endif
-#ifdef MATERIAL_MAPPING
+#if MATERIAL_MAPPING
 layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
 #endif
-#ifdef NORMAL_MAPPING
+#if NORMAL_MAPPING
 layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
 #endif
 
 layout(location = 0) in vec2 inUv;
 layout(location = 1) in vec3 inNormal;
-#ifdef NORMAL_MAPPING
+#if NORMAL_MAPPING
 layout(location = 2) in vec3 inTangent;
 #endif
 
@@ -43,11 +43,11 @@ void main()
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
 	float glowing = 0.0f;
 
-#ifdef DIFFUSE_MAPPING
+#if DIFFUSE_MAPPING
 	diffuse = texture(samplerDiffuse, inUv);
 #endif
 
-#ifdef MATERIAL_MAPPING
+#if MATERIAL_MAPPING
 	vec4 textureMaterial = texture(samplerMaterial, inUv);
 	material.x *= textureMaterial.r;
 	material.y *= textureMaterial.g;
@@ -58,13 +58,13 @@ void main()
 	}
 #endif
 
-#ifdef NORMAL_MAPPING
-	vec3 N = normalize(inNormal);
+#if NORMAL_MAPPING // TODO: Fix normal mapping.
+	/*vec3 N = normalize(inNormal);
 	N.y = -N.y;
 	vec3 T = normalize(inTangent);
 	vec3 B = cross(N, T);
 	mat3 TBN = mat3(T, B, N);
-	normal = TBN * normalize(texture(samplerNormal, inUV).rgb * 2.0f - vec3(1.0f));
+	normal = TBN * normalize(texture(samplerNormal, inUv).rgb * 2.0f - vec3(1.0f));*/
 #endif
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));

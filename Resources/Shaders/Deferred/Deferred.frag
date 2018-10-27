@@ -36,8 +36,10 @@ layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
 layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 4) uniform sampler2D samplerMaterial;
 layout(set = 0, binding = 5) uniform sampler2D samplerShadows;
+#if USE_IBL
 layout(set = 0, binding = 6) uniform sampler2D samplerBrdf;
 layout(set = 0, binding = 7) uniform samplerCube samplerIbl;
+#endif
 
 layout(location = 0) in vec2 inUv;
 
@@ -112,8 +114,8 @@ void main()
 			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
 		}
 
-#ifdef USE_IBL
-	//	irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
+#if USE_IBL
+		irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
 #endif
 
 		outColour = vec4(irradiance, 1.0f);
