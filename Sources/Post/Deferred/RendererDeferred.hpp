@@ -10,12 +10,20 @@
 
 namespace acid
 {
+	enum DeferredModel
+	{
+		DEFERRED_IBL = 0,
+		DEFERRED_SIMPLE = 1
+	};
+
 	class ACID_EXPORT RendererDeferred :
 		public IRenderer
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;
+
+		DeferredModel m_lightModel;
 
 		Pipeline m_pipeline;
 		std::shared_ptr<Model> m_model;
@@ -29,7 +37,7 @@ namespace acid
 	public:
 		static const uint32_t MAX_LIGHTS;
 
-		explicit RendererDeferred(const GraphicsStage &graphicsStage);
+		explicit RendererDeferred(const DeferredModel &lightModel, const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 

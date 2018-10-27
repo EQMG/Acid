@@ -7,9 +7,7 @@
 
 namespace test
 {
-	const float NameTag::RANGE_INNER = 32.0f;
-	const float NameTag::RANGE_OUTER = 40.0f;
-	const float NameTag::TEXT_SIZE = 3.0f;
+	const float NameTag::TEXT_SIZE = 5.0f;
 
 	NameTag::NameTag(const float &heightOffset) :
 		m_heightOffset(heightOffset),
@@ -32,11 +30,10 @@ namespace test
 		Vector3 worldPosition = GetGameObject()->GetTransform().GetPosition();
 		worldPosition.m_y += m_heightOffset;
 
-	//	m_transform.SetPosition(worldPosition);
-	//	m_transform.SetRotation(Vector3::ZERO);
+		m_transform.SetPosition(worldPosition);
+		m_transform.SetRotation(Vector3(0.0f, 90.0f, 180.0f));
 
-	//	m_text->SetWorldTransform(m_transform);
-		m_text->GetRectangle().SetPosition(Vector2(0.5f, 0.5f));
+		m_text->SetWorldTransform(m_transform);
 	}
 
 	void NameTag::Decode(const Metadata &metadata)

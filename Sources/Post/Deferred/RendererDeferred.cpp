@@ -22,14 +22,15 @@ namespace acid
 		float m_radius;
 	};
 
-	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage) :
+	RendererDeferred::RendererDeferred(const DeferredModel &lightModel, const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
+		m_lightModel(lightModel),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
-		m_brdf(ComputeBrdf(512)),
+		m_brdf(m_lightModel == DEFERRED_IBL ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
 		m_ibl(nullptr),
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
@@ -38,13 +39,16 @@ namespace acid
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		auto sceneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-		auto skybox = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap();
-
-		if (m_skybox != skybox)
+		if (m_lightModel == DEFERRED_IBL)
 		{
-			m_skybox = skybox;
-			m_ibl = ComputeIbl(m_skybox);
+			auto sceneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
+			auto skybox = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap();
+
+			if (m_skybox != skybox)
+			{
+				m_skybox = skybox;
+				m_ibl = ComputeIbl(m_skybox);
+			}
 		}
 
 		// Updates uniforms.
@@ -101,6 +105,7 @@ namespace acid
 		m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
 		m_descriptorSet.Push("samplerIbl", m_ibl);
+
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)
@@ -118,7 +123,7 @@ namespace acid
 	std::vector<PipelineDefine> RendererDeferred::GetDefines()
 	{
 		std::vector<PipelineDefine> result = {};
-		result.emplace_back(PipelineDefine("USE_IBL", "TRUE"));
+		result.emplace_back(PipelineDefine("USE_IBL", String::To<int32_t>(m_lightModel == DEFERRED_IBL)));
 		result.emplace_back(PipelineDefine("MAX_LIGHTS", String::To(MAX_LIGHTS)));
 		return result;
 	}

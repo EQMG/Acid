@@ -26,7 +26,8 @@ namespace acid
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;
 
-		std::map<SoundType, float> m_volumes;
+		float m_masterGain;
+		std::map<SoundType, float> m_gains;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -48,8 +49,12 @@ namespace acid
 
 		ACID_HIDDEN ALCcontext *GetContext() const { return m_alContext; }
 
-		float GetVolume(const SoundType &type) const;
+		float GetMasterGain() const { return m_masterGain; }
 
-		void SetVolume(const SoundType &type, const float &volume);
+		void SetMasterGain(const float &masterGain) { m_masterGain = masterGain; }
+
+		float GetTypeGain(const SoundType &type) const;
+
+		void SetTypeGain(const SoundType &type, const float &volume);
 	};
 }

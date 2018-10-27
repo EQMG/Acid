@@ -7,7 +7,7 @@ layout(triangle_strip, max_vertices = 3) out;
 
 layout(set = 0, binding = 0) uniform UboScene
 {
-    mat4 cropMatrix[NUM_CASCADES];
+	mat4 cropMatrix[NUM_CASCADES];
 } scene;
 
 layout(set = 0, binding = 1) uniform UboObject

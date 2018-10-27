@@ -9,11 +9,10 @@ namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_textInfo(CreateStatus("Build: d0.0.1", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
-		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
-		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
-		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.062f, TEXT_JUSTIFY_LEFT)),
-		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.082f, TEXT_JUSTIFY_LEFT)),
+		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
+		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
+		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
+		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.062f, TEXT_JUSTIFY_LEFT)),
 		m_timerUpdate(Timer(0.333f))
 	{
 	}

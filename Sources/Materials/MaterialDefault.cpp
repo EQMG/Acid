@@ -100,27 +100,12 @@ namespace acid
 	{
 		std::vector<PipelineDefine> result = {};
 
-		if (m_diffuseTexture != nullptr)
-		{
-			result.emplace_back(PipelineDefine("DIFFUSE_MAPPING", "TRUE"));
-		}
-
-		if (m_materialTexture != nullptr)
-		{
-			result.emplace_back(PipelineDefine("MATERIAL_MAPPING", "TRUE"));
-		}
-
-		if (m_animated)
-		{
-			result.emplace_back(PipelineDefine("ANIMATED", "TRUE"));
-			result.emplace_back(PipelineDefine("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS)));
-			result.emplace_back(PipelineDefine("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS)));
-		}
-
-		/*if (m_normalTexture != nullptr)
-		{
-			result.emplace_back(PipelineDefine("NORMAL_MAPPING", "TRUE"));
-		}*/
+		result.emplace_back(PipelineDefine("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr)));
+		result.emplace_back(PipelineDefine("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr)));
+		result.emplace_back(PipelineDefine("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr)));
+		result.emplace_back(PipelineDefine("ANIMATED", String::To<int32_t>(m_animated)));
+		result.emplace_back(PipelineDefine("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS)));
+		result.emplace_back(PipelineDefine("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS)));
 
 		return result;
 	}

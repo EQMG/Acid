@@ -16,8 +16,6 @@ namespace test
 		Transform m_transform;
 		std::unique_ptr<Text> m_text;
 	public:
-		static const float RANGE_INNER;
-		static const float RANGE_OUTER;
 		static const float TEXT_SIZE;
 
 		explicit NameTag(const float &heightOffset = 0.0f);
