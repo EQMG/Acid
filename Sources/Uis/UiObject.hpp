@@ -31,6 +31,7 @@ namespace acid
 		Vector2 m_positionOffset;
 		Vector4 m_screenTransform;
 
+		bool m_lockRotation;
 		std::optional<Transform> m_worldTransform;
 
 		std::unique_ptr<IDriver> m_alphaDriver;
@@ -110,6 +111,10 @@ namespace acid
 		/// <returns> The screen transform. </returns>
 		Vector4 GetScreenTransform() const { return m_screenTransform; }
 
+		bool IsLockRotation() const { return m_lockRotation; }
+
+		void SetLockRotation(const bool &lockRotation) { m_lockRotation = lockRotation; }
+
 		/// <summary>
 		/// Gets the world transform applied to the object, if has value.
 		/// </summary>
@@ -121,6 +126,8 @@ namespace acid
 		/// </summary>
 		/// <param name="transform"> The new world space transform. </param>
 		void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
+
+		Matrix4 GetWorldMatrix() const;
 
 		IDriver *GetAlphaDriver() const { return m_alphaDriver.get(); }
 

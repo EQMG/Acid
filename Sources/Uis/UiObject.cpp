@@ -12,6 +12,7 @@ namespace acid
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_positionOffset(Vector2()),
+		m_lockRotation(true),
 		m_screenTransform(Vector4()),
 		m_worldTransform({}),
 		m_alphaDriver(std::make_unique<DriverConstant>(1.0f)),
@@ -126,6 +127,16 @@ namespace acid
 		}
 
 		return m_visible;
+	}
+
+	Matrix4 UiObject::GetWorldMatrix() const
+	{
+		if (m_worldTransform)
+		{
+			return m_worldTransform->GetWorldMatrix();
+		}
+
+		return Matrix4::IDENTITY;
 	}
 
 	float UiObject::GetAlpha() const
