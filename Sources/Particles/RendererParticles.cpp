@@ -9,7 +9,7 @@ namespace acid
 		IRenderer(graphicsStage),
 		m_uniformScene(UniformHandler()),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {{"MAX_INSTANCES", String::To(ParticleType::MAX_TYPE_INSTANCES)}})))
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {{"MAX_INSTANCES", String::To(ParticleType::MAX_TYPE_INSTANCES)}})))
 	{
 	}
 
@@ -52,19 +52,7 @@ namespace acid
 	{
 		ParticleData instanceData = {};
 
-		Matrix4 modelMatrix = Matrix4::IDENTITY.Translate(particle.GetPosition());
-		modelMatrix[0][0] = viewMatrix[0][0];
-		modelMatrix[0][1] = viewMatrix[1][0];
-		modelMatrix[0][2] = viewMatrix[2][0];
-		modelMatrix[1][0] = viewMatrix[0][1];
-		modelMatrix[1][1] = viewMatrix[1][1];
-		modelMatrix[1][2] = viewMatrix[2][1];
-		modelMatrix[2][0] = viewMatrix[0][2];
-		modelMatrix[2][1] = viewMatrix[1][2];
-		modelMatrix[2][2] = viewMatrix[2][2];
-		modelMatrix = modelMatrix.Rotate(Maths::Radians(particle.GetRotation()), Vector3::FRONT);
-		modelMatrix = modelMatrix.Scale(Vector3(particle.GetScale(), particle.GetScale(), particle.GetScale()));
-		instanceData.mvp = modelMatrix;
+		instanceData.transform = Matrix4::TransformationMatrix(particle.GetPosition(), particle.GetRotation() * Vector3::FRONT, particle.GetScale() * Vector3::ONE);
 
 		instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
 

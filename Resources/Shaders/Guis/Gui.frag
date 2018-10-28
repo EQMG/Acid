@@ -10,6 +10,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec2 atlasOffset;
 	float atlasRows;
 	float alpha;
+	bool lockRotation;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;

@@ -10,7 +10,7 @@ layout(set = 0, binding = 0) uniform UboScene
 
 struct Instance
 {
-	mat4 mvp;
+	mat4 transform;
 	vec4 colourOffset;
 	vec4 offsets;
 	vec3 blend;
@@ -39,7 +39,18 @@ void main()
 {
 	Instance instance = instances.data[gl_InstanceIndex];
 
-	vec4 worldPosition = instance.mvp * vec4(inPosition, 1.0f);
+	mat4 modelMatrix = instance.transform;
+	modelMatrix[0][0] = scene.view[0][0];
+	modelMatrix[0][1] = scene.view[1][0];
+	modelMatrix[0][2] = scene.view[2][0];
+	modelMatrix[1][0] = scene.view[0][1];
+	modelMatrix[1][1] = scene.view[1][1];
+	modelMatrix[1][2] = scene.view[2][1];
+	modelMatrix[2][0] = scene.view[0][2];
+	modelMatrix[2][1] = scene.view[1][2];
+	modelMatrix[2][2] = scene.view[2][2];
+
+	vec4 worldPosition = modelMatrix * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 

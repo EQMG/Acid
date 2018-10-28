@@ -16,7 +16,7 @@ namespace acid
 {
 	struct ParticleData
 	{
-		Matrix4 mvp;
+		Matrix4 transform;
 		Colour colourOffset;
 		Vector4 offsets;
 		Vector3 blend;

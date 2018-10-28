@@ -26,15 +26,14 @@ namespace acid
 		int32_t row = m_selectedRow / numberOfRows;
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
-		Matrix4 worldTransform = GetWorldTransform() ? GetWorldTransform()->GetWorldMatrix() : Matrix4::IDENTITY;
-
 		// Updates uniforms.
-		m_uniformObject.Push("worldTransform", worldTransform);
+		m_uniformObject.Push("worldTransform", GetWorldMatrix());
 		m_uniformObject.Push("screenTransform", GetScreenTransform());
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("lockRotation", IsLockRotation());
 	}
 
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)

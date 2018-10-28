@@ -17,6 +17,7 @@ namespace test
 		std::unique_ptr<Text> m_text;
 	public:
 		static const float TEXT_SIZE;
+		static const float VIEW_DISTANCE;
 
 		explicit NameTag(const float &heightOffset = 0.0f);
 

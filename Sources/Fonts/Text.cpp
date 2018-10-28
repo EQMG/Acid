@@ -42,16 +42,15 @@ namespace acid
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 
-		Matrix4 worldTransform = GetWorldTransform() ? GetWorldTransform()->GetWorldMatrix() : Matrix4::IDENTITY;
-
 		// Updates uniforms.
-		m_uniformObject.Push("worldTransform", worldTransform);
+		m_uniformObject.Push("worldTransform", GetWorldMatrix());
 		m_uniformObject.Push("screenTransform", GetScreenTransform());
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
 		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
 		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("lockRotation", IsLockRotation());
 	}
 
 	bool Text::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
