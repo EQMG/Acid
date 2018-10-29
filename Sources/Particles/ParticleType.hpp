@@ -16,12 +16,14 @@ namespace acid
 {
 	struct ParticleData
 	{
-		Matrix4 transform;
+		Matrix4 modelMatrix;
 		Colour colourOffset;
 		Vector4 offsets;
 		Vector3 blend;
 		float _padding;
 	};
+
+	class Particle;
 
 	/// <summary>
 	/// A definition for what a particle should act and look like.
@@ -38,6 +40,8 @@ namespace acid
 		float m_lifeLength;
 		float m_stageCycles;
 		float m_scale;
+
+		uint32_t m_instances;
 
 		StorageHandler m_storageBuffer;
 		DescriptorsHandler m_descriptorSet;
@@ -72,11 +76,13 @@ namespace acid
 		/// <param name="scale"> The averaged scale for the particle. </param>
 		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
+		void Update(const std::vector<Particle> &particles);
+
+		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
+
 		void Decode(const Metadata &metadata);
 
 		void Encode(Metadata &metadata) const;
-
-		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData);
 
 		std::string GetFilename() override { return m_filename; }
 
@@ -105,5 +111,7 @@ namespace acid
 		void SetScale(const float &scale) { m_scale = scale; }
 	private:
 		static std::string ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
+
+		ParticleData GetInstanceData(const Particle &particle);
 	};
 }

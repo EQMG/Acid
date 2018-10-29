@@ -10,7 +10,7 @@ layout(set = 0, binding = 0) uniform UboScene
 
 struct Instance
 {
-	mat4 transform;
+	mat4 modelMatrix;
 	vec4 colourOffset;
 	vec4 offsets;
 	vec3 blend;
@@ -35,21 +35,13 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
+#include "Shaders/Billboard.glsl"
+
 void main() 
 {
 	Instance instance = instances.data[gl_InstanceIndex];
 
-	mat4 modelMatrix = instance.transform;
-	modelMatrix[0][0] = scene.view[0][0];
-	modelMatrix[0][1] = scene.view[1][0];
-	modelMatrix[0][2] = scene.view[2][0];
-	modelMatrix[1][0] = scene.view[0][1];
-	modelMatrix[1][1] = scene.view[1][1];
-	modelMatrix[1][2] = scene.view[2][1];
-	modelMatrix[2][0] = scene.view[0][2];
-	modelMatrix[2][1] = scene.view[1][2];
-	modelMatrix[2][2] = scene.view[2][2];
-
+	mat4 modelMatrix = modelMatrix(instance.modelMatrix, scene.view, true, vec3(3.14159f, 0.0f, instance.modelMatrix[1][0]));
 	vec4 worldPosition = modelMatrix * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;

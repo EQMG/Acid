@@ -82,7 +82,7 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		PrefabObject prefabPlane = PrefabObject("Plane.xml");
+		PrefabObject prefabPlane = PrefabObject("Plane.json");
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
@@ -121,7 +121,7 @@ namespace test
 
 		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
 
-		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.json");
+		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.xml");
 		prefabSmokeSystem.Write(*smokeSystem);
 		prefabSmokeSystem.Save();
 	}

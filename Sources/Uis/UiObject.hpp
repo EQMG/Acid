@@ -127,7 +127,7 @@ namespace acid
 		/// <param name="transform"> The new world space transform. </param>
 		void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
 
-		Matrix4 GetWorldMatrix() const;
+		Matrix4 GetModelMatrix() const;
 
 		IDriver *GetAlphaDriver() const { return m_alphaDriver.get(); }
 

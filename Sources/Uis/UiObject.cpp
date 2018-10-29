@@ -129,11 +129,28 @@ namespace acid
 		return m_visible;
 	}
 
-	Matrix4 UiObject::GetWorldMatrix() const
+	Matrix4 UiObject::GetModelMatrix() const
 	{
 		if (m_worldTransform)
 		{
-			return m_worldTransform->GetWorldMatrix();
+			Matrix4 worldMatrix = m_worldTransform->GetWorldMatrix();
+
+			if (m_lockRotation)
+			{
+				Vector3 scaling = m_worldTransform->GetScaling();
+
+				for (uint32_t i = 0; i < 3; i++)
+				{
+					worldMatrix[0][i] = scaling[i];
+				}
+			}
+
+			return worldMatrix;
+		}
+
+		if (m_parent != nullptr)
+		{
+			return m_parent->GetModelMatrix(); // TODO: Multiply by this 'local' WorldMatrix.
 		}
 
 		return Matrix4::IDENTITY;
