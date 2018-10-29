@@ -4,8 +4,8 @@
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-	mat4 worldTransform;
-	vec4 screenTransform;
+	mat4 modelMatrix;
+	vec4 screenOffset;
 	vec4 colourOffset;
 	vec2 atlasOffset;
 	float atlasRows;

@@ -10,13 +10,13 @@ layout(set = 0, binding = 0) uniform UboScene
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-	mat4 worldTransform;
-	vec4 screenTransform;
+	mat4 modelMatrix;
+	vec4 screenOffset;
 	vec4 colourOffset;
 	vec2 atlasOffset;
 	float atlasRows;
 	float alpha;
-	bool lockRotation;
+	int modelMode;
 } object;
 
 layout(set = 0, location = 0) in vec3 inPosition;
@@ -29,27 +29,16 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
+#include "Shaders/Billboard.glsl"
+const vec3 rotation = vec3(3.14159f, 0.0f, 0.0f);
+
 void main()
 {
-	vec4 position = vec4((inPosition.xy * object.screenTransform.xy) + object.screenTransform.zw, 0.0f, 1.0f);
+	vec4 position = vec4((inPosition.xy * object.screenOffset.xy) + object.screenOffset.zw, 0.0f, 1.0f);
 
-	if (object.worldTransform != mat4(1.0f))
+	if (object.modelMode != 0)
 	{
-		mat4 modelMatrix = object.worldTransform;
-
-		if (object.lockRotation)
-		{
-			modelMatrix[0][0] = scene.view[0][0];
-			modelMatrix[0][1] = scene.view[1][0];
-			modelMatrix[0][2] = scene.view[2][0];
-			modelMatrix[1][0] = scene.view[0][1];
-			modelMatrix[1][1] = scene.view[1][1];
-			modelMatrix[1][2] = scene.view[2][1];
-			modelMatrix[2][0] = scene.view[0][2];
-			modelMatrix[2][1] = scene.view[1][2];
-			modelMatrix[2][2] = scene.view[2][2];
-		}
-
+		mat4 modelMatrix = modelMatrix(object.modelMatrix, scene.view, object.modelMode == 2, rotation);
 		vec4 worldPosition = modelMatrix * position;
 		gl_Position = scene.projection * scene.view * worldPosition;
 	}

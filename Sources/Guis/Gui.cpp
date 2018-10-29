@@ -27,13 +27,13 @@ namespace acid
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 		// Updates uniforms.
-		m_uniformObject.Push("worldTransform", GetWorldMatrix());
-		m_uniformObject.Push("screenTransform", GetScreenTransform());
+		m_uniformObject.Push("modelMatrix", GetModelMatrix());
+		m_uniformObject.Push("screenOffset", GetScreenTransform());
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
-		m_uniformObject.Push("lockRotation", IsLockRotation());
+		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 	}
 
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)

@@ -18,7 +18,5 @@ namespace acid
 		explicit RendererParticles(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
-	private:
-		ParticleData GetInstanceData(Particle &particle, const Matrix4 &viewMatrix);
 	};
 }

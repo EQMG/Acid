@@ -34,6 +34,7 @@ namespace acid
 			}
 
 			std::sort((*it).second.begin(), (*it).second.end());
+			(*it).first->Update((*it).second);
 		}
 	}
 

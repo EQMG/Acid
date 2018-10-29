@@ -12,7 +12,6 @@ namespace test
 		public UiObject
 	{
 	private:
-		std::unique_ptr<Text> m_textInfo;
 		std::unique_ptr<Text> m_textFps;
 		std::unique_ptr<Text> m_textUps;
 		Timer m_timerUpdate;

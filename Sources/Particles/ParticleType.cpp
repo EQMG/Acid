@@ -4,6 +4,7 @@
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Helpers/String.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Particle.hpp"
 
 namespace acid
 {
@@ -44,9 +45,56 @@ namespace acid
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_scale(scale),
+		m_instances(0),
 		m_storageBuffer(StorageHandler()),
 		m_descriptorSet(DescriptorsHandler())
 	{
+	}
+
+	void ParticleType::Update(const std::vector<Particle> &particles)
+	{
+		auto instanceData = std::vector<ParticleData>();
+		instanceData.resize(MAX_TYPE_INSTANCES);
+		uint32_t i = 0;
+
+		for (auto &particle : particles)
+		{
+		//	if (!camera.GetViewFrustum().SphereInFrustum(particle.GetPosition(), particle.GetScale()))
+		//	{
+		//		continue;
+		//	}
+
+			instanceData[i] = GetInstanceData(particle);
+			i++;
+
+			if (i > instanceData.size())
+			{
+				break;
+			}
+		}
+
+		m_storageBuffer.Push("data", *instanceData.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
+		m_instances = static_cast<uint32_t>(instanceData.size());
+	}
+
+	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
+	{
+		// Updates descriptors.
+		m_descriptorSet.Push("UboScene", uniformScene);
+		m_descriptorSet.Push("Instances", m_storageBuffer);
+		m_descriptorSet.Push("samplerColour", m_texture);
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
+
+		if (!updateSuccess)
+		{
+			return false;
+		}
+
+		// Draws the instanced objects.
+		m_descriptorSet.BindDescriptor(commandBuffer);
+
+		m_model->CmdRender(commandBuffer, m_instances);
+		return true;
 	}
 
 	void ParticleType::Decode(const Metadata &metadata)
@@ -70,32 +118,44 @@ namespace acid
 		metadata.SetChild<float>("Scale", m_scale);
 	}
 
-	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene, const std::vector<ParticleData> &instanceData)
-	{
-		m_storageBuffer.Push("data", *instanceData.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
-
-		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("Instances", m_storageBuffer);
-		m_descriptorSet.Push("samplerColour", m_texture);
-		bool updateSuccess = m_descriptorSet.Update(pipeline);
-
-		if (!updateSuccess)
-		{
-			return false;
-		}
-
-		// Draws the instanced objects.
-		m_descriptorSet.BindDescriptor(commandBuffer);
-
-		m_model->CmdRender(commandBuffer, static_cast<uint32_t>(instanceData.size()));
-		return true;
-	}
-
 	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		std::stringstream result;
 		result << "ParticleType_" << (texture == nullptr ? "nullptr" : texture->GetFilename()) << "_" << numberOfRows << "_" << colourOffset.GetHex() << "_" << lifeLength << "_" << stageCycles << "_" << scale;
 		return result.str();
+	}
+
+	ParticleData ParticleType::GetInstanceData(const Particle &particle)
+	{
+		ParticleData instanceData = {};
+
+		Matrix4 modelMatrix = Matrix4();
+		modelMatrix = modelMatrix.Translate(particle.GetPosition());
+
+		for (uint32_t i = 0; i < 3; i++)
+		{
+			modelMatrix[0][i] = particle.GetScale();
+		}
+		
+		modelMatrix[1][0] = Maths::Radians(particle.GetRotation());
+
+		instanceData.modelMatrix = modelMatrix;
+
+		instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
+
+		Vector4 offsets = Vector4();
+		offsets.m_x = particle.GetTextureOffset1().m_x;
+		offsets.m_y = particle.GetTextureOffset1().m_y;
+		offsets.m_z = particle.GetTextureOffset2().m_x;
+		offsets.m_w = particle.GetTextureOffset2().m_y;
+		instanceData.offsets = offsets;
+
+		Vector3 blend = Vector3();
+		blend.m_x = particle.GetTextureBlendFactor();
+		blend.m_y = particle.GetTransparency();
+		blend.m_z = static_cast<float>(particle.GetParticleType()->GetNumberOfRows());
+		instanceData.blend = blend;
+
+		return instanceData;
 	}
 }
