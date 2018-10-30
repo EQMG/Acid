@@ -16,7 +16,7 @@ namespace acid
 	void FileCsv::Load()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		auto fileLoaded = Files::Read(m_filename);
@@ -36,7 +36,7 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("Csv '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -44,7 +44,7 @@ namespace acid
 	void FileCsv::Save()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		std::stringstream builder;
@@ -69,7 +69,7 @@ namespace acid
 		FileSystem::WriteTextFile(m_filename, builder.str());
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("Csv '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}

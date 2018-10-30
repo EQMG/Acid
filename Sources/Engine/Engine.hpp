@@ -11,18 +11,18 @@
 /// </summary>
 namespace acid
 {
+	typedef std::chrono::high_resolution_clock HighResolutionClock;
+	typedef std::chrono::duration<float, std::milli> MillisecondsType;
+
 	/// <summary>
 	/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
 	/// </summary>
 	class ACID_EXPORT Engine
 	{
 	private:
-		typedef std::chrono::high_resolution_clock HighResolutionClock;
-		typedef std::chrono::duration<float, std::milli> MillisecondsType;
-
 		static Engine *INSTANCE;
+		static std::chrono::time_point<HighResolutionClock> TIME_START;
 
-		std::chrono::time_point<HighResolutionClock> m_start;
 		float m_timeOffset;
 
 		ModuleRegister m_moduleRegister;
@@ -134,13 +134,13 @@ namespace acid
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in milliseconds. </returns>
-		float GetTimeMs() const;
+		static float GetTimeMs();
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
 		/// <returns> The current engine time in seconds. </returns>
-		float GetTime() const { return GetTimeMs() / 1000.0f; }
+		static float GetTime() { return GetTimeMs() / 1000.0f; }
 
 		/// <summary>
 		/// Gets if the engine has been initialized.

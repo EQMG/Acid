@@ -3,9 +3,9 @@
 namespace acid
 {
 	Engine *Engine::INSTANCE = nullptr;
+	std::chrono::time_point<HighResolutionClock> Engine::TIME_START = HighResolutionClock::now();
 
 	Engine::Engine(const bool &emptyRegister) :
-		m_start(HighResolutionClock::now()),
 		m_timeOffset(0.0f),
 		m_moduleRegister(ModuleRegister()),
 		m_moduleUpdater(ModuleUpdater()),
@@ -49,9 +49,16 @@ namespace acid
 		}
 	}
 
-	float Engine::GetTimeMs() const
+	float Engine::GetTimeMs()
 	{
-		return std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - m_start).count() + (m_timeOffset / 1000.0f);
+		auto duration = std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - TIME_START).count();
+
+		if (INSTANCE == nullptr)
+		{
+			return duration;
+		}
+
+		return duration + (INSTANCE->m_timeOffset / 1000.0f);
 	}
 
 	std::string Engine::GetDateTime()

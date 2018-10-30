@@ -21,7 +21,15 @@ int main(int argc, char **argv)
 {
 	// Registers file search paths.
 	Files::SetBaseDirectory(argv[0]);
-	Files::AddSearchPath("data-1.zip");
+
+	for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
+	{
+		if (String::Contains(file, "data-"))
+		{
+			Files::AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
+		}
+	}
+
 	Files::AddSearchPath("Resources/Engine");
 
 	// Creates the engine.

@@ -10,18 +10,18 @@ namespace acid
 	{
 		if (Engine::Get() != nullptr)
 		{
-			m_startTime = Engine::Get()->GetTimeMs();
+			m_startTime = Engine::GetTimeMs();
 		}
 	}
 
 	bool Timer::IsPassedTime() const
 	{
-		return Engine::Get()->GetTimeMs() - m_startTime >= m_interval;
+		return Engine::GetTimeMs() - m_startTime >= m_interval;
 	}
 
 	void Timer::ResetStartTime()
 	{
-		m_startTime = Engine::Get()->GetTimeMs();
+		m_startTime = Engine::GetTimeMs();
 	}
 
 	float Timer::GetInterval() const
@@ -37,6 +37,6 @@ namespace acid
 		}
 
 		m_interval = interval * 1000.0f;
-		m_startTime = Engine::Get()->GetTimeMs();
+		m_startTime = Engine::GetTimeMs();
 	}
 }

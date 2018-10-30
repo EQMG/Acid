@@ -101,7 +101,7 @@ namespace acid
 		return access(path.c_str(), 0x2) == 0;
 	}
 
-	std::vector<std::string> FileSystem::FilesInPath(const std::string &path)
+	std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const bool &recursive)
 	{
 		std::vector<std::string> result = {};
 
@@ -121,12 +121,15 @@ namespace acid
 				continue;
 			}
 
-			std::string relPath = path + '/' + de->d_name;
+			std::string relPath = path + SEPARATOR + de->d_name;
 
 			if (IsDirectory(relPath))
 			{
-				auto filesInFound = FilesInPath(relPath);
-				result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+				if (recursive)
+				{
+					auto filesInFound = FilesInPath(relPath, recursive);
+					result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+				}
 			}
 			else
 			{
@@ -155,7 +158,7 @@ namespace acid
 
 			for (auto &folder : splitFolders)
 			{
-				appended << folder << "/";
+				appended << folder << SEPARATOR;
 
 				if (!Exists(appended.str()) || !IsDirectory(appended.str()))
 				{
