@@ -55,7 +55,7 @@ namespace acid
 		m_imageInfo({})
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -97,7 +97,7 @@ namespace acid
 		m_filename = filename;
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("Texture '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}

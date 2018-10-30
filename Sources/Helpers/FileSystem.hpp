@@ -63,8 +63,9 @@ namespace acid
 		/// Finds all the files in a path.
 		/// </summary>
 		/// <param name="path"> The path to search. </param>
+		/// <param name="recursive"> If paths will be recursively searched. </param>
 		/// <returns> The files found. </returns>
-		static std::vector<std::string> FilesInPath(const std::string &path);
+		static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
 
 		/// <summary>
 		/// Creates a path, will create folders and files.

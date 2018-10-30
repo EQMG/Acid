@@ -29,7 +29,7 @@ namespace acid
 		Model()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		auto fileLoaded = Files::Read(filename);
@@ -132,7 +132,7 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("OBJ '%s' loaded in %fms\n", filename.c_str(), debugEnd - debugStart);
 #endif
 

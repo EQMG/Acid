@@ -25,7 +25,7 @@ namespace test
 	{
 		m_audio->Load();
 		auto audioData = m_audio->GetParent();
-		Audio::Get()->SetMasterGain(audioData->GetChild<float>("master Volume", 1.0f));
+		Audio::Get()->SetMasterGain(audioData->GetChild<float>("Master Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_GENERAL, audioData->GetChild<float>("General Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, audioData->GetChild<float>("Effect Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_MUSIC, audioData->GetChild<float>("Music Volume", 1.0f));

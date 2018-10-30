@@ -16,7 +16,7 @@ namespace acid
 	void FileJson::Load()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		m_parent->ClearChildren();
@@ -86,7 +86,7 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("Json '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
@@ -94,7 +94,7 @@ namespace acid
 	void FileJson::Save()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::Get()->GetTimeMs();
+		float debugStart = Engine::GetTimeMs();
 #endif
 
 		std::stringstream data;
@@ -105,7 +105,7 @@ namespace acid
 		FileSystem::WriteTextFile(m_filename, data.str());
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::Get()->GetTimeMs();
+		float debugEnd = Engine::GetTimeMs();
 		Log::Out("Json '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
 #endif
 	}
