@@ -2,12 +2,12 @@
 
 namespace acid
 {
-	FilterVignette::FilterVignette(const GraphicsStage &graphicsStage) :
+	FilterVignette::FilterVignette(const GraphicsStage &graphicsStage, const float &innerRadius, const float &outerRadius, const float &opacity) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Vignette.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_innerRadius(0.15f),
-		m_outerRadius(1.35f),
-		m_opacity(0.85f)
+		m_innerRadius(innerRadius),
+		m_outerRadius(outerRadius),
+		m_opacity(opacity)
 	{
 	}
 

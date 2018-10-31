@@ -86,12 +86,14 @@ namespace acid
 		
 		uint32_t m_width;
 		uint32_t m_height;
+		float m_scale;
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0) :
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0, const float &scale = 1.0f) :
 			m_images(images),
 			m_subpasses(subpasses),
 			m_width(width),
-			m_height(height)
+			m_height(height),
+			m_scale(scale)
 		{
 		}
 
@@ -142,5 +144,9 @@ namespace acid
 		uint32_t GetHeight() const { return m_height; }
 
 		void SetHeight(const uint32_t &height) { m_height = height; }
+
+		float GetScale() const { return m_scale; }
+
+		void SetScale(const float &scale) { m_scale = scale; }
 	};
 }

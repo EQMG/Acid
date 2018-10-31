@@ -30,6 +30,11 @@ namespace acid
 		Log::Error("GLFW error: %s, %i\n", description, error);
 	}
 
+	void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
+	{
+		Log::Error("Monitor action: %s, %i\n", glfwGetMonitorName(monitor), event);
+	}
+
 	void CallbackClose(GLFWwindow *window)
 	{
 		Display::Get()->m_closed = false;
@@ -423,6 +428,9 @@ namespace acid
 			assert(false && "GLFW runtime error!");
 		}
 
+		// Set the monitor callback
+		glfwSetMonitorCallback(CallbackMonitor);
+
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
@@ -474,8 +482,8 @@ namespace acid
 		glfwSetWindowFocusCallback(m_window, CallbackFocus);
 		glfwSetWindowPosCallback(m_window, CallbackPosition);
 		glfwSetWindowSizeCallback(m_window, CallbackSize);
-		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
 		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
+		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
 	}
 
 	void Display::SetupLayers()
@@ -887,6 +895,15 @@ namespace acid
 		else
 		{
 			Log::Error("Selected GPU does not support geometry shaders!");
+		}
+
+		if (m_physicalDeviceFeatures.multiViewport)
+		{
+			physicalDeviceFeatures.multiViewport = VK_TRUE;
+		}
+		else
+		{
+			Log::Error("Selected GPU does not support multi viewports!");
 		}
 
 		VkDeviceCreateInfo deviceCreateInfo = {};

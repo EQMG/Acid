@@ -103,22 +103,34 @@ namespace acid
 
 	uint32_t RenderStage::GetWidth() const
 	{
-		if (!m_fitDisplaySize)
+		uint32_t width = 0;
+
+		if (m_fitDisplaySize)
 		{
-			return m_renderpassCreate.GetWidth();
+			width = Display::Get()->GetWidth();
+		}
+		else
+		{
+			width = m_renderpassCreate.GetWidth();
 		}
 
-		return Display::Get()->GetWidth();
+		return static_cast<uint32_t>(m_renderpassCreate.GetScale() * static_cast<float>(width));
 	}
 
 	uint32_t RenderStage::GetHeight() const
 	{
-		if (!m_fitDisplaySize)
+		uint32_t height = 0;
+
+		if (m_fitDisplaySize)
 		{
-			return m_renderpassCreate.GetHeight();
+			height = Display::Get()->GetHeight();
+		}
+		else
+		{
+			height = m_renderpassCreate.GetHeight();
 		}
 
-		return Display::Get()->GetHeight();
+		return static_cast<uint32_t>(m_renderpassCreate.GetScale() * static_cast<float>(height));
 	}
 
 	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D)

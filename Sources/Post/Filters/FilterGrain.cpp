@@ -2,10 +2,10 @@
 
 namespace acid
 {
-	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage) :
+	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage, const float &strength) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_strength(2.3f)
+		m_strength(strength)
 	{
 	}
 

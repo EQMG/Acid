@@ -73,10 +73,10 @@ namespace acid
 		}
 
 		VkRect2D scissorRect = {};
-		scissorRect.offset.x = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_x);
-		scissorRect.offset.y = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_y);
-		scissorRect.extent.width = static_cast<uint32_t>(Display::Get()->GetWidth() * GetScissor().m_z);
-		scissorRect.extent.height = static_cast<uint32_t>(Display::Get()->GetHeight() * GetScissor().m_w);
+		scissorRect.offset.x = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_x);
+		scissorRect.offset.y = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_y);
+		scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
+		scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
 		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.

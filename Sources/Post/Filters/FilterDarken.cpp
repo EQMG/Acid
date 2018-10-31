@@ -2,10 +2,10 @@
 
 namespace acid
 {
-	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage) :
+	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage, const float &factor) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_factor(0.5f)
+		m_factor(factor)
 	{
 	}
 

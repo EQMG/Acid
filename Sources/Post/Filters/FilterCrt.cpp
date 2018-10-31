@@ -4,14 +4,14 @@
 
 namespace acid
 {
-	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage) :
+	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage, const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_screenColour(Colour(0.5f, 1.0f, 0.5f)),
-		m_curveAmountX(0.1f),
-		m_curveAmountY(0.1f),
-		m_scanLineSize(1000.0f),
-		m_scanIntensity(0.1f)
+		m_screenColour(screenColour),
+		m_curveAmountX(curveAmountX),
+		m_curveAmountY(curveAmountY),
+		m_scanLineSize(scanLineSize),
+		m_scanIntensity(scanIntensity)
 	{
 	}
 
@@ -23,7 +23,7 @@ namespace acid
 		m_uniformScene.Push("curveAmountY", m_curveAmountY);
 		m_uniformScene.Push("scanLineSize", m_scanLineSize);
 		m_uniformScene.Push("scanIntensity", m_scanIntensity);
-		m_uniformScene.Push("moveTime", Engine::Get()->GetTime() / 100.0f);
+		m_uniformScene.Push("moveTime", Engine::GetTime() / 100.0f);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);

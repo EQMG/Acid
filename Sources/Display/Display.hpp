@@ -6,6 +6,7 @@
 #include "Engine/Engine.hpp"
 
 struct GLFWwindow;
+struct GLFWmonitor;
 
 namespace acid
 {
@@ -69,6 +70,8 @@ namespace acid
 
 		friend void CallbackError(int32_t error, const char *description);
 
+		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
+
 		friend void CallbackClose(GLFWwindow *window);
 
 		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
@@ -77,9 +80,9 @@ namespace acid
 
 		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
 
-		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
-
 		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
+
+		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 

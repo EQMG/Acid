@@ -11,9 +11,12 @@
 #include <Post/Deferred/RendererDeferred.hpp>
 #include <Post/Filters/FilterFxaa.hpp>
 #include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/FilterCrt.hpp>
 #include <Post/Filters/FilterGrain.hpp>
 #include <Post/Filters/FilterTiltshift.hpp>
+#include <Post/Filters/FilterPixel.hpp>
 #include <Post/Filters/FilterSsao.hpp>
+#include <Post/Filters/FilterDof.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterVignette.hpp>
 #include <Inputs/Keyboard.hpp>
@@ -28,7 +31,7 @@ namespace test
 		{
 			SubpassType(0, {0})
 		}, // subpasses
-		4096, 4096, // width, height
+		4096, 4096 // width, height
 	};
 	const RenderpassCreate RENDERPASS_1_CREATE = RenderpassCreate
 	{
@@ -63,11 +66,14 @@ namespace test
 
 		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterCrt>(GraphicsStage(1, 2)); // FIXME
+	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), 3.0f);
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterPixel>(GraphicsStage(1, 2), 8.0f); // FIXME
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2)); // FIXME
 	//	Renderer::Get()->AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
@@ -78,6 +84,9 @@ namespace test
 		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
 		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
 		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
+
+	//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
+	//	renderpassCreate1.SetScale(0.75f);
 
 	//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	}

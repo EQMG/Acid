@@ -52,15 +52,19 @@ namespace acid
 
 		~Pipeline();
 
+		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
+
+		Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
+
+		uint32_t GetWidth(const int32_t &stage = -1) const;
+
+		uint32_t GetHeight(const int32_t &stage = -1) const;
+
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
 		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
-
-		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
-
-		Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

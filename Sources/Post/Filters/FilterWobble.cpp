@@ -2,10 +2,10 @@
 
 namespace acid
 {
-	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage) :
+	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage, const float &wobbleSpeed) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_wobbleSpeed(2.0f),
+		m_wobbleSpeed(wobbleSpeed),
 		m_wobbleAmount(0.0f)
 	{
 	}
