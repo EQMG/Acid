@@ -17,7 +17,7 @@ namespace acid
 		// Updates uniforms.
 		m_uniformScene.Push("sunPosition", m_sunPosition);
 		m_uniformScene.Push("worldHeight", m_sunHeight);
-		m_uniformScene.Push("displaySize", Vector2(static_cast<float>(Display::Get()->GetWidth()), static_cast<float>(Display::Get()->GetHeight())));
+		m_uniformScene.Push("displaySize", Vector2(static_cast<float>(m_pipeline.GetWidth()), static_cast<float>(m_pipeline.GetHeight())));
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);

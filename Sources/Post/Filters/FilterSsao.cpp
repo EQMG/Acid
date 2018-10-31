@@ -71,11 +71,21 @@ namespace acid
 
 		for (uint32_t i = 0; i < size * size; i++)
 		{
-			Vector3 noise = Vector3(float(i) / float(size * size), 0.0f, 0.0f); // Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f);
+			Vector3 noise = Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f);; // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
 			noise = noise.Normalize();
 			ssaoNoise[i] = Colour(noise, 1.0f);
 		}
 
-		return std::make_shared<Texture>(size, size, ssaoNoise.data(), VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
+		auto result = std::make_shared<Texture>(size, size, ssaoNoise.data()); // , VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST
+
+#if defined(ACID_VERBOSE)
+		// Saves the noise texture.
+		std::string filename = FileSystem::GetWorkingDirectory() + "/SSAO_Noise.png";
+		FileSystem::ClearFile(filename);
+		std::unique_ptr<uint8_t[]> pixels(result->GetPixels());
+		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
+#endif
+
+		return result;
 	}
 }

@@ -2,10 +2,10 @@
 
 namespace acid
 {
-	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage) :
+	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage, const float &spanMax) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_spanMax(8.0f)
+		m_spanMax(spanMax)
 	{
 	}
 

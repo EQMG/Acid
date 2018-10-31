@@ -31,5 +31,7 @@ namespace test
 
 	void MainRenderer::Update()
 	{
+	//	auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
+	//	renderpassCreate0.SetScale(0.8f);
 	}
 }

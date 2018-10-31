@@ -92,6 +92,16 @@ namespace acid
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
 	}
 
+	uint32_t Pipeline::GetWidth(const int32_t &stage) const
+	{
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetWidth();
+	}
+
+	uint32_t Pipeline::GetHeight(const int32_t &stage) const
+	{
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetHeight();
+	}
+
 	void Pipeline::CreateShaderProgram()
 	{
 		std::stringstream defineBlock;

@@ -15,7 +15,7 @@ layout(location = 0) in vec2 inUv;
 
 layout(location = 0) out vec4 outColour;
 
-void main() 
+void main()
 {
 	float x = (inUv.x + 4.0f) * (inUv.y + 4.0f) * 10.0f;
 	vec4 grain = vec4(mod((mod(x, 13.0f) + 1.0f) * (mod(x, 123.0f) + 1.0f), 0.01f) - 0.005f) * scene.strength;

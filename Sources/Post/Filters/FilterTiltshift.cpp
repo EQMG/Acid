@@ -2,13 +2,13 @@
 
 namespace acid
 {
-	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage) :
+	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage, const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_blurAmount(1.0f),
-		m_centre(1.1f),
-		m_stepSize(0.004f),
-		m_steps(3.0f)
+		m_blurAmount(blurAmount),
+		m_centre(centre),
+		m_stepSize(stepSize),
+		m_steps(steps)
 	{
 	}
 
