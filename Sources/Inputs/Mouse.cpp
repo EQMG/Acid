@@ -57,9 +57,11 @@ namespace acid
 
 	void Mouse::Update()
 	{
+		float delta = Engine::Get()->GetDelta().AsSeconds();
+
 		// Updates the mouses delta.
-		m_mouseDeltaX = Engine::Get()->GetDelta() * (m_lastMousePositionX - m_mousePositionX);
-		m_mouseDeltaY = Engine::Get()->GetDelta() * (m_lastMousePositionY - m_mousePositionY);
+		m_mouseDeltaX = delta * (m_lastMousePositionX - m_mousePositionX);
+		m_mouseDeltaY = delta * (m_lastMousePositionY - m_mousePositionY);
 
 		// Sets the last position of the current.
 		m_lastMousePositionX = m_mousePositionX;
@@ -77,7 +79,7 @@ namespace acid
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0f)
 		{
-			m_mouseDeltaWheel -= Engine::Get()->GetDelta() * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
+			m_mouseDeltaWheel -= delta * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
 			m_mouseDeltaWheel = Maths::Deadband(0.1f, m_mouseDeltaWheel);
 		}
 	}

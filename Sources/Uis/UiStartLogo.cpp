@@ -15,12 +15,12 @@ namespace acid
 		m_starting(true)
 	{
 #if defined(ACID_BUILD_DEBUG)
-		Events::Get()->AddEvent<EventTime>(1.65f, [&]()
+		Events::Get()->AddEvent<EventTime>(Time::Seconds(1.65f), [&]()
 #else
-		Events::Get()->AddEvent<EventTime>(3.6f, [&]()
+		Events::Get()->AddEvent<EventTime>(Time::Seconds(3.6f), [&]()
 #endif
 		{
-			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 1.4f);
+			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(1.4f));
 		}, false);
 	}
 

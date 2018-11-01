@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	const float UiInputButton::CHANGE_TIME = 0.1f;
+	const Time UiInputButton::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputButton::FONT_SIZE = 1.7f;
 	const Vector2 UiInputButton::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputButton::SCALE_NORMAL = 1.0f;

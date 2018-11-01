@@ -8,14 +8,14 @@ namespace acid
 	ModuleUpdater::ModuleUpdater() :
 		m_deltaUpdate(Delta()),
 		m_deltaRender(Delta()),
-		m_timerUpdate(Timer(1.0f / 66.0f)),
-		m_timerRender(Timer(1.0f / -1.0f))
+		m_timerUpdate(Timer(Time::Seconds(1.0f / 66.0f))),
+		m_timerRender(Timer(Time::Seconds(1.0f / -1.0f)))
 	{
 	}
 
 	void ModuleUpdater::Update(const ModuleRegister &moduleRegister)
 	{
-		m_timerRender.SetInterval(1.0f / Engine::Get()->GetFpsLimit());
+		m_timerRender.SetInterval(Time::Seconds(1.0f / Engine::Get()->GetFpsLimit()));
 
 		// Always-Update.
 		moduleRegister.RunUpdate(MODULE_UPDATE_ALWAYS);
@@ -39,7 +39,7 @@ namespace acid
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval(), m_deltaUpdate.GetChange(), 5.0f))
+		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 5.0f))
 		{
 			return;
 		}

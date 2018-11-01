@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	const float UiInputGrabber::CHANGE_TIME = 0.1f;
+	const Time UiInputGrabber::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputGrabber::FONT_SIZE = 1.7f;
 	const Vector2 UiInputGrabber::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputGrabber::SCALE_NORMAL = 1.0f;

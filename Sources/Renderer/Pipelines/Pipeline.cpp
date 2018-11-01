@@ -36,7 +36,7 @@ namespace acid
 		m_tessellationState({})
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		CreateShaderProgram();
@@ -59,9 +59,9 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
+		auto debugEnd = Engine::GetTime();
 	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
-		Log::Out("Pipeline '%s' created in %fms\n", m_pipelineCreate.GetShaderStages().back().c_str(), debugEnd - debugStart);
+		Log::Out("Pipeline '%s' created in %ims\n", m_pipelineCreate.GetShaderStages().back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

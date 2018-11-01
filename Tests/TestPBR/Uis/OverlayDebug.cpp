@@ -11,7 +11,7 @@ namespace test
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
 		m_levelIcons(std::vector<std::unique_ptr<Gui>>()),
 		m_levelTexts(std::vector<std::unique_ptr<Text>>()),
-		m_timerUpdate(Timer(0.333f))
+		m_timerUpdate(Timer(Time::Seconds(0.333f)))
 	{
 		for (uint32_t i = 0; i < 5; i++)
 		{
@@ -31,8 +31,8 @@ namespace test
 		{
 			m_timerUpdate.ResetStartTime();
 
-			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
-			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
+			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
+			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
 		}
 	}
 

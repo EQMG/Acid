@@ -11,19 +11,18 @@ namespace test
 	static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
 
 	World::World() :
-		m_driverDay(DriverLinear(0.0f, 1.0f, 300.0f)),
+		m_driverDay(DriverLinear(0.0f, 1.0f, Time::Seconds(300.0f))),
 		m_factorDay(0.0f),
 		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyboxRotation(Vector3()),
 		m_lightDirection(Vector3())
 	{
-		m_driverDay.Update(50.0f); // Starts during daytime.
+		m_driverDay.Update(Time::Seconds(50.0f)); // Starts during daytime.
 	}
 
 	void World::Update()
 	{
-		float delta = Engine::Get()->GetDelta();
-		m_factorDay = m_driverDay.Update(delta);
+		m_factorDay = m_driverDay.Update(Engine::Get()->GetDelta());
 
 		m_skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 

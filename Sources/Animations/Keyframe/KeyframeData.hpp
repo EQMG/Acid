@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Maths/Time.hpp"
 #include "Animations/Joint/JointTransformData.hpp"
 
 namespace acid
@@ -8,12 +9,12 @@ namespace acid
 	class ACID_EXPORT KeyframeData
 	{
 	private:
-		float m_time;
+		Time m_time;
 		std::vector<JointTransformData> m_jointTransforms;
 	public:
-		explicit KeyframeData(const float &time);
+		explicit KeyframeData(const Time &time);
 
-		float GetTime() const { return m_time; }
+		Time GetTime() const { return m_time; }
 
 		std::vector<JointTransformData> GetJointTransforms() const { return m_jointTransforms; }
 

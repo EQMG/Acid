@@ -148,7 +148,7 @@ namespace test
 	void VoxelChunk::GenerateMesh()
 	{
 #if ACID_VERBOSE
-		float debugStart = Engine::Get()->GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		auto mesh = GetGameObject()->GetComponent<Mesh>();
@@ -181,11 +181,11 @@ namespace test
 		}
 
 #if ACID_VERBOSE
-		float debugEnd = Engine::Get()->GetTimeMs();
+		auto debugEnd = Engine::GetTime();
 
-		if (debugEnd - debugStart > 22.0f)
+		if ((debugEnd - debugStart).AsMilliseconds() > 22.0f)
 		{
-			Log::Out("Chunk %s built in %fms\n", GetGameObject()->GetName().c_str(), debugEnd - debugStart);
+			Log::Out("Chunk %s built in %ims\n", GetGameObject()->GetName().c_str(), (debugEnd - debugStart).AsMilliseconds());
 		}
 #endif
 	}

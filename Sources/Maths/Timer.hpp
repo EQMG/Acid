@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
+#include "Time.hpp"
 
 namespace acid
 {
@@ -10,14 +11,14 @@ namespace acid
 	class ACID_EXPORT Timer
 	{
 	private:
-		float m_startTime;
-		float m_interval;
+		Time m_startTime;
+		Time m_interval;
 	public:
 		/// <summary>
 		/// Creates a new timer.
 		/// </summary>
-		/// <param name="interval"> The time between events (seconds). </param>
-		explicit Timer(const float &interval);
+		/// <param name="interval"> The time between events. </param>
+		explicit Timer(const Time &interval);
 
 		/// <summary>
 		/// Gets if the interval has been passes for the timer.
@@ -31,15 +32,15 @@ namespace acid
 		void ResetStartTime();
 
 		/// <summary>
-		/// Gets what the interval is. (Seconds).
+		/// Gets what the interval is.
 		/// </summary>
 		/// <returns> The timers current interval. </returns>
-		float GetInterval() const;
+		Time GetInterval() const;
 
 		/// <summary>
-		/// Gets the timers interval. (Seconds, Resets timer).
+		/// Gets the timers interval (resets timer).
 		/// </summary>
 		/// <param name="interval"> The new timer interval. </param>
-		void SetInterval(const float &interval);
+		void SetInterval(const Time &interval);
 	};
 }

@@ -9,10 +9,10 @@ namespace acid
 	{
 	}
 
-	void SmoothFloat::Update(const float &delta)
+	void SmoothFloat::Update(const Time &delta)
 	{
 		float offset = m_target - m_actual;
-		float change = offset * delta * m_agility;
+		float change = offset * delta.AsSeconds() * m_agility;
 		m_actual += change;
 	}
 }

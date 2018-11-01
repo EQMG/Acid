@@ -7,7 +7,7 @@ namespace acid
 {
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),
-		m_animationTime(0.0f),
+		m_animationTime(Time::ZERO),
 		m_currentAnimation(nullptr)
 	{
 	}
@@ -30,7 +30,7 @@ namespace acid
 
 		if (m_animationTime > m_currentAnimation->GetLength())
 		{
-			m_animationTime = std::fmod(m_animationTime, m_currentAnimation->GetLength());
+			m_animationTime = m_animationTime % m_currentAnimation->GetLength();
 		}
 	}
 
@@ -64,8 +64,8 @@ namespace acid
 
 	float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame)
 	{
-		float totalTime = nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp();
-		float currentTime = m_animationTime - previousFrame.GetTimeStamp();
+		Time totalTime = nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp();
+		Time currentTime = m_animationTime - previousFrame.GetTimeStamp();
 		return currentTime / totalTime;
 	}
 
@@ -100,7 +100,7 @@ namespace acid
 
 	void Animator::DoAnimation(Animation *animation)
 	{
-		m_animationTime = 0.0f;
+		m_animationTime = Time::ZERO;
 		m_currentAnimation = animation;
 	}
 }

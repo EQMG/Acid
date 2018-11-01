@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Engine/Log.hpp>
 #include <Maths/Maths.hpp>
+#include <Maths/Time.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Matrix2.hpp>
 #include <Maths/Matrix3.hpp>
@@ -15,6 +16,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	{
+		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
 		Log::Out("Matrix3 Size: %i\n", static_cast<int>(sizeof(Matrix3)));
@@ -22,6 +24,16 @@ int main(int argc, char **argv)
 		Log::Out("Vector2 Size: %i\n", static_cast<int>(sizeof(Vector2)));
 		Log::Out("Vector3 Size: %i\n", static_cast<int>(sizeof(Vector3)));
 		Log::Out("Vector4 Size: %i\n", static_cast<int>(sizeof(Vector4)));
+		Log::Out("\n");
+	}
+	{
+		Time a = Time::Seconds(348.991f);
+		Time b = Time::Milliseconds(9683);
+		Time c = a + b;
+
+		Log::Out("Seconds: %f\n", c.AsSeconds());
+		Log::Out("Milliseconds: %i\n", c.AsMilliseconds());
+		Log::Out("Microseconds: %i\n", c.AsMicroseconds());
 		Log::Out("\n");
 	}
 	{

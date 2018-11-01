@@ -52,7 +52,7 @@ namespace acid
 		m_imageInfo({})
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -93,8 +93,8 @@ namespace acid
 		Texture::DeletePixels(pixels);
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Cubemap '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Cubemap '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

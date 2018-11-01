@@ -20,7 +20,7 @@ namespace acid
 		/// <param name="min"> The min value. </param>
 		/// <param name="max"> The max value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		DriverSinwave(const float &min, const float &max, const float &length);
+		DriverSinwave(const float &min, const float &max, const Time &length);
 
 		/// <summary>
 		/// Gets the min value.
@@ -46,6 +46,6 @@ namespace acid
 		/// <param name="max"> The new max value. </param>
 		void SetMax(const float &max) { m_max = max; }
 	protected:
-		float Calculate(const float &time) override;
+		float Calculate(const float &factor) override;
 	};
 }

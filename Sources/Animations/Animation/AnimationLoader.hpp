@@ -10,20 +10,20 @@ namespace acid
 		Metadata *m_libraryAnimations;
 		Metadata *m_libraryVisualScenes;
 
-		float m_lengthSeconds;
+		Time m_lengthSeconds;
 		std::vector<KeyframeData> m_keyframeData;
 	public:
 		AnimationLoader(Metadata *libraryAnimations, Metadata *libraryVisualScenes);
 
-		float GetLengthSeconds() const { return m_lengthSeconds; }
+		Time GetLengthSeconds() const { return m_lengthSeconds; }
 
 		std::vector<KeyframeData> GetKeyframeData() const { return m_keyframeData; }
 	private:
 		std::string FindRootJointName();
 
-		std::vector<float> GetKeyTimes();
+		std::vector<Time> GetKeyTimes();
 
-		void CreateKeyframeData(const std::vector<float> &times);
+		void CreateKeyframeData(const std::vector<Time> &times);
 
 		void LoadJointTransforms(Metadata *jointData, const std::string &rootNodeId);
 

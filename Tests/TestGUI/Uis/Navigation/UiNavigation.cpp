@@ -100,17 +100,17 @@ namespace test
 					continue;
 				}
 
-				m_driverTarget = std::make_unique<DriverSlide>(0.0f, 1.0f, 0.4f);
+				m_driverTarget = std::make_unique<DriverSlide>(0.0f, 1.0f, Time::Seconds(0.4f));
 				m_targetTab = tab.get();
 
 				if (m_currentTab != nullptr)
 				{
-					m_currentTab->GetContent()->SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 0.1f);
+					m_currentTab->GetContent()->SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(0.1f));
 				}
 
-				Events::Get()->AddEvent<EventTime>(0.32f, [&]()
+				Events::Get()->AddEvent<EventTime>(Time::Seconds(0.32f), [&]()
 				{
-					m_targetTab->GetContent()->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, 0.1f);
+					m_targetTab->GetContent()->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, Time::Seconds(0.1f));
 				}, false);
 			}
 		}

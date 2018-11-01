@@ -31,6 +31,6 @@ namespace acid
 		/// <param name="constant"> The new constant. </param>
 		void SetConstant(const float &constant) { m_constant = constant; };
 	protected:
-		float Calculate(const float &time) override;
+		float Calculate(const float &factor) override;
 	};
 }

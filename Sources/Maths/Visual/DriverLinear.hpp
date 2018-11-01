@@ -20,7 +20,7 @@ namespace acid
 		/// <param name="startValue"> The start value. </param>
 		/// <param name="endValue"> The end value. </param>
 		/// <param name="length"> The time to go between values. </param>
-		DriverLinear(const float &startValue, const float &endValue, const float &length);
+		DriverLinear(const float &startValue, const float &endValue, const Time &length);
 
 		/// <summary>
 		/// Gets the start time.
@@ -46,6 +46,6 @@ namespace acid
 		/// <param name="end"> The new end time. </param>
 		void SetEnd(const float &end) { m_end = end; }
 	protected:
-		float Calculate(const float &time) override;
+		float Calculate(const float &factor) override;
 	};
 }

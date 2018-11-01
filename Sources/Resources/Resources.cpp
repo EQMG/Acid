@@ -6,7 +6,7 @@ namespace acid
 {
 	Resources::Resources() :
 		m_resources(std::vector<std::shared_ptr<IResource>>()),
-		m_timerPurge(Timer(5.0f))
+		m_timerPurge(Timer(Time::Seconds(5.0f)))
 	{
 	}
 

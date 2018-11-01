@@ -40,7 +40,7 @@ namespace acid
 			return;
 		}
 
-		m_timePassed += Engine::Get()->GetDelta();
+		m_timePassed += Engine::Get()->GetDelta().AsSeconds();
 
 		if (m_timePassed > 1.0f / m_pps)
 		{
@@ -186,10 +186,9 @@ namespace acid
 		}
 
 		Vector3 velocity = Vector3();
-		float delta = Engine::Get()->GetDelta();
 		velocity = GetGameObject()->GetTransform().GetPosition() - m_lastPosition;
 		m_lastPosition = GetGameObject()->GetTransform().GetPosition();
-		velocity /= delta;
+		velocity /= Engine::Get()->GetDelta().AsSeconds();
 
 		if (m_direction != 0.0f)
 		{
