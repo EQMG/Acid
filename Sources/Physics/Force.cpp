@@ -7,12 +7,12 @@ namespace acid
 	Force::Force(const Vector3 &force, const Vector3 &position) :
 		m_force(force),
 		m_neverExpires(true),
-		m_timeLeft(0.0f),
+		m_timeLeft(Time::ZERO),
 		m_position(position)
 	{
 	}
 
-	Force::Force(const Vector3 &force, const float &time, const Vector3 &position) :
+	Force::Force(const Vector3 &force, const Time &time, const Vector3 &position) :
 		m_force(force),
 		m_neverExpires(false),
 		m_timeLeft(time),

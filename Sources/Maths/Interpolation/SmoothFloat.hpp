@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
+#include "Maths/Time.hpp"
 
 namespace acid
 {
@@ -25,7 +26,7 @@ namespace acid
 		/// Updates the driver with the passed time.
 		/// </summary>
 		/// <param name="delta"> The time between the last update. </param>
-		void Update(const float &delta);
+		void Update(const Time &delta);
 
 		/// <summary>
 		/// Sets the target for the smooth float.

@@ -12,7 +12,7 @@ namespace acid
 
 	void FilterWobble::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender();
+		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender().AsSeconds();
 
 		// Updates uniforms.
 		m_uniformScene.Push("moveIt", m_wobbleAmount);

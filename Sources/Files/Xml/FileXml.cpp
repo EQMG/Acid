@@ -16,7 +16,7 @@ namespace acid
 	void FileXml::Load()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		m_parent->ClearChildren();
@@ -91,15 +91,15 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Xml '%s' loaded in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Xml '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 
 	void FileXml::Save()
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		std::stringstream data;
@@ -110,8 +110,8 @@ namespace acid
 		FileSystem::WriteTextFile(m_filename, data.str());
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Xml '%s' saved in %fms\n", m_filename.c_str(), debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Xml '%s' saved in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

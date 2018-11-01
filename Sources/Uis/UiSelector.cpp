@@ -19,7 +19,7 @@ namespace acid
 
 	void UiSelector::Update(const bool &paused, const SelectorJoystick &selectorJoystick)
 	{
-		float delta = Engine::Get()->GetDelta();
+		float delta = Engine::Get()->GetDelta().AsSeconds();
 
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();

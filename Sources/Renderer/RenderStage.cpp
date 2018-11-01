@@ -63,7 +63,7 @@ namespace acid
 	void RenderStage::Rebuild(const Swapchain &swapchain)
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
@@ -96,8 +96,8 @@ namespace acid
 		}
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Renderstage '%i' built in %fms\n", m_stageIndex, debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Renderstage '%i' built in %ims\n", m_stageIndex, (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

@@ -27,16 +27,18 @@ namespace acid
 
 	void Particle::Update()
 	{
-		m_velocity.m_y += -10.0f * m_gravityEffect * Engine::Get()->GetDelta();
+		float delta = Engine::Get()->GetDelta().AsSeconds();
+
+		m_velocity.m_y += -10.0f * m_gravityEffect * delta;
 		m_change = m_velocity;
-		m_change *= Engine::Get()->GetDelta();
+		m_change *= delta;
 
 		m_position += m_change;
-		m_elapsedTime += Engine::Get()->GetDelta();
+		m_elapsedTime += delta;
 
 		if (m_elapsedTime > m_lifeLength - FADE_TIME)
 		{
-			m_transparency -= Engine::Get()->GetDelta() / FADE_TIME;
+			m_transparency -= delta / FADE_TIME;
 		}
 
 		if (!IsAlive() || Scenes::Get()->GetCamera() == nullptr)

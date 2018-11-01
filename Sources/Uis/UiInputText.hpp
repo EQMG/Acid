@@ -13,7 +13,7 @@ namespace acid
 		public UiObject
 	{
 	private:
-		static const float CHANGE_TIME;
+		static const Time CHANGE_TIME;
 		static const float FONT_SIZE;
 		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;

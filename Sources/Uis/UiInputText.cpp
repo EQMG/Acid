@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	const float UiInputText::CHANGE_TIME = 0.1f;
+	const Time UiInputText::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputText::FONT_SIZE = 1.7f;
 	const Vector2 UiInputText::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputText::SCALE_NORMAL = 1.0f;

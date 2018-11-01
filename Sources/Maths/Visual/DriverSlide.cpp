@@ -2,14 +2,14 @@
 
 namespace acid
 {
-	DriverSlide::DriverSlide(const float &start, const float &end, const float &length) :
+	DriverSlide::DriverSlide(const float &start, const float &end, const Time &length) :
 		IDriver(length),
 		m_start(start),
 		m_end(end)
 	{
 	}
 
-	float DriverSlide::Calculate(const float &time)
+	float DriverSlide::Calculate(const float &factor)
 	{
 		float realTime = std::min(GetActualTime(), GetLength()) / GetLength();
 		return m_start + realTime * (m_end - m_start);

@@ -2,16 +2,16 @@
 
 namespace acid
 {
-	DriverBounce::DriverBounce(const float &start, const float &end, const float &length) :
+	DriverBounce::DriverBounce(const float &start, const float &end, const Time &length) :
 		IDriver(length),
 		m_start(start),
 		m_end(end)
 	{
 	}
 
-	float DriverBounce::Calculate(const float &time)
+	float DriverBounce::Calculate(const float &factor)
 	{
-		float value = 0.5f + std::sin(PI * 2.0f * time) * 0.5f;
+		float value = 0.5f + std::sin(PI * 2.0f * factor) * 0.5f;
 
 		if (GetActualTime() > GetLength() / 2.0f)
 		{

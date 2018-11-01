@@ -130,7 +130,7 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
@@ -148,15 +148,15 @@ namespace acid
 		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Renderpass created in %fms\n", debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Renderpass created in %ims\n", (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 
 	void Renderer::CaptureScreenshot(const std::string &filename)
 	{
 #if defined(ACID_VERBOSE)
-		float debugStart = Engine::GetTimeMs();
+		auto debugStart = Engine::GetTime();
 #endif
 
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -224,8 +224,8 @@ namespace acid
 		vkDestroyImage(logicalDevice, dstImage, nullptr);
 
 #if defined(ACID_VERBOSE)
-		float debugEnd = Engine::GetTimeMs();
-		Log::Out("Screenshot '%s' saved in %fms\n", filename.c_str(), debugEnd - debugStart);
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Screenshot '%s' saved in %ims\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

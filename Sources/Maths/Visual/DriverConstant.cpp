@@ -3,12 +3,12 @@
 namespace acid
 {
 	DriverConstant::DriverConstant(const float &constant) :
-		IDriver(+std::numeric_limits<float>::infinity()),
+		IDriver(Time::POSITIVE_INFINITY),
 		m_constant(constant)
 	{
 	}
 
-	float DriverConstant::Calculate(const float &time)
+	float DriverConstant::Calculate(const float &factor)
 	{
 		return m_constant;
 	}

@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	Keyframe::Keyframe(const float &timeStamp, const std::map<std::string, JointTransform> &pose) :
+	Keyframe::Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose) :
 		m_timeStamp(timeStamp),
 		m_pose(pose)
 	{

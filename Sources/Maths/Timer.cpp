@@ -4,39 +4,35 @@
 
 namespace acid
 {
-	Timer::Timer(const float &interval) :
-		m_startTime(0.0f),
-		m_interval(interval * 1000.0f)
+	Timer::Timer(const Time &interval) :
+		m_startTime(Engine::GetTime()),
+		m_interval(interval)
 	{
-		if (Engine::Get() != nullptr)
-		{
-			m_startTime = Engine::GetTimeMs();
-		}
 	}
 
 	bool Timer::IsPassedTime() const
 	{
-		return Engine::GetTimeMs() - m_startTime >= m_interval;
+		return Engine::GetTime() - m_startTime >= m_interval;
 	}
 
 	void Timer::ResetStartTime()
 	{
-		m_startTime = Engine::GetTimeMs();
+		m_startTime = Engine::GetTime();
 	}
 
-	float Timer::GetInterval() const
+	Time Timer::GetInterval() const
 	{
-		return m_interval / 1000.0f;
+		return m_interval;
 	}
 
-	void Timer::SetInterval(const float &interval)
+	void Timer::SetInterval(const Time &interval)
 	{
-		if (m_interval == interval * 1000.0f)
+		if (m_interval == interval)
 		{
 			return;
 		}
 
-		m_interval = interval * 1000.0f;
-		m_startTime = Engine::GetTimeMs();
+		m_interval = interval;
+		m_startTime = Engine::GetTime();
 	}
 }

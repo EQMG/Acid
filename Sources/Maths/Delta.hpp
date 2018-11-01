@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
+#include "Time.hpp"
 
 namespace acid
 {
@@ -10,10 +11,10 @@ namespace acid
 	class ACID_EXPORT Delta
 	{
 	private:
-		float m_currentFrameTime;
-		float m_lastFrameTime;
-		float m_change;
-		float m_time;
+		Time m_currentFrameTime;
+		Time m_lastFrameTime;
+		Time m_change;
+		Time m_time;
 	public:
 		/// <summary>
 		/// Creates a new change handler.
@@ -25,8 +26,8 @@ namespace acid
 		/// </summary>
 		void Update();
 
-		float GetChange() const { return m_change; }
+		Time GetChange() const { return m_change; }
 
-		float GetTime() const { return m_time; }
+		Time GetTime() const { return m_time; }
 	};
 }

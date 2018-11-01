@@ -3,6 +3,7 @@
 #include <chrono>
 #include <memory>
 #include "Log.hpp"
+#include "Maths/Time.hpp"
 #include "ModuleRegister.hpp"
 #include "ModuleUpdater.hpp"
 
@@ -13,6 +14,7 @@ namespace acid
 {
 	typedef std::chrono::high_resolution_clock HighResolutionClock;
 	typedef std::chrono::duration<float, std::milli> MillisecondsType;
+	typedef std::chrono::duration<int64_t, std::micro> MicrosecondsType;
 
 	/// <summary>
 	/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
@@ -23,7 +25,7 @@ namespace acid
 		static Engine *INSTANCE;
 		static std::chrono::time_point<HighResolutionClock> TIME_START;
 
-		float m_timeOffset;
+		Time m_timeOffset;
 
 		ModuleRegister m_moduleRegister;
 		ModuleUpdater m_moduleUpdater;
@@ -95,16 +97,16 @@ namespace acid
 		bool DeregisterModule() { return m_moduleRegister.DeregisterModule<T>(); }
 
 		/// <summary>
-		/// Gets the added/removed time for the engine (seconds).
+		/// Gets the added/removed time for the engine.
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		float GetTimeOffset() const { return m_timeOffset; }
+		Time GetTimeOffset() const { return m_timeOffset; }
 
 		/// <summary>
-		/// Sets the time offset for the engine (seconds).
+		/// Sets the time offset for the engine.
 		/// </summary>
 		/// <param name="timeOffset"> The new time offset. </param>
-		void SetTimeOffset(const float &timeOffset) { m_timeOffset = timeOffset; }
+		void SetTimeOffset(const Time &timeOffset) { m_timeOffset = timeOffset; }
 
 		/// <summary>
 		/// Gets the fps limit.
@@ -122,25 +124,19 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() const { return m_moduleUpdater.GetDelta(); }
+		Time GetDelta() const { return m_moduleUpdater.GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
+		Time GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
 		/// </summary>
-		/// <returns> The current engine time in milliseconds. </returns>
-		static float GetTimeMs();
-
-		/// <summary>
-		/// Gets the current time of the engine instance.
-		/// </summary>
-		/// <returns> The current engine time in seconds. </returns>
-		static float GetTime() { return GetTimeMs() / 1000.0f; }
+		/// <returns> The current engine time. </returns>
+		static Time GetTime();
 
 		/// <summary>
 		/// Gets if the engine has been initialized.

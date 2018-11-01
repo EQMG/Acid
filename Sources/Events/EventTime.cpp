@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	EventTime::EventTime(const float &interval, const std::function<void()> &onEvent, const bool &repeat) :
+	EventTime::EventTime(const Time &interval, const std::function<void()> &onEvent, const bool &repeat) :
 		IEvent(),
 		m_timer(Timer(interval)),
 		m_onEvent(onEvent),

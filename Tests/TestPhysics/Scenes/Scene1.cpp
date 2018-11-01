@@ -32,7 +32,7 @@
 
 namespace test
 {
-	static const float UI_SLIDE_TIME = 0.2f;
+	static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
 		IScene(new FpsCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
@@ -61,14 +61,14 @@ namespace test
 		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated.
-//		auto animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
-//		animatedObject->SetName("Animated");
-//	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
-//		animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
-//		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-//		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-//		animatedObject->AddComponent<MeshRender>();
-//	//	animatedObject->AddComponent<ShadowRender>();
+	//	auto animatedObject = new GameObject(Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(), 0.25f));
+	//	animatedObject->SetName("Animated");
+	////	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
+	////	animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
+	//	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+	//	animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+	//	animatedObject->AddComponent<MeshRender>();
+	//	animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
@@ -138,7 +138,7 @@ namespace test
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, 2.0f);
+			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();

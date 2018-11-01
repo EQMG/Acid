@@ -30,12 +30,12 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		float GetDelta() const { return m_deltaUpdate.GetChange(); }
+		Time GetDelta() const { return m_deltaUpdate.GetChange(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		float GetDeltaRender() const { return m_deltaRender.GetChange(); }
+		Time GetDeltaRender() const { return m_deltaRender.GetChange(); }
 	};
 }

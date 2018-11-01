@@ -11,8 +11,8 @@ namespace acid
 		public IDriver
 	{
 	private:
-		float m_start;
-		float m_end;
+		Time m_start;
+		Time m_end;
 		float m_peak;
 	public:
 		/// <summary>
@@ -22,31 +22,31 @@ namespace acid
 		/// <param name="end"> The end time. </param>
 		/// <param name="peak"> The peak value. </param>
 		/// <param name="length"> The time taken to get to the end. </param>
-		DriverFade(const float &start, const float &end, const float &peak, const float &length);
+		DriverFade(const Time &start, const Time &end, const float &peak, const Time &length);
 
 		/// <summary>
 		/// Gets the start time.
 		/// </summary>
 		/// <returns> The start time. </returns>
-		float GetStart() const { return m_start; }
+		Time GetStart() const { return m_start; }
 
 		/// <summary>
 		/// Sets the start time.
 		/// </summary>
 		/// <param name="start"> The new start time. </param>
-		void SetStart(const float &start) { m_start = start; }
+		void SetStart(const Time &start) { m_start = start; }
 
 		/// <summary>
 		/// Gets the end time.
 		/// </summary>
 		/// <returns> The end time. </returns>
-		float GetEnd() const { return m_end; }
+		Time GetEnd() const { return m_end; }
 
 		/// <summary>
 		/// Sets the end time.
 		/// </summary>
 		/// <param name="end"> The new end time. </param>
-		void SetEnd(const float &end) { m_end = end; }
+		void SetEnd(const Time &end) { m_end = end; }
 
 		/// <summary>
 		/// Gets the peak value.
@@ -60,6 +60,6 @@ namespace acid
 		/// <param name="peak"> The new peak value. </param>
 		void SetPeak(const float &peak) { m_peak = peak; }
 	protected:
-		float Calculate(const float &time) override;
+		float Calculate(const float &factor) override;
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include "Maths/Time.hpp"
 #include "Animation/Animation.hpp"
 #include "Joint/Joint.hpp"
 
@@ -26,7 +27,7 @@ namespace acid
 	private:
 		Joint *m_rootJoint;
 
-		float m_animationTime;
+		Time m_animationTime;
 		Animation *m_currentAnimation;
 	public:
 		/// <summary>

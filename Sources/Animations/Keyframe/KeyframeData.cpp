@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	KeyframeData::KeyframeData(const float &time) :
+	KeyframeData::KeyframeData(const Time &time) :
 		m_time(time),
 		m_jointTransforms(std::vector<JointTransformData>())
 	{

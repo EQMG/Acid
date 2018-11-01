@@ -9,7 +9,7 @@
 
 namespace test
 {
-	const float UI_SLIDE_TIME = 0.2f;
+	const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
 		IScene(new FixedCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),

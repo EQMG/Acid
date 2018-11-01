@@ -2,13 +2,13 @@
 
 namespace acid
 {
-	Animation::Animation(const float &length, const std::vector<Keyframe> &keyframes) :
+	Animation::Animation(const Time &length, const std::vector<Keyframe> &keyframes) :
 		m_length(length),
 		m_keyframes(keyframes)
 	{
 	}
 
-	Animation::Animation(const float &length, const std::vector<KeyframeData> &keyframeData) :
+	Animation::Animation(const Time &length, const std::vector<KeyframeData> &keyframeData) :
 		m_length(length),
 		m_keyframes(std::vector<Keyframe>())
 	{

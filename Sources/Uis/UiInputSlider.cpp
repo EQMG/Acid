@@ -6,7 +6,8 @@
 
 namespace acid
 {
-	const float UiInputSlider::CHANGE_TIME = 0.1f;
+	const Time UiInputSlider::CHANGE_TIME = Time::Seconds(0.1f);
+	const Time UiInputSlider::SLIDE_TIME = Time::Seconds(0.2f);
 	const float UiInputSlider::FONT_SIZE = 1.7f;
 	const Vector2 UiInputSlider::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputSlider::SCALE_NORMAL = 1.0f;
@@ -26,7 +27,7 @@ namespace acid
 		m_value(value),
 		m_mouseOver(false),
 		m_hasChange(false),
-		m_timerChange(Timer(0.2f)),
+		m_timerChange(Timer(SLIDE_TIME)),
 		m_actionChange(nullptr)
 	{
 		SetValue(value);

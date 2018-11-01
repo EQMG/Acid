@@ -30,7 +30,7 @@
 
 namespace test
 {
-	static const float UI_SLIDE_TIME = 0.2f;
+	static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
 		IScene(new FpsCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),

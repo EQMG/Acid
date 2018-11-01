@@ -46,7 +46,7 @@ namespace acid
 
 	void ScenePhysics::Update()
 	{
-		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta());
+		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
 	}
 
 	Vector3 ScenePhysics::GetGravity() const

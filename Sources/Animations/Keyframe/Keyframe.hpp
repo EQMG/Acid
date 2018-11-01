@@ -17,15 +17,15 @@ namespace acid
 	class ACID_EXPORT Keyframe
 	{
 	private:
-		float m_timeStamp;
+		Time m_timeStamp;
 		std::map<std::string, JointTransform> m_pose;
 	public:
 		/// <summary>
 		/// Creates a new keyframe at a timestamp.
 		/// </summary>
-		/// <param name="timeStamp"> The time (in seconds) that this keyframe occurs during the animation. </param>
+		/// <param name="timeStamp"> The time that this keyframe occurs during the animation. </param>
 		/// <param name="pose"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
-		Keyframe(const float &timeStamp, const std::map<std::string, JointTransform> &pose);
+		Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose);
 
 		/// <summary>
 		/// Creates a new keyframe at a timestamp.
@@ -37,7 +37,7 @@ namespace acid
 		/// Gets the time in seconds of the keyframe in the animation.
 		/// </summary>
 		/// <returns> The time in seconds. </returns>
-		float GetTimeStamp() const { return m_timeStamp; }
+		Time GetTimeStamp() const { return m_timeStamp; }
 
 		/// <summary>
 		/// Gets the desired local-space transforms of all the joints at this keyframe, of the animation,

@@ -13,7 +13,7 @@ namespace test
 		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
 		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.062f, TEXT_JUSTIFY_LEFT)),
-		m_timerUpdate(Timer(0.333f))
+		m_timerUpdate(Timer(Time::Seconds(0.333f)))
 	{
 	}
 
@@ -45,8 +45,8 @@ namespace test
 					String::To(static_cast<int>(cameraPosition.m_z)));
 			}
 
-			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender())));
-			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta())));
+			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
+			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
 		}
 	}
 

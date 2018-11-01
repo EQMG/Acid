@@ -6,7 +6,7 @@ namespace acid
 	std::chrono::time_point<HighResolutionClock> Engine::TIME_START = HighResolutionClock::now();
 
 	Engine::Engine(const bool &emptyRegister) :
-		m_timeOffset(0.0f),
+		m_timeOffset(Time::ZERO),
 		m_moduleRegister(ModuleRegister()),
 		m_moduleUpdater(ModuleUpdater()),
 		m_fpsLimit(-1.0f),
@@ -49,16 +49,16 @@ namespace acid
 		}
 	}
 
-	float Engine::GetTimeMs()
+	Time Engine::GetTime()
 	{
-		auto duration = std::chrono::duration_cast<MillisecondsType>(HighResolutionClock::now() - TIME_START).count();
+		auto duration = Time::Microseconds(std::chrono::duration_cast<MicrosecondsType>(HighResolutionClock::now() - TIME_START).count());
 
 		if (INSTANCE == nullptr)
 		{
 			return duration;
 		}
 
-		return duration + (INSTANCE->m_timeOffset / 1000.0f);
+		return duration + INSTANCE->m_timeOffset;
 	}
 
 	std::string Engine::GetDateTime()

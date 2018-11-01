@@ -2,9 +2,12 @@
 
 namespace acid
 {
+	const Time UiInputDelay::DELAY_TIME = Time::Seconds(0.4f);
+	const Time UiInputDelay::REPEAT_TIME = Time::Seconds(0.1f);
+
 	UiInputDelay::UiInputDelay() :
-		m_timerDelay(Timer(0.4f)),
-		m_timerRepeat(Timer(0.1f)),
+		m_timerDelay(Timer(DELAY_TIME)),
+		m_timerRepeat(Timer(REPEAT_TIME)),
 		m_delayOver(false)
 	{
 	}
