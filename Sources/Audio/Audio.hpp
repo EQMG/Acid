@@ -7,15 +7,15 @@ typedef struct ALCdevice_struct ALCdevice;
 
 typedef struct ALCcontext_struct ALCcontext;
 
-enum SoundType
-{
-	SOUND_TYPE_GENERAL = 0,
-	SOUND_TYPE_EFFECT = 1,
-	SOUND_TYPE_MUSIC = 2
-};
-
 namespace acid
 {
+	enum SoundType
+	{
+		SOUND_TYPE_GENERAL = 0,
+		SOUND_TYPE_EFFECT = 1,
+		SOUND_TYPE_MUSIC = 2
+	};
+
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>

@@ -22,7 +22,7 @@ namespace acid
 		float m_radius;
 	};
 
-	RendererDeferred::RendererDeferred(const DeferredModel &lightModel, const GraphicsStage &graphicsStage) :
+	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel) :
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
