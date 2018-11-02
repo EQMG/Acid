@@ -37,7 +37,7 @@ namespace acid
 	public:
 		static const uint32_t MAX_LIGHTS;
 
-		explicit RendererDeferred(const DeferredModel &lightModel, const GraphicsStage &graphicsStage);
+		explicit RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
