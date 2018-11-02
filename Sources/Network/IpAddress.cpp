@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <utility>
+#include "Http/Http.hpp"
 #include "Socket.hpp"
 
 namespace acid
@@ -74,7 +75,7 @@ namespace acid
 		}
 
 		// Get the local address of the socket connection.
-		Socket::AddrLength size = sizeof(address);
+		SocketAddrLength size = sizeof(address);
 
 		if (getsockname(sock, reinterpret_cast<sockaddr *>(&address), &size) == -1)
 		{
@@ -91,7 +92,7 @@ namespace acid
 		return localAddress;
 	}
 
-	/*IpAddress IpAddress::GetPublicAddress(Time timeout)
+	IpAddress IpAddress::GetPublicAddress(Time timeout)
 	{
 		// The trick here is more complicated, because the only way
 		// to get our public IP address is to get it from a distant computer.
@@ -99,17 +100,18 @@ namespace acid
 		// and parse the result to extract our IP address
 		// (not very hard: the web page contains only our IP address).
 
-		Http server("www.sfml-dev.org");
-		Http::Request request("/ip-provider.php", Http::Request::Get);
-		Http::Response page = server.sendRequest(request, timeout);
-		if (page.getStatus() == Http::Response::Ok)
+		Http server = Http("www.sfml-dev.org");
+		HttpRequest request("/ip-provider.php", HTTP_METHOD_GET);
+		HttpResponse page = server.SendRequest(request, timeout);
+
+		if (page.GetStatus() == HTTP_RESPONCE_OK)
 		{
-			return IpAddress(page.getBody());
+			return IpAddress(page.GetBody());
 		}
 
-		// Something failed: return an invalid address
+		// Something failed: return an invalid address.
 		return IpAddress();
-	}*/
+	}
 
 	void IpAddress::Resolve(const std::string &address)
 	{

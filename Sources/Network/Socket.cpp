@@ -62,7 +62,7 @@ namespace acid
 		u_long blocking = block ? 0 : 1;
 		ioctlsocket(sock, FIONBIO, &blocking);
 #else
-		int status = fcntl(sock, F_GETFL);
+		int32_t status = fcntl(sock, F_GETFL);
 
 		if (block)
 		{
@@ -209,7 +209,7 @@ namespace acid
 			if (m_type == SOCKET_TYPE_TCP)
 			{
 				// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
-				int yes = 1;
+				int32_t yes = 1;
 
 				if (setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 				{
@@ -223,10 +223,11 @@ namespace acid
 					Log::Error("Failed to set socket option \"SO_NOSIGPIPE\"\n");
 				}
 #endif
-			} else
+			}
+			else
 			{
 				// Enable broadcast by default for UDP sockets.
-				int yes = 1;
+				int32_t yes = 1;
 
 				if (setsockopt(m_socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 				{

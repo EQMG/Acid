@@ -11,24 +11,29 @@ namespace acid
 
 	class FtpResponse;
 
-	///
-	/// \brief Enumeration of transfer modes.
-	///
+	/// <summary>
+	/// Enumeration of transfer modes.
+	/// </summary>
 	enum FtpTransferMode
 	{
-		FTP_MODE_BINARY = 0, /// Binary mode (file is transfered as a sequence of bytes).
-		FTP_MODE_ASCII = 1, /// Text mode using ASCII encoding.
-		FTP_MODE_EBCDIC = 2 /// Text mode using EBCDIC encoding.
+		/// Binary mode (file is transfered as a sequence of bytes).
+		FTP_MODE_BINARY = 0,
+		/// Text mode using ASCII encoding.
+		FTP_MODE_ASCII = 1,
+		/// Text mode using EBCDIC encoding.
+		FTP_MODE_EBCDIC = 2
 	};
 
-	///
-	/// \brief Utility class for exchanging datas with the server on the data channel.
-	///
+	/// <summary>
+	/// Utility class for exchanging datas with the server on the data channel.
+	/// </summary>
 	class ACID_EXPORT FtpDataChannel
 	{
 	private:
-		Ftp &m_ftp; /// Reference to the owner Ftp instance.
-		TcpSocket m_dataSocket; /// Socket used for data transfers.
+		/// Reference to the owner Ftp instance.
+		Ftp &m_ftp;
+		/// Socket used for data transfers.
+		TcpSocket m_dataSocket;
 	public:
 		FtpDataChannel(Ftp &owner);
 
