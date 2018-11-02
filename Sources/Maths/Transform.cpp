@@ -1,5 +1,6 @@
 ﻿#include "Transform.hpp"
 
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -81,6 +82,16 @@ namespace acid
 	{
 		stream << transform.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Transform &transform)
+	{
+		return packet << transform.m_position << transform.m_rotation << transform.m_scaling;
+	}
+
+	Packet &operator>>(Packet &packet, Transform &transform)
+	{
+		return packet >> transform.m_position >> transform.m_rotation >> transform.m_scaling;
 	}
 
 	std::string Transform::ToString() const

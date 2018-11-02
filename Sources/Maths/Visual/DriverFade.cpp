@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	DriverFade::DriverFade(const Time &start, const Time &end, const float &peak, const Time &length) :
+	DriverFade::DriverFade(const float &start, const float &end, const float &peak, const Time &length) :
 		IDriver(length),
 		m_start(start),
 		m_end(end),
@@ -12,7 +12,7 @@ namespace acid
 
 	float DriverFade::Calculate(const float &factor)
 	{
-		/*if (factor < m_start) // FIXME
+		if (factor < m_start)
 		{
 			return factor / m_start * m_peak;
 		}
@@ -20,7 +20,7 @@ namespace acid
 		if (factor > m_end)
 		{
 			return (1.0f - (factor - m_end) / (1.0f - m_end)) * m_peak;
-		}*/
+		}
 
 		return m_peak;
 	}

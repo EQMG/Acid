@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include "Engine/Log.hpp"
+#include "Network/Packet.hpp"
+#include "Serialize.hpp"
 
 namespace acid
 {
@@ -173,5 +175,22 @@ namespace acid
 		}
 
 		return (*it).second;
+	}
+
+	Packet &operator<<(Packet &packet, const Metadata &metadata)
+	{
+		return packet << Serialize::Encode(metadata);
+	}
+
+	Packet &operator>>(Packet &packet, Metadata &metadata)
+	{
+		std::string encoded;
+		packet >> encoded;
+		auto decoded = Serialize::Decode(encoded); // TODO: Remove this work around.
+		metadata.m_name = decoded.m_name;
+		metadata.m_value = decoded.m_value;
+		metadata.m_children = std::move(decoded.m_children);
+		metadata.m_attributes = decoded.m_attributes;
+		return packet;
 	}
 }

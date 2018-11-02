@@ -4,6 +4,8 @@
 
 namespace acid
 {
+	class Packet;
+
 	class Metadata;
 
 	/// <summary>
@@ -59,6 +61,10 @@ namespace acid
 		void Encode(Metadata &metadata) const;
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
+
+		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Fog &fog);
+
+		ACID_EXPORT friend Packet &operator>>(Packet &packet, Fog &fog);
 
 		std::string ToString() const;
 	};

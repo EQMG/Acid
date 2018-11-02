@@ -28,6 +28,7 @@ This is a list of current features in Acid:
  * Modular rendering and compute pipeline
  * Deferred PBR rendering
  * Bullet physics
+ * Networking (HTTP/FTP/UDP/TCP)
  * Frustum and Occlusion culling
  * Resource management
  * Event and tasks systems
@@ -43,10 +44,9 @@ This is a list of current features in Acid:
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * GameObject prefab loading/saving (JSON, XML)
- * Visual drivers and maths classes
+ * Value drivers, timers, vectors, and matrices
  * Flexible input classes
- * C# generated files
- * Networking (WIP)
+ * C# generated files (WIP)
  * Steam integration (WIP)
 
 ## Dependencies
@@ -72,11 +72,10 @@ auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
 
 // Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
-auto jump = Sound("Sounds/Jump.ogg", 0.5f);
-jump.SetPosition(Vector3::ZERO);
-jump.Play();
+auto jump = Sound("Sounds/Jump.ogg", SOUND_TYPE_EFFECT, false, true, 0.5f);
+jump.SetPosition(10.0f * Vector3::RIGHT);
 
-// Imports a game object.
+// Imports a game object (pointer managed by scene after creation).
 auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
 
 // Creates a game object.
@@ -93,6 +92,16 @@ Vector2 a(3.0f, -7.2f);
 Vector2 b(-1.74f, 15.4f);
 Vector2 c = a * b;
 float dist = a.Distance(b);
+
+// Split a string by spaces.
+std::string stringSource = "Hello world!";
+std::vector<std::string> stringSplit = String::Split(stringSource, " ");
+
+// Will run a lamdba after 5 seconds.
+Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
+{
+	Log::Out("Hello world: %f\n", Maths::Random(-1.0f, 1.0f));
+}, false);
 ```
 
 ## Screenshots

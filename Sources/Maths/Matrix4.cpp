@@ -1,6 +1,7 @@
 #include "Matrix4.hpp"
 
 #include <cassert>
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Matrix3.hpp"
 #include "Quaternion.hpp"
@@ -611,6 +612,16 @@ namespace acid
 	{
 		stream << matrix.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Matrix4 &matrix)
+	{
+		return packet << matrix.m_rows[0] << matrix.m_rows[1] << matrix.m_rows[2] << matrix.m_rows[3];
+	}
+
+	Packet &operator>>(Packet &packet, Matrix4 &matrix)
+	{
+		return packet >> matrix.m_rows[0] >> matrix.m_rows[1] >> matrix.m_rows[2] >> matrix.m_rows[3];
 	}
 
 	std::string Matrix4::ToString() const

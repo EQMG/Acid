@@ -8,7 +8,6 @@
 #include "Inputs/Joysticks.hpp"
 #include "Inputs/Keyboard.hpp"
 #include "Inputs/Mouse.hpp"
-#include "Network/Network.hpp"
 #include "Particles/Particles.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
@@ -31,7 +30,6 @@ namespace acid
 		RegisterModule<Mouse>(MODULE_UPDATE_PRE);
 		RegisterModule<Audio>(MODULE_UPDATE_PRE);
 		RegisterModule<Files>(MODULE_UPDATE_PRE);
-		RegisterModule<Network>(MODULE_UPDATE_NORMAL);
 		RegisterModule<Scenes>(MODULE_UPDATE_NORMAL);
 		RegisterModule<Renderer>(MODULE_UPDATE_RENDER);
 		RegisterModule<Resources>(MODULE_UPDATE_PRE);

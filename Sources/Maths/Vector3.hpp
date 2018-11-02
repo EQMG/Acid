@@ -14,6 +14,8 @@ namespace acid
 
 	class Vector4;
 
+	class Packet;
+
 	class Metadata;
 
 	/// <summary>
@@ -363,6 +365,10 @@ namespace acid
 		Vector3 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector3 &vector);
+
+		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Vector3 &vector);
+
+		ACID_EXPORT friend Packet &operator>>(Packet &packet, Vector3 &vector);
 
 		std::string ToString() const;
 	};

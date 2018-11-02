@@ -9,6 +9,8 @@
 
 namespace acid
 {
+	class Packet;
+
 	/// <summary>
 	/// A class that is used to represent a tree of values, used in file-object serialization.
 	/// </summary>
@@ -144,5 +146,9 @@ namespace acid
 		bool RemoveAttribute(const std::string &attribute);
 
 		std::string FindAttribute(const std::string &attribute) const;
+
+		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Metadata &metadata);
+
+		ACID_EXPORT friend Packet &operator>>(Packet &packet, Metadata &metadata);
 	};
 }

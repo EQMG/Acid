@@ -1,6 +1,7 @@
 #include "Matrix2.hpp"
 
 #include <cassert>
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 
@@ -362,6 +363,16 @@ namespace acid
 	{
 		stream << matrix.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Matrix2 &matrix)
+	{
+		return packet << matrix.m_rows[0] << matrix.m_rows[1];
+	}
+
+	Packet &operator>>(Packet &packet, Matrix2 &matrix)
+	{
+		return packet >> matrix.m_rows[0] >> matrix.m_rows[1];
 	}
 
 	std::string Matrix2::ToString() const
