@@ -5,28 +5,27 @@
 
 namespace acid
 {
-	///
-	/// \brief Specialization of FTP response returning a filename listing.
-	///
+	/// <summary>
+	/// Specialization of FTP response returning a filename listing.
+	/// </summary>
 	class FtpResponseListing :
 		public FtpResponse
 	{
 	private:
-		std::vector<std::string> m_listing; /// Directory/file names extracted from the data.
+		/// Directory/file names extracted from the data.
+		std::vector<std::string> m_listing;
 	public:
-		///
-		/// \brief Default constructor.
-		///
-		/// \param response  Source response.
-		/// \param data      Data containing the raw listing.
-		///
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		/// <param name="response"> Source response. </param>
+		/// <param name="data"> Data containing the raw listing. </param>
 		FtpResponseListing(const FtpResponse &response, const std::string &data);
 
-		///
-		/// \brief Return the array of directory/file names.
-		///
-		/// \return Array containing the requested listing.
-		///
+		/// <summary>
+		/// Return the array of directory/file names.
+		/// </summary>
+		/// <returns> Array containing the requested listing. </returns>
 		const std::vector<std::string> &GetListing() const;
 	};
 }

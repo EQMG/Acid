@@ -32,160 +32,143 @@ namespace acid
 #if defined(ACID_BUILD_WINDOWS)
 	typedef UINT_PTR SocketHandle;
 #else
-	typedef int SocketHandle;
+	typedef int32_t SocketHandle;
 #endif
 
-	///
-	/// \brief Status codes that may be returned by socket functions.
-	///
+#if (defined ACID_BUILD_WINDOWS)
+	typedef int32_t SocketAddrLength;
+#else
+	typedef socklen_t SocketAddrLength;
+#endif
+
+	/// <summary>
+	/// Status codes that may be returned by socket functions.
+	/// </summary>
 	enum SocketStatus
 	{
-		SOCKET_STATUS_DONE = 0, /// The socket has sent / received the data.
-		SOCKET_STATUS_NOT_READY = 1, /// The socket is not ready to send / receive data yet.
-		SOCKET_STATUS_PARTIAL = 2, /// The socket sent a part of the data.
-		SOCKET_STATUS_DISCONNECTED = 3, /// The TCP socket has been disconnected.
-		SOCKET_STATUS_ERROR = 4 /// An unexpected error happened.
+		/// The socket has sent / received the data.
+		SOCKET_STATUS_DONE = 0,
+		/// The socket is not ready to send / receive data yet.
+		SOCKET_STATUS_NOT_READY = 1,
+		/// The socket sent a part of the data.
+		SOCKET_STATUS_PARTIAL = 2,
+		/// The TCP socket has been disconnected.
+		SOCKET_STATUS_DISCONNECTED = 3,
+		/// An unexpected error happened.
+		SOCKET_STATUS_ERROR = 4
 	};
 
-	///
-	/// \brief Types of protocols that the socket can use.
-	///
+	/// <summary>
+	/// Types of protocols that the socket can use.
+	/// </summary>
 	enum SocketType
 	{
-		SOCKET_TYPE_TCP = 0, /// TCP protocol.
-		SOCKET_TYPE_UDP = 1  /// UDP protocol.
+		/// TCP protocol.
+		SOCKET_TYPE_TCP = 0,
+		/// UDP protocol.
+		SOCKET_TYPE_UDP = 1
 	};
 
-	///
-	/// \brief Base class for all the socket types.
-	///
+	/// <summary>
+	/// Base class for all the socket types.
+	/// </summary>
 	class ACID_EXPORT Socket
 	{
 	private:
-		SocketType m_type; /// Type of the socket (TCP or UDP).
-		SocketHandle m_socket; /// Socket descriptor.
-		bool m_isBlocking; /// Current blocking mode of the socket.
+		/// Type of the socket (TCP or UDP).
+		SocketType m_type;
+		/// Socket descriptor.
+		SocketHandle m_socket;
+		/// Current blocking mode of the socket.
+		bool m_isBlocking;
 	public:
-#if (defined ACID_BUILD_WINDOWS)
-		typedef int AddrLength;
-#else
-		typedef socklen_t AddrLength;
-#endif
-
-		///
-		/// \brief Destructor
-		///
+		/// <summary>
+		/// Destructor that closes the socket.
+		/// </summary>
 		virtual ~Socket();
 
-		///
-		/// \brief Create an internal sockaddr_in address
-		///
-		/// \param address Target address
-		/// \param port    Target port
-		///
-		/// \return sockaddr_in ready to be used by socket functions
-		///
+		/// <summary>
+		/// Create an internal sockaddr_in address.
+		/// </summary>
+		/// <param name="address"> Target address. </param>
+		/// <param name="port"> Target port. </param>
+		/// <returns> sockaddr_in ready to be used by socket functions. </returns>
 		static sockaddr_in CreateAddress(uint32_t address, unsigned short port);
 
-		///
-		/// \brief Return the value of the invalid socket
-		///
-		/// \return Special value of the invalid socket
-		///
+		/// <summary>
+		/// Return the value of the invalid socket.
+		/// </summary>
+		/// <returns> Special value of the invalid socket. </returns>
 		static SocketHandle InvalidSocketHandle();
 
-		///
-		/// \brief Close and destroy a socket
-		///
-		/// \param sock Handle of the socket to close
-		///
+		/// <summary>
+		/// Close and destroy a socket.
+		/// </summary>
+		/// <param name="sock"> Handle of the socket to close. </param>
 		static void CloseSocketHandle(SocketHandle sock);
 
-		///
-		/// \brief Set a socket as blocking or non-blocking
-		///
-		/// \param sock  Handle of the socket
-		/// \param block New blocking state of the socket
-		///
+		/// <summary>
+		/// Set a socket as blocking or non-blocking.
+		/// </summary>
+		/// <param name="sock"> Handle of the socket. </param>
+		/// <param name="block"> New blocking state of the socket. </param>
 		static void SetHandleBlocking(SocketHandle sock, bool block);
 
-		///
-		/// Get the last socket error status
-		///
-		/// \return Status corresponding to the last socket error
-		///
+		/// <summary>
+		/// Get the last socket error status.
+		/// </summary>
+		/// <returns> Status corresponding to the last socket error. </returns>
 		static SocketStatus GetErrorStatus();
 
-		///
-		/// \brief Tell whether the socket is in blocking or non-blocking mode
-		///
-		/// \return True if the socket is blocking, false otherwise
-		///
-		/// \see setBlocking
-		///
+		/// <summary>
+		/// Tell whether the socket is in blocking or non-blocking mode.
+		/// </summary>
+		/// <returns> True if the socket is blocking, false otherwise. </returns>
 		bool IsBlocking() const;
 
-		///
-		/// \brief Set the blocking state of the socket
-		///
-		/// In blocking mode, calls will not return until they have
-		/// completed their task. For example, a call to Receive in
-		/// blocking mode won't return until some data was actually
-		/// received.
-		/// In non-blocking mode, calls will always return immediately,
-		/// using the return code to signal whether there was data
-		/// available or not.
-		/// By default, all sockets are blocking.
-		///
-		/// \param blocking True to set the socket as blocking, false for non-blocking
-		///
-		/// \see isBlocking
-		///
+		/// <summary>
+		/// Set the blocking state of the socket.
+		/// In blocking mode, calls will not return until they have completed their task.
+		/// For example, a call to Receive in blocking mode won't return until some data was actually received.
+		/// In non-blocking mode, calls will always return immediately, using the return code to signal
+		/// whether there was data available or not. By default, all sockets are blocking.
+		/// </summary>
+		/// <param name="blocking"> True to set the socket as blocking, false for non-blocking. </param>
 		void SetBlocking(bool blocking);
 
 	protected:
-		///
-		/// \brief Default constructor.
-		///
+		/// <summary>
+		/// Default constructor.
 		/// This constructor can only be accessed by derived classes.
-		///
-		/// \param type Type of the socket (TCP or UDP).
-		///
+		/// </summary>
+		/// <param name="type"> Type of the socket (TCP or UDP). </param>
 		Socket(SocketType type);
 
-		///
-		/// \brief Return the internal handle of the socket.
-		///
-		/// The returned handle may be invalid if the socket
-		/// was not created yet (or already destroyed).
+		/// <summary>
+		/// Return the internal handle of the socket.
+		/// The returned handle may be invalid if the socket was not created yet (or already destroyed).
 		/// This function can only be accessed by derived classes.
-		///
-		/// \return The internal (OS-specific) handle of the socket
-		///
+		/// </summary>
+		/// <returns> The internal (OS-specific) handle of the socket. </returns>
 		SocketHandle GetHandle() const;
 
-		///
-		/// \brief Create the internal representation of the socket
-		///
+		/// <summary>
+		/// Create the internal representation of the socket.
 		/// This function can only be accessed by derived classes.
-		///
+		/// </summary>
 		void Create();
 
-		///
-		/// \brief Create the internal representation of the socket
-		///        from a socket handle.
-		///
+		/// <summary>
+		/// Create the internal representation of the socket from a socket handle.
 		/// This function can only be accessed by derived classes.
-		///
-		/// \param handle OS-specific handle of the socket to wrap.
-		///
+		/// </summary>
+		/// <param name="handle"> OS-specific handle of the socket to wrap. </param>
 		void Create(SocketHandle handle);
 
-		///
-		/// \brief Close the socket gracefully.
-		///
+		/// <summary>
+		/// Close the socket gracefully.
 		/// This function can only be accessed by derived classes.
-		///
+		/// </summary>
 		void Close();
 	};
 }

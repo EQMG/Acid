@@ -21,7 +21,7 @@ namespace acid
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
-			Socket::AddrLength size = sizeof(address);
+			SocketAddrLength size = sizeof(address);
 
 			if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
@@ -114,7 +114,7 @@ namespace acid
 		sockaddr_in address = Socket::CreateAddress(INADDR_ANY, 0);
 
 		// Receive a chunk of bytes.
-		Socket::AddrLength addressSize = sizeof(address);
+		SocketAddrLength addressSize = sizeof(address);
 		int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0,
 		                            reinterpret_cast<sockaddr *>(&address), &addressSize);
 

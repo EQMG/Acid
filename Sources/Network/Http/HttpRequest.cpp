@@ -33,7 +33,7 @@ namespace acid
 		}
 	}
 
-	void HttpRequest::SetHttpVersion(unsigned int major, unsigned int minor)
+	void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor)
 	{
 		m_majorVersion = major;
 		m_minorVersion = minor;

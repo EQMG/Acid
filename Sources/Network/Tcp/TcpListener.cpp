@@ -16,7 +16,7 @@ namespace acid
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
-			Socket::AddrLength size = sizeof(address);
+			SocketAddrLength size = sizeof(address);
 			if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
 				return ntohs(address.sin_port);
@@ -79,7 +79,7 @@ namespace acid
 
 		// Accept a new connection.
 		sockaddr_in address;
-		Socket::AddrLength length = sizeof(address);
+		SocketAddrLength length = sizeof(address);
 		SocketHandle remote = accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length);
 
 		// Check for errors.

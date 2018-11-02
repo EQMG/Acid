@@ -102,17 +102,17 @@ namespace acid
 		return SendCommand("CDUP");
 	}
 
-	FtpResponse Ftp::createDirectory(const std::string &name)
+	FtpResponse Ftp::CreateRemoteDirectory(const std::string &name)
 	{
 		return SendCommand("MKD", name);
 	}
 
-	FtpResponse Ftp::deleteDirectory(const std::string &name)
+	FtpResponse Ftp::DeleteRemoteDirectory(const std::string &name)
 	{
 		return SendCommand("RMD", name);
 	}
 
-	FtpResponse Ftp::RenameFile(const std::string &file, const std::string &newName)
+	FtpResponse Ftp::RenameRemoteFile(const std::string &file, const std::string &newName)
 	{
 		FtpResponse response = SendCommand("RNFR", file);
 
@@ -124,7 +124,7 @@ namespace acid
 		return response;
 	}
 
-	FtpResponse Ftp::deleteFile(const std::string &name)
+	FtpResponse Ftp::DeleteRemoteFile(const std::string &name)
 	{
 		return SendCommand("DELE", name);
 	}
@@ -265,7 +265,7 @@ namespace acid
 	{
 		// We'll use a variable to keep track of the last valid code.
 		// It is useful in case of multi-lines responses, because the end of such a response will start by the same code.
-		unsigned int lastCode = 0;
+		uint32_t lastCode = 0;
 		bool isInsideMultiline = false;
 		std::string message;
 
@@ -294,7 +294,7 @@ namespace acid
 			while (in)
 			{
 				// Try to extract the code.
-				unsigned int code;
+				uint32_t code;
 
 				if (in >> code)
 				{

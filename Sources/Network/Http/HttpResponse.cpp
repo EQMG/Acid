@@ -31,12 +31,12 @@ namespace acid
 		return m_status;
 	}
 
-	unsigned int HttpResponse::GetMajorHttpVersion() const
+	uint32_t HttpResponse::GetMajorHttpVersion() const
 	{
 		return m_majorVersion;
 	}
 
-	unsigned int HttpResponse::GetMinorHttpVersion() const
+	uint32_t HttpResponse::GetMinorHttpVersion() const
 	{
 		return m_minorVersion;
 	}

@@ -12,7 +12,7 @@
 
 namespace acid
 {
-	// Define the low-level send/receive flags, which depend on the OS
+	// Define the low-level send/receive flags, which depends on the OS.
 #if defined(ACID_PLATFORM_LINUX)
 	const int flags = MSG_NOSIGNAL;
 #else
@@ -30,7 +30,7 @@ namespace acid
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
-			Socket::AddrLength size = sizeof(address);
+			SocketAddrLength size = sizeof(address);
 
 			if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
@@ -48,7 +48,7 @@ namespace acid
 		{
 			// Retrieve informations about the remote end of the socket.
 			sockaddr_in address;
-			Socket::AddrLength size = sizeof(address);
+			SocketAddrLength size = sizeof(address);
 
 			if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
@@ -66,7 +66,7 @@ namespace acid
 		{
 			// Retrieve informations about the remote end of the socket.
 			sockaddr_in address;
-			Socket::AddrLength size = sizeof(address);
+			SocketAddrLength size = sizeof(address);
 
 			if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
@@ -101,7 +101,8 @@ namespace acid
 
 			// Connection succeeded.
 			return SOCKET_STATUS_DONE;
-		} else
+		}
+		else
 		{
 			// We're using a timeout: we'll need a few tricks to make it work.
 
@@ -153,12 +154,14 @@ namespace acid
 					{
 						// Connection accepted.
 						status = SOCKET_STATUS_DONE;
-					} else
+					}
+					else
 					{
 						// Connection refused.
 						status = Socket::GetErrorStatus();
 					}
-				} else
+				}
+				else
 				{
 					// Failed to connect before timeout is over.
 					status = Socket::GetErrorStatus();
@@ -245,10 +248,12 @@ namespace acid
 		{
 			received = static_cast<std::size_t>(sizeReceived);
 			return SOCKET_STATUS_DONE;
-		} else if (sizeReceived == 0)
+		}
+		else if (sizeReceived == 0)
 		{
 			return SOCKET_STATUS_DISCONNECTED;
-		} else
+		}
+		else
 		{
 			return Socket::GetErrorStatus();
 		}
@@ -291,7 +296,8 @@ namespace acid
 		if (status == SOCKET_STATUS_PARTIAL)
 		{
 			packet.m_sendPos += sent;
-		} else if (status == SOCKET_STATUS_DONE)
+		}
+		else if (status == SOCKET_STATUS_DONE)
 		{
 			packet.m_sendPos = 0;
 		}
@@ -326,7 +332,8 @@ namespace acid
 
 			// The packet size has been fully received.
 			packetSize = ntohl(m_pendingPacket.m_size);
-		} else
+		}
+		else
 		{
 			// The packet size has already been received in a previous call.
 			packetSize = ntohl(m_pendingPacket.m_size);
@@ -334,12 +341,13 @@ namespace acid
 
 		// Loop until we receive all the packet data.
 		char buffer[1024];
+
 		while (m_pendingPacket.m_data.size() < packetSize)
 		{
 			// Receive a chunk of data.
-			std::size_t sizeToGet = std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()),
-			                                 sizeof(buffer));
+			std::size_t sizeToGet = std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()), sizeof(buffer));
 			SocketStatus status = Receive(buffer, sizeToGet, received);
+
 			if (status != SOCKET_STATUS_DONE)
 			{
 				return status;

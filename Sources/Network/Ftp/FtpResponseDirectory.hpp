@@ -4,27 +4,26 @@
 
 namespace acid
 {
-	///
-	/// \brief Specialization of FTP response returning a directory.
-	///
+	/// <summary>
+	/// Specialization of FTP response returning a directory.
+	/// </summary>
 	class FtpResponseDirectory :
 		public FtpResponse
 	{
 	private:
-		std::string m_directory; /// Directory extracted from the response message.
+		/// Directory extracted from the response message.
+		std::string m_directory;
 	public:
-		///
-		/// \brief Default constructor.
-		///
-		/// \param response Source response.
-		///
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		/// <param name="response"> Source response. </param>
 		FtpResponseDirectory(const FtpResponse &response);
 
-		///
-		/// \brief Get the directory returned in the response.
-		///
-		/// \return Directory name.
-		///
+		/// <summary>
+		/// Get the directory returned in the response.
+		/// </summary>
+		/// <returns> Directory name. </returns>
 		const std::string &GetDirectory() const;
 	};
 }
