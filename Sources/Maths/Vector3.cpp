@@ -1,6 +1,7 @@
 #include "Vector3.hpp"
 
 #include <cassert>
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Colour.hpp"
 #include "Matrix4.hpp"
@@ -478,6 +479,16 @@ namespace acid
 	{
 		stream << vector.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Vector3 &vector)
+	{
+		return packet << vector.m_x << vector.m_y << vector.m_z;
+	}
+
+	Packet &operator>>(Packet &packet, Vector3 &vector)
+	{
+		return packet >> vector.m_x >> vector.m_y >> vector.m_z;
 	}
 
 	std::string Vector3::ToString() const

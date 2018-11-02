@@ -8,6 +8,8 @@ namespace acid
 {
 	class Vector3;
 
+	class Packet;
+
 	class Metadata;
 
 	/// <summary>
@@ -287,6 +289,10 @@ namespace acid
 		Vector2 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector2 &vector);
+
+		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Vector2 &vector);
+
+		ACID_EXPORT friend Packet &operator>>(Packet &packet, Vector2 &vector);
 
 		std::string ToString() const;
 	};

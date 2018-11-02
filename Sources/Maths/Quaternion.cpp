@@ -1,6 +1,7 @@
 #include "Quaternion.hpp"
 
 #include <cassert>
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 
@@ -450,6 +451,16 @@ namespace acid
 	{
 		stream << quaternion.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Quaternion &quaternion)
+	{
+		return packet << quaternion.m_x << quaternion.m_y << quaternion.m_z << quaternion.m_w;
+	}
+
+	Packet &operator>>(Packet &packet, Quaternion &quaternion)
+	{
+		return packet >> quaternion.m_x >> quaternion.m_y >> quaternion.m_z >> quaternion.m_w;
 	}
 
 	std::string Quaternion::ToString() const

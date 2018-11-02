@@ -1,5 +1,6 @@
 #include "Fog.hpp"
 
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -44,6 +45,16 @@ namespace acid
 	{
 		stream << colour.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Fog &fog)
+	{
+		return packet << fog.m_colour << fog.m_density << fog.m_gradient << fog.m_lowerLimit << fog.m_upperLimit;
+	}
+
+	Packet &operator>>(Packet &packet, Fog &fog)
+	{
+		return packet >> fog.m_colour >> fog.m_density >> fog.m_gradient >> fog.m_lowerLimit >> fog.m_upperLimit;
 	}
 
 	std::string Fog::ToString() const

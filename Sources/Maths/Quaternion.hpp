@@ -9,6 +9,8 @@ namespace acid
 {
 	class Vector3;
 
+	class Packet;
+
 	class Metadata;
 
 	/// <summary>
@@ -258,6 +260,10 @@ namespace acid
 		Quaternion &operator*=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
+
+		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Quaternion &quaternion);
+
+		ACID_EXPORT friend Packet &operator>>(Packet &packet, Quaternion &quaternion);
 
 		std::string ToString() const;
 	};

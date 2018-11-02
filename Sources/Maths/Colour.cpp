@@ -1,6 +1,7 @@
 #include "Colour.hpp"
 
 #include <cassert>
+#include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
@@ -324,6 +325,16 @@ namespace acid
 	{
 		stream << colour.ToString();
 		return stream;
+	}
+
+	Packet &operator<<(Packet &packet, const Colour &colour)
+	{
+		return packet << colour.m_r << colour.m_g << colour.m_b << colour.m_a;
+	}
+
+	Packet &operator>>(Packet &packet, Colour &colour)
+	{
+		return packet >> colour.m_r >> colour.m_g >> colour.m_b >> colour.m_a;
 	}
 
 	std::string Colour::ToString() const
