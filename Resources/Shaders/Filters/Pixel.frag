@@ -7,13 +7,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	float pixelSize;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
-
-layout(location = 0) out vec4 outColour;
 
 void main() 
 {
@@ -24,8 +22,7 @@ void main()
 
 	vec2 coord = vec2(dx * floor(inUv.x / dx), dy * floor(inUv.y / dy));
 
-	vec3 colour = texture(samplerColour, coord).rgb;
-	outColour = vec4(colour, 1.0f);
+	vec4 colour = vec4(texture(samplerColour, coord).rgb, 1.0f);
 
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
 }

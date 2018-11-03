@@ -9,21 +9,19 @@ layout(set = 0, binding = 0) uniform UboScene
 	float opacity;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 
-layout(location = 0) out vec4 outColour;
-
 void main() 
 {
 	vec4 textureColour = texture(samplerColour, inUv);
-	outColour = textureColour;
-	outColour.rgb *= 1.0f - smoothstep(scene.innerRadius, scene.outerRadius, length(inUv - 0.5f));
-	outColour = mix(textureColour, outColour, scene.opacity);
+	vec4 colour = textureColour;
+	colour.rgb *= 1.0f - smoothstep(scene.innerRadius, scene.outerRadius, length(inUv - 0.5f));
+	colour = mix(textureColour, colour, scene.opacity);
 	
 	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
 }

@@ -171,7 +171,7 @@
 #include "Post/Filters/FilterWobble.hpp"
 #include "Post/IPostFilter.hpp"
 #include "Post/IPostPipeline.hpp"
-#include "Post/Pipelines/PipelineGaussian.hpp"
+#include "Post/Pipelines/PipelineBlur.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
 #include "Renderer/Buffers/InstanceBuffer.hpp"

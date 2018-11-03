@@ -863,6 +863,7 @@ namespace acid
 		physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 		physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
+		physicalDeviceFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
 

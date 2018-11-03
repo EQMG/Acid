@@ -2,7 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Post/IPostFilter.hpp"
-#include "Post/Pipelines/PipelineGaussian.hpp"
+#include "Post/Pipelines/PipelineBlur.hpp"
 
 namespace acid
 {
@@ -12,7 +12,7 @@ namespace acid
 	private:
 		UniformHandler m_uniformScene;
 
-		PipelineGaussian *m_pipelineGaussian;
+		PipelineBlur *m_pipelineBlur;
 
 		float m_focusPoint;
 		float m_nearField;
@@ -20,10 +20,14 @@ namespace acid
 		float m_farField;
 		float m_farTransition;
 	public:
-		explicit FilterDof(const GraphicsStage &graphicsStage, PipelineGaussian *pipelineGaussian, const float &focusPoint = 8.24f, const float &nearField = 0.3f, const float &nearTransition = 0.125f,
+		explicit FilterDof(const GraphicsStage &graphicsStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, const float &nearTransition = 0.125f,
 			const float &farField = 8.0f, const float &farTransition = 3.0f);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+
+		PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
+
+		void SetPipelineBlur(PipelineBlur *pipelineBlur) { m_pipelineBlur = pipelineBlur; }
 
 		float GetFocusPoint() const { return m_focusPoint; }
 

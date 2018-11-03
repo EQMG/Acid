@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
