@@ -75,6 +75,8 @@ namespace acid
 	class ACID_EXPORT Socket
 	{
 	private:
+		friend class SocketSelector;
+
 		/// Type of the socket (TCP or UDP).
 		SocketType m_type;
 		/// Socket descriptor.
@@ -135,7 +137,6 @@ namespace acid
 		/// </summary>
 		/// <param name="blocking"> True to set the socket as blocking, false for non-blocking. </param>
 		void SetBlocking(bool blocking);
-
 	protected:
 		/// <summary>
 		/// Default constructor.
