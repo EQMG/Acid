@@ -2,6 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Post/IPostFilter.hpp"
+#include "Post/Pipelines/PipelineGaussian.hpp"
 
 namespace acid
 {
@@ -11,24 +12,37 @@ namespace acid
 	private:
 		UniformHandler m_uniformScene;
 
-		float m_maxBlurSize;
-		float m_radiusScale;
-		float m_goldenAngle;
+		PipelineGaussian *m_pipelineGaussian;
+
+		float m_focusPoint;
+		float m_nearField;
+		float m_nearTransition;
+		float m_farField;
+		float m_farTransition;
 	public:
-		explicit FilterDof(const GraphicsStage &graphicsStage, const float &maxBlurSize = 20.0f, const float &radiusScale = 0.5f, const float &goldenAngle = 2.39996323f);
+		explicit FilterDof(const GraphicsStage &graphicsStage, PipelineGaussian *pipelineGaussian, const float &focusPoint = 8.24f, const float &nearField = 0.3f, const float &nearTransition = 0.125f,
+			const float &farField = 8.0f, const float &farTransition = 3.0f);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
 
-		float GetMaxBlurSize() const { return m_maxBlurSize; }
+		float GetFocusPoint() const { return m_focusPoint; }
 
-		void SetMaxBlurSize(const float &maxBlurSize) { m_maxBlurSize = maxBlurSize; }
+		void SetFocusPoint(const float &focusPoint) { m_focusPoint = focusPoint; }
 
-		float GetRadiusScale() const { return m_radiusScale; }
+		float GetNearField() const { return m_nearField; }
 
-		void SetRadiusScale(const float &radiusScale) { m_radiusScale = radiusScale; }
+		void SetNearField(const float &nearField) { m_nearField = nearField; }
 
-		float GetGoldenAngle() const { return m_goldenAngle; }
+		float GetNearTransition() const { return m_nearTransition; }
 
-		void SetGoldenAngle(const float &goldenAngle) { m_goldenAngle = goldenAngle; }
+		void SetNearTransition(const float &nearTransition) { m_nearTransition = nearTransition; }
+
+		float GetFarField() const { return m_farField; }
+
+		void SetFarField(const float &farField) { m_farField = farField; }
+
+		float GetFarTransition() const { return m_farTransition; }
+
+		void SetFarTransition(const float &farTransition) { m_farTransition = farTransition; }
 	};
 }
