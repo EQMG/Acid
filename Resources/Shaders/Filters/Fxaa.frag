@@ -7,13 +7,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	float spanMax;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
-
-layout(location = 0) out vec4 outColour;
 
 const float reduceMin = 1.0f / 128.0f;
 const float reduceMul = 1.0f / 8.0f;
@@ -54,15 +52,17 @@ void main()
   	vec3 rgbB = rgbA * (1.0f / 2.0f) + (1.0f / 4.0f) * (texture(samplerColour, inUv.xy + dir * (0.0f / 3.0f - 0.5f)).xyz + texture(samplerColour, inUv.xy + dir * (3.0f / 3.0f - 0.5f)).xyz);
   	float lumaB = dot(rgbB, luma);
 
+  	vec4 colour;
+
 	if ((lumaB < lumaMin) || (lumaB > lumaMax)) 
 	{
-		outColour = vec4(rgbA, 1.0f);
+		colour = vec4(rgbA, 1.0f);
 	} 
 	else
 	{
-		outColour = vec4(rgbB, 1.0f);
+		colour = vec4(rgbB, 1.0f);
 	}
 	
 	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
 }

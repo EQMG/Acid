@@ -10,13 +10,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	float steps;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
-
-layout(location = 0) out vec4 outColour;
 
 void main() 
 {
@@ -26,7 +24,7 @@ void main()
 	float offsetMax = (float(scene.steps - 1.0f)) / 2.0f;
 		
 	// This is the accumulation of color from the surrounding pixels in the texture.
-	outColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	vec4 colour = vec4(0.0f);
 
 	// From minimum offset to maximum offset.
 	for (float offsetX = offsetMin; offsetX <= offsetMax; ++offsetX) 
@@ -41,13 +39,13 @@ void main()
 			tempUv.y += offsetY * amount * scene.stepSize;
 
 			// Accumulate the sample
-			outColour += texture(samplerColour, tempUv);
+			colour += texture(samplerColour, tempUv);
 		}
 	}
 		
 	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
-	outColour /= float(scene.steps * scene.steps);
+	colour /= float(scene.steps * scene.steps);
 
 	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
 }

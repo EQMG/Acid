@@ -4,11 +4,11 @@
 
 namespace acid
 {
-	FilterDof::FilterDof(const GraphicsStage &graphicsStage, PipelineGaussian *pipelineGaussian, const float &focusPoint, const float &nearField,
+	FilterDof::FilterDof(const GraphicsStage &graphicsStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField,
 	                     const float &nearTransition, const float &farField, const float &farTransition) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Dof.frag"}, {}),
 		m_uniformScene(UniformHandler()),
-		m_pipelineGaussian(pipelineGaussian),
+		m_pipelineBlur(pipelineBlur),
 		m_focusPoint(focusPoint),
 		m_nearField(nearField),
 		m_nearTransition(nearTransition),
@@ -33,7 +33,7 @@ namespace acid
 		m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
 		m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
-	//	m_descriptorSet.Push("samplerBlured", m_pipelineGaussian->GetTexture());
+		m_descriptorSet.Push("samplerBlured", m_pipelineBlur == nullptr ? nullptr : m_pipelineBlur->GetOutput());
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)

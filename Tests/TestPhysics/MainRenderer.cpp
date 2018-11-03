@@ -64,10 +64,9 @@ namespace test
 		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
 		Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
 
-		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-	//	auto gaussian = Renderer::Get()->AddRenderer<PipelineGaussian>(GraphicsStage(1, 2), 2.333f, BLUR_TYPE_5);
-	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), gaussian, 1.11f); // FIXME
+		Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	auto sceneBlur = Renderer::Get()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.0f, 5.0f, BLUR_TYPE_9);
+	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f); // FIXME
 	//	Renderer::Get()->AddRenderer<FilterCrt>(GraphicsStage(1, 2)); // FIXME
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
@@ -75,6 +74,7 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2)); // FIXME
+		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}

@@ -68,7 +68,7 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<PipelineGaussian>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}

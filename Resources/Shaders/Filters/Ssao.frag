@@ -13,15 +13,13 @@ layout(set = 0, binding = 0) uniform UboScene
 	float farPlane;
 } scene;
 
-layout(rgba16f, set = 0, binding = 1) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
 layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
 layout(set = 0, binding = 4) uniform sampler2D samplerNoise;
 
 layout(location = 0) in vec2 inUv;
-
-layout(location = 0) out vec4 outColour;
 
 vec3 depthToWorld(vec2 uv, float depth)
 {
@@ -58,7 +56,7 @@ void main()
 	// Calculate occlusion value.
 	float occlusion = 0.0f;
 
-	for(int i = 0; i < SSAO_KERNEL_SIZE; i++)
+	for (int i = 0; i < SSAO_KERNEL_SIZE; i++)
 	{
 		vec3 samplePos = TBN * scene.kernel[i];
 		samplePos = samplePos * SSAO_RADIUS + worldPosition;
@@ -78,8 +76,8 @@ void main()
 	}
 
 	occlusion = 1.0f - (occlusion / float(SSAO_KERNEL_SIZE));
-	outColour = vec4(texture(samplerNoise, inUv).rgb, 1.0f); // occlusion, occlusion, occlusion
+	vec4 colour = vec4(texture(samplerNoise, inUv).rgb, 1.0f); // occlusion, occlusion, occlusion
 	
 	vec2 sizeColour = textureSize(samplerNormal, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
 }

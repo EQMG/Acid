@@ -109,7 +109,9 @@ namespace acid
 
 		uint32_t GetHeight() const { return m_height; }
 
-		VkImage GetImage() { return m_image; }
+		VkImage &GetImage() { return m_image; }
+
+		VkDeviceMemory &GetDeviceMemory() { return m_deviceMemory; }
 
 		VkImageView GetImageView() const { return m_imageView; }
 

@@ -23,5 +23,9 @@ namespace acid
 		explicit FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType = BLUR_TYPE_9);
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+
+		Vector2 GetDirection() const { return m_direction; }
+
+		void SetDirection(const Vector2 &direction) { m_direction = direction; }
 	};
 }
