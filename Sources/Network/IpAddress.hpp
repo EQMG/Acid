@@ -38,7 +38,7 @@ namespace acid
 		/// Here \a address can be either a decimal address (ex: "192.168.1.56") or a network name (ex: "localhost").
 		/// </summary>
 		/// <param name="address"> IP address or network name. </param>
-		IpAddress(const std::string &address);
+		explicit IpAddress(const std::string &address);
 
 		/// <summary>
 		/// Construct the address from 4 bytes.

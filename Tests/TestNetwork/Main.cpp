@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Engine/Log.hpp>
+#include <Network/Ftp/Ftp.hpp>
 #include <Network/Http/Http.hpp>
 #include <Network/Udp/UdpSocket.hpp>
 #include <Network/Packet.hpp>
@@ -8,6 +9,9 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
+
+
+	/*// https://www.sfml-dev.org/tutorials/2.5/network-http.php
 	{
 		Http http = Http("http://equilibrium.games/");
 
@@ -25,6 +29,25 @@ int main(int argc, char **argv)
 		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type").c_str());
 		Log::Out("Body: %s\n", response.GetBody().c_str());
 	}
+	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
+	{
+		Ftp ftp;
+		ftp.Connect(IpAddress("ftp.myserver.org"), 21);
+		ftp.Login("username", "password");
+		ftp.KeepAlive();
+
+		FtpResponseDirectory response = ftp.GetWorkingDirectory();
+
+		if (response.IsOk())
+		{
+			Log::Out("Current directory: %s\n", response.GetDirectory());
+		}
+
+		ftp.Download("remote_file_name.txt", "local/destination/path", FTP_MODE_ASCII);
+		ftp.Upload("local_file_name.pdf", "remote/destination/path", FTP_MODE_BINARY);
+
+		ftp.Disconnect();
+	}*/
 
 	/*UdpSocket socket = UdpSocket();
 
