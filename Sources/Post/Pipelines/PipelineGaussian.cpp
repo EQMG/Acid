@@ -4,10 +4,10 @@
 
 namespace acid
 {
-	PipelineGaussian::PipelineGaussian(const GraphicsStage &graphicsStage, const float &scale) :
+	PipelineGaussian::PipelineGaussian(const GraphicsStage &graphicsStage, const float &scale, const BlurType &blurType) :
 		IPostPipeline(graphicsStage),
-		m_filterBlurVertical(FilterBlurVertical(graphicsStage, scale)),
-		m_filterBlurHorizontal(FilterBlurHorizontal(graphicsStage, scale))
+		m_filterBlurVertical(FilterBlur(graphicsStage, Vector2(0.0f, scale), blurType)),
+		m_filterBlurHorizontal(FilterBlur(graphicsStage, Vector2(scale, 0.0f), blurType))
 	//	m_halfRes(nullptr),
 	//	m_lastWidth(0),
 	//	m_lastHeight(0)

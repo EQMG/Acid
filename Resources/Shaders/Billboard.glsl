@@ -25,7 +25,7 @@ mat4 modelMatrix(mat4 source, mat4 view, bool lockRotation, vec3 rotation)
 
 	if (lockRotation)
 	{
-	    vec3 scale = vec3(modelMatrix[0][0], modelMatrix[0][1], modelMatrix[0][2]);
+		vec3 scale = vec3(modelMatrix[0][0], modelMatrix[0][1], modelMatrix[0][2]);
 		modelMatrix[0][0] = view[0][0];
 		modelMatrix[0][1] = view[1][0];
 		modelMatrix[0][2] = view[2][0];

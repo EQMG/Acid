@@ -1,24 +1,21 @@
-#include "FilterBlurVertical.hpp"
+#include "FilterBlur.hpp"
 
 #include "Display/Display.hpp"
 
 namespace acid
 {
-	FilterBlurVertical::FilterBlurVertical(const GraphicsStage &graphicsStage, const float &scale) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/BlurVertical.frag"}, {}),
+	FilterBlur::FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType) :
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {PipelineDefine("BLUR_TYPE", String::To(blurType))}),
 		m_uniformScene(UniformHandler()),
-		m_scale(scale),
-		m_height(0.0f)
+		m_blurType(blurType),
+		m_direction(direction)
 	{
 	}
 
-	void FilterBlurVertical::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void FilterBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		m_height = static_cast<float>(m_pipeline.GetHeight());
-
 		// Updates uniforms.
-		m_uniformScene.Push("height", m_height);
-		m_uniformScene.Push("scale", m_scale);
+		m_uniformScene.Push("direction", m_direction);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);

@@ -22,7 +22,7 @@ namespace acid
 			switch (image.GetType())
 			{
 			case ATTACHMENT_TYPE_IMAGE:
-				m_imageAttachments.emplace_back(std::make_unique<Texture>(textureWidth, textureHeight, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT, imageSamples));
+				m_imageAttachments.emplace_back(std::make_unique<Texture>(textureWidth, textureHeight, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, imageSamples));
 				break;
 			case ATTACHMENT_TYPE_DEPTH:
 				m_imageAttachments.emplace_back(nullptr);
