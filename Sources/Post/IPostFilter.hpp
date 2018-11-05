@@ -15,6 +15,8 @@ namespace acid
 		public IRenderer
 	{
 	protected:
+		static uint32_t GLOBAL_SWITCHING;
+
 		DescriptorsHandler m_descriptorSet;
 
 		Pipeline m_pipeline;
@@ -38,12 +40,22 @@ namespace acid
 
 		std::shared_ptr<Model> GetModel() const { return m_model; }
 
-		IDescriptor *GetAttachment(const std::string &name, IDescriptor *descriptor) const;
+		IDescriptor *GetAttachment(const std::string &descriptorName, IDescriptor *descriptor) const;
 
-		IDescriptor *GetAttachment(const std::string &name, const std::string &rendererAttachment) const;
+		IDescriptor *GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const;
 
-		void SetAttachment(const std::string &name, IDescriptor *descriptor);
+		void SetAttachment(const std::string &descriptorName, IDescriptor *descriptor);
 
 		bool RemoveAttachment(const std::string &name);
+	protected:
+		/// <summary>
+		/// Used instead of `m_descriptorSet.Push()` in instances where a writeColour is the same as samplerColour in a shader.
+		/// By switching between what will be the input and output of each filter previous changes are available to the shader.
+		/// </summary>
+		/// <param name="descriptorName1"> The first descriptor in the shader. </param>
+		/// <param name="descriptorName2"> The second descriptor in the shader. </param>
+		/// <param name="rendererAttachment1"> The name of the renderers attachment that will be first option. </param>
+		/// <param name="rendererAttachment2"> The name of the renderers attachment that will be second option. </param>
+		void PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2);
 	};
 }

@@ -143,6 +143,33 @@ namespace acid
 		return outOfDate;
 	}
 
+	std::vector<VkImageMemoryBarrier> RenderStage::GetAttachmentBarriers() const
+	{
+		auto result = std::vector<VkImageMemoryBarrier>();
+
+		for (auto &[name, descriptor] : m_attachments)
+		{
+			auto texture = dynamic_cast<Texture *>(descriptor);
+
+			if (texture == nullptr)
+			{
+				continue;
+			}
+
+			VkImageMemoryBarrier imageMemoryBarrier = {};
+			imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+			imageMemoryBarrier.oldLayout = texture->GetImageLayout();
+			imageMemoryBarrier.newLayout = texture->GetImageLayout();
+			imageMemoryBarrier.image = texture->GetImage();
+			imageMemoryBarrier.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			result.emplace_back(imageMemoryBarrier);
+		}
+
+		return result;
+	}
+
 	IDescriptor *RenderStage::GetAttachment(const std::string &name) const
 	{
 		auto it = m_attachments.find(name);

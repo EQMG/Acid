@@ -32,6 +32,7 @@ namespace acid
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
 
 		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
 		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
@@ -74,7 +75,7 @@ namespace acid
 
 		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
 
-		VkPipelineBindPoint GetPipelineBindPoint() const { return VK_PIPELINE_BIND_POINT_GRAPHICS; }
+		VkPipelineBindPoint GetPipelineBindPoint() const { return m_pipelineBindPoint; }
 	private:
 		void CreateShaderProgram();
 
@@ -91,5 +92,7 @@ namespace acid
 		void CreatePipelinePolygon();
 
 		void CreatePipelineMrt();
+
+		void CreatePipelineCompute();
 	};
 }

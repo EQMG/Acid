@@ -30,10 +30,11 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", &m_uniformScene);
-		m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
+	//	m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
-		m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
+	//	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerBlured", m_pipelineBlur == nullptr ? nullptr : m_pipelineBlur->GetOutput());
+		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)

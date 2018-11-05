@@ -25,6 +25,7 @@ namespace acid
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
+		m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS),
 		m_inputAssemblyState({}),
 		m_rasterizationState({}),
 		m_blendAttachmentStates({}),
@@ -52,6 +53,9 @@ namespace acid
 			break;
 		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
+			break;
+		case PIPELINE_MODE_COMPUTE:
+			CreatePipelineCompute();
 			break;
 		default:
 			assert(false);
@@ -351,6 +355,8 @@ namespace acid
 		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 		vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
+		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.layout = m_pipelineLayout;
@@ -407,5 +413,26 @@ namespace acid
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
 
 		CreatePipeline();
+	}
+
+	void Pipeline::CreatePipelineCompute()
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto pipelineCache = Renderer::Get()->GetPipelineCache();
+
+		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_COMPUTE;
+
+		VkComputePipelineCreateInfo pipelineCreateInfo = {};
+		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
+		pipelineCreateInfo.layout = m_pipelineLayout;
+		pipelineCreateInfo.basePipelineIndex = -1;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.stage = m_stages[0];
+
+		// Create the compute pipeline.
+		Display::CheckVk(vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+
+		// Called when running the computer shader.
+	//	vkCmdDispatch(commandBuffer.GetCommandBuffer(), Display::Get()->GetWidth() / 16, Display::Get()->GetHeight() / 16, 1);
 	}
 }
