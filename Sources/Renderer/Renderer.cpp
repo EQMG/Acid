@@ -368,6 +368,16 @@ namespace acid
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
 
+		/*auto attachmentBarriers = renderStage->GetAttachmentBarriers();
+		vkCmdPipelineBarrier(
+			m_commandBuffer->GetCommandBuffer(),
+			VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+			VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+			0,
+			0, nullptr,
+			0, nullptr,
+			static_cast<uint32_t>(attachmentBarriers.size()), attachmentBarriers.data());*/
+
 		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		VkViewport viewport = {};

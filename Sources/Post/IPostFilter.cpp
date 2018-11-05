@@ -6,6 +6,8 @@
 
 namespace acid
 {
+	uint32_t IPostFilter::GLOBAL_SWITCHING = 0;
+
 	IPostFilter::IPostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<PipelineDefine> &defines) :
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
@@ -16,9 +18,9 @@ namespace acid
 	{
 	}
 
-	IDescriptor *IPostFilter::GetAttachment(const std::string &name, IDescriptor *descriptor) const
+	IDescriptor *IPostFilter::GetAttachment(const std::string &descriptorName, IDescriptor *descriptor) const
 	{
-		auto it = m_attachments.find(name);
+		auto it = m_attachments.find(descriptorName);
 
 		if (it == m_attachments.end())
 		{
@@ -28,9 +30,9 @@ namespace acid
 		return it->second;
 	}
 
-	IDescriptor *IPostFilter::GetAttachment(const std::string &name, const std::string &rendererAttachment) const
+	IDescriptor *IPostFilter::GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const
 	{
-		auto it = m_attachments.find(name);
+		auto it = m_attachments.find(descriptorName);
 
 		if (it == m_attachments.end())
 		{
@@ -40,13 +42,13 @@ namespace acid
 		return it->second;
 	}
 
-	void IPostFilter::SetAttachment(const std::string &name, IDescriptor *descriptor)
+	void IPostFilter::SetAttachment(const std::string &descriptorName, IDescriptor *descriptor)
 	{
-		auto it = m_attachments.find(name);
+		auto it = m_attachments.find(descriptorName);
 
 		if (it == m_attachments.end())
 		{
-			m_attachments.emplace(name, descriptor);
+			m_attachments.emplace(descriptorName, descriptor);
 			return;
 		}
 
@@ -64,5 +66,37 @@ namespace acid
 		}
 
 		return false;
+	}
+
+	void IPostFilter::PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2)
+	{
+		auto it1 = m_attachments.find(descriptorName1);
+		auto it2 = m_attachments.find(descriptorName1);
+
+		if (it1 != m_attachments.end() || it2 != m_attachments.end())
+		{
+			m_descriptorSet.Push(descriptorName1, GetAttachment(descriptorName1, rendererAttachment1));
+			m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
+			return;
+		}
+		else if (it1 == m_attachments.end() && it2 != m_attachments.end())
+		{
+			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(GLOBAL_SWITCHING % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
+			m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
+			return;
+		}
+
+		if (GLOBAL_SWITCHING % 2 == 1)
+		{
+			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(rendererAttachment1));
+			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(rendererAttachment2));
+		}
+		else
+		{
+			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(rendererAttachment2));
+			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(rendererAttachment1));
+		}
+
+		GLOBAL_SWITCHING++;
 	}
 }

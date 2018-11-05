@@ -39,10 +39,10 @@ namespace acid
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 5.0f))
-		{
-			return;
-		}
+	//	if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 5.0f))
+	//	{
+	//		return;
+	//	}
 
 		// Renders when needed.
 		if (m_timerRender.IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f)

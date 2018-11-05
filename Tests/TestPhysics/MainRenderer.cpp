@@ -17,6 +17,7 @@
 #include <Post/Filters/FilterPixel.hpp>
 #include <Post/Filters/FilterSsao.hpp>
 #include <Post/Filters/FilterDof.hpp>
+#include <Post/Filters/FilterEmboss.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterVignette.hpp>
 #include <Inputs/Keyboard.hpp>
@@ -64,17 +65,18 @@ namespace test
 		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
 		Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
 
-		Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-	//	auto sceneBlur = Renderer::Get()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.0f, 5.0f, BLUR_TYPE_9);
-	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f); // FIXME
-	//	Renderer::Get()->AddRenderer<FilterCrt>(GraphicsStage(1, 2)); // FIXME
+	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
+	//	auto sceneBlur = Renderer::Get()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 2.0f, BLUR_TYPE_9, false, 0.5f, 1.0f);
+	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f);
+	//	Renderer::Get()->AddRenderer<FilterEmboss>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterCrt>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterPixel>(GraphicsStage(1, 2), 8.0f); // FIXME
+	//	Renderer::Get()->AddRenderer<FilterPixel>(GraphicsStage(1, 2), 8.0f);
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2)); // FIXME
-		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2));
+	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2), true);
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}

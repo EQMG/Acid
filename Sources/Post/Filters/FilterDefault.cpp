@@ -2,16 +2,18 @@
 
 namespace acid
 {
-	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {})
+	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage, const bool &lastFilter) :
+		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {}),
+		m_lastFilter(lastFilter)
 	{
 	}
 
 	void FilterDefault::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates descriptors.
-		m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-		m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
+	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
+	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
+		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 		if (!updateSuccess)
@@ -24,5 +26,11 @@ namespace acid
 
 		m_descriptorSet.BindDescriptor(commandBuffer);
 		m_model->CmdRender(commandBuffer);
+
+		// Resets switching for next pass.
+		if (m_lastFilter)
+		{
+			GLOBAL_SWITCHING = 0;
+		}
 	}
 }

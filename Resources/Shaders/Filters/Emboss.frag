@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 0, rgba8) uniform writeonly image2D writeColour;
 
 layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
@@ -23,7 +23,7 @@ void main()
 	tc_offset[4] = vec2(0.0f, epsilon);
 	tc_offset[5] = vec2(epsilon, epsilon);
 
-	for(int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++)
 	{
 		tc_sampler[i] = texture(samplerColour, inUv + tc_offset[i]);
 	}
