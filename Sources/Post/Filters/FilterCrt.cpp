@@ -6,7 +6,7 @@ namespace acid
 {
 	FilterCrt::FilterCrt(const GraphicsStage &graphicsStage, const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Crt.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_screenColour(screenColour),
 		m_curveAmountX(curveAmountX),
 		m_curveAmountY(curveAmountY),
@@ -18,15 +18,15 @@ namespace acid
 	void FilterCrt::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("screenColour", m_screenColour);
-		m_uniformScene.Push("curveAmountX", m_curveAmountX * Display::Get()->GetAspectRatio());
-		m_uniformScene.Push("curveAmountY", m_curveAmountY);
-		m_uniformScene.Push("scanLineSize", m_scanLineSize);
-		m_uniformScene.Push("scanIntensity", m_scanIntensity);
-		m_uniformScene.Push("moveTime", Engine::GetTime() / 100.0f);
+		m_pushScene.Push("screenColour", m_screenColour);
+		m_pushScene.Push("curveAmountX", m_curveAmountX * Display::Get()->GetAspectRatio());
+		m_pushScene.Push("curveAmountY", m_curveAmountY);
+		m_pushScene.Push("scanLineSize", m_scanLineSize);
+		m_pushScene.Push("scanIntensity", m_scanIntensity);
+		m_pushScene.Push("moveTime", Engine::GetTime() / 100.0f);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
@@ -38,6 +38,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

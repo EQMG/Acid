@@ -12,7 +12,7 @@ namespace acid
 		static const uint32_t SSAO_KERNEL_SIZE;
 		static const float SSAO_RADIUS;
 
-		UniformHandler m_uniformScene;
+		PushHandler m_pushScene;
 
 		std::shared_ptr<Texture> m_noise;
 		std::vector<Vector3> m_kernel;

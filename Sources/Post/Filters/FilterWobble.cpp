@@ -4,7 +4,7 @@ namespace acid
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage, const float &wobbleSpeed) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_wobbleSpeed(wobbleSpeed),
 		m_wobbleAmount(0.0f)
 	{
@@ -15,10 +15,10 @@ namespace acid
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender().AsSeconds();
 
 		// Updates uniforms.
-		m_uniformScene.Push("moveIt", m_wobbleAmount);
+		m_pushScene.Push("moveIt", m_wobbleAmount);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
@@ -30,6 +30,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

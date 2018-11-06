@@ -10,7 +10,7 @@ namespace acid
 		public IPostFilter
 	{
 	private:
-		UniformHandler m_uniformScene;
+		PushHandler m_pushScene;
 
 		PipelineBlur *m_pipelineBlur;
 

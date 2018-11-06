@@ -13,7 +13,7 @@ namespace acid
 
 	FilterSsao::FilterSsao(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Ssao.frag"}, GetDefines()),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_noise(ComputeNoise(SSAO_NOISE_DIM)),
 		m_kernel(std::vector<Vector3>(SSAO_KERNEL_SIZE))
 	{
@@ -31,14 +31,14 @@ namespace acid
 	void FilterSsao::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
-		m_uniformScene.Push("nearPlane", camera.GetNearPlane());
-		m_uniformScene.Push("farPlane", camera.GetFarPlane());
+		m_pushScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
+		m_pushScene.Push("projection", camera.GetProjectionMatrix());
+		m_pushScene.Push("view", camera.GetViewMatrix());
+		m_pushScene.Push("nearPlane", camera.GetNearPlane());
+		m_pushScene.Push("farPlane", camera.GetFarPlane());
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 		m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 		m_descriptorSet.Push("samplerDepth", GetAttachment("samplerDepth", "depth"));
 		m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
@@ -51,6 +51,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

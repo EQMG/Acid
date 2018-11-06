@@ -6,7 +6,7 @@ namespace acid
 {
 	FilterBlur::FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {PipelineDefine("BLUR_TYPE", String::To(blurType))}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_blurType(blurType),
 		m_direction(direction)
 	{
@@ -15,10 +15,10 @@ namespace acid
 	void FilterBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("direction", m_direction);
+		m_pushScene.Push("direction", m_direction);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
@@ -30,6 +30,7 @@ namespace acid
 		}
 
 		// Binds the pipeline.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		// Draws the object.

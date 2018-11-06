@@ -4,7 +4,7 @@ namespace acid
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage, const float &pixelSize) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_pixelSize(pixelSize)
 	{
 	}
@@ -12,10 +12,10 @@ namespace acid
 	void FilterPixel::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("pixelSize", m_pixelSize);
+		m_pushScene.Push("pixelSize", m_pixelSize);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
@@ -27,6 +27,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);
