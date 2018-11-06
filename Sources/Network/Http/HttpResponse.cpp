@@ -13,7 +13,7 @@ namespace acid
 
 	const std::string &HttpResponse::GetField(const std::string &field) const
 	{
-		FieldTable::const_iterator it = m_fields.find(String::Lowercase(field));
+		auto it = m_fields.find(String::Lowercase(field));
 
 		if (it != m_fields.end())
 		{

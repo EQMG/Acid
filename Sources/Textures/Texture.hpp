@@ -73,9 +73,9 @@ namespace acid
 
 		~Texture();
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage, const uint32_t &count);
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const override;
 
 		/// <summary>
 		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.

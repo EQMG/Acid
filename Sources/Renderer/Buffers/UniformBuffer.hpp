@@ -18,8 +18,8 @@ namespace acid
 
 		void Update(const void *newData);
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage, const uint32_t &count);
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const override;
 	};
 }

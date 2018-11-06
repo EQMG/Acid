@@ -68,6 +68,18 @@ namespace acid
 			case HTTP_METHOD_DELETE:
 				method = "DELETE";
 				break;
+			case HTTP_METHOD_OPTIONS:
+				method = "OPTIONS";
+				break;
+			case HTTP_METHOD_PATCH:
+				method = "PATCH";
+				break;
+			case HTTP_METHOD_TRACE:
+				method = "TRACE";
+				break;
+			case HTTP_METHOD_CONNECT:
+				method = "CONNECT";
+				break;
 		}
 
 		// Write the first line containing the request type.
@@ -75,7 +87,7 @@ namespace acid
 		out << "HTTP/" << m_majorVersion << "." << m_minorVersion << "\r\n";
 
 		// Write fields.
-		for (FieldTable::const_iterator i = m_fields.begin(); i != m_fields.end(); ++i)
+		for (auto i = m_fields.begin(); i != m_fields.end(); ++i)
 		{
 			out << i->first << ": " << i->second << "\r\n";
 		}

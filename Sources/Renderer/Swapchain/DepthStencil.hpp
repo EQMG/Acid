@@ -23,9 +23,9 @@ namespace acid
 
 		~DepthStencil();
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage);
+		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const override;
+		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const override;
 
 		uint32_t GetWidth() const { return m_width; }
 

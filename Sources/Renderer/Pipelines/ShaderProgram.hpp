@@ -23,14 +23,18 @@ namespace acid
 		int32_t m_offset;
 		int32_t m_size;
 		int32_t m_glType;
+		bool m_readOnly;
+		bool m_writeOnly;
 		VkShaderStageFlags m_stageFlags;
 	public:
-		Uniform(const std::string &name, const int32_t &binding, const int32_t &offset, const int32_t &size, const int32_t &glType, const VkShaderStageFlags &stageFlags) :
+		Uniform(const std::string &name, const int32_t &binding, const int32_t &offset, const int32_t &size, const int32_t &glType, const bool &readOnly, const bool &writeOnly, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
 			m_glType(glType),
+			m_readOnly(readOnly),
+			m_writeOnly(writeOnly),
 			m_stageFlags(stageFlags)
 		{
 		}
@@ -44,6 +48,10 @@ namespace acid
 		int32_t GetSize() const { return m_size; }
 
 		int32_t GetGlType() const { return m_glType; }
+
+		bool IsReadOnly() const { return m_readOnly; }
+
+		bool IsWriteOnly() const { return m_writeOnly; }
 
 		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
 
@@ -191,6 +199,7 @@ namespace acid
 		std::vector<std::unique_ptr<VertexAttribute>> m_vertexAttributes;
 
 		std::vector<DescriptorType> m_descriptors;
+		std::vector<VkDescriptorType> m_descriptorTypes;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 
 		std::vector<std::string> m_notFoundNames;
@@ -224,6 +233,8 @@ namespace acid
 		const std::vector<std::unique_ptr<VertexAttribute>> &GetVertexAttributes() const { return m_vertexAttributes; };
 
 		std::vector<DescriptorType> GetDescriptors() const { return m_descriptors; }
+
+		VkDescriptorType GetDescriptorType(const uint32_t &location) const { return m_descriptorTypes[location]; }
 
 		uint32_t GetLastDescriptorBinding() const;
 

@@ -68,7 +68,7 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
 	//	auto sceneBlur = Renderer::Get()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 2.0f, BLUR_TYPE_9, false, 0.5f, 1.0f);
 	//	Renderer::Get()->AddRenderer<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f);
-	//	Renderer::Get()->AddRenderer<FilterEmboss>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<FilterEmboss>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterCrt>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));

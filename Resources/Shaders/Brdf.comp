@@ -3,17 +3,12 @@
 
 layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_z = 1) in;
 
-layout(rgba16f, set = 0, binding = 0) uniform writeonly image2D outColour;
+layout(set = 0, binding = 0, rgba8) uniform writeonly image2D outColour;
 
 #include "Shaders/Lighting.glsl"
 
 void main()
 {
-	if (gl_GlobalInvocationID.x >= WIDTH || gl_GlobalInvocationID.y >= HEIGHT)
-	{
-		return;
-	}
-
-	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f, 0.5f)) / vec2(WIDTH, HEIGHT);
+	vec2 uv = gl_GlobalInvocationID.xy / vec2(WIDTH, HEIGHT);
 	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(integrate_brdf(uv.x, uv.y), 0.0f, 1.0f));
 }

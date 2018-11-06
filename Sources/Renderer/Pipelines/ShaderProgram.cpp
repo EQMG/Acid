@@ -17,6 +17,7 @@ namespace acid
 		m_uniformBlocks(std::vector<std::unique_ptr<UniformBlock>>()),
 		m_vertexAttributes(std::vector<std::unique_ptr<VertexAttribute>>()),
 		m_descriptors(std::vector<DescriptorType>()),
+		m_descriptorTypes(std::vector<VkDescriptorType>()),
 		m_attributeDescriptions(std::vector<VkVertexInputAttributeDescription>()),
 		m_notFoundNames(std::vector<std::string>())
 	{
@@ -78,10 +79,12 @@ namespace acid
 			switch (uniformBlock->GetType())
 			{
 				case BLOCK_UNIFORM:
-					m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags(), setCount));
+					m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
+						VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, uniformBlock->GetStageFlags(), setCount));
 					break;
 				case BLOCK_STORAGE:
-					m_descriptors.emplace_back(StorageBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()), uniformBlock->GetStageFlags(), setCount));
+					m_descriptors.emplace_back(StorageBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
+						VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, uniformBlock->GetStageFlags(), setCount));
 					break;
 				case BLOCK_PUSH:
 					// Push constants are described in the pipeline.
@@ -99,15 +102,30 @@ namespace acid
 			case 0x904D: // GL_IMAGE_2D
 			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
-				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
+				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
+					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), setCount));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
-				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()), uniform->GetStageFlags(), setCount));
+				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
+					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), setCount));
 				break;
 			default:
 				break;
 			}
+		}
+
+		// Sort descriptors by binding.
+		std::sort(m_descriptors.begin(), m_descriptors.end(),
+		[](const DescriptorType &l, const DescriptorType &r)
+		{
+		    return l.GetLayoutBinding().binding < r.GetLayoutBinding().binding;
+		});
+
+		// Gets the descriptor type for each descriptor.
+		for (auto &descriptor : m_descriptors)
+		{
+			m_descriptorTypes.emplace_back(descriptor.GetLayoutBinding().descriptorType);
 		}
 
 		// Process attribute descriptions.
@@ -590,7 +608,7 @@ namespace acid
 					if (uniformBlock->GetName() == splitName.at(0))
 					{
 						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
-							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), stageFlag));
+							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), false, false, stageFlag));
 						return;
 					}
 				}
@@ -606,7 +624,9 @@ namespace acid
 			}
 		}
 
-		m_uniforms.emplace_back(std::make_unique<Uniform>(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), stageFlag));
+		auto &qualifier = program.getUniformTType(i)->getQualifier();
+		m_uniforms.emplace_back(std::make_unique<Uniform>(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i),
+			qualifier.readonly, qualifier.writeonly, stageFlag));
 	}
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
@@ -619,7 +639,8 @@ namespace acid
 			}
 		}
 
-		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), program.getAttributeTType(i)->getQualifier().layoutSet,
-			program.getAttributeTType(i)->getQualifier().layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
+		auto &qualifier = program.getAttributeTType(i)->getQualifier();
+		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), qualifier.layoutSet,
+			qualifier.layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
 	}
 }
