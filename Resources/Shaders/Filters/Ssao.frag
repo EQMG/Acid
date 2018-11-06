@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboScene
+layout(push_constant) uniform PushScene
 {
 	vec3 kernel[SSAO_KERNEL_SIZE];
 
@@ -13,11 +13,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	float farPlane;
 } scene;
 
-layout(set = 0, binding = 1, rgba8) uniform writeonly image2D writeColour;
+layout(set = 0, binding = 0, rgba8) uniform writeonly image2D writeColour;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 4) uniform sampler2D samplerNoise;
+layout(set = 0, binding = 1) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 2) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 3) uniform sampler2D samplerNoise;
 
 layout(location = 0) in vec2 inUv;
 

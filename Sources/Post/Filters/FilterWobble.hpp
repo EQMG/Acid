@@ -8,7 +8,7 @@ namespace acid
 		public IPostFilter
 	{
 	private:
-		UniformHandler m_uniformScene;
+		PushHandler m_pushScene;
 
 		float m_wobbleSpeed;
 		float m_wobbleAmount;

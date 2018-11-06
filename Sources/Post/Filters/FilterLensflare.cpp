@@ -6,7 +6,7 @@ namespace acid
 {
 	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_sunPosition(Vector3()),
 		m_sunHeight(0.0f)
 	{
@@ -15,12 +15,12 @@ namespace acid
 	void FilterLensflare::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("sunPosition", m_sunPosition);
-		m_uniformScene.Push("worldHeight", m_sunHeight);
-		m_uniformScene.Push("displaySize", Vector2(static_cast<float>(m_pipeline.GetWidth()), static_cast<float>(m_pipeline.GetHeight())));
+		m_pushScene.Push("sunPosition", m_sunPosition);
+		m_pushScene.Push("worldHeight", m_sunHeight);
+		m_pushScene.Push("displaySize", Vector2(static_cast<float>(m_pipeline.GetWidth()), static_cast<float>(m_pipeline.GetHeight())));
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		m_descriptorSet.Push("samplerMaterial", GetAttachment("samplerMaterial", "materials"));
@@ -33,6 +33,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

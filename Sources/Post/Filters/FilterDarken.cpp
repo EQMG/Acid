@@ -4,7 +4,7 @@ namespace acid
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage, const float &factor) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_factor(factor)
 	{
 	}
@@ -12,10 +12,10 @@ namespace acid
 	void FilterDarken::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("factor", m_factor);
+		m_pushScene.Push("factor", m_factor);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
@@ -27,6 +27,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

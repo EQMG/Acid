@@ -7,7 +7,7 @@ namespace acid
 	FilterDof::FilterDof(const GraphicsStage &graphicsStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField,
 	                     const float &nearTransition, const float &farField, const float &farTransition) :
 		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Dof.frag"}, {}),
-		m_uniformScene(UniformHandler()),
+		m_pushScene(PushHandler()),
 		m_pipelineBlur(pipelineBlur),
 		m_focusPoint(focusPoint),
 		m_nearField(nearField),
@@ -20,16 +20,16 @@ namespace acid
 	void FilterDof::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
 		// Updates uniforms.
-		m_uniformScene.Push("nearPlane", camera.GetNearPlane());
-		m_uniformScene.Push("farPlane", camera.GetFarPlane());
-		m_uniformScene.Push("focusPoint", m_focusPoint);
-		m_uniformScene.Push("nearField", m_nearField);
-		m_uniformScene.Push("nearTransition", m_nearTransition);
-		m_uniformScene.Push("farField", m_farField);
-		m_uniformScene.Push("farTransition", m_farTransition);
+		m_pushScene.Push("nearPlane", camera.GetNearPlane());
+		m_pushScene.Push("farPlane", camera.GetFarPlane());
+		m_pushScene.Push("focusPoint", m_focusPoint);
+		m_pushScene.Push("nearField", m_nearField);
+		m_pushScene.Push("nearTransition", m_nearTransition);
+		m_pushScene.Push("farField", m_farField);
+		m_pushScene.Push("farTransition", m_farTransition);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", &m_uniformScene);
+		m_descriptorSet.Push("PushScene", &m_pushScene);
 	//	m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
 	//	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
@@ -43,6 +43,7 @@ namespace acid
 		}
 
 		// Draws the object.
+		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer);

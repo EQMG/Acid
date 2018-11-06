@@ -9,7 +9,7 @@ namespace acid
 		public IPostFilter
 	{
 	private:
-		UniformHandler m_uniformScene;
+		PushHandler m_pushScene;
 
 		Vector3 m_sunPosition;
 		float m_sunHeight;
