@@ -93,7 +93,18 @@ namespace acid
 
 		if (m_changed)
 		{
-			m_descriptorSet->Update(m_descriptors);
+			std::vector<VkWriteDescriptorSet> descriptorWrites = {};
+
+			for (uint32_t i = 0; i < m_descriptors.size(); i++)
+			{
+				if (m_descriptors.at(i) != nullptr)
+				{
+					VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(i);
+					descriptorWrites.emplace_back(m_descriptors[i]->GetWriteDescriptor(i, descriptorType, *m_descriptorSet));
+				}
+			}
+
+			m_descriptorSet->Update(descriptorWrites);
 			m_changed = false;
 		}
 

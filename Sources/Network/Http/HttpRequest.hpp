@@ -7,7 +7,7 @@
 namespace acid
 {
 	/// <summary>
-	/// Enumerate the available HTTP methods for a request.
+	/// Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
 	/// </summary>
 	enum HttpRequestMethod
 	{
@@ -20,7 +20,15 @@ namespace acid
 		/// Request in put mode, useful for a REST API.
 		HTTP_METHOD_PUT = 3,
 		/// Request in delete mode, useful for a REST API.
-		HTTP_METHOD_DELETE = 4
+		HTTP_METHOD_DELETE = 4,
+		/// Request in options mode, describes the communication options for the page.
+		HTTP_METHOD_OPTIONS = 5,
+		/// Request applies partial modifications to a page.
+		HTTP_METHOD_PATCH = 6,
+		/// Request performs a message loop-back test along the path to the target resource.
+		HTTP_METHOD_TRACE = 7,
+		/// Request establishes a tunnel to the server page.
+		HTTP_METHOD_CONNECT = 8
 	};
 
 	/// <summary>

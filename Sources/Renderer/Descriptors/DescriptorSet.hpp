@@ -20,7 +20,7 @@ namespace acid
 
 		~DescriptorSet();
 
-		void Update(const std::vector<IDescriptor *> &descriptors);
+		void Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites);
 
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 

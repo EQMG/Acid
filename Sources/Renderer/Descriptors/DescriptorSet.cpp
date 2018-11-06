@@ -32,19 +32,9 @@ namespace acid
 		Display::CheckVk(vkFreeDescriptorSets(logicalDevice, m_descriptorPool, 1, &m_descriptorSet));
 	}
 
-	void DescriptorSet::Update(const std::vector<IDescriptor *> &descriptors)
+	void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		std::vector<VkWriteDescriptorSet> descriptorWrites = {};
-
-		for (uint32_t i = 0; i < descriptors.size(); i++)
-		{
-			if (descriptors.at(i) != nullptr)
-			{
-				descriptorWrites.emplace_back(descriptors.at(i)->GetWriteDescriptor(i, *this));
-			}
-		}
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}

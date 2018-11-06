@@ -179,30 +179,30 @@ namespace acid
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 
-	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkShaderStageFlags &stage, const uint32_t &count)
+	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
 		descriptorSetLayoutBinding.descriptorCount = 1;
-		descriptorSetLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorSetLayoutBinding.descriptorType = descriptorType;
 		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
 		descriptorSetLayoutBinding.stageFlags = stage;
 
 		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPoolSize.type = descriptorType;
 		descriptorPoolSize.descriptorCount = count;
 
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const DescriptorSet &descriptorSet) const
+	VkWriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
 	{
 		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
-		descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorWrite.descriptorType = descriptorType;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.pImageInfo = &m_imageInfo;
 

@@ -13,7 +13,6 @@
 namespace acid
 {
 	typedef std::chrono::high_resolution_clock HighResolutionClock;
-	typedef std::chrono::duration<float, std::milli> MillisecondsType;
 	typedef std::chrono::duration<int64_t, std::micro> MicrosecondsType;
 
 	/// <summary>

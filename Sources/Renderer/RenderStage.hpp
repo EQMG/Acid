@@ -54,8 +54,6 @@ namespace acid
 
 		Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
-		std::vector<VkImageMemoryBarrier> GetAttachmentBarriers() const;
-
 		IDescriptor *GetAttachment(const std::string &name) const;
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;

@@ -130,7 +130,7 @@ namespace acid
 
 	std::shared_ptr<Texture> RendererDeferred::ComputeBrdf(const uint32_t &size)
 	{
-		auto result = std::make_shared<Texture>(size, size, nullptr);
+		auto result = std::make_shared<Texture>(size, size);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);

@@ -9,8 +9,6 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
-
-
 	/*// https://www.sfml-dev.org/tutorials/2.5/network-http.php
 	{
 		Http http = Http("http://equilibrium.games/");

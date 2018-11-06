@@ -420,7 +420,7 @@ namespace acid
 		// Then insert characters.
 		if (length > 0)
 		{
-			for (std::wstring::const_iterator c = data.begin(); c != data.end(); ++c)
+			for (auto c = data.begin(); c != data.end(); ++c)
 			{
 				*this << static_cast<uint32_t>(*c);
 			}
