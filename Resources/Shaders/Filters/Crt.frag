@@ -51,6 +51,5 @@ void main()
 	float grey = dot(colour.rgb, vec3(0.299f, 0.587f, 0.114f));
 	colour = vec4(scene.screenColour.rgb * grey, 1.0f);
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

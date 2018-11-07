@@ -9,6 +9,7 @@
 namespace acid
 {
 	const uint32_t ParticleType::MAX_TYPE_INSTANCES = 512;
+	const float ParticleType::FRUSTUM_BUFFER = 1.4f;
 
 	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
@@ -59,10 +60,10 @@ namespace acid
 
 		for (auto &particle : particles)
 		{
-		//	if (!camera.GetViewFrustum().SphereInFrustum(particle.GetPosition(), particle.GetScale()))
-		//	{
-		//		continue;
-		//	}
+			if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale()))
+			{
+				continue;
+			}
 
 			instanceData[i] = GetInstanceData(particle);
 			i++;

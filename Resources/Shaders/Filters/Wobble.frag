@@ -23,6 +23,5 @@ void main()
 	t0.y += sin(2.0f * pi * inUv.x * 4.0f + scene.moveIt) * di;
 	vec4 colour = texture(samplerColour, t0);
 	
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

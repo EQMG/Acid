@@ -47,6 +47,7 @@ namespace acid
 		DescriptorsHandler m_descriptorSet;
 	public:
 		static const uint32_t MAX_TYPE_INSTANCES;
+		static const float FRUSTUM_BUFFER;
 
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
