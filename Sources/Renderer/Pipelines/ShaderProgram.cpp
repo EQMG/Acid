@@ -71,8 +71,6 @@ namespace acid
 			return l->GetLocation() < r->GetLocation();
 		});
 
-		uint32_t setCount = 64; // TODO: Arbitrary number.
-
 		// Process to descriptors.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
@@ -80,11 +78,11 @@ namespace acid
 			{
 				case BLOCK_UNIFORM:
 					m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, uniformBlock->GetStageFlags(), setCount));
+						VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, uniformBlock->GetStageFlags(), 1));
 					break;
 				case BLOCK_STORAGE:
 					m_descriptors.emplace_back(StorageBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, uniformBlock->GetStageFlags(), setCount));
+						VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, uniformBlock->GetStageFlags(), 1));
 					break;
 				case BLOCK_PUSH:
 					// Push constants are described in the pipeline.
@@ -103,12 +101,12 @@ namespace acid
 			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
 				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
-					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), setCount));
+					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), 1));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
 				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
-					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), setCount));
+					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), 1));
 				break;
 			default:
 				break;

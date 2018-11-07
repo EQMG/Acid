@@ -46,6 +46,5 @@ void main()
 	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
 	colour /= float(scene.steps * scene.steps);
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

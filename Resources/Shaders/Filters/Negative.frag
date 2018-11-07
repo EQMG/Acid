@@ -10,8 +10,8 @@ layout(location = 0) in vec2 inUv;
 
 void main() 
 {
-	vec4 colour = vec4((1.0f - texture(samplerColour, inUv).rgb), 1.0f);
+	vec3 textureColour = texture(samplerColour, inUv).rgb;
+	vec4 colour = vec4(1.0f - textureColour, 1.0f);
 	
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

@@ -44,5 +44,5 @@ void main()
 	colour += texture(samplerColour, inUv - (off3 / sizeColour)) * 0.010381362401148057f;
 #endif
 
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

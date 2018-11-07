@@ -14,6 +14,5 @@ void main()
 {
 	outColour = texture(samplerColour, inUv);
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), outColour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), outColour);
 }

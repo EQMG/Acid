@@ -37,12 +37,10 @@ void main()
 	float nearEnd = scene.nearField + scene.nearTransition;
 	float farStart = scene.farField - scene.farTransition;
 
-	/*float nearVisibility = smoothstep(scene.nearField * scene.focusPoint, nearEnd * scene.focusPoint, depth);
+	float nearVisibility = smoothstep(scene.nearField * scene.focusPoint, nearEnd * scene.focusPoint, depth);
 	float farVisibility = 1.0f - smoothstep(farStart * scene.focusPoint, scene.farField * scene.focusPoint, depth);
 	vec4 colour = vec4(mix(textureBlured, textureColour, nearVisibility), 1.0f);
-	colour.rgb = mix(textureBlured, colour.rgb, farVisibility);*/
-	vec4 colour = vec4(textureBlured, 1.0f);
+	colour.rgb = mix(textureBlured, colour.rgb, farVisibility);
 
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

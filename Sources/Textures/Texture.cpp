@@ -399,22 +399,6 @@ namespace acid
 			srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
 			dstStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
 		}
-		else if (srcImageLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && dstImageLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
-		{
-			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
-			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
-			dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-		}
-		else if (srcImageLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && dstImageLayout == VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
-		{
-			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-			imageMemoryBarrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
-			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
-			dstStageMask = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-		}
 		else if (srcImageLayout == VK_IMAGE_LAYOUT_UNDEFINED && dstImageLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
 		{
 			imageMemoryBarrier.srcAccessMask = 0;
@@ -431,9 +415,25 @@ namespace acid
 			srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
 			dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		}
+		else if (srcImageLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && dstImageLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+		{
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
+			dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+		}
+		else if (srcImageLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && dstImageLayout == VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL)
+		{
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
+			srcStageMask = VK_PIPELINE_STAGE_TRANSFER_BIT;
+			dstStageMask = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		}
 		else
 		{
-			assert(false && "Unsupported imate layout transition!");
+			assert(false && "Unsupported image layout transition!");
 		}
 
 		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);

@@ -78,6 +78,5 @@ void main()
 	occlusion = 1.0f - (occlusion / float(SSAO_KERNEL_SIZE));
 	vec4 colour = vec4(texture(samplerNoise, inUv).rgb, 1.0f); // occlusion, occlusion, occlusion
 	
-	vec2 sizeColour = textureSize(samplerNormal, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

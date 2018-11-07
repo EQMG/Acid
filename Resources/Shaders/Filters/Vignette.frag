@@ -22,6 +22,5 @@ void main()
 	colour.rgb *= 1.0f - smoothstep(scene.innerRadius, scene.outerRadius, length(inUv - 0.5f));
 	colour = mix(textureColour, colour, scene.opacity);
 	
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

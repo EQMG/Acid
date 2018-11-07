@@ -21,6 +21,5 @@ void main()
 	vec3 textureColour = texture(samplerColour, inUv).rgb;
 	vec4 colour = vec4(toneMap(textureColour * exposure) / toneMap(white), 1.0f);
 	
-	vec2 sizeColour = textureSize(samplerColour, 0);
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }

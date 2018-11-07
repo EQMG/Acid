@@ -19,10 +19,9 @@ void main()
 
 	float dx = scene.pixelSize * (1.0f / sizeColour.x);
 	float dy = scene.pixelSize * (sizeColour.x / sizeColour.y) * (1.0f / sizeColour.y);
-
 	vec2 coord = vec2(dx * floor(inUv.x / dx), dy * floor(inUv.y / dy));
 
 	vec4 colour = vec4(texture(samplerColour, coord).rgb, 1.0f);
 
-	imageStore(writeColour, ivec2(inUv * sizeColour), colour);
+	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }
