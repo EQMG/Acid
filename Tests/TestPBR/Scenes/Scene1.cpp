@@ -64,9 +64,21 @@ namespace test
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
-			//	sphere->AddComponent<ShadowRender>();
+				sphere->AddComponent<ShadowRender>();
+
+				auto teapot = new GameObject(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
+				teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
+				teapot->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, (float) j / 4.0f, (float) i / 4.0f);
+				teapot->AddComponent<MeshRender>();
+				teapot->AddComponent<ShadowRender>();
 			}
 		}
+
+		/*auto dragon = new GameObject(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, 90.0f, 0.0f), 0.4f));
+		dragon->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Dragon.obj"));
+		dragon->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.1f, 0.7f);
+		dragon->AddComponent<MeshRender>();
+		dragon->AddComponent<ShadowRender>();*/
 	}
 
 	void Scene1::Update()

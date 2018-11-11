@@ -23,9 +23,11 @@ namespace test
 
 	void HeightDespawn::Decode(const Metadata &metadata)
 	{
+		m_removeHeight = metadata.GetChild<float>("Remove Height");
 	}
 
 	void HeightDespawn::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<float>("Remove Height", m_removeHeight);
 	}
 }

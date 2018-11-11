@@ -38,13 +38,7 @@ namespace acid
 
 	void Rigidbody::Start()
 	{
-		Vector3 position = GetGameObject()->GetTransform().GetPosition();
-		Quaternion rotation = GetGameObject()->GetTransform().GetRotation();
-
-		btTransform worldTransform = btTransform();
-		worldTransform.setIdentity();
-		worldTransform.setOrigin(Collider::Convert(position));
-		worldTransform.setRotation(Collider::Convert(rotation));
+		btTransform worldTransform = Collider::Convert(GetGameObject()->GetTransform());
 
 		auto shape = GetGameObject()->GetComponent<Collider>();
 
@@ -110,21 +104,7 @@ namespace acid
 		auto &transform = GetGameObject()->GetTransform();
 		btTransform worldTransform;
 		m_body->getMotionState()->getWorldTransform(worldTransform);
-
-		if (m_linearFactor != Vector3::ZERO)
-		{
-			btVector3 position = worldTransform.getOrigin();
-			transform.SetPosition(Collider::Convert(position));
-		}
-
-		if (m_angularFactor != Vector3::ZERO)
-		{
-			btQuaternion rotation = worldTransform.getRotation();
-		//	transform.SetRotation(Collider::Convert(rotation));
-			float yaw, pitch, roll;
-			rotation.getEulerZYX(yaw, pitch, roll);
-			transform.SetRotation(Vector3(pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG));
-		}
+		transform = Collider::Convert(worldTransform, transform.GetScaling());
 
 	//  worldTransform->setIdentity();
 	//  worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));

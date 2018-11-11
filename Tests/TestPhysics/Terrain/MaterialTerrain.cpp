@@ -24,8 +24,8 @@ namespace test
 
 	void MaterialTerrain::Decode(const Metadata &metadata)
 	{
-		TrySetTextureR(metadata.GetChild<std::string>("Texture R"));
-		TrySetTextureR(metadata.GetChild<std::string>("Texture G"));
+		m_textureR = Texture::Resource(metadata.GetChild<std::string>("Texture R"));
+		m_textureG = Texture::Resource(metadata.GetChild<std::string>("Texture G"));
 	}
 
 	void MaterialTerrain::Encode(Metadata &metadata) const

@@ -15,8 +15,6 @@ namespace test
 	private:
 		std::unique_ptr<Text> m_textFps;
 		std::unique_ptr<Text> m_textUps;
-		std::vector<std::unique_ptr<Gui>> m_levelIcons;
-		std::vector<std::unique_ptr<Text>> m_levelTexts;
 		Timer m_timerUpdate;
 	public:
 		explicit OverlayDebug(UiObject *parent);

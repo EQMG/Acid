@@ -21,15 +21,15 @@ namespace acid
 			indents << "\t";
 		}
 
-		char openBrace = '[';
-		char closeBrace = ']';
+		char openBrace = '{';
+		char closeBrace = '}';
 
 		for (auto &child : source.GetChildren())
 		{
-			if (!child->GetName().empty())
+			if (child->GetName().empty())
 			{
-				openBrace = '{';
-				closeBrace = '}';
+				openBrace = '[';
+				closeBrace = ']';
 				break;
 			}
 		}
@@ -65,7 +65,7 @@ namespace acid
 		{
 			builder << indents.str();
 
-			if (end)
+			if (end || indentation == 0)
 			{
 				builder << closeBrace << "\n";
 			}

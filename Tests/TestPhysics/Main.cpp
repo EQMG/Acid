@@ -4,6 +4,8 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include "Behaviours/HeightDespawn.hpp"
+#include "Behaviours/NameTag.hpp"
 #include "Configs/ConfigManager.hpp"
 #include "MainRenderer.hpp"
 #include "Scenes/FpsPlayer.hpp"
@@ -43,6 +45,9 @@ int main(int argc, char **argv)
 //	Engine::Get()->DeregisterModule<Shadows>();
 
 	// Registers components.
+	Scenes::Get()->RegisterComponent<HeightDespawn>("HeightDespawn");
+	Scenes::Get()->RegisterComponent<NameTag>("NameTag");
+	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");

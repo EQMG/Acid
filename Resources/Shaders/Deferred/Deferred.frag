@@ -22,11 +22,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	float fogDensity;
 	float fogGradient;
 
-//	float shadowDistance;
-//	float shadowTransition;
-//	float shadowBias;
-//	float shadowDarkness;
-//	int shadowPCF;
+	float shadowDistance;
+	float shadowTransition;
+	float shadowBias;
+	float shadowDarkness;
+	int shadowPCF;
 
 	int lightsCount;
 } scene;
@@ -54,7 +54,7 @@ vec3 depthToWorld(vec2 uv, float depth)
 	return p.xyz / p.w;
 }
 
-/*float shadow(vec4 shadowCoords)
+float shadow(vec4 shadowCoords)
 {
 	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
 	float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
@@ -76,7 +76,7 @@ vec3 depthToWorld(vec2 uv, float depth)
 	}
 
 	return 1.0f - total;
-}*/
+}
 
 void main()
 {
@@ -120,7 +120,7 @@ void main()
 
 		outColour = vec4(irradiance, 1.0f);
 
-		/*if (scene.shadowDarkness >= 0.07f)
+		if (scene.shadowDarkness >= 0.07f)
 		{
 			vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
 			float distanceAway = length(screenPosition.xyz);
@@ -128,7 +128,7 @@ void main()
 			distanceAway = distanceAway / scene.shadowTransition;
 			shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
 			outColour *= shadow(shadowCoords);
-		}*/
+		}
 	}
 
 	if (!ignoreFog && normal != vec3(0.0f))
@@ -137,4 +137,9 @@ void main()
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
+
+//	if (inUv.x < 0.4f && inUv.y < 0.4f)
+//	{
+//		outColour = texture(samplerShadows, inUv / 0.4f);
+//	}
 }

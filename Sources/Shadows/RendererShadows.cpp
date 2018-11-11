@@ -13,7 +13,7 @@ namespace acid
 
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
-		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.geom"}, {VertexModel::GetVertexInput()},
+		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, GetDefines()))),
 		m_uniformScene(UniformHandler())
 	{
@@ -21,13 +21,8 @@ namespace acid
 
 	void RendererShadows::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
 	{
-		auto cropMatrix = std::vector<Matrix4>(NUM_CASCADES); // TODO: Have shadowbox generate the cascades.
-		cropMatrix[0] = Shadows::Get()->GetShadowBox().GetProjectionViewMatrix();
-		cropMatrix[1] = Shadows::Get()->GetShadowBox().GetProjectionViewMatrix();
-		cropMatrix[2] = Shadows::Get()->GetShadowBox().GetProjectionViewMatrix();
-		cropMatrix[3] = Shadows::Get()->GetShadowBox().GetProjectionViewMatrix();
-
-		m_uniformScene.Push("cropMatrix", *cropMatrix.data(), sizeof(Matrix4) * NUM_CASCADES);
+		m_uniformScene.Push("projectionView", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix());
+		m_uniformScene.Push("cameraPosition", camera.GetPosition());
 
 		vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), DEPTH_BIAS_CONSTANT, 0.0f, DEPTH_BIAS_SLOPE);
 

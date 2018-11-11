@@ -4,32 +4,6 @@
 		<Radius>0.2</Radius>
 		<Height>1.8</Height>
 	</ColliderCapsule>
-	<Rigidbody>
-		<Mass>1.0</Mass>
-		<Friction>0.4</Friction>
-		<Local_Transform>
-			<Position>
-				<x>0.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
-			</Position>
-			<Rotation>
-				<x>0.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
-			</Rotation>
-			<Scale>1.0</Scale>
-		</Local_Transform>
-		<Linear_Factor>
-			<x>0.0</x>
-			<y>0.0</y>
-			<z>0.0</z>
-		</Linear_Factor>
-		<Angular_Factor>
-			<x>0.0</x>
-			<y>0.0</y>
-			<z>0.0</z>
-		</Angular_Factor>
-	</Rigidbody>
+	<CharacterController />
 	<FpsPlayer />
 </GameObjectDefinition>

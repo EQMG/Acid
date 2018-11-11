@@ -4,6 +4,7 @@
 #include <memory>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
+#include "Maths/Transform.hpp"
 #include "Objects/IComponent.hpp"
 #include "Frustum.hpp"
 #include "Ray.hpp"
@@ -14,6 +15,8 @@ class btVector3;
 
 class btQuaternion;
 
+class btTransform;
+
 namespace acid
 {
 	/// <summary>
@@ -23,16 +26,10 @@ namespace acid
 		public IComponent
 	{
 	public:
-		Collider();
-
-		void Start() override = 0;
-
-		void Update() override = 0;
-
-		virtual void Decode(const Metadata &metadata) override = 0;
-
-		virtual void Encode(Metadata &metadata) const override = 0;
-
+		/// <summary>
+		/// Gets the collision shape defined in this collider.
+		/// </summary>
+		/// <returns> The collision shape. </returns>
 		virtual btCollisionShape* GetCollisionShape() const = 0;
 
 		/// <summary>
@@ -49,5 +46,9 @@ namespace acid
 		static btQuaternion Convert(const Quaternion &quaternion);
 
 		static Quaternion Convert(const btQuaternion &quaternion);
+
+		static btTransform Convert(const Transform &transform);
+
+		static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::ONE);
 	};
 }

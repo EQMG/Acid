@@ -7,9 +7,11 @@
 #include "Particles/ParticleSystem.hpp"
 #include "Physics/ColliderBox.hpp"
 #include "Physics/ColliderCapsule.hpp"
+#include "Physics/CharacterController.hpp"
 #include "Physics/ColliderCone.hpp"
 #include "Physics/ColliderConvexHull.hpp"
 #include "Physics/ColliderCylinder.hpp"
+#include "Physics/ColliderHeightfield.hpp"
 #include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Shadows/ShadowRender.hpp"
@@ -29,9 +31,11 @@ namespace acid
 		RegisterComponent<ParticleSystem>("ParticleSystem");
 		RegisterComponent<ColliderBox>("ColliderBox");
 		RegisterComponent<ColliderCapsule>("ColliderCapsule");
+		RegisterComponent<CharacterController>("CharacterController");
 		RegisterComponent<ColliderCone>("ColliderCone");
 		RegisterComponent<ColliderConvexHull>("ColliderConvexHull");
 		RegisterComponent<ColliderCylinder>("ColliderCylinder");
+		RegisterComponent<ColliderHeightfield>("ColliderHeightfield");
 		RegisterComponent<ColliderSphere>("ColliderSphere");
 		RegisterComponent<Rigidbody>("Rigidbody");
 		RegisterComponent<ShadowRender>("ShadowRender");

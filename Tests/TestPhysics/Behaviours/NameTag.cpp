@@ -46,9 +46,11 @@ namespace test
 
 	void NameTag::Decode(const Metadata &metadata)
 	{
+		m_heightOffset = metadata.GetChild<float>("Height Offset");
 	}
 
 	void NameTag::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<float>("Height Offset", m_heightOffset);
 	}
 }

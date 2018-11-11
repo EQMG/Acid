@@ -53,7 +53,7 @@ namespace test
 		Renderer::Get()->AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
 
 		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_IBL);
-	//	Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
+		Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
 
 		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2), true);
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
