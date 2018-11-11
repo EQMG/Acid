@@ -13,8 +13,6 @@ namespace test
 		public IComponent
 	{
 	private:
-		Vector3 m_velocity;
-		bool m_jumping;
 		bool m_noclipEnabled;
 
 		AxisCompound m_inputForward;
@@ -23,9 +21,6 @@ namespace test
 		ButtonCompound m_inputJump;
 		ButtonCompound m_inputCrouch;
 		ButtonCompound m_toggleNoclip;
-
-		Vector3 m_amountMove;
-		Vector3 m_amountRotate;
 	public:
 		FpsPlayer();
 

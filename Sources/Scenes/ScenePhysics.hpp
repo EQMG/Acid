@@ -38,6 +38,8 @@ namespace acid
 
 		void SetAirDensity(const float &airDensity);
 
+		btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }
+
 		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
 	};
 }

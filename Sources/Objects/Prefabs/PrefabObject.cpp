@@ -65,7 +65,7 @@ namespace acid
 
 			if (!componentName)
 			{
-				return;
+				continue;
 			}
 
 			auto child = m_parent->FindChild(*componentName, false);

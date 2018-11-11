@@ -34,25 +34,9 @@ namespace test
 
 		void SetTextureR(const std::shared_ptr<Texture> &textureR) { m_textureR = textureR; }
 
-		void TrySetTextureR(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_textureR = Texture::Resource(filename);
-			}
-		}
-
 		std::shared_ptr<Texture> GetTextureG() const { return m_textureG; }
 
 		void SetTextureG(const std::shared_ptr<Texture> &textureG) { m_textureG = textureG; }
-
-		void TrySetTextureG(const std::string &filename)
-		{
-			if (!filename.empty())
-			{
-				m_textureG = Texture::Resource(filename);
-			}
-		}
 
 		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_material; }
 	};

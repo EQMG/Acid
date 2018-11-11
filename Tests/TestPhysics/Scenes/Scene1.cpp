@@ -55,7 +55,7 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		auto playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		auto playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(0.0f, 2.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f)));
 
 		// Skybox.
 		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));

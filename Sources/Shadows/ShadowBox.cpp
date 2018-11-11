@@ -195,8 +195,6 @@ namespace acid
 
 	void ShadowBox::UpdateViewShadowMatrix()
 	{
-		m_projectionViewMatrix = Matrix4::IDENTITY;
-		m_shadowMapSpaceMatrix = Matrix4::IDENTITY;
 		m_projectionViewMatrix = m_projectionMatrix * m_lightViewMatrix;
 		m_shadowMapSpaceMatrix = m_offset * m_projectionViewMatrix;
 	}

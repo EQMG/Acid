@@ -70,12 +70,12 @@ namespace test
 
 		if (scenePlayer != nullptr)
 		{
-			auto playerRotation = scenePlayer->GetGameObject()->GetTransform().GetRotation();
 			auto playerPosition = scenePlayer->GetGameObject()->GetTransform().GetPosition();
+		//	auto playerRotation = scenePlayer->GetGameObject()->GetTransform().GetRotation();
 
 			m_velocity = (playerPosition - m_targetPosition) / delta;
 			m_targetPosition = playerPosition + Vector3(0.0f, VIEW_HEIGHT, 0.0f);
-			m_targetRotation = playerRotation;
+		//	m_targetRotation = playerRotation;
 		}
 
 		UpdateHorizontalAngle(delta);
