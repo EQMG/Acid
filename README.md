@@ -97,7 +97,7 @@ float dist = a.Distance(b);
 std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, " ");
 
-// Will run a lamdba after 5 seconds.
+// Will run a lambda after 5 seconds.
 Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
 {
 	Log::Out("Hello world: %f\n", Maths::Random(-1.0f, 1.0f));
