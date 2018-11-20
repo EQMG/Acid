@@ -20,7 +20,7 @@ namespace acid
 		// Connect to the server.
 		if (m_commandSocket.Connect(server, port, timeout) != SOCKET_STATUS_DONE)
 		{
-			return FtpResponse(FTP_RESPONCE_CONNECTION_FAILED);
+			return FtpResponse(FTP_RESPONSE_CONNECTION_FAILED);
 		}
 
 		// Get the response to the connection.
@@ -164,7 +164,7 @@ namespace acid
 
 				if (!file)
 				{
-					return FtpResponse(FTP_RESPONCE_INVALID_FILE);
+					return FtpResponse(FTP_RESPONSE_INVALID_FILE);
 				}
 
 				// Receive the file data.
@@ -195,7 +195,7 @@ namespace acid
 
 		if (!file)
 		{
-			return FtpResponse(FTP_RESPONCE_INVALID_FILE);
+			return FtpResponse(FTP_RESPONSE_INVALID_FILE);
 		}
 
 		// Extract the filename from the file path.
@@ -254,7 +254,7 @@ namespace acid
 		// Send it to the server.
 		if (m_commandSocket.Send(commandStr.c_str(), commandStr.length()) != SOCKET_STATUS_DONE)
 		{
-			return FtpResponse(FTP_RESPONCE_CONNECTION_CLOSED);
+			return FtpResponse(FTP_RESPONSE_CONNECTION_CLOSED);
 		}
 
 		// Get the response.
@@ -279,7 +279,7 @@ namespace acid
 			{
 				if (m_commandSocket.Receive(buffer, sizeof(buffer), length) != SOCKET_STATUS_DONE)
 				{
-					return FtpResponse(FTP_RESPONCE_CONNECTION_CLOSED);
+					return FtpResponse(FTP_RESPONSE_CONNECTION_CLOSED);
 				}
 			}
 			else
@@ -396,7 +396,7 @@ namespace acid
 				else
 				{
 					// Error: cannot extract the code, and we are not in a multiline response.
-					return FtpResponse(FTP_RESPONCE_INVALID_RESPONSE);
+					return FtpResponse(FTP_RESPONSE_INVALID_RESPONSE);
 				}
 			}
 		}

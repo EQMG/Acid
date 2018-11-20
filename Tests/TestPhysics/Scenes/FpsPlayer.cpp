@@ -57,7 +57,7 @@ namespace test
 	{
 		auto character = GetGameObject()->GetComponent<CharacterController>();
 
-		if (character == nullptr)
+		if (character == nullptr || !character->IsStarted())
 		{
 			return;
 		}

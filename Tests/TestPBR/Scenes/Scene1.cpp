@@ -24,6 +24,7 @@
 #include <Objects/Prefabs/PrefabObject.hpp>
 #include <Helpers/FileSystem.hpp>
 #include "FpsCamera.hpp"
+#include "FpsPlayer.hpp"
 
 namespace test
 {
@@ -46,7 +47,10 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		auto playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		auto playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+	//	playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
+	//	playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
+		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.
 		auto skyboxObject = new GameObject("Objects/SkyboxSnowy/SkyboxSnowy.json", Transform(Vector3(), Vector3(), 1024.0f));

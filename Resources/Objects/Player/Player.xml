@@ -4,6 +4,6 @@
 		<Radius>0.2</Radius>
 		<Height>1.8</Height>
 	</ColliderCapsule>
-	<CharacterController />
 	<FpsPlayer />
+	<CharacterController />
 </GameObjectDefinition>
