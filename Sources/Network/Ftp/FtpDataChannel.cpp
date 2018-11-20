@@ -71,7 +71,7 @@ namespace acid
 				else
 				{
 					// Failed to connect to the server.
-					response = FtpResponse(FTP_RESPONCE_CONNECTION_FAILED);
+					response = FtpResponse(FTP_RESPONSE_CONNECTION_FAILED);
 				}
 			}
 		}

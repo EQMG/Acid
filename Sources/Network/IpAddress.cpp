@@ -104,7 +104,7 @@ namespace acid
 		HttpRequest request("/ip-provider.php", HTTP_METHOD_GET);
 		HttpResponse page = server.SendRequest(request, timeout);
 
-		if (page.GetStatus() == HTTP_RESPONCE_OK)
+		if (page.GetStatus() == HTTP_RESPONSE_OK)
 		{
 			return IpAddress(page.GetBody());
 		}

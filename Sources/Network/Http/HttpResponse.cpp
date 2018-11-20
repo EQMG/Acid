@@ -5,7 +5,7 @@
 namespace acid
 {
 	HttpResponse::HttpResponse() :
-		m_status(HTTP_RESPONCE_CONNECTION_FAILED),
+		m_status(HTTP_RESPONSE_CONNECTION_FAILED),
 		m_majorVersion(0),
 		m_minorVersion(0)
 	{
@@ -65,7 +65,7 @@ namespace acid
 			else
 			{
 				// Invalid HTTP version.
-				m_status = HTTP_RESPONCE_INVALID_RESPONSE;
+				m_status = HTTP_RESPONSE_INVALID_RESPONSE;
 				return;
 			}
 		}
@@ -80,7 +80,7 @@ namespace acid
 		else
 		{
 			// Invalid status code.
-			m_status = HTTP_RESPONCE_INVALID_RESPONSE;
+			m_status = HTTP_RESPONSE_INVALID_RESPONSE;
 			return;
 		}
 

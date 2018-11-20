@@ -13,59 +13,59 @@ namespace acid
 	{
 		// 2xx: success.
 		/// Most common code returned when operation was successful.
-		HTTP_RESPONCE_OK = 200,
+		HTTP_RESPONSE_OK = 200,
 		/// The resource has successfully been created.
-		HTTP_RESPONCE_CREATED = 201,
+		HTTP_RESPONSE_CREATED = 201,
 		/// The request has been accepted, but will be processed later by the server.
-		HTTP_RESPONCE_ACCEPTED = 202,
+		HTTP_RESPONSE_ACCEPTED = 202,
 		/// The server didn't send any data in return.
-		HTTP_RESPONCE_NO_CONTENT = 204,
+		HTTP_RESPONSE_NO_CONTENT = 204,
 		/// The server informs the client that it should clear the view (form) that caused the request to be sent.
-		HTTP_RESPONCE_RESET_CONTENT = 205,
+		HTTP_RESPONSE_RESET_CONTENT = 205,
 		/// The server has sent a part of the resource, as a response to a partial GET request.
-		HTTP_RESPONCE_PARTIAL_CONTENT = 206,
+		HTTP_RESPONSE_PARTIAL_CONTENT = 206,
 
 		// 3xx: redirection.
 		/// The requested page can be accessed from several locations.
-		HTTP_RESPONCE_MULTIPLE_CHOICES = 300,
+		HTTP_RESPONSE_MULTIPLE_CHOICES = 300,
 		/// The requested page has permanently moved to a new location.
-		HTTP_RESPONCE_MOVED_PERMANENTLY = 301,
+		HTTP_RESPONSE_MOVED_PERMANENTLY = 301,
 		/// The requested page has temporarily moved to a new location.
-		HTTP_RESPONCE_MOVED_TEMPORARILY = 302,
+		HTTP_RESPONSE_MOVED_TEMPORARILY = 302,
 		/// For conditional requests, means the requested page hasn't changed and doesn't need to be refreshed.
-		HTTP_RESPONCE_NOT_MODIFIED = 304,
+		HTTP_RESPONSE_NOT_MODIFIED = 304,
 
 		// 4xx: client error.
 		/// The server couldn't understand the request (syntax error).
-		HTTP_RESPONCE_BAD_REQUEST = 400,
+		HTTP_RESPONSE_BAD_REQUEST = 400,
 		/// The requested page needs an authentication to be accessed.
-		HTTP_RESPONCE_UNAUTHORIZED = 401,
+		HTTP_RESPONSE_UNAUTHORIZED = 401,
 		/// The requested page cannot be accessed at all, even with authentication.
-		HTTP_RESPONCE_FORBIDDEN = 403,
+		HTTP_RESPONSE_FORBIDDEN = 403,
 		/// The requested page doesn't exist.
-		HTTP_RESPONCE_NOT_FOUND = 404,
+		HTTP_RESPONSE_NOT_FOUND = 404,
 		/// The server can't satisfy the partial GET request (with a "Range" header field).
-		HTTP_RESPONCE_Range_Not_Satisfiable = 407,
+		HTTP_RESPONSE_RANGE_NOT_SATISFIABLE = 407,
 
 		// 5xx: server error.
 		/// The server encountered an unexpected error.
-		HTTP_RESPONCE_INTERNAL_SERVER_ERROR = 500,
+		HTTP_RESPONSE_INTERNAL_SERVER_ERROR = 500,
 		/// The server doesn't implement a requested feature.
-		HTTP_RESPONCE_NOT_IMPLEMENTED = 501,
+		HTTP_RESPONSE_NOT_IMPLEMENTED = 501,
 		/// The gateway server has received an error from the source server.
-		HTTP_RESPONCE_BAD_GATEWAY = 502,
+		HTTP_RESPONSE_BAD_GATEWAY = 502,
 		/// The server is temporarily unavailable (overloaded, in maintenance, ...).
-		HTTP_RESPONCE_SERVICE_NOT_AVAILABLE = 503,
+		HTTP_RESPONSE_SERVICE_NOT_AVAILABLE = 503,
 		/// The gateway server couldn't receive a response from the source server.
-		HTTP_RESPONCE_GATEWAY_TIMEOUT = 504,
+		HTTP_RESPONSE_GATEWAY_TIMEOUT = 504,
 		/// The server doesn't support the requested HTTP version.
-		HTTP_RESPONCE_VERSION_NOT_SUPPORTED = 505,
+		HTTP_RESPONSE_VERSION_NOT_SUPPORTED = 505,
 
 		// 10xx: custom codes.
 		/// Response is not a valid HTTP one.
-		HTTP_RESPONCE_INVALID_RESPONSE = 1000,
+		HTTP_RESPONSE_INVALID_RESPONSE = 1000,
 		/// Connection with server failed.
-		HTTP_RESPONCE_CONNECTION_FAILED = 1001
+		HTTP_RESPONSE_CONNECTION_FAILED = 1001
 	};
 
 	/// <summary>
