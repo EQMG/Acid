@@ -41,7 +41,7 @@ namespace acid
 
 		btQuaternion rotation = transform.getRotation();
 		float pitch, yaw, roll;
-		rotation.getEulerZYX(yaw, pitch, roll);
+		rotation.getEulerZYX(roll, yaw, pitch);
 
 		return Transform(Collider::Convert(position), Vector3(pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG), scaling);
 	}

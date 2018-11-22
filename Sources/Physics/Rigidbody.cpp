@@ -102,13 +102,7 @@ namespace acid
 		}
 
 		auto &transform = GetGameObject()->GetTransform();
-		btTransform worldTransform;
-		m_body->getMotionState()->getWorldTransform(worldTransform);
-		transform = Collider::Convert(worldTransform, transform.GetScaling());
-
-	//  worldTransform->setIdentity();
-	//  worldTransform->setOrigin(Collider::Convert(transform.GetPosition()));
-	//  worldTransform->setRotation(Collider::Convert(transform.GetRotation()));
+		transform = Collider::Convert(m_body->getWorldTransform(), transform.GetScaling());
 
 		m_shape->setLocalScaling(Collider::Convert(m_localTransform.GetScaling() * transform.GetScaling()));
 	//  m_body->getMotionState()->setWorldTransform(*worldTransform);

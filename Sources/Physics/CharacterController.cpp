@@ -33,6 +33,7 @@ namespace acid
 			m_shape = shape->GetCollisionShape();
 
 			m_ghostObject = CreateGhostObject(m_mass, worldTransform, m_shape);
+			m_ghostObject->setUserPointer(GetGameObject());
 
 			m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject.get(), (btConvexShape *)shape->GetCollisionShape(), 0.01666f);
 			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);

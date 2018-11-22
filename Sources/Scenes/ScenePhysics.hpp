@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <optional>
+#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include "Maths/Vector3.hpp"
 
 class btCollisionConfiguration;
@@ -15,6 +17,38 @@ class btDiscreteDynamicsWorld;
 
 namespace acid
 {
+	class GameObject;
+
+	class ACID_EXPORT Raycast
+	{
+	private:
+		bool m_hasHit;
+		Vector3 m_pointWorld;
+		GameObject *m_gameObject;
+	public:
+		Raycast(bool m_hasHit, const Vector3 &m_pointWorld, GameObject *gameObject) :
+			m_hasHit(m_hasHit),
+			m_pointWorld(m_pointWorld),
+			m_gameObject(gameObject)
+		{
+		}
+
+		bool HasHit() const
+		{
+			return m_hasHit;
+		}
+
+		const Vector3 &GetPointWorld() const
+		{
+			return m_pointWorld;
+		}
+
+		GameObject *GetGameObject() const
+		{
+			return m_gameObject;
+		}
+	};
+
 	class ACID_EXPORT ScenePhysics
 	{
 	private:
@@ -29,6 +63,8 @@ namespace acid
 		~ScenePhysics();
 
 		void Update();
+
+		Raycast Raytest(const Vector3 &start, const Vector3 &end);
 
 		Vector3 GetGravity() const;
 
