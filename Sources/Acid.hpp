@@ -139,7 +139,7 @@
 #include "Particles/Spawns/SpawnPoint.hpp"
 #include "Particles/Spawns/SpawnSphere.hpp"
 #include "Physics/Collider.hpp"
-#include "Physics/ColliderBox.hpp"
+#include "Physics/ColliderCube.hpp"
 #include "Physics/ColliderCapsule.hpp"
 #include "Physics/ColliderCone.hpp"
 #include "Physics/ColliderConvexHull.hpp"

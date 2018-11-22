@@ -3,6 +3,7 @@
 #include <Post/Deferred/RendererDeferred.hpp>
 #include <Shadows/Shadows.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
 
 namespace test
 {

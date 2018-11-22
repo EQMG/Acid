@@ -9,7 +9,7 @@
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Physics/ColliderBox.hpp>
+#include <Physics/ColliderCube.hpp>
 #include <Physics/ColliderSphere.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Physics/ColliderConvexHull.hpp>
@@ -26,6 +26,7 @@
 #include <Uis/Uis.hpp>
 #include <Objects/Prefabs/PrefabObject.hpp>
 #include <Helpers/FileSystem.hpp>
+#include "Skybox/CelestialBody.hpp"
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "FpsCamera.hpp"
@@ -72,11 +73,14 @@ namespace test
 
 		// Entities.
 		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
+		sun->SetName("Sun");
+		sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
 		sun->AddComponent<Light>(Colour::WHITE);
 
 		auto plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
+		plane->SetName("Plane");
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<ColliderBox>(Vector3(1.0f, 1.0f, 1.0f));
+		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
 		plane->AddComponent<MeshRender>();
@@ -87,6 +91,7 @@ namespace test
 		prefabPlane.Save();
 
 		auto terrain = new GameObject(Transform());
+		terrain->SetName("Terrain");
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
@@ -99,10 +104,11 @@ namespace test
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				auto sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 0.5f));
-				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<ColliderSphere>();
-				sphere->AddComponent<Rigidbody>(0.5f);
+				auto sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
+				sphere->SetName("Sphere_" + String::To(i) + "_" + String::To(j));
+				sphere->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
+				sphere->AddComponent<ColliderCube>();
+				sphere->AddComponent<Rigidbody>(0.5f, 0.3f);
 				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
 					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
@@ -111,6 +117,7 @@ namespace test
 		}
 
 		auto teapot = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		teapot->SetName("Teapot");
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rigidbody>(1.0f);
@@ -134,6 +141,7 @@ namespace test
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
+			sphere->SetName("Sphere_Undefined");
 			sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
 			sphere->AddComponent<ColliderSphere>();

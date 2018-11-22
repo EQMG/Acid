@@ -1,40 +1,40 @@
-#include "ColliderBox.hpp"
+#include "ColliderCube.hpp"
 
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
-	ColliderBox::ColliderBox(const Vector3 &extents) :
+	ColliderCube::ColliderCube(const Vector3 &extents) :
 		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
 	}
 
-	ColliderBox::~ColliderBox()
+	ColliderCube::~ColliderCube()
 	{
 	}
 
-	void ColliderBox::Start()
+	void ColliderCube::Start()
 	{
 	}
 
-	void ColliderBox::Update()
+	void ColliderCube::Update()
 	{
 	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 
-	void ColliderBox::Decode(const Metadata &metadata)
+	void ColliderCube::Decode(const Metadata &metadata)
 	{
 		m_extents = metadata.GetChild<Vector3>("Extents");
 	}
 
-	void ColliderBox::Encode(Metadata &metadata) const
+	void ColliderCube::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<Vector3>("Extents", m_extents);
 	}
 
-	btCollisionShape *ColliderBox::GetCollisionShape() const
+	btCollisionShape *ColliderCube::GetCollisionShape() const
 	{
 		return m_shape.get();
 	}

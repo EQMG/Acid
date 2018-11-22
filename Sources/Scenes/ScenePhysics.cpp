@@ -7,6 +7,7 @@
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Engine/Engine.hpp"
+#include "Objects/GameObject.hpp"
 #include "Physics/Collider.hpp"
 
 namespace acid
@@ -23,7 +24,7 @@ namespace acid
 		m_dynamicsWorld->getDispatchInfo().m_enableSatConvex = true;
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = true;
 
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = 1.0f;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
@@ -47,6 +48,16 @@ namespace acid
 	void ScenePhysics::Update()
 	{
 		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
+	}
+
+	Raycast ScenePhysics::Raytest(const Vector3 &start, const Vector3 &end)
+	{
+		auto startBt = Collider::Convert(start);
+		auto endBt = Collider::Convert(end);
+		btCollisionWorld::ClosestRayResultCallback result(startBt, endBt);
+		m_dynamicsWorld->getCollisionWorld()->rayTest(startBt, endBt, result);
+
+		return Raycast(result.hasHit(), Collider::Convert(result.m_hitPointWorld), result.m_collisionObject != nullptr ? static_cast<GameObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 	}
 
 	Vector3 ScenePhysics::GetGravity() const

@@ -86,7 +86,10 @@ namespace test
 		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
-		m_viewRay.Update(m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), m_viewMatrix, m_projectionMatrix);
+		m_viewRay.Update(m_position, Vector2(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix); // Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()
+
+	//	auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
+	//	Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetGameObject()->GetName().c_str() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
 	}
 
 	void FpsCamera::CalculateHorizontalAngle()

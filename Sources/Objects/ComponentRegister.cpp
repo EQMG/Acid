@@ -5,7 +5,7 @@
 #include "Materials/MaterialDefault.hpp"
 #include "Meshes/MeshRender.hpp"
 #include "Particles/ParticleSystem.hpp"
-#include "Physics/ColliderBox.hpp"
+#include "Physics/ColliderCube.hpp"
 #include "Physics/ColliderCapsule.hpp"
 #include "Physics/CharacterController.hpp"
 #include "Physics/ColliderCone.hpp"
@@ -29,7 +29,7 @@ namespace acid
 		RegisterComponent<MeshAnimated>("MeshAnimated");
 		RegisterComponent<MeshRender>("MeshRender");
 		RegisterComponent<ParticleSystem>("ParticleSystem");
-		RegisterComponent<ColliderBox>("ColliderBox");
+		RegisterComponent<ColliderCube>("ColliderCube");
 		RegisterComponent<ColliderCapsule>("ColliderCapsule");
 		RegisterComponent<CharacterController>("CharacterController");
 		RegisterComponent<ColliderCone>("ColliderCone");

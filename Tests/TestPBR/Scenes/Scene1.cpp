@@ -9,7 +9,7 @@
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Physics/ColliderBox.hpp>
+#include <Physics/ColliderCube.hpp>
 #include <Physics/ColliderSphere.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Physics/ColliderConvexHull.hpp>
