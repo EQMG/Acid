@@ -5,5 +5,19 @@
 		<Height>1.8</Height>
 	</ColliderCapsule>
 	<FpsPlayer />
-	<CharacterController />
+	<KinematicCharacter>
+		<Friction>0.0</Friction>
+		<Friction_Rolling>0.0</Friction_Rolling>
+		<Friction_Spinning>0.0</Friction_Spinning>
+		<Up>
+			<x>0.0</x>
+			<y>1.0</y>
+			<z>0.0</z>
+		</Up>
+		<Step_Height>0.0</Step_Height>
+		<Fall_Speed>55.0</Fall_Speed>
+		<Jump_Speed>10.0</Jump_Speed>
+		<Max_Height>1.5</Max_Height>
+		<Interpolate>true</Interpolate>
+	</KinematicCharacter>
 </GameObjectDefinition>

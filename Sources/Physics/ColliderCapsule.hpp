@@ -15,7 +15,7 @@ namespace acid
 		float m_radius;
 		float m_height;
 	public:
-		explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f);
+		explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::ZERO);
 
 		~ColliderCapsule();
 

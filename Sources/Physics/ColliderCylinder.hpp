@@ -15,7 +15,7 @@ namespace acid
 		float m_radius;
 		float m_height;
 	public:
-		explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f);
+		explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::ZERO);
 
 		~ColliderCylinder();
 

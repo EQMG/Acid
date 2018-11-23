@@ -6,7 +6,8 @@
 
 namespace acid
 {
-	ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud) :
+	ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, const Transform &localTransform) :
+		Collider(localTransform),
 		m_shape(nullptr),
 		m_model(nullptr),
 		m_points(0)
@@ -60,10 +61,12 @@ namespace acid
 
 	void ColliderConvexHull::Decode(const Metadata &metadata)
 	{
+		m_localTransform = metadata.GetChild<Transform>("Local Transform");
 	}
 
 	void ColliderConvexHull::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<Transform>("Local Transform", m_localTransform);
 	}
 
 	btCollisionShape *ColliderConvexHull::GetCollisionShape() const

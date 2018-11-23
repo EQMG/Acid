@@ -14,7 +14,7 @@ namespace acid
 		std::unique_ptr<btBoxShape> m_shape;
 		Vector3 m_extents;
 	public:
-		explicit ColliderCube(const Vector3 &extents = Vector3::ONE);
+		explicit ColliderCube(const Vector3 &extents = Vector3::ONE, const Transform &localTransform = Transform::ZERO);
 
 		~ColliderCube();
 

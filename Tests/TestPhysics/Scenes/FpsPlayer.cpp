@@ -5,7 +5,7 @@
 #include <Inputs/AxisButton.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/AxisJoystick.hpp>
-#include <Physics/CharacterController.hpp>
+#include <Physics/KinematicCharacter.hpp>
 
 namespace test
 {
@@ -51,13 +51,18 @@ namespace test
 
 	void FpsPlayer::Start()
 	{
+	//	auto collisionObject = GetGameObject()->GetComponent<CollisionObject>();
+	//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
+	//		Log::Out("Player collided with '%s'\n", other->GetGameObject()->GetName().c_str());});
+	//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
+	//		Log::Out("Player seperated with '%s'\n", other->GetGameObject()->GetName().c_str());});
 	}
 
 	void FpsPlayer::Update()
 	{
-		auto character = GetGameObject()->GetComponent<CharacterController>();
+		auto character = GetGameObject()->GetComponent<KinematicCharacter>();
 
-		if (character == nullptr || !character->IsStarted())
+		if (character == nullptr || !character->IsShapeCreated())
 		{
 			return;
 		}

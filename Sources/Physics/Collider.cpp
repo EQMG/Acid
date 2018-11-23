@@ -3,9 +3,27 @@
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Maths/Maths.hpp"
 #include "Objects/GameObject.hpp"
+#include "CollisionObject.hpp"
 
 namespace acid
 {
+	Collider::Collider(const Transform &localTransform) :
+		m_localTransform(localTransform)
+	{
+	}
+
+	void Collider::SetLocalTransform(const Transform &localTransform)
+	{
+		m_localTransform = localTransform;
+
+		auto collisionObject = GetGameObject()->GetComponent<CollisionObject>();
+
+		if (collisionObject != nullptr)
+		{
+			collisionObject->SetChildTransform(this, m_localTransform);
+		}
+	}
+
 	btVector3 Collider::Convert(const Vector3 &vector)
 	{
 		return btVector3(vector.m_x, vector.m_y, vector.m_z);

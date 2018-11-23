@@ -61,11 +61,14 @@ namespace acid
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
-				auto component = (*it)->GetComponent<T>();
+				auto components = (*it)->GetComponents<T>();
 
-				if (component != nullptr && (component->IsEnabled() || allowDisabled))
+				for (auto &component : components)
 				{
-					result.emplace_back(component);
+					if (component != nullptr && (component->IsEnabled() || allowDisabled))
+					{
+						result.emplace_back(component);
+					}
 				}
 			}
 
