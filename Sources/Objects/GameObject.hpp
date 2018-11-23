@@ -72,7 +72,7 @@ namespace acid
 
 				if (casted != nullptr)
 				{
-					if (!allowDisabled && !casted->IsEnabled())
+					if (allowDisabled && !casted->IsEnabled())
 					{
 						alternative = casted;
 						continue;
@@ -83,6 +83,36 @@ namespace acid
 			}
 
 			return alternative;
+		}
+
+		/// <summary>
+		/// Gets components by type.
+		/// </summary>
+		/// <param name="T"> The component type to find. </param>
+		/// <param name="allowDisabled"> If disabled components will be returned. </param>
+		/// <returns> The components. </returns>
+		template<typename T>
+		std::vector<T *> GetComponents(const bool &allowDisabled = false)
+		{
+			std::vector<T *> result = {};
+
+			for (auto &component : m_components)
+			{
+				auto casted = dynamic_cast<T *>(component.get());
+
+				if (casted != nullptr)
+				{
+					if (allowDisabled && !casted->IsEnabled())
+					{
+						result.emplace_back(casted);
+						continue;
+					}
+
+					result.emplace_back(casted);
+				}
+			}
+
+			return result;
 		}
 
 		/// <summary>

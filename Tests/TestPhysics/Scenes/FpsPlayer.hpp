@@ -4,6 +4,7 @@
 #include <Objects/IComponent.hpp>
 #include <Inputs/AxisCompound.hpp>
 #include <Inputs/ButtonCompound.hpp>
+#include <Physics/CollisionObject.hpp>
 
 using namespace acid;
 

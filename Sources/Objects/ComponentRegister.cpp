@@ -7,7 +7,7 @@
 #include "Particles/ParticleSystem.hpp"
 #include "Physics/ColliderCube.hpp"
 #include "Physics/ColliderCapsule.hpp"
-#include "Physics/CharacterController.hpp"
+#include "Physics/KinematicCharacter.hpp"
 #include "Physics/ColliderCone.hpp"
 #include "Physics/ColliderConvexHull.hpp"
 #include "Physics/ColliderCylinder.hpp"
@@ -31,7 +31,7 @@ namespace acid
 		RegisterComponent<ParticleSystem>("ParticleSystem");
 		RegisterComponent<ColliderCube>("ColliderCube");
 		RegisterComponent<ColliderCapsule>("ColliderCapsule");
-		RegisterComponent<CharacterController>("CharacterController");
+		RegisterComponent<KinematicCharacter>("KinematicCharacter");
 		RegisterComponent<ColliderCone>("ColliderCone");
 		RegisterComponent<ColliderConvexHull>("ColliderConvexHull");
 		RegisterComponent<ColliderCylinder>("ColliderCylinder");

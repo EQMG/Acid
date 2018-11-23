@@ -1,9 +1,13 @@
 #pragma once
 
+#include <set>
+#include <iterator>
+#include <algorithm>
 #include <memory>
 #include <optional>
-#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include "Maths/Vector3.hpp"
+
+class btCollisionObject;
 
 class btCollisionConfiguration;
 
@@ -18,35 +22,30 @@ class btDiscreteDynamicsWorld;
 namespace acid
 {
 	class GameObject;
+	class CollisionObject;
+
+	typedef std::pair<const btCollisionObject*, const btCollisionObject*> CollisionPair;
+	typedef std::set<CollisionPair> CollisionPairs;
 
 	class ACID_EXPORT Raycast
 	{
 	private:
 		bool m_hasHit;
 		Vector3 m_pointWorld;
-		GameObject *m_gameObject;
+		CollisionObject *m_collisionObject;
 	public:
-		Raycast(bool m_hasHit, const Vector3 &m_pointWorld, GameObject *gameObject) :
+		Raycast(bool m_hasHit, const Vector3 &m_pointWorld, CollisionObject *collisionObject) :
 			m_hasHit(m_hasHit),
 			m_pointWorld(m_pointWorld),
-			m_gameObject(gameObject)
+			m_collisionObject(collisionObject)
 		{
 		}
 
-		bool HasHit() const
-		{
-			return m_hasHit;
-		}
+		bool HasHit() const { return m_hasHit; }
 
-		const Vector3 &GetPointWorld() const
-		{
-			return m_pointWorld;
-		}
+		const Vector3 &GetPointWorld() const { return m_pointWorld; }
 
-		GameObject *GetGameObject() const
-		{
-			return m_gameObject;
-		}
+		CollisionObject *GetCollisionObject() const { return m_collisionObject; }
 	};
 
 	class ACID_EXPORT ScenePhysics
@@ -57,6 +56,8 @@ namespace acid
 		std::unique_ptr<btCollisionDispatcher> m_dispatcher;
 		std::unique_ptr<btSequentialImpulseConstraintSolver> m_solver;
 		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
+
+		CollisionPairs m_pairsLastUpdate;
 	public:
 		ScenePhysics();
 
@@ -77,5 +78,7 @@ namespace acid
 		btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }
 
 		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
+	private:
+		void CheckForCollisionEvents();
 	};
 }

@@ -5,7 +5,8 @@
 
 namespace acid
 {
-	ColliderSphere::ColliderSphere(const float &radius) :
+	ColliderSphere::ColliderSphere(const float &radius, const Transform &localTransform) :
+		Collider(localTransform),
 		m_shape(std::make_unique<btSphereShape>(radius)),
 		m_radius(radius)
 	{
@@ -26,11 +27,13 @@ namespace acid
 
 	void ColliderSphere::Decode(const Metadata &metadata)
 	{
+		m_localTransform = metadata.GetChild<Transform>("Local Transform");
 		m_radius = metadata.GetChild<float>("Radius");
 	}
 
 	void ColliderSphere::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<Transform>("Local Transform", m_localTransform);
 		metadata.SetChild<float>("Radius", m_radius);
 	}
 

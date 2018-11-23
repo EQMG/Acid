@@ -3,6 +3,8 @@
 #include <Scenes/Scenes.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Maths/Maths.hpp>
+#include <Maths/Quaternion.hpp>
+#include <Physics/CollisionObject.hpp>
 #include "FpsPlayer.hpp"
 
 namespace test

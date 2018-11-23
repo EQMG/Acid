@@ -20,11 +20,15 @@ namespace test
 	{
 		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
 		auto colliderHeightfield = GetGameObject()->GetComponent<ColliderHeightfield>(true);
-		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>(true);
 
 		if (mesh == nullptr)
 		{
 			Log::Error("Terrain must be attached to a object with a mesh!");
+			return;
+		}
+
+		if (colliderHeightfield == nullptr)
+		{
 			return;
 		}
 
@@ -33,17 +37,15 @@ namespace test
 		m_heightmap = GenerateHeightmap(vertexCount);
 		mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
 
-		if (colliderHeightfield == nullptr)
-		{
-			return;
-		}
-
 		colliderHeightfield->Initialize(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
-		rigidbody->GetLocalTransform().SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 	}
 
 	void Terrain::Update()
 	{
+		if (m_heightmap.empty())
+		{
+			Start();
+		}
 	}
 
 	void Terrain::Decode(const Metadata &metadata)

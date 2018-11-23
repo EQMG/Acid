@@ -26,9 +26,13 @@
 #include <Uis/Uis.hpp>
 #include <Objects/Prefabs/PrefabObject.hpp>
 #include <Helpers/FileSystem.hpp>
+#include <Models/Shapes/ModelCylinder.hpp>
+#include <Physics/ColliderCone.hpp>
+#include <Physics/ColliderCylinder.hpp>
 #include "Skybox/CelestialBody.hpp"
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
+#include "Behaviours/Rotate.hpp"
 #include "FpsCamera.hpp"
 
 namespace test
@@ -116,7 +120,7 @@ namespace test
 			}
 		}
 
-		auto teapot = new GameObject(Transform(Vector3(7.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		auto teapot = new GameObject(Transform(Vector3(6.0f, 1.0f, 10.0f), Vector3(), 0.2f));
 		teapot->SetName("Teapot");
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<ColliderConvexHull>();
@@ -124,9 +128,38 @@ namespace test
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		teapot->AddComponent<MeshRender>();
 		teapot->AddComponent<ShadowRender>();
-	//	teapot->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", SOUND_TYPE_MUSIC, true, true);
+		teapot->AddComponent<Rotate>(Vector3(0.0f, 40.0f, 0.0f), false);
+
+		auto meta = new GameObject(Transform(Vector3(12.0f, 1.3f, 10.0f), Vector3(), 0.3f));
+		meta->SetName("Meta");
+		meta->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Meta.obj"));
+	//	meta->AddComponent<ColliderConvexHull>();
+	//	meta->AddComponent<Rigidbody>(1.0f);
+		meta->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.4f, 0.2f);
+		meta->AddComponent<MeshRender>();
+		meta->AddComponent<ShadowRender>();
+		meta->AddComponent<Rotate>(Vector3(0.0f, 40.0f, 0.0f), true);
+
+		auto cone = new GameObject(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
+		cone->SetName("Cone");
+		cone->AddComponent<Mesh>(ModelCylinder::Resource(1.0f, 0.0f, 2.0f, 16, 8));
+		cone->AddComponent<ColliderCone>(1.0f, 2.0f);
+		cone->AddComponent<Rigidbody>(1.5f);
+		cone->AddComponent<MaterialDefault>(Colour::BLUE, nullptr, 0.0f, 1.0f);
+		cone->AddComponent<MeshRender>();
+		cone->AddComponent<ShadowRender>();
+
+		auto cylinder = new GameObject(Transform(Vector3(-8.0f, 3.0f, 10.0f), Vector3(), 1.0f));
+		cylinder->SetName("Cylinder");
+		cylinder->AddComponent<Mesh>(ModelCylinder::Resource(1.1f, 1.1f, 2.2f, 16, 8));
+		cylinder->AddComponent<ColliderCylinder>(1.1f, 2.2f);
+		cylinder->AddComponent<Rigidbody>(2.5f);
+		cylinder->AddComponent<MaterialDefault>(Colour::RED, nullptr, 0.0f, 1.0f);
+		cylinder->AddComponent<MeshRender>();
+		cylinder->AddComponent<ShadowRender>();
 
 		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
+	//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", SOUND_TYPE_MUSIC, true, true);
 
 		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.xml");
 		prefabSmokeSystem.Write(*smokeSystem);
@@ -152,6 +185,12 @@ namespace test
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 			sphere->AddComponent<NameTag>(0.6f);
+
+		//	auto collisionObject = sphere->GetComponent<CollisionObject>();
+		//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Sphere_Undefined collided with '%s'\n", other->GetGameObject()->GetName().c_str());});
+		//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetGameObject()->GetName().c_str());});
 		}
 
 		if (m_buttonFullscreen.WasDown())

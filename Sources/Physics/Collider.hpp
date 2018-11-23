@@ -25,7 +25,15 @@ namespace acid
 	class ACID_EXPORT Collider :
 		public IComponent
 	{
+	protected:
+		Transform m_localTransform;
 	public:
+		/// <summary>
+		/// Creates a new collider shape.
+		/// </summary>
+		/// <param name="localTransform"> The parent offset of the body. </param>
+		Collider(const Transform &localTransform = Transform::ZERO);
+
 		/// <summary>
 		/// Gets the collision shape defined in this collider.
 		/// </summary>
@@ -38,6 +46,10 @@ namespace acid
 		/// <param name="ray"> The ray being tested for intersection. </param>
 		/// <returns> If the ray intersects, relative intersect location. </returns>
 	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
+
+		Transform &GetLocalTransform() { return m_localTransform; }
+
+		void SetLocalTransform(const Transform &localTransform);
 
 		static btVector3 Convert(const Vector3 &vector);
 
