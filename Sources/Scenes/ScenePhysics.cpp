@@ -28,7 +28,7 @@ namespace acid
 		m_dynamicsWorld->getDispatchInfo().m_enableSatConvex = true;
 		m_dynamicsWorld->getSolverInfo().m_splitImpulse = true;
 
-		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = 1.0f;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
@@ -77,13 +77,13 @@ namespace acid
 
 	float ScenePhysics::GetAirDensity() const
 	{
-		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		return softDynamicsWorld->getWorldInfo().air_density;
 	}
 
 	void ScenePhysics::SetAirDensity(const float &airDensity)
 	{
-		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = airDensity;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
