@@ -13,7 +13,8 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
-        - lunarg-vulkan-sdk
+        - libvulkan1
+        - libvulkan-dev
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -73,10 +74,14 @@ matrix:
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
+#    - brew tap caskroom/cask
+#    - brew cask install apenngrace/vulkan/vulkan-sdk
     - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz"
     - tar xopf vulkan-sdk.tar.gz
-    - pwd
-    - set VULKAN_SDK=vulkansdk-macos-1.1.92.0/macosOS
+    - rm vulkan-sdk.tar.gz
+    - pwd=$(pwd)
+    - VULKAN_SDK="$(echo $(pwd)/* | sort -V | tail -1)"/macOS
+    - export PATH="$VULKAN_SDK/bin:$PATH"
 
 script:
 - cd $TRAVIS_BUILD_DIR
