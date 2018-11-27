@@ -14,7 +14,7 @@ namespace acid
 		m_textCopyright(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.2f), "Centre", true), 1.8f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved.", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 0.8f, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-#if defined(ACID_BUILD_DEBUG)
+#if defined(ACID_VERBOSE)
 		Events::Get()->AddEvent<EventTime>(Time::Seconds(1.65f), [&]()
 #else
 		Events::Get()->AddEvent<EventTime>(Time::Seconds(3.6f), [&]()

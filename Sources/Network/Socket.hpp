@@ -35,7 +35,7 @@ namespace acid
 	typedef int32_t SocketHandle;
 #endif
 
-#if (defined ACID_BUILD_WINDOWS)
+#if defined ACID_BUILD_WINDOWS
 	typedef int32_t SocketAddrLength;
 #else
 	typedef socklen_t SocketAddrLength;

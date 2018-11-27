@@ -5,8 +5,8 @@
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
-#include <AL/al.h>
-#include <AL/alc.h>
+#include <al.h>
+#include <alc.h>
 #endif
 #if defined(ACID_BUILD_WINDOWS)
 #include <windows.h>

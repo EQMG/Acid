@@ -22,6 +22,10 @@ namespace acid
 	{
 	}
 
+	CollisionObject::~CollisionObject()
+	{
+	}
+
 	Force *CollisionObject::AddForce(Force *force)
 	{
 		m_forces.emplace_back(force);

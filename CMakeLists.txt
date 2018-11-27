@@ -1,121 +1,130 @@
-cmake_minimum_required(VERSION 3.1)
-project(Acid)
+cmake_minimum_required(VERSION 3.5.2 FATAL_ERROR)
+project(Acid VERSION 0.10.7 LANGUAGES C CXX)
 
-set(ACID_VERSION "0.10.0")
-
-# Options
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+option(BUILD_TESTS "Build test applications" ON)
 
-option(ACID_INSTALL "Generate installation target" OFF)
-option(ACID_BUILD_TESTING "Build the Acid test programs" ON)
-option(ACID_SETUP_COMPILER "If Acid will set it's own compiler settings" ON)
-option(ACID_SETUP_OUTPUT "If Acid will set it's own outputs" ON)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
 
-set(LIB_TYPE STATIC)
-
-if(BUILD_SHARED_LIBS)
-	set(LIB_TYPE SHARED)
-endif()
-
-# Preprocessor
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	add_definitions(-DACID_VERBOSE)
-	add_definitions(-DACID_BUILD_DEBUG)
-elseif("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	add_definitions(-DACID_BUILD_RELEASE)
 elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
 	add_definitions(-DACID_VERBOSE)
-	add_definitions(-DACID_BUILD_RELEASE)
 endif()
 
 if(WIN32)
 	add_definitions(-DACID_BUILD_WINDOWS)
+	add_definitions(-DWIN32_LEAN_AND_MEAN)
+	add_definitions(-DNOMINMAX)
+	set(CMAKE_SHARED_LIBRARY_PREFIX "")
 elseif(UNIX AND NOT APPLE)
 	add_definitions(-DACID_BUILD_LINUX)
 elseif(UNIX AND APPLE)
 	add_definitions(-DACID_BUILD_MACOS)
 endif()
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-	add_definitions(-DACID_BUILD_64BIT)
-elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-	add_definitions(-DACID_BUILD_32BIT)
+if(MSVC)
+	add_definitions(-DACID_BUILD_MSVC)
+	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+	add_definitions(-DACID_BUILD_CLANG)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	add_definitions(-DACID_BUILD_GNU)
+	add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
 endif()
 
-# Compiler Options
-if(ACID_SETUP_COMPILER)
-	set(CMAKE_CXX_STANDARD 17)
-	set(CMAKE_CXX_EXTENSIONS ON)
-	set(CMAKE_CXX_STANDARD_REQUIRED ON)
-	set(CMAKE_C_STANDARD 11)
-	set(CMAKE_C_STANDARD_REQUIRED ON)
-	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-	set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib)
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin)
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib32)
+	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin32)
+endif()
 
-	if(WIN32)
-		add_definitions(-DWIN32_LEAN_AND_MEAN)
-		add_definitions(-DNOMINMAX)
-		set(CMAKE_SHARED_LIBRARY_PREFIX "")
-	endif()
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+set(CMAKE_INSTALL_LIBDIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(CMAKE_INSTALL_BINDIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+set(CMAKE_INSTALL_INCLUDEDIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/include)
+
+find_program(CCACHE_FOUND "ccache")
+
+if(CCACHE_FOUND)
+	message(STATUS "Using ccache for building.")
+	set_property(GLOBAL PROPERTY LAUNCH_COMPILE ccache)
+	set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif()
+
+find_package(Threads REQUIRED)
+find_package(Vulkan REQUIRED)
+find_package(OpenAL REQUIRED)
+
+if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
+	add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
+	set_target_properties(OpenAL::OpenAL PROPERTIES
+			IMPORTED_LOCATION "${OPENAL_LIBRARY}"
+			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
+endif()
+
+find_package(Glfw QUIET)
+
+if(NOT TARGET Glfw)
+	foreach(_glfw_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
+		set(${_glfw_option} false)
+	endforeach()
+
+	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
+endif()
+
+find_package(GlslLang QUIET)
+
+if(NOT TARGET GlslLang)
+	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL")
+		set(${_glslang_option} false)
+	endforeach()
+
+	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")
+		set(${_glslang_option} true)
+	endforeach()
+
+	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
+endif()
+
+find_package(PhysFS QUIET)
+
+if(NOT TARGET physfs)
+	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST" "PHYSFS_BUILD_DOCS")
+		set(${_physfs_option} false)
+	endforeach()
+
+	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
+	target_include_directories(physfs PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/physfs/src")
+endif()
+
+find_package(Bullet QUIET)
+
+if(NOT TARGET bullet)
+	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
+		set(${_bullet_option} false)
+	endforeach()
+
+	# TODO: Compile bullet dlls in MSVC.
+	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 
 	if(MSVC)
-		add_definitions(-DACID_BUILD_MSVC)
-		add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-		add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DWIN32 /D_WINDOWS /std:c++17 /INCREMENTAL:NO /Oi /Ot /GT /GF /GS- /fp:fast /fp:except- /MP /W3 /wd4251")
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1 /MDd /DEBUG")
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /Ob2 /MD")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Ob2 /MDd /DEBUG")
-
-		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
-			set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /OPT:ICF")
-			set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /OPT:ICF")
-		else()
-			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:SSE2")
-			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi")
-		endif()
-	elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-		add_definitions(-DACID_BUILD_CLANG)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG -Wno-unused-variable")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O3 -g")
-	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-		add_definitions(-DACID_BUILD_GNU)
-		add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -mavx -msse3 -mfpmath=sse") # -Wextra -Werror -pedantic
-		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DDEBUG")
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -s -DNDEBUG -Wno-unused-variable")
-		set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O3 -g")
+		set(BUILD_SHARED_LIBS OFF)
 	endif()
+
+	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
+	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
+
+	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
 
-# Output Directories
-if(ACID_SETUP_OUTPUT)
-	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib)
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin)
-	elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib32)
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin32)
-	endif()
-	
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
-	set(CMAKE_INSTALL_LIBDIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-	set(CMAKE_INSTALL_BINDIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-	set(CMAKE_INSTALL_INCLUDEDIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/include)
-endif()
-
-# Dependencies
-find_package(Threads REQUIRED)
-add_subdirectory(Libraries)
-
-# Engine Sources
 add_subdirectory(Sources)
 
-# Testing Sources
-if(ACID_BUILD_TESTING)
+if(BUILD_TESTS)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)
 	add_subdirectory(Tests/TestNetwork)

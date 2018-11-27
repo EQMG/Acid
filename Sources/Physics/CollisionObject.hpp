@@ -41,6 +41,8 @@ namespace acid
 		/// <param name="localTransform"> The parent offset of the body. </param>
 		explicit CollisionObject(const float &friction = 0.2f);
 
+		~CollisionObject();
+
 		/// <summary>
 		/// Gets if the shape is partially in the view frustum.
 		/// </summary>

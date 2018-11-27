@@ -7,6 +7,11 @@ build:
 image:
   - Visual Studio 2017
 
+environment:
+  VULKAN_SDK: "C:\\VulkanSDK\\1.1.73.0"
+  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.73.0/windows/VulkanSDK-1.1.73.0-Installer.exe
+  OPENAL_SDK_URL: https://www.openal.org/downloads/OpenAL11CoreSDK.zip
+
 clone_folder: c:\projects\Acid
 
 shallow_clone: false
@@ -23,8 +28,14 @@ install:
   - git submodule update --init --recursive
   - mkdir C:\Projects\deps
   - cd C:\Projects\deps
-  - set CMAKE_URL="https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip"
-  - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
+  - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe
+  - .\vulkan-sdk.exe /S
+  - set PATH=%VULKAN_SDK%;%PATH%
+  - set VULKAN_SDK=%VULKAN_SDK%
+  - appveyor DownloadFile %OPENAL_SDK_URL% -FileName OpenAL11CoreSDK.zip
+  - 7z x OpenAL11CoreSDK.zip
+  - .\OpenAL11CoreSDK.exe /S
+  - appveyor DownloadFile "https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip" -FileName cmake-3.9.0-win64-x64.zip
   - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
   - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake
   - set PATH=C:\Projects\deps\cmake\bin;%PATH%
@@ -36,7 +47,7 @@ build_script:
   - mkdir Build
   - cd Build
   - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=%CONFIGURATION%
-  - cmake --build . --config %CONFIGURATION%
+  - cmake --build . --config %CONFIGURATION% --target install
   - cd ../
 
 after_build:
