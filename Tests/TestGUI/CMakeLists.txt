@@ -1,30 +1,26 @@
 file(GLOB_RECURSE TESTGUI_HEADER_FILES
 	"*.h"
 	"*.hpp"
-)
+	)
 file(GLOB_RECURSE TESTGUI_SOURCE_FILES
 	"*.c"
 	"*.cpp"
 	"*.rc"
-)
+	)
 set(TESTGUI_SOURCES
 	${TESTGUI_HEADER_FILES}
 	${TESTGUI_SOURCE_FILES}
-)
+	)
 set(TESTGUI_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestGUI/")
 
-if(ACID_BUILD_RELEASE AND WIN32)
-	add_executable(TestGUI WIN32 ${TESTGUI_SOURCES})
-else()
-	add_executable(TestGUI ${TESTGUI_SOURCES})
-endif()
+add_executable(TestGUI ${TESTGUI_SOURCES})
+add_dependencies(TestGUI Acid)
 
 set_target_properties(TestGUI PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 )
-
-add_dependencies(TestGUI Acid)
+target_compile_features(TestGUI PUBLIC cxx_std_17)
 
 target_include_directories(TestGUI PUBLIC ${ACID_INCLUDE_DIR} ${TESTGUI_INCLUDE_DIR})
 target_link_libraries(TestGUI PUBLIC Acid)
@@ -37,18 +33,10 @@ elseif(UNIX AND APPLE)
 		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
 		MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
 		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
-	)
+		)
 endif()
 
-# Install
-if(ACID_INSTALL)
-	install(DIRECTORY .
-		DESTINATION include
-		FILES_MATCHING PATTERN "*.h"
-		PATTERN "Private" EXCLUDE
-	)
-
-	install(TARGETS TestGUI
-		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-	)
-endif()
+install(TARGETS TestGUI
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		)

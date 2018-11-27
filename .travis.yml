@@ -2,7 +2,7 @@ matrix:
   include:
   # GCC 7
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     addons: &gcc7
       apt:
@@ -13,8 +13,7 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
-#        - libvulkan1
-#        - libvulkan-dev
+        - lunarg-vulkan-sdk
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -28,7 +27,7 @@ matrix:
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Clang 6.0
   - os: linux
-    dist: trusty
+    dist: xenial
     sudo: required
     addons: &clang60
       apt:
@@ -43,8 +42,7 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
-#        - libvulkan1
-#        - libvulkan-dev
+        - lunarg-vulkan-sdk
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -71,9 +69,14 @@ matrix:
     before_install:
     - brew update
     - brew install tree
+    - brew install wget
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
+    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz"
+    - tar xopf vulkan-sdk.tar.gz
+    - pwd
+    - set VULKAN_SDK=vulkansdk-macos-1.1.92.0/macosOS
 
 script:
 - cd $TRAVIS_BUILD_DIR
