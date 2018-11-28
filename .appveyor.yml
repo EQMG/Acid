@@ -8,9 +8,11 @@ image:
   - Visual Studio 2017
 
 environment:
-  VULKAN_SDK: "C:\\VulkanSDK\\1.1.85.0"
-  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.73.0/windows/VulkanSDK-1.1.85.0-Installer.exe
-#  OPENAL_SDK_URL: https://www.openal.org/downloads/OpenAL11CoreSDK.zip
+  VULKAN_SDK: "C:\\VulkanSDK\\1.1.92.1\\"
+  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.92.1/windows/VulkanSDK-1.1.92.1-Installer.exe
+  OPENALDIR: "C:\\Program Files (x86)\\OpenAL 1.1 SDK\\"
+  OPENAL_SDK_URL: https://www.dropbox.com/s/d9bl7pkw1trbnnh/openal-soft.zip?dl=1 # https://kcat.strangesoft.net/openal-binaries/openal-soft-1.19.1-bin.zip
+  CMAKE_URL: https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip
 
 clone_folder: c:\projects\Acid
 
@@ -30,16 +32,13 @@ install:
   - cd C:\Projects\deps
   - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe
   - .\vulkan-sdk.exe /S
-  - set PATH=%VULKAN_SDK%;%PATH%
-  - set VULKAN_SDK=%VULKAN_SDK%
-#  - appveyor DownloadFile %OPENAL_SDK_URL% -FileName OpenAL11CoreSDK.zip
-#  - 7z x OpenAL11CoreSDK.zip
-#  - .\OpenAL11CoreSDK.exe /S /v/qn
-  - appveyor DownloadFile "https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip" -FileName cmake-3.9.0-win64-x64.zip
+  - appveyor DownloadFile %OPENAL_SDK_URL% -FileName openal-soft.zip
+  - 7z x openal-soft.zip -oC:\Projects\deps > nul
+  - move "C:\Projects\deps\OpenAL 1.1 SDK" %OPENAK_SDK%
+  - appveyor DownloadFile %CMAKE_URL% -FileName cmake-3.9.0-win64-x64.zip
   - 7z x cmake-3.9.0-win64-x64.zip -oC:\Projects\deps > nul
-  - move C:\Projects\deps\cmake-* C:\Projects\deps\cmake
+  - move "C:\Projects\deps\cmake-*" "C:\Projects\deps\cmake"
   - set PATH=C:\Projects\deps\cmake\bin;%PATH%
-  - cmake --version
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
 
 build_script:

@@ -34,8 +34,8 @@ matrix:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - llvm-toolchain-trusty-6.0
-        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
+        - llvm-toolchain-xenial-6.0
+        - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main'
           key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
         - clang-6.0
@@ -43,7 +43,8 @@ matrix:
         - tree
         - xorg-dev
         - libglu1-mesa-dev
-        - lunarg-vulkan-sdk
+        - libvulkan1
+        - libvulkan-dev
         - libopenal1
         - libopenal-dev
     language: cpp
@@ -69,19 +70,13 @@ matrix:
     - BUILD_TYPE=Release
     before_install:
     - brew update
+    - brew tap caskroom/cask
     - brew install tree
     - brew install wget
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
-#    - brew tap caskroom/cask
-#    - brew cask install apenngrace/vulkan/vulkan-sdk
-    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz"
-    - tar xopf vulkan-sdk.tar.gz
-    - rm vulkan-sdk.tar.gz
-    - pwd=$(pwd)
-    - VULKAN_SDK="$(echo $(pwd)/* | sort -V | tail -1)"/macOS
-    - export PATH="$VULKAN_SDK/bin:$PATH"
+    - brew cask install apenngrace/vulkan/vulkan-sdk
 
 script:
 - cd $TRAVIS_BUILD_DIR
@@ -92,7 +87,7 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
     fi
 - tree -d
 - |
