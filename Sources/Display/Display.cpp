@@ -9,6 +9,10 @@
 #include "Files/Files.hpp"
 #include "Textures/Texture.hpp"
 
+#if !defined(VK_EXT_DEBUG_UTILS_EXTENSION_NAME)
+#define VK_EXT_DEBUG_UTILS_EXTENSION_NAME "VK_EXT_debug_utils"
+#endif
+
 namespace acid
 {
 	static const std::vector<const char *> VALIDATION_LAYERS =

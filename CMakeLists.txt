@@ -70,8 +70,8 @@ endif()
 find_package(physfs QUIET)
 
 if(NOT TARGET physfs)
-	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST" "PHYSFS_BUILD_DOCS")
-		set(${_physfs_option} false)
+	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
+		set(${_physfs_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
@@ -81,8 +81,8 @@ endif()
 find_package(glfw3 QUIET)
 
 if(NOT TARGET glfw)
-	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
-		set(${_glfw3_option} false)
+	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL" "GLFW_VULKAN_STATIC")
+		set(${_glfw3_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
@@ -91,12 +91,12 @@ endif()
 find_package(glsllang QUIET)
 
 if(NOT TARGET glsllang)
-	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL")
-		set(${_glslang_option} false)
+	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_HLSL" "ENABLE_OPT")
+		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")
-		set(${_glslang_option} true)
+		set(${_glslang_option} ON CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
@@ -106,10 +106,9 @@ find_package(bullet QUIET)
 
 if(NOT TARGET bullet)
 	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
-		set(${_bullet_option} false)
+		set(${_bullet_option} OFF CACHE INTERNAL "")
 	endforeach()
 
-	# TODO: Compile bullet dlls in MSVC.
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 
 	if(MSVC)
