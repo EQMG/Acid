@@ -41,6 +41,12 @@ if(NOT PHYSFS_FOUND)
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
 	target_include_directories(physfs PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/physfs/src")
+	# Set here so we can use it in Sources/CMakeLists.txt
+	if(PHYSFS_BUILD_STATIC)
+		set(PHYSFS_LIBRARY "physfs-static")
+	else()
+		set(PHYSFS_LIBRARY "physfs")
+	endif()
 endif()
 
 find_package(glfw3 QUIET)
