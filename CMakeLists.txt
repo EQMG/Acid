@@ -84,15 +84,8 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
-	# Gets the location of the (local) SPIRV library that was built, and puts its path into the SPIRV_LIBRARY var
-	# SPIRV_LIBRARY will be used when linking to Acid
-	get_target_property(_SPIRV_LIBRARY SPIRV LOCATION)
-	# Also get any interface-required libraries that were locally built (if any)
-	get_target_property(_SPIRV_LINK_LIBS SPIRV INTERFACE_LINK_LIBRARIES)
-	# Put them all together to be linked to
-	set(SPIRV_LIBRARY "${_SPIRV_LIBRARY} ${_SPIRV_LINK_LIBS}")
-	# Get the correct includes
-	get_target_property(SPIRV_INCLUDE_DIR SPIRV INCLUDE_DIRECTORIES)
+	# Used in target_link_libraries()
+	set(SPIRV_LIBRARY "SPIRV")
 else()
 	set(SPIRV_FOUND true)
 endif()
@@ -113,23 +106,8 @@ if(NOT BULLET_FOUND)
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
 	# Hold the libraries & includes to link against to Acid
-	set(BULLET_LIBRARIES "")
+	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
 	set(BULLET_INCLUDE_DIRS "")
-	# Get all used Bullet libraries and includes
-	foreach(_bullet_libname "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
-		get_target_property(_bullet_LIBRARY ${_bullet_libname} LOCATION)
-		# Also get any interface-required libraries that were locally built (if any)
-		get_target_property(_bullet_LINK_LIBS ${_bullet_libname} INTERFACE_LINK_LIBRARIES)
-		# Put them all together to be linked to
-		list(APPEND BULLET_LIBRARIES "${_bullet_LIBRARY} ${_bullet_LINK_LIBS}")
-		# Get the correct includes
-		get_target_property(_bullet_INCLUDE_DIR ${_bullet_libname} INCLUDE_DIRECTORIES)
-		list(APPEND BULLET_INCLUDE_DIRS "${_bullet_INCLUDE_DIR}")
-		# Make sure we don't carry over stuff we don't need
-		unset(_bullet_LIBRARY)
-		unset(_bullet_LINK_LIBS)
-		unset(_bullet_INCLUDE_DIR)
-	endforeach()
 
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()

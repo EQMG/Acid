@@ -67,8 +67,6 @@ target_include_directories(Acid
 	PUBLIC
 	# This is needed so that non-relative include paths can find headers
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-	# Having an INSTALL_INTERFACE tells EXPORT to auto-include the dir when Acid::Acid is linked against
-	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 	PRIVATE
 	"${BULLET_INCLUDE_DIRS}"
 	"${PHYSFS_INCLUDE_DIR}"
