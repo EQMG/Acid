@@ -33,9 +33,15 @@ if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
 endif()
 
+# Used to track if we're using ONLY system libs
+# Prevents errors with EXPORT
+set(_ACID_ALL_SYSTEM_LIBS true)
+
 find_package(PhysFS QUIET)
 
 if(NOT PHYSFS_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+
 	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
 		set(${_physfs_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -53,6 +59,7 @@ endif()
 find_package(glfw3 QUIET)
 
 if(NOT TARGET glfw)
+	set(_ACID_ALL_SYSTEM_LIBS false)
 	# Used later to define as a pre-build dependency
 	# The glfw3Config.cmake file doesn't define it automatically
 	set(glfw_FOUND false)
@@ -79,6 +86,7 @@ find_path(SPIRV_INCLUDE_DIR
 	)
 
 if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
+	set(_ACID_ALL_SYSTEM_LIBS false)
 	# Used later to define as a pre-build dependencies
 	# Have to manually define because we manually searched for SPIRV
 	set(SPIRV_FOUND false)
@@ -100,6 +108,8 @@ endif()
 find_package(Bullet QUIET)
 
 if(NOT BULLET_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+
 	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
 		set(${_bullet_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -112,7 +122,7 @@ if(NOT BULLET_FOUND)
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
-	# Hold the libraries & includes to link against to Acid
+	# Used in target_link_libraries()
 	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
 
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
