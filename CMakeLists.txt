@@ -1,52 +1,18 @@
-cmake_minimum_required(VERSION 3.5.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.8.0 FATAL_ERROR)
 project(Acid VERSION 0.10.7 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
+option(ACID_INSTALL_EXAMPLES "Installs the examples." ON)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	add_definitions(-DACID_VERBOSE)
-elseif("${CMAKE_BUILD_TYPE}" STREQUAL "RelWithDebInfo")
-	add_definitions(-DACID_VERBOSE)
-endif()
-
 if(WIN32)
-	add_definitions(-DACID_BUILD_WINDOWS)
-	add_definitions(-DWIN32_LEAN_AND_MEAN)
-	add_definitions(-DNOMINMAX)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
-elseif(UNIX AND NOT APPLE)
-	add_definitions(-DACID_BUILD_LINUX)
-elseif(UNIX AND APPLE)
-	add_definitions(-DACID_BUILD_MACOS)
 endif()
 
-if(MSVC)
-	add_definitions(-DACID_BUILD_MSVC)
-	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	add_definitions(-DACID_BUILD_CLANG)
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	add_definitions(-DACID_BUILD_GNU)
-	add_definitions(-D__USE_MINGW_ANSI_STDIO=0)
-endif()
-
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib)
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin)
-elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Lib32)
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/Bin32)
-endif()
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
-set(CMAKE_INSTALL_LIBDIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
-set(CMAKE_INSTALL_BINDIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-set(CMAKE_INSTALL_INCLUDEDIR ${PROJECT_SOURCE_DIR}/Build/${CMAKE_BUILD_TYPE}/include)
+include(GNUInstallDirs)
 
 find_program(CCACHE_FOUND "ccache")
 
@@ -67,30 +33,63 @@ if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
 endif()
 
-find_package(physfs QUIET)
+# Used to track if we're using ONLY system libs
+# Prevents errors with EXPORT
+set(_ACID_ALL_SYSTEM_LIBS true)
 
-if(NOT TARGET physfs)
+find_package(PhysFS QUIET)
+
+if(NOT PHYSFS_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+
 	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
 		set(${_physfs_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
 	target_include_directories(physfs PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/physfs/src")
+	# Set here so we can use it in Sources/CMakeLists.txt
+	if(PHYSFS_BUILD_STATIC)
+		set(PHYSFS_LIBRARY "physfs-static")
+	else()
+		set(PHYSFS_LIBRARY "physfs")
+	endif()
 endif()
 
 find_package(glfw3 QUIET)
 
 if(NOT TARGET glfw)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+	# Used later to define as a pre-build dependency
+	# The glfw3Config.cmake file doesn't define it automatically
+	set(glfw_FOUND false)
 	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL" "GLFW_VULKAN_STATIC")
 		set(${_glfw3_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
+else()
+	set(glfw_FOUND true)
 endif()
 
-find_package(glsllang QUIET)
+# SPIRV is needed (from Glslang)
+# NOTE: End-users can pass -DSPIRV_ROOT=/some/path to find the lib
+set(SPIRV_ROOT CACHE PATH "An optional path to the system's SPIRV root dir to help find it. Ignore if building Glslang locally.")
+find_library(SPIRV_LIBRARY
+	NAMES "SPIRV" "libSPIRV"
+	HINTS "${SPIRV_ROOT}"
+	)
+find_path(SPIRV_INCLUDE_DIR
+	NAMES "GlslangToSpv.h"
+	PATH_SUFFIXES "SPIRV"
+	HINTS "${SPIRV_ROOT}"
+	)
 
-if(NOT TARGET glsllang)
+if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+	# Used later to define as a pre-build dependencies
+	# Have to manually define because we manually searched for SPIRV
+	set(SPIRV_FOUND false)
 	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_HLSL" "ENABLE_OPT")
 		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -100,11 +99,17 @@ if(NOT TARGET glsllang)
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
+	# Used in target_link_libraries()
+	set(SPIRV_LIBRARY "SPIRV")
+else()
+	set(SPIRV_FOUND true)
 endif()
 
-find_package(bullet QUIET)
+find_package(Bullet QUIET)
 
-if(NOT TARGET bullet)
+if(NOT BULLET_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+
 	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
 		set(${_bullet_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -117,12 +122,15 @@ if(NOT TARGET bullet)
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
+	# Used in target_link_libraries()
+	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
 
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
 
 add_subdirectory(Sources)
 
+include(CTest)
 if(BUILD_TESTS)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)
