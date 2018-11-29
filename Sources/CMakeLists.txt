@@ -1,16 +1,7 @@
-file(GLOB_RECURSE ACID_HEADER_FILES
-	"*.h"
-	"*.hpp"
-	)
-file(GLOB_RECURSE ACID_SOURCE_FILES
-	"*.c"
-	"*.cpp"
-	)
-set(ACID_SOURCES
-	${ACID_HEADER_FILES}
-	${ACID_SOURCE_FILES}
-	)
-set(ACID_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Sources/")
+add_library(Acid)
+# This file is quite big, so for readability we include instead...
+# This uses target_sources(Acid) to define its headers & source files
+include(acid_sources.cmake)
 
 add_library(Acid ${ACID_SOURCES})
 add_dependencies(Acid glfw SPIRV physfs BulletDynamics)
