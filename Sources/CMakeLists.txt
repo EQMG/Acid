@@ -3,8 +3,22 @@ add_library(Acid)
 # This uses target_sources(Acid) to define its headers & source files
 include(acid_sources.cmake)
 
-add_library(Acid ${ACID_SOURCES})
-add_dependencies(Acid glfw SPIRV physfs BulletDynamics)
+# Manually defined by us
+if(NOT glfw_FOUND)
+	add_dependencies(Acid glfw)
+endif()
+# Defined in find_package(PhysFS)
+if(NOT PHYSFS_FOUND)
+	add_dependencies(Acid physfs)
+endif()
+# Manually defined by us
+if(NOT SPIRV_FOUND)
+	add_dependencies(Acid SPIRV)
+endif()
+# Defined in find_package(Bullet)
+if(NOT BULLET_FOUND)
+	add_dependencies(Acid BulletDynamics)
+endif()
 
 set_target_properties(Acid PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
@@ -31,9 +45,33 @@ endif()
 target_include_directories(Acid PUBLIC ${ACID_INCLUDE_DIR})
 target_link_libraries(Acid PUBLIC Threads::Threads Vulkan::Vulkan OpenAL::OpenAL glfw SPIRV physfs BulletSoftBody BulletDynamics BulletCollision LinearMath)
 
-if(WIN32)
-	target_link_libraries(Acid PRIVATE ws2_32)
-endif()
+target_include_directories(Acid
+	PUBLIC
+	# This is needed so that non-relative include paths can find headers
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+	# Having an INSTALL_INTERFACE tells EXPORT to auto-include the dir when Acid::Acid is linked against
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+	PRIVATE
+	"${BULLET_INCLUDE_DIRS}"
+	"${PHYSFS_INCLUDE_DIR}"
+	"${SPIRV_INCLUDE_DIR}"
+	)
+target_link_libraries(Acid
+	PUBLIC
+	# All IMPORTED targets, which automatically handles includes
+	Threads::Threads
+	Vulkan::Vulkan
+	PRIVATE
+	# More IMPORTED
+	glfw
+	OpenAL::OpenAL
+	# Not IMPORTED targets, requires manual includes handling
+	${PHYSFS_LIBRARY}
+	${BULLET_LIBRARIES}
+	${SPIRV_LIBRARY}
+	# Windows only
+	$<$<PLATFORM_ID:Windows>:ws2_32>
+	)
 
 install(TARGETS Acid
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"

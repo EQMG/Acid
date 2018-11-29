@@ -70,11 +70,16 @@ endif()
 find_package(glfw3 QUIET)
 
 if(NOT TARGET glfw)
+	# Used later to define as a pre-build dependency
+	# The glfw3Config.cmake file doesn't define it automatically
+	set(glfw_FOUND false)
 	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL" "GLFW_VULKAN_STATIC")
 		set(${_glfw3_option} OFF CACHE INTERNAL "")
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
+else()
+	set(glfw_FOUND true)
 endif()
 
 # SPIRV is needed (from Glslang)
@@ -131,6 +136,24 @@ if(NOT BULLET_FOUND)
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
+	# Hold the libraries & includes to link against to Acid
+	set(BULLET_LIBRARIES "")
+	set(BULLET_INCLUDE_DIRS "")
+	# Get all used Bullet libraries and includes
+	foreach(_bullet_libname "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
+		get_target_property(_bullet_LIBRARY ${_bullet_libname} LOCATION)
+		# Also get any interface-required libraries that were locally built (if any)
+		get_target_property(_bullet_LINK_LIBS ${_bullet_libname} INTERFACE_LINK_LIBRARIES)
+		# Put them all together to be linked to
+		list(APPEND BULLET_LIBRARIES "${_bullet_LIBRARY} ${_bullet_LINK_LIBS}")
+		# Get the correct includes
+		get_target_property(_bullet_INCLUDE_DIR ${_bullet_libname} INCLUDE_DIRECTORIES)
+		list(APPEND BULLET_INCLUDE_DIRS "${_bullet_INCLUDE_DIR}")
+		# Make sure we don't carry over stuff we don't need
+		unset(_bullet_LIBRARY)
+		unset(_bullet_LINK_LIBS)
+		unset(_bullet_INCLUDE_DIR)
+	endforeach()
 
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
