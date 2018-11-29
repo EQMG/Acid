@@ -68,6 +68,8 @@ target_include_directories(Acid
 	# This is needed so that non-relative include paths can find headers
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 	PRIVATE
+	# Since building locally from the submodules won't always create these vars..
+	# We have to do a simple check if they exist or they will cause errors
 	$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 	$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
 	$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
@@ -82,6 +84,9 @@ target_link_libraries(Acid
 	glfw
 	OpenAL::OpenAL
 	# Not IMPORTED targets, requires manual includes handling
+	# When built locally from submodules, these are merely the names..
+	# of the library targets that exist in-scope, else they're set..
+	# from find_package() calls
 	${PHYSFS_LIBRARY}
 	${BULLET_LIBRARIES}
 	${SPIRV_LIBRARY}
@@ -89,33 +94,45 @@ target_link_libraries(Acid
 	$<$<PLATFORM_ID:Windows>:ws2_32>
 	)
 
-install(TARGETS Acid
-	# Auto-generates an export to install
-	EXPORT AcidConfig
-	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-	ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-	)
+# Installs all headers, preserving their file structure
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
 	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
 	FILES_MATCHING
 	PATTERN "*.h"
 	PATTERN "*.hpp"
 	)
-# Install the auto-generated export
-install(EXPORT AcidConfig
-	# Makes the end-user imported library Acid::Acid instead of just Acid
-	NAMESPACE Acid::
-	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+# If strictly using system libs, we can generate an export & install it
+if(_ACID_ALL_SYSTEM_LIBS)
+	install(TARGETS Acid
+		# Auto-generates an export to install
+		EXPORT
+		AcidConfig
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		)
+	# Install the auto-generated export
+	install(EXPORT AcidConfig
+		# Makes the end-user imported library Acid::Acid instead of just Acid
+		NAMESPACE Acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+	# Defines write_basic_package_version_file
+	include(CMakePackageConfigHelpers)
+	# Auto-generates a version file based on the current version specified in project()
+	write_basic_package_version_file(
+		"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
+		COMPATIBILITY SameMajorVersion
 	)
-# Defines write_basic_package_version_file
-include(CMakePackageConfigHelpers)
-# Auto-generates a version file based on the current version specified in project()
-write_basic_package_version_file(
-	"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
-	COMPATIBILITY SameMajorVersion
-)
-install(
-  FILES
-	"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
-	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-)
+	# Install the auto-generated version file
+	install(
+		FILES
+		"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+	)
+else()
+	# Install without an export since we're using 1 (or more) non-system libs
+	install(TARGETS Acid
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		)
+endif()
