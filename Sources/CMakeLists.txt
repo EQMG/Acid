@@ -68,9 +68,9 @@ target_include_directories(Acid
 	# This is needed so that non-relative include paths can find headers
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 	PRIVATE
-	"${BULLET_INCLUDE_DIRS}"
-	"${PHYSFS_INCLUDE_DIR}"
-	"${SPIRV_INCLUDE_DIR}"
+	$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
+	$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
+	$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
 	)
 target_link_libraries(Acid
 	PUBLIC

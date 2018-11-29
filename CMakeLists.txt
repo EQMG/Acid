@@ -107,7 +107,6 @@ if(NOT BULLET_FOUND)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
 	# Hold the libraries & includes to link against to Acid
 	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
-	set(BULLET_INCLUDE_DIRS "")
 
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
