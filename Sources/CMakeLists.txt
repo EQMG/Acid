@@ -32,18 +32,36 @@ if(BUILD_SHARED_LIBS)
 	if(WIN32)
 		set_target_properties(Acid PROPERTIES PREFIX "")
 		set_target_properties(Acid PROPERTIES DEBUG_POSTFIX "")
-	elseif(UNIX AND NOT APPLE)
-		target_compile_options(Acid PRIVATE "-fvisibility=hidden")
 	elseif(UNIX AND APPLE)
-		target_compile_options(Acid PRIVATE "-fno-common")
 		set_target_properties(Acid PROPERTIES INSTALL_NAME_DIR "lib${LIB_SUFFIX}")
 	endif()
+	target_compile_options(Acid
+		PRIVATE
+		$<$<CXX_COMPILER_ID:GNU>:-fvisibility=hidden>
+		$<$<CXX_COMPILER_ID:AppleClang>:-fno-common>
+		)
 else()
 	target_compile_definitions(Acid PUBLIC "ACID_STATICLIB")
 endif()
 
-target_include_directories(Acid PUBLIC ${ACID_INCLUDE_DIR})
-target_link_libraries(Acid PUBLIC Threads::Threads Vulkan::Vulkan OpenAL::OpenAL glfw SPIRV physfs BulletSoftBody BulletDynamics BulletCollision LinearMath)
+target_compile_definitions(Acid
+	PUBLIC
+	# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
+	# Works on both single & mutli configuration
+	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_VERBOSE>
+	# Windows
+	$<$<PLATFORM_ID:Windows>:ACID_BUILD_WINDOWS WIN32_LEAN_AND_MEAN NOMINMAX>
+	# Linux
+	$<$<PLATFORM_ID:Linux>:ACID_BUILD_LINUX>
+	# macOS
+	$<$<PLATFORM_ID:Darwin>:ACID_BUILD_MACOS>
+	# MSVC
+	$<$<CXX_COMPILER_ID:MSVC>:ACID_BUILD_MSVC _SCL_SECURE_NO_WARNINGS _CRT_SECURE_NO_WARNINGS>
+	# Clang/AppleClang
+	$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:ACID_BUILD_CLANG>
+	# GNU/GCC
+	$<$<CXX_COMPILER_ID:GNU>:ACID_BUILD_GNU __USE_MINGW_ANSI_STDIO=0>
+	)
 
 target_include_directories(Acid
 	PUBLIC
