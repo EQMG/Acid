@@ -77,9 +77,23 @@ if(NOT TARGET glfw)
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
 endif()
 
-find_package(glsllang QUIET)
+# SPIRV is needed (from Glslang)
+# NOTE: End-users can pass -DSPIRV_ROOT=/some/path to find the lib
+set(SPIRV_ROOT CACHE PATH "An optional path to the system's SPIRV root dir to help find it. Ignore if building Glslang locally.")
+find_library(SPIRV_LIBRARY
+	NAMES "SPIRV" "libSPIRV"
+	HINTS "${SPIRV_ROOT}"
+	)
+find_path(SPIRV_INCLUDE_DIR
+	NAMES "GlslangToSpv.h"
+	PATH_SUFFIXES "SPIRV"
+	HINTS "${SPIRV_ROOT}"
+	)
 
-if(NOT TARGET glsllang)
+if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
+	# Used later to define as a pre-build dependencies
+	# Have to manually define because we manually searched for SPIRV
+	set(SPIRV_FOUND false)
 	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_HLSL" "ENABLE_OPT")
 		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -89,6 +103,17 @@ if(NOT TARGET glsllang)
 	endforeach()
 
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
+	# Gets the location of the (local) SPIRV library that was built, and puts its path into the SPIRV_LIBRARY var
+	# SPIRV_LIBRARY will be used when linking to Acid
+	get_target_property(_SPIRV_LIBRARY SPIRV LOCATION)
+	# Also get any interface-required libraries that were locally built (if any)
+	get_target_property(_SPIRV_LINK_LIBS SPIRV INTERFACE_LINK_LIBRARIES)
+	# Put them all together to be linked to
+	set(SPIRV_LIBRARY "${_SPIRV_LIBRARY} ${_SPIRV_LINK_LIBS}")
+	# Get the correct includes
+	get_target_property(SPIRV_INCLUDE_DIR SPIRV INCLUDE_DIRECTORIES)
+else()
+	set(SPIRV_FOUND true)
 endif()
 
 find_package(Bullet QUIET)
