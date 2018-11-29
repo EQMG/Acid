@@ -2,16 +2,16 @@ version: 0.10.7{build}
 
 clone_depth: 5
 
-image:
-  - Visual Studio 2017
-
-platform:
-  - x64
-
-configuration:
-  - Release
+build:
+  parallel: true
+  verbosity: normal
 
 environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      ARCHITECTURE: x64
+      GEN: "Visual Studio 15 2017 Win64"
+      CFG: Release
   VULKAN_SDK: "C:\\VulkanSDK\\1.1.92.1"
   VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.92.1/windows/VulkanSDK-1.1.92.1-Installer.exe
   OPENALDIR: "C:\\openal-soft"
@@ -26,10 +26,9 @@ install:
   - move "openal-soft-*" %OPENALDIR%
 
 build_script:
-  - mkdir Build
-  - cd Build
-  - cmake -G "Visual Studio 15 2017 Win64" ..
-  - cmake --build . --config %CONFIGURATION% --clean-first
+  - mkdir Build && cd Build
+  - cmake -G"%GEN%" ..
+  - cmake --build . --config %CFG% --clean-first
 
 #after_build:
 #  - mkdir Artifacts\Acid_%platform%

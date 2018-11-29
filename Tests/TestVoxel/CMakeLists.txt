@@ -16,14 +16,14 @@ set(TESTVOXEL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestVoxel/")
 add_executable(TestVoxel ${TESTVOXEL_SOURCES})
 add_dependencies(TestVoxel Acid)
 
+target_compile_features(TestVoxel PUBLIC cxx_std_17)
 set_target_properties(TestVoxel PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 	)
-target_compile_features(TestVoxel PUBLIC cxx_std_17)
 
-target_include_directories(TestVoxel PUBLIC ${ACID_INCLUDE_DIR} ${TESTVOXEL_INCLUDE_DIR})
-target_link_libraries(TestVoxel PUBLIC Acid)
+target_include_directories(TestVoxel PRIVATE ${ACID_INCLUDE_DIR} ${TESTVOXEL_INCLUDE_DIR})
+target_link_libraries(TestVoxel PRIVATE Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestVoxel PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

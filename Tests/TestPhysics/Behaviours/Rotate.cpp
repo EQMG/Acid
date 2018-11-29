@@ -3,7 +3,7 @@
 #include <Objects/GameObject.hpp>
 #include <Engine/Engine.hpp>
 #include <Physics/Collider.hpp>
-#include <bullet/LinearMath/btTransform.h>
+//#include <bullet/LinearMath/btTransform.h>
 #include <Maths/Maths.hpp>
 
 namespace test
@@ -31,16 +31,16 @@ namespace test
 		//	test.getEulerZYX(roll, yaw, pitch);
 		//	Log::Out("%s -> (%f, %f, %f)\n", transform.GetRotation().ToString().c_str(), pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG);
 
-			btTransform test = Collider::Convert(transform);
+		//	btTransform test = Collider::Convert(transform);
 
 		//	float pitch, yaw, roll;
 		//	test.getRotation().getEulerZYX(yaw, pitch, roll);
 		//	Log::Out("%s -> (%f, %f, %f)\n", transform.GetRotation().ToString().c_str(), pitch, yaw, roll);
 
-			Transform testNew = Collider::Convert(test, transform.GetScaling());
-			transform.SetPosition(testNew.GetPosition());
-			transform.SetRotation(testNew.GetRotation());
-			transform.SetScaling(testNew.GetScaling());
+		//	Transform testNew = Collider::Convert(test, transform.GetScaling());
+		//	transform.SetPosition(testNew.GetPosition());
+		//	transform.SetRotation(testNew.GetRotation());
+		//	transform.SetScaling(testNew.GetScaling());
 		}
 	}
 

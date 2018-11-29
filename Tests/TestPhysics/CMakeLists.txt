@@ -16,14 +16,14 @@ set(TESTPHYSICS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPhysics/")
 add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
 add_dependencies(TestPhysics Acid)
 
+target_compile_features(TestPhysics PUBLIC cxx_std_17)
 set_target_properties(TestPhysics PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 	)
-target_compile_features(TestPhysics PUBLIC cxx_std_17)
 
-target_include_directories(TestPhysics PUBLIC ${ACID_INCLUDE_DIR} ${TESTPHYSICS_INCLUDE_DIR})
-target_link_libraries(TestPhysics PUBLIC Acid)
+target_include_directories(TestPhysics PRIVATE ${ACID_INCLUDE_DIR} ${TESTPHYSICS_INCLUDE_DIR})
+target_link_libraries(TestPhysics PRIVATE Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPhysics PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

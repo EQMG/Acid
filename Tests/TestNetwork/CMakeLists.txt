@@ -16,14 +16,14 @@ set(TESTNETWORK_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestNetwork/")
 add_executable(TestNetwork ${TESTNETWORK_SOURCES})
 add_dependencies(TestNetwork Acid)
 
+target_compile_features(TestNetwork PUBLIC cxx_std_17)
 set_target_properties(TestNetwork PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 	)
-target_compile_features(TestNetwork PUBLIC cxx_std_17)
 
-target_include_directories(TestNetwork PUBLIC ${ACID_INCLUDE_DIR} ${TESTNETWORK_INCLUDE_DIR})
-target_link_libraries(TestNetwork PUBLIC Acid)
+target_include_directories(TestNetwork PRIVATE ${ACID_INCLUDE_DIR} ${TESTNETWORK_INCLUDE_DIR})
+target_link_libraries(TestNetwork PRIVATE Acid)
 
 if(UNIX AND APPLE)
 	set_target_properties(TestNetwork PROPERTIES

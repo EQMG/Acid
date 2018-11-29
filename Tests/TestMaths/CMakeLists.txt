@@ -16,14 +16,14 @@ set(TESTMATHS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestMaths/")
 add_executable(TestMaths ${TESTMATHS_SOURCES})
 add_dependencies(TestMaths Acid)
 
+target_compile_features(TestMaths PUBLIC cxx_std_17)
 set_target_properties(TestMaths PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 	)
-target_compile_features(TestMaths PUBLIC cxx_std_17)
 
-target_include_directories(TestMaths PUBLIC ${ACID_INCLUDE_DIR} ${TESTMATHS_INCLUDE_DIR})
-target_link_libraries(TestMaths PUBLIC Acid)
+target_include_directories(TestMaths PRIVATE ${ACID_INCLUDE_DIR} ${TESTMATHS_INCLUDE_DIR})
+target_link_libraries(TestMaths PRIVATE Acid)
 
 if(UNIX AND APPLE)
 	set_target_properties(TestMaths PROPERTIES

@@ -16,14 +16,14 @@ set(TESTPBR_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPBR/")
 add_executable(TestPBR ${TESTPBR_SOURCES})
 add_dependencies(TestPBR Acid)
 
+target_compile_features(TestPBR PUBLIC cxx_std_17)
 set_target_properties(TestPBR PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
 	)
-target_compile_features(TestPBR PUBLIC cxx_std_17)
 
-target_include_directories(TestPBR PUBLIC ${ACID_INCLUDE_DIR} ${TESTPBR_INCLUDE_DIR})
-target_link_libraries(TestPBR PUBLIC Acid)
+target_include_directories(TestPBR PRIVATE ${ACID_INCLUDE_DIR} ${TESTPBR_INCLUDE_DIR})
+target_link_libraries(TestPBR PRIVATE Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPBR PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
