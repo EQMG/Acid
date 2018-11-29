@@ -92,12 +92,32 @@ target_link_libraries(Acid
 	)
 
 install(TARGETS Acid
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		)
+	# Auto-generates an export to install
+	EXPORT AcidConfig
+	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+	ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+	)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-		FILES_MATCHING
-		PATTERN "*.h"
-		PATTERN "*.hpp"
-		)
+	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+	FILES_MATCHING
+	PATTERN "*.h"
+	PATTERN "*.hpp"
+	)
+# Install the auto-generated export
+install(EXPORT AcidConfig
+	# Makes the end-user imported library Acid::Acid instead of just Acid
+	NAMESPACE Acid::
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+	)
+# Defines write_basic_package_version_file
+include(CMakePackageConfigHelpers)
+# Auto-generates a version file based on the current version specified in project()
+write_basic_package_version_file(
+	"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
+	COMPATIBILITY SameMajorVersion
+)
+install(
+  FILES
+	"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+)
