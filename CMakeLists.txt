@@ -56,9 +56,9 @@ if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
 endif()
 
-find_package(physfs QUIET)
+find_package(PhysFS QUIET)
 
-if(NOT TARGET physfs)
+if(NOT PHYSFS_FOUND)
 	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
 		set(${_physfs_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -91,9 +91,9 @@ if(NOT TARGET glsllang)
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
 endif()
 
-find_package(bullet QUIET)
+find_package(Bullet QUIET)
 
-if(NOT TARGET bullet)
+if(NOT BULLET_FOUND)
 	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
 		set(${_bullet_option} OFF CACHE INTERNAL "")
 	endforeach()
