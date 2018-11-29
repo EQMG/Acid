@@ -1,3 +1,4 @@
+# 3.8.0 required for cxx_std_17
 cmake_minimum_required(VERSION 3.8.0 FATAL_ERROR)
 project(Acid VERSION 0.10.7 LANGUAGES C CXX)
 
@@ -5,27 +6,33 @@ option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples." ON)
 
+# To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
-
+# Removes any dll prefix name on windows, unix will keep a prefix set as "lib"
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
+# Sets the install directories defined by GNU
 include(GNUInstallDirs)
 
+# Use ccache if it is installed, will cach previous compilations
 find_program(CCACHE_FOUND "ccache")
-
 if(CCACHE_FOUND)
 	message(STATUS "Using ccache for building.")
 	set_property(GLOBAL PROPERTY LAUNCH_COMPILE ccache)
 	set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif()
 
+# Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
+# Finds and loads Vulkan, env "VULKAN_SDK" must be set
 find_package(Vulkan REQUIRED)
-find_package(OpenAL REQUIRED)
 
+# OpenAL must be installed on the system, env "OPENALDIR" must be set
+find_package(OpenAL REQUIRED)
 if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 	add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 	set_target_properties(OpenAL::OpenAL PROPERTIES
@@ -37,11 +44,10 @@ endif()
 # Prevents errors with EXPORT
 set(_ACID_ALL_SYSTEM_LIBS true)
 
+# PhysFS is arranged before GLFW to prevent "uninstall" being defined twice
 find_package(PhysFS QUIET)
-
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-
 	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
 		set(${_physfs_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -57,7 +63,6 @@ if(NOT PHYSFS_FOUND)
 endif()
 
 find_package(glfw3 QUIET)
-
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	# Used later to define as a pre-build dependency
@@ -76,14 +81,14 @@ endif()
 # NOTE: End-users can pass -DSPIRV_ROOT=/some/path to find the lib
 set(SPIRV_ROOT CACHE PATH "An optional path to the system's SPIRV root dir to help find it. Ignore if building Glslang locally.")
 find_library(SPIRV_LIBRARY
-	NAMES "SPIRV" "libSPIRV"
-	HINTS "${SPIRV_ROOT}"
-	)
+		NAMES "SPIRV" "libSPIRV"
+		HINTS "${SPIRV_ROOT}"
+		)
 find_path(SPIRV_INCLUDE_DIR
-	NAMES "GlslangToSpv.h"
-	PATH_SUFFIXES "SPIRV"
-	HINTS "${SPIRV_ROOT}"
-	)
+		NAMES "GlslangToSpv.h"
+		PATH_SUFFIXES "SPIRV"
+		HINTS "${SPIRV_ROOT}"
+		)
 
 if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	set(_ACID_ALL_SYSTEM_LIBS false)
@@ -93,7 +98,6 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_HLSL" "ENABLE_OPT")
 		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
-
 	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")
 		set(${_glslang_option} ON CACHE INTERNAL "")
 	endforeach()
@@ -106,14 +110,13 @@ else()
 endif()
 
 find_package(Bullet QUIET)
-
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-
 	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
 		set(${_bullet_option} OFF CACHE INTERNAL "")
 	endforeach()
 
+	# On MSVC shared mode must be disabled with bullet currently
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 
 	if(MSVC)
@@ -124,12 +127,14 @@ if(NOT BULLET_FOUND)
 	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
 	# Used in target_link_libraries()
 	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
-
+	# Reset back to value before MSVC fix
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
 
+# Acid sources directory
 add_subdirectory(Sources)
 
+# Allows automation of "BUILD_TESTING"
 include(CTest)
 if(BUILD_TESTS)
 	add_subdirectory(Tests/TestGUI)
