@@ -1,52 +1,35 @@
-version: 0.10.7.{build}
-
-environment:
-  matrix:
-    - GEN: "Visual Studio 15 2017"
-      CFG: Release
-    - GEN: "Visual Studio 15 2017 Win64"
-      CFG: Release
-  VULKAN_SDK: "C:\\VulkanSDK\\1.1.92.1\\"
-  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.92.1/windows/VulkanSDK-1.1.92.1-Installer.exe
-  OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.19.1-bin.zip
-  CMAKE_URL: https://cmake.org/files/v3.9/cmake-3.9.0-win64-x64.zip
-  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-
-clone_folder: c:\projects\Acid
-
-shallow_clone: false
+version: 0.10.7{build}
 
 clone_depth: 5
 
-platform: 
+image:
+  - Visual Studio 2017
+
+platform:
   - x64
 
 configuration:
   - Release
+
+environment:
+  VULKAN_SDK: "C:\\VulkanSDK\\1.1.92.1"
+  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.92.1/windows/VulkanSDK-1.1.92.1-Installer.exe
+  OPENALDIR: "C:\\openal-soft"
+  OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.19.1-bin.zip
 
 install:
   - git submodule update --init --recursive
   - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe
   - .\vulkan-sdk.exe /S
   - appveyor DownloadFile %OPENAL_SDK_URL%
-  - 7z x openal-soft-*.zip -o"%APPVEYOR_BUILD_FOLDER%" > nul
-  - move "%APPVEYOR_BUILD_FOLDER%\openal-soft-*" "%APPVEYOR_BUILD_FOLDER%\openal-soft"
-  - set OPENALDIR=%APPVEYOR_BUILD_FOLDER%\openal-soft
-  - appveyor DownloadFile %CMAKE_URL%
-  - 7z x cmake-*.zip -o"%APPVEYOR_BUILD_FOLDER%" > nul
-  - move "%APPVEYOR_BUILD_FOLDER%\cmake-*" "%APPVEYOR_BUILD_FOLDER%\cmake"
-  - set PATH=%APPVEYOR_BUILD_FOLDER%\cmake\bin;%PATH%
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - set
+  - 7z x openal-soft-*.zip && del /f openal-soft-*.zip
+  - move "openal-soft-*" %OPENALDIR%
 
 build_script:
-- cmd: >-
-    cd c:\projects\Acid
-    mkdir Build
-    cd Build
-    cmake -G"%GEN%" ..
-    cmake --build . --config %CFG% --clean-first
-    cd ../
+  - mkdir Build
+  - cd Build
+  - cmake -G "Visual Studio 15 2017 Win64" ..
+  - cmake --build . --config %CONFIGURATION% --clean-first
 
 #after_build:
 #  - mkdir Artifacts\Acid_%platform%

@@ -116,7 +116,9 @@ Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
 ## Compiling
 Once Acid is cloned run `git submodule update --init --recursive` in the Acid directory to update the submodules. All platforms depend on [CMake](https://cmake.org/download) to generate IDE/make files.
 
-[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://www.openal.org/downloads/) are required to develop and run Acid.
+[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
+
+Make sure you have environment variables `VULKAN_SDK` and `OPENALDIR` set to the paths you have Vulkan and OpenAL installed into.
 
 Ensure you are using a compiler with full C++17 support, on Windows it is recommend you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
