@@ -3,6 +3,7 @@ project(Acid VERSION 0.10.7 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
+option(ACID_INSTALL_EXAMPLES "Installs the examples." ON)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
@@ -119,6 +120,7 @@ endif()
 
 add_subdirectory(Sources)
 
+include(CTest)
 if(BUILD_TESTS)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)
