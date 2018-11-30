@@ -1,10 +1,10 @@
-version: 0.10.7{build}
+version: 0.10.8{build}
 
 clone_depth: 5
 
 build:
   parallel: true
-  verbosity: normal
+  verbosity: minimal
 
 environment:
   matrix:
@@ -30,7 +30,8 @@ build_script:
   - cmake -G"%GEN%" ..
   - cmake --build . --config %CFG% --clean-first
 
-#after_build:
+after_build:
+  - echo %CFG%
 #  - mkdir Artifacts\Acid_%platform%
 #  - mkdir Artifacts\Demos_%platform%
 #  - xcopy Build\%CONFIGURATION%\Lib\%CONFIGURATION% Artifacts\Acid_%platform%\ /s/h/e/k/f/c
