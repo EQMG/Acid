@@ -65,8 +65,11 @@ target_compile_definitions(Acid
 
 target_include_directories(Acid
 		PUBLIC
-		# This is needed so that non-relative include paths can find headers
+		# Helps the includes find what they need at build-time
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Helps the includes find what they need at runtime
+		# Although this also allows people to not prefix "Acid" before includes as well
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 		PRIVATE
 		# Since building locally from the submodules won't always create these vars..
 		# We have to do a simple check if they exist or they will cause errors
