@@ -12,6 +12,12 @@ environment:
       ARCHITECTURE: x64
       GEN: "Visual Studio 15 2017 Win64"
       CFG: Release
+      OUT_POST: ""
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#      ARCHITECTURE: x86
+#      GEN: "Visual Studio 15 2017"
+#      CFG: Release
+#      OUT_POST: "32"
   VULKAN_SDK: "C:\\VulkanSDK\\1.1.92.1"
   VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.92.1/windows/VulkanSDK-1.1.92.1-Installer.exe
   OPENALDIR: "C:\\openal-soft"
@@ -31,15 +37,14 @@ build_script:
   - cmake --build . --config %CFG% --clean-first
 
 after_build:
-  - echo %CFG%
-#  - mkdir Artifacts\Acid_%platform%
-#  - mkdir Artifacts\Demos_%platform%
-#  - xcopy Build\%CONFIGURATION%\Lib\%CONFIGURATION% Artifacts\Acid_%platform%\ /s/h/e/k/f/c
-#  - xcopy Build\%CONFIGURATION%\Bin\%CONFIGURATION% Artifacts\Demos_%platform%\ /s/h/e/k/f/c
-#  - xcopy Resources Artifacts\Demos_%platform%\Resources\Engine\ /s/h/e/k/f/c
+  - mkdir Artifacts\Acid\%CFG%_%ARCHITECTURE%
+  - mkdir Artifacts\Tests\%CFG%_%ARCHITECTURE%
+#  - xcopy Build\%CFG%\Lib%OUT_POST%\%CFG% Artifacts\Acid\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
+#  - xcopy Build\%CFG%\Bin%OUT_POST%\%CFG% Artifacts\Tests\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
+#  - xcopy Resources Artifacts\Tests\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
 
-#artifacts:
-#  - path: Artifacts\Acid_%platform%\
-#    name: Acid (%platform%)
-#  - path: Artifacts\Demos_%platform%\
-#    name: Acid Demos (%platform%)
+artifacts:
+  - path: Artifacts\Acid\%CFG%_%ARCHITECTURE%\
+    name: Acid (%CFG% %ARCHITECTURE%)
+  - path: Artifacts\Tests\%CFG%_%ARCHITECTURE%\
+    name: Acid Tests (%CFG% %ARCHITECTURE%)

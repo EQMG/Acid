@@ -59,30 +59,24 @@ matrix:
     - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 1000
     - clang --version
   # XCode 10.0
-  - os: osx
-    osx_image: xcode10
-    sudo: required
-    language: cpp
-    compiler: clang
-    env:
-    - COMPILER=clang++
-    - GSL_CXX_STANDARD=17
-    - BUILD_TYPE=Release
-    before_install:
-    - brew update
-    - brew tap caskroom/cask
-    - brew install tree
-    - brew install wget
-    - brew install openal-soft
-    - brew install glfw3 --HEAD
-    - brew install cmake || brew upgrade cmake
- #   - brew cask install apenngrace/vulkan/vulkan-sdk
-    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz"
-    - tar xopf vulkan-sdk.tar.gz
-    - rm vulkan-sdk.tar.gz
-    - pwd=$(pwd)
-    - VULKAN_SDK="$(echo $(pwd)/* | sort -V | tail -1)"/macOS
-    - export PATH="$VULKAN_SDK/bin:$PATH"
+#  - os: osx
+#    osx_image: xcode10
+#    sudo: required
+#    language: cpp
+#    compiler: clang
+#    env:
+#    - COMPILER=clang++
+#    - GSL_CXX_STANDARD=17
+#    - BUILD_TYPE=Release
+#    before_install:
+#    - brew update
+#    - brew tap caskroom/cask
+#    - brew install tree
+#    - brew install wget
+#    - brew install openal-soft
+#    - brew install glfw3 --HEAD
+#    - brew install cmake || brew upgrade cmake
+#    - brew cask install apenngrace/vulkan/vulkan-sdk
 
 script:
 - cd $TRAVIS_BUILD_DIR
