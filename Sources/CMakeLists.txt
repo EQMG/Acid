@@ -65,8 +65,11 @@ target_compile_definitions(Acid
 
 target_include_directories(Acid
 		PUBLIC
-		# This is needed so that non-relative include paths can find headers
+		# Helps the includes find what they need at build-time
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Helps the includes find what they need at runtime
+		# Although this also allows people to not prefix "Acid" before includes as well
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 		PRIVATE
 		# Since building locally from the submodules won't always create these vars..
 		# We have to do a simple check if they exist or they will cause errors
@@ -106,16 +109,16 @@ if(_ACID_ALL_SYSTEM_LIBS)
 	install(TARGETS Acid
 			# Auto-generates an export to install
 			EXPORT
-			AcidConfig
+			AcidTargets
 			LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 	# Install the auto-generated export
-	install(EXPORT AcidConfig
-			# Makes the end-user imported library Acid::Acid instead of just Acid
-			NAMESPACE Acid::
-			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-			)
+	install(EXPORT AcidTargets
+		# Makes the end-user imported library Acid::Acid instead of just Acid
+		NAMESPACE Acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
 	# Defines write_basic_package_version_file
 	include(CMakePackageConfigHelpers)
 	# Auto-generates a version file based on the current version specified in project()
@@ -123,9 +126,10 @@ if(_ACID_ALL_SYSTEM_LIBS)
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			COMPATIBILITY SameMajorVersion
 	)
-	# Install the auto-generated version file
+	# Install the auto-generated version file and AcidConfig
 	install(
 			FILES
+			"${CMAKE_CURRENT_SOURCE_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
 	)
