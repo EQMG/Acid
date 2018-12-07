@@ -20,6 +20,7 @@ namespace acid
 		{
 			// Extract the connection address and port from the response
 			std::string::size_type begin = response.GetFullMessage().find_first_of("0123456789");
+
 			if (begin != std::string::npos)
 			{
 				uint8_t data[6] = {0, 0, 0, 0, 0, 0};

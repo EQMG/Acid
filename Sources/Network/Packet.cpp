@@ -1,5 +1,10 @@
 #include "Packet.hpp"
 
+#if defined(ACID_BUILD_WINDOWS)
+#include <winsock2.h>
+#else
+#include <netinet/in.h>
+#endif
 #include <cstring>
 #include <cwchar>
 #include "Socket.hpp"

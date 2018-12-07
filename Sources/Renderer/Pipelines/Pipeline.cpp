@@ -64,7 +64,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
+	//	Log::Out("%s\n", m_shaderProgram->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %ims\n", m_pipelineCreate.GetShaderStages().back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}

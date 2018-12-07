@@ -1,5 +1,10 @@
 #include "TcpSocket.hpp"
 
+#if defined(ACID_BUILD_WINDOWS)
+#include <winsock2.h>
+#else
+#include <netinet/in.h>
+#endif
 #include <algorithm>
 #include <cstring>
 #include "Engine/Log.hpp"

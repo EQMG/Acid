@@ -1,44 +1,24 @@
 #pragma once
 
-#if defined(ACID_BUILD_WINDOWS)
-#ifdef _WIN32_WINDOWS
-#undef _WIN32_WINDOWS
-#endif
-#ifdef _WIN32_WINNT
-#undef _WIN32_WINNT
-#endif
-#define _WIN32_WINDOWS 0x0501
-#define _WIN32_WINNT   0x0501
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <basetsd.h>
-#else
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
-#endif
-
 #include <stdint.h>
 #include <vector>
 #include "Engine/Exports.hpp"
+
+struct sockaddr_in;
 
 namespace acid
 {
 // Define the low-level socket handle type, specific to each platform.
 #if defined(ACID_BUILD_WINDOWS)
-	typedef UINT_PTR SocketHandle;
+#if defined(_WIN64)
+	typedef unsigned __int64 SocketHandle;
 #else
-	typedef int32_t SocketHandle;
+	typedef unsigned int SocketHandle;
 #endif
-
-#if defined ACID_BUILD_WINDOWS
 	typedef int32_t SocketAddrLength;
 #else
-	typedef socklen_t SocketAddrLength;
+	typedef int32_t SocketHandle;
+	typedef unsigned int SocketAddrLength;
 #endif
 
 	/// <summary>
