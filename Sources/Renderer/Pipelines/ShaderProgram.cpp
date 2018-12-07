@@ -409,30 +409,28 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		EShLanguage language = GetEshLanguage(stageFlag);
-
 		// Starts converting GLSL to SPIR-V.
-		glslang::TShader shader = glslang::TShader(language);
+		EShLanguage language = GetEshLanguage(stageFlag);
 		glslang::TProgram program;
-		const char *shaderStrings[1];
+		glslang::TShader shader(language);
 		TBuiltInResource resources = GetResources();
 
 		// Enable SPIR-V and Vulkan rules when parsing GLSL.
-		EShMessages messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules);
+		EShMessages messages = (EShMessages)(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
+#if defined(ACID_VERBOSE)
+		messages = (EShMessages)(messages | EShMsgDebugInfo);
+#endif
 
-		shaderStrings[0] = shaderCode.c_str();
-		shader.setStrings(shaderStrings, 1);
+		const char *shaderSource = shaderCode.c_str();
+		shader.setStrings(&shaderSource, 1);
 
-		shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 100);
-		shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_0);
-		shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_0);
+		shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 110);
+		shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_1);
+		shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_3);
 
-	//	if (shader.preprocess(&resources, 100, ENoProfile, false, false, messages, &str, includer))
-	//	{
-	//		Log::Error("SPRIV shader preprocess failed!\n");
-	//	}
+		const int defaultVersion = glslang::EShTargetOpenGL_450;
 
-		if (!shader.parse(&resources, 100, false, messages))
+		if (!shader.parse(&resources, defaultVersion, false, messages))
 		{
 			Log::Out("%s\n", shader.getInfoLog());
 			Log::Out("%s\n", shader.getInfoDebugLog());
@@ -451,12 +449,19 @@ namespace acid
 		LoadProgram(program, stageFlag);
 
 		glslang::SpvOptions spvOptions;
+#if defined(ACID_VERBOSE)
 		spvOptions.generateDebugInfo = true;
 		spvOptions.disableOptimizer = true;
 		spvOptions.optimizeSize = false;
+#else
+		spvOptions.generateDebugInfo = false;
+		spvOptions.disableOptimizer = false;
+		spvOptions.optimizeSize = true;
+#endif
 
-		std::vector<uint32_t> spirv = std::vector<uint32_t>();
-		glslang::GlslangToSpv(*program.getIntermediate(language), spirv, &spvOptions);
+		spv::SpvBuildLogger logger;
+		std::vector<uint32_t> spirv;
+		glslang::GlslangToSpv(*program.getIntermediate((EShLanguage)language), spirv, &logger, &spvOptions);
 
 		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

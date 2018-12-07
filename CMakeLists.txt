@@ -17,6 +17,9 @@ endif()
 
 # Sets the install directories defined by GNU
 include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
 # Use ccache if it is installed, will cach previous compilations
 find_program(CCACHE_FOUND "ccache")
@@ -95,7 +98,7 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	# Used later to define as a pre-build dependencies
 	# Have to manually define because we manually searched for SPIRV
 	set(SPIRV_FOUND false)
-	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_HLSL" "ENABLE_OPT")
+	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_OPT")
 		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
 	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")

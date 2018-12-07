@@ -1,5 +1,10 @@
 #include "TcpListener.hpp"
 
+#if defined(ACID_BUILD_WINDOWS)
+#include <winsock2.h>
+#else
+#include <netinet/in.h>
+#endif
 #include "Engine/Log.hpp"
 #include "TcpSocket.hpp"
 

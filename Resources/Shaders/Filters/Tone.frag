@@ -8,18 +8,24 @@ layout(set = 0, binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 
-const vec3 white = vec3(1.0f, 1.0f, 1.0f);
-const float exposure = 1.3f;
+const float gamma = 2.0f;
+const float inverseGamma = 1.0f / gamma;
 
-vec3 toneMap(vec3 colour) 
+vec3 uncharted2(vec3 hdr)
 {
-	return colour / (1.0 + colour);
+	float A = 0.15f;
+	float B = 0.50f;
+	float C = 0.10f;
+	float D = 0.20f;
+	float E = 0.02f;
+	float F = 0.30f;
+	return ((hdr * (A * hdr + C * B) + D * E) / (hdr * (A * hdr + B) + D * F)) - E / F;
 }
 
 void main() 
 {
 	vec3 textureColour = texture(samplerColour, inUv).rgb;
-	vec4 colour = vec4(toneMap(textureColour * exposure) / toneMap(white), 1.0f);
+	vec4 colour = vec4(pow(uncharted2(textureColour), vec3(inverseGamma)), 1.0f);
 	
 	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
 }
