@@ -8,22 +8,22 @@ namespace acid
 	class ACID_EXPORT Force
 	{
 	private:
-		Vector3 m_force;
+		Vector3 m_direction;
 		bool m_neverExpires;
 		Time m_timeLeft;
 		Vector3 m_position;
 	public:
-		Force(const Vector3 &force, const Vector3 &position = Vector3::ZERO);
+		Force(const Vector3 &direction, const Vector3 &position = Vector3::ZERO);
 
-		Force(const Vector3 &force, const Time &time, const Vector3 &position = Vector3::ZERO);
+		Force(const Vector3 &direction, const Time &time, const Vector3 &position = Vector3::ZERO);
 
 		void Update();
 
 		bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
 
-		Vector3 GetForce() const { return m_force; }
+		Vector3 GetDirection() const { return m_direction; }
 
-		void SetForce(const Vector3 &force) { m_force = force; }
+		void SetDirection(const Vector3 &direction) { m_direction = direction; }
 
 		Time GetTimeLeft() const { return m_timeLeft; }
 
