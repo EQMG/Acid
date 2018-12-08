@@ -48,8 +48,13 @@ namespace acid
 
 		if (fs_file == nullptr)
 		{
-			Log::Error("Error while opening file to load %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
-			return {};
+			if (!FileSystem::Exists(path) || !FileSystem::IsFile(path))
+			{
+				Log::Error("Error while opening file to load %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+				return {};
+			}
+
+			return FileSystem::ReadTextFile(path);
 		}
 
 		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);

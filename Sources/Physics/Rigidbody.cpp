@@ -69,7 +69,7 @@ namespace acid
 		for (auto it = m_forces.begin(); it != m_forces.end();)
 		{
 			(*it)->Update();
-			m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
+			m_rigidBody->applyForce(Collider::Convert((*it)->GetDirection()), Collider::Convert((*it)->GetPosition()));
 
 			if ((*it)->IsExpired())
 			{

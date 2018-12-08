@@ -131,6 +131,9 @@ namespace acid
 		m_title("Acid Loading..."),
 		m_iconPath(""),
 		m_antialiasing(true),
+		m_borderless(false),
+		m_resizable(true),
+		m_floating(false),
 		m_fullscreen(false),
 		m_closed(false),
 		m_focused(true),
@@ -223,12 +226,29 @@ namespace acid
 		return UINT32_MAX;
 	}
 
-	void Display::SetWindowSize(const uint32_t &width, const uint32_t &height)
+	void Display::SetDimensions(const uint32_t &width, const uint32_t &height)
 	{
 		m_windowWidth = width;
 		m_windowHeight = height;
 		m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 		glfwSetWindowSize(m_window, width, height);
+	}
+
+	void Display::SetDimensions(const Vector2 &size)
+	{
+		SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x),
+			size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
+	}
+
+	void Display::SetPosition(const uint32_t &x, const uint32_t &y)
+	{
+		glfwSetWindowPos(m_window, x, y);
+	}
+
+	void Display::SetPosition(const Vector2 &position)
+	{
+		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
+			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 
 	void Display::SetTitle(const std::string &title)
@@ -258,6 +278,24 @@ namespace acid
 
 		glfwSetWindowIcon(m_window, 1, icons);
 		Texture::DeletePixels(data);
+	}
+
+	void Display::SetBorderless(const bool &borderless)
+	{
+		m_borderless = borderless;
+		glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
+	}
+
+	void Display::SetResizable(const bool &resizable)
+	{
+		m_resizable = resizable;
+		glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
+	}
+
+	void Display::SetFloating(const bool &floating)
+	{
+		m_floating = floating;
+		glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
 	}
 
 	void Display::SetFullscreen(const bool &fullscreen)
@@ -292,6 +330,18 @@ namespace acid
 			m_positionX = (videoMode->width - m_windowWidth) / 2;
 			m_positionY = (videoMode->height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
+		}
+	}
+
+	void Display::SetIconified(const bool &iconify)
+	{
+		if (!m_iconified && iconify)
+		{
+			glfwIconifyWindow(m_window);
+		}
+		else if (m_iconified && !iconify)
+		{
+			glfwRestoreWindow(m_window);
 		}
 	}
 
@@ -437,7 +487,6 @@ namespace acid
 
 		// Configures the window.
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // The window will be resizable depending on if it's fullscreen.
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Disable context creation.
 
@@ -456,11 +505,10 @@ namespace acid
 			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
 		}
 
-		glfwWindowHint(GLFW_RED_BITS, videoMode->redBits);
-		glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
-		glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
-		glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
-	//	glfwWindowHint(GLFW_DECORATED, GL_FALSE); // Borderless window.
+	//	glfwWindowHint(GLFW_RED_BITS, videoMode->redBits);
+	//	glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
+	//	glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
+	//	glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
 
 		// Create a windowed mode window and its context.
 		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
@@ -471,6 +519,11 @@ namespace acid
 			glfwTerminate();
 			assert(false && "Filed to create the GLFW window!");
 		}
+
+		// Window attributes that can change later.
+		glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
+		glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
+		glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
 
 		// Centre the window position.
 		m_positionX = (videoMode->width - m_windowWidth) / 2;
