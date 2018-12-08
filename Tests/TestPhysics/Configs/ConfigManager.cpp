@@ -6,7 +6,6 @@
 #include <Events/Events.hpp>
 #include <Events/EventTime.hpp>
 #include <Audio/Audio.hpp>
-#include <Events/EventChange.hpp>
 
 namespace test
 {
@@ -20,12 +19,6 @@ namespace test
 		{
 			Save();
 		}, false);
-
-		//	Events::Get()->AddEvent(new EventChange<uint32_t>([](){
-		//		return Display::Get()->GetWidth();
-		//	}, [](uint32_t value){
-		//		Log::Out("New width: %i\n", value);
-		//	}));
 	}
 
 	void ConfigManager::Load()

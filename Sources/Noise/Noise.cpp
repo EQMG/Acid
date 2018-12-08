@@ -571,7 +571,7 @@ namespace acid
 		{
 		case NOISE_TYPE_VALUE:
 			return SingleValue(0, x, y);
-		case NOISE_TYPE_VALUEFRACTAL:
+		case NOISE_TYPE_VALUE_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -583,7 +583,7 @@ namespace acid
 			}
 		case NOISE_TYPE_PERLIN:
 			return SinglePerlin(0, x, y);
-		case NOISE_TYPE_PERLINFRACTAL:
+		case NOISE_TYPE_PERLIN_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -595,7 +595,7 @@ namespace acid
 			}
 		case NOISE_TYPE_SIMPLEX:
 			return SingleSimplex(0, x, y);
-		case NOISE_TYPE_SIMPLEXFRACTAL:
+		case NOISE_TYPE_SIMPLEX_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -615,11 +615,11 @@ namespace acid
 			default:
 				return SingleCellular2Edge(x, y);
 			}
-		case NOISE_TYPE_WHITENOISE:
+		case NOISE_TYPE_STATIC:
 			return GetWhiteNoise(x, y);
 		case NOISE_TYPE_CUBIC:
 			return SingleCubic(0, x, y);
-		case NOISE_TYPE_CUBICFRACTAL:
+		case NOISE_TYPE_CUBIC_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -791,7 +791,7 @@ namespace acid
 		{
 		case NOISE_TYPE_VALUE:
 			return SingleValue(0, x, y, z);
-		case NOISE_TYPE_VALUEFRACTAL:
+		case NOISE_TYPE_VALUE_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -805,7 +805,7 @@ namespace acid
 			}
 		case NOISE_TYPE_PERLIN:
 			return SinglePerlin(0, x, y, z);
-		case NOISE_TYPE_PERLINFRACTAL:
+		case NOISE_TYPE_PERLIN_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -819,7 +819,7 @@ namespace acid
 			}
 		case NOISE_TYPE_SIMPLEX:
 			return SingleSimplex(0, x, y, z);
-		case NOISE_TYPE_SIMPLEXFRACTAL:
+		case NOISE_TYPE_SIMPLEX_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:
@@ -841,11 +841,11 @@ namespace acid
 			default:
 				return SingleCellular2Edge(x, y, z);
 			}
-		case NOISE_TYPE_WHITENOISE:
+		case NOISE_TYPE_STATIC:
 			return GetWhiteNoise(x, y, z);
 		case NOISE_TYPE_CUBIC:
 			return SingleCubic(0, x, y, z);
-		case NOISE_TYPE_CUBICFRACTAL:
+		case NOISE_TYPE_CUBIC_FRACTAL:
 			switch (m_fractalType)
 			{
 			case NOISE_FRACTAL_FBM:

@@ -7,7 +7,7 @@
 namespace test
 {
 	Terrain::Terrain(const float &sideLength, const float &squareSize) :
-		m_noise(Noise(25653345, 0.01f, NOISE_INTERP_QUINTIC, NOISE_TYPE_PERLINFRACTAL, 5, 2.0f, 0.5f, NOISE_FRACTAL_FBM)),
+		m_noise(Noise(25653345, 0.01f, NOISE_INTERP_QUINTIC, NOISE_TYPE_PERLIN_FRACTAL, 5, 2.0f, 0.5f, NOISE_FRACTAL_FBM)),
 		m_heightmap(std::vector<float>()),
 		m_sideLength(sideLength),
 		m_squareSize(squareSize),
