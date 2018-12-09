@@ -36,7 +36,7 @@ namespace acid
 
 	void Audio::Update()
 	{
-		auto camera = Scenes::Get()->GetScene()->GetCamera();
+		auto camera = Scenes::Get()->GetCamera();
 
 		if (camera == nullptr)
 		{
