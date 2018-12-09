@@ -5,6 +5,7 @@ project(Acid VERSION 0.10.8 LANGUAGES C CXX)
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples." ON)
+option(ACID_INSTALL_RESOURCES "Installs the Resources directory." ON)
 
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -136,6 +137,15 @@ endif()
 
 # Acid sources directory
 add_subdirectory(Sources)
+
+if(ACID_INSTALL_RESOURCES)
+	# Install resources for end-user usage
+	# because many source files use these
+	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
+			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
+		)
+endif()
 
 # Allows automation of "BUILD_TESTING"
 include(CTest)
