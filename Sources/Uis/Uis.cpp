@@ -13,8 +13,14 @@ namespace acid
 
 	void Uis::Update()
 	{
+		auto selectorJoystick = Scenes::Get()->GetSelectorJoystick();
+
+		if (selectorJoystick != nullptr)
+		{
+			m_selector.Update(Scenes::Get()->IsPaused(), *selectorJoystick);
+		}
+
 		m_objects.clear();
-		m_selector.Update(Scenes::Get()->IsPaused(), *Scenes::Get()->GetSelectorJoystick());
 		m_container->Update(m_objects);
 	}
 }

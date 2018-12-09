@@ -40,7 +40,7 @@ namespace acid
 
 	void Renderer::Update()
 	{
-		if (Display::Get()->IsIconified())
+		if (Display::Get()->IsIconified() || m_managerRender == nullptr)
 		{
 			return;
 		}
