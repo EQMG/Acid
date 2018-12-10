@@ -2,8 +2,9 @@
 
 namespace acid
 {
-	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons) :
+	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons, const bool &useAnd) :
 		m_buttons(std::vector<std::unique_ptr<IButton>>()),
+		m_useAnd(useAnd),
 		m_wasDown(false)
 	{
 		for (auto &button : buttons)
@@ -16,7 +17,11 @@ namespace acid
 	{
 		for (auto &button : m_buttons)
 		{
-			if (button->IsDown())
+			if (m_useAnd && !button->IsDown())
+			{
+				return false;
+			}
+			else if (!m_useAnd && button->IsDown())
 			{
 				return true;
 			}

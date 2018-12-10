@@ -14,13 +14,15 @@ namespace acid
 	{
 	private:
 		std::vector<std::unique_ptr<IButton>> m_buttons;
+		bool m_useAnd;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new compound button.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the being added. </param>
-		explicit ButtonCompound(const std::vector<IButton *> &buttons);
+		/// <param name="useAnd"> If <seealso cref="#IsDown()"/> will check if all buttons are down instead of just one. </param>
+		explicit ButtonCompound(const std::vector<IButton *> &buttons, const bool &useAnd = false);
 
 		ButtonCompound(const ButtonCompound&) = delete;
 
