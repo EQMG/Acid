@@ -15,8 +15,6 @@ Readme   [Read more](https://equilibrium-games.github.io/Acid/)
 
 Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
 
-Metrics   [Code metrics](https://equilibrium-games.github.io/Acid-Docs/loc/LocMetrics.html)
-
 Website   [Learn more](https://equilibrium.games)
 
 Trello   [Board](https://trello.com/b/ZRvpbbYC)

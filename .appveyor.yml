@@ -12,7 +12,7 @@ environment:
       ARCHITECTURE: x64
       GEN: "Visual Studio 15 2017 Win64"
       CFG: Release
-      OUT_POST: ""
+      OUT_POST: "64"
 #    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 #      ARCHITECTURE: x86
 #      GEN: "Visual Studio 15 2017"
