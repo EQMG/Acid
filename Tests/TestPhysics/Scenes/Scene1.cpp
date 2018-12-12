@@ -68,8 +68,8 @@ namespace test
 		// Animated.
 		auto animatedObject = new GameObject(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
 		animatedObject->SetName("Animated");
-	//	animatedObject->AddComponent<ColliderCapsule>(0.23f, 1.3f);
-	//	animatedObject->AddComponent<Rigidbody>(0.1f, 0.7f);
+		animatedObject->AddComponent<ColliderCapsule>(1.0f, 6.0f);
+		animatedObject->AddComponent<Rigidbody>(0.0f);
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<MeshRender>();
@@ -115,13 +115,13 @@ namespace test
 				cube->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
 				cube->AddComponent<ColliderCube>();
 				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
-				cube->AddComponent<MaterialDefault>(cubeColours[Maths::Random(0, cubeColours.size())]);
+				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
 				cube->AddComponent<MeshRender>();
 				cube->AddComponent<ShadowRender>();
 			}
 		}
 
-		auto teapot = new GameObject(Transform(Vector3(6.0f, 2.0f, 10.0f), Vector3(), 0.2f));
+		auto teapot = new GameObject(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->SetName("Teapot");
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 	//	teapot->AddComponent<ColliderConvexHull>();
@@ -129,9 +129,10 @@ namespace test
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		teapot->AddComponent<MeshRender>();
 		teapot->AddComponent<ShadowRender>();
-		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), false);
+		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
+		teapot->AddComponent<NameTag>("Vector3", 1.4f);
 
-		auto teapot2 = new GameObject(Transform(Vector3(9.0f, 2.0f, 10.0f), Vector3(), 0.2f));
+		auto teapot2 = new GameObject(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot2->SetName("Teapot2");
 		teapot2->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 	//	teapot2->AddComponent<ColliderConvexHull>();
@@ -139,7 +140,19 @@ namespace test
 		teapot2->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.0f, 1.0f);
 		teapot2->AddComponent<MeshRender>();
 		teapot2->AddComponent<ShadowRender>();
-		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), true);
+		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);
+		teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
+
+		auto teapot3 = new GameObject(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
+		teapot3->SetName("Teapot3");
+		teapot3->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
+	//	teapot3->AddComponent<ColliderConvexHull>();
+	//	teapot3->AddComponent<Rigidbody>(1.0f);
+		teapot3->AddComponent<MaterialDefault>(Colour::TEAL, nullptr, 0.0f, 1.0f);
+		teapot3->AddComponent<MeshRender>();
+		teapot3->AddComponent<ShadowRender>();
+		teapot3->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 2);
+		teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
 
 		auto cone = new GameObject(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 		cone->SetName("Cone");
@@ -185,7 +198,7 @@ namespace test
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
-			sphere->AddComponent<NameTag>(0.6f);
+			sphere->AddComponent<NameTag>("Sphere", 0.6f);
 
 		//	auto collisionObject = sphere->GetComponent<CollisionObject>();
 		//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){

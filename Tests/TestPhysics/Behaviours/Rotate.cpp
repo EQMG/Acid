@@ -8,7 +8,7 @@
 
 namespace test
 {
-	Rotate::Rotate(const Vector3 &direction, const bool &test) :
+	Rotate::Rotate(const Vector3 &direction, const int &test) :
 		m_direction(direction),
 		m_test(test),
 		m_rotation(Vector3())
@@ -25,11 +25,13 @@ namespace test
 		Transform &transform = GetGameObject()->GetTransform();
 		transform.SetRotation(m_rotation);
 
-		if (m_test)
+		if (m_test == 1)
 		{
-		//	Quaternion rotation = Quaternion(m_rotation.m_x, m_rotation.m_y, m_rotation.m_z);
-		//	transform.SetRotation(rotation.ToEuler());
-
+			Quaternion rotation = Quaternion(m_rotation.m_x, m_rotation.m_y, m_rotation.m_z);
+			transform.SetRotation(rotation.ToEuler());
+		}
+		else if (m_test == 2)
+		{
 			btTransform transform1 = Collider::Convert(transform);
 			transform = Collider::Convert(transform1, transform.GetScaling());
 		}

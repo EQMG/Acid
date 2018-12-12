@@ -43,7 +43,8 @@ namespace acid
 
 		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 
-		m_body = CreateRigidBody(m_mass, worldTransform, m_shape.get());
+		m_motionState = std::make_unique<btDefaultMotionState>(worldTransform);
+		m_body = CreateRigidBody(m_mass, m_motionState.get(), m_shape.get());
 		m_rigidBody = dynamic_cast<btRigidBody *>(m_body.get());
 		m_rigidBody->setWorldTransform(worldTransform);
 	//	m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
@@ -81,7 +82,9 @@ namespace acid
 		}
 
 		auto &transform = GetGameObject()->GetTransform();
-		transform = Collider::Convert(m_rigidBody->getWorldTransform(), transform.GetScaling());
+		btTransform motionTransform;
+		m_motionState->getWorldTransform(motionTransform);
+		transform = Collider::Convert(motionTransform, transform.GetScaling());
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
 	//	m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
@@ -184,7 +187,7 @@ namespace acid
 		m_rigidBody->setMassProps(m_mass, localInertia);
 	}
 
-	std::unique_ptr<btRigidBody> Rigidbody::CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape)
+	std::unique_ptr<btRigidBody> Rigidbody::CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 
@@ -197,7 +200,6 @@ namespace acid
 		}
 
 		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-		btDefaultMotionState *motionState = new btDefaultMotionState(startTransform);
 		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, motionState, shape, localInertia);
 		auto body = std::make_unique<btRigidBody>(cInfo);
 	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);

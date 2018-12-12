@@ -11,6 +11,7 @@ namespace test
 		public IComponent
 	{
 	private:
+		std::string m_name;
 		float m_heightOffset;
 
 		Transform m_transform;
@@ -19,7 +20,7 @@ namespace test
 		static const float TEXT_SIZE;
 		static const float VIEW_DISTANCE;
 
-		explicit NameTag(const float &heightOffset = 0.0f);
+		explicit NameTag(const std::string &name = "", const float &heightOffset = 0.0f);
 
 		void Start() override;
 

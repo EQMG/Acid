@@ -78,6 +78,11 @@ namespace acid
 		// Transform updates.
 		float aspectRatio = Display::Get()->GetAspectRatio();
 
+		if (m_worldTransform)
+		{
+			aspectRatio = 1.0f;
+		}
+
 		float da = m_rectangle.m_aspectSize ? aspectRatio : 1.0f;
 		float dw = (m_rectangle.GetDimensions().m_x / da) * m_scale;
 		float dh = m_rectangle.GetDimensions().m_y * m_scale;

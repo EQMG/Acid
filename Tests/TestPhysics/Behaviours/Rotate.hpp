@@ -12,10 +12,10 @@ namespace test
 	{
 	private:
 		Vector3 m_direction;
-		bool m_test;
+		int m_test;
 		Vector3 m_rotation;
 	public:
-		explicit Rotate(const Vector3 &direction = Vector3::ZERO, const bool &test = false);
+		explicit Rotate(const Vector3 &direction = Vector3::ZERO, const int &test = 0);
 
 		void Start() override;
 

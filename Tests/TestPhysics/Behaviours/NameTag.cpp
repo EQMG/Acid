@@ -10,7 +10,8 @@ namespace test
 	const float NameTag::TEXT_SIZE = 8.0f;
 	const float NameTag::VIEW_DISTANCE = 16.0f;
 
-	NameTag::NameTag(const float &heightOffset) :
+	NameTag::NameTag(const std::string &name, const float &heightOffset) :
+		m_name(name),
 		m_heightOffset(heightOffset),
 		m_transform(Transform()),
 		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), "Centre", true),
@@ -23,7 +24,7 @@ namespace test
 
 	void NameTag::Start()
 	{
-		m_text->SetString(GetGameObject()->GetName());
+		m_text->SetString(m_name);
 	}
 
 	void NameTag::Update()
