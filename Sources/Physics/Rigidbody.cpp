@@ -69,7 +69,7 @@ namespace acid
 		for (auto it = m_forces.begin(); it != m_forces.end();)
 		{
 			(*it)->Update();
-			m_rigidBody->applyForce(Collider::Convert((*it)->GetDirection()), Collider::Convert((*it)->GetPosition()));
+			m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
 
 			if ((*it)->IsExpired())
 			{
@@ -84,7 +84,7 @@ namespace acid
 		transform = Collider::Convert(m_rigidBody->getWorldTransform(), transform.GetScaling());
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-	//  rigidBody->getMotionState()->setWorldTransform(*worldTransform);
+	//	m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
 		m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
 	}

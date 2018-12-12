@@ -140,5 +140,13 @@ namespace acid
 		/// <param name="x"> The sample. </param>
 		/// <returns> The resulting stepped value. </returns>
 		static float SmoothlyStep(const float &edge0, const float &edge1, const float &x);
+
+		/// <summary>
+		/// Takes the cosign of a number by using the sign and a additional angle.
+		/// </summary>
+		/// <param name="sin"> The sin. </param>
+		/// <param name="angle"> The angle. </param>
+		/// <returns> The resulting cosign. </returns>
+		static float CosFromSin(const float &sin, const float &angle);
 	};
 }

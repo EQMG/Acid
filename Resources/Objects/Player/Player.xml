@@ -14,7 +14,7 @@
 			<y>1.0</y>
 			<z>0.0</z>
 		</Up>
-		<Step_Height>0.0</Step_Height>
+		<Step_Height>0.03</Step_Height>
 		<Fall_Speed>55.0</Fall_Speed>
 		<Jump_Speed>10.0</Jump_Speed>
 		<Max_Height>1.5</Max_Height>
