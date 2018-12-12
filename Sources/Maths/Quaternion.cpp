@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Matrix3.hpp"
 #include "Maths.hpp"
 
 namespace acid
@@ -42,9 +43,9 @@ namespace acid
 		float cosRoll = std::cos(halfRoll);
 		float sinRoll = std::sin(halfRoll);
 
-		m_x = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
-		m_y = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
-		m_z = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+		m_x = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
+		m_y = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
+		m_z = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
 		m_w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
 	}
 
@@ -138,13 +139,9 @@ namespace acid
 
 	Vector3 Quaternion::Multiply(const Vector3 &other) const
 	{
-		//	Matrix4 rotation = left.ToRotationMatrix();
-		//	return right * rotation;
-
 		Vector3 q = Vector3(m_x, m_y, m_z);
 		Vector3 cross1 = q.Cross(other);
 		Vector3 cross2 = q.Cross(cross1);
-
 		return other + 2.0f * (cross1 * m_w + cross2);
 	}
 
@@ -292,40 +289,36 @@ namespace acid
 
 	Vector3 Quaternion::ToEuler() const
 	{
-		/*float sqx = m_x * m_x;
+		float sqx = m_x * m_x;
 		float sqy = m_y * m_y;
 		float sqz = m_z * m_z;
 		float squ = m_w * m_w;
-		float rollX = std::atan2(2.0f * (m_y * m_z + m_w * m_x), squ - sqx - sqy + sqz);
-		float sarg = -2.f * (m_x * m_z - m_w * m_y);
-		float pitchY = sarg <= -1.0f ? -0.5f * PI : (sarg >= 1.0f ? 0.5f * PI : std::asin(sarg));
-		float yawZ = std::atan2(2 * (m_x * m_y + m_w * m_z), squ + sqx - sqy - sqz);
+		float sarg = -2.0f * (m_x * m_z - m_w * m_y);
 
-		return Vector3(pitchY * RAD_TO_DEG, yawZ * RAD_TO_DEG, rollX * RAD_TO_DEG);*/
-
-		float check = 2.0f * (-m_y * m_z + m_w * m_x);
-
-		if (check < -0.995f)
+		// If the pitch angle is PI/2 or -PI/2, we can only compute the sum roll + yaw.
+		// However, any combination that gives  the right sum will produce the correct orientation,
+		// so we set rollX = 0 and compute yawZ.
+		if (sarg <= -0.99999f)
 		{
 			return Vector3(
-				-90.0f,
-				0.0f,
-				-atan2f(2.0f * (m_x * m_z - m_w * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z)) * RAD_TO_DEG
+				-90.0f, // pitchY
+				2.0f * atan2f(m_x, -m_y) * RAD_TO_DEG, // yawZ
+				0.0f // rollX
 			);
 		}
-		else if (check > 0.995f)
+		else if (sarg >= 0.99999f)
 		{
 			return Vector3(
-				90.0f,
-				0.0f,
-				atan2f(2.0f * (m_x * m_z - m_w * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z)) * RAD_TO_DEG
+				90.0f, // pitchY
+				2.0f * atan2f(-m_x, m_y) * RAD_TO_DEG, // yawZ
+				0.0f // rollX
 			);
 		}
 
 		return Vector3(
-			asinf(check) * RAD_TO_DEG,
-			atan2f(2.0f * (m_x * m_z + m_w * m_y), 1.0f - 2.0f * (m_x * m_x + m_y * m_y)) * RAD_TO_DEG,
-			atan2f(2.0f * (m_x * m_y + m_w * m_z), 1.0f - 2.0f * (m_x * m_x + m_z * m_z)) * RAD_TO_DEG
+			asinf(sarg) * RAD_TO_DEG, // pitchY
+			atan2f(2.0f * (m_x * m_y + m_w * m_z), squ + sqx - sqy - sqz) * RAD_TO_DEG, // yawZ
+			atan2f(2.0f * (m_y * m_z + m_w * m_x), squ - sqx - sqy + sqz) * RAD_TO_DEG // rollX
 		);
 	}
 

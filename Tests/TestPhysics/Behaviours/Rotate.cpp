@@ -3,14 +3,15 @@
 #include <Objects/GameObject.hpp>
 #include <Engine/Engine.hpp>
 #include <Physics/Collider.hpp>
-//#include <bullet/LinearMath/btTransform.h>
+#include "../../../Libraries/bullet3/src/LinearMath/btTransform.h"
 #include <Maths/Maths.hpp>
 
 namespace test
 {
 	Rotate::Rotate(const Vector3 &direction, const bool &test) :
 		m_direction(direction),
-		m_test(test)
+		m_test(test),
+		m_rotation(Vector3())
 	{
 	}
 
@@ -20,27 +21,17 @@ namespace test
 
 	void Rotate::Update()
 	{
+		m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
 		Transform &transform = GetGameObject()->GetTransform();
-		transform.SetRotation(transform.GetRotation() + (m_direction * Engine::Get()->GetDelta().AsSeconds()));
+		transform.SetRotation(m_rotation);
 
 		if (m_test)
 		{
-		//	btQuaternion test = btQuaternion(transform.GetRotation().m_y * DEG_TO_RAD, transform.GetRotation().m_x * DEG_TO_RAD, transform.GetRotation().m_z * DEG_TO_RAD);
+		//	Quaternion rotation = Quaternion(m_rotation.m_x, m_rotation.m_y, m_rotation.m_z);
+		//	transform.SetRotation(rotation.ToEuler());
 
-		//	float pitch, yaw, roll;
-		//	test.getEulerZYX(roll, yaw, pitch);
-		//	Log::Out("%s -> (%f, %f, %f)\n", transform.GetRotation().ToString().c_str(), pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG);
-
-		//	btTransform test = Collider::Convert(transform);
-
-		//	float pitch, yaw, roll;
-		//	test.getRotation().getEulerZYX(yaw, pitch, roll);
-		//	Log::Out("%s -> (%f, %f, %f)\n", transform.GetRotation().ToString().c_str(), pitch, yaw, roll);
-
-		//	Transform testNew = Collider::Convert(test, transform.GetScaling());
-		//	transform.SetPosition(testNew.GetPosition());
-		//	transform.SetRotation(testNew.GetRotation());
-		//	transform.SetScaling(testNew.GetScaling());
+			btTransform transform1 = Collider::Convert(transform);
+			transform = Collider::Convert(transform1, transform.GetScaling());
 		}
 	}
 

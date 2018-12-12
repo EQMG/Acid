@@ -4,6 +4,8 @@
 #include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
+#include "Matrix3.hpp"
+#include "Matrix4.hpp"
 
 namespace acid
 {
@@ -19,7 +21,17 @@ namespace acid
 
 	Matrix2::Matrix2(const Matrix2 &source)
 	{
-		memcpy(m_rows, source.m_rows, 2 * 2 * sizeof(float));
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	}
+
+	Matrix2::Matrix2(const Matrix3 &source)
+	{
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	}
+
+	Matrix2::Matrix2(const Matrix4 &source)
+	{
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 	}
 
 	Matrix2::Matrix2(const float *source)

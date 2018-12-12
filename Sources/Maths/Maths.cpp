@@ -41,12 +41,12 @@ namespace acid
 
 	float Maths::Radians(const float &degrees)
 	{
-		return degrees / 180.0f * PI;
+		return degrees * DEG_TO_RAD;
 	}
 
 	float Maths::Degrees(const float &radians)
 	{
-		return radians * 180.0f / PI;
+		return radians * RAD_TO_DEG;
 	}
 
 	float Maths::WrapDegrees(const float &degrees)

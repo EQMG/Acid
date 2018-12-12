@@ -94,7 +94,7 @@ namespace test
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
-		auto terrain = new GameObject(Transform());
+		/*auto terrain = new GameObject(Transform());
 		terrain->SetName("Terrain");
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<ColliderHeightfield>();
@@ -102,7 +102,9 @@ namespace test
 		terrain->AddComponent<Mesh>();
 		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"), Texture::Resource("Objects/Terrain/Rocks.png"));
 		terrain->AddComponent<MeshRender>();
-		terrain->AddComponent<ShadowRender>();
+		terrain->AddComponent<ShadowRender>();*/
+
+		static const std::vector sphereColours = {Colour::RED, Colour::LIME, Colour::YELLOW, Colour::BLUE, Colour::PURPLE, Colour::GREY, Colour::WHITE};
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -110,11 +112,10 @@ namespace test
 			{
 				auto sphere = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
 				sphere->SetName("Sphere_" + String::To(i) + "_" + String::To(j));
-				sphere->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-				sphere->AddComponent<ColliderCube>();
+				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 0.5f));
+				sphere->AddComponent<ColliderSphere>();
 				sphere->AddComponent<Rigidbody>(0.5f, 0.3f);
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
-					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
+				sphere->AddComponent<MaterialDefault>(sphereColours[Maths::Random(0, sphereColours.size())]);
 				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();
 			}
@@ -123,22 +124,22 @@ namespace test
 		auto teapot = new GameObject(Transform(Vector3(6.0f, 1.0f, 10.0f), Vector3(), 0.2f));
 		teapot->SetName("Teapot");
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<ColliderConvexHull>();
-		teapot->AddComponent<Rigidbody>(1.0f);
+	//	teapot->AddComponent<ColliderConvexHull>();
+	//	teapot->AddComponent<Rigidbody>(1.0f);
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 		teapot->AddComponent<MeshRender>();
 		teapot->AddComponent<ShadowRender>();
-		teapot->AddComponent<Rotate>(Vector3(0.0f, 40.0f, 0.0f), false);
+		teapot->AddComponent<Rotate>(Vector3(40.0f, 0.0f, 0.0f), false);
 
-		auto meta = new GameObject(Transform(Vector3(12.0f, 1.3f, 10.0f), Vector3(), 0.3f));
-		meta->SetName("Meta");
-		meta->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Meta.obj"));
-	//	meta->AddComponent<ColliderConvexHull>();
-	//	meta->AddComponent<Rigidbody>(1.0f);
-		meta->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.4f, 0.2f);
-		meta->AddComponent<MeshRender>();
-		meta->AddComponent<ShadowRender>();
-		meta->AddComponent<Rotate>(Vector3(0.0f, 40.0f, 0.0f), true);
+		auto teapot2 = new GameObject(Transform(Vector3(9.0f, 1.0f, 10.0f), Vector3(), 0.2f));
+		teapot2->SetName("Teapot2");
+		teapot2->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
+	//	teapot2->AddComponent<ColliderConvexHull>();
+	//	teapot2->AddComponent<Rigidbody>(1.0f);
+		teapot2->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.0f, 1.0f);
+		teapot2->AddComponent<MeshRender>();
+		teapot2->AddComponent<ShadowRender>();
+		teapot2->AddComponent<Rotate>(Vector3(40.0f, 0.0f, 0.0f), true);
 
 		auto cone = new GameObject(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 		cone->SetName("Cone");
@@ -173,13 +174,13 @@ namespace test
 			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 0.5f));
+			auto sphere = new GameObject(Transform(cameraPosition, Vector3(), 1.0f));
 			sphere->SetName("Sphere_Undefined");
 			sphere->AddComponent<HeightDespawn>();
-			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
+			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 0.5f));
 			sphere->AddComponent<ColliderSphere>();
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * Vector3(-1.0f, 1.0f, -1.0f) * 3.0f, Time::Seconds(2.0f));
+			rigidbody->AddForce<Force>((cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
