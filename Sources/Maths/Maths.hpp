@@ -10,7 +10,7 @@ namespace acid
 {
 	static const float PI = 3.14159265358979323846264338f;
 	static const float DEG_TO_RAD = PI / 180.0f;
-	static const float RAD_TO_DEG = 360.0f / PI;
+	static const float RAD_TO_DEG = 180.0f / PI;
 
 	/// <summary>
 	/// A class that holds many various math functions.

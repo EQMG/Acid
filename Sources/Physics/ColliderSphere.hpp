@@ -13,7 +13,7 @@ namespace acid
 		std::unique_ptr<btSphereShape> m_shape;
 		float m_radius;
 	public:
-		explicit ColliderSphere(const float &radius = 1.0f, const Transform &localTransform = Transform::ZERO);
+		explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform::ZERO);
 
 		~ColliderSphere();
 

@@ -87,8 +87,6 @@ namespace acid
 	//  rigidBody->getMotionState()->setWorldTransform(*worldTransform);
 		m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
-	//	rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
-	//	rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 
 	void Rigidbody::Decode(const Metadata &metadata)

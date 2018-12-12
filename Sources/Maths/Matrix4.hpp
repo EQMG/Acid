@@ -7,6 +7,8 @@
 
 namespace acid
 {
+	class Matrix2;
+
 	class Matrix3;
 
 	class Quaternion;
@@ -50,6 +52,18 @@ namespace acid
 		/// </summary>
 		/// <param name="source"> Creates this matrix out of a existing one. </param>
 		Matrix4(const Matrix4 &source);
+
+		/// <summary>
+		/// Constructor for Matrix4.
+		/// </summary>
+		/// <param name="source"> Creates this matrix out of a existing one. </param>
+		Matrix4(const Matrix2 &source);
+
+		/// <summary>
+		/// Constructor for Matrix4.
+		/// </summary>
+		/// <param name="source"> Creates this matrix out of a existing one. </param>
+		Matrix4(const Matrix3 &source);
 
 		/// <summary>
 		/// Constructor for Matrix4.

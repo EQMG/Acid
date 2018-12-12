@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Matrix2.hpp"
 #include "Matrix3.hpp"
 #include "Quaternion.hpp"
 #include "Vector2.hpp"
@@ -25,6 +26,21 @@ namespace acid
 	Matrix4::Matrix4(const Matrix4 &source)
 	{
 		memcpy(m_rows, source.m_rows, 4 * sizeof(Vector4));
+	}
+
+	Matrix4::Matrix4(const Matrix2 &source)
+	{
+		memset(m_rows, 0, 4 * sizeof(Vector4));
+		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+		m_rows[2][2] = 1.0f;
+		m_rows[3][3] = 1.0f;
+	}
+
+	Matrix4::Matrix4(const Matrix3 &source)
+	{
+		memset(m_rows, 0, 4 * sizeof(Vector4));
+		memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
+		m_rows[3][3] = 1.0f;
 	}
 
 	Matrix4::Matrix4(const float *source)

@@ -12,8 +12,8 @@ namespace acid
 {
 	CollisionObject::CollisionObject(const float &friction) :
 		m_friction(friction),
-		m_frictionRolling(0.0f),
-		m_frictionSpinning(0.0f),
+		m_frictionRolling(0.1f),
+		m_frictionSpinning(0.2f),
 		m_shape(nullptr),
 		m_body(nullptr),
 		m_forces(std::vector<std::unique_ptr<Force>>()),

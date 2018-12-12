@@ -46,21 +46,23 @@ namespace acid
 
 	btTransform Collider::Convert(const Transform &transform)
 	{
+		btQuaternion rotation = btQuaternion();
+		rotation.setEulerZYX(transform.GetRotation().m_y * DEG_TO_RAD,
+			transform.GetRotation().m_x * DEG_TO_RAD, transform.GetRotation().m_z * DEG_TO_RAD);
+
 		btTransform worldTransform = btTransform();
 		worldTransform.setIdentity();
 		worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
-		worldTransform.setRotation(btQuaternion(transform.GetRotation().m_y, transform.GetRotation().m_x, transform.GetRotation().m_z));
+		worldTransform.setRotation(rotation);
 		return worldTransform;
 	}
 
 	Transform Collider::Convert(const btTransform &transform, const Vector3 &scaling)
 	{
 		btVector3 position = transform.getOrigin();
-
-		btQuaternion rotation = transform.getRotation();
-		float pitch, yaw, roll;
-		rotation.getEulerZYX(roll, yaw, pitch);
-
-		return Transform(Collider::Convert(position), Vector3(pitch * RAD_TO_DEG, yaw * RAD_TO_DEG, roll * RAD_TO_DEG), scaling);
+		float yaw, pitch, roll;
+		transform.getBasis().getEulerYPR(yaw, pitch, roll);
+		return Transform(Collider::Convert(position), Vector3(pitch * RAD_TO_DEG,
+			yaw * RAD_TO_DEG, roll * RAD_TO_DEG), scaling);
 	}
 }
