@@ -6,6 +6,8 @@
 #include "Objects/IComponent.hpp"
 #include "CollisionObject.hpp"
 
+class btDefaultMotionState;
+
 class btRigidBody;
 
 namespace acid
@@ -27,6 +29,7 @@ namespace acid
 		Vector3 m_linearVelocity;
 		Vector3 m_angularVelocity;
 
+		std::unique_ptr<btDefaultMotionState> m_motionState;
 		btRigidBody *m_rigidBody;
 	public:
 		/// <summary>
@@ -78,6 +81,6 @@ namespace acid
 	protected:
 		void RecalculateMass() override;
 	private:
-		static std::unique_ptr<btRigidBody> CreateRigidBody(float mass, const btTransform &startTransform, btCollisionShape* shape);
+		static std::unique_ptr<btRigidBody> CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
 	};
 }
