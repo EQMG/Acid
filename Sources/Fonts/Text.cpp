@@ -50,6 +50,7 @@ namespace acid
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
 		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
 		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("depth", GetDepth());
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 	}
 

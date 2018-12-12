@@ -29,6 +29,7 @@
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Physics/ColliderCone.hpp>
 #include <Physics/ColliderCylinder.hpp>
+#include <Files/Json/FileJson.hpp>
 #include "Skybox/CelestialBody.hpp"
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
@@ -45,6 +46,7 @@ namespace test
 		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
+		m_buttonSave(ButtonKeyboard({KEY_S})),
 		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
@@ -90,7 +92,7 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		PrefabObject prefabPlane = PrefabObject("Plane.json");
+		PrefabObject prefabPlane = PrefabObject("Plane.xml");
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
@@ -175,7 +177,7 @@ namespace test
 		auto smokeSystem = new GameObject("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
 	//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", SOUND_TYPE_MUSIC, true, true);
 
-		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.xml");
+		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.json");
 		prefabSmokeSystem.Write(*smokeSystem);
 		prefabSmokeSystem.Save();
 	}
@@ -221,6 +223,39 @@ namespace test
 		{
 			m_soundScreenshot.Play();
 			Renderer::Get()->CaptureScreenshot(FileSystem::GetWorkingDirectory() + "/Screenshots/" + Engine::GetDateTime() + ".png");
+		}
+
+		if (m_buttonSave.WasDown())
+		{
+			auto sceneFile = FileJson("Scene1.json");
+			auto sceneNode = sceneFile.GetParent()->AddChild(new Metadata("Scene"));
+
+			for (auto &entity : GetStructure()->QueryAll())
+			{
+				auto entityNode = sceneNode->AddChild(new Metadata());
+				entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
+				auto transformNode = entityNode->AddChild(new Metadata("Transform"));
+				auto componentsNode = entityNode->AddChild(new Metadata("Components"));
+				entity->GetTransform().Encode(*transformNode);
+
+				for (auto &component : entity->GetComponents())
+				{
+					if (component->IsFromPrefab())
+					{
+						continue;
+					}
+
+					auto componentName = Scenes::Get()->FindComponentName(component.get());
+
+					if (componentName)
+					{
+						auto child = componentsNode->AddChild(new Metadata(*componentName));
+						component->Encode(*child);
+					}
+				}
+			}
+
+			sceneFile.Save();
 		}
 
 		if (m_buttonExit.WasDown())

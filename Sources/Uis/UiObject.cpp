@@ -11,6 +11,7 @@ namespace acid
 		m_visible(true),
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
+		m_depth(0.0f),
 		m_positionOffset(Vector2()),
 		m_lockRotation(true),
 		m_screenTransform(Vector4()),

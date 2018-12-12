@@ -16,6 +16,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec2 atlasOffset;
 	float atlasRows;
 	float alpha;
+	float depth;
 	int modelMode;
 } object;
 
@@ -45,6 +46,7 @@ void main()
 	else
 	{
 		gl_Position = position;
+	    gl_Position.z = 0.5f - (0.01f * object.depth);
 	}
 
 	outUv = (inUv.xy / object.atlasRows) + object.atlasOffset;

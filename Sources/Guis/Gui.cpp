@@ -32,6 +32,7 @@ namespace acid
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("depth", GetDepth());
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 	}
 

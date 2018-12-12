@@ -44,6 +44,7 @@ namespace acid
 				continue;
 			}
 
+			component->SetFromPrefab(true);
 			component->Decode(*value);
 			AddComponent(component);
 		}

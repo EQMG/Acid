@@ -20,6 +20,7 @@ namespace test
 		ButtonKeyboard m_buttonFullscreen;
 		ButtonKeyboard m_buttonCaptureMouse;
 		ButtonKeyboard m_buttonScreenshot;
+		ButtonKeyboard m_buttonSave;
 		ButtonKeyboard m_buttonExit;
 		Sound m_soundScreenshot;
 

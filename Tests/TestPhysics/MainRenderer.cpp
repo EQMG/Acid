@@ -48,7 +48,7 @@ namespace test
 		{
 			SubpassType(0, {0, 2, 3, 4}),
 			SubpassType(1, {0, 5}),
-			SubpassType(2, {1})
+			SubpassType(2, {0, 1})
 		} // subpasses
 	};
 
