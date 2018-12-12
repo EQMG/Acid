@@ -14,7 +14,7 @@ namespace test
 			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN)
 		}, // images
 		{
-			SubpassType(0, {1}),
+			SubpassType(0, {0, 1}),
 		} // subpasses
 	};
 

@@ -14,12 +14,14 @@ namespace acid
 	{
 	private:
 		GameObject *m_gameObject;
+		bool m_fromPrefab;
 		bool m_started;
 		bool m_enabled;
 		bool m_removed;
 	public:
 		explicit IComponent() :
 			m_gameObject(nullptr),
+			m_fromPrefab(false),
 			m_started(false),
 			m_enabled(true),
 			m_removed(false)
@@ -67,6 +69,10 @@ namespace acid
 		/// </summary>
 		/// <param name="gameObject"> The new game object this is attached to. </param>
 		void SetGameObject(GameObject *gameObject) { m_gameObject = gameObject; }
+
+		bool IsFromPrefab() const { return m_fromPrefab; };
+
+		void SetFromPrefab(const bool &fromPrefab) { m_fromPrefab = fromPrefab; }
 
 		ACID_HIDDEN bool IsStarted() const { return m_started; };
 

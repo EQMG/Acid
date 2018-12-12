@@ -27,6 +27,7 @@ namespace acid
 		bool m_visible;
 		UiBound m_rectangle;
 		Vector4 m_scissor; // TODO: Convert to UiBound.
+		float m_depth;
 
 		Vector2 m_positionOffset;
 		Vector4 m_screenTransform;
@@ -100,6 +101,10 @@ namespace acid
 		Vector4 GetScissor() const { return m_scissor; }
 
 		void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
+
+		float GetDepth() const { return m_depth; }
+
+		void SetDepth(const float &depth) { m_depth = depth; }
 
 		Vector2 GetPositionOffset() const { return m_positionOffset; }
 

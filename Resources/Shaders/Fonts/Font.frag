@@ -11,7 +11,8 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec2 borderSizes;
 	vec2 edgeData;
 	float alpha;
-	bool lockRotation;
+	float depth;
+	int modelMode;
 } object;
 
 layout(set = 0, binding = 2) uniform sampler2D samplerColour;
