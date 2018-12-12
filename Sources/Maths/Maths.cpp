@@ -121,4 +121,24 @@ namespace acid
 		float s = std::clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 		return s * s * (3.0f - 2.0f * s);
 	}
+
+	float Maths::CosFromSin(const float &sin, const float &angle)
+	{
+		// sin(x)^2 + cos(x)^2 = 1
+		float cos = std::sqrt(1.0f - sin * sin);
+		float a = angle + (PI / 2.0f);
+		float b = a - (int)(a / (2.0f * PI)) * (2.0f * PI);
+
+		if (b < 0.0f)
+		{
+			b = (2.0f * PI) + b;
+		}
+
+		if (b >= PI)
+		{
+			return -cos;
+		}
+
+		return cos;
+	}
 }

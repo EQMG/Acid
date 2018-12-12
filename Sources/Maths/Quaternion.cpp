@@ -32,21 +32,21 @@ namespace acid
 
 	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
 	{
-		float halfPitch = pitch * DEG_TO_RAD * 0.5f;
-		float halfYaw = yaw * DEG_TO_RAD * 0.5f;
-		float halfRoll = roll * DEG_TO_RAD * 0.5f;
+		float sx = std::sin(pitch * DEG_TO_RAD * 0.5f);
+		float cx = Maths::CosFromSin(sx, pitch * DEG_TO_RAD * 0.5f);
+		float sy = std::sin(yaw * DEG_TO_RAD * 0.5f);
+		float cy = Maths::CosFromSin(sy, yaw * DEG_TO_RAD * 0.5f);
+		float sz = std::sin(roll * DEG_TO_RAD * 0.5f);
+		float cz = Maths::CosFromSin(sz, roll * DEG_TO_RAD * 0.5f);
 
-		float cosYaw = std::cos(halfYaw);
-		float sinYaw = std::sin(halfYaw);
-		float cosPitch = std::cos(halfPitch);
-		float sinPitch = std::sin(halfPitch);
-		float cosRoll = std::cos(halfRoll);
-		float sinRoll = std::sin(halfRoll);
-
-		m_x = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
-		m_y = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
-		m_z = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
-		m_w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw;
+		float cycz = cy * cz;
+		float sysz = sy * sz;
+		float sycz = sy * cz;
+		float cysz = cy * sz;
+		m_w = cx * cycz - sx * sysz;
+		m_x = sx * cycz + cx * sysz;
+		m_y = cx * sycz - sx * cysz;
+		m_z = cx * cysz + sx * sycz;
 	}
 
 	Quaternion::Quaternion(const Vector3 &source, const float &w) :
@@ -163,34 +163,31 @@ namespace acid
 
 	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression)
 	{
-		// Favor accuracy for native code builds.
-		float cosAngle = Dot(other);
-		float sign = 1.0f;
+		float cosom = m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
+		float absCosom = std::abs(cosom);
+		float scale0, scale1;
 
-		// Enable shortest path rotation.
-		if (cosAngle < 0.0f)
+		if (1.0f - absCosom > 1E-6f)
 		{
-			cosAngle = -cosAngle;
-			sign = -1.0f;
-		}
-
-		float angle = acosf(cosAngle);
-		float sinAngle = sinf(angle);
-		float t1, t2;
-
-		if (sinAngle > 0.001f)
-		{
-			float invSinAngle = 1.0f / sinAngle;
-			t1 = std::sin((1.0f - progression) * angle) * invSinAngle;
-			t2 = std::sin(progression * angle) * invSinAngle;
+			float sinSqr = 1.0f - absCosom * absCosom;
+			float sinom = 1.0f / std::sqrt(sinSqr);
+			float omega = std::atan2(sinSqr * sinom, absCosom);
+			scale0 = std::sin((1.0f - progression) * omega) * sinom;
+			scale1 = std::sin(progression * omega) * sinom;
 		}
 		else
 		{
-			t1 = 1.0f - progression;
-			t2 = progression;
+			scale0 = 1.0f - progression;
+			scale1 = progression;
 		}
 
-		return *this * t1 + (other * sign) * t2;
+		scale1 = cosom >= 0.0f ? scale1 : -scale1;
+		Quaternion result = Quaternion();
+		result.m_x = scale0 * m_x + scale1 * other.m_x;
+		result.m_y = scale0 * m_y + scale1 * other.m_y;
+		result.m_z = scale0 * m_z + scale1 * other.m_z;
+		result.m_w = scale0 * m_w + scale1 * other.m_w;
+		return result;
 	}
 
 	Quaternion Quaternion::Scale(const float &scalar) const
@@ -231,27 +228,27 @@ namespace acid
 
 	Matrix4 Quaternion::ToMatrix() const
 	{
-		float xSquared = m_x * m_x;
-		float twoXY = 2.0f * m_x * m_y;
-		float twoXZ = 2.0f * m_x * m_z;
-		float twoXW = 2.0f * m_x * m_w;
-		float ySquared = m_y * m_y;
-		float twoYZ = 2.0f * m_y * m_z;
-		float twoYW = 2.0f * m_y * m_w;
-		float twoZW = 2.0f * m_z * m_w;
-		float zSquared = m_z * m_z;
-		float wSquared = m_w * m_w;
+		float w2 = m_w * m_w;
+		float x2 = m_x * m_x;
+		float y2 = m_y * m_y;
+		float z2 = m_z * m_z;
+		float zw = m_z * m_w;
+		float xy = m_x * m_y;
+		float xz = m_x * m_z;
+		float yw = m_y * m_w;
+		float yz = m_y * m_z;
+		float xw = m_x * m_w;
 
 		Matrix4 result = Matrix4();
-		result[0][0] = wSquared + xSquared - ySquared - zSquared;
-		result[0][1] = twoXY - twoZW;
-		result[0][2] = twoXZ + twoYW;
-		result[1][0] = twoXY + twoZW;
-		result[1][1] = wSquared - xSquared + ySquared - zSquared;
-		result[1][2] = twoYZ - twoXW;
-		result[2][0] = twoXZ - twoYW;
-		result[2][1] = twoYZ + twoXW;
-		result[2][2] = wSquared - xSquared - ySquared + zSquared;
+		result[0][0] = w2 + x2 - z2 - y2;
+		result[0][1] = xy + zw + zw + xy;
+		result[0][2] = xz - yw + xz - yw;
+		result[1][0] = -zw + xy - zw + xy;
+		result[1][1] = y2 - z2 + w2 - x2;
+		result[1][2] = yz + yz + xw + xw;
+		result[2][0] = yw + xz + xz + yw;
+		result[2][1] = yz + yz - xw - xw;
+		result[2][2] = z2 - y2 - x2 + w2;
 		return result;
 	}
 
@@ -289,37 +286,11 @@ namespace acid
 
 	Vector3 Quaternion::ToEuler() const
 	{
-		float sqx = m_x * m_x;
-		float sqy = m_y * m_y;
-		float sqz = m_z * m_z;
-		float squ = m_w * m_w;
-		float sarg = -2.0f * (m_x * m_z - m_w * m_y);
-
-		// If the pitch angle is PI/2 or -PI/2, we can only compute the sum roll + yaw.
-		// However, any combination that gives  the right sum will produce the correct orientation,
-		// so we set rollX = 0 and compute yawZ.
-		if (sarg <= -0.99999f)
-		{
-			return Vector3(
-				-90.0f, // pitchY
-				2.0f * atan2f(m_x, -m_y) * RAD_TO_DEG, // yawZ
-				0.0f // rollX
-			);
-		}
-		else if (sarg >= 0.99999f)
-		{
-			return Vector3(
-				90.0f, // pitchY
-				2.0f * atan2f(-m_x, m_y) * RAD_TO_DEG, // yawZ
-				0.0f // rollX
-			);
-		}
-
-		return Vector3(
-			asinf(sarg) * RAD_TO_DEG, // pitchY
-			atan2f(2.0f * (m_x * m_y + m_w * m_z), squ + sqx - sqy - sqz) * RAD_TO_DEG, // yawZ
-			atan2f(2.0f * (m_y * m_z + m_w * m_x), squ - sqx - sqy + sqz) * RAD_TO_DEG // rollX
-		);
+		Vector3 result = Vector3();
+		result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
+		result.m_y = std::asin(2.0f *  (m_x * m_z + m_y * m_w));
+		result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));
+		return result * RAD_TO_DEG;
 	}
 
 	void Quaternion::Decode(const Metadata &metadata)

@@ -43,7 +43,7 @@ namespace acid
 		m_ghostObject->setSpinningFriction(m_frictionSpinning);
 		m_ghostObject->setUserPointer(this);
 
-		m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject, dynamic_cast<btConvexShape *>(m_shape.get()), 0.01666f);
+		m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject, dynamic_cast<btConvexShape *>(m_shape.get()), 0.03f);
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
 		m_controller->setGravity(Collider::Convert(m_gravity));

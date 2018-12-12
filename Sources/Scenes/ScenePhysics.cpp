@@ -51,7 +51,7 @@ namespace acid
 
 	void ScenePhysics::Update()
 	{
-		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
+		m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds(), 10);
 		CheckForCollisionEvents();
 	}
 

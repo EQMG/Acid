@@ -49,16 +49,7 @@ namespace acid
 	{
 		m_position = metadata.GetChild<Vector3>("Position");
 		m_rotation = metadata.GetChild<Vector3>("Rotation");
-
-		if (metadata.FindChild("Scale") != nullptr)
-		{
-			float scale = metadata.GetChild<float>("Scale");
-			m_scaling = Vector3(scale, scale, scale);
-		}
-		else
-		{
-			m_scaling = metadata.GetChild<Vector3>("Scaling");
-		}
+		m_scaling = metadata.GetChild<Vector3>("Scaling");
 	}
 
 	void Transform::Encode(Metadata &metadata) const

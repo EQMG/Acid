@@ -5,25 +5,39 @@
 
 namespace acid
 {
+	/// <summary>
+	/// Represents a force that is attached to a <seealso cref="Rigidbody"/>.
+	/// </summary>
 	class ACID_EXPORT Force
 	{
 	private:
-		Vector3 m_direction;
+		Vector3 m_force;
 		bool m_neverExpires;
 		Time m_timeLeft;
 		Vector3 m_position;
 	public:
-		Force(const Vector3 &direction, const Vector3 &position = Vector3::ZERO);
+		/// <summary>
+		/// Creates a new force that never times-out.
+		/// </summary>
+		/// <param name="force"> The vector of the force is applied. </param>
+		/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
+		Force(const Vector3 &force, const Vector3 &position = Vector3::ZERO);
 
-		Force(const Vector3 &direction, const Time &time, const Vector3 &position = Vector3::ZERO);
+		/// <summary>
+		/// Creates a new force that times-out.
+		/// </summary>
+		/// <param name="force"> The vector of the force is applied. </param>
+		/// <param name="time"> How long the force will be applied for. </param>
+		/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
+		Force(const Vector3 &force, const Time &time, const Vector3 &position = Vector3::ZERO);
 
 		void Update();
 
 		bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
 
-		Vector3 GetDirection() const { return m_direction; }
+		Vector3 GetForce() const { return m_force; }
 
-		void SetDirection(const Vector3 &direction) { m_direction = direction; }
+		void SetForce(const Vector3 &force) { m_force = force; }
 
 		Time GetTimeLeft() const { return m_timeLeft; }
 
