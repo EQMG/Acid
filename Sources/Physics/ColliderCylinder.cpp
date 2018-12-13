@@ -6,18 +6,16 @@
 namespace acid
 {
 	ColliderCylinder::ColliderCylinder(const float &radius, const float &height, const Transform &localTransform) :
-		Collider(localTransform),
+		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Cylinder.obj"), 3.0f, Colour::YELLOW)),
 		m_shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),
 		m_radius(radius),
 		m_height(height)
 	{
-		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Cylinder.obj"), 3.0f);
-		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::TEAL));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
 	}
 
 	ColliderCylinder::~ColliderCylinder()
 	{
-		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCylinder::Start()
@@ -26,8 +24,7 @@ namespace acid
 
 	void ColliderCylinder::Update()
 	{
-		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
-	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
+		Collider::Update();
 	}
 
 	void ColliderCylinder::Decode(const Metadata &metadata)
@@ -47,5 +44,19 @@ namespace acid
 	btCollisionShape *ColliderCylinder::GetCollisionShape() const
 	{
 		return m_shape.get();
+	}
+
+	void ColliderCylinder::SetRadius(const float &radius)
+	{
+		m_radius = radius;
+		m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
+	}
+
+	void ColliderCylinder::SetHeight(const float &height)
+	{
+		m_height = height;
+		m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
 	}
 }

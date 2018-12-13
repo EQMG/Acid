@@ -22,7 +22,7 @@ namespace test
 	void Rotate::Update()
 	{
 		m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
-		Transform &transform = GetGameObject()->GetTransform();
+		Transform &transform = GetGameObject()->GetLocalTransform();
 		transform.SetRotation(m_rotation);
 
 		if (m_test == 1)

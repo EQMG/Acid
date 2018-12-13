@@ -4,11 +4,12 @@
 
 namespace acid
 {
-	Light::Light(const Colour &colour, const float &radius, const Vector3 &offset) :
+	Light::Light(const Colour &colour, const float &radius, const Transform &localTransform) :
 		m_colour(colour),
 		m_radius(radius),
 		m_position(Vector3()),
-		m_localOffset(offset)
+		m_localTransform(localTransform),
+		m_worldTransform(Transform())
 	{
 	}
 
@@ -16,7 +17,8 @@ namespace acid
 		m_colour(source.m_colour),
 		m_radius(source.m_radius),
 		m_position(Vector3()),
-		m_localOffset(source.m_localOffset)
+		m_localTransform(source.m_localTransform),
+		m_worldTransform(source.m_worldTransform)
 	{
 	}
 
@@ -26,20 +28,30 @@ namespace acid
 
 	void Light::Update()
 	{
-		m_position = GetGameObject()->GetTransform().GetPosition() + m_localOffset;
 	}
 
 	void Light::Decode(const Metadata &metadata)
 	{
 		m_colour = metadata.GetChild<Colour>("Colour");
 		m_radius = metadata.GetChild<float>("Radius");
-		m_localOffset = metadata.GetChild<Vector3>("Local Offset");
+		m_localTransform = metadata.GetChild<Transform>("Local Transform");
 	}
 
 	void Light::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<Colour>("Colour", m_colour);
 		metadata.SetChild<float>("Radius", m_radius);
-		metadata.SetChild<Vector3>("Local Offset", m_localOffset);
+		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+	}
+
+	Transform Light::GetWorldTransform() const
+	{
+		if (m_localTransform.IsDirty() || GetGameObject()->GetWorldTransform().IsDirty())
+		{
+			m_worldTransform = GetGameObject()->GetWorldTransform() * m_localTransform;
+			m_localTransform.SetDirty(false);
+		}
+
+		return m_worldTransform;
 	}
 }

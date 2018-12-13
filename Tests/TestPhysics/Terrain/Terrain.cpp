@@ -68,7 +68,7 @@ namespace test
 
 	std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
 	{
-		auto transform = GetGameObject()->GetTransform();
+		auto &transform = GetGameObject()->GetLocalTransform();
 		auto heightmap = std::vector<float>(vertexCount * vertexCount);
 
 		for (uint32_t row = 0; row < vertexCount; row++)

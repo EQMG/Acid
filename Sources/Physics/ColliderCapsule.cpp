@@ -6,18 +6,16 @@
 namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height, const Transform &localTransform) :
-		Collider(localTransform),
+		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Capsule.obj"), 3.0f, Colour::FUCHSIA)),
 		m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)
 	{
-		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Capsule.obj"), 3.0f);
-		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::GREEN));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
 	}
 
 	ColliderCapsule::~ColliderCapsule()
 	{
-		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCapsule::Start()
@@ -26,8 +24,7 @@ namespace acid
 
 	void ColliderCapsule::Update()
 	{
-		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
-	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height, m_radius)); // TODO
+		Collider::Update();
 	}
 
 	void ColliderCapsule::Decode(const Metadata &metadata)
@@ -47,5 +44,19 @@ namespace acid
 	btCollisionShape *ColliderCapsule::GetCollisionShape() const
 	{
 		return m_shape.get();
+	}
+
+	void ColliderCapsule::SetRadius(const float &radius)
+	{
+		m_radius = radius;
+		m_shape->setImplicitShapeDimensions(btVector3(m_radius, 0.5f * m_height, m_radius));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
+	}
+
+	void ColliderCapsule::SetHeight(const float &height)
+	{
+		m_height = height;
+		m_shape->setImplicitShapeDimensions(btVector3(m_radius, 0.5f * m_height, m_radius));
+		m_localTransform.SetScaling(Vector3(m_radius, m_height, m_radius));
 	}
 }

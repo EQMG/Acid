@@ -39,7 +39,7 @@ namespace acid
 	void Rigidbody::Start()
 	{
 		CreateShape();
-		btTransform worldTransform = Collider::Convert(GetGameObject()->GetTransform());
+		auto worldTransform = Collider::Convert(GetGameObject()->GetWorldTransform());
 
 		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 
@@ -81,7 +81,7 @@ namespace acid
 			++it;
 		}
 
-		auto &transform = GetGameObject()->GetTransform();
+		auto &transform = GetGameObject()->GetLocalTransform();
 		btTransform motionTransform;
 		m_motionState->getWorldTransform(motionTransform);
 		transform = Collider::Convert(motionTransform, transform.GetScaling());

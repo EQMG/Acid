@@ -15,7 +15,7 @@ namespace test
 
 	void HeightDespawn::Update()
 	{
-		if (GetGameObject()->GetTransform().GetPosition().m_y < m_removeHeight)
+		if (GetGameObject()->GetWorldTransform().GetPosition().m_y < m_removeHeight)
 		{
 			GetGameObject()->SetRemoved(true);
 		}

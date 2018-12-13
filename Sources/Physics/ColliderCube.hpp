@@ -30,6 +30,6 @@ namespace acid
 
 		Vector3 GetExtents() const { return m_extents; }
 
-		void SetExtents(const Vector3 &extents) { m_extents = extents; }
+		void SetExtents(const Vector3 &extents);
 	};
 }

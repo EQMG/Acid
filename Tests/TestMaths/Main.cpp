@@ -10,6 +10,7 @@
 #include <Maths/Vector2.hpp>
 #include <Maths/Vector3.hpp>
 #include <Maths/Vector4.hpp>
+#include <Maths/Transform.hpp>
 
 using namespace acid;
 
@@ -21,9 +22,11 @@ int main(int argc, char **argv)
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
 		Log::Out("Matrix3 Size: %i\n", static_cast<int>(sizeof(Matrix3)));
 		Log::Out("Matrix4 Size: %i\n", static_cast<int>(sizeof(Matrix4)));
+		Log::Out("Quaternion Size: %i\n", static_cast<int>(sizeof(Quaternion)));
 		Log::Out("Vector2 Size: %i\n", static_cast<int>(sizeof(Vector2)));
 		Log::Out("Vector3 Size: %i\n", static_cast<int>(sizeof(Vector3)));
 		Log::Out("Vector4 Size: %i\n", static_cast<int>(sizeof(Vector4)));
+		Log::Out("Transform Size: %i\n", static_cast<int>(sizeof(Transform)));
 		Log::Out("\n");
 	}
 	{

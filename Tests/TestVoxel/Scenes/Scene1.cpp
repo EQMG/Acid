@@ -73,8 +73,8 @@ namespace test
 					auto voxelChunk = new GameObject(Transform(VoxelChunk::CHUNK_SIZE * Vector3(x, y, z)));
 					voxelChunk->SetName("Chunk_" + String::To(x) + "_" + String::To(y) + "_" + String::To(z));
 					voxelChunk->AddComponent<Mesh>();
-					voxelChunk->AddComponent<MaterialVoxel>();
 					voxelChunk->AddComponent<VoxelChunk>(MESHER_CULLED, true);
+					voxelChunk->AddComponent<MaterialVoxel>();
 					voxelChunk->AddComponent<MeshRender>();
 				}
 			}

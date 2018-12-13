@@ -30,7 +30,7 @@ namespace test
 	void NameTag::Update()
 	{
 		// Calculates the tag position, this component should be added after a rigidbody body.
-		Vector3 worldPosition = GetGameObject()->GetTransform().GetPosition();
+		Vector3 worldPosition = GetGameObject()->GetWorldTransform().GetPosition();
 		worldPosition.m_y += m_heightOffset;
 
 		m_transform.SetPosition(worldPosition);

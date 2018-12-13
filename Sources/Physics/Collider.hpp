@@ -31,7 +31,12 @@ namespace acid
 		/// Creates a new collider shape.
 		/// </summary>
 		/// <param name="localTransform"> The parent offset of the body. </param>
-		Collider(const Transform &localTransform = Transform::ZERO);
+		/// <param name="gizmoType"> The gizmo type to use for this collider type. </param>
+		Collider(const Transform &localTransform = Transform::ZERO, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
+
+		~Collider();
+
+		void Update() override;
 
 		/// <summary>
 		/// Gets the collision shape defined in this collider.
@@ -46,7 +51,7 @@ namespace acid
 		/// <returns> If the ray intersects, relative intersect location. </returns>
 	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
-		Transform &GetLocalTransform() { return m_localTransform; }
+		Transform GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform);
 

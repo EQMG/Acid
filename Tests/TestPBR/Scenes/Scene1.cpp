@@ -48,8 +48,8 @@ namespace test
 
 		// Player.
 		auto playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
-	//	playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
 	//	playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
+	//	playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
 		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.

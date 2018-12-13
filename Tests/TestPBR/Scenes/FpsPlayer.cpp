@@ -111,8 +111,8 @@ namespace test
 		m_velocity = m_velocity.SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-		Vector3 newPosition = GetGameObject()->GetTransform().GetPosition();
-		Vector3 newRotation = GetGameObject()->GetTransform().GetRotation();
+		Vector3 newPosition = GetGameObject()->GetLocalTransform().GetPosition();
+		Vector3 newRotation = GetGameObject()->GetLocalTransform().GetRotation();
 
 		float groundHeight = 0.0f;
 
@@ -135,8 +135,8 @@ namespace test
 			newPosition.m_y = groundHeight;
 		}
 
-		GetGameObject()->GetTransform().SetPosition(newPosition);
-		GetGameObject()->GetTransform().SetRotation(newRotation);
+		GetGameObject()->GetLocalTransform().SetPosition(newPosition);
+		GetGameObject()->GetLocalTransform().SetRotation(newRotation);
 	}
 
 	void FpsPlayer::Decode(const Metadata &metadata)

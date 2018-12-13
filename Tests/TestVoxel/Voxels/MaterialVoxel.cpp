@@ -30,7 +30,7 @@ namespace test
 
 	void MaterialVoxel::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
 	}
 
 	void MaterialVoxel::PushDescriptors(DescriptorsHandler &descriptorSet)

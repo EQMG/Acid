@@ -8,7 +8,7 @@ namespace acid
 {
 	GameObject::GameObject(const Transform &transform, ISpatialStructure *structure) :
 		m_name(""),
-		m_transform(transform),
+		m_localTransform(transform),
 		m_components(std::vector<std::unique_ptr<IComponent>>()),
 		m_structure(structure),
 		m_parent(nullptr),
@@ -44,7 +44,6 @@ namespace acid
 				continue;
 			}
 
-			component->SetFromPrefab(true);
 			component->Decode(*value);
 			AddComponent(component);
 		}
@@ -142,5 +141,32 @@ namespace acid
 		}
 
 		m_structure = structure;
+	}
+
+	Transform GameObject::GetWorldTransform() const
+	{
+		if (m_parent == nullptr)
+		{
+		//	if (m_localTransform.IsDirty())
+		//	{
+				m_worldTransform = m_localTransform;
+		//		m_localTransform.SetDirty(false);
+		//	}
+		}
+		else
+		{
+		//	if (m_localTransform.IsDirty() || m_parent->m_localTransform.IsDirty())
+		//	{
+				m_worldTransform = m_parent->GetWorldTransform() * m_localTransform;
+		//		m_localTransform.SetDirty(false);
+		//	}
+		}
+
+		return m_worldTransform;
+	}
+
+	Matrix4 GameObject::GetWorldMatrix() const
+	{
+		return GetWorldTransform().GetWorldMatrix();
 	}
 }

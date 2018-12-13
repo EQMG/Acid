@@ -83,7 +83,7 @@ namespace acid
 
 		Observer<CollisionObject *> &GetSeparationEvents() { return m_separationEvents; }
 	protected:
-		void CreateShape();
+		void CreateShape(const bool &forceSingle = false);
 
 		virtual void RecalculateMass() = 0;
 	};

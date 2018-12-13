@@ -46,7 +46,7 @@ namespace acid
 
 	void Sound::Update()
 	{
-		Transform transform = GetGameObject()->GetTransform();
+		auto transform = GetGameObject()->GetWorldTransform();
 		SetPosition(transform.GetPosition());
 	}
 

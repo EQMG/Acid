@@ -43,12 +43,12 @@ namespace test
 		if (m_enableRotation)
 		{
 			materialSkybox->SetBlend(World::Get()->GetStarIntensity());
-			GetGameObject()->GetTransform().SetRotation(World::Get()->GetSkyboxRotation());
+			GetGameObject()->GetLocalTransform().SetRotation(World::Get()->GetSkyboxRotation());
 		}
 		else
 		{
 			materialSkybox->SetBlend(1.0f);
-			GetGameObject()->GetTransform().SetRotation(Vector3::ZERO);
+			GetGameObject()->GetLocalTransform().SetRotation(Vector3::ZERO);
 		}
 	}
 

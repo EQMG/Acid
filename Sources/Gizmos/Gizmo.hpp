@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include "Engine/Engine.hpp"
 #include "Maths/Transform.hpp"
 #include "GizmoType.hpp"
@@ -21,8 +22,8 @@ namespace acid
 		/// </summary>
 		/// <param name="gizmoType"> The gizmo template to build from. </param>
 		/// <param name="transform"> The gizmos initial transform. </param>
-		/// <param name="diffuse"> The diffuse colour for this gizmo. </param>
-		Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const Colour &diffuse = Colour::RED);
+		/// <param name="diffuse"> The diffuse colour for this gizmo, without a value it will be set to the types default. </param>
+		Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &diffuse = {});
 
 		bool operator==(const Gizmo &other) const;
 

@@ -110,7 +110,7 @@ namespace test
 			}
 		}
 
-		auto &transform = GetGameObject()->GetTransform();
+		auto &transform = GetGameObject()->GetLocalTransform();
 		auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 		transform.SetRotation(Vector3(0.0f, cameraRotation.m_y, 0.0f));

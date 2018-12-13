@@ -81,7 +81,7 @@ namespace acid
 			uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
 		}
 
-		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
 		uniformObject.Push("baseDiffuse", m_baseDiffuse);
 		uniformObject.Push("metallic", m_metallic);
 		uniformObject.Push("roughness", m_roughness);
