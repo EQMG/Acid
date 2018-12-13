@@ -76,7 +76,7 @@ namespace acid
 		/// <returns> If the object has the cursor inside of its box. </returns>
 		bool IsSelected(const UiObject &object) const;
 
-		void CancelWasEvent();
+		void CancelWasEvent(const MouseButton &button);
 
 		float GetCursorX() const { return m_cursorX; }
 

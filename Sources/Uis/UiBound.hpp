@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include "Maths/Vector2.hpp"
 
 namespace acid
@@ -17,17 +16,27 @@ namespace acid
 		bool m_aspectSize;
 		Vector2 m_dimensions;
 
+		static const Vector2 TOP_LEFT;
+		static const Vector2 TOP_CENTRE;
+		static const Vector2 TOP_RIGHT;
+
+		static const Vector2 CENTRE_LEFT;
+		static const Vector2 CENTRE;
+		static const Vector2 CENTRE_RIGHT;
+
+		static const Vector2 BOTTOM_LEFT;
+		static const Vector2 BOTTOM_CENTRE;
+		static const Vector2 BOTTOM_RIGHT;
+
 		/// <summary>
 		/// Constructor for rectangle.
 		/// </summary>
 		/// <param name="position"> The object screen position. </param>
-		/// <param name="reference"> The reference pivot vertex (TopLeft, TopCentre, TopRight, CentreLeft, Centre, CentreRight, BottomLeft, BottomCentre, BottomRight). </param>
+		/// <param name="reference"> The reference pivot vertex (<seealso cref="#TOP_LEFT"/>, <seealso cref="#CENTRE_LEFT"/>, <seealso cref="#BOTTOM_LEFT"/>, ETC). </param>
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
-		explicit UiBound(const Vector2 &position, const std::string &reference = "TopLeft", const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
-
-		static Vector2 FindPivot(const std::string &key);
+		explicit UiBound(const Vector2 &position, const Vector2 &reference = TOP_LEFT, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		Vector2 GetPosition() const { return m_position; }
 

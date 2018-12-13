@@ -17,7 +17,7 @@ namespace acid
 {
 	static const std::vector<const char *> VALIDATION_LAYERS =
 	{
-		"VK_LAYER_LUNARG_standard_validation", "VK_LAYER_RENDERDOC_Capture"
+		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
 	};
 	static const std::vector<const char *> INSTANCE_EXTENSIONS =
 	{

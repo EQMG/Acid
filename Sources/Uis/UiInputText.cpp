@@ -9,14 +9,14 @@ namespace acid
 {
 	const Time UiInputText::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputText::FONT_SIZE = 1.7f;
-	const Vector2 UiInputText::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputText::SCALE_NORMAL = 1.0f;
 	const float UiInputText::SCALE_SELECTED = 1.1f;
 
-	UiInputText::UiInputText(UiObject *parent, const Vector3 &position, const std::string &prefix, const std::string &value, const int32_t &maxLength) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + value, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, DIMENSION.m_x)),
-		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+	UiInputText::UiInputText(UiObject *parent, const std::string &prefix, const std::string &value,
+	                         const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour) :
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + value, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
 		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_prefix(prefix),
 		m_value(value),
@@ -25,9 +25,9 @@ namespace acid
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
-		m_actionChange(nullptr)
+		m_changeEvents(Observer<UiInputText *, std::string>())
 	{
-		m_background->SetColourOffset(Colour());
+		m_background->SetColourOffset(primaryColour);
 	}
 
 	void UiInputText::UpdateObject()
@@ -45,10 +45,7 @@ namespace acid
 					m_value += static_cast<char>(key);
 					m_text->SetString(m_prefix + m_value);
 
-					if (m_actionChange != nullptr)
-					{
-						m_actionChange();
-					}
+					m_changeEvents.OnEvent(this, m_text->GetString());
 
 					m_lastKey = key;
 				}
@@ -62,10 +59,7 @@ namespace acid
 					m_value = m_value.substr(0, m_value.length() - 1);
 					m_text->SetString(m_prefix + m_value);
 
-					if (m_actionChange != nullptr)
-					{
-						m_actionChange();
-					}
+					m_changeEvents.OnEvent(this, m_text->GetString());
 
 					m_lastKey = 8;
 				}
@@ -99,7 +93,7 @@ namespace acid
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 			m_soundClick.Play();
 
-			Uis::Get()->GetSelector().CancelWasEvent();
+			CancelEvent(MOUSE_BUTTON_LEFT);
 		}
 		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
 		{

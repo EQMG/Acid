@@ -3,30 +3,59 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
-#include "UiTab.hpp"
+#include <Uis/UiInputButton.hpp>
 
 using namespace acid;
 
 namespace test
 {
+	class UiTab
+	{
+	private:
+		std::string m_name;
+		Colour m_colour;
+		std::unique_ptr<UiInputButton> m_button;
+		std::unique_ptr<UiObject> m_content;
+	public:
+		UiTab(const std::string &name, const Colour &colour, UiInputButton *button, UiObject *content) :
+			m_name(name),
+			m_colour(colour),
+			m_button(button),
+			m_content(content)
+		{
+		}
+
+		std::string GetName() const { return m_name; }
+
+		Colour GetColour() const { return m_colour; }
+
+		UiInputButton *GetButton() const { return m_button.get(); }
+
+		UiObject *GetContent() const { return m_content.get(); }
+	};
+
 	class UiNavigation :
 		public UiObject
 	{
 	private:
+		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Gui> m_barBackground;
-		std::unique_ptr<Text> m_barTitle;
-		std::unique_ptr<Text> m_barCreatedBy;
-		std::unique_ptr<Gui> m_tabPuck;
+		std::unique_ptr<Text> m_title;
+		std::unique_ptr<Text> m_createdBy;
 		std::vector<std::unique_ptr<UiTab>> m_tabs;
 
 		std::unique_ptr<IDriver> m_driverTarget;
 		UiTab *m_currentTab;
 		UiTab *m_targetTab;
 	public:
+		static const Colour PANEL_COLOUR;
+		static const Colour BUTTON_COLOUR;
+		static const Vector2 BUTTON_SIZE;
+
 		explicit UiNavigation(UiObject *parent);
 
 		void UpdateObject() override;
 
-		void SwitchTab(const std::string &tabName);
+		void SwitchTab(UiTab *tab);
 	};
 }

@@ -8,17 +8,17 @@ namespace acid
 {
 	const Time UiInputButton::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputButton::FONT_SIZE = 1.7f;
-	const Vector2 UiInputButton::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputButton::SCALE_NORMAL = 1.0f;
 	const float UiInputButton::SCALE_SELECTED = 1.1f;
 
-	UiInputButton::UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, DIMENSION.m_x)),
-		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle, const Colour &primaryColour) :
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
 		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_mouseOver(false)
 	{
+		m_background->SetColourOffset(primaryColour);
 	}
 
 	void UiInputButton::UpdateObject()

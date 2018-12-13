@@ -14,22 +14,26 @@ namespace acid
 	private:
 		static const Time CHANGE_TIME;
 		static const float FONT_SIZE;
-		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		std::unique_ptr<Text> m_text;
 		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
 
 		bool m_mouseOver;
 	public:
-		UiInputButton(UiObject *parent, const Vector2 &position, const std::string &string);
+		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)),
+			const Colour &primaryColour = Colour("#171717"));
 
 		void UpdateObject() override;
 
-		std::string GetText() const { return m_text->GetString(); }
+		Gui *GetBackground() const { return m_background.get(); }
 
-		void SetText(const std::string &string) const { m_text->SetString(string); }
+		Text *GetText() const { return m_text.get(); }
+
+		std::string GetString() const { return m_text->GetString(); }
+
+		void SetString(const std::string &string) const { m_text->SetString(string); }
 	};
 }

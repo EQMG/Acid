@@ -27,6 +27,7 @@
 #include "Voxels/MaterialVoxel.hpp"
 #include "Voxels/VoxelChunk.hpp"
 #include "FpsCamera.hpp"
+#include "FpsPlayer.hpp"
 
 namespace test
 {
@@ -52,7 +53,8 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		auto playerObject = new GameObject("Objects/Player/Player.xml", Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		auto playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		playerObject->AddComponent<FpsPlayer>();
 
 		// Skybox.
 		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));

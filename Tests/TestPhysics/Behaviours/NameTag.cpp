@@ -14,7 +14,7 @@ namespace test
 		m_name(name),
 		m_heightOffset(heightOffset),
 		m_transform(Transform()),
-		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), "Centre", true),
+		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::BOTTOM_CENTRE, true),
 			TEXT_SIZE, "Undefined", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE))
 	{
 		m_text->SetTextColour(Colour("#ffffff"));

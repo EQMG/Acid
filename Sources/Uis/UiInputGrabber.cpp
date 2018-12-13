@@ -8,7 +8,6 @@ namespace acid
 {
 	const Time UiInputGrabber::CHANGE_TIME = Time::Seconds(0.1f);
 	const float UiInputGrabber::FONT_SIZE = 1.7f;
-	const Vector2 UiInputGrabber::DIMENSION = Vector2(0.36f, 0.05f);
 	const float UiInputGrabber::SCALE_NORMAL = 1.0f;
 	const float UiInputGrabber::SCALE_SELECTED = 1.1f;
 
@@ -98,10 +97,10 @@ namespace acid
 		return String::To(value);
 	}
 
-	UiInputGrabber::UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber) :
-		UiObject(parent, UiBound(position, "Centre", true, true, Vector2(1.0f, 1.0f))),
-		m_text(std::make_unique<Text>(this, UiBound(position, "Centre", true), FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, DIMENSION.m_x)),
-		m_background(std::make_unique<Gui>(this, UiBound(position, "Centre", true, true, DIMENSION), Texture::Resource("Guis/Button.png"))),
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
 		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_grabber(grabber),
 		m_prefix(prefix),
@@ -109,8 +108,9 @@ namespace acid
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
-		m_actionChange(nullptr)
+		m_changeEvents(Observer<UiInputGrabber *, int32_t>())
 	{
+		m_background->SetColourOffset(primaryColour);
 	}
 
 	void UiInputGrabber::UpdateObject()
@@ -124,14 +124,11 @@ namespace acid
 				m_value = key;
 				m_text->SetString(m_prefix + m_grabber->GetValue(m_value));
 
-				if (m_actionChange != nullptr)
-				{
-					m_actionChange();
-				}
+				m_changeEvents.OnEvent(this, m_value);
 
 				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
-				Uis::Get()->GetSelector().CancelWasEvent();
+				CancelEvent(MOUSE_BUTTON_LEFT);
 				m_selected = false;
 
 				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -150,7 +147,7 @@ namespace acid
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 			m_soundClick.Play();
 
-			Uis::Get()->GetSelector().CancelWasEvent();
+			CancelEvent(MOUSE_BUTTON_LEFT);
 		}
 		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
 		{

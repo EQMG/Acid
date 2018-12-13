@@ -4,43 +4,25 @@
 
 namespace acid
 {
-	static std::map<std::string, Vector2> PIVOT_MAP = std::map<std::string, Vector2>
-	{
-		{"TopLeft", Vector2(0.0f, 1.0f)},
-		{"TopCentre", Vector2(0.5f, 1.0f)},
-		{"TopRight", Vector2(1.0f, 1.0f)},
+	const Vector2 UiBound::TOP_LEFT = Vector2(0.0f, 1.0f);
+	const Vector2 UiBound::TOP_CENTRE = Vector2(0.5f, 1.0f);
+	const Vector2 UiBound::TOP_RIGHT = Vector2(1.0f, 1.0f);
 
-		{"CentreLeft", Vector2(0.0f, 0.5f)},
-		{"Centre", Vector2(0.5f, 0.5f)},
-		{"CentreRight", Vector2(1.0f, 0.5f)},
+	const Vector2 UiBound::CENTRE_LEFT = Vector2(0.0f, 0.5f);
+	const Vector2 UiBound::CENTRE = Vector2(0.5f, 0.5f);
+	const Vector2 UiBound::CENTRE_RIGHT = Vector2(1.0f, 0.5f);
 
-		{"BottomLeft", Vector2(0.0f, 0.0f)},
-		{"BottomCentre", Vector2(0.5f, 0.0f)},
-		{"BottomRight", Vector2(1.0f, 0.0f)},
-	};
+	const Vector2 UiBound::BOTTOM_LEFT = Vector2(0.0f, 0.0f);
+	const Vector2 UiBound::BOTTOM_CENTRE = Vector2(0.5f, 0.0f);
+	const Vector2 UiBound::BOTTOM_RIGHT = Vector2(1.0f, 0.0f);
 
-	UiBound::UiBound(const Vector2 &position, const std::string &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
+	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const bool &aspectPosition, const bool &aspectSize, const Vector2 &dimensions) :
 		m_position(Vector2(position)),
-		m_reference(Vector2(FindPivot(reference))),
+		m_reference(reference),
 		m_aspectPosition(aspectPosition),
 		m_aspectSize(aspectSize),
 		m_dimensions(Vector2(dimensions))
 	{
-	}
-
-	Vector2 UiBound::FindPivot(const std::string &key)
-	{
-		auto it = PIVOT_MAP.find(key);
-
-		if (it == PIVOT_MAP.end())
-		{
-#if defined(ACID_VERBOSE)
-			Log::Error("Could not find a UiBound pivot from key: %s", key.c_str());
-#endif
-			return Vector2(0.0f, 1.0f);
-		}
-
-		return it->second;
 	}
 
 	bool UiBound::operator==(const UiBound &other) const

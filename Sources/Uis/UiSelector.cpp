@@ -77,11 +77,13 @@ namespace acid
 		return false;
 	}
 
-	void UiSelector::CancelWasEvent()
+	void UiSelector::CancelWasEvent(const MouseButton &button)
 	{
-		for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+		if (button > MOUSE_BUTTON_END_RANGE)
 		{
-			m_selectorMice[i].m_wasDown = false;
+			return;
 		}
+
+		m_selectorMice[static_cast<uint32_t>(button)].m_wasDown = false;
 	}
 }
