@@ -12,7 +12,7 @@ namespace acid
 	const float UiInputButton::SCALE_SELECTED = 1.1f;
 
 	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle, const Colour &primaryColour) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, string, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
 		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),

@@ -10,10 +10,13 @@ namespace acid
 		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
+		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Cube.obj"), 3.0f);
+		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::RED));
 	}
 
 	ColliderCube::~ColliderCube()
 	{
+		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCube::Start()
@@ -22,6 +25,7 @@ namespace acid
 
 	void ColliderCube::Update()
 	{
+		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
 	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
 	}
 

@@ -54,9 +54,9 @@ namespace acid
 
 	void ParticleType::Update(const std::vector<Particle> &particles)
 	{
-		auto instanceData = std::vector<ParticleData>();
-		instanceData.resize(MAX_TYPE_INSTANCES);
-		uint32_t i = 0;
+		auto instanceDatas = std::vector<ParticleData>();
+		instanceDatas.resize(MAX_TYPE_INSTANCES);
+		m_instances = 0;
 
 		for (auto &particle : particles)
 		{
@@ -65,21 +65,25 @@ namespace acid
 				continue;
 			}
 
-			instanceData[i] = GetInstanceData(particle);
-			i++;
+			instanceDatas[m_instances] = GetInstanceData(particle);
+			m_instances++;
 
-			if (i > instanceData.size())
+			if (m_instances >= instanceDatas.size())
 			{
 				break;
 			}
 		}
 
-		m_storageBuffer.Push("data", *instanceData.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
-		m_instances = static_cast<uint32_t>(instanceData.size());
+		m_storageBuffer.Push("data", *instanceDatas.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
 	}
 
 	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
+		if (m_instances == 0)
+		{
+			return false;
+		}
+
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("Instances", m_storageBuffer);

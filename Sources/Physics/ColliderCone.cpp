@@ -11,10 +11,13 @@ namespace acid
 		m_radius(radius),
 		m_height(height)
 	{
+		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Cone.obj"), 3.0f);
+		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::BLUE));
 	}
 
 	ColliderCone::~ColliderCone()
 	{
+		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCone::Start()
@@ -23,6 +26,7 @@ namespace acid
 
 	void ColliderCone::Update()
 	{
+		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
 		m_shape->setRadius(m_radius);
 		m_shape->setHeight(m_height);
 	}

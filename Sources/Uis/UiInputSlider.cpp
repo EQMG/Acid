@@ -15,7 +15,7 @@ namespace acid
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &prefix, const float &value,
 	                             const float &progressMin, const float &progressMax, const int32_t &roundTo,
 	                             const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
 		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),

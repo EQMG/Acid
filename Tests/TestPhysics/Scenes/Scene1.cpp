@@ -1,6 +1,9 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
+#include <Files/Json/FileJson.hpp>
+#include <Gizmos/Gizmos.hpp>
+#include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -8,32 +11,30 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Physics/ColliderCube.hpp>
-#include <Physics/ColliderSphere.hpp>
-#include <Models/Shapes/ModelCube.hpp>
-#include <Physics/ColliderConvexHull.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Models/Obj/ModelObj.hpp>
+#include <Models/Shapes/ModelCube.hpp>
+#include <Models/Shapes/ModelCylinder.hpp>
+#include <Models/Shapes/ModelSphere.hpp>
+#include <Objects/Prefabs/PrefabObject.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Particles/Spawns/SpawnCircle.hpp>
-#include <Shadows/ShadowRender.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Physics/ColliderHeightfield.hpp>
-#include <Terrain/Terrain.hpp>
-#include <Terrain/MaterialTerrain.hpp>
 #include <Physics/ColliderCapsule.hpp>
-#include <Uis/Uis.hpp>
-#include <Objects/Prefabs/PrefabObject.hpp>
-#include <Helpers/FileSystem.hpp>
-#include <Models/Shapes/ModelCylinder.hpp>
 #include <Physics/ColliderCone.hpp>
+#include <Physics/ColliderConvexHull.hpp>
+#include <Physics/ColliderCube.hpp>
 #include <Physics/ColliderCylinder.hpp>
-#include <Files/Json/FileJson.hpp>
-#include "Skybox/CelestialBody.hpp"
+#include <Physics/ColliderHeightfield.hpp>
+#include <Physics/ColliderSphere.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
+#include <Shadows/ShadowRender.hpp>
+#include <Terrain/MaterialTerrain.hpp>
+#include <Terrain/Terrain.hpp>
+#include <Uis/Uis.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
+#include "Skybox/CelestialBody.hpp"
 #include "FpsCamera.hpp"
 
 namespace test
@@ -115,7 +116,7 @@ namespace test
 				auto cube = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
 				cube->SetName("Sphere_" + String::To(i) + "_" + String::To(j));
 				cube->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-				cube->AddComponent<ColliderCube>();
+				cube->AddComponent<ColliderCube>(Vector3::ONE, Transform(Vector3::ZERO, Vector3::ZERO, 2.0f));
 				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
 				cube->AddComponent<MeshRender>();
@@ -194,6 +195,7 @@ namespace test
 			sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 0.5f));
 			sphere->AddComponent<ColliderSphere>();
+		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
@@ -201,6 +203,9 @@ namespace test
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
 			sphere->AddComponent<NameTag>("Sphere", 0.6f);
+
+		//	auto gizmoType1 = GizmoType::Resource(Model::Resource("Gizmos/Arrow.obj"), 3.0f);
+		//	Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
 
 		//	auto collisionObject = sphere->GetComponent<CollisionObject>();
 		//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){

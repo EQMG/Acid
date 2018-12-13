@@ -10,10 +10,13 @@ namespace acid
 		m_shape(std::make_unique<btSphereShape>(radius)),
 		m_radius(radius)
 	{
+		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Sphere.obj"), 3.0f);
+		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::FUCHSIA));
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
+		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderSphere::Start()
@@ -22,6 +25,7 @@ namespace acid
 
 	void ColliderSphere::Update()
 	{
+		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
 		m_shape->setUnscaledRadius(m_radius);
 	}
 

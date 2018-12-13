@@ -8,15 +8,10 @@
 #include "Maths/Vector3.hpp"
 
 class btCollisionObject;
-
 class btCollisionConfiguration;
-
 class btBroadphaseInterface;
-
 class btCollisionDispatcher;
-
-class btSequentialImpulseConstraintSolver;
-
+class btConstraintSolver;
 class btDiscreteDynamicsWorld;
 
 namespace acid
@@ -54,9 +49,8 @@ namespace acid
 		std::unique_ptr<btCollisionConfiguration> m_collisionConfiguration;
 		std::unique_ptr<btBroadphaseInterface> m_broadphase;
 		std::unique_ptr<btCollisionDispatcher> m_dispatcher;
-		std::unique_ptr<btSequentialImpulseConstraintSolver> m_solver;
+		std::unique_ptr<btConstraintSolver> m_solver;
 		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
-
 		CollisionPairs m_pairsLastUpdate;
 	public:
 		ScenePhysics();

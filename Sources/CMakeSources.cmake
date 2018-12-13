@@ -49,6 +49,10 @@ set(_temp_acid_headers
 		Fonts/FontWord.hpp
 		Fonts/RendererFonts.hpp
 		Fonts/Text.hpp
+		Gizmos/Gizmo.hpp
+		Gizmos/Gizmos.hpp
+		Gizmos/GizmoType.hpp
+		Gizmos/RendererGizmos.hpp
 		Guis/Gui.hpp
 		Guis/RendererGuis.hpp
 		Helpers/FileSystem.hpp
@@ -275,6 +279,10 @@ set(_temp_acid_sources
 		Fonts/FontWord.cpp
 		Fonts/RendererFonts.cpp
 		Fonts/Text.cpp
+		Gizmos/Gizmo.cpp
+		Gizmos/Gizmos.cpp
+		Gizmos/GizmoType.cpp
+		Gizmos/RendererGizmos.cpp
 		Guis/Gui.cpp
 		Guis/RendererGuis.cpp
 		Helpers/FileSystem.cpp

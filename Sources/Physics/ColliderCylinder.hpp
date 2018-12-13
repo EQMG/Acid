@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Collider.hpp"
 #include "Maths/Vector3.hpp"
+#include "Collider.hpp"
 
 class btCylinderShape;
 

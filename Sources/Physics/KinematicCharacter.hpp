@@ -5,7 +5,6 @@
 #include "CollisionObject.hpp"
 
 class btPairCachingGhostObject;
-
 class btKinematicCharacterController;
 
 namespace acid

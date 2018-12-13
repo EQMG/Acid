@@ -25,6 +25,30 @@ namespace acid
 	{
 	}
 
+	Vector2 UiBound::GetScreenPosition(const float &aspectRatio) const
+	{
+		Vector2 screenPosition = m_position;
+
+		if (!m_aspectPosition)
+		{
+			screenPosition.m_x /= aspectRatio;
+		}
+
+		return screenPosition;
+	}
+
+	Vector2 UiBound::GetScreenDimensions(const float &aspectRatio) const
+	{
+		Vector2 screenDimensions = m_dimensions;
+
+		if (m_aspectSize)
+		{
+			screenDimensions.m_x /= aspectRatio;
+		}
+
+		return screenDimensions;
+	}
+
 	bool UiBound::operator==(const UiBound &other) const
 	{
 		return m_position == other.m_position && m_reference == other.m_reference && m_aspectPosition == other.m_aspectPosition && m_aspectSize == other.m_aspectSize && m_dimensions == other.m_dimensions;

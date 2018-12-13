@@ -2,6 +2,7 @@
 
 #include "Network/Packet.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Quaternion.hpp"
 
 namespace acid
 {
@@ -33,6 +34,11 @@ namespace acid
 		m_rotation(rotation),
 		m_scaling(Vector3(scale, scale, scale))
 	{
+	}
+
+	Transform Transform::Multiply(const Transform &other) const
+	{
+		return Transform(m_position + (m_position.ToQuaternion() * other.m_position), m_rotation + other.m_rotation, m_scaling * other.m_scaling); // TODO: Create method.
 	}
 
 	Matrix4 Transform::GetWorldMatrix() const
@@ -67,6 +73,16 @@ namespace acid
 	bool Transform::operator!=(const Transform &other) const
 	{
 		return !(*this == other);
+	}
+
+	Transform operator*(const Transform &left, const Transform &right)
+	{
+		return left.Multiply(right);
+	}
+
+	Transform &Transform::operator*=(const Transform &other)
+	{
+		return *this = Multiply(other);
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Transform &transform)

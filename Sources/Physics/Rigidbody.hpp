@@ -7,7 +7,6 @@
 #include "CollisionObject.hpp"
 
 class btDefaultMotionState;
-
 class btRigidBody;
 
 namespace acid

@@ -8,7 +8,8 @@
 namespace acid
 {
 	Collider::Collider(const Transform &localTransform) :
-		m_localTransform(localTransform)
+		m_localTransform(localTransform),
+		m_gizmo(nullptr)
 	{
 	}
 

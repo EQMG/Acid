@@ -923,6 +923,7 @@ namespace acid
 		physicalDeviceFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
 		physicalDeviceFeatures.fillModeNonSolid = VK_TRUE;
 		physicalDeviceFeatures.sampleRateShading = VK_TRUE;
+		physicalDeviceFeatures.wideLines = VK_TRUE;
 
 		if (m_physicalDeviceFeatures.textureCompressionBC)
 		{
