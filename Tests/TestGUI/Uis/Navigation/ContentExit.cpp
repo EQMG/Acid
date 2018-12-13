@@ -1,19 +1,22 @@
 #include "ContentExit.hpp"
 
+#include "UiNavigation.hpp"
+
 namespace test
 {
 	ContentExit::ContentExit(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.4375f), "Centre", true, false, Vector2(0.8f, 0.7f))),
-		m_background(std::make_unique<Gui>(this, GetRectangle(), Texture::Resource("Guis/White.png"))),
-		m_button1(std::make_unique<UiInputButton>(m_background.get(), Vector2(0.35f, 0.4375f), "Test Button")),
-		m_input1(std::make_unique<UiInputGrabber>(m_background.get(), Vector2(0.35f, 0.38f), "Test Grabber: ", MOUSE_BUTTON_1, new UiGrabberMouse())),
-		m_slider1(std::make_unique<UiInputSlider>(m_background.get(), Vector2(0.65f, 0.4375f), "Test Slider: ", 1, 0.0f, 100.0f, 50.0f)),
-		m_text1(std::make_unique<UiInputText>(m_background.get(), Vector2(0.65f, 0.38f), "Test Text: ", "Hello World", 14))
+		UiObject(parent, UiBound(Vector2(0.45f, 0.5f), UiBound::CENTRE_LEFT, false, true, Vector2(0.8f, 0.8f))),
+		m_background(std::make_unique<Gui>(this, GetRectangle(), Texture::Resource("Guis/Black.png"))),
+		m_button1(std::make_unique<UiInputButton>(this, "Test Button", UiBound(Vector2(0.65f, 0.79f), UiBound::CENTRE, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
+		m_input1(std::make_unique<UiInputGrabber>(this, "Test Grabber: ", MOUSE_BUTTON_1, new UiGrabberMouse(), UiBound(Vector2(0.65f, 0.72f), UiBound::CENTRE, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
+		m_slider1(std::make_unique<UiInputSlider>(this, "Test Slider: ", 100.0f, 0.0f, 100.0f, 1, UiBound(Vector2(0.65f, 0.65f), UiBound::CENTRE, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
+		m_text1(std::make_unique<UiInputText>(this, "Test Text: ", "Hello World", 14, UiBound(Vector2(0.65f, 0.58f), UiBound::CENTRE, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR))
 	{
+		m_background->SetColourOffset(UiNavigation::PANEL_COLOUR); // TODO: Blur underneath.
 	//	m_background->SetDepth(1.0f);
-		m_slider1->SetActionChange([](float value) {
+		m_slider1->GetChangeEvents() += [](UiInputSlider *object, float value) {
 			Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, value);
-		});
+		};
 	}
 
 	void ContentExit::UpdateObject()

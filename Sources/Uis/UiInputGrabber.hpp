@@ -54,12 +54,11 @@ namespace acid
 	private:
 		static const Time CHANGE_TIME;
 		static const float FONT_SIZE;
-		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		std::unique_ptr<Text> m_text;
 		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
 
 		std::unique_ptr<IUiGrabber> m_grabber;
@@ -72,11 +71,16 @@ namespace acid
 		bool m_selected;
 		bool m_mouseOver;
 
-		std::function<void()> m_actionChange;
+		Observer<UiInputGrabber *, int32_t> m_changeEvents;
 	public:
-		UiInputGrabber(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &value, IUiGrabber *grabber);
+		UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber,
+			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
 
 		void UpdateObject() override;
+
+		Gui *GetBackground() const { return m_background.get(); }
+
+		Text *GetText() const { return m_text.get(); }
 
 		std::string GetPrefix() const { return m_prefix; }
 
@@ -86,6 +90,6 @@ namespace acid
 
 		void SetValue(const int32_t &value);
 
-		void SetActionChange(std::function<void()> action) { m_actionChange = action; }
+		Observer<UiInputGrabber *, int32_t> &GetChangeEvents() { return m_changeEvents; }
 	};
 }

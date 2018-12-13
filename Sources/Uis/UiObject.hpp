@@ -4,6 +4,7 @@
 #include <optional>
 #include <memory>
 #include <vector>
+#include "Events/Observer.hpp"
 #include "Inputs/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
@@ -41,7 +42,7 @@ namespace acid
 		std::unique_ptr<IDriver> m_scaleDriver;
 		float m_scale;
 
-		std::function<bool(MouseButton)> m_actionClick;
+		Observer<UiObject *, MouseButton> m_clickEvents;
 	public:
 		/// <summary>
 		/// Creates a new screen object.
@@ -170,6 +171,8 @@ namespace acid
 
 		float GetScale() const { return m_scale; }
 
-		void SetActionClick(const std::function<bool(MouseButton)> &actionClick) { m_actionClick = actionClick; }
+		Observer<UiObject *, MouseButton> &GetClickEvents() { return m_clickEvents; }
+
+		void CancelEvent(const MouseButton &button) const;
 	};
 }

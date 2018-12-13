@@ -16,31 +16,38 @@ namespace acid
 		static const Time CHANGE_TIME;
 		static const Time SLIDE_TIME;
 		static const float FONT_SIZE;
-		static const Vector2 DIMENSION;
 		static const float SCALE_NORMAL;
 		static const float SCALE_SELECTED;
 
-		std::unique_ptr<Text> m_text;
 		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Gui> m_slider;
+		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
 
 		std::string m_prefix;
-		int32_t m_roundTo;
 		bool m_updating;
+		float m_value;
 		float m_progressMin;
 		float m_progressMax;
-		float m_value;
+		int32_t m_roundTo;
 
 		bool m_mouseOver;
 
 		bool m_hasChange;
 		Timer m_timerChange;
-		std::function<void(float)> m_actionChange;
+		Observer<UiInputSlider *, float> m_changeEvents;
 	public:
-		UiInputSlider(UiObject *parent, const Vector3 &position, const std::string &prefix, const int32_t &roundTo, const float &progressMin, const float &progressMax, const float &value);
+		UiInputSlider(UiObject *parent, const std::string &prefix, const float &value, const float &progressMin, const float &progressMax, const int32_t &roundTo,
+			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)),
+			const Colour &primaryColour = Colour("#171717"), const Colour &secondaryColour = Colour("#202020"));
 
 		void UpdateObject() override;
+
+		Gui *GetBackground() const { return m_background.get(); }
+
+		Gui *GetSlider() const { return m_slider.get(); }
+
+		Text *GetText() const { return m_text.get(); }
 
 		std::string GetPrefix() const { return m_prefix; }
 
@@ -58,7 +65,7 @@ namespace acid
 
 		void SetValue(const float &value);
 
-		void SetActionChange(std::function<void(float)> action) { m_actionChange = action; }
+		Observer<UiInputSlider *, float> &GetChangeEvents() { return m_changeEvents; }
 	private:
 		void UpdateText();
 	};

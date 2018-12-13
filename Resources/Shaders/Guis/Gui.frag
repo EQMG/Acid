@@ -22,7 +22,7 @@ layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	outColour = texture(samplerColour, inUv) * vec4(object.colourOffset.rgb, 1.0f);
+	outColour = texture(samplerColour, inUv) * object.colourOffset;
 	outColour.a *= object.alpha;
 
 	if (outColour.a < 0.05f)

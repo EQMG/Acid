@@ -64,5 +64,35 @@ namespace acid
 
 			return false;
 		}
+
+		/// <summary>
+		/// Clears all subsribed functions.
+		/// </summary>
+		void Clear()
+		{
+			m_subscribed.clear();
+		}
+
+		/// <summary>
+		/// Subscribes a function to this observer.
+		/// </summary>
+		/// <param name="function"> The function to subscribe to this observer. </param>
+		/// <returns> This. </returns>
+		Observer<Args...> &operator+=(const std::function<void(Args...)> &function)
+		{
+			Subscribe(function);
+			return *this;
+		}
+
+		/// <summary>
+		/// Unsubscribes a function to this observer.
+		/// </summary>
+		/// <param name="function"> The function to unsubscribe to this observer. </param>
+		/// <returns> This. </returns>
+		Observer<Args...> &operator-=(const std::function<void(Args...)> &function)
+		{
+			Unsubscribe(function);
+			return *this;
+		}
 	};
 }

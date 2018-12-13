@@ -8,7 +8,7 @@
 namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), "Centre", true, true, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
 		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
 		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
@@ -52,7 +52,7 @@ namespace test
 
 	std::unique_ptr<Text> OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify)
 	{
-		auto result = std::make_unique<Text>(this, UiBound(Vector2(positionX, positionY), "BottomLeft", true), 1.1f, content, FontType::Resource("Fonts/ProximaNova", "Regular"), justify);
+		auto result = std::make_unique<Text>(this, UiBound(Vector2(positionX, positionY), UiBound::BOTTOM_LEFT, true), 1.1f, content, FontType::Resource("Fonts/ProximaNova", "Regular"), justify);
 		result->SetTextColour(Colour("#ffffff"));
 		result->SetBorderColour(Colour("#262626"));
 		result->SetBorderDriver<DriverConstant>(0.04f);

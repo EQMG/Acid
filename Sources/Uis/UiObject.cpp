@@ -20,7 +20,7 @@ namespace acid
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_scale(1.0f),
-		m_actionClick(nullptr)
+		m_clickEvents(Observer<UiObject *, MouseButton>())
 	{
 		if (parent != nullptr)
 		{
@@ -47,13 +47,7 @@ namespace acid
 				{
 					if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
 					{
-						bool cancelWas = m_actionClick != nullptr ? m_actionClick(static_cast<MouseButton>(i)) : false;
-
-						if (cancelWas)
-						{
-							Uis::Get()->GetSelector().CancelWasEvent();
-							break;
-						}
+						m_clickEvents.OnEvent(this, static_cast<MouseButton>(i));
 					}
 				}
 			}
@@ -170,5 +164,10 @@ namespace acid
 		}
 
 		return m_alpha;
+	}
+
+	void UiObject::CancelEvent(const MouseButton &button) const
+	{
+		Uis::Get()->GetSelector().CancelWasEvent(button);
 	}
 }
