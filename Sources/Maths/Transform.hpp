@@ -19,6 +19,8 @@ namespace acid
 		Vector3 m_position;
 		Vector3 m_rotation;
 		Vector3 m_scaling;
+		mutable Matrix4 m_worldMatrix;
+		mutable bool m_dirty;
 	public:
 		static const Transform ZERO;
 
@@ -58,19 +60,21 @@ namespace acid
 
 		Matrix4 GetWorldMatrix() const;
 
-		Matrix4 GetModelMatrix() const;
-
 		Vector3 GetPosition() const { return m_position; }
 
-		void SetPosition(const Vector3 &position) { m_position = position; }
+		void SetPosition(const Vector3 &position);
 
 		Vector3 GetRotation() const { return m_rotation; }
 
-		void SetRotation(const Vector3 &rotation) { m_rotation = rotation; }
+		void SetRotation(const Vector3 &rotation);
 
 		Vector3 GetScaling() const { return m_scaling; }
 
-		void SetScaling(const Vector3 &scaling) { m_scaling = scaling; }
+		void SetScaling(const Vector3 &scaling);
+
+		bool IsDirty() const { return m_dirty; }
+
+		void SetDirty(const bool &dirty) const;
 
 		void Decode(const Metadata &metadata);
 

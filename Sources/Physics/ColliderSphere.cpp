@@ -6,17 +6,15 @@
 namespace acid
 {
 	ColliderSphere::ColliderSphere(const float &radius, const Transform &localTransform) :
-		Collider(localTransform),
+		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Sphere.obj"), 3.0f, Colour::BLUE)),
 		m_shape(std::make_unique<btSphereShape>(radius)),
 		m_radius(radius)
 	{
-		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Sphere.obj"), 3.0f);
-		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::FUCHSIA));
+		m_localTransform.SetScaling(Vector3(m_radius, m_radius, m_radius));
 	}
 
 	ColliderSphere::~ColliderSphere()
 	{
-		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderSphere::Start()
@@ -25,8 +23,7 @@ namespace acid
 
 	void ColliderSphere::Update()
 	{
-		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
-		m_shape->setUnscaledRadius(m_radius);
+		Collider::Update();
 	}
 
 	void ColliderSphere::Decode(const Metadata &metadata)
@@ -44,5 +41,12 @@ namespace acid
 	btCollisionShape *ColliderSphere::GetCollisionShape() const
 	{
 		return m_shape.get();
+	}
+
+	void ColliderSphere::SetRadius(const float &radius)
+	{
+		m_radius = radius;
+		m_shape->setUnscaledRadius(m_radius);
+		m_localTransform.SetScaling(Vector3(m_radius, m_radius, m_radius));
 	}
 }

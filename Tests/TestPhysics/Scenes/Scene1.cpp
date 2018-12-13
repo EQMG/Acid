@@ -47,7 +47,7 @@ namespace test
 		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
-		m_buttonSave(ButtonKeyboard({KEY_S})),
+		m_buttonSave(ButtonKeyboard({KEY_K})),
 		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
@@ -71,10 +71,10 @@ namespace test
 		// Animated.
 		auto animatedObject = new GameObject(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
 		animatedObject->SetName("Animated");
-		animatedObject->AddComponent<ColliderCapsule>(1.0f, 6.0f);
-		animatedObject->AddComponent<Rigidbody>(0.0f);
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+		animatedObject->AddComponent<Rigidbody>(0.0f);
+		animatedObject->AddComponent<ColliderCapsule>(1.0f, 6.0f);
 		animatedObject->AddComponent<MeshRender>();
 		animatedObject->AddComponent<ShadowRender>();
 
@@ -87,9 +87,9 @@ namespace test
 		auto plane = new GameObject(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->SetName("Plane");
 		plane->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Resource("Undefined2.png"), 0.0f, 1.0f);
+		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
+		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
@@ -99,11 +99,11 @@ namespace test
 
 		/*auto terrain = new GameObject(Transform());
 		terrain->SetName("Terrain");
-		terrain->AddComponent<Terrain>(150.0f, 2.0f);
-		terrain->AddComponent<ColliderHeightfield>();
-		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<Mesh>();
 		terrain->AddComponent<MaterialTerrain>(Texture::Resource("Objects/Terrain/Grass.png"), Texture::Resource("Objects/Terrain/Rocks.png"));
+		terrain->AddComponent<Terrain>(150.0f, 2.0f);
+		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
+		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<MeshRender>();
 		terrain->AddComponent<ShadowRender>();*/
 
@@ -116,9 +116,9 @@ namespace test
 				auto cube = new GameObject(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
 				cube->SetName("Sphere_" + String::To(i) + "_" + String::To(j));
 				cube->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
-				cube->AddComponent<ColliderCube>(Vector3::ONE, Transform(Vector3::ZERO, Vector3::ZERO, 2.0f));
-				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
+				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
+				cube->AddComponent<ColliderCube>(Vector3::ONE);
 				cube->AddComponent<MeshRender>();
 				cube->AddComponent<ShadowRender>();
 			}
@@ -127,51 +127,60 @@ namespace test
 		auto teapot = new GameObject(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->SetName("Teapot");
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
-	//	teapot->AddComponent<ColliderConvexHull>();
-	//	teapot->AddComponent<Rigidbody>(1.0f);
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
-		teapot->AddComponent<MeshRender>();
-		teapot->AddComponent<ShadowRender>();
+	//	teapot->AddComponent<Rigidbody>(1.0f);
+	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
 		teapot->AddComponent<NameTag>("Vector3", 1.4f);
+		teapot->AddComponent<MeshRender>();
+		teapot->AddComponent<ShadowRender>();
+		auto teapot_cone = new GameObject(Transform(Vector3(0.0f, 10.0f, 0.0f), Vector3(), 3.0f));
+		teapot_cone->SetName("Teapot_Cone");
+		teapot_cone->SetParent(teapot);
+		teapot_cone->AddComponent<Mesh>(ModelCylinder::Resource(1.0f, 0.0f, 2.0f, 16, 8));
+		teapot_cone->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
+		teapot_cone->AddComponent<Light>(Colour::WHITE, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
+		teapot_cone->AddComponent<MeshRender>();
+		teapot_cone->AddComponent<ShadowRender>();
 
 		auto teapot2 = new GameObject(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot2->SetName("Teapot2");
 		teapot2->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
-	//	teapot2->AddComponent<ColliderConvexHull>();
-	//	teapot2->AddComponent<Rigidbody>(1.0f);
 		teapot2->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.0f, 1.0f);
-		teapot2->AddComponent<MeshRender>();
-		teapot2->AddComponent<ShadowRender>();
+	//	teapot2->AddComponent<Rigidbody>(1.0f);
+	//	teapot2->AddComponent<ColliderConvexHull>();
 		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);
 		teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
+		teapot2->AddComponent<MeshRender>();
+		teapot2->AddComponent<ShadowRender>();
 
 		auto teapot3 = new GameObject(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot3->SetName("Teapot3");
 		teapot3->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
-	//	teapot3->AddComponent<ColliderConvexHull>();
-	//	teapot3->AddComponent<Rigidbody>(1.0f);
 		teapot3->AddComponent<MaterialDefault>(Colour::TEAL, nullptr, 0.0f, 1.0f);
-		teapot3->AddComponent<MeshRender>();
-		teapot3->AddComponent<ShadowRender>();
+	//	teapot3->AddComponent<Rigidbody>(1.0f);
+	//	teapot3->AddComponent<ColliderConvexHull>();
 		teapot3->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 2);
 		teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
+		teapot3->AddComponent<MeshRender>();
+		teapot3->AddComponent<ShadowRender>();
 
 		auto cone = new GameObject(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 		cone->SetName("Cone");
 		cone->AddComponent<Mesh>(ModelCylinder::Resource(1.0f, 0.0f, 2.0f, 16, 8));
-		cone->AddComponent<ColliderCone>(1.0f, 2.0f);
-		cone->AddComponent<Rigidbody>(1.5f);
 		cone->AddComponent<MaterialDefault>(Colour::BLUE, nullptr, 0.0f, 1.0f);
+		cone->AddComponent<Rigidbody>(1.5f);
+		cone->AddComponent<ColliderCone>(1.0f, 2.0f);
+		cone->AddComponent<ColliderSphere>(1.0f, Transform(Vector3(0.0f, 2.0f, 0.0f)));
 		cone->AddComponent<MeshRender>();
 		cone->AddComponent<ShadowRender>();
 
 		auto cylinder = new GameObject(Transform(Vector3(-8.0f, 3.0f, 10.0f), Vector3(), 1.0f));
 		cylinder->SetName("Cylinder");
 		cylinder->AddComponent<Mesh>(ModelCylinder::Resource(1.1f, 1.1f, 2.2f, 16, 8));
-		cylinder->AddComponent<ColliderCylinder>(1.1f, 2.2f);
-		cylinder->AddComponent<Rigidbody>(2.5f);
 		cylinder->AddComponent<MaterialDefault>(Colour::RED, nullptr, 0.0f, 1.0f);
+		cylinder->AddComponent<Rigidbody>(2.5f);
+		cylinder->AddComponent<ColliderCylinder>(1.1f, 2.2f);
 		cylinder->AddComponent<MeshRender>();
 		cylinder->AddComponent<ShadowRender>();
 
@@ -194,15 +203,15 @@ namespace test
 			sphere->SetName("Sphere_Undefined");
 			sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 0.5f));
-			sphere->AddComponent<ColliderSphere>();
-		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * 3.0f, Time::Seconds(2.0f));
+			sphere->AddComponent<ColliderSphere>();
+		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
+			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
+			sphere->AddComponent<NameTag>("Sphere", 0.6f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
-			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Vector3(0.0f, 0.7f, 0.0f));
-			sphere->AddComponent<NameTag>("Sphere", 0.6f);
 
 		//	auto gizmoType1 = GizmoType::Resource(Model::Resource("Gizmos/Arrow.obj"), 3.0f);
 		//	Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
@@ -241,14 +250,14 @@ namespace test
 				entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
 				auto transformNode = entityNode->AddChild(new Metadata("Transform"));
 				auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-				entity->GetTransform().Encode(*transformNode);
+				entity->GetLocalTransform().Encode(*transformNode);
 
 				for (auto &component : entity->GetComponents())
 				{
-					if (component->IsFromPrefab())
-					{
-						continue;
-					}
+				//	if (component->IsFromPrefab())
+				//	{
+				//		continue;
+				//	}
 
 					auto componentName = Scenes::Get()->FindComponentName(component.get());
 

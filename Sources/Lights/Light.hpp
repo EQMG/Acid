@@ -2,6 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
+#include "Maths/Transform.hpp"
 #include "Objects/IComponent.hpp"
 
 namespace acid
@@ -16,16 +17,16 @@ namespace acid
 		Colour m_colour;
 		Vector3 m_position;
 		float m_radius;
-
-		Vector3 m_localOffset;
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
 	public:
 		/// <summary>
 		/// Creates a new point light.
 		/// </summary>
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
-		/// <param name="localOffset"> The parent offset of the light. </param>
-		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Vector3 &localOffset = Vector3::ZERO);
+		/// <param name="localTransform"> The local transform from the parents space. </param>
+		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Transform &localTransform = Transform::ZERO);
 
 		/// <summary>
 		/// Creates a new point light from a source object.
@@ -49,10 +50,10 @@ namespace acid
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Vector3 GetLocalOffset() const { return m_localOffset; }
+		Transform GetLocalTransform() const { return m_localTransform; }
 
-		void SetLocalOffset(const Vector3 &localOffset) { m_localOffset = localOffset; }
+		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 
-		Vector3 GetPosition() const { return m_position; }
+		Transform GetWorldTransform() const;
 	};
 }

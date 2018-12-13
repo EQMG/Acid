@@ -9,16 +9,16 @@ namespace acid
 {
 	const uint32_t GizmoType::MAX_TYPE_INSTANCES = 512;
 
-	std::shared_ptr<GizmoType> GizmoType::Resource(const std::shared_ptr<Model> &model, const float &lineThickness)
+	std::shared_ptr<GizmoType> GizmoType::Resource(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(model, lineThickness));
+		auto resource = Resources::Get()->Get(ToFilename(model, lineThickness, diffuse));
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<GizmoType>(resource);
 		}
 
-		auto result = std::make_shared<GizmoType>(model, lineThickness);
+		auto result = std::make_shared<GizmoType>(model, lineThickness, diffuse);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
@@ -31,10 +31,11 @@ namespace acid
 		return Resource(model, lineThickness);
 	}
 
-	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness) :
-		m_filename(ToFilename(model, lineThickness)),
+	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse) :
+		m_filename(ToFilename(model, lineThickness, diffuse)),
 		m_model(model),
 		m_lineThickness(lineThickness),
+		m_diffuse(diffuse),
 		m_storageBuffer(StorageHandler()),
 		m_descriptorSet(DescriptorsHandler())
 	{
@@ -101,10 +102,10 @@ namespace acid
 		metadata.SetChild<float>("Line Thickness", m_lineThickness);
 	}
 
-	std::string GizmoType::ToFilename(const std::shared_ptr<Model> &model, const float &lineThickness)
+	std::string GizmoType::ToFilename(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
 		std::stringstream result;
-		result << "GizmoType_" << (model == nullptr ? "nullptr" : model->GetFilename()) << "_" << lineThickness;
+		result << "GizmoType_" << (model == nullptr ? "nullptr" : model->GetFilename()) << "_" << lineThickness << "_" << diffuse;
 		return result.str();
 	}
 }

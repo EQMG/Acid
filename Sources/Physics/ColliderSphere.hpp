@@ -29,6 +29,6 @@ namespace acid
 
 		float GetRadius() const { return m_radius; }
 
-		void SetRadius(const float &radius) { m_radius = radius; }
+		void SetRadius(const float &radius);
 	};
 }

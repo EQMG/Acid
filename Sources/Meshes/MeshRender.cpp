@@ -97,8 +97,8 @@ namespace acid
 	{
 		auto camera = Scenes::Get()->GetCamera();
 
-		float thisDistance2 = (camera->GetPosition() - GetGameObject()->GetTransform().GetPosition()).LengthSquared();
-		float otherDistance2 = (camera->GetPosition() - other.GetGameObject()->GetTransform().GetPosition()).LengthSquared();
+		float thisDistance2 = (camera->GetPosition() - GetGameObject()->GetWorldTransform().GetPosition()).LengthSquared();
+		float otherDistance2 = (camera->GetPosition() - other.GetGameObject()->GetWorldTransform().GetPosition()).LengthSquared();
 
 		return thisDistance2 > otherDistance2;
 	}

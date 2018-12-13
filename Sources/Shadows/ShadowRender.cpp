@@ -18,7 +18,7 @@ namespace acid
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.
-		m_uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
+		m_uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
 	}
 
 	void ShadowRender::Decode(const Metadata &metadata)

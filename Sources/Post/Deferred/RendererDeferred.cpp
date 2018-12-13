@@ -69,7 +69,7 @@ namespace acid
 
 			DeferredLight deferredLight = {};
 			deferredLight.m_colour = light->GetColour();
-			deferredLight.m_position = light->GetPosition();
+			deferredLight.m_position = light->GetWorldTransform().GetPosition();
 			deferredLight.m_radius = light->GetRadius();
 			deferredLights[lightCount] = deferredLight;
 			lightCount++;

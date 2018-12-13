@@ -6,17 +6,15 @@
 namespace acid
 {
 	ColliderCube::ColliderCube(const Vector3 &extents, const Transform &localTransform) :
-		Collider(localTransform),
+		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Cube.obj"), 3.0f, Colour::RED)),
 		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
-		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Cube.obj"), 3.0f);
-		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::RED));
+		m_localTransform.SetScaling(m_extents);
 	}
 
 	ColliderCube::~ColliderCube()
 	{
-		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCube::Start()
@@ -25,8 +23,7 @@ namespace acid
 
 	void ColliderCube::Update()
 	{
-		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
-	//	m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents)); // TODO
+		Collider::Update();
 	}
 
 	void ColliderCube::Decode(const Metadata &metadata)
@@ -44,5 +41,12 @@ namespace acid
 	btCollisionShape *ColliderCube::GetCollisionShape() const
 	{
 		return m_shape.get();
+	}
+
+	void ColliderCube::SetExtents(const Vector3 &extents)
+	{
+		m_extents = extents;
+		m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents));
+		m_localTransform.SetScaling(m_extents);
 	}
 }

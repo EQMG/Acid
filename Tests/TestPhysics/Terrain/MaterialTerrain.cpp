@@ -36,7 +36,7 @@ namespace test
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetTransform().GetWorldMatrix());
+		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
 	}
 
 	void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)

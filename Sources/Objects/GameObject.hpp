@@ -16,7 +16,8 @@ namespace acid
 	{
 	private:
 		std::string m_name;
-		Transform m_transform;
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
 		std::vector<std::unique_ptr<IComponent>> m_components;
 		ISpatialStructure *m_structure;
 		GameObject *m_parent;
@@ -178,9 +179,13 @@ namespace acid
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		Transform &GetTransform() { return m_transform; }
+		Transform &GetLocalTransform() { return m_localTransform; }
 
-		void SetTransform(const Transform &transform) { m_transform = transform; }
+		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
+
+		Transform GetWorldTransform() const;
+
+		Matrix4 GetWorldMatrix() const;
 
 		ISpatialStructure *GetStructure() const { return m_structure; }
 

@@ -2,10 +2,10 @@
 
 namespace acid
 {
-	Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const Colour &diffuse) :
+	Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &diffuse) :
 		m_gizmoType(gizmoType),
 		m_transform(transform),
-		m_diffuse(diffuse)
+		m_diffuse(diffuse ? *diffuse : gizmoType->GetDiffuse())
 	{
 	}
 

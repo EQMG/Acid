@@ -102,11 +102,11 @@ namespace acid
 		m_body->setSpinningFriction(m_frictionSpinning);
 	}
 
-	void CollisionObject::CreateShape()
+	void CollisionObject::CreateShape(const bool &forceSingle)
 	{
 		auto colliders = GetGameObject()->GetComponents<Collider>();
 
-		if (colliders.size() == 1)
+		if (forceSingle) // && colliders.size() == 1
 		{
 			m_shape.reset(colliders[0]->GetCollisionShape());
 			return;

@@ -7,10 +7,26 @@
 
 namespace acid
 {
-	Collider::Collider(const Transform &localTransform) :
+	Collider::Collider(const Transform &localTransform, const std::shared_ptr<GizmoType> &gizmoType) :
 		m_localTransform(localTransform),
 		m_gizmo(nullptr)
 	{
+#if defined(ACID_VERBOSE)
+		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoType, localTransform));
+#endif
+	}
+
+	Collider::~Collider()
+	{
+		Gizmos::Get()->RemoveGizmo(m_gizmo);
+	}
+
+	void Collider::Update()
+	{
+		if (m_gizmo != nullptr)
+		{
+			m_gizmo->SetTransform(GetGameObject()->GetWorldTransform() * m_localTransform);
+		}
 	}
 
 	void Collider::SetLocalTransform(const Transform &localTransform)

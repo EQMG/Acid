@@ -185,9 +185,10 @@ namespace acid
 			return {};
 		}
 
+		auto currentPosition = GetGameObject()->GetWorldTransform().GetPosition();
 		Vector3 velocity = Vector3();
-		velocity = GetGameObject()->GetTransform().GetPosition() - m_lastPosition;
-		m_lastPosition = GetGameObject()->GetTransform().GetPosition();
+		velocity = currentPosition - m_lastPosition;
+		m_lastPosition = currentPosition;
 		velocity /= Engine::Get()->GetDelta().AsSeconds();
 
 		if (m_direction != 0.0f)
@@ -207,7 +208,7 @@ namespace acid
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
 		float stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
 
-		Vector3 spawnPos = GetGameObject()->GetTransform().GetPosition() + m_localOffset;
+		Vector3 spawnPos = currentPosition + m_localOffset;
 		spawnPos = spawnPos + m_spawn->GeneratePosition();
 		return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
 	}

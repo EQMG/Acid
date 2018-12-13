@@ -80,7 +80,7 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2), true);
-	//	Renderer::Get()->AddRenderer<RendererGizmos>(GraphicsStage(1, 2));
+		Renderer::Get()->AddRenderer<RendererGizmos>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}

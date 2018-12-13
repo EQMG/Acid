@@ -1,6 +1,17 @@
 {
-  "ShapeSphere": {
-    "Radius": 1.0
+  "Mesh": {
+    "Model": "Entities/Testing/Model.obj"
+  },
+  "MaterialDefault": {
+    "Diffuse Colour": "#C7BEBE",
+    "Diffuse Texture": "Entities/Testing/Diffuse.png",
+    "Metallic": 0.0,
+    "Roughness": 0.0,
+    "Material Texture": "Entities/Testing/Material.png",
+    "Normal Texture": "Entities/Testing/Normal.png",
+    "Casts Shadows": true,
+    "Ignore Lighting": false,
+    "Ignore Fog": false
   },
   "Rigidbody": {
     "Mass": 2.0,
@@ -29,19 +40,8 @@
       "z": 1.0
     }
   },
-  "Mesh": {
-    "Model": "Entities/Testing/Model.obj"
-  },
-  "MaterialDefault": {
-    "Diffuse Colour": "#C7BEBE",
-    "Diffuse Texture": "Entities/Testing/Diffuse.png",
-    "Metallic": 0.0, 
-    "Roughness": 0.0, 
-    "Material Texture": "Entities/Testing/Material.png",
-    "Normal Texture": "Entities/Testing/Normal.png",
-    "Casts Shadows": true,
-    "Ignore Lighting": false,
-    "Ignore Fog": false
+  "ColliderSphere": {
+    "Radius": 1.0
   },
   "Light": {
     "Colour": "#3319CC",
