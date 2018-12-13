@@ -12,7 +12,6 @@ namespace acid
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_depth(0.0f),
-		m_positionOffset(Vector2()),
 		m_lockRotation(true),
 		m_screenTransform(Vector4()),
 		m_worldTransform({}),
@@ -55,11 +54,6 @@ namespace acid
 			list.emplace_back(this);
 		}
 
-		for (auto &child : m_children)
-		{
-			child->Update(list);
-		}
-
 		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
 		m_alpha = std::clamp(m_alpha, 0.0f, 1.0f);
@@ -71,22 +65,34 @@ namespace acid
 		}
 
 		// Transform updates.
-		float aspectRatio = Display::Get()->GetAspectRatio();
+		float aspectRatio = m_worldTransform ? 1.0f : Display::Get()->GetAspectRatio();
 
-		if (m_worldTransform)
+		Vector2 screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio);
+		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);
+		Vector2 referenceOffset = Vector2();
+
+		//if (m_parent != nullptr)
+		//{
+		//	Vector4 parentTransform = m_parent->m_screenTransform;
+		//	Vector2 parentDimensions = Vector2(parentTransform.m_x / 2.0f, parentTransform.m_y / 2.0f);
+		//	Vector2 parentPosition = Vector2((parentTransform.m_z + 1.0f) / 2.0f, (parentTransform.m_w - 1.0f) / -2.0f);
+		//	Log::Out("%i: %s & %s\n", list.size(), parentDimensions.ToString().c_str(), parentPosition.ToString().c_str());
+		//	referenceOffset = parentPosition + Vector2(0.0f, -1.0f);
+		//}
+
+		Vector2 dimensions = screenDimensions * m_scale;
+		Vector2 position = screenPosition - (dimensions * Vector2(
+			m_rectangle.GetReference().m_x,
+			-1.0f + m_rectangle.GetReference().m_y
+		));
+		m_screenTransform = Vector4(2.0f * dimensions.m_x, 2.0f * dimensions.m_y, (2.0f * position.m_x) - 1.0f, (-2.0f * position.m_y) + 1.0f);
+	//	Log::Out("%i: %s\n", list.size(), m_screenTransform.ToString().c_str());
+
+		// Update all children objects.
+		for (auto &child : m_children)
 		{
-			aspectRatio = 1.0f;
+			child->Update(list);
 		}
-
-		float da = m_rectangle.m_aspectSize ? aspectRatio : 1.0f;
-		float dw = (m_rectangle.GetDimensions().m_x / da) * m_scale;
-		float dh = m_rectangle.GetDimensions().m_y * m_scale;
-
-		float pa = m_rectangle.m_aspectPosition ? 1.0f : aspectRatio;
-		float px = (m_rectangle.GetPosition().m_x / pa) - (dw * m_rectangle.GetReference().m_x) + m_positionOffset.m_x;
-		float py = m_rectangle.GetPosition().m_y - (dh * (-1.0f + m_rectangle.GetReference().m_y)) + m_positionOffset.m_y;
-
-		m_screenTransform = Vector4(2.0f * dw, 2.0f * dh, (2.0f * px) - 1.0f, (-2.0f * py) + 1.0f);
 	}
 
 	void UiObject::UpdateObject()

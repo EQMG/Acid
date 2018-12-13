@@ -30,7 +30,6 @@ namespace acid
 		Vector4 m_scissor; // TODO: Convert to UiBound.
 		float m_depth;
 
-		Vector2 m_positionOffset;
 		Vector4 m_screenTransform;
 
 		bool m_lockRotation;
@@ -106,10 +105,6 @@ namespace acid
 		float GetDepth() const { return m_depth; }
 
 		void SetDepth(const float &depth) { m_depth = depth; }
-
-		Vector2 GetPositionOffset() const { return m_positionOffset; }
-
-		void SetPositionOffset(const Vector2 &positionOffset) { m_positionOffset = positionOffset; }
 
 		/// <summary>
 		/// Gets the ui object screen space transform.

@@ -11,10 +11,13 @@ namespace acid
 		m_radius(radius),
 		m_height(height)
 	{
+		auto gizmoTypeSquare = GizmoType::Resource(Model::Resource("Gizmos/Cylinder.obj"), 3.0f);
+		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoTypeSquare, localTransform, Colour::TEAL));
 	}
 
 	ColliderCylinder::~ColliderCylinder()
 	{
+		Gizmos::Get()->RemoveGizmo(m_gizmo);
 	}
 
 	void ColliderCylinder::Start()
@@ -23,6 +26,7 @@ namespace acid
 
 	void ColliderCylinder::Update()
 	{
+		m_gizmo->SetTransform(GetGameObject()->GetTransform()); //  * m_localTransform
 	//	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius)); // TODO
 	}
 

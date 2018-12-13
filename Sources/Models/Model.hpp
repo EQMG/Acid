@@ -29,6 +29,8 @@ namespace acid
 		Vector3 m_maxExtents;
 		float m_radius;
 	public:
+		static std::shared_ptr<Model> Resource(const std::string &data);
+
 		/// <summary>
 		/// Creates a new empty model.
 		/// </summary>

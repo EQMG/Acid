@@ -5,6 +5,7 @@
 #include "Display/Display.hpp"
 #include "Events/Events.hpp"
 #include "Files/Files.hpp"
+#include "Gizmos/Gizmos.hpp"
 #include "Inputs/Joysticks.hpp"
 #include "Inputs/Keyboard.hpp"
 #include "Inputs/Mouse.hpp"
@@ -31,6 +32,7 @@ namespace acid
 		RegisterModule<Audio>(MODULE_UPDATE_PRE);
 		RegisterModule<Files>(MODULE_UPDATE_PRE);
 		RegisterModule<Scenes>(MODULE_UPDATE_NORMAL);
+		RegisterModule<Gizmos>(MODULE_UPDATE_NORMAL);
 		RegisterModule<Renderer>(MODULE_UPDATE_RENDER);
 		RegisterModule<Resources>(MODULE_UPDATE_PRE);
 		RegisterModule<Events>(MODULE_UPDATE_ALWAYS);

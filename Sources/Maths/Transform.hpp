@@ -49,6 +49,13 @@ namespace acid
 		/// <param name="scale"> The scale. </param>
 		Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
 
+		/// <summary>
+		/// Multiplies this transform with another transform.
+		/// </summary>
+		/// <param name="other"> The other transform. </param>
+		/// <returns> The resultant transform. </returns>
+		Transform Multiply(const Transform &other) const;
+
 		Matrix4 GetWorldMatrix() const;
 
 		Matrix4 GetModelMatrix() const;
@@ -72,6 +79,10 @@ namespace acid
 		bool operator==(const Transform &other) const;
 
 		bool operator!=(const Transform &other) const;
+
+		ACID_EXPORT friend Transform operator*(const Transform &left, const Transform &right);
+
+		Transform &operator*=(const Transform &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 

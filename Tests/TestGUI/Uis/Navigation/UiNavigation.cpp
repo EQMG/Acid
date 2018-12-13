@@ -17,11 +17,11 @@ namespace test
 		{"Exit", Colour("#75706B")}
 	};
 	const Colour UiNavigation::PANEL_COLOUR = Colour("#000000", 0.9f);
-	const Colour UiNavigation::BUTTON_COLOUR = Colour("#1e88e5", 0.92f);
+	const Colour UiNavigation::BUTTON_COLOUR = Colour("#d32f2f", 0.92f);
 	const Vector2 UiNavigation::BUTTON_SIZE = Vector2(0.3f, 0.05f);
 
 	UiNavigation::UiNavigation(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_background(nullptr),
 		m_barBackground(nullptr),
 		m_title(nullptr),
@@ -31,7 +31,7 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/Screen.png"));
+		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/White.png"));
 
 		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiBound::TOP_LEFT, true, true, Vector2(0.4f, 1.0f)), Texture::Resource("Guis/Gradient_A.png"));
 		m_barBackground->SetColourOffset(UiNavigation::PANEL_COLOUR); // TODO: Blur underneath.

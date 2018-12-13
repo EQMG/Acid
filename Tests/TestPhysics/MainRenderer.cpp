@@ -1,27 +1,28 @@
 #include "MainRenderer.hpp"
 
-#include <Scenes/Scenes.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Meshes/RendererMeshes.hpp>
 #include <Fonts/RendererFonts.hpp>
+#include <Gizmos/RendererGizmos.hpp>
 #include <Guis/RendererGuis.hpp>
-#include <Shadows/RendererShadows.hpp>
-#include <Particles/RendererParticles.hpp>
+#include <Inputs/Keyboard.hpp>
+#include <Meshes/RendererMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
+#include <Particles/RendererParticles.hpp>
 #include <Post/Deferred/RendererDeferred.hpp>
-#include <Post/Filters/FilterFxaa.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
 #include <Post/Filters/FilterCrt.hpp>
-#include <Post/Filters/FilterGrain.hpp>
-#include <Post/Filters/FilterTiltshift.hpp>
-#include <Post/Filters/FilterPixel.hpp>
-#include <Post/Filters/FilterSsao.hpp>
+#include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterDof.hpp>
 #include <Post/Filters/FilterEmboss.hpp>
-#include <Post/Filters/FilterDefault.hpp>
-#include <Post/Filters/FilterVignette.hpp>
-#include <Inputs/Keyboard.hpp>
+#include <Post/Filters/FilterFxaa.hpp>
+#include <Post/Filters/FilterGrain.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/FilterPixel.hpp>
+#include <Post/Filters/FilterSsao.hpp>
+#include <Post/Filters/FilterTiltshift.hpp>
 #include <Post/Filters/FilterTone.hpp>
+#include <Post/Filters/FilterVignette.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
+#include <Shadows/RendererShadows.hpp>
 
 namespace test
 {
@@ -79,6 +80,7 @@ namespace test
 	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
 	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2), true);
+	//	Renderer::Get()->AddRenderer<RendererGizmos>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
 		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
 	}

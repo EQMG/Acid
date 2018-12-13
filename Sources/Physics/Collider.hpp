@@ -5,16 +5,14 @@
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
+#include "Gizmos/Gizmos.hpp"
 #include "Objects/IComponent.hpp"
 #include "Frustum.hpp"
 #include "Ray.hpp"
 
 class btCollisionShape;
-
 class btVector3;
-
 class btQuaternion;
-
 class btTransform;
 
 namespace acid
@@ -27,6 +25,7 @@ namespace acid
 	{
 	protected:
 		Transform m_localTransform;
+		Gizmo *m_gizmo;
 	public:
 		/// <summary>
 		/// Creates a new collider shape.

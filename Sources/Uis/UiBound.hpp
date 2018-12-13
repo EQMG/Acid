@@ -38,6 +38,18 @@ namespace acid
 		/// <param name="dimensions"> The object dimensions. </param>
 		explicit UiBound(const Vector2 &position, const Vector2 &reference = TOP_LEFT, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
+		/// <summary>
+		/// Gets the bounds position in the current screen space.
+		/// </summary>
+		/// <returns> The position in screen space. </returns>
+		Vector2 GetScreenPosition(const float &aspectRatio) const;
+
+		/// <summary>
+		/// Gets the bounds dimensions in the current screen space.
+		/// </summary>
+		/// <returns> The dimensions in screen space. </returns>
+		Vector2 GetScreenDimensions(const float &aspectRatio) const;
+
 		Vector2 GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector2 &position) { m_position = position; }

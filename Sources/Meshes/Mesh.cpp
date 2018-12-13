@@ -1,13 +1,5 @@
 #include "Mesh.hpp"
 
-#include "Helpers/FileSystem.hpp"
-#include "Models/Shapes/ModelCube.hpp"
-#include "Models/Shapes/ModelCylinder.hpp"
-#include "Models/Shapes/ModelDisk.hpp"
-#include "Models/Shapes/ModelRectangle.hpp"
-#include "Models/Shapes/ModelSphere.hpp"
-#include "Models/Obj/ModelObj.hpp"
-
 namespace acid
 {
 	Mesh::Mesh(const std::shared_ptr<Model> &model) :
@@ -35,52 +27,6 @@ namespace acid
 
 	void Mesh::TrySetModel(const std::string &filename)
 	{
-		if (filename.empty())
-		{
-			return;
-		}
-
-		// TODO: Modularize.
-		auto split = String::Split(filename, "_");
-
-		if (!split.empty() && split[0] == "Cube")
-		{
-			m_model = ModelCube::Resource(filename);
-			return;
-		}
-
-		if (!split.empty() && split[0] == "Cylinder")
-		{
-			m_model = ModelCylinder::Resource(filename);
-			return;
-		}
-
-		if (!split.empty() && split[0] == "Disk")
-		{
-			m_model = ModelDisk::Resource(filename);
-			return;
-		}
-
-		if (!split.empty() && split[0] == "Rectangle")
-		{
-			m_model = ModelRectangle::Resource(filename);
-			return;
-		}
-
-		if (!split.empty() && split[0] == "Sphere")
-		{
-			m_model = ModelSphere::Resource(filename);
-			return;
-		}
-
-		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
-
-		if (fileExt == ".obj")
-		{
-			m_model = ModelObj::Resource(filename);
-			return;
-		}
-
-		Log::Error("Could not determine mesh model type: '%s'\n", filename.c_str());
+		m_model = Model::Resource(filename);
 	}
 }

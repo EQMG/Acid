@@ -58,7 +58,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		static std::shared_ptr<ParticleType> Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
+		static std::shared_ptr<ParticleType> Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.

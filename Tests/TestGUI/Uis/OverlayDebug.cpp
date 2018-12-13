@@ -7,11 +7,16 @@
 namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
 		m_timerUpdate(Timer(Time::Seconds(0.333f)))
 	{
+	//	auto guiA = new Gui(parent, UiBound(Vector2(0.0f, 0.2f), UiBound::BOTTOM_LEFT, true, true, Vector2(0.5f, 0.6f)), Texture::Resource("Guis/White.png"));
+	//	guiA->SetColourOffset(Colour::TEAL);
+
+	//	auto guiB = new Gui(guiA, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.35f, 0.35f)), Texture::Resource("Guis/White.png"));
+	//	guiB->SetColourOffset(Colour::RED);
 	}
 
 	void OverlayDebug::UpdateObject()

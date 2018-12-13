@@ -4,8 +4,14 @@
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletCollision/BroadphaseCollision/btAxisSweep3.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletDynamics/ConstraintSolver/btNNCGConstraintSolver.h>
+#include <BulletDynamics/MLCPSolvers/btMLCPSolver.h>
+#include <BulletDynamics/MLCPSolvers/btSolveProjectedGaussSeidel.h>
+#include <BulletDynamics/MLCPSolvers/btDantzigSolver.h>
+#include <BulletDynamics/MLCPSolvers/btLemkeSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Engine/Engine.hpp"
@@ -17,19 +23,23 @@ namespace acid
 {
 	ScenePhysics::ScenePhysics() :
 		m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
-		m_broadphase(std::make_unique<btDbvtBroadphase>()),
+		m_broadphase(std::make_unique<btAxisSweep3>(btVector3(-1000.0f, -1000.0f, -1000.0f), btVector3(1000.0f, 1000.0f, 1000.0f))),
 		m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
 		m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
 		m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
 		m_pairsLastUpdate(CollisionPairs())
 	{
 		m_dynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
-		m_dynamicsWorld->getSolverInfo().m_solverMode |= SOLVER_RANDMIZE_ORDER;
-		m_dynamicsWorld->getDispatchInfo().m_enableSatConvex = true;
-		m_dynamicsWorld->getSolverInfo().m_splitImpulse = true;
+		m_dynamicsWorld->getDispatchInfo().m_enableSPU = true;
+		m_dynamicsWorld->getSolverInfo().m_minimumSolverBatchSize = 128;
+		m_dynamicsWorld->getSolverInfo().m_globalCfm = 0.00001f;
 
 		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
-		softDynamicsWorld->getWorldInfo().air_density = 1.0f;
+		softDynamicsWorld->getWorldInfo().water_density = 0.0f;
+		softDynamicsWorld->getWorldInfo().water_offset = 0.0f;
+		softDynamicsWorld->getWorldInfo().water_normal = btVector3(0.0f, 0.0f, 0.0f);
+		softDynamicsWorld->getWorldInfo().m_gravity.setValue(0.0f, -9.81f, 0.0f);
+		softDynamicsWorld->getWorldInfo().air_density = 1.2f;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 
