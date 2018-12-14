@@ -2,7 +2,7 @@
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Maths/Maths.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid

@@ -1,7 +1,7 @@
 #include "ShadowRender.hpp"
 
 #include "Meshes/Mesh.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

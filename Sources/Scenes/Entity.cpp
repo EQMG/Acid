@@ -1,8 +1,8 @@
 #include "Entity.hpp"
 
 #include "Helpers/FileSystem.hpp"
-#include "Prefabs/PrefabObject.hpp"
-#include "Scenes/Scenes.hpp"
+#include "Scenes.hpp"
+#include "EntityPrefab.hpp"
 
 namespace acid
 {
@@ -11,6 +11,7 @@ namespace acid
 		m_localTransform(transform),
 		m_components(std::vector<std::unique_ptr<Component>>()),
 		m_parent(nullptr),
+		m_children(std::vector<Entity *>()),
 		m_removed(false)
 	{
 	}
@@ -18,7 +19,7 @@ namespace acid
 	Entity::Entity(const std::string &filename, const Transform &transform) :
 		Entity(transform)
 	{
-		auto prefabObject = PrefabObject::Resource(filename);
+		auto prefabObject = EntityPrefab::Resource(filename);
 
 		for (auto &value : prefabObject->GetParent()->GetChildren())
 		{
@@ -41,6 +42,14 @@ namespace acid
 		m_name = FileSystem::FileName(filename);
 	}
 
+	Entity::~Entity()
+	{
+		if (m_parent != nullptr)
+		{
+			m_parent->RemoveChild(this);
+		}
+	}
+
 	void Entity::Update()
 	{
 		for (auto it = m_components.begin(); it != m_components.end();)
@@ -56,14 +65,14 @@ namespace acid
 				(*it)->SetParent(this);
 			}
 
-			if (!(*it)->IsStarted())
-			{
-				(*it)->Start();
-				(*it)->SetStarted(true);
-			}
-
 			if ((*it)->IsEnabled())
 			{
+				if (!(*it)->IsStarted())
+				{
+					(*it)->Start();
+					(*it)->SetStarted(true);
+				}
+
 				(*it)->Update();
 			}
 
@@ -121,21 +130,23 @@ namespace acid
 
 	Transform Entity::GetWorldTransform() const
 	{
-		if (m_parent == nullptr)
+		if (m_localTransform.IsDirty())
 		{
-		//	if (m_localTransform.IsDirty())
-		//	{
-				m_worldTransform = m_localTransform;
-		//		m_localTransform.SetDirty(false);
-		//	}
-		}
-		else
-		{
-		//	if (m_localTransform.IsDirty() || m_parent->m_localTransform.IsDirty())
-		//	{
+			if (m_parent != nullptr)
+			{
 				m_worldTransform = m_parent->GetWorldTransform() * m_localTransform;
-		//		m_localTransform.SetDirty(false);
-		//	}
+			}
+			else
+			{
+				m_worldTransform = m_localTransform;
+			}
+
+			for (auto &child : m_children)
+			{
+				child->m_localTransform.SetDirty(true);
+			}
+
+			m_localTransform.SetDirty(false);
 		}
 
 		return m_worldTransform;
@@ -144,5 +155,30 @@ namespace acid
 	Matrix4 Entity::GetWorldMatrix() const
 	{
 		return GetWorldTransform().GetWorldMatrix();
+	}
+
+	void Entity::SetParent(Entity *parent)
+	{
+		if (m_parent != nullptr)
+		{
+			m_parent->RemoveChild(this);
+		}
+
+		m_parent = parent;
+
+		if (m_parent != nullptr)
+		{
+			m_parent->AddChild(this);
+		}
+	}
+
+	void Entity::AddChild(Entity *child)
+	{
+		m_children.emplace_back(child);
+	}
+
+	void Entity::RemoveChild(Entity *child)
+	{
+		m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
 	}
 }

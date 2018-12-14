@@ -5,7 +5,6 @@
 namespace acid
 {
 	class Packet;
-
 	class Metadata;
 
 	/// <summary>

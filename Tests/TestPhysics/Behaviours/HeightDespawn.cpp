@@ -1,6 +1,6 @@
 #include "HeightDespawn.hpp"
 
-#include <Objects/Entity.hpp>
+#include <Scenes/Entity.hpp>
 
 namespace test
 {

@@ -15,7 +15,7 @@
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Engine/Engine.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Physics/Colliders/Collider.hpp"
 #include "Physics/CollisionObject.hpp"
 

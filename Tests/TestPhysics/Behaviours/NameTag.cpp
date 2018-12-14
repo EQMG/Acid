@@ -1,6 +1,6 @@
 #include "NameTag.hpp"
 
-#include <Objects/Entity.hpp>
+#include <Scenes/Entity.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
 #include <Maths/Visual/DriverConstant.hpp>

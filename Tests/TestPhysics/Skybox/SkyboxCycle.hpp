@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/Component.hpp>
-#include <Objects/Entity.hpp>
+#include <Scenes/Component.hpp>
+#include <Scenes/Entity.hpp>
 
 using namespace acid;
 

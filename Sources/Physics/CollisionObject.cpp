@@ -4,7 +4,7 @@
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <LinearMath/btDefaultMotionState.h>
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 

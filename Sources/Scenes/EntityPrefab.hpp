@@ -15,7 +15,7 @@ namespace acid
 	/// <summary>
 	/// Class that represents a entity prefab.
 	/// </summary>
-	class ACID_EXPORT PrefabObject :
+	class ACID_EXPORT EntityPrefab :
 		public IResource
 	{
 	private:
@@ -27,13 +27,13 @@ namespace acid
 		/// Will find an existing prefab object with the same filename, or create a new prefab object.
 		/// </summary>
 		/// <param name="filename"> The file to load the prefab object from. </param>
-		static std::shared_ptr<PrefabObject> Resource(const std::string &filename);
+		static std::shared_ptr<EntityPrefab> Resource(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new entity prefab.
 		/// </summary>
 		/// <param name="filename"> The file name. </param>
-		explicit PrefabObject(const std::string &filename);
+		explicit EntityPrefab(const std::string &filename);
 
 		void Write(const Entity &entity);
 

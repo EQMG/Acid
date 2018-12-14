@@ -7,11 +7,8 @@
 namespace acid
 {
 	class Matrix3;
-
 	class Matrix4;
-
 	class Packet;
-
 	class Metadata;
 
 	/// <summary>

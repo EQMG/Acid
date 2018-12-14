@@ -7,15 +7,10 @@
 namespace acid
 {
 	class Colour;
-
 	class Quaternion;
-
 	class Vector2;
-
 	class Vector4;
-
 	class Packet;
-
 	class Metadata;
 
 	/// <summary>

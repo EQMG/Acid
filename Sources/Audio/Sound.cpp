@@ -5,8 +5,8 @@
 #else
 #include <al.h>
 #endif
-#include <cmath>
-#include "Objects/Entity.hpp"
+#include "Maths/Maths.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

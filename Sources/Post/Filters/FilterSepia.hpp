@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterSepia :
-		public IPostFilter
+		public PostFilter
 	{
 	public:
 		explicit FilterSepia(const GraphicsStage &graphicsStage);

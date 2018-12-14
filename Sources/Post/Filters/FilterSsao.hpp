@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterSsao :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		static const uint32_t SSAO_NOISE_DIM;

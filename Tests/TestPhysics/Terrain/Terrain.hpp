@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/Component.hpp>
-#include <Objects/Entity.hpp>
+#include <Scenes/Component.hpp>
+#include <Scenes/Entity.hpp>
 #include <Noise/Noise.hpp>
 #include <Models/Model.hpp>
 #include "MeshTerrain.hpp"

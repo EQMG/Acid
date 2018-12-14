@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterWobble::FilterWobble(const GraphicsStage &graphicsStage, const float &wobbleSpeed) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Wobble.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_wobbleSpeed(wobbleSpeed),
 		m_wobbleAmount(0.0f)

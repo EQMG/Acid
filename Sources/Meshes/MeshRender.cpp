@@ -2,7 +2,7 @@
 
 #include "Materials/Material.hpp"
 #include "Physics/Rigidbody.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid

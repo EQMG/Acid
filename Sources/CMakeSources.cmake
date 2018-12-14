@@ -127,10 +127,6 @@ set(_temp_acid_headers
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
 		Noise/Noise.hpp
-		Objects/Component.hpp
-		Objects/ComponentRegister.hpp
-		Objects/Entity.hpp
-		Objects/Prefabs/PrefabObject.hpp
 		Particles/Emitters/EmitterCircle.hpp
 		Particles/Emitters/EmitterLine.hpp
 		Particles/Emitters/EmitterPoint.hpp
@@ -174,9 +170,9 @@ set(_temp_acid_headers
 		Post/Filters/FilterTone.hpp
 		Post/Filters/FilterVignette.hpp
 		Post/Filters/FilterWobble.hpp
-		Post/IPostFilter.hpp
-		Post/IPostPipeline.hpp
 		Post/Pipelines/PipelineBlur.hpp
+		Post/PostFilter.hpp
+		Post/PostPipeline.hpp
 		Renderer/Buffers/Buffer.hpp
 		Renderer/Buffers/IndexBuffer.hpp
 		Renderer/Buffers/InstanceBuffer.hpp
@@ -208,6 +204,10 @@ set(_temp_acid_headers
 		Resources/IResource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
+		Scenes/Component.hpp
+		Scenes/ComponentRegister.hpp
+		Scenes/Entity.hpp
+		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
 		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
@@ -225,12 +225,12 @@ set(_temp_acid_headers
 		Textures/Texture.hpp
 		Threads/Thread.hpp
 		Threads/ThreadPool.hpp
+		Uis/Inputs/UiInputButton.hpp
+		Uis/Inputs/UiInputDelay.hpp
+		Uis/Inputs/UiInputGrabber.hpp
+		Uis/Inputs/UiInputSlider.hpp
+		Uis/Inputs/UiInputText.hpp
 		Uis/UiBound.hpp
-		Uis/UiInputButton.hpp
-		Uis/UiInputDelay.hpp
-		Uis/UiInputGrabber.hpp
-		Uis/UiInputSlider.hpp
-		Uis/UiInputText.hpp
 		Uis/UiObject.hpp
 		Uis/Uis.hpp
 		Uis/UiSelector.hpp
@@ -350,9 +350,6 @@ set(_temp_acid_sources
 		Network/Tcp/TcpSocket.cpp
 		Network/Udp/UdpSocket.cpp
 		Noise/Noise.cpp
-		Objects/ComponentRegister.cpp
-		Objects/Entity.cpp
-		Objects/Prefabs/PrefabObject.cpp
 		Particles/Emitters/EmitterCircle.cpp
 		Particles/Emitters/EmitterLine.cpp
 		Particles/Emitters/EmitterPoint.cpp
@@ -395,8 +392,8 @@ set(_temp_acid_sources
 		Post/Filters/FilterTone.cpp
 		Post/Filters/FilterVignette.cpp
 		Post/Filters/FilterWobble.cpp
-		Post/IPostFilter.cpp
 		Post/Pipelines/PipelineBlur.cpp
+		Post/PostFilter.cpp
 		Renderer/Buffers/Buffer.cpp
 		Renderer/Buffers/IndexBuffer.cpp
 		Renderer/Buffers/InstanceBuffer.cpp
@@ -420,6 +417,9 @@ set(_temp_acid_sources
 		Renderer/Swapchain/Framebuffers.cpp
 		Renderer/Swapchain/Swapchain.cpp
 		Resources/Resources.cpp
+		Scenes/ComponentRegister.cpp
+		Scenes/Entity.cpp
+		Scenes/EntityPrefab.cpp
 		Scenes/ScenePhysics.cpp
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
@@ -434,12 +434,12 @@ set(_temp_acid_sources
 		Textures/Texture.cpp
 		Threads/Thread.cpp
 		Threads/ThreadPool.cpp
+		Uis/Inputs/UiInputButton.cpp
+		Uis/Inputs/UiInputDelay.cpp
+		Uis/Inputs/UiInputGrabber.cpp
+		Uis/Inputs/UiInputSlider.cpp
+		Uis/Inputs/UiInputText.cpp
 		Uis/UiBound.cpp
-		Uis/UiInputButton.cpp
-		Uis/UiInputDelay.cpp
-		Uis/UiInputGrabber.cpp
-		Uis/UiInputSlider.cpp
-		Uis/UiInputText.cpp
 		Uis/UiObject.cpp
 		Uis/Uis.cpp
 		Uis/UiSelector.cpp

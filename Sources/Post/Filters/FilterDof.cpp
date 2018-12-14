@@ -6,7 +6,7 @@ namespace acid
 {
 	FilterDof::FilterDof(const GraphicsStage &graphicsStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField,
 	                     const float &nearTransition, const float &farField, const float &farTransition) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Dof.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Dof.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_pipelineBlur(pipelineBlur),
 		m_focusPoint(focusPoint),

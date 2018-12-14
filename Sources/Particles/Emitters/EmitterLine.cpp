@@ -1,7 +1,7 @@
 ﻿#include "EmitterLine.hpp"
 
 #include "Maths/Maths.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

@@ -1,7 +1,7 @@
 #include "VoxelChunk.hpp"
 
 #include <array>
-#include <Objects/Entity.hpp>
+#include <Scenes/Entity.hpp>
 #include <Noise/Noise.hpp>
 
 namespace test

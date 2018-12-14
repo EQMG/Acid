@@ -6,7 +6,7 @@
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <LinearMath/btDefaultMotionState.h>
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 

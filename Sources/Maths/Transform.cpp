@@ -1,7 +1,7 @@
 ﻿#include "Transform.hpp"
 
 #include "Network/Packet.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Quaternion.hpp"
 
@@ -105,11 +105,7 @@ namespace acid
 	void Transform::SetDirty(const bool &dirty) const
 	{
 		m_dirty = dirty;
-
-	//	if (!m_dirty)
-	//	{
-	//		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
-	//	}
+		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
 	}
 
 	bool Transform::operator==(const Transform &other) const

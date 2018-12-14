@@ -7,7 +7,6 @@
 namespace acid
 {
 	class Renderpass;
-
 	class DepthStencil;
 
 	class ACID_EXPORT Framebuffers

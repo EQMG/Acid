@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include <Objects/Component.hpp>
+#include <Scenes/Component.hpp>
 #include <Meshes/Mesh.hpp>
 #include "VoxelBlock.hpp"
 

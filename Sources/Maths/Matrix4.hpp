@@ -8,15 +8,10 @@
 namespace acid
 {
 	class Matrix2;
-
 	class Matrix3;
-
 	class Quaternion;
-
 	class Vector2;
-
 	class Packet;
-
 	class Metadata;
 
 	/// <summary>

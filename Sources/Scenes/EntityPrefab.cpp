@@ -1,15 +1,15 @@
-#include "PrefabObject.hpp"
+#include "EntityPrefab.hpp"
 
 #include "Files/Json/FileJson.hpp"
 #include "Files/Xml/FileXml.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Objects/Entity.hpp"
 #include "Resources/Resources.hpp"
-#include "Scenes/Scenes.hpp"
+#include "Entity.hpp"
+#include "Scenes.hpp"
 
 namespace acid
 {
-	std::shared_ptr<PrefabObject> PrefabObject::Resource(const std::string &filename)
+	std::shared_ptr<EntityPrefab> EntityPrefab::Resource(const std::string &filename)
 	{
 		if (filename.empty())
 		{
@@ -20,15 +20,15 @@ namespace acid
 
 		if (resource != nullptr)
 		{
-			return std::dynamic_pointer_cast<PrefabObject>(resource);
+			return std::dynamic_pointer_cast<EntityPrefab>(resource);
 		}
 
-		auto result = std::make_shared<PrefabObject>(filename);
+		auto result = std::make_shared<EntityPrefab>(filename);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
 
-	PrefabObject::PrefabObject(const std::string &filename) :
+	EntityPrefab::EntityPrefab(const std::string &filename) :
 		IResource(),
 		m_filename(filename),
 		m_file(nullptr),
@@ -55,7 +55,7 @@ namespace acid
 		}
 	}
 
-	void PrefabObject::Write(const Entity &entity)
+	void EntityPrefab::Write(const Entity &entity)
 	{
 		m_parent->ClearChildren();
 
@@ -80,7 +80,7 @@ namespace acid
 		}
 	}
 
-	void PrefabObject::Save()
+	void EntityPrefab::Save()
 	{
 		m_file->Save();
 	}

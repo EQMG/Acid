@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterVignette :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		PushHandler m_pushScene;

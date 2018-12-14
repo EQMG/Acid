@@ -3,7 +3,7 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
-#include <Uis/UiInputButton.hpp>
+#include <Uis/Inputs/UiInputButton.hpp>
 
 using namespace acid;
 

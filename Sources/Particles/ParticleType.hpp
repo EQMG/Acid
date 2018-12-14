@@ -14,6 +14,8 @@
 
 namespace acid
 {
+	class Particle;
+
 	struct ParticleData
 	{
 		Matrix4 modelMatrix;
@@ -22,8 +24,6 @@ namespace acid
 		Vector3 blend;
 		float _padding;
 	};
-
-	class Particle;
 
 	/// <summary>
 	/// A definition for what a particle should act and look like.

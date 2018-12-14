@@ -1,6 +1,6 @@
 ﻿#include "EmitterPoint.hpp"
 
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

@@ -5,7 +5,7 @@
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
 #include "Gizmos/Gizmos.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 #include "Physics/Frustum.hpp"
 #include "Physics/Ray.hpp"
 

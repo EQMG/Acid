@@ -4,7 +4,7 @@
 #include <vector>
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 
 namespace acid
 {

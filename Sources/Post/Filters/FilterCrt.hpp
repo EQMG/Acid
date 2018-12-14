@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterCrt :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		PushHandler m_pushScene;

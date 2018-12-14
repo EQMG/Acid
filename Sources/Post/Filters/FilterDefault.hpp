@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterDefault :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		bool m_lastFilter;
