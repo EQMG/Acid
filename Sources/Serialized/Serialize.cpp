@@ -15,7 +15,7 @@ namespace acid
 	{
 	//	ColliderCapsule,[(Radius,0.2,3),(Height,1.8,3),],5
 	//	Rigidbody,[(Mass,1.0,3),(Friction,0.4,3),(Linear_Factor,[(x,0.0,3),(y,0.0,3),(z,0.0,3),],5),(Angular_Factor,[(x,0.0,3),(y,0.0,3),(z,0.0,3),],5),],5
-	//	FpsPlayer,1
+	//	PlayerFps,1
 	//	Mesh,[(Model,"Sphere_10_10_1.0",3),],5
 		return Metadata(); // TODO: Implement.
 	}

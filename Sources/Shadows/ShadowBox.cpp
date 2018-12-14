@@ -25,7 +25,7 @@ namespace acid
 	{
 	}
 
-	void ShadowBox::Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
+	void ShadowBox::Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
 	{
 		m_lightDirection = lightPosition.Normalize();
 		m_shadowOffset = shadowOffset;
@@ -46,7 +46,7 @@ namespace acid
 		return offset;
 	}
 
-	void ShadowBox::UpdateShadowBox(const ICamera &camera)
+	void ShadowBox::UpdateShadowBox(const Camera &camera)
 	{
 		UpdateSizes(camera);
 
@@ -111,7 +111,7 @@ namespace acid
 		m_maxExtents.m_z += m_shadowOffset;
 	}
 
-	void ShadowBox::UpdateSizes(const ICamera &camera)
+	void ShadowBox::UpdateSizes(const Camera &camera)
 	{
 		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFov()));
 		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFov()));

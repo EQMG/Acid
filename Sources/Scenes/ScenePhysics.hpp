@@ -16,7 +16,7 @@ class btDiscreteDynamicsWorld;
 
 namespace acid
 {
-	class GameObject;
+	class Entity;
 	class CollisionObject;
 
 	typedef std::pair<const btCollisionObject*, const btCollisionObject*> CollisionPair;

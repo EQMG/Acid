@@ -32,7 +32,7 @@ namespace acid
 	void KinematicCharacter::Start()
 	{
 		CreateShape(true);
-		auto worldTransform = Collider::Convert(GetGameObject()->GetWorldTransform());
+		auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
 		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 
@@ -62,7 +62,7 @@ namespace acid
 			m_body->setCollisionShape(m_shape.get());
 		}
 
-		auto &transform = GetGameObject()->GetLocalTransform();
+		auto &transform = GetParent()->GetLocalTransform();
 		btTransform worldTransform = m_ghostObject->getWorldTransform();
 		transform = Collider::Convert(worldTransform, transform.GetScaling());
 	}
@@ -100,7 +100,7 @@ namespace acid
 
 		if (m_body != nullptr && m_shape != nullptr)
 		{
-			m_shape->getAabb(Collider::Convert(GetGameObject()->GetWorldTransform()), min, max);
+			m_shape->getAabb(Collider::Convert(GetParent()->GetWorldTransform()), min, max);
 		}
 
 		return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));

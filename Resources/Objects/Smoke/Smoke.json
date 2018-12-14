@@ -26,23 +26,9 @@
 		"Scale": 0.8
 	  }
 	],
-	"Spawn": {
-	  "Type": "SpawnCircle",
-	  "Radius": 2.0,
-	  "Heading": {
-		"x": 0.0,
-		"y": 1.0,
-		"z": 0.0
-	  }
-	},
-	"PPS": 10.0,
+	"PPS": 8.0,
 	"Average Speed": 0.8,
 	"Gravity Effect": 0.1,
-	"Local Offset": {
-	  "x": 0.0,
-	  "y": 0.0,
-	  "z": 0.0
-	},
 	"Random Rotation": true,
 	"Direction": {
 	  "x": 0.0,
@@ -54,5 +40,30 @@
 	"Life Deviation": 0.5,
 	"Stage Deviation": 0.0,
 	"Scale Deviation": 0.1
+  },
+  "EmitterSphere": {
+	"Radius": 2.0,
+	"Heading": {
+	  "x": 0.0,
+	  "y": 1.0,
+	  "z": 0.0
+	},
+	"Local Transform": {
+	  "Position": {
+		"x": 0.0,
+		"y": 0.0,
+		"z": 0.0
+	  },
+	  "Rotation": {
+		"x": 0.0,
+		"y": 0.0,
+		"z": 0.0
+	  },
+	  "Scaling": {
+		"x": 1.0,
+		"y": 1.0,
+		"z": 1.0
+	  }
+	}
   }
 }

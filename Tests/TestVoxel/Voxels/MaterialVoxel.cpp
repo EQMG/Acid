@@ -1,6 +1,6 @@
 #include "MaterialVoxel.hpp"
 
-#include <Objects/GameObject.hpp>
+#include <Objects/Entity.hpp>
 #include <Models/VertexModel.hpp>
 
 namespace test
@@ -30,7 +30,7 @@ namespace test
 
 	void MaterialVoxel::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
+		uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 	}
 
 	void MaterialVoxel::PushDescriptors(DescriptorsHandler &descriptorSet)

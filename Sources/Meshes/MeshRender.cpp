@@ -1,8 +1,8 @@
 #include "MeshRender.hpp"
 
-#include "Materials/IMaterial.hpp"
+#include "Materials/Material.hpp"
 #include "Physics/Rigidbody.hpp"
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -19,7 +19,7 @@ namespace acid
 
 	void MeshRender::Update()
 	{
-		auto material = GetGameObject()->GetComponent<IMaterial>();
+		auto material = GetParent()->GetComponent<Material>();
 
 		if (material == nullptr)
 		{
@@ -33,7 +33,7 @@ namespace acid
 	bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage)
 	{
 		// Checks if the mesh is in view.
-		auto rigidbody = GetGameObject()->GetComponent<Rigidbody>();
+		auto rigidbody = GetParent()->GetComponent<Rigidbody>();
 
 		if (rigidbody != nullptr)
 		{
@@ -44,8 +44,8 @@ namespace acid
 		}
 
 		// Gets required components.
-		auto material = GetGameObject()->GetComponent<IMaterial>();
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto material = GetParent()->GetComponent<Material>();
+		auto mesh = GetParent()->GetComponent<Mesh>();
 
 		if (material == nullptr || mesh == nullptr)
 		{
@@ -97,8 +97,8 @@ namespace acid
 	{
 		auto camera = Scenes::Get()->GetCamera();
 
-		float thisDistance2 = (camera->GetPosition() - GetGameObject()->GetWorldTransform().GetPosition()).LengthSquared();
-		float otherDistance2 = (camera->GetPosition() - other.GetGameObject()->GetWorldTransform().GetPosition()).LengthSquared();
+		float thisDistance2 = (camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
+		float otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
 
 		return thisDistance2 > otherDistance2;
 	}

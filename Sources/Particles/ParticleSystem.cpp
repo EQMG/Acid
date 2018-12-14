@@ -1,31 +1,23 @@
 ﻿#include "ParticleSystem.hpp"
 
 #include "Maths/Maths.hpp"
-#include "Particles/Spawns/SpawnCircle.hpp"
-#include "Particles/Spawns/SpawnLine.hpp"
-#include "Particles/Spawns/SpawnPoint.hpp"
-#include "Particles/Spawns/SpawnSphere.hpp"
 #include "Particles.hpp"
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, ISpawnParticle *spawn, const float &pps, const float &averageSpeed, const float &gravityEffect, const Vector3 &localOffset) :
+	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
 		m_types(types),
-		m_spawn(spawn),
 		m_pps(pps),
 		m_averageSpeed(averageSpeed),
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
-		m_lastPosition(Vector3()),
-		m_localOffset(localOffset),
 		m_direction(Vector3()),
 		m_directionDeviation(0.0f),
 		m_speedDeviation(0.0f),
 		m_lifeDeviation(0.0f),
 		m_stageDeviation(0.0f),
 		m_scaleDeviation(0.0f),
-		m_timePassed(0.0f),
-		m_paused(false)
+		m_emitTimer(Timer(Time::Seconds(1.0f / m_pps)))
 	{
 	}
 
@@ -35,21 +27,20 @@ namespace acid
 
 	void ParticleSystem::Update()
 	{
-		if (m_paused || m_types.empty())
+		if (m_types.empty())
 		{
 			return;
 		}
 
-		m_timePassed += Engine::Get()->GetDelta().AsSeconds();
-
-		if (m_timePassed > 1.0f / m_pps)
+		if (m_emitTimer.IsPassedTime())
 		{
-			auto created = EmitParticle();
+			m_emitTimer.ResetStartTime();
 
-			if (created)
+			auto emitters = GetParent()->GetComponents<ParticleEmitter>();
+
+			if (!emitters.empty())
 			{
-				Particles::Get()->AddParticle(*created);
-				m_timePassed = 0.0f;
+				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0, emitters.size()))]));
 			}
 		}
 	}
@@ -68,12 +59,10 @@ namespace acid
 			}
 		}
 
-		TrySetSpawn(*metadata.FindChild("Spawn"));
-
 		m_pps = metadata.GetChild<float>("PPS");
+		m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
 		m_averageSpeed = metadata.GetChild<float>("Average Speed");
 		m_gravityEffect = metadata.GetChild<float>("Gravity Effect");
-		m_localOffset = metadata.GetChild<Vector3>("Local Offset");
 		m_randomRotation = metadata.GetChild<bool>("Random Rotation");
 		m_direction = metadata.GetChild<Vector3>("Direction");
 		m_directionDeviation = metadata.GetChild<float>("Direction Deviation");
@@ -97,12 +86,9 @@ namespace acid
 			type->Encode(*typesNode->AddChild(new Metadata()));
 		}
 
-		metadata.SetChild<ISpawnParticle>("Spawn", *m_spawn);
-
 		metadata.SetChild<float>("PPS", m_pps);
 		metadata.SetChild<float>("Average Speed", m_averageSpeed);
 		metadata.SetChild<float>("Gravity Effect", m_gravityEffect);
-		metadata.SetChild<Vector3>("Local Offset", m_localOffset);
 		metadata.SetChild<bool>("Random Rotation", m_randomRotation);
 		metadata.SetChild<Vector3>("Direction", m_direction);
 		metadata.SetChild<float>("Direction Deviation", m_directionDeviation);
@@ -136,40 +122,10 @@ namespace acid
 		return false;
 	}
 
-	void ParticleSystem::TrySetSpawn(const Metadata &spawnNode)
+	void ParticleSystem::SetPps(const float &pps)
 	{
-		// TODO: Modularize.
-		std::string spawnName = spawnNode.GetChild<std::string>("Type");
-
-		if (spawnName == "SpawnCircle")
-		{
-			m_spawn = std::make_unique<SpawnCircle>();
-			m_spawn->Decode(spawnNode);
-			return;
-		}
-
-		if (spawnName == "SpawnLine")
-		{
-			m_spawn = std::make_unique<SpawnLine>();
-			m_spawn->Decode(spawnNode);
-			return;
-		}
-
-		if (spawnName == "SpawnPoint")
-		{
-			m_spawn = std::make_unique<SpawnPoint>();
-			m_spawn->Decode(spawnNode);
-			return;
-		}
-
-		if (spawnName == "SpawnSphere")
-		{
-			m_spawn = std::make_unique<SpawnSphere>();
-			m_spawn->Decode(spawnNode);
-			return;
-		}
-
-		Log::Error("Could not determine particle spawn type: '%s'\n", spawnName.c_str());
+		m_pps = pps;
+		m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
 	}
 
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
@@ -178,18 +134,12 @@ namespace acid
 		m_directionDeviation = deviation * PI;
 	}
 
-	std::optional<Particle> ParticleSystem::EmitParticle()
+	Particle ParticleSystem::EmitParticle(const ParticleEmitter &emitter)
 	{
-		if (m_spawn == nullptr)
-		{
-			return {};
-		}
+		auto worldTransform = GetParent()->GetWorldTransform() * emitter.GetLocalTransform();
+		Vector3 spawnPos = emitter.GeneratePosition() + worldTransform.GetPosition();
 
-		auto currentPosition = GetGameObject()->GetWorldTransform().GetPosition();
-		Vector3 velocity = Vector3();
-		velocity = currentPosition - m_lastPosition;
-		m_lastPosition = currentPosition;
-		velocity /= Engine::Get()->GetDelta().AsSeconds();
+		Vector3 velocity;
 
 		if (m_direction != 0.0f)
 		{
@@ -207,9 +157,6 @@ namespace acid
 		float scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
 		float stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
-
-		Vector3 spawnPos = currentPosition + m_localOffset;
-		spawnPos = spawnPos + m_spawn->GeneratePosition();
 		return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
 	}
 

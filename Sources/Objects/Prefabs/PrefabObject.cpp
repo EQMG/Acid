@@ -3,7 +3,7 @@
 #include "Files/Json/FileJson.hpp"
 #include "Files/Xml/FileXml.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -46,20 +46,20 @@ namespace acid
 		{
 			m_file = std::make_unique<FileXml>(filename);
 			m_file->Load();
-			m_parent = m_file->GetParent()->FindChild("GameObjectDefinition");
+			m_parent = m_file->GetParent()->FindChild("EntityDefinition");
 
 			if (m_parent == nullptr)
 			{
-				m_parent = m_file->GetParent()->AddChild(new Metadata("GameObjectDefinition"));
+				m_parent = m_file->GetParent()->AddChild(new Metadata("EntityDefinition"));
 			}
 		}
 	}
 
-	void PrefabObject::Write(const GameObject &gameObject)
+	void PrefabObject::Write(const Entity &entity)
 	{
 		m_parent->ClearChildren();
 
-		for (auto &component : gameObject.GetComponents())
+		for (auto &component : entity.GetComponents())
 		{
 			auto componentName = Scenes::Get()->FindComponentName(component.get());
 

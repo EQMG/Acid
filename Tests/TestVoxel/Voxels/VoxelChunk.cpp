@@ -1,7 +1,7 @@
 #include "VoxelChunk.hpp"
 
 #include <array>
-#include <Objects/GameObject.hpp>
+#include <Objects/Entity.hpp>
 #include <Noise/Noise.hpp>
 
 namespace test
@@ -12,7 +12,7 @@ namespace test
 	const Vector3 VoxelChunk::CHUNK_SIZE = Vector3(VOXEL_SIZE * CHUNK_WIDTH, VOXEL_SIZE * CHUNK_HEIGHT, VOXEL_SIZE * CHUNK_WIDTH);
 
 	VoxelChunk::VoxelChunk(const ChunkMesher &mesher, const bool &generate) :
-		IComponent(),
+		Component(),
 		m_blocks(std::vector<std::vector<std::vector<VoxelBlock>>>(CHUNK_WIDTH, std::vector<std::vector<VoxelBlock>>(CHUNK_WIDTH, std::vector<VoxelBlock>(CHUNK_HEIGHT)))),
 		m_mesher(mesher),
 		m_generate(generate),
@@ -105,7 +105,7 @@ namespace test
 
 	void VoxelChunk::Generate()
 	{
-		auto position = GetGameObject()->GetLocalTransform().GetPosition();
+		auto position = GetParent()->GetLocalTransform().GetPosition();
 		auto noise = Noise(25653345, 0.01f, NOISE_INTERP_QUINTIC, NOISE_TYPE_PERLIN_FRACTAL, 5, 2.0f, 0.5f, NOISE_FRACTAL_FBM);
 
 		for (uint32_t x = 0; x < CHUNK_WIDTH; x++)
@@ -151,7 +151,7 @@ namespace test
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto mesh = GetParent()->GetComponent<Mesh>();
 
 		if (mesh == nullptr)
 		{
@@ -173,7 +173,7 @@ namespace test
 
 		if (!vertices.empty() || !indices.empty())
 		{
-			mesh->SetModel(std::make_shared<Model>(vertices, indices, GetGameObject()->GetName()));
+			mesh->SetModel(std::make_shared<Model>(vertices, indices, GetParent()->GetName()));
 		}
 		else
 		{
@@ -185,7 +185,7 @@ namespace test
 
 		if ((debugEnd - debugStart).AsMilliseconds() > 22.0f)
 		{
-			Log::Out("Chunk %s built in %ims\n", GetGameObject()->GetName().c_str(), (debugEnd - debugStart).AsMilliseconds());
+			Log::Out("Chunk %s built in %ims\n", GetParent()->GetName().c_str(), (debugEnd - debugStart).AsMilliseconds());
 		}
 #endif
 	}

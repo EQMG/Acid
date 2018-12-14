@@ -28,7 +28,7 @@ namespace acid
 		}
 	}
 
-	void FilterSsao::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void FilterSsao::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);

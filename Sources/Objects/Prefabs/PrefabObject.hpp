@@ -10,7 +10,7 @@
 
 namespace acid
 {
-	class GameObject;
+	class Entity;
 
 	/// <summary>
 	/// Class that represents a entity prefab.
@@ -35,7 +35,7 @@ namespace acid
 		/// <param name="filename"> The file name. </param>
 		explicit PrefabObject(const std::string &filename);
 
-		void Write(const GameObject &gameObject);
+		void Write(const Entity &entity);
 
 		void Save();
 

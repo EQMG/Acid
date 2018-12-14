@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Objects/ComponentRegister.hpp"
-#include "IScene.hpp"
+#include "Scene.hpp"
 #include "SceneStructure.hpp"
 
 namespace acid
@@ -14,7 +14,7 @@ namespace acid
 		public IModule
 	{
 	private:
-		std::unique_ptr<IScene> m_scene;
+		std::unique_ptr<Scene> m_scene;
 
 		ComponentRegister m_componentRegister;
 	public:
@@ -35,13 +35,13 @@ namespace acid
 		/// Gets the current scene.
 		/// </summary>
 		/// <returns> The current scene. </returns>
-		IScene *GetScene() const { return m_scene.get(); }
+		Scene *GetScene() const { return m_scene.get(); }
 
 		/// <summary>
 		/// Sets the current scene to a new scene.
 		/// </summary>
 		/// <param name="scene"> The new scene. </param>
-		void SetScene(IScene *scene) { m_scene.reset(scene); }
+		void SetScene(Scene *scene) { m_scene.reset(scene); }
 
 		/// <summary>
 		/// Registers a component with the register.
@@ -64,20 +64,20 @@ namespace acid
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		IComponent *CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
+		Component *CreateComponent(const std::string &name) { return m_componentRegister.CreateComponent(name); }
 
 		/// <summary>
 		/// Finds the registered name to a component.
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindComponentName(IComponent *compare) { return m_componentRegister.FindComponentName(compare); }
+		std::optional<std::string> FindComponentName(Component *compare) { return m_componentRegister.FindComponentName(compare); }
 
 		/// <summary>
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
-		ICamera *GetCamera() const { return m_scene != nullptr ? m_scene->GetCamera() : nullptr; }
+		Camera *GetCamera() const { return m_scene != nullptr ? m_scene->GetCamera() : nullptr; }
 
 		/// <summary>
 		/// Gets the joystick controlled UI selector.

@@ -41,10 +41,10 @@ namespace acid
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
+		uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 		uniformObject.Push("skyColour", m_skyColour);
 		uniformObject.Push("fogColour", m_fogColour);
-		uniformObject.Push("fogLimits", GetGameObject()->GetLocalTransform().GetScaling().m_y * m_fogLimits);
+		uniformObject.Push("fogLimits", GetParent()->GetLocalTransform().GetScaling().m_y * m_fogLimits);
 		uniformObject.Push("blendFactor", m_blend);
 	}
 

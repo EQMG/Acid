@@ -19,7 +19,7 @@ namespace acid
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
 		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
-		m_soundClick(Sound("Sounds/Button1.ogg", SOUND_TYPE_EFFECT, false, false, 0.9f)),
+		m_soundClick(Sound("Sounds/Button1.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_prefix(prefix),
 		m_updating(false),
 		m_value(value),

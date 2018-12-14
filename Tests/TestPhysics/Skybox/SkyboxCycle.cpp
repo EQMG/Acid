@@ -20,7 +20,7 @@ namespace test
 
 	void SkyboxCycle::Update()
 	{
-		auto materialSkybox = GetGameObject()->GetComponent<MaterialSkybox>();
+		auto materialSkybox = GetParent()->GetComponent<MaterialSkybox>();
 
 		if (materialSkybox == nullptr)
 		{
@@ -43,12 +43,12 @@ namespace test
 		if (m_enableRotation)
 		{
 			materialSkybox->SetBlend(World::Get()->GetStarIntensity());
-			GetGameObject()->GetLocalTransform().SetRotation(World::Get()->GetSkyboxRotation());
+			GetParent()->GetLocalTransform().SetRotation(World::Get()->GetSkyboxRotation());
 		}
 		else
 		{
 			materialSkybox->SetBlend(1.0f);
-			GetGameObject()->GetLocalTransform().SetRotation(Vector3::ZERO);
+			GetParent()->GetLocalTransform().SetRotation(Vector3::ZERO);
 		}
 	}
 

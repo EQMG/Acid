@@ -1,7 +1,5 @@
 #include "Scenes.hpp"
 
-#include "Physics/Collider.hpp"
-
 namespace acid
 {
 	Scenes::Scenes() :
@@ -23,8 +21,8 @@ namespace acid
 			m_scene->SetStarted(true);
 		}
 
-		m_scene->GetPhysics()->Update();
 		m_scene->Update();
+		m_scene->GetPhysics()->Update();
 
 		if (m_scene->GetStructure() != nullptr)
 		{

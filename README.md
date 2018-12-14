@@ -70,14 +70,14 @@ auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
 
 // Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
-auto jump = Sound("Sounds/Jump.ogg", SOUND_TYPE_EFFECT, false, true, 0.5f);
+auto jump = Sound("Sounds/Jump.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, true, 0.5f);
 jump.SetPosition(10.0f * Vector3::RIGHT);
 
-// Imports a game object (pointer managed by scene after creation).
-auto playerObject = new GameObject("Objects/Player/Player.json", Transform());
+// Loads a entity from a prefab file.
+auto playerObject = CreateGameObject("Objects/Player/Player.json", Transform::IDENTITY);
 
-// Creates a game object.
-auto sphere = new GameObject(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+// Creates a entity.
+auto sphere = CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<ShapeSphere>(2.0f);
 sphere->AddComponent<Rigidbody>(2.0f);

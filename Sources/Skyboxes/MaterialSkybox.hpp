@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Materials/IMaterial.hpp"
+#include "Materials/Material.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Textures/Cubemap.hpp"
@@ -11,7 +11,7 @@ namespace acid
 	/// Class that represents a skybox material shader.
 	/// </summary>
 	class ACID_EXPORT MaterialSkybox :
-		public IMaterial
+		public Material
 	{
 	private:
 		std::shared_ptr<Cubemap> m_cubemap;

@@ -56,6 +56,8 @@ namespace acid
 
 		Metadata *FindChild(const std::string &name, const bool &reportError = true) const;
 
+		Metadata *FindChildWithBackup(const std::string &name, const std::string &backupName, const bool &reportError = true) const;
+
 		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
 		template<typename T>

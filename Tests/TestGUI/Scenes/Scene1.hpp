@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Scenes/IScene.hpp>
+#include <Scenes/Scene.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/ButtonCompound.hpp>
 #include <Uis/UiStartLogo.hpp>
@@ -12,7 +12,7 @@ using namespace acid;
 namespace test
 {
 	class Scene1 :
-		public IScene
+		public Scene
 	{
 	private:
 		ButtonKeyboard m_buttonFullscreen;

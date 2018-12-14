@@ -1,13 +1,13 @@
 #pragma once
 
-#include <Scenes/ICamera.hpp>
+#include <Scenes/Camera.hpp>
 
 using namespace acid;
 
 namespace test
 {
 	class FixedCamera :
-		public ICamera
+		public Camera
 	{
 	private:
 		static const float NEAR_PLANE;
@@ -26,9 +26,9 @@ namespace test
 	public:
 		FixedCamera();
 
-		void Update() override;
+		void Start() override;
 
-		void ReflectView(const float &height) override;
+		void Update() override;
 
 		float GetNearPlane() const override { return NEAR_PLANE; }
 

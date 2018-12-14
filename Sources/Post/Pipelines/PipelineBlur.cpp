@@ -19,7 +19,7 @@ namespace acid
 	{
 	}
 
-	void PipelineBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void PipelineBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		if (!m_toScreen)
 		{

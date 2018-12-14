@@ -1,14 +1,14 @@
 #pragma once
 
-#include <Objects/IComponent.hpp>
-#include <Objects/GameObject.hpp>
+#include <Objects/Component.hpp>
+#include <Objects/Entity.hpp>
 
 using namespace acid;
 
 namespace test
 {
 	class SkyboxCycle :
-		public IComponent
+		public Component
 	{
 	private:
 		bool m_enableFog;

@@ -1,6 +1,7 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
+#include <Helpers/FileSystem.hpp>
 #include <Inputs/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -8,33 +9,26 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Physics/ColliderCube.hpp>
-#include <Physics/ColliderSphere.hpp>
-#include <Models/Shapes/ModelCube.hpp>
-#include <Physics/ColliderConvexHull.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Models/Obj/ModelObj.hpp>
-#include <Particles/ParticleSystem.hpp>
-#include <Particles/Spawns/SpawnCircle.hpp>
-#include <Shadows/ShadowRender.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Physics/ColliderHeightfield.hpp>
-#include <Physics/ColliderCapsule.hpp>
-#include <Uis/Uis.hpp>
+#include <Models/Shapes/ModelCube.hpp>
+#include <Models/Shapes/ModelSphere.hpp>
 #include <Objects/Prefabs/PrefabObject.hpp>
-#include <Helpers/FileSystem.hpp>
+#include <Particles/ParticleSystem.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
+#include <Shadows/ShadowRender.hpp>
+#include <Uis/Uis.hpp>
 #include "Voxels/MaterialVoxel.hpp"
 #include "Voxels/VoxelChunk.hpp"
-#include "FpsCamera.hpp"
-#include "FpsPlayer.hpp"
+#include "CameraFps.hpp"
+#include "PlayerFps.hpp"
 
 namespace test
 {
 	static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
-		IScene(new FpsCamera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		Scene(new CameraFps(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
 		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
 		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
@@ -53,14 +47,14 @@ namespace test
 		GetPhysics()->SetAirDensity(1.0f);
 
 		// Player.
-		auto playerObject = new GameObject(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
-		playerObject->AddComponent<FpsPlayer>();
+		auto playerObject = new Entity(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+		playerObject->AddComponent<PlayerFps>();
 
 		// Skybox.
-		auto skyboxObject = new GameObject("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
+		auto skyboxObject = new Entity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Entities.
-		auto sun = new GameObject(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
+		auto sun = new Entity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 		sun->AddComponent<Light>(Colour::WHITE);
 
 		// Voxels.
@@ -70,7 +64,7 @@ namespace test
 			{
 				for (int32_t y = -1; y <= 1; y++)
 				{
-					auto voxelChunk = new GameObject(Transform(VoxelChunk::CHUNK_SIZE * Vector3(x, y, z)));
+					auto voxelChunk = new Entity(Transform(VoxelChunk::CHUNK_SIZE * Vector3(x, y, z)));
 					voxelChunk->SetName("Chunk_" + String::To(x) + "_" + String::To(y) + "_" + String::To(z));
 					voxelChunk->AddComponent<Mesh>();
 					voxelChunk->AddComponent<VoxelChunk>(MESHER_CULLED, true);

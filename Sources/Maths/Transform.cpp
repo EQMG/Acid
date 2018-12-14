@@ -1,30 +1,13 @@
 ﻿#include "Transform.hpp"
 
 #include "Network/Packet.hpp"
+#include "Objects/Entity.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Quaternion.hpp"
 
 namespace acid
 {
-	const Transform Transform::ZERO = Transform(Vector3::ZERO, Vector3::ZERO, Vector3::ONE);
-
-	Transform::Transform() :
-		m_position(Vector3()),
-		m_rotation(Vector3()),
-		m_scaling(Vector3(1.0f, 1.0f, 1.0f)),
-		m_worldMatrix(Matrix4()),
-		m_dirty(true)
-	{
-	}
-
-	Transform::Transform(const Transform &source) :
-		m_position(source.m_position),
-		m_rotation(source.m_rotation),
-		m_scaling(source.m_scaling),
-		m_worldMatrix(Matrix4()),
-		m_dirty(true)
-	{
-	}
+	const Transform Transform::IDENTITY = Transform();
 
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
 		m_position(position),
@@ -44,6 +27,38 @@ namespace acid
 	{
 	}
 
+	Transform::Transform(const Transform &source) :
+		m_position(source.m_position),
+		m_rotation(source.m_rotation),
+		m_scaling(source.m_scaling),
+		m_worldMatrix(Matrix4()),
+		m_dirty(true)
+	{
+	}
+
+	void Transform::Start()
+	{
+	}
+
+	void Transform::Update()
+	{
+	}
+
+	void Transform::Decode(const Metadata &metadata)
+	{
+		m_position = metadata.GetChild<Vector3>("Position");
+		m_rotation = metadata.GetChild<Vector3>("Rotation");
+		m_scaling = metadata.GetChild<Vector3>("Scaling");
+		m_dirty = true;
+	}
+
+	void Transform::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<Vector3>("Position", m_position);
+		metadata.SetChild<Vector3>("Rotation", m_rotation);
+		metadata.SetChild<Vector3>("Scaling", m_scaling);
+	}
+
 	Transform Transform::Multiply(const Transform &other) const
 	{
 		return Transform(GetWorldMatrix().Transform(other.m_position), m_rotation + other.m_rotation, m_scaling * other.m_scaling);
@@ -51,11 +66,11 @@ namespace acid
 
 	Matrix4 Transform::GetWorldMatrix() const
 	{
-	//	if (m_dirty)
-	//	{
+		if (m_dirty)
+		{
 			m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
-	//		m_dirty = false;
-	//	}
+			m_dirty = false;
+		}
 
 		return m_worldMatrix;
 	}
@@ -95,21 +110,6 @@ namespace acid
 	//	{
 	//		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
 	//	}
-	}
-
-	void Transform::Decode(const Metadata &metadata)
-	{
-		m_position = metadata.GetChild<Vector3>("Position");
-		m_rotation = metadata.GetChild<Vector3>("Rotation");
-		m_scaling = metadata.GetChild<Vector3>("Scaling");
-		m_dirty = true;
-	}
-
-	void Transform::Encode(Metadata &metadata) const
-	{
-		metadata.SetChild<Vector3>("Position", m_position);
-		metadata.SetChild<Vector3>("Rotation", m_rotation);
-		metadata.SetChild<Vector3>("Scaling", m_scaling);
 	}
 
 	bool Transform::operator==(const Transform &other) const

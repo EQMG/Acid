@@ -84,7 +84,7 @@ namespace acid
 		bool DeregisterModule(IModule *module);
 
 		/// <summary>
-		/// Removes a module by type from this game object.
+		/// Removes a module by type from this entity.
 		/// </summary>
 		/// <param name="T"> The type of module to deregister. </param>
 		/// <returns> If the module was deregistered. </returns>

@@ -113,6 +113,18 @@ namespace acid
 		return nullptr;
 	}
 
+	Metadata *Metadata::FindChildWithBackup(const std::string &name, const std::string &backupName, const bool &reportError) const
+	{
+		auto result = FindChild(name, reportError);
+
+		if (result != nullptr)
+		{
+			return result;
+		}
+
+		return FindChild(backupName, reportError);
+	}
+
 	Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError) const
 	{
 		auto children = FindChildren(childName);

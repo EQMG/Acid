@@ -5,7 +5,7 @@
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
-#include "Scenes/FpsPlayer.hpp"
+#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
 #include "Voxels/MaterialVoxel.hpp"
 #include "Voxels/VoxelChunk.hpp"
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	// Registers modules.
 
 	// Registers components.
-	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<PlayerFps>("PlayerFps");
 	Scenes::Get()->RegisterComponent<MaterialVoxel>("MaterialVoxel");
 	Scenes::Get()->RegisterComponent<VoxelChunk>("VoxelChunk");
 

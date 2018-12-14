@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/IComponent.hpp>
-#include <Objects/GameObject.hpp>
+#include <Objects/Component.hpp>
+#include <Objects/Entity.hpp>
 #include <Noise/Noise.hpp>
 #include <Models/Model.hpp>
 #include "MeshTerrain.hpp"
@@ -11,7 +11,7 @@ using namespace acid;
 namespace test
 {
 	class Terrain :
-		public IComponent
+		public Component
 	{
 	private:
 		Noise m_noise;

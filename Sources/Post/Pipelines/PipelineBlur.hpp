@@ -24,7 +24,7 @@ namespace acid
 		explicit PipelineBlur(const GraphicsStage &graphicsStage, const float &blur = 2.0f, const BlurType &blurType = BLUR_TYPE_9,
 			const bool &toScreen = false, const float &inputScale = 0.5f, const float &outputScale = 1.0f);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 
 		float GetInputScale() const { return m_inputScale; }
 

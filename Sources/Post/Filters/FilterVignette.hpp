@@ -16,7 +16,7 @@ namespace acid
 	public:
 		explicit FilterVignette(const GraphicsStage &graphicsStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 
 		float GetInnerRadius() const { return m_innerRadius; }
 

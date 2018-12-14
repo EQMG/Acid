@@ -34,6 +34,10 @@ namespace acid
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
 		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
+		/// <summary>
+		/// Binds this pipeline to the current renderpass.
+		/// </summary>
+		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
 		std::string GetFilename() override { return m_filename; }

@@ -1,9 +1,9 @@
 #include "Rotate.hpp"
 
-#include <Objects/GameObject.hpp>
-#include <Engine/Engine.hpp>
-#include <Physics/Collider.hpp>
 #include "../../../Libraries/bullet3/src/LinearMath/btTransform.h"
+#include <Objects/Entity.hpp>
+#include <Engine/Engine.hpp>
+#include <Physics/Colliders/Collider.hpp>
 #include <Maths/Maths.hpp>
 
 namespace test
@@ -22,7 +22,7 @@ namespace test
 	void Rotate::Update()
 	{
 		m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
-		Transform &transform = GetGameObject()->GetLocalTransform();
+		Transform &transform = GetParent()->GetLocalTransform();
 		transform.SetRotation(m_rotation);
 
 		if (m_test == 1)

@@ -20,6 +20,10 @@ namespace test
 	{
 	}
 
+	void FixedCamera::Start()
+	{
+	}
+
 	void FixedCamera::Update()
 	{
 		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
@@ -27,12 +31,5 @@ namespace test
 
 		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
 		m_viewRay.Update(m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), m_viewMatrix, m_projectionMatrix);
-	}
-
-	void FixedCamera::ReflectView(const float &height)
-	{
-		m_position.m_y -= 2.0f * (m_position.m_y - height);
-		m_rotation.m_x = -m_rotation.m_x;
-		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Objects/IComponent.hpp>
+#include <Objects/Component.hpp>
 #include <Maths/Vector3.hpp>
 
 using namespace acid;
@@ -8,7 +8,7 @@ using namespace acid;
 namespace test
 {
 	class Rotate :
-		public IComponent
+		public Component
 	{
 	private:
 		Vector3 m_direction;

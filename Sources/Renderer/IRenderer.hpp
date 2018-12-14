@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Vector4.hpp"
-#include "Scenes/ICamera.hpp"
+#include "Scenes/Camera.hpp"
 #include "Commands/CommandBuffer.hpp"
 #include "Pipelines/PipelineCreate.hpp"
 
@@ -31,7 +31,7 @@ namespace acid
 		/// </summary>
 		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) = 0;
+		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) = 0;
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
