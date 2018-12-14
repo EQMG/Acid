@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GameObjectDefinition name="Player">
+<EntityDefinition name="Player">
 	<KinematicCharacter>
 		<Friction>0.0</Friction>
 		<Friction_Rolling>0.0</Friction_Rolling>
@@ -19,5 +19,5 @@
 		<Radius>0.2</Radius>
 		<Height>1.8</Height>
 	</ColliderCapsule>
-	<FpsPlayer />
-</GameObjectDefinition>
+	<PlayerFps />
+</EntityDefinition>

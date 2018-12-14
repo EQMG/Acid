@@ -29,9 +29,9 @@ set(_temp_acid_headers
 		Engine/ModuleRegister.hpp
 		Engine/ModuleUpdater.hpp
 		Events/EventChange.hpp
+		Events/Events.hpp
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
-		Events/Events.hpp
 		Events/IEvent.hpp
 		Events/Observer.hpp
 		Files/Csv/FileCsv.hpp
@@ -55,9 +55,9 @@ set(_temp_acid_headers
 		Gizmos/RendererGizmos.hpp
 		Guis/Gui.hpp
 		Guis/RendererGuis.hpp
+		Helpers/dirent.h
 		Helpers/FileSystem.hpp
 		Helpers/String.hpp
-		Helpers/dirent.h
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp
@@ -72,7 +72,7 @@ set(_temp_acid_headers
 		Inputs/Mouse.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
-		Materials/IMaterial.hpp
+		Materials/Material.hpp
 		Materials/MaterialDefault.hpp
 		Materials/PipelineMaterial.hpp
 		Maths/Colour.hpp
@@ -127,28 +127,28 @@ set(_temp_acid_headers
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
 		Noise/Noise.hpp
+		Objects/Component.hpp
 		Objects/ComponentRegister.hpp
-		Objects/GameObject.hpp
-		Objects/IComponent.hpp
+		Objects/Entity.hpp
 		Objects/Prefabs/PrefabObject.hpp
+		Particles/Emitters/EmitterCircle.hpp
+		Particles/Emitters/EmitterLine.hpp
+		Particles/Emitters/EmitterPoint.hpp
+		Particles/Emitters/EmitterSphere.hpp
+		Particles/Emitters/ParticleEmitter.hpp
 		Particles/Particle.hpp
+		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
 		Particles/ParticleType.hpp
-		Particles/Particles.hpp
 		Particles/RendererParticles.hpp
-		Particles/Spawns/ISpawnParticle.hpp
-		Particles/Spawns/SpawnCircle.hpp
-		Particles/Spawns/SpawnLine.hpp
-		Particles/Spawns/SpawnPoint.hpp
-		Particles/Spawns/SpawnSphere.hpp
-		Physics/Collider.hpp
-		Physics/ColliderCapsule.hpp
-		Physics/ColliderCone.hpp
-		Physics/ColliderConvexHull.hpp
-		Physics/ColliderCube.hpp
-		Physics/ColliderCylinder.hpp
-		Physics/ColliderHeightfield.hpp
-		Physics/ColliderSphere.hpp
+		Physics/Colliders/Collider.hpp
+		Physics/Colliders/ColliderCapsule.hpp
+		Physics/Colliders/ColliderCone.hpp
+		Physics/Colliders/ColliderConvexHull.hpp
+		Physics/Colliders/ColliderCube.hpp
+		Physics/Colliders/ColliderCylinder.hpp
+		Physics/Colliders/ColliderHeightfield.hpp
+		Physics/Colliders/ColliderSphere.hpp
 		Physics/CollisionObject.hpp
 		Physics/Force.hpp
 		Physics/Frustum.hpp
@@ -197,22 +197,21 @@ set(_temp_acid_headers
 		Renderer/Pipelines/Pipeline.hpp
 		Renderer/Pipelines/PipelineCreate.hpp
 		Renderer/Pipelines/ShaderProgram.hpp
-		Renderer/RenderStage.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererRegister.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
+		Renderer/RenderStage.hpp
 		Renderer/Swapchain/DepthStencil.hpp
 		Renderer/Swapchain/Framebuffers.hpp
 		Renderer/Swapchain/Swapchain.hpp
 		Resources/IResource.hpp
 		Resources/Resources.hpp
-		Scenes/ICamera.hpp
-		Scenes/IScene.hpp
-		Scenes/ISpatialStructure.hpp
+		Scenes/Camera.hpp
+		Scenes/Scene.hpp
 		Scenes/ScenePhysics.hpp
-		Scenes/SceneStructure.hpp
 		Scenes/Scenes.hpp
+		Scenes/SceneStructure.hpp
 		Serialized/Metadata.hpp
 		Serialized/Serialize.hpp
 		Shadows/RendererShadows.hpp
@@ -221,9 +220,9 @@ set(_temp_acid_headers
 		Shadows/Shadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Textures/Cubemap.hpp
-		Textures/Texture.hpp
 		Textures/stb_image.h
 		Textures/stb_image_write.h
+		Textures/Texture.hpp
 		Threads/Thread.hpp
 		Threads/ThreadPool.hpp
 		Uis/UiBound.hpp
@@ -233,9 +232,9 @@ set(_temp_acid_headers
 		Uis/UiInputSlider.hpp
 		Uis/UiInputText.hpp
 		Uis/UiObject.hpp
+		Uis/Uis.hpp
 		Uis/UiSelector.hpp
 		Uis/UiStartLogo.hpp
-		Uis/Uis.hpp
 		)
 set(_temp_acid_sources
 		Animations/Animation/Animation.cpp
@@ -262,9 +261,9 @@ set(_temp_acid_sources
 		Engine/Log.cpp
 		Engine/ModuleRegister.cpp
 		Engine/ModuleUpdater.cpp
+		Events/Events.cpp
 		Events/EventStandard.cpp
 		Events/EventTime.cpp
-		Events/Events.cpp
 		Files/Csv/FileCsv.cpp
 		Files/Csv/RowCsv.cpp
 		Files/Files.cpp
@@ -352,25 +351,25 @@ set(_temp_acid_sources
 		Network/Udp/UdpSocket.cpp
 		Noise/Noise.cpp
 		Objects/ComponentRegister.cpp
-		Objects/GameObject.cpp
+		Objects/Entity.cpp
 		Objects/Prefabs/PrefabObject.cpp
+		Particles/Emitters/EmitterCircle.cpp
+		Particles/Emitters/EmitterLine.cpp
+		Particles/Emitters/EmitterPoint.cpp
+		Particles/Emitters/EmitterSphere.cpp
 		Particles/Particle.cpp
+		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp
 		Particles/ParticleType.cpp
-		Particles/Particles.cpp
 		Particles/RendererParticles.cpp
-		Particles/Spawns/SpawnCircle.cpp
-		Particles/Spawns/SpawnLine.cpp
-		Particles/Spawns/SpawnPoint.cpp
-		Particles/Spawns/SpawnSphere.cpp
-		Physics/Collider.cpp
-		Physics/ColliderCapsule.cpp
-		Physics/ColliderCone.cpp
-		Physics/ColliderConvexHull.cpp
-		Physics/ColliderCube.cpp
-		Physics/ColliderCylinder.cpp
-		Physics/ColliderHeightfield.cpp
-		Physics/ColliderSphere.cpp
+		Physics/Colliders/Collider.cpp
+		Physics/Colliders/ColliderCapsule.cpp
+		Physics/Colliders/ColliderCone.cpp
+		Physics/Colliders/ColliderConvexHull.cpp
+		Physics/Colliders/ColliderCube.cpp
+		Physics/Colliders/ColliderCylinder.cpp
+		Physics/Colliders/ColliderHeightfield.cpp
+		Physics/Colliders/ColliderSphere.cpp
 		Physics/CollisionObject.cpp
 		Physics/Force.cpp
 		Physics/Frustum.cpp
@@ -413,17 +412,17 @@ set(_temp_acid_sources
 		Renderer/Pipelines/Compute.cpp
 		Renderer/Pipelines/Pipeline.cpp
 		Renderer/Pipelines/ShaderProgram.cpp
-		Renderer/RenderStage.cpp
 		Renderer/Renderer.cpp
 		Renderer/RendererRegister.cpp
 		Renderer/Renderpass/Renderpass.cpp
+		Renderer/RenderStage.cpp
 		Renderer/Swapchain/DepthStencil.cpp
 		Renderer/Swapchain/Framebuffers.cpp
 		Renderer/Swapchain/Swapchain.cpp
 		Resources/Resources.cpp
 		Scenes/ScenePhysics.cpp
-		Scenes/SceneStructure.cpp
 		Scenes/Scenes.cpp
+		Scenes/SceneStructure.cpp
 		Serialized/Metadata.cpp
 		Serialized/Serialize.cpp
 		Shadows/RendererShadows.cpp
@@ -442,9 +441,9 @@ set(_temp_acid_sources
 		Uis/UiInputSlider.cpp
 		Uis/UiInputText.cpp
 		Uis/UiObject.cpp
+		Uis/Uis.cpp
 		Uis/UiSelector.cpp
 		Uis/UiStartLogo.cpp
-		Uis/Uis.cpp
 		)
 
 # Sets all headers as PUBLIC sources for Acid

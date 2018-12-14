@@ -4,9 +4,9 @@
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <LinearMath/btDefaultMotionState.h>
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 #include "Scenes/Scenes.hpp"
-#include "Collider.hpp"
+#include "Colliders/Collider.hpp"
 
 namespace acid
 {
@@ -104,7 +104,7 @@ namespace acid
 
 	void CollisionObject::CreateShape(const bool &forceSingle)
 	{
-		auto colliders = GetGameObject()->GetComponents<Collider>();
+		auto colliders = GetParent()->GetComponents<Collider>();
 
 		if (forceSingle) // && colliders.size() == 1
 		{

@@ -37,7 +37,7 @@ namespace acid
 	{
 	}
 
-	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		if (m_lightModel == DEFERRED_IBL)
 		{

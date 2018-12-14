@@ -14,7 +14,7 @@ namespace acid
 	public:
 		explicit FilterFxaa(const GraphicsStage &graphicsStage, const float &spanMax = 8.0f);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 
 		float GetSpanMax() const { return m_spanMax; }
 

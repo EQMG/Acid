@@ -3,14 +3,13 @@
 #include <memory>
 #include "Events/Observer.hpp"
 #include "Maths/Vector3.hpp"
-#include "Objects/GameObject.hpp"
-#include "Objects/IComponent.hpp"
+#include "Objects/Entity.hpp"
+#include "Objects/Component.hpp"
+#include "Colliders/Collider.hpp"
 #include "Force.hpp"
 
 class btTransform;
-
 class btCollisionShape;
-
 class btCollisionObject;
 
 namespace acid
@@ -19,7 +18,7 @@ namespace acid
 	/// Represents a object in a scene effected by physics.
 	/// </summary>
 	class ACID_EXPORT CollisionObject :
-		public IComponent
+		public Component
 	{
 	protected:
 		float m_friction;

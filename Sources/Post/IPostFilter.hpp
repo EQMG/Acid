@@ -32,8 +32,6 @@ namespace acid
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
 		IPostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<PipelineDefine> &defines = {});
 
-		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override = 0;
-
 		const DescriptorsHandler &GetDescriptorSet() const { return m_descriptorSet; }
 
 		const Pipeline &GetPipeline() const { return m_pipeline; }

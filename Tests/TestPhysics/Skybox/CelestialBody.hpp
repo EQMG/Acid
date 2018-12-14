@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include <Objects/IComponent.hpp>
-#include <Objects/GameObject.hpp>
+#include <Objects/Component.hpp>
+#include <Objects/Entity.hpp>
 
 using namespace acid;
 
@@ -14,7 +14,7 @@ namespace test
 	};
 
 	class CelestialBody :
-		public IComponent
+		public Component
 	{
 	private:
 		CelestialType m_type;

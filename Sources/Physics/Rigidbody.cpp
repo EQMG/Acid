@@ -6,9 +6,9 @@
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <LinearMath/btDefaultMotionState.h>
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 #include "Scenes/Scenes.hpp"
-#include "Collider.hpp"
+#include "Colliders/Collider.hpp"
 
 namespace acid
 {
@@ -39,7 +39,7 @@ namespace acid
 	void Rigidbody::Start()
 	{
 		CreateShape();
-		auto worldTransform = Collider::Convert(GetGameObject()->GetWorldTransform());
+		auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
 		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 
@@ -81,7 +81,7 @@ namespace acid
 			++it;
 		}
 
-		auto &transform = GetGameObject()->GetLocalTransform();
+		auto &transform = GetParent()->GetLocalTransform();
 		btTransform motionTransform;
 		m_motionState->getWorldTransform(motionTransform);
 		transform = Collider::Convert(motionTransform, transform.GetScaling());
@@ -177,7 +177,7 @@ namespace acid
 
 		btVector3 localInertia = btVector3(0.0f, 0.0f, 0.0f);
 
-		auto shape = GetGameObject()->GetComponent<Collider>();
+		auto shape = GetParent()->GetComponent<Collider>();
 
 		if (shape != nullptr && isDynamic)
 		{

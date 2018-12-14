@@ -16,7 +16,7 @@ namespace acid
 	public:
 		explicit FilterLensflare(const GraphicsStage &graphicsStage);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 
 		Vector3 GetSunPosition() const { return m_sunPosition; }
 

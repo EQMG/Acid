@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GameObjectDefinition name="Sun">
+<EntityDefinition name="Sun">
 	<Mesh>
 		<Model>Sphere_24_24_1.0</Model>
 	</Mesh>
@@ -27,4 +27,4 @@
 		<Type>0.0</Type>
 	</CelestialBody>
 	<MeshRender />
-</GameObjectDefinition>
+</EntityDefinition>

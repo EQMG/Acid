@@ -5,22 +5,35 @@
 namespace acid
 {
 	SceneStructure::SceneStructure() :
-		ISpatialStructure(),
-		m_objects(std::vector<std::unique_ptr<GameObject>>())
+		m_objects(std::vector<std::unique_ptr<Entity>>())
 	{
 	}
 
-	void SceneStructure::Add(GameObject *object)
+	Entity *SceneStructure::CreateEntity(const Transform &transform)
+	{
+		auto entity = new Entity(transform);
+		m_objects.emplace_back(entity);
+		return entity;
+	}
+
+	Entity *SceneStructure::CreateEntity(const std::string &filename, const Transform &transform)
+	{
+		auto entity = new Entity(filename, transform);
+		m_objects.emplace_back(entity);
+		return entity;
+	}
+
+	void SceneStructure::Add(Entity *object)
 	{
 		m_objects.emplace_back(object);
 	}
 
-	void SceneStructure::Add(std::unique_ptr<GameObject> object)
+	void SceneStructure::Add(std::unique_ptr<Entity> object)
 	{
 		m_objects.emplace_back(std::move(object));
 	}
 
-	bool SceneStructure::Remove(GameObject *object)
+	bool SceneStructure::Remove(Entity *object)
 	{
 		for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
 		{
@@ -36,7 +49,7 @@ namespace acid
 		return false;
 	}
 
-	bool SceneStructure::Move(GameObject *object, ISpatialStructure *structure)
+	bool SceneStructure::Move(Entity *object, SceneStructure &structure)
 	{
 		for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
 		{
@@ -45,7 +58,7 @@ namespace acid
 				continue;
 			}
 
-			structure->Add(std::move(*it));
+			structure.Add(std::move(*it));
 			m_objects.erase(it);
 			return true;
 		}
@@ -73,9 +86,9 @@ namespace acid
 		}
 	}
 
-	std::vector<GameObject *> SceneStructure::QueryAll()
+	std::vector<Entity *> SceneStructure::QueryAll()
 	{
-		auto result = std::vector<GameObject *>();
+		auto result = std::vector<Entity *>();
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
@@ -90,9 +103,9 @@ namespace acid
 		return result;
 	}
 
-	std::vector<GameObject *> SceneStructure::QueryFrustum(const Frustum &range)
+	std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 	{
-		auto result = std::vector<GameObject *>();
+		auto result = std::vector<Entity *>();
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
@@ -112,17 +125,17 @@ namespace acid
 		return result;
 	}
 
-	/*std::vector<GameObject *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)
+	/*std::vector<Entity *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)
 	{
-		return std::vector<GameObject *>();
+		return std::vector<Entity *>();
 	}*/
 
-	/*std::vector<GameObject *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max)
+	/*std::vector<Entity *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max)
 	{
-		return std::vector<GameObject *>();
+		return std::vector<Entity *>();
 	}*/
 
-	bool SceneStructure::Contains(GameObject *object)
+	bool SceneStructure::Contains(Entity *object)
 	{
 		for (auto &object2 : m_objects)
 		{

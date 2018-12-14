@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Models/Model.hpp"
 #include "Textures/Texture.hpp"
-#include "IMaterial.hpp"
+#include "Material.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
 	/// Class that represents the default material shader.
 	/// </summary>
 	class ACID_EXPORT MaterialDefault :
-		public IMaterial
+		public Material
 	{
 	private:
 		bool m_animated;

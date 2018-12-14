@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include <vector>
-#include <optional>
 #include "Maths/Vector3.hpp"
-#include "Objects/GameObject.hpp"
-#include "Objects/IComponent.hpp"
-#include "Spawns/ISpawnParticle.hpp"
+#include "Maths/Timer.hpp"
+#include "Objects/Entity.hpp"
+#include "Objects/Component.hpp"
+#include "Emitters/ParticleEmitter.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"
 
@@ -15,20 +15,16 @@ namespace acid
 	/// A system of particles that are to be spawned.
 	/// </summary>
 	class ACID_EXPORT ParticleSystem :
-		public IComponent
+		public Component
 	{
 	private:
 		std::vector<std::shared_ptr<ParticleType>> m_types;
-		std::unique_ptr<ISpawnParticle> m_spawn;
 
 		float m_pps;
 		float m_averageSpeed;
 		float m_gravityEffect;
 		bool m_randomRotation;
 
-		Vector3 m_lastPosition;
-
-		Vector3 m_localOffset;
 		Vector3 m_direction;
 		float m_directionDeviation;
 		float m_speedDeviation;
@@ -36,19 +32,17 @@ namespace acid
 		float m_stageDeviation;
 		float m_scaleDeviation;
 
-		float m_timePassed;
-		bool m_paused;
+		Timer m_emitTimer;
 	public:
 		/// <summary>
 		/// Creates a new particle system.
 		/// </summary>
 		/// <param name="types"> The types of particles to spawn. </param>
-		/// <param name="spawn"> The particle spawn types. </param>
+		/// <param name="localTransform"> The local transform from the parents space. </param>
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="averageSpeed"> Particle average speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
-		/// <param name="localOffset"> The offset from the game objects centre. </param>
-		explicit ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = {}, ISpawnParticle *spawn = nullptr, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f, const Vector3 &localOffset = Vector3::ZERO);
+		explicit ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = {}, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f);
 
 		void Start() override;
 
@@ -62,15 +56,9 @@ namespace acid
 
 		bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
 
-		ISpawnParticle *GetSpawn() const { return m_spawn.get(); }
-
-		void SetSpawn(ISpawnParticle *spawn) { m_spawn.reset(spawn); }
-
-		void TrySetSpawn(const Metadata &spawnNode); // TODO: Remove
-
 		float GetPps() const { return m_pps; }
 
-		void SetPps(const float &pps) { m_pps = pps; }
+		void SetPps(const float &pps);
 
 		float GetAverageSpeed() const { return m_averageSpeed; }
 
@@ -83,10 +71,6 @@ namespace acid
 		bool IsRandomRotation() const { return m_randomRotation; }
 
 		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
-
-		Vector3 GetLocalOffset() const { return m_localOffset; }
-
-		void SetLocalOffset(const Vector3 &localOffset) { m_localOffset = localOffset; }
 
 		Vector3 GetDirection() const { return m_direction; }
 
@@ -107,12 +91,8 @@ namespace acid
 		float GetScaleDeviation() const { return m_scaleDeviation; }
 
 		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
-
-		bool IsPaused() const { return m_paused; }
-
-		void SetPaused(const bool &paused) { m_paused = paused; }
 	private:
-		std::optional<Particle> EmitParticle();
+		Particle EmitParticle(const ParticleEmitter &emitter);
 
 		float GenerateValue(const float &average, const float &errorPercent) const;
 

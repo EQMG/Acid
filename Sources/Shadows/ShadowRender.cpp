@@ -1,7 +1,7 @@
 #include "ShadowRender.hpp"
 
 #include "Meshes/Mesh.hpp"
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 
 namespace acid
 {
@@ -18,7 +18,7 @@ namespace acid
 	void ShadowRender::Update()
 	{
 		// Updates uniforms.
-		m_uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
+		m_uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 	}
 
 	void ShadowRender::Decode(const Metadata &metadata)
@@ -32,7 +32,7 @@ namespace acid
 	bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets required components.
-		auto mesh = GetGameObject()->GetComponent<Mesh>();
+		auto mesh = GetParent()->GetComponent<Mesh>();
 
 		if (mesh == nullptr || mesh->GetModel() == nullptr)
 		{

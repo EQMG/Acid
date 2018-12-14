@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void FilterBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void FilterBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("direction", m_direction);

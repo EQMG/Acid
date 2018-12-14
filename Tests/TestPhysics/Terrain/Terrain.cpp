@@ -1,7 +1,7 @@
 #include "Terrain.hpp"
 
 #include <Meshes/Mesh.hpp>
-#include <Physics/ColliderHeightfield.hpp>
+#include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Rigidbody.hpp>
 
 namespace test
@@ -18,8 +18,8 @@ namespace test
 
 	void Terrain::Start()
 	{
-		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
-		auto colliderHeightfield = GetGameObject()->GetComponent<ColliderHeightfield>(true);
+		auto mesh = GetParent()->GetComponent<Mesh>(true);
+		auto colliderHeightfield = GetParent()->GetComponent<ColliderHeightfield>(true);
 
 		if (mesh == nullptr)
 		{
@@ -68,7 +68,7 @@ namespace test
 
 	std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
 	{
-		auto &transform = GetGameObject()->GetLocalTransform();
+		auto &transform = GetParent()->GetLocalTransform();
 		auto heightmap = std::vector<float>(vertexCount * vertexCount);
 
 		for (uint32_t row = 0; row < vertexCount; row++)

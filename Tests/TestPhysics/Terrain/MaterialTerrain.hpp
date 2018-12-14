@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Materials/IMaterial.hpp>
+#include <Materials/Material.hpp>
 #include <Textures/Texture.hpp>
 
 using namespace acid;
@@ -8,7 +8,7 @@ using namespace acid;
 namespace test
 {
 	class MaterialTerrain :
-		public IMaterial
+		public Material
 	{
 	private:
 		std::shared_ptr<Texture> m_textureR;

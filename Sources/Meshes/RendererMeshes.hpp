@@ -23,6 +23,6 @@ namespace acid
 	public:
 		explicit RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = MESH_SORT_NONE);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 	};
 }

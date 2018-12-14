@@ -2,7 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 #include "Models/VertexModel.hpp"
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 
 namespace acid
 {
@@ -25,7 +25,7 @@ namespace acid
 
 	void MaterialDefault::Start()
 	{
-		auto mesh = GetGameObject()->GetComponent<Mesh>(true);
+		auto mesh = GetParent()->GetComponent<Mesh>(true);
 
 		if (mesh == nullptr)
 		{
@@ -76,12 +76,12 @@ namespace acid
 	{
 		if (m_animated)
 		{
-			auto meshAnimated = GetGameObject()->GetComponent<MeshAnimated>();
+			auto meshAnimated = GetParent()->GetComponent<MeshAnimated>();
 			auto joints = meshAnimated->GetJointTransforms();
 			uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
 		}
 
-		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
+		uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 		uniformObject.Push("baseDiffuse", m_baseDiffuse);
 		uniformObject.Push("metallic", m_metallic);
 		uniformObject.Push("roughness", m_roughness);

@@ -20,10 +20,5 @@ namespace acid
 			IRenderer(graphicsStage)
 		{
 		}
-
-		/// <summary>
-		/// Renders the post pipeline.
-		/// </summary>
-		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera) override = 0;
 	};
 }

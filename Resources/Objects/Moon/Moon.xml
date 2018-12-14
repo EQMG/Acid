@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GameObjectDefinition name="Moon">
+<EntityDefinition name="Moon">
 	<Mesh>
 		<Model>Sphere_18_18_1</Model>
 	</Mesh>
@@ -27,4 +27,4 @@
 		<Type>1</Type>
 	</CelestialBody>
 	<MeshRender />
-</GameObjectDefinition>
+</EntityDefinition>

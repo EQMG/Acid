@@ -1,6 +1,6 @@
 #include "Light.hpp"
 
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 
 namespace acid
 {
@@ -46,9 +46,9 @@ namespace acid
 
 	Transform Light::GetWorldTransform() const
 	{
-		if (m_localTransform.IsDirty() || GetGameObject()->GetWorldTransform().IsDirty())
+		if (m_localTransform.IsDirty() || GetParent()->GetWorldTransform().IsDirty())
 		{
-			m_worldTransform = GetGameObject()->GetWorldTransform() * m_localTransform;
+			m_worldTransform = GetParent()->GetWorldTransform() * m_localTransform;
 			m_localTransform.SetDirty(false);
 		}
 

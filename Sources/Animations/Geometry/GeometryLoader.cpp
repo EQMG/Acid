@@ -53,7 +53,7 @@ namespace acid
 
 	void GeometryLoader::LoadUvs()
 	{
-		std::string uvsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
+		std::string uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
 		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
 		uint32_t uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
 		auto uvsRawData = String::Split(uvsData->GetValue(), " ");
@@ -67,7 +67,7 @@ namespace acid
 
 	void GeometryLoader::LoadNormals()
 	{
-		std::string normalsSource = m_meshData->FindChild("polylist")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
+		std::string normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
 		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
 		uint32_t normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
 		auto normalsRawData = String::Split(normalsData->GetValue(), " ");
@@ -82,8 +82,8 @@ namespace acid
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int32_t indexCount = static_cast<int32_t>(m_meshData->FindChild("polylist")->FindChildren("input").size());
-		auto indexRawData = String::Split(m_meshData->FindChild("polylist")->FindChild("p")->GetValue(), " ");
+		int32_t indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
+		auto indexRawData = String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{

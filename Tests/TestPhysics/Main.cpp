@@ -8,7 +8,7 @@
 #include "Behaviours/NameTag.hpp"
 #include "Configs/ConfigManager.hpp"
 #include "MainRenderer.hpp"
-#include "Scenes/FpsPlayer.hpp"
+#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
 #include "Skybox/CelestialBody.hpp"
 #include "Skybox/SkyboxCycle.hpp"
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	Scenes::Get()->RegisterComponent<HeightDespawn>("HeightDespawn");
 	Scenes::Get()->RegisterComponent<NameTag>("NameTag");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
-	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<PlayerFps>("PlayerFps");
 	Scenes::Get()->RegisterComponent<CelestialBody>("CelestialBody");
 	Scenes::Get()->RegisterComponent<SkyboxCycle>("SkyboxCycle");
 	Scenes::Get()->RegisterComponent<MaterialTerrain>("MaterialTerrain");

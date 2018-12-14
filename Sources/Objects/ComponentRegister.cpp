@@ -4,15 +4,19 @@
 #include "Lights/Light.hpp"
 #include "Materials/MaterialDefault.hpp"
 #include "Meshes/MeshRender.hpp"
+#include "Particles/Emitters/EmitterCircle.hpp"
+#include "Particles/Emitters/EmitterLine.hpp"
+#include "Particles/Emitters/EmitterPoint.hpp"
+#include "Particles/Emitters/EmitterSphere.hpp"
 #include "Particles/ParticleSystem.hpp"
-#include "Physics/ColliderCube.hpp"
-#include "Physics/ColliderCapsule.hpp"
+#include "Physics/Colliders/ColliderCapsule.hpp"
+#include "Physics/Colliders/ColliderCone.hpp"
+#include "Physics/Colliders/ColliderConvexHull.hpp"
+#include "Physics/Colliders/ColliderCube.hpp"
+#include "Physics/Colliders/ColliderCylinder.hpp"
+#include "Physics/Colliders/ColliderHeightfield.hpp"
+#include "Physics/Colliders/ColliderSphere.hpp"
 #include "Physics/KinematicCharacter.hpp"
-#include "Physics/ColliderCone.hpp"
-#include "Physics/ColliderConvexHull.hpp"
-#include "Physics/ColliderCylinder.hpp"
-#include "Physics/ColliderHeightfield.hpp"
-#include "Physics/ColliderSphere.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Shadows/ShadowRender.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
@@ -22,6 +26,18 @@ namespace acid
 	ComponentRegister::ComponentRegister() :
 		m_components(std::map<std::string, ComponentCreate>())
 	{
+		RegisterComponent<ColliderCapsule>("ColliderCapsule");
+		RegisterComponent<ColliderCone>("ColliderCone");
+		RegisterComponent<ColliderConvexHull>("ColliderConvexHull");
+		RegisterComponent<ColliderCube>("ColliderCube");
+		RegisterComponent<ColliderCylinder>("ColliderCylinder");
+		RegisterComponent<ColliderHeightfield>("ColliderHeightfield");
+		RegisterComponent<ColliderSphere>("ColliderSphere");
+		RegisterComponent<EmitterCircle>("EmitterCircle");
+		RegisterComponent<EmitterLine>("EmitterLine");
+		RegisterComponent<EmitterPoint>("EmitterPoint");
+		RegisterComponent<EmitterSphere>("EmitterSphere");
+		RegisterComponent<KinematicCharacter>("KinematicCharacter");
 		RegisterComponent<Light>("Light");
 		RegisterComponent<MaterialDefault>("MaterialDefault");
 		RegisterComponent<MaterialSkybox>("MaterialSkybox");
@@ -29,14 +45,6 @@ namespace acid
 		RegisterComponent<MeshAnimated>("MeshAnimated");
 		RegisterComponent<MeshRender>("MeshRender");
 		RegisterComponent<ParticleSystem>("ParticleSystem");
-		RegisterComponent<ColliderCube>("ColliderCube");
-		RegisterComponent<ColliderCapsule>("ColliderCapsule");
-		RegisterComponent<KinematicCharacter>("KinematicCharacter");
-		RegisterComponent<ColliderCone>("ColliderCone");
-		RegisterComponent<ColliderConvexHull>("ColliderConvexHull");
-		RegisterComponent<ColliderCylinder>("ColliderCylinder");
-		RegisterComponent<ColliderHeightfield>("ColliderHeightfield");
-		RegisterComponent<ColliderSphere>("ColliderSphere");
 		RegisterComponent<Rigidbody>("Rigidbody");
 		RegisterComponent<ShadowRender>("ShadowRender");
 	}
@@ -54,7 +62,7 @@ namespace acid
 		return true;
 	}
 
-	IComponent *ComponentRegister::CreateComponent(const std::string &name)
+	Component *ComponentRegister::CreateComponent(const std::string &name)
 	{
 		auto it = m_components.find(name);
 
@@ -67,7 +75,7 @@ namespace acid
 		return ((*it).second).m_create();
 	}
 
-	std::optional<std::string> ComponentRegister::FindComponentName(IComponent *compare)
+	std::optional<std::string> ComponentRegister::FindComponentName(Component *compare)
 	{
 		for (auto &[name, component] : m_components)
 		{

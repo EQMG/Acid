@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Objects/IComponent.hpp"
+#include "Objects/Component.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
@@ -9,10 +9,10 @@
 namespace acid
 {
 	/// <summary>
-	/// Class used to render a GameObject as a shadow.
+	/// This component is used to render a entity as a shadow.
 	/// </summary>
 	class ACID_EXPORT ShadowRender :
-		public IComponent
+		public Component
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;

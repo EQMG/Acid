@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Materials/IMaterial.hpp>
+#include <Materials/Material.hpp>
 
 using namespace acid;
 
@@ -10,7 +10,7 @@ namespace test
 	/// Class that represents a voxel material shader.
 	/// </summary>
 	class MaterialVoxel :
-		public IMaterial
+		public Material
 	{
 	private:
 		std::shared_ptr<PipelineMaterial> m_material;

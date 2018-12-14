@@ -6,19 +6,21 @@
 #include <al.h>
 #endif
 #include <cmath>
-#include "Objects/GameObject.hpp"
+#include "Objects/Entity.hpp"
 
 namespace acid
 {
-	Sound::Sound(const std::string &filename, const SoundType &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
+	Sound::Sound(const std::string &filename, const Transform &localTransform, const SoundType &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
 		m_soundBuffer(SoundBuffer::Resource(filename)),
 		m_source(0),
-		m_type(type),
-		m_gain(gain),
-		m_pitch(pitch),
+		m_localTransform(localTransform),
+		m_worldTransform(Transform()),
 		m_position(Vector3()),
 		m_direction(Vector3()),
-		m_velocity(Vector3())
+		m_velocity(Vector3()),
+		m_type(type),
+		m_gain(gain),
+		m_pitch(pitch)
 	{
 		alGenSources(1, &m_source);
 		alSourcei(m_source, AL_BUFFER, m_soundBuffer->GetBuffer());
@@ -46,8 +48,7 @@ namespace acid
 
 	void Sound::Update()
 	{
-		auto transform = GetGameObject()->GetWorldTransform();
-		SetPosition(transform.GetPosition());
+		SetPosition(GetWorldTransform().GetPosition());
 	}
 
 	void Sound::Decode(const Metadata &metadata)
@@ -109,6 +110,17 @@ namespace acid
 		ALenum state;
 		alGetSourcei(m_source, AL_SOURCE_STATE, &state);
 		return state == AL_PLAYING;
+	}
+
+	Transform Sound::GetWorldTransform() const
+	{
+		if (m_localTransform.IsDirty() || GetParent()->GetWorldTransform().IsDirty())
+		{
+			m_worldTransform = GetParent()->GetWorldTransform() * m_localTransform;
+			m_localTransform.SetDirty(false);
+		}
+
+		return m_worldTransform;
 	}
 
 	void Sound::SetPosition(const Vector3 &position)

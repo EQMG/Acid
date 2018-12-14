@@ -1,13 +1,13 @@
 #pragma once
 
-#include <Objects/IComponent.hpp>
+#include <Objects/Component.hpp>
 
 using namespace acid;
 
 namespace test
 {
 	class HeightDespawn :
-		public IComponent
+		public Component
 	{
 	private:
 		float m_removeHeight;

@@ -2,7 +2,7 @@
 
 #include <Audio/Sound.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Scenes/IScene.hpp>
+#include <Scenes/Scene.hpp>
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
@@ -10,7 +10,7 @@ using namespace acid;
 namespace test
 {
 	class Scene1 :
-		public IScene
+		public Scene
 	{
 	private:
 		ButtonKeyboard m_buttonFullscreen;

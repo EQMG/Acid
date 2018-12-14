@@ -1,6 +1,6 @@
 #include "HeightDespawn.hpp"
 
-#include <Objects/GameObject.hpp>
+#include <Objects/Entity.hpp>
 
 namespace test
 {
@@ -15,9 +15,9 @@ namespace test
 
 	void HeightDespawn::Update()
 	{
-		if (GetGameObject()->GetWorldTransform().GetPosition().m_y < m_removeHeight)
+		if (GetParent()->GetWorldTransform().GetPosition().m_y < m_removeHeight)
 		{
-			GetGameObject()->SetRemoved(true);
+			GetParent()->SetRemoved(true);
 		}
 	}
 

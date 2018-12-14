@@ -15,8 +15,8 @@
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Engine/Engine.hpp"
-#include "Objects/GameObject.hpp"
-#include "Physics/Collider.hpp"
+#include "Objects/Entity.hpp"
+#include "Physics/Colliders/Collider.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid
@@ -133,7 +133,7 @@ namespace acid
 			// If this pair doesn't exist in the list from the previous update, it is a new pair and we must send a collision event.
 			if (m_pairsLastUpdate.find(thisPair) == m_pairsLastUpdate.end())
 			{
-				// Gets the user pointer (Game Object).
+				// Gets the user pointer (entity).
 				auto collisionObjectA = static_cast<CollisionObject *>(sortedBodyA->getUserPointer());
 				auto collisionObjectB = static_cast<CollisionObject *>(sortedBodyB->getUserPointer());
 
@@ -152,7 +152,7 @@ namespace acid
 		// Iterate through all of the removed pairs sending separation events for them.
 		for (auto it = removedPairs.begin(); it != removedPairs.end(); ++it)
 		{
-			// Gets the user pointer (Game Object).
+			// Gets the user pointer (entity).
 			auto collisionObjectA = static_cast<CollisionObject *>(it->first->getUserPointer());
 			auto collisionObjectB = static_cast<CollisionObject *>(it->second->getUserPointer());
 

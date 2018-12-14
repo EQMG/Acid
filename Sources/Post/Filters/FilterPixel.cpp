@@ -9,7 +9,7 @@ namespace acid
 	{
 	}
 
-	void FilterPixel::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void FilterPixel::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("pixelSize", m_pixelSize);

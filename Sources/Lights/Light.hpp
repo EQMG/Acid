@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
-#include "Objects/IComponent.hpp"
+#include "Objects/Component.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
 	/// Represents a point light, contains a colour, position and attenuation.
 	/// </summary>
 	class ACID_EXPORT Light :
-		public IComponent
+		public Component
 	{
 	private:
 		Colour m_colour;
@@ -26,7 +26,7 @@ namespace acid
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
 		/// <param name="localTransform"> The local transform from the parents space. </param>
-		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Transform &localTransform = Transform::ZERO);
+		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Transform &localTransform = Transform::IDENTITY);
 
 		/// <summary>
 		/// Creates a new point light from a source object.

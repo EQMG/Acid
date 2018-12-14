@@ -7,7 +7,7 @@
 namespace acid
 {
 	class ACID_EXPORT MeshRender :
-		public IComponent
+		public Component
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;

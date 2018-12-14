@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Objects/IComponent.hpp>
+#include <Objects/Component.hpp>
 #include <Fonts/Text.hpp>
 
 using namespace acid;
@@ -8,7 +8,7 @@ using namespace acid;
 namespace test
 {
 	class NameTag :
-		public IComponent
+		public Component
 	{
 	private:
 		std::string m_name;

@@ -4,16 +4,23 @@
 #include <vector>
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
-#include "Objects/IComponent.hpp"
+#include "Objects/Component.hpp"
 
 namespace acid
 {
+	/// <summary>
+	/// A component that represents a model/mesh.
+	/// </summary>
 	class ACID_EXPORT Mesh :
-		public IComponent
+		public Component
 	{
 	private:
 		std::shared_ptr<Model> m_model;
 	public:
+		/// <summary>
+		/// Creates a new mesh component with a model.
+		/// </summary>
+		/// <param name="model"> The initial model to use in this mesh. </param>
 		explicit Mesh(const std::shared_ptr<Model> &model = nullptr);
 
 		void Start() override;

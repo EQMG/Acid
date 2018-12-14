@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Engine/Exports.hpp"
+#include "Objects/Component.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
@@ -13,7 +14,8 @@ namespace acid
 	/// <summary>
 	/// Holds position, rotation, and scale components.
 	/// </summary>
-	class ACID_EXPORT Transform
+	class ACID_EXPORT Transform :
+		public Component
 	{
 	private:
 		Vector3 m_position;
@@ -22,18 +24,7 @@ namespace acid
 		mutable Matrix4 m_worldMatrix;
 		mutable bool m_dirty;
 	public:
-		static const Transform ZERO;
-
-		/// <summary>
-		/// Constructor for Transform.
-		/// </summary>
-		Transform();
-
-		/// <summary>
-		/// Constructor for Transform.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a transform. </param>
-		Transform(const Transform &source);
+		static const Transform IDENTITY;
 
 		/// <summary>
 		/// Constructor for Transform.
@@ -41,7 +32,7 @@ namespace acid
 		/// <param name="position"> The position. </param>
 		/// <param name="rotation"> The rotation. </param>
 		/// <param name="scaling"> The scaling. </param>
-		explicit Transform(const Vector3 &position, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
+		explicit Transform(const Vector3 &position = Vector3::ZERO, const Vector3 &rotation = Vector3::ZERO, const Vector3 &scaling = Vector3::ONE);
 
 		/// <summary>
 		/// Constructor for Transform.
@@ -50,6 +41,20 @@ namespace acid
 		/// <param name="rotation"> The rotation. </param>
 		/// <param name="scale"> The scale. </param>
 		Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
+
+		/// <summary>
+		/// Constructor for Transform.
+		/// </summary>
+		/// <param name="source"> Creates this vector out of a transform. </param>
+		Transform(const Transform &source);
+
+		void Start() override;
+
+		void Update() override;
+
+		void Decode(const Metadata &metadata);
+
+		void Encode(Metadata &metadata) const;
 
 		/// <summary>
 		/// Multiplies this transform with another transform.
@@ -75,10 +80,6 @@ namespace acid
 		bool IsDirty() const { return m_dirty; }
 
 		void SetDirty(const bool &dirty) const;
-
-		void Decode(const Metadata &metadata);
-
-		void Encode(Metadata &metadata) const;
 
 		bool operator==(const Transform &other) const;
 

@@ -25,8 +25,8 @@ namespace test
 
 	void CelestialBody::Update()
 	{
-		auto &transform = GetGameObject()->GetLocalTransform();
-		auto componentLight = GetGameObject()->GetComponent<Light>();
+		auto &transform = GetParent()->GetLocalTransform();
+		auto componentLight = GetParent()->GetComponent<Light>();
 
 		switch (m_type)
 		{

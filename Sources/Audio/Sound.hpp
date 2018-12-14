@@ -2,31 +2,35 @@
 
 #include <string>
 #include "Maths/Vector3.hpp"
-#include "Objects/IComponent.hpp"
+#include "Maths/Transform.hpp"
+#include "Objects/Component.hpp"
 #include "SoundBuffer.hpp"
 #include "Audio.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// Class that represents a loaded sound.
+	/// Class that represents a playable sound.
 	/// </summary>
 	class ACID_EXPORT Sound :
-		public IComponent
+		public Component
 	{
 	private:
 		std::shared_ptr<SoundBuffer> m_soundBuffer;
 		uint32_t m_source;
 
-		SoundType m_type;
-		float m_gain;
-		float m_pitch;
-
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
 		Vector3 m_position;
 		Vector3 m_direction;
 		Vector3 m_velocity;
+
+		SoundType m_type;
+		float m_gain;
+		float m_pitch;
 	public:
-		explicit Sound(const std::string &filename, const SoundType &type = SOUND_TYPE_GENERAL, const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
+		explicit Sound(const std::string &filename, const Transform &localTransform = Transform::IDENTITY, const SoundType &type = SOUND_TYPE_GENERAL,
+			const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 		~Sound();
 
@@ -47,6 +51,12 @@ namespace acid
 		void Stop();
 
 		bool IsPlaying();
+
+		Transform GetLocalTransform() const { return m_localTransform; }
+
+		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
+
+		Transform GetWorldTransform() const;
 
 		void SetPosition(const Vector3 &position);
 

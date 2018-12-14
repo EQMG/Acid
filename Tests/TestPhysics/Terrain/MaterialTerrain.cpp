@@ -1,6 +1,6 @@
 #include "MaterialTerrain.hpp"
 
-#include <Objects/GameObject.hpp>
+#include <Objects/Entity.hpp>
 #include <Models/VertexModel.hpp>
 
 namespace test
@@ -36,7 +36,7 @@ namespace test
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)
 	{
-		uniformObject.Push("transform", GetGameObject()->GetWorldMatrix());
+		uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 	}
 
 	void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)

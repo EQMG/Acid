@@ -2,21 +2,19 @@
 
 #include <algorithm>
 #include <vector>
-#include "Objects/GameObject.hpp"
-#include "Objects/IComponent.hpp"
+#include "Objects/Entity.hpp"
+#include "Objects/Component.hpp"
 #include "Physics/Rigidbody.hpp"
-#include "ISpatialStructure.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// A structure of spatial objects for a 3D space.
+	/// A structure of spatial objects for a scene.
 	/// </summary>
-	class ACID_EXPORT SceneStructure :
-		public ISpatialStructure
+	class ACID_EXPORT SceneStructure
 	{
 	private:
-		std::vector<std::unique_ptr<GameObject>> m_objects;
+		std::vector<std::unique_ptr<Entity>> m_objects;
 	public:
 		/// <summary>
 		/// Creates a new scene structure.
@@ -27,27 +25,82 @@ namespace acid
 
 		SceneStructure& operator=(const SceneStructure&) = delete;
 
-		void Add(GameObject *object) override;
+		/// <summary>
+		/// Creates a new entity that starts in this structure.
+		/// </summary>
+		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
+		/// <returns> The newly created entity. </returns>
+		Entity *CreateEntity(const Transform &transform);
 
-		void Add(std::unique_ptr<GameObject> object) override;
+		/// <summary>
+		/// Creates a new entity from a prefab that starts in this structure.
+		/// </summary>
+		/// <param name="filename"> The file to load the component data from. </param>
+		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
+		/// <returns> The newly created entity. </returns>
+		Entity *CreateEntity(const std::string &filename, const Transform &transform);
 
-		bool Remove(GameObject *object) override;
+		/// <summary>
+		/// Adds a new object to the spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to add. </param>
+		void Add(Entity *object);
 
-		bool Move(GameObject *object, ISpatialStructure *structure) override;
+		/// <summary>
+		/// Adds a new object to the spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to add. </param>
+		void Add(std::unique_ptr<Entity> object);
 
-		void Clear() override;
+		/// <summary>
+		/// Removes an object from the spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to remove. </param>
+		/// <returns> If the object was removed. </returns>
+		bool Remove(Entity *object);
 
-		void Update() override;
+		/// <summary>
+		/// Moves an object to another spatial structure.
+		/// </summary>
+		/// <param name="object"> The object to remove. </param>
+		/// <param name="structure"> The structure to move to. </param>
+		/// <returns> If the object was moved. </returns>
+		bool Move(Entity *object, SceneStructure &structure);
 
-		uint32_t GetSize() override { return static_cast<uint32_t>(m_objects.size()); }
+		/// <summary>
+		/// Removes all objects from the spatial structure..
+		/// </summary>
+		void Clear();
 
-		std::vector<GameObject *> QueryAll() override;
+		/// <summary>
+		/// Updates all of the entity.
+		/// </summary>
+		void Update();
 
-		std::vector<GameObject *> QueryFrustum(const Frustum &range) override;
+		/// <summary>
+		/// Gets the size of this structure.
+		/// </summary>
+		/// <returns> The structures size. </returns>
+		uint32_t GetSize() const { return static_cast<uint32_t>(m_objects.size()); }
 
-	//	std::vector<GameObject *> QuerySphere(const Vector3 &centre, const Vector3 &radius) override;
+		/// <summary>
+		/// Returns a set of all objects in the spatial structure.
+		/// </summary>
+		/// </param>
+		/// <returns> The list specified by of all objects. </returns>
+		std::vector<Entity *> QueryAll();
 
-	//	std::vector<GameObject *> QueryCube(const Vector3 &min, const Vector3 &max) override;
+		/// <summary>
+		/// Returns a set of all objects in a spatial objects contained in a frustum.
+		/// </summary>
+		/// <param name="range"> The frustum range of space being queried. </param>
+		/// </param>
+		/// <returns> The list of all object in range. </returns>
+		std::vector<Entity *> QueryFrustum(const Frustum &range);
+
+	//	std::vector<Entity *> QuerySphere(const Vector3 &centre, const Vector3 &radius);
+
+	//	std::vector<Entity *> QueryCube(const Vector3 &min, const Vector3 &max);
 
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
@@ -96,6 +149,12 @@ namespace acid
 			return nullptr;
 		}
 
-		bool Contains(GameObject *object) override;
+		/// <summary>
+		/// If the structure contains the object.
+		/// </summary>
+		/// <param name="object"> The object to check for.
+		/// </param>
+		/// <returns> If the structure contains the object. </returns>
+		bool Contains(Entity *object);
 	};
 }

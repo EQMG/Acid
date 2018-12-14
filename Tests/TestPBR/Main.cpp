@@ -2,7 +2,7 @@
 #include <Inputs/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include "Scenes/FpsPlayer.hpp"
+#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
 #include "MainRenderer.hpp"
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	// Registers modules.
 
 	// Registers components.
-	Scenes::Get()->RegisterComponent<FpsPlayer>("FpsPlayer");
+	Scenes::Get()->RegisterComponent<PlayerFps>("PlayerFps");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test PBR");

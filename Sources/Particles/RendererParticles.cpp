@@ -13,7 +13,7 @@ namespace acid
 	{
 	}
 
-	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const ICamera &camera)
+	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());

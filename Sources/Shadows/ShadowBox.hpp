@@ -2,7 +2,7 @@
 
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
-#include "Scenes/ICamera.hpp"
+#include "Scenes/Camera.hpp"
 
 namespace acid
 {
@@ -45,7 +45,7 @@ namespace acid
 		/// <param name="lightPosition"> The lights position. </param>
 		/// <param name="shadowOffset"> The shadows offset. </param>
 		/// <param name="shadowDistance"> The shadows distance. </param>
-		void Update(const ICamera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
+		void Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
 	private:
 		/// <summary>
 		/// Create the offset for part of the conversion to shadow map space.
@@ -53,13 +53,13 @@ namespace acid
 		/// <returns> The offset as a matrix. </returns>
 		static Matrix4 CreateOffset();
 
-		void UpdateShadowBox(const ICamera &camera);
+		void UpdateShadowBox(const Camera &camera);
 
 		/// <summary>
 		/// Updates the widths and heights of the box panes.
 		/// </summary>
 		/// <param name="camera"> The camera object. </param>
-		void UpdateSizes(const ICamera &camera);
+		void UpdateSizes(const Camera &camera);
 
 		/// <summary>
 		/// Calculates the vertex of each corner of the view frustum in light space.
