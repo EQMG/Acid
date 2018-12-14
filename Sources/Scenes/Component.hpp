@@ -13,6 +13,8 @@ namespace acid
 	class ACID_EXPORT Component
 	{
 	private:
+		friend class Entity;
+
 		Entity *m_parent;
 		bool m_started;
 		bool m_enabled;
@@ -67,10 +69,6 @@ namespace acid
 		/// </summary>
 		/// <param name="parent"> The new parent this is attached to. </param>
 		void SetParent(Entity *parent) { m_parent = parent; }
-
-		ACID_HIDDEN bool IsStarted() const { return m_started; };
-
-		ACID_HIDDEN void SetStarted(const bool &started) { m_started = started; }
 
 		bool IsEnabled() const { return m_enabled; };
 

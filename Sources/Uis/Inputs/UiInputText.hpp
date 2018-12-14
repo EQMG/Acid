@@ -32,7 +32,7 @@ namespace acid
 		bool m_selected;
 		bool m_mouseOver;
 
-		Observer<UiInputText *, std::string> m_changeEvents;
+		Delegate<void(UiInputText *, std::string)> m_onType;
 	public:
 		UiInputText(UiObject *parent, const std::string &prefix, const std::string &value, const int32_t &maxLength,
 			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)),
@@ -52,6 +52,6 @@ namespace acid
 
 		void SetValue(const std::string &value);
 
-		Observer<UiInputText *, std::string> &GetChangeEvents() { return m_changeEvents; }
+		Delegate<void(UiInputText *, std::string)> &GetOnType() { return m_onType; }
 	};
 }

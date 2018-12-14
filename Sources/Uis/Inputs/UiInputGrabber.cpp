@@ -108,7 +108,7 @@ namespace acid
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
-		m_changeEvents(Observer<UiInputGrabber *, int32_t>())
+		m_onGrabbed(Delegate<void(UiInputGrabber *, int32_t)>())
 	{
 		m_background->SetColourOffset(primaryColour);
 	}
@@ -124,7 +124,7 @@ namespace acid
 				m_value = key;
 				m_text->SetString(m_prefix + m_grabber->GetValue(m_value));
 
-				m_changeEvents.OnEvent(this, m_value);
+				m_onGrabbed(this, m_value);
 
 				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);

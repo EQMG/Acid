@@ -25,7 +25,7 @@ namespace acid
 		m_lastKey(0),
 		m_selected(false),
 		m_mouseOver(false),
-		m_changeEvents(Observer<UiInputText *, std::string>())
+		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
 		m_background->SetColourOffset(primaryColour);
 	}
@@ -45,7 +45,7 @@ namespace acid
 					m_value += static_cast<char>(key);
 					m_text->SetString(m_prefix + m_value);
 
-					m_changeEvents.OnEvent(this, m_text->GetString());
+					m_onType(this, m_text->GetString());
 
 					m_lastKey = key;
 				}
@@ -59,7 +59,7 @@ namespace acid
 					m_value = m_value.substr(0, m_value.length() - 1);
 					m_text->SetString(m_prefix + m_value);
 
-					m_changeEvents.OnEvent(this, m_text->GetString());
+					m_onType(this, m_text->GetString());
 
 					m_lastKey = 8;
 				}

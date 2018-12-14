@@ -14,7 +14,7 @@ namespace test
 	{
 		m_background->SetColourOffset(UiNavigation::PANEL_COLOUR); // TODO: Blur underneath.
 	//	m_background->SetDepth(1.0f);
-		m_slider1->GetChangeEvents() += [](UiInputSlider *object, float value) {
+		m_slider1->GetOnSlide() += [](UiInputSlider *object, float value) {
 			Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, value);
 		};
 	}

@@ -35,7 +35,7 @@ namespace acid
 
 		bool m_hasChange;
 		Timer m_timerChange;
-		Observer<UiInputSlider *, float> m_changeEvents;
+		Delegate<void(UiInputSlider *, float)> m_onSlide;
 	public:
 		UiInputSlider(UiObject *parent, const std::string &prefix, const float &value, const float &progressMin, const float &progressMax, const int32_t &roundTo,
 			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)),
@@ -65,7 +65,7 @@ namespace acid
 
 		void SetValue(const float &value);
 
-		Observer<UiInputSlider *, float> &GetChangeEvents() { return m_changeEvents; }
+		Delegate<void(UiInputSlider *, float)> &GetOnSlide() { return m_onSlide; }
 	private:
 		void UpdateText();
 	};

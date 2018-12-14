@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "Events/Observer.hpp"
+#include "Helpers/Delegate.hpp"
 #include "Maths/Vector3.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Component.hpp"
@@ -30,8 +30,8 @@ namespace acid
 
 		std::vector<std::unique_ptr<Force>> m_forces;
 
-		Observer<CollisionObject *> m_collisionEvents;
-		Observer<CollisionObject *> m_separationEvents;
+		Delegate<void(CollisionObject *)> m_onCollision;
+		Delegate<void(CollisionObject *)> m_onSeparation;
 	public:
 		/// <summary>
 		/// Creates a new collision object.
@@ -56,7 +56,7 @@ namespace acid
 
 		virtual void ClearForces() = 0;
 
-		bool IsShapeCreated() const { return IsStarted() && m_shape != nullptr; }
+		bool IsShapeCreated() const { return m_shape != nullptr; }
 
 		void SetChildTransform(Collider *child, const Transform &transform);
 
@@ -78,9 +78,9 @@ namespace acid
 
 		void SetFrictionSpinning(const float &frictionSpinning);
 
-		Observer<CollisionObject *> &GetCollisionEvents() { return m_collisionEvents; }
+		Delegate<void(CollisionObject *)> &GetOnCollision() { return m_onCollision; }
 
-		Observer<CollisionObject *> &GetSeparationEvents() { return m_separationEvents; }
+		Delegate<void(CollisionObject *)> &GetOnSeparation() { return m_onSeparation; }
 	protected:
 		void CreateShape(const bool &forceSingle = false);
 

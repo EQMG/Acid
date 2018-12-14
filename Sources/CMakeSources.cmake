@@ -33,7 +33,6 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
-		Events/Observer.hpp
 		Files/Csv/FileCsv.hpp
 		Files/Csv/RowCsv.hpp
 		Files/Files.hpp
@@ -55,6 +54,7 @@ set(_temp_acid_headers
 		Gizmos/RendererGizmos.hpp
 		Guis/Gui.hpp
 		Guis/RendererGuis.hpp
+		Helpers/Delegate.hpp
 		Helpers/dirent.h
 		Helpers/FileSystem.hpp
 		Helpers/String.hpp
