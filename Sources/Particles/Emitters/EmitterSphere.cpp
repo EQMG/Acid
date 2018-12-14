@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Maths/Vector2.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

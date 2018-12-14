@@ -6,7 +6,7 @@ namespace acid
 {
 	PipelineBlur::PipelineBlur(const GraphicsStage &graphicsStage, const float &blur, const BlurType &blurType,
 	                           const bool &toScreen, const float &inputScale, const float &outputScale) :
-		IPostPipeline(graphicsStage),
+		PostPipeline(graphicsStage),
 		m_filterBlurVertical(FilterBlur(graphicsStage, Vector2(0.0f, blur), blurType)),
 		m_filterBlurHorizontal(FilterBlur(graphicsStage, Vector2(blur, 0.0f), blurType)),
 		m_toScreen(toScreen),

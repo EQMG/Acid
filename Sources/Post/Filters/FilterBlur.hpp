@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
@@ -12,7 +12,7 @@ namespace acid
 	};
 
 	class ACID_EXPORT FilterBlur :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		PushHandler m_pushScene;

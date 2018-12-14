@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 #include "Post/Pipelines/PipelineBlur.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterDof :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		PushHandler m_pushScene;

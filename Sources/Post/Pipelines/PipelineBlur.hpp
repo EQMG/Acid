@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Post/Filters/FilterBlur.hpp"
-#include "Post/IPostPipeline.hpp"
+#include "Post/PostPipeline.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT PipelineBlur :
-		public IPostPipeline
+		public PostPipeline
 	{
 	private:
 		FilterBlur m_filterBlurVertical;

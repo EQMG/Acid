@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterEmboss :
-		public IPostFilter
+		public PostFilter
 	{
 	public:
 		explicit FilterEmboss(const GraphicsStage &graphicsStage);

@@ -1,7 +1,7 @@
 #include "Rotate.hpp"
 
 #include "../../../Libraries/bullet3/src/LinearMath/btTransform.h"
-#include <Objects/Entity.hpp>
+#include <Scenes/Entity.hpp>
 #include <Engine/Engine.hpp>
 #include <Physics/Colliders/Collider.hpp>
 #include <Maths/Maths.hpp>

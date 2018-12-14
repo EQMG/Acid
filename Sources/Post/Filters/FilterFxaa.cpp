@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterFxaa::FilterFxaa(const GraphicsStage &graphicsStage, const float &spanMax) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Fxaa.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_spanMax(spanMax)
 	{

@@ -4,7 +4,7 @@
 #include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
-#include "UiObject.hpp"
+#include "Uis/UiObject.hpp"
 
 namespace acid
 {

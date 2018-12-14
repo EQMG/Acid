@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterPixel::FilterPixel(const GraphicsStage &graphicsStage, const float &pixelSize) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Pixel.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_pixelSize(pixelSize)
 	{

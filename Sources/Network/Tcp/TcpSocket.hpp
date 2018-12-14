@@ -8,7 +8,6 @@
 namespace acid
 {
 	class IpAddress;
-
 	class Packet;
 
 	/// <summary>

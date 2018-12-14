@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Exports.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Physics/Frustum.hpp"

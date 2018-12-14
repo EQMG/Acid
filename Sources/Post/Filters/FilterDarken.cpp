@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage, const float &factor) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_factor(factor)
 	{

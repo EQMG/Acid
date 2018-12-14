@@ -2,7 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 #include "Models/VertexModel.hpp"
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

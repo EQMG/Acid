@@ -12,7 +12,7 @@ namespace acid
 	const float FilterSsao::SSAO_RADIUS = 0.5f;
 
 	FilterSsao::FilterSsao(const GraphicsStage &graphicsStage) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Ssao.frag"}, GetDefines()),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Ssao.frag"}, GetDefines()),
 		m_pushScene(PushHandler()),
 		m_noise(ComputeNoise(SSAO_NOISE_DIM)),
 		m_kernel(std::vector<Vector3>(SSAO_KERNEL_SIZE))

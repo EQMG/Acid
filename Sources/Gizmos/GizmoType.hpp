@@ -11,13 +11,13 @@
 
 namespace acid
 {
+	class Gizmo;
+
 	struct GizmoTypeData
 	{
 		Matrix4 modelMatrix;
 		Colour diffuse;
 	};
-
-	class Gizmo;
 
 	class ACID_EXPORT GizmoType :
 		public IResource

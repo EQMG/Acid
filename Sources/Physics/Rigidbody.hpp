@@ -2,8 +2,8 @@
 
 #include "Events/Observer.hpp"
 #include "Maths/Vector3.hpp"
-#include "Objects/Entity.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Entity.hpp"
+#include "Scenes/Component.hpp"
 #include "CollisionObject.hpp"
 
 class btDefaultMotionState;

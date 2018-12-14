@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterTone::FilterTone(const GraphicsStage &graphicsStage) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tone.frag"}, {})
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tone.frag"}, {})
 	{
 	}
 

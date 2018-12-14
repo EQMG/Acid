@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterVignette::FilterVignette(const GraphicsStage &graphicsStage, const float &innerRadius, const float &outerRadius, const float &opacity) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Vignette.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Vignette.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_innerRadius(innerRadius),
 		m_outerRadius(outerRadius),

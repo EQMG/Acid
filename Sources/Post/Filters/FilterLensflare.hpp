@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterLensflare :
-		public IPostFilter
+		public PostFilter
 	{
 	private:
 		PushHandler m_pushScene;

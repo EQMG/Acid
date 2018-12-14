@@ -1,10 +1,10 @@
 #pragma once
 
+#include <Uis/Inputs/UiInputButton.hpp>
+#include <Uis/Inputs/UiInputGrabber.hpp>
+#include <Uis/Inputs/UiInputSlider.hpp>
+#include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiObject.hpp>
-#include <Uis/UiInputButton.hpp>
-#include <Uis/UiInputGrabber.hpp>
-#include <Uis/UiInputSlider.hpp>
-#include <Uis/UiInputText.hpp>
 #include <Guis/Gui.hpp>
 
 using namespace acid;

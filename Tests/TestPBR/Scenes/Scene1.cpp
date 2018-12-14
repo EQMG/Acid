@@ -12,10 +12,10 @@
 #include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Objects/Prefabs/PrefabObject.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/EntityPrefab.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Uis/Uis.hpp>
 #include "CameraFps.hpp"

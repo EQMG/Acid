@@ -15,7 +15,6 @@
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Objects/Prefabs/PrefabObject.hpp>
 #include <Particles/Emitters/EmitterCircle.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Physics/Colliders/ColliderCapsule.hpp>
@@ -27,6 +26,7 @@
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/EntityPrefab.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>
@@ -90,7 +90,7 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		PrefabObject prefabPlane = PrefabObject("Plane.xml");
+		EntityPrefab prefabPlane = EntityPrefab("Plane.xml");
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
@@ -112,15 +112,14 @@ namespace test
 				auto cube = CreateEntity(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
 				cube->AddComponent<Mesh>(ModelCube::Resource(1.0f, 1.0f, 1.0f));
 				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
-				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
-				cube->AddComponent<ColliderCube>(Vector3::ONE);
+				cube->AddComponent<Rigidbody>(0.8f, 0.3f);
+				cube->AddComponent<ColliderCube>();
 				cube->AddComponent<MeshRender>();
 				cube->AddComponent<ShadowRender>();
 			}
 		}
 
 		auto teapot = CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot->AddComponent<Transform>(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f);
 		teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
 	//	teapot->AddComponent<Rigidbody>(1.0f);
@@ -177,7 +176,7 @@ namespace test
 		auto smokeSystem = CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
 	//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
 
-		PrefabObject prefabSmokeSystem = PrefabObject("SmokeSystem.json");
+		EntityPrefab prefabSmokeSystem = EntityPrefab("SmokeSystem.json");
 		prefabSmokeSystem.Write(*smokeSystem);
 		prefabSmokeSystem.Save();
 	}

@@ -8,7 +8,6 @@
 namespace acid
 {
 	class Ftp;
-
 	class FtpResponse;
 
 	/// <summary>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Objects/Component.hpp>
+#include <Scenes/Component.hpp>
 
 using namespace acid;
 

@@ -3,8 +3,8 @@
 #include <vector>
 #include "Maths/Vector3.hpp"
 #include "Maths/Timer.hpp"
-#include "Objects/Entity.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Entity.hpp"
+#include "Scenes/Component.hpp"
 #include "Emitters/ParticleEmitter.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"

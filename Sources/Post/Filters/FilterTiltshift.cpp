@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterTiltshift::FilterTiltshift(const GraphicsStage &graphicsStage, const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Tiltshift.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_blurAmount(blurAmount),
 		m_centre(centre),

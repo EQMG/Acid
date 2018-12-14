@@ -3,7 +3,7 @@
 #include <string>
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 #include "SoundBuffer.hpp"
 #include "Audio.hpp"
 

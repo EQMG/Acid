@@ -5,7 +5,7 @@
 namespace acid
 {
 	FilterBlur::FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {PipelineDefine("BLUR_TYPE", String::To(blurType))}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {PipelineDefine("BLUR_TYPE", String::To(blurType))}),
 		m_pushScene(PushHandler()),
 		m_blurType(blurType),
 		m_direction(direction)

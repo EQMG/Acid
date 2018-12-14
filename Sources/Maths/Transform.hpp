@@ -1,14 +1,13 @@
 ﻿#pragma once
 
 #include "Engine/Exports.hpp"
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
 namespace acid
 {
 	class Packet;
-
 	class Metadata;
 
 	/// <summary>

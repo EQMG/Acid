@@ -2,9 +2,9 @@
 
 #include <algorithm>
 #include <vector>
-#include "Objects/Entity.hpp"
-#include "Objects/Component.hpp"
 #include "Physics/Rigidbody.hpp"
+#include "Component.hpp"
+#include "Entity.hpp"
 
 namespace acid
 {

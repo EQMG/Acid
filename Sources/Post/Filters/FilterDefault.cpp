@@ -3,7 +3,7 @@
 namespace acid
 {
 	FilterDefault::FilterDefault(const GraphicsStage &graphicsStage, const bool &lastFilter) :
-		IPostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {}),
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Default.frag"}, {}),
 		m_lastFilter(lastFilter)
 	{
 	}

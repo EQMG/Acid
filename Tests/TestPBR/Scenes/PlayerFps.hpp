@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Objects/Entity.hpp>
-#include <Objects/Component.hpp>
+#include <Scenes/Entity.hpp>
+#include <Scenes/Component.hpp>
 #include <Inputs/AxisCompound.hpp>
 #include <Inputs/ButtonCompound.hpp>
 

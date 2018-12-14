@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Post/IPostFilter.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FilterTone :
-		public IPostFilter
+		public PostFilter
 	{
 	public:
 		explicit FilterTone(const GraphicsStage &graphicsStage);

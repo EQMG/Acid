@@ -1,6 +1,6 @@
 ﻿#include "EmitterCircle.hpp"
 
-#include "Objects/Entity.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {

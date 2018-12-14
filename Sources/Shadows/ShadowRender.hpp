@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Objects/Component.hpp"
+#include "Scenes/Component.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"

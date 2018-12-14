@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Objects/ComponentRegister.hpp"
+#include "Scenes/ComponentRegister.hpp"
 #include "Scene.hpp"
 #include "SceneStructure.hpp"
 

@@ -19,6 +19,7 @@ namespace acid
 		mutable Transform m_worldTransform;
 		std::vector<std::unique_ptr<Component>> m_components;
 		Entity *m_parent;
+		std::vector<Entity *> m_children;
 		bool m_removed;
 	public:
 		/// <summary>
@@ -35,6 +36,8 @@ namespace acid
 		explicit Entity(const std::string &filename, const Transform &transform = Transform::IDENTITY);
 
 		Entity(const Entity&) = delete;
+
+		~Entity();
 
 		Entity& operator=(const Entity&) = delete;
 
@@ -189,6 +192,12 @@ namespace acid
 
 		Entity *GetParent() const { return m_parent; }
 
-		void SetParent(Entity *parent) { m_parent = parent; }
+		void SetParent(Entity *parent);
+
+		std::vector<Entity *> GetChildren() const { return m_children; }
+
+		void AddChild(Entity *child);
+
+		void RemoveChild(Entity *child);
 	};
 }

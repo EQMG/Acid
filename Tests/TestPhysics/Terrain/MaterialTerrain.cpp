@@ -1,6 +1,6 @@
 #include "MaterialTerrain.hpp"
 
-#include <Objects/Entity.hpp>
+#include <Scenes/Entity.hpp>
 #include <Models/VertexModel.hpp>
 
 namespace test
