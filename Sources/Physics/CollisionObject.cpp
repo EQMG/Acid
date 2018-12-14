@@ -17,8 +17,8 @@ namespace acid
 		m_shape(nullptr),
 		m_body(nullptr),
 		m_forces(std::vector<std::unique_ptr<Force>>()),
-		m_collisionEvents(Observer<CollisionObject *>()),
-		m_separationEvents(Observer<CollisionObject *>())
+		m_onCollision(Delegate<void(CollisionObject *)>()),
+		m_onSeparation(Delegate<void(CollisionObject *)>())
 	{
 	}
 

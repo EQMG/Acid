@@ -29,7 +29,7 @@ namespace acid
 		m_mouseOver(false),
 		m_hasChange(false),
 		m_timerChange(Timer(SLIDE_TIME)),
-		m_changeEvents(Observer<UiInputSlider *, float>())
+		m_onSlide(Delegate<void(UiInputSlider *, float)>())
 	{
 		m_background->SetColourOffset(primaryColour);
 		m_slider->GetRectangle().SetReference(UiBound::CENTRE_LEFT);
@@ -76,7 +76,7 @@ namespace acid
 		// Updates the listener.
 		if (m_hasChange && m_timerChange.IsPassedTime())
 		{
-			m_changeEvents.OnEvent(this, m_value);
+			m_onSlide(this, m_value);
 
 			UpdateText();
 			m_hasChange = false;

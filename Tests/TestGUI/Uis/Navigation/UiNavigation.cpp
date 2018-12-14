@@ -50,7 +50,7 @@ namespace test
 			m_tabs.emplace_back(uiTab);
 			tabYOffset -= 0.075f;
 
-			/*tabButton->GetClickEvents() += [&](UiObject *object, MouseButton button) -> void
+			/*tabButton->GetOnClick() += [&](UiObject *object, MouseButton button) -> void
 			{
 			    if (button == MOUSE_BUTTON_LEFT)
 			    {

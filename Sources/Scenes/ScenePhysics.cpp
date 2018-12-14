@@ -137,7 +137,7 @@ namespace acid
 				auto collisionObjectA = static_cast<CollisionObject *>(sortedBodyA->getUserPointer());
 				auto collisionObjectB = static_cast<CollisionObject *>(sortedBodyB->getUserPointer());
 
-				collisionObjectA->GetCollisionEvents().OnEvent(collisionObjectB);
+				collisionObjectA->GetOnCollision()(collisionObjectB);
 			}
 		}
 
@@ -156,7 +156,7 @@ namespace acid
 			auto collisionObjectA = static_cast<CollisionObject *>(it->first->getUserPointer());
 			auto collisionObjectB = static_cast<CollisionObject *>(it->second->getUserPointer());
 
-			collisionObjectA->GetSeparationEvents().OnEvent(collisionObjectB);
+			collisionObjectA->GetOnSeparation()(collisionObjectB);
 		}
 
 		// In the next iteration we'll want to compare against the pairs we found in this iteration.

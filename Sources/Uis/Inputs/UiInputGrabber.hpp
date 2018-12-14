@@ -71,7 +71,7 @@ namespace acid
 		bool m_selected;
 		bool m_mouseOver;
 
-		Observer<UiInputGrabber *, int32_t> m_changeEvents;
+		Delegate<void(UiInputGrabber *, int32_t)> m_onGrabbed;
 	public:
 		UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber,
 			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
@@ -90,6 +90,6 @@ namespace acid
 
 		void SetValue(const int32_t &value);
 
-		Observer<UiInputGrabber *, int32_t> &GetChangeEvents() { return m_changeEvents; }
+		Delegate<void(UiInputGrabber *, int32_t)> &GetOnGrabbed() { return m_onGrabbed; }
 	};
 }

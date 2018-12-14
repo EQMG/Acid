@@ -19,7 +19,7 @@ namespace acid
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_scale(1.0f),
-		m_clickEvents(Observer<UiObject *, MouseButton>())
+		m_onClick(Delegate<void(UiObject *, MouseButton)>())
 	{
 		if (parent != nullptr)
 		{
@@ -46,7 +46,7 @@ namespace acid
 				{
 					if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
 					{
-						m_clickEvents.OnEvent(this, static_cast<MouseButton>(i));
+						m_onClick(this, static_cast<MouseButton>(i));
 					}
 				}
 			}

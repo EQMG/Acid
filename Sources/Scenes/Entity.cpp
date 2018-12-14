@@ -67,10 +67,10 @@ namespace acid
 
 			if ((*it)->IsEnabled())
 			{
-				if (!(*it)->IsStarted())
+				if (!(*it)->m_started)
 				{
 					(*it)->Start();
-					(*it)->SetStarted(true);
+					(*it)->m_started = true;
 				}
 
 				(*it)->Update();
