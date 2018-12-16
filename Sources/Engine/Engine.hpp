@@ -4,7 +4,7 @@
 #include <memory>
 #include "Log.hpp"
 #include "Maths/Time.hpp"
-#include "ModuleRegister.hpp"
+#include "ModuleManager.hpp"
 #include "ModuleUpdater.hpp"
 
 /// <summary>
@@ -12,9 +12,6 @@
 /// </summary>
 namespace acid
 {
-	typedef std::chrono::high_resolution_clock HighResolutionClock;
-	typedef std::chrono::duration<int64_t, std::micro> MicrosecondsType;
-
 	/// <summary>
 	/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
 	/// </summary>
@@ -22,16 +19,12 @@ namespace acid
 	{
 	private:
 		static Engine *INSTANCE;
-		static std::chrono::time_point<HighResolutionClock> TIME_START;
 
-		Time m_timeOffset;
-
-		ModuleRegister m_moduleRegister;
+		ModuleManager m_moduleManager;
 		ModuleUpdater m_moduleUpdater;
 
+		Time m_timeOffset;
 		float m_fpsLimit;
-
-		bool m_initialized;
 		bool m_running;
 		bool m_error;
 	public:
@@ -56,44 +49,22 @@ namespace acid
 		int32_t Run();
 
 		/// <summary>
-		/// Gets a module instance by type.
+		/// Gets the module manager used by the engine instance. The manager can be used to register/deregister modules.
 		/// </summary>
-		/// <param name="T"> The module type to find. </param>
-		/// <returns> The found module. </returns>
-		template<typename T>
-		T *GetModule() const { return m_moduleRegister.GetModule<T>(); }
+		/// <returns> The engines module manager. </returns>
+		ModuleManager &GetModuleManager() { return m_moduleManager; }
 
 		/// <summary>
-		/// Registers a module with the register.
+		/// Gets the current time of the engine instance.
 		/// </summary>
-		/// <param name="module"> The modules object. </param>
-		/// <param name="update"> The modules update type. </param>
-		/// <returns> The registered module. </returns>
-		IModule *RegisterModule(IModule *module, const ModuleUpdate &update) { return m_moduleRegister.RegisterModule(module, update); }
+		/// <returns> The current engine time. </returns>
+		static Time GetTime();
 
 		/// <summary>
-		/// Registers a module with the register.
+		/// Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
 		/// </summary>
-		/// <param name="update"> The modules update type. </param>
-		/// <param name="T"> The type of module to register. </param>
-		/// <returns> The registered module. </returns>
-		template<typename T>
-		T *RegisterModule(const ModuleUpdate &update) { return m_moduleRegister.RegisterModule<T>(update); }
-
-		/// <summary>
-		/// Deregisters a module.
-		/// </summary>
-		/// <param name="module"> The module to deregister. </param>
-		/// <returns> If the module was deregistered. </returns>
-		bool DeregisterModule(IModule *module) { return m_moduleRegister.DeregisterModule(module); }
-
-		/// <summary>
-		/// Deregisters a module.
-		/// </summary>
-		/// <param name="T"> The type of module to deregister. </param>
-		/// <returns> If the module was deregistered. </returns>
-		template<typename T>
-		bool DeregisterModule() { return m_moduleRegister.DeregisterModule<T>(); }
+		/// <returns> The date time as a string. </returns>
+		static std::string GetDateTime();
 
 		/// <summary>
 		/// Gets the added/removed time for the engine.
@@ -132,24 +103,6 @@ namespace acid
 		Time GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
-		/// Gets the current time of the engine instance.
-		/// </summary>
-		/// <returns> The current engine time. </returns>
-		static Time GetTime();
-
-		/// <summary>
-		/// Gets if the engine has been initialized.
-		/// </summary>
-		/// <returns> If the engine has been initialized. </returns>
-		bool IsInitialized() const { return m_initialized; }
-
-		/// <summary>
-		/// Sets if the engine has been initialized.
-		/// </summary>
-		/// <param name="initialized"> If the engine has been initialized. </param>
-		void SetInitialized(const bool &initialized) { m_initialized = initialized; }
-
-		/// <summary>
 		/// Gets if the engine is running.
 		/// </summary>
 		/// <returns> If the engine is running. </returns>
@@ -160,11 +113,5 @@ namespace acid
 		/// </summary>
 		/// <param name="error"> If a bad error occurred. </param>
 		void RequestClose(const bool &error);
-
-		/// <summary>
-		/// Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
-		/// </summary>
-		/// <returns> The date time as a string. </returns>
-		static std::string GetDateTime();
 	};
 }

@@ -2,23 +2,24 @@
 
 #include <map>
 #include <memory>
-#include "IModule.hpp"
+#include "Module.hpp"
 
 namespace acid
 {
 	/// <summary>
 	/// A class that contains and manages modules registered to a engine.
 	/// </summary>
-	class ACID_EXPORT ModuleRegister
+	class ACID_EXPORT ModuleManager
 	{
 	private:
-		std::map<float, std::unique_ptr<IModule>> m_modules;
+		friend class ModuleUpdater;
+		std::map<float, std::unique_ptr<Module>> m_modules;
 	public:
-		ModuleRegister();
+		ModuleManager();
 
-		ModuleRegister(const ModuleRegister&) = delete;
+		ModuleManager(const ModuleManager&) = delete;
 
-		ModuleRegister& operator=(const ModuleRegister&) = delete;
+		ModuleManager& operator=(const ModuleManager&) = delete;
 
 		/// <summary>
 		/// Fills the module register with default modules.
@@ -30,7 +31,7 @@ namespace acid
 		/// </summary>
 		/// <param name="module"> The module to find. </param>
 		/// <returns> If the module is in the registry. </returns>
-		bool ContainsModule(IModule *module) const;
+		bool Contains(Module *module) const;
 
 		/// <summary>
 		/// Gets a module instance by type from the register.
@@ -38,7 +39,7 @@ namespace acid
 		/// <param name="T"> The module type to find. </param>
 		/// <returns> The found module. </returns>
 		template<typename T>
-		T *GetModule() const
+		T *Get() const
 		{
 			for (auto &[key, module] : m_modules)
 			{
@@ -59,7 +60,7 @@ namespace acid
 		/// <param name="module"> The modules object. </param>
 		/// <param name="update"> The modules update type. </param>
 		/// <returns> The registered module. </returns>
-		IModule *RegisterModule(IModule *module, const ModuleUpdate &update);
+		Module *Add(Module *module, const ModuleUpdate &update);
 
 		/// <summary>
 		/// Registers a module with the register.
@@ -68,10 +69,10 @@ namespace acid
 		/// <param name="T"> The modules type. </param>
 		/// <returns> The registered module. </returns>
 		template<typename T>
-		T *RegisterModule(const ModuleUpdate &update)
+		T *Add(const ModuleUpdate &update)
 		{
 			auto module = static_cast<T *>(malloc(sizeof(T)));
-			RegisterModule(module, update);
+			Add(module, update);
 			new(module) T();
 			return module;
 		}
@@ -80,16 +81,14 @@ namespace acid
 		/// Deregisters a module.
 		/// </summary>
 		/// <param name="module"> The module to deregister. </param>
-		/// <returns> If the module was deregistered. </returns>
-		bool DeregisterModule(IModule *module);
+		void Remove(Module *module);
 
 		/// <summary>
 		/// Removes a module by type from this entity.
 		/// </summary>
 		/// <param name="T"> The type of module to deregister. </param>
-		/// <returns> If the module was deregistered. </returns>
 		template<typename T>
-		bool DeregisterModule()
+		void Remove()
 		{
 			for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 			{
@@ -98,19 +97,14 @@ namespace acid
 				if (casted != nullptr)
 				{
 					m_modules.erase(it);
-					return true;
 				}
 			}
-
-			return false;
 		}
-
+	private:
 		/// <summary>
 		/// Runs updates for all module update types.
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
 		void RunUpdate(const ModuleUpdate &update) const;
-
-		uint32_t GetModuleCount() const { return static_cast<uint32_t>(m_modules.size()); }
 	};
 }

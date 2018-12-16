@@ -19,8 +19,8 @@ namespace acid
 	class Entity;
 	class CollisionObject;
 
-	typedef std::pair<const btCollisionObject*, const btCollisionObject*> CollisionPair;
-	typedef std::set<CollisionPair> CollisionPairs;
+	using CollisionPair = std::pair<const btCollisionObject*, const btCollisionObject*>;
+	using CollisionPairs = std::set<CollisionPair>;
 
 	class ACID_EXPORT Raycast
 	{

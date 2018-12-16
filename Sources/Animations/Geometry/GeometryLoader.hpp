@@ -12,7 +12,7 @@ namespace acid
 	private:
 		Metadata *m_meshData;
 
-		std::vector<VertexSkinData> m_vertexWeights;
+		std::vector<VertexWeights> m_vertexWeights;
 
 		std::vector<std::unique_ptr<VertexAnimatedData>> m_positionsList;
 		std::vector<Vector2> m_uvsList;
@@ -21,7 +21,7 @@ namespace acid
 		std::vector<VertexAnimated> m_vertices;
 		std::vector<uint32_t> m_indices;
 	public:
-		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexSkinData> &vertexWeights);
+		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights);
 
 		GeometryLoader(const GeometryLoader&) = delete; 
 

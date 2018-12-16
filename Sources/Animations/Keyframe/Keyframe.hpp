@@ -1,8 +1,9 @@
 #pragma once
 
 #include <map>
+#include <vector>
+#include "Maths/Time.hpp"
 #include "Animations/Joint/JointTransform.hpp"
-#include "KeyframeData.hpp"
 
 namespace acid
 {
@@ -28,12 +29,6 @@ namespace acid
 		Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose);
 
 		/// <summary>
-		/// Creates a new keyframe at a timestamp.
-		/// </summary>
-		/// <param name="data"> The data to load the keyframe from. </param>
-		explicit Keyframe(const KeyframeData &data);
-
-		/// <summary>
 		/// Gets the time in seconds of the keyframe in the animation.
 		/// </summary>
 		/// <returns> The time in seconds. </returns>
@@ -45,5 +40,10 @@ namespace acid
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
 		std::map<std::string, JointTransform> GetPose() const { return m_pose; }
+
+		void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform)
+		{
+			m_pose.emplace(jointNameId, jointLocalTransform);
+		}
 	};
 }

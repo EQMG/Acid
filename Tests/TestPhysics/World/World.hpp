@@ -14,7 +14,7 @@ namespace test
 	/// A module used for managing the world.
 	/// </summary>
 	class World :
-		public IModule
+		public Module
 	{
 	private:
 		DriverLinear m_driverDay;
@@ -29,7 +29,7 @@ namespace test
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static World *Get() { return Engine::Get()->GetModule<World>(); }
+		static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }
 
 		World();
 

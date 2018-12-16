@@ -48,28 +48,29 @@ namespace test
 	};
 
 	MainRenderer::MainRenderer() :
-		IManagerRender({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
+		RenderManager({RENDERPASS_0_CREATE, RENDERPASS_1_CREATE})
 	{
 	}
 
 	void MainRenderer::Start()
 	{
-	//	Renderer::Get()->AddRenderer<RendererShadows>(GraphicsStage(0, 0));
+		auto &rendererRegister = Renderer::Get()->GetRendererRegister();
+	//	rendererRegister.Add<RendererShadows>(GraphicsStage(0, 0));
 
-		Renderer::Get()->AddRenderer<RendererMeshes>(GraphicsStage(1, 0));
+		rendererRegister.Add<RendererMeshes>(GraphicsStage(1, 0));
 
-		Renderer::Get()->AddRenderer<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
-		Renderer::Get()->AddRenderer<RendererParticles>(GraphicsStage(1, 1));
+		rendererRegister.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
+		rendererRegister.Add<RendererParticles>(GraphicsStage(1, 1));
 
-	//	Renderer::Get()->AddRenderer<FilterFxaa>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterLensflare>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterTiltshift>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterGrain>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterVignette>(GraphicsStage(1, 2));
-	//	Renderer::Get()->AddRenderer<FilterSsao>(GraphicsStage(1, 2));
-		Renderer::Get()->AddRenderer<FilterDefault>(GraphicsStage(1, 2), true);
-		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(1, 2));
-		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterLensflare>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterTiltshift>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterGrain>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterVignette>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterSsao>(GraphicsStage(1, 2));
+		rendererRegister.Add<FilterDefault>(GraphicsStage(1, 2), true);
+		rendererRegister.Add<RendererGuis>(GraphicsStage(1, 2));
+		rendererRegister.Add<RendererFonts>(GraphicsStage(1, 2));
 	}
 
 	void MainRenderer::Update()

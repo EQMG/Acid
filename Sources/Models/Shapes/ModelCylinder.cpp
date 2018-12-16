@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelCylinder> ModelCylinder::Resource(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(radiusBase, radiusTop, height, slices, stacks));
+		auto resource = Resources::Get()->Find(ToFilename(radiusBase, radiusTop, height, slices, stacks));
 
 		if (resource != nullptr)
 		{

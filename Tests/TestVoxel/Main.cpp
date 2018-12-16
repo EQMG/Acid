@@ -25,9 +25,10 @@ int main(int argc, char **argv)
 	// Registers modules.
 
 	// Registers components.
-	Scenes::Get()->RegisterComponent<PlayerFps>("PlayerFps");
-	Scenes::Get()->RegisterComponent<MaterialVoxel>("MaterialVoxel");
-	Scenes::Get()->RegisterComponent<VoxelChunk>("VoxelChunk");
+	auto componentRegister = Scenes::Get()->GetComponentRegister();
+	componentRegister.Add<PlayerFps>("PlayerFps");
+	componentRegister.Add<MaterialVoxel>("MaterialVoxel");
+	componentRegister.Add<VoxelChunk>("VoxelChunk");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test Voxel");

@@ -10,7 +10,6 @@
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Uis/UiObject.hpp"
-#include "FontLine.hpp"
 #include "FontType.hpp"
 
 namespace acid
@@ -24,6 +23,99 @@ namespace acid
 		TEXT_JUSTIFY_CENTRE = 1,
 		TEXT_JUSTIFY_RIGHT = 2,
 		TEXT_JUSTIFY_FULLY = 3
+	};
+
+	/// <summary>
+	/// During the loading of a text this represents one word in the text.
+	/// </summary>
+	class ACID_EXPORT FontWord
+	{
+	private:
+		std::vector<FontCharacter> m_characters;
+		float m_width;
+	public:
+		/// <summary>
+		/// Creates a new text word.
+		/// </summary>
+		FontWord() :
+			m_characters(std::vector<FontCharacter>()),
+			m_width(0.0)
+		{
+		}
+
+		/// <summary>
+		/// Adds a character to the end of the current word and increases the screen-space width of the word.
+		/// </summary>
+		/// <param name="character"> The character to be added. </param>
+		/// <param name="kerning"> The character kerning. </param>
+		void AddCharacter(const FontCharacter &character, const float &kerning)
+		{
+			m_characters.emplace_back(character);
+			m_width += kerning + character.GetAdvanceX();
+		}
+
+		std::vector<FontCharacter> GetCharacters() const { return m_characters; }
+
+		float GetWidth() const { return m_width; }
+	};
+
+	/// <summary>
+	/// Represents a line of text during the loading of a text.
+	/// </summary>
+	class ACID_EXPORT FontLine
+	{
+	private:
+		float m_maxLength;
+		float m_spaceSize;
+
+		std::vector<FontWord> m_words;
+		float m_currentWordsLength;
+		float m_currentLineLength;
+	public:
+		/// <summary>
+		/// Creates a new text line.
+		/// </summary>
+		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
+		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
+		FontLine(const float &spaceWidth, const float &maxLength) :
+			m_maxLength(maxLength),
+			m_spaceSize(spaceWidth),
+			m_words(std::vector<FontWord>()),
+			m_currentWordsLength(0.0),
+			m_currentLineLength(0.0)
+		{
+		}
+
+		/// <summary>
+		/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
+		/// </summary>
+		/// <param name="word"> The word to try to add. </param>
+		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
+		bool AddWord(const FontWord &word)
+		{
+			float additionalLength = word.GetWidth();
+			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
+
+			if (m_currentLineLength + additionalLength <= m_maxLength)
+			{
+				m_words.emplace_back(word);
+				m_currentWordsLength += word.GetWidth();
+				m_currentLineLength += additionalLength;
+				return true;
+			}
+
+			return false;
+		}
+
+		float GetMaxLength() const { return m_maxLength; }
+
+		float GetSpaceSize() const { return m_spaceSize; }
+
+		std::vector<FontWord> GetWords() const { return m_words; }
+
+		float GetCurrentWordsLength() const { return m_currentWordsLength; }
+
+		float GetCurrentLineLength() const { return m_currentLineLength; }
 	};
 
 	/// <summary>

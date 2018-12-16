@@ -7,7 +7,7 @@ namespace acid
 	{
 	}
 
-	IRenderer *RendererRegister::AddRenderer(IRenderer *renderer)
+	IRenderer *RendererRegister::Add(IRenderer *renderer)
 	{
 		if (renderer == nullptr)
 		{
@@ -34,7 +34,7 @@ namespace acid
 		return renderer;
 	}
 
-	bool RendererRegister::RemoveRenderer(IRenderer *renderer)
+	void RendererRegister::Remove(IRenderer *renderer)
 	{
 		for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 		{
@@ -48,12 +48,8 @@ namespace acid
 					{
 						m_stages.erase(it);
 					}
-
-					return true;
 				}
 			}
 		}
-
-		return false;
 	}
 }

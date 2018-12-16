@@ -74,7 +74,7 @@ namespace acid
 	class ACID_EXPORT HttpResponse
 	{
 	private:
-		typedef std::map<std::string, std::string> FieldTable;
+		using FieldTable = std::map<std::string, std::string>;
 
 		/// Fields of the header.
 		FieldTable m_fields;

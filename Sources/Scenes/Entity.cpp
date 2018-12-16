@@ -28,7 +28,7 @@ namespace acid
 				continue;
 			}
 
-			auto component = Scenes::Get()->CreateComponent(value->GetName());
+			auto component = Scenes::Get()->GetComponentRegister().Create(value->GetName());
 
 			if (component == nullptr)
 			{
@@ -92,7 +92,7 @@ namespace acid
 		return component;
 	}
 
-	bool Entity::RemoveComponent(Component *component)
+	void Entity::RemoveComponent(Component *component)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
@@ -101,18 +101,15 @@ namespace acid
 				(*it)->SetParent(nullptr);
 
 				m_components.erase(it);
-				return true;
 			}
 		}
-
-		return false;
 	}
 
-	bool Entity::RemoveComponent(const std::string &name)
+	void Entity::RemoveComponent(const std::string &name)
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
-			auto componentName = Scenes::Get()->FindComponentName((*it).get());
+			auto componentName = Scenes::Get()->GetComponentRegister().FindName((*it).get());
 
 			if (componentName && name == *componentName)
 			{
@@ -122,10 +119,7 @@ namespace acid
 			(*it)->SetParent(nullptr);
 
 			m_components.erase(it);
-			return true;
 		}
-
-		return false;
 	}
 
 	Transform Entity::GetWorldTransform() const

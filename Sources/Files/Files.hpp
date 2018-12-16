@@ -11,14 +11,14 @@ namespace acid
 	/// A module used for managing files on engine updates.
 	/// </summary>
 	class ACID_EXPORT Files :
-		public IModule
+		public Module
 	{
 	public:
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Files *Get() { return Engine::Get()->GetModule<Files>(); }
+		static Files *Get() { return Engine::Get()->GetModuleManager().Get<Files>(); }
 
 		Files();
 

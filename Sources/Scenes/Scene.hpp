@@ -14,6 +14,8 @@ namespace acid
 	class ACID_EXPORT Scene
 	{
 	private:
+		friend class Scenes;
+
 		std::unique_ptr<Camera> m_camera;
 		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
 		std::unique_ptr<ScenePhysics> m_physics;
@@ -76,33 +78,6 @@ namespace acid
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
 		SceneStructure *GetStructure() { return m_structure.get(); }
-
-		/// <summary>
-		/// Creates a new entity that starts in this structure.
-		/// </summary>
-		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
-		/// <returns> The newly created entity. </returns>
-		Entity *CreateEntity(const Transform &transform) { return m_structure->CreateEntity(transform); }
-
-		/// <summary>
-		/// Creates a new entity from a prefab that starts in this structure.
-		/// </summary>
-		/// <param name="filename"> The file to load the component data from. </param>
-		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
-		/// <returns> The newly created entity. </returns>
-		Entity *CreateEntity(const std::string &filename, const Transform &transform) { return m_structure->CreateEntity(filename, transform); }
-
-		/// <summary>
-		/// Gets if this scene has started.
-		/// </summary>
-		/// <returns> If the scene has started. </returns>
-		bool IsStarted() const { return m_started; }
-
-		/// <summary>
-		/// Sets if this scene has started.
-		/// </summary>
-		/// <param name="started"> If the scene has started. </param>
-		void SetStarted(const bool &started) { m_started = started; }
 
 		/// <summary>
 		/// Gets if the scene is paused.

@@ -11,7 +11,7 @@ namespace acid
 
 	std::shared_ptr<GizmoType> GizmoType::Resource(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(model, lineThickness, diffuse));
+		auto resource = Resources::Get()->Find(ToFilename(model, lineThickness, diffuse));
 
 		if (resource != nullptr)
 		{

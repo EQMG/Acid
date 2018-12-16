@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<PipelineMaterial> PipelineMaterial::Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(graphicsStage, pipelineCreate));
+		auto resource = Resources::Get()->Find(ToFilename(graphicsStage, pipelineCreate));
 
 		if (resource != nullptr)
 		{

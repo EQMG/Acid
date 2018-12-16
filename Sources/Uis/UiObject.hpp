@@ -87,8 +87,7 @@ namespace acid
 		/// Disowns a child from this objects children.
 		/// </summary>
 		/// <param name="child"> The child to disown. </param>
-		/// <returns> If the child was disowned. </returns>
-		bool RemoveChild(UiObject *child);
+		void RemoveChild(UiObject *child);
 
 		bool IsVisible() const;
 

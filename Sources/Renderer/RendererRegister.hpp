@@ -32,7 +32,7 @@ namespace acid
 		/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
 		/// <returns> The found renderer. </returns>
 		template<typename T>
-		T *GetRenderer(const bool &allowDisabled = false)
+		T *Get(const bool &allowDisabled = false)
 		{
 			T *alternative = nullptr;
 
@@ -63,7 +63,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to add. </param>
 		/// <returns> The added renderer. </returns>
-		IRenderer *AddRenderer(IRenderer *renderer);
+		IRenderer *Add(IRenderer *renderer);
 
 		/// <summary>
 		/// Creates a renderer by type to be added this register.
@@ -72,10 +72,10 @@ namespace acid
 		/// <param name="args"> The type constructor arguments. </param>
 		/// <returns> The added renderer. </returns>
 		template<typename T, typename... Args>
-		T *AddRenderer(Args &&... args)
+		T *Add(Args &&... args)
 		{
 			auto created = new T(std::forward<Args>(args)...);
-			AddRenderer(created);
+			Add(created);
 			return created;
 		}
 
@@ -84,7 +84,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to remove. </param>
 		/// <returns> If the renderer was removed. </returns>
-		bool RemoveRenderer(IRenderer *renderer);
+		void Remove(IRenderer *renderer);
 
 		/// <summary>
 		/// Removes a renderer by type from this register.
@@ -92,7 +92,7 @@ namespace acid
 		/// <param name="T"> The type of renderer to remove. </param>
 		/// <returns> If the renderer was removed. </returns>
 		template<typename T>
-		bool RemoveRenderer()
+		void Remove()
 		{
 			for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 			{
@@ -108,13 +108,9 @@ namespace acid
 						{
 							m_stages.erase(it);
 						}
-
-						return true;
 					}
 				}
 			}
-
-			return false;
 		}
 	};
 }

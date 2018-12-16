@@ -26,43 +26,37 @@ namespace acid
 	ComponentRegister::ComponentRegister() :
 		m_components(std::map<std::string, ComponentCreate>())
 	{
-		RegisterComponent<ColliderCapsule>("ColliderCapsule");
-		RegisterComponent<ColliderCone>("ColliderCone");
-		RegisterComponent<ColliderConvexHull>("ColliderConvexHull");
-		RegisterComponent<ColliderCube>("ColliderCube");
-		RegisterComponent<ColliderCylinder>("ColliderCylinder");
-		RegisterComponent<ColliderHeightfield>("ColliderHeightfield");
-		RegisterComponent<ColliderSphere>("ColliderSphere");
-		RegisterComponent<EmitterCircle>("EmitterCircle");
-		RegisterComponent<EmitterLine>("EmitterLine");
-		RegisterComponent<EmitterPoint>("EmitterPoint");
-		RegisterComponent<EmitterSphere>("EmitterSphere");
-		RegisterComponent<KinematicCharacter>("KinematicCharacter");
-		RegisterComponent<Light>("Light");
-		RegisterComponent<MaterialDefault>("MaterialDefault");
-		RegisterComponent<MaterialSkybox>("MaterialSkybox");
-		RegisterComponent<Mesh>("Mesh");
-		RegisterComponent<MeshAnimated>("MeshAnimated");
-		RegisterComponent<MeshRender>("MeshRender");
-		RegisterComponent<ParticleSystem>("ParticleSystem");
-		RegisterComponent<Rigidbody>("Rigidbody");
-		RegisterComponent<ShadowRender>("ShadowRender");
+		Add<ColliderCapsule>("ColliderCapsule");
+		Add<ColliderCone>("ColliderCone");
+		Add<ColliderConvexHull>("ColliderConvexHull");
+		Add<ColliderCube>("ColliderCube");
+		Add<ColliderCylinder>("ColliderCylinder");
+		Add<ColliderHeightfield>("ColliderHeightfield");
+		Add<ColliderSphere>("ColliderSphere");
+		Add<EmitterCircle>("EmitterCircle");
+		Add<EmitterLine>("EmitterLine");
+		Add<EmitterPoint>("EmitterPoint");
+		Add<EmitterSphere>("EmitterSphere");
+		Add<KinematicCharacter>("KinematicCharacter");
+		Add<Light>("Light");
+		Add<MaterialDefault>("MaterialDefault");
+		Add<MaterialSkybox>("MaterialSkybox");
+		Add<Mesh>("Mesh");
+		Add<MeshAnimated>("MeshAnimated");
+		Add<MeshRender>("MeshRender");
+		Add<ParticleSystem>("ParticleSystem");
+		Add<Rigidbody>("Rigidbody");
+		Add<ShadowRender>("ShadowRender");
 	}
 
-	bool ComponentRegister::DeregisterComponent(const std::string &name)
+	void ComponentRegister::Remove(const std::string &name)
 	{
-		auto component = m_components.find(name);
-
-		if (component == m_components.end())
-		{
-			return false;
-		}
-
-		m_components.erase(component);
-		return true;
+		//	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](const std::string &n, const ComponentCreate &c){
+		//		return name == n; // FIXME: Remove
+		//	}), m_components.end());
 	}
 
-	Component *ComponentRegister::CreateComponent(const std::string &name)
+	Component *ComponentRegister::Create(const std::string &name)
 	{
 		auto it = m_components.find(name);
 
@@ -75,8 +69,12 @@ namespace acid
 		return ((*it).second).m_create();
 	}
 
-	std::optional<std::string> ComponentRegister::FindComponentName(Component *compare)
+	std::optional<std::string> ComponentRegister::FindName(Component *compare)
 	{
+		//	auto found = std::find_if(m_components.begin(), m_components.end(), [compare](const std::string &s, const ComponentCreate &c){
+		//		return c.m_isSame(compare);// FIXME: Remove
+		//	});
+
 		for (auto &[name, component] : m_components)
 		{
 			if (component.m_isSame(compare))

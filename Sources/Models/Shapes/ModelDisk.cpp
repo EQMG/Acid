@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelDisk> ModelDisk::Resource(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(innerRadius, outerRadius, slices, loops));
+		auto resource = Resources::Get()->Find(ToFilename(innerRadius, outerRadius, slices, loops));
 
 		if (resource != nullptr)
 		{

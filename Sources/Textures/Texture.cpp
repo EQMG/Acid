@@ -23,7 +23,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Get(filename);
+		auto resource = Resources::Get()->Find(filename);
 
 		if (resource != nullptr)
 		{

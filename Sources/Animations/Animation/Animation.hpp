@@ -25,13 +25,6 @@ namespace acid
 		Animation(const Time &length, const std::vector<Keyframe> &keyframes);
 
 		/// <summary>
-		/// Creates a new animation.
-		/// </summary>
-		/// <param name="length"> The length of the animation in seconds. </param>
-		/// <param name="keyframeData"> All the keyframe data for the animation, ordered by time of appearance in the animation. </param>
-		Animation(const Time &length, const std::vector<KeyframeData> &keyframeData);
-
-		/// <summary>
 		/// Gets the length of the animation.
 		/// </summary>
 		/// <returns> The length of the animation. </returns>

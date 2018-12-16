@@ -83,9 +83,9 @@ namespace acid
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			m_functionList.remove_if([&](std::shared_ptr<functionType> &functionPtr)
-			{
-			    return Hash(function) == Hash(*functionPtr);
-			});
+			                         {
+				                         return Hash(function) == Hash(*functionPtr);
+			                         });
 			return *this;
 		}
 

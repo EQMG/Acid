@@ -1,8 +1,8 @@
 #pragma once
 
+#include <string>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
-#include "JointTransformData.hpp"
 
 namespace acid
 {
@@ -30,8 +30,6 @@ namespace acid
 		/// </summary>
 		/// <param name="localTransform"> The joint's local-transform at a certain keyframe of an animation. </param>
 		explicit JointTransform(const Matrix4 &localTransform);
-
-		explicit JointTransform(const JointTransformData &data);
 
 		/// <summary>
 		/// In this method the local-space transform matrix is constructed by translating an identity matrix using the position variable and then applying the rotation.

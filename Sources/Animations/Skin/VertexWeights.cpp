@@ -1,14 +1,14 @@
-#include "VertexSkinData.hpp"
+#include "VertexWeights.hpp"
 
 namespace acid
 {
-	VertexSkinData::VertexSkinData() :
+	VertexWeights::VertexWeights() :
 		m_jointIds(std::vector<uint32_t>()),
 		m_weights(std::vector<float>())
 	{
 	}
 
-	void VertexSkinData::AddJointEffect(const uint32_t &jointId, const float &weight)
+	void VertexWeights::AddJointEffect(const uint32_t &jointId, const float &weight)
 	{
 		for (uint32_t i = 0; i < m_weights.size(); i++)
 		{
@@ -24,7 +24,7 @@ namespace acid
 		m_weights.emplace_back(weight);
 	}
 
-	void VertexSkinData::LimitJointNumber(const uint32_t &max)
+	void VertexWeights::LimitJointNumber(const uint32_t &max)
 	{
 		if (m_jointIds.size() > max)
 		{
@@ -39,7 +39,7 @@ namespace acid
 		}
 	}
 
-	void VertexSkinData::FillEmptyWeights(const uint32_t &max)
+	void VertexWeights::FillEmptyWeights(const uint32_t &max)
 	{
 		while (m_jointIds.size() < max)
 		{
@@ -48,7 +48,7 @@ namespace acid
 		}
 	}
 
-	float VertexSkinData::SaveTopWeights(std::vector<float> &topWeightsArray)
+	float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray)
 	{
 		float total = 0.0f;
 
@@ -61,7 +61,7 @@ namespace acid
 		return total;
 	}
 
-	void VertexSkinData::RefillWeightList(const std::vector<float> &topWeights, const float &total)
+	void VertexWeights::RefillWeightList(const std::vector<float> &topWeights, const float &total)
 	{
 		m_weights.clear();
 
@@ -71,7 +71,7 @@ namespace acid
 		}
 	}
 
-	void VertexSkinData::RemoveExcessJointIds(const uint32_t &max)
+	void VertexWeights::RemoveExcessJointIds(const uint32_t &max)
 	{
 		while (m_jointIds.size() > max)
 		{

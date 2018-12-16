@@ -32,7 +32,7 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IResource> Resources::Get(const std::string &filename)
+	std::shared_ptr<IResource> Resources::Find(const std::string &filename)
 	{
 		for (auto &resource : m_resources)
 		{

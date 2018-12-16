@@ -11,7 +11,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Get(ToFilename(filename, fontStyle));
+		auto resource = Resources::Get()->Find(ToFilename(filename, fontStyle));
 
 		if (resource != nullptr)
 		{

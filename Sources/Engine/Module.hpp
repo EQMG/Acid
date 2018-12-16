@@ -19,7 +19,7 @@ namespace acid
 	/// <summary>
 	/// A interface used for defining engine modules.
 	/// </summary>
-	class ACID_EXPORT IModule
+	class ACID_EXPORT Module
 	{
 	public:
 		/// <summary>
