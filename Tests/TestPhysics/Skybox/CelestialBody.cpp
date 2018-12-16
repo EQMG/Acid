@@ -43,7 +43,7 @@ namespace test
 				componentLight->SetColour(sunColour);
 			}
 
-			auto filterLensflare = Renderer::Get()->GetRenderer<FilterLensflare>();
+			auto filterLensflare = Renderer::Get()->GetRendererRegister().Get<FilterLensflare>();
 
 			if (filterLensflare != nullptr)
 			{

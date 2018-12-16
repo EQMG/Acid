@@ -6,13 +6,13 @@ namespace acid
 		m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
 		m_maxWeights(maxWeights),
 		m_jointOrder(std::vector<std::string>()),
-		m_verticesSkinData(std::vector<VertexSkinData>())
+		m_vertexWeights(std::vector<VertexWeights>())
 	{
 		LoadJointsList();
 		auto weights = LoadWeights();
 		auto weightsDataNode = m_skinData->FindChild("vertex_weights");
 		auto effectorJointCounts = GetEffectiveJointsCounts(weightsDataNode);
-		GetSkinData(weightsDataNode, effectorJointCounts, weights);
+		GetSkinWeights(weightsDataNode, effectorJointCounts, weights);
 	}
 
 	void SkinLoader::LoadJointsList()
@@ -53,14 +53,14 @@ namespace acid
 		return counts;
 	}
 
-	void SkinLoader::GetSkinData(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
+	void SkinLoader::GetSkinWeights(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("v")->GetString(), " ");
 		uint32_t pointer = 0;
 
 		for (auto count : counts)
 		{
-			auto skinData = VertexSkinData();
+			auto skinData = VertexWeights();
 
 			for (uint32_t i = 0; i < count; i++)
 			{
@@ -70,7 +70,7 @@ namespace acid
 			}
 
 			skinData.LimitJointNumber(m_maxWeights);
-			m_verticesSkinData.emplace_back(skinData);
+			m_vertexWeights.emplace_back(skinData);
 		}
 	}
 }

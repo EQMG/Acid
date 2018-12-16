@@ -38,7 +38,7 @@ namespace test
 		m_fog.SetLowerLimit(0.0f);
 		m_fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
-		auto deferred = Renderer::Get()->GetRenderer<RendererDeferred>();
+		auto deferred = Renderer::Get()->GetRendererRegister().Get<RendererDeferred>();
 
 		if (deferred != nullptr)
 		{

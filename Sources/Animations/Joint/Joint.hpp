@@ -1,11 +1,47 @@
 #pragma once
 
+#include <string>
 #include <memory>
 #include <vector>
 #include "Maths/Matrix4.hpp"
 
 namespace acid
 {
+	class ACID_EXPORT JointData
+	{
+	private:
+		uint32_t m_index;
+		std::string m_nameId;
+		Matrix4 m_bindLocalTransform;
+
+		std::vector<std::unique_ptr<JointData>> m_children;
+	public:
+		JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
+			m_index(index),
+			m_nameId(nameId),
+			m_bindLocalTransform(bindLocalTransform),
+			m_children(std::vector<std::unique_ptr<JointData>>())
+		{
+		}
+
+		JointData(const JointData&) = delete;
+
+		JointData& operator=(const JointData&) = delete;
+
+		uint32_t GetIndex() const { return m_index; }
+
+		std::string GetNameId() const { return m_nameId; }
+
+		Matrix4 GetBindLocalTransform() const { return m_bindLocalTransform; }
+
+		const std::vector<std::unique_ptr<JointData>> &GetChildren() const { return m_children; }
+
+		void AddChild(JointData *child)
+		{
+			m_children.emplace_back(child);
+		}
+	};
+
 	/// <summary>
 	/// Represents a joint in a "skeleton".
 	/// It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.

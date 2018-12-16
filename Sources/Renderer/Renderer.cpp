@@ -8,7 +8,7 @@
 namespace acid
 {
 	Renderer::Renderer() :
-		m_managerRender(nullptr),
+		m_renderManager(nullptr),
 		m_rendererRegister(RendererRegister()),
 		m_renderStages(std::vector<std::unique_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
@@ -40,20 +40,20 @@ namespace acid
 
 	void Renderer::Update()
 	{
-		if (Display::Get()->IsIconified() || m_managerRender == nullptr)
+		if (Display::Get()->IsIconified() || m_renderManager == nullptr)
 		{
 			return;
 		}
 
-		if (!m_managerRender->IsStarted())
+		if (!m_renderManager->m_started)
 		{
 			m_rendererRegister.Clear();
-			CreateRenderpass(m_managerRender->GetRenderpassCreates());
-			m_managerRender->Start();
-			m_managerRender->SetStarted(true);
+			CreateRenderpass(m_renderManager->m_renderpassCreates);
+			m_renderManager->Start();
+			m_renderManager->m_started = true;
 		}
 
-		m_managerRender->Update();
+		m_renderManager->Update();
 
 		auto camera = Scenes::Get()->GetCamera();
 		auto &stages = m_rendererRegister.GetStages();

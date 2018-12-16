@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Exports.hpp"
 #include "Maths/Delta.hpp"
 #include "Maths/Timer.hpp"
-#include "ModuleRegister.hpp"
+#include "Exports.hpp"
+#include "ModuleManager.hpp"
 
 namespace acid
 {
@@ -23,8 +23,7 @@ namespace acid
 		/// <summary>
 		/// Updates all modules in order.
 		/// </summary>
-		/// <returns> The module register. </returns>
-		void Update(const ModuleRegister &moduleRegister);
+		void Update(const ModuleManager &moduleManager);
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.

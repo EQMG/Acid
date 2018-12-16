@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelSphere> ModelSphere::Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(latitudeBands, longitudeBands, radius));
+		auto resource = Resources::Get()->Find(ToFilename(latitudeBands, longitudeBands, radius));
 
 		if (resource != nullptr)
 		{

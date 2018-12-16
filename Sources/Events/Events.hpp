@@ -10,7 +10,7 @@ namespace acid
 	/// A module used for managing events on engine updates.
 	/// </summary>
 	class ACID_EXPORT Events :
-		public IModule
+		public Module
 	{
 	private:
 		std::vector<std::unique_ptr<IEvent>> m_events;
@@ -19,7 +19,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Events *Get() { return Engine::Get()->GetModule<Events>(); }
+		static Events *Get() { return Engine::Get()->GetModuleManager().Get<Events>(); }
 
 		Events();
 

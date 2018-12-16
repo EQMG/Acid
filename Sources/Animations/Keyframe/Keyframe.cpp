@@ -7,14 +7,4 @@ namespace acid
 		m_pose(pose)
 	{
 	}
-
-	Keyframe::Keyframe(const KeyframeData &data) :
-		m_timeStamp(data.GetTime()),
-		m_pose(std::map<std::string, JointTransform>())
-	{
-		for (auto &jointData : data.GetJointTransforms())
-		{
-			m_pose.emplace(jointData.GetJointNameId(), JointTransform(jointData));
-		}
-	}
 }

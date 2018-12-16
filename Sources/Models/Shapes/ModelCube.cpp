@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<ModelCube> ModelCube::Resource(const float &width, const float &height, const float &depth)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(width, height, depth));
+		auto resource = Resources::Get()->Find(ToFilename(width, height, depth));
 
 		if (resource != nullptr)
 		{

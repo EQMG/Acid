@@ -13,7 +13,7 @@ namespace acid
 
 	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
+		auto resource = Resources::Get()->Find(ToFilename(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
 
 		if (resource != nullptr)
 		{

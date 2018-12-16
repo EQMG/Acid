@@ -54,7 +54,7 @@ namespace acid
 
 		SkinLoader skinLoader = SkinLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_controllers"), MAX_WEIGHTS);
 		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
-		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVerticesSkinData());
+		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVertexWeights());
 
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
@@ -65,7 +65,7 @@ namespace acid
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_animations"),
 			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"));
-		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframeData());
+		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 		m_animator->DoAnimation(m_animation.get());
 	}
 

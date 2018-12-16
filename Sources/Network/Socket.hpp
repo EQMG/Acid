@@ -11,14 +11,14 @@ namespace acid
 // Define the low-level socket handle type, specific to each platform.
 #if defined(ACID_BUILD_WINDOWS)
 #if defined(_WIN64)
-	typedef unsigned __int64 SocketHandle;
+	using SocketHandle = unsigned __int64;
 #else
-	typedef unsigned int SocketHandle;
+	using SocketHandle = unsigned int;
 #endif
-	typedef int32_t SocketAddrLength;
+	using SocketAddrLength = int32_t;
 #else
-	typedef int32_t SocketHandle;
-	typedef unsigned int SocketAddrLength;
+	using SocketHandle = int32_t;
+	using SocketAddrLength = unsigned int;
 #endif
 
 	/// <summary>

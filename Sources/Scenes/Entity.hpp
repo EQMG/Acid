@@ -141,14 +141,14 @@ namespace acid
 		/// </summary>
 		/// <param name="component"> The component to remove. </param>
 		/// <returns> If the component was removed. </returns>
-		bool RemoveComponent(Component *component);
+		void RemoveComponent(Component *component);
 
 		/// <summary>
 		/// Removes a component from this entity.
 		/// </summary>
 		/// <param name="name"> The name of the component to remove. </param>
 		/// <returns> If the component was removed. </returns>
-		bool RemoveComponent(const std::string &name);
+		void RemoveComponent(const std::string &name);
 
 		/// <summary>
 		/// Removes a component by type from this entity.
@@ -156,7 +156,7 @@ namespace acid
 		/// <param name="T"> The type of component to remove. </param>
 		/// <returns> If the component was removed. </returns>
 		template<typename T>
-		bool RemoveComponent()
+		void RemoveComponent()
 		{
 			for (auto it = m_components.begin(); it != m_components.end(); ++it)
 			{
@@ -167,11 +167,8 @@ namespace acid
 					(*it)->SetParent(nullptr);
 
 					m_components.erase(it);
-					return true;
 				}
 			}
-
-			return false;
 		}
 
 		std::string GetName() const { return m_name; }

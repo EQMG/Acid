@@ -19,14 +19,15 @@ namespace test
 	};
 
 	MainRenderer::MainRenderer() :
-		IManagerRender({RENDERPASS_0_CREATE})
+		RenderManager({RENDERPASS_0_CREATE})
 	{
 	}
 
 	void MainRenderer::Start()
 	{
-		Renderer::Get()->AddRenderer<RendererGuis>(GraphicsStage(0, 0));
-		Renderer::Get()->AddRenderer<RendererFonts>(GraphicsStage(0, 0));
+		auto &rendererRegister = Renderer::Get()->GetRendererRegister();
+		rendererRegister.Add<RendererGuis>(GraphicsStage(0, 0));
+		rendererRegister.Add<RendererFonts>(GraphicsStage(0, 0));
 	}
 
 	void MainRenderer::Update()

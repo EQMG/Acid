@@ -11,7 +11,7 @@ namespace acid
 	/// A manager that manages particles.
 	/// </summary>
 	class ACID_EXPORT Particles :
-		public IModule
+		public Module
 	{
 	private:
 		static const float MAX_ELAPSED_TIME;
@@ -22,7 +22,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Particles *Get() { return Engine::Get()->GetModule<Particles>(); }
+		static Particles *Get() { return Engine::Get()->GetModuleManager().Get<Particles>(); }
 
 		Particles();
 

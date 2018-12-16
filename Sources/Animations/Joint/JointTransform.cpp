@@ -14,12 +14,6 @@ namespace acid
 	{
 	}
 
-	JointTransform::JointTransform(const JointTransformData &data) :
-		m_position(Vector3(data.GetJointLocalTransform()[3])),
-		m_rotation(Quaternion(data.GetJointLocalTransform()))
-	{
-	}
-
 	Matrix4 JointTransform::GetLocalTransform() const
 	{
 		Matrix4 matrix = Matrix4();

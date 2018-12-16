@@ -8,14 +8,14 @@ namespace acid
 		m_libraryAnimations(libraryAnimations),
 		m_libraryVisualScenes(libraryVisualScenes),
 		m_lengthSeconds(Time::ZERO),
-		m_keyframeData(std::vector<KeyframeData>())
+		m_keyframes(std::vector<Keyframe>())
 	{
 		auto animationNodes = m_libraryAnimations->FindChildren("animation");
 
 		std::string rootNode = FindRootJointName();
 		auto times = GetKeyTimes();
 		m_lengthSeconds = times[times.size() - 1];
-		CreateKeyframeData(times);
+		CreateKeyframe(times);
 
 		for (auto &jointNode : animationNodes)
 		{
@@ -43,11 +43,11 @@ namespace acid
 		return times;
 	}
 
-	void AnimationLoader::CreateKeyframeData(const std::vector<Time> &times)
+	void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 	{
 		for (auto &time : times)
 		{
-			m_keyframeData.emplace_back(KeyframeData(time));
+			m_keyframes.emplace_back(Keyframe(time, {}));
 		}
 	}
 
@@ -79,7 +79,7 @@ namespace acid
 
 	void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
 	{
-		for (uint32_t i = 0; i < m_keyframeData.size(); i++)
+		for (uint32_t i = 0; i < m_keyframes.size(); i++)
 		{
 			Matrix4 transform = Matrix4();
 
@@ -96,7 +96,7 @@ namespace acid
 				transform = MeshAnimated::CORRECTION * transform;
 			}
 
-			m_keyframeData[i].AddJointTransform(JointTransformData(jointName, transform));
+			m_keyframes[i].AddJointTransform(jointName, transform);
 		}
 	}
 }

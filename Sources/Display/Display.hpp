@@ -15,7 +15,7 @@ namespace acid
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
 	class ACID_EXPORT Display :
-		public IModule
+		public Module
 	{
 	private:
 		uint32_t m_windowWidth;
@@ -99,7 +99,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Display *Get() { return Engine::Get()->GetModule<Display>(); }
+		static Display *Get() { return Engine::Get()->GetModuleManager().Get<Display>(); }
 
 		Display();
 

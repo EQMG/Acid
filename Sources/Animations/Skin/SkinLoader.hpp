@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Serialized/Metadata.hpp"
-#include "VertexSkinData.hpp"
+#include "VertexWeights.hpp"
 
 namespace acid
 {
@@ -14,13 +14,13 @@ namespace acid
 		uint32_t m_maxWeights;
 
 		std::vector<std::string> m_jointOrder;
-		std::vector<VertexSkinData> m_verticesSkinData;
+		std::vector<VertexWeights> m_vertexWeights;
 	public:
 		SkinLoader(Metadata *libraryControllers, const uint32_t &maxWeights);
 
 		std::vector<std::string> GetJointOrder() const { return m_jointOrder; }
 
-		std::vector<VertexSkinData> GetVerticesSkinData() const { return m_verticesSkinData; }
+		std::vector<VertexWeights> GetVertexWeights() const { return m_vertexWeights; }
 	private:
 		void LoadJointsList();
 
@@ -28,6 +28,6 @@ namespace acid
 
 		std::vector<uint32_t> GetEffectiveJointsCounts(Metadata *weightsDataNode);
 
-		void GetSkinData(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
+		void GetSkinWeights(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 	};
 }

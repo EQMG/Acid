@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<ModelRectangle> ModelRectangle::Resource(const float &min, const float &max)
 	{
-		auto resource = Resources::Get()->Get(ToFilename(min, max));
+		auto resource = Resources::Get()->Find(ToFilename(min, max));
 
 		if (resource != nullptr)
 		{

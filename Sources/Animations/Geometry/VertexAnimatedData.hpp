@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include "Animations/Skin/VertexSkinData.hpp"
+#include "Animations/Skin/VertexWeights.hpp"
 #include "Maths/Vector3.hpp"
 
 namespace acid
@@ -19,7 +19,7 @@ namespace acid
 
 		int32_t m_index;
 
-		VertexSkinData m_skinData;
+		VertexWeights m_skinData;
 	public:
 		VertexAnimatedData(const int32_t &index, const Vector3 &position);
 
@@ -43,8 +43,8 @@ namespace acid
 
 		bool HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const;
 
-		VertexSkinData GetSkinData() const { return m_skinData; }
+		VertexWeights GetSkinData() const { return m_skinData; }
 
-		void SetSkinData(const VertexSkinData &skinData) { m_skinData = skinData; }
+		void SetSkinData(const VertexWeights &skinData) { m_skinData = skinData; }
 	};
 }

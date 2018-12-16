@@ -21,7 +21,8 @@ int main(int argc, char **argv)
 	// Registers modules.
 
 	// Registers components.
-	Scenes::Get()->RegisterComponent<PlayerFps>("PlayerFps");
+	auto componentRegister = Scenes::Get()->GetComponentRegister();
+	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Initializes modules.
 	Display::Get()->SetTitle("Test PBR");

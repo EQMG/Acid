@@ -16,7 +16,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Get(filename);
+		auto resource = Resources::Get()->Find(filename);
 
 		if (resource != nullptr)
 		{
@@ -61,7 +61,7 @@ namespace acid
 
 		for (auto &component : entity.GetComponents())
 		{
-			auto componentName = Scenes::Get()->FindComponentName(component.get());
+			auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
 
 			if (!componentName)
 			{

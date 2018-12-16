@@ -5,17 +5,17 @@
 #include "Commands/CommandBuffer.hpp"
 #include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
-#include "IManagerRender.hpp"
+#include "RenderManager.hpp"
 #include "RendererRegister.hpp"
 #include "RenderStage.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT Renderer :
-		public IModule
+		public Module
 	{
 	private:
-		std::unique_ptr<IManagerRender> m_managerRender;
+		std::unique_ptr<RenderManager> m_renderManager;
 
 		RendererRegister m_rendererRegister;
 
@@ -36,7 +36,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Renderer *Get() { return Engine::Get()->GetModule<Renderer>(); }
+		static Renderer *Get() { return Engine::Get()->GetModuleManager().Get<Renderer>(); }
 
 		Renderer();
 
@@ -56,53 +56,19 @@ namespace acid
 		/// Gets the renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
-		IManagerRender *GetManager() const { return m_managerRender.get(); }
+		RenderManager *GetManager() const { return m_renderManager.get(); }
 
 		/// <summary>
 		/// Sets the current renderer manager to a new renderer manager.
 		/// </summary>
 		/// <param name="rendererMaster"> The new renderer manager. </param>
-		void SetManager(IManagerRender *managerRender) { m_managerRender.reset(managerRender); }
+		void SetManager(RenderManager *managerRender) { m_renderManager.reset(managerRender); }
 
 		/// <summary>
-		/// Gets a renderer instance by type from this register.
+		/// Gets the renderer register used by the engine. The refister can be used to register/deregister renderers.
 		/// </summary>
-		/// <param name="T"> The renderer type to find. </param>
-		/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
-		/// <returns> The found renderer. </returns>
-		template<typename T>
-		T *GetRenderer(const bool &allowDisabled = false) { return m_rendererRegister.GetRenderer<T>(allowDisabled); }
-
-		/// <summary>
-		/// Adds a renderer to this register.
-		/// </summary>
-		/// <param name="renderer"> The renderer to add. </param>
-		/// <returns> The added renderer. </returns>
-		IRenderer *AddRenderer(IRenderer *renderer) { return m_rendererRegister.AddRenderer(renderer); }
-
-		/// <summary>
-		/// Creates a renderer by type to be added this register.
-		/// </summary>
-		/// <param name="T"> The type of renderer to add. </param>
-		/// <param name="args"> The type constructor arguments. </param>
-		/// <returns> The added renderer. </returns>
-		template<typename T, typename... Args>
-		T *AddRenderer(Args &&... args) { return m_rendererRegister.AddRenderer<T>(std::forward<Args>(args)...); }
-
-		/// <summary>
-		/// Removes a renderer from this register.
-		/// </summary>
-		/// <param name="renderer"> The renderer to remove. </param>
-		/// <returns> If the renderer was removed. </returns>
-		bool RemoveRenderer(IRenderer *renderer) { return m_rendererRegister.RemoveRenderer(renderer); }
-
-		/// <summary>
-		/// Removes a renderer by type from this register.
-		/// </summary>
-		/// <param name="T"> The type of renderer to remove. </param>
-		/// <returns> If the renderer was removed. </returns>
-		template<typename T>
-		bool RemoveRenderer() { return m_rendererRegister.RemoveRenderer<T>(); }
+		/// <returns> The renderer register. </returns>
+		RendererRegister &GetRendererRegister() { return m_rendererRegister; }
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 

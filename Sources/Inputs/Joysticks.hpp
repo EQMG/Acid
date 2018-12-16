@@ -49,7 +49,7 @@ namespace acid
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
 	class ACID_EXPORT Joysticks :
-		public IModule
+		public Module
 	{
 	private:
 		std::array<Joystick, JOYSTICK_END_RANGE> m_connected;
@@ -58,7 +58,7 @@ namespace acid
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Joysticks *Get() { return Engine::Get()->GetModule<Joysticks>(); }
+		static Joysticks *Get() { return Engine::Get()->GetModuleManager().Get<Joysticks>(); }
 
 		Joysticks();
 

@@ -9,11 +9,13 @@ namespace acid
 	class IRenderer;
 
 	/// <summary>
-	/// A object used to manage <seealso cref="IRenderer"/>s.
+	/// A object used to manage <seealso cref="IRenderer"/> objects to create a list of render pass.
 	/// </summary>
-	class ACID_EXPORT IManagerRender
+	class ACID_EXPORT RenderManager
 	{
 	private:
+		friend class Renderer;
+
 		std::vector<RenderpassCreate> m_renderpassCreates;
 		bool m_started;
 	public:
@@ -21,7 +23,7 @@ namespace acid
 		/// Creates a new render manager.
 		/// </summary>
 		/// <param name="renderpassCreates"> The renderpass pipeline to create for this manager. </param>
-		explicit IManagerRender(const std::vector<RenderpassCreate> &renderpassCreates) :
+		explicit RenderManager(const std::vector<RenderpassCreate> &renderpassCreates) :
 			m_renderpassCreates(renderpassCreates),
 			m_started(false)
 		{
@@ -36,11 +38,5 @@ namespace acid
 		/// Run when updating the renderer manager.
 		/// </summary>
 		virtual void Update() = 0;
-
-		std::vector<RenderpassCreate> GetRenderpassCreates() const { return m_renderpassCreates; }
-
-		ACID_HIDDEN bool IsStarted() const { return m_started; };
-
-		ACID_HIDDEN void SetStarted(const bool &started) { m_started = started; }
 	};
 }

@@ -6,6 +6,8 @@
 
 namespace acid
 {
+	static const std::string FALLBACK_PATH = "Undefined.obj";
+
 	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
 	{
 		if (filename.empty())
@@ -13,7 +15,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Get(filename);
+		auto resource = Resources::Get()->Find(filename);
 
 		if (resource != nullptr)
 		{

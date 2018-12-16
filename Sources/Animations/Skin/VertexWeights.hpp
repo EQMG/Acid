@@ -6,13 +6,13 @@
 
 namespace acid
 {
-	class ACID_EXPORT VertexSkinData
+	class ACID_EXPORT VertexWeights
 	{
 	private:
 		std::vector<uint32_t> m_jointIds;
 		std::vector<float> m_weights;
 	public:
-		VertexSkinData();
+		VertexWeights();
 
 		void AddJointEffect(const uint32_t &jointId, const float &weight);
 

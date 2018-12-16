@@ -63,7 +63,7 @@ Acid uses the following libraries:
 // Imports a 2D texture.
 auto guiBlack = Texture::Resource("Guis/Black.png");
 
-// Imports a 3D cubemap.
+// Imports a 3D cubemap (face names defined in Cubemap.cpp).
 auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 
 // Imports a model.
@@ -74,10 +74,10 @@ auto jump = Sound("Sounds/Jump.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, fal
 jump.SetPosition(10.0f * Vector3::RIGHT);
 
 // Loads a entity from a prefab file.
-auto playerObject = CreateGameObject("Objects/Player/Player.json", Transform::IDENTITY);
+auto playerObject = GetContext()->CreateEntity("Objects/Player/Player.json", Transform::IDENTITY);
 
 // Creates a entity.
-auto sphere = CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+auto sphere = GetContext()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<ShapeSphere>(2.0f);
 sphere->AddComponent<Rigidbody>(2.0f);
