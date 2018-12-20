@@ -16,7 +16,7 @@ set(TESTGUI_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestGUI/")
 add_executable(TestGUI ${TESTGUI_SOURCES})
 add_dependencies(TestGUI Acid)
 
-target_compile_features(TestGUI PUBLIC cxx_std_17)
+set_property(TARGET TestGUI PROPERTY CXX_STANDARD 20)
 set_target_properties(TestGUI PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
