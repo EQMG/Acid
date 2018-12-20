@@ -14,12 +14,12 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
 
-		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
-		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		commandBufferAllocateInfo.commandPool = commandPool;
-		commandBufferAllocateInfo.level = bufferLevel;
-		commandBufferAllocateInfo.commandBufferCount = 1;
-
+		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {
+			.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+			.commandPool = commandPool,
+			.level = bufferLevel,
+			.commandBufferCount = 1
+		};
 		Display::CheckVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 
 		if (begin)
@@ -38,10 +38,10 @@ namespace acid
 
 	void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
 	{
-		VkCommandBufferBeginInfo beginInfo = {};
-		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-		beginInfo.flags = usage;
-
+		VkCommandBufferBeginInfo beginInfo = {
+			.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+			.flags = usage
+		};
 		Display::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
 		m_running = true;
 	}
@@ -57,10 +57,11 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
 
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &m_commandBuffer;
+		VkSubmitInfo submitInfo = {
+			.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO,
+			.commandBufferCount = 1,
+			.pCommandBuffers = &m_commandBuffer,
+		};
 
 		if (signalSemaphore != VK_NULL_HANDLE)
 		{
@@ -72,10 +73,10 @@ namespace acid
 
 		if (fence == VK_NULL_HANDLE && createFence)
 		{
-			VkFenceCreateInfo fenceCreateInfo = {};
-			fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-			fenceCreateInfo.flags = 0;
-
+			VkFenceCreateInfo fenceCreateInfo = {
+				.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+				.flags = 0
+			};
 			Display::CheckVk(vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &fence));
 			createdFence = true;
 		}

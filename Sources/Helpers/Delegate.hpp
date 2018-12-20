@@ -12,51 +12,48 @@ namespace acid
 	template<typename>
 	class Delegate;
 
-	namespace DelegateImpl
+	template<typename TReturnType, typename... TArgs>
+	struct Invoker
 	{
-		template <typename TReturnType, typename... TArgs>
-		struct Invoker
+	public:
+		using ReturnType = std::vector<TReturnType>;
+
+		static ReturnType Invoke(Delegate<TReturnType(TArgs...)> &delegate, TArgs... params)
 		{
-		public:
-			using ReturnType = std::vector<TReturnType>;
+			std::lock_guard<std::mutex> lock(delegate.m_mutex);
+			ReturnType returnValues;
 
-			static ReturnType Invoke(Delegate<TReturnType(TArgs...)> &delegate, TArgs... params)
+			for (const auto &functionPtr : delegate.m_functionList)
 			{
-				std::lock_guard<std::mutex> lock(delegate.m_mutex);
-				ReturnType returnValues;
-
-				for (const auto &functionPtr : delegate.m_functionList)
-				{
-					returnValues.push_back((*functionPtr)(params...));
-				}
-
-				return returnValues;
+				returnValues.push_back((*functionPtr)(params...));
 			}
-		};
 
-		template <typename... TArgs>
-		struct Invoker<void, TArgs...>
+			return returnValues;
+		}
+	};
+
+	template<typename... TArgs>
+	struct Invoker<void, TArgs...>
+	{
+	public:
+		using ReturnType = void;
+
+		static void Invoke(Delegate<void(TArgs...)> &delegate, TArgs... params)
 		{
-		public:
-			using ReturnType = void;
+			std::lock_guard<std::mutex> lock(delegate.m_mutex);
 
-			static void Invoke(Delegate<void(TArgs...)> &delegate, TArgs... params)
+			for (const auto &functionPtr : delegate.m_functionList)
 			{
-				std::lock_guard<std::mutex> lock(delegate.m_mutex);
-
-				for (const auto &functionPtr : delegate.m_functionList)
-				{
-					(*functionPtr)(params...);
-				}
+				(*functionPtr)(params...);
 			}
-		};
-	}
+		}
+	};
 
 	template<typename TReturnType, typename... TArgs>
 	class ACID_EXPORT Delegate<TReturnType(TArgs...)>
 	{
 	private:
-		using Invoker = DelegateImpl::Invoker<TReturnType, TArgs...>;
+		using Invoker = Invoker<TReturnType, TArgs...>;
 		using functionType = std::function<TReturnType(TArgs...)>;
 
 		friend Invoker;
@@ -83,9 +80,9 @@ namespace acid
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			m_functionList.remove_if([&](std::shared_ptr<functionType> &functionPtr)
-			                         {
-				                         return Hash(function) == Hash(*functionPtr);
-			                         });
+			{
+			    return Hash(function) == Hash(*functionPtr);
+			});
 			return *this;
 		}
 

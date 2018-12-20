@@ -16,16 +16,16 @@ namespace acid
 	private:
 		friend class Renderer;
 
-		std::vector<RenderpassCreate> m_renderpassCreates;
 		bool m_started;
+	protected:
+		std::vector<RenderpassCreate> m_renderpassCreates;
 	public:
 		/// <summary>
-		/// Creates a new render manager.
+		/// Creates a new render manager, once created fill <seealso cref="#m_renderpassCreates"/> with renderpasses.
 		/// </summary>
-		/// <param name="renderpassCreates"> The renderpass pipeline to create for this manager. </param>
-		explicit RenderManager(const std::vector<RenderpassCreate> &renderpassCreates) :
-			m_renderpassCreates(renderpassCreates),
-			m_started(false)
+		explicit RenderManager() :
+			m_started(false),
+			m_renderpassCreates(std::vector<RenderpassCreate>())
 		{
 		}
 

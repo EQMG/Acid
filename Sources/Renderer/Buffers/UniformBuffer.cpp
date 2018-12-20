@@ -9,9 +9,11 @@ namespace acid
 		Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT),
 		m_bufferInfo({})
 	{
-		m_bufferInfo.buffer = m_buffer;
-		m_bufferInfo.offset = 0;
-		m_bufferInfo.range = m_size;
+		m_bufferInfo = {
+			.buffer = m_buffer,
+			.offset = 0,
+			.range = m_size
+		};
 	}
 
 	void UniformBuffer::Update(const void *newData)
@@ -27,31 +29,31 @@ namespace acid
 
 	DescriptorType UniformBuffer::CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
-		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-		descriptorSetLayoutBinding.binding = binding;
-		descriptorSetLayoutBinding.descriptorType = descriptorType;
-		descriptorSetLayoutBinding.descriptorCount = 1;
-		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-		descriptorSetLayoutBinding.stageFlags = stage;
-
-		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = descriptorType;
-		descriptorPoolSize.descriptorCount = count;
-
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {
+			.binding = binding,
+			.descriptorType = descriptorType,
+			.descriptorCount = 1,
+			.stageFlags = stage,
+			.pImmutableSamplers = nullptr
+		};
+		VkDescriptorPoolSize descriptorPoolSize = {
+			.type = descriptorType,
+			.descriptorCount = count
+		};
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
 	VkWriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
 	{
-		VkWriteDescriptorSet descriptorWrite = {};
-		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
-		descriptorWrite.dstBinding = binding;
-		descriptorWrite.dstArrayElement = 0;
-		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.descriptorCount = 1;
-		descriptorWrite.pBufferInfo = &m_bufferInfo;
-
+		VkWriteDescriptorSet descriptorWrite = {
+			.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+			.dstSet = descriptorSet.GetDescriptorSet(),
+			.dstBinding = binding,
+			.dstArrayElement = 0,
+			.descriptorCount = 1,
+			.descriptorType = descriptorType,
+			.pBufferInfo = &m_bufferInfo
+		};
 		return descriptorWrite;
 	}
 }

@@ -24,6 +24,14 @@
 		"Life Length": 1.4,
 		"Stage Cycles": 1.0,
 		"Scale": 0.8
+	  },
+	  {
+		"Texture": "Particles/Circular.png",
+		"Number Of Rows": 4,
+		"Colour Offset": "#BA55D3",
+		"Life Length": 1.1,
+		"Stage Cycles": 1.0,
+		"Scale": 0.6
 	  }
 	],
 	"PPS": 8.0,
@@ -42,7 +50,7 @@
 	"Scale Deviation": 0.1
   },
   "EmitterSphere": {
-	"Radius": 2.0,
+	"Radius": 3.0,
 	"Heading": {
 	  "x": 0.0,
 	  "y": 1.0,

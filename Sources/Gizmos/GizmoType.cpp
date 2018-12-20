@@ -49,9 +49,10 @@ namespace acid
 
 		for (auto &gizmo : gizmos)
 		{
-			GizmoTypeData instanceData = {};
-			instanceData.modelMatrix = gizmo->GetTransform().GetWorldMatrix();
-			instanceData.diffuse = gizmo->GetDiffuse();
+			GizmoTypeData instanceData = {
+				.modelMatrix = gizmo->GetTransform().GetWorldMatrix(),
+				.diffuse = gizmo->GetDiffuse()
+			};
 			instanceDatas[m_instances] = instanceData;
 			m_instances++;
 

@@ -46,8 +46,10 @@ void main()
 	else
 	{
 		gl_Position = position;
-	    gl_Position.z = 0.5f - (0.01f * object.depth);
+		gl_Position.z = 0.5f;
 	}
+
+	gl_Position.z -= 0.01f * object.depth;
 
 	outUv = (inUv.xy / object.atlasRows) + object.atlasOffset;
 }

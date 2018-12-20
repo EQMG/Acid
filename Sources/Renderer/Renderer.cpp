@@ -133,7 +133,10 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
+		VkExtent2D displayExtent = {
+			.width = Display::Get()->GetWidth(),
+			.height = Display::Get()->GetHeight()
+		};
 
 		m_renderStages.clear();
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
@@ -166,14 +169,15 @@ namespace acid
 
 		Log::Out("Saving screenshot to: '%s'\n", filename.c_str());
 
-		VkImage srcImage = Renderer::Get()->GetSwapchain()->GetImages().at(Renderer::Get()->GetActiveSwapchainImage());
+		VkImage srcImage = m_swapchain->GetImages().at(m_activeSwapchainImage);
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
 		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height, true, 0, 1);
 
 		// Get layout of the image (including row pitch).
-		VkImageSubresource subResource{};
-		subResource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		VkImageSubresource subResource = {
+			.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT
+		};
 
 		VkSubresourceLayout subResourceLayout;
 		vkGetImageSubresourceLayout(logicalDevice, dstImage, &subResource, &subResourceLayout);
@@ -258,8 +262,9 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkFenceCreateInfo fenceCreateInfo = {};
-		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		VkFenceCreateInfo fenceCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO
+		};
 		vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
 	}
 
@@ -267,16 +272,16 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
-		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-
+		VkSemaphoreCreateInfo semaphoreCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
+		};
 		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
 
-		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
-		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamily();
-		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-
+		VkCommandPoolCreateInfo commandPoolCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+			.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+			.queueFamilyIndex = Display::Get()->GetGraphicsFamily()
+		};
 		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
@@ -286,9 +291,9 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
-		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-
+		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO
+		};
 		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
@@ -297,7 +302,10 @@ namespace acid
 		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
 		auto renderStage = GetRenderStage(i);
 
-		VkExtent2D displayExtent = {Display::Get()->GetWidth(), Display::Get()->GetHeight()};
+		VkExtent2D displayExtent = {
+			.width = Display::Get()->GetWidth(),
+			.height = Display::Get()->GetHeight()
+		};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -352,38 +360,43 @@ namespace acid
 			m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
 		}
 
-		VkRect2D renderArea = {};
-		renderArea.offset.x = 0;
-		renderArea.offset.y = 0;
-		renderArea.extent.width = renderStage->GetWidth();
-		renderArea.extent.height = renderStage->GetHeight();
+		VkRect2D renderArea = {
+			.offset = { 0, 0 },
+			.extent = {
+				.width = renderStage->GetWidth(),
+				.height = renderStage->GetHeight()
+			}
+		};
 
-		std::vector<VkClearValue> clearValues = renderStage->GetClearValues();
-
-		VkRenderPassBeginInfo renderPassBeginInfo = {};
-		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
-		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
-		renderPassBeginInfo.renderArea = renderArea;
-		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
-		renderPassBeginInfo.pClearValues = clearValues.data();
+		auto clearValues = renderStage->GetClearValues();
+		VkRenderPassBeginInfo renderPassBeginInfo = {
+			.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+			.renderPass = renderStage->GetRenderpass()->GetRenderpass(),
+			.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage),
+			.renderArea = renderArea,
+			.clearValueCount = static_cast<uint32_t>(clearValues.size()),
+			.pClearValues = clearValues.data()
+		};
 
 		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-		VkViewport viewport = {};
-		viewport.x = 0.0f;
-		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(renderStage->GetWidth());
-		viewport.height = static_cast<float>(renderStage->GetHeight());
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
+		VkViewport viewport = {
+			.x = 0.0f,
+			.y = 0.0f,
+			.width = static_cast<float>(renderStage->GetWidth()),
+			.height = static_cast<float>(renderStage->GetHeight()),
+			.minDepth = 0.0f,
+			.maxDepth = 1.0f
+		};
 		vkCmdSetViewport(m_commandBuffer->GetCommandBuffer(), 0, 1, &viewport);
 
-		VkRect2D scissor = {};
-		scissor.offset.x = 0;
-		scissor.offset.y = 0;
-		scissor.extent.width = renderStage->GetWidth();
-		scissor.extent.height = renderStage->GetHeight();
+		VkRect2D scissor = {
+			.offset = { 0, 0 },
+			.extent = {
+				.width = renderStage->GetWidth(),
+				.height = renderStage->GetHeight()
+			}
+		};
 		vkCmdSetScissor(m_commandBuffer->GetCommandBuffer(), 0, 1, &scissor);
 
 		return true;
@@ -408,15 +421,15 @@ namespace acid
 
 		VkResult presentResult = VK_RESULT_MAX_ENUM;
 
-		VkPresentInfoKHR presentInfo = {};
-		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
-		presentInfo.pWaitSemaphores = waitSemaphores.data();
-		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
-		presentInfo.pImageIndices = &m_activeSwapchainImage;
-		presentInfo.pResults = &presentResult;
-
+		VkPresentInfoKHR presentInfo = {
+			.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+			.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size()),
+			.pWaitSemaphores = waitSemaphores.data(),
+			.swapchainCount = 1,
+			.pSwapchains = m_swapchain->GetSwapchain(),
+			.pImageIndices = &m_activeSwapchainImage,
+			.pResults = &presentResult
+		};
 		VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)

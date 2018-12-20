@@ -23,25 +23,25 @@ namespace acid
 
 		std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
 
-		VkBufferCreateInfo bufferCreateInfo = {};
-		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferCreateInfo.size = size;
-		bufferCreateInfo.usage = usage;
-		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
-		bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
-
+		VkBufferCreateInfo bufferCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+			.size = size,
+			.usage = usage,
+			.sharingMode = VK_SHARING_MODE_EXCLUSIVE,
+			.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size()),
+			.pQueueFamilyIndices = queueFamily.data()
+		};
 		Display::CheckVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
 		vkGetBufferMemoryRequirements(logicalDevice, m_buffer, &memoryRequirements);
 
-		VkMemoryAllocateInfo memoryAllocateInfo = {};
-		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		memoryAllocateInfo.allocationSize = memoryRequirements.size;
-		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-
+		VkMemoryAllocateInfo memoryAllocateInfo = {
+			.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+			.allocationSize = memoryRequirements.size,
+			.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties)
+		};
 		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
@@ -67,7 +67,7 @@ namespace acid
 			uint32_t memoryTypeBits = 1 << i;
 			bool isRequiredMemoryType = typeFilter & memoryTypeBits;
 
-			VkMemoryPropertyFlags properties = physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags;
+			auto properties = physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags;
 			bool hasRequiredProperties = (properties & requiredProperties) == requiredProperties;
 
 			if (isRequiredMemoryType && hasRequiredProperties)
@@ -84,8 +84,9 @@ namespace acid
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
-		VkBufferCopy copyRegion = {};
-		copyRegion.size = size;
+		VkBufferCopy copyRegion = {
+			.size = size
+		};
 		vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
 
 		commandBuffer.End();

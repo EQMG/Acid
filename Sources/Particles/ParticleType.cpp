@@ -132,8 +132,6 @@ namespace acid
 
 	ParticleData ParticleType::GetInstanceData(const Particle &particle)
 	{
-		ParticleData instanceData = {};
-
 		Matrix4 modelMatrix = Matrix4();
 		modelMatrix = modelMatrix.Translate(particle.GetPosition());
 
@@ -144,23 +142,23 @@ namespace acid
 		
 		modelMatrix[1][0] = Maths::Radians(particle.GetRotation());
 
-		instanceData.modelMatrix = modelMatrix;
-
-		instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
-
 		Vector4 offsets = Vector4();
 		offsets.m_x = particle.GetTextureOffset1().m_x;
 		offsets.m_y = particle.GetTextureOffset1().m_y;
 		offsets.m_z = particle.GetTextureOffset2().m_x;
 		offsets.m_w = particle.GetTextureOffset2().m_y;
-		instanceData.offsets = offsets;
 
 		Vector3 blend = Vector3();
 		blend.m_x = particle.GetTextureBlendFactor();
 		blend.m_y = particle.GetTransparency();
 		blend.m_z = static_cast<float>(particle.GetParticleType()->GetNumberOfRows());
-		instanceData.blend = blend;
 
+		ParticleData instanceData = {
+			.modelMatrix = modelMatrix,
+			.colourOffset = particle.GetParticleType()->GetColourOffset(),
+			.offsets = offsets,
+			.blend = blend
+		};
 		return instanceData;
 	}
 }

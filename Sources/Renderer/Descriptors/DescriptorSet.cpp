@@ -14,14 +14,13 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
-
-		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
-		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-		descriptorSetAllocateInfo.pNext = nullptr;
-		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
-		descriptorSetAllocateInfo.descriptorSetCount = 1;
-		descriptorSetAllocateInfo.pSetLayouts = layouts;
-
+		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {
+			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,
+			.pNext = nullptr,
+			.descriptorPool = m_descriptorPool,
+			.descriptorSetCount = 1,
+			.pSetLayouts = layouts
+		};
 		Display::CheckVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 
@@ -41,7 +40,6 @@ namespace acid
 
 	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
-		VkDescriptorSet descriptors[1] = {m_descriptorSet};
-		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, descriptors, 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
 	}
 }

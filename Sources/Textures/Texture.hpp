@@ -8,6 +8,29 @@
 
 namespace acid
 {
+	/*struct TextureCreateInfo
+	{
+		uint32_t width;
+		uint32_t height;
+		void *pixels = nullptr;
+		VkFormat format = VK_FORMAT_R8G8B8A8_UNORM;
+		VkImageLayout imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+		VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT;
+		VkFilter filter = VK_FILTER_LINEAR;
+		VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT;
+		bool anisotropic = false;
+		bool mipmap = false;
+	};*/
+
+	/*TextureCreateInfo logoTextureCreateInfo {
+		.width = 1024,
+		.height = 1024,
+		.addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		.anisotropic = true,
+		.mipmap = true
+	};*/
+
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>
@@ -51,7 +74,7 @@ namespace acid
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		explicit Texture(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
-		                 const bool &anisotropic = true, const bool &mipmap = true);
+			const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
@@ -68,8 +91,8 @@ namespace acid
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		Texture(const uint32_t &width, const uint32_t &height, void *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-				const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
-				const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
+			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
 		~Texture();
 
@@ -127,7 +150,8 @@ namespace acid
 
 		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height);
 
-		static void CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples, const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
+		static void CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples,
+			const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
 
 		static bool HasStencilComponent(const VkFormat &format);
 
