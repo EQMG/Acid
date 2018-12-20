@@ -16,6 +16,8 @@ namespace acid
 		public Component
 	{
 	public:
+		~Camera() = default;
+
 		/// <summary>
 		/// Gets the distance of the near pane of the view frustum.
 		/// </summary>

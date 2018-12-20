@@ -72,7 +72,6 @@ matrix:
     - brew update
     - brew tap caskroom/cask
     - brew install tree
-    - brew install wget
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake

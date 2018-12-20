@@ -51,9 +51,9 @@ namespace acid
 
 		void Update() override;
 
-		void Decode(const Metadata &metadata);
+		void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const;
+		void Encode(Metadata &metadata) const override;
 
 		/// <summary>
 		/// Multiplies this transform with another transform.
