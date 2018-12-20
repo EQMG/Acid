@@ -3,6 +3,7 @@
 #if defined(ACID_BUILD_WINDOWS)
 #include <winsock2.h>
 #else
+#include <sys/select.h>
 #include <netinet/in.h>
 #endif
 #include <algorithm>
