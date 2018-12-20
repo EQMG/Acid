@@ -11,6 +11,10 @@ endif()
 if(NOT PHYSFS_FOUND)
 	add_dependencies(Acid physfs)
 endif()
+# Defined in find_package(freetype)
+if(NOT FREETYPE_FOUND)
+	add_dependencies(Acid freetype)
+endif()
 # Manually defined by us
 if(NOT SPIRV_FOUND)
 	add_dependencies(Acid SPIRV)
@@ -75,6 +79,7 @@ target_include_directories(Acid
 		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
+		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
 		$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
 		)
 target_link_libraries(Acid
@@ -91,6 +96,7 @@ target_link_libraries(Acid
 		# of the library targets that exist in-scope, else they're set..
 		# from find_package() calls
 		${PHYSFS_LIBRARY}
+		${FREETYPE_LIBRARY}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARY}
 		# Windows only

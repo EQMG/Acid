@@ -31,6 +31,14 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
+		auto guiA = new Gui(this, UiBound(Vector2(0.0f, 0.2f), UiBound::BOTTOM_LEFT, true, true, Vector2(0.5f, 0.6f)), Texture::Resource("Guis/White.png"));
+		guiA->SetDepth(1.0f);
+		guiA->SetColourOffset(Colour::TEAL);
+
+		auto guiB = new Gui(guiA, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.35f, 0.35f)), Texture::Resource("Guis/White.png"));
+		guiB->SetDepth(2.0f);
+		guiB->SetColourOffset(Colour::RED);
+
 		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/White.png"));
 
 		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiBound::TOP_LEFT, true, true, Vector2(0.4f, 1.0f)), Texture::Resource("Guis/Gradient_A.png"));

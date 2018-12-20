@@ -55,11 +55,16 @@ namespace acid
 			return false;
 		}
 
-		VkRect2D scissorRect = {};
-		scissorRect.offset.x = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_x);
-		scissorRect.offset.y = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_y);
-		scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
-		scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
+		VkRect2D scissorRect = {
+			.offset = {
+				.x = static_cast<int32_t>(pipeline.GetWidth() * GetScissor().m_x),
+				.y = static_cast<int32_t>(pipeline.GetHeight() * GetScissor().m_y)
+			},
+			.extent = {
+				.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z),
+				.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w)
+			}
+		};
 		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.

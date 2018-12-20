@@ -7,20 +7,16 @@
 
 namespace test
 {
-	const RenderpassCreate RENDERPASS_0_CREATE = RenderpassCreate
+	MainRenderer::MainRenderer()
 	{
-		{
+		std::vector<Attachment> renderpassImages0 = {
 			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH),
 			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN)
-		}, // images
-		{
-			SubpassType(0, {0, 1}),
-		} // subpasses
-	};
-
-	MainRenderer::MainRenderer() :
-		RenderManager({RENDERPASS_0_CREATE})
-	{
+		};
+		std::vector<SubpassType> renderpassSubpasses0 = {
+			SubpassType(0, {0, 1})
+		};
+		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages0, renderpassSubpasses0));
 	}
 
 	void MainRenderer::Start()

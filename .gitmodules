@@ -10,3 +10,6 @@
 [submodule "Libraries/physfs"]
 	path = Libraries/physfs
 	url = https://github.com/Didstopia/physfs.git
+[submodule "Libraries/freetype2"]
+	path = Libraries/freetype2
+	url = https://git.savannah.gnu.org/git/freetype/freetype2.git

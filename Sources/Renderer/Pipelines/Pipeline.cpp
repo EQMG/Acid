@@ -133,12 +133,12 @@ namespace acid
 			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
 			VkShaderModule shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
 
-			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
-			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-			pipelineShaderStageCreateInfo.stage = stageFlag;
-			pipelineShaderStageCreateInfo.module = shaderModule;
-			pipelineShaderStageCreateInfo.pName = "main";
-
+			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {
+				.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
+				.stage = stageFlag,
+				.module = shaderModule,
+				.pName = "main"
+			};
 			m_modules.emplace_back(shaderModule);
 			m_stages.emplace_back(pipelineShaderStageCreateInfo);
 		}
@@ -157,11 +157,11 @@ namespace acid
 			bindings.emplace_back(type.GetLayoutBinding());
 		}
 
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
-		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
-
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+			.bindingCount = static_cast<uint32_t>(bindings.size()),
+			.pBindings = bindings.data()
+		};
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
@@ -176,13 +176,13 @@ namespace acid
 			poolSizes.emplace_back(type.GetPoolSize());
 		}
 
-		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
-		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
-		descriptorPoolCreateInfo.maxSets = 1024; // TODO: Arbitrary number.
-
+		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
+			.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
+			.maxSets = 256, // TODO: Arbitrary number.
+			.poolSizeCount = static_cast<uint32_t>(poolSizes.size()),
+			.pPoolSizes = poolSizes.data()
+		};
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
@@ -200,65 +200,75 @@ namespace acid
 				continue;
 			}
 
-			VkPushConstantRange pushConstantRange = {};
-			pushConstantRange.stageFlags = uniformBlock->GetStageFlags();
-			pushConstantRange.offset = currentOffset;
-			pushConstantRange.size = static_cast<uint32_t>(uniformBlock->GetSize());
-
+			VkPushConstantRange pushConstantRange = {
+				.stageFlags = uniformBlock->GetStageFlags(),
+				.offset = currentOffset,
+				.size = static_cast<uint32_t>(uniformBlock->GetSize())
+			};
 			pushConstantRanges.emplace_back(pushConstantRange);
-
 			currentOffset += pushConstantRange.size;
 		}
 
-		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
-		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutCreateInfo.setLayoutCount = 1;
-		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
-		pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
-		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
-
+		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
+			.setLayoutCount = 1,
+			.pSetLayouts = &m_descriptorSetLayout,
+			.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size()),
+			.pPushConstantRanges = pushConstantRanges.data()
+		};
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void Pipeline::CreateAttributes()
 	{
-		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-		m_inputAssemblyState.primitiveRestartEnable = VK_FALSE;
+		m_inputAssemblyState = VkPipelineInputAssemblyStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
+			.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+			.primitiveRestartEnable = VK_FALSE
+		};
 
-		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-		m_rasterizationState.depthClampEnable = VK_FALSE;
-		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = m_pipelineCreate.GetPolygonMode();
-		m_rasterizationState.cullMode = m_pipelineCreate.GetCullMode();
-		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
-		m_rasterizationState.depthBiasEnable = VK_FALSE;
-		m_rasterizationState.depthBiasConstantFactor = 0.0f;
-		m_rasterizationState.depthBiasClamp = 0.0f;
-		m_rasterizationState.depthBiasSlopeFactor = 0.0f;
-		m_rasterizationState.lineWidth = 1.0f;
+		m_rasterizationState = VkPipelineRasterizationStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
+			.depthClampEnable = VK_FALSE,
+			.rasterizerDiscardEnable = VK_FALSE,
+			.polygonMode = m_pipelineCreate.GetPolygonMode(),
+			.cullMode = m_pipelineCreate.GetCullMode(),
+			.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE,
+			.depthBiasEnable = VK_FALSE,
+			.depthBiasConstantFactor = 0.0f,
+			.depthBiasClamp = 0.0f,
+			.depthBiasSlopeFactor = 0.0f,
+			.lineWidth = 1.0f
+		};
 
-		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
-		m_blendAttachmentStates[0].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-		m_blendAttachmentStates[0].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-		m_blendAttachmentStates[0].colorBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentStates[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-		m_blendAttachmentStates[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentStates[0].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+		m_blendAttachmentStates[0] = VkPipelineColorBlendAttachmentState{
+			.blendEnable = VK_TRUE,
+			.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA,
+			.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			.colorBlendOp = VK_BLEND_OP_ADD,
+			.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE,
+			.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+			.alphaBlendOp = VK_BLEND_OP_ADD,
+			.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+		};
 
-		m_colourBlendState.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
-		m_colourBlendState.logicOpEnable = VK_FALSE;
-		m_colourBlendState.logicOp = VK_LOGIC_OP_COPY;
-		m_colourBlendState.attachmentCount = static_cast<uint32_t>(m_blendAttachmentStates.size());
-		m_colourBlendState.pAttachments = m_blendAttachmentStates.data();
-		m_colourBlendState.blendConstants[0] = 0.0f;
-		m_colourBlendState.blendConstants[1] = 0.0f;
-		m_colourBlendState.blendConstants[2] = 0.0f;
-		m_colourBlendState.blendConstants[3] = 0.0f;
+		m_colourBlendState = VkPipelineColorBlendStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+			.logicOpEnable = VK_FALSE,
+			.logicOp = VK_LOGIC_OP_COPY,
+			.attachmentCount = static_cast<uint32_t>(m_blendAttachmentStates.size()),
+			.pAttachments = m_blendAttachmentStates.data(),
+			.blendConstants = { 0.0f, 0.0f, 0.0f, 0.0f }
+		};
 
-		m_depthStencilState.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+		m_depthStencilState = VkPipelineDepthStencilStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+			.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL,
+			.front = m_depthStencilState.back,
+			.back = {
+				.compareOp = VK_COMPARE_OP_ALWAYS
+			}
+		};
 
 		switch (m_pipelineCreate.GetPipelineDepth())
 		{
@@ -280,27 +290,31 @@ namespace acid
 				break;
 		}
 
-		m_depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
-		m_depthStencilState.front = m_depthStencilState.back;
-		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
-
-		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
-		m_viewportState.viewportCount = 1;
-		m_viewportState.scissorCount = 1;
+		m_viewportState = VkPipelineViewportStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
+			.viewportCount = 1,
+			.scissorCount = 1
+		};
 
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 		bool multisampled = renderStage->IsMultisampled(m_graphicsStage.GetSubpass());
 
-		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		m_multisampleState.sampleShadingEnable = VK_FALSE;
-		m_multisampleState.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
+		m_multisampleState = VkPipelineMultisampleStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
+			.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT,
+			.sampleShadingEnable = VK_FALSE
+		};
 
-		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-		m_dynamicState.pDynamicStates = m_dynamicStates.data();
-		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());
+		m_dynamicState = VkPipelineDynamicStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO,
+			.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size()),
+			.pDynamicStates = m_dynamicStates.data()
+		};
 
-		m_tessellationState.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO;
-		m_tessellationState.patchControlPoints = 3;
+		m_tessellationState = VkPipelineTessellationStateCreateInfo{
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+			.patchControlPoints = 3
+		};
 	}
 
 	void Pipeline::CreatePipeline()
@@ -348,37 +362,36 @@ namespace acid
 			}
 		}
 
-		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
-		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = bindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
-
+		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+			.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size()),
+			.pVertexBindingDescriptions = bindingDescriptions.data(),
+			.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size()),
+			.pVertexAttributeDescriptions = attributeDescriptions.data()
+		};
 		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 
-		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
-		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
-		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
-		pipelineCreateInfo.basePipelineIndex = -1;
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO,
+			.stageCount = static_cast<uint32_t>(m_stages.size()),
+			.pStages = m_stages.data(),
 
-		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
-		pipelineCreateInfo.pRasterizationState = &m_rasterizationState;
-		pipelineCreateInfo.pColorBlendState = &m_colourBlendState;
-		pipelineCreateInfo.pMultisampleState = &m_multisampleState;
-		pipelineCreateInfo.pViewportState = &m_viewportState;
-		pipelineCreateInfo.pDepthStencilState = &m_depthStencilState;
-		pipelineCreateInfo.pDynamicState = &m_dynamicState;
-		pipelineCreateInfo.pTessellationState = &m_tessellationState;
+			.pVertexInputState = &vertexInputStateCreateInfo,
+			.pInputAssemblyState = &m_inputAssemblyState,
+			.pTessellationState = &m_tessellationState,
+			.pViewportState = &m_viewportState,
+			.pRasterizationState = &m_rasterizationState,
+			.pMultisampleState = &m_multisampleState,
+			.pDepthStencilState = &m_depthStencilState,
+			.pColorBlendState = &m_colourBlendState,
+			.pDynamicState = &m_dynamicState,
 
-		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
-		pipelineCreateInfo.pStages = m_stages.data();
-
-		// Create the graphics pipeline.
+			.layout = m_pipelineLayout,
+			.renderPass = renderStage->GetRenderpass()->GetRenderpass(),
+			.subpass = m_graphicsStage.GetSubpass(),
+			.basePipelineHandle = VK_NULL_HANDLE,
+			.basePipelineIndex = -1
+		};
 		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
@@ -396,16 +409,16 @@ namespace acid
 
 		for (uint32_t i = 0; i < attachmentCount; i++)
 		{
-			VkPipelineColorBlendAttachmentState blendAttachmentState = {};
-			blendAttachmentState.blendEnable = VK_TRUE;
-			blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
-			blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-			blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
-			blendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-				VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+			VkPipelineColorBlendAttachmentState blendAttachmentState = {
+				.blendEnable = VK_TRUE,
+				.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA,
+				.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+				.colorBlendOp = VK_BLEND_OP_ADD,
+				.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE,
+				.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+				.alphaBlendOp = VK_BLEND_OP_ADD,
+				.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+			};
 			blendAttachmentStates.emplace_back(blendAttachmentState);
 		}
 
@@ -422,14 +435,13 @@ namespace acid
 
 		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_COMPUTE;
 
-		VkComputePipelineCreateInfo pipelineCreateInfo = {};
-		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
-		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.basePipelineIndex = -1;
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
-		pipelineCreateInfo.stage = m_stages[0];
-
-		// Create the compute pipeline.
+		VkComputePipelineCreateInfo pipelineCreateInfo = {
+			.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
+			.stage = m_stages[0],
+			.layout = m_pipelineLayout,
+			.basePipelineHandle = VK_NULL_HANDLE,
+			.basePipelineIndex = -1
+		};
 		Display::CheckVk(vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 
 		// Called when running the computer shader.

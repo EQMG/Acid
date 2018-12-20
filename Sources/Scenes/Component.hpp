@@ -15,16 +15,16 @@ namespace acid
 	private:
 		friend class Entity;
 
-		Entity *m_parent;
 		bool m_started;
 		bool m_enabled;
 		bool m_removed;
+		Entity *m_parent;
 	public:
 		explicit Component() :
-			m_parent(nullptr),
 			m_started(false),
 			m_enabled(true),
-			m_removed(false)
+			m_removed(false),
+			m_parent(nullptr)
 		{
 		}
 
@@ -58,6 +58,14 @@ namespace acid
 		{
 		}
 
+		bool IsEnabled() const { return m_enabled; };
+
+		void SetEnabled(const bool &enable) { m_enabled = enable; }
+
+		bool IsRemoved() const { return m_removed; }
+
+		void SetRemoved(const bool &removed) { m_removed = removed; }
+
 		/// <summary>
 		/// Gets the entity this component is attached to.
 		/// </summary>
@@ -69,13 +77,5 @@ namespace acid
 		/// </summary>
 		/// <param name="parent"> The new parent this is attached to. </param>
 		void SetParent(Entity *parent) { m_parent = parent; }
-
-		bool IsEnabled() const { return m_enabled; };
-
-		void SetEnabled(const bool &enable) { m_enabled = enable; }
-
-		bool IsRemoved() const { return m_removed; }
-
-		void SetRemoved(const bool &removed) { m_removed = removed; }
 	};
 }

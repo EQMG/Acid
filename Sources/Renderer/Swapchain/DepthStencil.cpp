@@ -51,9 +51,11 @@ namespace acid
 		Texture::CreateImageSampler(m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
 		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1);
 
-		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-		m_imageInfo.imageView = m_imageView;
-		m_imageInfo.sampler = m_sampler;
+		m_imageInfo = VkDescriptorImageInfo{
+			.sampler = m_sampler,
+			.imageView = m_imageView,
+			.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+		};
 	}
 
 	DepthStencil::~DepthStencil()
@@ -67,31 +69,31 @@ namespace acid
 
 	DescriptorType DepthStencil::CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
 	{
-		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-		descriptorSetLayoutBinding.binding = binding;
-		descriptorSetLayoutBinding.descriptorCount = 1;
-		descriptorSetLayoutBinding.descriptorType = descriptorType;
-		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-		descriptorSetLayoutBinding.stageFlags = stage;
-
-		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = descriptorType;
-		descriptorPoolSize.descriptorCount = 1;
-
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {
+			.binding = binding,
+			.descriptorType = descriptorType,
+			.descriptorCount = 1,
+			.stageFlags = stage,
+			.pImmutableSamplers = nullptr
+		};
+		VkDescriptorPoolSize descriptorPoolSize = {
+			.type = descriptorType,
+			.descriptorCount = 1
+		};
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
 	VkWriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
 	{
-		VkWriteDescriptorSet descriptorWrite = {};
-		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
-		descriptorWrite.dstBinding = binding;
-		descriptorWrite.dstArrayElement = 0;
-		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.descriptorCount = 1;
-		descriptorWrite.pImageInfo = &m_imageInfo;
-
+		VkWriteDescriptorSet descriptorWrite = {
+			.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+			.dstSet = descriptorSet.GetDescriptorSet(),
+			.dstBinding = binding,
+			.dstArrayElement = 0,
+			.descriptorCount = 1,
+			.descriptorType = descriptorType,
+			.pImageInfo = &m_imageInfo
+		};
 		return descriptorWrite;
 	}
 }
