@@ -153,12 +153,11 @@ namespace acid
 		blend.m_y = particle.GetTransparency();
 		blend.m_z = static_cast<float>(particle.GetParticleType()->GetNumberOfRows());
 
-		ParticleData instanceData = {
-			.modelMatrix = modelMatrix,
-			.colourOffset = particle.GetParticleType()->GetColourOffset(),
-			.offsets = offsets,
-			.blend = blend
-		};
+		ParticleData instanceData = {};
+		instanceData.modelMatrix = modelMatrix;
+		instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
+		instanceData.offsets = offsets;
+		instanceData.blend = blend;
 		return instanceData;
 	}
 }

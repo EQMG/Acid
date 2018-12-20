@@ -610,22 +610,21 @@ namespace acid
 
 	void Display::CreateInstance()
 	{
-		VkApplicationInfo applicationInfo = {
-			.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
-			.pApplicationName = m_title.c_str(),
-			.applicationVersion = VK_MAKE_VERSION(0, 1, 0),
-			.pEngineName = "Acid",
-			.engineVersion = VK_MAKE_VERSION(0, 9, 4),
-			.apiVersion = VK_MAKE_VERSION(1, 1, 0)
-		};
-		VkInstanceCreateInfo instanceCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-			.pApplicationInfo = &applicationInfo,
-			.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size()),
-			.ppEnabledLayerNames = m_instanceLayerList.data(),
-			.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size()),
-			.ppEnabledExtensionNames = m_instanceExtensionList.data()
-		};
+		VkApplicationInfo applicationInfo = {};
+		applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		applicationInfo.pApplicationName = m_title.c_str();
+		applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
+		applicationInfo.pEngineName = "Acid";
+		applicationInfo.engineVersion = VK_MAKE_VERSION(0, 9, 4);
+		applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
+
+		VkInstanceCreateInfo instanceCreateInfo = {};
+		instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+		instanceCreateInfo.pApplicationInfo = &applicationInfo;
+		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensionList.size());
+		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensionList.data();
 		CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
@@ -633,13 +632,13 @@ namespace acid
 	{
 		if (m_validationLayers)
 		{
-			VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {
-				.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
-				.pNext = nullptr,
-				.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
-				.pfnCallback = &CallbackDebug,
-				.pUserData = nullptr
-			};
+			VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
+			debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+			debugReportCallbackCreateInfo.pNext = nullptr;
+			debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT |
+				VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
+			debugReportCallbackCreateInfo.pUserData = nullptr;
 			CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
 		}
 	}
@@ -776,10 +775,8 @@ namespace acid
 		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &physicalDeviceFormatCount, physicalDeviceFormats.data());
 
-		m_surfaceFormat = {
-			.format = VK_FORMAT_B8G8R8A8_UNORM,
-			.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR
-		};
+		m_surfaceFormat.format = VK_FORMAT_B8G8R8A8_UNORM;
+		m_surfaceFormat.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
 
 		if (physicalDeviceFormats[0].format != VK_FORMAT_UNDEFINED)
 		{
@@ -854,12 +851,11 @@ namespace acid
 
 		if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
 		{
-			VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {
-				.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
-				.queueFamilyIndex = m_graphicsFamily,
-				.queueCount = 1,
-				.pQueuePriorities = queuePriorities
-			};
+			VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
+			graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
+			graphicsQueueCreateInfo.queueCount = 1;
+			graphicsQueueCreateInfo.pQueuePriorities = queuePriorities;
 			queueCreateInfos.emplace_back(graphicsQueueCreateInfo);
 		}
 		else
@@ -869,12 +865,11 @@ namespace acid
 
 		if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily)
 		{
-			VkDeviceQueueCreateInfo computeQueueCreateInfo = {
-				.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
-				.queueFamilyIndex = m_computeFamily,
-				.queueCount = 1,
-				.pQueuePriorities = queuePriorities
-			};
+			VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
+			computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			computeQueueCreateInfo.queueFamilyIndex = m_computeFamily;
+			computeQueueCreateInfo.queueCount = 1;
+			computeQueueCreateInfo.pQueuePriorities = queuePriorities;
 			queueCreateInfos.emplace_back(computeQueueCreateInfo);
 		}
 		else
@@ -884,12 +879,11 @@ namespace acid
 
 		if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily)
 		{
-			VkDeviceQueueCreateInfo transferQueueCreateInfo = {
-				.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
-				.queueFamilyIndex = m_transferFamily,
-				.queueCount = 1,
-				.pQueuePriorities = queuePriorities
-			};
+			VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
+			transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			transferQueueCreateInfo.queueFamilyIndex = m_transferFamily;
+			transferQueueCreateInfo.queueCount = 1;
+			transferQueueCreateInfo.pQueuePriorities = queuePriorities;
 			queueCreateInfos.emplace_back(transferQueueCreateInfo);
 		}
 		else
@@ -897,22 +891,22 @@ namespace acid
 			m_transferFamily = m_graphicsFamily;
 		}
 
-		VkPhysicalDeviceFeatures physicalDeviceFeatures = {
-			.sampleRateShading = VK_TRUE,
-			.fillModeNonSolid = VK_TRUE,
-			.wideLines = VK_TRUE,
-			.samplerAnisotropy = VK_TRUE,
-			.vertexPipelineStoresAndAtomics = VK_TRUE,
-			.fragmentStoresAndAtomics = VK_TRUE,
-			.shaderStorageImageExtendedFormats = VK_TRUE,
-			.shaderStorageImageWriteWithoutFormat = VK_TRUE,
-			.shaderClipDistance = VK_TRUE,
-			.shaderCullDistance = VK_TRUE
-		};
+		VkPhysicalDeviceFeatures deviceFeatures = {};
+		deviceFeatures.sampleRateShading = VK_TRUE;
+		deviceFeatures.fillModeNonSolid = VK_TRUE;
+		deviceFeatures.wideLines = VK_TRUE;
+		deviceFeatures.samplerAnisotropy = VK_TRUE;
+		deviceFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
+		deviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
+		deviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
+		deviceFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
+		deviceFeatures.shaderClipDistance = VK_TRUE;
+		deviceFeatures.shaderCullDistance = VK_TRUE;
+
 
 		if (m_physicalDeviceFeatures.geometryShader)
 		{
-			physicalDeviceFeatures.geometryShader = VK_TRUE;
+			deviceFeatures.geometryShader = VK_TRUE;
 		}
 		else
 		{
@@ -921,7 +915,7 @@ namespace acid
 
 		if (m_physicalDeviceFeatures.tessellationShader)
 		{
-			physicalDeviceFeatures.tessellationShader = VK_TRUE;
+			deviceFeatures.tessellationShader = VK_TRUE;
 		}
 		else
 		{
@@ -930,7 +924,7 @@ namespace acid
 
 		if (m_physicalDeviceFeatures.multiViewport)
 		{
-			physicalDeviceFeatures.multiViewport = VK_TRUE;
+			deviceFeatures.multiViewport = VK_TRUE;
 		}
 		else
 		{
@@ -939,27 +933,26 @@ namespace acid
 
 		if (m_physicalDeviceFeatures.textureCompressionBC)
 		{
-			physicalDeviceFeatures.textureCompressionBC = VK_TRUE;
+			deviceFeatures.textureCompressionBC = VK_TRUE;
 		}
 		else if (m_physicalDeviceFeatures.textureCompressionASTC_LDR)
 		{
-			physicalDeviceFeatures.textureCompressionASTC_LDR = VK_TRUE;
+			deviceFeatures.textureCompressionASTC_LDR = VK_TRUE;
 		}
 		else if (m_physicalDeviceFeatures.textureCompressionETC2)
 		{
-			physicalDeviceFeatures.textureCompressionETC2 = VK_TRUE;
+			deviceFeatures.textureCompressionETC2 = VK_TRUE;
 		}
 
-		VkDeviceCreateInfo deviceCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-			.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size()),
-			.pQueueCreateInfos = queueCreateInfos.data(),
-			.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size()),
-			.ppEnabledLayerNames = m_instanceLayerList.data(),
-			.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size()),
-			.ppEnabledExtensionNames = m_deviceExtensionList.data(),
-			.pEnabledFeatures = &physicalDeviceFeatures
-		};
+		VkDeviceCreateInfo deviceCreateInfo = {};
+		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+		deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
+		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayerList.size());
+		deviceCreateInfo.ppEnabledLayerNames = m_instanceLayerList.data();
+		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_deviceExtensionList.size());
+		deviceCreateInfo.ppEnabledExtensionNames = m_deviceExtensionList.data();
+		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
 		CheckVk(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);

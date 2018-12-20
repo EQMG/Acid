@@ -38,3 +38,7 @@ mklink /J Build\Tests\TestPBR\Resources\Engine Resources
 IF EXIST Build\Tests\TestPhysics\Resources\Engine (
 mklink /J Build\Tests\TestPhysics\Resources\Engine Resources
 )
+
+IF EXIST Build\Tests\TestVoxel\Resources\Engine (
+mklink /J Build\Tests\TestVoxel\Resources\Engine Resources
+)

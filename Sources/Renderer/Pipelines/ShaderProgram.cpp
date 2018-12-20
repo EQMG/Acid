@@ -131,12 +131,11 @@ namespace acid
 
 		for (auto &vertexAttribute : m_vertexAttributes)
 		{
-			VkVertexInputAttributeDescription attributeDescription = {
-				.location = static_cast<uint32_t>(vertexAttribute->GetLocation()),
-				.binding = 0,
-				.format = GlTypeToVk(vertexAttribute->GetGlType()),
-				.offset = currentOffset
-			};
+			VkVertexInputAttributeDescription attributeDescription = {};
+			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->GetLocation());
+			attributeDescription.binding = 0;
+			attributeDescription.format = GlTypeToVk(vertexAttribute->GetGlType());
+			attributeDescription.offset = currentOffset;
 			m_attributeDescriptions.emplace_back(attributeDescription);
 			currentOffset += vertexAttribute->GetSize();
 		}
@@ -309,102 +308,99 @@ namespace acid
 
 	TBuiltInResource GetResources()
 	{
-		TBuiltInResource resources = {
-			.maxLights = 32,
-			.maxClipPlanes = 6,
-			.maxTextureUnits = 32,
-			.maxTextureCoords = 32,
-			.maxVertexAttribs = 64,
-			.maxVertexUniformComponents = 4096,
-			.maxVaryingFloats = 64,
-			.maxVertexTextureImageUnits = 32,
-			.maxCombinedTextureImageUnits = 80,
-			.maxTextureImageUnits = 32,
-			.maxFragmentUniformComponents = 4096,
-			.maxDrawBuffers = 32,
-			.maxVertexUniformVectors = 128,
-			.maxVaryingVectors = 8,
-			.maxFragmentUniformVectors = 16,
-			.maxVertexOutputVectors = 16,
-			.maxFragmentInputVectors = 15,
-			.minProgramTexelOffset = -8,
-			.maxProgramTexelOffset = 7,
-			.maxClipDistances = 8,
-			.maxComputeWorkGroupCountX = 65535,
-			.maxComputeWorkGroupCountY = 65535,
-			.maxComputeWorkGroupCountZ = 65535,
-			.maxComputeWorkGroupSizeX = 1024,
-			.maxComputeWorkGroupSizeY = 1024,
-			.maxComputeWorkGroupSizeZ = 64,
-			.maxComputeUniformComponents = 1024,
-			.maxComputeTextureImageUnits = 16,
-			.maxComputeImageUniforms = 8,
-			.maxComputeAtomicCounters = 8,
-			.maxComputeAtomicCounterBuffers = 1,
-			.maxVaryingComponents = 60,
-			.maxVertexOutputComponents = 64,
-			.maxGeometryInputComponents = 64,
-			.maxGeometryOutputComponents = 128,
-			.maxFragmentInputComponents = 128,
-			.maxImageUnits = 8,
-			.maxCombinedImageUnitsAndFragmentOutputs = 8,
-			.maxCombinedShaderOutputResources = 8,
-			.maxImageSamples = 0,
-			.maxVertexImageUniforms = 0,
-			.maxTessControlImageUniforms = 0,
-			.maxTessEvaluationImageUniforms = 0,
-			.maxGeometryImageUniforms = 0,
-			.maxFragmentImageUniforms = 8,
-			.maxCombinedImageUniforms = 8,
-			.maxGeometryTextureImageUnits = 16,
-			.maxGeometryOutputVertices = 256,
-			.maxGeometryTotalOutputComponents = 1024,
-			.maxGeometryUniformComponents = 1024,
-			.maxGeometryVaryingComponents = 64,
-			.maxTessControlInputComponents = 128,
-			.maxTessControlOutputComponents = 128,
-			.maxTessControlTextureImageUnits = 16,
-			.maxTessControlUniformComponents = 1024,
-			.maxTessControlTotalOutputComponents = 4096,
-			.maxTessEvaluationInputComponents = 128,
-			.maxTessEvaluationOutputComponents = 128,
-			.maxTessEvaluationTextureImageUnits = 16,
-			.maxTessEvaluationUniformComponents = 1024,
-			.maxTessPatchComponents = 120,
-			.maxPatchVertices = 32,
-			.maxTessGenLevel = 64,
-			.maxViewports = 16,
-			.maxVertexAtomicCounters = 0,
-			.maxTessControlAtomicCounters = 0,
-			.maxTessEvaluationAtomicCounters = 0,
-			.maxGeometryAtomicCounters = 0,
-			.maxFragmentAtomicCounters = 8,
-			.maxCombinedAtomicCounters = 8,
-			.maxAtomicCounterBindings = 1,
-			.maxVertexAtomicCounterBuffers = 0,
-			.maxTessControlAtomicCounterBuffers = 0,
-			.maxTessEvaluationAtomicCounterBuffers = 0,
-			.maxGeometryAtomicCounterBuffers = 0,
-			.maxFragmentAtomicCounterBuffers = 1,
-			.maxCombinedAtomicCounterBuffers = 1,
-			.maxAtomicCounterBufferSize = 16384,
-			.maxTransformFeedbackBuffers = 4,
-			.maxTransformFeedbackInterleavedComponents = 64,
-			.maxCullDistances = 8,
-			.maxCombinedClipAndCullDistances = 8,
-			.maxSamples = 4,
-			.limits = {
-				.nonInductiveForLoops = true,
-				.whileLoops = true,
-				.doWhileLoops = true,
-				.generalUniformIndexing = true,
-				.generalAttributeMatrixVectorIndexing = true,
-				.generalVaryingIndexing = true,
-				.generalSamplerIndexing = true,
-				.generalVariableIndexing = true,
-				.generalConstantMatrixVectorIndexing = true
-			}
-		};
+		TBuiltInResource resources = {};
+		resources.maxLights = 32;
+		resources.maxClipPlanes = 6;
+		resources.maxTextureUnits = 32;
+		resources.maxTextureCoords = 32;
+		resources.maxVertexAttribs = 64;
+		resources.maxVertexUniformComponents = 4096;
+		resources.maxVaryingFloats = 64;
+		resources.maxVertexTextureImageUnits = 32;
+		resources.maxCombinedTextureImageUnits = 80;
+		resources.maxTextureImageUnits = 32;
+		resources.maxFragmentUniformComponents = 4096;
+		resources.maxDrawBuffers = 32;
+		resources.maxVertexUniformVectors = 128;
+		resources.maxVaryingVectors = 8;
+		resources.maxFragmentUniformVectors = 16;
+		resources.maxVertexOutputVectors = 16;
+		resources.maxFragmentInputVectors = 15;
+		resources.minProgramTexelOffset = -8;
+		resources.maxProgramTexelOffset = 7;
+		resources.maxClipDistances = 8;
+		resources.maxComputeWorkGroupCountX = 65535;
+		resources.maxComputeWorkGroupCountY = 65535;
+		resources.maxComputeWorkGroupCountZ = 65535;
+		resources.maxComputeWorkGroupSizeX = 1024;
+		resources.maxComputeWorkGroupSizeY = 1024;
+		resources.maxComputeWorkGroupSizeZ = 64;
+		resources.maxComputeUniformComponents = 1024;
+		resources.maxComputeTextureImageUnits = 16;
+		resources.maxComputeImageUniforms = 8;
+		resources.maxComputeAtomicCounters = 8;
+		resources.maxComputeAtomicCounterBuffers = 1;
+		resources.maxVaryingComponents = 60;
+		resources.maxVertexOutputComponents = 64;
+		resources.maxGeometryInputComponents = 64;
+		resources.maxGeometryOutputComponents = 128;
+		resources.maxFragmentInputComponents = 128;
+		resources.maxImageUnits = 8;
+		resources.maxCombinedImageUnitsAndFragmentOutputs = 8;
+		resources.maxCombinedShaderOutputResources = 8;
+		resources.maxImageSamples = 0;
+		resources.maxVertexImageUniforms = 0;
+		resources.maxTessControlImageUniforms = 0;
+		resources.maxTessEvaluationImageUniforms = 0;
+		resources.maxGeometryImageUniforms = 0;
+		resources.maxFragmentImageUniforms = 8;
+		resources.maxCombinedImageUniforms = 8;
+		resources.maxGeometryTextureImageUnits = 16;
+		resources.maxGeometryOutputVertices = 256;
+		resources.maxGeometryTotalOutputComponents = 1024;
+		resources.maxGeometryUniformComponents = 1024;
+		resources.maxGeometryVaryingComponents = 64;
+		resources.maxTessControlInputComponents = 128;
+		resources.maxTessControlOutputComponents = 128;
+		resources.maxTessControlTextureImageUnits = 16;
+		resources.maxTessControlUniformComponents = 1024;
+		resources.maxTessControlTotalOutputComponents = 4096;
+		resources.maxTessEvaluationInputComponents = 128;
+		resources.maxTessEvaluationOutputComponents = 128;
+		resources.maxTessEvaluationTextureImageUnits = 16;
+		resources.maxTessEvaluationUniformComponents = 1024;
+		resources.maxTessPatchComponents = 120;
+		resources.maxPatchVertices = 32;
+		resources.maxTessGenLevel = 64;
+		resources.maxViewports = 16;
+		resources.maxVertexAtomicCounters = 0;
+		resources.maxTessControlAtomicCounters = 0;
+		resources.maxTessEvaluationAtomicCounters = 0;
+		resources.maxGeometryAtomicCounters = 0;
+		resources.maxFragmentAtomicCounters = 8;
+		resources.maxCombinedAtomicCounters = 8;
+		resources.maxAtomicCounterBindings = 1;
+		resources.maxVertexAtomicCounterBuffers = 0;
+		resources.maxTessControlAtomicCounterBuffers = 0;
+		resources.maxTessEvaluationAtomicCounterBuffers = 0;
+		resources.maxGeometryAtomicCounterBuffers = 0;
+		resources.maxFragmentAtomicCounterBuffers = 1;
+		resources.maxCombinedAtomicCounterBuffers = 1;
+		resources.maxAtomicCounterBufferSize = 16384;
+		resources.maxTransformFeedbackBuffers = 4;
+		resources.maxTransformFeedbackInterleavedComponents = 64;
+		resources.maxCullDistances = 8;
+		resources.maxCombinedClipAndCullDistances = 8;
+		resources.maxSamples = 4;
+		resources.limits.nonInductiveForLoops = true;
+		resources.limits.whileLoops = true;
+		resources.limits.doWhileLoops = true;
+		resources.limits.generalUniformIndexing = true;
+		resources.limits.generalAttributeMatrixVectorIndexing = true;
+		resources.limits.generalVaryingIndexing = true;
+		resources.limits.generalSamplerIndexing = true;
+		resources.limits.generalVariableIndexing = true;
+		resources.limits.generalConstantMatrixVectorIndexing = true;
 		return resources;
 	}
 
@@ -466,11 +462,10 @@ namespace acid
 		std::vector<uint32_t> spirv;
 		glslang::GlslangToSpv(*program.getIntermediate((EShLanguage)language), spirv, &logger, &spvOptions);
 
-		VkShaderModuleCreateInfo shaderModuleCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-			.codeSize = spirv.size() * sizeof(uint32_t),
-			.pCode = spirv.data()
-		};
+		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
+		shaderModuleCreateInfo.pCode = spirv.data();
 		VkShaderModule shaderModule = VK_NULL_HANDLE;
 		Display::CheckVk(vkCreateShaderModule(logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 		return shaderModule;

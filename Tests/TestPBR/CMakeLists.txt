@@ -16,7 +16,7 @@ set(TESTPBR_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPBR/")
 add_executable(TestPBR ${TESTPBR_SOURCES})
 add_dependencies(TestPBR Acid)
 
-set_property(TARGET TestPBR PROPERTY CXX_STANDARD 20)
+target_compile_features(TestPBR PUBLIC cxx_std_17)
 set_target_properties(TestPBR PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"

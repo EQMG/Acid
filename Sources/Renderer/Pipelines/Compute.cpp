@@ -83,12 +83,11 @@ namespace acid
 		auto stageFlag = ShaderProgram::GetShaderStage(m_computeCreate.GetShaderStage());
 		m_shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
 
-		m_shaderStageCreateInfo = VkPipelineShaderStageCreateInfo{
-			.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
-			.stage = stageFlag,
-			.module = m_shaderModule,
-			.pName = "main"
-		};
+		m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		m_shaderStageCreateInfo.stage = stageFlag;
+		m_shaderStageCreateInfo.module = m_shaderModule;
+		m_shaderStageCreateInfo.pName = "main";
+
 		m_shaderProgram->ProcessShader();
 	}
 
@@ -103,11 +102,10 @@ namespace acid
 			bindings.emplace_back(type.GetLayoutBinding());
 		}
 
-		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-			.bindingCount = static_cast<uint32_t>(bindings.size()),
-			.pBindings = bindings.data()
-		};
+		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
+		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
@@ -122,13 +120,12 @@ namespace acid
 			poolSizes.emplace_back(type.GetPoolSize());
 		}
 
-		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
-			.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
-			.maxSets = 256, // TODO: Arbitrary number.
-			.poolSizeCount = static_cast<uint32_t>(poolSizes.size()),
-			.pPoolSizes = poolSizes.data()
-		};
+		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
+		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+		descriptorPoolCreateInfo.maxSets = 256; // TODO: Arbitrary number.
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
@@ -136,11 +133,10 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
-			.setLayoutCount = 1,
-			.pSetLayouts = &m_descriptorSetLayout
-		};
+		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
+		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+		pipelineLayoutCreateInfo.setLayoutCount = 1;
+		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
@@ -149,13 +145,12 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
-		VkComputePipelineCreateInfo pipelineCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
-			.stage = m_shaderStageCreateInfo,
-			.layout = m_pipelineLayout,
-			.basePipelineHandle = VK_NULL_HANDLE,
-			.basePipelineIndex = -1
-		};
+		VkComputePipelineCreateInfo pipelineCreateInfo = {};
+		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
+		pipelineCreateInfo.stage = m_shaderStageCreateInfo;
+		pipelineCreateInfo.layout = m_pipelineLayout;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineIndex = -1;
 		vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 	}
 }

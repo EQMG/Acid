@@ -86,11 +86,9 @@ namespace acid
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		Texture::CreateImageView(m_image, m_imageView,VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 
-		m_imageInfo = {
-			.sampler = m_sampler,
-			.imageView = m_imageView,
-			.imageLayout = m_imageLayout
-		};
+		m_imageInfo.sampler = m_sampler;
+		m_imageInfo.imageView = m_imageView;
+		m_imageInfo.imageLayout = m_imageLayout;
 
 		Texture::DeletePixels(pixels);
 
@@ -136,7 +134,7 @@ namespace acid
 		if (pixels != nullptr)
 		{
 			Buffer bufferStaging = Buffer(width * height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
 			Display::CheckVk(vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
@@ -162,11 +160,9 @@ namespace acid
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 
-		m_imageInfo = {
-			.sampler = m_sampler,
-			.imageView = m_imageView,
-			.imageLayout = m_imageLayout
-		};
+		m_imageInfo.sampler = m_sampler;
+		m_imageInfo.imageView = m_imageView;
+		m_imageInfo.imageLayout = m_imageLayout;
 	}
 
 	Cubemap::~Cubemap()
@@ -181,31 +177,31 @@ namespace acid
 
 	DescriptorType Cubemap::CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
-		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {
-			.binding = binding,
-			.descriptorType = descriptorType,
-			.descriptorCount = 1,
-			.stageFlags = stage,
-			.pImmutableSamplers = nullptr
-		};
-		VkDescriptorPoolSize descriptorPoolSize = {
-			.type = descriptorType,
-			.descriptorCount = count
-		};
+		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+		descriptorSetLayoutBinding.binding = binding;
+		descriptorSetLayoutBinding.descriptorType = descriptorType;
+		descriptorSetLayoutBinding.descriptorCount = 1;
+		descriptorSetLayoutBinding.stageFlags = stage;
+		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = descriptorType;
+		descriptorPoolSize.descriptorCount = count;
+
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
 	VkWriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
 	{
-		VkWriteDescriptorSet descriptorWrite = {
-			.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
-			.dstSet = descriptorSet.GetDescriptorSet(),
-			.dstBinding = binding,
-			.dstArrayElement = 0,
-			.descriptorCount = 1,
-			.descriptorType = descriptorType,
-			.pImageInfo = &m_imageInfo
-		};
+		VkWriteDescriptorSet descriptorWrite = {};
+		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstBinding = binding;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorCount = 1;
+		descriptorWrite.descriptorType = descriptorType;
+		descriptorWrite.pImageInfo = &m_imageInfo;
+
 		return descriptorWrite;
 	}
 
@@ -217,11 +213,10 @@ namespace acid
 		VkDeviceMemory dstImageMemory;
 		Texture::CopyImage(m_image, dstImage, dstImageMemory, m_width, m_height, false, arrayLayer, 6);
 
-		VkImageSubresource imageSubresource = {
-			.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
-			.mipLevel = 0,
-			.arrayLayer = 0
-		};
+		VkImageSubresource imageSubresource = {};
+		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		imageSubresource.mipLevel = 0;
+		imageSubresource.arrayLayer = 0;
 
 		VkSubresourceLayout subresourceLayout;
 		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
@@ -257,7 +252,7 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);

@@ -16,7 +16,7 @@ set(TESTNETWORK_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestNetwork/")
 add_executable(TestNetwork ${TESTNETWORK_SOURCES})
 add_dependencies(TestNetwork Acid)
 
-set_property(TARGET TestNetwork PROPERTY CXX_STANDARD 20)
+target_compile_features(TestNetwork PUBLIC cxx_std_17)
 set_target_properties(TestNetwork PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
