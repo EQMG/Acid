@@ -13,14 +13,14 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
-		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {
-			.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,
-			.pNext = nullptr,
-			.descriptorPool = m_descriptorPool,
-			.descriptorSetCount = 1,
-			.pSetLayouts = layouts
-		};
+		VkDescriptorSetLayout layouts[1] = { pipeline.GetDescriptorSetLayout() };
+
+		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
+		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		descriptorSetAllocateInfo.pNext = nullptr;
+		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
+		descriptorSetAllocateInfo.descriptorSetCount = 1;
+		descriptorSetAllocateInfo.pSetLayouts = layouts;
 		Display::CheckVk(vkAllocateDescriptorSets(logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 

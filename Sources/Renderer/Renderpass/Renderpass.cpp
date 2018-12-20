@@ -17,14 +17,13 @@ namespace acid
 		for (auto &image : renderpassCreate.GetImages())
 		{
 			auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
-			VkAttachmentDescription attachment = {
-				.samples = imageSamples,
-				.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
-				.storeOp = VK_ATTACHMENT_STORE_OP_STORE,
-				.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-				.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
-				.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED
-			};
+			VkAttachmentDescription attachment = {};
+			attachment.samples = imageSamples;
+			attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
 			switch (image.GetType())
 			{
@@ -69,36 +68,32 @@ namespace acid
 					continue;
 				}
 
-				VkAttachmentReference attachmentReference = {
-					.attachment = *attachment,
-					.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-				};
+				VkAttachmentReference attachmentReference = {};
+				attachmentReference.attachment = *attachment;
+				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				subpassColourAttachments->emplace_back(attachmentReference);
 			}
 
 			// Description.
-			VkSubpassDescription subpassDescription = {
-				.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS,
-				.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size()),
-				.pColorAttachments = subpassColourAttachments->data()
-			};
+			VkSubpassDescription subpassDescription = {};
+			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size());
+			subpassDescription.pColorAttachments = subpassColourAttachments->data();
 
 			if (depthAttachment != 9999)
 			{
 				auto subpassDepthStencilReference = new VkAttachmentReference(); // FIXME: Fixes a SEGFAULT on Linux.
 				subpassDepthStencilReference->attachment = depthAttachment;
 				subpassDepthStencilReference->layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
 				subpassDescription.pDepthStencilAttachment = subpassDepthStencilReference;
 			}
 
 			m_subpasses.emplace_back(subpassDescription);
 
 			// Dependencies.
-			VkSubpassDependency subpassDependency = {
-				.srcAccessMask = 0,
-				.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			};
+			VkSubpassDependency subpassDependency = {};
+			subpassDependency.srcAccessMask = 0;
+			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT; // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
 			if (renderpassCreate.GetSubpasses().size() == 1)
 			{
@@ -131,15 +126,14 @@ namespace acid
 		}
 
 		// Creates the render pass.
-		VkRenderPassCreateInfo renderPassCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-			.attachmentCount = static_cast<uint32_t>(m_attachments.size()),
-			.pAttachments = m_attachments.data(),
-			.subpassCount = static_cast<uint32_t>(m_subpasses.size()),
-			.pSubpasses = m_subpasses.data(),
-			.dependencyCount = static_cast<uint32_t>(m_dependencies.size()),
-			.pDependencies = m_dependencies.data()
-		};
+		VkRenderPassCreateInfo renderPassCreateInfo = {};
+		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+		renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(m_attachments.size());
+		renderPassCreateInfo.pAttachments = m_attachments.data();
+		renderPassCreateInfo.subpassCount = static_cast<uint32_t>(m_subpasses.size());
+		renderPassCreateInfo.pSubpasses = m_subpasses.data();
+		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(m_dependencies.size());
+		renderPassCreateInfo.pDependencies = m_dependencies.data();
 		Display::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 

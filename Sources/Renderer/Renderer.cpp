@@ -134,8 +134,8 @@ namespace acid
 #endif
 
 		VkExtent2D displayExtent = {
-			.width = Display::Get()->GetWidth(),
-			.height = Display::Get()->GetHeight()
+			Display::Get()->GetWidth(),
+			Display::Get()->GetHeight()
 		};
 
 		m_renderStages.clear();
@@ -175,12 +175,11 @@ namespace acid
 		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height, true, 0, 1);
 
 		// Get layout of the image (including row pitch).
-		VkImageSubresource subResource = {
-			.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT
-		};
+		VkImageSubresource imageSubresource = {};
+		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 
-		VkSubresourceLayout subResourceLayout;
-		vkGetImageSubresourceLayout(logicalDevice, dstImage, &subResource, &subResourceLayout);
+		VkSubresourceLayout subresourceLayout;
+		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
 
 		// Creates the screenshot image file.
 		FileSystem::Create(filename);
@@ -188,7 +187,7 @@ namespace acid
 		// Map image memory so we can start copying from it.
 		char *data;
 		vkMapMemory(logicalDevice, dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
-		data += subResourceLayout.offset;
+		data += subresourceLayout.offset;
 
 		// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'll have to manually swizzle color components
 		bool colourSwizzle = false;
@@ -196,18 +195,17 @@ namespace acid
 		// Check if source is BGR.
 		if (!supportsBlit)
 		{
-			std::vector<VkFormat> formatsBGR = {VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM};
+			std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
 			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surfaceFormat.format) != formatsBGR.end();
 		}
 
-		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subResourceLayout.size));
+		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subresourceLayout.size));
 
 		if (colourSwizzle)
 		{
 			for (uint32_t i = 0; i < width * height; i++)
 			{
-				uint8_t *pixelOffset = (uint8_t *) data + (i * 4);
-
+				auto pixelOffset = (uint8_t *) data + (i * 4);
 				pixels.get()[i * 4] = pixelOffset[2];
 				pixels.get()[i * 4 + 1] = pixelOffset[1];
 				pixels.get()[i * 4 + 2] = pixelOffset[0];
@@ -216,7 +214,7 @@ namespace acid
 		}
 		else
 		{
-			memcpy(pixels.get(), (uint8_t *) data, subResourceLayout.size);
+			memcpy(pixels.get(), (uint8_t *) data, subresourceLayout.size);
 		}
 
 		// Writes the image.
@@ -262,9 +260,8 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkFenceCreateInfo fenceCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO
-		};
+		VkFenceCreateInfo fenceCreateInfo = {};
+		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
 	}
 
@@ -272,16 +269,14 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkSemaphoreCreateInfo semaphoreCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
-		};
+		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
+		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
 
-		VkCommandPoolCreateInfo commandPoolCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-			.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
-			.queueFamilyIndex = Display::Get()->GetGraphicsFamily()
-		};
+		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
+		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamily();
 		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
@@ -291,9 +286,8 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {
-			.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO
-		};
+		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
+		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
@@ -303,8 +297,8 @@ namespace acid
 		auto renderStage = GetRenderStage(i);
 
 		VkExtent2D displayExtent = {
-			.width = Display::Get()->GetWidth(),
-			.height = Display::Get()->GetHeight()
+			Display::Get()->GetWidth(),
+			Display::Get()->GetHeight()
 		};
 
 		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
@@ -360,42 +354,38 @@ namespace acid
 			m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
 		}
 
-		VkRect2D renderArea = {
-			.offset = { 0, 0 },
-			.extent = {
-				.width = renderStage->GetWidth(),
-				.height = renderStage->GetHeight()
-			}
+		VkRect2D renderArea = {};
+		renderArea.offset = { 0, 0 };
+		renderArea.extent = {
+			renderStage->GetWidth(),
+			renderStage->GetHeight()
 		};
 
 		auto clearValues = renderStage->GetClearValues();
-		VkRenderPassBeginInfo renderPassBeginInfo = {
-			.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-			.renderPass = renderStage->GetRenderpass()->GetRenderpass(),
-			.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage),
-			.renderArea = renderArea,
-			.clearValueCount = static_cast<uint32_t>(clearValues.size()),
-			.pClearValues = clearValues.data()
-		};
 
+		VkRenderPassBeginInfo renderPassBeginInfo = {};
+		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
+		renderPassBeginInfo.renderArea = renderArea;
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassBeginInfo.pClearValues = clearValues.data();
 		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-		VkViewport viewport = {
-			.x = 0.0f,
-			.y = 0.0f,
-			.width = static_cast<float>(renderStage->GetWidth()),
-			.height = static_cast<float>(renderStage->GetHeight()),
-			.minDepth = 0.0f,
-			.maxDepth = 1.0f
-		};
+		VkViewport viewport = {};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = static_cast<float>(renderStage->GetWidth());
+		viewport.height = static_cast<float>(renderStage->GetHeight());
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
 		vkCmdSetViewport(m_commandBuffer->GetCommandBuffer(), 0, 1, &viewport);
 
-		VkRect2D scissor = {
-			.offset = { 0, 0 },
-			.extent = {
-				.width = renderStage->GetWidth(),
-				.height = renderStage->GetHeight()
-			}
+		VkRect2D scissor = {};
+		scissor.offset = { 0, 0 };
+		scissor.extent = {
+			renderStage->GetWidth(),
+			renderStage->GetHeight()
 		};
 		vkCmdSetScissor(m_commandBuffer->GetCommandBuffer(), 0, 1, &scissor);
 
@@ -421,15 +411,14 @@ namespace acid
 
 		VkResult presentResult = VK_RESULT_MAX_ENUM;
 
-		VkPresentInfoKHR presentInfo = {
-			.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
-			.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size()),
-			.pWaitSemaphores = waitSemaphores.data(),
-			.swapchainCount = 1,
-			.pSwapchains = m_swapchain->GetSwapchain(),
-			.pImageIndices = &m_activeSwapchainImage,
-			.pResults = &presentResult
-		};
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
+		presentInfo.pWaitSemaphores = waitSemaphores.data();
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
+		presentInfo.pImageIndices = &m_activeSwapchainImage;
+		presentInfo.pResults = &presentResult;
 		VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)

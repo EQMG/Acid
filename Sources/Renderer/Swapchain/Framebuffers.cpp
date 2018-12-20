@@ -55,15 +55,14 @@ namespace acid
 				}
 			}
 
-			VkFramebufferCreateInfo framebufferCreateInfo = {
-				.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
-				.renderPass = renderPass.GetRenderpass(),
-				.attachmentCount = static_cast<uint32_t>(attachments.size()),
-				.pAttachments = attachments.data(),
-				.width = width,
-				.height = height,
-				.layers = 1
-			};
+			VkFramebufferCreateInfo framebufferCreateInfo = {};
+			framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferCreateInfo.renderPass = renderPass.GetRenderpass();
+			framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+			framebufferCreateInfo.pAttachments = attachments.data();
+			framebufferCreateInfo.width = width;
+			framebufferCreateInfo.height = height;
+			framebufferCreateInfo.layers = 1;
 			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
