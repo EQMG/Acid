@@ -24,7 +24,7 @@ if(NOT BULLET_FOUND)
 	add_dependencies(Acid BulletDynamics)
 endif()
 
-target_compile_features(Acid PUBLIC cxx_std_17)
+set_property(TARGET Acid PROPERTY CXX_STANDARD 20)
 set_target_properties(Acid PROPERTIES
 		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
