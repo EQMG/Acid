@@ -16,7 +16,7 @@ set(TESTPHYSICS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPhysics/")
 add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
 add_dependencies(TestPhysics Acid)
 
-target_compile_features(TestPhysics PUBLIC cxx_std_17)
+set_property(TARGET TestPhysics PROPERTY CXX_STANDARD 20)
 set_target_properties(TestPhysics PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"

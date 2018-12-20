@@ -16,7 +16,7 @@ set(TESTMATHS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestMaths/")
 add_executable(TestMaths ${TESTMATHS_SOURCES})
 add_dependencies(TestMaths Acid)
 
-target_compile_features(TestMaths PUBLIC cxx_std_17)
+set_property(TARGET TestMaths PROPERTY CXX_STANDARD 20)
 set_target_properties(TestMaths PROPERTIES
 	POSITION_INDEPENDENT_CODE ON
 	FOLDER "Acid"
