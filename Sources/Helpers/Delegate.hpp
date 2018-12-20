@@ -57,7 +57,7 @@ namespace acid
 	class ACID_EXPORT Delegate<TReturnType(TArgs...)>
 	{
 	private:
-		using Invoker = Invoker<TReturnType, TArgs...>;
+		using Invoker = acid::Invoker<TReturnType, TArgs...>;
 		using FunctionType = std::function<TReturnType(TArgs...)>;
 		friend Invoker;
 
