@@ -31,6 +31,8 @@ namespace acid
 		/// </summary>
 		Scenes();
 
+		~Scenes() = default;
+
 		void Update() override;
 
 		/// <summary>
