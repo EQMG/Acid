@@ -96,7 +96,7 @@ target_link_libraries(Acid
 		# of the library targets that exist in-scope, else they're set..
 		# from find_package() calls
 		${PHYSFS_LIBRARY}
-		${FREETYPE_LIBRARY}
+		${FREETYPE_LIBRARIES}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARY}
 		# Windows only
