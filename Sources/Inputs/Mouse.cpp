@@ -79,8 +79,8 @@ namespace acid
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0f)
 		{
-			m_mouseDeltaWheel -= delta * ((m_mouseDeltaWheel < 0.0f) ? -1.0f : 1.0f);
-			m_mouseDeltaWheel = Maths::Deadband(0.1f, m_mouseDeltaWheel);
+			m_mouseDeltaWheel -= delta * ((m_mouseDeltaWheel < 0.0f) ? -3.0f : 3.0f);
+			m_mouseDeltaWheel = Maths::Deadband(0.08f, m_mouseDeltaWheel);
 		}
 	}
 
@@ -138,5 +138,11 @@ namespace acid
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
 		glfwSetCursorPos(Display::Get()->GetWindow(), cursorX * Display::Get()->GetWidth(), cursorY * Display::Get()->GetHeight());
+	}
+
+	void Mouse::SetPosition(const Vector2 &position)
+	{
+		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
+		              position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 }

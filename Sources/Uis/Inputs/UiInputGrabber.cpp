@@ -100,7 +100,8 @@ namespace acid
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
-		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x)),
+		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Resource("Fonts/ProximaNova", "Regular"),
+			TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x, Colour::WHITE)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_grabber(grabber),
 		m_prefix(prefix),

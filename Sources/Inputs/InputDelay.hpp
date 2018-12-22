@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiInputDelay
+	class ACID_EXPORT InputDelay
 	{
 	private:
 		static const Time DELAY_TIME;
@@ -14,7 +14,7 @@ namespace acid
 		Timer m_timerRepeat;
 		bool m_delayOver;
 	public:
-		UiInputDelay();
+		InputDelay();
 
 		void Update(const bool &keyIsDown);
 

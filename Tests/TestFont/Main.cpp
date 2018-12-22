@@ -24,9 +24,8 @@ int main(int argc, char **argv)
 	// Registers components.
 
 	// Initializes modules.
-	Display::Get()->SetTitle("Test GUI");
+	Display::Get()->SetTitle("Test Font");
 	Display::Get()->SetIcon("Logos/Flask.png");
-	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 

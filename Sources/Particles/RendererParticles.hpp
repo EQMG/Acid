@@ -12,8 +12,8 @@ namespace acid
 		public IRenderer
 	{
 	private:
-		UniformHandler m_uniformScene;
 		Pipeline m_pipeline;
+		UniformHandler m_uniformScene;
 	public:
 		explicit RendererParticles(const GraphicsStage &graphicsStage);
 

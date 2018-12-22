@@ -31,22 +31,23 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		auto guiA = new Gui(this, UiBound(Vector2(0.0f, 0.2f), UiBound::BOTTOM_LEFT, true, true, Vector2(0.5f, 0.6f)), Texture::Resource("Guis/White.png"));
-		guiA->SetDepth(1.0f);
-		guiA->SetColourOffset(Colour::TEAL);
+	//	auto guiA = new Gui(this, UiBound(Vector2(0.0f, 0.2f), UiBound::BOTTOM_LEFT, true, true, Vector2(0.5f, 0.6f)), Texture::Resource("Guis/White.png"));
+	//	guiA->SetDepth(1.0f);
+	//	guiA->SetColourOffset(Colour::TEAL);
 
-		auto guiB = new Gui(guiA, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.35f, 0.35f)), Texture::Resource("Guis/White.png"));
-		guiB->SetDepth(2.0f);
-		guiB->SetColourOffset(Colour::RED);
+	//	auto guiB = new Gui(guiA, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.35f, 0.35f)), Texture::Resource("Guis/White.png"));
+	//	guiB->SetDepth(2.0f);
+	//	guiB->SetColourOffset(Colour::RED);
 
 		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Resource("Guis/White.png"));
 
 		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiBound::TOP_LEFT, true, true, Vector2(0.4f, 1.0f)), Texture::Resource("Guis/Gradient_A.png"));
 		m_barBackground->SetColourOffset(UiNavigation::PANEL_COLOUR); // TODO: Blur underneath.
 
-		m_title = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.95f), UiBound::TOP_CENTRE, false), 5.5f, "TESTING", FontType::Resource("Fonts/ProximaNova", "Bold"), TEXT_JUSTIFY_LEFT, 1.0f, 0.0018f);
-		m_title->SetTextColour(BUTTON_COLOUR);
-		m_createdBy = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.015f), UiBound::BOTTOM_CENTRE, false), 1.2f, "Created By: Equilibrium Games", FontType::Resource("Fonts/ProximaNova", "Light"), TEXT_JUSTIFY_LEFT, 1.0f, 0.001f);
+		m_title = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.95f), UiBound::TOP_CENTRE, false), 5.5f, "TESTING",
+			FontType::Resource("Fonts/ProximaNova", "Bold"), TEXT_JUSTIFY_LEFT, 1.0f, BUTTON_COLOUR, 0.0018f);
+		m_createdBy = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.015f), UiBound::BOTTOM_CENTRE, false), 1.2f, "Created By: Equilibrium Games",
+			FontType::Resource("Fonts/ProximaNova", "Light"), TEXT_JUSTIFY_LEFT, 1.0f, Colour::WHITE, 0.001f);
 
 		float tabYOffset = 0.7f;
 

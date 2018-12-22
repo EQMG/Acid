@@ -30,8 +30,8 @@ namespace acid
 
 		uint32_t m_instances;
 
-		StorageHandler m_storageBuffer;
 		DescriptorsHandler m_descriptorSet;
+		StorageHandler m_storageInstances;
 	public:
 		static const uint32_t MAX_TYPE_INSTANCES;
 
