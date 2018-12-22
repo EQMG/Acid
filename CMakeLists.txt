@@ -163,6 +163,7 @@ endif()
 # Allows automation of "BUILD_TESTING"
 include(CTest)
 if(BUILD_TESTS)
+	add_subdirectory(Tests/TestFont)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)
 	add_subdirectory(Tests/TestNetwork)

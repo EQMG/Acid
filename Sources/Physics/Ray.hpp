@@ -30,6 +30,8 @@ namespace acid
 		Vector3 m_origin;
 		Vector3 m_currentRay;
 	public:
+		static const Ray ZERO;
+
 		/// <summary>
 		/// Creates a new 3D ray.
 		/// </summary>

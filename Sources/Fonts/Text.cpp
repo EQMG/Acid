@@ -4,7 +4,8 @@
 
 namespace acid
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType, const TextJustify &justify, const float &maxWidth, const float &kerning, const float &leading) :
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType,
+		const TextJustify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -17,8 +18,8 @@ namespace acid
 		m_maxWidth(maxWidth),
 		m_kerning(kerning),
 		m_leading(leading),
-		m_textColour(Colour("#ffffff")),
-		m_borderColour(Colour("#000000")),
+		m_textColour(textColour),
+		m_borderColour(Colour::WHITE),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(std::make_unique<DriverConstant>(0.0f)),
@@ -169,6 +170,12 @@ namespace acid
 
 	void Text::LoadText()
 	{
+		if (m_string.empty())
+		{
+			m_model = nullptr;
+			return;
+		}
+
 		// Creates mesh data.
 		auto lines = CreateStructure();
 		auto vertices = CreateQuad(lines);
@@ -200,7 +207,7 @@ namespace acid
 
 			for (auto &c : textLines.at(i))
 			{
-				int32_t ascii = static_cast<int>(c);
+				auto ascii = static_cast<int32_t>(c);
 
 				if (ascii == FontMetafile::SPACE_ASCII)
 				{
@@ -227,9 +234,16 @@ namespace acid
 
 			if (i != textLines.size() - 1)
 			{
+				bool wordAdded = currentLine.AddWord(currentWord);
 				lines.emplace_back(currentLine);
 				currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-				currentLine.AddWord(currentWord);
+
+				if (!wordAdded)
+				{
+					currentLine.AddWord(currentWord);
+				}
+
+				currentWord = FontWord();
 			}
 		}
 

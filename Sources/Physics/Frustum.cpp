@@ -5,6 +5,8 @@
 
 namespace acid
 {
+	const Frustum Frustum::ZERO = Frustum();
+
 	Frustum::Frustum() :
 		m_frustum(std::array<std::array<float, 4>, 6>())
 	{

@@ -105,11 +105,23 @@ namespace acid
 		float GetPositionY() const { return m_mousePositionY; }
 
 		/// <summary>
+		/// Gets the mouses screen position.
+		/// </summary>
+		/// <returns> The mouses position. </returns>
+		Vector2 GetPosition() { return Vector2(GetPositionX(), GetPositionY()); }
+
+		/// <summary>
 		/// Sets the mouse position.
 		/// </summary>
-		/// <param name="cursorX"> The x position in screenspace. </param>
-		/// <param name="cursorY"> The y position in screenspace. </param>
+		/// <param name="cursorX"> The x position in screen space. </param>
+		/// <param name="cursorY"> The y position in screen space. </param>
 		void SetPosition(const float &cursorX, const float &cursorY);
+
+		/// <summary>
+		/// Sets the mouse position.
+		/// </summary>
+		/// <param name="position"> The position in screen space. </param>
+		void SetPosition(const Vector2 &position);
 
 		/// <summary>
 		/// Gets the mouses delta x.

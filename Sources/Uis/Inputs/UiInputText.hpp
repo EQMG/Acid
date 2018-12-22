@@ -5,7 +5,7 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
-#include "UiInputDelay.hpp"
+#include "Inputs/InputDelay.hpp"
 
 namespace acid
 {
@@ -26,7 +26,7 @@ namespace acid
 		std::string m_value;
 		int32_t m_maxLength;
 
-		UiInputDelay m_inputDelay;
+		InputDelay m_inputDelay;
 		int32_t m_lastKey;
 
 		bool m_selected;

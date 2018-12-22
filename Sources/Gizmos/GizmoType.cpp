@@ -36,8 +36,8 @@ namespace acid
 		m_model(model),
 		m_lineThickness(lineThickness),
 		m_diffuse(diffuse),
-		m_storageBuffer(StorageHandler()),
-		m_descriptorSet(DescriptorsHandler())
+		m_descriptorSet(DescriptorsHandler()),
+		m_storageInstances(StorageHandler())
 	{
 	}
 
@@ -62,7 +62,7 @@ namespace acid
 			}
 		}
 
-		m_storageBuffer.Push("data", *instanceDatas.data(), sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES);
+		m_storageInstances.Push("data", *instanceDatas.data(), sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES);
 	}
 
 	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
@@ -74,7 +74,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("Instances", m_storageBuffer);
+		m_descriptorSet.Push("Instances", m_storageInstances);
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 		if (!updateSuccess)

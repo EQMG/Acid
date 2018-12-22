@@ -2,6 +2,8 @@
 
 namespace acid
 {
+	const Ray Ray::ZERO = Ray(false, Vector2::ZERO);
+
 	Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
 		m_useMouse(useMouse),
 		m_screenStart(Vector2(screenStart)),

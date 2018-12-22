@@ -13,6 +13,8 @@ namespace acid
 	private:
 		std::array<std::array<float, 4>, 6> m_frustum;
 	public:
+		static const Frustum ZERO;
+
 		/// <summary>
 		/// Creates a new frustum.
 		/// </summary>
