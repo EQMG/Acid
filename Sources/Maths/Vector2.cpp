@@ -82,6 +82,13 @@ namespace acid
 		return m_x * other.m_x + m_y * other.m_y;
 	}
 
+	Vector2 Vector2::Lerp(const Vector2 &other, const float &progression) const
+	{
+		Vector2 ta = *this * (1.0f - progression);
+		Vector2 tb = other * progression;
+		return ta + tb;
+	}
+
 	Vector2 Vector2::Scale(const float &scalar) const
 	{
 		return Vector2(m_x * scalar, m_y * scalar);

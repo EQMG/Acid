@@ -110,6 +110,13 @@ namespace acid
 		return Vector3(m_y * other.m_z - m_z * other.m_y, other.m_x * m_z - other.m_z * m_x, m_x * other.m_y - m_y * other.m_x);
 	}
 
+	Vector3 Vector3::Lerp(const Vector3 &other, const float &progression) const
+	{
+		Vector3 ta = *this * (1.0f - progression);
+		Vector3 tb = other * progression;
+		return ta + tb;
+	}
+
 	Vector3 Vector3::Scale(const float &scalar) const
 	{
 		return Vector3(m_x * scalar, m_y * scalar, m_z * scalar);

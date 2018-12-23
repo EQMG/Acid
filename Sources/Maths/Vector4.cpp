@@ -95,6 +95,13 @@ namespace acid
 		return m_x * other.m_x + m_y * other.m_y + m_w * other.m_w;
 	}
 
+	Vector4 Vector4::Lerp(const Vector4 &other, const float &progression) const
+	{
+		Vector4 ta = *this * (1.0f - progression);
+		Vector4 tb = other * progression;
+		return ta + tb;
+	}
+
 	Vector4 Vector4::Scale(const float &scalar) const
 	{
 		return Vector4(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);

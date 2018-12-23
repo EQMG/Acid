@@ -16,8 +16,6 @@ namespace acid
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
-
-		VkDescriptorImageInfo m_imageInfo;
 	public:
 		DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
@@ -25,7 +23,8 @@ namespace acid
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const override;
+		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
+			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
 		uint32_t GetWidth() const { return m_width; }
 

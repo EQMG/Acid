@@ -29,7 +29,7 @@ namespace acid
 		m_pushScene.Push("farTransition", m_farTransition);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("PushScene", &m_pushScene);
+		m_descriptorSet.Push("PushScene", m_pushScene);
 	//	m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
 	//	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));

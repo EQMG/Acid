@@ -15,7 +15,7 @@ namespace acid
 		m_pushScene.Push("pixelSize", m_pixelSize);
 
 		// Updates descriptors.
-		m_descriptorSet.Push("PushScene", &m_pushScene);
+		m_descriptorSet.Push("PushScene", m_pushScene);
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");

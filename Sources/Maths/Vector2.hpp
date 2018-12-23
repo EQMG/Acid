@@ -105,6 +105,14 @@ namespace acid
 		float Dot(const Vector2 &other) const;
 
 		/// <summary>
+		/// Calculates the linear interpolation between this vector and another vector.
+		/// </summary>
+		/// <param name="other"> The other quaternion. </param>
+		/// <param name="progression"> The progression. </param>
+		/// <returns> Left lerp right. </returns>
+		Vector2 Lerp(const Vector2 &other, const float &progression) const;
+
+		/// <summary>
 		/// Scales this vector by a scalar.
 		/// </summary>
 		/// <param name="scalar"> The scalar value. </param>

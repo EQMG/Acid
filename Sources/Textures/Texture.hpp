@@ -56,8 +56,6 @@ namespace acid
 		VkImageView m_imageView;
 		VkSampler m_sampler;
 		VkFormat m_format;
-
-		VkDescriptorImageInfo m_imageInfo;
 	public:
 		/// <summary>
 		/// Will find an existing texture with the same filename, or create a new texture.
@@ -98,7 +96,8 @@ namespace acid
 
 		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
-		VkWriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const override;
+		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
+			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
 		/// <summary>
 		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.

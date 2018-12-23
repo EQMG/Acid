@@ -106,31 +106,22 @@ namespace acid
 		static float SmoothDamp(const float &current, const float &target, const float &rate);
 
 		/// <summary>
-		/// Lerps two values by a factor.
-		/// </summary>
-		/// <param name="a"> The first value. </param>
-		/// <param name="b"> The second value. </param>
-		/// <param name="factor"> The factor value. </param>
-		/// <returns> Returns a lerped value. </returns>
-		static float Lerp(const float &a, const float &b, const float &factor);
-
-		/// <summary>
 		/// Interpolates two values by a factor using linear interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>
-		/// <param name="blend"> The blend value. </param>
-		/// <returns> Returns a interpolated value. </returns>
-		static float Interpolate(const float &a, const float &b, const float &blend);
+		/// <param name="factor"> The factor value. </param>
+		/// <returns> Returns a interpolation value. </returns>
+		static float Lerp(const float &a, const float &b, const float &factor);
 
 		/// <summary>
 		/// Interpolates two values by a factor using cosine interpolation.
 		/// </summary>
 		/// <param name="a"> The first value. </param>
 		/// <param name="b"> The second value. </param>
-		/// <param name="blend"> The blend value. </param>
+		/// <param name="factor"> The blend value. </param>
 		/// <returns> Returns a interpolated value. </returns>
-		static float InterpolateCosine(const float &a, const float &b, const float &blend);
+		static float CosLerp(const float &a, const float &b, const float &factor);
 
 		/// <summary>
 		/// A calculation that steps smoothly between two edges.

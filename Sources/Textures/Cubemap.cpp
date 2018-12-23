@@ -48,8 +48,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_R8G8B8A8_UNORM),
-		m_imageInfo({})
+		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
@@ -86,10 +85,6 @@ namespace acid
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		Texture::CreateImageView(m_image, m_imageView,VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 
-		m_imageInfo.sampler = m_sampler;
-		m_imageInfo.imageView = m_imageView;
-		m_imageInfo.imageLayout = m_imageLayout;
-
 		Texture::DeletePixels(pixels);
 
 #if defined(ACID_VERBOSE)
@@ -116,8 +111,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_R8G8B8A8_UNORM),
-		m_imageInfo({})
+		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -159,10 +153,6 @@ namespace acid
 
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
-
-		m_imageInfo.sampler = m_sampler;
-		m_imageInfo.imageView = m_imageView;
-		m_imageInfo.imageLayout = m_imageLayout;
 	}
 
 	Cubemap::~Cubemap()
@@ -191,17 +181,22 @@ namespace acid
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
+	WriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
+		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
-		VkWriteDescriptorSet descriptorWrite = {};
+		VkDescriptorImageInfo imageInfo = {};
+		imageInfo.sampler = m_sampler;
+		imageInfo.imageView = m_imageView;
+		imageInfo.imageLayout = m_imageLayout;
+
+		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.pImageInfo = &m_imageInfo;
-
+		descriptorWrite.imageInfo = imageInfo;
 		return descriptorWrite;
 	}
 

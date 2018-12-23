@@ -38,7 +38,7 @@ namespace acid
 		m_pushScene.Push("farPlane", camera.GetFarPlane());
 
 		// Updates descriptors.
-		m_descriptorSet.Push("PushScene", &m_pushScene);
+		m_descriptorSet.Push("PushScene", m_pushScene);
 		m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 		m_descriptorSet.Push("samplerDepth", GetAttachment("samplerDepth", "depth"));
 		m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));

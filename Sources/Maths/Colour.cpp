@@ -102,6 +102,13 @@ namespace acid
 		return Colour(m_r * scalar, m_g * scalar, m_b * scalar, m_a * scalar);
 	}
 
+	Colour Colour::Lerp(const Colour &other, const float &progression) const
+	{
+		Colour ta = *this * (1.0f - progression);
+		Colour tb = other * progression;
+		return ta + tb;
+	}
+
 	Colour Colour::Normalize() const
 	{
 		float l = Length();
@@ -117,15 +124,6 @@ namespace acid
 	float Colour::Length() const
 	{
 		return std::sqrt(LengthSquared());
-	}
-
-	Colour Colour::Interpolate(const Colour &other, const float blend) const
-	{
-		float r = Maths::Interpolate(m_r, other.m_r, blend);
-		float g = Maths::Interpolate(m_g, other.m_g, blend);
-		float b = Maths::Interpolate(m_b, other.m_b, blend);
-		float a = Maths::Interpolate(m_a, other.m_a, blend);
-		return Colour(r, g, b, a);
 	}
 
 	Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const
