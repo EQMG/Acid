@@ -38,8 +38,8 @@ namespace test
 
 			if (componentLight != nullptr)
 			{
-				Colour sunColour = SUN_COLOUR_SUNRISE.Interpolate(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
-				sunColour = sunColour.Interpolate(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
+				Colour sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
+				sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
 				componentLight->SetColour(sunColour);
 			}
 
@@ -60,7 +60,7 @@ namespace test
 
 			if (componentLight != nullptr)
 			{
-				Colour moonColour = MOON_COLOUR_NIGHT.Interpolate(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
+				Colour moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
 				componentLight->SetColour(moonColour);
 			}
 		}

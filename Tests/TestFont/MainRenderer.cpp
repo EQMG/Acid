@@ -4,7 +4,7 @@
 #include <Renderer/Renderer.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Fonts/RendererFonts.hpp>
-#include "Fonts2/RendererFonts2.hpp"
+//#include "Fonts2/RendererFonts2.hpp"
 
 namespace test
 {

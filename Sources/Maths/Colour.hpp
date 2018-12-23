@@ -89,72 +89,72 @@ namespace acid
 		Colour(const Vector4 &source);
 
 		/// <summary>
-		/// Adds this vector to another vector.
+		/// Adds this colour to another colour.
 		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
+		/// <param name="other"> The other colour. </param>
+		/// <returns> The resultant colour. </returns>
 		Colour Add(const Colour &other) const;
 
 		/// <summary>
-		/// Subtracts this vector to another vector.
+		/// Subtracts this colour to another colour.
 		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
+		/// <param name="other"> The other colour. </param>
+		/// <returns> The resultant colour. </returns>
 		Colour Subtract(const Colour &other) const;
 
 		/// <summary>
-		/// Multiplies this vector with another vector.
+		/// Multiplies this colour with another colour.
 		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
+		/// <param name="other"> The other colour. </param>
+		/// <returns> The resultant colour. </returns>
 		Colour Multiply(const Colour &other) const;
 
 		/// <summary>
-		/// Divides this vector by another vector.
+		/// Divides this colour by another colour.
 		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
+		/// <param name="other"> The other colour. </param>
+		/// <returns> The resultant colour. </returns>
 		Colour Divide(const Colour &other) const;
 
 		/// <summary>
-		/// Scales this vector by a scalar.
+		/// Scales this colour by a scalar.
 		/// </summary>
 		/// <param name="scalar"> The scalar value. </param>
-		/// <returns> The scaled vector. </returns>
+		/// <returns> The scaled colour. </returns>
 		Colour Scale(const float &scalar) const;
 
 		/// <summary>
-		/// Normalizes this vector.
+		/// Calculates the linear interpolation between this colour and another colour.
 		/// </summary>
-		/// <returns> The normalized vector. </returns>
+		/// <param name="other"> The other quaternion. </param>
+		/// <param name="progression"> The progression. </param>
+		/// <returns> Left lerp right. </returns>
+		Colour Lerp(const Colour &other, const float &progression) const;
+
+		/// <summary>
+		/// Normalizes this colour.
+		/// </summary>
+		/// <returns> The normalized colour. </returns>
 		Colour Normalize() const;
 
 		/// <summary>
-		/// Gets the length squared of this vector.
+		/// Gets the length squared of this colour.
 		/// </summary>
 		/// <returns> The length squared. </returns>
 		float LengthSquared() const;
 
 		/// <summary>
-		/// Gets the length of this vector.
+		/// Gets the length of this colour.
 		/// </summary>
 		/// <returns> The length. </returns>
 		float Length() const;
 
 		/// <summary>
-		/// Interpolates between this and another colour.
+		/// Gradually changes this colour to a target.
 		/// </summary>
-		/// <param name="other"> The other colour. </param>
-		/// <param name="blend"> The blend factor. </param>
-		/// <returns> The interpolated colour. </returns>
-		Colour Interpolate(const Colour &other, float blend) const;
-
-		/// <summary>
-		/// Gradually changes this vector to a target.
-		/// </summary>
-		/// <param name="target"> The target vector. </param>
+		/// <param name="target"> The target colour. </param>
 		/// <param name="rate"> The rate to go from current to the target. </param>
-		/// <returns> The changed vector. </returns>
+		/// <returns> The changed colour. </returns>
 		Colour SmoothDamp(const Colour &target, const Colour &rate) const;
 
 		/// <summary>

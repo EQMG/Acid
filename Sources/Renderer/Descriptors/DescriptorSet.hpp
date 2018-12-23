@@ -8,6 +8,8 @@ namespace acid
 {
 	class IDescriptor;
 
+	class WriteDescriptorSet;
+
 	class ACID_EXPORT DescriptorSet
 	{
 	private:
@@ -21,6 +23,8 @@ namespace acid
 		~DescriptorSet();
 
 		void Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites);
+
+		void Update(const std::vector<WriteDescriptorSet> &descriptorWrites);
 
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 

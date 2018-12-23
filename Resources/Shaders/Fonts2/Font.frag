@@ -5,12 +5,12 @@
 
 layout (set = 0, binding = 1) buffer CellBuffer
 {
-	uint cells[];
+	uint cells[MAX_INSTANCES];
 } cell_buffer;
 
 layout (set = 0, binding = 2) buffer PointBuffer
 {
-	vec2 points[];
+	vec2 points[MAX_INSTANCES];
 } point_buffer;
 
 layout(location = 0) in vec2 in_glyph_pos;

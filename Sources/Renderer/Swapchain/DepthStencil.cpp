@@ -23,8 +23,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
 		m_sampler(VK_NULL_HANDLE),
-		m_format(VK_FORMAT_UNDEFINED),
-		m_imageInfo({})
+		m_format(VK_FORMAT_UNDEFINED)
 	{
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
@@ -50,10 +49,6 @@ namespace acid
 		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, 1, 0, 1);
 		Texture::CreateImageSampler(m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
 		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1);
-
-		m_imageInfo.sampler = m_sampler;
-		m_imageInfo.imageView = m_imageView;
-		m_imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 	}
 
 	DepthStencil::~DepthStencil()
@@ -81,17 +76,22 @@ namespace acid
 		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
 	}
 
-	VkWriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const DescriptorSet &descriptorSet) const
+	WriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
+		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
-		VkWriteDescriptorSet descriptorWrite = {};
+		VkDescriptorImageInfo imageInfo = {};
+		imageInfo.sampler = m_sampler;
+		imageInfo.imageView = m_imageView;
+		imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.pImageInfo = &m_imageInfo;
-
+		descriptorWrite.imageInfo = imageInfo;
 		return descriptorWrite;
 	}
 }

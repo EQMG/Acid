@@ -66,7 +66,7 @@ namespace test
 		rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterTone>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterSsao>(GraphicsStage(1, 2));
-	//	rendererRegister.Addet()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.8f, BLUR_TYPE_5, false, 0.6f, 1.0f);
+	//	rendererRegister.Add()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.8f, BLUR_TYPE_5, false, 0.6f, 1.0f);
 	//	rendererRegister.Add<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f);
 	//	rendererRegister.Add<FilterEmboss>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterCrt>(GraphicsStage(1, 2));

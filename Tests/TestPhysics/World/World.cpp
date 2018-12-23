@@ -30,8 +30,8 @@ namespace test
 		m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.154303f, 0.771517f, -0.617213f));
 		m_lightDirection.Normalize();
 
-		Colour fogColour = FOG_COLOUR_SUNRISE.Interpolate(FOG_COLOUR_NIGHT, GetSunriseFactor());
-		fogColour = fogColour.Interpolate(FOG_COLOUR_DAY, GetShadowFactor());
+		Colour fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
+		fogColour = fogColour.Lerp(FOG_COLOUR_DAY, GetShadowFactor());
 		m_fog.SetColour(fogColour);
 		m_fog.SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
 		m_fog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));

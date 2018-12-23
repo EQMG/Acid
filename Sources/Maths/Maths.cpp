@@ -104,14 +104,9 @@ namespace acid
 		return a + factor * (b - a);
 	}
 
-	float Maths::Interpolate(const float &a, const float &b, const float &blend)
+	float Maths::CosLerp(const float &a, const float &b, const float &factor)
 	{
-		return (a * (1.0f - blend)) + (b * blend);
-	}
-
-	float Maths::InterpolateCosine(const float &a, const float &b, const float &blend)
-	{
-		float ft = blend * PI;
+		float ft = factor * PI;
 		float f = 1.0f - std::cos(ft) * 0.5f;
 		return (a * (1.0f - f)) + (b * f);
 	}
