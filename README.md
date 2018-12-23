@@ -57,6 +57,7 @@ Acid uses the following libraries:
  * [PhysFS](https://icculus.org/physfs) - Archive file access
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
  * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation
+ * [Freetype2](https://www.freetype.org/) - Font handling in text objects
 
 # Code Snippets
 ```cpp
@@ -112,7 +113,18 @@ Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot4.png" alt="Acid" width="600px">
 
 ## Compiling
-Once Acid is cloned run `git submodule update --init --recursive` in the Acid directory to update the submodules. All platforms depend on [CMake](https://cmake.org/download) to generate IDE/make files.
+If you don't want to use system-wide libraries, then after cloning the repo, run `git submodule update --init --recursive` in the Acid directory to update the submodules.
+
+All platforms depend on [CMake](https://cmake.org/download) to generate IDE/make files.
+
+Cmake options (default ON):
+* `BUILD_TESTS`
+* `ACID_INSTALL_EXAMPLES`
+* `ACID_INSTALL_RESOURCES`  
+
+If you installed Acid using only system libs, then `find_package(Acid)` will work from Cmake. Versioning is also supported.  
+When using `find_package(Acid)` the imported target `Acid::Acid` will be created.  
+The `ACID_RESOURCES_DIR` variable will also be available, which will point to the on-disk location of `Acid/Resources` (if installed).
 
 [Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
 
