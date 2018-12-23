@@ -7,6 +7,10 @@
 # target_link_libraries(yourliborexe PRIVATE Acid::Acid)
 #
 # Because it's an IMPORTED TARGET, you don't need to include its headers seperately, it's handled for you
+#
+# If you installed the "Resources" dir, then they can be accessed externally with ${ACID_RESOURCES_DIR}
+
+@PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
 # Since these are required for PUBLIC usage, they must be found here
@@ -19,6 +23,10 @@ find_dependency(Vulkan)
 include(${CMAKE_CURRENT_LIST_DIR}/AcidTargets.cmake)
 
 if(TARGET Acid::Acid)
+	# If resources were installed, then save their path to be used by other projects in a var
+	if(@ACID_INSTALL_RESOURCES@)
+		set_and_check(ACID_RESOURCES_DIR "@PACKAGE_CMAKE_INSTALL_DATADIR@/Acid/Resources")
+	endif()
 	# Note "Found Acid: " will be automatically prefixed by find_package_handle_standard_args
 	# Example output when doing find_package(Acid)...
 	# -- Found Acid: /usr/lib/libAcid.so  
