@@ -127,6 +127,13 @@ if(_ACID_ALL_SYSTEM_LIBS)
 		)
 	# Defines write_basic_package_version_file
 	include(CMakePackageConfigHelpers)
+	# Dynamically writes the path to the resources dir (if installed) into the AcidConfig.cmake file
+	configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/AcidConfig.cmake.in"
+		"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
+		INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		PATH_VARS CMAKE_INSTALL_DATADIR
+		NO_CHECK_REQUIRED_COMPONENTS_MACRO
+	)
 	# Auto-generates a version file based on the current version specified in project()
 	write_basic_package_version_file(
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
@@ -135,7 +142,7 @@ if(_ACID_ALL_SYSTEM_LIBS)
 	# Install the auto-generated version file and AcidConfig
 	install(
 			FILES
-			"${CMAKE_CURRENT_SOURCE_DIR}/AcidConfig.cmake"
+			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
 	)
