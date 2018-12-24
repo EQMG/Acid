@@ -7,8 +7,8 @@ namespace acid
 {
 	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
-		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {{"MAX_INSTANCES", String::To(ParticleType::MAX_TYPE_INSTANCES)}}))),
+		m_pipeline(Pipeline(graphicsStage, {"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"}, {VertexModel::GetVertexInput()},
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

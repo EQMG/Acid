@@ -4,18 +4,16 @@ namespace acid
 {
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shaderProgram(nullptr),
+		m_descriptors(std::map<std::string, DescriptorValue>()),
 		m_descriptorSet(nullptr),
-		m_descriptors(std::vector<IDescriptor *>()),
-		m_offsetSizes(std::vector<std::optional<OffsetSize>>()),
 		m_changed(false)
 	{
 	}
 
 	DescriptorsHandler::DescriptorsHandler(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
+		m_descriptors(std::map<std::string, DescriptorValue>()),
 		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
-		m_descriptors(std::vector<IDescriptor *>(m_shaderProgram->GetLastDescriptorBinding() + 1)),
-		m_offsetSizes(std::vector<std::optional<OffsetSize>>(m_shaderProgram->GetLastDescriptorBinding() + 1)),
 		m_changed(true)
 	{
 	}
@@ -41,12 +39,22 @@ namespace acid
 			return;
 		}
 
-		if (m_descriptors.at(location) != descriptor)
+		auto it = m_descriptors.find(descriptorName);
+
+		if (it != m_descriptors.end())
 		{
-			m_descriptors.at(location) = descriptor;
-			m_offsetSizes.at(location) = offsetSize;
-			m_changed = true;
+			if (it->second.descriptor != descriptor || it->second.offsetSize != offsetSize)
+			{
+				m_descriptors.erase(it);
+			}
+			else
+			{
+				return;
+			}
 		}
+
+		m_descriptors.emplace(descriptorName, DescriptorValue{descriptor, offsetSize, static_cast<uint32_t>(location)});
+		m_changed = true;
 	}
 
 	void DescriptorsHandler::Push(const std::string &descriptorName, IDescriptor &descriptor, const std::optional<OffsetSize> &offsetSize)
@@ -66,7 +74,7 @@ namespace acid
 			return;
 		}
 
-		uniformHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
+		uniformHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName), offsetSize);
 		Push(descriptorName, uniformHandler.GetUniformBuffer(), offsetSize);
 	}
 
@@ -77,7 +85,7 @@ namespace acid
 			return;
 		}
 
-		storageHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
+		storageHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName), offsetSize);
 		Push(descriptorName, storageHandler.GetStorageBuffer(), offsetSize);
 	}
 
@@ -98,8 +106,7 @@ namespace acid
 			m_descriptors.clear();
 
 			m_shaderProgram = pipeline.GetShaderProgram();
-			m_descriptors.resize(m_shaderProgram->GetLastDescriptorBinding() + 1);
-			m_offsetSizes.resize(m_shaderProgram->GetLastDescriptorBinding() + 1);
+			m_descriptors.clear();
 			m_descriptorSet = std::make_unique<DescriptorSet>(pipeline);
 			m_changed = false;
 			return false;
@@ -109,13 +116,11 @@ namespace acid
 		{
 			std::vector<WriteDescriptorSet> descriptorWrites = {};
 
-			for (uint32_t i = 0; i < m_descriptors.size(); i++)
+			for (auto &[descriptorName, descriptor] : m_descriptors)
 			{
-				if (m_descriptors.at(i) != nullptr)
-				{
-					VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(i);
-					descriptorWrites.emplace_back(m_descriptors[i]->GetWriteDescriptor(i, descriptorType, *m_descriptorSet, m_offsetSizes[i]));
-				}
+				VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(descriptor.location);
+				descriptorWrites.emplace_back(descriptor.descriptor->GetWriteDescriptor(descriptor.location,
+					descriptorType, *m_descriptorSet, descriptor.offsetSize));
 			}
 
 			m_descriptorSet->Update(descriptorWrites);

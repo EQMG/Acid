@@ -26,9 +26,10 @@ namespace acid
 		IRenderer(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
+		m_storageLights(StorageHandler()),
 		m_lightModel(lightModel),
-		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()))),
+		m_pipeline(Pipeline(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines())),
 		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
 		m_brdf(m_lightModel == DEFERRED_IBL ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
@@ -81,8 +82,6 @@ namespace acid
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("lights", *deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
-		m_uniformScene.Push("lightsCount", lightCount);
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
@@ -95,9 +94,14 @@ namespace acid
 		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());
 		m_uniformScene.Push("shadowDarkness", Shadows::Get()->GetShadowDarkness());
 		m_uniformScene.Push("shadowPCF", Shadows::Get()->GetShadowPcf());
+		m_uniformScene.Push("lightsCount", lightCount);
+
+		// Updates storage buffers.
+		m_storageLights.Stage(deferredLights.data(), 0, sizeof(DeferredLight) * MAX_LIGHTS);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", m_uniformScene);
+		m_descriptorSet.Push("Lights", m_storageLights, OffsetSize(0, sizeof(DeferredLight) * MAX_LIGHTS));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
 		m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normals"));
@@ -120,11 +124,11 @@ namespace acid
 		m_model->CmdRender(commandBuffer);
 	}
 
-	std::vector<PipelineDefine> RendererDeferred::GetDefines()
+	std::vector<ShaderDefine> RendererDeferred::GetDefines()
 	{
-		std::vector<PipelineDefine> result = {};
-		result.emplace_back(PipelineDefine("USE_IBL", String::To<int32_t>(m_lightModel == DEFERRED_IBL)));
-		result.emplace_back(PipelineDefine("MAX_LIGHTS", String::To(MAX_LIGHTS)));
+		std::vector<ShaderDefine> result = {};
+		result.emplace_back("USE_IBL", String::To<int32_t>(m_lightModel == DEFERRED_IBL));
+		result.emplace_back("MAX_LIGHTS", String::To(MAX_LIGHTS));
 		return result;
 	}
 
@@ -134,7 +138,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		Compute compute = Compute(ComputeCreate("Shaders/Brdf.comp", size, size, 16, {}));
+		Compute compute = Compute("Shaders/Brdf.comp", size, size, 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
@@ -172,7 +176,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		Compute compute = Compute(ComputeCreate("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16, {}));
+		Compute compute = Compute("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);

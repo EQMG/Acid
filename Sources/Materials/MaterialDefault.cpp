@@ -19,7 +19,7 @@ namespace acid
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog),
-		m_material(nullptr)
+		m_pipelineMaterial(nullptr)
 	{
 	}
 
@@ -34,7 +34,7 @@ namespace acid
 		}
 
 		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
-		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
+		m_pipelineMaterial = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
 			PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()));
 	}
 
@@ -96,17 +96,15 @@ namespace acid
 		descriptorSet.Push("samplerNormal", m_normalTexture);
 	}
 
-	std::vector<PipelineDefine> MaterialDefault::GetDefines()
+	std::vector<ShaderDefine> MaterialDefault::GetDefines()
 	{
-		std::vector<PipelineDefine> result = {};
-
-		result.emplace_back(PipelineDefine("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr)));
-		result.emplace_back(PipelineDefine("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr)));
-		result.emplace_back(PipelineDefine("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr)));
-		result.emplace_back(PipelineDefine("ANIMATED", String::To<int32_t>(m_animated)));
-		result.emplace_back(PipelineDefine("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS)));
-		result.emplace_back(PipelineDefine("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS)));
-
+		std::vector<ShaderDefine> result = {};
+		result.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));
+		result.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
+		result.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));
+		result.emplace_back("ANIMATED", String::To<int32_t>(m_animated));
+		result.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS));
+		result.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS));
 		return result;
 	}
 }

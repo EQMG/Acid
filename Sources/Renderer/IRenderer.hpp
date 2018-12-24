@@ -3,7 +3,7 @@
 #include "Maths/Vector4.hpp"
 #include "Scenes/Camera.hpp"
 #include "Commands/CommandBuffer.hpp"
-#include "Pipelines/PipelineCreate.hpp"
+#include "Pipelines/IPipeline.hpp"
 
 namespace acid
 {

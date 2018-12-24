@@ -2,7 +2,8 @@
 
 #include <algorithm>
 #include <memory>
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Descriptors/IDescriptor.hpp"
+#include "Renderer/Pipelines/IPipeline.hpp"
 
 namespace acid
 {
@@ -62,6 +63,6 @@ namespace acid
 
 		bool Update(UniformBlock *uniformBlock, const std::optional<OffsetSize> &offsetSize = {});
 
-		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
+		void BindPush(const CommandBuffer &commandBuffer, const IPipeline &pipeline);
 	};
 }

@@ -1,6 +1,7 @@
 ﻿#include "Pipeline.hpp"
 
 #include <cassert>
+#include <algorithm>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
@@ -13,11 +14,18 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode, const PipelineDepth &depthMode,
+	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const std::vector<ShaderDefine> &defines) :
 		IPipeline(),
 		m_graphicsStage(graphicsStage),
-		m_pipelineCreate(pipelineCreate),
-		m_shaderProgram(std::make_unique<ShaderProgram>(pipelineCreate.GetShaderStages().back())),
+		m_shaderStages(shaderStages),
+		m_vertexInputs(vertexInputs),
+		m_pipelineMode(pipelineMode),
+		m_depthMode(depthMode),
+		m_polygonMode(polygonMode),
+		m_cullMode(cullMode),
+		m_defines(defines),
+		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStages.back())),
 		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
@@ -40,13 +48,14 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
+		std::sort(m_vertexInputs.begin(), m_vertexInputs.end());
 		CreateShaderProgram();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (pipelineCreate.GetPipelineMode())
+		switch (m_pipelineMode)
 		{
 		case PIPELINE_MODE_POLYGON:
 			CreatePipelinePolygon();
@@ -65,8 +74,14 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 	//	Log::Out("%s\n", m_shaderProgram->ToString().c_str());
-		Log::Out("Pipeline '%s' created in %ims\n", m_pipelineCreate.GetShaderStages().back().c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Pipeline '%s' created in %ims\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
+	}
+
+	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
+		Pipeline(graphicsStage, pipelineCreate.m_shaderStages, pipelineCreate.m_vertexInputs, pipelineCreate.m_pipelineMode, pipelineCreate.m_depthMode,
+			pipelineCreate.m_polygonMode, pipelineCreate.m_cullMode, pipelineCreate.m_defines)
+	{
 	}
 
 	Pipeline::~Pipeline()
@@ -111,12 +126,12 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-		for (auto &define : m_pipelineCreate.GetDefines())
+		for (auto &define : m_defines)
 		{
-			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
+			defineBlock << "#define " << define.first << " " << define.second << "\n";
 		}
 
-		for (auto &shaderStage : m_pipelineCreate.GetShaderStages())
+		for (auto &shaderStage : m_shaderStages)
 		{
 			auto fileLoaded = Files::Read(shaderStage);
 
@@ -149,17 +164,12 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
-
-		for (auto &type : m_shaderProgram->GetDescriptors())
-		{
-			bindings.emplace_back(type.GetLayoutBinding());
-		}
+		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
@@ -167,19 +177,14 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
-
-		for (auto &type : m_shaderProgram->GetDescriptors())
-		{
-			poolSizes.emplace_back(type.GetPoolSize());
-		}
+		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolCreateInfo.maxSets = 256; // TODO: Arbitrary number.
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
+		descriptorPoolCreateInfo.maxSets = 16384;
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
+		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
@@ -223,8 +228,8 @@ namespace acid
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		m_rasterizationState.depthClampEnable = VK_FALSE;
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
-		m_rasterizationState.polygonMode = m_pipelineCreate.GetPolygonMode();
-		m_rasterizationState.cullMode = m_pipelineCreate.GetCullMode();
+		m_rasterizationState.polygonMode = m_polygonMode;
+		m_rasterizationState.cullMode = m_cullMode;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 		m_rasterizationState.depthBiasConstantFactor = 0.0f;
@@ -257,7 +262,7 @@ namespace acid
 		m_depthStencilState.front = m_depthStencilState.back;
 		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
 
-		switch (m_pipelineCreate.GetPipelineDepth())
+		switch (m_depthMode)
 		{
 			case PIPELINE_DEPTH_NONE:
 				m_depthStencilState.depthTestEnable = VK_FALSE;
@@ -306,7 +311,7 @@ namespace acid
 		auto attributeDescriptions = std::vector<VkVertexInputAttributeDescription>();
 		uint32_t lastAttribute = 0;
 
-		for (auto &vertexInput : m_pipelineCreate.GetVertexInputs())
+		for (auto &vertexInput : m_vertexInputs)
 		{
 			for (auto &binding : vertexInput.GetBindingDescriptions())
 			{

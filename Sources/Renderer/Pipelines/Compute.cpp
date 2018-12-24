@@ -8,10 +8,15 @@
 
 namespace acid
 {
-	Compute::Compute(const ComputeCreate &computeCreate) :
+	Compute::Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
+	    const uint32_t &workgroupSize, const std::vector<ShaderDefine> &defines) :
 		IPipeline(),
-		m_computeCreate(computeCreate),
-		m_shaderProgram(std::make_unique<ShaderProgram>(m_computeCreate.GetShaderStage())),
+		m_shaderStage(shaderStage),
+		m_width(width),
+		m_height(height),
+		m_workgroupSize(workgroupSize),
+		m_defines(defines),
+		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStage)),
 		m_shaderModule(VK_NULL_HANDLE),
 		m_shaderStageCreateInfo({}),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -23,6 +28,10 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
+		m_defines.emplace_back("WIDTH", String::To(m_width));
+		m_defines.emplace_back("HEIGHT", String::To(m_height));
+		m_defines.emplace_back("WORKGROUP_SIZE", String::To(m_workgroupSize));
+
 		CreateShaderProgram();
 		CreateDescriptorLayout();
 		CreateDescriptorPool();
@@ -32,7 +41,7 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
-		Log::Out("Compute pipeline '%s' created in %ims\n", m_computeCreate.GetShaderStage().c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Compute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 
@@ -52,8 +61,8 @@ namespace acid
 
 	bool Compute::CmdRender(const CommandBuffer &commandBuffer) const
 	{
-		auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(m_computeCreate.GetWidth()) / static_cast<float>(m_computeCreate.GetWorkgroupSize())));
-		auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(m_computeCreate.GetHeight()) / static_cast<float>(m_computeCreate.GetWorkgroupSize())));
+		auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(m_width) / static_cast<float>(m_workgroupSize)));
+		auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(m_height) / static_cast<float>(m_workgroupSize)));
 		vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
 		return true;
 	}
@@ -63,16 +72,16 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-		for (auto &define : m_computeCreate.GetDefines())
+		for (auto &define : m_defines)
 		{
-			defineBlock << "#define " << define.GetName() << " " << define.GetValue() << "\n";
+			defineBlock << "#define " << define.first << " " << define.second << "\n";
 		}
 
-		auto fileLoaded = Files::Read(m_computeCreate.GetShaderStage());
+		auto fileLoaded = Files::Read(m_shaderStage);
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Stage could not be loaded: '%s'\n", m_computeCreate.GetShaderStage().c_str());
+			Log::Error("Shader Stage could not be loaded: '%s'\n", m_shaderStage.c_str());
 			assert(false && "Could not create compute pipeline, missing shader stage!");
 			return;
 		}
@@ -80,7 +89,7 @@ namespace acid
 		auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());
 		shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
 
-		auto stageFlag = ShaderProgram::GetShaderStage(m_computeCreate.GetShaderStage());
+		auto stageFlag = ShaderProgram::GetShaderStage(m_shaderStage);
 		m_shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
 
 		m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -95,17 +104,12 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorSetLayoutBinding> bindings = std::vector<VkDescriptorSetLayoutBinding>();
-
-		for (auto &type : m_shaderProgram->GetDescriptors())
-		{
-			bindings.emplace_back(type.GetLayoutBinding());
-		}
+		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-		descriptorSetLayoutCreateInfo.pBindings = bindings.data();
+		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
@@ -113,19 +117,14 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkDescriptorPoolSize> poolSizes = std::vector<VkDescriptorPoolSize>();
-
-		for (auto &type : m_shaderProgram->GetDescriptors())
-		{
-			poolSizes.emplace_back(type.GetPoolSize());
-		}
+		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolCreateInfo.maxSets = 256; // TODO: Arbitrary number.
-		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-		descriptorPoolCreateInfo.pPoolSizes = poolSizes.data();
+		descriptorPoolCreateInfo.maxSets = 16384;
+		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
+		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 

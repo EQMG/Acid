@@ -16,7 +16,8 @@ namespace acid
 		m_uniforms(std::vector<std::unique_ptr<Uniform>>()),
 		m_uniformBlocks(std::vector<std::unique_ptr<UniformBlock>>()),
 		m_vertexAttributes(std::vector<std::unique_ptr<VertexAttribute>>()),
-		m_descriptors(std::vector<DescriptorType>()),
+		m_descriptorSetLayouts(std::vector<VkDescriptorSetLayoutBinding>()),
+		m_descriptorPools(std::vector<VkDescriptorPoolSize>()),
 		m_descriptorTypes(std::vector<VkDescriptorType>()),
 		m_attributeDescriptions(std::vector<VkVertexInputAttributeDescription>()),
 		m_notFoundNames(std::vector<std::string>())
@@ -71,18 +72,24 @@ namespace acid
 			return l->GetLocation() < r->GetLocation();
 		});
 
+		std::map<VkDescriptorType, uint32_t> descriptorPoolCounts = {};
+
 		// Process to descriptors.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
+			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
+
 			switch (uniformBlock->GetType())
 			{
 				case BLOCK_UNIFORM:
-					m_descriptors.emplace_back(UniformBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, uniformBlock->GetStageFlags(), 1));
+					descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
+						descriptorType, uniformBlock->GetStageFlags(), 1));
 					break;
 				case BLOCK_STORAGE:
-					m_descriptors.emplace_back(StorageBuffer::CreateDescriptor(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, uniformBlock->GetStageFlags(), 1));
+					descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+					m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
+						descriptorType, uniformBlock->GetStageFlags(), 1));
 					break;
 				case BLOCK_PUSH:
 					// Push constants are described in the pipeline.
@@ -90,40 +97,56 @@ namespace acid
 				default:
 					break;
 			}
+
+			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
 		}
 
 		for (auto &uniform : m_uniforms)
 		{
+			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
+
 			switch (uniform->GetGlType())
 			{
 			case 0x8B5E: // GL_SAMPLER_2D
 			case 0x904D: // GL_IMAGE_2D
 			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
-				m_descriptors.emplace_back(Texture::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
-					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), 1));
+				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				m_descriptorSetLayouts.emplace_back(Texture::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()),
+					descriptorType, uniform->GetStageFlags(), 1));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
-				m_descriptors.emplace_back(Cubemap::CreateDescriptor(static_cast<uint32_t>(uniform->GetBinding()),
-					uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, uniform->GetStageFlags(), 1));
+				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				m_descriptorSetLayouts.emplace_back(Cubemap::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()),
+					descriptorType, uniform->GetStageFlags(), 1));
 				break;
 			default:
 				break;
 			}
+
+			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
+		}
+
+		for (auto &[type, descriptorCount] : descriptorPoolCounts)
+		{
+			VkDescriptorPoolSize descriptorPoolSize = {};
+			descriptorPoolSize.type = type;
+			descriptorPoolSize.descriptorCount = descriptorCount;
+			m_descriptorPools.emplace_back(descriptorPoolSize);
 		}
 
 		// Sort descriptors by binding.
-		std::sort(m_descriptors.begin(), m_descriptors.end(),
-		[](const DescriptorType &l, const DescriptorType &r)
+		std::sort(m_descriptorSetLayouts.begin(), m_descriptorSetLayouts.end(),
+		[](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
 		{
-		    return l.GetLayoutBinding().binding < r.GetLayoutBinding().binding;
+		    return l.binding < r.binding;
 		});
 
 		// Gets the descriptor type for each descriptor.
-		for (auto &descriptor : m_descriptors)
+		for (auto &descriptor : m_descriptorSetLayouts)
 		{
-			m_descriptorTypes.emplace_back(descriptor.GetLayoutBinding().descriptorType);
+			m_descriptorTypes.emplace_back(descriptor.descriptorType);
 		}
 
 		// Process attribute descriptions.
@@ -199,11 +222,11 @@ namespace acid
 	{
 		uint32_t binding = 0;
 
-		for (auto &descriptor : m_descriptors)
+		for (auto &descriptor : m_descriptorSetLayouts)
 		{
-			if (descriptor.GetBinding() > binding)
+			if (descriptor.binding > binding)
 			{
-				binding = descriptor.GetBinding();
+				binding = descriptor.binding;
 			}
 		}
 
@@ -552,6 +575,25 @@ namespace acid
 		return result.str();
 	}
 
+	void ShaderProgram::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)
+	{
+		if (type == VK_DESCRIPTOR_TYPE_MAX_ENUM)
+		{
+			return;
+		}
+
+		auto it = descriptorPoolCounts.find(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+
+		if (it != descriptorPoolCounts.end())
+		{
+			it->second++;
+		}
+		else
+		{
+			descriptorPoolCounts.emplace(type, 1);
+		}
+	}
+
 	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
 	{
 		for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
@@ -609,7 +651,7 @@ namespace acid
 					if (uniformBlock->GetName() == splitName.at(0))
 					{
 						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
-							sizeof(float) * program.getUniformTType(i)->computeNumComponents(), program.getUniformType(i), false, false, stageFlag));
+							ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
 						return;
 					}
 				}
@@ -642,6 +684,48 @@ namespace acid
 
 		auto &qualifier = program.getAttributeTType(i)->getQualifier();
 		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), qualifier.layoutSet,
-			qualifier.layoutLocation, sizeof(float) * program.getAttributeTType(i)->getVectorSize(), program.getAttributeType(i)));
+			qualifier.layoutLocation, ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
+	}
+
+	int32_t ShaderProgram::ComputeSize(const glslang::TType *ttype)
+	{
+		// glslang::TType::computeNumComponents is available but has many issues resolved in this method.
+		int components = 0;
+
+		if (ttype->getBasicType() == glslang::EbtStruct || ttype->getBasicType() == glslang::EbtBlock)
+		{
+			for (const auto &tl : *ttype->getStruct())
+			{
+				components += ComputeSize(tl.type);
+			}
+		}
+		else if (ttype->getMatrixCols() != 0)
+		{
+			components = ttype->getMatrixCols() * ttype->getMatrixRows();
+		}
+		else
+		{
+			components = ttype->getVectorSize();
+		}
+
+		if (ttype->getArraySizes() != nullptr)
+		{
+			int32_t arraySize = 1;
+
+			for (int d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
+			{
+				auto dimSize = ttype->getArraySizes()->getDimSize(d);
+
+				// this only makes sense in paths that have a known array size
+				if (dimSize != glslang::UnsizedArraySize)
+				{
+					arraySize *= dimSize;
+				}
+			}
+
+			components *= arraySize;
+		}
+
+		return sizeof(float) * components;
 	}
 }

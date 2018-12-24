@@ -12,13 +12,13 @@ namespace acid
 		m_blend(1.0f),
 		m_fogColour(Colour()),
 		m_fogLimits(Vector2(-1000000.0f, -1000000.0f)),
-		m_material(nullptr)
+		m_pipelineMaterial(nullptr)
 	{
 	}
 
 	void MaterialSkybox::Start()
 	{
-		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
+		m_pipelineMaterial = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_MRT, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {}));
 	}
 

@@ -74,7 +74,7 @@ namespace acid
 			}
 		}
 
-		m_storageInstances.Push("data", *instanceDatas.data(), sizeof(ParticleData) * MAX_TYPE_INSTANCES);
+		m_storageInstances.Stage(instanceDatas.data(), 0, sizeof(ParticleData) * MAX_TYPE_INSTANCES);
 	}
 
 	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
@@ -86,7 +86,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("Instances", m_storageInstances);
+		m_descriptorSet.Push("Instances", m_storageInstances, OffsetSize(0, sizeof(ParticleData) * MAX_TYPE_INSTANCES));
 		m_descriptorSet.Push("samplerColour", m_texture);
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 

@@ -24,6 +24,6 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 
-		std::vector<PipelineDefine> GetDefines();
+		std::vector<ShaderDefine> GetDefines();
 	};
 }

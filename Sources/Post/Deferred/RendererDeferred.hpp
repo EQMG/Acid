@@ -22,6 +22,7 @@ namespace acid
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;
+		StorageHandler m_storageLights;
 
 		DeferredModel m_lightModel;
 
@@ -45,7 +46,7 @@ namespace acid
 
 		void SetFog(const Fog &fog) { m_fog = fog; }
 	private:
-		std::vector<PipelineDefine> GetDefines();
+		std::vector<ShaderDefine> GetDefines();
 
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 

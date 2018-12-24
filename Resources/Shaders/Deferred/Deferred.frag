@@ -2,17 +2,8 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-struct Light
-{
-	vec4 colour;
-	vec3 position;
-	float radius;
-};
-
 layout(set = 0, binding = 0) uniform UboScene
 {
-	Light lights[MAX_LIGHTS];
-
 	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
@@ -31,14 +22,26 @@ layout(set = 0, binding = 0) uniform UboScene
 	int lightsCount;
 } scene;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
-layout(set = 0, binding = 3) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 4) uniform sampler2D samplerMaterial;
-layout(set = 0, binding = 5) uniform sampler2D samplerShadows;
+struct Light
+{
+	vec4 colour;
+	vec3 position;
+	float radius;
+};
+
+layout(set = 0, binding = 1) buffer Lights
+{
+	Light lights[];
+} lights;
+
+layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
+layout(set = 0, binding = 3) uniform sampler2D samplerDiffuse;
+layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
+layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
 #if USE_IBL
-layout(set = 0, binding = 6) uniform sampler2D samplerBrdf;
-layout(set = 0, binding = 7) uniform samplerCube samplerIbl;
+layout(set = 0, binding = 7) uniform sampler2D samplerBrdf;
+layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
 #endif
 
 layout(location = 0) in vec2 inUv;
@@ -102,7 +105,7 @@ void main()
 
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-			Light light = scene.lights[i];
+			Light light = lights.lights[i];
 
 			vec3 lightDir = light.position - worldPosition;
 			float dist = length(lightDir);

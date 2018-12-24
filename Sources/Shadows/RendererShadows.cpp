@@ -36,12 +36,10 @@ namespace acid
 		}
 	}
 
-	std::vector<PipelineDefine> RendererShadows::GetDefines()
+	std::vector<ShaderDefine> RendererShadows::GetDefines()
 	{
-		std::vector<PipelineDefine> result = {};
-
-		result.emplace_back(PipelineDefine("NUM_CASCADES", String::To(NUM_CASCADES)));
-
+		std::vector<ShaderDefine> result = {};
+		result.emplace_back("NUM_CASCADES", String::To(NUM_CASCADES));
 		return result;
 	}
 }

@@ -62,7 +62,7 @@ namespace acid
 			}
 		}
 
-		m_storageInstances.Push("data", *instanceDatas.data(), sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES);
+		m_storageInstances.Stage(instanceDatas.data(), 0, sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES);
 	}
 
 	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
@@ -74,7 +74,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("Instances", m_storageInstances);
+		m_descriptorSet.Push("Instances", m_storageInstances, OffsetSize(0, sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES));
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 		if (!updateSuccess)

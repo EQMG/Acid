@@ -3,13 +3,69 @@
 #include <array>
 #include <string>
 #include <vector>
-#include "Textures/Texture.hpp"
-#include "PipelineCreate.hpp"
-#include "ShaderProgram.hpp"
+#include "IPipeline.hpp"
 
 namespace acid
 {
 	class DepthStencil;
+	class Texture;
+
+	enum PipelineMode
+	{
+		PIPELINE_MODE_POLYGON = 0,
+		PIPELINE_MODE_MRT = 1,
+		PIPELINE_MODE_COMPUTE = 2
+	};
+
+	enum PipelineDepth
+	{
+		PIPELINE_DEPTH_NONE = 0,
+		PIPELINE_DEPTH_READ_WRITE = 1,
+		PIPELINE_DEPTH_READ = 2,
+		PIPELINE_DEPTH_WRITE = 3
+	};
+
+
+	class ACID_EXPORT PipelineCreate
+	{
+	private:
+		friend class Pipeline;
+		std::vector<std::string> m_shaderStages;
+		std::vector<VertexInput> m_vertexInputs;
+
+		PipelineMode m_pipelineMode;
+		PipelineDepth m_depthMode;
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullMode;
+
+		std::vector<ShaderDefine> m_defines;
+	public:
+		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
+		               const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<ShaderDefine> &defines = {}) :
+			m_shaderStages(shaderStages),
+			m_vertexInputs(vertexInputs),
+			m_pipelineMode(pipelineMode),
+			m_depthMode(depthMode),
+			m_polygonMode(polygonMode),
+			m_cullMode(cullMode),
+			m_defines(defines)
+		{
+		}
+
+		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+
+		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
+
+		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+
+		PipelineDepth GetDepthMode() const { return m_depthMode; }
+
+		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+
+		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+
+		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
+	};
 
 	/// <summary>
 	/// Class that represents a Vulkan pipeline.
@@ -19,7 +75,14 @@ namespace acid
 	{
 	private:
 		GraphicsStage m_graphicsStage;
-		PipelineCreate m_pipelineCreate;
+		std::vector<std::string> m_shaderStages;
+		std::vector<VertexInput> m_vertexInputs;
+		PipelineMode m_pipelineMode;
+		PipelineDepth m_depthMode;
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullMode;
+		std::vector<ShaderDefine> m_defines;
+
 		std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 		std::vector<VkDynamicState> m_dynamicStates;
@@ -49,6 +112,14 @@ namespace acid
 		/// </summary>
 		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
 		/// <param name="pipelineCreate"> The pipelines creation info. </param>
+		Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
+		         const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<ShaderDefine> &defines = {});
+
+		/// <summary>
+		/// Creates a new pipeline.
+		/// </summary>
+		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
+		/// <param name="pipelineCreate"> The pipelines creation info. </param>
 		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
 		~Pipeline();
@@ -61,11 +132,23 @@ namespace acid
 
 		uint32_t GetHeight(const int32_t &stage = -1) const;
 
-		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
+		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+
+		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+
+		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
+
+		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+
+		PipelineDepth GetDepthMode() const { return m_depthMode; }
+
+		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+
+		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+
+		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
 
 		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
-
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
 		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

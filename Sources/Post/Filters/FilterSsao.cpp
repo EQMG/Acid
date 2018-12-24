@@ -58,11 +58,11 @@ namespace acid
 		m_model->CmdRender(commandBuffer);
 	}
 
-	std::vector<PipelineDefine> FilterSsao::GetDefines()
+	std::vector<ShaderDefine> FilterSsao::GetDefines()
 	{
-		std::vector<PipelineDefine> result = {};
-		result.emplace_back(PipelineDefine("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE)));
-		result.emplace_back(PipelineDefine("SSAO_RADIUS", String::To(SSAO_RADIUS)));
+		std::vector<ShaderDefine> result = {};
+		result.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
+		result.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
 		return result;
 	}
 

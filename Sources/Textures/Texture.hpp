@@ -94,7 +94,7 @@ namespace acid
 
 		~Texture();
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
+		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
 			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;

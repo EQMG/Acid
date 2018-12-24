@@ -58,7 +58,7 @@ namespace acid
 
 		for (auto &element : pipelineCreate.GetDefines())
 		{
-			result << element.GetName() << "=" << element.GetValue() << "_";
+			result << element.first << "=" << element.second << "_";
 		}
 
 		return result.str();
