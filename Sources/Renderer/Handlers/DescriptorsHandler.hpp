@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <optional>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
@@ -16,10 +17,16 @@ namespace acid
 	class ACID_EXPORT DescriptorsHandler
 	{
 	private:
+		struct DescriptorValue
+		{
+			IDescriptor *descriptor;
+			std::optional<OffsetSize> offsetSize;
+			uint32_t location;
+		};
+
 		ShaderProgram *m_shaderProgram;
+		std::map<std::string, DescriptorValue> m_descriptors;
 		std::unique_ptr<DescriptorSet> m_descriptorSet;
-		std::vector<IDescriptor *> m_descriptors;
-		std::vector<std::optional<OffsetSize>> m_offsetSizes;
 		bool m_changed;
 	public:
 		DescriptorsHandler();

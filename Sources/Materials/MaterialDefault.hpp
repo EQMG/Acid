@@ -27,7 +27,7 @@ namespace acid
 		bool m_ignoreLighting;
 		bool m_ignoreFog;
 
-		std::shared_ptr<PipelineMaterial> m_material;
+		std::shared_ptr<PipelineMaterial> m_pipelineMaterial;
 	public:
 		explicit MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
 			const float &metallic = 0.0f, const float &roughness = 0.0f, const std::shared_ptr<Texture> &materialTexture = nullptr, const std::shared_ptr<Texture> &normalTexture = nullptr,
@@ -45,7 +45,7 @@ namespace acid
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-		std::vector<PipelineDefine> GetDefines();
+		std::vector<ShaderDefine> GetDefines();
 
 		Colour GetBaseDiffuse() const { return m_baseDiffuse; }
 
@@ -83,6 +83,6 @@ namespace acid
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_material; }
+		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_pipelineMaterial; }
 	};
 }

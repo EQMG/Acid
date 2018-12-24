@@ -11,8 +11,8 @@ namespace acid
 		public VkWriteDescriptorSet
 	{
 	public:
-		VkDescriptorImageInfo            imageInfo;
-		VkDescriptorBufferInfo           bufferInfo;
+		VkDescriptorImageInfo imageInfo;
+		VkDescriptorBufferInfo bufferInfo;
 	};
 
 	class ACID_EXPORT OffsetSize
@@ -30,6 +30,16 @@ namespace acid
 		uint32_t GetOffset() const { return m_offset; }
 
 		uint32_t GetSize() const { return m_size; }
+
+		bool operator==(const OffsetSize &other) const
+		{
+			return m_offset == other.m_offset && m_size == other.m_size;
+		}
+
+		bool operator!=(const OffsetSize &other) const
+		{
+			return !(*this == other);
+		}
 	};
 
 	class ACID_EXPORT IDescriptor

@@ -42,7 +42,7 @@ namespace acid
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
 		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
-		vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0);
+		Display::CheckVk(vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0));
 	}
 
 	Buffer::~Buffer()

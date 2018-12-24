@@ -21,7 +21,7 @@ namespace acid
 
 		~DepthStencil();
 
-		static DescriptorType CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
+		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
 			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;

@@ -187,7 +187,6 @@ set(_temp_acid_headers
 		Renderer/Pipelines/Compute.hpp
 		Renderer/Pipelines/IPipeline.hpp
 		Renderer/Pipelines/Pipeline.hpp
-		Renderer/Pipelines/PipelineCreate.hpp
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererRegister.hpp

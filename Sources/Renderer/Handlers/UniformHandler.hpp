@@ -14,15 +14,27 @@ namespace acid
 	private:
 		bool m_multipipeline;
 		UniformBlock *m_uniformBlock;
-		std::unique_ptr<UniformBuffer> m_uniformBuffer;
+		OffsetSize m_offsetSize;
 		void *m_data; // TODO: Convert to unique_ptr
+		std::unique_ptr<UniformBuffer> m_uniformBuffer;
 		bool m_changed;
 	public:
 		explicit UniformHandler(const bool &multipipeline = false);
 
-		explicit UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false, const std::optional<OffsetSize> &offsetSize = {});
 
 		~UniformHandler();
+
+		void Stage(void *data, const size_t &offset, const size_t &size)
+		{
+			if (m_uniformBlock == nullptr)
+			{
+				return;
+			}
+
+			memcpy((char *) m_data + offset, data, size);
+			m_changed = true;
+		}
 
 		template<typename T>
 		void Push(const T &object, const size_t &offset, const size_t &size)
@@ -62,7 +74,7 @@ namespace acid
 			Push(object, static_cast<size_t>(uniform->GetOffset()), realSize);
 		}
 
-		bool Update(UniformBlock *uniformBlock);
+		bool Update(UniformBlock *uniformBlock, const std::optional<OffsetSize> &offsetSize = {});
 
 		UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
 	};

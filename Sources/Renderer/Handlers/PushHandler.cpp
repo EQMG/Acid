@@ -46,7 +46,7 @@ namespace acid
 		return true;
 	}
 
-	void PushHandler::BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
+	void PushHandler::BindPush(const CommandBuffer &commandBuffer, const IPipeline &pipeline)
 	{
 		vkCmdPushConstants(commandBuffer.GetCommandBuffer(), pipeline.GetPipelineLayout(), m_uniformBlock->GetStageFlags(),
 			0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data); // TODO: Allow offsets and sizes: m_offsetSize.GetOffset(), m_offsetSize.GetSize()

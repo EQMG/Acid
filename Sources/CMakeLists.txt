@@ -74,7 +74,7 @@ target_include_directories(Acid
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
-		PRIVATE
+	#	PRIVATE
 		# Since building locally from the submodules won't always create these vars..
 		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
@@ -87,7 +87,7 @@ target_link_libraries(Acid
 		# All IMPORTED targets, which automatically handles includes
 		Threads::Threads
 		Vulkan::Vulkan
-		PRIVATE
+	#	PRIVATE
 		# More IMPORTED
 		glfw
 		OpenAL::OpenAL

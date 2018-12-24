@@ -16,7 +16,7 @@ struct Instance
 
 layout(set = 0, binding = 1) buffer Instances
 {
-	Instance data[MAX_INSTANCES];
+	Instance data[];
 } instances;
 
 layout(set = 0, location = 0) in vec3 inPosition;

@@ -2,7 +2,6 @@
 
 #include "Renderer/Commands/CommandBuffer.hpp"
 #include "IPipeline.hpp"
-#include "PipelineCreate.hpp"
 
 namespace acid
 {
@@ -13,7 +12,12 @@ namespace acid
 		public IPipeline
 	{
 	private:
-		ComputeCreate m_computeCreate;
+		std::string m_shaderStage;
+		uint32_t m_width;
+		uint32_t m_height;
+		uint32_t m_workgroupSize;
+		std::vector<ShaderDefine> m_defines;
+
 		std::unique_ptr<ShaderProgram> m_shaderProgram;
 
 		VkShaderModule m_shaderModule;
@@ -29,11 +33,20 @@ namespace acid
 		/// Creates a new compute pipeline.
 		/// </summary>
 		/// <param name="pipelineCreate"> The compute pipelines creation info. </param>
-		explicit Compute(const ComputeCreate &computeCreate);
+		explicit Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
+			const uint32_t &workgroupSize, const std::vector<ShaderDefine> &defines = {});
 
 		~Compute();
 
-		ComputeCreate GetComputeCreate() const { return m_computeCreate; }
+		std::string GetShaderStage() const { return m_shaderStage; }
+
+		uint32_t GetWidth() const { return m_width; }
+
+		uint32_t GetHeight() const { return m_height; }
+
+		uint32_t GetWorkgroupSize() const { return m_workgroupSize; }
+
+		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
 
 		bool CmdRender(const CommandBuffer &commandBuffer) const;
 

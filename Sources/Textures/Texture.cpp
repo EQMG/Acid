@@ -169,7 +169,7 @@ namespace acid
 		vkDestroyImage(logicalDevice, m_image, nullptr);
 	}
 
-	DescriptorType Texture::CreateDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
+	VkDescriptorSetLayoutBinding Texture::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
@@ -177,12 +177,7 @@ namespace acid
 		descriptorSetLayoutBinding.descriptorCount = 1;
 		descriptorSetLayoutBinding.stageFlags = stage;
 		descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-
-		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = descriptorType;
-		descriptorPoolSize.descriptorCount = count;
-
-		return DescriptorType(binding, stage, descriptorSetLayoutBinding, descriptorPoolSize);
+		return descriptorSetLayoutBinding;
 	}
 
 	WriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,

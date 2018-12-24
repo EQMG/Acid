@@ -21,7 +21,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 	private:
-		std::vector<PipelineDefine> GetDefines();
+		std::vector<ShaderDefine> GetDefines();
 
 		static std::shared_ptr<acid::Texture> ComputeNoise(const uint32_t &size);
 	};
