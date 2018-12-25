@@ -25,6 +25,23 @@ namespace acid
 			return;
 		}
 
+		// Finds the local value given to the descriptor name.
+		auto it = m_descriptors.find(descriptorName);
+
+		if (it != m_descriptors.end())
+		{
+			// If the descriptor or size has changed the descriptor values are reset.
+			if (it->second.descriptor != descriptor || it->second.offsetSize != offsetSize)
+			{
+				m_descriptors.erase(it);
+			}
+			else
+			{
+				return;
+			}
+		}
+
+		// When adding the descriptor find the location in the shader.
 		int32_t location = m_shaderProgram->GetDescriptorLocation(descriptorName);
 
 		if (location == -1)
@@ -39,20 +56,7 @@ namespace acid
 			return;
 		}
 
-		auto it = m_descriptors.find(descriptorName);
-
-		if (it != m_descriptors.end())
-		{
-			if (it->second.descriptor != descriptor || it->second.offsetSize != offsetSize)
-			{
-				m_descriptors.erase(it);
-			}
-			else
-			{
-				return;
-			}
-		}
-
+		// Adds the new descriptor value.
 		m_descriptors.emplace(descriptorName, DescriptorValue{descriptor, offsetSize, static_cast<uint32_t>(location)});
 		m_changed = true;
 	}
@@ -74,7 +78,7 @@ namespace acid
 			return;
 		}
 
-		uniformHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName), offsetSize);
+		uniformHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
 		Push(descriptorName, uniformHandler.GetUniformBuffer(), offsetSize);
 	}
 
@@ -85,7 +89,7 @@ namespace acid
 			return;
 		}
 
-		storageHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName), offsetSize);
+		storageHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
 		Push(descriptorName, storageHandler.GetStorageBuffer(), offsetSize);
 	}
 
@@ -96,15 +100,13 @@ namespace acid
 			return;
 		}
 
-		pushHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName), offsetSize);
+		pushHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
 	}
 
 	bool DescriptorsHandler::Update(const IPipeline &pipeline)
 	{
 		if (m_shaderProgram != pipeline.GetShaderProgram())
 		{
-			m_descriptors.clear();
-
 			m_shaderProgram = pipeline.GetShaderProgram();
 			m_descriptors.clear();
 			m_descriptorSet = std::make_unique<DescriptorSet>(pipeline);

@@ -5,7 +5,6 @@ namespace acid
 	PushHandler::PushHandler(const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(nullptr),
-		m_offsetSize(OffsetSize(0, 0)),
 		m_data(nullptr)
 	{
 	}
@@ -13,33 +12,16 @@ namespace acid
 	PushHandler::PushHandler(UniformBlock *uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
-		m_offsetSize(OffsetSize(0, 0)),
-		m_data(malloc(static_cast<size_t>(m_uniformBlock->GetSize())))
+		m_data(std::make_unique<char[]>(m_uniformBlock->GetSize()))
 	{
 	}
 
-	PushHandler::~PushHandler()
-	{
-		free(m_data);
-	}
-
-	bool PushHandler::Update(UniformBlock *uniformBlock, const std::optional<OffsetSize> &offsetSize)
+	bool PushHandler::Update(UniformBlock *uniformBlock)
 	{
 		if ((m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{
-			free(m_data);
-
-			//if (offsetSize)
-			//{
-			//	m_offsetSize = *offsetSize;
-			//}
-			//else
-			//{
-			//	m_offsetSize = OffsetSize(0, static_cast<uint32_t>(m_uniformBlock->GetSize()));
-			//}
-
 			m_uniformBlock = uniformBlock;
-			m_data = malloc(static_cast<size_t>(m_uniformBlock->GetSize()));
+			m_data = std::make_unique<char[]>(m_uniformBlock->GetSize());
 			return false;
 		}
 
@@ -49,6 +31,6 @@ namespace acid
 	void PushHandler::BindPush(const CommandBuffer &commandBuffer, const IPipeline &pipeline)
 	{
 		vkCmdPushConstants(commandBuffer.GetCommandBuffer(), pipeline.GetPipelineLayout(), m_uniformBlock->GetStageFlags(),
-			0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data); // TODO: Allow offsets and sizes: m_offsetSize.GetOffset(), m_offsetSize.GetSize()
+			0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data.get());
 	}
 }

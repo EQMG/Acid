@@ -34,11 +34,17 @@ namespace acid
 
 		if (m_emitTimer.IsPassedTime())
 		{
+			float pastFactor = std::floor(m_emitTimer.GetDifference() / m_emitTimer.GetInterval());
 			m_emitTimer.ResetStartTime();
 
 			auto emitters = GetParent()->GetComponents<ParticleEmitter>();
 
-			if (!emitters.empty())
+			if (emitters.empty())
+			{
+				return;
+			}
+
+			for (uint32_t i = 0; i < pastFactor; i++)
 			{
 				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0, emitters.size()))]));
 			}

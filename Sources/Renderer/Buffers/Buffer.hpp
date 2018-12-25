@@ -6,6 +6,13 @@
 
 namespace acid
 {
+	enum HandlerStatus
+	{
+		HANDLER_STATUS_RESET = 0,
+		HANDLER_STATUS_CHANGED = 1,
+		HANDLER_STATUS_NORMAL = 2
+	};
+
 	class ACID_EXPORT Buffer
 	{
 	protected:

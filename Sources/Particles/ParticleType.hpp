@@ -32,6 +32,9 @@ namespace acid
 		public IResource
 	{
 	private:
+		static const uint32_t INSTANCE_STEPS;
+		static const float FRUSTUM_BUFFER;
+
 		std::string m_filename;
 		std::shared_ptr<Texture> m_texture;
 		std::shared_ptr<Model> m_model;
@@ -41,14 +44,12 @@ namespace acid
 		float m_stageCycles;
 		float m_scale;
 
+		uint32_t m_maxInstances;
 		uint32_t m_instances;
 
 		DescriptorsHandler m_descriptorSet;
 		StorageHandler m_storageInstances;
 	public:
-		static const uint32_t MAX_TYPE_INSTANCES;
-		static const float FRUSTUM_BUFFER;
-
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
 		/// </summary>

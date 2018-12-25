@@ -5,55 +5,43 @@ namespace acid
 	UniformHandler::UniformHandler(const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(nullptr),
-		m_offsetSize(OffsetSize(0, 0)),
+		m_size(0),
 		m_data(nullptr),
 		m_uniformBuffer(nullptr),
-		m_changed(false)
+		m_handlerStatus(HANDLER_STATUS_NORMAL)
 	{
 	}
 
-	UniformHandler::UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline, const std::optional<OffsetSize> &offsetSize) :
+	UniformHandler::UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
-		m_offsetSize(offsetSize ? *offsetSize : OffsetSize(0, m_uniformBlock->GetSize())),
-		m_data(malloc(static_cast<size_t>(m_offsetSize.GetSize()))),
-		m_uniformBuffer(std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_offsetSize.GetSize()))),
-		m_changed(true)
+		m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
+		m_data(std::make_unique<char[]>(m_size)),
+		m_uniformBuffer(std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size))),
+		m_handlerStatus(HANDLER_STATUS_NORMAL)
 	{
 	}
 
-	UniformHandler::~UniformHandler()
+	bool UniformHandler::Update(UniformBlock *uniformBlock)
 	{
-		free(m_data);
-	}
-
-	bool UniformHandler::Update(UniformBlock *uniformBlock, const std::optional<OffsetSize> &offsetSize)
-	{
-		if ((m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
+		if (m_handlerStatus == HANDLER_STATUS_RESET || (m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{
-			free(m_data);
+			if ((m_size == 0 && m_uniformBlock == nullptr) || (m_uniformBlock != nullptr && m_uniformBlock != uniformBlock && m_uniformBlock->GetSize() == m_size))
+			{
+				m_size = static_cast<uint32_t>(uniformBlock->GetSize());
+			}
 
 			m_uniformBlock = uniformBlock;
-
-			if (offsetSize)
-			{
-				m_offsetSize = *offsetSize;
-			}
-			else
-			{
-				m_offsetSize = OffsetSize(0, static_cast<uint32_t>(m_uniformBlock->GetSize()));
-			}
-
-			m_data = malloc(static_cast<size_t>(m_offsetSize.GetSize()));
-			m_uniformBuffer = std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_offsetSize.GetSize()));
-			m_changed = false;
+			m_data = std::make_unique<char[]>(m_size);
+			m_uniformBuffer = std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size));
+			m_handlerStatus = HANDLER_STATUS_CHANGED;
 			return false;
 		}
 
-		if (m_changed)
+		if (m_handlerStatus != HANDLER_STATUS_NORMAL)
 		{
-			m_uniformBuffer->Update(m_data);
-			m_changed = false;
+			m_uniformBuffer->Update(m_data.get());
+			m_handlerStatus = HANDLER_STATUS_NORMAL;
 		}
 
 		return true;

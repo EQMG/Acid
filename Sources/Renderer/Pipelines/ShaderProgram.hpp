@@ -222,6 +222,8 @@ namespace acid
 
 		int32_t GetDescriptorLocation(const std::string &descriptor);
 
+		std::optional<uint32_t> GetDescriptorSize(const std::string &descriptor);
+
 		Uniform *GetUniform(const std::string &uniformName);
 
 		UniformBlock *GetUniformBlock(const std::string &blockName);

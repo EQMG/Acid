@@ -97,11 +97,11 @@ namespace acid
 		m_uniformScene.Push("lightsCount", lightCount);
 
 		// Updates storage buffers.
-		m_storageLights.Stage(deferredLights.data(), 0, sizeof(DeferredLight) * MAX_LIGHTS);
+		m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", m_uniformScene);
-		m_descriptorSet.Push("Lights", m_storageLights, OffsetSize(0, sizeof(DeferredLight) * MAX_LIGHTS));
+		m_descriptorSet.Push("Lights", m_storageLights);
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
 		m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normals"));

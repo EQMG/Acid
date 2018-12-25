@@ -10,9 +10,14 @@ namespace acid
 	{
 	}
 
+	Time Timer::GetDifference() const
+	{
+		return Engine::GetTime() - m_startTime;
+	}
+
 	bool Timer::IsPassedTime() const
 	{
-		return Engine::GetTime() - m_startTime >= m_interval;
+		return GetDifference() >= m_interval;
 	}
 
 	void Timer::ResetStartTime()

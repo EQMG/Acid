@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	// Initializes modules.
 	Display::Get()->SetTitle("Test PBR");
 	Display::Get()->SetIcon("Logos/Flask.png");
-	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
+//	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 
