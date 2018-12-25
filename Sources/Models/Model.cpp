@@ -1,6 +1,7 @@
 #include "Model.hpp"
 
 #include <cassert>
+#include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid

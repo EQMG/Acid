@@ -1,9 +1,11 @@
 #pragma once
 
+#include <algorithm>
 #include <sstream>
 #include <string>
 #include <map>
 #include <memory>
+#include <optional>
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "Engine/Exports.hpp"
