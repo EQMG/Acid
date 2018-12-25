@@ -1,9 +1,9 @@
 #include "Texture.hpp"
 
-#include <cmath>
 #include "Display/Display.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Files/Files.hpp"
+#include "Maths/Maths.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resources.hpp"
 #define STB_IMAGE_IMPLEMENTATION
