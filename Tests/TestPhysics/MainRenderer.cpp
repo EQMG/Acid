@@ -76,7 +76,7 @@ namespace test
 	//	rendererRegister.Add<FilterVignette>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterGrain>(GraphicsStage(1, 2));
 		rendererRegister.Add<FilterDefault>(GraphicsStage(1, 2), true);
-		rendererRegister.Add<RendererGizmos>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<RendererGizmos>(GraphicsStage(1, 2));
 		rendererRegister.Add<RendererGuis>(GraphicsStage(1, 2));
 		rendererRegister.Add<RendererFonts>(GraphicsStage(1, 2));
 	}

@@ -30,6 +30,9 @@ namespace test
 
 	void MainRenderer::Update()
 	{
+	//	auto rendererFonts2 = Renderer::Get()->GetRendererRegister().Get<RendererFonts2>();
+	//	rendererFonts2->Update();
+
 	//	auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
 	//	renderpassCreate0.SetScale(0.8f);
 	}

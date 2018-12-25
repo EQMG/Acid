@@ -218,6 +218,27 @@ namespace acid
 		return -1;
 	}
 
+	std::optional<uint32_t> ShaderProgram::GetDescriptorSize(const std::string &descriptor)
+	{
+		for (auto &uniform : m_uniforms)
+		{
+			if (uniform->GetName() == descriptor)
+			{
+				return uniform->GetSize();
+			}
+		}
+
+		for (auto &uniformBlock : m_uniformBlocks)
+		{
+			if (uniformBlock->GetName() == descriptor)
+			{
+				return uniformBlock->GetSize();
+			}
+		}
+
+		return {};
+	}
+
 	uint32_t ShaderProgram::GetLastDescriptorBinding() const
 	{
 		uint32_t binding = 0;

@@ -1,11 +1,11 @@
-#include "RendererFonts2.hpp"
+/*#include "RendererFonts2.hpp"
 
 #include <assert.h>
 
 namespace acid
 {
 	const uint32_t RendererFonts2::MAX_VISIBLE_GLYPHS = 4096;
-	const uint32_t RendererFonts2::NUMBER_OF_GLYPHS = 256;
+	const uint32_t RendererFonts2::NUMBER_OF_GLYPHS = 128;
 
 	VertexInput GlyphInstance::GetVertexInput(const uint32_t &binding)
 	{
@@ -49,16 +49,21 @@ namespace acid
 		m_glyph_infos(new HostGlyphInfo[NUMBER_OF_GLYPHS])
 	{
 		LoadFont();
+	//	create_instance_buffer();
+	//	Update();
+		Log::Out("%s\n", m_pipeline.GetShaderProgram()->ToString().c_str());
 	}
 
-	void RendererFonts2::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererFonts2::Update()
 	{
-		/*BeginText();
+		CommandBuffer commandBuffer = CommandBuffer();
+
+		BeginText();
 
 		AppendText(5.0f, Display::Get()->GetHeight() - 10.0f, 0.02f, "Frame time: " + String::To(static_cast<int>(1000.0f * Engine::Get()->GetDeltaRender().AsSeconds())) + " ms");
 		AppendText(5.0f, Display::Get()->GetHeight() - 40.0f, 0.02f, "FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
 
-		std::vector<std::string> lines = {
+		static const std::vector<std::string> lines = {
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
 			"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et",
 			"arcu scelerisque, eget viverra ante dapibus. Proin enim neque, vehicula id congue quis, consequat sit amet tortor.Aenean ac",
@@ -102,16 +107,24 @@ namespace acid
 
 			AppendText(canvasScale * (10.0f - canvasOffset.m_x),
 			           canvasScale * (30.0f - canvasOffset.m_y + i * 30.0f),
-			            0.02f * canvasScale,
-			            lines[i]);
+			           0.02f * canvasScale,
+			           lines[i]);
 		}
 
 
-		EndText(commandBuffer);*/
+		EndText(commandBuffer);
 
-		/*m_storageBuffer.Stage(m_glyph_data, 0, m_glyph_data_size);
+		commandBuffer.End();
+		commandBuffer.Submit();
+	}
 
-		m_descriptorSet.Push("GlyphBuffer", m_storageBuffer, OffsetSize(m_glyph_info_offset, m_glyph_info_size));
+	void RendererFonts2::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	{
+		m_storageBuffer.Stage(m_glyph_data, 0, m_glyph_data_size);
+
+		m_pipeline.BindPipeline(commandBuffer);
+
+		m_descriptorSet.Push("GlyphBuffer", m_storageBuffer, OffsetSize(m_glyph_info_offset, m_glyph_data_size));
 		m_descriptorSet.Push("CellBuffer", m_storageBuffer, OffsetSize(m_glyph_cells_offset, m_glyph_cells_size));
 		m_descriptorSet.Push("PointBuffer", m_storageBuffer, OffsetSize(m_glyph_points_offset, m_glyph_points_size));
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
@@ -127,7 +140,7 @@ namespace acid
 
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, &m_instance_buffer, offsets);
-		vkCmdDraw(commandBuffer.GetCommandBuffer(), 4, m_glyph_instance_count, 0, 0);*/
+		vkCmdDraw(commandBuffer.GetCommandBuffer(), 4, m_glyph_instance_count, 0, 0);
 	}
 
 	uint32_t RendererFonts2::align_uint32(const uint32_t &value, const uint32_t &alignment)
@@ -141,11 +154,11 @@ namespace acid
 		FT_CHECK(FT_Init_FreeType(&library));
 
 		FT_Face face;
-//	    NewFace(library, "Fonts/Pacifico-Regular.ttf", 0, &face);
-//	    NewFace(library, "Fonts/Lato-Medium.ttf", 0, &face);
-//	    NewFace(library, "Fonts/Lobster-Regular.ttf", 0, &face);
-		NewFace(library, "Fonts/LobsterTwo-Italic.ttf", 0, &face);
-//	    NewFace(library, "Fonts/OpenSans-Regular.ttf", 0, &face);
+//	    NewFace(&library, "Fonts/Pacifico-Regular.ttf", 0, &face);
+//	    NewFace(&library, "Fonts/Lato-Medium.ttf", 0, &face);
+//	    NewFace(&library, "Fonts/Lobster-Regular.ttf", 0, &face);
+		NewFace(&library, "Fonts/LobsterTwo-Italic.ttf", 0, &face);
+//	    NewFace(&library, "Fonts/OpenSans-Regular.ttf", 0, &face);
 
 		FT_CHECK(FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96));
 
@@ -222,21 +235,74 @@ namespace acid
 		FT_CHECK(FT_Done_FreeType(library));
 	}
 
-	void RendererFonts2::NewFace(const FT_Library &library, const std::string &filename, const FT_Long &faceIndex, FT_Face *aface)
+	void RendererFonts2::NewFace(FT_Library *library, const std::string &filename, const signed long &faceIndex, FT_Face *aface)
 	{
 		auto fileLoaded = Files::Read(filename);
 		assert(fileLoaded);
-		FT_CHECK(FT_New_Memory_Face(library, (FT_Byte*)fileLoaded->data(), (FT_Long)fileLoaded->size(), faceIndex, aface));
+		FT_CHECK(FT_New_Memory_Face(*library, (FT_Byte*)fileLoaded->data(), (FT_Long)fileLoaded->size(), faceIndex, aface));
+	}
+
+	void RendererFonts2::create_instance_buffer()
+	{
+		VkBufferCreateInfo ci = {
+			.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+			.size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance),
+			.usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
+			.sharingMode = VK_SHARING_MODE_EXCLUSIVE,
+		};
+
+		create_buffer_with_memory(&ci, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		                          &m_instance_buffer_memory, &m_instance_buffer);
+
+		VkBufferCreateInfo staging_ci = {
+			.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+			.size = ci.size,
+			.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			.sharingMode = VK_SHARING_MODE_EXCLUSIVE,
+		};
+
+		create_buffer_with_memory(&staging_ci,
+		                          VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+		                          &m_instance_staging_buffer_memory, &m_instance_staging_buffer);
+	}
+
+	VkDeviceMemory RendererFonts2::alloc_required_memory(VkMemoryRequirements *req, VkMemoryPropertyFlags flags)
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		VkMemoryAllocateInfo alloc_info = {
+			.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+			.allocationSize = req->size,
+			.memoryTypeIndex = Buffer::FindMemoryType(req->memoryTypeBits, flags),
+		};
+
+		VkDeviceMemory mem;
+		Display::CheckVk(vkAllocateMemory(logicalDevice, &alloc_info, nullptr, &mem));
+		return mem;
+	}
+
+	void RendererFonts2::create_buffer_with_memory(VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags,
+	                                               VkDeviceMemory *memory, VkBuffer *buffer)
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		Display::CheckVk(vkCreateBuffer(logicalDevice, ci, nullptr, buffer));
+
+		VkMemoryRequirements req;
+		vkGetBufferMemoryRequirements(logicalDevice, *buffer, &req);
+
+		*memory = alloc_required_memory(&req, flags);
+		Display::CheckVk(vkBindBufferMemory(logicalDevice, *buffer, *memory, 0));
 	}
 
 	void RendererFonts2::BeginText()
 	{
-		/*auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		m_glyph_instance_count = 0;
 		uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 
-		Display::CheckVk(vkMapMemory(logicalDevice, m_instance_staging_buffer_memory, 0, size, 0, (void **)&m_glyph_instances));*/
+		Display::CheckVk(vkMapMemory(logicalDevice, m_instance_staging_buffer_memory, 0, size, 0, (void **)&m_glyph_instances));
 	}
 
 	void RendererFonts2::AppendText(float x, float y, float scale, const std::string &text)
@@ -271,7 +337,7 @@ namespace acid
 
 	void RendererFonts2::EndText(const CommandBuffer &commandBuffer)
 	{
-		/*auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 
@@ -313,6 +379,6 @@ namespace acid
 			0,
 			0, nullptr,
 			1, &barrier,
-			0, nullptr);*/
+			0, nullptr);
 	}
-}
+}*/

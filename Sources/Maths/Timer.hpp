@@ -21,6 +21,12 @@ namespace acid
 		explicit Timer(const Time &interval);
 
 		/// <summary>
+		/// Gets if the amount of time between the current time and the start time.
+		/// </summary>
+		/// <returns> The time passed between current time and start time. </returns>
+		Time GetDifference() const;
+
+		/// <summary>
 		/// Gets if the interval has been passes for the timer.
 		/// </summary>
 		/// <returns> If the interval was exceeded. </returns>

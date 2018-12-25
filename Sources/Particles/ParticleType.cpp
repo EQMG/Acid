@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	const uint32_t ParticleType::MAX_TYPE_INSTANCES = 512;
+	const uint32_t ParticleType::INSTANCE_STEPS = 128;
 	const float ParticleType::FRUSTUM_BUFFER = 1.4f;
 
 	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
@@ -46,6 +46,7 @@ namespace acid
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_scale(scale),
+		m_maxInstances(0),
 		m_instances(0),
 		m_descriptorSet(DescriptorsHandler()),
 		m_storageInstances(StorageHandler())
@@ -54,8 +55,10 @@ namespace acid
 
 	void ParticleType::Update(const std::vector<Particle> &particles)
 	{
-		auto instanceDatas = std::vector<ParticleData>();
-		instanceDatas.resize(MAX_TYPE_INSTANCES);
+		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
+		uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(particles.size()) / static_cast<float>(INSTANCE_STEPS)));
+		m_maxInstances = std::max(m_maxInstances, instances);
+		auto instanceDatas = std::vector<ParticleData>(m_maxInstances);
 		m_instances = 0;
 
 		for (auto &particle : particles)
@@ -68,13 +71,13 @@ namespace acid
 			instanceDatas[m_instances] = GetInstanceData(particle);
 			m_instances++;
 
-			if (m_instances >= instanceDatas.size())
+			if (m_instances >= m_maxInstances)
 			{
 				break;
 			}
 		}
 
-		m_storageInstances.Stage(instanceDatas.data(), 0, sizeof(ParticleData) * MAX_TYPE_INSTANCES);
+		m_storageInstances.Push(instanceDatas.data(), sizeof(ParticleData) * m_maxInstances);
 	}
 
 	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
@@ -86,7 +89,7 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("Instances", m_storageInstances, OffsetSize(0, sizeof(ParticleData) * MAX_TYPE_INSTANCES));
+		m_descriptorSet.Push("Instances", m_storageInstances);
 		m_descriptorSet.Push("samplerColour", m_texture);
 		bool updateSuccess = m_descriptorSet.Update(pipeline);
 

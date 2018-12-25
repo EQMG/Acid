@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 
 #include "Display/Display.hpp"
 #include "Renderer/IRenderer.hpp"
@@ -40,7 +40,7 @@ namespace acid
 		CellInfo cell_info;
 	};
 
-	class RendererFonts2 : // ACID_EXPORT
+	class RendererFonts2 :
 		public IRenderer
 	{
 	private:
@@ -48,10 +48,10 @@ namespace acid
 		DescriptorsHandler m_descriptorSet;
 		StorageHandler m_storageBuffer;
 
-	//	VkDeviceMemory m_instance_buffer_memory;
-	//	VkBuffer m_instance_buffer;
-	//	VkDeviceMemory m_instance_staging_buffer_memory;
-	//	VkBuffer m_instance_staging_buffer;
+		VkDeviceMemory m_instance_buffer_memory;
+		VkBuffer m_instance_buffer;
+		VkDeviceMemory m_instance_staging_buffer_memory;
+		VkBuffer m_instance_staging_buffer;
 
 		Outline *m_outlines;
 		HostGlyphInfo *m_glyph_infos;
@@ -73,13 +73,19 @@ namespace acid
 
 		explicit RendererFonts2(const GraphicsStage &graphicsStage);
 
+		void Update();
+
 		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
 	private:
 		static uint32_t align_uint32(const uint32_t &value, const uint32_t &alignment);
 
 		void LoadFont();
 
-		void NewFace(const FT_Library &library, const std::string &filename, const FT_Long &faceIndex, FT_Face *aface);
+		void NewFace(FT_Library *library, const std::string &filename, const signed long &faceIndex, FT_Face *aface);
+
+		void create_instance_buffer();
+		VkDeviceMemory alloc_required_memory(VkMemoryRequirements *req, VkMemoryPropertyFlags flags);
+		void create_buffer_with_memory(VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags, VkDeviceMemory *memory, VkBuffer *buffer);
 
 		void BeginText();
 
@@ -87,4 +93,4 @@ namespace acid
 
 		void EndText(const CommandBuffer &commandBuffer);
 	};
-}
+}*/

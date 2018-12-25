@@ -137,7 +137,7 @@ void main()
 
 	float v = cell_signed_dist(in_cell_info.x, cell, in_glyph_pos);
 	float alpha = clamp(v * in_sharpness + 0.5, 0.0, 1.0);
-	out_color = vec4(1.0, 1.0, 1.0, alpha);
+	out_color = vec4(0.0, 0.0, 0.0, alpha);
 
 	//if ((c.x + c.y) % 2 == 0)
 	//	out_color = mix(out_color, vec4(1.0, 0.0, 0.0, 1.0), 0.1);
