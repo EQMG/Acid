@@ -11,6 +11,7 @@
 namespace acid
 {
 	ModelRegister::ModelRegister() :
+		m_mutex(std::mutex()),
 		m_models(std::map<std::string, ModelCreate>())
 	{
 		Add<ModelObj>(".obj");
@@ -23,12 +24,14 @@ namespace acid
 
 	void ModelRegister::Remove(const std::string &name)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		//	m_models.erase(std::remove_if(m_models.begin(), m_models.end(), [name](const std::string &n, const ComponentCreate &c){
 		//		return name == n; // FIXME: Remove
 		//	}), m_models.end());
 	}
 
-	std::shared_ptr<Model> ModelRegister::Create(const std::string &data)
+	std::shared_ptr<Model> ModelRegister::Create(const std::string &data) const
 	{
 		auto fileExt = String::Lowercase(FileSystem::FileSuffix(data));
 		auto split = String::Split(data, "_");

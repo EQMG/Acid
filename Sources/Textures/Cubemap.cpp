@@ -1,8 +1,8 @@
 ﻿#include "Cubemap.hpp"
 
-#include <cmath>
 #include "Display/Display.hpp"
 #include "Helpers/String.hpp"
+#include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Texture.hpp"

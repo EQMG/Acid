@@ -23,7 +23,7 @@ namespace acid
 		/// <summary>
 		/// Updates all modules in order.
 		/// </summary>
-		void Update(const ModuleManager &moduleManager);
+		void Update(ModuleManager &moduleManager);
 
 		/// <summary>
 		/// Gets the delta (seconds) between updates.

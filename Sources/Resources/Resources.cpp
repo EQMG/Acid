@@ -5,6 +5,7 @@
 namespace acid
 {
 	Resources::Resources() :
+		m_mutex(std::mutex()),
 		m_resources(std::vector<std::shared_ptr<IResource>>()),
 		m_timerPurge(Timer(Time::Seconds(5.0f)))
 	{
@@ -15,6 +16,8 @@ namespace acid
 		if (m_timerPurge.IsPassedTime())
 		{
 			m_timerPurge.ResetStartTime();
+
+			std::lock_guard<std::mutex> lock(m_mutex);
 
 			for (auto it = m_resources.begin(); it != m_resources.end();)
 			{
@@ -32,7 +35,7 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IResource> Resources::Find(const std::string &filename)
+	std::shared_ptr<IResource> Resources::Find(const std::string &filename) const
 	{
 		for (auto &resource : m_resources)
 		{
@@ -47,6 +50,8 @@ namespace acid
 
 	void Resources::Add(const std::shared_ptr<IResource> &resource)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		if (std::find(m_resources.begin(), m_resources.end(), resource) != m_resources.end())
 		{
 			return;
@@ -57,6 +62,8 @@ namespace acid
 
 	bool Resources::Remove(const std::shared_ptr<IResource> &resource)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
 			if (*it == resource)
@@ -71,6 +78,8 @@ namespace acid
 
 	bool Resources::Remove(const std::string &filename)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
 			if ((*it)->GetFilename() == filename)

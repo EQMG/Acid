@@ -3,12 +3,15 @@
 namespace acid
 {
 	Events::Events() :
+		m_mutex(std::mutex()),
 		m_events(std::vector<std::unique_ptr<IEvent>>())
 	{
 	}
 
 	void Events::Update()
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_events.begin(); it != m_events.end();)
 		{
 			if (!(*it)->EventTriggered())
@@ -31,12 +34,16 @@ namespace acid
 
 	IEvent *Events::AddEvent(IEvent *event)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		m_events.emplace_back(event);
 		return event;
 	}
 
 	bool Events::RemoveEvent(IEvent *event)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_events.begin(); it != m_events.end(); ++it)
 		{
 			if ((*it).get() == event)

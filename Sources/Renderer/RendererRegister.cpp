@@ -3,12 +3,15 @@
 namespace acid
 {
 	RendererRegister::RendererRegister() :
+		m_mutex(std::mutex()),
 		m_stages(std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>>())
 	{
 	}
 
 	IRenderer *RendererRegister::Add(IRenderer *renderer)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		if (renderer == nullptr)
 		{
 			return nullptr;
@@ -36,6 +39,8 @@ namespace acid
 
 	void RendererRegister::Remove(IRenderer *renderer)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 		{
 			for (auto it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it)

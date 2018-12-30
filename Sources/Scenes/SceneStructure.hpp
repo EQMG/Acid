@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <algorithm>
+#include <mutex>
 #include <vector>
 #include "Physics/Rigidbody.hpp"
 #include "Component.hpp"
@@ -14,6 +15,7 @@ namespace acid
 	class ACID_EXPORT SceneStructure
 	{
 	private:
+		std::mutex m_mutex;
 		std::vector<std::unique_ptr<Entity>> m_objects;
 	public:
 		/// <summary>
@@ -110,6 +112,8 @@ namespace acid
 		template<typename T>
 		std::vector<T *> QueryComponents(const bool &allowDisabled = false)
 		{
+			std::lock_guard<std::mutex> lock(m_mutex);
+
 			auto result = std::vector<T *>();
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
@@ -136,6 +140,8 @@ namespace acid
 		template<typename T>
 		T *GetComponent(const bool &allowDisabled = false)
 		{
+			std::lock_guard<std::mutex> lock(m_mutex);
+
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
 				auto component = (*it)->GetComponent<T>();

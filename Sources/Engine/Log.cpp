@@ -4,23 +4,27 @@
 
 namespace acid
 {
-	std::ostringstream Log::STREAM = std::ostringstream();
+	std::mutex Log::MUTEX = std::mutex();
+	std::ofstream Log::STREAM = std::ofstream();
 
 	void Log::Out(const std::string &string)
 	{
+		std::lock_guard<std::mutex> lock(MUTEX);
 		fprintf(stdout, string.c_str());
 		STREAM << string;
 	}
 
 	void Log::Error(const std::string &string)
 	{
+		std::lock_guard<std::mutex> lock(MUTEX);
 		fprintf(stderr, string.c_str());
 		STREAM << string;
 	}
 
-	void Log::CreateLog(const std::string &filename)
+	void Log::OpenLog(const std::string &filename)
 	{
+		std::lock_guard<std::mutex> lock(MUTEX);
 		FileSystem::Create(filename);
-		FileSystem::WriteTextFile(filename, STREAM.str());
+		STREAM.open(filename);
 	}
 }

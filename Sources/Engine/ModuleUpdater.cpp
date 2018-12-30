@@ -13,7 +13,7 @@ namespace acid
 	{
 	}
 
-	void ModuleUpdater::Update(const ModuleManager &moduleManager)
+	void ModuleUpdater::Update(ModuleManager &moduleManager)
 	{
 		m_timerRender.SetInterval(Time::Seconds(1.0f / Engine::Get()->GetFpsLimit()));
 

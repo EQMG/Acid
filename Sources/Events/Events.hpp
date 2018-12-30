@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <mutex>
 #include "Engine/Engine.hpp"
 #include "IEvent.hpp"
 
@@ -13,6 +14,7 @@ namespace acid
 		public Module
 	{
 	private:
+		std::mutex m_mutex;
 		std::vector<std::unique_ptr<IEvent>> m_events;
 	public:
 		/// <summary>

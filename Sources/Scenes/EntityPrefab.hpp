@@ -39,7 +39,7 @@ namespace acid
 
 		void Save();
 
-		std::string GetFilename() override { return m_filename; }
+		std::string GetFilename() const override { return m_filename; }
 
 		Metadata *GetParent() const { return m_parent; }
 	};

@@ -122,7 +122,7 @@ namespace acid
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
 		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
-		            usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
+			usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
 
 		if (pixels != nullptr || mipmap)
 		{
@@ -132,7 +132,7 @@ namespace acid
 		if (pixels != nullptr)
 		{
 			Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
 			Display::CheckVk(vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));

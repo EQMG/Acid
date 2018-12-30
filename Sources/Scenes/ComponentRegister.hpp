@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <mutex>
 #include <memory>
 #include <optional>
 #include "Engine/Log.hpp"
@@ -20,6 +21,7 @@ namespace acid
 			std::function<bool(Component *)> m_isSame;
 		};
 
+		std::mutex m_mutex;
 		std::map<std::string, ComponentCreate> m_components;
 	public:
 		/// <summary>
@@ -35,6 +37,8 @@ namespace acid
 		template<typename T>
 		void Add(const std::string &name)
 		{
+			std::lock_guard<std::mutex> lock(m_mutex);
+
 			if (m_components.find(name) != m_components.end())
 			{
 				Log::Error("Component '%s' is already registered!\n", name.c_str());
@@ -65,13 +69,13 @@ namespace acid
 		/// </summary>
 		/// <param name="name"> The component name to create. </param>
 		/// <returns> The new component. </returns>
-		Component *Create(const std::string &name);
+		Component *Create(const std::string &name) const;
 
 		/// <summary>
 		/// Finds the registered name to a component.
 		/// </summary>
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
-		std::optional<std::string> FindName(Component *compare);
+		std::optional<std::string> FindName(Component *compare) const;
 	};
 }

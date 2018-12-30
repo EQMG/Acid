@@ -17,16 +17,12 @@ namespace acid
 		m_error(false)
 	{
 		INSTANCE = this;
+		Log::OpenLog("Logs/" + GetDateTime() + ".log");
 
 		if (!emptyRegister)
 		{
 			m_moduleManager.FillRegister();
 		}
-	}
-
-	Engine::~Engine()
-	{
-		Log::CreateLog("Logs/" + ((m_error ? "Crashes/" : "") + GetDateTime()) + ".log");
 	}
 
 	int32_t Engine::Run()

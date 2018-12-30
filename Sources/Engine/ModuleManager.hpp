@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <mutex>
 #include <memory>
 #include "Module.hpp"
 
@@ -13,6 +14,7 @@ namespace acid
 	{
 	private:
 		friend class ModuleUpdater;
+		std::mutex m_mutex;
 		std::map<float, std::unique_ptr<Module>> m_modules;
 	public:
 		ModuleManager();
@@ -31,7 +33,7 @@ namespace acid
 		/// </summary>
 		/// <param name="module"> The module to find. </param>
 		/// <returns> If the module is in the registry. </returns>
-		bool Contains(Module *module) const;
+		bool Contains(Module *module);
 
 		/// <summary>
 		/// Gets a module instance by type from the register.
@@ -90,6 +92,8 @@ namespace acid
 		template<typename T>
 		void Remove()
 		{
+			std::lock_guard<std::mutex> lock(m_mutex);
+
 			for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 			{
 				auto casted = dynamic_cast<T *>((*it).second.get());
@@ -105,6 +109,6 @@ namespace acid
 		/// Runs updates for all module update types.
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
-		void RunUpdate(const ModuleUpdate &update) const;
+		void RunUpdate(const ModuleUpdate &update);
 	};
 }

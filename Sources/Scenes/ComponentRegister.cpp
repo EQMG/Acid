@@ -24,6 +24,7 @@
 namespace acid
 {
 	ComponentRegister::ComponentRegister() :
+		m_mutex(std::mutex()),
 		m_components(std::map<std::string, ComponentCreate>())
 	{
 		Add<ColliderCapsule>("ColliderCapsule");
@@ -51,12 +52,14 @@ namespace acid
 
 	void ComponentRegister::Remove(const std::string &name)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		//	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](const std::string &n, const ComponentCreate &c){
 		//		return name == n; // FIXME: Remove
 		//	}), m_components.end());
 	}
 
-	Component *ComponentRegister::Create(const std::string &name)
+	Component *ComponentRegister::Create(const std::string &name) const
 	{
 		auto it = m_components.find(name);
 
@@ -69,7 +72,7 @@ namespace acid
 		return ((*it).second).m_create();
 	}
 
-	std::optional<std::string> ComponentRegister::FindName(Component *compare)
+	std::optional<std::string> ComponentRegister::FindName(Component *compare) const
 	{
 		//	auto found = std::find_if(m_components.begin(), m_components.end(), [compare](const std::string &s, const ComponentCreate &c){
 		//		return c.m_isSame(compare);// FIXME: Remove
