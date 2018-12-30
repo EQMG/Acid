@@ -1,7 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <sstream>
+#include <mutex>
+#include <fstream>
 #include <string>
 #include "Exports.hpp"
 
@@ -13,7 +14,8 @@ namespace acid
 	class ACID_EXPORT Log
 	{
 	private:
-		static std::ostringstream STREAM;
+		static std::mutex MUTEX;
+		static std::ofstream STREAM;
 	public:
 		/// <summary>
 		/// Outputs a message into the console.
@@ -50,10 +52,10 @@ namespace acid
 		}
 
 		/// <summary>
-		/// Outputs all logs into a file.
+		/// Sets a fule to output all log messages into.
 		/// </summary>
 		/// <param name="filename"> The filename to output into. </param>
-		static void CreateLog(const std::string &filename);
+		static void OpenLog(const std::string &filename);
 	private:
 		template<typename... Args>
 		static std::string StringFormat(const std::string &format, Args &&... args)

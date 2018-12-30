@@ -111,7 +111,7 @@ namespace acid
 		/// <param name="pixels"> The pixels to copy to the image. </param>
 		void SetPixels(uint8_t *pixels);
 
-		std::string GetFilename() override { return m_filename; };
+		std::string GetFilename() const override { return m_filename; };
 
 		VkFilter GetFilter() const { return m_filter; }
 

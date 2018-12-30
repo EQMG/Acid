@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <mutex>
 #include <vector>
 #include "Engine/Engine.hpp"
 #include "Maths/Timer.hpp"
@@ -15,6 +16,7 @@ namespace acid
 		public Module
 	{
 	private:
+		std::mutex m_mutex;
 		std::vector<std::shared_ptr<IResource>> m_resources;
 		Timer m_timerPurge;
 	public:
@@ -28,7 +30,7 @@ namespace acid
 
 		void Update() override;
 
-		std::shared_ptr<IResource> Find(const std::string &filename);
+		std::shared_ptr<IResource> Find(const std::string &filename) const;
 
 		void Add(const std::shared_ptr<IResource> &resource);
 

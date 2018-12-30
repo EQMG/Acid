@@ -86,7 +86,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		std::string GetFilename() override { return m_filename; }
+		std::string GetFilename() const override { return m_filename; }
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

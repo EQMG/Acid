@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <mutex>
 #include <vector>
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
@@ -14,8 +15,7 @@ namespace acid
 		public Module
 	{
 	private:
-		static const float MAX_ELAPSED_TIME;
-
+		std::mutex m_mutex;
 		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
 	public:
 		/// <summary>

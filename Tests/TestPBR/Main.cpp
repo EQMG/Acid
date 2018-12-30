@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	// Registers modules.
 
 	// Registers components.
-	auto componentRegister = Scenes::Get()->GetComponentRegister();
+	auto &componentRegister = Scenes::Get()->GetComponentRegister();
 	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Initializes modules.

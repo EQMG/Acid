@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <future>
 #include "Maths/Vector3.hpp"
 #include "Resources/IResource.hpp"
 #include "Audio.hpp"
@@ -31,10 +32,9 @@ namespace acid
 
 		~SoundBuffer();
 
-		std::string GetFilename() override { return m_filename; };
+		std::string GetFilename() const override { return m_filename; };
 
-		uint32_t GetBuffer() const { return m_buffer; };
-
+		uint32_t GetBuffer() const { return m_buffer; }
 	private:
 		static uint32_t LoadBufferWav(const std::string &filename);
 

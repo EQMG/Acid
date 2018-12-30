@@ -40,8 +40,6 @@ namespace acid
 		/// <param name="emptyRegister"> If the module register will start empty. </param>
 		explicit Engine(const bool &emptyRegister = false);
 
-		~Engine();
-
 		/// <summary>
 		/// The update function for the updater.
 		/// </summary>

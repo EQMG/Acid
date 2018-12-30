@@ -40,7 +40,7 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
-		std::string GetFilename() override { return m_filename; }
+		std::string GetFilename() const override { return m_filename; }
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 

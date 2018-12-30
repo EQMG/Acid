@@ -9,6 +9,7 @@ namespace acid
 	Entity::Entity(const Transform &transform) :
 		m_name(""),
 		m_localTransform(transform),
+		m_mutex(std::mutex()),
 		m_components(std::vector<std::unique_ptr<Component>>()),
 		m_parent(nullptr),
 		m_children(std::vector<Entity *>()),
@@ -52,6 +53,8 @@ namespace acid
 
 	void Entity::Update()
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_components.begin(); it != m_components.end();)
 		{
 			if ((*it)->IsRemoved())
@@ -82,6 +85,8 @@ namespace acid
 
 	Component *Entity::AddComponent(Component *component)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		if (component == nullptr)
 		{
 			return nullptr;
@@ -94,6 +99,8 @@ namespace acid
 
 	void Entity::RemoveComponent(Component *component)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			if ((*it).get() == component)
@@ -107,6 +114,8 @@ namespace acid
 
 	void Entity::RemoveComponent(const std::string &name)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{
 			auto componentName = Scenes::Get()->GetComponentRegister().FindName((*it).get());

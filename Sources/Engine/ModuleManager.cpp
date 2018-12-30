@@ -19,6 +19,7 @@
 namespace acid
 {
 	ModuleManager::ModuleManager() :
+		m_mutex(std::mutex()),
 		m_modules(std::map<float, std::unique_ptr<Module>>())
 	{
 	}
@@ -41,8 +42,10 @@ namespace acid
 		Add<Shadows>(MODULE_UPDATE_NORMAL);
 	}
 
-	bool ModuleManager::Contains(Module *module) const
+	bool ModuleManager::Contains(Module *module)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto &module1 : m_modules)
 		{
 			if (module1.second.get() == module)
@@ -62,6 +65,7 @@ namespace acid
 			return nullptr;
 		}
 
+		std::lock_guard<std::mutex> lock(m_mutex);
 		float key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
 		m_modules.emplace(key, module);
 		return module;
@@ -69,6 +73,8 @@ namespace acid
 
 	void ModuleManager::Remove(Module *module)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 		{
 			if ((*it).second.get() != module)
@@ -80,8 +86,10 @@ namespace acid
 		}
 	}
 
-	void ModuleManager::RunUpdate(const ModuleUpdate &update) const
+	void ModuleManager::RunUpdate(const ModuleUpdate &update)
 	{
+		std::lock_guard<std::mutex> lock(m_mutex);
+
 		for (auto &[key, module] : m_modules)
 		{
 			if (static_cast<int32_t>(std::floor(key)) == update)

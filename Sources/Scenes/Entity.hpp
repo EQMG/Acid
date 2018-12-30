@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <mutex>
 #include <vector>
 #include "Engine/Exports.hpp"
 #include "Maths/Transform.hpp"
@@ -17,6 +18,7 @@ namespace acid
 		std::string m_name;
 		Transform m_localTransform;
 		mutable Transform m_worldTransform;
+		std::mutex m_mutex;
 		std::vector<std::unique_ptr<Component>> m_components;
 		Entity *m_parent;
 		std::vector<Entity *> m_children;
@@ -62,7 +64,7 @@ namespace acid
 		/// <param name="allowDisabled"> If disabled components will be returned. </param>
 		/// <returns> The found component. </returns>
 		template<typename T>
-		T *GetComponent(const bool &allowDisabled = false)
+		T *GetComponent(const bool &allowDisabled = false) const
 		{
 			T *alternative = nullptr;
 
@@ -92,7 +94,7 @@ namespace acid
 		/// <param name="allowDisabled"> If disabled components will be returned. </param>
 		/// <returns> The components. </returns>
 		template<typename T>
-		std::vector<T *> GetComponents(const bool &allowDisabled = false)
+		std::vector<T *> GetComponents(const bool &allowDisabled = false) const
 		{
 			std::vector<T *> result = {};
 
@@ -158,6 +160,8 @@ namespace acid
 		template<typename T>
 		void RemoveComponent()
 		{
+			std::lock_guard<std::mutex> lock(m_mutex);
+
 			for (auto it = m_components.begin(); it != m_components.end(); ++it)
 			{
 				auto casted = dynamic_cast<T *>((*it).get());

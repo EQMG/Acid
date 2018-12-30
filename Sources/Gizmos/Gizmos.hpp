@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <mutex>
 #include <vector>
 #include <memory>
 #include "Engine/Engine.hpp"
@@ -15,6 +16,7 @@ namespace acid
 		public Module
 	{
 	private:
+		std::mutex m_mutex;
 		std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
 	public:
 		/// <summary>

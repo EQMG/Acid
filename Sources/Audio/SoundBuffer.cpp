@@ -49,8 +49,6 @@ namespace acid
 		{
 			m_buffer = LoadBufferOgg(m_filename);
 		}
-
-		Audio::CheckAl(alGetError());
 	}
 
 	SoundBuffer::~SoundBuffer()
@@ -123,6 +121,7 @@ namespace acid
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data.get(), size, samplesPerSec);
 
+		Audio::CheckAl(alGetError());
 		return buffer;
 	}
 
@@ -151,7 +150,7 @@ namespace acid
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
 
 		delete[] data;
-
+		Audio::CheckAl(alGetError());
 		return buffer;
 	}
 }
