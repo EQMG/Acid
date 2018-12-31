@@ -27,7 +27,7 @@ namespace test
 
 	std::unique_ptr<Text> OverlayDebug::CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify)
 	{
-		auto result = std::make_unique<Text>(this, UiBound(Vector2(positionX, positionY), UiBound::BOTTOM_LEFT, true), 1.1f, content, FontType::Resource("Fonts/ProximaNova", "Regular"), justify);
+		auto result = std::make_unique<Text>(this, UiBound(Vector2(positionX, positionY), UiBound::BOTTOM_LEFT, true), 1.1f, content, FontType::Create("Fonts/ProximaNova", "Regular"), justify);
 		result->SetTextColour(Colour("#ffffff"));
 		result->SetBorderColour(Colour("#262626"));
 		result->SetBorderDriver<DriverConstant>(0.04f);

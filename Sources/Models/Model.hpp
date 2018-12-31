@@ -6,7 +6,7 @@
 #include "Maths/Vector3.hpp"
 #include "Renderer/Buffers/IndexBuffer.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 #include "IVertex.hpp"
 
 namespace acid
@@ -15,7 +15,7 @@ namespace acid
 	/// Class that represents a OBJ model.
 	/// </summary>
 	class ACID_EXPORT Model :
-		public IResource
+		public Resource
 	{
 	private:
 		std::unique_ptr<VertexBuffer> m_vertexBuffer;
@@ -25,7 +25,7 @@ namespace acid
 		Vector3 m_maxExtents;
 		float m_radius;
 	public:
-		static std::shared_ptr<Model> Resource(const std::string &data);
+		static std::shared_ptr<Model> Create(const std::string &data);
 
 		/// <summary>
 		/// Creates a new empty model.

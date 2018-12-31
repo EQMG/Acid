@@ -34,8 +34,8 @@ namespace acid
 		}
 
 		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
-		m_pipelineMaterial = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
-			PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines()));
+		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
+			PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()));
 	}
 
 	void MaterialDefault::Update()
@@ -45,12 +45,12 @@ namespace acid
 	void MaterialDefault::Decode(const Metadata &metadata)
 	{
 		m_baseDiffuse = metadata.GetChild<Colour>("Base Diffuse");
-		m_diffuseTexture = Texture::Resource(metadata.GetChild<std::string>("Diffuse Texture"));
+		m_diffuseTexture = Texture::Create(metadata.GetChild<std::string>("Diffuse Texture"));
 
 		m_metallic = metadata.GetChild<float>("Metallic");
 		m_roughness = metadata.GetChild<float>("Roughness");
-		m_materialTexture = Texture::Resource(metadata.GetChild<std::string>("Material Texture"));
-		m_normalTexture = Texture::Resource(metadata.GetChild<std::string>("Normal Texture"));
+		m_materialTexture = Texture::Create(metadata.GetChild<std::string>("Material Texture"));
+		m_normalTexture = Texture::Create(metadata.GetChild<std::string>("Normal Texture"));
 
 		m_castsShadows = metadata.GetChild<bool>("Casts Shadows");
 		m_ignoreLighting = metadata.GetChild<bool>("Ignore Lighting");

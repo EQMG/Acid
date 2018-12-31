@@ -24,7 +24,7 @@ namespace acid
 		// Draws the object.
 		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
 		m_model->CmdRender(commandBuffer);
 
 		// Resets switching for next pass.

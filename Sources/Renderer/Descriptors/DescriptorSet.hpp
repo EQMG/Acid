@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class IDescriptor;
+	class Descriptor;
 
 	class WriteDescriptorSet;
 

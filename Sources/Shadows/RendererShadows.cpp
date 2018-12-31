@@ -14,7 +14,7 @@ namespace acid
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, GetDefines()))),
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines()))),
 		m_uniformScene(UniformHandler())
 	{
 	}

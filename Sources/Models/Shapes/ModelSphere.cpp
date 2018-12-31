@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelSphere> ModelSphere::Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
+	std::shared_ptr<ModelSphere> ModelSphere::Create(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
 		auto resource = Resources::Get()->Find(ToName(latitudeBands, longitudeBands, radius));
 
@@ -16,11 +16,11 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelSphere>(latitudeBands, longitudeBands, radius);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<ModelSphere> ModelSphere::Resource(const std::string &data)
+	std::shared_ptr<ModelSphere> ModelSphere::Create(const std::string &data)
 	{
 		if (data.empty())
 		{
@@ -31,7 +31,7 @@ namespace acid
 		auto latitudeBands = String::From<uint32_t>(split[1]);
 		auto longitudeBands = String::From<uint32_t>(split[2]);
 		auto radius = String::From<float>(split[3]);
-		return Resource(latitudeBands, longitudeBands, radius);
+		return Create(latitudeBands, longitudeBands, radius);
 	}
 
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :

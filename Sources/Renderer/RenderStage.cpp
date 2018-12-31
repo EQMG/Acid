@@ -11,7 +11,7 @@ namespace acid
 		m_renderpass(nullptr),
 		m_depthStencil(nullptr),
 		m_framebuffers(nullptr),
-		m_attachments(std::map<std::string, IDescriptor *>()),
+		m_attachments(std::map<std::string, Descriptor *>()),
 		m_clearValues(std::vector<VkClearValue>()),
 		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
 		m_depthAttachment({}),
@@ -143,7 +143,7 @@ namespace acid
 		return outOfDate;
 	}
 
-	IDescriptor *RenderStage::GetAttachment(const std::string &name) const
+	Descriptor *RenderStage::GetAttachment(const std::string &name) const
 	{
 		auto it = m_attachments.find(name);
 

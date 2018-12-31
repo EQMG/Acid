@@ -20,7 +20,7 @@ namespace acid
 	Entity::Entity(const std::string &filename, const Transform &transform) :
 		Entity(transform)
 	{
-		auto prefabObject = EntityPrefab::Resource(filename);
+		auto prefabObject = EntityPrefab::Create(filename);
 
 		for (auto &value : prefabObject->GetParent()->GetChildren())
 		{

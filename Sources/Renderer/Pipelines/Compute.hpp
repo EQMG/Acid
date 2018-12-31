@@ -16,6 +16,7 @@ namespace acid
 		uint32_t m_width;
 		uint32_t m_height;
 		uint32_t m_workgroupSize;
+		bool m_pushDescriptors;
 		std::vector<ShaderDefine> m_defines;
 
 		std::unique_ptr<ShaderProgram> m_shaderProgram;
@@ -32,9 +33,14 @@ namespace acid
 		/// <summary>
 		/// Creates a new compute pipeline.
 		/// </summary>
-		/// <param name="pipelineCreate"> The compute pipelines creation info. </param>
+		/// <param name="shaderStage"> The shader file that will be loaded. </param>
+		/// <param name="width"> The width used in local_size_x. </param>
+		/// <param name="height"> The height used in local_size_y. </param>
+		/// <param name="workgroupSize"> The amount of workgroups to use. </param>
+		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
+		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		explicit Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-			const uint32_t &workgroupSize, const std::vector<ShaderDefine> &defines = {});
+			const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
 
 		~Compute();
 
@@ -45,6 +51,8 @@ namespace acid
 		uint32_t GetHeight() const { return m_height; }
 
 		uint32_t GetWorkgroupSize() const { return m_workgroupSize; }
+
+		bool IsPushDescriptors() const override { return m_pushDescriptors; }
 
 		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
 

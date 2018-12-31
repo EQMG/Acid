@@ -9,7 +9,7 @@ namespace acid
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
-		m_model(ModelRectangle::Resource(0.0f, 1.0f)),
+		m_model(ModelRectangle::Create(0.0f, 1.0f)),
 		m_texture(texture),
 		m_numberOfRows(1),
 		m_selectedRow(0),
@@ -63,7 +63,7 @@ namespace acid
 		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		m_model->CmdRender(commandBuffer);
 		return true;
 	}

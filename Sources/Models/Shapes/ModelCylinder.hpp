@@ -10,9 +10,9 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelCylinder> Resource(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
+		static std::shared_ptr<ModelCylinder> Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 
-		static std::shared_ptr<ModelCylinder> Resource(const std::string &data);
+		static std::shared_ptr<ModelCylinder> Create(const std::string &data);
 
 		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 	private:

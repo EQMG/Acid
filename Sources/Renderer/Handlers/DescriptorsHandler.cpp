@@ -1,10 +1,14 @@
 #include "DescriptorsHandler.hpp"
 
+#include "Display/Display.hpp"
+
 namespace acid
 {
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shaderProgram(nullptr),
+		m_pushDescriptors(false),
 		m_descriptors(std::map<std::string, DescriptorValue>()),
+		m_descriptorWrites(std::vector<WriteDescriptorSet>()),
 		m_descriptorSet(nullptr),
 		m_changed(false)
 	{
@@ -12,13 +16,15 @@ namespace acid
 
 	DescriptorsHandler::DescriptorsHandler(const IPipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
+		m_pushDescriptors(pipeline.IsPushDescriptors()),
 		m_descriptors(std::map<std::string, DescriptorValue>()),
+		m_descriptorWrites(std::vector<WriteDescriptorSet>()),
 		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
 		m_changed(true)
 	{
 	}
 
-	void DescriptorsHandler::Push(const std::string &descriptorName, IDescriptor *descriptor, const std::optional<OffsetSize> &offsetSize)
+	void DescriptorsHandler::Push(const std::string &descriptorName, Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize)
 	{
 		if (m_shaderProgram == nullptr)
 		{
@@ -61,12 +67,12 @@ namespace acid
 		m_changed = true;
 	}
 
-	void DescriptorsHandler::Push(const std::string &descriptorName, IDescriptor &descriptor, const std::optional<OffsetSize> &offsetSize)
+	void DescriptorsHandler::Push(const std::string &descriptorName, Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize)
 	{
 		Push(descriptorName, &descriptor, offsetSize);
 	}
 
-	void DescriptorsHandler::Push(const std::string &descriptorName, const std::shared_ptr<IDescriptor> &descriptor, const std::optional<OffsetSize> &offsetSize)
+	void DescriptorsHandler::Push(const std::string &descriptorName, const std::shared_ptr<Descriptor> &descriptor, const std::optional<OffsetSize> &offsetSize)
 	{
 		Push(descriptorName, descriptor.get(), offsetSize);
 	}
@@ -108,32 +114,62 @@ namespace acid
 		if (m_shaderProgram != pipeline.GetShaderProgram())
 		{
 			m_shaderProgram = pipeline.GetShaderProgram();
+			m_pushDescriptors = pipeline.IsPushDescriptors();
 			m_descriptors.clear();
-			m_descriptorSet = std::make_unique<DescriptorSet>(pipeline);
+
+			if (!m_pushDescriptors)
+			{
+				m_descriptorSet = std::make_unique<DescriptorSet>(pipeline);
+			}
+
 			m_changed = false;
 			return false;
 		}
 
 		if (m_changed)
 		{
-			std::vector<WriteDescriptorSet> descriptorWrites = {};
+			m_descriptorWrites.clear();
 
 			for (auto &[descriptorName, descriptor] : m_descriptors)
 			{
 				VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(descriptor.location);
-				descriptorWrites.emplace_back(descriptor.descriptor->GetWriteDescriptor(descriptor.location,
-					descriptorType, *m_descriptorSet, descriptor.offsetSize));
+				m_descriptorWrites.emplace_back(descriptor.descriptor->GetWriteDescriptor(descriptor.location,
+					descriptorType, m_pushDescriptors ? nullptr : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize));
 			}
 
-			m_descriptorSet->Update(descriptorWrites);
+			if (!m_pushDescriptors)
+			{
+				m_descriptorSet->Update(m_descriptorWrites);
+			}
+
 			m_changed = false;
 		}
 
 		return true;
 	}
 
-	void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer)
+	void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, const IPipeline &pipeline)
 	{
-		m_descriptorSet->BindDescriptor(commandBuffer);
+		if (m_pushDescriptors)
+		{
+			auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+			std::vector<VkWriteDescriptorSet> descriptors = {}; // TODO: Remove.
+
+			for (auto &descriptorWrite : m_descriptorWrites)
+			{
+				auto descriptor = static_cast<VkWriteDescriptorSet>(descriptorWrite);
+				descriptor.pImageInfo = &descriptorWrite.imageInfo;
+				descriptor.pBufferInfo = &descriptorWrite.bufferInfo;
+				descriptors.emplace_back(descriptor);
+			}
+
+			Display::FvkCmdPushDescriptorSetKHR(logicalDevice, commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
+				0, static_cast<uint32_t>(descriptors.size()), descriptors.data());
+		}
+		else
+		{
+			m_descriptorSet->BindDescriptor(commandBuffer);
+		}
 	}
 }

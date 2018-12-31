@@ -6,13 +6,13 @@
 
 namespace acid
 {
-	std::shared_ptr<Model> Model::Resource(const std::string &data)
+	std::shared_ptr<Model> Model::Create(const std::string &data)
 	{
 		return Scenes::Get()->GetModelRegister().Create(data);
 	}
 
 	Model::Model() :
-		IResource(""),
+		Resource(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
 		m_minExtents(Vector3()),

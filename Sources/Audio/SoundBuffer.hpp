@@ -3,7 +3,7 @@
 #include <string>
 #include <future>
 #include "Maths/Vector3.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 #include "Audio.hpp"
 
 namespace acid
@@ -12,7 +12,7 @@ namespace acid
 	/// Class that represents a sound buffer.
 	/// </summary>
 	class ACID_EXPORT SoundBuffer :
-		public IResource
+		public Resource
 	{
 	private:
 		std::string m_filename;
@@ -22,7 +22,7 @@ namespace acid
 		/// Will find an existing sound buffer with the same filename, or create a new sound buffer.
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
-		static std::shared_ptr<SoundBuffer> Resource(const std::string &filename);
+		static std::shared_ptr<SoundBuffer> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new sound buffer.

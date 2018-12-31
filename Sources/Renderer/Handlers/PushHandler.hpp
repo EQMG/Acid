@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <memory>
-#include "Renderer/Descriptors/IDescriptor.hpp"
+#include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Pipelines/IPipeline.hpp"
 
 namespace acid

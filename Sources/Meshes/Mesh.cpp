@@ -27,6 +27,6 @@ namespace acid
 
 	void Mesh::TrySetModel(const std::string &filename)
 	{
-		m_model = Model::Resource(filename);
+		m_model = Model::Create(filename);
 	}
 }

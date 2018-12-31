@@ -164,7 +164,7 @@ namespace acid
 		/// <param name="textColour"> The colour of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Resource("Fonts/ProximaNova", "Regular"),
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
 			const TextJustify &justify = TEXT_JUSTIFY_LEFT, const float &maxWidth = 1.0f, const Colour &textColour = Colour::BLACK, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;

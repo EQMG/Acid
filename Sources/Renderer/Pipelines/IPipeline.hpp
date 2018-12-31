@@ -92,6 +92,8 @@ namespace acid
 
 		virtual ShaderProgram *GetShaderProgram() const = 0;
 
+		virtual bool IsPushDescriptors() const = 0;
+
 		virtual VkDescriptorSetLayout GetDescriptorSetLayout() const = 0;
 
 		virtual VkDescriptorPool GetDescriptorPool() const = 0;

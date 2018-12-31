@@ -18,7 +18,7 @@ namespace acid
 	const float FontMetafile::LINE_HEIGHT = 0.03f;
 	const int32_t FontMetafile::SPACE_ASCII = 32;
 
-	std::shared_ptr<FontMetafile> FontMetafile::Resource(const std::string &filename)
+	std::shared_ptr<FontMetafile> FontMetafile::Create(const std::string &filename)
 	{
 		if (filename.empty())
 		{
@@ -33,12 +33,12 @@ namespace acid
 		}
 
 		auto result = std::make_shared<FontMetafile>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	FontMetafile::FontMetafile(const std::string &filename) :
-		IResource(filename),
+		Resource(filename),
 		m_metadata(std::map<int32_t, FontCharacter>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),

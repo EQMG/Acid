@@ -42,10 +42,10 @@ namespace acid
 		}
 	};
 
-	class ACID_EXPORT IDescriptor
+	class ACID_EXPORT Descriptor
 	{
 	public:
 		virtual WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const = 0;
+			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const = 0;
 	};
 }

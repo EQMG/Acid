@@ -5,7 +5,7 @@
 namespace acid
 {
 	StorageBuffer::StorageBuffer(const VkDeviceSize &size) :
-		IDescriptor(),
+		Descriptor(),
 		Buffer(size, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT) // TODO: Use DEVICE_LOCAL instead.
 	{
 	}
@@ -33,7 +33,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
@@ -48,7 +48,7 @@ namespace acid
 
 		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;

@@ -42,7 +42,7 @@ namespace acid
 
 			auto modelCreate = [](std::string data) -> std::shared_ptr<Model>
 			{
-				return T::Resource(data);
+				return T::Create(data);
 			};
 
 			m_models.emplace(type, modelCreate);

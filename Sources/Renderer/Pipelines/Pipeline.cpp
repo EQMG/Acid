@@ -15,7 +15,7 @@ namespace acid
 	};
 
 	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode, const PipelineDepth &depthMode,
-	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const std::vector<ShaderDefine> &defines) :
+	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
 		IPipeline(),
 		m_graphicsStage(graphicsStage),
 		m_shaderStages(shaderStages),
@@ -24,6 +24,7 @@ namespace acid
 		m_depthMode(depthMode),
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
+		m_pushDescriptors(pushDescriptors),
 		m_defines(defines),
 		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStages.back())),
 		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
@@ -80,7 +81,7 @@ namespace acid
 
 	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
 		Pipeline(graphicsStage, pipelineCreate.m_shaderStages, pipelineCreate.m_vertexInputs, pipelineCreate.m_pipelineMode, pipelineCreate.m_depthMode,
-			pipelineCreate.m_polygonMode, pipelineCreate.m_cullMode, pipelineCreate.m_defines)
+			pipelineCreate.m_polygonMode, pipelineCreate.m_cullMode, pipelineCreate.m_pushDescriptors, pipelineCreate.m_defines)
 	{
 	}
 
@@ -168,6 +169,7 @@ namespace acid
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));

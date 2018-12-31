@@ -68,11 +68,13 @@ namespace acid
 			return false;
 		}
 
+		auto &pipeline = *materialPipeline->GetPipeline();
+
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", uniformScene);
 		m_descriptorSet.Push("UboObject", m_uniformObject);
 		material->PushDescriptors(m_descriptorSet);
-		bool updateSuccess = m_descriptorSet.Update(*materialPipeline->GetPipeline());
+		bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 		if (!updateSuccess)
 		{
@@ -80,7 +82,7 @@ namespace acid
 		}
 
 		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		meshModel->CmdRender(commandBuffer);
 		return true;
 	}

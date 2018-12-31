@@ -31,7 +31,7 @@ This is a list of current features in Acid:
  * Frustum culling
  * Resource management
  * Event listener system
- * Resource path searches, and packaging
+ * File path searches, and packaging
  * GUI and SDF font rendering
  * Entity component system
  * Particle effect systems
@@ -64,16 +64,16 @@ Acid uses the following libraries:
 # Code Snippets
 ```cpp
 // Imports a 2D texture using nearest filtering.
-auto guiBlack = Texture::Resource("Guis/Black.png", VK_FILTER_NEAREST);
+auto guiBlack = Texture::Create("Guis/Black.png", VK_FILTER_NEAREST);
 
 // Imports a 3D cubemap (face names defined in Cubemap.cpp).
-auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
+auto skyboxSnowy = Cubemap::Create("Objects/SkyboxSnowy", ".png");
 
 // Imports a OBJ model.
-auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
+auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
 
 // Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
-auto sphere = ModelSphere::Resource(20, 20, 1.0f);
+auto sphere = ModelSphere::Create(20, 20, 1.0f);
 
 // Plays a 3D sound (sound buffer resource internally managed), at the (10, 0, 0), at half volume.
 auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::RIGHT), SOUND_TYPE_EFFECT, false, true, 0.5f);
@@ -83,11 +83,11 @@ auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", T
 
 // Creates a entity.
 auto sphere = GetStructure()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
-sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
+sphere->AddComponent<Mesh>(ShapeSphere::Create(30, 30, 1.0f));
 sphere->AddComponent<ShapeSphere>(2.0f);
 sphere->AddComponent<Rigidbody>(2.0f);
-sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
-    0.0f, 0.5f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
+sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Albedo.png"),
+    0.0f, 0.5f, Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>();
 
 // Vector maths.

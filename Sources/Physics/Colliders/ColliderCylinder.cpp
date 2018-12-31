@@ -6,7 +6,7 @@
 namespace acid
 {
 	ColliderCylinder::ColliderCylinder(const float &radius, const float &height, const Transform &localTransform) :
-		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Cylinder.obj"), 3.0f, Colour::YELLOW)),
+		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cylinder.obj"), 3.0f, Colour::YELLOW)),
 		m_shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),
 		m_radius(radius),
 		m_height(height)

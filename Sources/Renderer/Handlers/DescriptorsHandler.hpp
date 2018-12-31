@@ -19,13 +19,15 @@ namespace acid
 	private:
 		struct DescriptorValue
 		{
-			IDescriptor *descriptor;
+			Descriptor *descriptor{};
 			std::optional<OffsetSize> offsetSize;
-			uint32_t location;
+			uint32_t location{};
 		};
 
 		ShaderProgram *m_shaderProgram;
+		bool m_pushDescriptors;
 		std::map<std::string, DescriptorValue> m_descriptors;
+		std::vector<WriteDescriptorSet> m_descriptorWrites;
 		std::unique_ptr<DescriptorSet> m_descriptorSet;
 		bool m_changed;
 	public:
@@ -33,11 +35,11 @@ namespace acid
 
 		explicit DescriptorsHandler(const IPipeline &pipeline);
 
-		void Push(const std::string &descriptorName, IDescriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		void Push(const std::string &descriptorName, Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
-		void Push(const std::string &descriptorName, IDescriptor &descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		void Push(const std::string &descriptorName, Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
-		void Push(const std::string &descriptorName, const std::shared_ptr<IDescriptor> &descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		void Push(const std::string &descriptorName, const std::shared_ptr<Descriptor> &descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
 		void Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize = {});
 
@@ -47,7 +49,7 @@ namespace acid
 
 		bool Update(const IPipeline &pipeline);
 
-		void BindDescriptor(const CommandBuffer &commandBuffer);
+		void BindDescriptor(const CommandBuffer &commandBuffer, const IPipeline &pipeline);
 
 		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
 	};

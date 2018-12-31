@@ -9,7 +9,7 @@ namespace acid
 {
 	const uint32_t GizmoType::MAX_TYPE_INSTANCES = 512;
 
-	std::shared_ptr<GizmoType> GizmoType::Resource(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
+	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
 		auto resource = Resources::Get()->Find(ToName(model, lineThickness, diffuse));
 
@@ -19,20 +19,20 @@ namespace acid
 		}
 
 		auto result = std::make_shared<GizmoType>(model, lineThickness, diffuse);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<GizmoType> GizmoType::Resource(const std::string &data)
+	std::shared_ptr<GizmoType> GizmoType::Create(const std::string &data)
 	{
 		auto split = String::Split(data, "_");
-		auto model = Model::Resource(split[1]);
+		auto model = Model::Create(split[1]);
 		auto lineThickness = String::From<float>(split[2]);
-		return Resource(model, lineThickness);
+		return Create(model, lineThickness);
 	}
 
 	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse) :
-		IResource(ToName(model, lineThickness, diffuse)),
+		Resource(ToName(model, lineThickness, diffuse)),
 		m_model(model),
 		m_lineThickness(lineThickness),
 		m_diffuse(diffuse),
@@ -85,7 +85,7 @@ namespace acid
 		vkCmdSetLineWidth(commandBuffer.GetCommandBuffer(), m_lineThickness);
 
 		// Draws the instanced objects.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
 		m_model->CmdRender(commandBuffer, m_instances);
 		return true;
@@ -93,7 +93,7 @@ namespace acid
 
 	void GizmoType::Decode(const Metadata &metadata)
 	{
-		m_model = Model::Resource(metadata.GetChild<std::string>("Model"));
+		m_model = Model::Create(metadata.GetChild<std::string>("Model"));
 		m_lineThickness = metadata.GetChild<float>("Line Thickness");
 	}
 

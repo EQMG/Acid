@@ -3,7 +3,7 @@
 #include "Models/Model.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Renderer/RenderStage.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
 	/// Class that represents a material pipeline.
 	/// </summary>
 	class ACID_EXPORT PipelineMaterial :
-		public IResource
+		public Resource
 	{
 	private:
 		GraphicsStage m_graphicsStage;
@@ -24,7 +24,7 @@ namespace acid
 		/// </summary>
 		/// <param name="graphicsStage"> Stage the pipeline will be executed on. </param>
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
-		static std::shared_ptr<PipelineMaterial> Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		static std::shared_ptr<PipelineMaterial> Create(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 
 		/// <summary>
 		/// Creates a new material pipeline.

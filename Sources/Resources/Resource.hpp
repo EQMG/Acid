@@ -8,7 +8,7 @@ namespace acid
 	/// <summary>
 	/// A managed resource object.
 	/// </summary>
-	class ACID_EXPORT IResource
+	class ACID_EXPORT Resource
 	{
 	protected:
 		std::string m_name;
@@ -17,7 +17,7 @@ namespace acid
 		/// Creates a new resource with a unique name.
 		/// </summary>
 		/// <param name="name"> The unique name to use with this resource, this can be changed later. </param>
-		IResource(const std::string &name) :
+		explicit Resource(const std::string &name) :
 			m_name(name)
 		{
 		}

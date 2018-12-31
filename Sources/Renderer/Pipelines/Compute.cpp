@@ -9,12 +9,13 @@
 namespace acid
 {
 	Compute::Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-	    const uint32_t &workgroupSize, const std::vector<ShaderDefine> &defines) :
+	    const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
 		IPipeline(),
 		m_shaderStage(shaderStage),
 		m_width(width),
 		m_height(height),
 		m_workgroupSize(workgroupSize),
+		m_pushDescriptors(pushDescriptors),
 		m_defines(defines),
 		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStage)),
 		m_shaderModule(VK_NULL_HANDLE),
@@ -108,6 +109,7 @@ namespace acid
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));

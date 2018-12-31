@@ -12,7 +12,7 @@ namespace test
 	
 	void MaterialVoxel::Start()
 	{
-		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Voxels/Voxel.vert", "Shaders/Voxels/Voxel.frag"}, {VertexModel::GetVertexInput()},
+		m_material = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Voxels/Voxel.vert", "Shaders/Voxels/Voxel.frag"}, {VertexModel::GetVertexInput()},
 		    PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}));
 	}
 

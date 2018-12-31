@@ -16,9 +16,9 @@ namespace acid
 	                             const float &progressMin, const float &progressMax, const int32_t &roundTo,
 	                             const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
-		m_background(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
-		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Resource("Guis/Button.png"))),
-		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Resource("Fonts/ProximaNova", "Regular"),
+		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
+		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
+		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Create("Fonts/ProximaNova", "Regular"),
 			TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x, Colour::WHITE)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, false, 0.9f)),
 		m_prefix(prefix),

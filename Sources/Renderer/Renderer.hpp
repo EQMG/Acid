@@ -3,8 +3,8 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Commands/CommandBuffer.hpp"
-#include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Swapchain.hpp"
+#include "Textures/DepthStencil.hpp"
 #include "RenderManager.hpp"
 #include "RendererRegister.hpp"
 #include "RenderStage.hpp"
@@ -72,7 +72,7 @@ namespace acid
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
-		IDescriptor *GetAttachment(const std::string &name) const;
+		Descriptor *GetAttachment(const std::string &name) const;
 
 		Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 

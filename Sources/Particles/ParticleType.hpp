@@ -8,7 +8,7 @@
 #include "Models/Model.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 #include "Textures/Texture.hpp"
 #include "Serialized/Metadata.hpp"
 
@@ -29,7 +29,7 @@ namespace acid
 	/// A definition for what a particle should act and look like.
 	/// </summary>
 	class ACID_EXPORT ParticleType :
-		public IResource
+		public Resource
 	{
 	private:
 		static const uint32_t INSTANCE_STEPS;
@@ -58,13 +58,13 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		static std::shared_ptr<ParticleType> Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
 		/// </summary>
 		/// <param name="data"> The combined data for the particle type. </param>
-		static std::shared_ptr<ParticleType> Resource(const std::string &data);
+		static std::shared_ptr<ParticleType> Create(const std::string &data);
 
 		/// <summary>
 		/// Creates a new particle type.
