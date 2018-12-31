@@ -18,8 +18,8 @@ namespace acid
 
 	void MaterialSkybox::Start()
 	{
-		m_pipelineMaterial = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_MRT, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, {}));
+		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
+			PIPELINE_MODE_MRT, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, {}));
 	}
 
 	void MaterialSkybox::Update()
@@ -28,7 +28,7 @@ namespace acid
 
 	void MaterialSkybox::Decode(const Metadata &metadata)
 	{
-		m_cubemap = Cubemap::Resource(metadata.GetChild<std::string>("Cubemap Texture"), metadata.GetChild<std::string>("Cubemap Suffix"));
+		m_cubemap = Cubemap::Create(metadata.GetChild<std::string>("Cubemap Texture"), metadata.GetChild<std::string>("Cubemap Suffix"));
 		m_skyColour = metadata.GetChild<Colour>("Sky Colour");
 	}
 

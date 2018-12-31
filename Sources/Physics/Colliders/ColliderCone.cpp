@@ -6,7 +6,7 @@
 namespace acid
 {
 	ColliderCone::ColliderCone(const float &radius, const float &height, const Transform &localTransform) :
-		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Cone.obj"), 3.0f, Colour::GREEN)),
+		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cone.obj"), 3.0f, Colour::GREEN)),
 		m_shape(std::make_unique<btConeShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)

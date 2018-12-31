@@ -11,7 +11,7 @@ namespace acid
 {
 	const std::vector<std::string> Cubemap::FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
-	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap)
 	{
 		if (filename.empty())
@@ -27,14 +27,14 @@ namespace acid
 		}
 
 		auto result = std::make_shared<Cubemap>(filename, fileSuffix, filter, addressMode, anisotropic, mipmap);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap) :
-		IResource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
-		IDescriptor(),
+		Resource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
+		Descriptor(),
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
 		m_filter(filter),
@@ -96,8 +96,8 @@ namespace acid
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		IResource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
-		IDescriptor(),
+		Resource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
+		Descriptor(),
 		m_filename(""),
 		m_fileSuffix(""),
 		m_filter(filter),
@@ -178,7 +178,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};
 		imageInfo.sampler = m_sampler;
@@ -187,7 +187,7 @@ namespace acid
 
 		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;

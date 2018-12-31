@@ -5,9 +5,9 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "Renderpass/Renderpass.hpp"
-#include "Swapchain/DepthStencil.hpp"
 #include "Swapchain/Framebuffers.hpp"
 #include "Swapchain/Swapchain.hpp"
+#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {
@@ -21,7 +21,7 @@ namespace acid
 		std::unique_ptr<DepthStencil> m_depthStencil;
 		std::unique_ptr<Framebuffers> m_framebuffers;
 
-		std::map<std::string, IDescriptor *> m_attachments;
+		std::map<std::string, Descriptor *> m_attachments;
 
 		std::vector<VkClearValue> m_clearValues;
 		std::vector<uint32_t> m_subpassAttachmentCount;
@@ -54,7 +54,7 @@ namespace acid
 
 		Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
-		IDescriptor *GetAttachment(const std::string &name) const;
+		Descriptor *GetAttachment(const std::string &name) const;
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 

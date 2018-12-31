@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Helpers/String.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 #include "Textures/Texture.hpp"
 #include "FontMetafile.hpp"
 
@@ -11,7 +11,7 @@ namespace acid
 	/// A loader capable of loading font data into a instance of a text mesh.
 	/// </summary>
 	class ACID_EXPORT FontType :
-		public IResource
+		public Resource
 	{
 	private:
 		std::shared_ptr<Texture> m_texture;
@@ -22,13 +22,13 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
 		/// <param name="fontStyle"> The style selected to load as this type. </param>
-		static std::shared_ptr<FontType> Resource(const std::string &filename, const std::string &fontStyle);
+		static std::shared_ptr<FontType> Create(const std::string &filename, const std::string &fontStyle);
 
 		/// <summary>
 		/// Will find an existing font type with the same filename, or create a new font type.
 		/// </summary>
 		/// <param name="data"> The combined data for the family file path and selected style. </param>
-		static std::shared_ptr<FontType> Resource(const std::string &data);
+		static std::shared_ptr<FontType> Create(const std::string &data);
 
 		/// <summary>
 		/// Creates a new text loader.

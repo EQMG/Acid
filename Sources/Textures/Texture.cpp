@@ -16,7 +16,7 @@ namespace acid
 	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;
 
-	std::shared_ptr<Texture> Texture::Resource(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+	std::shared_ptr<Texture> Texture::Create(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
 	{
 		if (filename.empty())
 		{
@@ -31,13 +31,13 @@ namespace acid
 		}
 
 		auto result = std::make_shared<Texture>(filename, filter, addressMode, anisotropic, mipmap);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
-		IResource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
-		IDescriptor(),
+		Resource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
+		Descriptor(),
 		m_filename(filename),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -99,8 +99,8 @@ namespace acid
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		IResource(ToName("", filter, addressMode, anisotropic, mipmap)),
-		IDescriptor(),
+		Resource(ToName("", filter, addressMode, anisotropic, mipmap)),
+		Descriptor(),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -181,7 +181,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet Texture::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};
 		imageInfo.sampler = m_sampler;
@@ -190,7 +190,7 @@ namespace acid
 
 		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;

@@ -6,7 +6,7 @@
 namespace acid
 {
 	ColliderCube::ColliderCube(const Vector3 &extents, const Transform &localTransform) :
-		Collider(localTransform, GizmoType::Resource(Model::Resource("Gizmos/Cube.obj"), 3.0f, Colour::RED)),
+		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cube.obj"), 3.0f, Colour::RED)),
 		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
 		m_extents(extents)
 	{

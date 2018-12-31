@@ -82,7 +82,7 @@ namespace acid
 		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		m_model->CmdRender(commandBuffer);
 		return true;
 	}

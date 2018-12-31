@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	std::shared_ptr<PipelineMaterial> PipelineMaterial::Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
+	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 	{
 		auto resource = Resources::Get()->Find(ToName(graphicsStage, pipelineCreate));
 
@@ -15,12 +15,12 @@ namespace acid
 		}
 
 		auto result = std::make_shared<PipelineMaterial>(graphicsStage, pipelineCreate);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
-		IResource(ToName(graphicsStage, pipelineCreate)),
+		Resource(ToName(graphicsStage, pipelineCreate)),
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
 		m_renderStage(nullptr),

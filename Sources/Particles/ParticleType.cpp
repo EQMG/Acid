@@ -11,7 +11,7 @@ namespace acid
 	const uint32_t ParticleType::INSTANCE_STEPS = 128;
 	const float ParticleType::FRUSTUM_BUFFER = 1.4f;
 
-	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
+	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		auto resource = Resources::Get()->Find(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
 
@@ -21,26 +21,26 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ParticleType>(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<ParticleType> ParticleType::Resource(const std::string &data)
+	std::shared_ptr<ParticleType> ParticleType::Create(const std::string &data)
 	{
 		auto split = String::Split(data, "_");
-		auto texture = Texture::Resource(split[1]);
+		auto texture = Texture::Create(split[1]);
 		auto numberOfRows = String::From<uint32_t>(split[2]);
 		auto colourOffset = Colour(split[3]);
 		auto lifeLength = String::From<float>(split[4]);
 		auto stageCycles = String::From<float>(split[5]);
 		auto scale = String::From<float>(split[6]);
-		return Resource(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
+		return Create(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	}
 
 	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
-		IResource(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale)),
+		Resource(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale)),
 		m_texture(texture),
-		m_model(ModelRectangle::Resource(-0.5f, 0.5f)),
+		m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
 		m_colourOffset(colourOffset),
 		m_lifeLength(lifeLength),
@@ -99,7 +99,7 @@ namespace acid
 		}
 
 		// Draws the instanced objects.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
 		m_model->CmdRender(commandBuffer, m_instances);
 		return true;
@@ -107,7 +107,7 @@ namespace acid
 
 	void ParticleType::Decode(const Metadata &metadata)
 	{
-		m_texture = Texture::Resource(metadata.GetChild<std::string>("Texture"));
+		m_texture = Texture::Create(metadata.GetChild<std::string>("Texture"));
 		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
 		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
 		m_lifeLength = metadata.GetChild<float>("Life Length");

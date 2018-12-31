@@ -50,7 +50,7 @@ namespace acid
 		}
 
 		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 		mesh->GetModel()->CmdRender(commandBuffer);
 		return true;
 	}

@@ -8,7 +8,7 @@ namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.obj";
 
-	std::shared_ptr<ModelObj> ModelObj::Resource(const std::string &filename)
+	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 	{
 		if (filename.empty())
 		{
@@ -23,7 +23,7 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelObj>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 

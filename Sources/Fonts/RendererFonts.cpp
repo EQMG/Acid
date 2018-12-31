@@ -8,7 +8,7 @@ namespace acid
 	RendererFonts::RendererFonts(const GraphicsStage &graphicsStage) :
 		IRenderer(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})),
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, true, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

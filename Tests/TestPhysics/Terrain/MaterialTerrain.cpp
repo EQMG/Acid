@@ -14,7 +14,7 @@ namespace test
 
 	void MaterialTerrain::Start()
 	{
-		m_material = PipelineMaterial::Resource({1, 0}, PipelineCreate({"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {VertexModel::GetVertexInput()},
+		m_material = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}));
 	}
 
@@ -24,8 +24,8 @@ namespace test
 
 	void MaterialTerrain::Decode(const Metadata &metadata)
 	{
-		m_textureR = Texture::Resource(metadata.GetChild<std::string>("Texture R"));
-		m_textureG = Texture::Resource(metadata.GetChild<std::string>("Texture G"));
+		m_textureR = Texture::Create(metadata.GetChild<std::string>("Texture R"));
+		m_textureG = Texture::Create(metadata.GetChild<std::string>("Texture G"));
 	}
 
 	void MaterialTerrain::Encode(Metadata &metadata) const

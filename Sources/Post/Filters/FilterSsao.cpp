@@ -1,9 +1,9 @@
-#include <Helpers/FileSystem.hpp>
 #include "FilterSsao.hpp"
 
-#include "Renderer/Swapchain/DepthStencil.hpp"
+#include "Helpers/FileSystem.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Maths.hpp"
+#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {
@@ -54,7 +54,7 @@ namespace acid
 		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 

@@ -11,7 +11,7 @@
 namespace acid
 {
 	Sound::Sound(const std::string &filename, const Transform &localTransform, const SoundType &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
-		m_soundBuffer(SoundBuffer::Resource(filename)),
+		m_soundBuffer(SoundBuffer::Create(filename)),
 		m_source(0),
 		m_localTransform(localTransform),
 		m_worldTransform(Transform()),
@@ -53,7 +53,7 @@ namespace acid
 
 	void Sound::Decode(const Metadata &metadata)
 	{
-		m_soundBuffer = SoundBuffer::Resource(metadata.GetChild<std::string>("Filename"));
+		m_soundBuffer = SoundBuffer::Create(metadata.GetChild<std::string>("Filename"));
 	}
 
 	void Sound::Encode(Metadata &metadata) const

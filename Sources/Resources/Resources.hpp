@@ -5,7 +5,7 @@
 #include <vector>
 #include "Engine/Engine.hpp"
 #include "Maths/Timer.hpp"
-#include "IResource.hpp"
+#include "Resource.hpp"
 
 namespace acid
 {
@@ -17,7 +17,7 @@ namespace acid
 	{
 	private:
 		std::mutex m_mutex;
-		std::vector<std::shared_ptr<IResource>> m_resources;
+		std::vector<std::shared_ptr<Resource>> m_resources;
 		Timer m_timerPurge;
 	public:
 		/// <summary>
@@ -30,11 +30,11 @@ namespace acid
 
 		void Update() override;
 
-		std::shared_ptr<IResource> Find(const std::string &filename) const;
+		std::shared_ptr<Resource> Find(const std::string &filename) const;
 
-		void Add(const std::shared_ptr<IResource> &resource);
+		void Add(const std::shared_ptr<Resource> &resource);
 
-		bool Remove(const std::shared_ptr<IResource> &resource);
+		bool Remove(const std::shared_ptr<Resource> &resource);
 
 		bool Remove(const std::string &filename);
 	};

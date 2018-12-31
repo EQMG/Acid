@@ -37,17 +37,19 @@ namespace acid
 		PipelineDepth m_depthMode;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
+		bool m_pushDescriptors;
 
 		std::vector<ShaderDefine> m_defines;
 	public:
 		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
-		               const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<ShaderDefine> &defines = {}) :
+			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
 			m_pipelineMode(pipelineMode),
 			m_depthMode(depthMode),
 			m_polygonMode(polygonMode),
 			m_cullMode(cullMode),
+			m_pushDescriptors(pushDescriptors),
 			m_defines(defines)
 		{
 		}
@@ -63,6 +65,8 @@ namespace acid
 		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
 
 		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+
+		bool GetPushDescriptors() const { return m_pushDescriptors; }
 
 		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
 	};
@@ -81,6 +85,7 @@ namespace acid
 		PipelineDepth m_depthMode;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
+		bool m_pushDescriptors;
 		std::vector<ShaderDefine> m_defines;
 
 		std::unique_ptr<ShaderProgram> m_shaderProgram;
@@ -110,10 +115,17 @@ namespace acid
 		/// <summary>
 		/// Creates a new pipeline.
 		/// </summary>
-		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
-		/// <param name="pipelineCreate"> The pipelines creation info. </param>
+		/// <param name="graphicsStage"> The graphics stage this pipeline will be run on. </param>
+		/// <param name="shaderStages"> The source files to load the pipeline shaders from. </param>
+		/// <param name="vertexInputs"> The vertex inputs that will be used as a shaders input. </param>
+		/// <param name="pipelineMode"> The mode this pipeline will run in. </param>
+		/// <param name="depthMode"> The depth read/write that will be used. </param>
+		/// <param name="polygonMode"> The polygon draw mode. </param>
+		/// <param name="cullMode"> The vertex cull mode. </param>
+		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
+		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
-		         const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const std::vector<ShaderDefine> &defines = {});
+			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
 
 		/// <summary>
 		/// Creates a new pipeline.
@@ -145,6 +157,8 @@ namespace acid
 		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
 
 		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+
+		bool IsPushDescriptors() const override { return m_pushDescriptors; }
 
 		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
 

@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelCylinder> ModelCylinder::Resource(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
+	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
 		auto resource = Resources::Get()->Find(ToName(radiusBase, radiusTop, height, slices, stacks));
 
@@ -16,11 +16,11 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<ModelCylinder> ModelCylinder::Resource(const std::string &data)
+	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const std::string &data)
 	{
 		if (data.empty())
 		{
@@ -33,7 +33,7 @@ namespace acid
 		auto height = String::From<float>(split[3]);
 		auto slices = String::From<uint32_t>(split[4]);
 		auto stacks = String::From<uint32_t>(split[5]);
-		return Resource(radiusBase, radiusTop, height, slices, stacks);
+		return Create(radiusBase, radiusTop, height, slices, stacks);
 	}
 
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :

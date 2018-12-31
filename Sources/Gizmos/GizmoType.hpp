@@ -6,7 +6,7 @@
 #include "Models/Model.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -20,7 +20,7 @@ namespace acid
 	};
 
 	class ACID_EXPORT GizmoType :
-		public IResource
+		public Resource
 	{
 	private:
 		std::shared_ptr<Model> m_model;
@@ -40,13 +40,13 @@ namespace acid
 		/// <param name="model"> The model that the gizmo will render. </param>
 		/// <param name="lineThickness"> The thickness that the model will be rendered at. </param>
 		/// <param name="diffuse"> The default diffuse colour for gizmos. </param>
-		static std::shared_ptr<GizmoType> Resource(const std::shared_ptr<Model> &model = nullptr, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::WHITE);
+		static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::WHITE);
 
 		/// <summary>
 		/// Will find an existing gizmo type with the same filename, or create a new gizmo type.
 		/// </summary>
 		/// <param name="data"> The combined data for the gizmo type. </param>
-		static std::shared_ptr<GizmoType> Resource(const std::string &data);
+		static std::shared_ptr<GizmoType> Create(const std::string &data);
 
 		/// <summary>
 		/// Creates a new gizmo type.

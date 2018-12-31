@@ -59,14 +59,14 @@ namespace test
 			for (int j = 0; j < 5; j++)
 			{
 				auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
-				sphere->AddComponent<Mesh>(ModelSphere::Resource(30, 30, 1.0f));
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Diffuse.png"),
-					(float) j / 4.0f, (float) i / 4.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
+				sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 1.0f));
+				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Diffuse.png"),
+					(float) j / 4.0f, (float) i / 4.0f, Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();
 
 				auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
-				teapot->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Tea.obj"));
+				teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 				teapot->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, (float) j / 4.0f, (float) i / 4.0f);
 				teapot->AddComponent<MeshRender>();
 				teapot->AddComponent<ShadowRender>();
@@ -74,7 +74,7 @@ namespace test
 		}
 
 		/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, 90.0f, 0.0f), 0.4f));
-		dragon->AddComponent<Mesh>(ModelObj::Resource("Objects/Testing/Model_Dragon.obj"));
+		dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
 		dragon->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.1f, 0.7f);
 		dragon->AddComponent<MeshRender>();
 		dragon->AddComponent<ShadowRender>();*/

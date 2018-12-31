@@ -22,7 +22,7 @@ namespace acid
 		Pipeline m_pipeline;
 		std::shared_ptr<Model> m_model;
 
-		std::map<std::string, IDescriptor *> m_attachments;
+		std::map<std::string, Descriptor *> m_attachments;
 	public:
 		/// <summary>
 		/// Creates a new post effect filter.
@@ -38,11 +38,11 @@ namespace acid
 
 		std::shared_ptr<Model> GetModel() const { return m_model; }
 
-		IDescriptor *GetAttachment(const std::string &descriptorName, IDescriptor *descriptor) const;
+		Descriptor *GetAttachment(const std::string &descriptorName, Descriptor *descriptor) const;
 
-		IDescriptor *GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const;
+		Descriptor *GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const;
 
-		void SetAttachment(const std::string &descriptorName, IDescriptor *descriptor);
+		void SetAttachment(const std::string &descriptorName, Descriptor *descriptor);
 
 		bool RemoveAttachment(const std::string &name);
 	protected:

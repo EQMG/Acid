@@ -21,8 +21,8 @@ set(_temp_acid_headers
 		Display/Display.hpp
 		Engine/Engine.hpp
 		Engine/Exports.hpp
-		Engine/Module.hpp
 		Engine/Log.hpp
+		Engine/Module.hpp
 		Engine/ModuleManager.hpp
 		Engine/ModuleUpdater.hpp
 		Events/EventChange.hpp
@@ -176,13 +176,12 @@ set(_temp_acid_headers
 		Renderer/Buffers/UniformBuffer.hpp
 		Renderer/Buffers/VertexBuffer.hpp
 		Renderer/Commands/CommandBuffer.hpp
+		Renderer/Descriptors/Descriptor.hpp
 		Renderer/Descriptors/DescriptorSet.hpp
-		Renderer/Descriptors/IDescriptor.hpp
 		Renderer/Handlers/DescriptorsHandler.hpp
 		Renderer/Handlers/PushHandler.hpp
 		Renderer/Handlers/StorageHandler.hpp
 		Renderer/Handlers/UniformHandler.hpp
-		Renderer/RenderManager.hpp
 		Renderer/IRenderer.hpp
 		Renderer/Pipelines/Compute.hpp
 		Renderer/Pipelines/IPipeline.hpp
@@ -190,13 +189,13 @@ set(_temp_acid_headers
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererRegister.hpp
+		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
 		Renderer/RenderStage.hpp
-		Renderer/Swapchain/DepthStencil.hpp
 		Renderer/Swapchain/Framebuffers.hpp
 		Renderer/Swapchain/Swapchain.hpp
-		Resources/IResource.hpp
+		Resources/Resource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
@@ -215,6 +214,7 @@ set(_temp_acid_headers
 		Shadows/Shadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Textures/Cubemap.hpp
+		Textures/DepthStencil.hpp
 		Textures/stb_image.h
 		Textures/stb_image_write.h
 		Textures/Texture.hpp
@@ -403,7 +403,6 @@ set(_temp_acid_sources
 		Renderer/RendererRegister.cpp
 		Renderer/Renderpass/Renderpass.cpp
 		Renderer/RenderStage.cpp
-		Renderer/Swapchain/DepthStencil.cpp
 		Renderer/Swapchain/Framebuffers.cpp
 		Renderer/Swapchain/Swapchain.cpp
 		Resources/Resources.cpp
@@ -421,6 +420,7 @@ set(_temp_acid_sources
 		Shadows/Shadows.cpp
 		Skyboxes/MaterialSkybox.cpp
 		Textures/Cubemap.cpp
+		Textures/DepthStencil.cpp
 		Textures/Texture.cpp
 		Threads/Thread.cpp
 		Threads/ThreadPool.cpp

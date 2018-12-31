@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include "Display/Display.hpp"
-#include "Textures/Texture.hpp"
+#include "Texture.hpp"
 
 namespace acid
 {
@@ -16,7 +16,7 @@ namespace acid
 	};
 
 	DepthStencil::DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples) :
-		IDescriptor(),
+		Descriptor(),
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_width(width),
 		m_height(height),
@@ -72,7 +72,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};
 		imageInfo.sampler = m_sampler;
@@ -81,7 +81,7 @@ namespace acid
 
 		WriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet = descriptorSet.GetDescriptorSet();
+		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;

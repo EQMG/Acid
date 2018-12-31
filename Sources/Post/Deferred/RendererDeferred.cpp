@@ -4,12 +4,12 @@
 #include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
-#include "Renderer/Swapchain/DepthStencil.hpp"
 #include "Renderer/Pipelines/Compute.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
+#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {
@@ -29,8 +29,8 @@ namespace acid
 		m_storageLights(StorageHandler()),
 		m_lightModel(lightModel),
 		m_pipeline(Pipeline(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, GetDefines())),
-		m_model(ModelRectangle::Resource(-1.0f, 1.0f)),
+			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
+		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_brdf(m_lightModel == DEFERRED_IBL ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
 		m_ibl(nullptr),
@@ -120,7 +120,7 @@ namespace acid
 		// Draws the object.
 		m_pipeline.BindPipeline(commandBuffer);
 
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 
@@ -149,7 +149,7 @@ namespace acid
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
-		descriptorSet.BindDescriptor(commandBuffer);
+		descriptorSet.BindDescriptor(commandBuffer, compute);
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
 		commandBuffer.Submit();
@@ -188,7 +188,7 @@ namespace acid
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
-		descriptorSet.BindDescriptor(commandBuffer);
+		descriptorSet.BindDescriptor(commandBuffer, compute);
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
 		commandBuffer.Submit();

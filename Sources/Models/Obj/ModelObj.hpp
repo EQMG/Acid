@@ -19,7 +19,7 @@ namespace acid
 		/// Will find an existing OBJ model with the same filename, or create a new OBJ model.
 		/// </summary>
 		/// <param name="filename"> The file to load the OBJ model from. </param>
-		static std::shared_ptr<ModelObj> Resource(const std::string &filename);
+		static std::shared_ptr<ModelObj> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new OBJ model.

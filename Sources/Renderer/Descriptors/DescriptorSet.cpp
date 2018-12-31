@@ -1,7 +1,7 @@
 #include "DescriptorSet.hpp"
 
 #include "Display/Display.hpp"
-#include "IDescriptor.hpp"
+#include "Descriptor.hpp"
 
 namespace acid
 {

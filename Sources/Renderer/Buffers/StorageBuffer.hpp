@@ -1,14 +1,14 @@
 ﻿#pragma once
 
 #include <vulkan/vulkan.h>
-#include "Renderer/Descriptors/IDescriptor.hpp"
+#include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Pipelines/ShaderProgram.hpp"
 #include "Buffer.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT StorageBuffer :
-		public IDescriptor,
+		public Descriptor,
 		public Buffer
 	{
 	public:
@@ -19,6 +19,6 @@ namespace acid
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 	};
 }

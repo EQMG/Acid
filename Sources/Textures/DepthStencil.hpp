@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Renderer/Descriptors/IDescriptor.hpp"
+#include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT DepthStencil :
-		public IDescriptor,
+		public Descriptor,
 		public Buffer
 	{
 	private:
@@ -24,7 +24,7 @@ namespace acid
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
 		uint32_t GetWidth() const { return m_width; }
 

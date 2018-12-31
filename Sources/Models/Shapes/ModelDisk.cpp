@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelDisk> ModelDisk::Resource(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
+	std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
 		auto resource = Resources::Get()->Find(ToName(innerRadius, outerRadius, slices, loops));
 
@@ -16,11 +16,11 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelDisk>(innerRadius, outerRadius, slices, loops);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<ModelDisk> ModelDisk::Resource(const std::string &data)
+	std::shared_ptr<ModelDisk> ModelDisk::Create(const std::string &data)
 	{
 		if (data.empty())
 		{
@@ -32,7 +32,7 @@ namespace acid
 		auto outerRadius = String::From<float>(split[2]);
 		auto slices = String::From<uint32_t>(split[3]);
 		auto loops = String::From<uint32_t>(split[4]);
-		return Resource(innerRadius, outerRadius, slices, loops);
+		return Create(innerRadius, outerRadius, slices, loops);
 	}
 
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :

@@ -9,9 +9,9 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelRectangle> Resource(const float &min, const float &max);
+		static std::shared_ptr<ModelRectangle> Create(const float &min, const float &max);
 
-		static std::shared_ptr<ModelRectangle> Resource(const std::string &data);
+		static std::shared_ptr<ModelRectangle> Create(const std::string &data);
 
 		ModelRectangle(const float &width, const float &height);
 	private:

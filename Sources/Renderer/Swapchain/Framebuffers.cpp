@@ -2,7 +2,7 @@
 
 #include "Display/Display.hpp"
 #include "Renderer/Renderpass/Renderpass.hpp"
-#include "DepthStencil.hpp"
+#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {

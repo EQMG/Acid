@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include "Renderer/Descriptors/IDescriptor.hpp"
-#include "Resources/IResource.hpp"
+#include "Renderer/Descriptors/Descriptor.hpp"
+#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -12,8 +12,8 @@ namespace acid
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class ACID_EXPORT Texture :
-		public IResource,
-		public IDescriptor
+		public Resource,
+		public Descriptor
 	{
 	private:
 		std::string m_filename;
@@ -42,7 +42,7 @@ namespace acid
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		static std::shared_ptr<Texture> Resource(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		static std::shared_ptr<Texture> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
 			const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
@@ -79,7 +79,7 @@ namespace acid
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const DescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
 		/// <summary>
 		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.

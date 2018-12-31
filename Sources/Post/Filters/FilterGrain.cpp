@@ -31,7 +31,7 @@ namespace acid
 		m_pipeline.BindPipeline(commandBuffer);
 
 		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer);
+		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
 		m_model->CmdRender(commandBuffer);
 	}
 }

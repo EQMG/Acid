@@ -1,7 +1,7 @@
 ﻿#include "Renderpass.hpp"
 
 #include "Display/Display.hpp"
-#include "Renderer/Swapchain/DepthStencil.hpp"
+#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {

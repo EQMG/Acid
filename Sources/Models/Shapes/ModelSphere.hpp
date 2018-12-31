@@ -10,9 +10,9 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelSphere> Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
+		static std::shared_ptr<ModelSphere> Create(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 
-		static std::shared_ptr<ModelSphere> Resource(const std::string &data);
+		static std::shared_ptr<ModelSphere> Create(const std::string &data);
 
 		ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 	private:

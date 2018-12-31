@@ -15,7 +15,7 @@
 
 namespace acid
 {
-	std::shared_ptr<SoundBuffer> SoundBuffer::Resource(const std::string &filename)
+	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 	{
 		if (filename.empty())
 		{
@@ -30,12 +30,12 @@ namespace acid
 		}
 
 		auto result = std::make_shared<SoundBuffer>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	SoundBuffer::SoundBuffer(const std::string &filename) :
-		IResource(filename),
+		Resource(filename),
 		m_filename(filename),
 		m_buffer(0)
 	{

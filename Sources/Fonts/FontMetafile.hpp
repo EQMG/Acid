@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdint>
 #include "Files/Files.hpp"
-#include "Resources/IResource.hpp"
+#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -41,7 +41,7 @@ namespace acid
 		/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 		/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
 		FontCharacter(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY,
-		              const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
+		    const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
 			m_id(id),
 			m_textureCoordX(textureCoordX),
 			m_textureCoordY(textureCoordY),
@@ -80,7 +80,7 @@ namespace acid
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
 	class ACID_EXPORT FontMetafile :
-		public IResource
+		public Resource
 	{
 	private:
 		std::map<int32_t, FontCharacter> m_metadata;
@@ -112,7 +112,7 @@ namespace acid
 		/// Will find an existing metafile with the same filename, or create a new metafile.
 		/// </summary>
 		/// <param name="filename"> The file to load the metafile from. </param>
-		static std::shared_ptr<FontMetafile> Resource(const std::string &filename);
+		static std::shared_ptr<FontMetafile> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new meta file.

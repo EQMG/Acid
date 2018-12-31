@@ -6,7 +6,7 @@ namespace acid
 {
 	Resources::Resources() :
 		m_mutex(std::mutex()),
-		m_resources(std::vector<std::shared_ptr<IResource>>()),
+		m_resources(std::vector<std::shared_ptr<Resource>>()),
 		m_timerPurge(Timer(Time::Seconds(5.0f)))
 	{
 	}
@@ -35,7 +35,7 @@ namespace acid
 		}
 	}
 
-	std::shared_ptr<IResource> Resources::Find(const std::string &filename) const
+	std::shared_ptr<Resource> Resources::Find(const std::string &filename) const
 	{
 		for (auto &resource : m_resources)
 		{
@@ -48,7 +48,7 @@ namespace acid
 		return nullptr;
 	}
 
-	void Resources::Add(const std::shared_ptr<IResource> &resource)
+	void Resources::Add(const std::shared_ptr<Resource> &resource)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -60,7 +60,7 @@ namespace acid
 		m_resources.emplace_back(resource);
 	}
 
-	bool Resources::Remove(const std::shared_ptr<IResource> &resource)
+	bool Resources::Remove(const std::shared_ptr<Resource> &resource)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 

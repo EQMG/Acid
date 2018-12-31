@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	std::shared_ptr<EntityPrefab> EntityPrefab::Resource(const std::string &filename)
+	std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 	{
 		if (filename.empty())
 		{
@@ -24,12 +24,12 @@ namespace acid
 		}
 
 		auto result = std::make_shared<EntityPrefab>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	EntityPrefab::EntityPrefab(const std::string &filename) :
-		IResource(filename),
+		Resource(filename),
 		m_filename(filename),
 		m_file(nullptr),
 		m_parent(nullptr)

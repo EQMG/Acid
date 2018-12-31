@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelCube> ModelCube::Resource(const float &width, const float &height, const float &depth)
+	std::shared_ptr<ModelCube> ModelCube::Create(const float &width, const float &height, const float &depth)
 	{
 		auto resource = Resources::Get()->Find(ToName(width, height, depth));
 
@@ -15,11 +15,11 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelCube>(width, height, depth);
-		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
+		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<ModelCube> ModelCube::Resource(const std::string &data)
+	std::shared_ptr<ModelCube> ModelCube::Create(const std::string &data)
 	{
 		if (data.empty())
 		{
@@ -30,7 +30,7 @@ namespace acid
 		auto width = String::From<float>(split[1]);
 		auto height = String::From<float>(split[2]);
 		auto depth = String::From<float>(split[3]);
-		return Resource(width, height, depth);
+		return Create(width, height, depth);
 	}
 
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :

@@ -10,9 +10,9 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelCube> Resource(const float &width, const float &height, const float &depth);
+		static std::shared_ptr<ModelCube> Create(const float &width, const float &height, const float &depth);
 
-		static std::shared_ptr<ModelCube> Resource(const std::string &data);
+		static std::shared_ptr<ModelCube> Create(const std::string &data);
 
 		ModelCube(const float &width, const float &height, const float &depth);
 	private:

@@ -11,13 +11,13 @@ namespace test
 		m_zoom(1.0f),
 		m_offset(Vector2::ZERO),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
-		m_background(std::make_unique<Gui>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false), Texture::Resource("Guis/White.png"))),
+		m_background(std::make_unique<Gui>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false), Texture::Create("Guis/White.png"))),
 		m_texts(std::vector<std::pair<Vector3, std::unique_ptr<Text>>>()),
-		m_textFps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.002f), UiBound::BOTTOM_LEFT, true), 1.1f, "FPS: 0", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT)),
-		m_textUps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.022f), UiBound::BOTTOM_LEFT, true), 1.1f, "UPS: 0", FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT))
+		m_textFps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.002f), UiBound::BOTTOM_LEFT, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT)),
+		m_textUps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.022f), UiBound::BOTTOM_LEFT, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT))
 	{
 		m_texts.emplace_back(Vector3(0.0f, 0.8f, 6.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::CENTRE, false), 1.0f, "Acid Font",
-			FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 1.0f, Colour::RED, 0.0f, 0.015f));
+			FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 1.0f, Colour::RED, 0.0f, 0.015f));
 
 		static const std::string content1 =
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum \n"
@@ -51,7 +51,7 @@ namespace test
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
 		m_texts.emplace_back(Vector3(0.0f, 0.0f, 2.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::CENTRE, false), 1.0f, content1,
-			FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 10.0f, Colour::BLACK, 0.0f, 0.015f));
+			FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 10.0f, Colour::BLACK, 0.0f, 0.015f));
 	}
 
 	void Pannable::UpdateObject()

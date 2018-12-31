@@ -241,7 +241,7 @@ namespace acid
 		return m_renderStages.at(index).get();
 	}
 
-	IDescriptor *Renderer::GetAttachment(const std::string &name) const
+	Descriptor *Renderer::GetAttachment(const std::string &name) const
 	{
 		for (auto &renderStage : m_renderStages)
 		{
