@@ -38,7 +38,7 @@ set(_temp_acid_headers
 		Files/Csv/FileCsv.hpp
 		Files/Csv/RowCsv.hpp
 		Files/Files.hpp
-		Files/DataFile.hpp
+		Files/IFile.hpp
 		Files/Json/FileJson.hpp
 		Files/Json/JsonSection.hpp
 		Files/Xml/FileXml.hpp
@@ -207,7 +207,6 @@ set(_temp_acid_headers
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
 		Serialized/Metadata.hpp
-		Serialized/Serialize.hpp
 		Shadows/RendererShadows.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
@@ -413,7 +412,6 @@ set(_temp_acid_sources
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
 		Serialized/Metadata.cpp
-		Serialized/Serialize.cpp
 		Shadows/RendererShadows.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp

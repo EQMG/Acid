@@ -37,7 +37,7 @@ namespace test
 		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096));
 
 		std::vector<Attachment> renderpassImages1 = {
-			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, VK_FORMAT_D32_SFLOAT_S8_UINT, false),
+			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, VK_FORMAT_UNDEFINED, false),
 			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN),
 			Attachment(2, "diffuse", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
 			Attachment(3, "normals", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, false),

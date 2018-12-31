@@ -2,13 +2,13 @@
 
 #include <string>
 #include <vector>
-#include "Files/DataFile.hpp"
+#include "Files/IFile.hpp"
 #include "JsonSection.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FileJson :
-		public DataFile
+		public IFile
 	{
 	private:
 		std::string m_filename;
