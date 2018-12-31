@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
-#include "IRenderer.hpp"
+#include "RenderPipeline.hpp"
 
 namespace acid
 {
@@ -57,7 +57,6 @@ namespace acid
 
 		auto camera = Scenes::Get()->GetCamera();
 		auto &stages = m_rendererRegister.GetStages();
-		Vector4 clipPlane = Vector4(0.0f, 1.0f, 0.0f, +std::numeric_limits<float>::infinity());
 
 		if (stages.empty())
 		{
@@ -117,7 +116,7 @@ namespace acid
 					continue;
 				}
 
-				renderer->Render(*m_commandBuffer, clipPlane, *camera);
+				renderer->Render(*m_commandBuffer, *camera);
 			}
 		}
 

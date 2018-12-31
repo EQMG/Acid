@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <memory>
 #include "Renderer/Descriptors/Descriptor.hpp"
-#include "Renderer/Pipelines/IPipeline.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
@@ -54,6 +54,6 @@ namespace acid
 
 		bool Update(UniformBlock *uniformBlock);
 
-		void BindPush(const CommandBuffer &commandBuffer, const IPipeline &pipeline);
+		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 	};
 }

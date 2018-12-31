@@ -10,7 +10,7 @@ namespace acid
 	{
 	}
 
-	void FilterWobble::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterWobble::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender().AsSeconds();
 

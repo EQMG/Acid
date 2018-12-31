@@ -5,7 +5,7 @@
 #include "Maths/Matrix4.hpp"
 #include "Models/Model.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
 #include "Serialized/Metadata.hpp"
 
@@ -58,7 +58,7 @@ namespace acid
 
 		void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
 		void Decode(const Metadata &metadata);
 

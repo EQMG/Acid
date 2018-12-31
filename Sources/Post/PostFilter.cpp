@@ -9,9 +9,9 @@ namespace acid
 	uint32_t PostFilter::GLOBAL_SWITCHING = 0;
 
 	PostFilter::PostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<ShaderDefine> &defines) :
-		IRenderer(graphicsStage),
+		RenderPipeline(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
-		m_pipeline(Pipeline(graphicsStage, shaderStages, {VertexModel::GetVertexInput()},
+		m_pipeline(PipelineGraphics(graphicsStage, shaderStages, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_attachments(std::map<std::string, Descriptor *>())

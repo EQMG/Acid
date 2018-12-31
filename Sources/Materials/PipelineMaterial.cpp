@@ -39,7 +39,7 @@ namespace acid
 		else if (m_renderStage != renderStage)
 		{
 			m_renderStage = renderStage;
-			m_pipeline = std::make_unique<Pipeline>(m_graphicsStage, m_pipelineCreate);
+			m_pipeline = std::make_unique<PipelineGraphics>(m_graphicsStage, m_pipelineCreate);
 		}
 
 		m_pipeline->BindPipeline(commandBuffer);

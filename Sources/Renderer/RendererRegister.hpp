@@ -4,7 +4,7 @@
 #include <mutex>
 #include <memory>
 #include <vector>
-#include "IRenderer.hpp"
+#include "RenderPipeline.hpp"
 
 namespace acid
 {
@@ -15,7 +15,7 @@ namespace acid
 	{
 	private:
 		std::mutex m_mutex;
-		std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>> m_stages;
+		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	public:
 		RendererRegister();
 
@@ -23,7 +23,7 @@ namespace acid
 
 		RendererRegister& operator=(const RendererRegister&) = delete;
 
-		const std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>> &GetStages() const { return m_stages; }
+		const std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
 
 		void Clear() { m_stages.clear(); }
 
@@ -65,7 +65,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to add. </param>
 		/// <returns> The added renderer. </returns>
-		IRenderer *Add(IRenderer *renderer);
+		RenderPipeline *Add(RenderPipeline *renderer);
 
 		/// <summary>
 		/// Creates a renderer by type to be added this register.
@@ -86,7 +86,7 @@ namespace acid
 		/// </summary>
 		/// <param name="renderer"> The renderer to remove. </param>
 		/// <returns> If the renderer was removed. </returns>
-		void Remove(IRenderer *renderer);
+		void Remove(RenderPipeline *renderer);
 
 		/// <summary>
 		/// Removes a renderer by type from this register.

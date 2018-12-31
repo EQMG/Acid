@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	class IRenderer;
+	class RenderPipeline;
 
 	/// <summary>
 	/// A object used to manage <seealso cref="IRenderer"/> objects to create a list of render pass.

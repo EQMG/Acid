@@ -6,13 +6,13 @@
 namespace acid
 {
 	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort) :
-		IRenderer(graphicsStage),
+		RenderPipeline(graphicsStage),
 		m_meshSort(meshSort),
 		m_uniformScene(UniformHandler(true))
 	{
 	}
 
-	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());

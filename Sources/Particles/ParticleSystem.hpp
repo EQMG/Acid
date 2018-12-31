@@ -5,7 +5,7 @@
 #include "Maths/Timer.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Component.hpp"
-#include "Emitters/ParticleEmitter.hpp"
+#include "Emitters/Emitter.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"
 
@@ -92,7 +92,7 @@ namespace acid
 
 		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 	private:
-		Particle EmitParticle(const ParticleEmitter &emitter);
+		Particle EmitParticle(const Emitter &emitter);
 
 		float GenerateValue(const float &average, const float &errorPercent) const;
 

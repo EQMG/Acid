@@ -33,7 +33,7 @@ namespace acid
 	public:
 		DescriptorsHandler();
 
-		explicit DescriptorsHandler(const IPipeline &pipeline);
+		explicit DescriptorsHandler(const Pipeline &pipeline);
 
 		void Push(const std::string &descriptorName, Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
@@ -47,9 +47,9 @@ namespace acid
 
 		void Push(const std::string &descriptorName, PushHandler &pushHandler, const std::optional<OffsetSize> &offsetSize = {});
 
-		bool Update(const IPipeline &pipeline);
+		bool Update(const Pipeline &pipeline);
 
-		void BindDescriptor(const CommandBuffer &commandBuffer, const IPipeline &pipeline);
+		void BindDescriptor(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
 	};

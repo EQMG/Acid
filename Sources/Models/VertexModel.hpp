@@ -4,7 +4,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
-#include "Renderer/Pipelines/IPipeline.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 #include "IVertex.hpp"
 
 namespace acid

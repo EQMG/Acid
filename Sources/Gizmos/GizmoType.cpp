@@ -65,7 +65,7 @@ namespace acid
 		m_storageInstances.Push(instanceDatas.data(), sizeof(GizmoTypeData) * MAX_TYPE_INSTANCES);
 	}
 
-	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
+	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		if (m_instances == 0)
 		{

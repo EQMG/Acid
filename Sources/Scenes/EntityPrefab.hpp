@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include "Files/Files.hpp"
-#include "Files/IFile.hpp"
+#include "Files/DataFile.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
 
@@ -20,7 +20,7 @@ namespace acid
 	{
 	private:
 		std::string m_filename;
-		std::unique_ptr<IFile> m_file;
+		std::unique_ptr<DataFile> m_file;
 		Metadata *m_parent;
 	public:
 		/// <summary>

@@ -363,7 +363,7 @@ _wopendir(
 		dirp->patt = NULL;
 		dirp->cached = 0;
 
-		/* Compute the length of full path plus zero terminator
+		/* PipelineCompute the length of full path plus zero terminator
 		 *
 		 * Note that on WinRT there's no way to convert relative paths
 		 * into absolute paths, so just assume it is an absolute path.
@@ -900,7 +900,7 @@ scandir(
 				void *p;
 				size_t num_entries;
 
-				/* Compute number of entries in the enlarged pointer table */
+				/* PipelineCompute number of entries in the enlarged pointer table */
 				if (size < init_size) {
 					/* Allocate initial pointer table */
 					num_entries = init_size;
@@ -1085,7 +1085,7 @@ dirent_mbstowcs_s(
 			flags = MB_ERR_INVALID_CHARS;
 	}
 
-	/* Compute the length of input string without zero-terminator */
+	/* PipelineCompute the length of input string without zero-terminator */
 	len = 0;
 	while (mbstr[len] != '\0'  &&  len < count) {
 		len++;
@@ -1141,7 +1141,7 @@ dirent_wcstombs_s(
 		cp = GetOEMCP ();
 	}
 
-	/* Compute the length of input string without zero-terminator */
+	/* PipelineCompute the length of input string without zero-terminator */
 	len = 0;
 	while (wcstr[len] != '\0'  &&  len < count) {
 		len++;

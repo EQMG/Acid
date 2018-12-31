@@ -5,7 +5,7 @@
 #include "Models/Model.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Textures/Texture.hpp"
 #include "Uis/UiObject.hpp"
 
@@ -38,7 +38,7 @@ namespace acid
 
 		void UpdateObject() override;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

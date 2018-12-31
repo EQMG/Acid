@@ -3,10 +3,10 @@
 #include <future>
 #include "Lights/Fog.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/IRenderer.hpp"
+#include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Textures/Cubemap.hpp"
 
 namespace acid
@@ -18,7 +18,7 @@ namespace acid
 	};
 
 	class ACID_EXPORT RendererDeferred :
-		public IRenderer
+		public RenderPipeline
 	{
 	private:
 		DescriptorsHandler m_descriptorSet;
@@ -27,7 +27,7 @@ namespace acid
 
 		DeferredModel m_lightModel;
 
-		Pipeline m_pipeline;
+		PipelineGraphics m_pipeline;
 		std::shared_ptr<Model> m_model;
 
 		std::shared_ptr<Texture> m_brdf;
@@ -41,7 +41,7 @@ namespace acid
 
 		explicit RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
 		Fog GetFog() const { return m_fog; }
 

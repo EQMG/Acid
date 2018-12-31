@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	DescriptorSet::DescriptorSet(const IPipeline &pipeline) :
+	DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),

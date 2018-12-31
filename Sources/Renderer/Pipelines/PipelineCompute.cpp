@@ -1,4 +1,4 @@
-#include "Compute.hpp"
+#include "PipelineCompute.hpp"
 
 #include <cmath>
 #include <cassert>
@@ -8,9 +8,9 @@
 
 namespace acid
 {
-	Compute::Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
+	PipelineCompute::PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
 	    const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
-		IPipeline(),
+		Pipeline(),
 		m_shaderStage(shaderStage),
 		m_width(width),
 		m_height(height),
@@ -42,11 +42,11 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
-		Log::Out("Compute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("PipelineCompute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 
-	Compute::~Compute()
+	PipelineCompute::~PipelineCompute()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -60,7 +60,7 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
 	}
 
-	bool Compute::CmdRender(const CommandBuffer &commandBuffer) const
+	bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer) const
 	{
 		auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(m_width) / static_cast<float>(m_workgroupSize)));
 		auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(m_height) / static_cast<float>(m_workgroupSize)));
@@ -68,7 +68,7 @@ namespace acid
 		return true;
 	}
 
-	void Compute::CreateShaderProgram()
+	void PipelineCompute::CreateShaderProgram()
 	{
 		std::stringstream defineBlock;
 		defineBlock << "\n";
@@ -101,7 +101,7 @@ namespace acid
 		m_shaderProgram->ProcessShader();
 	}
 
-	void Compute::CreateDescriptorLayout()
+	void PipelineCompute::CreateDescriptorLayout()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -115,7 +115,7 @@ namespace acid
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
-	void Compute::CreateDescriptorPool()
+	void PipelineCompute::CreateDescriptorPool()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -130,7 +130,7 @@ namespace acid
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
-	void Compute::CreatePipelineLayout()
+	void PipelineCompute::CreatePipelineLayout()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -141,7 +141,7 @@ namespace acid
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Compute::CreatePipelineCompute()
+	void PipelineCompute::CreatePipelineCompute()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();

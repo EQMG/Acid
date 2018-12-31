@@ -5,7 +5,7 @@
 namespace acid
 {
 	EmitterPoint::EmitterPoint(const Transform &localTransform) :
-		ParticleEmitter(localTransform),
+		Emitter(localTransform),
 		m_point(Vector3())
 	{
 	}

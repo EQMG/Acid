@@ -1,7 +1,7 @@
 /*#pragma once
 
 #include "Display/Display.hpp"
-#include "Renderer/IRenderer.hpp"
+#include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
@@ -41,7 +41,7 @@ namespace acid
 	};
 
 	class RendererFonts2 :
-		public IRenderer
+		public RenderPipeline
 	{
 	private:
 		Pipeline m_pipeline;
