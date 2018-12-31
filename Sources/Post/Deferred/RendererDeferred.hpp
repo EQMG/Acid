@@ -1,5 +1,6 @@
 #pragma once
 
+#include <future>
 #include "Lights/Fog.hpp"
 #include "Models/Model.hpp"
 #include "Renderer/IRenderer.hpp"

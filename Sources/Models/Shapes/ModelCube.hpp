@@ -16,6 +16,6 @@ namespace acid
 
 		ModelCube(const float &width, const float &height, const float &depth);
 	private:
-		static std::string ToFilename(const float &width, const float &height, const float &depth);
+		static std::string ToName(const float &width, const float &height, const float &depth);
 	};
 }

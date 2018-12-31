@@ -24,6 +24,8 @@ namespace acid
 
 		~Buffer();
 
+		void CopyBuffer(void *data) const;
+
 		VkDeviceSize GetSize() const { return m_size; }
 
 		VkBuffer GetBuffer() const { return m_buffer; }

@@ -12,11 +12,9 @@ namespace acid
 	}
 
 	Model::Model() :
-		IResource(),
-		m_filename(""),
+		IResource(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
-		m_pointCloud(std::vector<float>()),
 		m_minExtents(Vector3()),
 		m_maxExtents(Vector3()),
 		m_radius(0.0f)
@@ -47,5 +45,17 @@ namespace acid
 		}
 
 		return true;
+	}
+
+	std::vector<float> Model::GetPointCloud() const
+	{
+		if (m_vertexBuffer == nullptr)
+		{
+			return std::vector<float>();
+		}
+
+		auto result = std::vector<float>(3 * m_vertexBuffer->GetSize());
+		m_vertexBuffer->CopyBuffer(result.data());
+		return result;
 	}
 }

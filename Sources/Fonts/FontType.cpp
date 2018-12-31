@@ -37,7 +37,7 @@ namespace acid
 	}
 
 	FontType::FontType(const std::string &filename, const std::string &fontStyle) :
-		m_name(ToFilename(filename, fontStyle)),
+		IResource(ToFilename(filename, fontStyle)),
 		m_texture(Texture::Resource(filename + "/" + fontStyle + ".png")),
 		m_metadata(FontMetafile::Resource(filename + "/" + fontStyle + ".fnt"))
 	{

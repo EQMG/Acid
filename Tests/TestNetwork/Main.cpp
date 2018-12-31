@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <Engine/Log.hpp>
 #include <Network/Ftp/Ftp.hpp>
 #include <Network/Http/Http.hpp>
@@ -10,7 +11,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	// https://www.sfml-dev.org/tutorials/2.5/network-http.php
-	{
+	std::thread t0([](){
 		Http http = Http("http://equilibrium.games/");
 
 		HttpRequest request;
@@ -26,9 +27,9 @@ int main(int argc, char **argv)
 		Log::Out("HTTP version: %i.%i\n", response.GetMajorHttpVersion(), response.GetMinorHttpVersion());
 		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type").c_str());
 		Log::Out("Body: %s\n", response.GetBody().c_str());
-	}
+	});
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
-	/*{
+	/*std::thread t1([](){
 		Ftp ftp;
 		ftp.Connect(IpAddress("ftp.myserver.org"), 21);
 		ftp.Login("username", "password");
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
 		ftp.Upload("local_file_name.pdf", "remote/destination/path", FTP_MODE_BINARY);
 
 		ftp.Disconnect();
-	}*/
+	})*/
 
 	/*UdpSocket socket = UdpSocket();
 
@@ -65,6 +66,9 @@ int main(int argc, char **argv)
 		Log::Error("Error OH NO\n");
 		// error...
 	}*/
+	
+	t0.join();
+//	t1.join();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

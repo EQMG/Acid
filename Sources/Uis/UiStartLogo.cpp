@@ -15,14 +15,15 @@ namespace acid
 			FontType::Resource("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 0.8f, Colour::WHITE, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-#if defined(ACID_VERBOSE)
-		Events::Get()->AddEvent<EventTime>(Time::Seconds(1.65f), [&]()
-#else
-		Events::Get()->AddEvent<EventTime>(Time::Seconds(3.6f), [&]()
-#endif
+		Events::Get()->AddEvent<EventTime>([&]()
 		{
 			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(1.4f));
-		}, false);
+		},
+#if defined(ACID_VERBOSE)
+        Time::Seconds(1.65f));
+#else
+	    Time::Seconds(3.6f));
+#endif
 	}
 
 	void UiStartLogo::UpdateObject()

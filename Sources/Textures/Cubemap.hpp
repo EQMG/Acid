@@ -42,18 +42,23 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
 		/// <param name="fileSuffix"> The files suffix type (ex .png). </param>
-		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileSuffix);
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
+		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		static std::shared_ptr<Cubemap> Resource(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter = VK_FILTER_LINEAR,
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new cubemap object.
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
-		/// <param name="fileExt"> The files extension type (ex .png). </param>
+		/// <param name="fileSuffix"> The files extension type (ex .png). </param>
 		/// <param name="filter"> The type of filtering will be use on the texture. </param>
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		explicit Cubemap(const std::string &filename, const std::string &fileExt = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
+		explicit Cubemap(const std::string &filename, const std::string &fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
 			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
@@ -100,7 +105,7 @@ namespace acid
 		/// <param name="pixels"> The pixels to copy to the image. </param>
 		void SetPixels(uint8_t *pixels);
 
-		std::string GetFilename() const override { return m_filename; };
+		std::string GetFilename() const { return m_filename; };
 
 		std::string GetFileSuffix() { return m_fileSuffix; };
 
@@ -127,5 +132,8 @@ namespace acid
 		VkImageView GetImageView() const { return m_imageView; }
 
 		VkSampler GetSampler() const { return m_sampler; }
+	private:
+		static std::string ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
+			const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap);
 	};
 }

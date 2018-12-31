@@ -32,7 +32,7 @@ namespace acid
 
 		~SoundBuffer();
 
-		std::string GetFilename() const override { return m_filename; };
+		std::string GetFilename() const { return m_filename; };
 
 		uint32_t GetBuffer() const { return m_buffer; }
 	private:

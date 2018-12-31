@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelDisk> ModelDisk::Resource(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(innerRadius, outerRadius, slices, loops));
+		auto resource = Resources::Get()->Find(ToName(innerRadius, outerRadius, slices, loops));
 
 		if (resource != nullptr)
 		{
@@ -28,10 +28,10 @@ namespace acid
 		}
 
 		auto split = String::Split(data, "_");
-		float innerRadius = String::From<float>(split[1]);
-		float outerRadius = String::From<float>(split[2]);
-		uint32_t slices = String::From<uint32_t>(split[3]);
-		uint32_t loops = String::From<uint32_t>(split[4]);
+		auto innerRadius = String::From<float>(split[1]);
+		auto outerRadius = String::From<float>(split[2]);
+		auto slices = String::From<uint32_t>(split[3]);
+		auto loops = String::From<uint32_t>(split[4]);
 		return Resource(innerRadius, outerRadius, slices, loops);
 	}
 
@@ -45,7 +45,7 @@ namespace acid
 		{
 			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
 			float alpha = iDivSlices * 2.0f * PI;
-			float xDir = cos(alpha), yDir = sin(alpha);
+			float xDir = std::cos(alpha), yDir = std::sin(alpha);
 
 			for (uint32_t j = 0; j < loops + 1; j++)
 			{
@@ -78,10 +78,10 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToFilename(innerRadius, outerRadius, slices, loops));
+		Model::Initialize(vertices, indices, ToName(innerRadius, outerRadius, slices, loops));
 	}
 
-	std::string ModelDisk::ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
+	std::string ModelDisk::ToName(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
 		std::stringstream result;
 		result << "Disk_" << innerRadius << "_" << outerRadius << "_" << slices << "_" << loops;

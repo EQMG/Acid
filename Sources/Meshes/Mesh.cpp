@@ -22,7 +22,7 @@ namespace acid
 
 	void Mesh::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
+		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetName());
 	}
 
 	void Mesh::TrySetModel(const std::string &filename)

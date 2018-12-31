@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<PipelineMaterial> PipelineMaterial::Resource(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(graphicsStage, pipelineCreate));
+		auto resource = Resources::Get()->Find(ToName(graphicsStage, pipelineCreate));
 
 		if (resource != nullptr)
 		{
@@ -20,7 +20,7 @@ namespace acid
 	}
 
 	PipelineMaterial::PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
-		m_filename(ToFilename(graphicsStage, pipelineCreate)),
+		IResource(ToName(graphicsStage, pipelineCreate)),
 		m_graphicsStage(graphicsStage),
 		m_pipelineCreate(pipelineCreate),
 		m_renderStage(nullptr),
@@ -46,7 +46,7 @@ namespace acid
 		return true;
 	}
 
-	std::string PipelineMaterial::ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
+	std::string PipelineMaterial::ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate)
 	{
 		std::stringstream result;
 		result << "Material_" << graphicsStage.GetRenderpass() << "_" << graphicsStage.GetSubpass() << "_";

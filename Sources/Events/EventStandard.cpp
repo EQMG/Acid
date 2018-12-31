@@ -2,9 +2,9 @@
 
 namespace acid
 {
-	EventStandard::EventStandard(const std::function<bool()> &triggered, const std::function<void()> &onEvent, const bool &repeat) :
-		m_triggered(triggered),
+	EventStandard::EventStandard(const std::function<void()> &onEvent, const std::function<bool()> &triggered, const bool &repeat) :
 		m_onEvent(onEvent),
+		m_triggered(triggered),
 		m_repeat(repeat)
 	{
 	}

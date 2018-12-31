@@ -60,12 +60,12 @@ namespace acid
 	void MaterialDefault::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<Colour>("Base Diffuse", m_baseDiffuse);
-		metadata.SetChild<std::string>("Diffuse Texture", m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetFilename());
+		metadata.SetChild<std::string>("Diffuse Texture", m_diffuseTexture == nullptr ? "" : m_diffuseTexture->GetName());
 
 		metadata.SetChild<float>("Metallic", m_metallic);
 		metadata.SetChild<float>("Roughness", m_roughness);
-		metadata.SetChild<std::string>("Material Texture", m_materialTexture == nullptr ? "" : m_materialTexture->GetFilename());
-		metadata.SetChild<std::string>("Normal Texture", m_normalTexture == nullptr ? "" : m_normalTexture->GetFilename());
+		metadata.SetChild<std::string>("Material Texture", m_materialTexture == nullptr ? "" : m_materialTexture->GetName());
+		metadata.SetChild<std::string>("Normal Texture", m_normalTexture == nullptr ? "" : m_normalTexture->GetName());
 
 		metadata.SetChild<bool>("Casts Shadows", m_castsShadows);
 		metadata.SetChild<bool>("Ignore Lighting", m_ignoreLighting);

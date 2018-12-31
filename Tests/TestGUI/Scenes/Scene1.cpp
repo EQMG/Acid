@@ -1,5 +1,6 @@
 #include "Scene1.hpp"
 
+#include <thread>
 #include <Animations/MeshAnimated.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
@@ -41,8 +42,12 @@ namespace test
 
 		if (m_buttonScreenshot.WasDown())
 		{
-			std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
-			Renderer::Get()->CaptureScreenshot(filename);
+			// TODO: Threading.
+			std::thread t([](){
+				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+				Renderer::Get()->CaptureScreenshot(filename);
+			});
+			t.detach();
 		}
 
 		if (m_buttonExit.WasDown())

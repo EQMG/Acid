@@ -15,10 +15,10 @@ namespace test
 	{
 		Load();
 
-		Events::Get()->AddEvent<EventTime>(Time::Seconds(2.5f), [&]() -> void
+		Events::Get()->AddEvent<EventTime>([&]() -> void
 		{
 			Save();
-		}, false);
+		}, Time::Seconds(2.5f));
 	}
 
 	void ConfigManager::Load()

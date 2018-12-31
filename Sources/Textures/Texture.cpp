@@ -16,27 +16,27 @@ namespace acid
 	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;
 
-	std::shared_ptr<Texture> Texture::Resource(const std::string &filename)
+	std::shared_ptr<Texture> Texture::Resource(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
 	{
 		if (filename.empty())
 		{
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Find(filename);
+		auto resource = Resources::Get()->Find(ToName(filename, filter, addressMode, anisotropic, mipmap));
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Texture>(resource);
 		}
 
-		auto result = std::make_shared<Texture>(filename);
+		auto result = std::make_shared<Texture>(filename, filter, addressMode, anisotropic, mipmap);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
 
 	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
-		IResource(),
+		IResource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
 		IDescriptor(),
 		m_filename(filename),
 		m_filter(filter),
@@ -99,7 +99,7 @@ namespace acid
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		IResource(),
+		IResource(ToName("", filter, addressMode, anisotropic, mipmap)),
 		IDescriptor(),
 		m_filename(""),
 		m_filter(filter),
@@ -291,10 +291,14 @@ namespace acid
 		return pixels;
 	}
 
-	bool Texture::WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components)
+	void Texture::WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components)
 	{
 		int32_t result = stbi_write_png(filename.c_str(), width, height, components, data, width * components);
-		return result == 1;
+
+		if (result != 1)
+		{
+			Log::Error("Unable to write pixels: '%s'\n", filename.c_str());
+		}
 	}
 
 	void Texture::DeletePixels(uint8_t *pixels)
@@ -733,5 +737,13 @@ namespace acid
 		imageMemoryBarrier.image = image;
 		imageMemoryBarrier.subresourceRange = subresourceRange;
 		vkCmdPipelineBarrier(cmdbuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
+	}
+
+	std::string Texture::ToName(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+		const bool &anisotropic, const bool &mipmap)
+	{
+		std::stringstream result;
+		result << "Texture_" << filename << "_" << filter << "_" << addressMode << "_" << anisotropic << "_" << mipmap;
+		return result.str();
 	}
 }

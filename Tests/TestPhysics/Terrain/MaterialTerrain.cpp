@@ -30,8 +30,8 @@ namespace test
 
 	void MaterialTerrain::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Texture R", m_textureR == nullptr ? "" : m_textureR->GetFilename());
-		metadata.SetChild<std::string>("Texture G", m_textureG == nullptr ? "" : m_textureG->GetFilename());
+		metadata.SetChild<std::string>("Texture R", m_textureR == nullptr ? "" : m_textureR->GetName());
+		metadata.SetChild<std::string>("Texture G", m_textureG == nullptr ? "" : m_textureG->GetName());
 	}
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)

@@ -58,7 +58,7 @@ namespace acid
 
 	void Sound::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Filename", m_soundBuffer == nullptr ? "" : m_soundBuffer->GetFilename());
+		metadata.SetChild<std::string>("Filename", m_soundBuffer == nullptr ? "" : m_soundBuffer->GetName());
 	}
 
 	void Sound::Play(const bool &loop)

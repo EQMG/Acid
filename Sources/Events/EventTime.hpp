@@ -14,17 +14,17 @@ namespace acid
 		public IEvent
 	{
 	private:
-		Timer m_timer;
 		std::function<void()> m_onEvent;
+		Timer m_timer;
 		bool m_repeat;
 	public:
 		/// <summary>
 		/// Creates a new time event.
 		/// </summary>
-		/// <param name="interval"> The amount of time in the future to run the event. </param>
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
+		/// <param name="interval"> The amount of time in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		EventTime(const Time &interval, const std::function<void()> &onEvent, const bool &repeat = false);
+		EventTime(const std::function<void()> &onEvent, const Time &interval, const bool &repeat = false);
 
 		bool EventTriggered() override;
 

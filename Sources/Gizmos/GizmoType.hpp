@@ -23,7 +23,6 @@ namespace acid
 		public IResource
 	{
 	private:
-		std::string m_filename;
 		std::shared_ptr<Model> m_model;
 		float m_lineThickness;
 		Colour m_diffuse;
@@ -65,8 +64,6 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		std::string GetFilename() const override { return m_filename; }
-
 		std::shared_ptr<Model> GetModel() const { return m_model; }
 
 		void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
@@ -79,6 +76,6 @@ namespace acid
 
 		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
 	private:
-		static std::string ToFilename(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse);
+		static std::string ToName(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse);
 	};
 }

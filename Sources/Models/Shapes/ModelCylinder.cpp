@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelCylinder> ModelCylinder::Resource(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(radiusBase, radiusTop, height, slices, stacks));
+		auto resource = Resources::Get()->Find(ToName(radiusBase, radiusTop, height, slices, stacks));
 
 		if (resource != nullptr)
 		{
@@ -28,11 +28,11 @@ namespace acid
 		}
 
 		auto split = String::Split(data, "_");
-		float radiusBase = String::From<float>(split[1]);
-		float radiusTop = String::From<float>(split[2]);
-		float height = String::From<float>(split[3]);
-		uint32_t slices = String::From<uint32_t>(split[4]);
-		uint32_t stacks = String::From<uint32_t>(split[5]);
+		auto radiusBase = String::From<float>(split[1]);
+		auto radiusTop = String::From<float>(split[2]);
+		auto height = String::From<float>(split[3]);
+		auto slices = String::From<uint32_t>(split[4]);
+		auto stacks = String::From<uint32_t>(split[5]);
 		return Resource(radiusBase, radiusTop, height, slices, stacks);
 	}
 
@@ -80,10 +80,10 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToFilename(radiusBase, radiusTop, height, slices, stacks));
+		Model::Initialize(vertices, indices, ToName(radiusBase, radiusTop, height, slices, stacks));
 	}
 
-	std::string ModelCylinder::ToFilename(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
+	std::string ModelCylinder::ToName(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
 		std::stringstream result;
 		result << "Cylinder_" << radiusBase << "_" << radiusTop << "_" << height << "_" << slices << "_" << stacks;

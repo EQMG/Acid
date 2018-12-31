@@ -11,7 +11,7 @@ namespace acid
 
 	std::shared_ptr<GizmoType> GizmoType::Resource(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(model, lineThickness, diffuse));
+		auto resource = Resources::Get()->Find(ToName(model, lineThickness, diffuse));
 
 		if (resource != nullptr)
 		{
@@ -27,12 +27,12 @@ namespace acid
 	{
 		auto split = String::Split(data, "_");
 		auto model = Model::Resource(split[1]);
-		float lineThickness = String::From<float>(split[2]);
+		auto lineThickness = String::From<float>(split[2]);
 		return Resource(model, lineThickness);
 	}
 
 	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse) :
-		m_filename(ToFilename(model, lineThickness, diffuse)),
+		IResource(ToName(model, lineThickness, diffuse)),
 		m_model(model),
 		m_lineThickness(lineThickness),
 		m_diffuse(diffuse),
@@ -99,14 +99,14 @@ namespace acid
 
 	void GizmoType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetFilename());
+		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetName());
 		metadata.SetChild<float>("Line Thickness", m_lineThickness);
 	}
 
-	std::string GizmoType::ToFilename(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
+	std::string GizmoType::ToName(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
 		std::stringstream result;
-		result << "GizmoType_" << (model == nullptr ? "nullptr" : model->GetFilename()) << "_" << lineThickness << "_" << diffuse;
+		result << "GizmoType_" << (model == nullptr ? "nullptr" : model->GetName()) << "_" << lineThickness << "_" << diffuse; // TODO: Fix saving model name to gizmo.
 		return result.str();
 	}
 }

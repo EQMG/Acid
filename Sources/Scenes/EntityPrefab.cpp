@@ -29,7 +29,7 @@ namespace acid
 	}
 
 	EntityPrefab::EntityPrefab(const std::string &filename) :
-		IResource(),
+		IResource(filename),
 		m_filename(filename),
 		m_file(nullptr),
 		m_parent(nullptr)
