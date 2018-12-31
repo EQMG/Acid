@@ -26,9 +26,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		//	m_models.erase(std::remove_if(m_models.begin(), m_models.end(), [name](const std::string &n, const ComponentCreate &c){
-		//		return name == n; // FIXME: Remove
-		//	}), m_models.end());
+		m_models.erase(name);
 	}
 
 	std::shared_ptr<Model> ModelRegister::Create(const std::string &data) const

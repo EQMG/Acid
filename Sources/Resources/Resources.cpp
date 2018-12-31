@@ -60,7 +60,7 @@ namespace acid
 		m_resources.emplace_back(resource);
 	}
 
-	bool Resources::Remove(const std::shared_ptr<Resource> &resource)
+	void Resources::Remove(const std::shared_ptr<Resource> &resource)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -69,14 +69,11 @@ namespace acid
 			if (*it == resource)
 			{
 				m_resources.erase(it);
-				return true;
 			}
 		}
-
-		return false;
 	}
 
-	bool Resources::Remove(const std::string &filename)
+	void Resources::Remove(const std::string &filename)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -85,10 +82,7 @@ namespace acid
 			if ((*it)->GetName() == filename)
 			{
 				m_resources.erase(it);
-				return true;
 			}
 		}
-
-		return false;
 	}
 }

@@ -30,12 +30,12 @@ namespace acid
 
 		void Update() override;
 
-		std::shared_ptr<Resource> Find(const std::string &filename) const;
+		std::shared_ptr<Resource> Find(const std::string &name) const;
 
 		void Add(const std::shared_ptr<Resource> &resource);
 
-		bool Remove(const std::shared_ptr<Resource> &resource);
+		void Remove(const std::shared_ptr<Resource> &resource);
 
-		bool Remove(const std::string &filename);
+		void Remove(const std::string &filename);
 	};
 }
