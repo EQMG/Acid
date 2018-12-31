@@ -8,29 +8,6 @@
 
 namespace acid
 {
-	/*struct TextureCreateInfo
-	{
-		uint32_t width;
-		uint32_t height;
-		void *pixels = nullptr;
-		VkFormat format = VK_FORMAT_R8G8B8A8_UNORM;
-		VkImageLayout imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-		VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT;
-		VkFilter filter = VK_FILTER_LINEAR;
-		VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT;
-		bool anisotropic = false;
-		bool mipmap = false;
-	};*/
-
-	/*TextureCreateInfo logoTextureCreateInfo {
-		.width = 1024,
-		.height = 1024,
-		.addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		.anisotropic = true,
-		.mipmap = true
-	};*/
-
 	/// <summary>
 	/// Class that represents a loaded texture.
 	/// </summary>
@@ -61,7 +38,12 @@ namespace acid
 		/// Will find an existing texture with the same filename, or create a new texture.
 		/// </summary>
 		/// <param name="filename"> The file to load the texture from. </param>
-		static std::shared_ptr<Texture> Resource(const std::string &filename);
+		/// <param name="filter"> The type of filtering will be use on the texture. </param>
+		/// <param name="addressMode"> The sampler address mode to use. </param>
+		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
+		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		static std::shared_ptr<Texture> Resource(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+			const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new texture object.
@@ -111,7 +93,7 @@ namespace acid
 		/// <param name="pixels"> The pixels to copy to the image. </param>
 		void SetPixels(uint8_t *pixels);
 
-		std::string GetFilename() const override { return m_filename; };
+		std::string GetFilename() const { return m_filename; };
 
 		VkFilter GetFilter() const { return m_filter; }
 
@@ -143,7 +125,7 @@ namespace acid
 
 		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t *width, uint32_t *height, uint32_t *components);
 
-		static bool WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
+		static void WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 
 		static void DeletePixels(uint8_t *pixels);
 
@@ -167,7 +149,10 @@ namespace acid
 		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
 		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask,
-											 const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
-											 const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
+			const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
+			const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
+	private:
+		static std::string ToName(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+			const bool &anisotropic, const bool &mipmap);
 	};
 }

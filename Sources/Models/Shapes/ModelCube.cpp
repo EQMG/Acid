@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<ModelCube> ModelCube::Resource(const float &width, const float &height, const float &depth)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(width, height, depth));
+		auto resource = Resources::Get()->Find(ToName(width, height, depth));
 
 		if (resource != nullptr)
 		{
@@ -27,9 +27,9 @@ namespace acid
 		}
 
 		auto split = String::Split(data, "_");
-		float width = String::From<float>(split[1]);
-		float height = String::From<float>(split[2]);
-		float depth = String::From<float>(split[3]);
+		auto width = String::From<float>(split[1]);
+		auto height = String::From<float>(split[2]);
+		auto depth = String::From<float>(split[3]);
 		return Resource(width, height, depth);
 	}
 
@@ -82,10 +82,10 @@ namespace acid
 			vertex.SetPosition(vertex.GetPosition() * Vector3(width, height, depth));
 		}
 
-		Model::Initialize(vertices, indices, ToFilename(width, height, depth));
+		Model::Initialize(vertices, indices, ToName(width, height, depth));
 	}
 
-	std::string ModelCube::ToFilename(const float &width, const float &height, const float &depth)
+	std::string ModelCube::ToName(const float &width, const float &height, const float &depth)
 	{
 		std::stringstream result;
 		result << "Cube_" << width << "_" << height << "_" << depth;

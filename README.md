@@ -22,30 +22,32 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC)
 ## Features
 This is a list of current features in Acid:
  * Multiplatform (32bit and 64bit)
- * On the fly GLSL to SPIR-V compiler
+ * Multithreaded command buffers and thread safety
+ * On the fly GLSL to SPIR-V compilation and reflection
  * Modular rendering pipeline and compute
- * Deferred PBR rendering
+ * Deferred rendering (PBR, Simple)
  * Bullet physics
- * Networking (HTTP/FTP/UDP/TCP)
+ * Networking (HTTP, FTP, UDP, TCP)
  * Frustum culling
  * Resource management
- * Event and tasks systems
+ * Event listener system
  * Resource path searches, and packaging
- * GUI and font rendering
+ * GUI and SDF font rendering
+ * Entity component system
  * Particle effect systems
  * Audio and music
- * Skyboxes and fog
+ * Skyboxes and fog (OGG, WAV)
  * Shadow mapping
- * GameObjects and component system
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ)
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
  * GameObject prefab loading/saving (JSON, XML)
- * Value drivers, timers, vectors, and matrices
+ * Time, vectors, and matrices
  * Flexible input classes
- * C# generated files (WIP)
  * Steam integration (WIP)
+ * C# generated files (https://github.com/Equilibrium-Games/Acid-Sharp)
+ * Scene editor (https://github.com/Equilibrium-Games/Acid-Editor)
 
 ## Dependencies
 Acid uses the following libraries:
@@ -61,29 +63,31 @@ Acid uses the following libraries:
 
 # Code Snippets
 ```cpp
-// Imports a 2D texture.
-auto guiBlack = Texture::Resource("Guis/Black.png");
+// Imports a 2D texture using nearest filtering.
+auto guiBlack = Texture::Resource("Guis/Black.png", VK_FILTER_NEAREST);
 
 // Imports a 3D cubemap (face names defined in Cubemap.cpp).
 auto skyboxSnowy = Cubemap::Resource("Objects/SkyboxSnowy", ".png");
 
-// Imports a model.
+// Imports a OBJ model.
 auto dragon = ModelObj::Resource("Objects/Testing/ModelDragon.obj");
 
-// Plays a 3D sound (sound buffer internally managed), at the origin, at half volume.
-auto jump = Sound("Sounds/Jump.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, true, 0.5f);
-jump.SetPosition(10.0f * Vector3::RIGHT);
+// Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
+auto sphere = ModelSphere::Resource(20, 20, 1.0f);
+
+// Plays a 3D sound (sound buffer resource internally managed), at the (10, 0, 0), at half volume.
+auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::RIGHT), SOUND_TYPE_EFFECT, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
-auto playerObject = GetContext()->CreateEntity("Objects/Player/Player.json", Transform::IDENTITY);
+auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::IDENTITY);
 
 // Creates a entity.
-auto sphere = GetContext()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+auto sphere = GetStructure()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Resource(30, 30, 1.0f));
 sphere->AddComponent<ShapeSphere>(2.0f);
 sphere->AddComponent<Rigidbody>(2.0f);
 sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Resource("Objects/Testing/Albedo.png"),
-    0.0f, 0.0f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
+    0.0f, 0.5f, Texture::Resource("Objects/Testing/Material.png"), Texture::Resource("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>();
 
 // Vector maths.
@@ -97,10 +101,9 @@ std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, " ");
 
 // Will run a lambda after 5 seconds.
-Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
-{
+Events::Get()->AddEvent<EventTime>([](){
 	Log::Out("Hello world: %f\n", Maths::Random(-1.0f, 1.0f));
-}, false);
+}, Time::Seconds(5.0f));
 ```
 
 ## Screenshots
@@ -111,6 +114,8 @@ Events::Get()->AddEvent<EventTime>(Time::Seconds(5.0f), [&]() -> void
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot3.png" alt="Acid" width="600px">
 
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot4.png" alt="Acid" width="600px">
+
+<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot5.png" alt="Acid" width="600px">
 
 ## Compiling
 If you don't want to use system-wide libraries, then after cloning the repo, run `git submodule update --init --recursive` in the Acid directory to update the submodules.

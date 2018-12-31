@@ -72,20 +72,11 @@ namespace acid
 		Vector2 referenceOffset = Vector2();
 
 		Vector2 dimensions = screenDimensions * m_scale;
+		// TODO: Use parent screen transform as screen position and scale instead of (0,0), (aspect,1) to offset this UI.
 		Vector2 position = screenPosition - (dimensions * Vector2(
 			m_rectangle.GetReference().m_x,
 			-1.0f + m_rectangle.GetReference().m_y
 		));
-
-		if (m_parent != nullptr)
-		{
-		//	Vector4 parentTransform = m_parent->m_screenTransform;
-		//	Vector2 parentDimensions = Vector2(parentTransform.m_x / 2.0f, parentTransform.m_y / 2.0f);
-		//	Vector2 parentPosition = Vector2((parentTransform.m_z + 1.0f) / 2.0f, (parentTransform.m_w - 1.0f) / -2.0f);
-		//	Log::Out("%i: %s & %s\n", list.size(), parentDimensions.ToString().c_str(), parentPosition.ToString().c_str());
-		//	position -= parentPosition;
-		}
-
 		m_screenTransform = Vector4(2.0f * dimensions.m_x, 2.0f * dimensions.m_y, (2.0f * position.m_x) - 1.0f, (-2.0f * position.m_y) + 1.0f);
 
 		// Update all children objects.

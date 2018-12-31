@@ -34,7 +34,7 @@ namespace acid
 
 	void MaterialSkybox::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Cubemap Texture", m_cubemap == nullptr ? "" : m_cubemap->GetFilename());
+		metadata.SetChild<std::string>("Cubemap Texture", m_cubemap == nullptr ? "" : m_cubemap->GetName());
 		metadata.SetChild<std::string>("Cubemap Suffix", m_cubemap == nullptr ? "" : m_cubemap->GetFileSuffix());
 		metadata.SetChild<Colour>("Sky Colour", m_skyColour.GetHex());
 	}

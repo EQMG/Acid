@@ -3,7 +3,7 @@
     "Model": "Sphere_10_10_1.0"
   },
   "MaterialSkybox": {
-    "Cubemap Texture": "Objects/SkyboxSnowy/",
+    "Cubemap Texture": "Objects/SkyboxSnowy",
     "Cubemap Suffix": ".png",
     "Sky Colour": "#FFFFFF"
   },

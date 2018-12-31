@@ -35,7 +35,6 @@ namespace acid
 		static const uint32_t INSTANCE_STEPS;
 		static const float FRUSTUM_BUFFER;
 
-		std::string m_filename;
 		std::shared_ptr<Texture> m_texture;
 		std::shared_ptr<Model> m_model;
 		uint32_t m_numberOfRows;
@@ -86,8 +85,6 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		std::string GetFilename() const override { return m_filename; }
-
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 
 		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
@@ -112,7 +109,7 @@ namespace acid
 
 		void SetScale(const float &scale) { m_scale = scale; }
 	private:
-		static std::string ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
+		static std::string ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
 
 		ParticleData GetInstanceData(const Particle &particle);
 	};

@@ -122,7 +122,7 @@ namespace acid
 
 		std::optional<FontCharacter> GetCharacter(const int32_t &ascii);
 
-		std::string GetFilename() const override { return m_filename; }
+		std::string GetFileName() const { return m_filename; }
 
 		float GetSpaceWidth() const { return m_spaceWidth; }
 

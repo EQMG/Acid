@@ -42,8 +42,8 @@ namespace acid
 	{
 		if (m_lightModel == DEFERRED_IBL)
 		{
-			auto sceneSkyboxRender = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-			auto skybox = (sceneSkyboxRender == nullptr) ? nullptr : sceneSkyboxRender->GetCubemap();
+			auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
+			auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetCubemap();
 
 			if (m_skybox != skybox)
 			{
@@ -202,7 +202,7 @@ namespace acid
 #endif
 
 		return std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), convolution.GetPixels(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		                                 VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
-		                                 VK_SAMPLE_COUNT_1_BIT, true, true);
+			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
+			VK_SAMPLE_COUNT_1_BIT, true, true);
 	}
 }

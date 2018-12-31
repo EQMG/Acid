@@ -53,6 +53,14 @@ namespace acid
 		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
 	}
 
+	void Buffer::CopyBuffer(void *data) const
+	{
+		auto logicalDevice = Display::Get()->GetLogicalDevice();
+
+		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
+		vkUnmapMemory(logicalDevice, m_bufferMemory);
+	}
+
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 	{
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();

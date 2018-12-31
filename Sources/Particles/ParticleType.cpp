@@ -13,7 +13,7 @@ namespace acid
 
 	std::shared_ptr<ParticleType> ParticleType::Resource(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
+		auto resource = Resources::Get()->Find(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
 
 		if (resource != nullptr)
 		{
@@ -29,16 +29,16 @@ namespace acid
 	{
 		auto split = String::Split(data, "_");
 		auto texture = Texture::Resource(split[1]);
-		uint32_t numberOfRows = String::From<uint32_t>(split[2]);
-		Colour colourOffset = Colour(split[3]);
-		float lifeLength = String::From<float>(split[4]);
-		float stageCycles = String::From<float>(split[5]);
-		float scale = String::From<float>(split[6]);
+		auto numberOfRows = String::From<uint32_t>(split[2]);
+		auto colourOffset = Colour(split[3]);
+		auto lifeLength = String::From<float>(split[4]);
+		auto stageCycles = String::From<float>(split[5]);
+		auto scale = String::From<float>(split[6]);
 		return Resource(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	}
 
 	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
-		m_filename(ToFilename(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale)),
+		IResource(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale)),
 		m_texture(texture),
 		m_model(ModelRectangle::Resource(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
@@ -113,12 +113,12 @@ namespace acid
 		m_lifeLength = metadata.GetChild<float>("Life Length");
 		m_stageCycles = metadata.GetChild<float>("Stage Cycles");
 		m_scale = metadata.GetChild<float>("Scale");
-		m_filename = ToFilename(m_texture, m_numberOfRows, m_colourOffset, m_lifeLength, m_stageCycles, m_scale);
+		m_name = ToName(m_texture, m_numberOfRows, m_colourOffset, m_lifeLength, m_stageCycles, m_scale);
 	}
 
 	void ParticleType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetFilename());
+		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetName());
 		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
 		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
 		metadata.SetChild<float>("Life Length", m_lifeLength);
@@ -126,7 +126,7 @@ namespace acid
 		metadata.SetChild<float>("Scale", m_scale);
 	}
 
-	std::string ParticleType::ToFilename(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
+	std::string ParticleType::ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		std::stringstream result;
 		result << "ParticleType_" << (texture == nullptr ? "nullptr" : texture->GetFilename()) << "_" << numberOfRows << "_" << colourOffset.GetHex() << "_" << lifeLength << "_" << stageCycles << "_" << scale;

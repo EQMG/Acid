@@ -14,8 +14,6 @@ namespace acid
 		public IResource
 	{
 	private:
-		std::string m_name;
-
 		std::shared_ptr<Texture> m_texture;
 		std::shared_ptr<FontMetafile> m_metadata;
 	public:
@@ -38,8 +36,6 @@ namespace acid
 		/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
 		/// <param name="fontStyle"> The style selected to load as this type. </param>
 		FontType(const std::string &filename, const std::string &fontStyle);
-
-		std::string GetFilename() const override { return m_name; }
 
 		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
 

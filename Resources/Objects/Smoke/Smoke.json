@@ -2,7 +2,7 @@
   "ParticleSystem": {
 	"Types": [
 	  {
-		"Texture": "Particles/Circular.png",
+		"Texture": "Objects/Smoke/Circular.png",
 		"Number Of Rows": 4,
 		"Colour Offset": "#0000FF",
 		"Life Length": 3.0,
@@ -10,7 +10,7 @@
 		"Scale": 0.5
 	  },
 	  {
-		"Texture": "Particles/Circular.png",
+		"Texture": "Objects/Smoke/Circular.png",
 		"Number Of Rows": 4,
 		"Colour Offset": "#FFFF00",
 		"Life Length": 2.0,
@@ -18,7 +18,7 @@
 		"Scale": 1.0
 	  },
 	  {
-		"Texture": "Particles/Circular.png",
+		"Texture": "Objects/Smoke/Circular.png",
 		"Number Of Rows": 4,
 		"Colour Offset": "#FF0000",
 		"Life Length": 1.4,
@@ -26,7 +26,7 @@
 		"Scale": 0.8
 	  },
 	  {
-		"Texture": "Particles/Circular.png",
+		"Texture": "Objects/Smoke/Circular.png",
 		"Number Of Rows": 4,
 		"Colour Offset": "#BA55D3",
 		"Life Length": 1.1,

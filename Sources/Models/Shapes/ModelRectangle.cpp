@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<ModelRectangle> ModelRectangle::Resource(const float &min, const float &max)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(min, max));
+		auto resource = Resources::Get()->Find(ToName(min, max));
 
 		if (resource != nullptr)
 		{
@@ -27,8 +27,8 @@ namespace acid
 		}
 
 		auto split = String::Split(data, "_");
-		float width = String::From<float>(split[1]);
-		float height = String::From<float>(split[2]);
+		auto width = String::From<float>(split[1]);
+		auto height = String::From<float>(split[2]);
 		return Resource(width, height);
 	}
 
@@ -46,10 +46,10 @@ namespace acid
 			2, 1, 0
 		};
 
-		Model::Initialize(vertices, indices, ToFilename(min, max));
+		Model::Initialize(vertices, indices, ToName(min, max));
 	}
 
-	std::string ModelRectangle::ToFilename(const float &min, const float &max)
+	std::string ModelRectangle::ToName(const float &min, const float &max)
 	{
 		std::stringstream result;
 		result << "Rectangle_" << min << "_" << max;

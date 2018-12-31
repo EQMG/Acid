@@ -117,9 +117,9 @@ namespace test
 			m_currentTab->GetContent()->SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(0.1f));
 		}
 
-		Events::Get()->AddEvent<EventTime>(Time::Seconds(0.32f), [&]()
+		Events::Get()->AddEvent<EventTime>([&]()
 		{
 			m_targetTab->GetContent()->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, Time::Seconds(0.1f));
-		}, false);
+		}, Time::Seconds(0.32f));
 	}
 }

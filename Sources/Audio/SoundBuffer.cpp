@@ -35,7 +35,7 @@ namespace acid
 	}
 
 	SoundBuffer::SoundBuffer(const std::string &filename) :
-		IResource(),
+		IResource(filename),
 		m_filename(filename),
 		m_buffer(0)
 	{

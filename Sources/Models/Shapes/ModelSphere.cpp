@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelSphere> ModelSphere::Resource(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
-		auto resource = Resources::Get()->Find(ToFilename(latitudeBands, longitudeBands, radius));
+		auto resource = Resources::Get()->Find(ToName(latitudeBands, longitudeBands, radius));
 
 		if (resource != nullptr)
 		{
@@ -28,9 +28,9 @@ namespace acid
 		}
 
 		auto split = String::Split(data, "_");
-		uint32_t latitudeBands = String::From<uint32_t>(split[1]);
-		uint32_t longitudeBands = String::From<uint32_t>(split[2]);
-		float radius = String::From<float>(split[3]);
+		auto latitudeBands = String::From<uint32_t>(split[1]);
+		auto longitudeBands = String::From<uint32_t>(split[2]);
+		auto radius = String::From<float>(split[3]);
 		return Resource(latitudeBands, longitudeBands, radius);
 	}
 
@@ -76,10 +76,10 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToFilename(latitudeBands, longitudeBands, radius));
+		Model::Initialize(vertices, indices, ToName(latitudeBands, longitudeBands, radius));
 	}
 
-	std::string ModelSphere::ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
+	std::string ModelSphere::ToName(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
 		std::stringstream result;
 		result << "Sphere_" << latitudeBands << "_" << longitudeBands << "_" << radius;

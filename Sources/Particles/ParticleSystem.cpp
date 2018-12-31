@@ -61,7 +61,7 @@ namespace acid
 			{
 				ParticleType temp = ParticleType();
 				temp.Decode(*typeNode);
-				m_types.emplace_back(ParticleType::Resource(temp.GetFilename()));
+				m_types.emplace_back(ParticleType::Resource(temp.GetName()));
 			}
 		}
 

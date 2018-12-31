@@ -38,6 +38,7 @@ namespace acid
 	}
 
 	FontMetafile::FontMetafile(const std::string &filename) :
+		IResource(filename),
 		m_metadata(std::map<int32_t, FontCharacter>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),

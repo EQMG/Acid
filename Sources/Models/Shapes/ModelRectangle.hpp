@@ -15,6 +15,6 @@ namespace acid
 
 		ModelRectangle(const float &width, const float &height);
 	private:
-		static std::string ToFilename(const float &min, const float &max);
+		static std::string ToName(const float &min, const float &max);
 	};
 }

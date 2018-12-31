@@ -14,7 +14,6 @@ namespace acid
 		public IResource
 	{
 	private:
-		std::string m_filename;
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
 		RenderStage *m_renderStage;
@@ -40,14 +39,12 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
-		std::string GetFilename() const override { return m_filename; }
-
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
 		Pipeline *GetPipeline() { return m_pipeline.get(); }
 	private:
-		static std::string ToFilename(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		static std::string ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 	};
 }

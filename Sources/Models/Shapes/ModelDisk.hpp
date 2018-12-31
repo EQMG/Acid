@@ -16,6 +16,6 @@ namespace acid
 
 		ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
 	private:
-		static std::string ToFilename(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
+		static std::string ToName(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops);
 	};
 }

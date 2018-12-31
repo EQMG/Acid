@@ -16,6 +16,6 @@ namespace acid
 
 		ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 	private:
-		static std::string ToFilename(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
+		static std::string ToName(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
 	};
 }

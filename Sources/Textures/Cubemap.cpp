@@ -11,28 +11,29 @@ namespace acid
 {
 	const std::vector<std::string> Cubemap::FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
-	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileExt)
+	std::shared_ptr<Cubemap> Cubemap::Resource(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+		const bool &anisotropic, const bool &mipmap)
 	{
 		if (filename.empty())
 		{
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Find(filename);
+		auto resource = Resources::Get()->Find(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap));
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Cubemap>(resource);
 		}
 
-		auto result = std::make_shared<Cubemap>(filename, fileExt);
+		auto result = std::make_shared<Cubemap>(filename, fileSuffix, filter, addressMode, anisotropic, mipmap);
 		Resources::Get()->Add(std::dynamic_pointer_cast<IResource>(result));
 		return result;
 	}
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap) :
-		IResource(),
+		IResource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
 		IDescriptor(),
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
@@ -95,7 +96,7 @@ namespace acid
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		IResource(),
+		IResource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
 		IDescriptor(),
 		m_filename(""),
 		m_fileSuffix(""),
@@ -248,5 +249,13 @@ namespace acid
 		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+	}
+
+	std::string Cubemap::ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
+		const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+	{
+		std::stringstream result;
+		result << "Cubemap_" << filename << "_" << fileSuffix << "_" << filter << "_" << addressMode << "_" << anisotropic << "_" << mipmap;
+		return result.str();
 	}
 }
