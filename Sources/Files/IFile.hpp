@@ -10,7 +10,7 @@ namespace acid
 	/// <summary>
 	/// A class that represents a file format that has been loaded into <seealso cref="Metadata"/>.
 	/// </summary>
-	class ACID_EXPORT DataFile
+	class ACID_EXPORT IFile
 	{
 	public:
 		virtual void Load() = 0;

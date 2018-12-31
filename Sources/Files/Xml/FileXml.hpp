@@ -2,12 +2,12 @@
 
 #include <string>
 #include <vector>
-#include "Files/DataFile.hpp"
+#include "Files/IFile.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FileXml :
-		public DataFile
+		public IFile
 	{
 	private:
 		std::string m_filename;

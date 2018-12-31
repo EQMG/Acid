@@ -42,7 +42,7 @@ This is a list of current features in Acid:
  * Model file loading (OBJ)
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * GameObject prefab loading/saving (JSON, XML)
+ * Entity prefab loading/saving (JSON, XML)
  * Time, vectors, and matrices
  * Flexible input classes
  * Steam integration (WIP)
@@ -75,7 +75,7 @@ auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
 // Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
 auto sphere = ModelSphere::Create(20, 20, 1.0f);
 
-// Plays a 3D sound (sound buffer resource internally managed), at the (10, 0, 0), at half volume.
+// Plays a 3D sound (sound buffer resource internally managed), at (10, 0, 0), at half volume.
 auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::RIGHT), SOUND_TYPE_EFFECT, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
@@ -83,12 +83,12 @@ auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", T
 
 // Creates a entity.
 auto sphere = GetStructure()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
-sphere->AddComponent<Mesh>(ShapeSphere::Create(30, 30, 1.0f));
-sphere->AddComponent<ShapeSphere>(2.0f);
-sphere->AddComponent<Rigidbody>(2.0f);
-sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Albedo.png"),
-    0.0f, 0.5f, Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
-sphere->AddComponent<MeshRender>();
+sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
+sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
+sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
+sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
+    Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
+sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material attached.
 
 // Vector maths.
 Vector2 a(3.0f, -7.2f);

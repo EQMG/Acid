@@ -10,7 +10,7 @@
 namespace acid
 {
 	/// <summary>
-	/// This component represents a scene camera.
+	/// This component represents a scene camera, this object should be overridden with new behaviour.
 	/// </summary>
 	class ACID_EXPORT Camera :
 		public Component
