@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Renderer/Commands/CommandBuffer.hpp"
-#include "Renderer/Pipelines/IPipeline.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
@@ -18,7 +18,7 @@ namespace acid
 		VkDescriptorPool m_descriptorPool;
 		VkDescriptorSet m_descriptorSet;
 	public:
-		explicit DescriptorSet(const IPipeline &pipeline);
+		explicit DescriptorSet(const Pipeline &pipeline);
 
 		~DescriptorSet();
 

@@ -5,7 +5,7 @@
 namespace acid
 {
 	EmitterCircle::EmitterCircle(const float &radius, const Vector3 &heading, const Transform &localTransform) :
-		ParticleEmitter(localTransform),
+		Emitter(localTransform),
 		m_radius(radius),
 		m_heading(heading.Normalize())
 	{
@@ -35,7 +35,6 @@ namespace acid
 
 	Vector3 EmitterCircle::GeneratePosition() const
 	{
-		auto spawnPosition = Vector3::RandomPointOnCircle(m_heading, m_radius);
-		return spawnPosition;
+		return Vector3::RandomPointOnCircle(m_heading, m_radius);
 	}
 }

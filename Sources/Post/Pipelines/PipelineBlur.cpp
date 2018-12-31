@@ -19,7 +19,7 @@ namespace acid
 	{
 	}
 
-	void PipelineBlur::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void PipelineBlur::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		if (!m_toScreen)
 		{
@@ -46,7 +46,7 @@ namespace acid
 		m_filterBlurVertical.SetDirection(Vector2(0.0f, m_blur));
 		m_filterBlurHorizontal.SetDirection(Vector2(m_blur, 0.0f));
 
-		m_filterBlurVertical.Render(commandBuffer, clipPlane, camera);
-		m_filterBlurHorizontal.Render(commandBuffer, clipPlane, camera);
+		m_filterBlurVertical.Render(commandBuffer, camera);
+		m_filterBlurHorizontal.Render(commandBuffer, camera);
 	}
 }

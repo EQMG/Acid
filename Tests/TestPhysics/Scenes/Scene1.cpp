@@ -1,6 +1,7 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
+#include <Emitters/EmitterCircle.hpp>
 #include <Files/Json/FileJson.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Helpers/FileSystem.hpp>
@@ -15,7 +16,6 @@
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/Emitters/EmitterCircle.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Physics/Colliders/ColliderCapsule.hpp>
 #include <Physics/Colliders/ColliderCone.hpp>
@@ -25,8 +25,8 @@
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>

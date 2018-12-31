@@ -1,13 +1,13 @@
 #pragma once
 
 #include <string>
-#include "Files/IFile.hpp"
+#include "Files/DataFile.hpp"
 #include "RowCsv.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT FileCsv :
-		public IFile
+		public DataFile
 	{
 	private:
 		std::string m_filename;

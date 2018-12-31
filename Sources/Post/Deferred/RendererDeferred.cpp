@@ -4,7 +4,7 @@
 #include "Lights/Light.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
-#include "Renderer/Pipelines/Compute.hpp"
+#include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
@@ -23,12 +23,12 @@ namespace acid
 	};
 
 	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel) :
-		IRenderer(graphicsStage),
+		RenderPipeline(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_storageLights(StorageHandler()),
 		m_lightModel(lightModel),
-		m_pipeline(Pipeline(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
+		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_brdf(m_lightModel == DEFERRED_IBL ? ComputeBrdf(512) : nullptr),
@@ -38,7 +38,7 @@ namespace acid
 	{
 	}
 
-	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		if (m_lightModel == DEFERRED_IBL)
 		{
@@ -138,7 +138,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		Compute compute = Compute("Shaders/Brdf.comp", size, size, 16);
+		PipelineCompute compute = PipelineCompute("Shaders/Brdf.comp", size, size, 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
@@ -176,7 +176,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		Compute compute = Compute("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16);
+		PipelineCompute compute = PipelineCompute("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);

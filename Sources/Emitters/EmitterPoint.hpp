@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-#include "ParticleEmitter.hpp"
+#include "Emitter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT EmitterPoint :
-		public ParticleEmitter
+		public Emitter
 	{
 	private:
 		Vector3 m_point;

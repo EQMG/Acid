@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "Renderer/Buffers/UniformBuffer.hpp"
-#include "Renderer/IRenderer.hpp"
+#include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
@@ -15,7 +15,7 @@ namespace acid
 	};
 
 	class ACID_EXPORT RendererMeshes :
-		public IRenderer
+		public RenderPipeline
 	{
 	private:
 		MeshSort m_meshSort;
@@ -23,6 +23,6 @@ namespace acid
 	public:
 		explicit RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort = MESH_SORT_NONE);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 	};
 }

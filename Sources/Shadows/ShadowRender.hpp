@@ -4,7 +4,7 @@
 #include "Scenes/Component.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
@@ -28,6 +28,6 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene);
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 	};
 }

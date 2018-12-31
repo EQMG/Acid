@@ -17,7 +17,7 @@ namespace acid
 	{
 	}
 
-	void FilterDof::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterDof::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("nearPlane", camera.GetNearPlane());

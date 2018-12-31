@@ -6,14 +6,14 @@
 namespace acid
 {
 	RendererGizmos::RendererGizmos(const GraphicsStage &graphicsStage) :
-		IRenderer(graphicsStage),
-		m_pipeline(Pipeline(graphicsStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexModel::GetVertexInput()},
+		RenderPipeline(graphicsStage),
+		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}
 
-	void RendererGizmos::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererGizmos::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
 		m_uniformScene.Push("view", camera.GetViewMatrix());

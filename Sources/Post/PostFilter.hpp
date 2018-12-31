@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Renderer/IRenderer.hpp"
+#include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
@@ -12,14 +12,14 @@ namespace acid
 	/// Represents a post effect shader and on application saves the result into a FBO.
 	/// </summary>
 	class ACID_EXPORT PostFilter :
-		public IRenderer
+		public RenderPipeline
 	{
 	protected:
 		static uint32_t GLOBAL_SWITCHING;
 
 		DescriptorsHandler m_descriptorSet;
 
-		Pipeline m_pipeline;
+		PipelineGraphics m_pipeline;
 		std::shared_ptr<Model> m_model;
 
 		std::map<std::string, Descriptor *> m_attachments;
@@ -34,7 +34,7 @@ namespace acid
 
 		const DescriptorsHandler &GetDescriptorSet() const { return m_descriptorSet; }
 
-		const Pipeline &GetPipeline() const { return m_pipeline; }
+		const PipelineGraphics &GetPipeline() const { return m_pipeline; }
 
 		std::shared_ptr<Model> GetModel() const { return m_model; }
 

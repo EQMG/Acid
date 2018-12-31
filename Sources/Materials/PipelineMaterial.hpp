@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Renderer/RenderStage.hpp"
 #include "Resources/Resource.hpp"
 
@@ -17,7 +17,7 @@ namespace acid
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
 		RenderStage *m_renderStage;
-		std::unique_ptr<Pipeline> m_pipeline;
+		std::unique_ptr<PipelineGraphics> m_pipeline;
 	public:
 		/// <summary>
 		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
@@ -43,7 +43,7 @@ namespace acid
 
 		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
 
-		Pipeline *GetPipeline() { return m_pipeline.get(); }
+		PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 	private:
 		static std::string ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 	};

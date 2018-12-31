@@ -80,7 +80,7 @@ namespace acid
 		m_storageInstances.Push(instanceDatas.data(), sizeof(ParticleData) * m_maxInstances);
 	}
 
-	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
+	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		if (m_instances == 0)
 		{

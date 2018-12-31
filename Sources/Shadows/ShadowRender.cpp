@@ -29,7 +29,7 @@ namespace acid
 	{
 	}
 
-	bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const Pipeline &pipeline, UniformHandler &uniformScene)
+	bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets required components.
 		auto mesh = GetParent()->GetComponent<Mesh>();

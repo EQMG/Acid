@@ -7,7 +7,7 @@
 namespace acid
 {
 	EmitterSphere::EmitterSphere(const float &radius, const Transform &localTransform) :
-		ParticleEmitter(localTransform),
+		Emitter(localTransform),
 		m_radius(radius)
 	{
 	}
@@ -34,9 +34,6 @@ namespace acid
 
 	Vector3 EmitterSphere::GeneratePosition() const
 	{
-		auto spawnPosition = Vector3::RandomUnitVector();
-
-		spawnPosition *= m_radius;
 		float a = Maths::Random(0.0f, 1.0f);
 		float b = Maths::Random(0.0f, 1.0f);
 
@@ -50,7 +47,6 @@ namespace acid
 		float randX = b * std::cos(2.0f * PI * (a / b));
 		float randY = b * std::sin(2.0f * PI * (a / b));
 		float distance = Vector2(randX, randY).Length();
-		spawnPosition *= distance;
-		return spawnPosition;
+		return m_radius * distance * Vector3::RandomUnitVector();
 	}
 }

@@ -14,7 +14,7 @@ namespace acid
 	/// along with a reference to the currently playing animation for the corresponding entity.
 	/// <para>
 	/// An Animator instance needs to be updated every frame, in order for it to keep updating the animation pose of the associated entity.
-	/// The currently playing animation can be changed at any time using the doAnimation() method.
+	/// The currently playing animation can be changed at any time using <seealso cref="#DoAnimation()"/>.
 	/// The Animator will keep looping the current animation until a new animation is chosen.
 	/// </para>
 	/// <para>

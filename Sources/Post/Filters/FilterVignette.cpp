@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	void FilterVignette::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterVignette::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("innerRadius", m_innerRadius);

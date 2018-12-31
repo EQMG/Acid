@@ -1,7 +1,7 @@
 #include "MaterialSkybox.hpp"
 
 #include "Models/VertexModel.hpp"
-#include "Renderer/Pipelines/Compute.hpp"
+#include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid

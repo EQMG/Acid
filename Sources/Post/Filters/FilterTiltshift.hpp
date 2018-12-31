@@ -17,7 +17,7 @@ namespace acid
 	public:
 		explicit FilterTiltshift(const GraphicsStage &graphicsStage, const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
 		float GetBlurAmount() const { return m_blurAmount; }
 

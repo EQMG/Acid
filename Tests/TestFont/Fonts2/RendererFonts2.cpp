@@ -40,7 +40,7 @@ namespace acid
 	}
 
 	RendererFonts2::RendererFonts2(const GraphicsStage &graphicsStage) :
-		IRenderer(graphicsStage),
+		RenderPipeline(graphicsStage),
 		m_pipeline(Pipeline(graphicsStage, {"Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag"}, {GlyphInstance::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {})),
 		m_descriptorSet(DescriptorsHandler()),

@@ -37,7 +37,7 @@ namespace acid
 			float pastFactor = std::floor(m_emitTimer.GetDifference() / m_emitTimer.GetInterval());
 			m_emitTimer.ResetStartTime();
 
-			auto emitters = GetParent()->GetComponents<ParticleEmitter>();
+			auto emitters = GetParent()->GetComponents<Emitter>();
 
 			if (emitters.empty())
 			{
@@ -140,7 +140,7 @@ namespace acid
 		m_directionDeviation = deviation * PI;
 	}
 
-	Particle ParticleSystem::EmitParticle(const ParticleEmitter &emitter)
+	Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	{
 		auto worldTransform = GetParent()->GetWorldTransform() * emitter.GetLocalTransform();
 		Vector3 spawnPos = emitter.GeneratePosition() + worldTransform.GetPosition();

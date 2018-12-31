@@ -1,195 +1,110 @@
-﻿#pragma once
+#pragma once
 
-#include <array>
 #include <string>
 #include <vector>
-#include "IPipeline.hpp"
+#include <vulkan/vulkan.h>
+#include "Helpers/String.hpp"
+#include "Files/Files.hpp"
+#include "Renderer/Commands/CommandBuffer.hpp"
+#include "ShaderProgram.hpp"
 
 namespace acid
 {
-	class DepthStencil;
-	class Texture;
-
-	enum PipelineMode
-	{
-		PIPELINE_MODE_POLYGON = 0,
-		PIPELINE_MODE_MRT = 1,
-		PIPELINE_MODE_COMPUTE = 2
-	};
-
-	enum PipelineDepth
-	{
-		PIPELINE_DEPTH_NONE = 0,
-		PIPELINE_DEPTH_READ_WRITE = 1,
-		PIPELINE_DEPTH_READ = 2,
-		PIPELINE_DEPTH_WRITE = 3
-	};
-
-
-	class ACID_EXPORT PipelineCreate
+	/// <summary>
+	/// A object that represents position in the renderpass/subpass structure.
+	/// </summary>
+	class ACID_EXPORT GraphicsStage
 	{
 	private:
-		friend class Pipeline;
-		std::vector<std::string> m_shaderStages;
-		std::vector<VertexInput> m_vertexInputs;
-
-		PipelineMode m_pipelineMode;
-		PipelineDepth m_depthMode;
-		VkPolygonMode m_polygonMode;
-		VkCullModeFlags m_cullMode;
-		bool m_pushDescriptors;
-
-		std::vector<ShaderDefine> m_defines;
+		uint32_t m_renderpass;
+		uint32_t m_subpass;
 	public:
-		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
-			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {}) :
-			m_shaderStages(shaderStages),
-			m_vertexInputs(vertexInputs),
-			m_pipelineMode(pipelineMode),
-			m_depthMode(depthMode),
-			m_polygonMode(polygonMode),
-			m_cullMode(cullMode),
-			m_pushDescriptors(pushDescriptors),
-			m_defines(defines)
+		/// <summary>
+		/// Creates a new graphics stage.
+		/// </summary>
+		/// <param name="renderpass"> The renderpass. </param>
+		/// <param name="subpass"> The subpass. </param>
+		GraphicsStage(const uint32_t &renderpass, const uint32_t &subpass) :
+			m_renderpass(renderpass),
+			m_subpass(subpass)
 		{
 		}
 
-		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+		uint32_t GetRenderpass() const { return m_renderpass; }
 
-		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
+		uint32_t GetSubpass() const { return m_subpass; }
 
-		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+		bool operator==(const GraphicsStage &other) const
+		{
+			return m_renderpass == other.m_renderpass && m_subpass == other.m_subpass;
+		}
 
-		PipelineDepth GetDepthMode() const { return m_depthMode; }
+		bool operator!=(const GraphicsStage &other) const
+		{
+			return !(*this == other);
+		}
 
-		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+		bool operator<(const GraphicsStage &other) const
+		{
+			return m_renderpass < other.m_renderpass || m_subpass < other.m_subpass;
+		}
+	};
 
-		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+	using ShaderDefine = std::pair<std::string, std::string>;
 
-		bool GetPushDescriptors() const { return m_pushDescriptors; }
+	class ACID_EXPORT VertexInput
+	{
+	private:
+		uint32_t m_binding;
+		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
+	public:
+		VertexInput(const uint32_t &binding, const std::vector<VkVertexInputBindingDescription> &bindingDescriptions, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions) :
+			m_binding(binding),
+			m_bindingDescriptions(bindingDescriptions),
+			m_attributeDescriptions(attributeDescriptions)
+		{
+		}
 
-		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
+		uint32_t GetBinding() const { return m_binding; }
+
+		std::vector<VkVertexInputBindingDescription> GetBindingDescriptions() const { return m_bindingDescriptions; }
+
+		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
+
+		bool operator<(const VertexInput &other) const
+		{
+			return m_binding < other.m_binding;
+		}
 	};
 
 	/// <summary>
-	/// Class that represents a Vulkan pipeline.
+	/// Class that represents is used to represent a Vulkan pipeline.
 	/// </summary>
-	class ACID_EXPORT Pipeline :
-		public IPipeline
+	class ACID_EXPORT Pipeline
 	{
-	private:
-		GraphicsStage m_graphicsStage;
-		std::vector<std::string> m_shaderStages;
-		std::vector<VertexInput> m_vertexInputs;
-		PipelineMode m_pipelineMode;
-		PipelineDepth m_depthMode;
-		VkPolygonMode m_polygonMode;
-		VkCullModeFlags m_cullMode;
-		bool m_pushDescriptors;
-		std::vector<ShaderDefine> m_defines;
-
-		std::unique_ptr<ShaderProgram> m_shaderProgram;
-
-		std::vector<VkDynamicState> m_dynamicStates;
-
-		std::vector<VkShaderModule> m_modules;
-		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
-
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-
-		VkPipeline m_pipeline;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
-
-		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
-		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
-		std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
-		VkPipelineColorBlendStateCreateInfo m_colourBlendState;
-		VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
-		VkPipelineViewportStateCreateInfo m_viewportState;
-		VkPipelineMultisampleStateCreateInfo m_multisampleState;
-		VkPipelineDynamicStateCreateInfo m_dynamicState;
-		VkPipelineTessellationStateCreateInfo m_tessellationState;
 	public:
-		/// <summary>
-		/// Creates a new pipeline.
-		/// </summary>
-		/// <param name="graphicsStage"> The graphics stage this pipeline will be run on. </param>
-		/// <param name="shaderStages"> The source files to load the pipeline shaders from. </param>
-		/// <param name="vertexInputs"> The vertex inputs that will be used as a shaders input. </param>
-		/// <param name="pipelineMode"> The mode this pipeline will run in. </param>
-		/// <param name="depthMode"> The depth read/write that will be used. </param>
-		/// <param name="polygonMode"> The polygon draw mode. </param>
-		/// <param name="cullMode"> The vertex cull mode. </param>
-		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
-		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
-			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
+		Pipeline() = default;
 
-		/// <summary>
-		/// Creates a new pipeline.
-		/// </summary>
-		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
-		/// <param name="pipelineCreate"> The pipelines creation info. </param>
-		Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		~Pipeline() = default;
 
-		~Pipeline();
+		void BindPipeline(const CommandBuffer &commandBuffer) const
+		{
+			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
+		}
 
-		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
+		virtual ShaderProgram *GetShaderProgram() const = 0;
 
-		Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
+		virtual bool IsPushDescriptors() const = 0;
 
-		uint32_t GetWidth(const int32_t &stage = -1) const;
+		virtual VkDescriptorSetLayout GetDescriptorSetLayout() const = 0;
 
-		uint32_t GetHeight(const int32_t &stage = -1) const;
+		virtual VkDescriptorPool GetDescriptorPool() const = 0;
 
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+		virtual VkPipeline GetPipeline() const = 0;
 
-		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+		virtual VkPipelineLayout GetPipelineLayout() const = 0;
 
-		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
-
-		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
-
-		PipelineDepth GetDepthMode() const { return m_depthMode; }
-
-		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
-
-		VkCullModeFlags GetCullMode() const { return m_cullMode; }
-
-		bool IsPushDescriptors() const override { return m_pushDescriptors; }
-
-		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
-
-		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
-
-		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
-
-		VkDescriptorPool GetDescriptorPool() const override { return m_descriptorPool; }
-
-		VkPipeline GetPipeline() const override { return m_pipeline; }
-
-		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
-
-		VkPipelineBindPoint GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
-	private:
-		void CreateShaderProgram();
-
-		void CreateDescriptorLayout();
-
-		void CreateDescriptorPool();
-
-		void CreatePipelineLayout();
-
-		void CreateAttributes();
-
-		void CreatePipeline();
-
-		void CreatePipelinePolygon();
-
-		void CreatePipelineMrt();
-
-		void CreatePipelineCompute();
+		virtual VkPipelineBindPoint GetPipelineBindPoint() const = 0;
 	};
 }

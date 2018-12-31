@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-#include "ParticleEmitter.hpp"
+#include "Emitter.hpp"
 
 namespace acid
 {
 	class ACID_EXPORT EmitterLine :
-		public ParticleEmitter
+		public Emitter
 	{
 	private:
 		float m_length;

@@ -9,7 +9,7 @@ namespace acid
 	{
 	}
 
-	void FilterGrain::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterGrain::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("strength", m_strength);

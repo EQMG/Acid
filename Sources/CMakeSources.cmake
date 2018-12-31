@@ -19,6 +19,11 @@ set(_temp_acid_headers
 		Audio/SoundBuffer.hpp
 		Audio/stb_vorbis.h
 		Display/Display.hpp
+		Emitters/Emitter.hpp
+		Emitters/EmitterCircle.hpp
+		Emitters/EmitterLine.hpp
+		Emitters/EmitterPoint.hpp
+		Emitters/EmitterSphere.hpp
 		Engine/Engine.hpp
 		Engine/Exports.hpp
 		Engine/Log.hpp
@@ -33,7 +38,7 @@ set(_temp_acid_headers
 		Files/Csv/FileCsv.hpp
 		Files/Csv/RowCsv.hpp
 		Files/Files.hpp
-		Files/IFile.hpp
+		Files/DataFile.hpp
 		Files/Json/FileJson.hpp
 		Files/Json/JsonSection.hpp
 		Files/Xml/FileXml.hpp
@@ -123,11 +128,6 @@ set(_temp_acid_headers
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
 		Noise/Noise.hpp
-		Particles/Emitters/EmitterCircle.hpp
-		Particles/Emitters/EmitterLine.hpp
-		Particles/Emitters/EmitterPoint.hpp
-		Particles/Emitters/EmitterSphere.hpp
-		Particles/Emitters/ParticleEmitter.hpp
 		Particles/Particle.hpp
 		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
@@ -182,12 +182,12 @@ set(_temp_acid_headers
 		Renderer/Handlers/PushHandler.hpp
 		Renderer/Handlers/StorageHandler.hpp
 		Renderer/Handlers/UniformHandler.hpp
-		Renderer/IRenderer.hpp
-		Renderer/Pipelines/Compute.hpp
-		Renderer/Pipelines/IPipeline.hpp
 		Renderer/Pipelines/Pipeline.hpp
+		Renderer/Pipelines/PipelineCompute.hpp
+		Renderer/Pipelines/PipelineGraphics.hpp
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
+		Renderer/RenderPipeline.hpp
 		Renderer/RendererRegister.hpp
 		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Renderpass.hpp
@@ -248,6 +248,10 @@ set(_temp_acid_sources
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
 		Display/Display.cpp
+		Emitters/EmitterCircle.cpp
+		Emitters/EmitterLine.cpp
+		Emitters/EmitterPoint.cpp
+		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Engine/ModuleManager.cpp
@@ -340,10 +344,6 @@ set(_temp_acid_sources
 		Network/Tcp/TcpSocket.cpp
 		Network/Udp/UdpSocket.cpp
 		Noise/Noise.cpp
-		Particles/Emitters/EmitterCircle.cpp
-		Particles/Emitters/EmitterLine.cpp
-		Particles/Emitters/EmitterPoint.cpp
-		Particles/Emitters/EmitterSphere.cpp
 		Particles/Particle.cpp
 		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp
@@ -396,8 +396,8 @@ set(_temp_acid_sources
 		Renderer/Handlers/PushHandler.cpp
 		Renderer/Handlers/StorageHandler.cpp
 		Renderer/Handlers/UniformHandler.cpp
-		Renderer/Pipelines/Compute.cpp
-		Renderer/Pipelines/Pipeline.cpp
+		Renderer/Pipelines/PipelineCompute.cpp
+		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/ShaderProgram.cpp
 		Renderer/Renderer.cpp
 		Renderer/RendererRegister.cpp

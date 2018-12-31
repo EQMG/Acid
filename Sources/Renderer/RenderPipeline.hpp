@@ -3,35 +3,34 @@
 #include "Maths/Vector4.hpp"
 #include "Scenes/Camera.hpp"
 #include "Commands/CommandBuffer.hpp"
-#include "Pipelines/IPipeline.hpp"
+#include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// Represents a sub-renderer in the engine.
+	/// Represents a render pipeline that is used to render a type of pipeline.
 	/// </summary>
-	class ACID_EXPORT IRenderer
+	class ACID_EXPORT RenderPipeline
 	{
 	private:
 		GraphicsStage m_graphicsStage;
 		bool m_enabled;
 	public:
 		/// <summary>
-		/// Creates a new renderer.
+		/// Creates a new render pipeline.
 		/// </summary>
 		/// <param name="graphicsStage"> The graphics stage this renderer will be used in. </param>
-		explicit IRenderer(const GraphicsStage &graphicsStage) :
+		explicit RenderPipeline(const GraphicsStage &graphicsStage) :
 			m_graphicsStage(graphicsStage),
 			m_enabled(true)
 		{
 		}
 
 		/// <summary>
-		/// Called when the renderer is needed to be rendered.
+		/// Runs the render pipeline in the current renderpass.
 		/// </summary>
-		/// <param name="clipPlane"> The current clip plane. </param>
 		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) = 0;
+		virtual void Render(const CommandBuffer &commandBuffer, const Camera &camera) = 0;
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 

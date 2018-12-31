@@ -7,7 +7,7 @@ namespace acid
 	{
 	}
 
-	void FilterNegative::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterNegative::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		// Updates descriptors.
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

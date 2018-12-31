@@ -1,4 +1,4 @@
-﻿#include "Pipeline.hpp"
+﻿#include "PipelineGraphics.hpp"
 
 #include <cassert>
 #include <algorithm>
@@ -14,9 +14,9 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode, const PipelineDepth &depthMode,
+	PipelineGraphics::PipelineGraphics(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode, const PipelineDepth &depthMode,
 	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
-		IPipeline(),
+		Pipeline(),
 		m_graphicsStage(graphicsStage),
 		m_shaderStages(shaderStages),
 		m_vertexInputs(vertexInputs),
@@ -64,9 +64,6 @@ namespace acid
 		case PIPELINE_MODE_MRT:
 			CreatePipelineMrt();
 			break;
-		case PIPELINE_MODE_COMPUTE:
-			CreatePipelineCompute();
-			break;
 		default:
 			assert(false);
 			break;
@@ -79,13 +76,13 @@ namespace acid
 #endif
 	}
 
-	Pipeline::Pipeline(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
-		Pipeline(graphicsStage, pipelineCreate.m_shaderStages, pipelineCreate.m_vertexInputs, pipelineCreate.m_pipelineMode, pipelineCreate.m_depthMode,
+	PipelineGraphics::PipelineGraphics(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
+		PipelineGraphics(graphicsStage, pipelineCreate.m_shaderStages, pipelineCreate.m_vertexInputs, pipelineCreate.m_pipelineMode, pipelineCreate.m_depthMode,
 			pipelineCreate.m_polygonMode, pipelineCreate.m_cullMode, pipelineCreate.m_pushDescriptors, pipelineCreate.m_defines)
 	{
 	}
 
-	Pipeline::~Pipeline()
+	PipelineGraphics::~PipelineGraphics()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -102,27 +99,27 @@ namespace acid
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 	}
 
-	DepthStencil *Pipeline::GetDepthStencil(const int32_t &stage) const
+	DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
-	Texture *Pipeline::GetTexture(const uint32_t &index, const int32_t &stage) const
+	Texture *PipelineGraphics::GetTexture(const uint32_t &index, const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
 	}
 
-	uint32_t Pipeline::GetWidth(const int32_t &stage) const
+	uint32_t PipelineGraphics::GetWidth(const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetWidth();
 	}
 
-	uint32_t Pipeline::GetHeight(const int32_t &stage) const
+	uint32_t PipelineGraphics::GetHeight(const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetHeight();
 	}
 
-	void Pipeline::CreateShaderProgram()
+	void PipelineGraphics::CreateShaderProgram()
 	{
 		std::stringstream defineBlock;
 		defineBlock << "\n";
@@ -161,7 +158,7 @@ namespace acid
 		m_shaderProgram->ProcessShader();
 	}
 
-	void Pipeline::CreateDescriptorLayout()
+	void PipelineGraphics::CreateDescriptorLayout()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -175,7 +172,7 @@ namespace acid
 		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
-	void Pipeline::CreateDescriptorPool()
+	void PipelineGraphics::CreateDescriptorPool()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -190,7 +187,7 @@ namespace acid
 		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
-	void Pipeline::CreatePipelineLayout()
+	void PipelineGraphics::CreatePipelineLayout()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -221,7 +218,7 @@ namespace acid
 		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
-	void Pipeline::CreateAttributes()
+	void PipelineGraphics::CreateAttributes()
 	{
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -303,7 +300,7 @@ namespace acid
 		m_tessellationState.patchControlPoints = 3;
 	}
 
-	void Pipeline::CreatePipeline()
+	void PipelineGraphics::CreatePipeline()
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
@@ -379,12 +376,12 @@ namespace acid
 		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
-	void Pipeline::CreatePipelinePolygon()
+	void PipelineGraphics::CreatePipelinePolygon()
 	{
 		CreatePipeline();
 	}
 
-	void Pipeline::CreatePipelineMrt()
+	void PipelineGraphics::CreatePipelineMrt()
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
@@ -410,24 +407,5 @@ namespace acid
 		m_colourBlendState.pAttachments = blendAttachmentStates.data();
 
 		CreatePipeline();
-	}
-
-	void Pipeline::CreatePipelineCompute()
-	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto pipelineCache = Renderer::Get()->GetPipelineCache();
-
-		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_COMPUTE;
-
-		VkComputePipelineCreateInfo pipelineCreateInfo = {};
-		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
-		pipelineCreateInfo.stage = m_stages[0];
-		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
-		pipelineCreateInfo.basePipelineIndex = -1;
-		Display::CheckVk(vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
-
-		// Called when running the computer shader.
-	//	vkCmdDispatch(commandBuffer.GetCommandBuffer(), Display::Get()->GetWidth() / 16, Display::Get()->GetHeight() / 16, 1);
 	}
 }

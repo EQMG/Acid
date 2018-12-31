@@ -4,11 +4,11 @@ namespace acid
 {
 	RendererRegister::RendererRegister() :
 		m_mutex(std::mutex()),
-		m_stages(std::map<GraphicsStage, std::vector<std::unique_ptr<IRenderer>>>())
+		m_stages(std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>>())
 	{
 	}
 
-	IRenderer *RendererRegister::Add(IRenderer *renderer)
+	RenderPipeline *RendererRegister::Add(RenderPipeline *renderer)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -25,7 +25,7 @@ namespace acid
 
 			if (stage == m_stages.end())
 			{
-				m_stages.emplace(renderer->GetGraphicsStage(), std::vector<std::unique_ptr<IRenderer>>());
+				m_stages.emplace(renderer->GetGraphicsStage(), std::vector<std::unique_ptr<RenderPipeline>>());
 			}
 			else
 			{
@@ -37,7 +37,7 @@ namespace acid
 		return renderer;
 	}
 
-	void RendererRegister::Remove(IRenderer *renderer)
+	void RendererRegister::Remove(RenderPipeline *renderer)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 

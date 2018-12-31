@@ -14,7 +14,7 @@ namespace acid
 	{
 	}
 
-	DescriptorsHandler::DescriptorsHandler(const IPipeline &pipeline) :
+	DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pushDescriptors(pipeline.IsPushDescriptors()),
 		m_descriptors(std::map<std::string, DescriptorValue>()),
@@ -109,7 +109,7 @@ namespace acid
 		pushHandler.Update(m_shaderProgram->GetUniformBlock(descriptorName));
 	}
 
-	bool DescriptorsHandler::Update(const IPipeline &pipeline)
+	bool DescriptorsHandler::Update(const Pipeline &pipeline)
 	{
 		if (m_shaderProgram != pipeline.GetShaderProgram())
 		{
@@ -148,7 +148,7 @@ namespace acid
 		return true;
 	}
 
-	void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, const IPipeline &pipeline)
+	void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
 	{
 		if (m_pushDescriptors)
 		{

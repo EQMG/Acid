@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void FilterLensflare::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void FilterLensflare::Render(const CommandBuffer &commandBuffer, const Camera &camera)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("sunPosition", m_sunPosition);

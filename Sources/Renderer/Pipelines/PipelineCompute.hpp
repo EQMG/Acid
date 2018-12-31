@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Renderer/Commands/CommandBuffer.hpp"
-#include "IPipeline.hpp"
+#include "Pipeline.hpp"
 
 namespace acid
 {
 	/// <summary>
-	/// Class that represents a compute Vulkan pipeline.
+	/// Class that represents a compute Vulkan compute pipeline.
 	/// </summary>
-	class ACID_EXPORT Compute :
-		public IPipeline
+	class ACID_EXPORT PipelineCompute :
+		public Pipeline
 	{
 	private:
 		std::string m_shaderStage;
@@ -39,10 +39,10 @@ namespace acid
 		/// <param name="workgroupSize"> The amount of workgroups to use. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		explicit Compute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
+		explicit PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
 			const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
 
-		~Compute();
+		~PipelineCompute();
 
 		std::string GetShaderStage() const { return m_shaderStage; }
 
