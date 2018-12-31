@@ -13,6 +13,26 @@ namespace acid
 	public:
 		VkDescriptorImageInfo imageInfo;
 		VkDescriptorBufferInfo bufferInfo;
+
+		static VkWriteDescriptorSet GetType(const WriteDescriptorSet &writeDescriptorSet)
+		{
+			auto type = static_cast<VkWriteDescriptorSet>(writeDescriptorSet);
+			type.pImageInfo = &writeDescriptorSet.imageInfo;
+			type.pBufferInfo = &writeDescriptorSet.bufferInfo;
+			return type;
+		}
+
+		static std::vector<VkWriteDescriptorSet> GetTypes(const std::vector<WriteDescriptorSet> &writeDescriptorSets)
+		{
+			std::vector<VkWriteDescriptorSet> types = {};
+
+			for (auto &writeDescriptorSet : writeDescriptorSets)
+			{
+				types.emplace_back(GetType(writeDescriptorSet));
+			}
+
+			return types;
+		}
 	};
 
 	class ACID_EXPORT OffsetSize

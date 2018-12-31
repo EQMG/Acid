@@ -54,9 +54,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		//	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](const std::string &n, const ComponentCreate &c){
-		//		return name == n; // FIXME: Remove
-		//	}), m_components.end());
+		m_components.erase(name);
 	}
 
 	Component *ComponentRegister::Create(const std::string &name) const
@@ -74,9 +72,7 @@ namespace acid
 
 	std::optional<std::string> ComponentRegister::FindName(Component *compare) const
 	{
-		//	auto found = std::find_if(m_components.begin(), m_components.end(), [compare](const std::string &s, const ComponentCreate &c){
-		//		return c.m_isSame(compare);// FIXME: Remove
-		//	});
+		// TODO: Replace with std::remove_if when it can be used with maps.
 
 		for (auto &[name, component] : m_components)
 		{

@@ -42,15 +42,7 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		std::vector<VkWriteDescriptorSet> descriptors = {};
-
-		for (auto &descriptorWrite : descriptorWrites)
-		{
-			auto descriptor = static_cast<VkWriteDescriptorSet>(descriptorWrite);
-			descriptor.pImageInfo = &descriptorWrite.imageInfo;
-			descriptor.pBufferInfo = &descriptorWrite.bufferInfo;
-			descriptors.emplace_back(descriptor);
-		}
+		auto descriptors = WriteDescriptorSet::GetTypes(descriptorWrites);
 
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptors.size()), descriptors.data(), 0, nullptr);
 	}

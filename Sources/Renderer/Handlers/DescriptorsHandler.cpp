@@ -154,15 +154,7 @@ namespace acid
 		{
 			auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-			std::vector<VkWriteDescriptorSet> descriptors = {}; // TODO: Remove.
-
-			for (auto &descriptorWrite : m_descriptorWrites)
-			{
-				auto descriptor = static_cast<VkWriteDescriptorSet>(descriptorWrite);
-				descriptor.pImageInfo = &descriptorWrite.imageInfo;
-				descriptor.pBufferInfo = &descriptorWrite.bufferInfo;
-				descriptors.emplace_back(descriptor);
-			}
+			auto descriptors = WriteDescriptorSet::GetTypes(m_descriptorWrites); // TODO: Remove.
 
 			Display::FvkCmdPushDescriptorSetKHR(logicalDevice, commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
 				0, static_cast<uint32_t>(descriptors.size()), descriptors.data());
