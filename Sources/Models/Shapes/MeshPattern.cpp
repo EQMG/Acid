@@ -13,8 +13,8 @@ namespace acid
 
 	void MeshPattern::GenerateMesh()
 	{
-		auto vertices = std::vector<VertexModel>();
-		auto indices = std::vector<uint32_t>();
+		std::vector<VertexModel> vertices = {};
+		std::vector<uint32_t> indices = {};
 
 		// Creates and stores vertices.
 		for (uint32_t col = 0; col < m_vertexCount; col++)

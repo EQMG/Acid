@@ -30,7 +30,7 @@ namespace acid
 		auto weightsNode = m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array");
 
 		auto rawData = String::Split(weightsNode->GetValue(), " ");
-		auto weights = std::vector<float>(rawData.size());
+		std::vector<float> weights(rawData.size());
 
 		for (uint32_t i = 0; i < weights.size(); i++)
 		{
@@ -43,7 +43,7 @@ namespace acid
 	std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(Metadata *weightsDataNode)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
-		auto counts = std::vector<uint32_t>(rawData.size());
+		std::vector<uint32_t> counts(rawData.size());
 
 		for (uint32_t i = 0; i < rawData.size(); i++)
 		{

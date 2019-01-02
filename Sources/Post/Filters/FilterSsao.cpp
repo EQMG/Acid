@@ -68,7 +68,7 @@ namespace acid
 
 	std::shared_ptr<acid::Texture> FilterSsao::ComputeNoise(const uint32_t &size)
 	{
-		auto ssaoNoise = std::vector<Colour>(size * size);
+		std::vector<Colour> ssaoNoise(size * size);
 
 		for (uint32_t i = 0; i < size * size; i++)
 		{

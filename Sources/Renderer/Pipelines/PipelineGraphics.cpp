@@ -290,7 +290,8 @@ namespace acid
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
-		m_multisampleState.sampleShadingEnable = VK_FALSE;
+		m_multisampleState.sampleShadingEnable = VK_TRUE;
+		m_multisampleState.minSampleShading = 0.2f;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());
@@ -306,8 +307,8 @@ namespace acid
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
-		auto bindingDescriptions = std::vector<VkVertexInputBindingDescription>();
-		auto attributeDescriptions = std::vector<VkVertexInputAttributeDescription>();
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {};
 		uint32_t lastAttribute = 0;
 
 		for (auto &vertexInput : m_vertexInputs)

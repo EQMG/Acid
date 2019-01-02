@@ -43,8 +43,7 @@ namespace acid
 
 	void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 	{
-		auto instanceDatas = std::vector<GizmoTypeData>();
-		instanceDatas.resize(MAX_TYPE_INSTANCES);
+		std::vector<GizmoTypeData> instanceDatas(MAX_TYPE_INSTANCES);
 		m_instances = 0;
 
 		for (auto &gizmo : gizmos)

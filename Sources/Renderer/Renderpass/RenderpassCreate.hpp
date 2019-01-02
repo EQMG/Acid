@@ -25,8 +25,8 @@ namespace acid
 		uint32_t m_binding;
 		std::string m_name;
 		AttachmentType m_type;
-		VkFormat m_format;
 		bool m_multisampled;
+		VkFormat m_format;
 		Colour m_clearColour;
 	public:
 		/// <summary>
@@ -34,16 +34,16 @@ namespace acid
 		/// </summary>
 		/// <param name="binding"> The index the attachment is bound to in the renderpass. </param>
 		/// <param name="name"> The unique name given to the object for all renderpasses. </param>
+		/// <param name="multisampled"> If this attachment is multisampled. </param>
 		/// <param name="type"> The attachment type this represents. </param>
 		/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
-		/// <param name="multisampled"> If this attachment is multisampled. </param>
 		/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
-		Attachment(const uint32_t &binding, const std::string &name, const AttachmentType &type, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const bool &multisampled = false, const Colour &clearColour = Colour::BLACK) :
+		Attachment(const uint32_t &binding, const std::string &name, const AttachmentType &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
 			m_binding(binding),
 			m_name(name),
 			m_type(type),
-			m_format(format),
 			m_multisampled(multisampled),
+			m_format(format),
 			m_clearColour(clearColour)
 		{
 		}
@@ -54,9 +54,9 @@ namespace acid
 
 		AttachmentType GetType() const { return m_type; }
 
-		VkFormat GetFormat() const { return m_format; }
-
 		bool IsMultisampled() const { return m_multisampled; }
+
+		VkFormat GetFormat() const { return m_format; }
 
 		Colour GetClearColour() const { return m_clearColour; }
 	};

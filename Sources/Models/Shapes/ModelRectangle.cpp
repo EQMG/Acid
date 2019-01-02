@@ -35,13 +35,13 @@ namespace acid
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :
 		Model()
 	{
-		auto vertices = std::vector<VertexModel>{
+		std::vector<VertexModel> vertices = {
 			VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
 			VertexModel(Vector3(max, min, 0.0f), Vector2(1.0f, 0.0f)),
 			VertexModel(Vector3(max, max, 0.0f), Vector2(1.0f, 1.0f)),
 			VertexModel(Vector3(min, max, 0.0f), Vector2(0.0f, 1.0f)),
 		};
-		auto indices = std::vector<uint32_t>{
+		std::vector<uint32_t> indices = {
 			0, 3, 2,
 			2, 1, 0
 		};

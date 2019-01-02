@@ -29,7 +29,7 @@ namespace test
 	MainRenderer::MainRenderer()
 	{
 		std::vector<Attachment> renderpassImages0 = {
-			Attachment(0, "shadows", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8_UNORM)
+			Attachment(0, "shadows", ATTACHMENT_TYPE_IMAGE, false, VK_FORMAT_R8_UNORM)
 		};
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0})
@@ -37,12 +37,12 @@ namespace test
 		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096));
 
 		std::vector<Attachment> renderpassImages1 = {
-			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, VK_FORMAT_UNDEFINED, false),
+			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH, false),
 			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN),
-			Attachment(2, "diffuse", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
-			Attachment(3, "normals", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R16G16B16A16_SFLOAT, false),
-			Attachment(4, "materials", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM, false),
-			Attachment(5, "resolved", ATTACHMENT_TYPE_IMAGE, VK_FORMAT_R8G8B8A8_UNORM)
+			Attachment(2, "diffuse", ATTACHMENT_TYPE_IMAGE, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(3, "normals", ATTACHMENT_TYPE_IMAGE, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+			Attachment(4, "materials", ATTACHMENT_TYPE_IMAGE, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(5, "resolved", ATTACHMENT_TYPE_IMAGE, false, VK_FORMAT_R8G8B8A8_UNORM)
 		};
 		std::vector<SubpassType> renderpassSubpasses1 = {
 			SubpassType(0, {0, 2, 3, 4}),
@@ -61,9 +61,9 @@ namespace test
 		rendererRegister.Add<RendererMeshes>(GraphicsStage(1, 0));
 
 		rendererRegister.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
-		rendererRegister.Add<RendererParticles>(GraphicsStage(1, 1));
+	//	rendererRegister.Add<RendererParticles>(GraphicsStage(1, 1));
 
-		rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
+	//	rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterTone>(GraphicsStage(1, 2));
 	//	rendererRegister.Add<FilterSsao>(GraphicsStage(1, 2));
 	//	rendererRegister.Add()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.8f, BLUR_TYPE_5, false, 0.6f, 1.0f);

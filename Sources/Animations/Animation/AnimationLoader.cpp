@@ -33,11 +33,11 @@ namespace acid
 	{
 		auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
 		auto rawTimes = String::Split(timeData->GetValue(), " ");
-		auto times = std::vector<Time>(rawTimes.size());
+		std::vector<Time> times = {};
 
-		for (uint32_t i = 0; i < times.size(); i++)
+		for (auto &rawTime : rawTimes)
 		{
-			times[i] = Time::Seconds(String::From<float>(rawTimes[i]));
+			times.emplace_back(Time::Seconds(String::From<float>(rawTime)));
 		}
 
 		return times;

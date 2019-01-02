@@ -28,7 +28,7 @@ namespace acid
 	{
 		if (m_jointIds.size() > max)
 		{
-			auto topWeights = std::vector<float>(max);
+			std::vector<float> topWeights(max);
 			float total = SaveTopWeights(topWeights);
 			RefillWeightList(topWeights, total);
 			RemoveExcessJointIds(max);

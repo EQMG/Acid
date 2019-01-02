@@ -103,16 +103,16 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		auto result = std::vector<Entity *>();
+		std::vector<Entity *> result = {};
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+		for (auto &object : m_objects)
 		{
-			if ((*it)->IsRemoved())
+			if (object->IsRemoved())
 			{
 				continue;
 			}
 
-			result.emplace_back((*it).get());
+			result.emplace_back(object.get());
 		}
 
 		return result;
@@ -122,20 +122,20 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		auto result = std::vector<Entity *>();
+		std::vector<Entity *> result = {};
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+		for (auto &object : m_objects)
 		{
-			if ((*it)->IsRemoved())
+			if (object->IsRemoved())
 			{
 				continue;
 			}
 
-			auto rigidbody = (*it)->GetComponent<Rigidbody>();
+			auto rigidbody = object->GetComponent<Rigidbody>();
 
 			if (rigidbody == nullptr || rigidbody->InFrustum(range))
 			{
-				result.emplace_back((*it).get());
+				result.emplace_back(object.get());
 			}
 		}
 

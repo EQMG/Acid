@@ -58,7 +58,7 @@ namespace acid
 		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
 		uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(particles.size()) / static_cast<float>(INSTANCE_STEPS)));
 		m_maxInstances = std::max(m_maxInstances, instances);
-		auto instanceDatas = std::vector<ParticleData>(m_maxInstances);
+		std::vector<ParticleData> instanceDatas(m_maxInstances);
 		m_instances = 0;
 
 		for (auto &particle : particles)

@@ -79,7 +79,7 @@ namespace acid
 
 	std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
 	{
-		auto result = std::vector<Metadata *>();
+		std::vector<Metadata *> result = {};
 
 		for (auto &child : m_children)
 		{
