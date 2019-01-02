@@ -114,7 +114,7 @@ namespace acid
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 
-			auto result = std::vector<T *>();
+			std::vector<T *> result = {};
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{

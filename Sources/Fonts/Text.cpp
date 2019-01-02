@@ -191,7 +191,7 @@ namespace acid
 
 	std::vector<FontLine> Text::CreateStructure()
 	{
-		auto lines = std::vector<FontLine>();
+		std::vector<FontLine> lines = {};
 		auto currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 		auto currentWord = FontWord();
 
@@ -267,12 +267,12 @@ namespace acid
 
 	std::vector<VertexModel> Text::CreateQuad(const std::vector<FontLine> &lines)
 	{
-		auto vertices = std::vector<VertexModel>();
+		std::vector<VertexModel> vertices = {};
 		m_numberLines = static_cast<uint32_t>(lines.size());
 
 		float cursorX = 0.0f;
 		float cursorY = 0.0f;
-		int32_t lineOrder = static_cast<int32_t>(lines.size());
+		auto lineOrder = static_cast<int32_t>(lines.size());
 
 		for (auto &line : lines)
 		{

@@ -27,6 +27,10 @@ namespace acid
 	{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME, VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 	};
+	static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS =
+	{
+		VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT
+	};
 
 	void CallbackError(int32_t error, const char *description)
 	{
@@ -761,9 +765,7 @@ namespace acid
 
 		VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
 
-		std::vector<VkSampleCountFlagBits> sampleFlagBits = { VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT };
-
-		for (auto &sampleFlag : sampleFlagBits)
+		for (auto &sampleFlag : STAGE_FLAG_BITS)
 		{
 			if (counts & sampleFlag)
 			{

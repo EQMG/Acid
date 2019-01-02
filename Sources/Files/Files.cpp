@@ -44,7 +44,7 @@ namespace acid
 
 	std::optional<std::string> Files::Read(const std::string &path)
 	{
-		PHYSFS_file *fs_file = PHYSFS_openRead(path.c_str());
+		auto fs_file = PHYSFS_openRead(path.c_str());
 
 		if (fs_file == nullptr)
 		{
@@ -57,11 +57,11 @@ namespace acid
 			return FileSystem::ReadTextFile(path);
 		}
 
-		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
+		auto size = PHYSFS_fileLength(fs_file);
 		std::vector<uint8_t> data(size);
 		PHYSFS_readBytes(fs_file, data.data(), (PHYSFS_uint64)size);
 
-		if (PHYSFS_close(fs_file) == 0)
+		if (PHYSFS_close(fs_file) != 0)
 		{
 			Log::Error("Error while closing file %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		}

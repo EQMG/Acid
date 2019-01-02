@@ -165,7 +165,7 @@ namespace acid
 
 	std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 	{
-		auto result = std::vector<int32_t>();
+		std::vector<int32_t> result = {};
 		auto numbers = String::Split(m_values.at(variable), NUMBER_SEPARATOR);
 
 		for (auto &number : numbers)

@@ -36,7 +36,7 @@ namespace acid
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
 		Model()
 	{
-		auto vertices = std::vector<VertexModel>{
+		std::vector<VertexModel> vertices = {
 			VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.625f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
@@ -62,7 +62,7 @@ namespace acid
 			VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.875f, 0.25f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
 		};
-		auto indices = std::vector<uint32_t>{
+		std::vector<uint32_t> indices = {
 			1, 2, 0, // Front
 			3, 6, 8,
 			7, 4, 9, // Back

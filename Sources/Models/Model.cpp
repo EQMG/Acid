@@ -54,7 +54,7 @@ namespace acid
 			return std::vector<float>();
 		}
 
-		auto result = std::vector<float>(3 * m_vertexBuffer->GetSize());
+		std::vector<float> result(3 * m_vertexBuffer->GetSize());
 		m_vertexBuffer->CopyBuffer(result.data());
 		return result;
 	}

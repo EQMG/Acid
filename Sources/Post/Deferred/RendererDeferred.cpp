@@ -53,7 +53,7 @@ namespace acid
 		}
 
 		// Updates uniforms.
-		auto deferredLights = std::vector<DeferredLight>(MAX_LIGHTS);
+		std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
 		uint32_t lightCount = 0;
 
 		auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();

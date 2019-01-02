@@ -39,8 +39,8 @@ namespace acid
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
 		Model()
 	{
-		auto vertices = std::vector<VertexModel>();
-		auto indices = std::vector<uint32_t>();
+		std::vector<VertexModel> vertices = {};
+		std::vector<uint32_t> indices = {};
 
 		for (uint32_t i = 0; i < slices + 1; i++)
 		{

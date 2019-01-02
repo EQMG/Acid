@@ -44,10 +44,10 @@ namespace acid
 
 		auto lines = String::Split(*fileLoaded, "\n");
 
-		auto indicesList = std::vector<uint32_t>();
-		auto verticesList = std::vector<std::unique_ptr<VertexModelData>>();
-		auto uvsList = std::vector<Vector2>();
-		auto normalsList = std::vector<Vector3>();
+		std::vector<uint32_t> indices = {};
+		std::vector<std::unique_ptr<VertexModelData>> verticesList = {};
+		std::vector<Vector2> uvsList = {};
+		std::vector<Vector3> normalsList = {};
 
 		for (auto &line : lines)
 		{
@@ -98,13 +98,13 @@ namespace acid
 
 					VertexModelData *v0 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]),
-							String::From<float>(vertex1[2])), verticesList, indicesList);
+							String::From<float>(vertex1[2])), verticesList, indices);
 					VertexModelData *v1 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]),
-							String::From<float>(vertex2[2])), verticesList, indicesList);
+							String::From<float>(vertex2[2])), verticesList, indices);
 					VertexModelData *v2 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]),
-							String::From<float>(vertex3[2])), verticesList, indicesList);
+							String::From<float>(vertex3[2])), verticesList, indices);
 					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
@@ -132,8 +132,7 @@ namespace acid
 			}
 		}
 
-		std::vector<VertexModel> vertices = std::vector<VertexModel>();
-		std::vector<uint32_t> indices = std::vector<uint32_t>(indicesList);
+		std::vector<VertexModel> vertices = {};
 
 		// Turns the loaded data into a format that can be used by Acid models.
 		for (auto &current : verticesList)

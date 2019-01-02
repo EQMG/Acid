@@ -49,7 +49,6 @@ int main(int argc, char **argv)
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
 	componentRegister.Add<HeightDespawn>("HeightDespawn");
 	componentRegister.Add<NameTag>("NameTag");
-	componentRegister.Add<CelestialBody>("CelestialBody");
 	componentRegister.Add<PlayerFps>("PlayerFps");
 	componentRegister.Add<CelestialBody>("CelestialBody");
 	componentRegister.Add<SkyboxCycle>("SkyboxCycle");
