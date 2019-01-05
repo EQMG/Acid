@@ -125,7 +125,7 @@ namespace acid
 		/// </summary>
 		/// <param name="code"> Response status code. </param>
 		/// <param name="message"> Response message. </param>
-		explicit FtpResponse(FtpResponseStatus code = FTP_RESPONSE_INVALID_RESPONSE, const std::string &message = "");
+		explicit FtpResponse(const FtpResponseStatus &code = FTP_RESPONSE_INVALID_RESPONSE, const std::string &message = "");
 
 		/// <summary>
 		/// Check if the status code means a success.
@@ -144,6 +144,6 @@ namespace acid
 		/// Get the full message contained in the response.
 		/// </summary>
 		/// <returns> The response message. </returns>
-		const std::string &GetFullMessage() const;
+		std::string GetFullMessage() const;
 	};
 }

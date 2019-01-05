@@ -33,13 +33,13 @@ namespace acid
 		Resolve(address);
 	}
 
-	IpAddress::IpAddress(uint8_t byte0, uint8_t byte1, uint8_t byte2, uint8_t byte3) :
+	IpAddress::IpAddress(const uint8_t &byte0, const uint8_t &byte1, const uint8_t &byte2, const uint8_t &byte3) :
 		m_address(htonl((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3)),
 		m_valid(true)
 	{
 	}
 
-	IpAddress::IpAddress(uint32_t address) :
+	IpAddress::IpAddress(const uint32_t &address) :
 		m_address(htonl(address)),
 		m_valid(true)
 	{
@@ -47,7 +47,7 @@ namespace acid
 
 	std::string IpAddress::ToString() const
 	{
-		in_addr address;
+		in_addr address = {};
 		address.s_addr = m_address;
 		return inet_ntoa(address);
 	}
@@ -100,7 +100,7 @@ namespace acid
 		return localAddress;
 	}
 
-	IpAddress IpAddress::GetPublicAddress(Time timeout)
+	IpAddress IpAddress::GetPublicAddress(const Time &timeout)
 	{
 		// The trick here is more complicated, because the only way
 		// to get our public IP address is to get it from a distant computer.
@@ -150,12 +150,11 @@ namespace acid
 			else
 			{
 				// Not a valid address, try to convert it as a host name.
-				addrinfo hints;
-				std::memset(&hints, 0, sizeof(hints));
+				addrinfo hints = {};
 				hints.ai_family = AF_INET;
-				addrinfo *result = NULL;
+				addrinfo *result = nullptr;
 
-				if (getaddrinfo(address.c_str(), NULL, &hints, &result) == 0)
+				if (getaddrinfo(address.c_str(), nullptr, &hints, &result) == 0)
 				{
 					if (result)
 					{

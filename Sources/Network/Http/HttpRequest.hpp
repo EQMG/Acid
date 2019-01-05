@@ -58,7 +58,7 @@ namespace acid
 		/// <param name="uri"> Target URI. </param>
 		/// <param name="method"> Method to use for the request. </param>
 		/// <param name="body"> Content of the request's body. </param>
-		HttpRequest(const std::string &uri = "/", HttpRequestMethod method = HTTP_METHOD_GET, const std::string &body = "");
+		explicit HttpRequest(const std::string &uri = "/", const HttpRequestMethod &method = HTTP_METHOD_GET, const std::string &body = "");
 
 		/// <summary>
 		/// Set the value of a field.
@@ -76,7 +76,7 @@ namespace acid
 		/// The method is HTTP_REQUEST_METHOD_GET by default.
 		/// </summary>
 		/// <param name="method"> Method to use for the request. </param>
-		void SetMethod(HttpRequestMethod method);
+		void SetMethod(const HttpRequestMethod &method);
 
 		/// <summary>
 		/// Set the requested URI.
@@ -91,7 +91,7 @@ namespace acid
 		/// </summary>
 		/// <param name="major"> Major HTTP version number. </param>
 		/// <param name="minor"> Minor HTTP version number. </param>
-		void SetHttpVersion(uint32_t major, uint32_t minor);
+		void SetHttpVersion(const uint32_t &major, const uint32_t &minor);
 
 		/// <summary>
 		/// Set the body of the request.

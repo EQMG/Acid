@@ -30,7 +30,7 @@ namespace acid
 		/// Get the port to which the socket is bound locally. If the socket is not bound to a port, this function returns 0.
 		/// </summary>
 		/// <returns> Port to which the socket is bound. </returns>
-		unsigned short GetLocalPort() const;
+		uint16_t GetLocalPort() const;
 
 		/// <summary>
 		/// Bind the socket to a specific port.
@@ -43,7 +43,7 @@ namespace acid
 		/// <param name="port"> Port to bind the socket to. </param>
 		/// <param name="address"> Address of the interface to bind to. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Bind(unsigned short port, const IpAddress &address = IpAddress::ANY);
+		SocketStatus Bind(const uint16_t &port, const IpAddress &address = IpAddress::ANY);
 
 		/// <summary>
 		/// Unbind the socket from the local port to which it is bound.
@@ -62,7 +62,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the receiver. </param>
 		/// <param name="remotePort"> Port of the receiver to send the data to. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(const void *data, std::size_t size, const IpAddress &remoteAddress, unsigned short remotePort);
+		SocketStatus Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort);
 
 		/// <summary>
 		/// Receive raw data from a remote peer.
@@ -76,7 +76,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the peer that sent the data. </param>
 		/// <param name="remotePort"> Port of the peer that sent the data. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, unsigned short &remotePort);
+		SocketStatus Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
 
 		/// <summary>
 		/// Send a formatted packet of data to a remote peer.
@@ -86,7 +86,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the receiver. </param>
 		/// <param name="remotePort"> Port of the receiver to send the data to. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(Packet &packet, const IpAddress &remoteAddress, unsigned short remotePort);
+		SocketStatus Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort);
 
 		/// <summary>
 		/// Receive a formatted packet of data from a remote peer.
@@ -96,6 +96,6 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the peer that sent the data. </param>
 		/// <param name="remotePort"> Port of the peer that sent the data. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Receive(Packet &packet, IpAddress &remoteAddress, unsigned short &remotePort);
+		SocketStatus Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort);
 	};
 }

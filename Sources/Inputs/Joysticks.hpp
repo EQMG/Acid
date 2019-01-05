@@ -40,7 +40,7 @@ namespace acid
 		std::string m_name;
 
 		const float *m_axes;
-		const unsigned char *m_buttons;
+		const uint8_t *m_buttons;
 		uint32_t m_axeCount;
 		uint32_t m_buttonCount;
 	};

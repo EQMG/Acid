@@ -49,7 +49,7 @@ namespace acid
 		/// <param name="byte1"> Second byte of the address. </param>
 		/// <param name="byte2"> Third byte of the address. </param>
 		/// <param name="byte3"> Fourth byte of the address. </param>
-		IpAddress(uint8_t byte0, uint8_t byte1, uint8_t byte2, uint8_t byte3);
+		IpAddress(const uint8_t &byte0, const uint8_t &byte1, const uint8_t &byte2, const uint8_t &byte3);
 
 		/// <summary>
 		/// Construct the address from a 32-bits integer.
@@ -58,7 +58,7 @@ namespace acid
 		/// It should be used for optimization purposes, and only if you got that representation from IpAddress::toInteger().
 		/// </summary>
 		/// <param name="address"> 4 bytes of the address packed into a 32-bits integer. </param>
-		explicit IpAddress(uint32_t address);
+		explicit IpAddress(const uint32_t &address);
 
 		/// <summary>
 		/// Get a string representation of the address.
@@ -100,7 +100,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Public IP address of the computer. </returns>
-		static IpAddress GetPublicAddress(Time timeout = Time::ZERO);
+		static IpAddress GetPublicAddress(const Time &timeout = Time::ZERO);
 	private:
 		/// <summary>
 		/// Resolve the given address string.

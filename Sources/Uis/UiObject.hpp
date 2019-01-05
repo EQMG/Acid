@@ -50,6 +50,10 @@ namespace acid
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		UiObject(UiObject *parent, const UiBound &rectangle);
 
+		UiObject(const UiObject&) = delete;
+
+		UiObject& operator=(const UiObject&) = delete;
+
 		~UiObject();
 
 		/// <summary>

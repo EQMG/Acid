@@ -25,7 +25,7 @@ namespace acid
 		/// If the socket is not listening to a port, this function returns 0.
 		/// </summary>
 		/// <returns> Port to which the socket is bound. </returns>
-		unsigned short GetLocalPort() const;
+		uint16_t GetLocalPort() const;
 
 		/// <summary>
 		/// Start listening for incoming connection attempts.
@@ -36,7 +36,7 @@ namespace acid
 		/// <param name="port"> Port to listen on for incoming connection attempts. </param>
 		/// <param name="address"> Address of the interface to listen on. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Listen(unsigned short port, const IpAddress &address = IpAddress::ANY);
+		SocketStatus Listen(const uint16_t &port, const IpAddress &address = IpAddress::ANY);
 
 		/// <summary>
 		/// Stop listening and close the socket. This function gracefully stops the listener.

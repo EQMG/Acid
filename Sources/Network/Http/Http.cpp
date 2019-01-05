@@ -16,12 +16,12 @@ namespace acid
 	{
 	}
 
-	Http::Http(const std::string &host, unsigned short port)
+	Http::Http(const std::string &host, const uint16_t &port)
 	{
 		SetHost(host, port);
 	}
 
-	void Http::SetHost(const std::string &host, unsigned short port)
+	void Http::SetHost(const std::string &host, const uint16_t &port)
 	{
 		// Check the protocol.
 		if (String::Lowercase(host.substr(0, 7)) == "http://")
@@ -53,7 +53,7 @@ namespace acid
 		m_host = IpAddress(m_hostName);
 	}
 
-	HttpResponse Http::SendRequest(const HttpRequest &request, Time timeout)
+	HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 	{
 		// First make sure that the request is valid -- add missing mandatory fields.
 		HttpRequest toSend(request);

@@ -14,7 +14,7 @@ namespace acid
 		}
 	}
 
-	const std::string &FtpResponseDirectory::GetDirectory() const
+	std::string FtpResponseDirectory::GetDirectory() const
 	{
 		return m_directory;
 	}

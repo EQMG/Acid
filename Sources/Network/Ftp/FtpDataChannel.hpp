@@ -36,7 +36,7 @@ namespace acid
 	public:
 		FtpDataChannel(Ftp &owner);
 
-		FtpResponse Open(FtpTransferMode mode);
+		FtpResponse Open(const FtpTransferMode &mode);
 
 		void Send(std::istream &stream);
 

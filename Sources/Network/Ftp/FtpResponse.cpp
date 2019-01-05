@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	FtpResponse::FtpResponse(FtpResponseStatus code, const std::string &message) :
+	FtpResponse::FtpResponse(const FtpResponseStatus &code, const std::string &message) :
 		m_status(code),
 		m_message(message)
 	{
@@ -18,7 +18,7 @@ namespace acid
 		return m_status;
 	}
 
-	const std::string &FtpResponse::GetFullMessage() const
+	std::string FtpResponse::GetFullMessage() const
 	{
 		return m_message;
 	}

@@ -16,16 +16,15 @@ namespace acid
 		std::vector<VkAttachmentReference> colorAttachments;
 		VkAttachmentReference depthStencilAttachment;
 
-		static VkSubpassDescription GetType(const SubpassDescription &subpassDescription)
+		static VkSubpassDescription GetType(SubpassDescription &subpassDescription)
 		{
-			auto type = static_cast<VkSubpassDescription>(subpassDescription);
-			type.colorAttachmentCount = static_cast<uint32_t>(subpassDescription.colorAttachments.size());
-			type.pColorAttachments = subpassDescription.colorAttachments.data();
-			type.pDepthStencilAttachment = &subpassDescription.depthStencilAttachment;
-			return type;
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassDescription.colorAttachments.size());
+			subpassDescription.pColorAttachments = subpassDescription.colorAttachments.data();
+			subpassDescription.pDepthStencilAttachment = &subpassDescription.depthStencilAttachment;
+			return static_cast<VkSubpassDescription>(subpassDescription);
 		}
 
-		static std::vector<VkSubpassDescription> GetTypes(const std::vector<SubpassDescription> &subpassDescriptions)
+		static std::vector<VkSubpassDescription> GetTypes(std::vector<SubpassDescription> &subpassDescriptions)
 		{
 			std::vector<VkSubpassDescription> types = {};
 
