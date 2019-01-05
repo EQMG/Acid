@@ -23,7 +23,7 @@ namespace acid
 		/// Web host name.
 		std::string m_hostName;
 		/// Port used for connection with host.
-		unsigned short m_port;
+		uint16_t m_port;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -39,7 +39,7 @@ namespace acid
 		/// </summary>
 		/// <param name="host"> Web server to connect to. </param>
 		/// <param name="port"> Port to use for connection. </param>
-		Http(const std::string &host, unsigned short port = 0);
+		Http(const std::string &host, const uint16_t &port = 0);
 
 		/// <summary>
 		/// Set the target host.
@@ -50,7 +50,7 @@ namespace acid
 		/// </summary>
 		/// <param name="host"> Web server to connect to. </param>
 		/// <param name="port"> Port to use for connection. </param>
-		void SetHost(const std::string &host, unsigned short port = 0);
+		void SetHost(const std::string &host, const uint16_t &port = 0);
 
 		/// <summary>
 		/// Send a HTTP request and return the server's response.
@@ -63,6 +63,6 @@ namespace acid
 		/// <param name="request"> Request to send. </param>
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Server's response. </returns>
-		HttpResponse SendRequest(const HttpRequest &request, Time timeout = Time::ZERO);
+		HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = Time::ZERO);
 	};
 }

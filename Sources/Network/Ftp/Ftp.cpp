@@ -10,12 +10,18 @@
 
 namespace acid
 {
+	Ftp::Ftp() :
+		m_commandSocket(TcpSocket()),
+		m_receiveBuffer("")
+	{
+	}
+
 	Ftp::~Ftp()
 	{
 		Disconnect();
 	}
 
-	FtpResponse Ftp::Connect(const IpAddress &server, unsigned short port, Time timeout)
+	FtpResponse Ftp::Connect(const IpAddress &server, const uint16_t &port, const Time &timeout)
 	{
 		// Connect to the server.
 		if (m_commandSocket.Connect(server, port, timeout) != SOCKET_STATUS_DONE)
@@ -129,7 +135,7 @@ namespace acid
 		return SendCommand("DELE", name);
 	}
 
-	FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &localPath, FtpTransferMode mode)
+	FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &localPath, const FtpTransferMode &mode)
 	{
 		// Open a data channel using the given transfer mode.
 		FtpDataChannel data(*this);
@@ -187,8 +193,7 @@ namespace acid
 		return response;
 	}
 
-	FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, FtpTransferMode mode,
-	                        bool append)
+	FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpTransferMode &mode, const bool &append)
 	{
 		// Get the contents of the file to send.
 		std::ifstream file(localFile.c_str(), std::ios_base::binary);
@@ -242,7 +247,7 @@ namespace acid
 		// Build the command string.
 		std::string commandStr;
 
-		if (parameter != "")
+		if (!parameter.empty())
 		{
 			commandStr = command + " " + parameter + "\r\n";
 		}
@@ -291,6 +296,7 @@ namespace acid
 
 			// There can be several lines inside the received buffer, extract them all.
 			std::istringstream in(std::string(buffer, length), std::ios_base::binary);
+
 			while (in)
 			{
 				// Try to extract the code.

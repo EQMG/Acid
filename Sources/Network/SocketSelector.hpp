@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Engine/Exports.hpp"
 #include "Maths/Time.hpp"
 
@@ -16,7 +17,7 @@ namespace acid
 		struct SocketSelectorImpl;
 
 		/// Opaque pointer to the implementation (which requires OS-specific types).
-		SocketSelectorImpl *m_impl;
+		std::unique_ptr<SocketSelectorImpl> m_impl;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -28,11 +29,6 @@ namespace acid
 		/// </summary>
 		/// <param name="copy"> Instance to copy. </param>
 		SocketSelector(const SocketSelector &copy);
-
-		/// <summary>
-		/// Destructor.
-		/// </summary>
-		~SocketSelector();
 
 		/// <summary>
 		/// Add a new socket to the selector.
@@ -66,7 +62,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeout"> Maximum time to wait, (use Time::Zero for infinity). </param>
 		/// <returns> True if there are sockets ready, false otherwise. </returns>
-		bool Wait(Time timeout = Time::ZERO);
+		bool Wait(const Time timeout = Time::ZERO);
 
 		/// <summary>
 		/// Test a socket to know if it is ready to receive data.
@@ -77,7 +73,7 @@ namespace acid
 		/// </summary>
 		/// <param name="socket"> Socket to test. </param>
 		/// <returns> True if the socket is ready to read, false otherwise. </returns>
-		bool IsReady(Socket &socket) const;
+		bool IsReady(const Socket &socket) const;
 
 		/// <summary>
 		/// Overload of assignment operator.

@@ -31,19 +31,14 @@ namespace acid
 	};
 
 	SocketSelector::SocketSelector() :
-		m_impl(new SocketSelectorImpl)
+		m_impl(std::make_unique<SocketSelectorImpl>())
 	{
 		Clear();
 	}
 
 	SocketSelector::SocketSelector(const SocketSelector &copy) :
-		m_impl(new SocketSelectorImpl(*copy.m_impl))
+		m_impl(std::make_unique<SocketSelectorImpl>(*copy.m_impl))
 	{
-	}
-
-	SocketSelector::~SocketSelector()
-	{
-		delete m_impl;
 	}
 
 	void SocketSelector::Add(Socket &socket)
@@ -115,10 +110,10 @@ namespace acid
 		m_impl->socketCount = 0;
 	}
 
-	bool SocketSelector::Wait(Time timeout)
+	bool SocketSelector::Wait(const Time timeout)
 	{
 		// Setup the timeout
-		timeval time;
+		timeval time = {};
 		time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
 		time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
 
@@ -127,12 +122,12 @@ namespace acid
 
 		// Wait until one of the sockets is ready for reading, or timeout is reached
 		// The first parameter is ignored on Windows
-		int count = select(m_impl->maxSocket + 1, &m_impl->socketsReady, NULL, NULL, timeout != Time::ZERO ? &time : NULL);
+		int count = select(m_impl->maxSocket + 1, &m_impl->socketsReady, nullptr, nullptr, timeout != Time::ZERO ? &time : nullptr);
 
 		return count > 0;
 	}
 
-	bool SocketSelector::IsReady(Socket &socket) const
+	bool SocketSelector::IsReady(const Socket &socket) const
 	{
 		SocketHandle handle = socket.GetHandle();
 
@@ -154,9 +149,7 @@ namespace acid
 	SocketSelector &SocketSelector::operator=(const SocketSelector &right)
 	{
 		SocketSelector temp(right);
-
-		std::swap(m_impl, temp.m_impl);
-
+		m_impl.swap(temp.m_impl);
 		return *this;
 	}
 }

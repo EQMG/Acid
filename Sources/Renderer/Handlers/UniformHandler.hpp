@@ -24,7 +24,7 @@ namespace acid
 		explicit UniformHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		template<typename T>
-		void Push(const T &object, const size_t &offset, const size_t &size)
+		void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 		{
 			if (memcmp(m_data.get() + offset, &object, size) != 0)
 			{
@@ -34,7 +34,7 @@ namespace acid
 		}
 
 		template<typename T>
-		void Push(const std::string &uniformName, const T &object, const size_t &size = 0)
+		void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
 		{
 			if (m_uniformBlock == nullptr)
 			{
@@ -48,14 +48,14 @@ namespace acid
 				return;
 			}
 
-			size_t realSize = size;
+			std::size_t realSize = size;
 
 			if (realSize == 0)
 			{
-				realSize = std::min(sizeof(object), static_cast<size_t>(uniform->GetSize()));
+				realSize = std::min(sizeof(object), static_cast<std::size_t>(uniform->GetSize()));
 			}
 
-			Push(object, static_cast<size_t>(uniform->GetOffset()), realSize);
+			Push(object, static_cast<std::size_t>(uniform->GetOffset()), realSize);
 		}
 
 		bool Update(UniformBlock *uniformBlock);

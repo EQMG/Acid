@@ -75,7 +75,7 @@ namespace acid
 		/// <param name="address"> Target address. </param>
 		/// <param name="port"> Target port. </param>
 		/// <returns> sockaddr_in ready to be used by socket functions. </returns>
-		static sockaddr_in CreateAddress(uint32_t address, unsigned short port);
+		static sockaddr_in CreateAddress(uint32_t address, uint16_t port);
 
 		/// <summary>
 		/// Return the value of the invalid socket.

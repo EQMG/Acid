@@ -13,7 +13,7 @@ namespace acid
 	{
 	private:
 		/// A bool-like type that cannot be converted to integer or pointer types.
-		typedef bool (Packet::*BoolType)(std::size_t);
+		typedef bool (Packet::*BoolType)(const std::size_t&);
 
 		/// Data stored in the packet.
 		std::vector<char> m_data;
@@ -29,14 +29,14 @@ namespace acid
 		/// </summary>
 		Packet();
 
-		virtual ~Packet();
+		virtual ~Packet() = default;
 
 		/// <summary>
 		/// Append data to the end of the packet.
 		/// </summary>
 		/// <param name="data"> Pointer to the sequence of bytes to append. </param>
 		/// <param name="sizeInBytes"> Number of bytes to append. </param>
-		void Append(const void *data, std::size_t sizeInBytes);
+		void Append(const void *data, const std::size_t &sizeInBytes);
 
 		/// <summary>
 		/// Clear the packet, after calling Clear, the packet is empty.
@@ -47,7 +47,7 @@ namespace acid
 		/// Get a pointer to the data contained in the packet.
 		/// Warning: the returned pointer may become invalid after  you append data to the packet,
 		/// therefore it should never be stored.
-		/// The return pointer is NULL if the packet is empty.
+		/// The return pointer is null if the packet is empty.
 		/// </summary>
 		/// <returns> Pointer to the data. </returns>
 		const void *GetData() const;
@@ -128,27 +128,27 @@ namespace acid
 
 		// Overload of operator << to write data into the packet
 
-		Packet &operator<<(bool data);
+		Packet &operator<<(const bool &data);
 
-		Packet &operator<<(int8_t data);
+		Packet &operator<<(const int8_t &data);
 
-		Packet &operator<<(uint8_t data);
+		Packet &operator<<(const uint8_t &data);
 
-		Packet &operator<<(int16_t data);
+		Packet &operator<<(const int16_t &data);
 
-		Packet &operator<<(uint16_t data);
+		Packet &operator<<(const uint16_t &data);
 
-		Packet &operator<<(int32_t data);
+		Packet &operator<<(const int32_t &data);
 
-		Packet &operator<<(uint32_t data);
+		Packet &operator<<(const uint32_t &data);
 
-		Packet &operator<<(int64_t data);
+		Packet &operator<<(const int64_t &data);
 
-		Packet &operator<<(uint64_t data);
+		Packet &operator<<(const uint64_t &data);
 
-		Packet &operator<<(float data);
+		Packet &operator<<(const float &data);
 
-		Packet &operator<<(double data);
+		Packet &operator<<(const double &data);
 
 		Packet &operator<<(const char *data);
 
@@ -168,9 +168,8 @@ namespace acid
 		/// The function must return a pointer to the modified data, as well as the number of bytes pointed.
 		/// The default implementation provides the packet's data without transforming it.
 		/// </summary>
-		/// <param name="size"> Variable to fill with the size of data to send. </param>
-		/// <returns> Pointer to the array of bytes to send. </returns>
-		virtual const void *OnSend(std::size_t &size);
+		/// <returns> Pointer to the array of bytes to send and the size of data to send. </returns>
+		virtual std::pair<const void *, std::size_t> OnSend();
 
 		/// <summary>
 		/// Called after the packet is received over the network.
@@ -181,7 +180,7 @@ namespace acid
 		/// </summary>
 		/// <param name="data"> Pointer to the received bytes. </param>
 		/// <param name="size"> Number of bytes. </param>
-		virtual void OnReceive(const void *data, std::size_t size);
+		virtual void OnReceive(const void *data, const std::size_t &size);
 
 		/// <summary>
 		/// Check if the packet can extract a given number of bytes.
@@ -189,6 +188,6 @@ namespace acid
 		/// </summary>
 		/// <param name="size"> Size to check. </param>
 		/// <returns> True if \a size bytes can be read from the packet. </returns>
-		bool CheckSize(std::size_t size);
+		bool CheckSize(const std::size_t &size);
 	};
 }

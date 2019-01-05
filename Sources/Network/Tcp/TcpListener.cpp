@@ -15,13 +15,14 @@ namespace acid
 	{
 	}
 
-	unsigned short TcpListener::GetLocalPort() const
+	uint16_t TcpListener::GetLocalPort() const
 	{
 		if (GetHandle() != Socket::InvalidSocketHandle())
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
 			SocketAddrLength size = sizeof(address);
+
 			if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			{
 				return ntohs(address.sin_port);
@@ -32,7 +33,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus TcpListener::Listen(unsigned short port, const IpAddress &address)
+	SocketStatus TcpListener::Listen(const uint16_t &port, const IpAddress &address)
 	{
 		// Close the socket if it is already bound.
 		Close();

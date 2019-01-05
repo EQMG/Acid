@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	FtpResponse FtpDataChannel::Open(FtpTransferMode mode)
+	FtpResponse FtpDataChannel::Open(const FtpTransferMode &mode)
 	{
 		// Open a data connection in active mode (we connect to the server).
 		FtpResponse response = m_ftp.SendCommand("PASV");
@@ -27,12 +27,12 @@ namespace acid
 				std::string str = response.GetFullMessage().substr(begin);
 				std::size_t index = 0;
 
-				for (int i = 0; i < 6; ++i)
+				for (uint8_t &i : data)
 				{
 					// Extract the current number.
 					while (isdigit(str[index]))
 					{
-						data[i] = data[i] * 10 + (str[index] - '0');
+						i = i * 10 + (str[index] - '0');
 						index++;
 					}
 
@@ -41,7 +41,7 @@ namespace acid
 				}
 
 				// Reconstruct connection port and address.
-				unsigned short port = data[4] * 256 + data[5];
+				uint16_t port = data[4] * 256 + data[5];
 				IpAddress address(static_cast<uint8_t>(data[0]),
 				                  static_cast<uint8_t>(data[1]),
 				                  static_cast<uint8_t>(data[2]),

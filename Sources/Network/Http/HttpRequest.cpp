@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	HttpRequest::HttpRequest(const std::string &uri, HttpRequestMethod method, const std::string &body)
+	HttpRequest::HttpRequest(const std::string &uri, const HttpRequestMethod &method, const std::string &body)
 	{
 		SetMethod(method);
 		SetUri(uri);
@@ -17,7 +17,7 @@ namespace acid
 		m_fields[String::Lowercase(field)] = value;
 	}
 
-	void HttpRequest::SetMethod(HttpRequestMethod method)
+	void HttpRequest::SetMethod(const HttpRequestMethod &method)
 	{
 		m_method = method;
 	}
@@ -33,7 +33,7 @@ namespace acid
 		}
 	}
 
-	void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor)
+	void HttpRequest::SetHttpVersion(const uint32_t &major, const uint32_t &minor)
 	{
 		m_majorVersion = major;
 		m_minorVersion = minor;

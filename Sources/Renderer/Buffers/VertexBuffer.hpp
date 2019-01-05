@@ -10,7 +10,7 @@ namespace acid
 	private:
 		uint32_t m_vertexCount;
 	public:
-		VertexBuffer(const uint64_t &elementSize, const size_t &vertexCount, const void *newData);
+		VertexBuffer(const uint64_t &elementSize, const std::size_t &vertexCount, const void *newData);
 
 		uint32_t GetVertexCount() const { return m_vertexCount; }
 	};

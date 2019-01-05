@@ -17,11 +17,23 @@
 	<Light>
 		<Colour>#FFFFFF</Colour>
 		<Radius>-1.0</Radius>
-		<Local_Offset>
-			<x>0.0</x>
-			<y>0.0</y>
-			<z>0.0</z>
-		</Local_Offset>
+		<Local_Transform>
+			<Position>
+				<x>0.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</Position>
+			<Rotation>
+				<x>0.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</Rotation>
+			<Scaling>
+				<x>1.0</x>
+				<y>1.0</y>
+				<z>1.0</z>
+			</Scaling>
+		</Local_Transform>
 	</Light>
 	<CelestialBody>
 		<Type>1</Type>

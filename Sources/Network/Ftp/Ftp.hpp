@@ -22,6 +22,11 @@ namespace acid
 		std::string m_receiveBuffer;
 	public:
 		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		Ftp();
+
+		/// <summary>
 		/// Automatically closes the connection with the server if it is still opened.
 		/// </summary>
 		~Ftp();
@@ -39,7 +44,7 @@ namespace acid
 		/// <param name="port"> Port used for the connection. </param>
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Server response to the request. </returns>
-		FtpResponse Connect(const IpAddress &server, unsigned short port = 21, Time timeout = Time::ZERO);
+		FtpResponse Connect(const IpAddress &server, const uint16_t &port = 21, const Time &timeout = Time::ZERO);
 
 		/// <summary>
 		/// Close the connection with the server.
@@ -148,7 +153,7 @@ namespace acid
 		/// <param name="localPath"> The directory in which to put the file on the local computer. </param>
 		/// <param name="mode"> Transfer mode. </param>
 		/// <returns> Server response to the request. </returns>
-		FtpResponse Download(const std::string &remoteFile, const std::string &localPath, FtpTransferMode mode = FTP_MODE_BINARY);
+		FtpResponse Download(const std::string &remoteFile, const std::string &localPath, const FtpTransferMode &mode = FTP_MODE_BINARY);
 
 		/// <summary>
 		/// Upload a file to the server.
@@ -161,7 +166,7 @@ namespace acid
 		/// <param name="mode"> Transfer mode. </param>
 		/// <param name="append"> Pass true to append to or false to overwrite the remote file if it already exists. </param>
 		/// <returns> Server response to the request. </returns>
-		FtpResponse Upload(const std::string &localFile, const std::string &remotePath, FtpTransferMode mode = FTP_MODE_BINARY, bool append = false);
+		FtpResponse Upload(const std::string &localFile, const std::string &remotePath, const FtpTransferMode &mode = FTP_MODE_BINARY, const bool &append = false);
 
 		/// <summary>
 		/// Send a command to the FTP server.

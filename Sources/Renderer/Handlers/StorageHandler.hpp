@@ -23,7 +23,7 @@ namespace acid
 
 		explicit StorageHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
 
-		void Push(void *data, const size_t &size)
+		void Push(void *data, const std::size_t &size)
 		{
 			if (size != m_size)
 			{
@@ -45,7 +45,7 @@ namespace acid
 		}
 
 		template<typename T>
-		void Push(const T &object, const size_t &offset, const size_t &size)
+		void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 		{
 			if (m_uniformBlock == nullptr)
 			{
@@ -60,7 +60,7 @@ namespace acid
 		}
 
 		template<typename T>
-		void Push(const std::string &uniformName, const T &object, const size_t &size = 0)
+		void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
 		{
 			if (m_uniformBlock == nullptr)
 			{
@@ -74,14 +74,14 @@ namespace acid
 				return;
 			}
 
-			size_t realSize = size;
+			std::size_t realSize = size;
 
 			if (realSize == 0)
 			{
-				realSize = std::min(sizeof(object), static_cast<size_t>(uniform->GetSize()));
+				realSize = std::min(sizeof(object), static_cast<std::size_t>(uniform->GetSize()));
 			}
 
-			Push(object, static_cast<size_t>(uniform->GetOffset()), realSize);
+			Push(object, static_cast<std::size_t>(uniform->GetOffset()), realSize);
 		}
 
 		bool Update(UniformBlock *uniformBlock);

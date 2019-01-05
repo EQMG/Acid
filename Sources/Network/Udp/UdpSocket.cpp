@@ -20,7 +20,7 @@ namespace acid
 	{
 	}
 
-	unsigned short UdpSocket::GetLocalPort() const
+	uint16_t UdpSocket::GetLocalPort() const
 	{
 		if (GetHandle() != Socket::InvalidSocketHandle())
 		{
@@ -38,7 +38,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus UdpSocket::Bind(unsigned short port, const IpAddress &address)
+	SocketStatus UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
 	{
 		// Close the socket if it is already bound.
 		Close();
@@ -70,8 +70,7 @@ namespace acid
 		Close();
 	}
 
-	SocketStatus
-	UdpSocket::Send(const void *data, std::size_t size, const IpAddress &remoteAddress, unsigned short remotePort)
+	SocketStatus UdpSocket::Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort)
 	{
 		// Create the internal socket if it doesn't exist.
 		Create();
@@ -79,8 +78,7 @@ namespace acid
 		// Make sure that all the data will fit in one datagram.
 		if (size > MAX_DATAGRAM_SIZE)
 		{
-			Log::Error(
-				"Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MAX_DATAGRAM_SIZE)\n");
+			Log::Error("Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MAX_DATAGRAM_SIZE)\n");
 			return SOCKET_STATUS_ERROR;
 		}
 
@@ -89,7 +87,7 @@ namespace acid
 
 		// Send the data (unlike TCP, all the data is always sent in one call).
 		int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0,
-		                  reinterpret_cast<sockaddr *>(&address), sizeof(address));
+			reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 		// Check for errors.
 		if (sent < 0)
@@ -100,8 +98,7 @@ namespace acid
 		return SOCKET_STATUS_DONE;
 	}
 
-	SocketStatus UdpSocket::Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress,
-	                                unsigned short &remotePort)
+	SocketStatus UdpSocket::Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
 	{
 		// First clear the variables to fill.
 		received = 0;
@@ -121,7 +118,7 @@ namespace acid
 		// Receive a chunk of bytes.
 		SocketAddrLength addressSize = sizeof(address);
 		int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0,
-		                            reinterpret_cast<sockaddr *>(&address), &addressSize);
+			reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 		// Check for errors.
 		if (sizeReceived < 0)
@@ -137,7 +134,7 @@ namespace acid
 		return SOCKET_STATUS_DONE;
 	}
 
-	SocketStatus UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, unsigned short remotePort)
+	SocketStatus UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort)
 	{
 		// UDP is a datagram-oriented protocol (as opposed to TCP which is a stream protocol).
 		// Sending one datagram is almost safe: it may be lost but if it's received, then its data
@@ -148,14 +145,13 @@ namespace acid
 		// to the packet's data.
 
 		// Get the data to send from the packet.
-		std::size_t size = 0;
-		const void *data = packet.OnSend(size);
+		auto dataSize = packet.OnSend();
 
 		// Send it.
-		return Send(data, size, remoteAddress, remotePort);
+		return Send(dataSize.first, dataSize.second, remoteAddress, remotePort);
 	}
 
-	SocketStatus UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, unsigned short &remotePort)
+	SocketStatus UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort)
 	{
 		// See the detailed comment in send(Packet) above.
 

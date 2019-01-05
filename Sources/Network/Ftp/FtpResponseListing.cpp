@@ -19,7 +19,7 @@ namespace acid
 		}
 	}
 
-	const std::vector<std::string> &FtpResponseListing::GetListing() const
+	std::vector<std::string> FtpResponseListing::GetListing() const
 	{
 		return m_listing;
 	}

@@ -24,6 +24,6 @@ namespace acid
 		/// Get the directory returned in the response.
 		/// </summary>
 		/// <returns> Directory name. </returns>
-		const std::string &GetDirectory() const;
+		std::string GetDirectory() const;
 	};
 }

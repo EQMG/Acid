@@ -73,7 +73,7 @@ namespace acid
 		m_frictionRolling = metadata.GetChild<float>("Friction Rolling");
 		m_frictionSpinning = metadata.GetChild<float>("Friction Spinning");
 		m_up = metadata.GetChild<Vector3>("Up");
-		m_stepHeight = metadata.GetChild<float>("Height");
+		m_stepHeight = metadata.GetChild<float>("Step Height");
 		m_fallSpeed = metadata.GetChild<float>("Fall Speed");
 		m_jumpSpeed = metadata.GetChild<float>("Jump Speed");
 		m_maxHeight = metadata.GetChild<float>("Max Height");

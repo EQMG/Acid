@@ -99,7 +99,7 @@ namespace acid
 		/// </summary>
 		/// <param name="field"> Name of the field to get. </param>
 		/// <returns> Value of the field, or empty string if not found. </returns>
-		const std::string &GetField(const std::string &field) const;
+		std::string GetField(const std::string &field) const;
 
 		/// <summary>
 		/// Get the response status code.
@@ -132,7 +132,7 @@ namespace acid
 		/// </ul>
 		/// </summary>
 		/// <returns> The response body. </returns>
-		const std::string &GetBody() const;
+		std::string GetBody() const;
 	private:
 		friend class Http;
 

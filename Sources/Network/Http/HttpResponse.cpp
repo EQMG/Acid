@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	const std::string &HttpResponse::GetField(const std::string &field) const
+	std::string HttpResponse::GetField(const std::string &field) const
 	{
 		auto it = m_fields.find(String::Lowercase(field));
 
@@ -41,7 +41,7 @@ namespace acid
 		return m_minorVersion;
 	}
 
-	const std::string &HttpResponse::GetBody() const
+	std::string HttpResponse::GetBody() const
 	{
 		return m_body;
 	}

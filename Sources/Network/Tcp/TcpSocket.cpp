@@ -30,7 +30,7 @@ namespace acid
 	{
 	}
 
-	unsigned short TcpSocket::GetLocalPort() const
+	uint16_t TcpSocket::GetLocalPort() const
 	{
 		if (GetHandle() != Socket::InvalidSocketHandle())
 		{
@@ -66,7 +66,7 @@ namespace acid
 		return IpAddress::NONE;
 	}
 
-	unsigned short TcpSocket::GetRemotePort() const
+	uint16_t TcpSocket::GetRemotePort() const
 	{
 		if (GetHandle() != Socket::InvalidSocketHandle())
 		{
@@ -84,7 +84,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus TcpSocket::Connect(const IpAddress &remoteAddress, unsigned short remotePort, Time timeout)
+	SocketStatus TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout)
 	{
 		// Disconnect the socket if it is already connected.
 		Disconnect();
@@ -147,12 +147,12 @@ namespace acid
 				FD_SET(GetHandle(), &selector);
 
 				// Setup the timeout.
-				timeval time;
+				timeval time = {};
 				time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
 				time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
 
 				// Wait for something to write on our socket (which means that the connection request has returned).
-				if (select(static_cast<int>(GetHandle() + 1), NULL, &selector, NULL, &time) > 0)
+				if (select(static_cast<int>(GetHandle() + 1), nullptr, &selector, nullptr, &time) > 0)
 				{
 					// At this point the connection may have been either accepted or refused.
 					// To know whether it's a success or a failure, we must check the address of the connected peer.
@@ -189,7 +189,7 @@ namespace acid
 		m_pendingPacket = PendingPacket();
 	}
 
-	SocketStatus TcpSocket::Send(const void *data, std::size_t size)
+	SocketStatus TcpSocket::Send(const void *data, const std::size_t &size)
 	{
 		if (!IsBlocking())
 		{
@@ -200,7 +200,7 @@ namespace acid
 		return Send(data, size, sent);
 	}
 
-	SocketStatus TcpSocket::Send(const void *data, std::size_t size, std::size_t &sent)
+	SocketStatus TcpSocket::Send(const void *data, const std::size_t &size, std::size_t &sent)
 	{
 		// Check the parameters.
 		if (!data || (size == 0))
@@ -234,7 +234,7 @@ namespace acid
 		return SOCKET_STATUS_DONE;
 	}
 
-	SocketStatus TcpSocket::Receive(void *data, std::size_t size, std::size_t &received)
+	SocketStatus TcpSocket::Receive(void *data, const std::size_t &size, std::size_t &received)
 	{
 		// First clear the variables to fill.
 		received = 0;
@@ -277,21 +277,20 @@ namespace acid
 		// data corruption on the receiving end.
 
 		// Get the data to send from the packet.
-		std::size_t size = 0;
-		const void *data = packet.OnSend(size);
+		auto dataSize = packet.OnSend();
 
 		// First convert the packet size to network byte order
-		uint32_t packetSize = htonl(static_cast<uint32_t>(size));
+		uint32_t packetSize = htonl(static_cast<uint32_t>(dataSize.second));
 
 		// Allocate memory for the data block to send
-		std::vector<char> blockToSend(sizeof(packetSize) + size);
+		std::vector<char> blockToSend(sizeof(packetSize) + dataSize.second);
 
 		// Copy the packet size and data into the block to send
 		std::memcpy(&blockToSend[0], &packetSize, sizeof(packetSize));
 
-		if (size > 0)
+		if (dataSize.second > 0)
 		{
-			std::memcpy(&blockToSend[0] + sizeof(packetSize), data, size);
+			std::memcpy(&blockToSend[0] + sizeof(packetSize), dataSize.first, dataSize.second);
 		}
 
 		// Send the data block.

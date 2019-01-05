@@ -28,7 +28,7 @@ namespace acid
 		Close();
 	}
 
-	sockaddr_in Socket::CreateAddress(uint32_t address, unsigned short port)
+	sockaddr_in Socket::CreateAddress(uint32_t address, uint16_t port)
 	{
 		sockaddr_in addr;
 		std::memset(&addr, 0, sizeof(addr));

@@ -52,7 +52,7 @@ namespace acid
 		/// Get the port to which the socket is bound locally. If the socket is not connected, this function returns 0.
 		/// </summary>
 		/// <returns> Port to which the socket is bound. </returns>
-		unsigned short GetLocalPort() const;
+		uint16_t GetLocalPort() const;
 
 		/// <summary>
 		/// Get the address of the connected peer.
@@ -66,7 +66,7 @@ namespace acid
 		/// If the socket is not connected, this function returns 0.
 		/// </summary>
 		/// <returns> Remote port to which the socket is connected. </returns>
-		unsigned short GetRemotePort() const;
+		uint16_t GetRemotePort() const;
 
 		/// <summary>
 		/// Connect the socket to a remote peer.
@@ -78,7 +78,7 @@ namespace acid
 		/// <param name="remotePort"> Port of the remote peer. </param>
 		/// <param name="timeout"> Optional maximum time to wait. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Connect(const IpAddress &remoteAddress, unsigned short remotePort, Time timeout = Time::ZERO);
+		SocketStatus Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::ZERO);
 
 		/// <summary>
 		/// Disconnect the socket from its remote peer.
@@ -95,7 +95,7 @@ namespace acid
 		/// <param name="data"> Pointer to the sequence of bytes to send. </param>
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(const void *data, std::size_t size);
+		SocketStatus Send(const void *data, const std::size_t &size);
 
 		/// <summary>
 		/// Send raw data to the remote peer. This function will fail if the socket is not connected.
@@ -104,7 +104,7 @@ namespace acid
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <param name="sent"> The number of bytes sent will be written here. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(const void *data, std::size_t size, std::size_t &sent);
+		SocketStatus Send(const void *data, const std::size_t &size, std::size_t &sent);
 
 		/// <summary>
 		/// Receive raw data from the remote peer.
@@ -115,7 +115,7 @@ namespace acid
 		/// <param name="size"> Maximum number of bytes that can be received. </param>
 		/// <param name="received"> This variable is filled with the actual number of bytes received. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Receive(void *data, std::size_t size, std::size_t &received);
+		SocketStatus Receive(void *data, const std::size_t &size, std::size_t &received);
 
 		/// <summary>
 		/// Send a formatted packet of data to the remote peer.

@@ -290,9 +290,9 @@ namespace acid
 	{
 		// TODO: Needs a rework.
 		std::string result = shaderCode;
-		size_t foundIndex0 = result.find('\n', 0);
-		size_t foundIndex1 = result.find('\n', foundIndex0 + 1);
-		size_t foundIndex2 = result.find('\n', foundIndex1 + 1);
+		std::size_t foundIndex0 = result.find('\n', 0);
+		std::size_t foundIndex1 = result.find('\n', foundIndex0 + 1);
+		std::size_t foundIndex2 = result.find('\n', foundIndex1 + 1);
 		result.insert(foundIndex2, blockCode);
 		return result;
 	}

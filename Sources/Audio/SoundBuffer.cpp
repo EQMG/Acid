@@ -89,12 +89,12 @@ namespace acid
 		chunkId[4] = '\0';
 
 		// Read first chunk content.
-		short formatTag;
-		short channels;
+		int16_t formatTag;
+		int16_t channels;
 		int32_t samplesPerSec;
 		int32_t averageBytesPerSec;
-		short blockAlign;
-		short bitsPerSample;
+		int16_t blockAlign;
+		int16_t bitsPerSample;
 
 		file.read(reinterpret_cast<char *>(&formatTag), 2);
 		file.read(reinterpret_cast<char *>(&channels), 2);
@@ -114,7 +114,7 @@ namespace acid
 
 		chunkId[4] = '\0';
 
-		std::unique_ptr<unsigned char[]> data(new unsigned char[size]);
+		std::unique_ptr<uint8_t[]> data(new uint8_t[size]);
 		file.read(reinterpret_cast<char *>(data.get()), size);
 
 		uint32_t buffer;
@@ -137,7 +137,7 @@ namespace acid
 
 		int32_t channels;
 		int32_t samplesPerSec;
-		short *data;
+		int16_t *data;
 		int32_t size = stb_vorbis_decode_memory((uint8_t*)fileLoaded->data(), (uint32_t)fileLoaded->size(), &channels, &samplesPerSec, &data);
 
 		if (size == -1)
