@@ -161,7 +161,7 @@ namespace acid
 
 		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
 
-		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
+		const ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
 		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

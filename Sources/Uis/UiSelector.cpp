@@ -5,11 +5,11 @@ namespace acid
 	UiSelector::UiSelector() :
 		m_cursorX(0.0f),
 		m_cursorY(0.0f),
-		m_selectorMice(std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE>())
+		m_selectorMice(std::array<SelectorMouse, MOUSE_BUTTON_END_RANGE>())
 	{
 		for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
-			UiSelectorMouse selectorMouse = UiSelectorMouse();
+			SelectorMouse selectorMouse = {};
 			selectorMouse.m_mouseButton = static_cast<MouseButton>(i);
 			selectorMouse.m_isDown = false;
 			selectorMouse.m_wasDown = false;

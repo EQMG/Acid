@@ -7,6 +7,12 @@
 
 namespace acid
 {
+#if defined(ACID_VERBOSE)
+	const Time START_DELAY = Time::Seconds(1.5f);
+#else
+	const Time START_DELAY = Time::Seconds(3.0f);
+#endif
+
 	UiStartLogo::UiStartLogo(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_guiBackground(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/Black.png"))),
@@ -18,17 +24,10 @@ namespace acid
 		Events::Get()->AddEvent<EventTime>([&]()
 		{
 			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(1.4f));
-		},
-#if defined(ACID_VERBOSE)
-        Time::Seconds(1.65f));
-#else
-	    Time::Seconds(3.6f));
-#endif
+		}, START_DELAY);
 	}
 
 	void UiStartLogo::UpdateObject()
 	{
-		m_guiBackground->GetRectangle().m_dimensions.m_x = Display::Get()->GetAspectRatio();
-		m_guiBackground->SetScaleDriver<DriverConstant>(1.6f);
 	}
 }

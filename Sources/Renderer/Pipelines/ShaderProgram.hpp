@@ -206,7 +206,7 @@ namespace acid
 		std::vector<VkDescriptorType> m_descriptorTypes;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 
-		std::vector<std::string> m_notFoundNames;
+		mutable std::vector<std::string> m_notFoundNames;
 	public:
 		explicit ShaderProgram(const std::string &name);
 
@@ -216,7 +216,7 @@ namespace acid
 
 		const std::string &GetName() const { return m_name; }
 
-		bool ReportedNotFound(const std::string &name, const bool &reportIfFound);
+		bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
 		void ProcessShader();
 

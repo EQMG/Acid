@@ -51,8 +51,6 @@ namespace acid
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
-
 		vkDestroyShaderModule(logicalDevice, m_shaderModule, nullptr);
 
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);

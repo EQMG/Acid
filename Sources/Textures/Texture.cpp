@@ -199,7 +199,7 @@ namespace acid
 		return descriptorWrite;
 	}
 
-	uint8_t *Texture::GetPixels()
+	uint8_t *Texture::GetPixels() const
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -228,7 +228,7 @@ namespace acid
 		return result;
 	}
 
-	void Texture::SetPixels(uint8_t *pixels)
+	void Texture::SetPixels(const uint8_t *pixels)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 

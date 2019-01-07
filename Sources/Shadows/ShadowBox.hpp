@@ -47,12 +47,6 @@ namespace acid
 		/// <param name="shadowDistance"> The shadows distance. </param>
 		void Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
 	private:
-		/// <summary>
-		/// Create the offset for part of the conversion to shadow map space.
-		/// </summary>
-		/// <returns> The offset as a matrix. </returns>
-		static Matrix4 CreateOffset();
-
 		void UpdateShadowBox(const Camera &camera);
 
 		/// <summary>

@@ -24,7 +24,7 @@ namespace acid
 			uint32_t location{};
 		};
 
-		ShaderProgram *m_shaderProgram;
+		const ShaderProgram *m_shaderProgram;
 		bool m_pushDescriptors;
 		std::map<std::string, DescriptorValue> m_descriptors;
 		std::vector<WriteDescriptorSet> m_descriptorWrites;

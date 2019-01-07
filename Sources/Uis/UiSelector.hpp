@@ -46,23 +46,22 @@ namespace acid
 		void SetInputButton(const MouseButton &button, const ButtonJoystick &inputButton) { m_inputButtons[button] = inputButton; }
 	};
 
-	struct UiSelectorMouse
-	{
-		MouseButton m_mouseButton;
-		bool m_isDown;
-		bool m_wasDown;
-	};
-
 	/// <summary>
 	/// Represents a virtual cursor that will be used to determine if a ui action was preformed by a device.
 	/// </summary>
 	class ACID_EXPORT UiSelector
 	{
 	private:
+		struct SelectorMouse
+		{
+			MouseButton m_mouseButton;
+			bool m_isDown;
+			bool m_wasDown;
+		};
+
 		float m_cursorX;
 		float m_cursorY;
-
-		std::array<UiSelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
+		std::array<SelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
 	public:
 		UiSelector();
 

@@ -14,7 +14,7 @@ namespace acid
 		m_lightViewMatrix(Matrix4()),
 		m_projectionViewMatrix(Matrix4()),
 		m_shadowMapSpaceMatrix(Matrix4()),
-		m_offset(CreateOffset()),
+		m_offset(Matrix4()),
 		m_centre(Vector3()),
 		m_farHeight(0.0f),
 		m_farWidth(0.0f),
@@ -23,6 +23,9 @@ namespace acid
 		m_minExtents(Vector3()),
 		m_maxExtents(Vector3())
 	{
+		// Creates the offset for part of the conversion to shadow map space.
+		m_offset = m_offset.Translate(Vector3(0.5f, 0.5f, 0.5f));
+		m_offset = m_offset.Scale(Vector3(0.5f, 0.5f, 0.5f));
 	}
 
 	void ShadowBox::Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance)
@@ -36,14 +39,6 @@ namespace acid
 		UpdateCenter();
 		UpdateLightViewMatrix();
 		UpdateViewShadowMatrix();
-	}
-
-	Matrix4 ShadowBox::CreateOffset()
-	{
-		Matrix4 offset = Matrix4();
-		offset = offset.Translate(Vector3(0.5f, 0.5f, 0.5f));
-		offset = offset.Scale(Vector3(0.5f, 0.5f, 0.5f));
-		return offset;
 	}
 
 	void ShadowBox::UpdateShadowBox(const Camera &camera)
