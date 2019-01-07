@@ -66,7 +66,7 @@ namespace acid
 		/// </summary>
 		/// <param name="width"> The cubemaps width. </param>
 		/// <param name="height"> The cubemaps height. </param>
-		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
+		/// <param name="pixels"> The initial pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
 		/// <param name="format"> The cubemaps format. </param>
 		/// <param name="imageLayout"> The cubemaps image layout </param>
 		/// <param name="usage"> The cubemaps image usage </param>
@@ -91,19 +91,19 @@ namespace acid
 		/// </summary>
 		/// <param name="arrayLayer"> The layer to copy from. </param>
 		/// <returns> A copy of the cubemaps pixels. </returns>
-		uint8_t *GetPixels(const uint32_t &arrayLayer);
+		uint8_t *GetPixels(const uint32_t &arrayLayer) const;
 
 		/// <summary>
 		/// Gets a copy of the cubemaps pixels from memory, after usage is finished remember to delete the result.
 		/// </summary>
 		/// <returns> A copy of the cubemaps. </returns>
-		uint8_t *GetPixels();
+		uint8_t *GetPixels() const;
 
 		/// <summary>
 		/// Copies the pixels into this cubemaps memory.
 		/// </summary>
 		/// <param name="pixels"> The pixels to copy to the image. </param>
-		void SetPixels(uint8_t *pixels);
+		void SetPixels(const uint8_t *pixels);
 
 		const std::string &GetFilename() const { return m_filename; };
 

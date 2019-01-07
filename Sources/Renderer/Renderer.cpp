@@ -147,8 +147,6 @@ namespace acid
 			m_renderStages.emplace_back(renderStage);
 		}
 
-		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
-
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 		Log::Out("Renderpass created in %ims\n", (debugEnd - debugStart).AsMilliseconds());

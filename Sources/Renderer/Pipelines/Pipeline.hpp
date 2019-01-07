@@ -93,7 +93,7 @@ namespace acid
 			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
 		}
 
-		virtual ShaderProgram *GetShaderProgram() const = 0;
+		virtual const ShaderProgram *GetShaderProgram() const = 0;
 
 		virtual const bool &IsPushDescriptors() const = 0;
 

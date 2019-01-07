@@ -196,7 +196,7 @@ namespace acid
 		return descriptorWrite;
 	}
 
-	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer)
+	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer) const
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
@@ -225,7 +225,7 @@ namespace acid
 		return result;
 	}
 
-	uint8_t *Cubemap::GetPixels()
+	uint8_t *Cubemap::GetPixels() const
 	{
 		auto result = (uint8_t *) malloc(m_width * m_height * 4 * 6);
 
@@ -238,7 +238,7 @@ namespace acid
 		return result;
 	}
 
-	void Cubemap::SetPixels(uint8_t *pixels)
+	void Cubemap::SetPixels(const uint8_t *pixels)
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 

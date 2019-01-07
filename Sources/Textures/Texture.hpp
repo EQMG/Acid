@@ -61,7 +61,7 @@ namespace acid
 		/// </summary>
 		/// <param name="width"> The textures width. </param>
 		/// <param name="height"> The textures height. </param>
-		/// <param name="pixels"> The inital pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
+		/// <param name="pixels"> The initial pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
 		/// <param name="format"> The textures format. </param>
 		/// <param name="imageLayout"> The textures image layout </param>
 		/// <param name="usage"> The textures image usage </param>
@@ -85,13 +85,13 @@ namespace acid
 		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.
 		/// </summary>
 		/// <returns> A copy of the textures pixels. </returns>
-		uint8_t *GetPixels();
+		uint8_t *GetPixels() const;
 
 		/// <summary>
 		/// Copies the pixels into this textures memory.
 		/// </summary>
 		/// <param name="pixels"> The pixels to copy to the image. </param>
-		void SetPixels(uint8_t *pixels);
+		void SetPixels(const uint8_t *pixels);
 
 		const std::string &GetFilename() const { return m_filename; };
 
