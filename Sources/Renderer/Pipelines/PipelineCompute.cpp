@@ -74,7 +74,7 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-		for (auto &define : m_defines)
+		for (const auto &define : m_defines)
 		{
 			defineBlock << "#define " << define.first << " " << define.second << "\n";
 		}

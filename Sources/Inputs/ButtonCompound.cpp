@@ -7,7 +7,7 @@ namespace acid
 		m_useAnd(useAnd),
 		m_wasDown(false)
 	{
-		for (auto &button : buttons)
+		for (const auto &button : buttons)
 		{
 			m_buttons.emplace_back(button);
 		}
@@ -15,7 +15,7 @@ namespace acid
 
 	bool ButtonCompound::IsDown() const
 	{
-		for (auto &button : m_buttons)
+		for (const auto &button : m_buttons)
 		{
 			if (m_useAnd && !button->IsDown())
 			{

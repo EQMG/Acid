@@ -57,7 +57,7 @@ namespace acid
 
 		if (typesNode != nullptr)
 		{
-			for (auto &typeNode : typesNode->GetChildren())
+			for (const auto &typeNode : typesNode->GetChildren())
 			{
 				ParticleType temp = ParticleType();
 				temp.Decode(*typeNode);
@@ -87,7 +87,7 @@ namespace acid
 			typesNode = metadata.AddChild(new Metadata("Types"));
 		}
 
-		for (auto &type : m_types)
+		for (const auto &type : m_types)
 		{
 			type->Encode(*typesNode->AddChild(new Metadata()));
 		}

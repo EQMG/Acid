@@ -61,7 +61,7 @@ namespace acid
 
 		auto lines = String::Split(*fileLoaded, "\n");
 
-		for (auto &line : lines)
+		for (const auto &line : lines)
 		{
 			ProcessNextLine(line);
 
@@ -97,7 +97,7 @@ namespace acid
 		m_values.clear();
 		auto parts = String::Split(line, SPLITTER);
 
-		for (auto &part : parts)
+		for (const auto &part : parts)
 		{
 			auto pairs = String::Split(part, "=");
 
@@ -110,7 +110,7 @@ namespace acid
 
 	void FontMetafile::LoadPaddingData()
 	{
-		for (auto &padding : GetValuesOfVariable("padding"))
+		for (const auto &padding : GetValuesOfVariable("padding"))
 		{
 			m_padding.emplace_back(padding);
 		}
@@ -168,7 +168,7 @@ namespace acid
 		std::vector<int32_t> result = {};
 		auto numbers = String::Split(m_values.at(variable), NUMBER_SEPARATOR);
 
-		for (auto &number : numbers)
+		for (const auto &number : numbers)
 		{
 			result.emplace_back(String::From<int32_t>(number));
 		}

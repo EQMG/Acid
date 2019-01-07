@@ -88,7 +88,7 @@ namespace acid
 
 		Display::CheckVk(vkDeviceWaitIdle(logicalDevice));
 
-		for (auto &shaderModule : m_modules)
+		for (const auto &shaderModule : m_modules)
 		{
 			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 		}
@@ -124,12 +124,12 @@ namespace acid
 		std::stringstream defineBlock;
 		defineBlock << "\n";
 
-		for (auto &define : m_defines)
+		for (const auto &define : m_defines)
 		{
 			defineBlock << "#define " << define.first << " " << define.second << "\n";
 		}
 
-		for (auto &shaderStage : m_shaderStages)
+		for (const auto &shaderStage : m_shaderStages)
 		{
 			auto fileLoaded = Files::Read(shaderStage);
 
@@ -194,7 +194,7 @@ namespace acid
 		std::vector<VkPushConstantRange> pushConstantRanges = {};
 		uint32_t currentOffset = 0;
 
-		for (auto &uniformBlock : m_shaderProgram->GetUniformBlocks())
+		for (const auto &uniformBlock : m_shaderProgram->GetUniformBlocks())
 		{
 			if (uniformBlock->GetType() != BLOCK_PUSH)
 			{
@@ -311,18 +311,18 @@ namespace acid
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {};
 		uint32_t lastAttribute = 0;
 
-		for (auto &vertexInput : m_vertexInputs)
+		for (const auto &vertexInput : m_vertexInputs)
 		{
-			for (auto &binding : vertexInput.GetBindingDescriptions())
+			for (const auto &binding : vertexInput.GetBindingDescriptions())
 			{
 				bindingDescriptions.emplace_back(binding);
 			}
 
-			for (auto &attribute : vertexInput.GetAttributeDescriptions())
+			for (const auto &attribute : vertexInput.GetAttributeDescriptions())
 			{
 				bool shaderContains = false;
 
-				for (auto &shaderAttribute : m_shaderProgram->GetVertexAttributes())
+				for (const auto &shaderAttribute : m_shaderProgram->GetVertexAttributes())
 				{
 					if (attribute.location + lastAttribute == shaderAttribute->GetLocation())
 					{

@@ -73,7 +73,7 @@ namespace acid
 	{
 		auto joint = new Joint(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
 
-		for (auto &child : data.GetChildren())
+		for (const auto &child : data.GetChildren())
 		{
 			joint->AddChild(CreateJoints(*child));
 		}
@@ -88,7 +88,7 @@ namespace acid
 			jointMatrices[headJoint.GetIndex()] = headJoint.GetAnimatedTransform();
 		}
 
-		for (auto &childJoint : headJoint.GetChildren())
+		for (const auto &childJoint : headJoint.GetChildren())
 		{
 			AddJointsToArray(*childJoint, jointMatrices);
 		}

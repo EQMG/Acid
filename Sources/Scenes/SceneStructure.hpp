@@ -120,7 +120,7 @@ namespace acid
 			{
 				auto components = (*it)->GetComponents<T>();
 
-				for (auto &component : components)
+				for (const auto &component : components)
 				{
 					if (component != nullptr && (component->IsEnabled() || allowDisabled))
 					{

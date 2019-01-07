@@ -43,7 +43,7 @@ namespace acid
 		template<typename T>
 		T *Get() const
 		{
-			for (auto &[key, module] : m_modules)
+			for (const auto &[key, module] : m_modules)
 			{
 				auto casted = dynamic_cast<T *>(module.get());
 

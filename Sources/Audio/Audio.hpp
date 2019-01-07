@@ -44,9 +44,9 @@ namespace acid
 
 		ACID_HIDDEN static void CheckAl(const int32_t &result);
 
-		ACID_HIDDEN const ALCdevice *GetDevice() const { return m_alDevice; }
+		ACID_HIDDEN ALCdevice *GetDevice() const { return m_alDevice; }
 
-		ACID_HIDDEN const ALCcontext *GetContext() const { return m_alContext; }
+		ACID_HIDDEN ALCcontext *GetContext() const { return m_alContext; }
 
 		const float &GetMasterGain() const { return m_masterGain; }
 

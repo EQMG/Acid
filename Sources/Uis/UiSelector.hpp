@@ -23,7 +23,7 @@ namespace acid
 			m_axisY(AxisJoystick(joystick, {joystickAxisY})),
 			m_inputButtons(std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE>())
 		{
-			for (auto &inputButton : inputButtons)
+			for (const auto &inputButton : inputButtons)
 			{
 				m_inputButtons[inputButton] = ButtonJoystick(joystick, {inputButton});
 			}

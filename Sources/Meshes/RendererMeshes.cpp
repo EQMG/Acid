@@ -30,7 +30,7 @@ namespace acid
 			}
 		}
 
-		for (auto &meshRender : sceneMeshRenders)
+		for (const auto &meshRender : sceneMeshRenders)
 		{
 			meshRender->CmdRender(commandBuffer, m_uniformScene, GetGraphicsStage());
 		}

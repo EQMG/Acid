@@ -21,7 +21,7 @@ namespace acid
 
 		m_pipeline.BindPipeline(commandBuffer);
 
-		for (auto &screenObject : Uis::Get()->GetObjects())
+		for (const auto &screenObject : Uis::Get()->GetObjects())
 		{
 			if (!screenObject->IsVisible())
 			{

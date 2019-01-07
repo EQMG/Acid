@@ -46,9 +46,9 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto &module1 : m_modules)
+		for (const auto &m : m_modules)
 		{
-			if (module1.second.get() == module)
+			if (m.second.get() == module)
 			{
 				return true;
 			}

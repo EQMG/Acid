@@ -19,7 +19,7 @@ namespace acid
 		AssembleVertices();
 		RemoveUnusedVertices();
 
-		for (auto &current : m_positionsList)
+		for (const auto &current : m_positionsList)
 		{
 			Vector3 position = current->GetPosition();
 			Vector2 textures = m_uvsList.at(current->GetUvIndex());
@@ -38,7 +38,7 @@ namespace acid
 	{
 		std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
 		auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
-		uint32_t positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
+		auto positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
 		auto positionsRawData = String::Split(positionsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
@@ -55,7 +55,7 @@ namespace acid
 	{
 		std::string uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
 		auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
-		uint32_t uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
+		auto uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
 		auto uvsRawData = String::Split(uvsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < uvsCount / 2; i++)
@@ -69,7 +69,7 @@ namespace acid
 	{
 		std::string normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
 		auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
-		uint32_t normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
+		auto normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
 		auto normalsRawData = String::Split(normalsData->GetValue(), " ");
 
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
@@ -82,14 +82,14 @@ namespace acid
 
 	void GeometryLoader::AssembleVertices()
 	{
-		int32_t indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
+		auto indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
 		auto indexRawData = String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), " ");
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			int32_t positionIndex = String::From<int32_t>(indexRawData[i * indexCount]);
-			int32_t normalIndex = String::From<int32_t>(indexRawData[i * indexCount + 1]);
-			int32_t uvIndex = String::From<int32_t>(indexRawData[i * indexCount + 2]);
+			auto positionIndex = String::From<int32_t>(indexRawData[i * indexCount]);
+			auto normalIndex = String::From<int32_t>(indexRawData[i * indexCount + 1]);
+			auto uvIndex = String::From<int32_t>(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}
@@ -122,7 +122,7 @@ namespace acid
 		{
 			VertexAnimatedData *anotherVertex = nullptr;
 
-			for (auto &position : m_positionsList)
+			for (const auto &position : m_positionsList)
 			{
 				if (position.get() == previousVertex->GetDuplicateVertex())
 				{

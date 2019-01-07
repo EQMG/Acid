@@ -26,7 +26,7 @@ namespace acid
 		{
 			std::vector<VkWriteDescriptorSet> types = {};
 
-			for (auto &writeDescriptorSet : writeDescriptorSets)
+			for (const auto &writeDescriptorSet : writeDescriptorSets)
 			{
 				types.emplace_back(GetType(writeDescriptorSet));
 			}

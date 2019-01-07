@@ -10,7 +10,7 @@ namespace acid
 
 	bool ButtonMouse::IsDown() const
 	{
-		for (auto &button : m_buttons)
+		for (const auto &button : m_buttons)
 		{
 			if (Mouse::Get()->GetButton(button))
 			{

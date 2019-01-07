@@ -61,7 +61,7 @@ namespace acid
 		std::vector<ParticleData> instanceDatas(m_maxInstances);
 		m_instances = 0;
 
-		for (auto &particle : particles)
+		for (const auto &particle : particles)
 		{
 			if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale()))
 			{

@@ -205,7 +205,7 @@ namespace acid
 				continue;
 			}
 
-			for (auto &c : textLines.at(i))
+			for (const auto &c : textLines.at(i))
 			{
 				auto ascii = static_cast<int32_t>(c);
 
@@ -274,7 +274,7 @@ namespace acid
 		float cursorY = 0.0f;
 		auto lineOrder = static_cast<int32_t>(lines.size());
 
-		for (auto &line : lines)
+		for (const auto &line : lines)
 		{
 			switch (m_justify)
 			{
@@ -292,9 +292,9 @@ namespace acid
 				break;
 			}
 
-			for (auto &word : line.GetWords())
+			for (const auto &word : line.GetWords())
 			{
-				for (auto &letter : word.GetCharacters())
+				for (const auto &letter : word.GetCharacters())
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
 					cursorX += m_kerning + letter.GetAdvanceX();
@@ -349,7 +349,7 @@ namespace acid
 		float maxX = -std::numeric_limits<float>::infinity();
 		float maxY = -std::numeric_limits<float>::infinity();
 
-		for (auto &vertex : vertices)
+		for (const auto &vertex : vertices)
 		{
 			Vector3 position = vertex.GetPosition();
 

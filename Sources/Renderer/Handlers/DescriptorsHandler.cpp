@@ -130,7 +130,7 @@ namespace acid
 		{
 			m_descriptorWrites.clear();
 
-			for (auto &[descriptorName, descriptor] : m_descriptors)
+			for (const auto &[descriptorName, descriptor] : m_descriptors)
 			{
 				VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(descriptor.location);
 				m_descriptorWrites.emplace_back(descriptor.descriptor->GetWriteDescriptor(descriptor.location,

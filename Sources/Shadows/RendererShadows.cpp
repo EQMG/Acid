@@ -30,7 +30,7 @@ namespace acid
 
 		auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
-		for (auto &shadowRender : sceneShadowRenders)
+		for (const auto &shadowRender : sceneShadowRenders)
 		{
 			shadowRender->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}

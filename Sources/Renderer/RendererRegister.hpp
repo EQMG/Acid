@@ -38,9 +38,9 @@ namespace acid
 		{
 			T *alternative = nullptr;
 
-			for (auto &[key, renderers] : m_stages)
+			for (const auto &[key, renderers] : m_stages)
 			{
-				for (auto &renderer : renderers)
+				for (const auto &renderer : renderers)
 				{
 					auto casted = dynamic_cast<T *>(renderer.get());
 

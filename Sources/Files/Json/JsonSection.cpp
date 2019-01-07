@@ -24,7 +24,7 @@ namespace acid
 		char openBrace = '{';
 		char closeBrace = '}';
 
-		for (auto &child : source.GetChildren())
+		for (const auto &child : source.GetChildren())
 		{
 			if (child->GetName().empty())
 			{
@@ -56,7 +56,7 @@ namespace acid
 			builder << "\n";
 		}
 
-		for (auto &child : source.GetChildren())
+		for (const auto &child : source.GetChildren())
 		{
 			AppendData(*child, builder, indentation + 1, child == source.GetChildren().back());
 		}
@@ -88,7 +88,7 @@ namespace acid
 
 		auto contentSplit = String::Split(source.m_content, ",", true);
 
-		for (auto &data : contentSplit)
+		for (const auto &data : contentSplit)
 		{
 			auto dataSplit = String::Split(data, ":", true);
 
@@ -102,7 +102,7 @@ namespace acid
 			thisValue->AddChild(newChild);
 		}
 
-		for (auto &child : source.m_children)
+		for (const auto &child : source.m_children)
 		{
 			Convert(*child, thisValue, false);
 		}

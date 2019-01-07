@@ -271,7 +271,7 @@ namespace acid
 		stbi_uc *pixels = nullptr;
 		stbi_uc *offset = nullptr;
 
-		for (auto &side : fileSides)
+		for (const auto &side : fileSides)
 		{
 			std::string filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
 			auto pixelsSide = LoadPixels(filenameSide, width, height, components);

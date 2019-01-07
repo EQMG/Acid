@@ -22,21 +22,21 @@ namespace acid
 	{
 		auto prefabObject = EntityPrefab::Create(filename);
 
-		for (auto &value : prefabObject->GetParent()->GetChildren())
+		for (const auto &child : prefabObject->GetParent()->GetChildren())
 		{
-			if (value->GetName().empty())
+			if (child->GetName().empty())
 			{
 				continue;
 			}
 
-			auto component = Scenes::Get()->GetComponentRegister().Create(value->GetName());
+			auto component = Scenes::Get()->GetComponentRegister().Create(child->GetName());
 
 			if (component == nullptr)
 			{
 				continue;
 			}
 
-			component->Decode(*value);
+			component->Decode(*child);
 			AddComponent(component);
 		}
 
@@ -144,7 +144,7 @@ namespace acid
 				m_worldTransform = m_localTransform;
 			}
 
-			for (auto &child : m_children)
+			for (const auto &child : m_children)
 			{
 				child->m_localTransform.SetDirty(true);
 			}

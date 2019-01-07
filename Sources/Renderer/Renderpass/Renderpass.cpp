@@ -45,7 +45,7 @@ namespace acid
 		}
 
 		// Subpasses and dependencies.
-		for (auto &subpassType : renderpassCreate.GetSubpasses())
+		for (const auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
 			std::vector<VkAttachmentReference> subpassColourAttachments = {};

@@ -140,7 +140,7 @@ namespace acid
 		m_renderStages.clear();
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 
-		for (auto &renderpassCreate : renderpassCreates)
+		for (const auto &renderpassCreate : renderpassCreates)
 		{
 			auto renderStage = new RenderStage(static_cast<uint32_t>(m_renderStages.size()), renderpassCreate); // TODO: Clean up.
 			renderStage->Rebuild(*m_swapchain);
@@ -240,9 +240,9 @@ namespace acid
 		return m_renderStages.at(index).get();
 	}
 
-	Descriptor *Renderer::GetAttachment(const std::string &name) const
+	const Descriptor *Renderer::GetAttachment(const std::string &name) const
 	{
-		for (auto &renderStage : m_renderStages)
+		for (const auto &renderStage : m_renderStages)
 		{
 			auto attachment = renderStage->GetAttachment(name);
 

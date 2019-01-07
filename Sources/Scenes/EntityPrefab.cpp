@@ -59,7 +59,7 @@ namespace acid
 	{
 		m_parent->ClearChildren();
 
-		for (auto &component : entity.GetComponents())
+		for (const auto &component : entity.GetComponents())
 		{
 			auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
 

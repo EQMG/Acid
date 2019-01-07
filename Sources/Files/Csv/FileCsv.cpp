@@ -29,7 +29,7 @@ namespace acid
 
 		auto lines = String::Split(*fileLoaded, "\n", true);
 
-		for (auto &line : lines)
+		for (const auto &line : lines)
 		{
 			RowCsv row = RowCsv(String::Split(line, std::string(1, m_delimiter), true));
 			m_rows.emplace_back(row);
@@ -49,9 +49,9 @@ namespace acid
 
 		std::stringstream builder;
 
-		for (auto &row : m_rows)
+		for (const auto &row : m_rows)
 		{
-			for (auto &element : row.GetElements())
+			for (const auto &element : row.GetElements())
 			{
 				builder << element;
 

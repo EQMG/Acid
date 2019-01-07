@@ -73,7 +73,7 @@ namespace acid
 	{
 		auto currentPose = std::map<std::string, Matrix4>();
 
-		for (auto &[name, joint] : previousFrame.GetPose())
+		for (const auto &[name, joint] : previousFrame.GetPose())
 		{
 			JointTransform previousTransform = previousFrame.GetPose().find(name)->second;
 			JointTransform nextTransform = nextFrame.GetPose().find(name)->second;
@@ -89,7 +89,7 @@ namespace acid
 		Matrix4 currentLocalTransform = currentPose.find(joint.GetName())->second;
 		Matrix4 currentTransform = parentTransform * currentLocalTransform;
 
-		for (auto &childJoint : joint.GetChildren())
+		for (const auto &childJoint : joint.GetChildren())
 		{
 			ApplyPoseToJoints(currentPose, *childJoint, currentTransform);
 		}

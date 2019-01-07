@@ -32,7 +32,7 @@ namespace acid
 	{
 		children.emplace_back(this);
 
-		for (auto &child : children)
+		for (const auto &child : children)
 		{
 			child->AddSelfAndChildren(children);
 		}
