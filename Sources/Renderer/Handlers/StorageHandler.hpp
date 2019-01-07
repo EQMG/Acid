@@ -86,6 +86,6 @@ namespace acid
 
 		bool Update(UniformBlock *uniformBlock);
 
-		StorageBuffer *GetStorageBuffer() const { return m_storageBuffer.get(); }
+		const StorageBuffer *GetStorageBuffer() const { return m_storageBuffer.get(); }
 	};
 }

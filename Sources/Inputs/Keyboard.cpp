@@ -47,9 +47,4 @@ namespace acid
 
 		return m_keyboardKeys[key];
 	}
-
-	char Keyboard::GetChar() const
-	{
-		return m_char;
-	}
 }

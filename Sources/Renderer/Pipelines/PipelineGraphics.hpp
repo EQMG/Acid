@@ -53,21 +53,21 @@ namespace acid
 		{
 		}
 
-		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
 
-		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
+		const std::vector<VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 
-		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+		const PipelineMode &GetPipelineMode() const { return m_pipelineMode; }
 
-		PipelineDepth GetDepthMode() const { return m_depthMode; }
+		const PipelineDepth &GetDepthMode() const { return m_depthMode; }
 
-		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+		const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
 
-		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
 
-		bool GetPushDescriptors() const { return m_pushDescriptors; }
+		const bool &GetPushDescriptors() const { return m_pushDescriptors; }
 
-		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
+		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
 	};
 
 	/// <summary>
@@ -135,43 +135,43 @@ namespace acid
 
 		~PipelineGraphics();
 
-		DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
+		const DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
 
-		Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
+		const Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
 
 		uint32_t GetWidth(const int32_t &stage = -1) const;
 
 		uint32_t GetHeight(const int32_t &stage = -1) const;
 
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
 
-		std::vector<std::string> GetShaderStages() const { return m_shaderStages; }
+		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
 
-		std::vector<VertexInput> GetVertexInputs() const { return m_vertexInputs; }
+		const std::vector<VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 
-		PipelineMode GetPipelineMode() const { return m_pipelineMode; }
+		const PipelineMode &GetPipelineMode() const { return m_pipelineMode; }
 
-		PipelineDepth GetDepthMode() const { return m_depthMode; }
+		const PipelineDepth &GetDepthMode() const { return m_depthMode; }
 
-		VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+		const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
 
-		VkCullModeFlags GetCullMode() const { return m_cullMode; }
+		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
 
-		bool IsPushDescriptors() const override { return m_pushDescriptors; }
+		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
+		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
 
 		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
+		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetDescriptorPool() const override { return m_descriptorPool; }
+		const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
 
-		VkPipeline GetPipeline() const override { return m_pipeline; }
+		const VkPipeline &GetPipeline() const override { return m_pipeline; }
 
-		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
+		const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
 
-		VkPipelineBindPoint GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
+		const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
 	private:
 		void CreateShaderProgram();
 

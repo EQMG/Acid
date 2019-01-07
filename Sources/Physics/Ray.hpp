@@ -62,9 +62,17 @@ namespace acid
 		/// <returns> Returns the destination vector X and Y being screen space coords and Z being the distance to the camera. </returns>
 		Vector3 ConvertToScreenSpace(const Vector3 &position) const;
 
-		Vector3 GetOrigin() const { return m_origin; }
+		const bool &IsUseMouse() const { return m_useMouse; }
 
-		Vector3 GetCurrentRay() const { return m_currentRay; }
+		void SetUseMouse(const bool &useMouse) { m_useMouse = useMouse; }
+
+		const Vector2 &GetScreenStart() const { return m_screenStart; }
+
+		void SetScreenStart(const Vector2 &screenStart) { m_screenStart = screenStart; }
+
+		const Vector3 &GetOrigin() const { return m_origin; }
+
+		const Vector3 &GetCurrentRay() const { return m_currentRay; }
 	private:
 		void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
 

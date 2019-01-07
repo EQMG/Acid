@@ -29,11 +29,11 @@ namespace acid
 
 		void AddChild(XmlNode *child) { m_children.emplace_back(child); }
 
-		std::string GetAttributes() const { return m_attributes; }
+		const std::string &GetAttributes() const { return m_attributes; }
 
 		void SetAttributes(const std::string &attributes) { m_attributes = attributes; }
 
-		std::string GetContent() const { return m_content; }
+		const std::string &GetContent() const { return m_content; }
 
 		void SetContent(const std::string &content) { m_content = content; }
 

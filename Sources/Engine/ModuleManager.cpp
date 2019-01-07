@@ -75,7 +75,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
+		for (auto it = --m_modules.end(); it != m_modules.begin(); --it) // TODO: Clean remove.
 		{
 			if ((*it).second.get() != module)
 			{

@@ -23,13 +23,13 @@ namespace acid
 	public:
 		VertexAnimatedData(const int32_t &index, const Vector3 &position);
 
-		Vector3 GetPosition() const { return m_position; }
+		const Vector3 &GetPosition() const { return m_position; }
 
-		int32_t GetUvIndex() const { return m_uvIndex; }
+		const int32_t &GetUvIndex() const { return m_uvIndex; }
 
 		void SetUvIndex(const int32_t &uvIndex) { m_uvIndex = uvIndex; }
 
-		int32_t GetNormalIndex() const { return m_normalIndex; }
+		const int32_t &GetNormalIndex() const { return m_normalIndex; }
 
 		void SetNormalIndex(const int32_t &normalIndex) { m_normalIndex = normalIndex; }
 
@@ -37,13 +37,13 @@ namespace acid
 
 		void SetDuplicateVertex(VertexAnimatedData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		int32_t GetIndex() const { return m_index; }
+		const int32_t &GetIndex() const { return m_index; }
 
 		bool IsSet() const;
 
 		bool HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const;
 
-		VertexWeights GetSkinData() const { return m_skinData; }
+		const VertexWeights &GetSkinData() const { return m_skinData; }
 
 		void SetSkinData(const VertexWeights &skinData) { m_skinData = skinData; }
 	};

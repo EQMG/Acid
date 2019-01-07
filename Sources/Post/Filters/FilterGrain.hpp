@@ -16,7 +16,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetStrength() const { return m_strength; }
+		const float &GetStrength() const { return m_strength; }
 
 		void SetStrength(const float &strength) { m_strength = strength; }
 	};

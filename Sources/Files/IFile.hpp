@@ -23,7 +23,7 @@ namespace acid
 
 		virtual void Clear() = 0;
 
-		virtual std::string GetFilename() const = 0;
+		virtual const std::string &GetFilename() const = 0;
 
 		virtual void SetFilename(const std::string &filename) = 0;
 

@@ -24,7 +24,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		Vector2 GetDirection() const { return m_direction; }
+		const Vector2 &GetDirection() const { return m_direction; }
 
 		void SetDirection(const Vector2 &direction) { m_direction = direction; }
 	};

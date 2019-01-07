@@ -39,6 +39,6 @@ namespace acid
 		/// Gets a list of all particles.
 		/// </summary>
 		/// <returns> All particles. </returns>
-		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> GetParticles() const { return m_particles; }
+		const std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> &GetParticles() const { return m_particles; }
 	};
 }

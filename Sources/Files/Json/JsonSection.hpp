@@ -29,11 +29,11 @@ namespace acid
 
 		void AddChild(JsonSection *child) { m_children.emplace_back(child); }
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		std::string GetContent() const { return m_content; }
+		const std::string &GetContent() const { return m_content; }
 
 		void SetContent(const std::string &content) { m_content = content; }
 

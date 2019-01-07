@@ -56,39 +56,39 @@ namespace acid
 
 		bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
 
-		float GetPps() const { return m_pps; }
+		const float &GetPps() const { return m_pps; }
 
 		void SetPps(const float &pps);
 
-		float GetAverageSpeed() const { return m_averageSpeed; }
+		const float &GetAverageSpeed() const { return m_averageSpeed; }
 
 		void SetAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
 
-		float GetGravityEffect() const { return m_gravityEffect; }
+		const float &GetGravityEffect() const { return m_gravityEffect; }
 
 		void SetGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
 
-		bool IsRandomRotation() const { return m_randomRotation; }
+		const bool &IsRandomRotation() const { return m_randomRotation; }
 
 		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-		Vector3 GetDirection() const { return m_direction; }
+		const Vector3 &GetDirection() const { return m_direction; }
 
 		void SetDirection(const Vector3 &direction, const float &deviation);
 
-		float GetSpeedDeviation() const { return m_speedDeviation; }
+		const float &GetSpeedDeviation() const { return m_speedDeviation; }
 
 		void SetSpeedDeviation(const float &speedDeviation) { m_speedDeviation = speedDeviation; }
 
-		float GetLifeDeviation() const { return m_lifeDeviation; }
+		const float &GetLifeDeviation() const { return m_lifeDeviation; }
 
 		void SetLifeDeviation(const float &lifeDeviation) { m_lifeDeviation = lifeDeviation; }
 
-		float GetStageDeviation() const { return m_stageDeviation; }
+		const float &GetStageDeviation() const { return m_stageDeviation; }
 
 		void SetStageDeviation(const float &stageDeviation) { m_stageDeviation = stageDeviation; }
 
-		float GetScaleDeviation() const { return m_scaleDeviation; }
+		const float &GetScaleDeviation() const { return m_scaleDeviation; }
 
 		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 	private:

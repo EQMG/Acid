@@ -23,11 +23,11 @@ namespace acid
 
 		Vector3 GeneratePosition() const override;
 
-		float GetLength() const { return m_length; }
+		const float &GetLength() const { return m_length; }
 
 		void SetLength(const float &length) { m_length = length; }
 
-		Vector3 GetAxis() const { return m_axis; }
+		const Vector3 &GetAxis() const { return m_axis; }
 
 		void SetAxis(const Vector3 &axis) { m_axis = axis; }
 	};

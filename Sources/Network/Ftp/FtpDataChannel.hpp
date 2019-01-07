@@ -34,7 +34,7 @@ namespace acid
 		/// Socket used for data transfers.
 		TcpSocket m_dataSocket;
 	public:
-		FtpDataChannel(Ftp &owner);
+		explicit FtpDataChannel(Ftp &owner);
 
 		FtpResponse Open(const FtpTransferMode &mode);
 

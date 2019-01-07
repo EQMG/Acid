@@ -60,6 +60,6 @@ namespace acid
 
 		bool Update(UniformBlock *uniformBlock);
 
-		UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
+		const UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
 	};
 }

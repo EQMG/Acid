@@ -48,31 +48,31 @@ namespace acid
 
 		void ClearForces() override;
 
-		Vector3 GetGravity() const { return m_gravity; }
+		const Vector3 &GetGravity() const { return m_gravity; }
 
 		void SetGravity(const Vector3 &gravity);
 
-		Vector3 GetUp() const { return m_up; }
+		const Vector3 &GetUp() const { return m_up; }
 
 		void SetUp(const Vector3 &up);
 
-		float GetStepHeight() const { return m_stepHeight; }
+		const float &GetStepHeight() const { return m_stepHeight; }
 
 		void SetStepHeight(const float &stepHeight);
 
-		float GetFallSpeed() const { return m_fallSpeed; }
+		const float &GetFallSpeed() const { return m_fallSpeed; }
 
 		void SetFallSpeed(const float &fallSpeed);
 
-		float GetJumpSpeed() const { return m_jumpSpeed; }
+		const float &GetJumpSpeed() const { return m_jumpSpeed; }
 
 		void SetJumpSpeed(const float &jumpSpeed);
 
-		float GetMaxJumpHeight() const { return m_maxHeight; }
+		const float &GetMaxJumpHeight() const { return m_maxHeight; }
 
 		void SetMaxJumpHeight(const float &maxHeight);
 
-		bool IsInterpolate() const { return m_interpolate; }
+		const bool &IsInterpolate() const { return m_interpolate; }
 
 		void SetInterpolate(const bool &interpolate);
 

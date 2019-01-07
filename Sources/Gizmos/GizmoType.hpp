@@ -64,15 +64,15 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		std::shared_ptr<Model> GetModel() const { return m_model; }
+		const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 		void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
-		float GetLineThickness() const { return m_lineThickness; }
+		const float &GetLineThickness() const { return m_lineThickness; }
 
 		void SetLineThickness(const float &lineThickness) { m_lineThickness = lineThickness; }
 
-		Colour GetDiffuse() const { return m_diffuse; }
+		const Colour &GetDiffuse() const { return m_diffuse; }
 
 		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
 	private:

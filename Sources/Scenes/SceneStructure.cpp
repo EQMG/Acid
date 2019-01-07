@@ -78,7 +78,6 @@ namespace acid
 	void SceneStructure::Clear()
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
-
 		m_objects.clear();
 	}
 
@@ -105,7 +104,7 @@ namespace acid
 
 		std::vector<Entity *> result = {};
 
-		for (auto &object : m_objects)
+		for (const auto &object : m_objects)
 		{
 			if (object->IsRemoved())
 			{
@@ -124,7 +123,7 @@ namespace acid
 
 		std::vector<Entity *> result = {};
 
-		for (auto &object : m_objects)
+		for (const auto &object : m_objects)
 		{
 			if (object->IsRemoved())
 			{
@@ -156,7 +155,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto &object2 : m_objects)
+		for (const auto &object2 : m_objects)
 		{
 			if (object2.get() == object)
 			{

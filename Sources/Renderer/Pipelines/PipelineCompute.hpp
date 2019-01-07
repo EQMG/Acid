@@ -29,6 +29,7 @@ namespace acid
 
 		VkPipeline m_pipeline;
 		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
 	public:
 		/// <summary>
 		/// Creates a new compute pipeline.
@@ -44,31 +45,31 @@ namespace acid
 
 		~PipelineCompute();
 
-		std::string GetShaderStage() const { return m_shaderStage; }
+		const std::string &GetShaderStage() const { return m_shaderStage; }
 
-		uint32_t GetWidth() const { return m_width; }
+		const uint32_t &GetWidth() const { return m_width; }
 
-		uint32_t GetHeight() const { return m_height; }
+		const uint32_t &GetHeight() const { return m_height; }
 
-		uint32_t GetWorkgroupSize() const { return m_workgroupSize; }
+		const uint32_t &GetWorkgroupSize() const { return m_workgroupSize; }
 
-		bool IsPushDescriptors() const override { return m_pushDescriptors; }
+		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-		std::vector<ShaderDefine> GetDefines() const { return m_defines; }
+		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
 
 		bool CmdRender(const CommandBuffer &commandBuffer) const;
 
 		ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
 
-		VkDescriptorSetLayout GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
+		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
-		VkDescriptorPool GetDescriptorPool() const override { return m_descriptorPool; }
+		const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
 
-		VkPipeline GetPipeline() const override { return m_pipeline; }
+		const VkPipeline &GetPipeline() const override { return m_pipeline; }
 
-		VkPipelineLayout GetPipelineLayout() const override { return m_pipelineLayout; }
+		const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
 
-		virtual VkPipelineBindPoint GetPipelineBindPoint() const override { return VK_PIPELINE_BIND_POINT_COMPUTE; }
+		const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
 	private:
 		void CreateShaderProgram();
 

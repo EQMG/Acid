@@ -28,11 +28,11 @@ namespace acid
 
 		void UpdateObject() override;
 
-		Gui *GetBackground() const { return m_background.get(); }
+		const Gui *GetBackground() const { return m_background.get(); }
 
-		Text *GetText() const { return m_text.get(); }
+		const Text *GetText() const { return m_text.get(); }
 
-		std::string GetString() const { return m_text->GetString(); }
+		const std::string &GetString() const { return m_text->GetString(); }
 
 		void SetString(const std::string &string) const { m_text->SetString(string); }
 	};

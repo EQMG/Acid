@@ -47,9 +47,9 @@ namespace acid
 		{
 		}
 
-		uint32_t GetOffset() const { return m_offset; }
+		const uint32_t &GetOffset() const { return m_offset; }
 
-		uint32_t GetSize() const { return m_size; }
+		const uint32_t &GetSize() const { return m_size; }
 
 		bool operator==(const OffsetSize &other) const
 		{

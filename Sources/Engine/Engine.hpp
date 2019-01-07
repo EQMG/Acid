@@ -23,6 +23,7 @@ namespace acid
 		ModuleManager m_moduleManager;
 		ModuleUpdater m_moduleUpdater;
 
+		std::string m_argv0;
 		Time m_timeOffset;
 		float m_fpsLimit;
 		bool m_running;
@@ -37,8 +38,9 @@ namespace acid
 		/// <summary>
 		/// Carries out the setup for basic engine components and the engine. Call <seealso cref="#Run()"/> after creating a instance.
 		/// </summary>
+		/// <param name="argv0"> The first argument passed to main. </param>
 		/// <param name="emptyRegister"> If the module register will start empty. </param>
-		explicit Engine(const bool &emptyRegister = false);
+		explicit Engine(const std::string &argv0, const bool &emptyRegister = false);
 
 		/// <summary>
 		/// The update function for the updater.
@@ -65,10 +67,16 @@ namespace acid
 		static std::string GetDateTime();
 
 		/// <summary>
+		/// Gets the first argument passed to main.
+		/// </summary>
+		/// <returns> The first argument passed to main. </returns>
+		const std::string &GetArgv0() const { return m_argv0; };
+
+		/// <summary>
 		/// Gets the added/removed time for the engine.
 		/// </summary>
 		/// <returns> The time offset. </returns>
-		Time GetTimeOffset() const { return m_timeOffset; }
+		const Time &GetTimeOffset() const { return m_timeOffset; }
 
 		/// <summary>
 		/// Sets the time offset for the engine.
@@ -80,7 +88,7 @@ namespace acid
 		/// Gets the fps limit.
 		/// </summary>
 		/// <returns> The fps limit. </returns>
-		float GetFpsLimit() const { return m_fpsLimit; }
+		const float &GetFpsLimit() const { return m_fpsLimit; }
 
 		/// <summary>
 		/// Sets the fps limit. -1 disables limits.
@@ -92,19 +100,19 @@ namespace acid
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
-		Time GetDelta() const { return m_moduleUpdater.GetDelta(); }
+		const Time &GetDelta() const { return m_moduleUpdater.GetDelta(); }
 
 		/// <summary>
 		/// Gets the delta (seconds) between renders.
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
-		Time GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
+		const Time &GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
 		/// Gets if the engine is running.
 		/// </summary>
 		/// <returns> If the engine is running. </returns>
-		bool IsRunning() const { return m_running; }
+		const bool &IsRunning() const { return m_running; }
 
 		/// <summary>
 		/// Requests the engine to delete and stop the game-loop.

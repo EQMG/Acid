@@ -11,12 +11,11 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
-	// Registers file search paths.
-	Files::SetBaseDirectory(argv[0]);
-	Files::AddSearchPath("Resources/Engine");
-
 	// Creates the engine.
-	auto engine = std::make_unique<Engine>();
+	auto engine = std::make_unique<Engine>(argv[0]);
+
+	// Registers file search paths.
+	Files::AddSearchPath("Resources/Engine");
 
 	// Registers modules.
 
@@ -24,7 +23,7 @@ int main(int argc, char **argv)
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
 	componentRegister.Add<PlayerFps>("PlayerFps");
 
-	// Initializes modules.
+	// Sets values to modules.
 	Display::Get()->SetTitle("Test PBR");
 	Display::Get()->SetIcon("Logos/Flask.png");
 //	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");

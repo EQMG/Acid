@@ -175,19 +175,19 @@ namespace acid
 		/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 		/// </summary>
 		/// <returns> The model of the text. </returns>
-		Model *GetModel() const { return m_model.get(); }
+		const Model *GetModel() const { return m_model.get(); }
 
 		/// <summary>
 		/// Gets the number of lines in this text.
 		/// </summary>
 		/// <returns> The number of lines. </returns>
-		uint32_t GetNumberLines() const { return m_numberLines; }
+		const uint32_t &GetNumberLines() const { return m_numberLines; }
 
 		/// <summary>
 		/// Gets the string of text represented.
 		/// </summary>
 		/// <returns> The string of text. </returns>
-		std::string GetString() const { return m_string; }
+		const std::string &GetString() const { return m_string; }
 
 		/// <summary>
 		/// Changed the current string in this text.
@@ -199,13 +199,13 @@ namespace acid
 		/// Gets how the text should justify.
 		/// </summary>
 		/// <returns> How the text should justify. </returns>
-		TextJustify GetTextJustify() const { return m_justify; }
+		const TextJustify &GetTextJustify() const { return m_justify; }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
 		/// </summary>
 		/// <returns> The maximum length of a line. </returns>
-		float GetMaxWidth() const { return m_maxWidth; }
+		const float &GetMaxWidth() const { return m_maxWidth; }
 
 		/// <summary>
 		/// Sets the maximum length of a line of this text.
@@ -217,7 +217,7 @@ namespace acid
 		/// Gets the kerning (type character spacing multiplier) of this text.
 		/// </summary>
 		/// <returns> The type kerning. </returns>
-		float GetKerning() const { return m_kerning; }
+		const float &GetKerning() const { return m_kerning; }
 
 		/// <summary>
 		/// Sets the kerning (type character spacing multiplier) of this text.
@@ -229,7 +229,7 @@ namespace acid
 		/// Gets the leading (vertical line spacing multiplier) of this text.
 		/// </summary>
 		/// <returns> The line leading. </returns>
-		float GetLeading() const { return m_leading; }
+		const float &GetLeading() const { return m_leading; }
 
 		/// <summary>
 		/// Sets the leading (vertical line spacing multiplier) of this text.
@@ -241,19 +241,13 @@ namespace acid
 		/// Gets the font used by this text.
 		/// </summary>
 		/// <returns> The font used by this text. </returns>
-		std::shared_ptr<FontType> GetFontType() const { return m_fontType; }
-
-		/// <summary>
-		/// Gets font type texture for this text.
-		/// </summary>
-		/// <returns> The texts texture. </returns>
-		std::shared_ptr<Texture> GetTexture() const { return m_fontType->GetTexture(); }
+		const std::shared_ptr<FontType> &GetFontType() const { return m_fontType; }
 
 		/// <summary>
 		/// Gets the colour of the text.
 		/// </summary>
 		/// <returns> The colour of the text. </returns>
-		Colour GetTextColour() const { return m_textColour; }
+		const Colour &GetTextColour() const { return m_textColour; }
 
 		/// <summary>
 		/// Sets the colour of the text.
@@ -265,7 +259,7 @@ namespace acid
 		/// Gets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <returns> The border colour of the text. </returns>
-		Colour GetBorderColour() const { return m_borderColour; }
+		const Colour &GetBorderColour() const { return m_borderColour; }
 
 		IDriver *GetBorderDriver() const { return m_borderDriver.get(); }
 

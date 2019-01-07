@@ -50,7 +50,7 @@ namespace acid
 		/// <returns> If the ray intersects, relative intersect location. </returns>
 	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
-		Transform GetLocalTransform() const { return m_localTransform; }
+		const Transform &GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform);
 

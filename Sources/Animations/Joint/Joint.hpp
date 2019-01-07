@@ -28,11 +28,11 @@ namespace acid
 
 		JointData& operator=(const JointData&) = delete;
 
-		uint32_t GetIndex() const { return m_index; }
+		const uint32_t &GetIndex() const { return m_index; }
 
-		std::string GetNameId() const { return m_nameId; }
+		const std::string &GetNameId() const { return m_nameId; }
 
-		Matrix4 GetBindLocalTransform() const { return m_bindLocalTransform; }
+		const Matrix4 &GetBindLocalTransform() const { return m_bindLocalTransform; }
 
 		const std::vector<std::unique_ptr<JointData>> &GetChildren() const { return m_children; }
 
@@ -99,11 +99,11 @@ namespace acid
 		/// <param name="parentBindTransform"> The model-space bind transform of the parent joint. </param>
 		void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
-		uint32_t GetIndex() const { return m_index; }
+		const uint32_t &GetIndex() const { return m_index; }
 
 		void SetIndex(const uint32_t &index) { m_index = index; }
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
 		void SetName(const std::string &name) { m_name = name; }
 
@@ -122,7 +122,7 @@ namespace acid
 		/// <param name="children"> The array to add this and children into. </param>
 		void AddSelfAndChildren(std::vector<Joint *> &children);
 
-		Matrix4 GetLocalBindTransform() const { return m_localBindTransform; }
+		const Matrix4 &GetLocalBindTransform() const { return m_localBindTransform; }
 
 		void SetLocalBindTransform(const Matrix4 &localBindTransform) { m_localBindTransform = localBindTransform; }
 
@@ -132,7 +132,7 @@ namespace acid
 		/// This matrix is calculated by taking the desired model-space transform of the joint and multiplying it by the inverse of the starting model-space transform of the joint.
 		/// </summary>
 		/// <returns> The transformation matrix of the joint which is used to deform associated vertices of the skin in the shaders. </returns>
-		Matrix4 GetAnimatedTransform() const { return m_animatedTransform; }
+		const Matrix4 &GetAnimatedTransform() const { return m_animatedTransform; }
 
 		void SetAnimatedTransform(const Matrix4 &animatedTransform) { m_animatedTransform = animatedTransform; }
 
@@ -142,7 +142,7 @@ namespace acid
 		/// This returns the inverse of that, which is used to calculate the animated transform matrix which gets used to transform vertices in the shader.
 		/// </summary>
 		/// <returns> The inverse of the joint's bind transform (in model-space). </returns>
-		Matrix4 GetInverseBindTransform() const { return m_inverseBindTransform; }
+		const Matrix4 &GetInverseBindTransform() const { return m_inverseBindTransform; }
 
 		void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 	};

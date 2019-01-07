@@ -33,23 +33,20 @@ namespace acid
 		return gizmo;
 	}
 
-	bool Gizmos::RemoveGizmo(Gizmo *gizmo)
+	void Gizmos::RemoveGizmo(Gizmo *gizmo)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
 		for (auto &[gizmoType, gizmos] : m_gizmos)
 		{
-			for (auto it1 = gizmos.begin(); it1 != gizmos.end();)
+			for (auto it1 = gizmos.begin(); it1 != gizmos.end();) // TODO: Clean remove.
 			{
 				if ((*it1).get() == gizmo)
 				{
 					it1 = gizmos.erase(it1);
-					return true;
 				}
 			}
 		}
-
-		return false;
 	}
 
 	void Gizmos::Clear()

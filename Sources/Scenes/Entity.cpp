@@ -101,7 +101,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it) // TODO: Clean remove.
 		{
 			if ((*it).get() == component)
 			{
@@ -116,7 +116,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		for (auto it = m_components.begin(); it != m_components.end(); ++it) // TODO: Clean remove.
 		{
 			auto componentName = Scenes::Get()->GetComponentRegister().FindName((*it).get());
 

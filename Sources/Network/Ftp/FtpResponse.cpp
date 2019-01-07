@@ -12,14 +12,4 @@ namespace acid
 	{
 		return m_status < 400;
 	}
-
-	FtpResponseStatus FtpResponse::GetStatus() const
-	{
-		return m_status;
-	}
-
-	std::string FtpResponse::GetFullMessage() const
-	{
-		return m_message;
-	}
 }

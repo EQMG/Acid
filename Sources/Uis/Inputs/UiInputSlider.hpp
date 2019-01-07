@@ -43,25 +43,25 @@ namespace acid
 
 		void UpdateObject() override;
 
-		Gui *GetBackground() const { return m_background.get(); }
+		const Gui *GetBackground() const { return m_background.get(); }
 
-		Gui *GetSlider() const { return m_slider.get(); }
+		const Gui *GetSlider() const { return m_slider.get(); }
 
-		Text *GetText() const { return m_text.get(); }
+		const Text *GetText() const { return m_text.get(); }
 
-		std::string GetPrefix() const { return m_prefix; }
+		const std::string &GetPrefix() const { return m_prefix; }
 
 		void SetPrefix(const std::string &prefix);
 
-		float GetProgressMin() const { return m_progressMin; }
+		const float &GetProgressMin() const { return m_progressMin; }
 
 		void SetProgressMin(const float &progressMin) { m_progressMin = progressMin; }
 
-		float GetProgressMax() const { return m_progressMax; }
+		const float &GetProgressMax() const { return m_progressMax; }
 
 		void SetProgressMax(const float &progressMax) { m_progressMax = progressMax; }
 
-		float GetValue() const { return m_value; }
+		const float &GetValue() const { return m_value; }
 
 		void SetValue(const float &value);
 

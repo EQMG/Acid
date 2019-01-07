@@ -10,7 +10,7 @@ namespace acid
 	private:
 		Vector3 m_point;
 	public:
-		EmitterPoint(const Transform &localTransform = Transform::IDENTITY);
+		explicit EmitterPoint(const Transform &localTransform = Transform::IDENTITY);
 
 		void Start() override;
 
@@ -22,7 +22,7 @@ namespace acid
 
 		Vector3 GeneratePosition() const override;
 
-		Vector3 GetPoint() const { return m_point; }
+		const Vector3 &GetPoint() const { return m_point; }
 
 		void SetPoint(const Vector3 &point) { m_point = point; }
 	};

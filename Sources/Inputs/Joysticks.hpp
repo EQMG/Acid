@@ -69,14 +69,14 @@ namespace acid
 		/// </summary>
 		/// <param name="port"> The joystick to check connection with. </param>
 		/// <returns> If the joystick is connected. </returns>
-		bool IsConnected(const JoystickPort &port) const { return m_connected.at(port).m_connected; }
+		const bool &IsConnected(const JoystickPort &port) const { return m_connected.at(port).m_connected; }
 
 		/// <summary>
 		/// Gets the name of the joystick.
 		/// </summary>
 		/// <param name="port"> The joystick to get the name of. </param>
 		/// <returns> The joysticks name. </returns>
-		std::string GetName(const JoystickPort &port) const { return m_connected.at(port).m_name; }
+		const std::string &GetName(const JoystickPort &port) const { return m_connected.at(port).m_name; }
 
 		/// <summary>
 		/// Gets the whether a button on a joystick is pressed.
@@ -99,13 +99,13 @@ namespace acid
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		uint32_t GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
+		const uint32_t &GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		uint32_t GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
+		const uint32_t &GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
 	};
 }

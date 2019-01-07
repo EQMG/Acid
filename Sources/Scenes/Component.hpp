@@ -58,11 +58,11 @@ namespace acid
 		{
 		}
 
-		bool IsEnabled() const { return m_enabled; };
+		const bool &IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
 
-		bool IsRemoved() const { return m_removed; }
+		const bool &IsRemoved() const { return m_removed; }
 
 		void SetRemoved(const bool &removed) { m_removed = removed; }
 

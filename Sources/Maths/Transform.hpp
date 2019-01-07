@@ -64,19 +64,19 @@ namespace acid
 
 		Matrix4 GetWorldMatrix() const;
 
-		Vector3 GetPosition() const { return m_position; }
+		const Vector3 &GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector3 &position);
 
-		Vector3 GetRotation() const { return m_rotation; }
+		const Vector3 &GetRotation() const { return m_rotation; }
 
 		void SetRotation(const Vector3 &rotation);
 
-		Vector3 GetScaling() const { return m_scaling; }
+		const Vector3 &GetScaling() const { return m_scaling; }
 
 		void SetScaling(const Vector3 &scaling);
 
-		bool IsDirty() const { return m_dirty; }
+		const bool &IsDirty() const { return m_dirty; }
 
 		void SetDirty(const bool &dirty) const;
 

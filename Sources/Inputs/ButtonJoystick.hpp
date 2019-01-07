@@ -28,11 +28,11 @@ namespace acid
 
 		bool WasDown() override;
 
-		JoystickPort GetJoystick() const { return m_joystick; }
+		const JoystickPort &GetJoystick() const { return m_joystick; }
 
 		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
 
-		std::vector<uint32_t> GetButtons() const { return m_buttons; }
+		const std::vector<uint32_t> &GetButtons() const { return m_buttons; }
 
 		void SetButtons(const std::vector<uint32_t> &buttons) { m_buttons = buttons; }
 	};

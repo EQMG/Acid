@@ -10,7 +10,7 @@ namespace acid
 		Collider(localTransform),
 		m_shape(nullptr),
 		m_model(nullptr),
-		m_points(0)
+		m_pointCount(0)
 	{
 		if (pointCloud.empty())
 		{
@@ -45,7 +45,7 @@ namespace acid
 
 		if (m_shape != nullptr && m_model == nullptr)
 		{
-			if (mesh->GetModel()->GetPointCloud().size() / 3 == m_points)
+			if (mesh->GetModel()->GetPointCloud().size() / 3 == m_pointCount)
 			{
 				m_model = mesh->GetModel();
 				return;
@@ -54,7 +54,7 @@ namespace acid
 
 		if (m_model != mesh->GetModel())
 		{
-			m_model == mesh->GetModel();
+			m_model = mesh->GetModel();
 			Initialize(m_model->GetPointCloud());
 		}
 	}
@@ -84,6 +84,6 @@ namespace acid
 		m_shape = std::make_unique<btConvexHullShape>(pointCloud.data(), static_cast<int32_t>(pointCloud.size() / 3), sizeof(float));
 		m_shape->optimizeConvexHull();
 		m_shape->initializePolyhedralFeatures();
-		m_points = static_cast<uint32_t>(pointCloud.size() / 3);
+		m_pointCount = static_cast<uint32_t>(pointCloud.size() / 3);
 	}
 }

@@ -13,7 +13,7 @@ namespace acid
 	public:
 		explicit RowCsv(const std::vector<std::string> &elements);
 
-		std::vector<std::string> GetElements() const { return m_elements; }
+		const std::vector<std::string> &GetElements() const { return m_elements; }
 
 		void AddElement(const std::string &element) { m_elements.emplace_back(element); }
 

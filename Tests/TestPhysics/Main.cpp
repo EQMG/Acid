@@ -21,9 +21,10 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
-	// Registers file search paths.
-	Files::SetBaseDirectory(argv[0]);
+	// Creates the engine.
+	auto engine = std::make_unique<Engine>(argv[0]);
 
+	// Registers file search paths.
 	for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
 	{
 		if (String::Contains(file, "data-"))
@@ -34,9 +35,7 @@ int main(int argc, char **argv)
 
 	Files::AddSearchPath("Resources/Engine");
 
-	// Creates the engine.
-	auto engine = Engine();
-
+	// Loads configs from a config manager.
 	auto configManager = ConfigManager();
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
@@ -55,7 +54,7 @@ int main(int argc, char **argv)
 	componentRegister.Add<MaterialTerrain>("MaterialTerrain");
 	componentRegister.Add<Terrain>("Terrain");
 
-	// Initializes modules.
+	// Sets values to modules.
 	Display::Get()->SetTitle("Test Physics");
 	Display::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
@@ -63,7 +62,7 @@ int main(int argc, char **argv)
 	Scenes::Get()->SetScene(new Scene1());
 
 	// Runs the game loop.
-	int32_t exitCode = engine.Run();
+	int32_t exitCode = engine->Run();
 	configManager.Save();
 
 	// Pauses the console.

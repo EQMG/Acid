@@ -23,7 +23,7 @@ namespace acid
 		/// Gets the constant.
 		/// </summary>
 		/// <returns> The constant. </returns>
-		float GetConstant() const { return m_constant; }
+		const float &GetConstant() const { return m_constant; }
 
 		/// <summary>
 		/// Sets the constant.

@@ -25,13 +25,13 @@ namespace acid
 	public:
 		VertexModelData(const uint32_t &index, const Vector3 &position);
 
-		Vector3 GetPosition() const { return m_position; }
+		const Vector3 &GetPosition() const { return m_position; }
 
-		int32_t GetUvIndex() const { return m_uvIndex; }
+		const int32_t &GetUvIndex() const { return m_uvIndex; }
 
 		void SetUvIndex(const int32_t &uvIndex) { m_uvIndex = uvIndex; }
 
-		int32_t GetNormalIndex() const { return m_normalIndex; }
+		const int32_t &GetNormalIndex() const { return m_normalIndex; }
 
 		void SetNormalIndex(const int32_t &normalIndex) { m_normalIndex = normalIndex; }
 
@@ -39,15 +39,15 @@ namespace acid
 
 		void SetDuplicateVertex(VertexModelData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		uint32_t GetIndex() const { return m_index; }
+		const uint32_t &GetIndex() const { return m_index; }
 
-		float GetLength() const { return m_length; }
+		const float &GetLength() const { return m_length; }
 
 		void AddTangent(const Vector3 &tangent);
 
 		void AverageTangents();
 
-		Vector3 GetAverageTangent() const { return m_averagedTangent; }
+		const Vector3 &GetAverageTangent() const { return m_averagedTangent; }
 
 		bool IsSet() const;
 

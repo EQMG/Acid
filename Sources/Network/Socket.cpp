@@ -162,11 +162,6 @@ namespace acid
 	SocketInitializer globalInitializer;
 #endif
 
-	bool Socket::IsBlocking() const
-	{
-		return m_isBlocking;
-	}
-
 	void Socket::SetBlocking(bool blocking)
 	{
 		// Apply if the socket is already created.
@@ -176,11 +171,6 @@ namespace acid
 		}
 
 		m_isBlocking = blocking;
-	}
-
-	SocketHandle Socket::GetHandle() const
-	{
-		return m_socket;
 	}
 
 	void Socket::Create()

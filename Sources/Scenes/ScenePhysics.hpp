@@ -52,6 +52,9 @@ namespace acid
 		std::unique_ptr<btConstraintSolver> m_solver;
 		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
 		CollisionPairs m_pairsLastUpdate;
+
+		Vector3 m_gravity;
+		float m_airDensity;
 	public:
 		ScenePhysics();
 
@@ -61,11 +64,11 @@ namespace acid
 
 		Raycast Raytest(const Vector3 &start, const Vector3 &end);
 
-		Vector3 GetGravity() const;
+		const Vector3 &GetGravity() const { return m_gravity; }
 
 		void SetGravity(const Vector3 &gravity);
 
-		float GetAirDensity() const;
+		const float &GetAirDensity() const { return m_airDensity; }
 
 		void SetAirDensity(const float &airDensity);
 

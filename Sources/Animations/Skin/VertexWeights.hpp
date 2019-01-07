@@ -26,8 +26,8 @@ namespace acid
 
 		void RemoveExcessJointIds(const uint32_t &max);
 
-		std::vector<uint32_t> GetJointIds() const { return m_jointIds; }
+		const std::vector<uint32_t> &GetJointIds() const { return m_jointIds; }
 
-		std::vector<float> GetWeights() const { return m_weights; }
+		const std::vector<float> &GetWeights() const { return m_weights; }
 	};
 }

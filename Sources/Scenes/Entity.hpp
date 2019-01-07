@@ -175,7 +175,7 @@ namespace acid
 			}
 		}
 
-		std::string GetName() const { return m_name; }
+		const std::string GetName() const { return m_name; }
 
 		void SetName(const std::string &name) { m_name = name; }
 
@@ -187,7 +187,7 @@ namespace acid
 
 		Matrix4 GetWorldMatrix() const;
 
-		bool IsRemoved() const { return m_removed; }
+		const bool &IsRemoved() const { return m_removed; }
 
 		void SetRemoved(const bool &removed) { m_removed = removed; }
 
@@ -195,7 +195,7 @@ namespace acid
 
 		void SetParent(Entity *parent);
 
-		std::vector<Entity *> GetChildren() const { return m_children; }
+		const std::vector<Entity *> &GetChildren() const { return m_children; }
 
 		void AddChild(Entity *child);
 

@@ -18,8 +18,7 @@ namespace acid
 		m_normalTexture(normalTexture),
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
-		m_ignoreFog(ignoreFog),
-		m_pipelineMaterial(nullptr)
+		m_ignoreFog(ignoreFog)
 	{
 	}
 

@@ -29,16 +29,16 @@ namespace acid
 		void Update(const Time &delta);
 
 		/// <summary>
+		/// Gets the smooth floats current target.
+		/// </summary>
+		/// <returns> The target. </returns>
+		const float &GetTarget() const { return m_target; }
+
+		/// <summary>
 		/// Sets the target for the smooth float.
 		/// </summary>
 		/// <param name="target"> The new target. </param>
 		void SetTarget(const float &target) { m_target = target; }
-
-		/// <summary>
-		/// Gets the smooth floats current target.
-		/// </summary>
-		/// <returns> The target. </returns>
-		float GetTarget() const { return m_target; }
 
 		/// <summary>
 		/// Increases the smooth floats target.
@@ -50,6 +50,6 @@ namespace acid
 		/// Gets the currently calculated value.
 		/// </summary>
 		/// <returns> The calculated value. </returns>
-		float Get() const { return m_actual; }
+		const float &Get() const { return m_actual; }
 	};
 }

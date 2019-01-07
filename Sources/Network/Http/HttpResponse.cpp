@@ -26,26 +26,6 @@ namespace acid
 		}
 	}
 
-	HttpResponseStatus HttpResponse::GetStatus() const
-	{
-		return m_status;
-	}
-
-	uint32_t HttpResponse::GetMajorHttpVersion() const
-	{
-		return m_majorVersion;
-	}
-
-	uint32_t HttpResponse::GetMinorHttpVersion() const
-	{
-		return m_minorVersion;
-	}
-
-	std::string HttpResponse::GetBody() const
-	{
-		return m_body;
-	}
-
 	void HttpResponse::Parse(const std::string &data)
 	{
 		std::istringstream in(data);

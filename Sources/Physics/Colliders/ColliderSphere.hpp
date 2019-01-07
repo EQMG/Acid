@@ -27,7 +27,7 @@ namespace acid
 
 		btCollisionShape *GetCollisionShape() const override;
 
-		float GetRadius() const { return m_radius; }
+		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius);
 	};

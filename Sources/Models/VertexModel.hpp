@@ -20,19 +20,19 @@ namespace acid
 	public:
 		explicit VertexModel(const Vector3 &position = Vector3::ZERO, const Vector2 &uv = Vector2::ZERO, const Vector3 &normal = Vector3::ZERO, const Vector3 &tangent = Vector3::ZERO);
 
-		Vector3 GetPosition() const override { return m_position; };
+		const Vector3 &GetPosition() const override { return m_position; };
 
 		void SetPosition(const Vector3 &position) override { m_position = position; };
 
-		Vector2 GetUv() const { return m_uv; };
+		const Vector2 &GetUv() const { return m_uv; };
 
 		void SetUv(const Vector2 &uv) { m_uv = uv; };
 
-		Vector3 GetNormal() const { return m_normal; };
+		const Vector3 &GetNormal() const { return m_normal; };
 
 		void SetNormal(const Vector3 &normal) { m_normal = normal; };
 
-		Vector3 GetTangent() const { return m_tangent; };
+		const Vector3 &GetTangent() const { return m_tangent; };
 
 		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
 

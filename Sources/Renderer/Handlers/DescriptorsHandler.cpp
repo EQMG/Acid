@@ -24,7 +24,7 @@ namespace acid
 	{
 	}
 
-	void DescriptorsHandler::Push(const std::string &descriptorName, Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize)
+	void DescriptorsHandler::Push(const std::string &descriptorName, const Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize)
 	{
 		if (m_shaderProgram == nullptr)
 		{
@@ -67,7 +67,7 @@ namespace acid
 		m_changed = true;
 	}
 
-	void DescriptorsHandler::Push(const std::string &descriptorName, Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize)
+	void DescriptorsHandler::Push(const std::string &descriptorName, const Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize)
 	{
 		Push(descriptorName, &descriptor, offsetSize);
 	}

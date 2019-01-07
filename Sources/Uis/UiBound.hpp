@@ -50,23 +50,23 @@ namespace acid
 		/// <returns> The dimensions in screen space. </returns>
 		Vector2 GetScreenDimensions(const float &aspectRatio) const;
 
-		Vector2 GetPosition() const { return m_position; }
+		const Vector2 &GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector2 &position) { m_position = position; }
 
-		Vector2 GetReference() const { return m_reference; }
+		const Vector2 &GetReference() const { return m_reference; }
 
 		void SetReference(const Vector2 &reference) { m_reference = reference; }
 
-		bool IsAspectPosition() const { return m_aspectPosition; }
+		const bool &IsAspectPosition() const { return m_aspectPosition; }
 
 		void SetAspectPosition(const bool &aspectPosition) { m_aspectPosition = aspectPosition; }
 
-		bool IsAspectSize() const { return m_aspectSize; }
+		const bool &IsAspectSize() const { return m_aspectSize; }
 
 		void SetAspectSize(const bool &aspectSize) { m_aspectSize = aspectSize; }
 
-		Vector2 GetDimensions() const { return m_dimensions; }
+		const Vector2 &GetDimensions() const { return m_dimensions; }
 
 		void SetDimensions(const Vector2 &dimensions) { m_dimensions = dimensions; }
 

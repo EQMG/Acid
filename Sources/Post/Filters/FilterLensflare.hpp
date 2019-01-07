@@ -18,11 +18,11 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		Vector3 GetSunPosition() const { return m_sunPosition; }
+		const Vector3 &GetSunPosition() const { return m_sunPosition; }
 
 		void SetSunPosition(const Vector3 &sunPosition);
 
-		float GetSunHeight() const { return m_sunHeight; }
+		const float &GetSunHeight() const { return m_sunHeight; }
 
 		void SetSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
 	};

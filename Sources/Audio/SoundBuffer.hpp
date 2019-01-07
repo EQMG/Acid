@@ -32,9 +32,9 @@ namespace acid
 
 		~SoundBuffer();
 
-		std::string GetFilename() const { return m_filename; };
+		const std::string &GetFilename() const { return m_filename; };
 
-		uint32_t GetBuffer() const { return m_buffer; }
+		const uint32_t &GetBuffer() const { return m_buffer; }
 	private:
 		static uint32_t LoadBufferWav(const std::string &filename);
 

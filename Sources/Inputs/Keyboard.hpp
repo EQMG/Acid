@@ -148,7 +148,6 @@ namespace acid
 		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
 
 		friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
-
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -172,6 +171,6 @@ namespace acid
 		/// Gets the current user input, ASCII Dec value.
 		/// </summary>
 		/// <returns> The current keyboard char. </returns>
-		char GetChar() const;
+		const char &GetChar() const { return m_char; }
 	};
 }

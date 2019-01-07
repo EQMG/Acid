@@ -22,13 +22,9 @@ namespace acid
 
 		Files();
 
-		void Update() override;
+		~Files();
 
-		/// <summary>
-		/// Sets the base directory for the search path, called before any calls to <seealso cref="#AddSearchPath()"/>.
-		/// </summary>
-		/// <param name="argv0"> The first argument passed to mail. </param>
-		static void SetBaseDirectory(const char *argv0);
+		void Update() override;
 
 		/// <summary>
 		/// Adds an file search path, ensure <seealso cref="#SetBaseDirectory()"/> is called once before.

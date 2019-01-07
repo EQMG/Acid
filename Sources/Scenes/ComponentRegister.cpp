@@ -72,9 +72,7 @@ namespace acid
 
 	std::optional<std::string> ComponentRegister::FindName(Component *compare) const
 	{
-		// TODO: Replace with std::remove_if when it can be used with maps.
-
-		for (auto &[name, component] : m_components)
+		for (auto &[name, component] : m_components) // TODO: Clean remove.
 		{
 			if (component.m_isSame(compare))
 			{

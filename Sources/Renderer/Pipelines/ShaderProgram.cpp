@@ -58,7 +58,7 @@ namespace acid
 		// Sort uniform block uniforms by offsets.
 		for (auto &uniformBlock : m_uniformBlocks)
 		{
-			std::sort(uniformBlock->GetUniforms().begin(), uniformBlock->GetUniforms().end(),
+			std::sort(uniformBlock->m_uniforms.begin(), uniformBlock->m_uniforms.end(),
 				[](const std::unique_ptr<Uniform> &l, const std::unique_ptr<Uniform> &r)
 			{
 				return l->GetOffset() < r->GetOffset();
@@ -683,7 +683,7 @@ namespace acid
 		{
 			if (uniform->GetName() == program.getUniformName(i))
 			{
-				uniform->SetStageFlags(uniform->GetStageFlags() | stageFlag);
+				uniform->m_stageFlags |= stageFlag;
 				return;
 			}
 		}

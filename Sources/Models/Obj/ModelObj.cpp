@@ -49,7 +49,7 @@ namespace acid
 		std::vector<Vector2> uvsList = {};
 		std::vector<Vector3> normalsList = {};
 
-		for (auto &line : lines)
+		for (const auto &line : lines)
 		{
 			auto split = String::Split(line, " ", true);
 
@@ -135,7 +135,7 @@ namespace acid
 		std::vector<VertexModel> vertices = {};
 
 		// Turns the loaded data into a format that can be used by Acid models.
-		for (auto &current : verticesList)
+		for (const auto &current : verticesList)
 		{
 			Vector3 position = current->GetPosition();
 			Vector2 uvs = uvsList[current->GetUvIndex()];

@@ -18,9 +18,9 @@ namespace acid
 	public:
 		SkeletonLoader(Metadata *libraryControllers, const std::vector<std::string> &boneOrder);
 
-		uint32_t GetJointCount() const { return m_jointCount; }
+		const uint32_t &GetJointCount() const { return m_jointCount; }
 
-		JointData *GetHeadJoint() const { return m_headJoint.get(); }
+		const JointData *GetHeadJoint() const { return m_headJoint.get(); }
 	private:
 		JointData *LoadJointData(Metadata *jointNode, const bool &isRoot);
 				  

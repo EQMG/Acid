@@ -138,12 +138,12 @@ namespace acid
 		/// Get the status code of the response.
 		/// </summary>
 		/// <returns> Status code. </returns>
-		FtpResponseStatus GetStatus() const;
+		const FtpResponseStatus &GetStatus() const { return m_status; }
 
 		/// <summary>
 		/// Get the full message contained in the response.
 		/// </summary>
 		/// <returns> The response message. </returns>
-		std::string GetFullMessage() const;
+		const std::string &GetFullMessage() const { return m_message; }
 	};
 }

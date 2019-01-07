@@ -42,15 +42,15 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		Colour GetColour() const { return m_colour; }
+		const Colour &GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) { m_colour = colour; }
 
-		float GetRadius() const { return m_radius; }
+		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Transform GetLocalTransform() const { return m_localTransform; }
+		const Transform &GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 

@@ -133,7 +133,7 @@ namespace acid
 		/// <param name="other"> The other quaternion. </param>
 		/// <param name="progression"> The progression. </param>
 		/// <returns> Left slerp right. </returns>
-		Quaternion Slerp(const Quaternion &other, const float &progression);
+		Quaternion Slerp(const Quaternion &other, const float &progression) const;
 
 		/// <summary>
 		/// Scales this quaternion by a scalar.
@@ -197,19 +197,19 @@ namespace acid
 		/// <returns> The euler angle representation of this quaternion. </returns>
 		Vector3 ToEuler() const;
 
-		float GetX() const { return m_x; }
+		const float &GetX() const { return m_x; }
 
 		void SetX(const float &x) { m_x = x; }
 
-		float GetY() const { return m_y; }
+		const float &GetY() const { return m_y; }
 
 		void SetY(const float &y) { m_y = y; }
 
-		float GetZ() const { return m_z; }
+		const float &GetZ() const { return m_z; }
 
 		void SetZ(const float &z) { m_z = z; }
 
-		float GetW() const { return m_w; }
+		const float &GetW() const { return m_w; }
 
 		void SetW(const float &w) { m_w = w; }
 

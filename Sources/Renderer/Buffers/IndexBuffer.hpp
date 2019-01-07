@@ -13,8 +13,8 @@ namespace acid
 	public:
 		IndexBuffer(const VkIndexType &indexType, const uint64_t &elementSize, const std::size_t &indexCount, const void *newData);
 
-		VkIndexType GetIndexType() const { return m_indexType; }
+		const VkIndexType &GetIndexType() const { return m_indexType; }
 
-		uint32_t GetIndexCount() const { return m_indexCount; }
+		const uint32_t &GetIndexCount() const { return m_indexCount; }
 	};
 }

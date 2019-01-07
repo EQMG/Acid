@@ -55,25 +55,25 @@ namespace acid
 		{
 		}
 
-		int32_t GetId() const { return m_id; }
+		const int32_t &GetId() const { return m_id; }
 
-		float GetTextureCoordX() const { return m_textureCoordX; }
+		const float &GetTextureCoordX() const { return m_textureCoordX; }
 
-		float GetTextureCoordY() const { return m_textureCoordY; }
+		const float &GetTextureCoordY() const { return m_textureCoordY; }
 
-		float GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
+		const float &GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
 
-		float GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
+		const float &GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
 
-		float GetOffsetX() const { return m_offsetX; }
+		const float &GetOffsetX() const { return m_offsetX; }
 
-		float GetOffsetY() const { return m_offsetY; }
+		const float &GetOffsetY() const { return m_offsetY; }
 
-		float GetSizeX() const { return m_sizeX; }
+		const float &GetSizeX() const { return m_sizeX; }
 
-		float GetSizeY() const { return m_sizeY; }
+		const float &GetSizeY() const { return m_sizeY; }
 
-		float GetAdvanceX() const { return m_advanceX; }
+		const float &GetAdvanceX() const { return m_advanceX; }
 	};
 
 	/// <summary>
@@ -122,11 +122,11 @@ namespace acid
 
 		std::optional<FontCharacter> GetCharacter(const int32_t &ascii);
 
-		std::string GetFileName() const { return m_filename; }
+		const std::string &GetFileName() const { return m_filename; }
 
-		float GetSpaceWidth() const { return m_spaceWidth; }
+		const float &GetSpaceWidth() const { return m_spaceWidth; }
 
-		float GetMaxSizeY() const { return m_maxSizeY; }
+		const float &GetMaxSizeY() const { return m_maxSizeY; }
 	private:
 		/// <summary>
 		/// Read in the next line and store the variable values.

@@ -26,14 +26,14 @@ namespace acid
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
 			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
-		uint32_t GetWidth() const { return m_width; }
+		const uint32_t &GetWidth() const { return m_width; }
 
-		uint32_t GetHeight() const { return m_height; }
+		const uint32_t &GetHeight() const { return m_height; }
 
-		VkImage GetImage() const { return m_image; }
+		const VkImage &GetImage() const { return m_image; }
 
-		VkImageView GetImageView() const { return m_imageView; }
+		const VkImageView &GetImageView() const { return m_imageView; }
 
-		VkFormat GetFormat() const { return m_format; }
+		const VkFormat &GetFormat() const { return m_format; }
 	};
 }

@@ -13,9 +13,4 @@ namespace acid
 			m_directory = GetFullMessage().substr(begin + 1, end - begin - 1);
 		}
 	}
-
-	std::string FtpResponseDirectory::GetDirectory() const
-	{
-		return m_directory;
-	}
 }

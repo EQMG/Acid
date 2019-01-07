@@ -16,7 +16,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetSpanMax() const { return m_spanMax; }
+		const float &GetSpanMax() const { return m_spanMax; }
 
 		void SetSpanMax(const float &spanMax) { m_spanMax = spanMax; }
 	};

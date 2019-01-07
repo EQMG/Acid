@@ -26,8 +26,8 @@ namespace acid
 		/// </summary>
 		void Update();
 
-		Time GetChange() const { return m_change; }
+		const Time &GetChange() const { return m_change; }
 
-		Time GetTime() const { return m_time; }
+		const Time &GetTime() const { return m_time; }
 	};
 }

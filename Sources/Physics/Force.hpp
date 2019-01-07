@@ -35,15 +35,15 @@ namespace acid
 
 		bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
 
-		Vector3 GetForce() const { return m_force; }
+		const Vector3 &GetForce() const { return m_force; }
 
 		void SetForce(const Vector3 &force) { m_force = force; }
 
-		Time GetTimeLeft() const { return m_timeLeft; }
+		const Time &GetTimeLeft() const { return m_timeLeft; }
 
 		void SetTimeLeft(const Time &timeLeft) { m_timeLeft = timeLeft; }
 
-		Vector3 GetPosition() const { return m_position; }
+		const Vector3 &GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector3 &position) { m_position = position; }
 	};

@@ -4,26 +4,23 @@
 #include <ostream>
 #include <fstream>
 #include <physfs.h>
+#include "Engine/Engine.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
 {
 	Files::Files()
 	{
+		PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	}
 
-//	Files::~Files()
-//	{
-//		PHYSFS_deinit();
-//	}
+	Files::~Files()
+	{
+		PHYSFS_deinit();
+	}
 
 	void Files::Update()
 	{
-	}
-
-	void Files::SetBaseDirectory(const char *argv0)
-	{
-		PHYSFS_init(argv0);
 	}
 
 	void Files::AddSearchPath(const std::string &path)

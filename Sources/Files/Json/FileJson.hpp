@@ -22,7 +22,7 @@ namespace acid
 
 		void Clear() override;
 
-		std::string GetFilename() const override { return m_filename; }
+		const std::string &GetFilename() const override { return m_filename; }
 
 		void SetFilename(const std::string &filename) override { m_filename = filename; }
 

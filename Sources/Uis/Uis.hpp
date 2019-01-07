@@ -42,6 +42,6 @@ namespace acid
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
-		std::vector<UiObject *> GetObjects() const { return m_objects; };
+		const std::vector<UiObject *> &GetObjects() const { return m_objects; };
 	};
 }

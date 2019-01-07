@@ -28,7 +28,7 @@ namespace acid
 
 		btCollisionShape *GetCollisionShape() const override;
 
-		Vector3 GetExtents() const { return m_extents; }
+		const Vector3 &GetExtents() const { return m_extents; }
 
 		void SetExtents(const Vector3 &extents);
 	};

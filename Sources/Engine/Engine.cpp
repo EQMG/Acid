@@ -8,9 +8,10 @@ namespace acid
 	Engine *Engine::INSTANCE = nullptr;
 	std::chrono::time_point<HighResolutionClock> TIME_START = HighResolutionClock::now();
 
-	Engine::Engine(const bool &emptyRegister) :
+	Engine::Engine(const std::string &argv0, const bool &emptyRegister) :
 		m_moduleManager(ModuleManager()),
 		m_moduleUpdater(ModuleUpdater()),
+		m_argv0(argv0),
 		m_timeOffset(Time::ZERO),
 		m_fpsLimit(-1.0f),
 		m_running(true),

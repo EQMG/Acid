@@ -48,17 +48,17 @@ namespace acid
 		{
 		}
 
-		uint32_t GetBinding() const { return m_binding; }
+		const uint32_t &GetBinding() const { return m_binding; }
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
-		AttachmentType GetType() const { return m_type; }
+		const AttachmentType &GetType() const { return m_type; }
 
-		bool IsMultisampled() const { return m_multisampled; }
+		const bool &IsMultisampled() const { return m_multisampled; }
 
-		VkFormat GetFormat() const { return m_format; }
+		const VkFormat &GetFormat() const { return m_format; }
 
-		Colour GetClearColour() const { return m_clearColour; }
+		const Colour &GetClearColour() const { return m_clearColour; }
 	};
 
 	class ACID_EXPORT SubpassType
@@ -73,9 +73,9 @@ namespace acid
 		{
 		}
 
-		uint32_t GetBinding() const { return m_binding; }
+		const uint32_t &GetBinding() const { return m_binding; }
 
-		std::vector<uint32_t> GetAttachmentBindings() const { return m_attachmentBindings; }
+		const std::vector<uint32_t> &GetAttachmentBindings() const { return m_attachmentBindings; }
 	};
 
 	class ACID_EXPORT RenderpassCreate
@@ -97,10 +97,6 @@ namespace acid
 		{
 		}
 
-		std::vector<Attachment> GetImages() const { return m_images; }
-
-		std::vector<SubpassType> GetSubpasses() const { return m_subpasses; }
-
 		std::optional<uint32_t> GetAttachment(const std::string &name) const
 		{
 			uint32_t attachment = 0;
@@ -115,7 +111,7 @@ namespace acid
 				attachment++;
 			}
 
-		//	Log::Error("Filed to find a renderpass attachment by name: '%i'\n", name.c_str());
+			//	Log::Error("Filed to find a renderpass attachment by name: '%i'\n", name.c_str());
 			return {};
 		}
 
@@ -133,19 +129,23 @@ namespace acid
 				attachment++;
 			}
 
-		//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
+			//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
 			return {};
 		}
-		
-		uint32_t GetWidth() const { return m_width; }
+
+		const std::vector<Attachment> &GetImages() const { return m_images; }
+
+		const std::vector<SubpassType> &GetSubpasses() const { return m_subpasses; }
+
+		const uint32_t &GetWidth() const { return m_width; }
 
 		void SetWidth(const uint32_t &width) { m_width = width; }
 
-		uint32_t GetHeight() const { return m_height; }
+		const uint32_t &GetHeight() const { return m_height; }
 
 		void SetHeight(const uint32_t &height) { m_height = height; }
 
-		float GetScale() const { return m_scale; }
+		const float &GetScale() const { return m_scale; }
 
 		void SetScale(const float &scale) { m_scale = scale; }
 	};

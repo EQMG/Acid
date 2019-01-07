@@ -28,6 +28,6 @@ namespace acid
 
 		Texture *GetAttachment(const uint32_t &index) const { return m_imageAttachments[index].get(); }
 
-		std::vector<VkFramebuffer> GetFramebuffers() const { return m_framebuffers; }
+		const std::vector<VkFramebuffer> &GetFramebuffers() const { return m_framebuffers; }
 	};
 }

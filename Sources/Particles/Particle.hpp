@@ -55,36 +55,35 @@ namespace acid
 
 		bool IsAlive() const { return m_transparency > 0.0f; }
 
-		std::shared_ptr<ParticleType> GetParticleType() const { return m_particleType; }
+		const std::shared_ptr<ParticleType> &GetParticleType() const { return m_particleType; }
 
-		Vector3 GetPosition() const { return m_position; }
+		const Vector3 &GetPosition() const { return m_position; }
 
-		Vector3 GetVelocity() const { return m_velocity; }
+		const Vector3 &GetVelocity() const { return m_velocity; }
 
-		Vector3 GetChange() const { return m_change; }
+		const Vector3 &GetChange() const { return m_change; }
 
-		Vector2 GetTextureOffset1() const { return m_textureOffset1; }
+		const Vector2 &GetTextureOffset1() const { return m_textureOffset1; }
 
-		Vector2 GetTextureOffset2() const { return m_textureOffset2; }
+		const Vector2 &GetTextureOffset2() const { return m_textureOffset2; }
 
-		float GetLifeLength() const { return m_lifeLength; }
+		const float &GetLifeLength() const { return m_lifeLength; }
 
-		float GetRotation() const { return m_rotation; }
+		const float &GetRotation() const { return m_rotation; }
 
-		float GetScale() const { return m_scale; }
+		const float &GetScale() const { return m_scale; }
 
-		float GetGravityEffect() const { return m_gravityEffect; }
+		const float &GetGravityEffect() const { return m_gravityEffect; }
 
-		float GetElapsedTime() const { return m_elapsedTime; }
+		const float &GetElapsedTime() const { return m_elapsedTime; }
 
-		float GetTransparency() const { return m_transparency; }
+		const float &GetTransparency() const { return m_transparency; }
 
-		float GetTextureBlendFactor() const { return m_textureBlendFactor; }
+		const float &GetTextureBlendFactor() const { return m_textureBlendFactor; }
 
-		float DistanceToCamera() const { return m_distanceToCamera; }
+		const float &DistanceToCamera() const { return m_distanceToCamera; }
 
 		bool operator<(const Particle &other) const;
-
 	private:
 		Vector2 CalculateTextureOffset(const int32_t &index) const;
 	};

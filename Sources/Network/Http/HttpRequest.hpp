@@ -76,7 +76,7 @@ namespace acid
 		/// The method is HTTP_REQUEST_METHOD_GET by default.
 		/// </summary>
 		/// <param name="method"> Method to use for the request. </param>
-		void SetMethod(const HttpRequestMethod &method);
+		void SetMethod(const HttpRequestMethod &method) { m_method = method; }
 
 		/// <summary>
 		/// Set the requested URI.
@@ -99,7 +99,7 @@ namespace acid
 		/// It is ignored for all other methods. The body is empty by default.
 		/// </summary>
 		/// <param name="body"> Content of the body. </param>
-		void SetBody(const std::string &body);
+		void SetBody(const std::string &body) { m_body = body; }
 	private:
 		friend class Http;
 

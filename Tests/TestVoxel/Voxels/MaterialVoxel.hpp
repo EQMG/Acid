@@ -12,8 +12,6 @@ namespace test
 	class MaterialVoxel :
 		public Material
 	{
-	private:
-		std::shared_ptr<PipelineMaterial> m_material;
 	public:
 		MaterialVoxel();
 
@@ -28,7 +26,5 @@ namespace test
 		void PushUniforms(UniformHandler &uniformObject) override;
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
-
-		std::shared_ptr<PipelineMaterial> GetMaterialPipeline() const override { return m_material; }
 	};
 }
