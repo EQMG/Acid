@@ -105,33 +105,33 @@ namespace acid
 		/// <param name="pixels"> The pixels to copy to the image. </param>
 		void SetPixels(uint8_t *pixels);
 
-		std::string GetFilename() const { return m_filename; };
+		const std::string &GetFilename() const { return m_filename; };
 
-		std::string GetFileSuffix() { return m_fileSuffix; };
+		const std::string &GetFileSuffix() { return m_fileSuffix; };
 
-		VkFilter GetFilter() const { return m_filter; }
+		const VkFilter &GetFilter() const { return m_filter; }
 
-		VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
+		const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
 
-		bool IsAnisotropic() const { return m_anisotropic; }
+		const bool &IsAnisotropic() const { return m_anisotropic; }
 
-		uint32_t GetMipLevels() const { return m_mipLevels; }
+		const uint32_t &GetMipLevels() const { return m_mipLevels; }
 
-		VkSampleCountFlagBits GetSamples() const { return m_samples; }
+		const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
 
-		VkImageLayout GetImageLayout() const { return m_imageLayout; }
+		const VkImageLayout &GetImageLayout() const { return m_imageLayout; }
 
-		uint32_t GetComponents() const { return m_components; }
+		const uint32_t &GetComponents() const { return m_components; }
 
-		uint32_t GetWidth() const { return m_width; }
+		const uint32_t &GetWidth() const { return m_width; }
 
-		uint32_t GetHeight() const { return m_height; }
+		const uint32_t &GetHeight() const { return m_height; }
 
-		VkImage GetImage() const { return m_image; }
+		const VkImage &GetImage() const { return m_image; }
 
-		VkImageView GetImageView() const { return m_imageView; }
+		const VkImageView &GetImageView() const { return m_imageView; }
 
-		VkSampler GetSampler() const { return m_sampler; }
+		const VkSampler &GetSampler() const { return m_sampler; }
 	private:
 		static std::string ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
 			const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap);

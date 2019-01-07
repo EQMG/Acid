@@ -26,18 +26,18 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetInputScale() const { return m_inputScale; }
+		const float &GetInputScale() const { return m_inputScale; }
 
 		void SetInputScale(const float &inputScale) { m_inputScale = inputScale; }
 
-		float GetOutputScale() const { return m_outputScale; }
+		const float &GetOutputScale() const { return m_outputScale; }
 
 		void SetOutputScale(const float &outputScale) { m_outputScale = outputScale; }
 
-		float GetBlur() const { return m_blur; }
+		const float &GetBlur() const { return m_blur; }
 
 		void SetBlur(const float &blur) { m_blur = blur; }
 
-		Texture *GetOutput() const { return m_output.get(); }
+		const Texture *GetOutput() const { return m_output.get(); }
 	};
 }

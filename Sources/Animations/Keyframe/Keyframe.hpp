@@ -32,14 +32,14 @@ namespace acid
 		/// Gets the time in seconds of the keyframe in the animation.
 		/// </summary>
 		/// <returns> The time in seconds. </returns>
-		Time GetTimeStamp() const { return m_timeStamp; }
+		const Time &GetTimeStamp() const { return m_timeStamp; }
 
 		/// <summary>
 		/// Gets the desired local-space transforms of all the joints at this keyframe, of the animation,
 		/// indexed by the name of the joint that they correspond to.
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
-		std::map<std::string, JointTransform> GetPose() const { return m_pose; }
+		const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
 
 		void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform)
 		{

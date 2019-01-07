@@ -48,19 +48,19 @@ namespace acid
 
 		RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
 
-		Renderpass *GetRenderpass() const { return m_renderpass.get(); };
+		const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
 
-		DepthStencil *GetDepthStencil() const { return m_depthStencil.get(); };
+		const DepthStencil *GetDepthStencil() const { return m_depthStencil.get(); };
 
-		Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
+		const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
 		Descriptor *GetAttachment(const std::string &name) const;
 
 		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 
-		std::vector<VkClearValue> GetClearValues() const { return m_clearValues; }
+		const std::vector<VkClearValue> &GetClearValues() const { return m_clearValues; }
 
-		uint32_t GetAttachmentCount(const uint32_t &subpass) const { return m_subpassAttachmentCount[subpass]; }
+		const uint32_t &GetAttachmentCount(const uint32_t &subpass) const { return m_subpassAttachmentCount[subpass]; }
 
 		bool HasDepth() const { return m_depthAttachment.has_value(); }
 
@@ -68,6 +68,6 @@ namespace acid
 
 		bool IsMultisampled(const uint32_t &subpass) const { return m_subpassMultisampled[subpass]; }
 
-		bool FitDisplaySize() const { return m_fitDisplaySize; }
+		const bool &FitDisplaySize() const { return m_fitDisplaySize; }
 	};
 }

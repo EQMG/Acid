@@ -75,7 +75,7 @@ namespace acid
 
 		if (Renderer::Get()->GetSwapchain() != nullptr)
 		{
-			swapchainCreateInfo.oldSwapchain = *Renderer::Get()->GetSwapchain()->GetSwapchain();
+			swapchainCreateInfo.oldSwapchain = Renderer::Get()->GetSwapchain()->GetSwapchain();
 		}
 
 		if (graphicsFamily != presentFamily)

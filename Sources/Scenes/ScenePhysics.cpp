@@ -27,9 +27,11 @@ namespace acid
 		m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
 		m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
 		m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
-		m_pairsLastUpdate(CollisionPairs())
+		m_pairsLastUpdate(CollisionPairs()),
+		m_gravity(Vector3(0.0f, -9.81f, 0.0f)),
+		m_airDensity(1.2f)
 	{
-		m_dynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
+		m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 		m_dynamicsWorld->getDispatchInfo().m_enableSPU = true;
 		m_dynamicsWorld->getSolverInfo().m_minimumSolverBatchSize = 128;
 		m_dynamicsWorld->getSolverInfo().m_globalCfm = 0.00001f;
@@ -39,7 +41,7 @@ namespace acid
 		softDynamicsWorld->getWorldInfo().water_offset = 0.0f;
 		softDynamicsWorld->getWorldInfo().water_normal = btVector3(0.0f, 0.0f, 0.0f);
 		softDynamicsWorld->getWorldInfo().m_gravity.setValue(0.0f, -9.81f, 0.0f);
-		softDynamicsWorld->getWorldInfo().air_density = 1.2f;
+		softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 
@@ -75,26 +77,17 @@ namespace acid
 		return Raycast(result.hasHit(), Collider::Convert(result.m_hitPointWorld), result.m_collisionObject != nullptr ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 	}
 
-	Vector3 ScenePhysics::GetGravity() const
-	{
-		return Collider::Convert(m_dynamicsWorld->getGravity());
-	}
-
 	void ScenePhysics::SetGravity(const Vector3 &gravity)
 	{
-		m_dynamicsWorld->setGravity(Collider::Convert(gravity));
-	}
-
-	float ScenePhysics::GetAirDensity() const
-	{
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
-		return softDynamicsWorld->getWorldInfo().air_density;
+		m_gravity = gravity;
+		m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 	}
 
 	void ScenePhysics::SetAirDensity(const float &airDensity)
 	{
+		m_airDensity = airDensity;
 		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
-		softDynamicsWorld->getWorldInfo().air_density = airDensity;
+		softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}
 
@@ -104,7 +97,7 @@ namespace acid
 		CollisionPairs pairsThisUpdate;
 
 		// Iterate through all of the manifolds in the dispatcher.
-		for (int i = 0; i < m_dispatcher->getNumManifolds(); ++i)
+		for (int32_t i = 0; i < m_dispatcher->getNumManifolds(); ++i)
 		{
 			// Get the manifold.
 			auto manifold = m_dispatcher->getManifoldByIndexInternal(i);
@@ -150,11 +143,11 @@ namespace acid
 			std::inserter(removedPairs, removedPairs.begin()));
 
 		// Iterate through all of the removed pairs sending separation events for them.
-		for (auto it = removedPairs.begin(); it != removedPairs.end(); ++it)
+		for (const auto &removedPair : removedPairs)
 		{
 			// Gets the user pointer (entity).
-			auto collisionObjectA = static_cast<CollisionObject *>(it->first->getUserPointer());
-			auto collisionObjectB = static_cast<CollisionObject *>(it->second->getUserPointer());
+			auto collisionObjectA = static_cast<CollisionObject *>(removedPair.first->getUserPointer());
+			auto collisionObjectB = static_cast<CollisionObject *>(removedPair.second->getUserPointer());
 
 			collisionObjectA->GetOnSeparation()(collisionObjectB);
 		}

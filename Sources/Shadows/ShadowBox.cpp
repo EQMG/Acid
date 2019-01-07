@@ -113,8 +113,8 @@ namespace acid
 
 	void ShadowBox::UpdateSizes(const Camera &camera)
 	{
-		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFov()));
-		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFov()));
+		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFieldOfView()));
+		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFieldOfView()));
 		m_farHeight = m_farWidth / Display::Get()->GetAspectRatio();
 		m_nearHeight = m_nearWidth / Display::Get()->GetAspectRatio();
 	}

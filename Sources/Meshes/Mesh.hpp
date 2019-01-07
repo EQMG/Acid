@@ -31,7 +31,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		virtual std::shared_ptr<Model> GetModel() const { return m_model; }
+		virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 		virtual VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
 

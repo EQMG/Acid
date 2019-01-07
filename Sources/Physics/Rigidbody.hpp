@@ -53,27 +53,27 @@ namespace acid
 
 		void ClearForces() override;
 
-		float GetMass() const { return m_mass; }
+		const float &GetMass() const { return m_mass; }
 
 		void SetMass(const float &mass);
 
-		Vector3 GetGravity() const { return m_gravity; }
+		const Vector3 &GetGravity() const { return m_gravity; }
 
 		void SetGravity(const Vector3 &gravity);
 
-		Vector3 GetLinearFactor() const { return m_linearFactor; }
+		const Vector3 &GetLinearFactor() const { return m_linearFactor; }
 
 		void SetLinearFactor(const Vector3 &linearFactor);
 
-		Vector3 GetAngularFactor() const { return m_angularFactor; }
+		const Vector3 &GetAngularFactor() const { return m_angularFactor; }
 
 		void SetAngularFactor(const Vector3 &angularFactor);
 
-		const Vector3 GetLinearVelocity() const { return m_linearVelocity; }
+		const Vector3 &GetLinearVelocity() const { return m_linearVelocity; }
 
 		void SetLinearVelocity(const Vector3 &linearVelocity);
 
-		const Vector3 GetAngularVelocity() const { return m_angularVelocity; }
+		const Vector3 &GetAngularVelocity() const { return m_angularVelocity; }
 
 		void SetAngularVelocity(const Vector3 &angularVelocity);
 	protected:

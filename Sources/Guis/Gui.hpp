@@ -40,21 +40,21 @@ namespace acid
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
+		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
 
 		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
 
-		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
+		const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
 		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
-		uint32_t GetSelectedRow() const { return m_selectedRow; }
+		const uint32_t &GetSelectedRow() const { return m_selectedRow; }
 
 		void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
 
-		Vector2 GetAtlasOffset() const { return m_atlasOffset; }
+		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
 
-		Colour GetColourOffset() const { return m_colourOffset; }
+		const Colour &GetColourOffset() const { return m_colourOffset; }
 
 		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 	};

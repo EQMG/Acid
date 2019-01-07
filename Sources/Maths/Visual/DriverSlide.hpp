@@ -26,7 +26,7 @@ namespace acid
 		/// Gets the start time.
 		/// </summary>
 		/// <returns> The start time. </returns>
-		float GetStart() const { return m_start; }
+		const float &GetStart() const { return m_start; }
 
 		/// <summary>
 		/// Sets the start time.
@@ -38,7 +38,7 @@ namespace acid
 		/// Gets the end time.
 		/// </summary>
 		/// <returns> The end time. </returns>
-		float GetEnd() const { return m_end; }
+		const float &GetEnd() const { return m_end; }
 
 		/// <summary>
 		/// Sets the end time.

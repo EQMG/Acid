@@ -19,7 +19,7 @@ namespace acid
 	private:
 		struct DescriptorValue
 		{
-			Descriptor *descriptor{};
+			const Descriptor *descriptor{};
 			std::optional<OffsetSize> offsetSize;
 			uint32_t location{};
 		};
@@ -35,9 +35,9 @@ namespace acid
 
 		explicit DescriptorsHandler(const Pipeline &pipeline);
 
-		void Push(const std::string &descriptorName, Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		void Push(const std::string &descriptorName, const Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
-		void Push(const std::string &descriptorName, Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		void Push(const std::string &descriptorName, const Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
 		void Push(const std::string &descriptorName, const std::shared_ptr<Descriptor> &descriptor, const std::optional<OffsetSize> &offsetSize = {});
 
@@ -51,6 +51,6 @@ namespace acid
 
 		void BindDescriptor(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
-		DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
+		const DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
 	};
 }

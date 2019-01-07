@@ -35,23 +35,23 @@ namespace acid
 		/// <param name="source"> Creates this fog out of a existing one. </param>
 		Fog(const Fog &source);
 
-		Colour GetColour() const { return m_colour; }
+		const Colour &GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) { m_colour = colour; }
 
-		float GetDensity() const { return m_density; }
+		const float &GetDensity() const { return m_density; }
 
 		void SetDensity(const float &density) { m_density = density; }
 
-		float GetGradient() const { return m_gradient; }
+		const float &GetGradient() const { return m_gradient; }
 
 		void SetGradient(const float &gradient) { m_gradient = gradient; }
 
-		float GetLowerLimit() const { return m_lowerLimit; }
+		const float &GetLowerLimit() const { return m_lowerLimit; }
 
 		void SetLowerLimit(const float &lowerLimit) { m_lowerLimit = lowerLimit; }
 
-		float GetUpperLimit() const { return m_upperLimit; }
+		const float &GetUpperLimit() const { return m_upperLimit; }
 
 		void SetUpperLimit(const float &upperLimit) { m_upperLimit = upperLimit; }
 

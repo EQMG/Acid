@@ -31,7 +31,7 @@ namespace acid
 		/// <returns> The new objects position. </returns>
 		virtual Vector3 GeneratePosition() const = 0;
 
-		Transform GetLocalTransform() const { return m_localTransform; }
+		const Transform &GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 	};

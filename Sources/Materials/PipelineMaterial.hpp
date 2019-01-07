@@ -39,11 +39,11 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
 
-		PipelineCreate GetPipelineCreate() const { return m_pipelineCreate; }
+		const PipelineCreate &GetPipelineCreate() const { return m_pipelineCreate; }
 
-		PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
+		const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 	private:
 		static std::string ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
 	};

@@ -124,7 +124,7 @@ namespace acid
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
 		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform);
 
-		Animation *GetCurrentAnimation() const { return m_currentAnimation; }
+		const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 
 		/// <summary>
 		/// Indicates that the entity should carry out the given animation. Resets the animation time so that the new animation starts from the beginning.

@@ -330,7 +330,7 @@ namespace acid
 
 		if (renderStage->HasSwapchain())
 		{
-			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, *m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
@@ -406,16 +406,17 @@ namespace acid
 		m_commandBuffer->End();
 		m_commandBuffer->Submit(m_semaphore, VK_NULL_HANDLE, false);
 
-		std::vector<VkSemaphore> waitSemaphores = {m_semaphore};
+		VkSemaphore waitSemaphores[1] = { m_semaphore };
+		VkSwapchainKHR swapchains[1] = { m_swapchain->GetSwapchain() };
 
 		VkResult presentResult = VK_RESULT_MAX_ENUM;
 
 		VkPresentInfoKHR presentInfo = {};
 		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = static_cast<uint32_t>(waitSemaphores.size());
-		presentInfo.pWaitSemaphores = waitSemaphores.data();
+		presentInfo.waitSemaphoreCount = 1;
+		presentInfo.pWaitSemaphores = waitSemaphores;
 		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = m_swapchain->GetSwapchain();
+		presentInfo.pSwapchains = swapchains;
 		presentInfo.pImageIndices = &m_activeSwapchainImage;
 		presentInfo.pResults = &presentResult;
 		VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);

@@ -21,23 +21,23 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		Colour GetScreenColour() const { return m_screenColour; }
+		const Colour &GetScreenColour() const { return m_screenColour; }
 
 		void SetScreenColour(const Colour &screenColour) { m_screenColour = screenColour; }
 
-		float GetCurveAmountX() const { return m_curveAmountX; }
+		const float &GetCurveAmountX() const { return m_curveAmountX; }
 
 		void SetCurveAmountX(const float &curveAmountX) { m_curveAmountX = curveAmountX; }
 
-		float GetCurveAmountY() const { return m_curveAmountY; }
+		const float &GetCurveAmountY() const { return m_curveAmountY; }
 
 		void SetCurveAmountY(const float &curveAmountY) { m_curveAmountY = curveAmountY; }
 
-		float GetScanLineSize() const { return m_scanLineSize; }
+		const float &GetScanLineSize() const { return m_scanLineSize; }
 
 		void SetScanLineSize(const float &scanLineSize) { m_scanLineSize = scanLineSize; }
 
-		float GetScanIntensity() const { return m_scanIntensity; }
+		const float &GetScanIntensity() const { return m_scanIntensity; }
 
 		void SetScanIntensity(const float &scanIntensity) { m_scanIntensity = scanIntensity; }
 	};

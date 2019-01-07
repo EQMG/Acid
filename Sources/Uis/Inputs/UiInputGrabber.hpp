@@ -78,15 +78,15 @@ namespace acid
 
 		void UpdateObject() override;
 
-		Gui *GetBackground() const { return m_background.get(); }
+		const Gui *GetBackground() const { return m_background.get(); }
 
-		Text *GetText() const { return m_text.get(); }
+		const Text *GetText() const { return m_text.get(); }
 
-		std::string GetPrefix() const { return m_prefix; }
+		const std::string &GetPrefix() const { return m_prefix; }
 
 		void SetPrefix(const std::string &prefix);
 
-		int32_t GetValue() const { return m_value; }
+		const int32_t &GetValue() const { return m_value; }
 
 		void SetValue(const int32_t &value);
 

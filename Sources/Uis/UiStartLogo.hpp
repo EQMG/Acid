@@ -18,7 +18,7 @@ namespace acid
 
 		void UpdateObject() override;
 
-		bool IsStarting() const { return m_starting; }
+		const bool &IsStarting() const { return m_starting; }
 
 		void SetStarting(const bool &starting) { m_starting = starting; }
 	};

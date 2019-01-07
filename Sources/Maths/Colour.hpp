@@ -169,19 +169,19 @@ namespace acid
 		/// <returns> The hex code. </returns>
 		std::string GetHex() const;
 
-		float GetR() const { return m_r; }
+		const float &GetR() const { return m_r; }
 
 		void SetR(const float &r) { m_r = r; }
 
-		float GetG() const { return m_g; }
+		const float &GetG() const { return m_g; }
 
 		void SetG(const float &g) { m_g = g; }
 
-		float GetB() const { return m_b; }
+		const float &GetB() const { return m_b; }
 
 		void SetB(const float &b) { m_b = b; }
 
-		float GetA() const { return m_a; }
+		const float &GetA() const { return m_a; }
 
 		void SetA(const float &a) { m_a = a; }
 

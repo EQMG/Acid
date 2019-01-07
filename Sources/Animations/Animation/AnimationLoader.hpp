@@ -15,9 +15,9 @@ namespace acid
 	public:
 		AnimationLoader(Metadata *libraryAnimations, Metadata *libraryVisualScenes);
 
-		Time GetLengthSeconds() const { return m_lengthSeconds; }
+		const Time &GetLengthSeconds() const { return m_lengthSeconds; }
 
-		std::vector<Keyframe> GetKeyframes() const { return m_keyframes; }
+		const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
 	private:
 		std::string FindRootJointName();
 

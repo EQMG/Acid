@@ -106,7 +106,7 @@ namespace acid
 		/// Tell whether the socket is in blocking or non-blocking mode.
 		/// </summary>
 		/// <returns> True if the socket is blocking, false otherwise. </returns>
-		bool IsBlocking() const;
+		const bool &IsBlocking() const { return m_isBlocking; }
 
 		/// <summary>
 		/// Set the blocking state of the socket.
@@ -131,7 +131,7 @@ namespace acid
 		/// This function can only be accessed by derived classes.
 		/// </summary>
 		/// <returns> The internal (OS-specific) handle of the socket. </returns>
-		SocketHandle GetHandle() const;
+		const SocketHandle &GetHandle() const { return m_socket; }
 
 		/// <summary>
 		/// Create the internal representation of the socket.

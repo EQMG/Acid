@@ -63,18 +63,15 @@ namespace acid
 		return child;
 	}
 
-	bool Metadata::RemoveChild(Metadata *child)
+	void Metadata::RemoveChild(Metadata *child)
 	{
-		for (auto it = m_children.begin(); it != m_children.end(); ++it)
+		for (auto it = m_children.begin(); it != m_children.end(); ++it) // TODO: Clean remove.
 		{
 			if ((*it).get() == child)
 			{
 				m_children.erase(it);
-				return true;
 			}
 		}
-
-		return false;
 	}
 
 	std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
@@ -163,17 +160,14 @@ namespace acid
 		(*it).second = value;
 	}
 
-	bool Metadata::RemoveAttribute(const std::string &attribute)
+	void Metadata::RemoveAttribute(const std::string &attribute)
 	{
 		auto it = m_attributes.find(attribute);
 
-		if (it != m_attributes.end())
+		if (it != m_attributes.end()) // TODO: Clean remove.
 		{
 			m_attributes.erase(it);
-			return true;
 		}
-
-		return false;
 	}
 
 	std::string Metadata::FindAttribute(const std::string &attribute) const

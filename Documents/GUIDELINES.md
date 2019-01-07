@@ -1,5 +1,5 @@
 # Acid Guidelines 
-October 21, 2018
+January 6, 2019
  
 This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](LICENSE.md) file. For more about the project read our read more on our [README.md](README.md) file.
 
@@ -42,13 +42,13 @@ namespace Examples
 		/// </summary>
 		/// <param name="doThing"> If a thing will be done. </param>
 		/// <returns> If there was a error (result does not equal 0). </returns>
-		int DoStuff(const bool &doThing);
+		int32_t DoStuff(const bool &doThing);
 
-		uint32_t GetX() const { return m_x; }
+		const uint32_t &GetX() const { return m_x; }
 	
 		void SetX(const uint32_t &x) { m_x = x; }
 
-		float GetY() const { return m_y; }
+		const float &GetY() const { return m_y; }
 
 		void SetY(const float &y) { m_y = y; }
 
@@ -76,7 +76,7 @@ namespace Examples
 	{
 	}
 
-	int Example::DoStuff(const bool &doThing)
+	int32_t Example::DoStuff(const bool &doThing)
 	{
 		m_list.emplace_back(m_x + m_list.size());
 		fprintf(stdout, "X: %i\n", m_x);

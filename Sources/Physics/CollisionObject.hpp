@@ -66,15 +66,15 @@ namespace acid
 
 		void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
 
-		float GetFriction() const { return m_friction; }
+		const float &GetFriction() const { return m_friction; }
 
 		void SetFriction(const float &friction);
 
-		float GetFrictionRolling() const { return m_frictionRolling; }
+		const float &GetFrictionRolling() const { return m_frictionRolling; }
 
 		void SetFrictionRolling(const float &frictionRolling);
 
-		float GetFrictionSpinning() const { return m_frictionSpinning; }
+		const float &GetFrictionSpinning() const { return m_frictionSpinning; }
 
 		void SetFrictionSpinning(const float &frictionSpinning);
 

@@ -26,7 +26,7 @@ namespace acid
 
 		bool WasDown() override;
 
-		std::vector<MouseButton> GetButtons() const { return m_buttons; }
+		const std::vector<MouseButton> &GetButtons() const { return m_buttons; }
 
 		void SetButtons(const std::vector<MouseButton> &buttons) { m_buttons = buttons; }
 	};

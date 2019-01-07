@@ -23,7 +23,8 @@ namespace acid
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_pipeline(VK_NULL_HANDLE),
-		m_pipelineLayout(VK_NULL_HANDLE)
+		m_pipelineLayout(VK_NULL_HANDLE),
+		m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE)
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();

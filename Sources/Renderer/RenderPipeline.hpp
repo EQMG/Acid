@@ -34,7 +34,7 @@ namespace acid
 
 		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
 
-		bool IsEnabled() const { return m_enabled; };
+		const bool &IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
 	};

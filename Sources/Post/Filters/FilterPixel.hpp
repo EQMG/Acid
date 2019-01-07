@@ -16,7 +16,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetPixelSize() const { return m_pixelSize; }
+		const float &GetPixelSize() const { return m_pixelSize; }
 
 		void SetPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
 	};

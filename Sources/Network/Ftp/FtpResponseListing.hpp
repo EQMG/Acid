@@ -26,6 +26,6 @@ namespace acid
 		/// Return the array of directory/file names.
 		/// </summary>
 		/// <returns> Array containing the requested listing. </returns>
-		std::vector<std::string> GetListing() const;
+		const std::vector<std::string> &GetListing() const { return m_listing; }
 	};
 }

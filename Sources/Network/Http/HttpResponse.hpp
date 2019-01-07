@@ -107,19 +107,19 @@ namespace acid
 		/// it defines whether it is a success, a failure or anything else (see the Status enumeration).
 		/// </summary>
 		/// <returns> Status code of the response. </returns>
-		HttpResponseStatus GetStatus() const;
+		const HttpResponseStatus &GetStatus() const { return m_status; }
 
 		/// <summary>
 		/// Get the major HTTP version number of the response.
 		/// </summary>
 		/// <returns> Major HTTP version number. </returns>
-		uint32_t GetMajorHttpVersion() const;
+		const uint32_t &GetMajorHttpVersion() const { return m_majorVersion; }
 
 		/// <summary>
 		/// Get the minor HTTP version number of the response.
 		/// </summary>
 		/// <returns> Minor HTTP version number. </returns>
-		uint32_t GetMinorHttpVersion() const;
+		const uint32_t &GetMinorHttpVersion() const { return m_minorVersion; }
 
 		/// <summary>
 		/// Get the body of the response.
@@ -132,7 +132,7 @@ namespace acid
 		/// </ul>
 		/// </summary>
 		/// <returns> The response body. </returns>
-		std::string GetBody() const;
+		const std::string &GetBody() const { return m_body; }
 	private:
 		friend class Http;
 

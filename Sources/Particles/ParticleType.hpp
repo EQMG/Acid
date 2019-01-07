@@ -85,27 +85,27 @@ namespace acid
 
 		void Encode(Metadata &metadata) const;
 
-		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
+		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
 
 		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
 
-		uint32_t GetNumberOfRows() const { return m_numberOfRows; }
+		const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
 		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
-		Colour GetColourOffset() const { return m_colourOffset; }
+		const Colour &GetColourOffset() const { return m_colourOffset; }
 
 		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 
-		float GetLifeLength() const { return m_lifeLength; }
+		const float &GetLifeLength() const { return m_lifeLength; }
 
 		void SetLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
 
-		float GetStageCycles() const { return m_stageCycles; }
+		const float &GetStageCycles() const { return m_stageCycles; }
 
 		void SetStageCycles(const float &stageCycles) { m_stageCycles = stageCycles; }
 
-		float GetScale() const { return m_scale; }
+		const float &GetScale() const { return m_scale; }
 
 		void SetScale(const float &scale) { m_scale = scale; }
 	private:

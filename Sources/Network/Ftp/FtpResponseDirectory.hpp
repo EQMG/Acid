@@ -18,12 +18,12 @@ namespace acid
 		/// Default constructor.
 		/// </summary>
 		/// <param name="response"> Source response. </param>
-		FtpResponseDirectory(const FtpResponse &response);
+		explicit FtpResponseDirectory(const FtpResponse &response);
 
 		/// <summary>
 		/// Get the directory returned in the response.
 		/// </summary>
 		/// <returns> Directory name. </returns>
-		std::string GetDirectory() const;
+		const std::string &GetDirectory() const { return m_directory; }
 	};
 }

@@ -18,15 +18,15 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetInnerRadius() const { return m_innerRadius; }
+		const float &GetInnerRadius() const { return m_innerRadius; }
 
 		void SetInnerRadius(const float &innerRadius) { m_innerRadius = innerRadius; }
 
-		float GetOuterRadius() const { return m_outerRadius; }
+		const float &GetOuterRadius() const { return m_outerRadius; }
 
 		void SetOuterRadius(const float &outerRadius) { m_outerRadius = outerRadius; }
 
-		float GetOpacity() const { return m_opacity; }
+		const float &GetOpacity() const { return m_opacity; }
 
 		void SetOpacity(const float &opacity) { m_opacity = opacity; }
 	};

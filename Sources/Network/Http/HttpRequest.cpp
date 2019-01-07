@@ -17,11 +17,6 @@ namespace acid
 		m_fields[String::Lowercase(field)] = value;
 	}
 
-	void HttpRequest::SetMethod(const HttpRequestMethod &method)
-	{
-		m_method = method;
-	}
-
 	void HttpRequest::SetUri(const std::string &uri)
 	{
 		m_uri = uri;
@@ -37,11 +32,6 @@ namespace acid
 	{
 		m_majorVersion = major;
 		m_minorVersion = minor;
-	}
-
-	void HttpRequest::SetBody(const std::string &body)
-	{
-		m_body = body;
 	}
 
 	std::string HttpRequest::Prepare() const

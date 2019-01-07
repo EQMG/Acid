@@ -99,12 +99,12 @@ namespace acid
 		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
 	}
 
-	DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
+	const DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
 	}
 
-	Texture *PipelineGraphics::GetTexture(const uint32_t &index, const int32_t &stage) const
+	const Texture *PipelineGraphics::GetTexture(const uint32_t &index, const int32_t &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
 	}

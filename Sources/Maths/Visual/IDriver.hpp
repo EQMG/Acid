@@ -46,7 +46,7 @@ namespace acid
 		/// Gets the length.
 		/// </summary>
 		/// <returns> The length. </returns>
-		Time GetLength() const { return m_length; }
+		const Time &GetLength() const { return m_length; }
 
 		/// <summary>
 		/// Sets the length.
@@ -62,6 +62,6 @@ namespace acid
 		/// <returns> The calculated value. </returns>
 		virtual float Calculate(const float &factor) = 0;
 
-		Time GetActualTime() const { return m_actualTime; }
+		const Time &GetActualTime() const { return m_actualTime; }
 	};
 }

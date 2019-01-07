@@ -20,7 +20,7 @@ namespace acid
 		}
 	}
 
-	void Thread::AddJob(std::function<void()> job)
+	void Thread::AddJob(std::function<void()> &job)
 	{
 		std::lock_guard<std::mutex> lock(m_queueMutex);
 		m_jobQueue.push(std::move(job));

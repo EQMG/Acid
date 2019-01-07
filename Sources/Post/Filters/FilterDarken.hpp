@@ -16,7 +16,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetFactor() const { return m_factor; }
+		const float &GetFactor() const { return m_factor; }
 
 		void SetFactor(const float &factor) { m_factor = factor; }
 	};

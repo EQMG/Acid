@@ -102,23 +102,23 @@ namespace acid
 		/// <returns> {@code true} if the sphere intersects the box. </returns>
 		bool IsInBox(const Vector3 &position, const float &radius) const;
 
-		Matrix4 GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
+		const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
 		/// <summary>
 		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
 		/// </summary>
 		/// <returns> The to-shadow-map-space matrix. </returns>
-		Matrix4 GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+		const Matrix4 &GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
 
 		/// <summary>
 		/// Gets the light's "view" matrix
 		/// </summary>
 		/// <returns> The light's "view" matrix. </returns>
-		Matrix4 GetLightSpaceTransform() const { return m_lightViewMatrix; }
+		const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
 
-		Vector3 GetMinExtents() const { return m_minExtents; }
+		const Vector3 &GetMinExtents() const { return m_minExtents; }
 
-		Vector3 GetMaxExtents() const { return m_maxExtents; }
+		const Vector3 &GetMaxExtents() const { return m_maxExtents; }
 
 		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
 

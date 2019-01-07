@@ -49,9 +49,9 @@ namespace acid
 
 		std::vector<float> GetPointCloud() const;
 
-		Vector3 GetMinExtents() const { return m_minExtents; }
+		const Vector3 &GetMinExtents() const { return m_minExtents; }
 
-		Vector3 GetMaxExtents() const { return m_maxExtents; }
+		const Vector3 &GetMaxExtents() const { return m_maxExtents; }
 
 		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
 
@@ -61,9 +61,9 @@ namespace acid
 
 		float GetRadius() const { return m_radius; }
 
-		VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
+		const VertexBuffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
 
-		IndexBuffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
+		const IndexBuffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
 	protected:
 		template<typename T>
 		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}, const std::string &name = "")

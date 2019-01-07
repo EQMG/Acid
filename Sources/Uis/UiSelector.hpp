@@ -29,19 +29,19 @@ namespace acid
 			}
 		}
 
-		JoystickPort GetJoystick() const { return m_joystick; }
+		const JoystickPort &GetJoystick() const { return m_joystick; }
 
 		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
 
-		AxisJoystick GetAxisX() const { return m_axisX; }
+		const AxisJoystick &GetAxisX() const { return m_axisX; }
 
 		void SetAxisX(const AxisJoystick &axisX) { m_axisX = axisX; }
 
-		AxisJoystick GetAxisY() const { return m_axisY; }
+		const AxisJoystick &GetAxisY() const { return m_axisY; }
 
 		void SetAxisY(const AxisJoystick &axisY) { m_axisY = axisY; }
 
-		std::optional<ButtonJoystick> GetInputButton(const MouseButton &button) const { return m_inputButtons[button]; }
+		const std::optional<ButtonJoystick> &GetInputButton(const MouseButton &button) const { return m_inputButtons[button]; }
 
 		void SetInputButton(const MouseButton &button, const ButtonJoystick &inputButton) { m_inputButtons[button] = inputButton; }
 	};
@@ -78,12 +78,12 @@ namespace acid
 
 		void CancelWasEvent(const MouseButton &button);
 
-		float GetCursorX() const { return m_cursorX; }
+		const float &GetCursorX() const { return m_cursorX; }
 
-		float GetCursorY() const { return m_cursorY; }
+		const float& GetCursorY() const { return m_cursorY; }
 
-		bool IsDown(const MouseButton &button) const { return m_selectorMice[button].m_isDown; }
+		const bool &IsDown(const MouseButton &button) const { return m_selectorMice[button].m_isDown; }
 
-		bool WasDown(const MouseButton &button) const { return m_selectorMice[button].m_wasDown; }
+		const bool &WasDown(const MouseButton &button) const { return m_selectorMice[button].m_wasDown; }
 	};
 }

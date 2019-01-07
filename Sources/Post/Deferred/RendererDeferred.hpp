@@ -43,7 +43,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		Fog GetFog() const { return m_fog; }
+		const Fog &GetFog() const { return m_fog; }
 
 		void SetFog(const Fog &fog) { m_fog = fog; }
 	private:

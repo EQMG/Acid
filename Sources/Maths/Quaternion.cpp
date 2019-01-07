@@ -161,7 +161,7 @@ namespace acid
 		return m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
 	}
 
-	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression)
+	Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression) const
 	{
 		float cosom = m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
 		float absCosom = std::abs(cosom);

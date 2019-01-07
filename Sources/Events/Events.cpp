@@ -40,19 +40,16 @@ namespace acid
 		return event;
 	}
 
-	bool Events::RemoveEvent(IEvent *event)
+	void Events::RemoveEvent(IEvent *event)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = m_events.begin(); it != m_events.end(); ++it)
+		for (auto it = m_events.begin(); it != m_events.end(); ++it) // TODO: Clean remove.
 		{
 			if ((*it).get() == event)
 			{
 				m_events.erase(it);
-				return true;
 			}
 		}
-
-		return false;
 	}
 }

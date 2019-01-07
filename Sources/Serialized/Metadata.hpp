@@ -30,11 +30,11 @@ namespace acid
 
 		Metadata& operator=(const Metadata&) = delete;
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
 		void SetName(const std::string &name) { m_name = name; }
 
-		std::string GetValue() const { return m_value; }
+		const std::string &GetValue() const { return m_value; }
 
 		void SetValue(const std::string &value) { m_value = value; }
 
@@ -50,7 +50,7 @@ namespace acid
 
 		Metadata *AddChild(Metadata *value);
 
-		bool RemoveChild(Metadata *child);
+		void RemoveChild(Metadata *child);
 
 		std::vector<Metadata *> FindChildren(const std::string &name) const;
 
@@ -137,7 +137,7 @@ namespace acid
 			}
 		}
 
-		std::map<std::string, std::string> GetAttributes() const { return m_attributes; }
+		const std::map<std::string, std::string> &GetAttributes() const { return m_attributes; }
 
 		uint32_t GetAttributeCount() const { return static_cast<uint32_t>(m_attributes.size()); }
 
@@ -145,7 +145,7 @@ namespace acid
 
 		void AddAttribute(const std::string &attribute, const std::string &value);
 
-		bool RemoveAttribute(const std::string &attribute);
+		void RemoveAttribute(const std::string &attribute);
 
 		std::string FindAttribute(const std::string &attribute) const;
 	};

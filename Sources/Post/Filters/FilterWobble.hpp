@@ -17,7 +17,7 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetWobbleSpeed() const { return m_wobbleSpeed; }
+		const float &GetWobbleSpeed() const { return m_wobbleSpeed; }
 
 		void SetWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
 	};

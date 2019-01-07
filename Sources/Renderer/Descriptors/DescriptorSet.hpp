@@ -28,6 +28,6 @@ namespace acid
 
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 
-		VkDescriptorSet GetDescriptorSet() const { return m_descriptorSet; }
+		const VkDescriptorSet &GetDescriptorSet() const { return m_descriptorSet; }
 	};
 }

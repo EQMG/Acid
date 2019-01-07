@@ -14,7 +14,7 @@ namespace acid
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
 		// Attachments,
-		for (auto &image : renderpassCreate.GetImages())
+		for (const auto &image : renderpassCreate.GetImages())
 		{
 			auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 			VkAttachmentDescription attachment = {};
@@ -52,7 +52,7 @@ namespace acid
 
 			uint32_t depthAttachment = 9999;
 
-			for (auto &attachmentBinding : subpassType.GetAttachmentBindings())
+			for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 			{
 				auto attachment = renderpassCreate.GetAttachment(attachmentBinding);
 

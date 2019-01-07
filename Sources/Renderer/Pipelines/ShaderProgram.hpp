@@ -21,6 +21,8 @@ namespace acid
 	class ACID_EXPORT Uniform
 	{
 	private:
+		friend class ShaderProgram;
+
 		std::string m_name;
 		int32_t m_binding;
 		int32_t m_offset;
@@ -42,23 +44,21 @@ namespace acid
 		{
 		}
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
-		int32_t GetBinding() const { return m_binding; }
+		const int32_t &GetBinding() const { return m_binding; }
 
-		int32_t GetOffset() const { return m_offset; }
+		const int32_t &GetOffset() const { return m_offset; }
 
-		int32_t GetSize() const { return m_size; }
+		const int32_t &GetSize() const { return m_size; }
 
-		int32_t GetGlType() const { return m_glType; }
+		const int32_t &GetGlType() const { return m_glType; }
 
-		bool IsReadOnly() const { return m_readOnly; }
+		const bool &IsReadOnly() const { return m_readOnly; }
 
-		bool IsWriteOnly() const { return m_writeOnly; }
+		const bool &IsWriteOnly() const { return m_writeOnly; }
 
-		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
-
-		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
+		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
 
 		bool operator==(const Uniform &other) const
 		{
@@ -88,6 +88,8 @@ namespace acid
 	class ACID_EXPORT UniformBlock
 	{
 	private:
+		friend class ShaderProgram;
+
 		std::string m_name;
 		int32_t m_binding;
 		int32_t m_size;
@@ -135,19 +137,19 @@ namespace acid
 			return nullptr;
 		}
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
-		int32_t GetBinding() const { return m_binding; }
+		const int32_t &GetBinding() const { return m_binding; }
 
-		int32_t GetSize() const { return m_size; }
+		const int32_t &GetSize() const { return m_size; }
 
-		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
+		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
 
 		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
-		UniformBlockType GetType() const { return m_type; }
+		const UniformBlockType &GetType() const { return m_type; }
 
-		std::vector<std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
+		const std::vector<std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
 
 		std::string ToString() const
 		{
@@ -175,15 +177,15 @@ namespace acid
 		{
 		}
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
-		int32_t GetSet() const { return m_set; }
+		const int32_t &GetSet() const { return m_set; }
 
-		int32_t GetLocation() const { return m_location; }
+		const int32_t &GetLocation() const { return m_location; }
 
-		int32_t GetSize() const { return m_size; }
+		const int32_t &GetSize() const { return m_size; }
 
-		int32_t GetGlType() const { return m_glType; }
+		const int32_t &GetGlType() const { return m_glType; }
 
 		std::string ToString() const
 		{
@@ -214,7 +216,7 @@ namespace acid
 
 		ShaderProgram& operator=(ShaderProgram&) = delete;
 
-		std::string GetName() const { return m_name; }
+		const std::string &GetName() const { return m_name; }
 
 		bool ReportedNotFound(const std::string &name, const bool &reportIfFound);
 
@@ -238,15 +240,15 @@ namespace acid
 
 		const std::vector<std::unique_ptr<VertexAttribute>> &GetVertexAttributes() const { return m_vertexAttributes; };
 
-		std::vector<VkDescriptorSetLayoutBinding> GetDescriptorSetLayouts() const { return m_descriptorSetLayouts; }
+		const std::vector<VkDescriptorSetLayoutBinding> &GetDescriptorSetLayouts() const { return m_descriptorSetLayouts; }
 
-		std::vector<VkDescriptorPoolSize> GetDescriptorPools() const { return m_descriptorPools; }
+		const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
 
-		VkDescriptorType GetDescriptorType(const uint32_t &location) const { return m_descriptorTypes[location]; }
+		const VkDescriptorType &GetDescriptorType(const uint32_t &location) const { return m_descriptorTypes[location]; }
 
 		uint32_t GetLastDescriptorBinding() const;
 
-		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
+		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
 		static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 

@@ -30,9 +30,9 @@ namespace acid
 		{
 		}
 
-		uint32_t GetRenderpass() const { return m_renderpass; }
+		const uint32_t &GetRenderpass() const { return m_renderpass; }
 
-		uint32_t GetSubpass() const { return m_subpass; }
+		const uint32_t &GetSubpass() const { return m_subpass; }
 
 		bool operator==(const GraphicsStage &other) const
 		{
@@ -66,11 +66,11 @@ namespace acid
 		{
 		}
 
-		uint32_t GetBinding() const { return m_binding; }
+		const uint32_t &GetBinding() const { return m_binding; }
 
-		std::vector<VkVertexInputBindingDescription> GetBindingDescriptions() const { return m_bindingDescriptions; }
+		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
 
-		std::vector<VkVertexInputAttributeDescription> GetAttributeDescriptions() const { return m_attributeDescriptions; }
+		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
 		bool operator<(const VertexInput &other) const
 		{
@@ -95,16 +95,16 @@ namespace acid
 
 		virtual ShaderProgram *GetShaderProgram() const = 0;
 
-		virtual bool IsPushDescriptors() const = 0;
+		virtual const bool &IsPushDescriptors() const = 0;
 
-		virtual VkDescriptorSetLayout GetDescriptorSetLayout() const = 0;
+		virtual const VkDescriptorSetLayout &GetDescriptorSetLayout() const = 0;
 
-		virtual VkDescriptorPool GetDescriptorPool() const = 0;
+		virtual const VkDescriptorPool &GetDescriptorPool() const = 0;
 
-		virtual VkPipeline GetPipeline() const = 0;
+		virtual const VkPipeline &GetPipeline() const = 0;
 
-		virtual VkPipelineLayout GetPipelineLayout() const = 0;
+		virtual const VkPipelineLayout &GetPipelineLayout() const = 0;
 
-		virtual VkPipelineBindPoint GetPipelineBindPoint() const = 0;
+		virtual const VkPipelineBindPoint &GetPipelineBindPoint() const = 0;
 	};
 }

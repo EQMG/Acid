@@ -23,9 +23,9 @@ namespace acid
 
 		void Submit(VkSemaphore signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE, const bool &createFence = true);
 
-		bool IsRunning() const { return m_running; }
+		const bool &IsRunning() const { return m_running; }
 
-		VkCommandBuffer GetCommandBuffer() const { return m_commandBuffer; }
+		const VkCommandBuffer &GetCommandBuffer() const { return m_commandBuffer; }
 	private:
 		VkQueue GetQueue() const;
 	};

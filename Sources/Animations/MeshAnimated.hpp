@@ -41,7 +41,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		std::shared_ptr<Model> GetModel() const override { return m_model; }
+		const std::shared_ptr<Model> &GetModel() const override { return m_model; }
 
 		virtual VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexAnimated::GetVertexInput(binding); }
 
@@ -49,8 +49,7 @@ namespace acid
 
 		void TrySetModel(const std::string &filename) override; // TODO: Remove
 
-		std::vector<Matrix4> GetJointTransforms() const { return m_jointMatrices; }
-
+		const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 	private:
 		Joint *CreateJoints(const JointData &data);
 

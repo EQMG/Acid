@@ -28,12 +28,12 @@ namespace acid
 		/// Gets the length of the animation.
 		/// </summary>
 		/// <returns> The length of the animation. </returns>
-		Time GetLength() const { return m_length; }
+		const Time &GetLength() const { return m_length; }
 
 		/// <summary>
 		/// Gets an array of the animation's keyframes. The array is ordered based on the order of the keyframes in the animation.
 		/// </summary>
 		/// <returns> The array of the animation's keyframes. </returns>
-		std::vector<Keyframe> GetKeyframes() const { return m_keyframes; }
+		const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
 	};
 }

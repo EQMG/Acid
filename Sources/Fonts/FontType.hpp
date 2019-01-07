@@ -37,9 +37,9 @@ namespace acid
 		/// <param name="fontStyle"> The style selected to load as this type. </param>
 		FontType(const std::string &filename, const std::string &fontStyle);
 
-		std::shared_ptr<Texture> GetTexture() const { return m_texture; }
+		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
 
-		std::shared_ptr<FontMetafile> GetMetadata() const { return m_metadata; }
+		const std::shared_ptr<FontMetafile> &GetMetadata() const { return m_metadata; }
 	private:
 		static std::string ToFilename(const std::string &filename, const std::string &fontStyle);
 	};

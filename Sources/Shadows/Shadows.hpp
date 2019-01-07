@@ -36,35 +36,35 @@ namespace acid
 
 		void Update() override;
 
-		Vector3 GetLightDirection() const { return m_lightDirection; }
+		const Vector3 &GetLightDirection() const { return m_lightDirection; }
 
 		void SetLightDirection(const Vector3 &lightDirection) { m_lightDirection = lightDirection; }
 
-		uint32_t GetShadowSize() const { return m_shadowSize; }
+		const uint32_t &GetShadowSize() const { return m_shadowSize; }
 
 		void SetShadowSize(const uint32_t &shadowSize) { m_shadowSize = shadowSize; }
 
-		int32_t GetShadowPcf() const { return m_shadowPcf; }
+		const int32_t &GetShadowPcf() const { return m_shadowPcf; }
 
 		void SetShadowPcf(const int32_t &shadowPcf) { m_shadowPcf = shadowPcf; }
 
-		float GetShadowBias() const { return m_shadowBias; }
+		const float &GetShadowBias() const { return m_shadowBias; }
 
 		void SetShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
 
-		float GetShadowDarkness() const { return m_shadowDarkness; }
+		const float &GetShadowDarkness() const { return m_shadowDarkness; }
 
 		void SetShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
 
-		float GetShadowTransition() const { return m_shadowTransition; }
+		const float &GetShadowTransition() const { return m_shadowTransition; }
 
 		void SetShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
 
-		float GetShadowBoxOffset() const { return m_shadowBoxOffset; }
+		const float &GetShadowBoxOffset() const { return m_shadowBoxOffset; }
 
 		void SetShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
 
-		float GetShadowBoxDistance() const { return m_shadowBoxDistance; }
+		const float &GetShadowBoxDistance() const { return m_shadowBoxDistance; }
 
 		void SetShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
@@ -72,6 +72,6 @@ namespace acid
 		/// Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
 		/// </summary>
 		/// <returns> The shadow box. </returns>
-		ShadowBox GetShadowBox() const { return m_shadowBox; }
+		const ShadowBox &GetShadowBox() const { return m_shadowBox; }
 	};
 }

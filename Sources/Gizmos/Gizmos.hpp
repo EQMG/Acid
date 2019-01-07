@@ -35,7 +35,7 @@ namespace acid
 
 		Gizmo *AddGizmo(Gizmo *gizmo);
 
-		bool RemoveGizmo(Gizmo *gizmo);
+		void RemoveGizmo(Gizmo *gizmo);
 
 		/// <summary>
 		/// Clears all gizmods from the scene.

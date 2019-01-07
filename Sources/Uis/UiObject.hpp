@@ -101,11 +101,11 @@ namespace acid
 
 		void SetRectangle(const UiBound &rectangle) { m_rectangle = rectangle; }
 
-		Vector4 GetScissor() const { return m_scissor; }
+		const Vector4 &GetScissor() const { return m_scissor; }
 
 		void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
 
-		float GetDepth() const { return m_depth; }
+		const float &GetDepth() const { return m_depth; }
 
 		void SetDepth(const float &depth) { m_depth = depth; }
 
@@ -113,9 +113,9 @@ namespace acid
 		/// Gets the ui object screen space transform.
 		/// </summary>
 		/// <returns> The screen transform. </returns>
-		Vector4 GetScreenTransform() const { return m_screenTransform; }
+		const Vector4 &GetScreenTransform() const { return m_screenTransform; }
 
-		bool IsLockRotation() const { return m_lockRotation; }
+		const bool &IsLockRotation() const { return m_lockRotation; }
 
 		void SetLockRotation(const bool &lockRotation) { m_lockRotation = lockRotation; }
 
@@ -123,7 +123,7 @@ namespace acid
 		/// Gets the world transform applied to the object, if has value.
 		/// </summary>
 		/// <returns> The world transform. </returns>
-		std::optional<Transform> GetWorldTransform() const { return m_worldTransform; }
+		const std::optional<Transform> &GetWorldTransform() const { return m_worldTransform; }
 
 		/// <summary>
 		/// Sets the world transform applied to the object.
@@ -167,7 +167,7 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetScaleDriver(Args &&... args) { SetScaleDriver(new T(std::forward<Args>(args)...)); }
 
-		float GetScale() const { return m_scale; }
+		const float &GetScale() const { return m_scale; }
 
 		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
 

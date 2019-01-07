@@ -28,7 +28,7 @@ namespace acid
 		/// Gets the start interval.
 		/// </summary>
 		/// <returns> The start interval. </returns>
-		float GetStart() const { return m_start; }
+		const float &GetStart() const { return m_start; }
 
 		/// <summary>
 		/// Sets the start interval (0.0-1.0).
@@ -40,7 +40,7 @@ namespace acid
 		/// Gets the end interval.
 		/// </summary>
 		/// <returns> The end interval. </returns>
-		float GetEnd() const { return m_end; }
+		const float &GetEnd() const { return m_end; }
 
 		/// <summary>
 		/// Sets the end interval (0.0-1.0).
@@ -52,7 +52,7 @@ namespace acid
 		/// Gets the peak value.
 		/// </summary>
 		/// <returns> The peak value. </returns>
-		float GetPeak() const { return m_peak; }
+		const float &GetPeak() const { return m_peak; }
 
 		/// <summary>
 		/// Sets the peak value.

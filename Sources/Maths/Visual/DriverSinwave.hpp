@@ -26,7 +26,7 @@ namespace acid
 		/// Gets the min value.
 		/// </summary>
 		/// <returns> The min value. </returns>
-		float GetMin() const { return m_min; }
+		const float &GetMin() const { return m_min; }
 
 		/// <summary>
 		/// Sets the min value.
@@ -38,7 +38,7 @@ namespace acid
 		/// Gets the max value.
 		/// </summary>
 		/// <returns> The max value. </returns>
-		float GetMax() const { return m_max; }
+		const float &GetMax() const { return m_max; }
 
 		/// <summary>
 		/// Sets the max value.

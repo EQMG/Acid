@@ -25,27 +25,27 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
+		const PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
 
 		void SetPipelineBlur(PipelineBlur *pipelineBlur) { m_pipelineBlur = pipelineBlur; }
 
-		float GetFocusPoint() const { return m_focusPoint; }
+		const float &GetFocusPoint() const { return m_focusPoint; }
 
 		void SetFocusPoint(const float &focusPoint) { m_focusPoint = focusPoint; }
 
-		float GetNearField() const { return m_nearField; }
+		const float &GetNearField() const { return m_nearField; }
 
 		void SetNearField(const float &nearField) { m_nearField = nearField; }
 
-		float GetNearTransition() const { return m_nearTransition; }
+		const float &GetNearTransition() const { return m_nearTransition; }
 
 		void SetNearTransition(const float &nearTransition) { m_nearTransition = nearTransition; }
 
-		float GetFarField() const { return m_farField; }
+		const float &GetFarField() const { return m_farField; }
 
 		void SetFarField(const float &farField) { m_farField = farField; }
 
-		float GetFarTransition() const { return m_farTransition; }
+		const float &GetFarTransition() const { return m_farTransition; }
 
 		void SetFarTransition(const float &farTransition) { m_farTransition = farTransition; }
 	};

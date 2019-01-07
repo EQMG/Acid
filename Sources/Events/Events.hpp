@@ -51,6 +51,6 @@ namespace acid
 		/// </summary>
 		/// <param name="event"> The event to remove. </param>
 		/// <returns> If the event was removed. </returns>
-		bool RemoveEvent(IEvent *event);
+		void RemoveEvent(IEvent *event);
 	};
 }

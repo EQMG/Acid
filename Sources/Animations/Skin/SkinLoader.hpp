@@ -18,9 +18,9 @@ namespace acid
 	public:
 		SkinLoader(Metadata *libraryControllers, const uint32_t &maxWeights);
 
-		std::vector<std::string> GetJointOrder() const { return m_jointOrder; }
+		const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
 
-		std::vector<VertexWeights> GetVertexWeights() const { return m_vertexWeights; }
+		const std::vector<VertexWeights> &GetVertexWeights() const { return m_vertexWeights; }
 	private:
 		void LoadJointsList();
 

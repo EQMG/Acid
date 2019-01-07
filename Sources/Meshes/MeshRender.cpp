@@ -53,7 +53,7 @@ namespace acid
 		}
 
 		auto meshModel = mesh->GetModel();
-		auto materialPipeline = material->GetMaterialPipeline();
+		auto materialPipeline = material->GetPipelineMaterial();
 
 		if (meshModel == nullptr || materialPipeline->GetGraphicsStage() != graphicsStage)
 		{

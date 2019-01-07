@@ -26,11 +26,11 @@ namespace acid
 
 		void CopyBuffer(void *data) const;
 
-		VkDeviceSize GetSize() const { return m_size; }
+		const VkDeviceSize &GetSize() const { return m_size; }
 
-		VkBuffer GetBuffer() const { return m_buffer; }
+		const VkBuffer &GetBuffer() const { return m_buffer; }
 
-		VkDeviceMemory GetBufferMemory() const { return m_bufferMemory; }
+		const VkDeviceMemory &GetBufferMemory() const { return m_bufferMemory; }
 
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 

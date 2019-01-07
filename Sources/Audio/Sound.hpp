@@ -52,7 +52,7 @@ namespace acid
 
 		bool IsPlaying();
 
-		Transform GetLocalTransform() const { return m_localTransform; }
+		const Transform &GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 
@@ -64,15 +64,15 @@ namespace acid
 
 		void SetVelocity(const Vector3 &velocity);
 
-		SoundType GetType() const { return m_type; }
+		const SoundType &GetType() const { return m_type; }
 
 		void SetType(const SoundType &type) { m_type = type; }
 
-		float GetGain() const { return m_gain; }
+		const float &GetGain() const { return m_gain; }
 
 		void SetGain(const float &gain);
 
-		float GetPitch() const { return m_pitch; }
+		const float &GetPitch() const { return m_pitch; }
 
 		void SetPitch(const float &pitch);
 	};

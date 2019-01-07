@@ -114,13 +114,13 @@ namespace acid
 		/// Gets the width of the window in pixels.
 		/// </summary>
 		/// <returns> The width of the window. </returns>
-		uint32_t GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		const uint32_t &GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the window in pixels.
 		/// </summary>
 		/// <returns> The width of the window. </returns>
-		uint32_t GetWindowWidth() const { return m_windowWidth; }
+		const uint32_t &GetWindowWidth() const { return m_windowWidth; }
 
 		/// <summary>
 		/// Sets the width of the window in pixels.
@@ -132,13 +132,13 @@ namespace acid
 		/// Gets the height of the window in pixels.
 		/// </summary>
 		/// <returns> The height of the window. </returns>
-		uint32_t GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		const uint32_t &GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the window in pixels.
 		/// </summary>
 		/// <returns> The height of the window. </returns>
-		uint32_t GetWindowHeight() const { return m_windowHeight; }
+		const uint32_t &GetWindowHeight() const { return m_windowHeight; }
 
 		/// <summary>
 		/// Sets the height of the window in pixels.
@@ -150,7 +150,7 @@ namespace acid
 		/// Gets the aspect ratio between the windows width and height.
 		/// </summary>
 		/// <returns> The aspect ratio. </returns>
-		float GetAspectRatio() const { return m_aspectRatio; }
+		const float &GetAspectRatio() const { return m_aspectRatio; }
 
 		/// <summary>
 		/// Gets the dimensions of the window in pixels.
@@ -175,13 +175,13 @@ namespace acid
 		/// Gets the windows Y position in pixels.
 		/// </summary>
 		/// <returns> The windows x position. </returns>
-		uint32_t GetPositionX() const { return m_positionX; }
+		const uint32_t &GetPositionX() const { return m_positionX; }
 
 		/// <summary>
 		/// Gets the windows Y position in pixels.
 		/// </summary>
 		/// <returns> The windows Y position. </returns>
-		uint32_t GetPositionY() const { return m_positionY; }
+		const uint32_t &GetPositionY() const { return m_positionY; }
 
 		/// <summary>
 		/// Gets the windows position in pixels.
@@ -206,7 +206,7 @@ namespace acid
 		/// Gets the window's title.
 		/// </summary>
 		/// <returns> The window's title. </returns>
-		std::string GetTitle() const { return m_title; }
+		const std::string &GetTitle() const { return m_title; }
 
 		/// <summary>
 		/// Sets window title
@@ -218,7 +218,7 @@ namespace acid
 		/// Gets the window's icon file.
 		/// </summary>
 		/// <returns> The window's icon file. </returns>
-		std::string GetIcon() const { return m_iconPath; }
+		const std::string &GetIcon() const { return m_iconPath; }
 
 		/// <summary>
 		/// Sets window icon image.
@@ -230,7 +230,7 @@ namespace acid
 		/// Gets if the window requests antialiased images.
 		/// </summary>
 		/// <returns> If using antialiased images. </returns>
-		bool IsAntialiasing() const { return m_antialiasing; }
+		const bool &IsAntialiasing() const { return m_antialiasing; }
 
 		/// <summary>
 		/// Requests the window to antialias.
@@ -242,7 +242,7 @@ namespace acid
 		/// Gets weather the window is borderless or not.
 		/// </summary>
 		/// <returns> If the window is borderless. </returns>
-		bool IsBorderless() const { return m_borderless; }
+		const bool &IsBorderless() const { return m_borderless; }
 
 		/// <summary>
 		/// Sets the window to be borderless.
@@ -254,7 +254,7 @@ namespace acid
 		/// Gets weather the window is resizable or not.
 		/// </summary>
 		/// <returns> If the window is resizable. </returns>
-		bool IsResizable() const { return m_resizable; }
+		const bool &IsResizable() const { return m_resizable; }
 
 		/// <summary>
 		/// Sets the window to be resizable.
@@ -266,7 +266,7 @@ namespace acid
 		/// Gets weather the window is floating or not, if floating the window will always display above other windows.
 		/// </summary>
 		/// <returns> If the window is floating. </returns>
-		bool IsFloating() const { return m_floating; }
+		const bool &IsFloating() const { return m_floating; }
 
 		/// <summary>
 		/// Sets the window to be floating.
@@ -278,7 +278,7 @@ namespace acid
 		/// Gets weather the window is fullscreen or not.
 		/// </summary>
 		/// <returns> Fullscreen or windowed. </returns>
-		bool IsFullscreen() const { return m_fullscreen; }
+		const bool &IsFullscreen() const { return m_fullscreen; }
 
 		/// <summary>
 		/// Sets the window to be fullscreen or windowed.
@@ -290,19 +290,19 @@ namespace acid
 		/// Gets if the window is closed.
 		/// </summary>
 		/// <returns> If the window is closed. </returns>
-		bool IsClosed() const { return m_closed; }
+		const bool &IsClosed() const { return m_closed; }
 
 		/// <summary>
 		/// Gets if the window is selected.
 		/// </summary>
 		/// <returns> If the window is selected. </returns>
-		bool IsFocused() const { return m_focused; }
+		const bool &IsFocused() const { return m_focused; }
 
 		/// <summary>
 		/// Gets the windows is minimized.
 		/// </summary>
 		/// <returns> If the window is minimized. </returns>
-		bool IsIconified() const { return m_iconified; }
+		const bool &IsIconified() const { return m_iconified; }
 
 		/// <summary>
 		/// Sets the window to be iconified (minimized).
@@ -320,41 +320,41 @@ namespace acid
 
 		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
-		VkInstance GetInstance() const { return m_instance; }
+		const VkInstance &GetInstance() const { return m_instance; }
 
-		VkSurfaceKHR GetSurface() const { return m_surface; }
+		const VkSurfaceKHR &GetSurface() const { return m_surface; }
 
-		VkSurfaceCapabilitiesKHR GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
+		const VkSurfaceCapabilitiesKHR &GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
 
-		VkSurfaceFormatKHR GetSurfaceFormat() const { return m_surfaceFormat; }
+		const VkSurfaceFormatKHR &GetSurfaceFormat() const { return m_surfaceFormat; }
 
-		VkDevice GetLogicalDevice() const { return m_logicalDevice; }
+		const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
 
-		VkSampleCountFlagBits GetMsaaSamples() const { return m_msaaSamples; }
+		const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
 
-		VkPhysicalDevice GetPhysicalDevice() const { return m_physicalDevice; }
+		const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }
 
-		VkPhysicalDeviceProperties GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
+		const VkPhysicalDeviceProperties &GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
 
-		VkPhysicalDeviceFeatures GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
+		const VkPhysicalDeviceFeatures &GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
 
-		VkPhysicalDeviceMemoryProperties GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
+		const VkPhysicalDeviceMemoryProperties &GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
 
-		VkQueue GetGraphicsQueue() const { return m_graphicsQueue; }
+		const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
 
-		VkQueue GetPresentQueue() const { return m_presentQueue; }
+		const VkQueue &GetPresentQueue() const { return m_presentQueue; }
 
-		VkQueue GetComputeQueue() const { return m_computeQueue; }
+		const VkQueue &GetComputeQueue() const { return m_computeQueue; }
 
-		VkQueue GetTransferQueue() const { return m_transferQueue; }
+		const VkQueue &GetTransferQueue() const { return m_transferQueue; }
 
-		uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
+		const uint32_t &GetGraphicsFamily() const { return m_graphicsFamily; }
 
-		uint32_t GetPresentFamily() const { return m_presentFamily; }
+		const uint32_t &GetPresentFamily() const { return m_presentFamily; }
 
-		uint32_t GetComputeFamily() const { return m_computeFamily; }
+		const uint32_t &GetComputeFamily() const { return m_computeFamily; }
 
-		uint32_t GetTransferFamily() const { return m_transferFamily; }
+		const uint32_t &GetTransferFamily() const { return m_transferFamily; }
 	private:
 		void CreateGlfw();
 

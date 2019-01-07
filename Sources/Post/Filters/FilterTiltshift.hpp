@@ -19,19 +19,19 @@ namespace acid
 
 		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
 
-		float GetBlurAmount() const { return m_blurAmount; }
+		const float &GetBlurAmount() const { return m_blurAmount; }
 
 		void SetBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
 
-		float GetCentre() const { return m_centre; }
+		const float &GetCentre() const { return m_centre; }
 
 		void SetCentre(const float &centre) { m_centre = centre; }
 
-		float GetStepSize() const { return m_stepSize; }
+		const float &GetStepSize() const { return m_stepSize; }
 
 		void SetStepSize(const float &stepSize) { m_stepSize = stepSize; }
 
-		float GetSteps() const { return m_steps; }
+		const float &GetSteps() const { return m_steps; }
 
 		void SetSteps(const float &steps) { m_steps = steps; }
 	};

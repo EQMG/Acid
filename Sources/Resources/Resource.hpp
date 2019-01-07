@@ -26,6 +26,6 @@ namespace acid
 		/// Gets a unique name (most likely a filename) associated with this resource object.
 		/// </summary>
 		/// <returns> The objects unique name. </returns>
-		virtual std::string GetName() const { return m_name; };
+		virtual const std::string &GetName() const { return m_name; };
 	};
 }

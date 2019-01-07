@@ -26,7 +26,7 @@ namespace acid
 		/// Adds an job to the thread queue.
 		/// </summary>
 		/// <param name="job"> The job to add. </param>
-		void AddJob(std::function<void()> job);
+		void AddJob(std::function<void()> &job);
 
 		/// <summary>
 		/// Waits until all jobs have been finished.

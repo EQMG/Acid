@@ -22,7 +22,7 @@ namespace acid
 
 		Vector3 GeneratePosition() const override;
 
-		float GetRadius() const { return m_radius; }
+		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 	};

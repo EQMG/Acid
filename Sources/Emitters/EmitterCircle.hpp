@@ -23,11 +23,11 @@ namespace acid
 
 		Vector3 GeneratePosition() const override;
 
-		float GetRadius() const { return m_radius; }
+		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius) { m_radius = radius; }
 
-		Vector3 GetHeading() const { return m_heading; }
+		const Vector3 &GetHeading() const { return m_heading; }
 
 		void SetHeading(const Vector3 &heading) { m_heading = heading; }
 	};

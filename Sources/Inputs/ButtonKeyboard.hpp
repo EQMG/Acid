@@ -26,7 +26,7 @@ namespace acid
 
 		bool WasDown() override;
 
-		std::vector<Key> GetKeys() const { return m_keys; }
+		const std::vector<Key> &GetKeys() const { return m_keys; }
 
 		void SetKeys(const std::vector<Key> &keys) { m_keys = keys; }
 	};

@@ -31,13 +31,6 @@ namespace test
 	const float CameraFps::MIN_ANGLE_OF_ELEVATION = -85.0f;
 
 	CameraFps::CameraFps() :
-		m_position(Vector3()),
-		m_rotation(Vector3()),
-		m_velocity(Vector3()),
-		m_viewMatrix(Matrix4()),
-		m_projectionMatrix(Matrix4()),
-		m_viewFrustum(Frustum()),
-		m_viewRay(Ray(false, Vector2(0.5f, 0.5f))),
 		m_angleOfElevation(25.0f),
 		m_angleAroundPlayer(0.0f),
 		m_targetPosition(Vector3()),
@@ -50,6 +43,9 @@ namespace test
 		m_joystickHorizontal(AxisJoystick(JOYSTICK_1, std::vector<uint32_t>{2})),
 		m_paused(false)
 	{
+		m_nearPlane = NEAR_PLANE;
+		m_farPlane = FAR_PLANE;
+		m_fieldOfView = FIELD_OF_VIEW;
 	}
 
 	void CameraFps::Start()
@@ -89,7 +85,7 @@ namespace test
 		UpdatePosition();
 
 		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
-		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFov(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Display::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
 		m_viewRay.Update(m_position, Vector2(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix); // Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()
