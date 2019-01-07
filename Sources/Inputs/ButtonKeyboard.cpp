@@ -10,7 +10,7 @@ namespace acid
 
 	bool ButtonKeyboard::IsDown() const
 	{
-		for (auto &key : m_keys)
+		for (const auto &key : m_keys)
 		{
 			if (Keyboard::Get()->GetKey(key))
 			{

@@ -16,7 +16,7 @@ namespace acid
 	private:
 		GraphicsStage m_graphicsStage;
 		PipelineCreate m_pipelineCreate;
-		RenderStage *m_renderStage;
+		const RenderStage *m_renderStage;
 		std::unique_ptr<PipelineGraphics> m_pipeline;
 	public:
 		/// <summary>

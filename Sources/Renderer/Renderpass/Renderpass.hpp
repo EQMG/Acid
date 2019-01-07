@@ -28,7 +28,7 @@ namespace acid
 		{
 			std::vector<VkSubpassDescription> types = {};
 
-			for (auto &subpassDescription : subpassDescriptions)
+			for (   auto &subpassDescription : subpassDescriptions)
 			{
 				types.emplace_back(GetType(subpassDescription));
 			}

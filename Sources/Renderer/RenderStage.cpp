@@ -11,7 +11,7 @@ namespace acid
 		m_renderpass(nullptr),
 		m_depthStencil(nullptr),
 		m_framebuffers(nullptr),
-		m_attachments(std::map<std::string, Descriptor *>()),
+		m_attachments(std::map<std::string, const Descriptor *>()),
 		m_clearValues(std::vector<VkClearValue>()),
 		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
 		m_depthAttachment({}),
@@ -21,7 +21,7 @@ namespace acid
 		m_lastWidth(m_renderpassCreate.GetWidth()),
 		m_lastHeight(m_renderpassCreate.GetHeight())
 	{
-		for (auto &image : m_renderpassCreate.GetImages())
+		for (const auto &image : m_renderpassCreate.GetImages())
 		{
 			VkClearValue clearValue = {};
 
@@ -30,7 +30,7 @@ namespace acid
 			case ATTACHMENT_TYPE_IMAGE:
 				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
 
-				for (auto &subpass : m_renderpassCreate.GetSubpasses())
+				for (const auto &subpass : m_renderpassCreate.GetSubpasses())
 				{
 					auto subpassBindings = subpass.GetAttachmentBindings();
 
@@ -83,7 +83,7 @@ namespace acid
 
 		m_attachments.clear();
 
-		for (auto &image : m_renderpassCreate.GetImages())
+		for (const auto &image : m_renderpassCreate.GetImages())
 		{
 			if (image.GetType() == ATTACHMENT_TYPE_DEPTH)
 			{
@@ -143,7 +143,7 @@ namespace acid
 		return outOfDate;
 	}
 
-	Descriptor *RenderStage::GetAttachment(const std::string &name) const
+	const Descriptor *RenderStage::GetAttachment(const std::string &name) const
 	{
 		auto it = m_attachments.find(name);
 
@@ -155,7 +155,7 @@ namespace acid
 		return nullptr;
 	}
 
-	VkFramebuffer RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
+	const VkFramebuffer &RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
 	{
 		if (activeSwapchainImage > m_framebuffers->GetFramebuffers().size())
 		{

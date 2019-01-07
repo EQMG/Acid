@@ -15,11 +15,11 @@ namespace acid
 		m_headJoint.reset(LoadJointData(headNode, true));
 	}
 
-	JointData *SkeletonLoader::LoadJointData(Metadata *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
 	{
 		auto joint = ExtractMainJointData(jointNode, isRoot);
 
-		for (auto &childNode : jointNode->FindChildren("node"))
+		for (const auto &childNode : jointNode->FindChildren("node"))
 		{
 			joint->AddChild(LoadJointData(childNode, false));
 		}
@@ -27,7 +27,7 @@ namespace acid
 		return joint;
 	}
 
-	JointData *SkeletonLoader::ExtractMainJointData(Metadata *jointNode, const bool &isRoot)
+	JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
 	{
 		std::string nameId = jointNode->FindAttribute("id");
 		auto index = GetBoneIndex(nameId);

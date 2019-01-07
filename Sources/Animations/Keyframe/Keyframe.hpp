@@ -28,6 +28,8 @@ namespace acid
 		/// <param name="pose"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
 		Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose);
 
+		void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform);
+
 		/// <summary>
 		/// Gets the time in seconds of the keyframe in the animation.
 		/// </summary>
@@ -40,10 +42,5 @@ namespace acid
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
 		const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
-
-		void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform)
-		{
-			m_pose.emplace(jointNameId, jointLocalTransform);
-		}
 	};
 }

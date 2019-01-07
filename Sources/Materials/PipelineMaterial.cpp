@@ -51,12 +51,12 @@ namespace acid
 		std::stringstream result;
 		result << "Material_" << graphicsStage.GetRenderpass() << "_" << graphicsStage.GetSubpass() << "_";
 
-		for (auto &stage : pipelineCreate.GetShaderStages())
+		for (const auto &stage : pipelineCreate.GetShaderStages())
 		{
 			result << stage << "_";
 		}
 
-		for (auto &element : pipelineCreate.GetDefines())
+		for (const auto &element : pipelineCreate.GetDefines())
 		{
 			result << element.first << "=" << element.second << "_";
 		}

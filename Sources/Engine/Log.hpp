@@ -52,7 +52,7 @@ namespace acid
 		}
 
 		/// <summary>
-		/// Sets a fule to output all log messages into.
+		/// Sets a file to output all log messages into.
 		/// </summary>
 		/// <param name="filename"> The filename to output into. </param>
 		static void OpenLog(const std::string &filename);

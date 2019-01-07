@@ -75,7 +75,7 @@ namespace acid
 		std::map<VkDescriptorType, uint32_t> descriptorPoolCounts = {};
 
 		// Process to descriptors.
-		for (auto &uniformBlock : m_uniformBlocks)
+		for (const auto &uniformBlock : m_uniformBlocks)
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
@@ -101,7 +101,7 @@ namespace acid
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
 		}
 
-		for (auto &uniform : m_uniforms)
+		for (const auto &uniform : m_uniforms)
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
@@ -128,7 +128,7 @@ namespace acid
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
 		}
 
-		for (auto &[type, descriptorCount] : descriptorPoolCounts)
+		for (const auto &[type, descriptorCount] : descriptorPoolCounts)
 		{
 			VkDescriptorPoolSize descriptorPoolSize = {};
 			descriptorPoolSize.type = type;
@@ -144,7 +144,7 @@ namespace acid
 		});
 
 		// Gets the descriptor type for each descriptor.
-		for (auto &descriptor : m_descriptorSetLayouts)
+		for (const auto &descriptor : m_descriptorSetLayouts)
 		{
 			m_descriptorTypes.emplace_back(descriptor.descriptorType);
 		}
@@ -152,7 +152,7 @@ namespace acid
 		// Process attribute descriptions.
 		uint32_t currentOffset = 4;
 
-		for (auto &vertexAttribute : m_vertexAttributes)
+		for (const auto &vertexAttribute : m_vertexAttributes)
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
 			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->GetLocation());
@@ -197,9 +197,9 @@ namespace acid
 		}
 	}
 
-	int32_t ShaderProgram::GetDescriptorLocation(const std::string &descriptor)
+	int32_t ShaderProgram::GetDescriptorLocation(const std::string &descriptor) const
 	{
-		for (auto &uniform : m_uniforms)
+		for (const auto &uniform : m_uniforms)
 		{
 			if (uniform->GetName() == descriptor)
 			{
@@ -207,7 +207,7 @@ namespace acid
 			}
 		}
 
-		for (auto &uniformBlock : m_uniformBlocks)
+		for (const auto &uniformBlock : m_uniformBlocks)
 		{
 			if (uniformBlock->GetName() == descriptor)
 			{
@@ -218,9 +218,9 @@ namespace acid
 		return -1;
 	}
 
-	std::optional<uint32_t> ShaderProgram::GetDescriptorSize(const std::string &descriptor)
+	std::optional<uint32_t> ShaderProgram::GetDescriptorSize(const std::string &descriptor) const
 	{
-		for (auto &uniform : m_uniforms)
+		for (const auto &uniform : m_uniforms)
 		{
 			if (uniform->GetName() == descriptor)
 			{
@@ -228,7 +228,7 @@ namespace acid
 			}
 		}
 
-		for (auto &uniformBlock : m_uniformBlocks)
+		for (const auto &uniformBlock : m_uniformBlocks)
 		{
 			if (uniformBlock->GetName() == descriptor)
 			{
@@ -239,11 +239,50 @@ namespace acid
 		return {};
 	}
 
+	const Uniform *ShaderProgram::GetUniform(const std::string &uniformName) const
+	{
+		for (const auto &uniform : m_uniforms)
+		{
+			if (uniform->GetName() == uniformName)
+			{
+				return uniform.get();
+			}
+		}
+
+		return nullptr;
+	}
+
+	const UniformBlock *ShaderProgram::GetUniformBlock(const std::string &blockName) const
+	{
+		for (const auto &uniformBlock : m_uniformBlocks)
+		{
+			if (uniformBlock->GetName() == blockName)
+			{
+				return uniformBlock.get();
+			}
+		}
+
+		return nullptr;
+	}
+
+	const VertexAttribute *ShaderProgram::GetVertexAttribute(const std::string &attributeName) const
+	{
+		for (const auto &attribute : m_vertexAttributes)
+		{
+			if (attribute->GetName() == attributeName)
+			{
+				return attribute.get();
+			}
+		}
+
+		return nullptr;
+	}
+
 	uint32_t ShaderProgram::GetLastDescriptorBinding() const
 	{
 		uint32_t binding = 0;
 
-		for (auto &descriptor : m_descriptorSetLayouts)
+		for (const auto &descriptor : m_descriptorSetLayouts)
 		{
 			if (descriptor.binding > binding)
 			{
@@ -303,7 +342,7 @@ namespace acid
 
 		std::stringstream result;
 
-		for (auto &line : lines)
+		for (const auto &line : lines)
 		{
 			if (String::Contains(line, "#include"))
 			{
@@ -515,45 +554,6 @@ namespace acid
 		return shaderModule;
 	}
 
-	Uniform *ShaderProgram::GetUniform(const std::string &uniformName)
-	{
-		for (auto &uniform : m_uniforms)
-		{
-			if (uniform->GetName() == uniformName)
-			{
-				return uniform.get();
-			}
-		}
-
-		return nullptr;
-	}
-
-	UniformBlock *ShaderProgram::GetUniformBlock(const std::string &blockName)
-	{
-		for (auto &uniformBlock : m_uniformBlocks)
-		{
-			if (uniformBlock->GetName() == blockName)
-			{
-				return uniformBlock.get();
-			}
-		}
-
-		return nullptr;
-	}
-
-	VertexAttribute *ShaderProgram::GetVertexAttribute(const std::string &attributeName)
-	{
-		for (auto &attribute : m_vertexAttributes)
-		{
-			if (attribute->GetName() == attributeName)
-			{
-				return attribute.get();
-			}
-		}
-
-		return nullptr;
-	}
-
 	std::string ShaderProgram::ToString() const
 	{
 		std::stringstream result;
@@ -562,7 +562,7 @@ namespace acid
 		{
 			result << "Vertex Attributes: \n";
 
-			for (auto &vertexAttribute : m_vertexAttributes)
+			for (const auto &vertexAttribute : m_vertexAttributes)
 			{
 				result << "  - " << vertexAttribute->ToString() << "\n";
 			}
@@ -572,7 +572,7 @@ namespace acid
 		{
 			result << "Uniforms: \n";
 
-			for (auto &uniform : m_uniforms)
+			for (const auto &uniform : m_uniforms)
 			{
 				result << "  - " << uniform->ToString() << "\n";
 			}
@@ -582,11 +582,11 @@ namespace acid
 		{
 			result << "Uniform Blocks: \n";
 
-			for (auto &uniformBlock : m_uniformBlocks)
+			for (const auto &uniformBlock : m_uniformBlocks)
 			{
 				result << "  - " << uniformBlock->ToString() << " \n";
 
-				for (auto &uniform : uniformBlock->GetUniforms())
+				for (const auto &uniform : uniformBlock->GetUniforms())
 				{
 					result << "	- " << uniform->ToString() << " \n";
 				}
@@ -639,7 +639,7 @@ namespace acid
 		{
 			if (uniformBlock->GetName() == program.getUniformBlockName(i))
 			{
-				uniformBlock->SetStageFlags(uniformBlock->GetStageFlags() | stageFlag);
+				uniformBlock->m_stageFlags |= stageFlag;
 				return;
 			}
 		}
@@ -695,7 +695,7 @@ namespace acid
 
 	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
-		for (auto &vertexAttribute : m_vertexAttributes)
+		for (const auto &vertexAttribute : m_vertexAttributes)
 		{
 			if (vertexAttribute->GetName() == program.getAttributeName(i))
 			{

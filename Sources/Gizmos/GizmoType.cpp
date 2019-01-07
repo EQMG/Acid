@@ -46,7 +46,7 @@ namespace acid
 		std::vector<GizmoTypeData> instanceDatas(MAX_TYPE_INSTANCES);
 		m_instances = 0;
 
-		for (auto &gizmo : gizmos)
+		for (const auto &gizmo : gizmos)
 		{
 			GizmoTypeData instanceData = {};
 			instanceData.modelMatrix = gizmo->GetTransform().GetWorldMatrix();

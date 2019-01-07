@@ -22,7 +22,7 @@ namespace acid
 
 		m_pipeline.BindPipeline(commandBuffer);
 
-		for (auto &[type, gizmos] : gizmos)
+		for (const auto &[type, gizmos] : gizmos)
 		{
 			type->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}

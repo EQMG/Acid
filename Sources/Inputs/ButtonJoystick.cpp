@@ -16,7 +16,7 @@ namespace acid
 			return false;
 		}
 
-		for (auto &button : m_buttons)
+		for (const auto &button : m_buttons)
 		{
 			if (Joysticks::Get()->GetButton(m_joystick, button))
 			{

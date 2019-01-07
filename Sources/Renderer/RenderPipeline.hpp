@@ -32,7 +32,7 @@ namespace acid
 		/// <param name="camera"> The camera to be used when rendering. </param>
 		virtual void Render(const CommandBuffer &commandBuffer, const Camera &camera) = 0;
 
-		GraphicsStage GetGraphicsStage() const { return m_graphicsStage; }
+		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
 
 		const bool &IsEnabled() const { return m_enabled; };
 

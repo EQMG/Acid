@@ -113,7 +113,7 @@ namespace acid
 
 		void AddUniform(Uniform *uniform)
 		{
-			for (auto &u : m_uniforms)
+			for (const auto &u : m_uniforms)
 			{
 				if (*u == *uniform)
 				{
@@ -124,9 +124,9 @@ namespace acid
 			m_uniforms.emplace_back(uniform);
 		}
 
-		Uniform *GetUniform(const std::string &uniformName)
+		const Uniform *GetUniform(const std::string &uniformName) const
 		{
-			for (auto &uniform : m_uniforms)
+			for (const auto &uniform : m_uniforms)
 			{
 				if (uniform->GetName() == uniformName)
 				{
@@ -144,8 +144,6 @@ namespace acid
 		const int32_t &GetSize() const { return m_size; }
 
 		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
-
-		void SetStageFlags(const VkShaderStageFlags &stageFlags) { m_stageFlags = stageFlags; }
 
 		const UniformBlockType &GetType() const { return m_type; }
 
@@ -224,15 +222,17 @@ namespace acid
 
 		VkFormat GlTypeToVk(const int32_t &type);
 
-		int32_t GetDescriptorLocation(const std::string &descriptor);
+		int32_t GetDescriptorLocation(const std::string &descriptor) const;
 
-		std::optional<uint32_t> GetDescriptorSize(const std::string &descriptor);
+		std::optional<uint32_t> GetDescriptorSize(const std::string &descriptor) const;
 
-		Uniform *GetUniform(const std::string &uniformName);
+		const Uniform *GetUniform(const std::string &uniformName) const;
 
-		UniformBlock *GetUniformBlock(const std::string &blockName);
+		const UniformBlock *GetUniformBlock(const std::string &blockName) const;
 
-		VertexAttribute *GetVertexAttribute(const std::string &attributeName);
+		const VertexAttribute *GetVertexAttribute(const std::string &attributeName) const;
+
+		uint32_t GetLastDescriptorBinding() const;
 
 		const std::vector<std::unique_ptr<Uniform>> &GetUniforms() const { return m_uniforms; };
 
@@ -245,8 +245,6 @@ namespace acid
 		const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
 
 		const VkDescriptorType &GetDescriptorType(const uint32_t &location) const { return m_descriptorTypes[location]; }
-
-		uint32_t GetLastDescriptorBinding() const;
 
 		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
 

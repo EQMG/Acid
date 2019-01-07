@@ -13,7 +13,7 @@ namespace acid
 	{
 	private:
 		bool m_multipipeline;
-		UniformBlock *m_uniformBlock;
+		const UniformBlock *m_uniformBlock;
 		uint32_t m_size;
 		std::unique_ptr<char[]> m_data;
 		std::unique_ptr<StorageBuffer> m_storageBuffer;
@@ -21,7 +21,7 @@ namespace acid
 	public:
 		explicit StorageHandler(const bool &multipipeline = false);
 
-		explicit StorageHandler(UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit StorageHandler(const UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		void Push(void *data, const std::size_t &size)
 		{
@@ -84,7 +84,7 @@ namespace acid
 			Push(object, static_cast<std::size_t>(uniform->GetOffset()), realSize);
 		}
 
-		bool Update(UniformBlock *uniformBlock);
+		bool Update(const UniformBlock *uniformBlock);
 
 		const StorageBuffer *GetStorageBuffer() const { return m_storageBuffer.get(); }
 	};

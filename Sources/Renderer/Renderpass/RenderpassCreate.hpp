@@ -101,7 +101,7 @@ namespace acid
 		{
 			uint32_t attachment = 0;
 
-			for (auto &image : m_images)
+			for (const auto &image : m_images)
 			{
 				if (image.GetName() == name)
 				{
@@ -111,7 +111,7 @@ namespace acid
 				attachment++;
 			}
 
-			//	Log::Error("Filed to find a renderpass attachment by name: '%i'\n", name.c_str());
+		//	Log::Error("Filed to find a renderpass attachment by name: '%i'\n", name.c_str());
 			return {};
 		}
 
@@ -119,7 +119,7 @@ namespace acid
 		{
 			uint32_t attachment = 0;
 
-			for (auto &image : m_images)
+			for (const auto &image : m_images)
 			{
 				if (image.GetBinding() == binding)
 				{
@@ -129,7 +129,7 @@ namespace acid
 				attachment++;
 			}
 
-			//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
+		//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
 			return {};
 		}
 

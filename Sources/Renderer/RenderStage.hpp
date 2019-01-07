@@ -14,6 +14,8 @@ namespace acid
 	class ACID_EXPORT RenderStage
 	{
 	private:
+		friend class Renderer;
+
 		uint32_t m_stageIndex;
 		RenderpassCreate m_renderpassCreate;
 
@@ -21,7 +23,7 @@ namespace acid
 		std::unique_ptr<DepthStencil> m_depthStencil;
 		std::unique_ptr<Framebuffers> m_framebuffers;
 
-		std::map<std::string, Descriptor *> m_attachments;
+		std::map<std::string, const Descriptor *> m_attachments;
 
 		std::vector<VkClearValue> m_clearValues;
 		std::vector<uint32_t> m_subpassAttachmentCount;
@@ -54,9 +56,9 @@ namespace acid
 
 		const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
-		Descriptor *GetAttachment(const std::string &name) const;
+		const Descriptor *GetAttachment(const std::string &name) const;
 
-		VkFramebuffer GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
+		const VkFramebuffer &GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 
 		const std::vector<VkClearValue> &GetClearValues() const { return m_clearValues; }
 

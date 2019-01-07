@@ -68,7 +68,7 @@ namespace acid
 		{
 			T *alternative = nullptr;
 
-			for (auto &component : m_components)
+			for (const auto &component : m_components)
 			{
 				auto casted = dynamic_cast<T *>(component.get());
 
@@ -98,7 +98,7 @@ namespace acid
 		{
 			std::vector<T *> result = {};
 
-			for (auto &component : m_components)
+			for (const auto &component : m_components)
 			{
 				auto casted = dynamic_cast<T *>(component.get());
 

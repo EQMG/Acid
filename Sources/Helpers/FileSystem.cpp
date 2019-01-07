@@ -156,7 +156,7 @@ namespace acid
 			auto splitFolders = SplitPath(folderPath);
 			std::stringstream appended;
 
-			for (auto &folder : splitFolders)
+			for (const auto &folder : splitFolders)
 			{
 				appended << folder << SEPARATOR;
 
@@ -421,7 +421,7 @@ namespace acid
 		std::string joined;
 		std::size_t i = 0;
 
-		for (auto &part : parts)
+		for (const auto &part : parts)
 		{
 			joined.append(part);
 
@@ -459,7 +459,7 @@ namespace acid
 
 		split.push_back(path.substr(previous_index));
 
-		if(split.size() == 1 && delim == SEPARATOR)
+		if (split.size() == 1 && delim == SEPARATOR)
 		{
 			auto alternative = SplitPath(path, ALT_SEPARATOR);
 

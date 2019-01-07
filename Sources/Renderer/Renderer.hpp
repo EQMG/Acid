@@ -72,17 +72,17 @@ namespace acid
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
-		Descriptor *GetAttachment(const std::string &name) const;
+		const Descriptor *GetAttachment(const std::string &name) const;
 
-		Swapchain *GetSwapchain() const { return m_swapchain.get(); }
+		const Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 
-		VkCommandPool GetCommandPool() const { return m_commandPool; }
+		const VkCommandPool &GetCommandPool() const { return m_commandPool; }
 
 		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
 
-		uint32_t GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
+		const uint32_t &GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
 
-		VkPipelineCache GetPipelineCache() const { return m_pipelineCache; }
+		const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
 	private:
 		void CreateFences();
 

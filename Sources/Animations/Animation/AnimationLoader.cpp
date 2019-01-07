@@ -17,7 +17,7 @@ namespace acid
 		m_lengthSeconds = times[times.size() - 1];
 		CreateKeyframe(times);
 
-		for (auto &jointNode : animationNodes)
+		for (const auto &jointNode : animationNodes)
 		{
 			LoadJointTransforms(jointNode, rootNode);
 		}
@@ -35,7 +35,7 @@ namespace acid
 		auto rawTimes = String::Split(timeData->GetValue(), " ");
 		std::vector<Time> times = {};
 
-		for (auto &rawTime : rawTimes)
+		for (const auto &rawTime : rawTimes)
 		{
 			times.emplace_back(Time::Seconds(String::From<float>(rawTime)));
 		}
@@ -45,7 +45,7 @@ namespace acid
 
 	void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 	{
-		for (auto &time : times)
+		for (const auto &time : times)
 		{
 			m_keyframes.emplace_back(Keyframe(time, {}));
 		}

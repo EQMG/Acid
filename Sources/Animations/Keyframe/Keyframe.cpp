@@ -7,4 +7,9 @@ namespace acid
 		m_pose(pose)
 	{
 	}
+
+	void Keyframe::AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform)
+	{
+		m_pose.emplace(jointNameId, jointLocalTransform);
+	}
 }

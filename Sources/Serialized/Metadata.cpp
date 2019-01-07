@@ -78,7 +78,7 @@ namespace acid
 	{
 		std::vector<Metadata *> result = {};
 
-		for (auto &child : m_children)
+		for (const auto &child : m_children)
 		{
 			if (child->m_name == name)
 			{
@@ -93,7 +93,7 @@ namespace acid
 	{
 		std::string nameNoSpaces = String::ReplaceAll(name, " ", "_");
 
-		for (auto &child : m_children)
+		for (const auto &child : m_children)
 		{
 			if (child->m_name == name || child->m_name == nameNoSpaces)
 			{
@@ -130,7 +130,7 @@ namespace acid
 			return nullptr;
 		}
 
-		for (auto &child : children)
+		for (const auto &child : children)
 		{
 			std::string attrib = child->FindAttribute(attribute);
 

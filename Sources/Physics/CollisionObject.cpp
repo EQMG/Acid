@@ -41,7 +41,7 @@ namespace acid
 			return;
 		}
 
-		for (int i = 0; i < compoundShape->getNumChildShapes(); i++)
+		for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 		{
 			if (compoundShape->getChildShape(i) == child->GetCollisionShape())
 			{
@@ -125,12 +125,12 @@ namespace acid
 		m_shape = std::make_unique<btCompoundShape>();
 		auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-		for (int i = 0; i < compoundShape->getNumChildShapes(); i++)
+		for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 		{
 			compoundShape->removeChildShapeByIndex(i);
 		}
 
-		for (auto &collider : colliders)
+		for (const auto &collider : colliders)
 		{
 			compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
 		}

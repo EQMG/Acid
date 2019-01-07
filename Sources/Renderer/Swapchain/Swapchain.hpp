@@ -20,7 +20,7 @@ namespace acid
 
 		~Swapchain();
 
-		const VkSwapchainKHR &GetSwapchain() { return m_swapchain; }
+		const VkSwapchainKHR &GetSwapchain() const { return m_swapchain; }
 
 		const uint32_t &GetImageCount() const { return m_swapchainImageCount; }
 

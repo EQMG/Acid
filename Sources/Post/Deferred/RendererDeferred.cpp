@@ -58,7 +58,7 @@ namespace acid
 
 		auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
-		for (auto &light : sceneLights)
+		for (const auto &light : sceneLights)
 		{
 		//	auto position = *light->GetPosition();
 		//	float radius = light->GetRadius();

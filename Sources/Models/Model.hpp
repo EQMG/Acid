@@ -84,7 +84,7 @@ namespace acid
 			m_minExtents = Vector3::POSITIVE_INFINITY;
 			m_maxExtents = Vector3::NEGATIVE_INFINITY;
 
-			for (auto &vertex : vertices)
+			for (const auto &vertex : vertices)
 			{
 				Vector3 position = vertex.GetPosition();
 				m_minExtents = Vector3::MinVector(m_minExtents, position);

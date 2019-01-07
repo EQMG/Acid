@@ -572,11 +572,11 @@ namespace acid
 		// Sets up the layers.
 		if (m_validationLayers)
 		{
-			for (auto &layerName : VALIDATION_LAYERS)
+			for (const auto &layerName : VALIDATION_LAYERS)
 			{
 				bool layerFound = false;
 
-				for (auto &layerProperties : instanceLayerProperties)
+				for (const auto &layerProperties : instanceLayerProperties)
 				{
 					if (strcmp(layerName, layerProperties.layerName) == 0)
 					{
@@ -594,7 +594,7 @@ namespace acid
 			}
 		}
 
-		for (auto &layerName : DEVICE_EXTENSIONS)
+		for (const auto &layerName : DEVICE_EXTENSIONS)
 		{
 			m_deviceExtensionList.emplace_back(layerName);
 		}
@@ -611,7 +611,7 @@ namespace acid
 			m_instanceExtensionList.emplace_back(glfwExtensions[i]);
 		}
 
-		for (auto &instanceExtension : INSTANCE_EXTENSIONS)
+		for (const auto &instanceExtension : INSTANCE_EXTENSIONS)
 		{
 			m_instanceExtensionList.emplace_back(instanceExtension);
 		}
@@ -687,7 +687,7 @@ namespace acid
 		std::multimap<int32_t, VkPhysicalDevice> rankedDevices;
 
 		// Iterates through all devices and rate their suitability.
-		for (auto &device : devices)
+		for (const auto &device : devices)
 		{
 			int32_t score = ScorePhysicalDevice(device);
 			rankedDevices.emplace(score, device);
@@ -718,7 +718,7 @@ namespace acid
 			bool extensionFound = false;
 
 			// Checks if the extension is in the available extensions.
-			for (auto &extension : extensionProperties)
+			for (const auto &extension : extensionProperties)
 			{
 				if (strcmp(currentExtension, extension.extensionName) == 0)
 				{
@@ -765,7 +765,7 @@ namespace acid
 
 		VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
 
-		for (auto &sampleFlag : STAGE_FLAG_BITS)
+		for (const auto &sampleFlag : STAGE_FLAG_BITS)
 		{
 			if (counts & sampleFlag)
 			{
@@ -1026,7 +1026,7 @@ namespace acid
 	{
 		Log::Out("-- Avalable Layers For: '%s' --\n", type.c_str());
 
-		for (auto &layer : layerProperties)
+		for (const auto &layer : layerProperties)
 		{
 			if (showDescription)
 			{

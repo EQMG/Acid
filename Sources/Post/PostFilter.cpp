@@ -14,11 +14,11 @@ namespace acid
 		m_pipeline(PipelineGraphics(graphicsStage, shaderStages, {VertexModel::GetVertexInput()},
 			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
-		m_attachments(std::map<std::string, Descriptor *>())
+		m_attachments(std::map<std::string, const Descriptor *>())
 	{
 	}
 
-	Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, Descriptor *descriptor) const
+	const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const Descriptor *descriptor) const
 	{
 		auto it = m_attachments.find(descriptorName);
 
@@ -30,7 +30,7 @@ namespace acid
 		return it->second;
 	}
 
-	Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const
+	const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const
 	{
 		auto it = m_attachments.find(descriptorName);
 
@@ -42,7 +42,7 @@ namespace acid
 		return it->second;
 	}
 
-	void PostFilter::SetAttachment(const std::string &descriptorName, Descriptor *descriptor)
+	void PostFilter::SetAttachment(const std::string &descriptorName, const Descriptor *descriptor)
 	{
 		auto it = m_attachments.find(descriptorName);
 

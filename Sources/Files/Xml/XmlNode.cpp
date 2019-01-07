@@ -26,9 +26,9 @@ namespace acid
 		std::stringstream nameAttributes;
 		nameAttributes << name;
 
-		for (auto &[name, value] : source.GetAttributes())
+		for (const auto &[attributeName, value] : source.GetAttributes())
 		{
-			nameAttributes << " " << name << "=\"" << value << "\"";
+			nameAttributes << " " << attributeName << "=\"" << value << "\"";
 		}
 
 		std::string nameAndAttribs = String::Trim(nameAttributes.str());
@@ -39,7 +39,7 @@ namespace acid
 		{
 			builder << "<" << nameAndAttribs << "?>\n";
 
-			for (auto &child : source.GetChildren())
+			for (const auto &child : source.GetChildren())
 			{
 				AppendData(*child, builder, indentation);
 			}
@@ -59,7 +59,7 @@ namespace acid
 		{
 			builder << "\n";
 
-			for (auto &child : source.GetChildren())
+			for (const auto &child : source.GetChildren())
 			{
 				AppendData(*child, builder, indentation + 1);
 			}
@@ -94,7 +94,7 @@ namespace acid
 			std::string currentKey;
 			std::string summation;
 
-			for (char &c : attributes)
+			for (const char &c : attributes)
 			{
 				switch (c)
 				{
@@ -142,7 +142,7 @@ namespace acid
 			parent->SetAttributes(parseAttributes);
 		}
 
-		for (auto &child : source.m_children)
+		for (const auto &child : source.m_children)
 		{
 			Convert(*child, thisValue, false);
 		}

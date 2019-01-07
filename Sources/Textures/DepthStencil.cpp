@@ -27,7 +27,7 @@ namespace acid
 	{
 		auto physicalDevice = Display::Get()->GetPhysicalDevice();
 
-		for (auto &format : TRY_FORMATS)
+		for (const auto &format : TRY_FORMATS)
 		{
 			VkFormatProperties formatProperties = {};
 			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);

@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	StorageHandler::StorageHandler(UniformBlock *uniformBlock, const bool &multipipeline) :
+	StorageHandler::StorageHandler(const UniformBlock *uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
 		m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
@@ -22,7 +22,7 @@ namespace acid
 	{
 	}
 
-	bool StorageHandler::Update(UniformBlock *uniformBlock)
+	bool StorageHandler::Update(const UniformBlock *uniformBlock)
 	{
 		if (m_handlerStatus == HANDLER_STATUS_RESET || (m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{

@@ -37,7 +37,7 @@ namespace acid
 
 	std::shared_ptr<Resource> Resources::Find(const std::string &filename) const
 	{
-		for (auto &resource : m_resources)
+		for (const auto &resource : m_resources)
 		{
 			if (resource != nullptr && resource->GetName() == filename)
 			{
