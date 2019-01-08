@@ -28,7 +28,7 @@ namespace acid
 	/// <summary>
 	/// During the loading of a text this represents one word in the text.
 	/// </summary>
-	class ACID_EXPORT FontWord
+	class FontWord
 	{
 	private:
 		std::vector<FontCharacter> m_characters;
@@ -62,7 +62,7 @@ namespace acid
 	/// <summary>
 	/// Represents a line of text during the loading of a text.
 	/// </summary>
-	class ACID_EXPORT FontLine
+	class FontLine
 	{
 	private:
 		float m_maxLength;

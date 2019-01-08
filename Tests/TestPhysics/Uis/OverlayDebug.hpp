@@ -12,11 +12,15 @@ namespace test
 		public UiObject
 	{
 	private:
-		std::unique_ptr<Text> m_textTime;
 		std::unique_ptr<Text> m_textFps;
 		std::unique_ptr<Text> m_textUps;
 		std::unique_ptr<Text> m_textPosition;
+		std::unique_ptr<Text> m_textTime;
 		Timer m_timerUpdate;
+
+		float m_accumulatedFps;
+		float m_accumulatedUps;
+		uint32_t m_ticksPassed;
 	public:
 		explicit OverlayDebug(UiObject *parent);
 

@@ -9,25 +9,49 @@ namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
-		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
-		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
-		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
-		m_textPosition(CreateStatus("POSITION: 0.0, 0.0, 0.0", 0.002f, 0.062f, TEXT_JUSTIFY_LEFT)),
-		m_timerUpdate(Timer(Time::Seconds(0.333f)))
+		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.002f, TEXT_JUSTIFY_LEFT)),
+		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.022f, TEXT_JUSTIFY_LEFT)),
+		m_textPosition(CreateStatus("Pos: 0.0, 0.0, 0.0", 0.002f, 0.042f, TEXT_JUSTIFY_LEFT)),
+		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.062f, TEXT_JUSTIFY_LEFT)),
+		m_timerUpdate(Timer(Time::Seconds(0.5f))),
+		m_accumulatedFps(0.0f),
+		m_accumulatedUps(0.0f),
+		m_ticksPassed(0)
 	{
 	}
 
 	void OverlayDebug::UpdateObject()
 	{
+		m_accumulatedFps += 1.0f / Engine::Get()->GetDeltaRender().AsSeconds();
+		m_accumulatedUps += 1.0f / Engine::Get()->GetDelta().AsSeconds();
+		m_ticksPassed++;
+
 		if (m_timerUpdate.IsPassedTime())
 		{
 			m_timerUpdate.ResetStartTime();
 
+			float fps = m_accumulatedFps / static_cast<float>(m_ticksPassed);
+			float ups = m_accumulatedUps / static_cast<float>(m_ticksPassed);
+			m_accumulatedFps = 0.0f;
+			m_accumulatedUps = 0.0f;
+			m_ticksPassed = 0;
+
+			m_textFps->SetString("FPS: " + String::To(static_cast<int>(fps)));
+			m_textUps->SetString("UPS: " + String::To(static_cast<int>(ups)));
+
+			if (Scenes::Get()->GetCamera() != nullptr)
+			{
+				Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+				m_textPosition->SetString("Pos: " + String::To(static_cast<int>(cameraPosition.m_x)) + ", " +
+					String::To(static_cast<int>(cameraPosition.m_y)) + ", " +
+					String::To(static_cast<int>(cameraPosition.m_z)));
+			}
+
 			if (World::Get() != nullptr)
 			{
 				float timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
-				int hour = static_cast<int>(timePercent);
-				int minute = static_cast<int>((timePercent - hour) * 60.0f);
+				auto hour = static_cast<int32_t>(timePercent);
+				auto minute = static_cast<int32_t>((timePercent - hour) * 60.0f);
 
 				if (hour > 24)
 				{
@@ -36,17 +60,6 @@ namespace test
 
 				m_textTime->SetString("Time: " + String::To(hour) + ":" + String::To(minute));
 			}
-
-			if (Scenes::Get()->GetCamera() != nullptr)
-			{
-				Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-				m_textPosition->SetString("POS: " + String::To(static_cast<int>(cameraPosition.m_x)) + ", " +
-					String::To(static_cast<int>(cameraPosition.m_y)) + ", " +
-					String::To(static_cast<int>(cameraPosition.m_z)));
-			}
-
-			m_textFps->SetString("FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
-			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
 		}
 	}
 

@@ -27,7 +27,8 @@ namespace acid
 		const ShaderProgram *m_shaderProgram;
 		bool m_pushDescriptors;
 		std::map<std::string, DescriptorValue> m_descriptors;
-		std::vector<WriteDescriptorSet> m_descriptorWrites;
+		std::vector<WriteDescriptorSet> m_writeDescriptors;
+		std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
 		std::unique_ptr<DescriptorSet> m_descriptorSet;
 		bool m_changed;
 	public:

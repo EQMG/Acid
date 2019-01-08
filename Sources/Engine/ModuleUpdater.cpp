@@ -8,7 +8,7 @@ namespace acid
 	ModuleUpdater::ModuleUpdater() :
 		m_deltaUpdate(Delta()),
 		m_deltaRender(Delta()),
-		m_timerUpdate(Timer(Time::Seconds(1.0f / 66.0f))),
+		m_timerUpdate(Timer(Time::Seconds(1.0f / 68.0f))),
 		m_timerRender(Timer(Time::Seconds(1.0f / -1.0f)))
 	{
 	}
@@ -25,6 +25,9 @@ namespace acid
 			// Resets the timer.
 			m_timerUpdate.ResetStartTime();
 
+			// Updates the engines delta.
+			m_deltaUpdate.Update();
+
 			// Pre-Update.
 			moduleManager.RunUpdate(MODULE_UPDATE_PRE);
 
@@ -33,28 +36,25 @@ namespace acid
 
 			// Post-Update.
 			moduleManager.RunUpdate(MODULE_UPDATE_POST);
-
-			// Updates the engines delta.
-			m_deltaUpdate.Update();
 		}
 
 		// Prioritize updates over rendering.
-	//	if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 5.0f))
-	//	{
-	//		return;
-	//	}
+		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 0.8f))
+		{
+			return;
+		}
 
 		// Renders when needed.
-		if (m_timerRender.IsPassedTime() || Engine::Get()->GetFpsLimit() <= 0.0f)
+		if (m_timerRender.IsPassedTime())
 		{
 			// Resets the timer.
 			m_timerRender.ResetStartTime();
 
-			// Render
-			moduleManager.RunUpdate(MODULE_UPDATE_RENDER);
-
 			// Updates the render delta, and render time extension.
 			m_deltaRender.Update();
+
+			// Render
+			moduleManager.RunUpdate(MODULE_UPDATE_RENDER);
 		}
 	}
 }

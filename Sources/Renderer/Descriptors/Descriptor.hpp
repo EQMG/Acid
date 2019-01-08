@@ -1,40 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "DescriptorSet.hpp"
 
 namespace acid
 {
-	/// <summary>
-	/// A wrapper for <seealso cref="VkWriteDescriptorSet"/> that has image and buffer image stored by reference.
-	/// </summary>
-	class WriteDescriptorSet :
-		public VkWriteDescriptorSet
-	{
-	public:
-		VkDescriptorImageInfo imageInfo;
-		VkDescriptorBufferInfo bufferInfo;
-
-		static VkWriteDescriptorSet GetType(const WriteDescriptorSet &writeDescriptorSet)
-		{
-			auto type = static_cast<VkWriteDescriptorSet>(writeDescriptorSet);
-			type.pImageInfo = &writeDescriptorSet.imageInfo;
-			type.pBufferInfo = &writeDescriptorSet.bufferInfo;
-			return type;
-		}
-
-		static std::vector<VkWriteDescriptorSet> GetTypes(const std::vector<WriteDescriptorSet> &writeDescriptorSets)
-		{
-			std::vector<VkWriteDescriptorSet> types = {};
-
-			for (const auto &writeDescriptorSet : writeDescriptorSets)
-			{
-				types.emplace_back(GetType(writeDescriptorSet));
-			}
-
-			return types;
-		}
-	};
-
 	class ACID_EXPORT OffsetSize
 	{
 	private:
@@ -60,6 +30,32 @@ namespace acid
 		{
 			return !(*this == other);
 		}
+	};
+
+	class WriteDescriptorSet
+	{
+	private:
+		VkWriteDescriptorSet m_writeDescriptorSet;
+		std::unique_ptr<VkDescriptorImageInfo> m_imageInfo;
+		std::unique_ptr<VkDescriptorBufferInfo> m_bufferInfo;
+	public:
+		WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :
+			m_writeDescriptorSet(writeDescriptorSet),
+			m_imageInfo(std::make_unique<VkDescriptorImageInfo>(imageInfo)),
+			m_bufferInfo(nullptr)
+		{
+			m_writeDescriptorSet.pImageInfo = m_imageInfo.get();
+		}
+
+		WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorBufferInfo &bufferInfo) :
+			m_writeDescriptorSet(writeDescriptorSet),
+			m_imageInfo(nullptr),
+			m_bufferInfo(std::make_unique<VkDescriptorBufferInfo>(bufferInfo))
+		{
+			m_writeDescriptorSet.pBufferInfo = m_bufferInfo.get();
+		}
+
+		const VkWriteDescriptorSet &GetWriteDescriptorSet() const { return m_writeDescriptorSet; }
 	};
 
 	class ACID_EXPORT Descriptor

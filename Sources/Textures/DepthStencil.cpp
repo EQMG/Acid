@@ -79,14 +79,14 @@ namespace acid
 		imageInfo.imageView = m_imageView;
 		imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-		WriteDescriptorSet descriptorWrite = {};
+		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.imageInfo = imageInfo;
-		return descriptorWrite;
+	//	descriptorWrite.pImageInfo = &imageInfo;
+		return WriteDescriptorSet(descriptorWrite, imageInfo);
 	}
 }
