@@ -3,11 +3,13 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "Maths/Matrix4.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT JointData
+	class ACID_EXPORT JointData :
+		public NonCopyable
 	{
 	private:
 		uint32_t m_index;
@@ -23,10 +25,6 @@ namespace acid
 			m_children(std::vector<std::unique_ptr<JointData>>())
 		{
 		}
-
-		JointData(const JointData&) = delete;
-
-		JointData& operator=(const JointData&) = delete;
 
 		const uint32_t &GetIndex() const { return m_index; }
 
@@ -61,7 +59,8 @@ namespace acid
 	/// The inverseBindTransform is that bind transform in model-space, but inversed.
 	/// </para>
 	/// </summary>
-	class ACID_EXPORT Joint
+	class ACID_EXPORT Joint :
+		public NonCopyable
 	{
 	private:
 		uint32_t m_index;
@@ -79,10 +78,6 @@ namespace acid
 		/// <param name="name"> The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to. </param>
 		/// <param name="bindLocalTransform"> The bone-space transform of the joint in the bind position. </param>
 		Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform);
-
-		Joint(const Joint&) = delete;
-
-		Joint& operator=(const Joint&) = delete;
 
 		/// <summary>
 		/// This is called during set-up, after the joints hierarchy has been created. This calculates the model-space bind transform of this joint like so:

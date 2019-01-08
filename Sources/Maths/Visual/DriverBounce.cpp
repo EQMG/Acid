@@ -13,7 +13,7 @@ namespace acid
 	{
 		float value = 0.5f + std::sin(PI * 2.0f * factor) * 0.5f;
 
-		if (GetActualTime() > GetLength() / 2.0f)
+		if (m_actualTime > GetLength() / 2.0f)
 		{
 			value = 0.0f;
 		}

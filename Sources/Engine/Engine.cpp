@@ -1,5 +1,7 @@
 #include "Engine.hpp"
 
+#include <chrono>
+
 namespace acid
 {
 	using HighResolutionClock = std::chrono::high_resolution_clock;

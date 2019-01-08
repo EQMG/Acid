@@ -5,7 +5,7 @@
 #include "Scenes/Component.hpp"
 #include "CollisionObject.hpp"
 
-class btDefaultMotionState;
+struct btDefaultMotionState;
 class btRigidBody;
 
 namespace acid

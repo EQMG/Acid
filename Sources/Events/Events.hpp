@@ -25,10 +25,6 @@ namespace acid
 
 		Events();
 
-		Events(const Events&) = delete; 
-
-		Events& operator=(const Events&) = delete;
-
 		void Update() override;
 
 		/// <summary>

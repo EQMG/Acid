@@ -1,13 +1,15 @@
 ﻿#pragma once
 
 #include <memory>
+#include "Helpers/NonCopyable.hpp"
 #include "RenderpassCreate.hpp"
 
 namespace acid
 {
 	class DepthStencil;
 
-	class SubpassDescription
+	class SubpassDescription :
+		public NonCopyable
 	{
 	private:
 		VkSubpassDescription m_subpassDescription;
@@ -35,12 +37,13 @@ namespace acid
 		const VkSubpassDescription &GetSubpassDescription() const { return m_subpassDescription; }
 	};
 
-	class ACID_EXPORT Renderpass
+	class ACID_EXPORT Renderpass :
+		public NonCopyable
 	{
 	private:
 		VkRenderPass m_renderPass;
 		std::vector<VkAttachmentDescription> m_attachments;
-		std::vector<SubpassDescription> m_subpasses;
+		std::vector<std::unique_ptr<SubpassDescription>> m_subpasses;
 		std::vector<VkSubpassDependency> m_dependencies;
 	public:
 		Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);

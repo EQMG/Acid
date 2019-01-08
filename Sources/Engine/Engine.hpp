@@ -1,9 +1,8 @@
 #pragma once
 
-#include <chrono>
-#include <memory>
-#include "Log.hpp"
+#include "Helpers/NonCopyable.hpp"
 #include "Maths/Time.hpp"
+#include "Log.hpp"
 #include "ModuleManager.hpp"
 #include "ModuleUpdater.hpp"
 
@@ -15,7 +14,8 @@ namespace acid
 	/// <summary>
 	/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
 	/// </summary>
-	class ACID_EXPORT Engine
+	class ACID_EXPORT Engine :
+		public NonCopyable
 	{
 	private:
 		static Engine *INSTANCE;
@@ -97,6 +97,12 @@ namespace acid
 		void SetFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
 		/// <summary>
+		/// Gets if the engine is running.
+		/// </summary>
+		/// <returns> If the engine is running. </returns>
+		const bool &IsRunning() const { return m_running; }
+
+		/// <summary>
 		/// Gets the delta (seconds) between updates.
 		/// </summary>
 		/// <returns> The delta between updates. </returns>
@@ -107,12 +113,6 @@ namespace acid
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
 		const Time &GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
-
-		/// <summary>
-		/// Gets if the engine is running.
-		/// </summary>
-		/// <returns> If the engine is running. </returns>
-		const bool &IsRunning() const { return m_running; }
 
 		/// <summary>
 		/// Requests the engine to delete and stop the game-loop.

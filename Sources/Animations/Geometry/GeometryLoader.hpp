@@ -1,13 +1,15 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
+#include "Helpers/NonCopyable.hpp"
 #include "Models/Model.hpp"
 #include "VertexAnimated.hpp"
 #include "VertexAnimatedData.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT GeometryLoader
+	class ACID_EXPORT GeometryLoader :
+		public NonCopyable
 	{
 	private:
 		Metadata *m_meshData;
@@ -22,10 +24,6 @@ namespace acid
 		std::vector<uint32_t> m_indices;
 	public:
 		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights);
-
-		GeometryLoader(const GeometryLoader&) = delete; 
-
-		GeometryLoader& operator=(const GeometryLoader&) = delete;
 
 		const std::vector<VertexAnimated> &GetVertices() const { return m_vertices; }
 

@@ -26,12 +26,7 @@ namespace acid
 		/// <returns> The current module instance. </returns>
 		static Scenes *Get() { return Engine::Get()->GetModuleManager().Get<Scenes>(); }
 
-		/// <summary>
-		/// Creates a new Scenes module.
-		/// </summary>
 		Scenes();
-
-		~Scenes() = default;
 
 		void Update() override;
 

@@ -4,6 +4,7 @@
 #include <mutex>
 #include <memory>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "RenderPipeline.hpp"
 
 namespace acid
@@ -11,17 +12,14 @@ namespace acid
 	/// <summary>
 	/// A class that contains and manages renderers registered to a render manager.
 	/// </summary>
-	class ACID_EXPORT RendererRegister
+	class ACID_EXPORT RendererRegister :
+		public NonCopyable
 	{
 	private:
 		std::mutex m_mutex;
 		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	public:
 		RendererRegister();
-
-		RendererRegister(const RendererRegister&) = delete; 
-
-		RendererRegister& operator=(const RendererRegister&) = delete;
 
 		const std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
 

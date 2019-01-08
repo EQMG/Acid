@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 #include <vector>
-#include "Engine/Exports.hpp"
+#include "Helpers/NonCopyable.hpp"
 #include "Maths/Transform.hpp"
 #include "Component.hpp"
 
@@ -12,7 +12,8 @@ namespace acid
 	/// <summary>
 	/// A class that represents a objects that acts as a component container.
 	/// </summary>
-	class ACID_EXPORT Entity
+	class ACID_EXPORT Entity :
+		public NonCopyable
 	{
 	private:
 		std::string m_name;
@@ -37,11 +38,7 @@ namespace acid
 		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
 		explicit Entity(const std::string &filename, const Transform &transform = Transform::IDENTITY);
 
-		Entity(const Entity&) = delete;
-
 		~Entity();
-
-		Entity& operator=(const Entity&) = delete;
 
 		void Update();
 

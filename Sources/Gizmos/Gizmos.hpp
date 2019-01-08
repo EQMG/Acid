@@ -27,10 +27,6 @@ namespace acid
 
 		Gizmos();
 
-		Gizmos(const Gizmos&) = delete;
-
-		Gizmos& operator=(const Gizmos&) = delete;
-
 		void Update() override;
 
 		Gizmo *AddGizmo(Gizmo *gizmo);

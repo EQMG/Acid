@@ -10,7 +10,7 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT IDriver
 	{
-	private:
+	protected:
 		Time m_length;
 		Time m_actualTime;
 		Time m_currentTime;
@@ -61,7 +61,5 @@ namespace acid
 		/// </param>
 		/// <returns> The calculated value. </returns>
 		virtual float Calculate(const float &factor) = 0;
-
-		const Time &GetActualTime() const { return m_actualTime; }
 	};
 }

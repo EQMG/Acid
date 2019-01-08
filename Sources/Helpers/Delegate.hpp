@@ -5,7 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <functional>
-#include "Engine/Exports.hpp"
+#include "Helpers/NonCopyable.hpp"
 
 namespace acid
 {
@@ -54,7 +54,8 @@ namespace acid
 	};
 
 	template<typename TReturnType, typename... TArgs>
-	class ACID_EXPORT Delegate<TReturnType(TArgs...)>
+	class ACID_EXPORT Delegate<TReturnType(TArgs...)> :
+		public NonCopyable
 	{
 	private:
 		using Invoker = acid::Invoker<TReturnType, TArgs...>;
@@ -67,10 +68,6 @@ namespace acid
 		Delegate() = default;
 
 		~Delegate() = default;
-
-		Delegate(const Delegate&) = delete;
-
-		const Delegate& operator=(const Delegate&) = delete;
 
 		Delegate &Connect(FunctionType &&function)
 		{

@@ -8,7 +8,7 @@
 #include <optional>
 #include <vector>
 #include <vulkan/vulkan.h>
-#include "Engine/Exports.hpp"
+#include "Helpers/NonCopyable.hpp"
 
 namespace glslang 
 {
@@ -85,7 +85,8 @@ namespace acid
 		BLOCK_PUSH = 2
 	};
 
-	class ACID_EXPORT UniformBlock
+	class ACID_EXPORT UniformBlock :
+		public NonCopyable
 	{
 	private:
 		friend class ShaderProgram;
@@ -106,10 +107,6 @@ namespace acid
 			m_uniforms(std::vector<std::unique_ptr<Uniform>>())
 		{
 		}
-
-		UniformBlock(const UniformBlock&) = delete; 
-
-		UniformBlock& operator=(UniformBlock&) = delete;
 
 		void AddUniform(Uniform *uniform)
 		{
@@ -193,7 +190,8 @@ namespace acid
 		}
 	};
 
-	class ACID_EXPORT ShaderProgram
+	class ACID_EXPORT ShaderProgram :
+		public NonCopyable
 	{
 	private:
 		std::string m_name;
@@ -209,10 +207,6 @@ namespace acid
 		mutable std::vector<std::string> m_notFoundNames;
 	public:
 		explicit ShaderProgram(const std::string &name);
-
-		ShaderProgram(const ShaderProgram&) = delete;
-
-		ShaderProgram& operator=(ShaderProgram&) = delete;
 
 		const std::string &GetName() const { return m_name; }
 

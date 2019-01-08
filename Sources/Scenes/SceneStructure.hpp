@@ -12,7 +12,8 @@ namespace acid
 	/// <summary>
 	/// A structure of spatial objects for a scene.
 	/// </summary>
-	class ACID_EXPORT SceneStructure
+	class ACID_EXPORT SceneStructure :
+		public NonCopyable
 	{
 	private:
 		std::mutex m_mutex;
@@ -22,10 +23,6 @@ namespace acid
 		/// Creates a new scene structure.
 		/// </summary>
 		SceneStructure();
-
-		SceneStructure(const SceneStructure&) = delete;
-
-		SceneStructure& operator=(const SceneStructure&) = delete;
 
 		/// <summary>
 		/// Creates a new entity that starts in this structure.

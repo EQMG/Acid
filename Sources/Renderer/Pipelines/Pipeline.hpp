@@ -83,11 +83,11 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Pipeline
 	{
-	public:
+	protected:
 		Pipeline() = default;
 
 		~Pipeline() = default;
-
+	public:
 		void BindPipeline(const CommandBuffer &commandBuffer) const
 		{
 			vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
