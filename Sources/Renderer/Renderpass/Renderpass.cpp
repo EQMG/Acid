@@ -8,12 +8,12 @@ namespace acid
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
 		m_renderPass(VK_NULL_HANDLE),
 		m_attachments(std::vector<VkAttachmentDescription>()),
-		m_subpasses(std::vector<VkSubpassDescription>()),
+		m_subpasses(std::vector<SubpassDescription>()),
 		m_dependencies(std::vector<VkSubpassDependency>())
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-		// Attachments,
+		// Creates the renderpasses attachment descriptions,
 		for (const auto &image : renderpassCreate.GetImages())
 		{
 			auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
@@ -44,13 +44,13 @@ namespace acid
 			m_attachments.emplace_back(attachment);
 		}
 
-		// Subpasses and dependencies.
+		// Creates each subpass and its dependencies.
 		for (const auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
-			auto subpassColourAttachments = new std::vector<VkAttachmentReference>(); // TODO: Keep alive better.
+			std::vector<VkAttachmentReference> subpassColourAttachments = {};
 
-			uint32_t depthAttachment = 9999;
+			std::optional<uint32_t> depthAttachment = {};
 
 			for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 			{
@@ -71,26 +71,15 @@ namespace acid
 				VkAttachmentReference attachmentReference = {};
 				attachmentReference.attachment = *attachment;
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				subpassColourAttachments->emplace_back(attachmentReference);
+				subpassColourAttachments.emplace_back(attachmentReference);
 			}
 
-			// Description.
+			// Subpass description.
 			VkSubpassDescription subpassDescription = {};
 			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(subpassColourAttachments->size());
-			subpassDescription.pColorAttachments = subpassColourAttachments->data();
+			m_subpasses.emplace_back(SubpassDescription(subpassDescription, subpassColourAttachments, depthAttachment));
 
-			if (depthAttachment != 9999)
-			{
-				auto subpassDepthStencilReference = new VkAttachmentReference(); // TODO: Keep alive better.
-				subpassDepthStencilReference->attachment = depthAttachment;
-				subpassDepthStencilReference->layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				subpassDescription.pDepthStencilAttachment = subpassDepthStencilReference;
-			}
-
-			m_subpasses.emplace_back(subpassDescription);
-
-			// Dependencies.
+			// Subpass dependencies.
 			VkSubpassDependency subpassDependency = {};
 			subpassDependency.srcAccessMask = 0;
 			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT; // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
@@ -125,13 +114,20 @@ namespace acid
 			m_dependencies.emplace_back(subpassDependency);
 		}
 
+		std::vector<VkSubpassDescription> subpassDescriptions = {};
+
+		for (const auto &subpass : m_subpasses)
+		{
+			subpassDescriptions.emplace_back(subpass.GetSubpassDescription());
+		}
+
 		// Creates the render pass.
 		VkRenderPassCreateInfo renderPassCreateInfo = {};
 		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 		renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(m_attachments.size());
 		renderPassCreateInfo.pAttachments = m_attachments.data();
-		renderPassCreateInfo.subpassCount = static_cast<uint32_t>(m_subpasses.size());
-		renderPassCreateInfo.pSubpasses = m_subpasses.data();
+		renderPassCreateInfo.subpassCount = static_cast<uint32_t>(subpassDescriptions.size());
+		renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(m_dependencies.size());
 		renderPassCreateInfo.pDependencies = m_dependencies.data();
 		Display::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &m_renderPass));

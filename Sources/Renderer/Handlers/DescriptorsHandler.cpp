@@ -8,7 +8,8 @@ namespace acid
 		m_shaderProgram(nullptr),
 		m_pushDescriptors(false),
 		m_descriptors(std::map<std::string, DescriptorValue>()),
-		m_descriptorWrites(std::vector<WriteDescriptorSet>()),
+		m_writeDescriptors(std::vector<WriteDescriptorSet>()),
+		m_writeDescriptorSets(std::vector<VkWriteDescriptorSet>()),
 		m_descriptorSet(nullptr),
 		m_changed(false)
 	{
@@ -18,7 +19,8 @@ namespace acid
 		m_shaderProgram(pipeline.GetShaderProgram()),
 		m_pushDescriptors(pipeline.IsPushDescriptors()),
 		m_descriptors(std::map<std::string, DescriptorValue>()),
-		m_descriptorWrites(std::vector<WriteDescriptorSet>()),
+		m_writeDescriptors(std::vector<WriteDescriptorSet>()),
+		m_writeDescriptorSets(std::vector<VkWriteDescriptorSet>()),
 		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
 		m_changed(true)
 	{
@@ -128,18 +130,21 @@ namespace acid
 
 		if (m_changed)
 		{
-			m_descriptorWrites.clear();
+			m_writeDescriptors.clear();
+			m_writeDescriptorSets.clear();
 
 			for (const auto &[descriptorName, descriptor] : m_descriptors)
 			{
 				VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(descriptor.location);
-				m_descriptorWrites.emplace_back(descriptor.descriptor->GetWriteDescriptor(descriptor.location,
-					descriptorType, m_pushDescriptors ? nullptr : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize));
+				auto writeDescriptor = descriptor.descriptor->GetWriteDescriptor(descriptor.location,
+					descriptorType, m_pushDescriptors ? nullptr : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
+				m_writeDescriptorSets.emplace_back(writeDescriptor.GetWriteDescriptorSet());
+				m_writeDescriptors.emplace_back(std::move(writeDescriptor));
 			}
 
 			if (!m_pushDescriptors)
 			{
-				m_descriptorSet->Update(m_descriptorWrites);
+				m_descriptorSet->Update(m_writeDescriptorSets);
 			}
 
 			m_changed = false;
@@ -154,10 +159,8 @@ namespace acid
 		{
 			auto logicalDevice = Display::Get()->GetLogicalDevice();
 
-			auto descriptors = WriteDescriptorSet::GetTypes(m_descriptorWrites); // TODO: Remove.
-
 			Display::FvkCmdPushDescriptorSetKHR(logicalDevice, commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
-				0, static_cast<uint32_t>(descriptors.size()), descriptors.data());
+				0, static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 		}
 		else
 		{

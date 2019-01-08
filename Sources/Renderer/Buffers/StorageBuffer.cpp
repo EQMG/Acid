@@ -46,14 +46,14 @@ namespace acid
 			bufferInfo.range = offsetSize->GetSize();
 		}
 
-		WriteDescriptorSet descriptorWrite = {};
+		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.bufferInfo = bufferInfo;
-		return descriptorWrite;
+	//	descriptorWrite.pBufferInfo = &bufferInfo;
+		return WriteDescriptorSet(descriptorWrite, bufferInfo);
 	}
 }

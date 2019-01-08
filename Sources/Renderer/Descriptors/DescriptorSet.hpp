@@ -24,8 +24,6 @@ namespace acid
 
 		void Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites);
 
-		void Update(const std::vector<WriteDescriptorSet> &descriptorWrites);
-
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 
 		const VkDescriptorSet &GetDescriptorSet() const { return m_descriptorSet; }

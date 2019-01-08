@@ -185,15 +185,15 @@ namespace acid
 		imageInfo.imageView = m_imageView;
 		imageInfo.imageLayout = m_imageLayout;
 
-		WriteDescriptorSet descriptorWrite = {};
+		VkWriteDescriptorSet descriptorWrite = {};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = descriptorSet;
 		descriptorWrite.dstBinding = binding;
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		descriptorWrite.imageInfo = imageInfo;
-		return descriptorWrite;
+	//	descriptorWrite.pImageInfo = &imageInfo;
+		return WriteDescriptorSet(descriptorWrite, imageInfo);
 	}
 
 	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer) const

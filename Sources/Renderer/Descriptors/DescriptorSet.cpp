@@ -38,15 +38,6 @@ namespace acid
 		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 
-	void DescriptorSet::Update(const std::vector<WriteDescriptorSet> &descriptorWrites)
-	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-		auto descriptors = WriteDescriptorSet::GetTypes(descriptorWrites);
-
-		vkUpdateDescriptorSets(logicalDevice, static_cast<uint32_t>(descriptors.size()), descriptors.data(), 0, nullptr);
-	}
-
 	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
 		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
