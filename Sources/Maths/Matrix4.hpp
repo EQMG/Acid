@@ -11,7 +11,7 @@ namespace acid
 	class Matrix3;
 	class Quaternion;
 	class Vector2;
-	class Packet;
+	class DataStream;
 	class Metadata;
 
 	/// <summary>
@@ -311,9 +311,9 @@ namespace acid
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
-		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Matrix4 &matrix);
+		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Matrix4 &matrix);
 
-		ACID_EXPORT friend Packet &operator>>(Packet &packet, Matrix4 &matrix);
+		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Matrix4 &matrix);
 
 		std::string ToString() const;
 	};

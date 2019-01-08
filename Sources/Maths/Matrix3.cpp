@@ -1,7 +1,7 @@
 #include "Matrix3.hpp"
 
 #include <cassert>
-#include "Network/Packet.hpp"
+#include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 #include "Matrix2.hpp"
@@ -396,14 +396,14 @@ namespace acid
 		return stream;
 	}
 
-	Packet &operator<<(Packet &packet, const Matrix3 &matrix)
+	DataStream &operator<<(DataStream &stream, const Matrix3 &matrix)
 	{
-		return packet << matrix.m_rows[0] << matrix.m_rows[1] << matrix.m_rows[2];
+		return stream << matrix.m_rows[0] << matrix.m_rows[1] << matrix.m_rows[2];
 	}
 
-	Packet &operator>>(Packet &packet, Matrix3 &matrix)
+	DataStream &operator>>(DataStream &stream, Matrix3 &matrix)
 	{
-		return packet >> matrix.m_rows[0] >> matrix.m_rows[1] >> matrix.m_rows[2];
+		return stream >> matrix.m_rows[0] >> matrix.m_rows[1] >> matrix.m_rows[2];
 	}
 
 	std::string Matrix3::ToString() const

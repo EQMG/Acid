@@ -5,6 +5,8 @@
 
 namespace acid
 {
+	class DataStream;
+
 	/// <summary>
 	/// Represents a time value stored in microseconds.
 	/// </summary>
@@ -109,5 +111,9 @@ namespace acid
 		Time &operator/=(const int64_t &other);
 
 		Time &operator%=(const Time &other);
+
+		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Time &time);
+
+		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Time &time);
 	};
 }

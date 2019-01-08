@@ -126,12 +126,6 @@ namespace acid
 
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-
-#if defined(ACID_VERBOSE)
-		auto debugStart = Engine::GetTime();
-#endif
-
 		VkExtent2D displayExtent = {
 			Display::Get()->GetWidth(),
 			Display::Get()->GetHeight()
@@ -142,15 +136,9 @@ namespace acid
 
 		for (const auto &renderpassCreate : renderpassCreates)
 		{
-			auto renderStage = new RenderStage(static_cast<uint32_t>(m_renderStages.size()), renderpassCreate); // TODO: Clean up.
-			renderStage->Rebuild(*m_swapchain);
-			m_renderStages.emplace_back(renderStage);
+			m_renderStages.emplace_back(std::make_unique<RenderStage>(static_cast<uint32_t>(m_renderStages.size()),
+				renderpassCreate, *m_swapchain));
 		}
-
-#if defined(ACID_VERBOSE)
-		auto debugEnd = Engine::GetTime();
-		Log::Out("Renderpass created in %ims\n", (debugEnd - debugStart).AsMilliseconds());
-#endif
 	}
 
 	void Renderer::CaptureScreenshot(const std::string &filename)
@@ -163,8 +151,6 @@ namespace acid
 		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
 		auto width = Display::Get()->GetWidth();
 		auto height = Display::Get()->GetHeight();
-
-		Log::Out("Saving screenshot to: '%s'\n", filename.c_str());
 
 		VkImage srcImage = m_swapchain->GetImages().at(m_activeSwapchainImage);
 		VkImage dstImage;

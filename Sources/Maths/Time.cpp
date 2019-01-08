@@ -2,6 +2,7 @@
 
 #include <limits>
 #include <cmath>
+#include "Serialized/DataStream.hpp"
 
 namespace acid
 {
@@ -162,5 +163,15 @@ namespace acid
 	Time &Time::operator%=(const Time &other)
 	{
 		return *this = *this % other;
+	}
+
+	DataStream &operator<<(DataStream &stream, const Time &time)
+	{
+		return stream << time.m_microseconds;
+	}
+
+	DataStream &operator>>(DataStream &stream, Time &time)
+	{
+		return stream >> time.m_microseconds;
 	}
 }

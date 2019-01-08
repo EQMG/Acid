@@ -44,6 +44,7 @@ set(_temp_acid_headers
 		Files/Xml/FileXml.hpp
 		Files/Xml/XmlNode.hpp
 		Fonts/FontMetafile.hpp
+		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
 		Fonts/RendererFonts.hpp
 		Fonts/Text.hpp
@@ -207,6 +208,7 @@ set(_temp_acid_headers
 		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
+		Serialized/DataStream.hpp
 		Serialized/Metadata.hpp
 		Shadows/RendererShadows.hpp
 		Shadows/ShadowBox.hpp
@@ -412,6 +414,7 @@ set(_temp_acid_sources
 		Scenes/ScenePhysics.cpp
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
+		Serialized/DataStream.cpp
 		Serialized/Metadata.cpp
 		Shadows/RendererShadows.cpp
 		Shadows/ShadowBox.cpp

@@ -1,7 +1,7 @@
 #include "Vector3.hpp"
 
 #include <cassert>
-#include "Network/Packet.hpp"
+#include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Colour.hpp"
 #include "Matrix4.hpp"
@@ -488,14 +488,14 @@ namespace acid
 		return stream;
 	}
 
-	Packet &operator<<(Packet &packet, const Vector3 &vector)
+	DataStream &operator<<(DataStream &stream, const Vector3 &vector)
 	{
-		return packet << vector.m_x << vector.m_y << vector.m_z;
+		return stream << vector.m_x << vector.m_y << vector.m_z;
 	}
 
-	Packet &operator>>(Packet &packet, Vector3 &vector)
+	DataStream &operator>>(DataStream &stream, Vector3 &vector)
 	{
-		return packet >> vector.m_x >> vector.m_y >> vector.m_z;
+		return stream >> vector.m_x >> vector.m_y >> vector.m_z;
 	}
 
 	std::string Vector3::ToString() const

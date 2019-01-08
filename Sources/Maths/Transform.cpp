@@ -1,7 +1,7 @@
 ﻿#include "Transform.hpp"
 
-#include "Network/Packet.hpp"
 #include "Scenes/Entity.hpp"
+#include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Quaternion.hpp"
 
@@ -134,14 +134,14 @@ namespace acid
 		return stream;
 	}
 
-	Packet &operator<<(Packet &packet, const Transform &transform)
+	DataStream &operator<<(DataStream &stream, const Transform &transform)
 	{
-		return packet << transform.m_position << transform.m_rotation << transform.m_scaling;
+		return stream << transform.m_position << transform.m_rotation << transform.m_scaling;
 	}
 
-	Packet &operator>>(Packet &packet, Transform &transform)
+	DataStream &operator>>(DataStream &stream, Transform &transform)
 	{
-		return packet >> transform.m_position >> transform.m_rotation >> transform.m_scaling;
+		return stream >> transform.m_position >> transform.m_rotation >> transform.m_scaling;
 	}
 
 	std::string Transform::ToString() const

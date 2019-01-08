@@ -224,40 +224,50 @@ namespace test
 		if (m_buttonScreenshot.WasDown())
 		{
 			m_soundScreenshot.Play();
-			Renderer::Get()->CaptureScreenshot(FileSystem::GetWorkingDirectory() + "/Screenshots/" + Engine::GetDateTime() + ".png");
+
+			// TODO: Threading.
+			std::thread t([](){
+				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+				Renderer::Get()->CaptureScreenshot(filename);
+			});
+			t.detach();
 		}
 
 		if (m_buttonSave.WasDown())
 		{
-			auto sceneFile = FileJson("Scene1.json");
-			auto sceneNode = sceneFile.GetParent()->AddChild(new Metadata("Scene"));
+			// TODO: Threading.
+			std::thread t([this](){
+				auto sceneFile = FileJson("Scene1.json");
+				auto sceneNode = sceneFile.GetParent()->AddChild(new Metadata("Scene"));
 
-			for (auto &entity : GetStructure()->QueryAll())
-			{
-				auto entityNode = sceneNode->AddChild(new Metadata());
-				entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
-				auto transformNode = entityNode->AddChild(new Metadata("Transform"));
-				auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-				entity->GetLocalTransform().Encode(*transformNode);
-
-				for (auto &component : entity->GetComponents())
+				for (auto &entity : GetStructure()->QueryAll())
 				{
-				//	if (component->IsFromPrefab())
-				//	{
-				//		continue;
-				//	}
+					auto entityNode = sceneNode->AddChild(new Metadata());
+					entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
+					auto transformNode = entityNode->AddChild(new Metadata("Transform"));
+					auto componentsNode = entityNode->AddChild(new Metadata("Components"));
+					entity->GetLocalTransform().Encode(*transformNode);
 
-					auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
-
-					if (componentName)
+					for (auto &component : entity->GetComponents())
 					{
-						auto child = componentsNode->AddChild(new Metadata(*componentName));
-						component->Encode(*child);
+					//	if (component->IsFromPrefab())
+					//	{
+					//		continue;
+					//	}
+
+						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+
+						if (componentName)
+						{
+							auto child = componentsNode->AddChild(new Metadata(*componentName));
+							component->Encode(*child);
+						}
 					}
 				}
-			}
 
-			sceneFile.Save();
+				sceneFile.Save();
+			});
+			t.detach();
 		}
 
 		if (m_buttonExit.WasDown())

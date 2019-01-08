@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	class Packet;
+	class DataStream;
 	class Metadata;
 
 	/// <summary>
@@ -90,9 +90,9 @@ namespace acid
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 
-		ACID_EXPORT friend Packet &operator<<(Packet &packet, const Transform &transform);
+		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Transform &transform);
 
-		ACID_EXPORT friend Packet &operator>>(Packet &packet, Transform &transform);
+		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Transform &transform);
 
 		std::string ToString() const;
 	};

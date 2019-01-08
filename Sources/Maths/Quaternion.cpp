@@ -1,7 +1,7 @@
 #include "Quaternion.hpp"
 
 #include <cassert>
-#include "Network/Packet.hpp"
+#include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Matrix3.hpp"
 #include "Maths.hpp"
@@ -417,14 +417,14 @@ namespace acid
 		return stream;
 	}
 
-	Packet &operator<<(Packet &packet, const Quaternion &quaternion)
+	DataStream &operator<<(DataStream &stream, const Quaternion &quaternion)
 	{
-		return packet << quaternion.m_x << quaternion.m_y << quaternion.m_z << quaternion.m_w;
+		return stream << quaternion.m_x << quaternion.m_y << quaternion.m_z << quaternion.m_w;
 	}
 
-	Packet &operator>>(Packet &packet, Quaternion &quaternion)
+	DataStream &operator>>(DataStream &stream, Quaternion &quaternion)
 	{
-		return packet >> quaternion.m_x >> quaternion.m_y >> quaternion.m_z >> quaternion.m_w;
+		return stream >> quaternion.m_x >> quaternion.m_y >> quaternion.m_z >> quaternion.m_w;
 	}
 
 	std::string Quaternion::ToString() const

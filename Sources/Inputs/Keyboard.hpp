@@ -6,6 +6,21 @@
 
 namespace acid
 {
+	enum InputAction
+	{
+		INPUT_ACTION_RELEASE = 0,
+		INPUT_ACTION_PRESS = 1,
+		INPUT_ACTION_REPEAT = 3
+	};
+
+	enum InputMod
+	{
+		KEY_MOD_SHIFT = 1,
+		KEY_MOD_CONTROL = 2,
+		KEY_MOD_ALT = 4,
+		KEY_MOD_SUPER = 8
+	};
+
 	enum Key
 	{
 		KEY_UNKNOWN = -1,

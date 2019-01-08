@@ -36,7 +36,7 @@ namespace acid
 		uint32_t m_lastWidth;
 		uint32_t m_lastHeight;
 	public:
-		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate);
+		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain);
 
 		void Rebuild(const Swapchain &swapchain);
 
