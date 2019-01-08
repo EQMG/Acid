@@ -156,7 +156,7 @@ namespace acid
 		/// Gets the dimensions of the window in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetDimensions() { return Vector2(GetWidth(), GetHeight()); }
+		Vector2 GetDimensions() { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
 
 		/// <summary>
 		/// Sets the window size to a new size.
@@ -187,7 +187,7 @@ namespace acid
 		/// Gets the windows position in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetPosition() { return Vector2(m_positionX, m_positionY); }
+		Vector2 GetPosition() { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
 
 		/// <summary>
 		/// Sets the window position to a new position in pixels.

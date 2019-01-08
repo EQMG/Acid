@@ -7,7 +7,7 @@
 namespace acid
 {
 	/// <summary>
-	/// A module used for managing shadow maps in 3D worlds.
+	/// A module used for managing shadow maps.
 	/// </summary>
 	class ACID_EXPORT Shadows :
 		public Module

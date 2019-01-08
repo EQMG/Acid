@@ -30,7 +30,7 @@
 #include "Engine/Engine.hpp"
 #include "Engine/Exports.hpp"
 #include "Engine/Log.hpp"
-#include "Engine/Module.hpp"
+#include "Engine/Engine.hpp"
 #include "Engine/ModuleManager.hpp"
 #include "Engine/ModuleUpdater.hpp"
 #include "Events/EventChange.hpp"

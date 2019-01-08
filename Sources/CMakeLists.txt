@@ -60,11 +60,16 @@ target_compile_definitions(Acid
 		# macOS
 		$<$<PLATFORM_ID:Darwin>:ACID_BUILD_MACOS>
 		# MSVC
-		$<$<CXX_COMPILER_ID:MSVC>:ACID_BUILD_MSVC _SCL_SECURE_NO_WARNINGS _CRT_SECURE_NO_WARNINGS>
+		$<$<CXX_COMPILER_ID:MSVC>:ACID_BUILD_MSVC _SCL_SECURE_NO_WARNINGS _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS>
 		# Clang/AppleClang
 		$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:ACID_BUILD_CLANG>
 		# GNU/GCC
 		$<$<CXX_COMPILER_ID:GNU>:ACID_BUILD_GNU __USE_MINGW_ANSI_STDIO=0>
+		)
+target_compile_options(Acid
+		PUBLIC
+		# Disables symbol warnings.
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592>
 		)
 
 target_include_directories(Acid

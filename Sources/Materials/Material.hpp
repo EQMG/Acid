@@ -16,14 +16,14 @@ namespace acid
 	{
 	protected:
 		std::shared_ptr<PipelineMaterial> m_pipelineMaterial;
-	public:
+
 		Material() :
 			m_pipelineMaterial(nullptr)
 		{
 		}
 
 		~Material() = default;
-
+	public:
 		/// <summary>
 		/// Used to update the main uniform handler used in a material.
 		/// A material can defined it's own uniforms and push them via <seealso cref="#PushDescriptors()"/>.

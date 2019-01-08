@@ -159,7 +159,7 @@ namespace acid
 		velocity = velocity.Normalize();
 		velocity *= GenerateValue(m_averageSpeed, m_speedDeviation);
 
-		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0.0f, static_cast<float>(m_types.size())))));
+		auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0, m_types.size()))));
 		float scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
 		float lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
 		float stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);

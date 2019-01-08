@@ -4,11 +4,13 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT JsonSection
+	class ACID_EXPORT JsonSection :
+		public NonCopyable
 	{
 	private:
 		JsonSection *m_parent;
@@ -18,10 +20,6 @@ namespace acid
 		std::string m_content;
 	public:
 		JsonSection(JsonSection *parent, const std::string &name, const std::string &content);
-
-		JsonSection(const JsonSection&) = delete;
-
-		JsonSection& operator=(const JsonSection&) = delete;
 
 		JsonSection *GetParent() const { return m_parent; }
 

@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "IAxis.hpp"
 
 namespace acid
@@ -10,7 +11,8 @@ namespace acid
 	/// Axis composed of multiple other axes.
 	/// </summary>
 	class ACID_EXPORT AxisCompound :
-		public IAxis
+		public IAxis,
+		public NonCopyable
 	{
 	private:
 		std::vector<std::unique_ptr<IAxis>> m_axes;
@@ -20,10 +22,6 @@ namespace acid
 		/// </summary>
 		/// <param name="axes"> The axes on the being added. </param>
 		explicit AxisCompound(const std::vector<IAxis *> &axes);
-
-		AxisCompound(const AxisCompound&) = delete;
-
-		AxisCompound& operator=(const AxisCompound&) = delete;
 
 		float GetAmount() const override;
 	};

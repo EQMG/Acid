@@ -4,7 +4,7 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include "Engine/Exports.hpp"
+#include "Helpers/NonCopyable.hpp"
 #include "Helpers/String.hpp"
 
 namespace acid
@@ -14,7 +14,8 @@ namespace acid
 	/// <summary>
 	/// A class that is used to represent a tree of values, used in file-object serialization.
 	/// </summary>
-	class ACID_EXPORT Metadata
+	class ACID_EXPORT Metadata :
+		public NonCopyable
 	{
 	protected:
 		std::string m_name;
@@ -25,10 +26,6 @@ namespace acid
 		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
 
 		explicit Metadata(const std::string &name = "", const std::string &value = "");
-
-		Metadata(const Metadata&) = delete;
-
-		Metadata& operator=(const Metadata&) = delete;
 
 		const std::string &GetName() const { return m_name; }
 

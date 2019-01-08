@@ -9,7 +9,8 @@ namespace acid
 	class Renderpass;
 	class DepthStencil;
 
-	class ACID_EXPORT Framebuffers
+	class ACID_EXPORT Framebuffers :
+		public NonCopyable
 	{
 	private:
 		std::vector<std::unique_ptr<Texture>> m_imageAttachments;
@@ -18,11 +19,7 @@ namespace acid
 	public:
 		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
-		Framebuffers(const Framebuffers&) = delete; 
-
 		~Framebuffers();
-
-		Framebuffers& operator=(const Framebuffers&) = delete;
 
 		const std::vector<std::unique_ptr<Texture>> &GetImageAttachments() const { return m_imageAttachments; }
 

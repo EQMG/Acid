@@ -15,7 +15,7 @@ namespace acid
 	public:
 		IFile() = default;
 
-		virtual ~IFile() = default;
+		~IFile() = default;
 
 		virtual void Load() = 0;
 

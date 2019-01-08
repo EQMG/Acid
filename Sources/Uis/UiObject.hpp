@@ -19,7 +19,8 @@ namespace acid
 	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
 	/// This class can be extended to create a representation for GUI textures, fonts, etc.
 	/// </summary>
-	class ACID_EXPORT UiObject
+	class ACID_EXPORT UiObject :
+		public NonCopyable
 	{
 	private:
 		UiObject *m_parent;
@@ -49,10 +50,6 @@ namespace acid
 		/// <param name="parent"> The parent screen object. </param>
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		UiObject(UiObject *parent, const UiBound &rectangle);
-
-		UiObject(const UiObject&) = delete;
-
-		UiObject& operator=(const UiObject&) = delete;
 
 		~UiObject();
 

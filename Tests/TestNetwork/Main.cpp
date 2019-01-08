@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	}*/
 
 	// Pauses the console.
-//	std::cout << "Press enter to continue...";
-//	std::cin.get();
+	std::cout << "Press enter to continue...";
+	std::cin.get();
 	return EXIT_SUCCESS;
 }

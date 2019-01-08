@@ -4,11 +4,13 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT XmlNode
+	class ACID_EXPORT XmlNode :
+		public NonCopyable
 	{
 	private:
 		XmlNode *m_parent;
@@ -18,10 +20,6 @@ namespace acid
 		std::string m_content;
 	public:
 		XmlNode(XmlNode *parent, const std::string &attributes, const std::string &content);
-
-		XmlNode(const XmlNode&) = delete;
-
-		XmlNode& operator=(const XmlNode&) = delete;
 
 		XmlNode *GetParent() const { return m_parent; }
 

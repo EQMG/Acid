@@ -1,6 +1,5 @@
 #include "ModuleManager.hpp"
 
-#include "Log.hpp"
 #include "Audio/Audio.hpp"
 #include "Display/Display.hpp"
 #include "Events/Events.hpp"
@@ -15,6 +14,8 @@
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Uis/Uis.hpp"
+#include "Log.hpp"
+#include "Module.hpp"
 
 namespace acid
 {

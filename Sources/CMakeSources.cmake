@@ -56,6 +56,7 @@ set(_temp_acid_headers
 		Helpers/Delegate.hpp
 		Helpers/dirent.h
 		Helpers/FileSystem.hpp
+		Helpers/NonCopyable.hpp
 		Helpers/String.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp

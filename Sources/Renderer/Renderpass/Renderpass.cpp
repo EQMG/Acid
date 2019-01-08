@@ -8,7 +8,7 @@ namespace acid
 	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
 		m_renderPass(VK_NULL_HANDLE),
 		m_attachments(std::vector<VkAttachmentDescription>()),
-		m_subpasses(std::vector<SubpassDescription>()),
+		m_subpasses(std::vector<std::unique_ptr<SubpassDescription>>()),
 		m_dependencies(std::vector<VkSubpassDependency>())
 	{
 		auto logicalDevice = Display::Get()->GetLogicalDevice();
@@ -77,7 +77,7 @@ namespace acid
 			// Subpass description.
 			VkSubpassDescription subpassDescription = {};
 			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			m_subpasses.emplace_back(SubpassDescription(subpassDescription, subpassColourAttachments, depthAttachment));
+			m_subpasses.emplace_back(std::make_unique<SubpassDescription>(subpassDescription, subpassColourAttachments, depthAttachment));
 
 			// Subpass dependencies.
 			VkSubpassDependency subpassDependency = {};
@@ -118,7 +118,7 @@ namespace acid
 
 		for (const auto &subpass : m_subpasses)
 		{
-			subpassDescriptions.emplace_back(subpass.GetSubpassDescription());
+			subpassDescriptions.emplace_back(subpass->GetSubpassDescription());
 		}
 
 		// Creates the render pass.

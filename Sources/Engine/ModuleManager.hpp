@@ -10,7 +10,8 @@ namespace acid
 	/// <summary>
 	/// A class that contains and manages modules registered to a engine.
 	/// </summary>
-	class ACID_EXPORT ModuleManager
+	class ACID_EXPORT ModuleManager :
+		public NonCopyable
 	{
 	private:
 		friend class ModuleUpdater;
@@ -18,10 +19,6 @@ namespace acid
 		std::map<float, std::unique_ptr<Module>> m_modules;
 	public:
 		ModuleManager();
-
-		ModuleManager(const ModuleManager&) = delete;
-
-		ModuleManager& operator=(const ModuleManager&) = delete;
 
 		/// <summary>
 		/// Fills the module register with default modules.
