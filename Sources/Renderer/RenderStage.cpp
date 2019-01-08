@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate) :
+	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain) :
 		m_stageIndex(stageIndex),
 		m_renderpassCreate(renderpassCreate),
 		m_renderpass(nullptr),
@@ -58,6 +58,8 @@ namespace acid
 
 			m_clearValues.emplace_back(clearValue);
 		}
+
+		Rebuild(swapchain);
 	}
 
 	void RenderStage::Rebuild(const Swapchain &swapchain)
