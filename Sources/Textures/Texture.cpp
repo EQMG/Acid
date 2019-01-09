@@ -1,6 +1,6 @@
 #include "Texture.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
@@ -57,7 +57,7 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
@@ -117,7 +117,7 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
@@ -161,7 +161,7 @@ namespace acid
 
 	Texture::~Texture()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);
@@ -201,7 +201,7 @@ namespace acid
 
 	uint8_t *Texture::GetPixels() const
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
@@ -230,7 +230,7 @@ namespace acid
 
 	void Texture::SetPixels(const uint8_t *pixels)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -314,7 +314,7 @@ namespace acid
 	void Texture::CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples,
 		const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -557,8 +557,8 @@ namespace acid
 
 	void Texture::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels)
 	{
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -583,7 +583,7 @@ namespace acid
 
 	void Texture::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -606,8 +606,8 @@ namespace acid
 
 	bool Texture::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
-		auto surface = Window::Get()->GetSurface();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+		auto surface = Renderer::Get()->GetSurface();
 
 		// Checks blit swapchain support.
 		bool supportsBlit = true;

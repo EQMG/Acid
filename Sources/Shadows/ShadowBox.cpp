@@ -1,7 +1,7 @@
 ﻿#include "ShadowBox.hpp"
 
 #include <array>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Maths/Maths.hpp"
 
 namespace acid
@@ -110,8 +110,8 @@ namespace acid
 	{
 		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFieldOfView()));
 		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFieldOfView()));
-		m_farHeight = m_farWidth / Window::Get()->GetAspectRatio();
-		m_nearHeight = m_nearWidth / Window::Get()->GetAspectRatio();
+		m_farHeight = m_farWidth / Renderer::Get()->GetWindow()->GetAspectRatio();
+		m_nearHeight = m_nearWidth / Renderer::Get()->GetWindow()->GetAspectRatio();
 	}
 
 	std::array<Vector4, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar)

@@ -41,7 +41,7 @@ namespace acid
 
 		explicit RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		const Fog &GetFog() const { return m_fog; }
 

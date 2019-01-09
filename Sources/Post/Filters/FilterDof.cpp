@@ -1,6 +1,7 @@
 #include "FilterDof.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -17,11 +18,12 @@ namespace acid
 	{
 	}
 
-	void FilterDof::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterDof::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
-		m_pushScene.Push("nearPlane", camera.GetNearPlane());
-		m_pushScene.Push("farPlane", camera.GetFarPlane());
+		auto camera = Scenes::Get()->GetCamera();
+		m_pushScene.Push("nearPlane", camera->GetNearPlane());
+		m_pushScene.Push("farPlane", camera->GetFarPlane());
 		m_pushScene.Push("focusPoint", m_focusPoint);
 		m_pushScene.Push("nearField", m_nearField);
 		m_pushScene.Push("nearTransition", m_nearTransition);

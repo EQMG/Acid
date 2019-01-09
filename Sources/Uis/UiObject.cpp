@@ -1,5 +1,6 @@
 ﻿#include "UiObject.hpp"
 
+#include "Renderer/Renderer.hpp"
 #include "Maths/Visual/DriverConstant.hpp"
 #include "Uis.hpp"
 
@@ -65,7 +66,7 @@ namespace acid
 		}
 
 		// Transform updates.
-		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
+		float aspectRatio = m_worldTransform ? 1.0f : Renderer::Get()->GetWindow()->GetAspectRatio();
 
 		Vector2 screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio);
 		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);

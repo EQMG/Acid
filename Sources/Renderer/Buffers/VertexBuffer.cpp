@@ -1,6 +1,6 @@
 ﻿#include "VertexBuffer.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -8,7 +8,7 @@ namespace acid
 		Buffer(elementSize * vertexCount, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT),
 		m_vertexCount(static_cast<uint32_t>(vertexCount))
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Copies the vertex data to the buffer.
 		void *data;

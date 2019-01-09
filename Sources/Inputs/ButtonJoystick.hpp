@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
+#include "Devices/Joysticks.hpp"
 #include "IButton.hpp"
-#include "Joysticks.hpp"
 
 namespace acid
 {

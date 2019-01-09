@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Maths/Vector4.hpp"
-#include "Scenes/Camera.hpp"
 #include "Commands/CommandBuffer.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
@@ -26,11 +24,13 @@ namespace acid
 		{
 		}
 
+		~RenderPipeline() = default;
+
 		/// <summary>
 		/// Runs the render pipeline in the current renderpass.
 		/// </summary>
-		/// <param name="camera"> The camera to be used when rendering. </param>
-		virtual void Render(const CommandBuffer &commandBuffer, const Camera &camera) = 0;
+		/// <param name="commandBuffer"> The command buffer to record render command into. </param>
+		virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
 

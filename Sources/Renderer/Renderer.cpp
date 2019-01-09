@@ -2,35 +2,36 @@
 
 #include <cassert>
 #include <SPIRV/GlslangToSpv.h>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
-#include "Scenes/Scenes.hpp"
 #include "RenderPipeline.hpp"
 
 namespace acid
 {
 	Renderer::Renderer() :
 		m_renderManager(nullptr),
-		m_rendererRegister(RendererRegister()),
 		m_renderStages(std::vector<std::unique_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
-		m_fenceSwapchainImage(VK_NULL_HANDLE),
-		m_activeSwapchainImage(UINT32_MAX),
 		m_pipelineCache(VK_NULL_HANDLE),
-		m_semaphore(VK_NULL_HANDLE),
 		m_commandPool(VK_NULL_HANDLE),
-		m_commandBuffer(nullptr)
+		m_presentSemaphore(VK_NULL_HANDLE),
+		m_commandBuffer(nullptr),
+		m_antialiasing(true),
+		m_window(std::make_unique<Window>()),
+		m_instance(std::make_unique<Instance>(m_window.get())),
+		m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
+		m_surface(std::make_unique<Surface>(m_window.get(), m_instance.get(), m_physicalDevice.get())),
+		m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get()))
 	{
 		glslang::InitializeProcess();
 
-		CreateFences();
 		CreateCommandPool();
 		CreatePipelineCache();
 	}
 
 	Renderer::~Renderer()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
 		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
@@ -39,21 +40,20 @@ namespace acid
 
 		vkDestroyPipelineCache(logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
 
-		vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceSwapchainImage, nullptr);
-		vkDestroySemaphore(logicalDevice->GetLogicalDevice(), m_semaphore, nullptr);
 		vkDestroyCommandPool(logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
+		vkDestroySemaphore(logicalDevice->GetLogicalDevice(), m_presentSemaphore, nullptr);
 	}
 
 	void Renderer::Update()
 	{
-		if (Window::Get()->IsIconified() || m_renderManager == nullptr)
+		if (m_renderManager == nullptr || m_window->IsIconified())
 		{
 			return;
 		}
 
 		if (!m_renderManager->m_started)
 		{
-			m_rendererRegister.Clear();
+			m_renderManager->GetRendererContainer().Clear();
 			CreateRenderpass(m_renderManager->m_renderpassCreates);
 			m_renderManager->Start();
 			m_renderManager->m_started = true;
@@ -61,8 +61,7 @@ namespace acid
 
 		m_renderManager->Update();
 
-		auto camera = Scenes::Get()->GetCamera();
-		auto &stages = m_rendererRegister.GetStages();
+		auto &stages = m_renderManager->GetRendererContainer().GetStages();
 
 		if (stages.empty())
 		{
@@ -72,21 +71,21 @@ namespace acid
 		std::optional<uint32_t> renderpass = {};
 		uint32_t subpass = 0;
 
-		for (auto &[key, renderers] : stages)
+		for (auto &[key, renderPipelines] : stages)
 		{
 			if (renderpass != key.GetRenderpass())
 			{
 				// Ends the previous renderpass.
 				if (renderpass)
 				{
-					EndRenderpass(*renderpass);
+					EndRenderpass(*GetRenderStage(*renderpass));
 				}
 
 				renderpass = key.GetRenderpass();
 				subpass = 0;
 
 				// Starts the next renderpass.
-				auto startResult = StartRenderpass(*renderpass);
+				auto startResult = StartRenderpass(*GetRenderStage(*renderpass));
 
 				if (!startResult)
 				{
@@ -108,42 +107,28 @@ namespace acid
 
 				for (uint32_t d = 0; d < difference; d++)
 				{
-					Renderer::Get()->NextSubpass();
+					vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 				}
 
 				subpass = key.GetSubpass();
 			}
 
-			// Renders subpass renderers.
-			for (auto &renderer : renderers)
+			// Renders subpass render pipeline.
+			for (auto &renderPipeline : renderPipelines)
 			{
-				if (!renderer->IsEnabled())
+				if (!renderPipeline->IsEnabled())
 				{
 					continue;
 				}
 
-				renderer->Render(*m_commandBuffer, *camera);
+				renderPipeline->Render(*m_commandBuffer);
 			}
 		}
 
 		// Ends the last renderpass.
-		EndRenderpass(*renderpass);
-	}
-
-	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
-	{
-		VkExtent2D displayExtent = {
-			Window::Get()->GetWidth(),
-			Window::Get()->GetHeight()
-		};
-
-		m_renderStages.clear();
-		m_swapchain = std::make_unique<Swapchain>(displayExtent);
-
-		for (const auto &renderpassCreate : renderpassCreates)
+		if (renderpass)
 		{
-			m_renderStages.emplace_back(std::make_unique<RenderStage>(static_cast<uint32_t>(m_renderStages.size()),
-				renderpassCreate, *m_swapchain));
+			EndRenderpass(*GetRenderStage(*renderpass));
 		}
 	}
 
@@ -153,12 +138,12 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
-		auto surface = Window::Get()->GetSurface();
-		auto width = Window::Get()->GetWidth();
-		auto height = Window::Get()->GetHeight();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		auto surface = Renderer::Get()->GetSurface();
+		auto width = m_window->GetWidth();
+		auto height = m_window->GetHeight();
 
-		VkImage srcImage = m_swapchain->GetImages().at(m_activeSwapchainImage);
+		VkImage srcImage = m_swapchain->GetActiveImage();
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
 		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height, true, 0, 1);
@@ -245,23 +230,14 @@ namespace acid
 		return nullptr;
 	}
 
-	void Renderer::CreateFences()
-	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
-
-		VkFenceCreateInfo fenceCreateInfo = {};
-		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
-	}
-
 	void Renderer::CreateCommandPool()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Window::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_semaphore));
+		Window::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentSemaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -274,27 +250,43 @@ namespace acid
 
 	void Renderer::CreatePipelineCache()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 		Window::CheckVk(vkCreatePipelineCache(logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
-	void Renderer::RecreatePass(const uint32_t &i)
+	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		VkExtent2D displayExtent = {
+			m_window->GetWidth(),
+			m_window->GetHeight()
+		};
+
+		m_renderStages.clear();
+		m_swapchain = std::make_unique<Swapchain>(displayExtent);
+
+		for (const auto &renderpassCreate : renderpassCreates)
+		{
+			m_renderStages.emplace_back(std::make_unique<RenderStage>(static_cast<uint32_t>(m_renderStages.size()),
+				renderpassCreate, *m_swapchain));
+		}
+	}
+
+	void Renderer::RecreatePass(RenderStage &renderStage)
+	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
-		auto renderStage = GetRenderStage(i);
 
 		VkExtent2D displayExtent = {
-			Window::Get()->GetWidth(),
-			Window::Get()->GetHeight()
+			m_window->GetWidth(),
+			m_window->GetHeight()
 		};
 
 		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
+		if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
 #if defined(ACID_VERBOSE)
 			Log::Out("Resizing swapchain: Old (%i, %i), New (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
@@ -302,42 +294,36 @@ namespace acid
 			m_swapchain = std::make_unique<Swapchain>(displayExtent);
 		}
 
-		renderStage->Rebuild(*m_swapchain);
+		renderStage.Rebuild(*m_swapchain);
 	}
 
-	bool Renderer::StartRenderpass(const uint32_t &i)
+	bool Renderer::StartRenderpass(RenderStage &renderStage)
 	{
-		auto renderStage = GetRenderStage(i);
-
-		if (renderStage->IsOutOfDate(m_swapchain->GetExtent()))
+		if (renderStage.IsOutOfDate(m_swapchain->GetExtent()))
 		{
-			RecreatePass(i);
+			RecreatePass(renderStage);
 			return false;
 		}
 
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
 		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-		if (renderStage->HasSwapchain())
+		if (renderStage.HasSwapchain())
 		{
-			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			VkResult acquireResult = m_swapchain->AcquireNextImage();
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
-				RecreatePass(i);
+				RecreatePass(renderStage);
 				return false;
 			}
 
-			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
+			if (acquireResult != VK_SUCCESS)
 			{
-				assert(false && "Renderer failed to acquire swapchain image!");
+				return false;
 			}
-
-			Window::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceSwapchainImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
-
-			Window::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceSwapchainImage));
 		}
 
 		if (!m_commandBuffer->IsRunning())
@@ -348,16 +334,16 @@ namespace acid
 		VkRect2D renderArea = {};
 		renderArea.offset = { 0, 0 };
 		renderArea.extent = {
-			renderStage->GetWidth(),
-			renderStage->GetHeight()
+			renderStage.GetWidth(),
+			renderStage.GetHeight()
 		};
 
-		auto clearValues = renderStage->GetClearValues();
+		auto clearValues = renderStage.GetClearValues();
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {};
 		renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassBeginInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
-		renderPassBeginInfo.framebuffer = renderStage->GetActiveFramebuffer(m_activeSwapchainImage);
+		renderPassBeginInfo.renderPass = renderStage.GetRenderpass()->GetRenderpass();
+		renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(m_swapchain->GetActiveImageIndex());
 		renderPassBeginInfo.renderArea = renderArea;
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
@@ -366,41 +352,38 @@ namespace acid
 		VkViewport viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(renderStage->GetWidth());
-		viewport.height = static_cast<float>(renderStage->GetHeight());
+		viewport.width = static_cast<float>(renderArea.extent.width);
+		viewport.height = static_cast<float>(renderArea.extent.height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
 		vkCmdSetViewport(m_commandBuffer->GetCommandBuffer(), 0, 1, &viewport);
 
 		VkRect2D scissor = {};
 		scissor.offset = { 0, 0 };
-		scissor.extent = {
-			renderStage->GetWidth(),
-			renderStage->GetHeight()
-		};
+		scissor.extent = renderArea.extent;
 		vkCmdSetScissor(m_commandBuffer->GetCommandBuffer(), 0, 1, &scissor);
 
 		return true;
 	}
 
-	void Renderer::EndRenderpass(const uint32_t &i)
+	void Renderer::EndRenderpass(RenderStage &renderStage)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto presentQueue = logicalDevice->GetPresentQueue();
-		auto renderStage = GetRenderStage(i);
 
 		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
 
-		if (!renderStage->HasSwapchain())
+		if (!renderStage.HasSwapchain())
 		{
 			return;
 		}
 
 		m_commandBuffer->End();
-		m_commandBuffer->Submit(m_semaphore, VK_NULL_HANDLE, false);
+		m_commandBuffer->Submit(m_presentSemaphore, VK_NULL_HANDLE, false);
 
-		VkSemaphore waitSemaphores[1] = { m_semaphore };
+		VkSemaphore waitSemaphores[1] = { m_presentSemaphore };
 		VkSwapchainKHR swapchains[1] = { m_swapchain->GetSwapchain() };
+		uint32_t imageIndices[1] = { m_swapchain->GetActiveImageIndex() };
 
 		VkResult presentResult = VK_RESULT_MAX_ENUM;
 
@@ -410,22 +393,18 @@ namespace acid
 		presentInfo.pWaitSemaphores = waitSemaphores;
 		presentInfo.swapchainCount = 1;
 		presentInfo.pSwapchains = swapchains;
-		presentInfo.pImageIndices = &m_activeSwapchainImage;
+		presentInfo.pImageIndices = imageIndices;
 		presentInfo.pResults = &presentResult;
 		VkResult queuePresentResult = vkQueuePresentKHR(presentQueue, &presentInfo);
 
 		if (queuePresentResult == VK_ERROR_OUT_OF_DATE_KHR || queuePresentResult == VK_SUBOPTIMAL_KHR)
 		{
-			RecreatePass(i);
+			RecreatePass(renderStage);
 			return;
 		}
 
 		Window::CheckVk(presentResult);
+		m_window->PollEvents();
 		Window::CheckVk(vkQueueWaitIdle(presentQueue));
-	}
-
-	void Renderer::NextSubpass()
-	{
-		vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 	}
 }

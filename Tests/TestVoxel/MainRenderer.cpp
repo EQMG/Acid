@@ -1,22 +1,22 @@
 #include "MainRenderer.hpp"
 
-#include <Scenes/Scenes.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Meshes/RendererMeshes.hpp>
+#include <Devices/Keyboard.hpp>
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
-#include <Shadows/RendererShadows.hpp>
-#include <Particles/RendererParticles.hpp>
+#include <Meshes/RendererMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
+#include <Particles/RendererParticles.hpp>
 #include <Post/Deferred/RendererDeferred.hpp>
-#include <Post/Filters/FilterFxaa.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
-#include <Post/Filters/FilterGrain.hpp>
-#include <Post/Filters/FilterTiltshift.hpp>
-#include <Post/Filters/FilterSsao.hpp>
 #include <Post/Filters/FilterDefault.hpp>
+#include <Post/Filters/FilterFxaa.hpp>
+#include <Post/Filters/FilterGrain.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/FilterSsao.hpp>
+#include <Post/Filters/FilterTiltshift.hpp>
 #include <Post/Filters/FilterVignette.hpp>
-#include <Inputs/Keyboard.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
+#include <Shadows/RendererShadows.hpp>
 
 namespace test
 {
@@ -48,23 +48,23 @@ namespace test
 
 	void MainRenderer::Start()
 	{
-		auto &rendererRegister = Renderer::Get()->GetRendererRegister();
-	//	rendererRegister.Add<RendererShadows>(GraphicsStage(0, 0));
+		auto &rendererContainer = GetRendererContainer();
+	//	rendererContainer.Add<RendererShadows>(GraphicsStage(0, 0));
 
-		rendererRegister.Add<RendererMeshes>(GraphicsStage(1, 0));
+		rendererContainer.Add<RendererMeshes>(GraphicsStage(1, 0));
 
-		rendererRegister.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
-		rendererRegister.Add<RendererParticles>(GraphicsStage(1, 1));
+		rendererContainer.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
+		rendererContainer.Add<RendererParticles>(GraphicsStage(1, 1));
 
-	//	rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterLensflare>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterTiltshift>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterGrain>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterVignette>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterSsao>(GraphicsStage(1, 2));
-		rendererRegister.Add<FilterDefault>(GraphicsStage(1, 2), true);
-		rendererRegister.Add<RendererGuis>(GraphicsStage(1, 2));
-		rendererRegister.Add<RendererFonts>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterFxaa>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterLensflare>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterTiltshift>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterGrain>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterVignette>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterSsao>(GraphicsStage(1, 2));
+		rendererContainer.Add<FilterDefault>(GraphicsStage(1, 2), true);
+		rendererContainer.Add<RendererGuis>(GraphicsStage(1, 2));
+		rendererContainer.Add<RendererFonts>(GraphicsStage(1, 2));
 	}
 
 	void MainRenderer::Update()

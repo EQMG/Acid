@@ -1,6 +1,6 @@
 #include "DescriptorSet.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Descriptor.hpp"
 
 namespace acid
@@ -11,7 +11,7 @@ namespace acid
 		m_descriptorPool(pipeline.GetDescriptorPool()),
 		m_descriptorSet(VK_NULL_HANDLE)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkDescriptorSetLayout layouts[1] = { pipeline.GetDescriptorSetLayout() };
 
@@ -26,14 +26,14 @@ namespace acid
 
 	DescriptorSet::~DescriptorSet()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		Window::CheckVk(vkFreeDescriptorSets(logicalDevice->GetLogicalDevice(), m_descriptorPool, 1, &m_descriptorSet));
 	}
 
 	void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}

@@ -1,14 +1,14 @@
-#include "RendererRegister.hpp"
+#include "RendererContainer.hpp"
 
 namespace acid
 {
-	RendererRegister::RendererRegister() :
+	RendererContainer::RendererContainer() :
 		m_mutex(std::mutex()),
 		m_stages(std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>>())
 	{
 	}
 
-	RenderPipeline *RendererRegister::Add(RenderPipeline *renderer)
+	RenderPipeline *RendererContainer::Add(RenderPipeline *renderer)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -37,7 +37,7 @@ namespace acid
 		return renderer;
 	}
 
-	void RendererRegister::Remove(RenderPipeline *renderer)
+	void RendererContainer::Remove(RenderPipeline *renderer)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 

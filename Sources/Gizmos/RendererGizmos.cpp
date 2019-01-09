@@ -1,6 +1,7 @@
 #include "RendererGizmos.hpp"
 
 #include "Models/VertexModel.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Gizmos.hpp"
 
 namespace acid
@@ -13,10 +14,11 @@ namespace acid
 	{
 	}
 
-	void RendererGizmos::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererGizmos::Render(const CommandBuffer &commandBuffer)
 	{
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
+		auto camera = Scenes::Get()->GetCamera();
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
 
 		auto &gizmos = Gizmos::Get()->GetGizmos();
 

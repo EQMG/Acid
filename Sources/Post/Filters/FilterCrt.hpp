@@ -19,7 +19,7 @@ namespace acid
 	public:
 		explicit FilterCrt(const GraphicsStage &graphicsStage, const Colour &screenColour = Colour(0.5f, 1.0f, 0.5f), const float &curveAmountX = 0.1f, const float &curveAmountY = 0.1f, const float &scanLineSize = 1000.0f, const float &scanIntensity = 0.1f);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		const Colour &GetScreenColour() const { return m_screenColour; }
 

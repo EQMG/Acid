@@ -1,9 +1,10 @@
 #include "CameraFps.hpp"
 
 #include <Scenes/Scenes.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Maths/Quaternion.hpp>
+#include <Renderer/Renderer.hpp>
 #include <Physics/CollisionObject.hpp>
 #include "PlayerFps.hpp"
 
@@ -85,7 +86,7 @@ namespace test
 		UpdatePosition();
 
 		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
-		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Renderer::Get()->GetWindow()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
 		m_viewRay.Update(m_position, Vector2(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix); // Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()

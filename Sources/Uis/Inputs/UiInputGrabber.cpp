@@ -1,6 +1,6 @@
 ﻿#include "UiInputGrabber.hpp"
 
-#include "Inputs/Keyboard.hpp"
+#include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Scenes/Scenes.hpp"
 

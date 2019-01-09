@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <algorithm>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -84,7 +84,7 @@ namespace acid
 
 	PipelineGraphics::~PipelineGraphics()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		for (const auto &shaderModule : m_modules)
 		{
@@ -158,7 +158,7 @@ namespace acid
 
 	void PipelineGraphics::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
@@ -172,7 +172,7 @@ namespace acid
 
 	void PipelineGraphics::CreateDescriptorPool()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
@@ -187,7 +187,7 @@ namespace acid
 
 	void PipelineGraphics::CreatePipelineLayout()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		std::vector<VkPushConstantRange> pushConstantRanges = {};
 		uint32_t currentOffset = 0;
@@ -218,7 +218,7 @@ namespace acid
 
 	void PipelineGraphics::CreateAttributes()
 	{
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -303,7 +303,7 @@ namespace acid
 
 	void PipelineGraphics::CreatePipeline()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 

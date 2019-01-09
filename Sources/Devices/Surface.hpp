@@ -7,6 +7,7 @@
 
 namespace acid
 {
+	class Window;
 	class Instance;
 	class PhysicalDevice;
 
@@ -18,6 +19,7 @@ namespace acid
 	private:
 		friend class Window;
 
+		const Window *m_window;
 		const Instance *m_instance;
 		const PhysicalDevice *m_physicalDevice;
 
@@ -25,7 +27,7 @@ namespace acid
 		VkSurfaceCapabilitiesKHR m_capabilities;
 		VkSurfaceFormatKHR m_format;
 	public:
-		Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
+		Surface(const Window *window, const Instance *instance, const PhysicalDevice *physicalDevice);
 
 		~Surface();
 

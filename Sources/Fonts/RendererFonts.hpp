@@ -3,7 +3,6 @@
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
-#include "Text.hpp"
 
 namespace acid
 {
@@ -16,6 +15,6 @@ namespace acid
 	public:
 		explicit RendererFonts(const GraphicsStage &graphicsStage);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	};
 }

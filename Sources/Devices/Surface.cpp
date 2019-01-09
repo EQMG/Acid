@@ -7,7 +7,8 @@
 
 namespace acid
 {
-	Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
+	Surface::Surface(const Window *window, const Instance *instance, const PhysicalDevice *physicalDevice) :
+		m_window(window),
 		m_instance(instance),
 		m_physicalDevice(physicalDevice),
 		m_surface(VK_NULL_HANDLE),
@@ -15,7 +16,7 @@ namespace acid
 		m_format({})
 	{
 		// Creates the surface.
-		Window::Get()->CreateSurface(m_instance->GetInstance(), nullptr, &m_surface);
+		m_window->CreateSurface(m_instance->GetInstance(), nullptr, &m_surface);
 
 		Window::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &m_capabilities));
 

@@ -5,7 +5,7 @@
 #include <Files/Json/FileJson.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -213,7 +213,7 @@ namespace test
 
 		if (m_buttonFullscreen.WasDown())
 		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			Renderer::Get()->GetWindow()->SetFullscreen(!Renderer::Get()->GetWindow()->IsFullscreen());
 		}
 
 		if (m_buttonCaptureMouse.WasDown())

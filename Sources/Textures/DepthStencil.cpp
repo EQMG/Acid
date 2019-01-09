@@ -1,7 +1,7 @@
 #include "DepthStencil.hpp"
 
 #include <cassert>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Texture.hpp"
 
 namespace acid
@@ -25,7 +25,7 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_UNDEFINED)
 	{
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
 		for (const auto &format : TRY_FORMATS)
 		{
@@ -53,7 +53,7 @@ namespace acid
 
 	DepthStencil::~DepthStencil()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
 		vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);

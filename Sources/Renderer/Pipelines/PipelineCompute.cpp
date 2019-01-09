@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <cassert>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -49,7 +49,7 @@ namespace acid
 
 	PipelineCompute::~PipelineCompute()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkDestroyShaderModule(logicalDevice->GetLogicalDevice(), m_shaderModule, nullptr);
 
@@ -102,7 +102,7 @@ namespace acid
 
 	void PipelineCompute::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
@@ -116,7 +116,7 @@ namespace acid
 
 	void PipelineCompute::CreateDescriptorPool()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
@@ -131,7 +131,7 @@ namespace acid
 
 	void PipelineCompute::CreatePipelineLayout()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -142,7 +142,7 @@ namespace acid
 
 	void PipelineCompute::CreatePipelineCompute()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkComputePipelineCreateInfo pipelineCreateInfo = {};

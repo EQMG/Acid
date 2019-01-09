@@ -1,7 +1,7 @@
 #include "ShaderProgram.hpp"
 
 #include <SPIRV/GlslangToSpv.h>
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Renderer/Buffers/StorageBuffer.hpp"
@@ -489,7 +489,7 @@ namespace acid
 
 	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Starts converting GLSL to SPIR-V.
 		EShLanguage language = GetEshLanguage(stageFlag);

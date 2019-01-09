@@ -1,6 +1,6 @@
 #include "CommandBuffer.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -11,7 +11,7 @@ namespace acid
 		m_commandBuffer(VK_NULL_HANDLE),
 		m_running(false)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
@@ -29,7 +29,7 @@ namespace acid
 
 	CommandBuffer::~CommandBuffer()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
 
 		vkFreeCommandBuffers(logicalDevice->GetLogicalDevice(), commandPool, 1, &m_commandBuffer);
@@ -54,7 +54,7 @@ namespace acid
 
 	void CommandBuffer::Submit(VkSemaphore signalSemaphore, VkFence fence, const bool &createFence)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
 
 		VkSubmitInfo submitInfo = {};
@@ -100,7 +100,7 @@ namespace acid
 
 	VkQueue CommandBuffer::GetQueue() const
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		switch (m_queueType)
 		{

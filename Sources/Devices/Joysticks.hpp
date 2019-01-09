@@ -28,27 +28,24 @@ namespace acid
 	};
 
 	/// <summary>
-	/// A definition for a managed joystick.
-	/// </summary>
-	struct Joystick
-	{
-		JoystickPort m_port;
-		bool m_connected;
-		std::string m_name;
-
-		const float *m_axes;
-		const uint8_t *m_buttons;
-		uint32_t m_axeCount;
-		uint32_t m_buttonCount;
-	};
-
-	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
 	class ACID_EXPORT Joysticks :
 		public Module
 	{
 	private:
+		struct Joystick
+		{
+			JoystickPort m_port{};
+			bool m_connected{};
+			std::string m_name{};
+
+			const float *m_axes{};
+			const uint8_t *m_buttons{};
+			uint32_t m_axeCount{};
+			uint32_t m_buttonCount{};
+		};
+
 		std::array<Joystick, JOYSTICK_END_RANGE> m_connected;
 	public:
 		/// <summary>

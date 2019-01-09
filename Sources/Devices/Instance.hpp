@@ -6,17 +6,19 @@
 
 namespace acid
 {
+	class Window;
+
 	class ACID_EXPORT Instance
 	{
 	private:
-		bool m_validationLayers;
+		const Window *m_window;
 
+		bool m_validationLayers;
 		std::vector<const char *> m_instanceLayers;
 		std::vector<const char *> m_instanceExtensions;
 		std::vector<const char *> m_deviceExtensions;
 
 		VkDebugReportCallbackEXT m_debugReportCallback;
-
 		VkInstance m_instance;
 
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,
@@ -26,7 +28,7 @@ namespace acid
 		static const std::vector<const char *> INSTANCE_EXTENSIONS;
 		static const std::vector<const char *> DEVICE_EXTENSIONS;
 
-		Instance();
+		Instance(const Window *window);
 
 		~Instance();
 

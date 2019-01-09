@@ -118,7 +118,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void RendererFonts2::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererFonts2::Render(const CommandBuffer &commandBuffer)
 	{
 		m_storageBuffer.Stage(m_glyph_data, 0, m_glyph_data_size);
 

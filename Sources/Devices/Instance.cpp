@@ -80,10 +80,11 @@ namespace acid
 		}
 
 		assert(false && "Vulkan runtime error, couldn't find proper memory type!");
-		return UINT32_MAX;
+		return std::numeric_limits<uint32_t>::max();
 	}
 
-	Instance::Instance() :
+	Instance::Instance(const Window *window) :
+		m_window(window),
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
 		m_validationLayers(true),
 #else
@@ -152,7 +153,7 @@ namespace acid
 	void Instance::SetupExtensions()
 	{
 		// Sets up the extensions.
-		auto instanceExtensions = Window::Get()->GetInstanceExtensions();
+		auto instanceExtensions = m_window->GetInstanceExtensions();
 
 		for (uint32_t i = 0; i < instanceExtensions.second; i++)
 		{

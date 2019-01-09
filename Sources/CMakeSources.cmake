@@ -73,9 +73,9 @@ set(_temp_acid_headers
 		Inputs/IAxis.hpp
 		Inputs/IButton.hpp
 		Inputs/InputDelay.hpp
-		Inputs/Joysticks.hpp
-		Inputs/Keyboard.hpp
-		Inputs/Mouse.hpp
+		Devices/Joysticks.hpp
+		Devices/Keyboard.hpp
+		Devices/Mouse.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
 		Materials/Material.hpp
@@ -193,8 +193,8 @@ set(_temp_acid_headers
 		Renderer/Pipelines/PipelineGraphics.hpp
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
+		Renderer/RendererContainer.hpp
 		Renderer/RenderPipeline.hpp
-		Renderer/RendererRegister.hpp
 		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
@@ -296,9 +296,9 @@ set(_temp_acid_sources
 		Inputs/ButtonKeyboard.cpp
 		Inputs/ButtonMouse.cpp
 		Inputs/InputDelay.cpp
-		Inputs/Joysticks.cpp
-		Inputs/Keyboard.cpp
-		Inputs/Mouse.cpp
+		Devices/Joysticks.cpp
+		Devices/Keyboard.cpp
+		Devices/Mouse.cpp
 		Lights/Fog.cpp
 		Lights/Light.cpp
 		Materials/MaterialDefault.cpp
@@ -410,7 +410,7 @@ set(_temp_acid_sources
 		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/ShaderProgram.cpp
 		Renderer/Renderer.cpp
-		Renderer/RendererRegister.cpp
+		Renderer/RendererContainer.cpp
 		Renderer/Renderpass/Renderpass.cpp
 		Renderer/RenderStage.cpp
 		Renderer/Swapchain/Framebuffers.cpp

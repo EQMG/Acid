@@ -1,8 +1,8 @@
 #include "RenderStage.hpp"
 
 #include <algorithm>
-#include "Devices/Window.hpp"
-#include "Devices/Window.hpp"
+#include <cassert>
+#include "Renderer.hpp"
 
 namespace acid
 {
@@ -69,8 +69,8 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
-		auto surface = Window::Get()->GetSurface();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+		auto surface = Renderer::Get()->GetSurface();
 
 		auto msaaSamples = physicalDevice->GetMsaaSamples();
 
@@ -112,7 +112,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			width = Window::Get()->GetWidth();
+			width = Renderer::Get()->GetWindow()->GetWidth();
 		}
 		else
 		{
@@ -128,7 +128,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			height = Window::Get()->GetHeight();
+			height = Renderer::Get()->GetWindow()->GetHeight();
 		}
 		else
 		{

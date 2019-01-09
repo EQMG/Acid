@@ -2,9 +2,9 @@
 
 #include <array>
 #include <optional>
+#include "Devices/Mouse.hpp"
 #include "Inputs/AxisJoystick.hpp"
 #include "Inputs/ButtonJoystick.hpp"
-#include "Inputs/Mouse.hpp"
 #include "UiObject.hpp"
 
 namespace acid

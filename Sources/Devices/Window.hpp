@@ -6,22 +6,16 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Maths/Vector2.hpp"
-#include "Instance.hpp"
-#include "LogicalDevice.hpp"
-#include "PhysicalDevice.hpp"
-#include "Surface.hpp"
 
 struct GLFWwindow;
 struct GLFWmonitor;
 
 namespace acid
 {
-
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class ACID_EXPORT Window :
-		public Module
+	class ACID_EXPORT Window
 	{
 	private:
 		uint32_t m_windowWidth;
@@ -35,7 +29,6 @@ namespace acid
 
 		std::string m_title;
 		std::string m_iconPath;
-		bool m_antialiasing;
 		bool m_borderless;
 		bool m_resizable;
 		bool m_floating;
@@ -46,11 +39,6 @@ namespace acid
 		bool m_iconified;
 
 		GLFWwindow *m_window;
-
-		std::unique_ptr<Instance> m_instance;
-		std::unique_ptr<PhysicalDevice> m_physicalDevice;
-		std::unique_ptr<Surface> m_surface;
-		std::unique_ptr<LogicalDevice> m_logicalDevice;
 
 		friend void CallbackError(int32_t error, const char *description);
 
@@ -68,23 +56,17 @@ namespace acid
 
 		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static Window *Get() { return Engine::Get()->GetModuleManager().Get<Window>(); }
-
 		Window();
 
 		~Window();
 
-		void Update() override;
+		void PollEvents();
 
 		/// <summary>
 		/// Gets the width of the window in pixels.
 		/// </summary>
 		/// <returns> The width of the window. </returns>
-		const uint32_t &GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		const uint32_t &GetWidth() const { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the window in pixels.
@@ -102,7 +84,7 @@ namespace acid
 		/// Gets the height of the window in pixels.
 		/// </summary>
 		/// <returns> The height of the window. </returns>
-		const uint32_t &GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		const uint32_t &GetHeight() const { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the window in pixels.
@@ -126,7 +108,7 @@ namespace acid
 		/// Gets the dimensions of the window in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetDimensions() { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
+		Vector2 GetDimensions() const { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
 
 		/// <summary>
 		/// Sets the window size to a new size.
@@ -157,7 +139,7 @@ namespace acid
 		/// Gets the windows position in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetPosition() { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
+		Vector2 GetPosition() const { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
 
 		/// <summary>
 		/// Sets the window position to a new position in pixels.
@@ -195,18 +177,6 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The new icon file. </param>
 		void SetIcon(const std::string &filename);
-
-		/// <summary>
-		/// Gets if the window requests antialiased images.
-		/// </summary>
-		/// <returns> If using antialiased images. </returns>
-		const bool &IsAntialiasing() const { return m_antialiasing; }
-
-		/// <summary>
-		/// Requests the window to antialias.
-		/// </summary>
-		/// <param name="antialiasing"> If the window should antialias. </param>
-		void SetAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
 
 		/// <summary>
 		/// Gets weather the window is borderless or not.
@@ -289,14 +259,6 @@ namespace acid
 		static void CheckVk(const VkResult &result);
 
 		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
-
-		const Instance *GetInstance() const { return m_instance.get(); }
-
-		const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
-
-		const Surface *GetSurface() const { return m_surface.get(); }
-
-		const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
 
 		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
