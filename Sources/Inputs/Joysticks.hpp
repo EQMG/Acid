@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid
@@ -24,10 +24,7 @@ namespace acid
 		JOYSTICK_14 = 13,
 		JOYSTICK_15 = 14,
 		JOYSTICK_16 = 15,
-		JOYSTICK_BEGIN_RANGE = JOYSTICK_1,
-		JOYSTICK_END_RANGE = JOYSTICK_16,
-		JOYSTICK_RANGE_SIZE = (JOYSTICK_16 - JOYSTICK_1 + 1),
-		JOYSTICK_MAX_ENUM = 0x7FFFFFFF
+		JOYSTICK_END_RANGE = JOYSTICK_16
 	};
 
 	/// <summary>

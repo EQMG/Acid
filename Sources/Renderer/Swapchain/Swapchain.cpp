@@ -1,6 +1,6 @@
 ﻿#include "Swapchain.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -13,20 +13,21 @@ namespace acid
 		m_swapchainImageViews(std::vector<VkImageView>()),
 		m_extent({})
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		auto surface = Display::Get()->GetSurface();
-		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		auto surfaceCapabilities = Display::Get()->GetSurfaceCapabilities();
-		auto graphicsFamily = Display::Get()->GetGraphicsFamily();
-		auto presentFamily = Display::Get()->GetPresentFamily();
+		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto surface = Window::Get()->GetSurface();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+
+		auto surfaceFormat = surface->GetFormat();
+		auto surfaceCapabilities = surface->GetCapabilities();
+		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
+		auto presentFamily = logicalDevice->GetPresentFamily();
 
 		m_extent = extent;
 
 		uint32_t physicalPresentModeCount = 0;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, nullptr);
+		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice->GetPhysicalDevice(), surface->GetSurface(), &physicalPresentModeCount, nullptr);
 		std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
-		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, physicalPresentModes.data());
+		vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice->GetPhysicalDevice(), surface->GetSurface(), &physicalPresentModeCount, physicalPresentModes.data());
 
 		for (const auto &presentMode : physicalPresentModes)
 		{
@@ -50,7 +51,7 @@ namespace acid
 
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		swapchainCreateInfo.surface = surface;
+		swapchainCreateInfo.surface = surface->GetSurface();
 		swapchainCreateInfo.minImageCount = m_swapchainImageCount;
 		swapchainCreateInfo.imageFormat = surfaceFormat.format;
 		swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -90,12 +91,12 @@ namespace acid
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
-		Display::CheckVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
+		Window::CheckVk(vkCreateSwapchainKHR(logicalDevice->GetLogicalDevice(), &swapchainCreateInfo, nullptr, &m_swapchain));
 
-		Display::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, nullptr));
+		Window::CheckVk(vkGetSwapchainImagesKHR(logicalDevice->GetLogicalDevice(), m_swapchain, &m_swapchainImageCount, nullptr));
 		m_swapchainImages.resize(m_swapchainImageCount);
 		m_swapchainImageViews.resize(m_swapchainImageCount);
-		Display::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, m_swapchain, &m_swapchainImageCount, m_swapchainImages.data()));
+		Window::CheckVk(vkGetSwapchainImagesKHR(logicalDevice->GetLogicalDevice(), m_swapchain, &m_swapchainImageCount, m_swapchainImages.data()));
 
 		for (uint32_t i = 0; i < m_swapchainImageCount; i++)
 		{
@@ -105,13 +106,13 @@ namespace acid
 
 	Swapchain::~Swapchain()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		for (const auto &imageView : m_swapchainImageViews)
 		{
-			vkDestroyImageView(logicalDevice, imageView, nullptr);
+			vkDestroyImageView(logicalDevice->GetLogicalDevice(), imageView, nullptr);
 		}
 
-		vkDestroySwapchainKHR(logicalDevice, m_swapchain, nullptr);
+		vkDestroySwapchainKHR(logicalDevice->GetLogicalDevice(), m_swapchain, nullptr);
 	}
 }

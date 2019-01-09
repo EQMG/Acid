@@ -1,7 +1,7 @@
 #include "ModuleManager.hpp"
 
 #include "Audio/Audio.hpp"
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Events/Events.hpp"
 #include "Files/Files.hpp"
 #include "Gizmos/Gizmos.hpp"
@@ -27,7 +27,7 @@ namespace acid
 
 	void ModuleManager::FillRegister()
 	{
-		Add<Display>(MODULE_UPDATE_POST);
+		Add<Window>(MODULE_UPDATE_POST);
 		Add<Joysticks>(MODULE_UPDATE_PRE);
 		Add<Keyboard>(MODULE_UPDATE_PRE);
 		Add<Mouse>(MODULE_UPDATE_PRE);

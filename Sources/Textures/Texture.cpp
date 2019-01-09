@@ -1,6 +1,6 @@
 #include "Texture.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
@@ -57,7 +57,7 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		auto pixels = LoadPixels(m_filename, &m_width, &m_height, &m_components);
 
@@ -67,9 +67,9 @@ namespace acid
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
 		CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
@@ -117,7 +117,7 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		m_mipLevels = mipmap ? GetMipLevels(m_width, m_height) : 1;
 
@@ -135,9 +135,9 @@ namespace acid
 				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
-			Display::CheckVk(vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
+			Window::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
 			memcpy(data, pixels, bufferStaging.GetSize());
-			vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+			vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
 			CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 1);
 		}
@@ -161,12 +161,12 @@ namespace acid
 
 	Texture::~Texture()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkFreeMemory(logicalDevice, m_deviceMemory, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
+		vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
+		vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), m_deviceMemory, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 	}
 
 	VkDescriptorSetLayoutBinding Texture::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
@@ -201,7 +201,7 @@ namespace acid
 
 	uint8_t *Texture::GetPixels() const
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
@@ -213,32 +213,32 @@ namespace acid
 		imageSubresource.arrayLayer = 0;
 
 		VkSubresourceLayout subresourceLayout;
-		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
+		vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
 
 		auto result = new uint8_t[subresourceLayout.size];
 
 		void *data;
-		vkMapMemory(logicalDevice, dstImageMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
 		memcpy(result, data, static_cast<size_t>(subresourceLayout.size));
-		vkUnmapMemory(logicalDevice, dstImageMemory);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
 
-		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
-		vkDestroyImage(logicalDevice, dstImage, nullptr);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
 		return result;
 	}
 
 	void Texture::SetPixels(const uint8_t *pixels)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		Buffer bufferStaging = Buffer(m_width * m_height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 	}
 
 	uint8_t *Texture::LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components)
@@ -314,7 +314,7 @@ namespace acid
 	void Texture::CreateImage(VkImage &image, VkDeviceMemory &imageMemory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples,
 		const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -329,18 +329,18 @@ namespace acid
 		imageCreateInfo.usage = usage;
 		imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-		Display::CheckVk(vkCreateImage(logicalDevice, &imageCreateInfo, nullptr, &image));
+		Window::CheckVk(vkCreateImage(logicalDevice->GetLogicalDevice(), &imageCreateInfo, nullptr, &image));
 
 		VkMemoryRequirements memoryRequirements;
-		vkGetImageMemoryRequirements(logicalDevice, image, &memoryRequirements);
+		vkGetImageMemoryRequirements(logicalDevice->GetLogicalDevice(), image, &memoryRequirements);
 
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &imageMemory));
+		Window::CheckVk(vkAllocateMemory(logicalDevice->GetLogicalDevice(), &memoryAllocateInfo, nullptr, &imageMemory));
 
-		Display::CheckVk(vkBindImageMemory(logicalDevice, image, imageMemory, 0));
+		Window::CheckVk(vkBindImageMemory(logicalDevice->GetLogicalDevice(), image, imageMemory, 0));
 	}
 
 	bool Texture::HasStencilComponent(const VkFormat &format)
@@ -557,7 +557,8 @@ namespace acid
 
 	void Texture::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkSamplerCreateInfo samplerCreateInfo = {};
 		samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -570,19 +571,19 @@ namespace acid
 		samplerCreateInfo.mipLodBias = 0.0f;
 		samplerCreateInfo.anisotropyEnable = static_cast<VkBool32>(anisotropic);
 		samplerCreateInfo.maxAnisotropy = std::min(ANISOTROPY,
-			Display::Get()->GetPhysicalDeviceProperties().limits.maxSamplerAnisotropy);
+			physicalDevice->GetProperties().limits.maxSamplerAnisotropy);
 		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
 		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
-		Display::CheckVk(vkCreateSampler(logicalDevice, &samplerCreateInfo, nullptr, &sampler));
+		Window::CheckVk(vkCreateSampler(logicalDevice->GetLogicalDevice(), &samplerCreateInfo, nullptr, &sampler));
 	}
 
 	void Texture::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkImageViewCreateInfo imageViewCreateInfo = {};
 		imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -600,20 +601,20 @@ namespace acid
 		imageViewCreateInfo.subresourceRange.levelCount = mipLevels;
 		imageViewCreateInfo.subresourceRange.baseArrayLayer = baseArrayLayer;
 		imageViewCreateInfo.subresourceRange.layerCount = layerCount;
-		Display::CheckVk(vkCreateImageView(logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
+		Window::CheckVk(vkCreateImageView(logicalDevice->GetLogicalDevice(), &imageViewCreateInfo, nullptr, &imageView));
 	}
 
 	bool Texture::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
-		auto physicalDevice = Display::Get()->GetPhysicalDevice();
-		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
+		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto surface = Window::Get()->GetSurface();
 
 		// Checks blit swapchain support.
 		bool supportsBlit = true;
 		VkFormatProperties formatProperties;
 
 		// Check if the device supports blitting from optimal images (the swapchain images are in optimal format).
-		vkGetPhysicalDeviceFormatProperties(physicalDevice, surfaceFormat.format, &formatProperties);
+		vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), surface->GetFormat().format, &formatProperties);
 
 		if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 		{
@@ -621,7 +622,7 @@ namespace acid
 		}
 
 		// Check if the device supports blitting to linear images.
-		vkGetPhysicalDeviceFormatProperties(physicalDevice, VK_FORMAT_R8G8B8A8_UNORM, &formatProperties);
+		vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), VK_FORMAT_R8G8B8A8_UNORM, &formatProperties);
 
 		if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 		{

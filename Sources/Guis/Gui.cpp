@@ -1,6 +1,6 @@
 ﻿#include "Gui.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid

@@ -1,7 +1,7 @@
 #include "DepthStencil.hpp"
 
 #include <cassert>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Texture.hpp"
 
 namespace acid
@@ -25,12 +25,12 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_UNDEFINED)
 	{
-		auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		auto physicalDevice = Window::Get()->GetPhysicalDevice();
 
 		for (const auto &format : TRY_FORMATS)
 		{
 			VkFormatProperties formatProperties = {};
-			vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &formatProperties);
+			vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), format, &formatProperties);
 
 			if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
 			{
@@ -53,11 +53,11 @@ namespace acid
 
 	DepthStencil::~DepthStencil()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
+		vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
+		vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 	}
 
 	VkDescriptorSetLayoutBinding DepthStencil::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)

@@ -1,6 +1,6 @@
 ﻿#include "InstanceBuffer.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 
 namespace acid
 {
@@ -11,12 +11,12 @@ namespace acid
 
 	void InstanceBuffer::Update(const void *newData)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		// Copies the data to the buffer.
 		void *data;
-		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
 		memcpy(data, newData, static_cast<std::size_t>(m_size));
-		vkUnmapMemory(logicalDevice, m_bufferMemory);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 	}
 }

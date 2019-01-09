@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid
@@ -19,10 +19,7 @@ namespace acid
 		MOUSE_BUTTON_LEFT = 0,
 		MOUSE_BUTTON_RIGHT = 1,
 		MOUSE_BUTTON_MIDDLE = 2,
-		MOUSE_BUTTON_BEGIN_RANGE = MOUSE_BUTTON_1,
-		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8,
-		MOUSE_BUTTON_RANGE_SIZE = (MOUSE_BUTTON_8 - MOUSE_BUTTON_1 + 1),
-		MOUSE_BUTTON_MAX_ENUM = 0x7FFFFFFF
+		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8
 	};
 
 	/// <summary>

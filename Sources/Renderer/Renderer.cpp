@@ -1,6 +1,8 @@
 #include "Renderer.hpp"
 
 #include <cassert>
+#include <SPIRV/GlslangToSpv.h>
+#include "Devices/Window.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 #include "RenderPipeline.hpp"
@@ -19,6 +21,8 @@ namespace acid
 		m_commandPool(VK_NULL_HANDLE),
 		m_commandBuffer(nullptr)
 	{
+		glslang::InitializeProcess();
+
 		CreateFences();
 		CreateCommandPool();
 		CreatePipelineCache();
@@ -26,21 +30,23 @@ namespace acid
 
 	Renderer::~Renderer()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-		vkDestroyPipelineCache(logicalDevice, m_pipelineCache, nullptr);
+		glslang::FinalizeProcess();
 
-		vkDestroyFence(logicalDevice, m_fenceSwapchainImage, nullptr);
-		vkDestroySemaphore(logicalDevice, m_semaphore, nullptr);
-		vkDestroyCommandPool(logicalDevice, m_commandPool, nullptr);
+		vkDestroyPipelineCache(logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
+
+		vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceSwapchainImage, nullptr);
+		vkDestroySemaphore(logicalDevice->GetLogicalDevice(), m_semaphore, nullptr);
+		vkDestroyCommandPool(logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
 	}
 
 	void Renderer::Update()
 	{
-		if (Display::Get()->IsIconified() || m_renderManager == nullptr)
+		if (Window::Get()->IsIconified() || m_renderManager == nullptr)
 		{
 			return;
 		}
@@ -127,8 +133,8 @@ namespace acid
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
 	{
 		VkExtent2D displayExtent = {
-			Display::Get()->GetWidth(),
-			Display::Get()->GetHeight()
+			Window::Get()->GetWidth(),
+			Window::Get()->GetHeight()
 		};
 
 		m_renderStages.clear();
@@ -147,10 +153,10 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		auto width = Display::Get()->GetWidth();
-		auto height = Display::Get()->GetHeight();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto surface = Window::Get()->GetSurface();
+		auto width = Window::Get()->GetWidth();
+		auto height = Window::Get()->GetHeight();
 
 		VkImage srcImage = m_swapchain->GetImages().at(m_activeSwapchainImage);
 		VkImage dstImage;
@@ -162,14 +168,14 @@ namespace acid
 		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 
 		VkSubresourceLayout subresourceLayout;
-		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
+		vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
 
 		// Creates the screenshot image file.
 		FileSystem::Create(filename);
 
 		// Map image memory so we can start copying from it.
 		char *data;
-		vkMapMemory(logicalDevice, dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
 		data += subresourceLayout.offset;
 
 		// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'll have to manually swizzle color components
@@ -179,7 +185,7 @@ namespace acid
 		if (!supportsBlit)
 		{
 			std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surfaceFormat.format) != formatsBGR.end();
+			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surface->GetFormat().format) != formatsBGR.end();
 		}
 
 		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subresourceLayout.size));
@@ -204,9 +210,9 @@ namespace acid
 		Texture::WritePixels(filename, pixels.get(), width, height, 4);
 
 		// Clean up resources.
-		vkUnmapMemory(logicalDevice, dstImageMemory);
-		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
-		vkDestroyImage(logicalDevice, dstImage, nullptr);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
@@ -241,50 +247,52 @@ namespace acid
 
 	void Renderer::CreateFences()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
+		vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_fenceSwapchainImage);
 	}
 
 	void Renderer::CreateCommandPool()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Display::CheckVk(vkCreateSemaphore(logicalDevice, &semaphoreCreateInfo, nullptr, &m_semaphore));
+		Window::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_semaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-		commandPoolCreateInfo.queueFamilyIndex = Display::Get()->GetGraphicsFamily();
-		Display::CheckVk(vkCreateCommandPool(logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
+		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
+		Window::CheckVk(vkCreateCommandPool(logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
 	}
 
 	void Renderer::CreatePipelineCache()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-		Display::CheckVk(vkCreatePipelineCache(logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+		Window::CheckVk(vkCreatePipelineCache(logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::RecreatePass(const uint32_t &i)
 	{
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 		auto renderStage = GetRenderStage(i);
 
 		VkExtent2D displayExtent = {
-			Display::Get()->GetWidth(),
-			Display::Get()->GetHeight()
+			Window::Get()->GetWidth(),
+			Window::Get()->GetHeight()
 		};
 
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage->HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
@@ -307,14 +315,14 @@ namespace acid
 			return false;
 		}
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto graphicsQueue = Display::Get()->GetGraphicsQueue();
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-		Display::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage->HasSwapchain())
 		{
-			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice, m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
+			VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain->GetSwapchain(), std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceSwapchainImage, &m_activeSwapchainImage);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
@@ -327,9 +335,9 @@ namespace acid
 				assert(false && "Renderer failed to acquire swapchain image!");
 			}
 
-			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &m_fenceSwapchainImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+			Window::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceSwapchainImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-			Display::CheckVk(vkResetFences(logicalDevice, 1, &m_fenceSwapchainImage));
+			Window::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceSwapchainImage));
 		}
 
 		if (!m_commandBuffer->IsRunning())
@@ -377,8 +385,9 @@ namespace acid
 
 	void Renderer::EndRenderpass(const uint32_t &i)
 	{
+		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto presentQueue = logicalDevice->GetPresentQueue();
 		auto renderStage = GetRenderStage(i);
-		auto presentQueue = Display::Get()->GetPresentQueue();
 
 		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
 
@@ -411,8 +420,8 @@ namespace acid
 			return;
 		}
 
-		Display::CheckVk(presentResult);
-		Display::CheckVk(vkQueueWaitIdle(presentQueue));
+		Window::CheckVk(presentResult);
+		Window::CheckVk(vkQueueWaitIdle(presentQueue));
 	}
 
 	void Renderer::NextSubpass()

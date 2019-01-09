@@ -2,19 +2,25 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Maths/Vector2.hpp"
+#include "Instance.hpp"
+#include "LogicalDevice.hpp"
+#include "PhysicalDevice.hpp"
+#include "Surface.hpp"
 
 struct GLFWwindow;
 struct GLFWmonitor;
 
 namespace acid
 {
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class ACID_EXPORT Display :
+	class ACID_EXPORT Window :
 		public Module
 	{
 	private:
@@ -39,38 +45,12 @@ namespace acid
 		bool m_focused;
 		bool m_iconified;
 
-		bool m_validationLayers;
-
 		GLFWwindow *m_window;
 
-		std::vector<const char *> m_instanceLayerList;
-		std::vector<const char *> m_instanceExtensionList;
-		std::vector<const char *> m_deviceExtensionList;
-
-		VkDebugReportCallbackEXT m_debugReportCallback;
-
-		VkInstance m_instance;
-		VkSurfaceKHR m_surface;
-		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
-		VkSurfaceFormatKHR m_surfaceFormat;
-		VkDevice m_logicalDevice;
-
-		VkSampleCountFlagBits m_msaaSamples;
-
-		VkPhysicalDevice m_physicalDevice;
-		VkPhysicalDeviceProperties m_physicalDeviceProperties;
-		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
-		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
-
-		VkQueueFlags m_supportedQueues;
-		uint32_t m_graphicsFamily;
-		uint32_t m_presentFamily;
-		uint32_t m_computeFamily;
-		uint32_t m_transferFamily;
-		VkQueue m_graphicsQueue;
-		VkQueue m_presentQueue;
-		VkQueue m_computeQueue;
-		VkQueue m_transferQueue;
+		std::unique_ptr<Instance> m_instance;
+		std::unique_ptr<PhysicalDevice> m_physicalDevice;
+		std::unique_ptr<Surface> m_surface;
+		std::unique_ptr<LogicalDevice> m_logicalDevice;
 
 		friend void CallbackError(int32_t error, const char *description);
 
@@ -87,28 +67,18 @@ namespace acid
 		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
 
 		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
-
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 	public:
-		static VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
-
-		static void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
-
-		static void FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet* pDescriptorWrites);
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Display *Get() { return Engine::Get()->GetModuleManager().Get<Display>(); }
+		static Window *Get() { return Engine::Get()->GetModuleManager().Get<Window>(); }
 
-		Display();
+		Window();
 
-		~Display();
+		~Window();
 
 		void Update() override;
-
-		uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the width of the window in pixels.
@@ -320,68 +290,16 @@ namespace acid
 
 		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
-		const VkInstance &GetInstance() const { return m_instance; }
+		const Instance *GetInstance() const { return m_instance.get(); }
 
-		const VkSurfaceKHR &GetSurface() const { return m_surface; }
+		const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
 
-		const VkSurfaceCapabilitiesKHR &GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
+		const Surface *GetSurface() const { return m_surface.get(); }
 
-		const VkSurfaceFormatKHR &GetSurfaceFormat() const { return m_surfaceFormat; }
+		const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
 
-		const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
+		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
-		const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
-
-		const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }
-
-		const VkPhysicalDeviceProperties &GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
-
-		const VkPhysicalDeviceFeatures &GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
-
-		const VkPhysicalDeviceMemoryProperties &GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
-
-		const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
-
-		const VkQueue &GetPresentQueue() const { return m_presentQueue; }
-
-		const VkQueue &GetComputeQueue() const { return m_computeQueue; }
-
-		const VkQueue &GetTransferQueue() const { return m_transferQueue; }
-
-		const uint32_t &GetGraphicsFamily() const { return m_graphicsFamily; }
-
-		const uint32_t &GetPresentFamily() const { return m_presentFamily; }
-
-		const uint32_t &GetComputeFamily() const { return m_computeFamily; }
-
-		const uint32_t &GetTransferFamily() const { return m_transferFamily; }
-	private:
-		void CreateGlfw();
-
-		void SetupLayers();
-
-		void SetupExtensions();
-
-		void CreateInstance();
-
-		void CreateDebugCallback();
-
-		void CreatePhysicalDevice();
-
-		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
-
-		int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
-
-		VkSampleCountFlagBits GetMaxUsableSampleCount();
-
-		void CreateSurface();
-
-		void CreateQueueIndices();
-
-		void CreateLogicalDevice();
-
-		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties);
-
-		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
+		VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
 	};
 }
