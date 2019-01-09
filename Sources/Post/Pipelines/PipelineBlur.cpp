@@ -1,6 +1,6 @@
 #include "PipelineBlur.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -19,12 +19,12 @@ namespace acid
 	{
 	}
 
-	void PipelineBlur::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void PipelineBlur::Render(const CommandBuffer &commandBuffer)
 	{
 		if (!m_toScreen)
 		{
-			uint32_t width = Window::Get()->GetWidth();
-			uint32_t height = Window::Get()->GetHeight();
+			uint32_t width = Renderer::Get()->GetWindow()->GetWidth();
+			uint32_t height = Renderer::Get()->GetWindow()->GetHeight();
 
 			if (width != m_lastWidth || height != m_lastHeight)
 			{
@@ -46,7 +46,7 @@ namespace acid
 		m_filterBlurVertical.SetDirection(Vector2(0.0f, m_blur));
 		m_filterBlurHorizontal.SetDirection(Vector2(m_blur, 0.0f));
 
-		m_filterBlurVertical.Render(commandBuffer, camera);
-		m_filterBlurHorizontal.Render(commandBuffer, camera);
+		m_filterBlurVertical.Render(commandBuffer);
+		m_filterBlurHorizontal.Render(commandBuffer);
 	}
 }

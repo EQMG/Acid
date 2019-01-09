@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<VoxelChunk>("VoxelChunk");
 
 	// Sets values to modules.
-	Window::Get()->SetTitle("Test Voxel");
-	Window::Get()->SetIcon("Logos/Flask.png");
+	Renderer::Get()->GetWindow()->SetTitle("Test Voxel");
+	Renderer::Get()->GetWindow()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

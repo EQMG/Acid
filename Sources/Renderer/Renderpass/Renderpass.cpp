@@ -1,6 +1,6 @@
 ﻿#include "Renderpass.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Textures/DepthStencil.hpp"
 
 namespace acid
@@ -11,7 +11,7 @@ namespace acid
 		m_subpasses(std::vector<std::unique_ptr<SubpassDescription>>()),
 		m_dependencies(std::vector<VkSubpassDependency>())
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Creates the renderpasses attachment descriptions,
 		for (const auto &image : renderpassCreate.GetImages())
@@ -135,7 +135,7 @@ namespace acid
 
 	Renderpass::~Renderpass()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkDestroyRenderPass(logicalDevice->GetLogicalDevice(), m_renderPass, nullptr);
 	}

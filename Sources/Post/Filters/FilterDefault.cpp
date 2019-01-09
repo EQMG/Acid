@@ -8,7 +8,7 @@ namespace acid
 	{
 	}
 
-	void FilterDefault::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterDefault::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates descriptors.
 	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

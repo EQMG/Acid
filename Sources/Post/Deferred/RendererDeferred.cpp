@@ -38,8 +38,10 @@ namespace acid
 	{
 	}
 
-	void RendererDeferred::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	{
+		auto camera = Scenes::Get()->GetCamera();
+
 		if (m_lightModel == DEFERRED_IBL)
 		{
 			auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
@@ -82,11 +84,11 @@ namespace acid
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
 		m_uniformScene.Push("fogColour", m_fog.GetColour());
-		m_uniformScene.Push("cameraPosition", camera.GetPosition());
+		m_uniformScene.Push("cameraPosition", camera->GetPosition());
 		m_uniformScene.Push("fogDensity", m_fog.GetDensity());
 		m_uniformScene.Push("fogGradient", m_fog.GetGradient());
 		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());

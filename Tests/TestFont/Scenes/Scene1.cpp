@@ -23,7 +23,7 @@ namespace test
 	{
 		if (m_buttonFullscreen.WasDown())
 		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			Renderer::Get()->GetWindow()->SetFullscreen(!Renderer::Get()->GetWindow()->IsFullscreen());
 		}
 
 		if (m_buttonScreenshot.WasDown())

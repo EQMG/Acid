@@ -1,6 +1,7 @@
 #include "Mouse.hpp"
 
 #include <GLFW/glfw3.h>
+#include "Renderer/Renderer.hpp"
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Textures/Texture.hpp"
@@ -19,8 +20,8 @@ namespace acid
 
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 	{
-		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetWidth());
-		Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetHeight()));
+		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Renderer::Get()->GetWindow()->GetWidth());
+		Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Renderer::Get()->GetWindow()->GetHeight()));
 	}
 
 	void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
@@ -49,10 +50,10 @@ namespace acid
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Window::Get()->GetWindow(), CallbackScroll);
-		glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
-		glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
-		glfwSetCursorEnterCallback(Window::Get()->GetWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(Renderer::Get()->GetWindow()->GetWindow(), CallbackScroll);
+		glfwSetMouseButtonCallback(Renderer::Get()->GetWindow()->GetWindow(), CallbackMouseButton);
+		glfwSetCursorPosCallback(Renderer::Get()->GetWindow()->GetWindow(), CallbackCursorPos);
+		glfwSetCursorEnterCallback(Renderer::Get()->GetWindow()->GetWindow(), CallbackCursorEnter);
 	}
 
 	void Mouse::Update()
@@ -104,7 +105,7 @@ namespace acid
 		image[0].height = height;
 
 		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
-		glfwSetCursor(Window::Get()->GetWindow(), cursor);
+		glfwSetCursor(Renderer::Get()->GetWindow()->GetWindow(), cursor);
 		Texture::DeletePixels(data);
 	}
 
@@ -112,11 +113,11 @@ namespace acid
 	{
 		if (m_cursorDisabled != disabled)
 		{
-			glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(Renderer::Get()->GetWindow()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
 
 			if (!disabled && m_cursorDisabled)
 			{
-				glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePositionX * Window::Get()->GetWidth(), m_mousePositionY * Window::Get()->GetHeight());
+				glfwSetCursorPos(Renderer::Get()->GetWindow()->GetWindow(), m_mousePositionX * Renderer::Get()->GetWindow()->GetWidth(), m_mousePositionY * Renderer::Get()->GetWindow()->GetHeight());
 			}
 		}
 
@@ -137,7 +138,7 @@ namespace acid
 	{
 		m_mousePositionX = cursorX;
 		m_mousePositionY = cursorY;
-		glfwSetCursorPos(Window::Get()->GetWindow(), cursorX * Window::Get()->GetWidth(), cursorY * Window::Get()->GetHeight());
+		glfwSetCursorPos(Renderer::Get()->GetWindow()->GetWindow(), cursorX * Renderer::Get()->GetWindow()->GetWidth(), cursorY * Renderer::Get()->GetWindow()->GetHeight());
 	}
 
 	void Mouse::SetPosition(const Vector2 &position)

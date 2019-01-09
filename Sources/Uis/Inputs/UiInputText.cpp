@@ -1,6 +1,6 @@
 ﻿#include "UiInputText.hpp"
 
-#include "Inputs/Keyboard.hpp"
+#include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
@@ -13,7 +13,7 @@ namespace acid
 	const float UiInputText::SCALE_SELECTED = 1.1f;
 
 	UiInputText::UiInputText(UiObject *parent, const std::string &prefix, const std::string &value,
-	                         const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour) :
+	    const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + value, FontType::Create("Fonts/ProximaNova", "Regular"),

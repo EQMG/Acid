@@ -20,55 +20,63 @@ namespace acid
 
 	void CallbackClose(GLFWwindow *window)
 	{
-		Window::Get()->m_closed = false;
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+		userPointer->m_closed = false;
 		Engine::Get()->RequestClose(false);
 	}
 
 	void CallbackFocus(GLFWwindow *window, int32_t focused)
 	{
-		Window::Get()->m_focused = static_cast<bool>(focused);
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+		userPointer->m_focused = static_cast<bool>(focused);
 	}
 
 	void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 	{
-		if (!Window::Get()->m_fullscreen)
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+
+		if (!userPointer->m_fullscreen)
 		{
-			Window::Get()->m_positionX = static_cast<uint32_t>(xpos);
-			Window::Get()->m_positionY = static_cast<uint32_t>(ypos);
+			userPointer->m_positionX = static_cast<uint32_t>(xpos);
+			userPointer->m_positionY = static_cast<uint32_t>(ypos);
 		}
 	}
 
 	void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 	{
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+
 		if (width <= 0 || height <= 0)
 		{
 			return;
 		}
 
-		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		userPointer->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-		if (Window::Get()->m_fullscreen)
+		if (userPointer->m_fullscreen)
 		{
-			Window::Get()->m_fullscreenWidth = static_cast<uint32_t>(width);
-			Window::Get()->m_fullscreenHeight = static_cast<uint32_t>(height);
+			userPointer->m_fullscreenWidth = static_cast<uint32_t>(width);
+			userPointer->m_fullscreenHeight = static_cast<uint32_t>(height);
 		}
 		else
 		{
-			Window::Get()->m_windowWidth = static_cast<uint32_t>(width);
-			Window::Get()->m_windowHeight = static_cast<uint32_t>(height);
+			userPointer->m_windowWidth = static_cast<uint32_t>(width);
+			userPointer->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
-	//	Window::CheckVk(vkGetPhysicalDeviceWindowCapabilitiesKHR(Window::Get()->m_physicalDevice, Window::Get()->m_surface, &Window::Get()->m_surfaceCapabilities)); // FIXME
+	//	Window::CheckVk(vkGetPhysicalDeviceWindowCapabilitiesKHR(Renderer::Get()->GetWindow()->m_physicalDevice, Renderer::Get()->GetWindow()->m_surface, &Renderer::Get()->GetWindow()->m_surfaceCapabilities)); // FIXME
 	}
 
 	void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 	{
-		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+		userPointer->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	}
 
 	void CallbackIconify(GLFWwindow *window, int32_t iconified)
 	{
-		Window::Get()->m_iconified = iconified == GLFW_TRUE;
+		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
+		userPointer->m_iconified = iconified == GLFW_TRUE;
 	}
 
 	Window::Window() :
@@ -81,7 +89,6 @@ namespace acid
 		m_positionY(0),
 		m_title("Acid Loading..."),
 		m_iconPath(""),
-		m_antialiasing(true),
 		m_borderless(false),
 		m_resizable(true),
 		m_floating(false),
@@ -89,11 +96,7 @@ namespace acid
 		m_closed(false),
 		m_focused(true),
 		m_iconified(false),
-		m_window(nullptr),
-		m_instance(nullptr),
-		m_physicalDevice(nullptr),
-		m_surface(nullptr),
-		m_logicalDevice(nullptr)
+		m_window(nullptr)
 	{
 		// Set the error error callback
 		glfwSetErrorCallback(CallbackError);
@@ -150,6 +153,9 @@ namespace acid
 			assert(false && "Filed to create the GLFW window!");
 		}
 
+		// Sets the user pointer.
+		glfwSetWindowUserPointer(m_window, this);
+
 		// Window attributes that can change later.
 		glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
 		glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
@@ -171,11 +177,6 @@ namespace acid
 		glfwSetWindowSizeCallback(m_window, CallbackSize);
 		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
 		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
-
-		m_instance = std::make_unique<Instance>();
-		m_physicalDevice = std::make_unique<PhysicalDevice>(m_instance.get());
-		m_surface = std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get());
-		m_logicalDevice = std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get());
 	}
 
 	Window::~Window()
@@ -189,7 +190,7 @@ namespace acid
 		m_closed = true;
 	}
 
-	void Window::Update()
+	void Window::PollEvents()
 	{
 		// Polls for window events.
 		glfwPollEvents();
@@ -206,7 +207,7 @@ namespace acid
 	void Window::SetDimensions(const Vector2 &size)
 	{
 		SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x),
-		              size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
+			size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
 	}
 
 	void Window::SetPosition(const uint32_t &x, const uint32_t &y)
@@ -217,7 +218,7 @@ namespace acid
 	void Window::SetPosition(const Vector2 &position)
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-		            position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 
 	void Window::SetTitle(const std::string &title)

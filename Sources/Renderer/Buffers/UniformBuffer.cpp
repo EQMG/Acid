@@ -1,6 +1,6 @@
 ﻿#include "UniformBuffer.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -12,7 +12,7 @@ namespace acid
 
 	void UniformBuffer::Update(const void *newData)
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Copies the data to the buffer.
 		void *data;

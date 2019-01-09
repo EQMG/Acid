@@ -1,7 +1,7 @@
 ﻿#include "Buffer.hpp"
 
+#include <array>
 #include <cassert>
-#include "Devices/Window.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -16,13 +16,13 @@ namespace acid
 			return;
 		}
 
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
 		auto presentFamily = logicalDevice->GetPresentFamily();
 		auto computeFamily = logicalDevice->GetComputeFamily();
 
-		std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
+		std::array<uint32_t, 3> queueFamily = { graphicsFamily, presentFamily, computeFamily };
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -48,7 +48,7 @@ namespace acid
 
 	Buffer::~Buffer()
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkDestroyBuffer(logicalDevice->GetLogicalDevice(), m_buffer, nullptr);
 		vkFreeMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, nullptr);
@@ -56,7 +56,7 @@ namespace acid
 
 	void Buffer::CopyBuffer(void *data) const
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
@@ -64,7 +64,7 @@ namespace acid
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 	{
-		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
 		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
 		vkGetPhysicalDeviceMemoryProperties(physicalDevice->GetPhysicalDevice(), &physicalDeviceMemoryProperties);

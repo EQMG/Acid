@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void FilterTiltshift::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("blurAmount", m_blurAmount);

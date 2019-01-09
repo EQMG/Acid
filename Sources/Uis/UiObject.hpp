@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 #include "Helpers/Delegate.hpp"
-#include "Inputs/Mouse.hpp"
+#include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
+#include "Devices/Mouse.hpp"
 #include "IButton.hpp"
-#include "Mouse.hpp"
 
 namespace acid
 {

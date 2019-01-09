@@ -1,6 +1,6 @@
 ﻿#include "IndexBuffer.hpp"
 
-#include "Devices/Window.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -9,7 +9,7 @@ namespace acid
 		m_indexType(indexType),
 		m_indexCount(static_cast<uint32_t>(indexCount))
 	{
-		auto logicalDevice = Window::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Copies the index data to the buffer.
 		void *data;

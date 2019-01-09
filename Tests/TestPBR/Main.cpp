@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "Scenes/PlayerFps.hpp"
@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Sets values to modules.
-	Window::Get()->SetTitle("Test PBR");
-	Window::Get()->SetIcon("Logos/Flask.png");
+	Renderer::Get()->GetWindow()->SetTitle("Test PBR");
+	Renderer::Get()->GetWindow()->SetIcon("Logos/Flask.png");
 //	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

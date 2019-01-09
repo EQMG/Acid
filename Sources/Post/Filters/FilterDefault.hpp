@@ -12,6 +12,6 @@ namespace acid
 	public:
 		explicit FilterDefault(const GraphicsStage &graphicsStage, const bool &lastFilter = false);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	};
 }

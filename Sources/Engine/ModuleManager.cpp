@@ -1,13 +1,12 @@
 #include "ModuleManager.hpp"
 
 #include "Audio/Audio.hpp"
-#include "Devices/Window.hpp"
 #include "Events/Events.hpp"
 #include "Files/Files.hpp"
 #include "Gizmos/Gizmos.hpp"
-#include "Inputs/Joysticks.hpp"
-#include "Inputs/Keyboard.hpp"
-#include "Inputs/Mouse.hpp"
+#include "Devices/Joysticks.hpp"
+#include "Devices/Keyboard.hpp"
+#include "Devices/Mouse.hpp"
 #include "Particles/Particles.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
@@ -27,15 +26,14 @@ namespace acid
 
 	void ModuleManager::FillRegister()
 	{
-		Add<Window>(MODULE_UPDATE_POST);
+		Add<Renderer>(MODULE_UPDATE_RENDER);
+		Add<Audio>(MODULE_UPDATE_PRE);
 		Add<Joysticks>(MODULE_UPDATE_PRE);
 		Add<Keyboard>(MODULE_UPDATE_PRE);
 		Add<Mouse>(MODULE_UPDATE_PRE);
-		Add<Audio>(MODULE_UPDATE_PRE);
 		Add<Files>(MODULE_UPDATE_PRE);
 		Add<Scenes>(MODULE_UPDATE_NORMAL);
 		Add<Gizmos>(MODULE_UPDATE_NORMAL);
-		Add<Renderer>(MODULE_UPDATE_RENDER);
 		Add<Resources>(MODULE_UPDATE_PRE);
 		Add<Events>(MODULE_UPDATE_ALWAYS);
 		Add<Uis>(MODULE_UPDATE_PRE);

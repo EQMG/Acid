@@ -15,7 +15,7 @@ namespace acid
 	public:
 		explicit FilterWobble(const GraphicsStage &graphicsStage, const float &wobbleSpeed = 2.0f);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		const float &GetWobbleSpeed() const { return m_wobbleSpeed; }
 

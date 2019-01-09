@@ -19,10 +19,11 @@ namespace acid
 	{
 	}
 
-	void RendererShadows::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererShadows::Render(const CommandBuffer &commandBuffer)
 	{
+		auto camera = Scenes::Get()->GetCamera();
 		m_uniformScene.Push("projectionView", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix());
-		m_uniformScene.Push("cameraPosition", camera.GetPosition());
+		m_uniformScene.Push("cameraPosition", camera->GetPosition());
 
 		vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), DEPTH_BIAS_CONSTANT, 0.0f, DEPTH_BIAS_SLOPE);
 

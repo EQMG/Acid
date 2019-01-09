@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Maths/Vector2.hpp"
 #include "Post/PostFilter.hpp"
 
 namespace acid
@@ -22,7 +23,7 @@ namespace acid
 	public:
 		explicit FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType = BLUR_TYPE_9);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		const Vector2 &GetDirection() const { return m_direction; }
 
