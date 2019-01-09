@@ -1,6 +1,6 @@
 #include "PipelineBlur.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 
 namespace acid
 {
@@ -23,8 +23,8 @@ namespace acid
 	{
 		if (!m_toScreen)
 		{
-			uint32_t width = Display::Get()->GetWidth();
-			uint32_t height = Display::Get()->GetHeight();
+			uint32_t width = Window::Get()->GetWidth();
+			uint32_t height = Window::Get()->GetHeight();
 
 			if (width != m_lastWidth || height != m_lastHeight)
 			{

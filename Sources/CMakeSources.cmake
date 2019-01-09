@@ -18,7 +18,11 @@ set(_temp_acid_headers
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
 		Audio/stb_vorbis.h
-		Display/Display.hpp
+		Devices/Instance.hpp
+		Devices/LogicalDevice.hpp
+		Devices/PhysicalDevice.hpp
+		Devices/Surface.hpp
+		Devices/Window.hpp
 		Emitters/Emitter.hpp
 		Emitters/EmitterCircle.hpp
 		Emitters/EmitterLine.hpp
@@ -249,7 +253,11 @@ set(_temp_acid_sources
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
-		Display/Display.cpp
+		Devices/Instance.cpp
+		Devices/LogicalDevice.cpp
+		Devices/PhysicalDevice.cpp
+		Devices/Surface.cpp
+		Devices/Window.cpp
 		Emitters/EmitterCircle.cpp
 		Emitters/EmitterLine.cpp
 		Emitters/EmitterPoint.cpp

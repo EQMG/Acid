@@ -1,6 +1,6 @@
 #include "FilterDof.hpp"
 
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 
 namespace acid
 {

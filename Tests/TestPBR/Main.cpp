@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Sets values to modules.
-	Display::Get()->SetTitle("Test PBR");
-	Display::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetTitle("Test PBR");
+	Window::Get()->SetIcon("Logos/Flask.png");
 //	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

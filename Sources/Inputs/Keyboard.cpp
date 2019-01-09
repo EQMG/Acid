@@ -30,8 +30,8 @@ namespace acid
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
+		glfwSetKeyCallback(Window::Get()->GetWindow(), CallbackKey);
+		glfwSetCharCallback(Window::Get()->GetWindow(), CallbackChar);
 	}
 
 	void Keyboard::Update()

@@ -1,7 +1,8 @@
 #include "RenderStage.hpp"
 
 #include <algorithm>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
+#include "Devices/Window.hpp"
 
 namespace acid
 {
@@ -68,8 +69,10 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto surfaceFormat = Display::Get()->GetSurfaceFormat();
-		auto msaaSamples = Display::Get()->GetMsaaSamples();
+		auto physicalDevice = Window::Get()->GetPhysicalDevice();
+		auto surface = Window::Get()->GetSurface();
+
+		auto msaaSamples = physicalDevice->GetMsaaSamples();
 
 		if (m_depthAttachment)
 		{
@@ -78,7 +81,7 @@ namespace acid
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surfaceFormat.format, msaaSamples);
+			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surface->GetFormat().format, msaaSamples);
 		}
 
 		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
@@ -109,7 +112,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			width = Display::Get()->GetWidth();
+			width = Window::Get()->GetWidth();
 		}
 		else
 		{
@@ -125,7 +128,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			height = Display::Get()->GetHeight();
+			height = Window::Get()->GetHeight();
 		}
 		else
 		{

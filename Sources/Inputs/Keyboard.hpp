@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid
@@ -15,11 +15,12 @@ namespace acid
 
 	enum InputMod
 	{
-		KEY_MOD_SHIFT = 1,
-		KEY_MOD_CONTROL = 2,
-		KEY_MOD_ALT = 4,
-		KEY_MOD_SUPER = 8
+		INPUT_MOD_SHIFT = 1,
+		INPUT_MOD_CONTROL = 2,
+		INPUT_MOD_ALT = 4,
+		INPUT_MOD_SUPER = 8
 	};
+	typedef uint32_t InputMods;
 
 	enum Key
 	{
@@ -144,10 +145,7 @@ namespace acid
 		KEY_RIGHT_ALT = 346,
 		KEY_RIGHT_SUPER = 347,
 		KEY_MENU = 348,
-		KEY_BEGIN_RANGE = KEY_UNKNOWN,
-		KEY_END_RANGE = KEY_MENU,
-		KEY_RANGE_SIZE = (KEY_MENU - KEY_UNKNOWN + 1),
-		KEY_MAX_ENUM = 0x7FFFFFFF
+		KEY_END_RANGE = KEY_MENU
 	};
 
 	/// <summary>

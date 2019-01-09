@@ -84,7 +84,7 @@ namespace test
 	{
 		if (m_buttonFullscreen.WasDown())
 		{
-			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
 		if (m_buttonCaptureMouse.WasDown())
@@ -95,7 +95,8 @@ namespace test
 		if (m_buttonScreenshot.WasDown())
 		{
 			m_soundScreenshot.Play();
-			Renderer::Get()->CaptureScreenshot(FileSystem::GetWorkingDirectory() + "/Screenshots/" + Engine::GetDateTime() + ".png");
+			std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+			Renderer::Get()->CaptureScreenshot(filename);
 		}
 
 		if (m_buttonExit.WasDown())
