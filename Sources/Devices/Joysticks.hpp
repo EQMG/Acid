@@ -27,6 +27,20 @@ namespace acid
 		JOYSTICK_END_RANGE = JOYSTICK_16
 	};
 
+	enum JoystickHat
+	{
+		JOYSTICK_HAT_CENTERED = 0,
+		JOYSTICK_HAT_UP = 1,
+		JOYSTICK_HAT_RIGHT = 2,
+		JOYSTICK_HAT_DOWN = 4,
+		JOYSTICK_HAT_LEFT = 8,
+		JOYSTICK_HAT_RIGHT_UP = JOYSTICK_HAT_RIGHT | JOYSTICK_HAT_UP,
+		JOYSTICK_HAT_RIGHT_DOWN = JOYSTICK_HAT_RIGHT | JOYSTICK_HAT_DOWN,
+		JOYSTICK_HAT_LEFT_UP = JOYSTICK_HAT_LEFT  | JOYSTICK_HAT_UP,
+		JOYSTICK_HAT_LEFT_DOWN = JOYSTICK_HAT_LEFT  | JOYSTICK_HAT_DOWN
+	};
+	typedef uint32_t JoystickHatFlags;
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the joysticks.
 	/// </summary>
@@ -34,19 +48,21 @@ namespace acid
 		public Module
 	{
 	private:
-		struct Joystick
+		struct JoystickImpl
 		{
 			JoystickPort m_port{};
 			bool m_connected{};
 			std::string m_name{};
 
-			const float *m_axes{};
-			const uint8_t *m_buttons{};
 			uint32_t m_axeCount{};
+			const float *m_axes{};
 			uint32_t m_buttonCount{};
+			const uint8_t *m_buttons{};
+			uint32_t m_hatCount{};
+			const uint8_t *m_hats{};
 		};
 
-		std::array<Joystick, JOYSTICK_END_RANGE> m_connected;
+		std::array<JoystickImpl, JOYSTICK_END_RANGE> m_connected;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -76,7 +92,7 @@ namespace acid
 		/// Gets the whether a button on a joystick is pressed.
 		/// </summary>
 		/// <param name="port"> The joystick to get the button from. </param>
-		/// <param name="button"> The button of interest. </param>
+		/// <param name="button"> The button id to get the value from. </param>
 		/// <returns> Whether a button on a joystick is pressed. </returns>
 		bool GetButton(const JoystickPort &port, const uint32_t &button) const;
 
@@ -84,22 +100,37 @@ namespace acid
 		/// Gets the value of a joysticks axis.
 		/// </summary>
 		/// <param name="port"> The joystick to get the axis from. </param>
-		/// <param name="axis"> The axis of interest. </param>
+		/// <param name="axis"> The axis id to get the value from. </param>
 		/// <returns> The value of the joystick's axis. </returns>
 		float GetAxis(const JoystickPort &port, const uint32_t &axis) const;
+
+		/// <summary>
+		/// Gets the value of a joysticks axis.
+		/// </summary>
+		/// <param name="port"> The joystick to get the axis from. </param>
+		/// <param name="hat"> The hat id to get the value from. </param>
+		/// <returns> The value of the joystick's hat. </returns>
+		JoystickHatFlags GetHat(const JoystickPort &port, const uint32_t &hat) const;
 
 		/// <summary>
 		/// Gets the number of buttons the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the button count from. </param>
 		/// <returns> The number of buttons the joystick offers. </returns>
-		const uint32_t &GetCountButtons(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
+		const uint32_t &GetButtonCount(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
 
 		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
 		/// <returns> The number of axes the joystick offers. </returns>
-		const uint32_t &GetCountAxes(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
+		const uint32_t &GetAxisCount(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
+
+		/// <summary>
+		/// Gets the number of hats the joystick offers.
+		/// </summary>
+		/// <param name="port"> The joystick to the the hats count from. </param>
+		/// <returns> The number of hats the joystick offers. </returns>
+		const uint32_t &GetHatCount(const JoystickPort &port) const { return m_connected.at(port).m_hatCount; }
 	};
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Devices/Joysticks.hpp"
 #include "IAxis.hpp"
 
@@ -14,16 +13,16 @@ namespace acid
 	{
 	private:
 		JoystickPort m_joystick;
-		std::vector<uint32_t> m_axes;
-		bool m_reverse;
+		uint32_t m_axis;
+		bool m_inverted;
 	public:
 		/// <summary>
 		/// Creates a new axis joystick.
 		/// </summary>
 		/// <param name="joystick"> The joystick port. </param>
-		/// <param name="axes"> The axes on the joystick being checked. </param>
-		/// <param name="reverse"> If the axis direction should be inverted. </param>
-		AxisJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &axes, const bool &reverse = false);
+		/// <param name="axis"> The axis on the joystick being checked. </param>
+		/// <param name="inverse"> If the axis direction should be inverted. </param>
+		AxisJoystick(const JoystickPort &joystick, const uint32_t &axis, const bool &inverted = false);
 
 		float GetAmount() const override;
 
@@ -31,8 +30,12 @@ namespace acid
 
 		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
 
-		const std::vector<uint32_t> &GetAxes() const { return m_axes; }
+		const uint32_t &GetAxis() const { return m_axis; }
 
-		void SetAxes(const std::vector<uint32_t> &axes) { m_axes = axes; }
+		void SetAxis(const uint32_t &axis) { m_axis = axis; }
+
+		const bool &IsInverted() const { return m_inverted; }
+
+		void SetInverted(const bool &inverted) { m_inverted = inverted; }
 	};
 }

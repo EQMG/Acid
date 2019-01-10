@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	auto engine = std::make_unique<Engine>(argv[0]);
 
 	// Registers file search paths.
-	Files::AddSearchPath("Resources/Engine");
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Registers modules.
 

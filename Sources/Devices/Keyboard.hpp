@@ -20,7 +20,7 @@ namespace acid
 		INPUT_MOD_ALT = 4,
 		INPUT_MOD_SUPER = 8
 	};
-	typedef uint32_t InputMods;
+	typedef uint32_t InputModFlags;
 
 	enum Key
 	{

@@ -70,6 +70,7 @@ set(_temp_acid_headers
 		Inputs/ButtonJoystick.hpp
 		Inputs/ButtonKeyboard.hpp
 		Inputs/ButtonMouse.hpp
+		Inputs/HatJoystick.hpp
 		Inputs/IAxis.hpp
 		Inputs/IButton.hpp
 		Inputs/InputDelay.hpp
@@ -295,6 +296,7 @@ set(_temp_acid_sources
 		Inputs/ButtonJoystick.cpp
 		Inputs/ButtonKeyboard.cpp
 		Inputs/ButtonMouse.cpp
+		Inputs/HatJoystick.cpp
 		Inputs/InputDelay.cpp
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp

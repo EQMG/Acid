@@ -2,9 +2,9 @@
 
 namespace acid
 {
-	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons) :
+	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const uint32_t &button) :
 		m_joystick(joystick),
-		m_buttons(buttons),
+		m_button(button),
 		m_wasDown(false)
 	{
 	}
@@ -16,15 +16,7 @@ namespace acid
 			return false;
 		}
 
-		for (const auto &button : m_buttons)
-		{
-			if (Joysticks::Get()->GetButton(m_joystick, button))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return Joysticks::Get()->GetButton(m_joystick, m_button);
 	}
 
 	bool ButtonJoystick::WasDown()

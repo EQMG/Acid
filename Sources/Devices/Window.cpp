@@ -315,6 +315,16 @@ namespace acid
 		}
 	}
 
+	std::string Window::GetClipboard() const
+	{
+		return glfwGetClipboardString(m_window);
+	}
+
+	void Window::SetClipboard(const std::string &string) const
+	{
+		glfwSetClipboardString(m_window, string.c_str());
+	}
+
 	std::string Window::StringifyResultGlfw(const int32_t &result)
 	{
 		switch (result)
