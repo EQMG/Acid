@@ -1,5 +1,6 @@
 ﻿#include "Swapchain.hpp"
 
+#include <array>
 #include <cassert>
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Renderer.hpp"

@@ -13,13 +13,13 @@ namespace test
 
 	Scene1::Scene1() :
 		Scene(new Camera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonFullscreen(ButtonKeyboard(std::vector<Key>{KEY_F11})),
-		m_buttonScreenshot(ButtonKeyboard(std::vector<Key>{KEY_F12})),
+		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
+		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
 		m_buttonPause(ButtonCompound({
-			new ButtonKeyboard(std::vector<Key>{KEY_ESCAPE}),
-			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{7})
+			new ButtonKeyboard(KEY_ESCAPE),
+			new ButtonJoystick(JOYSTICK_1, 7)
 		})),
-		m_buttonExit(ButtonKeyboard(std::vector<Key>{KEY_DELETE})),
+		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer())),
 		m_uiNavigation(std::make_unique<UiNavigation>(Uis::Get()->GetContainer()))

@@ -29,11 +29,11 @@ int main(int argc, char **argv)
 	{
 		if (String::Contains(file, "data-"))
 		{
-			Files::AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
+			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
 		}
 	}
 
-	Files::AddSearchPath("Resources/Engine");
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads configs from a config manager.
 	auto configManager = ConfigManager();

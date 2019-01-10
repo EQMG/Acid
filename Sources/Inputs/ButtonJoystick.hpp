@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Devices/Joysticks.hpp"
 #include "IButton.hpp"
 
@@ -14,15 +13,15 @@ namespace acid
 	{
 	private:
 		JoystickPort m_joystick;
-		std::vector<uint32_t> m_buttons;
+		uint32_t m_button;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new joystick button.
 		/// </summary>
 		/// <param name="joystick"> The joystick port. </param>
-		/// <param name="buttons"> The buttons on the joystick being checked. </param>
-		ButtonJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &buttons);
+		/// <param name="button"> The button on the joystick being checked. </param>
+		ButtonJoystick(const JoystickPort &joystick, const uint32_t &button);
 
 		bool IsDown() const override;
 
@@ -32,8 +31,8 @@ namespace acid
 
 		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
 
-		const std::vector<uint32_t> &GetButtons() const { return m_buttons; }
+		const uint32_t &GetButton() const { return m_button; }
 
-		void SetButtons(const std::vector<uint32_t> &buttons) { m_buttons = buttons; }
+		void SetButton(const uint32_t &button) { m_button = button; }
 	};
 }

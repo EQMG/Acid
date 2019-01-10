@@ -6,11 +6,12 @@
 namespace acid
 {
 	Joysticks::Joysticks() :
-		m_connected(std::array<Joystick, JOYSTICK_END_RANGE>())
+		m_connected(std::array<JoystickImpl, JOYSTICK_END_RANGE>())
 	{
 		for (int32_t i = 0; i < JOYSTICK_END_RANGE; i++)
 		{
-			Joystick joystick = Joystick();
+			JoystickImpl joystick = {};
+			joystick.m_connected = false;
 			joystick.m_port = static_cast<JoystickPort>(i);
 			m_connected[i] = joystick;
 		}
@@ -31,10 +32,13 @@ namespace acid
 
 				int32_t axeCount = 0;
 				int32_t buttonCount = 0;
+				int32_t hatCount = 0;
 				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &axeCount);
 				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &buttonCount);
+				joystick.m_hats = glfwGetJoystickHats(joystick.m_port, &hatCount);
 				joystick.m_axeCount = static_cast<uint32_t>(axeCount);
 				joystick.m_buttonCount = static_cast<uint32_t>(buttonCount);
+				joystick.m_hatCount = static_cast<uint32_t>(hatCount);
 			}
 			else
 			{
@@ -54,7 +58,7 @@ namespace acid
 
 	bool Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const
 	{
-		if (button > GetCountButtons(port))
+		if (button > GetButtonCount(port))
 		{
 			return false;
 		}
@@ -64,11 +68,21 @@ namespace acid
 
 	float Joysticks::GetAxis(const JoystickPort &port, const uint32_t &axis) const
 	{
-		if (axis > GetCountAxes(port))
+		if (axis > GetAxisCount(port))
 		{
 			return false;
 		}
 
 		return m_connected.at(port).m_axes[axis];
+	}
+
+	JoystickHatFlags Joysticks::GetHat(const JoystickPort &port, const uint32_t &hat) const
+	{
+		if (hat > GetHatCount(port))
+		{
+			return JOYSTICK_HAT_CENTERED;
+		}
+
+		return m_connected.at(port).m_hats[hat];
 	}
 }

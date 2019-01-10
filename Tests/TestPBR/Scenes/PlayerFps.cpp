@@ -23,33 +23,33 @@ namespace test
 		m_jumping(false),
 		m_noclipEnabled(true),
 		m_inputForward(AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard(std::vector<Key>{KEY_S, KEY_DOWN}),
-				new ButtonKeyboard(std::vector<Key>{KEY_W, KEY_UP})
-			),
-			new AxisJoystick(JOYSTICK_1, std::vector<uint32_t>{1}, true)
+		    new AxisButton(
+		        ButtonCompound::Create<ButtonKeyboard>(KEY_S, KEY_DOWN),
+		        ButtonCompound::Create<ButtonKeyboard>(KEY_W, KEY_UP)
+		    ),
+		    new AxisJoystick(JOYSTICK_1, 1, true)
 		})),
 		m_inputStrafe(AxisCompound({
-			new AxisButton(
-				new ButtonKeyboard(std::vector<Key>{KEY_D, KEY_RIGHT}),
-				new ButtonKeyboard(std::vector<Key>{KEY_A, KEY_LEFT})
-			),
-			new AxisJoystick(JOYSTICK_1, std::vector<uint32_t>{0}, true)
+		    new AxisButton(
+		        ButtonCompound::Create<ButtonKeyboard>(KEY_D, KEY_RIGHT),
+		        ButtonCompound::Create<ButtonKeyboard>(KEY_A, KEY_LEFT)
+		    ),
+		    new AxisJoystick(JOYSTICK_1, 0, true)
 		})),
 		m_inputSprint(ButtonCompound({
-			new ButtonKeyboard(std::vector<Key>{KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT}),
-			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
+		    ButtonCompound::Create<ButtonKeyboard>(KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT),
+		    new ButtonJoystick(JOYSTICK_1, 1)
 		})),
 		m_inputJump(ButtonCompound({
-			new ButtonKeyboard(std::vector<Key>{KEY_SPACE}),
-			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
+		    new ButtonKeyboard(KEY_SPACE),
+		    new ButtonJoystick(JOYSTICK_1, 1)
 		})),
 		m_inputCrouch(ButtonCompound({
-			new ButtonKeyboard(std::vector<Key>{KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL}),
-			new ButtonJoystick(JOYSTICK_1, std::vector<uint32_t>{1})
+		    ButtonCompound::Create<ButtonKeyboard>(KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL),
+		    new ButtonJoystick(JOYSTICK_1, 1)
 		})),
 		m_toggleNoclip(ButtonCompound({
-			new ButtonKeyboard(std::vector<Key>{KEY_N}),
+		    ButtonCompound::Create<ButtonKeyboard>(KEY_N)
 		})),
 		m_amountMove(Vector3()),
 		m_amountRotate(Vector3())

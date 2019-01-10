@@ -20,6 +20,25 @@ namespace acid
 		bool m_wasDown;
 	public:
 		/// <summary>
+		/// A template used to create a compound button of a single type.
+		/// </summary>
+		/// <param name="args"> The arguments to pass to T. </param>
+		/// <param name="T"> The type of buttons to create. </param>
+		/// <param name="Args"> The values passed to each button. </param>
+		template<class T, typename... Args>
+		static ButtonCompound *Create(Args &&... args)
+		{
+			std::vector<IButton *> buttons;
+
+			for (const auto &x : {args...})
+			{
+				buttons.emplace_back(new T(x));
+			}
+
+			return new ButtonCompound(buttons);
+		}
+
+		/// <summary>
 		/// Creates a new compound button.
 		/// </summary>
 		/// <param name="buttons"> The buttons on the being added. </param>

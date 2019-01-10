@@ -72,6 +72,7 @@
 #include "Inputs/ButtonJoystick.hpp"
 #include "Inputs/ButtonKeyboard.hpp"
 #include "Inputs/ButtonMouse.hpp"
+#include "Inputs/HatJoystick.cpp"
 #include "Inputs/IAxis.hpp"
 #include "Inputs/IButton.hpp"
 #include "Inputs/InputDelay.hpp"

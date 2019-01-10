@@ -19,13 +19,13 @@ namespace acid
 	public:
 		explicit SelectorJoystick(const JoystickPort &joystick = JOYSTICK_1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1, const std::vector<uint32_t> &inputButtons = {0, 1}) :
 			m_joystick(joystick),
-			m_axisX(AxisJoystick(joystick, {joystickAxisX})),
-			m_axisY(AxisJoystick(joystick, {joystickAxisY})),
+			m_axisX(AxisJoystick(joystick, joystickAxisX)),
+			m_axisY(AxisJoystick(joystick, joystickAxisY)),
 			m_inputButtons(std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE>())
 		{
 			for (const auto &inputButton : inputButtons)
 			{
-				m_inputButtons[inputButton] = ButtonJoystick(joystick, {inputButton});
+				m_inputButtons[inputButton] = ButtonJoystick(joystick, inputButton);
 			}
 		}
 

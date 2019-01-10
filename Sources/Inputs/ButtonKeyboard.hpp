@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Devices/Keyboard.hpp"
 #include "IButton.hpp"
 
@@ -13,21 +12,21 @@ namespace acid
 		public IButton
 	{
 	private:
-		std::vector<Key> m_keys;
+		Key m_key;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button keyboard.
 		/// </summary>
-		/// <param name="keys"> The keys on the keyboard being checked. </param>
-		explicit ButtonKeyboard(const std::vector<Key> &keys);
+		/// <param name="keys"> The key on the keyboard being checked. </param>
+		explicit ButtonKeyboard(const Key &key);
 
 		bool IsDown() const override;
 
 		bool WasDown() override;
 
-		const std::vector<Key> &GetKeys() const { return m_keys; }
+		const Key &GetKey() const { return m_key; }
 
-		void SetKeys(const std::vector<Key> &keys) { m_keys = keys; }
+		void SetKey(const Key &key) { m_key = key; }
 	};
 }

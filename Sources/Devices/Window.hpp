@@ -250,6 +250,18 @@ namespace acid
 		/// <param name="iconify"> If the window will be set as iconified. </param>
 		void SetIconified(const bool &iconify);
 
+		/// <summary>
+		/// Gets the contents of the clipboard as a string.
+		/// </summary>
+		/// <returns> If the clipboard contents. </returns>
+		std::string GetClipboard() const;
+
+		/// <summary>
+		/// Sets the clipboard to the specified string.
+		/// </summary>
+		/// <param name="string"> The string to set as the clipboard. </param>
+		void SetClipboard(const std::string &string) const;
+
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
 		ACID_HIDDEN static void CheckGlfw(const int32_t &result);

@@ -2,23 +2,15 @@
 
 namespace acid
 {
-	ButtonKeyboard::ButtonKeyboard(const std::vector<Key> &keys) :
-		m_keys(keys),
+	ButtonKeyboard::ButtonKeyboard(const Key &key) :
+		m_key(key),
 		m_wasDown(false)
 	{
 	}
 
 	bool ButtonKeyboard::IsDown() const
 	{
-		for (const auto &key : m_keys)
-		{
-			if (Keyboard::Get()->GetKey(key))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return Keyboard::Get()->GetKey(m_key);
 	}
 
 	bool ButtonKeyboard::WasDown()
