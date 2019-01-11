@@ -6,14 +6,9 @@
 
 namespace acid
 {
-	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
-	{
-		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
-	}
-
 	void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods)
 	{
-		Mouse::Get()->m_mouseButtons[button] = action != GLFW_RELEASE;
+		Mouse::Get()->m_mouseButtons[button] = static_cast<InputAction>(action);
 	}
 
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
@@ -24,11 +19,29 @@ namespace acid
 
 	void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 	{
-		Mouse::Get()->m_displaySelected = static_cast<bool>(entered);
+		Mouse::Get()->m_windowSelected = entered == GLFW_TRUE;
+		Mouse::Get()->m_onEnter(entered == GLFW_TRUE);
+	}
+
+	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
+	{
+		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
+	}
+
+	void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
+	{
+		std::vector<std::string> files(static_cast<uint32_t>(count));
+
+		for (uint32_t i = 0; i < count; i++)
+		{
+			files[i] = paths[i];
+		}
+
+		Mouse::Get()->m_onDrop(files);
 	}
 
 	Mouse::Mouse() :
-		m_mouseButtons(std::array<bool, MOUSE_BUTTON_END_RANGE>()),
+		m_mouseButtons(std::array<InputAction, MOUSE_BUTTON_END_RANGE>()),
 		m_mousePath(""),
 		m_lastMousePositionX(0.0f),
 		m_lastMousePositionY(0.0f),
@@ -37,21 +50,23 @@ namespace acid
 		m_mouseDeltaX(0.0f),
 		m_mouseDeltaY(0.0f),
 		m_mouseDeltaWheel(0.0f),
-		m_displaySelected(true),
-		m_lastCursorDisabled(false),
-		m_cursorDisabled(false)
+		m_windowSelected(true),
+		m_cursorHidden(false),
+		m_onEnter(Delegate<void(bool)>()),
+		m_onDrop(Delegate<void(std::vector<std::string>)>())
 	{
 		// Sets the default state of the buttons to released.
 		for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 		{
-			m_mouseButtons[i] = false;
+			m_mouseButtons[i] = INPUT_ACTION_RELEASE;
 		}
 
 		// Sets the mouses callbacks.
-		glfwSetScrollCallback(Window::Get()->GetWindow(), CallbackScroll);
 		glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
 		glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
 		glfwSetCursorEnterCallback(Window::Get()->GetWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(Window::Get()->GetWindow(), CallbackScroll);
+		glfwSetDropCallback(Window::Get()->GetWindow(), CallbackDrop);
 	}
 
 	void Mouse::Update()
@@ -65,15 +80,6 @@ namespace acid
 		// Sets the last position of the current.
 		m_lastMousePositionX = m_mousePositionX;
 		m_lastMousePositionY = m_mousePositionY;
-
-		// Fixes snaps when toggling cursor.
-		if (m_cursorDisabled != m_lastCursorDisabled)
-		{
-			m_mouseDeltaX = 0.0f;
-			m_mouseDeltaY = 0.0f;
-
-			m_lastCursorDisabled = m_cursorDisabled;
-		}
 
 		// Updates the mouse wheel using a smooth scroll technique.
 		if (m_mouseDeltaWheel != 0.0f)
@@ -107,26 +113,21 @@ namespace acid
 		Texture::DeletePixels(data);
 	}
 
-	void Mouse::SetCursorHidden(const bool &disabled)
+	std::string Mouse::GetClipboard() const
 	{
-		if (m_cursorDisabled != disabled)
-		{
-			glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, (disabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL));
-
-			if (!disabled && m_cursorDisabled)
-			{
-				glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePositionX * Window::Get()->GetWidth(), m_mousePositionY * Window::Get()->GetHeight());
-			}
-		}
-
-		m_cursorDisabled = disabled;
+		return glfwGetClipboardString(Window::Get()->GetWindow());
 	}
 
-	bool Mouse::GetButton(const MouseButton &mouseButton) const
+	void Mouse::SetClipboard(const std::string &string) const
+	{
+		glfwSetClipboardString(Window::Get()->GetWindow(), string.c_str());
+	}
+
+	InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 	{
 		if (mouseButton < 0 || mouseButton >= MOUSE_BUTTON_END_RANGE)
 		{
-			return false;
+			return INPUT_ACTION_RELEASE;
 		}
 
 		return m_mouseButtons[mouseButton];
@@ -143,5 +144,20 @@ namespace acid
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
 			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+	}
+
+	void Mouse::SetCursorHidden(const bool &hidden)
+	{
+		if (m_cursorHidden != hidden)
+		{
+			glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+
+			if (!hidden && m_cursorHidden)
+			{
+				glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePositionX * Window::Get()->GetWidth(), m_mousePositionY * Window::Get()->GetHeight());
+			}
+		}
+
+		m_cursorHidden = hidden;
 	}
 }

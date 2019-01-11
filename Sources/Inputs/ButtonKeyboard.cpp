@@ -10,7 +10,7 @@ namespace acid
 
 	bool ButtonKeyboard::IsDown() const
 	{
-		return Keyboard::Get()->GetKey(m_key);
+		return Keyboard::Get()->GetKey(m_key) != INPUT_ACTION_RELEASE;
 	}
 
 	bool ButtonKeyboard::WasDown()

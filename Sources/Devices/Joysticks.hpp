@@ -3,6 +3,7 @@
 #include <array>
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
+#include "Helpers/Delegate.hpp"
 
 namespace acid
 {
@@ -65,6 +66,8 @@ namespace acid
 
 		std::array<JoystickImpl, JOYSTICK_END_RANGE> m_connected;
 
+		Delegate<void(JoystickPort, bool)> m_onConnect;
+
 		friend void CallbackJoystick(int32_t id, int32_t event);
 	public:
 		/// <summary>
@@ -92,20 +95,20 @@ namespace acid
 		const std::string &GetName(const JoystickPort &port) const { return m_connected.at(port).m_name; }
 
 		/// <summary>
-		/// Gets the whether a button on a joystick is pressed.
-		/// </summary>
-		/// <param name="port"> The joystick to get the button from. </param>
-		/// <param name="button"> The button id to get the value from. </param>
-		/// <returns> Whether a button on a joystick is pressed. </returns>
-		bool GetButton(const JoystickPort &port, const uint32_t &button) const;
-
-		/// <summary>
 		/// Gets the value of a joysticks axis.
 		/// </summary>
 		/// <param name="port"> The joystick to get the axis from. </param>
 		/// <param name="axis"> The axis id to get the value from. </param>
 		/// <returns> The value of the joystick's axis. </returns>
 		float GetAxis(const JoystickPort &port, const uint32_t &axis) const;
+
+		/// <summary>
+		/// Gets the whether a button on a joystick is pressed.
+		/// </summary>
+		/// <param name="port"> The joystick to get the button from. </param>
+		/// <param name="button"> The button id to get the value from. </param>
+		/// <returns> Whether a button on a joystick is pressed. </returns>
+		InputAction GetButton(const JoystickPort &port, const uint32_t &button) const;
 
 		/// <summary>
 		/// Gets the value of a joysticks axis.
@@ -116,13 +119,6 @@ namespace acid
 		JoystickHatFlags GetHat(const JoystickPort &port, const uint32_t &hat) const;
 
 		/// <summary>
-		/// Gets the number of buttons the joystick offers.
-		/// </summary>
-		/// <param name="port"> The joystick to the the button count from. </param>
-		/// <returns> The number of buttons the joystick offers. </returns>
-		const uint32_t &GetButtonCount(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
-
-		/// <summary>
 		/// Gets the number of axes the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the axis count from. </param>
@@ -130,10 +126,19 @@ namespace acid
 		const uint32_t &GetAxisCount(const JoystickPort &port) const { return m_connected.at(port).m_axeCount; }
 
 		/// <summary>
+		/// Gets the number of buttons the joystick offers.
+		/// </summary>
+		/// <param name="port"> The joystick to the the button count from. </param>
+		/// <returns> The number of buttons the joystick offers. </returns>
+		const uint32_t &GetButtonCount(const JoystickPort &port) const { return m_connected.at(port).m_buttonCount; }
+
+		/// <summary>
 		/// Gets the number of hats the joystick offers.
 		/// </summary>
 		/// <param name="port"> The joystick to the the hats count from. </param>
 		/// <returns> The number of hats the joystick offers. </returns>
 		const uint32_t &GetHatCount(const JoystickPort &port) const { return m_connected.at(port).m_hatCount; }
+
+		Delegate<void(JoystickPort, bool)> &OnConnect() { return m_onConnect; }
 	};
 }

@@ -22,6 +22,7 @@ set(_temp_acid_headers
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
 		Devices/LogicalDevice.hpp
+		Devices/Monitor.hpp
 		Devices/Mouse.hpp
 		Devices/PhysicalDevice.hpp
 		Devices/Surface.hpp
@@ -258,6 +259,7 @@ set(_temp_acid_sources
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp
 		Devices/LogicalDevice.cpp
+		Devices/Monitor.cpp
 		Devices/Mouse.cpp
 		Devices/PhysicalDevice.cpp
 		Devices/Surface.cpp

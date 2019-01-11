@@ -10,7 +10,7 @@ namespace acid
 
 	bool ButtonMouse::IsDown() const
 	{
-		return Mouse::Get()->GetButton(m_button);
+		return Mouse::Get()->GetButton(m_button) != INPUT_ACTION_RELEASE;
 	}
 
 	bool ButtonMouse::WasDown()

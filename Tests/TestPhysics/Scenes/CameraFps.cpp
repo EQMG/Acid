@@ -105,7 +105,7 @@ namespace test
 			{
 				angleChange = m_joystickHorizontal.GetAmount() * INFLUENCE_OF_JOYSTICK_DX * m_sensitivity;
 			}
-			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
+			else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton))
 			{
 				angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 			}
@@ -142,7 +142,7 @@ namespace test
 			{
 				angleChange = m_joystickVertical.GetAmount() * INFLUENCE_OF_JOYSTICK_DY * m_sensitivity;
 			}
-			else if (Mouse::Get()->IsCursorDisabled() || Mouse::Get()->GetButton(m_reangleButton))
+			else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton))
 			{
 				angleChange = Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}

@@ -139,7 +139,7 @@ namespace acid
 		public Module
 	{
 	private:
-		std::array<bool, KEY_END_RANGE> m_keyboardKeys;
+		std::array<InputAction, KEY_END_RANGE> m_keyboardKeys;
 		char m_char;
 
 		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
@@ -158,11 +158,10 @@ namespace acid
 
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.
-		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
-		bool GetKey(const Key &key) const;
+		InputAction GetKey(const Key &key) const;
 
 		/// <summary>
 		/// Gets the current user input, ASCII Dec value.

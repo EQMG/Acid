@@ -89,7 +89,7 @@ namespace test
 
 		if (m_buttonCaptureMouse->WasDown())
 		{
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 
 		if (m_buttonScreenshot.WasDown())

@@ -56,11 +56,21 @@ namespace test
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
 
-		Window::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
+		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
 			for (const auto &path : paths)
 			{
 				Log::Out("File dropped: '%s'\n", path.c_str());
 			}
+		};
+		Window::Get()->GetOnMonitorConnect() += [](uint32_t index, bool connected) {
+			auto monitor = Window::Get()->GetMonitors()[index];
+			Log::Out("Monitor '%s' action: %i\n", monitor.GetName().c_str(), connected);
+		};
+		Window::Get()->GetOnClose() += []() {
+			Log::Out("Window has closed!\n");
+		};
+		Window::Get()->GetOnIconify() += [](bool iconified) {
+			Log::Out("Iconified: %i\n", iconified);
 		};
 	}
 
@@ -225,7 +235,7 @@ namespace test
 
 		if (m_buttonCaptureMouse->WasDown())
 		{
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 
 		if (m_buttonScreenshot.WasDown())
