@@ -140,10 +140,18 @@ namespace acid
 
 		void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }
 
+		void ClearAttributes() { m_attributes.clear(); }
+
 		void AddAttribute(const std::string &attribute, const std::string &value);
 
 		void RemoveAttribute(const std::string &attribute);
 
 		std::string FindAttribute(const std::string &attribute) const;
+
+		virtual void Load(const std::string &data);
+
+		virtual std::string Write() const;
+
+		virtual void Clear();
 	};
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Files/IFile.hpp>
+#include <Files/File.hpp>
 
 using namespace acid;
 
@@ -9,8 +9,8 @@ namespace test
 	class ConfigManager
 	{
 	private:
-		std::unique_ptr<IFile> m_audio;
-		std::unique_ptr<IFile> m_graphics;
+		std::unique_ptr<File> m_audio;
+		std::unique_ptr<File> m_graphics;
 	public:
 		ConfigManager();
 

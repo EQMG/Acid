@@ -1,8 +1,10 @@
 #include "Scene1.hpp"
 
+#include <thread>
 #include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
-#include <Files/Json/FileJson.hpp>
+#include <Files/File.hpp>
+#include <Serialized/Json/Json.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
@@ -254,8 +256,8 @@ namespace test
 		{
 			// TODO: Threading.
 			std::thread t([this](){
-				auto sceneFile = FileJson("Scene1.json");
-				auto sceneNode = sceneFile.GetParent()->AddChild(new Metadata("Scene"));
+				auto sceneFile = File("Scene1.json", new Json());
+				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
@@ -282,7 +284,7 @@ namespace test
 					}
 				}
 
-				sceneFile.Save();
+				sceneFile.Write();
 			});
 			t.detach();
 		}

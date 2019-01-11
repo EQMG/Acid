@@ -1,6 +1,8 @@
 #include "MeshAnimated.hpp"
 
-#include "Files/Xml/FileXml.hpp"
+#include "Maths/Maths.hpp"
+#include "Files/File.hpp"
+#include "Serialized/Xml/Xml.hpp"
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
@@ -49,12 +51,12 @@ namespace acid
 
 	void MeshAnimated::TrySetModel(const std::string &filename)
 	{
-		FileXml file = FileXml(filename);
+		File file = File(filename, new Xml());
 		file.Load();
 
-		SkinLoader skinLoader = SkinLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_controllers"), MAX_WEIGHTS);
-		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
-		GeometryLoader geometryLoader = GeometryLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVertexWeights());
+		SkinLoader skinLoader = SkinLoader(file.GetMetadata()->FindChild("COLLADA")->FindChild("library_controllers"), MAX_WEIGHTS);
+		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("COLLADA")->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
+		GeometryLoader geometryLoader = GeometryLoader(file.GetMetadata()->FindChild("COLLADA")->FindChild("library_geometries"), skinLoader.GetVertexWeights());
 
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
@@ -63,8 +65,8 @@ namespace acid
 		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
 		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
-		AnimationLoader animationLoader = AnimationLoader(file.GetParent()->FindChild("COLLADA")->FindChild("library_animations"),
-			file.GetParent()->FindChild("COLLADA")->FindChild("library_visual_scenes"));
+		AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("COLLADA")->FindChild("library_animations"),
+			file.GetMetadata()->FindChild("COLLADA")->FindChild("library_visual_scenes"));
 		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 		m_animator->DoAnimation(m_animation.get());
 	}

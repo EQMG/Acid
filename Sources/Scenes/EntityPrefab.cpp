@@ -1,7 +1,8 @@
 #include "EntityPrefab.hpp"
 
-#include "Files/Json/FileJson.hpp"
-#include "Files/Xml/FileXml.hpp"
+#include "Files/File.hpp"
+#include "Serialized/Json/Json.hpp"
+#include "Serialized/Xml/Xml.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
@@ -38,19 +39,19 @@ namespace acid
 
 		if (fileExt == ".json")
 		{
-			m_file = std::make_unique<FileJson>(filename);
+			m_file = std::make_unique<File>(filename, new Json());
 			m_file->Load();
-			m_parent = m_file->GetParent();
+			m_parent = m_file->GetMetadata();
 		}
 		else if (fileExt == ".xml")
 		{
-			m_file = std::make_unique<FileXml>(filename);
+			m_file = std::make_unique<File>(filename, new Xml());
 			m_file->Load();
-			m_parent = m_file->GetParent()->FindChild("EntityDefinition");
+			m_parent = m_file->GetMetadata()->FindChild("EntityDefinition");
 
 			if (m_parent == nullptr)
 			{
-				m_parent = m_file->GetParent()->AddChild(new Metadata("EntityDefinition"));
+				m_parent = m_file->GetMetadata()->AddChild(new Metadata("EntityDefinition"));
 			}
 		}
 	}
@@ -82,6 +83,6 @@ namespace acid
 
 	void EntityPrefab::Save()
 	{
-		m_file->Save();
+		m_file->Write();
 	}
 }

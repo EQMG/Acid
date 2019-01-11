@@ -21,7 +21,7 @@ namespace acid
 	};
 	const std::vector<const char *> Instance::DEVICE_EXTENSIONS =
 	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME, VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME // , VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 	};
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "Maths/Time.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Animations/Keyframe/Keyframe.hpp"
 
 namespace acid
