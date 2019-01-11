@@ -5,7 +5,7 @@
 #include <Files/Json/FileJson.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -43,18 +43,35 @@ namespace test
 
 	Scene1::Scene1() :
 		Scene(new CameraFps(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonSpawnSphere(ButtonMouse({MOUSE_BUTTON_1})),
-		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
-		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
-		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
-		m_buttonSave(ButtonKeyboard({KEY_K})),
-		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
+		m_buttonSpawnSphere(ButtonMouse(MOUSE_BUTTON_1)),
+		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
+		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(KEY_ESCAPE, KEY_M)),
+		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
+		m_buttonSave(ButtonKeyboard(KEY_K)),
+		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
+
+		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
+			for (const auto &path : paths)
+			{
+				Log::Out("File dropped: '%s'\n", path.c_str());
+			}
+		};
+		Window::Get()->GetOnMonitorConnect() += [](uint32_t index, bool connected) {
+			auto monitor = Window::Get()->GetMonitors()[index];
+			Log::Out("Monitor '%s' action: %i\n", monitor.GetName().c_str(), connected);
+		};
+		Window::Get()->GetOnClose() += []() {
+			Log::Out("Window has closed!\n");
+		};
+		Window::Get()->GetOnIconify() += [](bool iconified) {
+			Log::Out("Iconified: %i\n", iconified);
+		};
 	}
 
 	void Scene1::Start()
@@ -213,12 +230,12 @@ namespace test
 
 		if (m_buttonFullscreen.WasDown())
 		{
-			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
-		if (m_buttonCaptureMouse.WasDown())
+		if (m_buttonCaptureMouse->WasDown())
 		{
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 
 		if (m_buttonScreenshot.WasDown())

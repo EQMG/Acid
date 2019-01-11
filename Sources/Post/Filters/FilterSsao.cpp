@@ -2,7 +2,9 @@
 
 #include "Helpers/FileSystem.hpp"
 #include "Maths/Colour.hpp"
+#include "Maths/Vector4.hpp"
 #include "Maths/Maths.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Textures/DepthStencil.hpp"
 
 namespace acid
@@ -28,14 +30,15 @@ namespace acid
 		}
 	}
 
-	void FilterSsao::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
+		auto camera = Scenes::Get()->GetCamera();
 		m_pushScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
-		m_pushScene.Push("projection", camera.GetProjectionMatrix());
-		m_pushScene.Push("view", camera.GetViewMatrix());
-		m_pushScene.Push("nearPlane", camera.GetNearPlane());
-		m_pushScene.Push("farPlane", camera.GetFarPlane());
+		m_pushScene.Push("projection", camera->GetProjectionMatrix());
+		m_pushScene.Push("view", camera->GetViewMatrix());
+		m_pushScene.Push("nearPlane", camera->GetNearPlane());
+		m_pushScene.Push("farPlane", camera->GetFarPlane());
 
 		// Updates descriptors.
 		m_descriptorSet.Push("PushScene", m_pushScene);

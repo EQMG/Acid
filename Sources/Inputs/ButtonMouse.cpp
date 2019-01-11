@@ -2,23 +2,15 @@
 
 namespace acid
 {
-	ButtonMouse::ButtonMouse(const std::vector<MouseButton> &buttons) :
-		m_buttons(buttons),
+	ButtonMouse::ButtonMouse(const MouseButton &button) :
+		m_button(button),
 		m_wasDown(false)
 	{
 	}
 
 	bool ButtonMouse::IsDown() const
 	{
-		for (const auto &button : m_buttons)
-		{
-			if (Mouse::Get()->GetButton(button))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return Mouse::Get()->GetButton(m_button) != INPUT_ACTION_RELEASE;
 	}
 
 	bool ButtonMouse::WasDown()

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "Scenes/PlayerFps.hpp"
@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	auto engine = std::make_unique<Engine>(argv[0]);
 
 	// Registers file search paths.
-	Files::AddSearchPath("Resources/Engine");
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Registers modules.
 
@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Sets values to modules.
-	Display::Get()->SetTitle("Test PBR");
-	Display::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetTitle("Test PBR");
+	Window::Get()->SetIcon("Logos/Flask.png");
 //	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

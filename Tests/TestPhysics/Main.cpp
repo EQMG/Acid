@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "Behaviours/HeightDespawn.hpp"
@@ -29,11 +29,11 @@ int main(int argc, char **argv)
 	{
 		if (String::Contains(file, "data-"))
 		{
-			Files::AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
+			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
 		}
 	}
 
-	Files::AddSearchPath("Resources/Engine");
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads configs from a config manager.
 	auto configManager = ConfigManager();
@@ -55,8 +55,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<Terrain>("Terrain");
 
 	// Sets values to modules.
-	Display::Get()->SetTitle("Test Physics");
-	Display::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetTitle("Test Physics");
+	Window::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

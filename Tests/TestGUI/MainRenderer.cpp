@@ -1,9 +1,9 @@
 #include "MainRenderer.hpp"
 
-#include <Scenes/Scenes.hpp>
-#include <Renderer/Renderer.hpp>
-#include <Guis/RendererGuis.hpp>
 #include <Fonts/RendererFonts.hpp>
+#include <Guis/RendererGuis.hpp>
+#include <Renderer/Renderer.hpp>
+#include <Scenes/Scenes.hpp>
 
 namespace test
 {
@@ -21,9 +21,9 @@ namespace test
 
 	void MainRenderer::Start()
 	{
-		auto &rendererRegister = Renderer::Get()->GetRendererRegister();
-		rendererRegister.Add<RendererGuis>(GraphicsStage(0, 0));
-		rendererRegister.Add<RendererFonts>(GraphicsStage(0, 0));
+		auto &rendererContainer = GetRendererContainer();
+		rendererContainer.Add<RendererGuis>(GraphicsStage(0, 0));
+		rendererContainer.Add<RendererFonts>(GraphicsStage(0, 0));
 	}
 
 	void MainRenderer::Update()

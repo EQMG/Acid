@@ -1,6 +1,6 @@
 #include "FilterBlur.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void FilterBlur::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterBlur::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("direction", m_direction);

@@ -1,6 +1,6 @@
 #include "CommandBuffer.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -11,7 +11,7 @@ namespace acid
 		m_commandBuffer(VK_NULL_HANDLE),
 		m_running(false)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
 
 		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
@@ -19,7 +19,7 @@ namespace acid
 		commandBufferAllocateInfo.commandPool = commandPool;
 		commandBufferAllocateInfo.level = bufferLevel;
 		commandBufferAllocateInfo.commandBufferCount = 1;
-		Display::CheckVk(vkAllocateCommandBuffers(logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
+		Renderer::CheckVk(vkAllocateCommandBuffers(logicalDevice->GetLogicalDevice(), &commandBufferAllocateInfo, &m_commandBuffer));
 
 		if (begin)
 		{
@@ -29,10 +29,10 @@ namespace acid
 
 	CommandBuffer::~CommandBuffer()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto commandPool = Renderer::Get()->GetCommandPool();
 
-		vkFreeCommandBuffers(logicalDevice, commandPool, 1, &m_commandBuffer);
+		vkFreeCommandBuffers(logicalDevice->GetLogicalDevice(), commandPool, 1, &m_commandBuffer);
 	}
 
 	void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
@@ -40,21 +40,21 @@ namespace acid
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = usage;
-		Display::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
+		Renderer::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
 
 		m_running = true;
 	}
 
 	void CommandBuffer::End()
 	{
-		Display::CheckVk(vkEndCommandBuffer(m_commandBuffer));
+		Renderer::CheckVk(vkEndCommandBuffer(m_commandBuffer));
 
 		m_running = false;
 	}
 
 	void CommandBuffer::Submit(VkSemaphore signalSemaphore, VkFence fence, const bool &createFence)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
 
 		VkSubmitInfo submitInfo = {};
@@ -75,37 +75,39 @@ namespace acid
 			VkFenceCreateInfo fenceCreateInfo = {};
 			fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			fenceCreateInfo.flags = 0;
-			Display::CheckVk(vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &fence));
+			Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
 
 			createdFence = true;
 		}
 
 		if (fence != VK_NULL_HANDLE)
 		{
-			Display::CheckVk(vkResetFences(logicalDevice, 1, &fence));
+			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
 		}
 
-		Display::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
+		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 
 		if (fence != VK_NULL_HANDLE)
 		{
-			Display::CheckVk(vkWaitForFences(logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+			Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
 			if (createdFence)
 			{
-				vkDestroyFence(logicalDevice, fence, nullptr);
+				vkDestroyFence(logicalDevice->GetLogicalDevice(), fence, nullptr);
 			}
 		}
 	}
 
 	VkQueue CommandBuffer::GetQueue() const
 	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+
 		switch (m_queueType)
 		{
 		case VK_QUEUE_GRAPHICS_BIT:
-			return Display::Get()->GetGraphicsQueue();
+			return logicalDevice->GetGraphicsQueue();
 		case VK_QUEUE_COMPUTE_BIT:
-			return Display::Get()->GetComputeQueue();
+			return logicalDevice->GetComputeQueue();
 		default:
 			return nullptr;
 		}

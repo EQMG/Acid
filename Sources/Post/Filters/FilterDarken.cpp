@@ -9,7 +9,7 @@ namespace acid
 	{
 	}
 
-	void FilterDarken::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterDarken::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("factor", m_factor);

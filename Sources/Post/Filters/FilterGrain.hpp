@@ -14,7 +14,7 @@ namespace acid
 	public:
 		explicit FilterGrain(const GraphicsStage &graphicsStage, const float &strength = 2.3f);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 
 		const float &GetStrength() const { return m_strength; }
 

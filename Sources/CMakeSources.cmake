@@ -18,7 +18,15 @@ set(_temp_acid_headers
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
 		Audio/stb_vorbis.h
-		Display/Display.hpp
+		Devices/Instance.hpp
+		Devices/Joysticks.hpp
+		Devices/Keyboard.hpp
+		Devices/LogicalDevice.hpp
+		Devices/Monitor.hpp
+		Devices/Mouse.hpp
+		Devices/PhysicalDevice.hpp
+		Devices/Surface.hpp
+		Devices/Window.hpp
 		Emitters/Emitter.hpp
 		Emitters/EmitterCircle.hpp
 		Emitters/EmitterLine.hpp
@@ -66,12 +74,10 @@ set(_temp_acid_headers
 		Inputs/ButtonJoystick.hpp
 		Inputs/ButtonKeyboard.hpp
 		Inputs/ButtonMouse.hpp
+		Inputs/HatJoystick.hpp
 		Inputs/IAxis.hpp
 		Inputs/IButton.hpp
 		Inputs/InputDelay.hpp
-		Inputs/Joysticks.hpp
-		Inputs/Keyboard.hpp
-		Inputs/Mouse.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
 		Materials/Material.hpp
@@ -189,11 +195,11 @@ set(_temp_acid_headers
 		Renderer/Pipelines/PipelineGraphics.hpp
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
-		Renderer/RenderPipeline.hpp
-		Renderer/RendererRegister.hpp
+		Renderer/RendererContainer.hpp
 		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
+		Renderer/RenderPipeline.hpp
 		Renderer/RenderStage.hpp
 		Renderer/Swapchain/Framebuffers.hpp
 		Renderer/Swapchain/Swapchain.hpp
@@ -249,7 +255,15 @@ set(_temp_acid_sources
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
-		Display/Display.cpp
+		Devices/Instance.cpp
+		Devices/Joysticks.cpp
+		Devices/Keyboard.cpp
+		Devices/LogicalDevice.cpp
+		Devices/Monitor.cpp
+		Devices/Mouse.cpp
+		Devices/PhysicalDevice.cpp
+		Devices/Surface.cpp
+		Devices/Window.cpp
 		Emitters/EmitterCircle.cpp
 		Emitters/EmitterLine.cpp
 		Emitters/EmitterPoint.cpp
@@ -287,10 +301,8 @@ set(_temp_acid_sources
 		Inputs/ButtonJoystick.cpp
 		Inputs/ButtonKeyboard.cpp
 		Inputs/ButtonMouse.cpp
+		Inputs/HatJoystick.cpp
 		Inputs/InputDelay.cpp
-		Inputs/Joysticks.cpp
-		Inputs/Keyboard.cpp
-		Inputs/Mouse.cpp
 		Lights/Fog.cpp
 		Lights/Light.cpp
 		Materials/MaterialDefault.cpp
@@ -402,7 +414,7 @@ set(_temp_acid_sources
 		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/ShaderProgram.cpp
 		Renderer/Renderer.cpp
-		Renderer/RendererRegister.cpp
+		Renderer/RendererContainer.cpp
 		Renderer/Renderpass/Renderpass.cpp
 		Renderer/RenderStage.cpp
 		Renderer/Swapchain/Framebuffers.cpp

@@ -1,5 +1,9 @@
 #include "Log.hpp"
 
+#include <cstring>
+#if defined(ACID_BUILD_WINDOWS)
+#include <windows.h>
+#endif
 #include "Helpers/FileSystem.hpp"
 
 namespace acid
@@ -19,6 +23,13 @@ namespace acid
 		std::lock_guard<std::mutex> lock(MUTEX);
 		fprintf(stderr, string.c_str());
 		STREAM << string;
+	}
+
+	void Log::Popup(const std::string &title, const std::string &message)
+	{
+#if defined(ACID_BUILD_WINDOWS)
+		MessageBox(nullptr, message.c_str(), title.c_str(), 0);
+#endif
 	}
 
 	void Log::OpenLog(const std::string &filename)

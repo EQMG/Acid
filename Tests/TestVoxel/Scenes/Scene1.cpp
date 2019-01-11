@@ -2,7 +2,7 @@
 
 #include <Animations/MeshAnimated.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -29,10 +29,10 @@ namespace test
 
 	Scene1::Scene1() :
 		Scene(new CameraFps(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
-		m_buttonCaptureMouse(ButtonKeyboard({KEY_M, KEY_ESCAPE})),
-		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
-		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
+		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
+		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(KEY_M, KEY_ESCAPE)),
+		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
+		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
@@ -79,12 +79,12 @@ namespace test
 	{
 		if (m_buttonFullscreen.WasDown())
 		{
-			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
-		if (m_buttonCaptureMouse.WasDown())
+		if (m_buttonCaptureMouse->WasDown())
 		{
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorDisabled());
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 
 		if (m_buttonScreenshot.WasDown())

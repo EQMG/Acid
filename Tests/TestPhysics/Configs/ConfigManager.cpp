@@ -1,8 +1,8 @@
 #include "ConfigManager.hpp"
 
-#include <Display/Display.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Files/Json/FileJson.hpp>
+#include <Renderer/Renderer.hpp>
 #include <Events/Events.hpp>
 #include <Events/EventTime.hpp>
 #include <Audio/Audio.hpp>
@@ -32,13 +32,13 @@ namespace test
 
 		m_graphics->Load();
 		auto graphicsData = m_graphics->GetParent();
-		Display::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));
-		Display::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::ONE));
-		Display::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
-		Display::Get()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
-		Display::Get()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
-		Display::Get()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
-		Display::Get()->SetFullscreen(graphicsData->GetChild<bool>("Fullscreen", false));
+	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
+		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));
+		Window::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::ONE));
+		Window::Get()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
+		Window::Get()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
+		Window::Get()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
+		Window::Get()->SetFullscreen(graphicsData->GetChild<bool>("Fullscreen", false));
 		Engine::Get()->SetFpsLimit(graphicsData->GetChild<float>("FPS Limit", 0.0f));
 	}
 
@@ -52,13 +52,13 @@ namespace test
 		m_audio->Save();
 
 		auto graphicsData = m_graphics->GetParent();
-		graphicsData->SetChild<Vector2>("Dimensions", Display::Get()->GetDimensions());
-		graphicsData->SetChild<Vector2>("Position", Display::Get()->GetPosition());
-		graphicsData->SetChild<bool>("Antialiasing", Display::Get()->IsAntialiasing());
-		graphicsData->SetChild<bool>("Borderless", Display::Get()->IsBorderless());
-		graphicsData->SetChild<bool>("Resizable", Display::Get()->IsResizable());
-		graphicsData->SetChild<bool>("Floating", Display::Get()->IsFloating());
-		graphicsData->SetChild<bool>("Fullscreen", Display::Get()->IsFullscreen());
+	//	graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
+		graphicsData->SetChild<Vector2>("Dimensions", Window::Get()->GetDimensions());
+		graphicsData->SetChild<Vector2>("Position", Window::Get()->GetPosition());
+		graphicsData->SetChild<bool>("Borderless", Window::Get()->IsBorderless());
+		graphicsData->SetChild<bool>("Resizable", Window::Get()->IsResizable());
+		graphicsData->SetChild<bool>("Floating", Window::Get()->IsFloating());
+		graphicsData->SetChild<bool>("Fullscreen", Window::Get()->IsFullscreen());
 		graphicsData->SetChild<float>("FPS Limit", Engine::Get()->GetFpsLimit());
 		m_graphics->Save();
 	}

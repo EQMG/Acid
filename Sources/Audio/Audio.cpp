@@ -8,9 +8,6 @@
 #include <al.h>
 #include <alc.h>
 #endif
-#if defined(ACID_BUILD_WINDOWS)
-#include <windows.h>
-#endif
 #include "Helpers/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -93,10 +90,8 @@ namespace acid
 		std::string failure = StringifyResultAl(result);
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
-		assert(false && "OpenAL error!");
-#if defined(ACID_BUILD_WINDOWS)
-		MessageBox(nullptr, failure.c_str(), "OpenAL Error", 0);
-#endif
+		Log::Popup("OpenAL Error", failure);
+		assert(false && "OpenAL Error!");
 	}
 
 	float Audio::GetTypeGain(const SoundType &type) const

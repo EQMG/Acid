@@ -4,10 +4,10 @@
 
 namespace acid
 {
-	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const std::vector<uint32_t> &axes, const bool &reverse) :
+	AxisJoystick::AxisJoystick(const JoystickPort &joystick, const uint32_t &axis, const bool &inverted) :
 		m_joystick(joystick),
-		m_axes(axes),
-		m_reverse(reverse)
+		m_axis(axis),
+		m_inverted(inverted)
 	{
 	}
 
@@ -18,13 +18,6 @@ namespace acid
 			return 0.0f;
 		}
 
-		float result = 0.0f;
-
-		for (const auto &axis : m_axes)
-		{
-			result += Joysticks::Get()->GetAxis(m_joystick, axis);
-		}
-
-		return std::clamp(result, -1.0f, 1.0f) * (m_reverse ? -1.0f : 1.0f);
+		return Joysticks::Get()->GetAxis(m_joystick, m_axis) * (m_inverted ? -1.0f : 1.0f);
 	}
 }

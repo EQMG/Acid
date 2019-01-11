@@ -5,8 +5,12 @@
 #include "Commands/CommandBuffer.hpp"
 #include "Swapchain/Swapchain.hpp"
 #include "Textures/DepthStencil.hpp"
+#include "Devices/Instance.hpp"
+#include "Devices/LogicalDevice.hpp"
+#include "Devices/PhysicalDevice.hpp"
+#include "Devices/Surface.hpp"
+#include "Devices/Window.hpp"
 #include "RenderManager.hpp"
-#include "RendererRegister.hpp"
 #include "RenderStage.hpp"
 
 namespace acid
@@ -16,21 +20,21 @@ namespace acid
 	{
 	private:
 		std::unique_ptr<RenderManager> m_renderManager;
-
-		RendererRegister m_rendererRegister;
-
 		std::vector<std::unique_ptr<RenderStage>> m_renderStages;
 
 		std::unique_ptr<Swapchain> m_swapchain;
-		VkFence m_fenceSwapchainImage;
-		uint32_t m_activeSwapchainImage;
 
 		VkPipelineCache m_pipelineCache;
 
-		VkSemaphore m_semaphore;
 		VkCommandPool m_commandPool;
+		VkSemaphore m_presentSemaphore;
 
 		std::unique_ptr<CommandBuffer> m_commandBuffer;
+
+		std::unique_ptr<Instance> m_instance;
+		std::unique_ptr<PhysicalDevice> m_physicalDevice;
+		std::unique_ptr<Surface> m_surface;
+		std::unique_ptr<LogicalDevice> m_logicalDevice;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -44,7 +48,11 @@ namespace acid
 
 		void Update() override;
 
-		void CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates);
+		static std::string StringifyResultVk(const VkResult &result);
+
+		static void CheckVk(const VkResult &result);
+
+		void UpdateSurfaceCapabilities();
 
 		/// <summary>
 		/// Takes a screenshot of the current image of the display and saves it into a image file.
@@ -64,12 +72,6 @@ namespace acid
 		/// <param name="rendererMaster"> The new renderer manager. </param>
 		void SetManager(RenderManager *managerRender) { m_renderManager.reset(managerRender); }
 
-		/// <summary>
-		/// Gets the renderer register used by the engine. The refister can be used to register/deregister renderers.
-		/// </summary>
-		/// <returns> The renderer register. </returns>
-		RendererRegister &GetRendererRegister() { return m_rendererRegister; }
-
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
 		const Descriptor *GetAttachment(const std::string &name) const;
@@ -78,24 +80,26 @@ namespace acid
 
 		const VkCommandPool &GetCommandPool() const { return m_commandPool; }
 
-		CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
-
-		const uint32_t &GetActiveSwapchainImage() const { return m_activeSwapchainImage; }
+		const CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
 
 		const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
-	private:
-		void CreateFences();
 
+		const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
+
+		const Surface *GetSurface() const { return m_surface.get(); }
+
+		const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
+	private:
 		void CreateCommandPool();
 
 		void CreatePipelineCache();
 
-		void RecreatePass(const uint32_t &i);
+		void CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates);
 
-		bool StartRenderpass(const uint32_t &i);
+		void RecreatePass(RenderStage &renderStage);
 
-		void EndRenderpass(const uint32_t &i);
+		bool StartRenderpass(RenderStage &renderStage);
 
-		void NextSubpass();
+		void EndRenderpass(RenderStage &renderStage);
 	};
 }

@@ -3,7 +3,7 @@
 #include <Fonts/RendererFonts.hpp>
 #include <Gizmos/RendererGizmos.hpp>
 #include <Guis/RendererGuis.hpp>
-#include <Inputs/Keyboard.hpp>
+#include <Devices/Keyboard.hpp>
 #include <Meshes/RendererMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Particles/RendererParticles.hpp>
@@ -54,31 +54,31 @@ namespace test
 
 	void MainRenderer::Start()
 	{
-		auto &rendererRegister = Renderer::Get()->GetRendererRegister();
+		auto &rendererContainer = GetRendererContainer();
 
-	//	rendererRegister.Add<RendererShadows>(GraphicsStage(0, 0));
+	//	rendererContainer.Add<RendererShadows>(GraphicsStage(0, 0));
 
-		rendererRegister.Add<RendererMeshes>(GraphicsStage(1, 0));
+		rendererContainer.Add<RendererMeshes>(GraphicsStage(1, 0));
 
-		rendererRegister.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
-	//	rendererRegister.Add<RendererParticles>(GraphicsStage(1, 1));
+		rendererContainer.Add<RendererDeferred>(GraphicsStage(1, 1), DEFERRED_SIMPLE);
+	//	rendererContainer.Add<RendererParticles>(GraphicsStage(1, 1));
 
-	//	rendererRegister.Add<FilterFxaa>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterTone>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterSsao>(GraphicsStage(1, 2));
-	//	rendererRegister.Add()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.8f, BLUR_TYPE_5, false, 0.6f, 1.0f);
-	//	rendererRegister.Add<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f);
-	//	rendererRegister.Add<FilterEmboss>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterCrt>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterLensflare>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterTiltshift>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterPixel>(GraphicsStage(1, 2), 8.0f);
-	//	rendererRegister.Add<FilterVignette>(GraphicsStage(1, 2));
-	//	rendererRegister.Add<FilterGrain>(GraphicsStage(1, 2));
-		rendererRegister.Add<FilterDefault>(GraphicsStage(1, 2), true);
-	//	rendererRegister.Add<RendererGizmos>(GraphicsStage(1, 2));
-		rendererRegister.Add<RendererGuis>(GraphicsStage(1, 2));
-		rendererRegister.Add<RendererFonts>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterFxaa>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterTone>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterSsao>(GraphicsStage(1, 2));
+	//	rendererContainer.Add()->AddRenderer<PipelineBlur>(GraphicsStage(1, 2), 1.8f, BLUR_TYPE_5, false, 0.6f, 1.0f);
+	//	rendererContainer.Add<FilterDof>(GraphicsStage(1, 2), sceneBlur, 1.11f);
+	//	rendererContainer.Add<FilterEmboss>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterCrt>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterLensflare>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterTiltshift>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterPixel>(GraphicsStage(1, 2), 8.0f);
+	//	rendererContainer.Add<FilterVignette>(GraphicsStage(1, 2));
+	//	rendererContainer.Add<FilterGrain>(GraphicsStage(1, 2));
+		rendererContainer.Add<FilterDefault>(GraphicsStage(1, 2), true);
+	//	rendererContainer.Add<RendererGizmos>(GraphicsStage(1, 2));
+		rendererContainer.Add<RendererGuis>(GraphicsStage(1, 2));
+		rendererContainer.Add<RendererFonts>(GraphicsStage(1, 2));
 	}
 
 	void MainRenderer::Update()

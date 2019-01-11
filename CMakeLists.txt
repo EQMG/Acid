@@ -1,6 +1,6 @@
 # 3.8.0 required for cxx_std_17
 cmake_minimum_required(VERSION 3.8.0 FATAL_ERROR)
-project(Acid VERSION 0.11.2 LANGUAGES C CXX)
+project(Acid VERSION 0.11.3 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)

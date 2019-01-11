@@ -76,6 +76,7 @@ namespace acid
 	private:
 		using FieldTable = std::map<std::string, std::string>;
 
+		friend class Http;
 		/// Fields of the header.
 		FieldTable m_fields;
 		/// Status code.
@@ -134,8 +135,6 @@ namespace acid
 		/// <returns> The response body. </returns>
 		const std::string &GetBody() const { return m_body; }
 	private:
-		friend class Http;
-
 		/// <summary>
 		/// Construct the header from a response string.
 		/// This function is used by Http to build the response of a request.

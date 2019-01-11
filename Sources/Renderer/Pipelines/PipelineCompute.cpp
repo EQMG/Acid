@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <cassert>
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -49,14 +49,14 @@ namespace acid
 
 	PipelineCompute::~PipelineCompute()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkDestroyShaderModule(logicalDevice, m_shaderModule, nullptr);
+		vkDestroyShaderModule(logicalDevice->GetLogicalDevice(), m_shaderModule, nullptr);
 
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
-		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
-		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
+		vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
+		vkDestroyDescriptorPool(logicalDevice->GetLogicalDevice(), m_descriptorPool, nullptr);
+		vkDestroyPipeline(logicalDevice->GetLogicalDevice(), m_pipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice->GetLogicalDevice(), m_pipelineLayout, nullptr);
 	}
 
 	bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer) const
@@ -102,7 +102,7 @@ namespace acid
 
 	void PipelineCompute::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
@@ -111,12 +111,12 @@ namespace acid
 		descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
-		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Renderer::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void PipelineCompute::CreateDescriptorPool()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
@@ -126,23 +126,23 @@ namespace acid
 		descriptorPoolCreateInfo.maxSets = 16384;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
-		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void PipelineCompute::CreatePipelineLayout()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.setLayoutCount = 1;
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
-		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Renderer::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void PipelineCompute::CreatePipelineCompute()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 
 		VkComputePipelineCreateInfo pipelineCreateInfo = {};
@@ -151,6 +151,6 @@ namespace acid
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
-		vkCreateComputePipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
+		vkCreateComputePipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 	}
 }

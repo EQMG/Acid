@@ -11,7 +11,7 @@ namespace acid
 			return;
 		}
 
-		Keyboard::Get()->m_keyboardKeys[key] = action != GLFW_RELEASE;
+		Keyboard::Get()->m_keyboardKeys[key] = static_cast<InputAction>(action);
 	}
 
 	void CallbackChar(GLFWwindow *window, uint32_t codepoint)
@@ -20,29 +20,29 @@ namespace acid
 	}
 
 	Keyboard::Keyboard() :
-		m_keyboardKeys(std::array<bool, KEY_END_RANGE>()),
+		m_keyboardKeys(std::array<InputAction, KEY_END_RANGE>()),
 		m_char(0)
 	{
 		// Sets the default state of the keys to released.
 		for (uint32_t i = 0; i < KEY_END_RANGE; i++)
 		{
-			m_keyboardKeys[i] = false;
+			m_keyboardKeys[i] = INPUT_ACTION_RELEASE;
 		}
 
 		// Sets the keyboards callbacks.
-		glfwSetKeyCallback(Display::Get()->GetWindow(), CallbackKey);
-		glfwSetCharCallback(Display::Get()->GetWindow(), CallbackChar);
+		glfwSetKeyCallback(Window::Get()->GetWindow(), CallbackKey);
+		glfwSetCharCallback(Window::Get()->GetWindow(), CallbackChar);
 	}
 
 	void Keyboard::Update()
 	{
 	}
 
-	bool Keyboard::GetKey(const Key &key) const
+	InputAction Keyboard::GetKey(const Key &key) const
 	{
 		if (key < 0 || key >= KEY_END_RANGE)
 		{
-			return false;
+			return INPUT_ACTION_RELEASE;
 		}
 
 		return m_keyboardKeys[key];

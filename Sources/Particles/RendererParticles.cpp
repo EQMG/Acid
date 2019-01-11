@@ -1,6 +1,7 @@
 #include "RendererParticles.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Models/VertexModel.hpp"
 
 namespace acid
@@ -13,10 +14,11 @@ namespace acid
 	{
 	}
 
-	void RendererParticles::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererParticles::Render(const CommandBuffer &commandBuffer)
 	{
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
+		auto camera = Scenes::Get()->GetCamera();
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
 
 		auto particles = Particles::Get()->GetParticles();
 

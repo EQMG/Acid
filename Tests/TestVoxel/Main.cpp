@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Files/Files.hpp>
 #include <Helpers/FileSystem.hpp>
-#include <Inputs/Mouse.hpp>
+#include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	auto engine = std::make_unique<Engine>(argv[0]);
 
 	// Registers file search paths.
-	Files::AddSearchPath("Resources/Engine");
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Registers modules.
 
@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<VoxelChunk>("VoxelChunk");
 
 	// Sets values to modules.
-	Display::Get()->SetTitle("Test Voxel");
-	Display::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetTitle("Test Voxel");
+	Window::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
