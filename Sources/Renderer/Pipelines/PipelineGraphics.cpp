@@ -167,7 +167,7 @@ namespace acid
 		descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
-		Window::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Renderer::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void PipelineGraphics::CreateDescriptorPool()
@@ -182,7 +182,7 @@ namespace acid
 		descriptorPoolCreateInfo.maxSets = 16384;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
-		Window::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void PipelineGraphics::CreatePipelineLayout()
@@ -213,7 +213,7 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 		pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
 		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
-		Window::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Renderer::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void PipelineGraphics::CreateAttributes()
@@ -374,7 +374,7 @@ namespace acid
 		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
-		Window::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void PipelineGraphics::CreatePipelinePolygon()

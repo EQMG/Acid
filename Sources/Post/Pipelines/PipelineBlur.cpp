@@ -23,8 +23,8 @@ namespace acid
 	{
 		if (!m_toScreen)
 		{
-			uint32_t width = Renderer::Get()->GetWindow()->GetWidth();
-			uint32_t height = Renderer::Get()->GetWindow()->GetHeight();
+			uint32_t width = Window::Get()->GetWidth();
+			uint32_t height = Window::Get()->GetHeight();
 
 			if (width != m_lastWidth || height != m_lastHeight)
 			{

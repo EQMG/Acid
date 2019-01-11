@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cstring>
+#include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 
 namespace acid

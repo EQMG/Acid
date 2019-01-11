@@ -19,7 +19,10 @@ set(_temp_acid_headers
 		Audio/SoundBuffer.hpp
 		Audio/stb_vorbis.h
 		Devices/Instance.hpp
+		Devices/Joysticks.hpp
+		Devices/Keyboard.hpp
 		Devices/LogicalDevice.hpp
+		Devices/Mouse.hpp
 		Devices/PhysicalDevice.hpp
 		Devices/Surface.hpp
 		Devices/Window.hpp
@@ -74,9 +77,6 @@ set(_temp_acid_headers
 		Inputs/IAxis.hpp
 		Inputs/IButton.hpp
 		Inputs/InputDelay.hpp
-		Devices/Joysticks.hpp
-		Devices/Keyboard.hpp
-		Devices/Mouse.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
 		Materials/Material.hpp
@@ -195,10 +195,10 @@ set(_temp_acid_headers
 		Renderer/Pipelines/ShaderProgram.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererContainer.hpp
-		Renderer/RenderPipeline.hpp
 		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
+		Renderer/RenderPipeline.hpp
 		Renderer/RenderStage.hpp
 		Renderer/Swapchain/Framebuffers.hpp
 		Renderer/Swapchain/Swapchain.hpp
@@ -255,7 +255,10 @@ set(_temp_acid_sources
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
 		Devices/Instance.cpp
+		Devices/Joysticks.cpp
+		Devices/Keyboard.cpp
 		Devices/LogicalDevice.cpp
+		Devices/Mouse.cpp
 		Devices/PhysicalDevice.cpp
 		Devices/Surface.cpp
 		Devices/Window.cpp
@@ -298,9 +301,6 @@ set(_temp_acid_sources
 		Inputs/ButtonMouse.cpp
 		Inputs/HatJoystick.cpp
 		Inputs/InputDelay.cpp
-		Devices/Joysticks.cpp
-		Devices/Keyboard.cpp
-		Devices/Mouse.cpp
 		Lights/Fog.cpp
 		Lights/Light.cpp
 		Materials/MaterialDefault.cpp

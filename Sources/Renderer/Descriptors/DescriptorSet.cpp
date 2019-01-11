@@ -21,14 +21,14 @@ namespace acid
 		descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
 		descriptorSetAllocateInfo.descriptorSetCount = 1;
 		descriptorSetAllocateInfo.pSetLayouts = layouts;
-		Window::CheckVk(vkAllocateDescriptorSets(logicalDevice->GetLogicalDevice(), &descriptorSetAllocateInfo, &m_descriptorSet));
+		Renderer::CheckVk(vkAllocateDescriptorSets(logicalDevice->GetLogicalDevice(), &descriptorSetAllocateInfo, &m_descriptorSet));
 	}
 
 	DescriptorSet::~DescriptorSet()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		Window::CheckVk(vkFreeDescriptorSets(logicalDevice->GetLogicalDevice(), m_descriptorPool, 1, &m_descriptorSet));
+		Renderer::CheckVk(vkFreeDescriptorSets(logicalDevice->GetLogicalDevice(), m_descriptorPool, 1, &m_descriptorSet));
 	}
 
 	void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites)

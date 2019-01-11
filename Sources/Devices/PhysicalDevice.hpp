@@ -11,6 +11,7 @@ namespace acid
 	class ACID_EXPORT PhysicalDevice
 	{
 	private:
+		friend class Renderer;
 		const Instance *m_instance;
 
 		VkPhysicalDevice m_physicalDevice;

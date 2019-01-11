@@ -130,7 +130,7 @@ namespace acid
 		renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
 		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(m_dependencies.size());
 		renderPassCreateInfo.pDependencies = m_dependencies.data();
-		Window::CheckVk(vkCreateRenderPass(logicalDevice->GetLogicalDevice(), &renderPassCreateInfo, nullptr, &m_renderPass));
+		Renderer::CheckVk(vkCreateRenderPass(logicalDevice->GetLogicalDevice(), &renderPassCreateInfo, nullptr, &m_renderPass));
 	}
 
 	Renderpass::~Renderpass()

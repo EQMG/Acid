@@ -13,6 +13,7 @@ namespace acid
 	class ACID_EXPORT LogicalDevice
 	{
 	private:
+		friend class Renderer;
 		const Instance *m_instance;
 		const PhysicalDevice *m_physicalDevice;
 		const Surface *m_surface;

@@ -31,7 +31,7 @@ namespace acid
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 		bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
-		Window::CheckVk(vkCreateBuffer(logicalDevice->GetLogicalDevice(), &bufferCreateInfo, nullptr, &m_buffer));
+		Renderer::CheckVk(vkCreateBuffer(logicalDevice->GetLogicalDevice(), &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
@@ -41,9 +41,9 @@ namespace acid
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-		Window::CheckVk(vkAllocateMemory(logicalDevice->GetLogicalDevice(), &memoryAllocateInfo, nullptr, &m_bufferMemory));
+		Renderer::CheckVk(vkAllocateMemory(logicalDevice->GetLogicalDevice(), &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
-		Window::CheckVk(vkBindBufferMemory(logicalDevice->GetLogicalDevice(), m_buffer, m_bufferMemory, 0));
+		Renderer::CheckVk(vkBindBufferMemory(logicalDevice->GetLogicalDevice(), m_buffer, m_bufferMemory, 0));
 	}
 
 	Buffer::~Buffer()

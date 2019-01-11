@@ -14,7 +14,6 @@ namespace acid
 	{
 	private:
 		friend class Entity;
-
 		bool m_started;
 		bool m_enabled;
 		bool m_removed;

@@ -16,11 +16,9 @@ namespace acid
 		m_commandPool(VK_NULL_HANDLE),
 		m_presentSemaphore(VK_NULL_HANDLE),
 		m_commandBuffer(nullptr),
-		m_antialiasing(true),
-		m_window(std::make_unique<Window>()),
-		m_instance(std::make_unique<Instance>(m_window.get())),
+		m_instance(std::make_unique<Instance>()),
 		m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
-		m_surface(std::make_unique<Surface>(m_window.get(), m_instance.get(), m_physicalDevice.get())),
+		m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
 		m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get()))
 	{
 		glslang::InitializeProcess();
@@ -34,7 +32,7 @@ namespace acid
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Renderer::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		glslang::FinalizeProcess();
 
@@ -46,7 +44,7 @@ namespace acid
 
 	void Renderer::Update()
 	{
-		if (m_renderManager == nullptr || m_window->IsIconified())
+		if (m_renderManager == nullptr || Window::Get()->IsIconified())
 		{
 			return;
 		}
@@ -132,6 +130,81 @@ namespace acid
 		}
 	}
 
+	std::string Renderer::StringifyResultVk(const VkResult &result)
+	{
+		switch (result)
+		{
+			case VK_SUCCESS:
+				return "Success";
+			case VK_NOT_READY:
+				return "A fence or query has not yet completed";
+			case VK_TIMEOUT:
+				return "A wait operation has not completed in the specified time";
+			case VK_EVENT_SET:
+				return "An event is signaled";
+			case VK_EVENT_RESET:
+				return "An event is unsignaled";
+			case VK_INCOMPLETE:
+				return "A return array was too small for the result";
+			case VK_ERROR_OUT_OF_HOST_MEMORY:
+				return "A host memory allocation has failed";
+			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+				return "A device memory allocation has failed";
+			case VK_ERROR_INITIALIZATION_FAILED:
+				return "Initialization of an object could not be completed for implementation-specific reasons";
+			case VK_ERROR_DEVICE_LOST:
+				return "The logical or physical device has been lost";
+			case VK_ERROR_MEMORY_MAP_FAILED:
+				return "Mapping of a memory object has failed";
+			case VK_ERROR_LAYER_NOT_PRESENT:
+				return "A requested layer is not present or could not be loaded";
+			case VK_ERROR_EXTENSION_NOT_PRESENT:
+				return "A requested extension is not supported";
+			case VK_ERROR_FEATURE_NOT_PRESENT:
+				return "A requested feature is not supported";
+			case VK_ERROR_INCOMPATIBLE_DRIVER:
+				return "The requested version of Vulkan is not supported by the driver or is otherwise incompatible";
+			case VK_ERROR_TOO_MANY_OBJECTS:
+				return "Too many objects of the type have already been created";
+			case VK_ERROR_FORMAT_NOT_SUPPORTED:
+				return "A requested format is not supported on this device";
+			case VK_ERROR_SURFACE_LOST_KHR:
+				return "A surface is no longer available";
+			case VK_SUBOPTIMAL_KHR:
+				return "A swapchain no longer matches the surface properties exactly, but can still be used";
+			case VK_ERROR_OUT_OF_DATE_KHR:
+				return "A surface has changed in such a way that it is no longer compatible with the swapchain";
+			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
+				return "The display used by a swapchain does not use the same presentable image layout";
+			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
+				return "The requested window is already connected to a VkSurfaceKHR, or to some other non-Vulkan API";
+			case VK_ERROR_VALIDATION_FAILED_EXT:
+				return "A validation layer found an error";
+			default:
+				return "ERROR: UNKNOWN VULKAN ERROR";
+		}
+	}
+
+	void Renderer::CheckVk(const VkResult &result)
+	{
+		if (result >= 0)
+		{
+			return;
+		}
+
+		std::string failure = StringifyResultVk(result);
+
+		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
+		Log::Popup("Vulkan Error", failure);
+		assert(false && "Vulkan error!");
+	}
+
+	void Renderer::UpdateSurfaceCapabilities()
+	{
+		Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(),
+			m_surface->GetSurface(), &m_surface->m_capabilities));
+	}
+
 	void Renderer::CaptureScreenshot(const std::string &filename)
 	{
 #if defined(ACID_VERBOSE)
@@ -140,8 +213,8 @@ namespace acid
 
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto surface = Renderer::Get()->GetSurface();
-		auto width = m_window->GetWidth();
-		auto height = m_window->GetHeight();
+		auto width = Window::Get()->GetWidth();
+		auto height = Window::Get()->GetHeight();
 
 		VkImage srcImage = m_swapchain->GetActiveImage();
 		VkImage dstImage;
@@ -237,13 +310,13 @@ namespace acid
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Window::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentSemaphore));
+		Renderer::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentSemaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
-		Window::CheckVk(vkCreateCommandPool(logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
+		Renderer::CheckVk(vkCreateCommandPool(logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
 	}
@@ -254,14 +327,14 @@ namespace acid
 
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-		Window::CheckVk(vkCreatePipelineCache(logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+		Renderer::CheckVk(vkCreatePipelineCache(logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
 	{
 		VkExtent2D displayExtent = {
-			m_window->GetWidth(),
-			m_window->GetHeight()
+			Window::Get()->GetWidth(),
+			Window::Get()->GetHeight()
 		};
 
 		m_renderStages.clear();
@@ -280,11 +353,11 @@ namespace acid
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
 		VkExtent2D displayExtent = {
-			m_window->GetWidth(),
-			m_window->GetHeight()
+			Window::Get()->GetWidth(),
+			Window::Get()->GetHeight()
 		};
 
-		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Renderer::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 		{
@@ -308,7 +381,7 @@ namespace acid
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-		Window::CheckVk(vkQueueWaitIdle(graphicsQueue));
+		Renderer::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		if (renderStage.HasSwapchain())
 		{
@@ -403,8 +476,7 @@ namespace acid
 			return;
 		}
 
-		Window::CheckVk(presentResult);
-		m_window->PollEvents();
-		Window::CheckVk(vkQueueWaitIdle(presentQueue));
+		Renderer::CheckVk(presentResult);
+		Renderer::CheckVk(vkQueueWaitIdle(presentQueue));
 	}
 }

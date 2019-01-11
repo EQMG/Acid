@@ -6,16 +6,34 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Maths/Vector2.hpp"
+#include "Helpers/Delegate.hpp"
 
 struct GLFWwindow;
 struct GLFWmonitor;
 
 namespace acid
 {
+	enum InputAction
+	{
+		INPUT_ACTION_RELEASE = 0,
+		INPUT_ACTION_PRESS = 1,
+		INPUT_ACTION_REPEAT = 3
+	};
+
+	enum InputMod
+	{
+		INPUT_MOD_SHIFT = 1,
+		INPUT_MOD_CONTROL = 2,
+		INPUT_MOD_ALT = 4,
+		INPUT_MOD_SUPER = 8
+	};
+	typedef uint32_t InputModFlags;
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class ACID_EXPORT Window
+	class ACID_EXPORT Window :
+		public Module
 	{
 	private:
 		uint32_t m_windowWidth;
@@ -38,6 +56,8 @@ namespace acid
 		bool m_focused;
 		bool m_iconified;
 
+		Delegate<void(std::vector<std::string>)> m_onDrop;
+
 		GLFWwindow *m_window;
 
 		friend void CallbackError(int32_t error, const char *description);
@@ -55,12 +75,20 @@ namespace acid
 		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
 
 		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
+
+		friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 	public:
+		/// <summary>
+		/// Gets this engine instance.
+		/// </summary>
+		/// <returns> The current module instance. </returns>
+		static Window *Get() { return Engine::Get()->GetModuleManager().Get<Window>(); }
+
 		Window();
 
 		~Window();
 
-		void PollEvents();
+		void Update() override;
 
 		/// <summary>
 		/// Gets the width of the window in pixels.
@@ -250,6 +278,8 @@ namespace acid
 		/// <param name="iconify"> If the window will be set as iconified. </param>
 		void SetIconified(const bool &iconify);
 
+		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
+
 		/// <summary>
 		/// Gets the contents of the clipboard as a string.
 		/// </summary>
@@ -265,10 +295,6 @@ namespace acid
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
 		ACID_HIDDEN static void CheckGlfw(const int32_t &result);
-
-		static std::string StringifyResultVk(const VkResult &result);
-
-		static void CheckVk(const VkResult &result);
 
 		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 

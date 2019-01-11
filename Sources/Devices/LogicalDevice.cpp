@@ -1,6 +1,7 @@
 #include "LogicalDevice.hpp"
 
 #include <cassert>
+#include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
 #include "Surface.hpp"
@@ -29,7 +30,7 @@ namespace acid
 
 	LogicalDevice::~LogicalDevice()
 	{
-		Window::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
+		Renderer::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
 
 		vkDestroyDevice(m_logicalDevice, nullptr);
 	}
@@ -204,7 +205,7 @@ namespace acid
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instance->GetDeviceExtensions().size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_instance->GetDeviceExtensions().data();
 		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
-		Window::CheckVk(vkCreateDevice(m_physicalDevice->GetPhysicalDevice(), &deviceCreateInfo, nullptr, &m_logicalDevice));
+		Renderer::CheckVk(vkCreateDevice(m_physicalDevice->GetPhysicalDevice(), &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
 		vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);
