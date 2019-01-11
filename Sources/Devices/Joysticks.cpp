@@ -14,17 +14,20 @@ namespace acid
 			joystick.m_connected = true;
 			joystick.m_gamepad = glfwJoystickIsGamepad(id) == GLFW_TRUE;
 			joystick.m_name = glfwGetJoystickName(joystick.m_port);
+			Joysticks::Get()->m_onConnect(static_cast<JoystickPort>(id), true);
 		}
 		else if (event == GLFW_DISCONNECTED)
 		{
 			printf("Joystick disconnected from %i\n", joystick.m_port);
 			joystick.m_connected = false;
 			joystick.m_name = "";
+			Joysticks::Get()->m_onConnect(static_cast<JoystickPort>(id), false);
 		}
 	}
 
 	Joysticks::Joysticks() :
-		m_connected(std::array<JoystickImpl, JOYSTICK_END_RANGE>())
+		m_connected(std::array<JoystickImpl, JOYSTICK_END_RANGE>()),
+		m_onConnect(Delegate<void(JoystickPort, bool)>())
 	{
 		for (int32_t i = 0; i < JOYSTICK_END_RANGE; i++)
 		{
@@ -60,16 +63,6 @@ namespace acid
 		}
 	}
 
-	bool Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const
-	{
-		if (!IsConnected(port) || button > GetButtonCount(port))
-		{
-			return false;
-		}
-
-		return m_connected.at(port).m_buttons[button];
-	}
-
 	float Joysticks::GetAxis(const JoystickPort &port, const uint32_t &axis) const
 	{
 		if (!IsConnected(port) || axis > GetAxisCount(port))
@@ -78,6 +71,16 @@ namespace acid
 		}
 
 		return m_connected.at(port).m_axes[axis];
+	}
+
+	InputAction Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const
+	{
+		if (!IsConnected(port) || button > GetButtonCount(port))
+		{
+			return INPUT_ACTION_RELEASE;
+		}
+
+		return static_cast<InputAction>(m_connected.at(port).m_buttons[button]);
 	}
 
 	JoystickHatFlags Joysticks::GetHat(const JoystickPort &port, const uint32_t &hat) const

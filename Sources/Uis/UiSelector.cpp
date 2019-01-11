@@ -68,7 +68,7 @@ namespace acid
 		float positionX = (object.GetScreenTransform().m_z + 1.0f) / 2.0f;
 		float positionY = (object.GetScreenTransform().m_w - 1.0f) / -2.0f;
 
-		if (Mouse::Get()->IsDisplaySelected() && Window::Get()->IsFocused())
+		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
 			if (m_cursorX >= positionX && m_cursorX <= positionX + width && 1.0f - m_cursorY >= positionY - height && 1.0f - m_cursorY <= positionY)
 			{

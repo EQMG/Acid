@@ -16,7 +16,7 @@ namespace acid
 			return false;
 		}
 
-		return Joysticks::Get()->GetButton(m_joystick, m_button);
+		return Joysticks::Get()->GetButton(m_joystick, m_button) != INPUT_ACTION_RELEASE;
 	}
 
 	bool ButtonJoystick::WasDown()

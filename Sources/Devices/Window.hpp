@@ -3,13 +3,14 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <optional>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
-#include "Maths/Vector2.hpp"
 #include "Helpers/Delegate.hpp"
+#include "Maths/Vector2.hpp"
+#include "Monitor.hpp"
 
 struct GLFWwindow;
-struct GLFWmonitor;
 
 namespace acid
 {
@@ -56,27 +57,28 @@ namespace acid
 		bool m_focused;
 		bool m_iconified;
 
-		Delegate<void(std::vector<std::string>)> m_onDrop;
-
 		GLFWwindow *m_window;
+		std::vector<Monitor> m_monitors;
+
+		Delegate<void(uint32_t, bool)> m_onMonitorConnect;
+		Delegate<void()> m_onClose;
+		Delegate<void(bool)> m_onIconify;
 
 		friend void CallbackError(int32_t error, const char *description);
 
 		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
 
-		friend void CallbackClose(GLFWwindow *window);
-
-		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
-
 		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
 
 		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
 
+		friend void CallbackClose(GLFWwindow *window);
+
+		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
+
 		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
 
 		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
-
-		friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -251,8 +253,9 @@ namespace acid
 		/// <summary>
 		/// Sets the window to be fullscreen or windowed.
 		/// </summary>
-		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
-		void SetFullscreen(const bool &fullscreen);
+		/// <param name="fullscreen"> If the window will be fullscreen. </param>
+		/// <param name="monitor"> The monitor to display in. </param>
+		void SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor = {});
 
 		/// <summary>
 		/// Gets if the window is closed.
@@ -278,25 +281,19 @@ namespace acid
 		/// <param name="iconify"> If the window will be set as iconified. </param>
 		void SetIconified(const bool &iconify);
 
-		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
+		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
-		/// <summary>
-		/// Gets the contents of the clipboard as a string.
-		/// </summary>
-		/// <returns> If the clipboard contents. </returns>
-		std::string GetClipboard() const;
+		const std::vector<Monitor> &GetMonitors() const { return m_monitors; };
 
-		/// <summary>
-		/// Sets the clipboard to the specified string.
-		/// </summary>
-		/// <param name="string"> The string to set as the clipboard. </param>
-		void SetClipboard(const std::string &string) const;
+		Delegate<void(uint32_t, bool)> &GetOnMonitorConnect() { return m_onMonitorConnect; }
+
+		Delegate<void()> &GetOnClose() { return m_onClose; }
+
+		Delegate<void(bool)> &GetOnIconify() {return m_onIconify; }
 
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
 		ACID_HIDDEN static void CheckGlfw(const int32_t &result);
-
-		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
 		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 

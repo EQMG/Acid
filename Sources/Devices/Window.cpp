@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
 #include <cassert>
+#include <algorithm>
 #include <GLFW/glfw3.h>
 #include "Renderer/Renderer.hpp"
 #include "Textures/Texture.hpp"
@@ -15,18 +16,27 @@ namespace acid
 
 	void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 	{
-		Log::Error("Monitor action: %s, %i\n", glfwGetMonitorName(monitor), event);
-	}
+		if (event == GLFW_CONNECTED)
+		{
+			Log::Error("Monitor connected: %s\n", glfwGetMonitorName(monitor));
+			Window::Get()->m_monitors.emplace_back(Monitor(monitor));
+			Window::Get()->m_onMonitorConnect(static_cast<uint32_t>(Window::Get()->m_monitors.size() - 1), true);
+		}
+		else if (event == GLFW_DISCONNECTED)
+		{
+			Log::Error("Monitor disconnected: %s\n", glfwGetMonitorName(monitor));
+			auto &monitors = Window::Get()->m_monitors;
+			monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m)
+			{
+				return monitor == m.GetMonitor();
+			}), monitors.end());
 
-	void CallbackClose(GLFWwindow *window)
-	{
-		Window::Get()->m_closed = false;
-		Engine::Get()->RequestClose(false);
-	}
-
-	void CallbackFocus(GLFWwindow *window, int32_t focused)
-	{
-		Window::Get()->m_focused = static_cast<bool>(focused);
+			for (auto &m : monitors)
+			{
+				m.SetPrimary(m.GetMonitor() == glfwGetPrimaryMonitor());
+			}
+			Window::Get()->m_onMonitorConnect(0, false);
+		}
 	}
 
 	void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
@@ -60,26 +70,27 @@ namespace acid
 		Renderer::Get()->UpdateSurfaceCapabilities();
 	}
 
-	void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
+	void CallbackClose(GLFWwindow *window)
 	{
-		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Window::Get()->m_closed = false;
+		Engine::Get()->RequestClose(false);
+		Window::Get()->m_onClose();
 	}
 
-	void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
+	void CallbackFocus(GLFWwindow *window, int32_t focused)
 	{
-		std::vector<std::string> files(static_cast<uint32_t>(count));
-
-		for (uint32_t i = 0; i < count; i++)
-		{
-			files[i] = paths[i];
-		}
-
-		Window::Get()->m_onDrop(files);
+		Window::Get()->m_focused = static_cast<bool>(focused);
 	}
 
 	void CallbackIconify(GLFWwindow *window, int32_t iconified)
 	{
 		Window::Get()->m_iconified = iconified == GLFW_TRUE;
+		Window::Get()->m_onIconify(iconified == GLFW_TRUE);
+	}
+
+	void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
+	{
+		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	}
 
 	Window::Window() :
@@ -99,8 +110,11 @@ namespace acid
 		m_closed(false),
 		m_focused(true),
 		m_iconified(false),
-		m_onDrop(Delegate<void(std::vector<std::string>)>()),
-		m_window(nullptr)
+		m_window(nullptr),
+		m_monitors(std::vector<Monitor>()),
+		m_onMonitorConnect(Delegate<void(uint32_t, bool)>()),
+		m_onClose(Delegate<void()>()),
+		m_onIconify(Delegate<void(bool)>())
 	{
 		// Set the error error callback
 		glfwSetErrorCallback(CallbackError);
@@ -131,24 +145,19 @@ namespace acid
 		glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
 		glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
 
-		// Get the resolution of the primary monitor.
-		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
+		// Get connected monitors.
+		int32_t monitorCount;
+		GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
 
-		if (m_fullscreen)
+		for (uint32_t i = 0; i < monitorCount; i++)
 		{
-			m_fullscreenWidth = static_cast<uint32_t>(videoMode->width);
-			m_fullscreenHeight = static_cast<uint32_t>(videoMode->height);
-			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
+			m_monitors.emplace_back(Monitor(monitors[i]));
 		}
 
-		//	glfwWindowHint(GLFW_RED_BITS, videoMode->redBits);
-		//	glfwWindowHint(GLFW_GREEN_BITS, videoMode->greenBits);
-		//	glfwWindowHint(GLFW_BLUE_BITS, videoMode->blueBits);
-		//	glfwWindowHint(GLFW_REFRESH_RATE, videoMode->refreshRate);
+		auto videoMode = m_monitors[0].GetVideoMode();
 
 		// Create a windowed mode window and its context.
-		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), m_fullscreen ? monitor : nullptr, nullptr);
+		m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), nullptr, nullptr);
 
 		// Gets any window errors.
 		if (m_window == nullptr)
@@ -166,21 +175,26 @@ namespace acid
 		glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
 
 		// Centre the window position.
-		m_positionX = (videoMode->width - m_windowWidth) / 2;
-		m_positionY = (videoMode->height - m_windowHeight) / 2;
+		m_positionX = (videoMode.m_width - m_windowWidth) / 2;
+		m_positionY = (videoMode.m_height - m_windowHeight) / 2;
 		glfwSetWindowPos(m_window, m_positionX, m_positionY);
+
+		// Sets fullscreen if enabled.
+		if (m_fullscreen)
+		{
+			SetFullscreen(true);
+		}
 
 		// Shows the glfw window.
 		glfwShowWindow(m_window);
 
 		// Sets the displays callbacks.
-		glfwSetWindowCloseCallback(m_window, CallbackClose);
-		glfwSetWindowFocusCallback(m_window, CallbackFocus);
 		glfwSetWindowPosCallback(m_window, CallbackPosition);
 		glfwSetWindowSizeCallback(m_window, CallbackSize);
+		glfwSetWindowCloseCallback(m_window, CallbackClose);
+		glfwSetWindowFocusCallback(m_window, CallbackFocus);
 		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
 		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
-		glfwSetDropCallback(m_window, CallbackDrop);
 	}
 
 	Window::~Window()
@@ -272,37 +286,29 @@ namespace acid
 		glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
 	}
 
-	void Window::SetFullscreen(const bool &fullscreen)
+	void Window::SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor)
 	{
-		if (m_fullscreen == fullscreen)
-		{
-			return;
-		}
-
 		m_fullscreen = fullscreen;
 
-	//  int32_t monitorCount;
-	//  GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
-
-		GLFWmonitor *monitor = glfwGetPrimaryMonitor(); // monitors[1];
-		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
+		auto selected = monitor ? *monitor : m_monitors[0];
+		auto videoMode = selected.GetVideoMode();
 
 		if (fullscreen)
 		{
 #if defined(ACID_VERBOSE)
 			printf("Window is going fullscreen\n");
 #endif
-			m_fullscreenWidth = static_cast<uint32_t>(videoMode->width);
-			m_fullscreenHeight = static_cast<uint32_t>(videoMode->height);
-			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
+			m_fullscreenWidth = static_cast<uint32_t>(videoMode.m_width);
+			m_fullscreenHeight = static_cast<uint32_t>(videoMode.m_height);
+			glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
 		{
 #if defined(ACID_VERBOSE)
 			printf("Window is going windowed\n");
 #endif
-			m_positionX = (videoMode->width - m_windowWidth) / 2;
-			m_positionY = (videoMode->height - m_windowHeight) / 2;
+			m_positionX = (videoMode.m_width - m_windowWidth) / 2;
+			m_positionY = (videoMode.m_height - m_windowHeight) / 2;
 			glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
 		}
 	}
@@ -317,16 +323,6 @@ namespace acid
 		{
 			glfwRestoreWindow(m_window);
 		}
-	}
-
-	std::string Window::GetClipboard() const
-	{
-		return glfwGetClipboardString(m_window);
-	}
-
-	void Window::SetClipboard(const std::string &string) const
-	{
-		glfwSetClipboardString(m_window, string.c_str());
 	}
 
 	std::string Window::StringifyResultGlfw(const int32_t &result)
