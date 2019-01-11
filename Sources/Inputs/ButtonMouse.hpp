@@ -1,8 +1,7 @@
 #pragma once
 
-#include <vector>
+#include "Devices/Mouse.hpp"
 #include "IButton.hpp"
-#include "Mouse.hpp"
 
 namespace acid
 {
@@ -13,21 +12,21 @@ namespace acid
 		public IButton
 	{
 	private:
-		std::vector<MouseButton> m_buttons;
+		MouseButton m_button;
 		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button mouse.
 		/// </summary>
-		/// <param name="buttons"> The buttons on the mouse being checked. </param>
-		explicit ButtonMouse(const std::vector<MouseButton> &buttons);
+		/// <param name="buttons"> The button on the mouse being checked. </param>
+		explicit ButtonMouse(const MouseButton &button);
 
 		bool IsDown() const override;
 
 		bool WasDown() override;
 
-		const std::vector<MouseButton> &GetButtons() const { return m_buttons; }
+		const MouseButton &GetButton() const { return m_button; }
 
-		void SetButtons(const std::vector<MouseButton> &buttons) { m_buttons = buttons; }
+		void SetButton(const MouseButton &button) { m_button = button; }
 	};
 }

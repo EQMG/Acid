@@ -22,7 +22,7 @@ namespace acid
 
 		explicit RendererShadows(const GraphicsStage &graphicsStage);
 
-		void Render(const CommandBuffer &commandBuffer, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	private:
 		std::vector<ShaderDefine> GetDefines();
 	};

@@ -12,11 +12,12 @@ namespace acid
 	{
 	}
 
-	void RendererMeshes::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererMeshes::Render(const CommandBuffer &commandBuffer)
 	{
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
-		m_uniformScene.Push("cameraPos", camera.GetPosition());
+		auto camera = Scenes::Get()->GetCamera();
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
+		m_uniformScene.Push("cameraPos", camera->GetPosition());
 
 		auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 

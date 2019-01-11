@@ -1,6 +1,6 @@
 ﻿#include "IndexBuffer.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -9,12 +9,12 @@ namespace acid
 		m_indexType(indexType),
 		m_indexCount(static_cast<uint32_t>(indexCount))
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Copies the index data to the buffer.
 		void *data;
-		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
 		memcpy(data, newData, static_cast<std::size_t>(m_size));
-		vkUnmapMemory(logicalDevice, m_bufferMemory);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 	}
 }

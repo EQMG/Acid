@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <algorithm>
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
@@ -84,17 +84,17 @@ namespace acid
 
 	PipelineGraphics::~PipelineGraphics()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		for (const auto &shaderModule : m_modules)
 		{
-			vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
+			vkDestroyShaderModule(logicalDevice->GetLogicalDevice(), shaderModule, nullptr);
 		}
 
-		vkDestroyDescriptorPool(logicalDevice, m_descriptorPool, nullptr);
-		vkDestroyPipeline(logicalDevice, m_pipeline, nullptr);
-		vkDestroyPipelineLayout(logicalDevice, m_pipelineLayout, nullptr);
-		vkDestroyDescriptorSetLayout(logicalDevice, m_descriptorSetLayout, nullptr);
+		vkDestroyDescriptorPool(logicalDevice->GetLogicalDevice(), m_descriptorPool, nullptr);
+		vkDestroyPipeline(logicalDevice->GetLogicalDevice(), m_pipeline, nullptr);
+		vkDestroyPipelineLayout(logicalDevice->GetLogicalDevice(), m_pipelineLayout, nullptr);
+		vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
 	}
 
 	const DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
@@ -158,7 +158,7 @@ namespace acid
 
 	void PipelineGraphics::CreateDescriptorLayout()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
@@ -167,12 +167,12 @@ namespace acid
 		descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 		descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 		descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
-		Display::CheckVk(vkCreateDescriptorSetLayout(logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+		Renderer::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 	}
 
 	void PipelineGraphics::CreateDescriptorPool()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
 
@@ -182,12 +182,12 @@ namespace acid
 		descriptorPoolCreateInfo.maxSets = 16384;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
-		Display::CheckVk(vkCreateDescriptorPool(logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+		Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 	}
 
 	void PipelineGraphics::CreatePipelineLayout()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		std::vector<VkPushConstantRange> pushConstantRanges = {};
 		uint32_t currentOffset = 0;
@@ -213,11 +213,13 @@ namespace acid
 		pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 		pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
 		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
-		Display::CheckVk(vkCreatePipelineLayout(logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+		Renderer::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 	}
 
 	void PipelineGraphics::CreateAttributes()
 	{
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		m_inputAssemblyState.primitiveRestartEnable = VK_FALSE;
@@ -287,7 +289,7 @@ namespace acid
 		bool multisampled = renderStage->IsMultisampled(m_graphicsStage.GetSubpass());
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		m_multisampleState.rasterizationSamples = multisampled ? Display::Get()->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
+		m_multisampleState.rasterizationSamples = multisampled ? physicalDevice->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
 		m_multisampleState.sampleShadingEnable = VK_TRUE;
 		m_multisampleState.minSampleShading = 0.2f;
 
@@ -301,7 +303,7 @@ namespace acid
 
 	void PipelineGraphics::CreatePipeline()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
 		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
 
@@ -372,7 +374,7 @@ namespace acid
 		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
-		Display::CheckVk(vkCreateGraphicsPipelines(logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+		Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}
 
 	void PipelineGraphics::CreatePipelinePolygon()

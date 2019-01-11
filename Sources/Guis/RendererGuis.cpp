@@ -1,6 +1,7 @@
 #include "RendererGuis.hpp"
 
 #include "Models/VertexModel.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
@@ -14,10 +15,11 @@ namespace acid
 	{
 	}
 
-	void RendererGuis::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void RendererGuis::Render(const CommandBuffer &commandBuffer)
 	{
-		m_uniformScene.Push("projection", camera.GetProjectionMatrix());
-		m_uniformScene.Push("view", camera.GetViewMatrix());
+		auto camera = Scenes::Get()->GetCamera();
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
 
 		m_pipeline.BindPipeline(commandBuffer);
 

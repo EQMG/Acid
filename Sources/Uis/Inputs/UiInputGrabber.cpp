@@ -1,6 +1,6 @@
 ﻿#include "UiInputGrabber.hpp"
 
-#include "Inputs/Keyboard.hpp"
+#include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -23,7 +23,7 @@ namespace acid
 
 		if (Joysticks::Get()->IsConnected(m_joystick))
 		{
-			for (uint32_t i = 0; i < Joysticks::Get()->GetCountButtons(m_joystick); i++)
+			for (uint32_t i = 0; i < Joysticks::Get()->GetButtonCount(m_joystick); i++)
 			{
 				if (Joysticks::Get()->GetButton(m_joystick, i))
 				{

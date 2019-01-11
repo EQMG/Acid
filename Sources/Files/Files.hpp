@@ -30,13 +30,13 @@ namespace acid
 		/// Adds an file search path, ensure <seealso cref="#SetBaseDirectory()"/> is called once before.
 		/// </summary>
 		/// <param name="path"> The path to add. </param>
-		static void AddSearchPath(const std::string &path);
+		void AddSearchPath(const std::string &path);
 
 		/// <summary>
 		/// Removes a file search path.
 		/// </summary>
 		/// <param name="path"> The path to remove. </param>
-		static void RemoveSearchPath(const std::string &path);
+		void RemoveSearchPath(const std::string &path);
 
 		/// <summary>
 		/// Reads a file found by real or partial path.

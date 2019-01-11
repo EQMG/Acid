@@ -12,14 +12,14 @@ namespace acid
 	/// <summary>
 	/// A class that contains and manages renderers registered to a render manager.
 	/// </summary>
-	class ACID_EXPORT RendererRegister :
+	class ACID_EXPORT RendererContainer :
 		public NonCopyable
 	{
 	private:
 		std::mutex m_mutex;
 		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	public:
-		RendererRegister();
+		RendererContainer();
 
 		const std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
 

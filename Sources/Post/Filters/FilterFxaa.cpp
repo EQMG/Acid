@@ -9,7 +9,7 @@ namespace acid
 	{
 	}
 
-	void FilterFxaa::Render(const CommandBuffer &commandBuffer, const Camera &camera)
+	void FilterFxaa::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("spanMax", m_spanMax);

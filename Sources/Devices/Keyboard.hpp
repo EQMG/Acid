@@ -1,26 +1,11 @@
 #pragma once
 
 #include <array>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid
 {
-	enum InputAction
-	{
-		INPUT_ACTION_RELEASE = 0,
-		INPUT_ACTION_PRESS = 1,
-		INPUT_ACTION_REPEAT = 3
-	};
-
-	enum InputMod
-	{
-		KEY_MOD_SHIFT = 1,
-		KEY_MOD_CONTROL = 2,
-		KEY_MOD_ALT = 4,
-		KEY_MOD_SUPER = 8
-	};
-
 	enum Key
 	{
 		KEY_UNKNOWN = -1,
@@ -144,10 +129,7 @@ namespace acid
 		KEY_RIGHT_ALT = 346,
 		KEY_RIGHT_SUPER = 347,
 		KEY_MENU = 348,
-		KEY_BEGIN_RANGE = KEY_UNKNOWN,
-		KEY_END_RANGE = KEY_MENU,
-		KEY_RANGE_SIZE = (KEY_MENU - KEY_UNKNOWN + 1),
-		KEY_MAX_ENUM = 0x7FFFFFFF
+		KEY_END_RANGE = KEY_MENU
 	};
 
 	/// <summary>
@@ -157,7 +139,7 @@ namespace acid
 		public Module
 	{
 	private:
-		std::array<bool, KEY_END_RANGE> m_keyboardKeys;
+		std::array<InputAction, KEY_END_RANGE> m_keyboardKeys;
 		char m_char;
 
 		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
@@ -176,11 +158,10 @@ namespace acid
 
 		/// <summary>
 		/// Gets whether or not a particular key is currently pressed.
-		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>
 		/// </summary>
 		/// <param name="key"> The key to test. </param>
 		/// <returns> If the key is currently pressed. </returns>
-		bool GetKey(const Key &key) const;
+		InputAction GetKey(const Key &key) const;
 
 		/// <summary>
 		/// Gets the current user input, ASCII Dec value.

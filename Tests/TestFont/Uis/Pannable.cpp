@@ -1,6 +1,7 @@
 ﻿#include "Pannable.hpp"
 
 #include <Maths/Visual/DriverConstant.hpp>
+#include <Renderer/Renderer.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test
@@ -74,13 +75,13 @@ namespace test
 
 		if (Mouse::Get()->GetButton(MOUSE_BUTTON_LEFT))
 		{
-			m_offset.m_x -= Mouse::Get()->GetDeltaX() * Display::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+			m_offset.m_x -= Mouse::Get()->GetDeltaX() * Window::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 			m_offset.m_y += Mouse::Get()->GetDeltaY() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 		}
 
 		for (auto &text : m_texts)
 		{
-			text.second->GetRectangle().SetPosition((m_zoom * (Vector2(text.first) + m_offset)) + Vector2(0.5f * Display::Get()->GetAspectRatio(), 0.5f));
+			text.second->GetRectangle().SetPosition((m_zoom * (Vector2(text.first) + m_offset)) + Vector2(0.5f * Window::Get()->GetAspectRatio(), 0.5f));
 			dynamic_cast<DriverConstant *>(text.second->GetScaleDriver())->SetConstant(m_zoom * text.first.m_z);
 		}
 	}

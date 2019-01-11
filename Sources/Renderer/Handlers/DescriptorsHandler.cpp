@@ -1,6 +1,6 @@
 #include "DescriptorsHandler.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -157,9 +157,9 @@ namespace acid
 	{
 		if (m_pushDescriptors)
 		{
-			auto logicalDevice = Display::Get()->GetLogicalDevice();
+			auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-			Display::FvkCmdPushDescriptorSetKHR(logicalDevice, commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
+			Instance::FvkCmdPushDescriptorSetKHR(logicalDevice->GetLogicalDevice(), commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
 				0, static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 		}
 		else

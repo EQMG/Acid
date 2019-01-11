@@ -39,7 +39,6 @@ namespace acid
 	{
 	private:
 		friend class TcpListener;
-
 		/// Temporary data of the packet currently being received.
 		PendingPacket m_pendingPacket;
 	public:

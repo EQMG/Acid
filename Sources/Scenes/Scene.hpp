@@ -15,7 +15,6 @@ namespace acid
 	{
 	private:
 		friend class Scenes;
-
 		std::unique_ptr<Camera> m_camera;
 		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
 		std::unique_ptr<ScenePhysics> m_physics;

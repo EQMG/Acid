@@ -60,8 +60,8 @@ namespace acid
 
 		BeginText();
 
-		AppendText(5.0f, Display::Get()->GetHeight() - 10.0f, 0.02f, "Frame time: " + String::To(static_cast<int>(1000.0f * Engine::Get()->GetDeltaRender().AsSeconds())) + " ms");
-		AppendText(5.0f, Display::Get()->GetHeight() - 40.0f, 0.02f, "FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
+		AppendText(5.0f, Surface::Get()->GetHeight() - 10.0f, 0.02f, "Frame time: " + String::To(static_cast<int>(1000.0f * Engine::Get()->GetDeltaRender().AsSeconds())) + " ms");
+		AppendText(5.0f, Surface::Get()->GetHeight() - 40.0f, 0.02f, "FPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
 
 		static const std::vector<std::string> lines = {
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
@@ -118,7 +118,7 @@ namespace acid
 		commandBuffer.Submit();
 	}
 
-	void RendererFonts2::Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera)
+	void RendererFonts2::Render(const CommandBuffer &commandBuffer)
 	{
 		m_storageBuffer.Stage(m_glyph_data, 0, m_glyph_data_size);
 
@@ -189,7 +189,7 @@ namespace acid
 		m_glyph_cells_size = sizeof(uint32_t) * total_cells;
 		m_glyph_points_size = sizeof(acid::Vector2) * total_points;
 
-		auto alignment = static_cast<uint32_t>(Display::Get()->GetPhysicalDeviceProperties().limits.minStorageBufferOffsetAlignment);
+		auto alignment = static_cast<uint32_t>(Surface::Get()->GetPhysicalDeviceProperties().limits.minStorageBufferOffsetAlignment);
 		m_glyph_info_offset = 0;
 		m_glyph_cells_offset = align_uint32(m_glyph_info_size, alignment);
 		m_glyph_points_offset = align_uint32(m_glyph_info_size + m_glyph_cells_size, alignment);
@@ -268,7 +268,7 @@ namespace acid
 
 	VkDeviceMemory RendererFonts2::alloc_required_memory(VkMemoryRequirements *req, VkMemoryPropertyFlags flags)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Surface::Get()->GetLogicalDevice();
 
 		VkMemoryAllocateInfo alloc_info = {
 			.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
@@ -277,32 +277,32 @@ namespace acid
 		};
 
 		VkDeviceMemory mem;
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &alloc_info, nullptr, &mem));
+		Surface::CheckVk(vkAllocateMemory(logicalDevice, &alloc_info, nullptr, &mem));
 		return mem;
 	}
 
 	void RendererFonts2::create_buffer_with_memory(VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags,
 	                                               VkDeviceMemory *memory, VkBuffer *buffer)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Surface::Get()->GetLogicalDevice();
 
-		Display::CheckVk(vkCreateBuffer(logicalDevice, ci, nullptr, buffer));
+		Surface::CheckVk(vkCreateBuffer(logicalDevice, ci, nullptr, buffer));
 
 		VkMemoryRequirements req;
 		vkGetBufferMemoryRequirements(logicalDevice, *buffer, &req);
 
 		*memory = alloc_required_memory(&req, flags);
-		Display::CheckVk(vkBindBufferMemory(logicalDevice, *buffer, *memory, 0));
+		Surface::CheckVk(vkBindBufferMemory(logicalDevice, *buffer, *memory, 0));
 	}
 
 	void RendererFonts2::BeginText()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Surface::Get()->GetLogicalDevice();
 
 		m_glyph_instance_count = 0;
 		uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 
-		Display::CheckVk(vkMapMemory(logicalDevice, m_instance_staging_buffer_memory, 0, size, 0, (void **)&m_glyph_instances));
+		Surface::CheckVk(vkMapMemory(logicalDevice, m_instance_staging_buffer_memory, 0, size, 0, (void **)&m_glyph_instances));
 	}
 
 	void RendererFonts2::AppendText(float x, float y, float scale, const std::string &text)
@@ -317,10 +317,10 @@ namespace acid
 			HostGlyphInfo *gi = &m_glyph_infos[glyph_index];
 			GlyphInstance *inst = &m_glyph_instances[m_glyph_instance_count];
 
-			inst->rect.minX = (x + gi->bbox.minX * scale) / (Display::Get()->GetWidth() / 2.0f) - 1.0f;
-			inst->rect.minY = (y - gi->bbox.minY * scale) / (Display::Get()->GetHeight() / 2.0f) - 1.0f;
-			inst->rect.maxX = (x + gi->bbox.maxX * scale) / (Display::Get()->GetWidth() / 2.0f) - 1.0f;
-			inst->rect.maxY = (y - gi->bbox.maxY * scale) / (Display::Get()->GetHeight() / 2.0f) - 1.0f;
+			inst->rect.minX = (x + gi->bbox.minX * scale) / (Surface::Get()->GetWidth() / 2.0f) - 1.0f;
+			inst->rect.minY = (y - gi->bbox.minY * scale) / (Surface::Get()->GetHeight() / 2.0f) - 1.0f;
+			inst->rect.maxX = (x + gi->bbox.maxX * scale) / (Surface::Get()->GetWidth() / 2.0f) - 1.0f;
+			inst->rect.maxY = (y - gi->bbox.maxY * scale) / (Surface::Get()->GetHeight() / 2.0f) - 1.0f;
 
 			if (inst->rect.minX <= 1 && inst->rect.maxX >= -1 &&
 			    inst->rect.maxY <= 1 && inst->rect.minY >= -1)
@@ -337,7 +337,7 @@ namespace acid
 
 	void RendererFonts2::EndText(const CommandBuffer &commandBuffer)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Surface::Get()->GetLogicalDevice();
 
 		uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 

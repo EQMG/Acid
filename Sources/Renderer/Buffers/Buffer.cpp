@@ -1,7 +1,7 @@
 ﻿#include "Buffer.hpp"
 
+#include <array>
 #include <cassert>
-#include "Display/Display.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -16,12 +16,13 @@ namespace acid
 			return;
 		}
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
-		auto graphicsFamily = Display::Get()->GetGraphicsFamily();
-		auto presentFamily = Display::Get()->GetPresentFamily();
-		auto computeFamily = Display::Get()->GetComputeFamily();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
+		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
+		auto presentFamily = logicalDevice->GetPresentFamily();
+		auto computeFamily = logicalDevice->GetComputeFamily();
+
+		std::array<uint32_t, 3> queueFamily = { graphicsFamily, presentFamily, computeFamily };
 
 		VkBufferCreateInfo bufferCreateInfo = {};
 		bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -30,43 +31,43 @@ namespace acid
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 		bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
-		Display::CheckVk(vkCreateBuffer(logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
+		Renderer::CheckVk(vkCreateBuffer(logicalDevice->GetLogicalDevice(), &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Allocates buffer memory.
 		VkMemoryRequirements memoryRequirements;
-		vkGetBufferMemoryRequirements(logicalDevice, m_buffer, &memoryRequirements);
+		vkGetBufferMemoryRequirements(logicalDevice->GetLogicalDevice(), m_buffer, &memoryRequirements);
 
 		VkMemoryAllocateInfo memoryAllocateInfo = {};
 		memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		memoryAllocateInfo.allocationSize = memoryRequirements.size;
 		memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-		Display::CheckVk(vkAllocateMemory(logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
+		Renderer::CheckVk(vkAllocateMemory(logicalDevice->GetLogicalDevice(), &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
-		Display::CheckVk(vkBindBufferMemory(logicalDevice, m_buffer, m_bufferMemory, 0));
+		Renderer::CheckVk(vkBindBufferMemory(logicalDevice->GetLogicalDevice(), m_buffer, m_bufferMemory, 0));
 	}
 
 	Buffer::~Buffer()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkDestroyBuffer(logicalDevice, m_buffer, nullptr);
-		vkFreeMemory(logicalDevice, m_bufferMemory, nullptr);
+		vkDestroyBuffer(logicalDevice->GetLogicalDevice(), m_buffer, nullptr);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, nullptr);
 	}
 
 	void Buffer::CopyBuffer(void *data) const
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkMapMemory(logicalDevice, m_bufferMemory, 0, m_size, 0, &data);
-		vkUnmapMemory(logicalDevice, m_bufferMemory);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 	}
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 	{
-		auto physicalDevice = Display::Get()->GetPhysicalDevice();
+		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
 		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
-		vkGetPhysicalDeviceMemoryProperties(physicalDevice, &physicalDeviceMemoryProperties);
+		vkGetPhysicalDeviceMemoryProperties(physicalDevice->GetPhysicalDevice(), &physicalDeviceMemoryProperties);
 
 		for (uint32_t i = 0; i < physicalDeviceMemoryProperties.memoryTypeCount; i++)
 		{

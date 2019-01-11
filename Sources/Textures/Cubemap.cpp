@@ -1,6 +1,6 @@
 ﻿#include "Cubemap.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Helpers/String.hpp"
 #include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
@@ -55,7 +55,7 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto pixels = Texture::LoadPixels(m_filename, m_fileSuffix, FILE_SIDES, &m_width, &m_height, &m_components);
 
@@ -65,9 +65,9 @@ namespace acid
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
 		Texture::CreateImage(m_image, m_deviceMemory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
@@ -114,7 +114,7 @@ namespace acid
 		m_imageView(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		m_mipLevels = mipmap ? Texture::GetMipLevels(m_width, m_height) : 1;
 
@@ -132,9 +132,9 @@ namespace acid
 				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
-			Display::CheckVk(vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
+			Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
 			memcpy(data, pixels, bufferStaging.GetSize());
-			vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+			vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
 			Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 6);
 		}
@@ -158,12 +158,12 @@ namespace acid
 
 	Cubemap::~Cubemap()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkDestroySampler(logicalDevice, m_sampler, nullptr);
-		vkDestroyImageView(logicalDevice, m_imageView, nullptr);
-		vkFreeMemory(logicalDevice, m_deviceMemory, nullptr);
-		vkDestroyImage(logicalDevice, m_image, nullptr);
+		vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
+		vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), m_deviceMemory, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 	}
 
 	VkDescriptorSetLayoutBinding Cubemap::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
@@ -198,7 +198,7 @@ namespace acid
 
 	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer) const
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
@@ -210,17 +210,17 @@ namespace acid
 		imageSubresource.arrayLayer = 0;
 
 		VkSubresourceLayout subresourceLayout;
-		vkGetImageSubresourceLayout(logicalDevice, dstImage, &imageSubresource, &subresourceLayout);
+		vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
 
 		auto result = new uint8_t[subresourceLayout.size];
 
 		void *data;
-		vkMapMemory(logicalDevice, dstImageMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, subresourceLayout.offset, subresourceLayout.size, 0, &data);
 		memcpy(result, data, static_cast<size_t>(subresourceLayout.size));
-		vkUnmapMemory(logicalDevice, dstImageMemory);
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
 
-		vkFreeMemory(logicalDevice, dstImageMemory, nullptr);
-		vkDestroyImage(logicalDevice, dstImage, nullptr);
+		vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
+		vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
 		return result;
 	}
@@ -240,15 +240,15 @@ namespace acid
 
 	void Cubemap::SetPixels(const uint8_t *pixels)
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
-		vkMapMemory(logicalDevice, bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
+		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
-		vkUnmapMemory(logicalDevice, bufferStaging.GetBufferMemory());
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 	}
 
 	std::string Cubemap::ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,

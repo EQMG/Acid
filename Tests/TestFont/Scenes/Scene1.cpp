@@ -8,9 +8,9 @@ namespace test
 {
 	Scene1::Scene1() :
 		Scene(new Camera(), nullptr),
-		m_buttonFullscreen(ButtonKeyboard({KEY_F11})),
-		m_buttonScreenshot(ButtonKeyboard({KEY_F12})),
-		m_buttonExit(ButtonKeyboard({KEY_DELETE})),
+		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
+		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
+		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
 		m_pannable(std::make_unique<Pannable>(Uis::Get()->GetContainer()))
 	{
 	}
@@ -23,7 +23,7 @@ namespace test
 	{
 		if (m_buttonFullscreen.WasDown())
 		{
-			Display::Get()->SetFullscreen(!Display::Get()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
 		if (m_buttonScreenshot.WasDown())

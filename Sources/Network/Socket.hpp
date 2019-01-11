@@ -56,7 +56,6 @@ namespace acid
 	{
 	private:
 		friend class SocketSelector;
-
 		/// Type of the socket (TCP or UDP).
 		SocketType m_type;
 		/// Socket descriptor.

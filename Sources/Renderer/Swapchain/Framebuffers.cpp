@@ -1,7 +1,9 @@
 ﻿#include "Framebuffers.hpp"
 
-#include "Display/Display.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Renderer/Renderpass/Renderpass.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Textures/DepthStencil.hpp"
 
 namespace acid
@@ -11,10 +13,10 @@ namespace acid
 		m_imageAttachments(std::vector<std::unique_ptr<Texture>>()),
 		m_framebuffers(std::vector<VkFramebuffer>())
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto textureWidth = renderpassCreate.GetWidth() == 0 ? Display::Get()->GetWidth() : renderpassCreate.GetWidth();
-		auto textureHeight = renderpassCreate.GetHeight() == 0 ? Display::Get()->GetHeight() : renderpassCreate.GetHeight();
+		auto textureWidth = renderpassCreate.GetWidth() == 0 ? Window::Get()->GetWidth() : renderpassCreate.GetWidth();
+		auto textureHeight = renderpassCreate.GetHeight() == 0 ? Window::Get()->GetHeight() : renderpassCreate.GetHeight();
 
 		for (const auto &image : renderpassCreate.GetImages())
 		{
@@ -65,17 +67,17 @@ namespace acid
 			framebufferCreateInfo.width = width;
 			framebufferCreateInfo.height = height;
 			framebufferCreateInfo.layers = 1;
-			Display::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
+			Renderer::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
 
 	Framebuffers::~Framebuffers()
 	{
-		auto logicalDevice = Display::Get()->GetLogicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		for (const auto &framebuffer : m_framebuffers)
 		{
-			vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
+			vkDestroyFramebuffer(logicalDevice->GetLogicalDevice(), framebuffer, nullptr);
 		}
 	}
 }

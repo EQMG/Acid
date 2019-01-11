@@ -52,6 +52,13 @@ namespace acid
 		}
 
 		/// <summary>
+		/// Displays a popup menu.
+		/// </summary>
+		/// <param name="title"> The title. </param>
+		/// <param name="message"> The message. </param>
+		static void Popup(const std::string &title, const std::string &message);
+
+		/// <summary>
 		/// Sets a file to output all log messages into.
 		/// </summary>
 		/// <param name="filename"> The filename to output into. </param>

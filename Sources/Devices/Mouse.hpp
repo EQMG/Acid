@@ -1,8 +1,9 @@
 #pragma once
 
 #include <array>
-#include "Display/Display.hpp"
+#include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
+#include "Helpers/Delegate.hpp"
 
 namespace acid
 {
@@ -19,10 +20,7 @@ namespace acid
 		MOUSE_BUTTON_LEFT = 0,
 		MOUSE_BUTTON_RIGHT = 1,
 		MOUSE_BUTTON_MIDDLE = 2,
-		MOUSE_BUTTON_BEGIN_RANGE = MOUSE_BUTTON_1,
-		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8,
-		MOUSE_BUTTON_RANGE_SIZE = (MOUSE_BUTTON_8 - MOUSE_BUTTON_1 + 1),
-		MOUSE_BUTTON_MAX_ENUM = 0x7FFFFFFF
+		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8
 	};
 
 	/// <summary>
@@ -32,7 +30,7 @@ namespace acid
 		public Module
 	{
 	private:
-		std::array<bool, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
+		std::array<InputAction, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
 		std::string m_mousePath;
 
 		float m_lastMousePositionX;
@@ -42,18 +40,21 @@ namespace acid
 		float m_mouseDeltaX;
 		float m_mouseDeltaY;
 		float m_mouseDeltaWheel;
-		bool m_displaySelected;
+		bool m_windowSelected;
+		bool m_cursorHidden;
 
-		bool m_lastCursorDisabled;
-		bool m_cursorDisabled;
-
-		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
+		Delegate<void(bool)> m_onEnter;
+		Delegate<void(std::vector<std::string>)> m_onDrop;
 
 		friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
 
 		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
 
 		friend void CallbackCursorEnter(GLFWwindow *window, int32_t entered);
+
+		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
+
+		friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -66,18 +67,11 @@ namespace acid
 		void Update() override;
 
 		/// <summary>
-		/// Sets if the operating systems cursor is hidden whilst in the display.
-		/// </summary>
-		/// <param name="disabled"> If the system cursor should be disabled or hidden when not shown. </param>
-		void SetCursorHidden(const bool &disabled);
-
-		/// <summary>
 		/// Gets whether or not a particular mouse button is currently pressed.
-		/// <p>Actions: WSI_ACTION_PRESS, WSI_ACTION_RELEASE, WSI_ACTION_REPEAT</p>
 		/// </summary>
 		/// <param name="mouseButton"> The mouse button to test. </param>
 		/// <returns> If the mouse button is currently pressed. </returns>
-		bool GetButton(const MouseButton &mouseButton) const;
+		InputAction GetButton(const MouseButton &mouseButton) const;
 
 		/// <summary>
 		/// Gets the mouses custom mouse file.
@@ -90,6 +84,18 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The new custom mouse file. </param>
 		void SetCustomMouse(const std::string &filename);
+
+		/// <summary>
+		/// Gets the contents of the clipboard as a string.
+		/// </summary>
+		/// <returns> If the clipboard contents. </returns>
+		std::string GetClipboard() const;
+
+		/// <summary>
+		/// Sets the clipboard to the specified string.
+		/// </summary>
+		/// <param name="string"> The string to set as the clipboard. </param>
+		void SetClipboard(const std::string &string) const;
 
 		/// <summary>
 		/// Gets the mouses screen x position.
@@ -144,12 +150,22 @@ namespace acid
 		/// Gets if the display is selected.
 		/// </summary>
 		/// <returns> If the display is selected. </returns>
-		const bool &IsDisplaySelected() const { return m_displaySelected; }
+		const bool &IsWindowSelected() const { return m_windowSelected; }
 
 		/// <summary>
 		/// If the cursor is hidden, the mouse is the display locked if true.
 		/// </summary>
 		/// <returns> If the cursor is hidden. </returns>
-		const bool &IsCursorDisabled() const { return m_cursorDisabled; }
+		const bool &IsCursorHidden() const { return m_cursorHidden; }
+
+		/// <summary>
+		/// Sets if the operating systems cursor is hidden whilst in the display.
+		/// </summary>
+		/// <param name="hidden"> If the system cursor should be hidden when not shown. </param>
+		void SetCursorHidden(const bool &hidden);
+
+		Delegate<void(bool)> &GetEnter() { return m_onEnter; }
+
+		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
 	};
 }

@@ -1,6 +1,6 @@
 /*#pragma once
 
-#include "Display/Display.hpp"
+#include "Surface/Surface.hpp"
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Buffers/VertexBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
@@ -75,7 +75,7 @@ namespace acid
 
 		void Update();
 
-		void Render(const CommandBuffer &commandBuffer, const Vector4 &clipPlane, const Camera &camera) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	private:
 		static uint32_t align_uint32(const uint32_t &value, const uint32_t &alignment);
 

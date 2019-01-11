@@ -2,19 +2,38 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+#include <optional>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
+#include "Helpers/Delegate.hpp"
 #include "Maths/Vector2.hpp"
+#include "Monitor.hpp"
 
 struct GLFWwindow;
-struct GLFWmonitor;
 
 namespace acid
 {
+	enum InputAction
+	{
+		INPUT_ACTION_RELEASE = 0,
+		INPUT_ACTION_PRESS = 1,
+		INPUT_ACTION_REPEAT = 3
+	};
+
+	enum InputMod
+	{
+		INPUT_MOD_SHIFT = 1,
+		INPUT_MOD_CONTROL = 2,
+		INPUT_MOD_ALT = 4,
+		INPUT_MOD_SUPER = 8
+	};
+	typedef uint32_t InputModFlags;
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.
 	/// </summary>
-	class ACID_EXPORT Display :
+	class ACID_EXPORT Window :
 		public Module
 	{
 	private:
@@ -29,7 +48,6 @@ namespace acid
 
 		std::string m_title;
 		std::string m_iconPath;
-		bool m_antialiasing;
 		bool m_borderless;
 		bool m_resizable;
 		bool m_floating;
@@ -39,82 +57,46 @@ namespace acid
 		bool m_focused;
 		bool m_iconified;
 
-		bool m_validationLayers;
-
 		GLFWwindow *m_window;
+		std::vector<Monitor> m_monitors;
 
-		std::vector<const char *> m_instanceLayerList;
-		std::vector<const char *> m_instanceExtensionList;
-		std::vector<const char *> m_deviceExtensionList;
-
-		VkDebugReportCallbackEXT m_debugReportCallback;
-
-		VkInstance m_instance;
-		VkSurfaceKHR m_surface;
-		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;
-		VkSurfaceFormatKHR m_surfaceFormat;
-		VkDevice m_logicalDevice;
-
-		VkSampleCountFlagBits m_msaaSamples;
-
-		VkPhysicalDevice m_physicalDevice;
-		VkPhysicalDeviceProperties m_physicalDeviceProperties;
-		VkPhysicalDeviceFeatures m_physicalDeviceFeatures;
-		VkPhysicalDeviceMemoryProperties m_physicalDeviceMemoryProperties;
-
-		VkQueueFlags m_supportedQueues;
-		uint32_t m_graphicsFamily;
-		uint32_t m_presentFamily;
-		uint32_t m_computeFamily;
-		uint32_t m_transferFamily;
-		VkQueue m_graphicsQueue;
-		VkQueue m_presentQueue;
-		VkQueue m_computeQueue;
-		VkQueue m_transferQueue;
+		Delegate<void(uint32_t, bool)> m_onMonitorConnect;
+		Delegate<void()> m_onClose;
+		Delegate<void(bool)> m_onIconify;
 
 		friend void CallbackError(int32_t error, const char *description);
 
 		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
 
-		friend void CallbackClose(GLFWwindow *window);
-
-		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
-
 		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
 
 		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
 
+		friend void CallbackClose(GLFWwindow *window);
+
+		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
+
 		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
 
 		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
-
-		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
 	public:
-		static VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback);
-
-		static void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
-
-		static void FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet* pDescriptorWrites);
-
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
 		/// <returns> The current module instance. </returns>
-		static Display *Get() { return Engine::Get()->GetModuleManager().Get<Display>(); }
+		static Window *Get() { return Engine::Get()->GetModuleManager().Get<Window>(); }
 
-		Display();
+		Window();
 
-		~Display();
+		~Window();
 
 		void Update() override;
-
-		uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties);
 
 		/// <summary>
 		/// Gets the width of the window in pixels.
 		/// </summary>
 		/// <returns> The width of the window. </returns>
-		const uint32_t &GetWidth() { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
+		const uint32_t &GetWidth() const { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
 
 		/// <summary>
 		/// Gets the non-fullscreen width of the window in pixels.
@@ -132,7 +114,7 @@ namespace acid
 		/// Gets the height of the window in pixels.
 		/// </summary>
 		/// <returns> The height of the window. </returns>
-		const uint32_t &GetHeight() { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
+		const uint32_t &GetHeight() const { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
 
 		/// <summary>
 		/// Gets the non-fullscreen height of the window in pixels.
@@ -156,7 +138,7 @@ namespace acid
 		/// Gets the dimensions of the window in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetDimensions() { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
+		Vector2 GetDimensions() const { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
 
 		/// <summary>
 		/// Sets the window size to a new size.
@@ -187,7 +169,7 @@ namespace acid
 		/// Gets the windows position in pixels.
 		/// </summary>
 		/// <returns> The dimension of the window. </returns>
-		Vector2 GetPosition() { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
+		Vector2 GetPosition() const { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
 
 		/// <summary>
 		/// Sets the window position to a new position in pixels.
@@ -225,18 +207,6 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The new icon file. </param>
 		void SetIcon(const std::string &filename);
-
-		/// <summary>
-		/// Gets if the window requests antialiased images.
-		/// </summary>
-		/// <returns> If using antialiased images. </returns>
-		const bool &IsAntialiasing() const { return m_antialiasing; }
-
-		/// <summary>
-		/// Requests the window to antialias.
-		/// </summary>
-		/// <param name="antialiasing"> If the window should antialias. </param>
-		void SetAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
 
 		/// <summary>
 		/// Gets weather the window is borderless or not.
@@ -283,8 +253,9 @@ namespace acid
 		/// <summary>
 		/// Sets the window to be fullscreen or windowed.
 		/// </summary>
-		/// <param name="fullscreen"> Weather or not to be fullscreen. </param>
-		void SetFullscreen(const bool &fullscreen);
+		/// <param name="fullscreen"> If the window will be fullscreen. </param>
+		/// <param name="monitor"> The monitor to display in. </param>
+		void SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor = {});
 
 		/// <summary>
 		/// Gets if the window is closed.
@@ -310,78 +281,22 @@ namespace acid
 		/// <param name="iconify"> If the window will be set as iconified. </param>
 		void SetIconified(const bool &iconify);
 
+		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
+
+		const std::vector<Monitor> &GetMonitors() const { return m_monitors; };
+
+		Delegate<void(uint32_t, bool)> &GetOnMonitorConnect() { return m_onMonitorConnect; }
+
+		Delegate<void()> &GetOnClose() { return m_onClose; }
+
+		Delegate<void(bool)> &GetOnIconify() {return m_onIconify; }
+
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
 		ACID_HIDDEN static void CheckGlfw(const int32_t &result);
 
-		static std::string StringifyResultVk(const VkResult &result);
+		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
-		static void CheckVk(const VkResult &result);
-
-		ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
-
-		const VkInstance &GetInstance() const { return m_instance; }
-
-		const VkSurfaceKHR &GetSurface() const { return m_surface; }
-
-		const VkSurfaceCapabilitiesKHR &GetSurfaceCapabilities() const { return m_surfaceCapabilities; }
-
-		const VkSurfaceFormatKHR &GetSurfaceFormat() const { return m_surfaceFormat; }
-
-		const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
-
-		const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
-
-		const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }
-
-		const VkPhysicalDeviceProperties &GetPhysicalDeviceProperties() const { return m_physicalDeviceProperties; }
-
-		const VkPhysicalDeviceFeatures &GetPhysicalDeviceFeatures() const { return m_physicalDeviceFeatures; }
-
-		const VkPhysicalDeviceMemoryProperties &GetPhysicalDeviceMemoryProperties() const { return m_physicalDeviceMemoryProperties; }
-
-		const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
-
-		const VkQueue &GetPresentQueue() const { return m_presentQueue; }
-
-		const VkQueue &GetComputeQueue() const { return m_computeQueue; }
-
-		const VkQueue &GetTransferQueue() const { return m_transferQueue; }
-
-		const uint32_t &GetGraphicsFamily() const { return m_graphicsFamily; }
-
-		const uint32_t &GetPresentFamily() const { return m_presentFamily; }
-
-		const uint32_t &GetComputeFamily() const { return m_computeFamily; }
-
-		const uint32_t &GetTransferFamily() const { return m_transferFamily; }
-	private:
-		void CreateGlfw();
-
-		void SetupLayers();
-
-		void SetupExtensions();
-
-		void CreateInstance();
-
-		void CreateDebugCallback();
-
-		void CreatePhysicalDevice();
-
-		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
-
-		int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
-
-		VkSampleCountFlagBits GetMaxUsableSampleCount();
-
-		void CreateSurface();
-
-		void CreateQueueIndices();
-
-		void CreateLogicalDevice();
-
-		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties);
-
-		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
+		VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
 	};
 }

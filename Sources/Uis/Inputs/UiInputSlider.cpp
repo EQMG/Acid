@@ -1,6 +1,7 @@
 ﻿#include "UiInputSlider.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 
@@ -101,7 +102,7 @@ namespace acid
 		}
 
 		auto backgroundRectangle = m_background->GetRectangle();
-		float aspectRatio = m_background->GetRectangle().IsAspectPosition() ? Display::Get()->GetAspectRatio() : 1.0f;
+		float aspectRatio = m_background->GetRectangle().IsAspectPosition() ? Window::Get()->GetAspectRatio() : 1.0f;
 		m_slider->GetRectangle().SetDimensions(Vector2(backgroundRectangle.GetDimensions().m_x * m_value, 0.05f));
 		m_slider->GetRectangle().SetPosition(backgroundRectangle.GetPosition() - Vector2(backgroundRectangle.GetDimensions().m_x / 2.0f / aspectRatio * m_slider->GetScale(), 0.0f));
 	}
