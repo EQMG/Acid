@@ -49,7 +49,7 @@
 #include "Files/Csv/FileCsv.hpp"
 #include "Files/Csv/RowCsv.hpp"
 #include "Files/Files.hpp"
-#include "Files/IFile.hpp"
+#include "Files/File.hpp"
 #include "Files/Json/FileJson.hpp"
 #include "Files/Json/JsonSection.hpp"
 #include "Files/Xml/FileXml.hpp"

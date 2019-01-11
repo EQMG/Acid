@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths/Maths.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Component.hpp"

@@ -1,7 +1,7 @@
 #include "Animator.hpp"
 
-#include <cmath>
 #include "Engine/Engine.hpp"
+#include "Maths/Maths.hpp"
 
 namespace acid
 {

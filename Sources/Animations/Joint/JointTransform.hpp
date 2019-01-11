@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "Maths/Quaternion.hpp"
 #include "Maths/Vector3.hpp"
 

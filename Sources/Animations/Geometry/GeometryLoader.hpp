@@ -2,7 +2,6 @@
 
 #include "Maths/Vector3.hpp"
 #include "Helpers/NonCopyable.hpp"
-#include "Models/Model.hpp"
 #include "VertexAnimated.hpp"
 #include "VertexAnimatedData.hpp"
 

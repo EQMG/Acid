@@ -181,4 +181,18 @@ namespace acid
 
 		return (*it).second;
 	}
+
+	void Metadata::Load(const std::string &data)
+	{
+	}
+
+	std::string Metadata::Write() const
+	{
+		return "";
+	}
+
+	void Metadata::Clear()
+	{
+		ClearChildren();
+	}
 }

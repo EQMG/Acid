@@ -43,14 +43,14 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
-		Files/Csv/FileCsv.hpp
-		Files/Csv/RowCsv.hpp
+		Serialized/Csv/Csv.hpp
+		Serialized/Csv/RowCsv.hpp
 		Files/Files.hpp
-		Files/IFile.hpp
-		Files/Json/FileJson.hpp
-		Files/Json/JsonSection.hpp
-		Files/Xml/FileXml.hpp
-		Files/Xml/XmlNode.hpp
+		Files/File.hpp
+		Serialized/Json/Json.hpp
+		Serialized/Json/JsonSection.hpp
+		Serialized/Xml/Xml.hpp
+		Serialized/Xml/XmlNode.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
@@ -275,13 +275,14 @@ set(_temp_acid_sources
 		Events/Events.cpp
 		Events/EventStandard.cpp
 		Events/EventTime.cpp
-		Files/Csv/FileCsv.cpp
-		Files/Csv/RowCsv.cpp
+		Serialized/Csv/Csv.cpp
+		Serialized/Csv/RowCsv.cpp
 		Files/Files.cpp
-		Files/Json/FileJson.cpp
-		Files/Json/JsonSection.cpp
-		Files/Xml/FileXml.cpp
-		Files/Xml/XmlNode.cpp
+		Files/File.cpp
+		Serialized/Json/Json.cpp
+		Serialized/Json/JsonSection.cpp
+		Serialized/Xml/Xml.cpp
+		Serialized/Xml/XmlNode.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
 		Fonts/RendererFonts.cpp
