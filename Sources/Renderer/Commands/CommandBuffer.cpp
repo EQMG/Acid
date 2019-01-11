@@ -19,7 +19,7 @@ namespace acid
 		commandBufferAllocateInfo.commandPool = commandPool;
 		commandBufferAllocateInfo.level = bufferLevel;
 		commandBufferAllocateInfo.commandBufferCount = 1;
-		Window::CheckVk(vkAllocateCommandBuffers(logicalDevice->GetLogicalDevice(), &commandBufferAllocateInfo, &m_commandBuffer));
+		Renderer::CheckVk(vkAllocateCommandBuffers(logicalDevice->GetLogicalDevice(), &commandBufferAllocateInfo, &m_commandBuffer));
 
 		if (begin)
 		{
@@ -40,14 +40,14 @@ namespace acid
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = usage;
-		Window::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
+		Renderer::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
 
 		m_running = true;
 	}
 
 	void CommandBuffer::End()
 	{
-		Window::CheckVk(vkEndCommandBuffer(m_commandBuffer));
+		Renderer::CheckVk(vkEndCommandBuffer(m_commandBuffer));
 
 		m_running = false;
 	}
@@ -75,21 +75,21 @@ namespace acid
 			VkFenceCreateInfo fenceCreateInfo = {};
 			fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			fenceCreateInfo.flags = 0;
-			Window::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
+			Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
 
 			createdFence = true;
 		}
 
 		if (fence != VK_NULL_HANDLE)
 		{
-			Window::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
+			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
 		}
 
-		Window::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
+		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 
 		if (fence != VK_NULL_HANDLE)
 		{
-			Window::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+			Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
 			if (createdFence)
 			{

@@ -66,7 +66,7 @@ namespace acid
 		}
 
 		// Transform updates.
-		float aspectRatio = m_worldTransform ? 1.0f : Renderer::Get()->GetWindow()->GetAspectRatio();
+		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
 
 		Vector2 screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio);
 		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);

@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <GLFW/glfw3.h>
-#include "Files/Files.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Textures/Texture.hpp"
 
 namespace acid
@@ -20,63 +20,66 @@ namespace acid
 
 	void CallbackClose(GLFWwindow *window)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-		userPointer->m_closed = false;
+		Window::Get()->m_closed = false;
 		Engine::Get()->RequestClose(false);
 	}
 
 	void CallbackFocus(GLFWwindow *window, int32_t focused)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-		userPointer->m_focused = static_cast<bool>(focused);
+		Window::Get()->m_focused = static_cast<bool>(focused);
 	}
 
 	void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-
-		if (!userPointer->m_fullscreen)
+		if (!Window::Get()->m_fullscreen)
 		{
-			userPointer->m_positionX = static_cast<uint32_t>(xpos);
-			userPointer->m_positionY = static_cast<uint32_t>(ypos);
+			Window::Get()->m_positionX = static_cast<uint32_t>(xpos);
+			Window::Get()->m_positionY = static_cast<uint32_t>(ypos);
 		}
 	}
 
 	void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-
 		if (width <= 0 || height <= 0)
 		{
 			return;
 		}
 
-		userPointer->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-
-		if (userPointer->m_fullscreen)
+		if (Window::Get()->m_fullscreen)
 		{
-			userPointer->m_fullscreenWidth = static_cast<uint32_t>(width);
-			userPointer->m_fullscreenHeight = static_cast<uint32_t>(height);
+			Window::Get()->m_fullscreenWidth = static_cast<uint32_t>(width);
+			Window::Get()->m_fullscreenHeight = static_cast<uint32_t>(height);
 		}
 		else
 		{
-			userPointer->m_windowWidth = static_cast<uint32_t>(width);
-			userPointer->m_windowHeight = static_cast<uint32_t>(height);
+			Window::Get()->m_windowWidth = static_cast<uint32_t>(width);
+			Window::Get()->m_windowHeight = static_cast<uint32_t>(height);
 		}
 
-	//	Window::CheckVk(vkGetPhysicalDeviceWindowCapabilitiesKHR(Renderer::Get()->GetWindow()->m_physicalDevice, Renderer::Get()->GetWindow()->m_surface, &Renderer::Get()->GetWindow()->m_surfaceCapabilities)); // FIXME
+		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Renderer::Get()->UpdateSurfaceCapabilities();
 	}
 
 	void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-		userPointer->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	}
+
+	void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
+	{
+		std::vector<std::string> files(static_cast<uint32_t>(count));
+
+		for (uint32_t i = 0; i < count; i++)
+		{
+			files[i] = paths[i];
+		}
+
+		Window::Get()->m_onDrop(files);
 	}
 
 	void CallbackIconify(GLFWwindow *window, int32_t iconified)
 	{
-		auto userPointer = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
-		userPointer->m_iconified = iconified == GLFW_TRUE;
+		Window::Get()->m_iconified = iconified == GLFW_TRUE;
 	}
 
 	Window::Window() :
@@ -96,6 +99,7 @@ namespace acid
 		m_closed(false),
 		m_focused(true),
 		m_iconified(false),
+		m_onDrop(Delegate<void(std::vector<std::string>)>()),
 		m_window(nullptr)
 	{
 		// Set the error error callback
@@ -133,8 +137,8 @@ namespace acid
 
 		if (m_fullscreen)
 		{
-			m_fullscreenWidth = videoMode->width;
-			m_fullscreenHeight = videoMode->height;
+			m_fullscreenWidth = static_cast<uint32_t>(videoMode->width);
+			m_fullscreenHeight = static_cast<uint32_t>(videoMode->height);
 			m_aspectRatio = static_cast<float>(videoMode->width) / static_cast<float>(videoMode->height);
 		}
 
@@ -170,13 +174,13 @@ namespace acid
 		glfwShowWindow(m_window);
 
 		// Sets the displays callbacks.
-		glfwSetWindowUserPointer(m_window, this);
 		glfwSetWindowCloseCallback(m_window, CallbackClose);
 		glfwSetWindowFocusCallback(m_window, CallbackFocus);
 		glfwSetWindowPosCallback(m_window, CallbackPosition);
 		glfwSetWindowSizeCallback(m_window, CallbackSize);
 		glfwSetWindowIconifyCallback(m_window, CallbackIconify);
 		glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
+		glfwSetDropCallback(m_window, CallbackDrop);
 	}
 
 	Window::~Window()
@@ -190,7 +194,7 @@ namespace acid
 		m_closed = true;
 	}
 
-	void Window::PollEvents()
+	void Window::Update()
 	{
 		// Polls for window events.
 		glfwPollEvents();
@@ -277,8 +281,8 @@ namespace acid
 
 		m_fullscreen = fullscreen;
 
-		// int32_t monitorCount;
-		// GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
+	//  int32_t monitorCount;
+	//  GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
 
 		GLFWmonitor *monitor = glfwGetPrimaryMonitor(); // monitors[1];
 		const GLFWvidmode *videoMode = glfwGetVideoMode(monitor);
@@ -288,8 +292,8 @@ namespace acid
 #if defined(ACID_VERBOSE)
 			printf("Window is going fullscreen\n");
 #endif
-			m_fullscreenWidth = videoMode->width;
-			m_fullscreenHeight = videoMode->height;
+			m_fullscreenWidth = static_cast<uint32_t>(videoMode->width);
+			m_fullscreenHeight = static_cast<uint32_t>(videoMode->height);
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 		}
 		else
@@ -368,75 +372,6 @@ namespace acid
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("GLFW Error", failure);
 		assert(false && "GLFW error!");
-	}
-
-	std::string Window::StringifyResultVk(const VkResult &result)
-	{
-		switch (result)
-		{
-			case VK_SUCCESS:
-				return "Success";
-			case VK_NOT_READY:
-				return "A fence or query has not yet completed";
-			case VK_TIMEOUT:
-				return "A wait operation has not completed in the specified time";
-			case VK_EVENT_SET:
-				return "An event is signaled";
-			case VK_EVENT_RESET:
-				return "An event is unsignaled";
-			case VK_INCOMPLETE:
-				return "A return array was too small for the result";
-			case VK_ERROR_OUT_OF_HOST_MEMORY:
-				return "A host memory allocation has failed";
-			case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-				return "A device memory allocation has failed";
-			case VK_ERROR_INITIALIZATION_FAILED:
-				return "Initialization of an object could not be completed for implementation-specific reasons";
-			case VK_ERROR_DEVICE_LOST:
-				return "The logical or physical device has been lost";
-			case VK_ERROR_MEMORY_MAP_FAILED:
-				return "Mapping of a memory object has failed";
-			case VK_ERROR_LAYER_NOT_PRESENT:
-				return "A requested layer is not present or could not be loaded";
-			case VK_ERROR_EXTENSION_NOT_PRESENT:
-				return "A requested extension is not supported";
-			case VK_ERROR_FEATURE_NOT_PRESENT:
-				return "A requested feature is not supported";
-			case VK_ERROR_INCOMPATIBLE_DRIVER:
-				return "The requested version of Vulkan is not supported by the driver or is otherwise incompatible";
-			case VK_ERROR_TOO_MANY_OBJECTS:
-				return "Too many objects of the type have already been created";
-			case VK_ERROR_FORMAT_NOT_SUPPORTED:
-				return "A requested format is not supported on this device";
-			case VK_ERROR_SURFACE_LOST_KHR:
-				return "A surface is no longer available";
-			case VK_SUBOPTIMAL_KHR:
-				return "A swapchain no longer matches the surface properties exactly, but can still be used";
-			case VK_ERROR_OUT_OF_DATE_KHR:
-				return "A surface has changed in such a way that it is no longer compatible with the swapchain";
-			case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
-				return "The display used by a swapchain does not use the same presentable image layout";
-			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-				return "The requested window is already connected to a VkSurfaceKHR, or to some other non-Vulkan API";
-			case VK_ERROR_VALIDATION_FAILED_EXT:
-				return "A validation layer found an error";
-			default:
-				return "ERROR: UNKNOWN VULKAN ERROR";
-		}
-	}
-
-	void Window::CheckVk(const VkResult &result)
-	{
-		if (result >= 0)
-		{
-			return;
-		}
-
-		std::string failure = StringifyResultVk(result);
-
-		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
-		Log::Popup("Vulkan Error", failure);
-		assert(false && "Vulkan error!");
 	}
 
 	std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const

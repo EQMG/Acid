@@ -32,13 +32,13 @@ namespace test
 
 		m_graphics->Load();
 		auto graphicsData = m_graphics->GetParent();
-		Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
-		Renderer::Get()->GetWindow()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));
-		Renderer::Get()->GetWindow()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::ONE));
-		Renderer::Get()->GetWindow()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
-		Renderer::Get()->GetWindow()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
-		Renderer::Get()->GetWindow()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
-		Renderer::Get()->GetWindow()->SetFullscreen(graphicsData->GetChild<bool>("Fullscreen", false));
+	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
+		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));
+		Window::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::ONE));
+		Window::Get()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
+		Window::Get()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
+		Window::Get()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
+		Window::Get()->SetFullscreen(graphicsData->GetChild<bool>("Fullscreen", false));
 		Engine::Get()->SetFpsLimit(graphicsData->GetChild<float>("FPS Limit", 0.0f));
 	}
 
@@ -52,13 +52,13 @@ namespace test
 		m_audio->Save();
 
 		auto graphicsData = m_graphics->GetParent();
-		graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
-		graphicsData->SetChild<Vector2>("Dimensions", Renderer::Get()->GetWindow()->GetDimensions());
-		graphicsData->SetChild<Vector2>("Position", Renderer::Get()->GetWindow()->GetPosition());
-		graphicsData->SetChild<bool>("Borderless", Renderer::Get()->GetWindow()->IsBorderless());
-		graphicsData->SetChild<bool>("Resizable", Renderer::Get()->GetWindow()->IsResizable());
-		graphicsData->SetChild<bool>("Floating", Renderer::Get()->GetWindow()->IsFloating());
-		graphicsData->SetChild<bool>("Fullscreen", Renderer::Get()->GetWindow()->IsFullscreen());
+	//	graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
+		graphicsData->SetChild<Vector2>("Dimensions", Window::Get()->GetDimensions());
+		graphicsData->SetChild<Vector2>("Position", Window::Get()->GetPosition());
+		graphicsData->SetChild<bool>("Borderless", Window::Get()->IsBorderless());
+		graphicsData->SetChild<bool>("Resizable", Window::Get()->IsResizable());
+		graphicsData->SetChild<bool>("Floating", Window::Get()->IsFloating());
+		graphicsData->SetChild<bool>("Fullscreen", Window::Get()->IsFullscreen());
 		graphicsData->SetChild<float>("FPS Limit", Engine::Get()->GetFpsLimit());
 		m_graphics->Save();
 	}

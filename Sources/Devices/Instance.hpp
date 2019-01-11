@@ -6,13 +6,10 @@
 
 namespace acid
 {
-	class Window;
-
 	class ACID_EXPORT Instance
 	{
 	private:
-		const Window *m_window;
-
+		friend class Renderer;
 		bool m_validationLayers;
 		std::vector<const char *> m_instanceLayers;
 		std::vector<const char *> m_instanceExtensions;
@@ -28,7 +25,7 @@ namespace acid
 		static const std::vector<const char *> INSTANCE_EXTENSIONS;
 		static const std::vector<const char *> DEVICE_EXTENSIONS;
 
-		Instance(const Window *window);
+		Instance();
 
 		~Instance();
 

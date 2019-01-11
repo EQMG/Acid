@@ -1,10 +1,28 @@
 #include "Joysticks.hpp"
 
 #include <GLFW/glfw3.h>
-#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
+	void CallbackJoystick(int32_t id, int32_t event)
+	{
+		auto &joystick = Joysticks::Get()->m_connected[id];
+
+		if (event == GLFW_CONNECTED)
+		{
+			printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(joystick.m_port), joystick.m_port);
+			joystick.m_connected = true;
+			joystick.m_gamepad = glfwJoystickIsGamepad(id) == GLFW_TRUE;
+			joystick.m_name = glfwGetJoystickName(joystick.m_port);
+		}
+		else if (event == GLFW_DISCONNECTED)
+		{
+			printf("Joystick disconnected from %i\n", joystick.m_port);
+			joystick.m_connected = false;
+			joystick.m_name = "";
+		}
+	}
+
 	Joysticks::Joysticks() :
 		m_connected(std::array<JoystickImpl, JOYSTICK_END_RANGE>())
 	{
@@ -15,50 +33,36 @@ namespace acid
 			joystick.m_port = static_cast<JoystickPort>(i);
 			m_connected[i] = joystick;
 		}
+
+		glfwSetJoystickCallback(CallbackJoystick);
 	}
 
 	void Joysticks::Update()
 	{
 		for (auto &joystick : m_connected)
 		{
-			if (glfwJoystickPresent(joystick.m_port))
+			if (!joystick.m_connected)
 			{
-				if (!joystick.m_connected)
-				{
-					printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(joystick.m_port), joystick.m_port);
-					joystick.m_connected = true;
-					joystick.m_name = glfwGetJoystickName(joystick.m_port);
-				}
+				continue;
+			}
 
-				int32_t axeCount = 0;
-				int32_t buttonCount = 0;
-				int32_t hatCount = 0;
-				joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &axeCount);
-				joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &buttonCount);
-				joystick.m_hats = glfwGetJoystickHats(joystick.m_port, &hatCount);
-				joystick.m_axeCount = static_cast<uint32_t>(axeCount);
-				joystick.m_buttonCount = static_cast<uint32_t>(buttonCount);
-				joystick.m_hatCount = static_cast<uint32_t>(hatCount);
-			}
-			else
-			{
-				if (joystick.m_connected)
-				{
-					printf("Joystick disconnected from %i\n", joystick.m_port);
-					joystick.m_connected = false;
-					joystick.m_name = "";
-					joystick.m_axes = nullptr;
-					joystick.m_buttons = nullptr;
-					joystick.m_axeCount = 0;
-					joystick.m_buttonCount = 0;
-				}
-			}
+			int32_t axeCount = 0;
+			joystick.m_axes = glfwGetJoystickAxes(joystick.m_port, &axeCount);
+			joystick.m_axeCount = static_cast<uint32_t>(axeCount);
+
+			int32_t buttonCount = 0;
+			joystick.m_buttons = glfwGetJoystickButtons(joystick.m_port, &buttonCount);
+			joystick.m_buttonCount = static_cast<uint32_t>(buttonCount);
+
+			int32_t hatCount = 0;
+			joystick.m_hats = glfwGetJoystickHats(joystick.m_port, &hatCount);
+			joystick.m_hatCount = static_cast<uint32_t>(hatCount);
 		}
 	}
 
 	bool Joysticks::GetButton(const JoystickPort &port, const uint32_t &button) const
 	{
-		if (button > GetButtonCount(port))
+		if (!IsConnected(port) || button > GetButtonCount(port))
 		{
 			return false;
 		}
@@ -68,7 +72,7 @@ namespace acid
 
 	float Joysticks::GetAxis(const JoystickPort &port, const uint32_t &axis) const
 	{
-		if (axis > GetAxisCount(port))
+		if (!IsConnected(port) || axis > GetAxisCount(port))
 		{
 			return false;
 		}
@@ -78,7 +82,7 @@ namespace acid
 
 	JoystickHatFlags Joysticks::GetHat(const JoystickPort &port, const uint32_t &hat) const
 	{
-		if (hat > GetHatCount(port))
+		if (!IsConnected(port) || hat > GetHatCount(port))
 		{
 			return JOYSTICK_HAT_CENTERED;
 		}

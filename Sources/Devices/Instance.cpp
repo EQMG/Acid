@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cstring>
+#include "Renderer/Renderer.hpp"
 #include "Window.hpp"
 
 #if !defined(VK_EXT_DEBUG_UTILS_EXTENSION_NAME)
@@ -83,8 +84,7 @@ namespace acid
 		return std::numeric_limits<uint32_t>::max();
 	}
 
-	Instance::Instance(const Window *window) :
-		m_window(window),
+	Instance::Instance() :
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
 		m_validationLayers(true),
 #else
@@ -153,7 +153,7 @@ namespace acid
 	void Instance::SetupExtensions()
 	{
 		// Sets up the extensions.
-		auto instanceExtensions = m_window->GetInstanceExtensions();
+		auto instanceExtensions = Window::Get()->GetInstanceExtensions();
 
 		for (uint32_t i = 0; i < instanceExtensions.second; i++)
 		{
@@ -189,7 +189,7 @@ namespace acid
 		instanceCreateInfo.ppEnabledLayerNames = m_instanceLayers.data();
 		instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensions.size());
 		instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensions.data();
-		Window::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+		Renderer::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 	}
 
 	void Instance::CreateDebugCallback()
@@ -203,7 +203,7 @@ namespace acid
 				VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 			debugReportCallbackCreateInfo.pUserData = nullptr;
-			Window::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+			Renderer::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
 		}
 	}
 

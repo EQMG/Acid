@@ -54,7 +54,7 @@ namespace acid
 
 	bool HatJoystick::WasDown()
 	{
-		const bool stillDown = m_wasDown && IsDown();
+		bool stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

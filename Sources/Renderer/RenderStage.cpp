@@ -112,7 +112,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			width = Renderer::Get()->GetWindow()->GetWidth();
+			width = Window::Get()->GetWidth();
 		}
 		else
 		{
@@ -128,7 +128,7 @@ namespace acid
 
 		if (m_fitDisplaySize)
 		{
-			height = Renderer::Get()->GetWindow()->GetHeight();
+			height = Window::Get()->GetHeight();
 		}
 		else
 		{

@@ -1,14 +1,14 @@
 #include "Surface.hpp"
 
 #include <cassert>
+#include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
 #include "Window.hpp"
 
 namespace acid
 {
-	Surface::Surface(const Window *window, const Instance *instance, const PhysicalDevice *physicalDevice) :
-		m_window(window),
+	Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
 		m_instance(instance),
 		m_physicalDevice(physicalDevice),
 		m_surface(VK_NULL_HANDLE),
@@ -16,9 +16,9 @@ namespace acid
 		m_format({})
 	{
 		// Creates the surface.
-		m_window->CreateSurface(m_instance->GetInstance(), nullptr, &m_surface);
+		Window::Get()->CreateSurface(m_instance->GetInstance(), nullptr, &m_surface);
 
-		Window::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &m_capabilities));
+		Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &m_capabilities));
 
 		uint32_t physicalDeviceFormatCount = 0;
 		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &physicalDeviceFormatCount, nullptr);

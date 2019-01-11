@@ -55,8 +55,8 @@ int main(int argc, char **argv)
 	componentRegister.Add<Terrain>("Terrain");
 
 	// Sets values to modules.
-	Renderer::Get()->GetWindow()->SetTitle("Test Physics");
-	Renderer::Get()->GetWindow()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetTitle("Test Physics");
+	Window::Get()->SetIcon("Logos/Flask.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());

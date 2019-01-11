@@ -84,7 +84,7 @@ namespace test
 	{
 		if (m_buttonFullscreen.WasDown())
 		{
-			Renderer::Get()->GetWindow()->SetFullscreen(!Renderer::Get()->GetWindow()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
 		if (m_buttonCaptureMouse->WasDown())

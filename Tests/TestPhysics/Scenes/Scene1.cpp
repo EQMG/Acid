@@ -55,6 +55,13 @@ namespace test
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
+
+		Window::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
+			for (const auto &path : paths)
+			{
+				Log::Out("File dropped: '%s'\n", path.c_str());
+			}
+		};
 	}
 
 	void Scene1::Start()
@@ -213,7 +220,7 @@ namespace test
 
 		if (m_buttonFullscreen.WasDown())
 		{
-			Renderer::Get()->GetWindow()->SetFullscreen(!Renderer::Get()->GetWindow()->IsFullscreen());
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 
 		if (m_buttonCaptureMouse->WasDown())

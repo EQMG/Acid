@@ -22,7 +22,6 @@ namespace acid
 	{
 	private:
 		friend class ShaderProgram;
-
 		std::string m_name;
 		int32_t m_binding;
 		int32_t m_offset;
@@ -90,7 +89,6 @@ namespace acid
 	{
 	private:
 		friend class ShaderProgram;
-
 		std::string m_name;
 		int32_t m_binding;
 		int32_t m_size;

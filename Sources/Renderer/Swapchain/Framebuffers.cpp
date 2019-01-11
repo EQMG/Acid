@@ -15,8 +15,8 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto textureWidth = renderpassCreate.GetWidth() == 0 ? Renderer::Get()->GetWindow()->GetWidth() : renderpassCreate.GetWidth();
-		auto textureHeight = renderpassCreate.GetHeight() == 0 ? Renderer::Get()->GetWindow()->GetHeight() : renderpassCreate.GetHeight();
+		auto textureWidth = renderpassCreate.GetWidth() == 0 ? Window::Get()->GetWidth() : renderpassCreate.GetWidth();
+		auto textureHeight = renderpassCreate.GetHeight() == 0 ? Window::Get()->GetHeight() : renderpassCreate.GetHeight();
 
 		for (const auto &image : renderpassCreate.GetImages())
 		{
@@ -67,7 +67,7 @@ namespace acid
 			framebufferCreateInfo.width = width;
 			framebufferCreateInfo.height = height;
 			framebufferCreateInfo.layers = 1;
-			Window::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
+			Renderer::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
 		}
 	}
 

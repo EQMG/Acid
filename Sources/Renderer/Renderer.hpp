@@ -31,8 +31,6 @@ namespace acid
 
 		std::unique_ptr<CommandBuffer> m_commandBuffer;
 
-		bool m_antialiasing;
-		std::unique_ptr<Window> m_window;
 		std::unique_ptr<Instance> m_instance;
 		std::unique_ptr<PhysicalDevice> m_physicalDevice;
 		std::unique_ptr<Surface> m_surface;
@@ -49,6 +47,12 @@ namespace acid
 		~Renderer();
 
 		void Update() override;
+
+		static std::string StringifyResultVk(const VkResult &result);
+
+		static void CheckVk(const VkResult &result);
+
+		void UpdateSurfaceCapabilities();
 
 		/// <summary>
 		/// Takes a screenshot of the current image of the display and saves it into a image file.
@@ -79,22 +83,6 @@ namespace acid
 		const CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
 
 		const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
-
-		/// <summary>
-		/// Gets if the window requests antialiased images.
-		/// </summary>
-		/// <returns> If using antialiased images. </returns>
-		const bool &IsAntialiasing() const { return m_antialiasing; }
-
-		/// <summary>
-		/// Requests the window to antialias.
-		/// </summary>
-		/// <param name="antialiasing"> If the window should antialias. </param>
-		void SetAntialiasing(const bool &antialiasing) { m_antialiasing = antialiasing; }
-
-		Window *GetWindow() const { return m_window.get(); }
-
-		const Instance *GetInstance() const { return m_instance.get(); }
 
 		const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
 
