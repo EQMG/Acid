@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	void File::Load()
+	void File::Read()
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();

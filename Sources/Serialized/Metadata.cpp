@@ -155,6 +155,7 @@ namespace acid
 		if (it == m_attributes.end())
 		{
 			m_attributes.emplace(attribute, value);
+			return;
 		}
 
 		(*it).second = value;
@@ -189,10 +190,5 @@ namespace acid
 	std::string Metadata::Write() const
 	{
 		return "";
-	}
-
-	void Metadata::Clear()
-	{
-		ClearChildren();
 	}
 }

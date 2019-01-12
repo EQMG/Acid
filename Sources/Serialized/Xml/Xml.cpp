@@ -4,9 +4,19 @@
 
 namespace acid
 {
-	Xml::Xml() :
-		Metadata("?xml", "", std::map<std::string, std::string>{{}, {"encoding", "utf-8"}})
+	Xml::Xml(const std::string &rootName) :
+		Metadata(rootName, ""),
+		m_root(std::make_unique<Metadata>("?xml", "", std::map<std::string, std::string>{{"version", "1.0"}, {"encoding", "utf-8"}}))
 	{
+		m_root->AddChild(this);
+	}
+
+	Xml::Xml(const std::string &rootName, Metadata *metadata) :
+		Metadata(rootName, ""),
+		m_root(std::make_unique<Metadata>("?xml", "", std::map<std::string, std::string>{{"version", "1.0"}, {"encoding", "utf-8"}}))
+	{
+		m_root->AddChild(this);
+		AddChildren(metadata, this);
 	}
 
 	void Xml::Load(const std::string &data)
@@ -29,13 +39,13 @@ namespace acid
 
 				if (*(it + 1) == '/') // End tag.
 				{
-					currentSection->SetContent(currentSection->GetContent() + summation.str());
+					currentSection->m_content += summation.str();
 					end = true;
 				}
 				else // Start tag.
 				{
 					auto section = new XmlNode(currentSection, "", "");
-					currentSection->AddChild(section);
+					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
 
@@ -45,7 +55,7 @@ namespace acid
 			{
 				if (!end)
 				{
-					currentSection->SetAttributes(currentSection->GetAttributes() + summation.str());
+					currentSection->m_attributes += summation.str();
 				}
 
 				summation.str(std::string());
@@ -54,9 +64,9 @@ namespace acid
 				{
 					end = false;
 
-					if (currentSection->GetParent() != nullptr)
+					if (currentSection->m_parent != nullptr)
 					{
-						currentSection = currentSection->GetParent();
+						currentSection = currentSection->m_parent;
 					}
 				}
 			}
@@ -71,22 +81,33 @@ namespace acid
 
 		if (currentSection != nullptr)
 		{
-			XmlNode::Convert(*currentSection, this, true);
+			XmlNode::Convert(*currentSection, m_root.get(), 0);
+
+			if (!currentSection->m_children.empty())
+			{
+				XmlNode::Convert(*currentSection->m_children[0], this, 1);
+			}
 		}
 	}
 
 	std::string Xml::Write() const
 	{
 		std::stringstream data;
-		XmlNode::AppendData(*this, data, 0);
+		XmlNode::AppendData(*m_root, data, 0);
 		return data.str();
 	}
 
-	void Xml::Clear()
+	void Xml::AddChildren(const Metadata *source, Metadata *destination)
 	{
-		ClearChildren();
-		ClearAttributes();
-		AddAttribute("version",  "1.0");
-		AddAttribute("encoding", "utf-8");
+		for (const auto &child : source->GetChildren())
+		{
+			auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+			AddChildren(child.get(), created);
+		}
+
+		for (const auto &attribute : source->GetAttributes())
+		{
+			destination->AddAttribute(attribute.first, attribute.second);
+		}
 	}
 }

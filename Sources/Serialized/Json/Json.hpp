@@ -10,10 +10,12 @@ namespace acid
 	public:
 		Json();
 
+		explicit Json(Metadata *metadata);
+
 		void Load(const std::string &data) override;
 
 		std::string Write() const override;
-
-		void Clear() override;
+	private:
+		void AddChildren(const Metadata *source, Metadata *destination);
 	};
 }

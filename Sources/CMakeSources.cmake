@@ -43,8 +43,6 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
-		Serialized/Csv/Csv.hpp
-		Serialized/Csv/RowCsv.hpp
 		Files/Files.hpp
 		Files/File.hpp
 		Serialized/Json/Json.hpp
@@ -275,8 +273,6 @@ set(_temp_acid_sources
 		Events/Events.cpp
 		Events/EventStandard.cpp
 		Events/EventTime.cpp
-		Serialized/Csv/Csv.cpp
-		Serialized/Csv/RowCsv.cpp
 		Files/Files.cpp
 		Files/File.cpp
 		Serialized/Json/Json.cpp
