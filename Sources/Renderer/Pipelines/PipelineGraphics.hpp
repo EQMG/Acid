@@ -24,7 +24,6 @@ namespace acid
 		PIPELINE_DEPTH_WRITE = 3
 	};
 
-
 	class ACID_EXPORT PipelineCreate
 	{
 	private:

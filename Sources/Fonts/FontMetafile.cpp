@@ -155,7 +155,7 @@ namespace acid
 		}
 
 		FontCharacter character = FontCharacter(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
-		m_metadata.emplace(character.GetId(), character);
+		m_metadata.emplace(character.m_id, character);
 	}
 
 	int32_t FontMetafile::GetValueOfVariable(const std::string &variable)

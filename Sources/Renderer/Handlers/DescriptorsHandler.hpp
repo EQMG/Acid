@@ -19,9 +19,9 @@ namespace acid
 	private:
 		struct DescriptorValue
 		{
-			const Descriptor *descriptor{};
+			const Descriptor *descriptor;
 			std::optional<OffsetSize> offsetSize;
-			uint32_t location{};
+			uint32_t location;
 		};
 
 		const ShaderProgram *m_shaderProgram;

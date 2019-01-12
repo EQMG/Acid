@@ -43,12 +43,8 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
-		Files/Files.hpp
 		Files/File.hpp
-		Serialized/Json/Json.hpp
-		Serialized/Json/JsonSection.hpp
-		Serialized/Xml/Xml.hpp
-		Serialized/Xml/XmlNode.hpp
+		Files/Files.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
@@ -213,7 +209,10 @@ set(_temp_acid_headers
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
 		Serialized/DataStream.hpp
+		Serialized/Json/Json.hpp
 		Serialized/Metadata.hpp
+		Serialized/Xml/Xml.hpp
+	#	Serialized/Yaml/Yaml.hpp
 		Shadows/RendererShadows.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
@@ -273,12 +272,8 @@ set(_temp_acid_sources
 		Events/Events.cpp
 		Events/EventStandard.cpp
 		Events/EventTime.cpp
-		Files/Files.cpp
 		Files/File.cpp
-		Serialized/Json/Json.cpp
-		Serialized/Json/JsonSection.cpp
-		Serialized/Xml/Xml.cpp
-		Serialized/Xml/XmlNode.cpp
+		Files/Files.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
 		Fonts/RendererFonts.cpp
@@ -424,7 +419,10 @@ set(_temp_acid_sources
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
 		Serialized/DataStream.cpp
+		Serialized/Json/Json.cpp
 		Serialized/Metadata.cpp
+		Serialized/Xml/Xml.cpp
+	#	Serialized/Yaml/Yaml.cpp
 		Shadows/RendererShadows.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp

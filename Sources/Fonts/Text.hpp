@@ -30,16 +30,16 @@ namespace acid
 	/// </summary>
 	class FontWord
 	{
-	private:
+	public:
 		std::vector<FontCharacter> m_characters;
 		float m_width;
-	public:
+
 		/// <summary>
 		/// Creates a new text word.
 		/// </summary>
 		FontWord() :
 			m_characters(std::vector<FontCharacter>()),
-			m_width(0.0)
+			m_width(0.0f)
 		{
 		}
 
@@ -51,12 +51,8 @@ namespace acid
 		void AddCharacter(const FontCharacter &character, const float &kerning)
 		{
 			m_characters.emplace_back(character);
-			m_width += kerning + character.GetAdvanceX();
+			m_width += kerning + character.m_advanceX;
 		}
-
-		std::vector<FontCharacter> GetCharacters() const { return m_characters; }
-
-		float GetWidth() const { return m_width; }
 	};
 
 	/// <summary>
@@ -64,14 +60,14 @@ namespace acid
 	/// </summary>
 	class FontLine
 	{
-	private:
+	public:
 		float m_maxLength;
 		float m_spaceSize;
 
 		std::vector<FontWord> m_words;
 		float m_currentWordsLength;
 		float m_currentLineLength;
-	public:
+
 		/// <summary>
 		/// Creates a new text line.
 		/// </summary>
@@ -81,8 +77,8 @@ namespace acid
 			m_maxLength(maxLength),
 			m_spaceSize(spaceWidth),
 			m_words(std::vector<FontWord>()),
-			m_currentWordsLength(0.0),
-			m_currentLineLength(0.0)
+			m_currentWordsLength(0.0f),
+			m_currentLineLength(0.0f)
 		{
 		}
 
@@ -93,29 +89,19 @@ namespace acid
 		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
 		bool AddWord(const FontWord &word)
 		{
-			float additionalLength = word.GetWidth();
+			float additionalLength = word.m_width;
 			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
 
 			if (m_currentLineLength + additionalLength <= m_maxLength)
 			{
 				m_words.emplace_back(word);
-				m_currentWordsLength += word.GetWidth();
+				m_currentWordsLength += word.m_width;
 				m_currentLineLength += additionalLength;
 				return true;
 			}
 
 			return false;
 		}
-
-		float GetMaxLength() const { return m_maxLength; }
-
-		float GetSpaceSize() const { return m_spaceSize; }
-
-		std::vector<FontWord> GetWords() const { return m_words; }
-
-		float GetCurrentWordsLength() const { return m_currentWordsLength; }
-
-		float GetCurrentLineLength() const { return m_currentLineLength; }
 	};
 
 	/// <summary>
