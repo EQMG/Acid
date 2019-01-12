@@ -4,7 +4,6 @@
 #include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
-#include <Serialized/Json/Json.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Helpers/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
@@ -33,7 +32,9 @@
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>
 #include <Uis/Uis.hpp>
+#include <Serialized/Json/Json.hpp>
 #include <Serialized/Xml/Xml.hpp>
+#include "Yaml/Yaml.hpp" // <Serialized/Yaml/Yaml.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
@@ -60,18 +61,11 @@ namespace test
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
 
 		/*{
-			auto dataXml = File("Convert.xml", new Xml("COLLADA"));
-			dataXml.Read();
+			auto dataYaml = File("Example.yaml", new Yaml());
+			dataYaml.Read();
 
-			auto dataJson = File("Convert.json", new Json(dataXml.GetMetadata()));
+			auto dataJson = File("Example.json", new Json(dataYaml.GetMetadata()));
 			dataJson.Write();
-		}
-		{
-			auto dataJson = File("Convert.json", new Json());
-			dataJson.Read();
-
-			auto dataXml = File("Convert2.xml", new Xml("COLLADA", dataJson.GetMetadata()));
-			dataXml.Write();
 		}*/
 
 		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
@@ -272,7 +266,7 @@ namespace test
 		{
 			// TODO: Threading.
 			std::thread t([this](){
-				auto sceneFile = File("Scene1.json", new Json());
+				auto sceneFile = File("Scene1.yaml", new Yaml());
 				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())

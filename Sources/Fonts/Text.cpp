@@ -282,27 +282,27 @@ namespace acid
 				cursorX = 0.0f;
 				break;
 			case TEXT_JUSTIFY_CENTRE:
-				cursorX = (line.GetMaxLength() - line.GetCurrentLineLength()) / 2.0f;
+				cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
 				break;
 			case TEXT_JUSTIFY_RIGHT:
-				cursorX = line.GetMaxLength() - line.GetCurrentLineLength();
+				cursorX = line.m_maxLength - line.m_currentLineLength;
 				break;
 			case TEXT_JUSTIFY_FULLY:
 				cursorX = 0.0f;
 				break;
 			}
 
-			for (const auto &word : line.GetWords())
+			for (const auto &word : line.m_words)
 			{
-				for (const auto &letter : word.GetCharacters())
+				for (const auto &letter : word.m_characters)
 				{
 					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					cursorX += m_kerning + letter.GetAdvanceX();
+					cursorX += m_kerning + letter.m_advanceX;
 				}
 
 				if (m_justify == TEXT_JUSTIFY_FULLY && lineOrder > 1)
 				{
-					cursorX += (line.GetMaxLength() - line.GetCurrentWordsLength()) / line.GetWords().size();
+					cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
 				}
 				else
 				{
@@ -319,15 +319,15 @@ namespace acid
 
 	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<VertexModel> &vertices)
 	{
-		float vertexX = cursorX + character.GetOffsetX();
-		float vertexY = cursorY + character.GetOffsetY();
-		float vertexMaxX = vertexX + character.GetSizeX();
-		float vertexMaxY = vertexY + character.GetSizeY();
+		float vertexX = cursorX + character.m_offsetX;
+		float vertexY = cursorY + character.m_offsetY;
+		float vertexMaxX = vertexX + character.m_sizeX;
+		float vertexMaxY = vertexY + character.m_sizeY;
 
-		float textureX = character.GetTextureCoordX();
-		float textureY = character.GetTextureCoordY();
-		float textureMaxX = character.GetMaxTextureCoordX();
-		float textureMaxY = character.GetMaxTextureCoordY();
+		float textureX = character.m_textureCoordX;
+		float textureY = character.m_textureCoordY;
+		float textureMaxX = character.m_maxTextureCoordX;
+		float textureMaxY = character.m_maxTextureCoordY;
 
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);

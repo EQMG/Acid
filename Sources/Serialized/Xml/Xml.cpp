@@ -1,7 +1,5 @@
 #include "Xml.hpp"
 
-#include "XmlNode.hpp"
-
 namespace acid
 {
 	Xml::Xml(const std::string &rootName) :
@@ -22,6 +20,7 @@ namespace acid
 	void Xml::Load(const std::string &data)
 	{
 		ClearChildren();
+		ClearAttributes();
 
 		XmlNode *currentSection = nullptr;
 		std::stringstream summation;
@@ -81,11 +80,11 @@ namespace acid
 
 		if (currentSection != nullptr)
 		{
-			XmlNode::Convert(*currentSection, m_root.get(), 0);
+			Convert(*currentSection, m_root.get(), 0);
 
 			if (!currentSection->m_children.empty())
 			{
-				XmlNode::Convert(*currentSection->m_children[0], this, 1);
+				Convert(*currentSection->m_children[0], this, 1);
 			}
 		}
 	}
@@ -93,7 +92,7 @@ namespace acid
 	std::string Xml::Write() const
 	{
 		std::stringstream data;
-		XmlNode::AppendData(*m_root, data, 0);
+		AppendData(m_root.get(), data, 0);
 		return data.str();
 	}
 
@@ -109,5 +108,152 @@ namespace acid
 		{
 			destination->AddAttribute(attribute.first, attribute.second);
 		}
+	}
+
+	Metadata *Xml::Convert(const XmlNode &source, Metadata *parent, const uint32_t &depth)
+	{
+		int32_t firstSpace = String::FindCharPos(source.m_attributes, ' ');
+		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
+		name = String::Trim(name);
+		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, static_cast<int32_t>(source.m_attributes.size()));
+		attributes = String::Trim(attributes);
+
+		if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')
+		{
+			attributes.pop_back();
+		}
+
+		attributes = String::Trim(attributes);
+
+		std::map<std::string, std::string> parseAttributes = {};
+
+		if (!attributes.empty())
+		{
+			std::string currentKey;
+			std::string summation;
+
+			for (const char &c : attributes)
+			{
+				switch (c)
+				{
+					case '"':
+					{
+						if (currentKey.empty())
+						{
+							currentKey = summation;
+							summation.clear();
+							continue;
+						}
+
+						parseAttributes.emplace(String::Trim(currentKey), String::Trim(summation));
+						currentKey.clear();
+						summation.clear();
+						break;
+					}
+					case '=':
+					{
+						if (!currentKey.empty())
+						{
+							summation += c;
+						}
+
+						break;
+					}
+					default:
+					{
+						summation += c;
+						break;
+					}
+				}
+			}
+		}
+
+		auto thisValue = parent;
+
+		if (depth != 0)
+		{
+			if (depth != 1)
+			{
+				thisValue = new Metadata(name, source.m_content, parseAttributes);
+				parent->AddChild(thisValue);
+			}
+			else
+			{
+				thisValue->SetName(name);
+				thisValue->SetValue(source.m_content);
+				thisValue->SetAttributes(parseAttributes);
+			}
+
+			for (const auto &child : source.m_children)
+			{
+				Convert(*child, thisValue, depth + 1);
+			}
+		}
+		else
+		{
+			parent->SetName(name);
+			parent->SetValue(source.m_content);
+			parent->SetAttributes(parseAttributes);
+		}
+
+		return thisValue;
+	}
+
+	void Xml::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation)
+	{
+		std::stringstream indents;
+
+		for (int32_t i = 0; i < indentation; i++)
+		{
+			indents << "  ";
+		}
+
+		std::string name = String::ReplaceAll(source->GetName(), " ", "_");
+
+		std::stringstream nameAttributes;
+		nameAttributes << name;
+
+		for (const auto &[attributeName, value] : source->GetAttributes())
+		{
+			nameAttributes << " " << attributeName << "=\"" << value << "\"";
+		}
+
+		std::string nameAndAttribs = String::Trim(nameAttributes.str());
+
+		builder << indents.str();
+
+		if (source->GetName()[0] == '?')
+		{
+			builder << "<" << nameAndAttribs << "?>\n";
+
+			for (const auto &child : source->GetChildren())
+			{
+				AppendData(child.get(), builder, indentation);
+			}
+
+			return;
+		}
+
+		if (source->GetChildren().empty() && source->GetValue().empty())
+		{
+			builder << "<" << nameAndAttribs << "/>\n";
+			return;
+		}
+
+		builder << "<" << nameAndAttribs << ">" << source->GetString();
+
+		if (!source->GetChildren().empty())
+		{
+			builder << "\n";
+
+			for (const auto &child : source->GetChildren())
+			{
+				AppendData(child.get(), builder, indentation + 1);
+			}
+
+			builder << indents.str();
+		}
+
+		builder << "</" << name << ">\n";
 	}
 }

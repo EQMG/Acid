@@ -15,7 +15,7 @@ namespace acid
 	/// </summary>
 	class FontCharacter
 	{
-	private:
+	public:
 		int32_t m_id;
 		float m_textureCoordX;
 		float m_textureCoordY;
@@ -26,7 +26,7 @@ namespace acid
 		float m_sizeX;
 		float m_sizeY;
 		float m_advanceX;
-	public:
+
 		/// <summary>
 		/// Creates a new character.
 		/// </summary>
@@ -54,26 +54,6 @@ namespace acid
 			m_advanceX(advanceX)
 		{
 		}
-
-		const int32_t &GetId() const { return m_id; }
-
-		const float &GetTextureCoordX() const { return m_textureCoordX; }
-
-		const float &GetTextureCoordY() const { return m_textureCoordY; }
-
-		const float &GetMaxTextureCoordX() const { return m_maxTextureCoordX; }
-
-		const float &GetMaxTextureCoordY() const { return m_maxTextureCoordY; }
-
-		const float &GetOffsetX() const { return m_offsetX; }
-
-		const float &GetOffsetY() const { return m_offsetY; }
-
-		const float &GetSizeX() const { return m_sizeX; }
-
-		const float &GetSizeY() const { return m_sizeY; }
-
-		const float &GetAdvanceX() const { return m_advanceX; }
 	};
 
 	/// <summary>

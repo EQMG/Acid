@@ -1,7 +1,7 @@
 #include "Json.hpp"
 
+#include <utility>
 #include "Helpers/String.hpp"
-#include "JsonSection.hpp"
 
 namespace acid
 {
@@ -19,6 +19,7 @@ namespace acid
 	void Json::Load(const std::string &data)
 	{
 		ClearChildren();
+		ClearAttributes();
 
 		JsonSection *currentSection = nullptr;
 		std::stringstream summation;
@@ -73,14 +74,14 @@ namespace acid
 
 		if (currentSection != nullptr)
 		{
-			JsonSection::Convert(*currentSection, this, true);
+			Convert(*currentSection, this, true);
 		}
 	}
 
 	std::string Json::Write() const
 	{
 		std::stringstream data;
-		JsonSection::AppendData(*this, data, 0);
+		AppendData(this, data, 0);
 		return data.str();
 	}
 
@@ -95,6 +96,128 @@ namespace acid
 		for (const auto &attribute : source->GetAttributes())
 		{
 			destination->AddAttribute(attribute.first, attribute.second);
+		}
+	}
+
+	Metadata *Json::Convert(const JsonSection &source, Metadata *parent, const bool &isTopSection)
+	{
+		auto thisValue = parent;
+
+		if (!isTopSection)
+		{
+			thisValue = new Metadata(source.m_name, "");
+			parent->AddChild(thisValue);
+		}
+
+		auto contentSplit = String::Split(source.m_content, ",", true);
+
+		for (const auto &data : contentSplit)
+		{
+			auto name = String::Trim(data.substr(0, data.find(':')));
+			auto value = String::ReplaceFirst(data, name, "");
+			value = String::Trim(value.erase(0, 1));
+
+			if (name.empty() || value.empty())
+			{
+				continue;
+			}
+
+			name = name.substr(1, name.size() - 2);
+
+			if (String::StartsWith(name, "_"))
+			{
+				name = name.erase(0, 1);
+				value = value.substr(1, value.size() - 2);
+				thisValue->AddAttribute(name, value);
+			}
+			else
+			{
+				auto newChild = new Metadata(name, value);
+				thisValue->AddChild(newChild);
+			}
+		}
+
+		for (const auto &child : source.m_children)
+		{
+			Convert(*child, thisValue, false);
+		}
+
+		return thisValue;
+	}
+
+	void Json::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation, const bool &end)
+	{
+		std::stringstream indents;
+
+		for (int32_t i = 0; i < indentation; i++)
+		{
+			indents << "  ";
+		}
+
+		char openBrace = '{';
+		char closeBrace = '}';
+
+		for (const auto &child : source->GetChildren())
+		{
+			if (child->GetName().empty())
+			{
+				openBrace = '[';
+				closeBrace = ']';
+				break;
+			}
+		}
+
+		builder << indents.str();
+
+		if (source->GetName().empty())
+		{
+			builder << openBrace << "\n";
+		}
+		else if (source->GetValue().empty())
+		{
+			builder << "\"" << source->GetName() << "\": " << openBrace << "\n";
+		}
+		else
+		{
+			builder << "\"" << source->GetName() << "\": " << source->GetValue();
+
+			if (!(end && source->GetAttributes().empty()))
+			{
+				builder << ", ";
+			}
+
+			builder << "\n";
+		}
+
+		for (const auto &attribute : source->GetAttributes())
+		{
+			builder << indents.str() << "  \"_" << attribute.first + "\": \"" << attribute.second << "\"";
+
+			if (!(end && source->GetChildren().empty()))
+			{
+				builder << ", ";
+			}
+
+			builder << "\n";
+		}
+
+		for (const auto &child : source->GetChildren())
+		{
+			AppendData(child.get(), builder, indentation + 1, child == source->GetChildren().back());
+		}
+
+		if (source->GetValue().empty())
+		{
+			builder << indents.str();
+
+			if (end || indentation == 0)
+			{
+				builder << closeBrace << "\n";
+			}
+			else
+			{
+				builder << closeBrace << ",\n";
+			}
 		}
 	}
 }
