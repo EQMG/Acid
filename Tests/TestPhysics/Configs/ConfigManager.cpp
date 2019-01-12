@@ -23,14 +23,14 @@ namespace test
 
 	void ConfigManager::Load()
 	{
-		m_audio->Load();
+		m_audio->Read();
 		auto audioData = m_audio->GetMetadata();
 		Audio::Get()->SetMasterGain(audioData->GetChild<float>("Master Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_GENERAL, audioData->GetChild<float>("General Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, audioData->GetChild<float>("Effect Volume", 1.0f));
 		Audio::Get()->SetTypeGain(SOUND_TYPE_MUSIC, audioData->GetChild<float>("Music Volume", 1.0f));
 
-		m_graphics->Load();
+		m_graphics->Read();
 		auto graphicsData = m_graphics->GetMetadata();
 	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
 		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));

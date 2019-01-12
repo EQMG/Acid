@@ -18,7 +18,7 @@ namespace acid
 	public:
 		explicit File(const std::string &filename, Metadata *metadata);
 
-		void Load();
+		void Read();
 
 		void Write();
 

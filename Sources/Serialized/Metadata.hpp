@@ -151,7 +151,5 @@ namespace acid
 		virtual void Load(const std::string &data);
 
 		virtual std::string Write() const;
-
-		virtual void Clear();
 	};
 }

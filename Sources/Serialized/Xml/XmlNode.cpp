@@ -18,7 +18,7 @@ namespace acid
 
 		for (int32_t i = 0; i < indentation; i++)
 		{
-			indents << "\t";
+			indents << "  ";
 		}
 
 		std::string name = String::ReplaceAll(source.GetName(), " ", "_");
@@ -70,10 +70,8 @@ namespace acid
 		builder << "</" << name << ">\n";
 	}
 
-	Metadata *XmlNode::Convert(const XmlNode &source, Metadata *parent, const bool &isTopSection)
+	Metadata *XmlNode::Convert(const XmlNode &source, Metadata *parent, const uint32_t &depth)
 	{
-		auto thisValue = parent;
-
 		int32_t firstSpace = String::FindCharPos(source.m_attributes, ' ');
 		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
 		name = String::Trim(name);
@@ -130,21 +128,32 @@ namespace acid
 			}
 		}
 
-		if (!isTopSection)
+		auto thisValue = parent;
+
+		if (depth != 0)
 		{
-			thisValue = new Metadata(name, source.m_content, parseAttributes);
-			parent->AddChild(thisValue);
+			if (depth != 1)
+			{
+				thisValue = new Metadata(name, source.m_content, parseAttributes);
+				parent->AddChild(thisValue);
+			}
+			else
+			{
+				thisValue->SetName(name);
+				thisValue->SetValue(source.m_content);
+				thisValue->SetAttributes(parseAttributes);
+			}
+
+			for (const auto &child : source.m_children)
+			{
+				Convert(*child, thisValue, depth + 1);
+			}
 		}
 		else
 		{
 			parent->SetName(name);
 			parent->SetValue(source.m_content);
 			parent->SetAttributes(parseAttributes);
-		}
-
-		for (const auto &child : source.m_children)
-		{
-			Convert(*child, thisValue, false);
 		}
 
 		return thisValue;

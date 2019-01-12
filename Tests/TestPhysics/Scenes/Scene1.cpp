@@ -33,6 +33,7 @@
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>
 #include <Uis/Uis.hpp>
+#include <Serialized/Xml/Xml.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
@@ -57,6 +58,21 @@ namespace test
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
+
+		/*{
+			auto dataXml = File("Convert.xml", new Xml("COLLADA"));
+			dataXml.Read();
+
+			auto dataJson = File("Convert.json", new Json(dataXml.GetMetadata()));
+			dataJson.Write();
+		}
+		{
+			auto dataJson = File("Convert.json", new Json());
+			dataJson.Read();
+
+			auto dataXml = File("Convert2.xml", new Xml("COLLADA", dataJson.GetMetadata()));
+			dataXml.Write();
+		}*/
 
 		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
 			for (const auto &path : paths)

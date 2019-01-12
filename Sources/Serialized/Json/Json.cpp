@@ -10,6 +10,12 @@ namespace acid
 	{
 	}
 
+	Json::Json(Metadata *metadata) :
+		Metadata("", "")
+	{
+		AddChildren(metadata, this);
+	}
+
 	void Json::Load(const std::string &data)
 	{
 		ClearChildren();
@@ -39,21 +45,21 @@ namespace acid
 					}
 				}
 
-				currentSection->SetContent(currentSection->GetContent() + summation.str());
+				currentSection->m_content += summation.str();
 				summation.str(std::string());
 
 				auto section = new JsonSection(currentSection, name, "");
-				currentSection->AddChild(section);
+				currentSection->m_children.emplace_back(section);
 				currentSection = section;
 			}
 			else if (c == '}' || c == ']')
 			{
-				currentSection->SetContent(currentSection->GetContent() + summation.str());
+				currentSection->m_content += summation.str();
 				summation.str(std::string());
 
-				if (currentSection->GetParent() != nullptr)
+				if (currentSection->m_parent != nullptr)
 				{
-					currentSection = currentSection->GetParent();
+					currentSection = currentSection->m_parent;
 				}
 			}
 			else if (c == '\n')
@@ -78,8 +84,17 @@ namespace acid
 		return data.str();
 	}
 
-	void Json::Clear()
+	void Json::AddChildren(const Metadata *source, Metadata *destination)
 	{
-		ClearChildren();
+		for (const auto &child : source->GetChildren())
+		{
+			auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+			AddChildren(child.get(), created);
+		}
+
+		for (const auto &attribute : source->GetAttributes())
+		{
+			destination->AddAttribute(attribute.first, attribute.second);
+		}
 	}
 }

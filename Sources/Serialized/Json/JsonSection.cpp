@@ -18,7 +18,7 @@ namespace acid
 
 		for (int32_t i = 0; i < indentation; i++)
 		{
-			indents << "\t";
+			indents << "  ";
 		}
 
 		char openBrace = '{';
@@ -48,7 +48,19 @@ namespace acid
 		{
 			builder << "\"" << source.GetName() + "\": " << source.GetValue();
 
-			if (!end)
+			if (!(end && source.GetAttributes().empty()))
+			{
+				builder << ", ";
+			}
+
+			builder << "\n";
+		}
+
+		for (const auto &attribute : source.GetAttributes())
+		{
+			builder << indents.str() << "  \"_" << attribute.first + "\": \"" << attribute.second << "\"";
+
+			if (!(end && source.GetChildren().empty()))
 			{
 				builder << ", ";
 			}
@@ -90,16 +102,28 @@ namespace acid
 
 		for (const auto &data : contentSplit)
 		{
-			auto dataSplit = String::Split(data, ":", true);
+			auto name = String::Trim(data.substr(0, data.find(':')));
+			auto value = String::ReplaceFirst(data, name, "");
+			value = String::Trim(value.erase(0, 1));
 
-			if (dataSplit.size() != 2 || dataSplit.at(0).empty() || dataSplit.at(1).empty())
+			if (name.empty() || value.empty())
 			{
 				continue;
 			}
 
-			std::string name = dataSplit.at(0).substr(1, dataSplit.at(0).size() - 2);
-			auto newChild = new Metadata(name, dataSplit.at(1));
-			thisValue->AddChild(newChild);
+			name = name.substr(1, name.size() - 2);
+
+			if (String::StartsWith(name, "_"))
+			{
+				name = name.erase(0, 1);
+				value = value.substr(1, value.size() - 2);
+				thisValue->AddAttribute(name, value);
+			}
+			else
+			{
+				auto newChild = new Metadata(name, value);
+				thisValue->AddChild(newChild);
+			}
 		}
 
 		for (const auto &child : source.m_children)

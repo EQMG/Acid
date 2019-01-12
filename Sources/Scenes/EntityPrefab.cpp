@@ -32,33 +32,25 @@ namespace acid
 	EntityPrefab::EntityPrefab(const std::string &filename) :
 		Resource(filename),
 		m_filename(filename),
-		m_file(nullptr),
-		m_parent(nullptr)
+		m_file(nullptr)
 	{
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
 
 		if (fileExt == ".json")
 		{
 			m_file = std::make_unique<File>(filename, new Json());
-			m_file->Load();
-			m_parent = m_file->GetMetadata();
 		}
 		else if (fileExt == ".xml")
 		{
-			m_file = std::make_unique<File>(filename, new Xml());
-			m_file->Load();
-			m_parent = m_file->GetMetadata()->FindChild("EntityDefinition");
-
-			if (m_parent == nullptr)
-			{
-				m_parent = m_file->GetMetadata()->AddChild(new Metadata("EntityDefinition"));
-			}
+			m_file = std::make_unique<File>(filename, new Xml("EntityDefinition"));
 		}
+
+		m_file->Read();
 	}
 
 	void EntityPrefab::Write(const Entity &entity)
 	{
-		m_parent->ClearChildren();
+		m_file->GetMetadata()->ClearChildren();
 
 		for (const auto &component : entity.GetComponents())
 		{
@@ -69,14 +61,8 @@ namespace acid
 				continue;
 			}
 
-			auto child = m_parent->FindChild(*componentName, false);
-
-			if (child == nullptr)
-			{
-				child = new Metadata(*componentName);
-				m_parent->AddChild(child);
-			}
-
+			auto child = new Metadata(*componentName);
+			m_file->GetMetadata()->AddChild(child);
 			component->Encode(*child);
 		}
 	}
