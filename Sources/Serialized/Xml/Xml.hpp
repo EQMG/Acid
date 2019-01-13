@@ -39,7 +39,7 @@ namespace acid
 	private:
 		void AddChildren(const Metadata *source, Metadata *destination);
 
-		static Metadata *Convert(const XmlNode &source, Metadata *parent, const uint32_t &depth);
+		static void Convert(const XmlNode *source, Metadata *parent, const uint32_t &depth);
 
 		static void AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation);
 	};

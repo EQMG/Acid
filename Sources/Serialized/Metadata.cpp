@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include "Engine/Log.hpp"
-#include "Network/Packet.hpp"
 
 namespace acid
 {

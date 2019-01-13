@@ -34,7 +34,7 @@
 #include <Uis/Uis.hpp>
 #include <Serialized/Json/Json.hpp>
 #include <Serialized/Xml/Xml.hpp>
-#include "Yaml/Yaml.hpp" // <Serialized/Yaml/Yaml.hpp>
+//#include <Serialized/Yaml/Yaml.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
@@ -59,14 +59,6 @@ namespace test
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
-
-		/*{
-			auto dataYaml = File("Example.yaml", new Yaml());
-			dataYaml.Read();
-
-			auto dataJson = File("Example.json", new Json(dataYaml.GetMetadata()));
-			dataJson.Write();
-		}*/
 
 		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
 			for (const auto &path : paths)
@@ -266,7 +258,7 @@ namespace test
 		{
 			// TODO: Threading.
 			std::thread t([this](){
-				auto sceneFile = File("Scene1.yaml", new Yaml());
+				auto sceneFile = File("Scene1.json", new Json());
 				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())

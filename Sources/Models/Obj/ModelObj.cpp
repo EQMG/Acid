@@ -120,7 +120,10 @@ namespace acid
 			}
 		}
 
+		std::vector<VertexModel> vertices = {};
+
 		// Averages out vertex tangents, and disabled non set vertices,
+		// and converts the loaded data into a format that can be used by models.
 		for (auto &current : verticesList)
 		{
 			current->AverageTangents();
@@ -130,13 +133,7 @@ namespace acid
 				current->SetUvIndex(0);
 				current->SetNormalIndex(0);
 			}
-		}
 
-		std::vector<VertexModel> vertices = {};
-
-		// Turns the loaded data into a format that can be used by Acid models.
-		for (const auto &current : verticesList)
-		{
 			Vector3 position = current->GetPosition();
 			Vector2 uvs = uvsList[current->GetUvIndex()];
 			Vector3 normal = normalsList[current->GetNormalIndex()];

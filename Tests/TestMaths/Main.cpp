@@ -12,11 +12,56 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Transform.hpp>
 
+
+#include <Engine/Engine.hpp>
+#include <Files/File.hpp>
+#include <Serialized/Json/Json.hpp>
+#include <Serialized/Xml/Xml.hpp>
+#include <Files/Files.hpp>
+#include "Yaml/Yaml.hpp" // <Serialized/Yaml/Yaml.hpp>
+
 using namespace acid;
 
 int main(int argc, char **argv)
 {
+	auto engine = std::make_unique<Engine>(argv[0], true);
+	engine->GetModuleManager().Add<Files>(MODULE_UPDATE_ALWAYS);
+	Files::Get()->AddSearchPath("Resources/Engine");
+
 	{
+		auto dataYaml = File("Example0.yaml", new Yaml());
+		dataYaml.Read();
+
+		auto dataJson = File("Example0.json", new Json(dataYaml.GetMetadata()));
+		dataJson.Write();
+	}
+	{
+		auto dataJson = File("Example1.json", new Json());
+		dataJson.Read();
+
+		auto dataYaml = File("Example1.yaml", new Yaml(dataJson.GetMetadata()));
+		dataYaml.Write();
+	}
+	{
+		auto dataJson = File("Example2.json", new Json());
+		dataJson.Read();
+
+		auto dataYaml = File("Example2.yaml", new Yaml(dataJson.GetMetadata()));
+		dataYaml.Write();
+	}
+	{
+		auto dataJson = File("Example2.json", new Json());
+		dataJson.Read();
+
+		auto dataXml = File("Example2.xml", new Xml("EntityDefinition", dataJson.GetMetadata()));
+		dataXml.Write();
+
+		auto dataJson2 = File("Example2.2.json", new Json(dataJson.GetMetadata()));
+		dataJson2.Write();
+
+	}
+
+	/*{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
@@ -88,6 +133,6 @@ int main(int argc, char **argv)
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
-	std::cin.get();
+	std::cin.get();*/
 	return EXIT_SUCCESS;
 }

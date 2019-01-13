@@ -21,6 +21,7 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
+		auto topSection = std::make_unique<JsonSection>(nullptr, "", "");
 		JsonSection *currentSection = nullptr;
 		std::stringstream summation;
 
@@ -30,7 +31,7 @@ namespace acid
 			{
 				if (currentSection == nullptr)
 				{
-					currentSection = new JsonSection(nullptr, "", "");
+					currentSection = topSection.get();
 					continue;
 				}
 
@@ -72,10 +73,7 @@ namespace acid
 			}
 		}
 
-		if (currentSection != nullptr)
-		{
-			Convert(*currentSection, this, true);
-		}
+		Convert(topSection.get(), this, true);
 	}
 
 	std::string Json::Write() const
@@ -99,35 +97,45 @@ namespace acid
 		}
 	}
 
-	Metadata *Json::Convert(const JsonSection &source, Metadata *parent, const bool &isTopSection)
+	void Json::Convert(const JsonSection *source, Metadata *parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 
 		if (!isTopSection)
 		{
-			thisValue = new Metadata(source.m_name, "");
+			thisValue = new Metadata(source->m_name, "");
 			parent->AddChild(thisValue);
 		}
 
-		auto contentSplit = String::Split(source.m_content, ",", true);
+		auto contentSplit = String::Split(source->m_content, ",", true);
 
 		for (const auto &data : contentSplit)
 		{
-			auto name = String::Trim(data.substr(0, data.find(':')));
-			auto value = String::ReplaceFirst(data, name, "");
-			value = String::Trim(value.erase(0, 1));
+			std::string name = "";
+			std::string value = data;
 
-			if (name.empty() || value.empty())
+			if (String::Contains(data, ":"))
+			{
+				name = String::Trim(data.substr(0, data.find(':')));
+				value = String::Trim(String::ReplaceFirst(value, name, ""));
+				value = String::Trim(value.erase(0, 1));
+				name = name.substr(1, name.size() - 2);
+			}
+
+			if (value.empty())
 			{
 				continue;
 			}
 
-			name = name.substr(1, name.size() - 2);
-
 			if (String::StartsWith(name, "_"))
 			{
 				name = name.erase(0, 1);
-				value = value.substr(1, value.size() - 2);
+
+				if (!value.empty())
+				{
+					value = value.substr(1, value.size() - 2);
+				}
+
 				thisValue->AddAttribute(name, value);
 			}
 			else
@@ -137,12 +145,10 @@ namespace acid
 			}
 		}
 
-		for (const auto &child : source.m_children)
+		for (const auto &child : source->m_children)
 		{
-			Convert(*child, thisValue, false);
+			Convert(child.get(), thisValue, false);
 		}
-
-		return thisValue;
 	}
 
 	void Json::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation, const bool &end)
