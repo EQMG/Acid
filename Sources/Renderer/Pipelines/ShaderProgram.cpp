@@ -603,7 +603,7 @@ namespace acid
 			return;
 		}
 
-		auto it = descriptorPoolCounts.find(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+		auto it = descriptorPoolCounts.find(type);
 
 		if (it != descriptorPoolCounts.end())
 		{
