@@ -22,6 +22,7 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
+		auto topNode = std::make_unique<XmlNode>(nullptr, "", "");
 		XmlNode *currentSection = nullptr;
 		std::stringstream summation;
 		bool end = false;
@@ -32,7 +33,7 @@ namespace acid
 			{
 				if (*(it + 1) == '?') // Prolog.
 				{
-					currentSection = new XmlNode(nullptr, "", "");
+					currentSection = topNode.get();
 					continue;
 				}
 
@@ -78,14 +79,11 @@ namespace acid
 			}
 		}
 
-		if (currentSection != nullptr)
-		{
-			Convert(*currentSection, m_root.get(), 0);
+		Convert(topNode.get(), m_root.get(), 0);
 
-			if (!currentSection->m_children.empty())
-			{
-				Convert(*currentSection->m_children[0], this, 1);
-			}
+		if (!topNode->m_children.empty())
+		{
+			Convert(topNode->m_children[0].get(), this, 1);
 		}
 	}
 
@@ -110,12 +108,11 @@ namespace acid
 		}
 	}
 
-	Metadata *Xml::Convert(const XmlNode &source, Metadata *parent, const uint32_t &depth)
+	void Xml::Convert(const XmlNode *source, Metadata *parent, const uint32_t &depth)
 	{
-		int32_t firstSpace = String::FindCharPos(source.m_attributes, ' ');
-		std::string name = String::Substring(source.m_attributes, 0, firstSpace);
-		name = String::Trim(name);
-		std::string attributes = String::Substring(source.m_attributes, firstSpace + 1, static_cast<int32_t>(source.m_attributes.size()));
+		int32_t firstSpace = String::FindCharPos(source->m_attributes, ' ');
+		std::string name = String::Trim(String::Substring(source->m_attributes, 0, firstSpace));
+		std::string attributes = String::Substring(source->m_attributes, firstSpace + 1, static_cast<int32_t>(source->m_attributes.size()));
 		attributes = String::Trim(attributes);
 
 		if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')
@@ -174,29 +171,27 @@ namespace acid
 		{
 			if (depth != 1)
 			{
-				thisValue = new Metadata(name, source.m_content, parseAttributes);
+				thisValue = new Metadata(name, source->m_content, parseAttributes);
 				parent->AddChild(thisValue);
 			}
 			else
 			{
 				thisValue->SetName(name);
-				thisValue->SetValue(source.m_content);
+				thisValue->SetValue(source->m_content);
 				thisValue->SetAttributes(parseAttributes);
 			}
 
-			for (const auto &child : source.m_children)
+			for (const auto &child : source->m_children)
 			{
-				Convert(*child, thisValue, depth + 1);
+				Convert(child.get(), thisValue, depth + 1);
 			}
 		}
 		else
 		{
 			parent->SetName(name);
-			parent->SetValue(source.m_content);
+			parent->SetValue(source->m_content);
 			parent->SetAttributes(parseAttributes);
 		}
-
-		return thisValue;
 	}
 
 	void Xml::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation)

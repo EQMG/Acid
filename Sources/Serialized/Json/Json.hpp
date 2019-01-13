@@ -37,7 +37,7 @@ namespace acid
 	private:
 		void AddChildren(const Metadata *source, Metadata *destination);
 
-		static Metadata *Convert(const JsonSection &source, Metadata *parent, const bool &isTopSection = true);
+		static void Convert(const JsonSection *source, Metadata *parent, const bool &isTopSection = true);
 
 		static void AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation, const bool &end = false);
 	};
