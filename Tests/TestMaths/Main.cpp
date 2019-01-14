@@ -36,12 +36,19 @@ int main(int argc, char **argv)
 		dataJson.Write();
 	}
 	{
+		auto dataYaml = File("Example1.yaml", new Yaml());
+		dataYaml.Read();
+
+		auto dataJson = File("Example1.json", new Json(dataYaml.GetMetadata()));
+		dataJson.Write();
+	}
+	/*{
 		auto dataJson = File("Example1.json", new Json());
 		dataJson.Read();
 
 		auto dataYaml = File("Example1.yaml", new Yaml(dataJson.GetMetadata()));
 		dataYaml.Write();
-	}
+	}*/
 	{
 		auto dataJson = File("Example2.json", new Json());
 		dataJson.Read();
