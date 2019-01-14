@@ -1,4 +1,3 @@
-#include <Engine/Log.hpp>
 #include "Yaml.hpp"
 
 #include "Helpers/String.hpp"
@@ -21,7 +20,7 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
-		auto topSection = std::make_unique<YamlSection>(nullptr, "", "");
+		auto topSection = std::make_unique<YamlSection>(nullptr, "", 0);
 		YamlSection *currentSection = topSection.get();
 		uint32_t lastIndentation = 0;
 
@@ -36,8 +35,8 @@ namespace acid
 			}
 
 			uint32_t indentation = 0;
-			bool arrayElement = false;
 			bool comment = false;
+		//	bool array = false;
 
 			for (const auto &c : line)
 			{
@@ -47,7 +46,7 @@ namespace acid
 				}
 				else if (c == '-')
 				{
-					arrayElement = true;
+				//	array = true;
 					indentation += 2;
 					break;
 				}
@@ -67,44 +66,52 @@ namespace acid
 				continue;
 			}
 
-			Log::Out("'%s': %i, %s, ", line.c_str(), indentation, arrayElement ? "true" : "false");
-
-			if (indentation != lastIndentation && !arrayElement)
+			if (indentation < lastIndentation)
 			{
-				auto name = String::Trim(line.substr(0, line.find(':')));
-				auto value = String::Trim(String::ReplaceFirst(line, name, ""));
-				value = String::Trim(value.erase(0, 1));
-				Log::Out("%s, %s, ", name.c_str(), value.c_str());
-
-				if (indentation < lastIndentation)
+				for (uint32_t i = 0; i < (lastIndentation - indentation) / 2; i++)
 				{
-					for (uint32_t i = 0; i < (lastIndentation - indentation) / 2; i++)
+					if (currentSection->m_parent != nullptr)
 					{
-						if (currentSection->m_parent != nullptr)
-						{
-							currentSection = currentSection->m_parent;
-						}
+						currentSection = currentSection->m_parent;
 					}
 				}
-				else
+			}
+			else if (indentation > lastIndentation)
+			{
+				for (uint32_t i = 0; i < ((indentation - lastIndentation) / 2) - 1; i++)
 				{
-					auto section = new YamlSection(currentSection, name, value);
+					auto section = new YamlSection(currentSection, "", lastIndentation + (i * 2));
 					currentSection->m_children.emplace_back(section);
-
-					if (indentation > lastIndentation)
-					{
-						currentSection = section;
-					}
+					currentSection = section;
 				}
-
-				lastIndentation = indentation;
 			}
 
+			if (indentation - lastIndentation == 2)
+			{
+				currentSection = currentSection->m_children.back().get();
+			}
 
-			Log::Out("\n");
+			/*if (array)
+			{
+				{
+					indentation += 2;
+					auto section = new YamlSection(currentSection, "", indentation);
+					currentSection->m_children.emplace_back(section);
+					currentSection = section;
+				}
+				auto section = new YamlSection(currentSection, String::Trim(line).erase(0, 1), indentation);
+				currentSection->m_children.emplace_back(section);
+			}
+			else
+			{*/
+				auto section = new YamlSection(currentSection, String::Trim(line), indentation);
+				currentSection->m_children.emplace_back(section);
+			//}
+
+			lastIndentation = indentation;
 		}
 
-		Convert(topSection.get(), this);
+		Convert(topSection.get(), this, true);
 	}
 
 	std::string Yaml::Write() const
@@ -129,8 +136,30 @@ namespace acid
 		}
 	}
 
-	void Yaml::Convert(const YamlSection *source, Metadata *parent)
+	void Yaml::Convert(const YamlSection *source, Metadata *parent, const bool &isTopSection)
 	{
+		auto name = String::Trim(source->m_content.substr(0, source->m_content.find(':')));
+		auto value = String::Trim(String::ReplaceFirst(source->m_content, name, ""));
+		value = String::Trim(value.erase(0, 1));
+
+		auto thisValue = parent;
+
+		if (String::StartsWith(name, "_"))
+		{
+			name = name.erase(0, 1);
+			parent->AddAttribute(name, value);
+			return;
+		}
+		else if (!isTopSection)
+		{
+			thisValue = new Metadata(name, value);
+			parent->AddChild(thisValue);
+		}
+
+		for (const auto &child : source->m_children)
+		{
+			Convert(child.get(), thisValue, false);
+		}
 	}
 
 	void Yaml::AppendData(const Metadata *source, const Metadata *parent, std::stringstream &builder, const int32_t &indentation)

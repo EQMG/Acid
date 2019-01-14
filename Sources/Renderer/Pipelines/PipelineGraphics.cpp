@@ -160,7 +160,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
+		auto &descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -174,7 +174,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
+		auto &descriptorPools = m_shaderProgram->GetDescriptorPools();
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
