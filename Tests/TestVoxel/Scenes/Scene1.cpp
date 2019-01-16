@@ -55,7 +55,7 @@ namespace test
 
 		// Entities.
 		auto sun = new Entity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
-		sun->AddComponent<Light>(Colour::WHITE);
+		sun->AddComponent<Light>(Colour::White);
 
 		// Voxels.
 		for (int32_t x = -3; x <= 3; x++)

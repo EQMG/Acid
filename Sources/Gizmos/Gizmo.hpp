@@ -12,10 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Gizmo
 	{
-	private:
-		std::shared_ptr<GizmoType> m_gizmoType;
-		Transform m_transform;
-		Colour m_diffuse;
 	public:
 		/// <summary>
 		/// Creates a new gizmo object.
@@ -40,5 +36,9 @@ namespace acid
 		const Colour &GetDiffuse() const { return m_diffuse; }
 
 		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
+	private:
+		std::shared_ptr<GizmoType> m_gizmoType;
+		Transform m_transform;
+		Colour m_diffuse;
 	};
 }

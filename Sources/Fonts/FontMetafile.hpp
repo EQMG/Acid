@@ -62,31 +62,15 @@ namespace acid
 	class ACID_EXPORT FontMetafile :
 		public Resource
 	{
-	private:
-		std::map<int32_t, FontCharacter> m_metadata;
-		std::map<std::string, std::string> m_values;
-
-		std::string m_filename;
-		float m_verticalPerPixelSize;
-		float m_horizontalPerPixelSize;
-		int32_t m_imageWidth;
-		float m_spaceWidth;
-		std::vector<int32_t> m_padding;
-		int32_t m_paddingWidth;
-		int32_t m_paddingHeight;
-		float m_maxSizeY;
 	public:
-		static const uint32_t PAD_TOP;
-		static const uint32_t PAD_LEFT;
-		static const uint32_t PAD_BOTTOM;
-		static const uint32_t PAD_RIGHT;
-		static const int32_t DESIRED_PADDING;
+		static constexpr uint32_t PadTop = 0;
+		static constexpr uint32_t PadLeft = 1;
+		static constexpr uint32_t PadBottom = 2;
+		static constexpr uint32_t PadRight = 3;
+		static constexpr int32_t DesiredPassing = 8;
 
-		static const std::string SPLITTER;
-		static const std::string NUMBER_SEPARATOR;
-
-		static const float LINE_HEIGHT;
-		static const int32_t SPACE_ASCII;
+		static constexpr float LineHeight = 0.03f;
+		static constexpr int32_t SpaceAscii = 32;
 
 		/// <summary>
 		/// Will find an existing metafile with the same filename, or create a new metafile.
@@ -146,5 +130,18 @@ namespace acid
 		/// </param>
 		/// <returns> The int32_t array of values associated with the variable. </returns>
 		std::vector<int32_t> GetValuesOfVariable(const std::string &variable);
+
+		std::map<int32_t, FontCharacter> m_metadata;
+		std::map<std::string, std::string> m_values;
+
+		std::string m_filename;
+		float m_verticalPerPixelSize;
+		float m_horizontalPerPixelSize;
+		int32_t m_imageWidth;
+		float m_spaceWidth;
+		std::vector<int32_t> m_padding;
+		int32_t m_paddingWidth;
+		int32_t m_paddingHeight;
+		float m_maxSizeY;
 	};
 }

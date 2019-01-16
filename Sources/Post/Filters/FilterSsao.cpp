@@ -9,9 +9,9 @@
 
 namespace acid
 {
-	const uint32_t FilterSsao::SSAO_NOISE_DIM = 4;
-	const uint32_t FilterSsao::SSAO_KERNEL_SIZE = 64;
-	const float FilterSsao::SSAO_RADIUS = 0.5f;
+	static const uint32_t SSAO_NOISE_DIM = 4;
+	static const uint32_t SSAO_KERNEL_SIZE = 64;
+	static const float SSAO_RADIUS = 0.5f;
 
 	FilterSsao::FilterSsao(const GraphicsStage &graphicsStage) :
 		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Ssao.frag"}, GetDefines()),

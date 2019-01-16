@@ -46,13 +46,13 @@ namespace test
 	static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
-		Scene(new CameraFps(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonSpawnSphere(ButtonMouse(MOUSE_BUTTON_1)),
-		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
-		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(KEY_ESCAPE, KEY_M)),
-		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
-		m_buttonSave(ButtonKeyboard(KEY_K)),
-		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
+		Scene(new CameraFps(), new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, {0, 1})),
+		m_buttonSpawnSphere(ButtonMouse(MouseButton::MOUSE_BUTTON_LEFT)),
+		m_buttonFullscreen(ButtonKeyboard(Key::KEY_F11)),
+		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::KEY_ESCAPE, Key::KEY_M)),
+		m_buttonScreenshot(ButtonKeyboard(Key::KEY_F12)),
+		m_buttonSave(ButtonKeyboard(Key::KEY_K)),
+		m_buttonExit(ButtonKeyboard(Key::KEY_DELETE)),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
@@ -92,7 +92,7 @@ namespace test
 		// Animated.
 		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
 		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 		animatedObject->AddComponent<Rigidbody>(0.0f);
 		animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
 		animatedObject->AddComponent<MeshRender>();
@@ -101,11 +101,11 @@ namespace test
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
 	//	sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
-		sun->AddComponent<Light>(Colour::WHITE);
+		sun->AddComponent<Light>(Colour::White);
 
 		auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<MaterialDefault>(Colour::GREY, Texture::Create("Undefined2.png"), 0.0f, 1.0f);
+		plane->AddComponent<MaterialDefault>(Colour::Grey, Texture::Create("Undefined2.png"), 0.0f, 1.0f);
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<MeshRender>();
@@ -124,7 +124,7 @@ namespace test
 		terrain->AddComponent<MeshRender>();
 		terrain->AddComponent<ShadowRender>();
 
-		static const std::vector cubeColours = {Colour::RED, Colour::LIME, Colour::YELLOW, Colour::BLUE, Colour::PURPLE, Colour::GREY, Colour::WHITE};
+		static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -142,7 +142,7 @@ namespace test
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
+		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
@@ -152,14 +152,14 @@ namespace test
 		auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3(0.0f, 10.0f, 0.0f), Vector3(), 3.0f));
 		teapotCone->SetParent(teapot);
 		teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
-		teapotCone->AddComponent<MaterialDefault>(Colour::FUCHSIA, nullptr, 0.0f, 1.0f);
-		teapotCone->AddComponent<Light>(Colour::WHITE, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
+		teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
+		teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
 		teapotCone->AddComponent<MeshRender>();
 		teapotCone->AddComponent<ShadowRender>();
 
 		auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot2->AddComponent<MaterialDefault>(Colour::LIME, nullptr, 0.0f, 1.0f);
+		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.0f, 1.0f);
 	//	teapot2->AddComponent<Rigidbody>(1.0f);
 	//	teapot2->AddComponent<ColliderConvexHull>();
 		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);
@@ -169,7 +169,7 @@ namespace test
 
 		auto teapot3 = GetStructure()->CreateEntity(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot3->AddComponent<MaterialDefault>(Colour::TEAL, nullptr, 0.0f, 1.0f);
+		teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.0f, 1.0f);
 	//	teapot3->AddComponent<Rigidbody>(1.0f);
 	//	teapot3->AddComponent<ColliderConvexHull>();
 		teapot3->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 2);
@@ -179,7 +179,7 @@ namespace test
 
 		auto cone = GetStructure()->CreateEntity(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 		cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
-		cone->AddComponent<MaterialDefault>(Colour::BLUE, nullptr, 0.0f, 1.0f);
+		cone->AddComponent<MaterialDefault>(Colour::Blue, nullptr, 0.0f, 1.0f);
 		cone->AddComponent<Rigidbody>(1.5f);
 		cone->AddComponent<ColliderCone>(1.0f, 2.0f);
 		cone->AddComponent<ColliderSphere>(1.0f, Transform(Vector3(0.0f, 2.0f, 0.0f)));
@@ -188,7 +188,7 @@ namespace test
 
 		auto cylinder = GetStructure()->CreateEntity(Transform(Vector3(-8.0f, 3.0f, 10.0f), Vector3(0.0f, 0.0f, 90.0f), 1.0f));
 		cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 16, 8));
-		cylinder->AddComponent<MaterialDefault>(Colour::RED, nullptr, 0.0f, 1.0f);
+		cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
 		cylinder->AddComponent<Rigidbody>(2.5f);
 		cylinder->AddComponent<ColliderCylinder>(1.1f, 2.2f);
 		cylinder->AddComponent<MeshRender>();
@@ -213,11 +213,11 @@ namespace test
 			sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 0.5f));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::FRONT).Normalize() * 3.0f, Time::Seconds(2.0f));
+			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
 		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
-			sphere->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, 0.0f, 1.0f);
-			sphere->AddComponent<Light>(Colour::AQUA, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
+			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
+			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
 			sphere->AddComponent<NameTag>("Sphere", 0.6f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();

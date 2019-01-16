@@ -5,9 +5,9 @@
 
 namespace acid
 {
-	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage, const MeshSort &meshSort) :
+	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage, const Sort &sort) :
 		RenderPipeline(graphicsStage),
-		m_meshSort(meshSort),
+		m_sort(sort),
 		m_uniformScene(UniformHandler(true))
 	{
 	}
@@ -21,11 +21,11 @@ namespace acid
 
 		auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 
-		if (m_meshSort != MESH_SORT_NONE)
+		if (m_sort != Sort::None)
 		{
 			std::sort(sceneMeshRenders.begin(), sceneMeshRenders.end());
 
-			if (m_meshSort == MESH_SORT_FRONT)
+			if (m_sort == Sort::Front)
 			{
 				std::reverse(sceneMeshRenders.begin(), sceneMeshRenders.end());
 			}

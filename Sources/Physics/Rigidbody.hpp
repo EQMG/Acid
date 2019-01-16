@@ -16,19 +16,6 @@ namespace acid
 	class ACID_EXPORT Rigidbody :
 		public CollisionObject
 	{
-	private:
-		float m_mass;
-
-		Vector3 m_gravity;
-
-		Vector3 m_linearFactor;
-		Vector3 m_angularFactor;
-
-		Vector3 m_linearVelocity;
-		Vector3 m_angularVelocity;
-
-		std::unique_ptr<btDefaultMotionState> m_motionState;
-		btRigidBody *m_rigidBody;
 	public:
 		/// <summary>
 		/// Creates a new rigidbody.
@@ -37,7 +24,7 @@ namespace acid
 		/// <param name="friction"> The amount of surface friction. </param>
 		/// <param name="linearFactor"> How effected each axis (XYZ) will be to linear movement. </param>
 		/// <param name="angularFactor"> How effected each axis (XYZ) will be to angular movement. </param>
-		explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::ONE, const Vector3 &angularFactor = Vector3::ONE);
+		explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::One, const Vector3 &angularFactor = Vector3::One);
 
 		~Rigidbody();
 
@@ -80,5 +67,17 @@ namespace acid
 		void RecalculateMass() override;
 	private:
 		static std::unique_ptr<btRigidBody> CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
+
+		float m_mass;
+		Vector3 m_gravity;
+
+		Vector3 m_linearFactor;
+		Vector3 m_angularFactor;
+
+		Vector3 m_linearVelocity;
+		Vector3 m_angularVelocity;
+
+		std::unique_ptr<btDefaultMotionState> m_motionState;
+		btRigidBody *m_rigidBody;
 	};
 }

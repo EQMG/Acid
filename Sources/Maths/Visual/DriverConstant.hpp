@@ -10,8 +10,6 @@ namespace acid
 	class ACID_EXPORT DriverConstant :
 		public IDriver
 	{
-	private:
-		float m_constant;
 	public:
 		/// <summary>
 		/// Creates a new constant driver.
@@ -32,5 +30,7 @@ namespace acid
 		void SetConstant(const float &constant) { m_constant = constant; };
 	protected:
 		float Calculate(const float &factor) override;
+	private:
+		float m_constant;
 	};
 }

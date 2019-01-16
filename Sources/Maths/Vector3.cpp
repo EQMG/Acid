@@ -11,16 +11,16 @@
 
 namespace acid
 {
-	const Vector3 Vector3::ZERO = Vector3(0.0f, 0.0f, 0.0f);
-	const Vector3 Vector3::ONE = Vector3(1.0f, 1.0f, 1.0f);
-	const Vector3 Vector3::LEFT = Vector3(-1.0f, 0.0f, 0.0f);
-	const Vector3 Vector3::RIGHT = Vector3(1.0f, 0.0f, 0.0f);
-	const Vector3 Vector3::UP = Vector3(0.0f, 1.0f, 0.0f);
-	const Vector3 Vector3::DOWN = Vector3(0.0f, -1.0f, 0.0f);
-	const Vector3 Vector3::FRONT = Vector3(0.0f, 0.0f, 1.0f);
-	const Vector3 Vector3::BACK = Vector3(0.0f, 0.0f, -1.0f);
-	const Vector3 Vector3::POSITIVE_INFINITY = Vector3(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
-	const Vector3 Vector3::NEGATIVE_INFINITY = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+	const Vector3 Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::One = Vector3(1.0f, 1.0f, 1.0f);
+	const Vector3 Vector3::Left = Vector3(-1.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::Right = Vector3(1.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::Up = Vector3(0.0f, 1.0f, 0.0f);
+	const Vector3 Vector3::Down = Vector3(0.0f, -1.0f, 0.0f);
+	const Vector3 Vector3::Front = Vector3(0.0f, 0.0f, 1.0f);
+	const Vector3 Vector3::Back = Vector3(0.0f, 0.0f, -1.0f);
+	const Vector3 Vector3::PositiveInfinity = Vector3(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector3 Vector3::NegativeInfinity = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector3::Vector3() :
 		m_x(0.0f),
@@ -124,7 +124,7 @@ namespace acid
 
 	Vector3 Vector3::Rotate(const Vector3 &rotation) const
 	{
-		Matrix4 matrix = Matrix4::TransformationMatrix(Vector3::ZERO, rotation, Vector3::ONE);
+		Matrix4 matrix = Matrix4::TransformationMatrix(Vector3::Zero, rotation, Vector3::One);
 		Vector4 direction4 = Vector4(m_x, m_y, m_z, 1.0f);
 		direction4 = matrix.Transform(direction4);
 		return Vector3(direction4.m_x, direction4.m_y, direction4.m_z);
@@ -246,7 +246,7 @@ namespace acid
 
 	Vector3 Vector3::RandomUnitVector()
 	{
-		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
 		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
@@ -277,8 +277,8 @@ namespace acid
 			b = temp;
 		}
 
-		float randX = b * std::cos(2.0f * PI * (a / b));
-		float randY = b * std::sin(2.0f * PI * (a / b));
+		float randX = b * std::cos(2.0f * Maths::Pi * (a / b));
+		float randY = b * std::sin(2.0f * Maths::Pi * (a / b));
 		float distance = Vector3(randX, randY, 0.0f).Length();
 		return Vector3(direction * distance);
 	}
@@ -286,7 +286,7 @@ namespace acid
 	Vector3 Vector3::RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle)
 	{
 		float cosAngle = std::cos(angle);
-		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
 		float z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);
@@ -296,9 +296,9 @@ namespace acid
 
 		if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
 		{
-			Vector3 rotateAxis = coneDirection.Cross(Vector3::FRONT);
+			Vector3 rotateAxis = coneDirection.Cross(Vector3::Front);
 			rotateAxis.Normalize();
-			float rotateAngle = std::acos(coneDirection.Dot(Vector3::FRONT));
+			float rotateAngle = std::acos(coneDirection.Dot(Vector3::Front));
 			Matrix4 rotationMatrix = Matrix4();
 			rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
 			direction = rotationMatrix.Transform(direction);

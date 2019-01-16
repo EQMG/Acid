@@ -17,25 +17,6 @@ namespace acid
 	class ACID_EXPORT Quaternion
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_x, m_y, m_z, m_w;
-			};
-
-			struct
-			{
-				float m_elements[4];
-			};
-		};
-
-		static const Quaternion ZERO;
-		static const Quaternion ONE;
-		static const Quaternion W_ONE;
-		static const Quaternion POSITIVE_INFINITY;
-		static const Quaternion NEGATIVE_INFINITY;
-
 		/// <summary>
 		/// Constructor for Quaternion.
 		/// </summary>
@@ -264,5 +245,24 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Quaternion &quaternion);
 
 		std::string ToString() const;
+
+		static const Quaternion Zero;
+		static const Quaternion One;
+		static const Quaternion OneW;
+		static const Quaternion PositiveInfinity;
+		static const Quaternion NegativeInfinity;
+
+		union
+		{
+			struct
+			{
+				float m_x, m_y, m_z, m_w;
+			};
+
+			struct
+			{
+				float m_elements[4];
+			};
+		};
 	};
 }

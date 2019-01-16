@@ -12,10 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT PushHandler
 	{
-	private:
-		bool m_multipipeline;
-		const UniformBlock *m_uniformBlock;
-		std::unique_ptr<char[]> m_data;
 	public:
 		explicit PushHandler(const bool &multipipeline = false);
 
@@ -55,5 +51,9 @@ namespace acid
 		bool Update(const UniformBlock *uniformBlock);
 
 		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
+	private:
+		bool m_multipipeline;
+		const UniformBlock *m_uniformBlock;
+		std::unique_ptr<char[]> m_data;
 	};
 }

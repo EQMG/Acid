@@ -14,10 +14,6 @@ namespace acid
 		public IButton,
 		public NonCopyable
 	{
-	private:
-		std::vector<std::unique_ptr<IButton>> m_buttons;
-		bool m_useAnd;
-		bool m_wasDown;
 	public:
 		/// <summary>
 		/// A template used to create a compound button of a single type.
@@ -48,5 +44,9 @@ namespace acid
 		bool IsDown() const override;
 
 		bool WasDown() override;
+	private:
+		std::vector<std::unique_ptr<IButton>> m_buttons;
+		bool m_useAnd;
+		bool m_wasDown;
 	};
 }

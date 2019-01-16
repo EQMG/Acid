@@ -44,8 +44,8 @@ namespace acid
 			b = temp;
 		}
 
-		float randX = b * std::cos(2.0f * PI * (a / b));
-		float randY = b * std::sin(2.0f * PI * (a / b));
+		float randX = b * std::cos(2.0f * Maths::Pi * (a / b));
+		float randY = b * std::sin(2.0f * Maths::Pi * (a / b));
 		float distance = Vector2(randX, randY).Length();
 		return m_radius * distance * Vector3::RandomUnitVector();
 	}

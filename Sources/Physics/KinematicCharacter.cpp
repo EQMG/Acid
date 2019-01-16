@@ -12,8 +12,8 @@ namespace acid
 	KinematicCharacter::KinematicCharacter(const float &friction) :
 		CollisionObject(friction),
 		m_controller(nullptr),
-		m_gravity(Vector3::ZERO),
-		m_up(Vector3::UP),
+		m_gravity(Vector3::Zero),
+		m_up(Vector3::Up),
 		m_stepHeight(0.0f),
 		m_fallSpeed(55.0f),
 		m_jumpSpeed(10.0f),

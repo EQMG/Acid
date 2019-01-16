@@ -12,10 +12,10 @@
 
 namespace acid
 {
-	const uint32_t UdpSocket::MAX_DATAGRAM_SIZE = 65507;
+	static const uint32_t MAX_DATAGRAM_SIZE = 65507;
 
 	UdpSocket::UdpSocket() :
-		Socket(SOCKET_TYPE_UDP),
+		Socket(Type::Udp),
 		m_buffer(MAX_DATAGRAM_SIZE)
 	{
 	}
@@ -38,7 +38,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
+	Socket::Status UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
 	{
 		// Close the socket if it is already bound.
 		Close();
@@ -47,9 +47,9 @@ namespace acid
 		Create();
 
 		// Check if the address is valid/
-		if ((address == IpAddress::NONE) || (address == IpAddress::BROADCAST))
+		if ((address == IpAddress::None) || (address == IpAddress::Broadcast))
 		{
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Bind the socket/
@@ -58,10 +58,10 @@ namespace acid
 		if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 		{
 			Log::Error("Failed to bind socket to port %i\n", port);
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 
 	void UdpSocket::Unbind()
@@ -70,7 +70,7 @@ namespace acid
 		Close();
 	}
 
-	SocketStatus UdpSocket::Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort)
+	Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort)
 	{
 		// Create the internal socket if it doesn't exist.
 		Create();
@@ -79,7 +79,7 @@ namespace acid
 		if (size > MAX_DATAGRAM_SIZE)
 		{
 			Log::Error("Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MAX_DATAGRAM_SIZE)\n");
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Build the target address.
@@ -95,10 +95,10 @@ namespace acid
 			return Socket::GetErrorStatus();
 		}
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 
-	SocketStatus UdpSocket::Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
+	Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
 	{
 		// First clear the variables to fill.
 		received = 0;
@@ -109,7 +109,7 @@ namespace acid
 		if (!data)
 		{
 			Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Data that will be filled with the other computer's address.
@@ -131,10 +131,10 @@ namespace acid
 		remoteAddress = IpAddress(ntohl(address.sin_addr.s_addr));
 		remotePort = ntohs(address.sin_port);
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 
-	SocketStatus UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort)
+	Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort)
 	{
 		// UDP is a datagram-oriented protocol (as opposed to TCP which is a stream protocol).
 		// Sending one datagram is almost safe: it may be lost but if it's received, then its data
@@ -151,18 +151,18 @@ namespace acid
 		return Send(dataSize.first, dataSize.second, remoteAddress, remotePort);
 	}
 
-	SocketStatus UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort)
+	Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort)
 	{
 		// See the detailed comment in send(Packet) above.
 
 		// Receive the datagram.
 		std::size_t received = 0;
-		SocketStatus status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
+		Socket::Status status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
 
 		// If we received valid data, we can copy it to the user packet.
 		packet.Clear();
 
-		if ((status == SOCKET_STATUS_DONE) && (received > 0))
+		if ((status == Socket::Status::Done) && (received > 0))
 		{
 			packet.OnReceive(&m_buffer[0], received);
 		}

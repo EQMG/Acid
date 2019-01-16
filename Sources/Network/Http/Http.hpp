@@ -11,19 +11,33 @@
 namespace acid
 {
 	/// <summary>
-	/// A HTTP client.
+	/// A very simple HTTP client that allows you to communicate with a web server.
+	/// You can retrieve web pages, send data to an interactive resource,
+	/// download a remote file, etc. The HTTPS protocol is not supported.
+	///
+	/// The HTTP client is split into 3 classes:
+	/// \li acid::HttpRequest
+	/// \li acid::HttpResponse
+	/// \li acid::Http
+	///
+	/// acid::HttpRequest builds the request that will be sent to the server. A request is made of:
+	/// \li a method (what you want to do)
+	/// \li a target URI (usually the name of the web page or file)
+	/// \li one or more header fields (options that you can pass to the server)
+	/// \li an optional body (for POST requests)
+	///
+	/// acid::HttpResponse parse the response from the web server and provides getters to read them.
+	/// The response contains:
+	/// \li a status code
+	/// \li header fields (that may be answers to the ones that you requested)
+	/// \li a body, which contains the contents of the requested resource
+	///
+	/// acid::Http provides a simple function, SendRequest, to send a acid::HttpRequest and
+	/// return the corresponding acid::HttpResponse
+	/// from the server.
 	/// </summary>
 	class ACID_EXPORT Http
 	{
-	private:
-		/// Connection to the host.
-		TcpSocket m_connection;
-		/// Web host address.
-		IpAddress m_host;
-		/// Web host name.
-		std::string m_hostName;
-		/// Port used for connection with host.
-		uint16_t m_port;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -63,6 +77,15 @@ namespace acid
 		/// <param name="request"> Request to send. </param>
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Server's response. </returns>
-		HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = Time::ZERO);
+		HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = Time::Zero);
+	private:
+		/// Connection to the host.
+		TcpSocket m_connection;
+		/// Web host address.
+		IpAddress m_host;
+		/// Web host name.
+		std::string m_hostName;
+		/// Port used for connection with host.
+		uint16_t m_port;
 	};
 }

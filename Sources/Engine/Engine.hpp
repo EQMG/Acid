@@ -17,17 +17,6 @@ namespace acid
 	class ACID_EXPORT Engine :
 		public NonCopyable
 	{
-	private:
-		static Engine *INSTANCE;
-
-		ModuleManager m_moduleManager;
-		ModuleUpdater m_moduleUpdater;
-
-		std::string m_argv0;
-		Time m_timeOffset;
-		float m_fpsLimit;
-		bool m_running;
-		bool m_error;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -119,5 +108,16 @@ namespace acid
 		/// </summary>
 		/// <param name="error"> If a bad error occurred. </param>
 		void RequestClose(const bool &error);
+	private:
+		static Engine *INSTANCE;
+
+		ModuleManager m_moduleManager;
+		ModuleUpdater m_moduleUpdater;
+
+		std::string m_argv0;
+		Time m_timeOffset;
+		float m_fpsLimit;
+		bool m_running;
+		bool m_error;
 	};
 }

@@ -52,7 +52,7 @@ namespace test
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, 4000.0f), Vector3(), 18.0f));
-		sun->AddComponent<Light>(Colour::WHITE);
+		sun->AddComponent<Light>(Colour::White);
 
 		for (float i = 0.0f; i < 5.0f; i++)
 		{
@@ -60,14 +60,14 @@ namespace test
 			{
 				auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
 				sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 1.0f));
-				sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Diffuse.png"),
+				sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Testing/Diffuse.png"),
 					j / 4.0f, i / 4.0f, Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();
 				sphere->AddComponent<ShadowRender>();
 
 				auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
 				teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-				teapot->AddComponent<MaterialDefault>(Colour::WHITE, nullptr, j / 4.0f, i / 4.0f);
+				teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 4.0f, i / 4.0f);
 				teapot->AddComponent<MeshRender>();
 				teapot->AddComponent<ShadowRender>();
 			}

@@ -7,9 +7,6 @@ namespace acid
 {
 	class ACID_EXPORT OffsetSize
 	{
-	private:
-		uint32_t m_offset;
-		uint32_t m_size;
 	public:
 		OffsetSize(const uint32_t &offset, const uint32_t &size) :
 			m_offset(offset),
@@ -30,14 +27,13 @@ namespace acid
 		{
 			return !(*this == other);
 		}
+	private:
+		uint32_t m_offset;
+		uint32_t m_size;
 	};
 
 	class WriteDescriptorSet
 	{
-	private:
-		VkWriteDescriptorSet m_writeDescriptorSet;
-		std::unique_ptr<VkDescriptorImageInfo> m_imageInfo;
-		std::unique_ptr<VkDescriptorBufferInfo> m_bufferInfo;
 	public:
 		WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :
 			m_writeDescriptorSet(writeDescriptorSet),
@@ -56,6 +52,10 @@ namespace acid
 		}
 
 		const VkWriteDescriptorSet &GetWriteDescriptorSet() const { return m_writeDescriptorSet; }
+	private:
+		VkWriteDescriptorSet m_writeDescriptorSet;
+		std::unique_ptr<VkDescriptorImageInfo> m_imageInfo;
+		std::unique_ptr<VkDescriptorBufferInfo> m_bufferInfo;
 	};
 
 	class ACID_EXPORT Descriptor

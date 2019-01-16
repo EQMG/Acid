@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	const uint32_t ThreadPool::HARDWARE_CONCURRENCY = std::thread::hardware_concurrency();
+	const uint32_t ThreadPool::HardwareConcurrency = std::thread::hardware_concurrency();
 
 	ThreadPool::ThreadPool(const uint32_t &threadCount)
 	{

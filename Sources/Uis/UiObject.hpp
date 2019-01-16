@@ -22,27 +22,6 @@ namespace acid
 	class ACID_EXPORT UiObject :
 		public NonCopyable
 	{
-	private:
-		UiObject *m_parent;
-		std::vector<std::unique_ptr<UiObject>> m_children;
-
-		bool m_visible;
-		UiBound m_rectangle;
-		Vector4 m_scissor; // TODO: Convert to UiBound.
-		float m_depth;
-
-		Vector4 m_screenTransform;
-
-		bool m_lockRotation;
-		std::optional<Transform> m_worldTransform;
-
-		std::unique_ptr<IDriver> m_alphaDriver;
-		float m_alpha;
-
-		std::unique_ptr<IDriver> m_scaleDriver;
-		float m_scale;
-
-		Delegate<void(UiObject *, MouseButton)> m_onClick;
 	public:
 		/// <summary>
 		/// Creates a new screen object.
@@ -169,5 +148,26 @@ namespace acid
 		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
 
 		void CancelEvent(const MouseButton &button) const;
+	private:
+		UiObject *m_parent;
+		std::vector<std::unique_ptr<UiObject>> m_children;
+
+		bool m_visible;
+		UiBound m_rectangle;
+		Vector4 m_scissor; // TODO: Convert to UiBound.
+		float m_depth;
+
+		Vector4 m_screenTransform;
+
+		bool m_lockRotation;
+		std::optional<Transform> m_worldTransform;
+
+		std::unique_ptr<IDriver> m_alphaDriver;
+		float m_alpha;
+
+		std::unique_ptr<IDriver> m_scaleDriver;
+		float m_scale;
+
+		Delegate<void(UiObject *, MouseButton)> m_onClick;
 	};
 }

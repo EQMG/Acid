@@ -11,15 +11,15 @@
 
 namespace acid
 {
-	const std::vector<const char *> Instance::VALIDATION_LAYERS =
+	const std::vector<const char *> Instance::ValidationLayers =
 	{
 		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
 	};
-	const std::vector<const char *> Instance::INSTANCE_EXTENSIONS =
+	const std::vector<const char *> Instance::InstanceExtensions =
 	{
 		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
 	};
-	const std::vector<const char *> Instance::DEVICE_EXTENSIONS =
+	const std::vector<const char *> Instance::DeviceExtensions =
 	{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME // , VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 	};
@@ -122,7 +122,7 @@ namespace acid
 		// Sets up the layers.
 		if (m_validationLayers)
 		{
-			for (const auto &layerName : VALIDATION_LAYERS)
+			for (const auto &layerName : ValidationLayers)
 			{
 				bool layerFound = false;
 
@@ -144,7 +144,7 @@ namespace acid
 			}
 		}
 
-		for (const auto &layerName : DEVICE_EXTENSIONS)
+		for (const auto &layerName : DeviceExtensions)
 		{
 			m_deviceExtensions.emplace_back(layerName);
 		}
@@ -160,7 +160,7 @@ namespace acid
 			m_instanceExtensions.emplace_back(instanceExtensions.first[i]);
 		}
 
-		for (const auto &instanceExtension : INSTANCE_EXTENSIONS)
+		for (const auto &instanceExtension : InstanceExtensions)
 		{
 			m_instanceExtensions.emplace_back(instanceExtension);
 		}

@@ -15,15 +15,6 @@ namespace acid
 	class ACID_EXPORT Entity :
 		public NonCopyable
 	{
-	private:
-		std::string m_name;
-		Transform m_localTransform;
-		mutable Transform m_worldTransform;
-		std::mutex m_mutex;
-		std::vector<std::unique_ptr<Component>> m_components;
-		Entity *m_parent;
-		std::vector<Entity *> m_children;
-		bool m_removed;
 	public:
 		/// <summary>
 		/// Creates a new entity and stores it into a structure.
@@ -36,7 +27,7 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file to load the component data from. </param>
 		/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
-		explicit Entity(const std::string &filename, const Transform &transform = Transform::IDENTITY);
+		explicit Entity(const std::string &filename, const Transform &transform = Transform::Identity);
 
 		~Entity();
 
@@ -197,5 +188,14 @@ namespace acid
 		void AddChild(Entity *child);
 
 		void RemoveChild(Entity *child);
+	private:
+		std::string m_name;
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
+		std::mutex m_mutex;
+		std::vector<std::unique_ptr<Component>> m_components;
+		Entity *m_parent;
+		std::vector<Entity *> m_children;
+		bool m_removed;
 	};
 }

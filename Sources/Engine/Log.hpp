@@ -13,9 +13,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Log
 	{
-	private:
-		static std::mutex MUTEX;
-		static std::ofstream STREAM;
 	public:
 		/// <summary>
 		/// Outputs a message into the console.
@@ -64,6 +61,9 @@ namespace acid
 		/// <param name="filename"> The filename to output into. </param>
 		static void OpenLog(const std::string &filename);
 	private:
+		static std::mutex MUTEX;
+		static std::ofstream STREAM;
+
 		template<typename... Args>
 		static std::string StringFormat(const std::string &format, Args &&... args)
 		{

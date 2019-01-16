@@ -10,17 +10,6 @@ namespace acid
 	class ACID_EXPORT GeometryLoader :
 		public NonCopyable
 	{
-	private:
-		Metadata *m_meshData;
-
-		std::vector<VertexWeights> m_vertexWeights;
-
-		std::vector<std::unique_ptr<VertexAnimatedData>> m_positionsList;
-		std::vector<Vector2> m_uvsList;
-		std::vector<Vector3> m_normalsList;
-
-		std::vector<VertexAnimated> m_vertices;
-		std::vector<uint32_t> m_indices;
 	public:
 		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights);
 
@@ -41,5 +30,16 @@ namespace acid
 		VertexAnimatedData *DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int32_t &newUvIndex, const int32_t &newNormalIndex);
 
 		void RemoveUnusedVertices();
+
+		Metadata *m_meshData;
+
+		std::vector<VertexWeights> m_vertexWeights;
+
+		std::vector<std::unique_ptr<VertexAnimatedData>> m_positionsList;
+		std::vector<Vector2> m_uvsList;
+		std::vector<Vector3> m_normalsList;
+
+		std::vector<VertexAnimated> m_vertices;
+		std::vector<uint32_t> m_indices;
 	};
 }

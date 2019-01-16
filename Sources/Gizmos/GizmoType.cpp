@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	const uint32_t GizmoType::MAX_TYPE_INSTANCES = 512;
+	static const uint32_t MAX_TYPE_INSTANCES = 512;
 
 	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{

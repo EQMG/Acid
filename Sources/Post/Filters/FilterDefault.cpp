@@ -30,7 +30,7 @@ namespace acid
 		// Resets switching for next pass.
 		if (m_lastFilter)
 		{
-			GLOBAL_SWITCHING = 0;
+			GlobalSwitching = 0;
 		}
 	}
 }

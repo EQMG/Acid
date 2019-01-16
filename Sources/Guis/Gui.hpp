@@ -17,17 +17,6 @@ namespace acid
 	class ACID_EXPORT Gui :
 		public UiObject
 	{
-	private:
-		DescriptorsHandler m_descriptorSet;
-		UniformHandler m_uniformObject;
-
-		std::shared_ptr<Model> m_model;
-		std::shared_ptr<Texture> m_texture;
-		uint32_t m_numberOfRows;
-		uint32_t m_selectedRow;
-
-		Vector2 m_atlasOffset;
-		Colour m_colourOffset;
 	public:
 		/// <summary>
 		/// Creates a new GUI object.
@@ -57,5 +46,16 @@ namespace acid
 		const Colour &GetColourOffset() const { return m_colourOffset; }
 
 		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
+	private:
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
+
+		std::shared_ptr<Model> m_model;
+		std::shared_ptr<Texture> m_texture;
+		uint32_t m_numberOfRows;
+		uint32_t m_selectedRow;
+
+		Vector2 m_atlasOffset;
+		Colour m_colourOffset;
 	};
 }

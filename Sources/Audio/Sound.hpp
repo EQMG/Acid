@@ -15,21 +15,8 @@ namespace acid
 	class ACID_EXPORT Sound :
 		public Component
 	{
-	private:
-		std::shared_ptr<SoundBuffer> m_soundBuffer;
-		uint32_t m_source;
-
-		Transform m_localTransform;
-		mutable Transform m_worldTransform;
-		Vector3 m_position;
-		Vector3 m_direction;
-		Vector3 m_velocity;
-
-		SoundType m_type;
-		float m_gain;
-		float m_pitch;
 	public:
-		explicit Sound(const std::string &filename, const Transform &localTransform = Transform::IDENTITY, const SoundType &type = SOUND_TYPE_GENERAL,
+		explicit Sound(const std::string &filename, const Transform &localTransform = Transform::Identity, const Audio::Type &type = Audio::Type::General,
 			const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 		~Sound();
@@ -64,9 +51,9 @@ namespace acid
 
 		void SetVelocity(const Vector3 &velocity);
 
-		const SoundType &GetType() const { return m_type; }
+		const Audio::Type &GetType() const { return m_type; }
 
-		void SetType(const SoundType &type) { m_type = type; }
+		void SetType(const Audio::Type &type) { m_type = type; }
 
 		const float &GetGain() const { return m_gain; }
 
@@ -75,5 +62,18 @@ namespace acid
 		const float &GetPitch() const { return m_pitch; }
 
 		void SetPitch(const float &pitch);
+	private:
+		std::shared_ptr<SoundBuffer> m_soundBuffer;
+		uint32_t m_source;
+
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
+		Vector3 m_position;
+		Vector3 m_direction;
+		Vector3 m_velocity;
+
+		Audio::Type m_type;
+		float m_gain;
+		float m_pitch;
 	};
 }

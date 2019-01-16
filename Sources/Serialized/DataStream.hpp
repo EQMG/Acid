@@ -8,19 +8,13 @@ namespace acid
 {
 	class ACID_EXPORT DataStream
 	{
-	protected:
+	public:
 		/// A bool-like type that cannot be converted to integer or pointer types.
 		typedef bool (DataStream::*BoolType)(const std::size_t&);
 
-		/// Data stored in the packet.
-		std::vector<char> m_data;
-		/// Current reading position in the packet.
-		std::size_t m_readPos;
-		/// Current send position in the packet (for handling partial sends).
-		std::size_t m_sendPos;
-		/// Reading state of the packet.
-		bool m_isValid;
-	public:
+		/// <summary>
+		/// Default constructor, creates an empty data stream.
+		/// </summary>
 		DataStream();
 
 		/// <summary>
@@ -157,5 +151,14 @@ namespace acid
 		/// <param name="size"> Size to check. </param>
 		/// <returns> True if \a size bytes can be read from the packet. </returns>
 		bool CheckSize(const std::size_t &size);
+
+		/// Data stored in the packet.
+		std::vector<char> m_data;
+		/// Current reading position in the packet.
+		std::size_t m_readPos;
+		/// Current send position in the packet (for handling partial sends).
+		std::size_t m_sendPos;
+		/// Reading state of the packet.
+		bool m_isValid;
 	};
 }

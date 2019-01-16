@@ -21,7 +21,7 @@ namespace test
 	const Vector2 UiNavigation::BUTTON_SIZE = Vector2(0.3f, 0.05f);
 
 	UiNavigation::UiNavigation(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
 		m_background(nullptr),
 		m_barBackground(nullptr),
 		m_title(nullptr),
@@ -39,21 +39,21 @@ namespace test
 	//	guiB->SetDepth(2.0f);
 	//	guiB->SetColourOffset(Colour::RED);
 
-		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/White.png"));
+		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/White.png"));
 
-		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiBound::TOP_LEFT, true, true, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"));
+		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiBound::TopLeft, true, true, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"));
 		m_barBackground->SetColourOffset(UiNavigation::PANEL_COLOUR); // TODO: Blur underneath.
 
-		m_title = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.95f), UiBound::TOP_CENTRE, false), 5.5f, "TESTING",
-			FontType::Create("Fonts/ProximaNova", "Bold"), TEXT_JUSTIFY_LEFT, 1.0f, BUTTON_COLOUR, 0.0018f);
-		m_createdBy = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.015f), UiBound::BOTTOM_CENTRE, false), 1.2f, "Created By: Equilibrium Games",
-			FontType::Create("Fonts/ProximaNova", "Light"), TEXT_JUSTIFY_LEFT, 1.0f, Colour::WHITE, 0.001f);
+		m_title = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.95f), UiBound::TopCentre, false), 5.5f, "TESTING",
+			FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, BUTTON_COLOUR, 0.0018f);
+		m_createdBy = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.015f), UiBound::BottomCentre, false), 1.2f, "Created By: Equilibrium Games",
+			FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f);
 
 		float tabYOffset = 0.7f;
 
 		for (auto &tab : TABS)
 		{
-			auto tabButton = new UiInputButton(this, tab.first, UiBound(Vector2(0.2f, tabYOffset), UiBound::CENTRE, false, true, Vector2(0.27f, 0.05f)), BUTTON_COLOUR);
+			auto tabButton = new UiInputButton(this, tab.first, UiBound(Vector2(0.2f, tabYOffset), UiBound::Centre, false, true, Vector2(0.27f, 0.05f)), BUTTON_COLOUR);
 			auto tabContent = new ContentExit(this);
 			auto uiTab = new UiTab(tab.first, tab.second, tabButton, tabContent);
 			m_tabs.emplace_back(uiTab);

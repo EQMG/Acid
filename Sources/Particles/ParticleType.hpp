@@ -16,38 +16,12 @@ namespace acid
 {
 	class Particle;
 
-	struct ParticleData
-	{
-		Matrix4 modelMatrix;
-		Colour colourOffset;
-		Vector4 offsets;
-		Vector3 blend;
-		float _padding;
-	};
-
 	/// <summary>
 	/// A definition for what a particle should act and look like.
 	/// </summary>
 	class ACID_EXPORT ParticleType :
 		public Resource
 	{
-	private:
-		static const uint32_t INSTANCE_STEPS;
-		static const float FRUSTUM_BUFFER;
-
-		std::shared_ptr<Texture> m_texture;
-		std::shared_ptr<Model> m_model;
-		uint32_t m_numberOfRows;
-		Colour m_colourOffset;
-		float m_lifeLength;
-		float m_stageCycles;
-		float m_scale;
-
-		uint32_t m_maxInstances;
-		uint32_t m_instances;
-
-		DescriptorsHandler m_descriptorSet;
-		StorageHandler m_storageInstances;
 	public:
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
@@ -58,7 +32,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		/// <summary>
 		/// Will find an existing particle type with the same filename, or create a new particle type.
@@ -75,7 +49,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::BLACK, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		void Update(const std::vector<Particle> &particles);
 
@@ -109,8 +83,29 @@ namespace acid
 
 		void SetScale(const float &scale) { m_scale = scale; }
 	private:
+		struct ParticleTypeData
+		{
+			Matrix4 modelMatrix;
+			Colour colourOffset;
+			Vector4 offsets;
+			Vector3 blend;
+			float _padding;
+		};
+
 		static std::string ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
 
-		ParticleData GetInstanceData(const Particle &particle);
+		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<Model> m_model;
+		uint32_t m_numberOfRows;
+		Colour m_colourOffset;
+		float m_lifeLength;
+		float m_stageCycles;
+		float m_scale;
+
+		uint32_t m_maxInstances;
+		uint32_t m_instances;
+
+		DescriptorsHandler m_descriptorSet;
+		StorageHandler m_storageInstances;
 	};
 }

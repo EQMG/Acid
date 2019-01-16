@@ -7,13 +7,6 @@ namespace acid
 	class ACID_EXPORT FilterTiltshift :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		float m_blurAmount;
-		float m_centre;
-		float m_stepSize;
-		float m_steps;
 	public:
 		explicit FilterTiltshift(const GraphicsStage &graphicsStage, const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f, const float &steps = 3.0f);
 
@@ -34,5 +27,12 @@ namespace acid
 		const float &GetSteps() const { return m_steps; }
 
 		void SetSteps(const float &steps) { m_steps = steps; }
+	private:
+		PushHandler m_pushScene;
+
+		float m_blurAmount;
+		float m_centre;
+		float m_stepSize;
+		float m_steps;
 	};
 }

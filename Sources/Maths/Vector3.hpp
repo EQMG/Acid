@@ -19,30 +19,6 @@ namespace acid
 	class ACID_EXPORT Vector3
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_elements[3];
-			};
-
-			struct
-			{
-				float m_x, m_y, m_z;
-			};
-		};
-
-		static const Vector3 ZERO;
-		static const Vector3 ONE;
-		static const Vector3 LEFT;
-		static const Vector3 RIGHT;
-		static const Vector3 UP;
-		static const Vector3 DOWN;
-		static const Vector3 FRONT;
-		static const Vector3 BACK;
-		static const Vector3 POSITIVE_INFINITY;
-		static const Vector3 NEGATIVE_INFINITY;
-
 		/// <summary>
 		/// Constructor for Vector3.
 		/// </summary>
@@ -374,5 +350,29 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Vector3 &vector);
 
 		std::string ToString() const;
+
+		static const Vector3 Zero;
+		static const Vector3 One;
+		static const Vector3 Left;
+		static const Vector3 Right;
+		static const Vector3 Up;
+		static const Vector3 Down;
+		static const Vector3 Front;
+		static const Vector3 Back;
+		static const Vector3 PositiveInfinity;
+		static const Vector3 NegativeInfinity;
+
+		union
+		{
+			struct
+			{
+				float m_elements[3];
+			};
+
+			struct
+			{
+				float m_x, m_y, m_z;
+			};
+		};
 	};
 }

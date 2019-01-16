@@ -13,13 +13,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Scene
 	{
-	private:
-		friend class Scenes;
-		std::unique_ptr<Camera> m_camera;
-		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
-		std::unique_ptr<ScenePhysics> m_physics;
-		std::unique_ptr<SceneStructure> m_structure;
-		bool m_started;
 	public:
 		/// <summary>
 		/// Creates a new scene.
@@ -83,5 +76,13 @@ namespace acid
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		virtual bool IsPaused() const = 0;
+	private:
+		friend class Scenes;
+
+		std::unique_ptr<Camera> m_camera;
+		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
+		std::unique_ptr<ScenePhysics> m_physics;
+		std::unique_ptr<SceneStructure> m_structure;
+		bool m_started;
 	};
 }

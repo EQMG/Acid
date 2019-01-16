@@ -14,12 +14,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT RenderManager
 	{
-	private:
-		friend class Renderer;
-		bool m_started;
-	protected:
-		RendererContainer m_rendererContainer;
-		std::vector<RenderpassCreate> m_renderpassCreates;
 	public:
 		/// <summary>
 		/// Creates a new render manager, once created fill <seealso cref="#m_renderpassCreates"/> with renderpasses.
@@ -46,5 +40,12 @@ namespace acid
 		/// </summary>
 		/// <returns> The renderer register. </returns>
 		RendererContainer &GetRendererContainer() { return m_rendererContainer; }
+	private:
+		friend class Renderer;
+
+		bool m_started;
+		RendererContainer m_rendererContainer;
+	protected:
+		std::vector<RenderpassCreate> m_renderpassCreates;
 	};
 }

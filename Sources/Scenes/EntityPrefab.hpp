@@ -18,9 +18,6 @@ namespace acid
 	class ACID_EXPORT EntityPrefab :
 		public Resource
 	{
-	private:
-		std::string m_filename;
-		std::unique_ptr<File> m_file;
 	public:
 		/// <summary>
 		/// Will find an existing prefab object with the same filename, or create a new prefab object.
@@ -41,5 +38,8 @@ namespace acid
 		const std::string &GetFilename() const { return m_filename; }
 
 		Metadata *GetParent() const { return m_file->GetMetadata(); }
+	private:
+		std::string m_filename;
+		std::unique_ptr<File> m_file;
 	};
 }

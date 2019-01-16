@@ -7,9 +7,9 @@
 
 namespace acid
 {
-	const Matrix4 MeshAnimated::CORRECTION = Matrix4(Matrix4::IDENTITY.Rotate(Maths::Radians(-90.0f), Vector3::RIGHT));
-	const uint32_t MeshAnimated::MAX_JOINTS = 50;
-	const uint32_t MeshAnimated::MAX_WEIGHTS = 3;
+	const Matrix4 MeshAnimated::Correction = Matrix4(Matrix4::Identity.Rotate(-90.0f * Maths::DegToRad, Vector3::Right));
+	const uint32_t MeshAnimated::MaxJoints = 50;
+	const uint32_t MeshAnimated::MaxWeights = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
 		Mesh(),
@@ -33,7 +33,7 @@ namespace acid
 		if (m_headJoint != nullptr)
 		{
 			m_jointMatrices.clear();
-			m_jointMatrices.resize(MAX_JOINTS);
+			m_jointMatrices.resize(MaxJoints);
 			AddJointsToArray(*m_headJoint, m_jointMatrices);
 		//	m_jointMatrices.shrink_to_fit();
 		}
@@ -54,7 +54,7 @@ namespace acid
 		File file = File(filename, new Xml("COLLADA"));
 		file.Read();
 
-		SkinLoader skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MAX_WEIGHTS);
+		SkinLoader skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
 		SkeletonLoader skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
 		GeometryLoader geometryLoader = GeometryLoader(file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights());
 
@@ -62,7 +62,7 @@ namespace acid
 		auto indices = geometryLoader.GetIndices();
 		m_model = std::make_shared<Model>(vertices, indices, filename);
 		m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
-		m_headJoint->CalculateInverseBindTransform(Matrix4::IDENTITY);
+		m_headJoint->CalculateInverseBindTransform(Matrix4::Identity);
 		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"),

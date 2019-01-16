@@ -16,28 +16,6 @@ namespace acid
 	class ACID_EXPORT Vector2
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_elements[2];
-			};
-
-			struct
-			{
-				float m_x, m_y;
-			};
-		};
-
-		static const Vector2 ZERO;
-		static const Vector2 ONE;
-		static const Vector2 LEFT;
-		static const Vector2 RIGHT;
-		static const Vector2 UP;
-		static const Vector2 DOWN;
-		static const Vector2 POSITIVE_INFINITY;
-		static const Vector2 NEGATIVE_INFINITY;
-
 		/// <summary>
 		/// Constructor for Vector2.
 		/// </summary>
@@ -301,5 +279,27 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Vector2 &vector);
 
 		std::string ToString() const;
+
+		static const Vector2 Zero;
+		static const Vector2 One;
+		static const Vector2 Left;
+		static const Vector2 Right;
+		static const Vector2 Up;
+		static const Vector2 Down;
+		static const Vector2 PositiveInfinity;
+		static const Vector2 NegativeInfinity;
+
+		union
+		{
+			struct
+			{
+				float m_elements[2];
+			};
+
+			struct
+			{
+				float m_x, m_y;
+			};
+		};
 	};
 }

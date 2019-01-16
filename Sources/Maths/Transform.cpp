@@ -7,7 +7,7 @@
 
 namespace acid
 {
-	const Transform Transform::IDENTITY = Transform();
+	const Transform Transform::Identity = Transform(Vector3::Zero, Vector3::Zero, Vector3::One);
 
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
 		m_position(position),

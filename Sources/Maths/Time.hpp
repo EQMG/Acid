@@ -12,12 +12,10 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Time
 	{
-	private:
-		int64_t m_microseconds;
 	public:
-		static const Time ZERO;
-		static const Time NEGATIVE_INFINITY;
-		static const Time POSITIVE_INFINITY;
+		static const Time Zero;
+		static const Time PositiveInfinity;
+		static const Time NegativeInfinity;
 
 		/// <summary>
 		/// Constructor for time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
@@ -115,5 +113,7 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Time &time);
 
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Time &time);
+	private:
+		int64_t m_microseconds;
 	};
 }

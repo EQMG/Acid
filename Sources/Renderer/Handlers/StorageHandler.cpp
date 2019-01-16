@@ -8,7 +8,7 @@ namespace acid
 		m_size(0),
 		m_data(nullptr),
 		m_storageBuffer(nullptr),
-		m_handlerStatus(HANDLER_STATUS_RESET)
+		m_handlerStatus(Buffer::Status::Reset)
 	{
 	}
 
@@ -18,13 +18,13 @@ namespace acid
 		m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
 		m_data(std::make_unique<char[]>(m_size)),
 		m_storageBuffer(std::make_unique<StorageBuffer>(static_cast<VkDeviceSize>(m_size))),
-		m_handlerStatus(HANDLER_STATUS_CHANGED)
+		m_handlerStatus(Buffer::Status::Changed)
 	{
 	}
 
 	bool StorageHandler::Update(const UniformBlock *uniformBlock)
 	{
-		if (m_handlerStatus == HANDLER_STATUS_RESET || (m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
+		if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{
 			if ((m_size == 0 && m_uniformBlock == nullptr) || (m_uniformBlock != nullptr && m_uniformBlock != uniformBlock && m_uniformBlock->GetSize() == m_size))
 			{
@@ -34,14 +34,14 @@ namespace acid
 			m_uniformBlock = uniformBlock;
 			m_data = std::make_unique<char[]>(m_size);
 			m_storageBuffer = std::make_unique<StorageBuffer>(static_cast<VkDeviceSize>(m_size));
-			m_handlerStatus = HANDLER_STATUS_CHANGED;
+			m_handlerStatus = Buffer::Status::Changed;
 			return false;
 		}
 
-		if (m_handlerStatus != HANDLER_STATUS_NORMAL)
+		if (m_handlerStatus != Buffer::Status::Normal)
 		{
 			m_storageBuffer->Update(m_data.get());
-			m_handlerStatus = HANDLER_STATUS_NORMAL;
+			m_handlerStatus = Buffer::Status::Normal;
 		}
 
 		return true;

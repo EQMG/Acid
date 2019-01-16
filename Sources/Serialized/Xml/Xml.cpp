@@ -3,17 +3,13 @@
 namespace acid
 {
 	Xml::Xml(const std::string &rootName) :
-		Metadata(rootName, ""),
-		m_root(std::make_unique<Metadata>("?xml", "", std::map<std::string, std::string>{{"version", "1.0"}, {"encoding", "utf-8"}}))
+		Metadata(rootName, "")
 	{
-		m_root->AddChild(this);
 	}
 
 	Xml::Xml(const std::string &rootName, Metadata *metadata) :
-		Metadata(rootName, ""),
-		m_root(std::make_unique<Metadata>("?xml", "", std::map<std::string, std::string>{{"version", "1.0"}, {"encoding", "utf-8"}}))
+		Metadata(rootName, "")
 	{
-		m_root->AddChild(this);
 		AddChildren(metadata, this);
 	}
 
@@ -79,8 +75,6 @@ namespace acid
 			}
 		}
 
-		Convert(topNode.get(), m_root.get(), 0);
-
 		if (!topNode->m_children.empty())
 		{
 			Convert(topNode->m_children[0].get(), this, 1);
@@ -90,7 +84,8 @@ namespace acid
 	std::string Xml::Write() const
 	{
 		std::stringstream data;
-		AppendData(m_root.get(), data, 0);
+		data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+		AppendData(this, data, 0);
 		return data.str();
 	}
 

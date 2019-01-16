@@ -12,12 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Fog
 	{
-	private:
-		Colour m_colour;
-		float m_density;
-		float m_gradient;
-		float m_lowerLimit;
-		float m_upperLimit;
 	public:
 		/// <summary>
 		/// Constructor for Fog.
@@ -27,7 +21,7 @@ namespace acid
 		/// <param name="gradient"> The gradient of the Fog. </param>
 		/// <param name="lowerLimit"> At what height will the skybox Fog begin to appear. </param>
 		/// <param name="upperLimit"> At what height will there be skybox no Fog. </param>
-		explicit Fog(const Colour &colour = Colour::WHITE, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
+		explicit Fog(const Colour &colour = Colour::White, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
 
 		/// <summary>
 		/// Constructor for Fog.
@@ -66,5 +60,11 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Fog &fog);
 
 		std::string ToString() const;
+	private:
+		Colour m_colour;
+		float m_density;
+		float m_gradient;
+		float m_lowerLimit;
+		float m_upperLimit;
 	};
 }

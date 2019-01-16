@@ -7,11 +7,8 @@ namespace acid
 	class ACID_EXPORT EmitterLine :
 		public Emitter
 	{
-	private:
-		float m_length;
-		Vector3 m_axis;
 	public:
-		explicit EmitterLine(const float &length = 1.0f, const Vector3 &axis = Vector3::RIGHT, const Transform &localTransform = Transform::IDENTITY);
+		explicit EmitterLine(const float &length = 1.0f, const Vector3 &axis = Vector3::Right, const Transform &localTransform = Transform::Identity);
 
 		void Start() override;
 
@@ -30,5 +27,8 @@ namespace acid
 		const Vector3 &GetAxis() const { return m_axis; }
 
 		void SetAxis(const Vector3 &axis) { m_axis = axis; }
+	private:
+		float m_length;
+		Vector3 m_axis;
 	};
 }

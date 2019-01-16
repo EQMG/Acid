@@ -15,11 +15,6 @@ namespace acid
 	class ACID_EXPORT Metadata :
 		public NonCopyable
 	{
-	protected:
-		std::string m_name;
-		std::string m_value;
-		std::vector<std::unique_ptr<Metadata>> m_children;
-		std::map<std::string, std::string> m_attributes;
 	public:
 		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
 
@@ -149,5 +144,10 @@ namespace acid
 		virtual void Load(const std::string &data);
 
 		virtual std::string Write() const;
+	protected:
+		std::string m_name;
+		std::string m_value;
+		std::vector<std::unique_ptr<Metadata>> m_children;
+		std::map<std::string, std::string> m_attributes;
 	};
 }

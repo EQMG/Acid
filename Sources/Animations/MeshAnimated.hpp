@@ -18,19 +18,10 @@ namespace acid
 	class ACID_EXPORT MeshAnimated :
 		public Mesh
 	{
-	private:
-		std::string m_filename;
-
-		std::shared_ptr<Model> m_model;
-		std::unique_ptr<Joint> m_headJoint;
-		std::unique_ptr<Animator> m_animator;
-		std::unique_ptr<Animation> m_animation;
-
-		std::vector<Matrix4> m_jointMatrices;
 	public:
-		static const Matrix4 CORRECTION;
-		static const uint32_t MAX_JOINTS;
-		static const uint32_t MAX_WEIGHTS;
+		static const Matrix4 Correction;
+		static const uint32_t MaxJoints;
+		static const uint32_t MaxWeights;
 
 		explicit MeshAnimated(const std::string &filename = "");
 
@@ -53,5 +44,13 @@ namespace acid
 		Joint *CreateJoints(const JointData &data);
 
 		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
+
+		std::string m_filename;
+		std::shared_ptr<Model> m_model;
+		std::unique_ptr<Joint> m_headJoint;
+		std::unique_ptr<Animator> m_animator;
+		std::unique_ptr<Animation> m_animation;
+
+		std::vector<Matrix4> m_jointMatrices;
 	};
 }

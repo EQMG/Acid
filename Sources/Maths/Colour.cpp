@@ -9,23 +9,23 @@
 
 namespace acid
 {
-	const Colour Colour::CLEAR = Colour("#000000", 0.0f);
-	const Colour Colour::BLACK = Colour("#000000");
-	const Colour Colour::GREY = Colour("#808080");
-	const Colour Colour::SILVER = Colour("#C0C0C0");
-	const Colour Colour::WHITE = Colour("#FFFFFF");
-	const Colour Colour::MAROON = Colour("#800000");
-	const Colour Colour::RED = Colour("#FF0000");
-	const Colour Colour::OLIVE = Colour("#808000");
-	const Colour Colour::YELLOW = Colour("#FFFF00");
-	const Colour Colour::GREEN = Colour("#008000");
-	const Colour Colour::LIME = Colour("#00FF00");
-	const Colour Colour::TEAL = Colour("#008080");
-	const Colour Colour::AQUA = Colour("#00FFFF");
-	const Colour Colour::NAVY = Colour("#000080");
-	const Colour Colour::BLUE = Colour("#0000FF");
-	const Colour Colour::PURPLE = Colour("#800080");
-	const Colour Colour::FUCHSIA = Colour("#FF00FF");
+	const Colour Colour::Clear = Colour("#000000", 0.0f);
+	const Colour Colour::Black = Colour("#000000");
+	const Colour Colour::Grey = Colour("#808080");
+	const Colour Colour::Silver = Colour("#C0C0C0");
+	const Colour Colour::White = Colour("#FFFFFF");
+	const Colour Colour::Maroon = Colour("#800000");
+	const Colour Colour::Red = Colour("#FF0000");
+	const Colour Colour::Olive = Colour("#808000");
+	const Colour Colour::Yellow = Colour("#FFFF00");
+	const Colour Colour::Green = Colour("#008000");
+	const Colour Colour::Lime = Colour("#00FF00");
+	const Colour Colour::Teal = Colour("#008080");
+	const Colour Colour::Aqua = Colour("#00FFFF");
+	const Colour Colour::Navy = Colour("#000080");
+	const Colour Colour::Blue = Colour("#0000FF");
+	const Colour Colour::Purple = Colour("#800080");
+	const Colour Colour::Fuchsia = Colour("#FF00FF");
 
 	Colour::Colour() :
 		m_r(0.0f),

@@ -15,7 +15,7 @@
 
 namespace acid
 {
-	Socket::Socket(SocketType type) :
+	Socket::Socket(Type type) :
 		m_type(type),
 		m_socket(Socket::InvalidSocketHandle()),
 		m_isBlocking(true)
@@ -86,29 +86,29 @@ namespace acid
 #endif
 	}
 
-	SocketStatus Socket::GetErrorStatus()
+	Socket::Status Socket::GetErrorStatus()
 	{
 #if defined(ACID_BUILD_WINDOWS)
 		switch (WSAGetLastError())
 		{
 			case WSAEWOULDBLOCK:
-				return SOCKET_STATUS_NOT_READY;
+				return Status::NotReady;
 			case WSAEALREADY:
-				return SOCKET_STATUS_NOT_READY;
+				return Status::NotReady;
 			case WSAECONNABORTED:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case WSAECONNRESET:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case WSAETIMEDOUT:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case WSAENETRESET:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case WSAENOTCONN:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case WSAEISCONN:
-				return SOCKET_STATUS_DONE; // When connecting a non-blocking socket
+				return Status::Done; // When connecting a non-blocking socket
 			default:
-				return SOCKET_STATUS_ERROR;
+				return Status::Error;
 		}
 #else
 		// The followings are sometimes equal to EWOULDBLOCK,
@@ -116,27 +116,27 @@ namespace acid
 		// to avoid having double values in the switch case
 		if ((errno == EAGAIN) || (errno == EINPROGRESS))
 		{
-			return SOCKET_STATUS_NOT_READY;
+			return Status::NotReady;
 		}
 
 		switch (errno)
 		{
 			case EWOULDBLOCK:
-				return SOCKET_STATUS_NOT_READY;
+				return Status::NotReady;
 			case ECONNABORTED:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case ECONNRESET:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case ETIMEDOUT:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case ENETRESET:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case ENOTCONN:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			case EPIPE:
-				return SOCKET_STATUS_DISCONNECTED;
+				return Status::Disconnected;
 			default:
-				return SOCKET_STATUS_ERROR;
+				return Status::Error;
 		}
 #endif
 	}
@@ -178,7 +178,7 @@ namespace acid
 		// Don't create the socket if it already exists.
 		if (m_socket == Socket::InvalidSocketHandle())
 		{
-			SocketHandle handle = socket(PF_INET, m_type == SOCKET_TYPE_TCP ? SOCK_STREAM : SOCK_DGRAM, 0);
+			SocketHandle handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
 
 			if (handle == Socket::InvalidSocketHandle())
 			{
@@ -201,7 +201,7 @@ namespace acid
 			// Set the current blocking state.
 			SetBlocking(m_isBlocking);
 
-			if (m_type == SOCKET_TYPE_TCP)
+			if (m_type == Type::Tcp)
 			{
 				// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
 				int32_t yes = 1;

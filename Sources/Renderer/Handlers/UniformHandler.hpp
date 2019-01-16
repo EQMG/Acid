@@ -11,13 +11,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT UniformHandler
 	{
-	private:
-		bool m_multipipeline;
-		const UniformBlock *m_uniformBlock;
-		uint32_t m_size;
-		std::unique_ptr<char[]> m_data;
-		std::unique_ptr<UniformBuffer> m_uniformBuffer;
-		HandlerStatus m_handlerStatus;
 	public:
 		explicit UniformHandler(const bool &multipipeline = false);
 
@@ -29,7 +22,7 @@ namespace acid
 			if (memcmp(m_data.get() + offset, &object, size) != 0)
 			{
 				memcpy(m_data.get() + offset, &object, size);
-				m_handlerStatus = HANDLER_STATUS_CHANGED;
+				m_handlerStatus = Buffer::Status::Changed;
 			}
 		}
 
@@ -61,5 +54,12 @@ namespace acid
 		bool Update(const UniformBlock *uniformBlock);
 
 		const UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
+	private:
+		bool m_multipipeline;
+		const UniformBlock *m_uniformBlock;
+		uint32_t m_size;
+		std::unique_ptr<char[]> m_data;
+		std::unique_ptr<UniformBuffer> m_uniformBuffer;
+		Buffer::Status m_handlerStatus;
 	};
 }

@@ -12,12 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Component
 	{
-	private:
-		friend class Entity;
-		bool m_started;
-		bool m_enabled;
-		bool m_removed;
-		Entity *m_parent;
 	public:
 		explicit Component() :
 			m_started(false),
@@ -76,5 +70,12 @@ namespace acid
 		/// </summary>
 		/// <param name="parent"> The new parent this is attached to. </param>
 		void SetParent(Entity *parent) { m_parent = parent; }
+	private:
+		friend class Entity;
+
+		bool m_started;
+		bool m_enabled;
+		bool m_removed;
+		Entity *m_parent;
 	};
 }

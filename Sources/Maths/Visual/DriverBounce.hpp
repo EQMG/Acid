@@ -10,9 +10,6 @@ namespace acid
 	class ACID_EXPORT DriverBounce :
 		public IDriver
 	{
-	private:
-		float m_start;
-		float m_end;
 	public:
 		/// <summary>
 		/// Creates a new sine wave driver.
@@ -47,5 +44,8 @@ namespace acid
 		void SetEnd(const float &end) { m_end = end; }
 	protected:
 		float Calculate(const float &factor) override;
+	private:
+		float m_start;
+		float m_end;
 	};
 }

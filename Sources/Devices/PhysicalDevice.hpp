@@ -10,15 +10,6 @@ namespace acid
 
 	class ACID_EXPORT PhysicalDevice
 	{
-	private:
-		friend class Renderer;
-		const Instance *m_instance;
-
-		VkPhysicalDevice m_physicalDevice;
-		VkPhysicalDeviceProperties m_properties;
-		VkPhysicalDeviceFeatures m_features;
-		VkPhysicalDeviceMemoryProperties m_memoryProperties;
-		VkSampleCountFlagBits m_msaaSamples;
 	public:
 		explicit PhysicalDevice(const Instance *instance);
 
@@ -34,6 +25,8 @@ namespace acid
 
 		const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
 	private:
+		friend class Renderer;
+
 		VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
 		int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
@@ -41,5 +34,13 @@ namespace acid
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
 
 		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties);
+
+		const Instance *m_instance;
+
+		VkPhysicalDevice m_physicalDevice;
+		VkPhysicalDeviceProperties m_properties;
+		VkPhysicalDeviceFeatures m_features;
+		VkPhysicalDeviceMemoryProperties m_memoryProperties;
+		VkSampleCountFlagBits m_msaaSamples;
 	};
 }

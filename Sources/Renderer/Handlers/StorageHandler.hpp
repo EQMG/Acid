@@ -11,13 +11,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT StorageHandler
 	{
-	private:
-		bool m_multipipeline;
-		const UniformBlock *m_uniformBlock;
-		uint32_t m_size;
-		std::unique_ptr<char[]> m_data;
-		std::unique_ptr<StorageBuffer> m_storageBuffer;
-		HandlerStatus m_handlerStatus;
 	public:
 		explicit StorageHandler(const bool &multipipeline = false);
 
@@ -28,7 +21,7 @@ namespace acid
 			if (size != m_size)
 			{
 				m_size = static_cast<uint32_t>(size);
-				m_handlerStatus = HANDLER_STATUS_RESET;
+				m_handlerStatus = Buffer::Status::Reset;
 				return;
 			}
 
@@ -40,7 +33,7 @@ namespace acid
 			if (memcmp(m_data.get(), data, size) != 0)
 			{
 				memcpy(m_data.get(), data, size);
-				m_handlerStatus = HANDLER_STATUS_CHANGED;
+				m_handlerStatus = Buffer::Status::Changed;
 			}
 		}
 
@@ -55,7 +48,7 @@ namespace acid
 			if (memcmp(m_data.get() + offset, &object, size) != 0)
 			{
 				memcpy(m_data.get() + offset, &object, size);
-				m_handlerStatus = HANDLER_STATUS_CHANGED;
+				m_handlerStatus = Buffer::Status::Changed;
 			}
 		}
 
@@ -87,5 +80,12 @@ namespace acid
 		bool Update(const UniformBlock *uniformBlock);
 
 		const StorageBuffer *GetStorageBuffer() const { return m_storageBuffer.get(); }
+	private:
+		bool m_multipipeline;
+		const UniformBlock *m_uniformBlock;
+		uint32_t m_size;
+		std::unique_ptr<char[]> m_data;
+		std::unique_ptr<StorageBuffer> m_storageBuffer;
+		Buffer::Status m_handlerStatus;
 	};
 }

@@ -13,12 +13,6 @@ namespace acid
 	class ACID_EXPORT Light :
 		public Component
 	{
-	private:
-		Colour m_colour;
-		Vector3 m_position;
-		float m_radius;
-		Transform m_localTransform;
-		mutable Transform m_worldTransform;
 	public:
 		/// <summary>
 		/// Creates a new point light.
@@ -26,7 +20,7 @@ namespace acid
 		/// <param name="colour"> The colour of the light. </param>
 		/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
 		/// <param name="localTransform"> The local transform from the parents space. </param>
-		explicit Light(const Colour &colour = Colour::WHITE, const float &radius = -1.0f, const Transform &localTransform = Transform::IDENTITY);
+		explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f, const Transform &localTransform = Transform::Identity);
 
 		/// <summary>
 		/// Creates a new point light from a source object.
@@ -55,5 +49,11 @@ namespace acid
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 
 		Transform GetWorldTransform() const;
+	private:
+		Colour m_colour;
+		Vector3 m_position;
+		float m_radius;
+		Transform m_localTransform;
+		mutable Transform m_worldTransform;
 	};
 }

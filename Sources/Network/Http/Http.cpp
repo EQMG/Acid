@@ -80,7 +80,7 @@ namespace acid
 			toSend.SetField("Content-Length", out.str());
 		}
 
-		if ((toSend.m_method == HTTP_METHOD_POST) && !toSend.HasField("Content-Type"))
+		if ((toSend.m_method == HttpRequest::Method::Post) && !toSend.HasField("Content-Type"))
 		{
 			toSend.SetField("Content-Type", "application/x-www-form-urlencoded");
 		}
@@ -94,7 +94,7 @@ namespace acid
 		HttpResponse received;
 
 		// Connect the socket to the host.
-		if (m_connection.Connect(m_host, m_port, timeout) == SOCKET_STATUS_DONE)
+		if (m_connection.Connect(m_host, m_port, timeout) == Socket::Status::Done)
 		{
 			// Convert the request to string and send it through the connected socket.
 			std::string requestStr = toSend.Prepare();
@@ -102,14 +102,14 @@ namespace acid
 			if (!requestStr.empty())
 			{
 				// Send it through the socket.
-				if (m_connection.Send(requestStr.c_str(), requestStr.size()) == SOCKET_STATUS_DONE)
+				if (m_connection.Send(requestStr.c_str(), requestStr.size()) == Socket::Status::Done)
 				{
 					// Wait for the server's response.
 					std::string receivedStr;
 					std::size_t size = 0;
 					char buffer[1024];
 
-					while (m_connection.Receive(buffer, sizeof(buffer), size) == SOCKET_STATUS_DONE)
+					while (m_connection.Receive(buffer, sizeof(buffer), size) == Socket::Status::Done)
 					{
 						receivedStr.append(buffer, buffer + size);
 					}

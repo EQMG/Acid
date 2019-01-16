@@ -27,15 +27,15 @@ namespace test
 		m_audio->Read();
 		auto audioData = m_audio->GetMetadata();
 		Audio::Get()->SetMasterGain(audioData->GetChild<float>("Master Volume", 1.0f));
-		Audio::Get()->SetTypeGain(SOUND_TYPE_GENERAL, audioData->GetChild<float>("General Volume", 1.0f));
-		Audio::Get()->SetTypeGain(SOUND_TYPE_EFFECT, audioData->GetChild<float>("Effect Volume", 1.0f));
-		Audio::Get()->SetTypeGain(SOUND_TYPE_MUSIC, audioData->GetChild<float>("Music Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::General, audioData->GetChild<float>("General Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::Effect, audioData->GetChild<float>("Effect Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::Music, audioData->GetChild<float>("Music Volume", 1.0f));
 
 		m_graphics->Read();
 		auto graphicsData = m_graphics->GetMetadata();
 	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
-		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::ONE));
-		Window::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::ONE));
+		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::One));
+		Window::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::One));
 		Window::Get()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
 		Window::Get()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
 		Window::Get()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
@@ -47,9 +47,9 @@ namespace test
 	{
 		auto audioData = m_audio->GetMetadata();
 		audioData->SetChild<float>("Master Volume", Audio::Get()->GetMasterGain());
-		audioData->SetChild<float>("General Volume", Audio::Get()->GetTypeGain(SOUND_TYPE_GENERAL));
-		audioData->SetChild<float>("Effect Volume", Audio::Get()->GetTypeGain(SOUND_TYPE_EFFECT));
-		audioData->SetChild<float>("Music Volume", Audio::Get()->GetTypeGain(SOUND_TYPE_MUSIC));
+		audioData->SetChild<float>("General Volume", Audio::Get()->GetTypeGain(Audio::Type::General));
+		audioData->SetChild<float>("Effect Volume", Audio::Get()->GetTypeGain(Audio::Type::Effect));
+		audioData->SetChild<float>("Music Volume", Audio::Get()->GetTypeGain(Audio::Type::Music));
 		m_audio->Write();
 
 		auto graphicsData = m_graphics->GetMetadata();

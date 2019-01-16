@@ -48,27 +48,6 @@ namespace acid
 	class ACID_EXPORT Joysticks :
 		public Module
 	{
-	private:
-		struct JoystickImpl
-		{
-			JoystickPort m_port;
-			bool m_connected;
-			bool m_gamepad;
-			std::string m_name;
-
-			const float *m_axes;
-			uint32_t m_axeCount;
-			const uint8_t *m_buttons;
-			uint32_t m_buttonCount;
-			const uint8_t *m_hats;
-			uint32_t m_hatCount;
-		};
-
-		std::array<JoystickImpl, JOYSTICK_END_RANGE> m_connected;
-
-		Delegate<void(JoystickPort, bool)> m_onConnect;
-
-		friend void CallbackJoystick(int32_t id, int32_t event);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -140,5 +119,25 @@ namespace acid
 		const uint32_t &GetHatCount(const JoystickPort &port) const { return m_connected.at(port).m_hatCount; }
 
 		Delegate<void(JoystickPort, bool)> &OnConnect() { return m_onConnect; }
+	private:
+		struct JoystickImpl
+		{
+			JoystickPort m_port;
+			bool m_connected;
+			bool m_gamepad;
+			std::string m_name;
+
+			const float *m_axes;
+			uint32_t m_axeCount;
+			const uint8_t *m_buttons;
+			uint32_t m_buttonCount;
+			const uint8_t *m_hats;
+			uint32_t m_hatCount;
+		};
+
+		std::array<JoystickImpl, JOYSTICK_END_RANGE> m_connected;
+		Delegate<void(JoystickPort, bool)> m_onConnect;
+
+		friend void CallbackJoystick(int32_t id, int32_t event);
 	};
 }

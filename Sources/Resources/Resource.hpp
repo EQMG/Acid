@@ -10,8 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Resource
 	{
-	protected:
-		std::string m_name;
 	public:
 		/// <summary>
 		/// Creates a new resource with a unique name.
@@ -27,5 +25,7 @@ namespace acid
 		/// </summary>
 		/// <returns> The objects unique name. </returns>
 		virtual const std::string &GetName() const { return m_name; };
+	protected:
+		std::string m_name;
 	};
 }

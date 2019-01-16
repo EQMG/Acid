@@ -14,8 +14,6 @@ namespace acid
 	class ACID_EXPORT Mesh :
 		public Component
 	{
-	private:
-		std::shared_ptr<Model> m_model;
 	public:
 		/// <summary>
 		/// Creates a new mesh component with a model.
@@ -38,5 +36,7 @@ namespace acid
 		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
 		virtual void TrySetModel(const std::string &filename); // TODO: Remove
+	private:
+		std::shared_ptr<Model> m_model;
 	};
 }

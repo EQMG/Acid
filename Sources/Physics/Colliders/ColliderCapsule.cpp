@@ -6,7 +6,7 @@
 namespace acid
 {
 	ColliderCapsule::ColliderCapsule(const float &radius, const float &height, const Transform &localTransform) :
-		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::FUCHSIA)),
+		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)),
 		m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 		m_radius(radius),
 		m_height(height)

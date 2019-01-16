@@ -7,10 +7,6 @@ namespace acid
 	class ACID_EXPORT FilterDarken :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		float m_factor;
 	public:
 		explicit FilterDarken(const GraphicsStage &graphicsStage, const float &factor = 0.5f);
 
@@ -19,5 +15,9 @@ namespace acid
 		const float &GetFactor() const { return m_factor; }
 
 		void SetFactor(const float &factor) { m_factor = factor; }
+	private:
+		PushHandler m_pushScene;
+
+		float m_factor;
 	};
 }

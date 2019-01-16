@@ -14,9 +14,6 @@ namespace acid
 	class ACID_EXPORT Particles :
 		public Module
 	{
-	private:
-		std::mutex m_mutex;
-		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -40,5 +37,8 @@ namespace acid
 		/// </summary>
 		/// <returns> All particles. </returns>
 		const std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> &GetParticles() const { return m_particles; }
+	private:
+		std::mutex m_mutex;
+		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
 	};
 }

@@ -14,10 +14,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT ModelRegister
 	{
-	private:
-		using ModelCreate = std::function<std::shared_ptr<Model>(std::string)>;
-		std::mutex m_mutex;
-		std::map<std::string, ModelCreate> m_models;
 	public:
 		/// <summary>
 		/// Creates a new model types register.
@@ -60,5 +56,9 @@ namespace acid
 		/// <param name="data"> The models filename/data to create from. </param>
 		/// <returns> The new model. </returns>
 		std::shared_ptr<Model> Create(const std::string &data) const;
+	private:
+		using ModelCreate = std::function<std::shared_ptr<Model>(std::string)>;
+		std::mutex m_mutex;
+		std::map<std::string, ModelCreate> m_models;
 	};
 }

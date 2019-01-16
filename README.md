@@ -76,17 +76,17 @@ auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
 auto sphere = ModelSphere::Create(20, 20, 1.0f);
 
 // Plays a 3D sound (sound buffer resource internally managed), at (10, 0, 0), at half volume.
-auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::RIGHT), SOUND_TYPE_EFFECT, false, true, 0.5f);
+auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::Right), Audio::Type::Effect, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
-auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::IDENTITY);
+auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::Identity);
 
 // Creates a entity.
 auto sphere = GetStructure()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
 sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
 sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
-sphere->AddComponent<MaterialDefault>(Colour::WHITE, Texture::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
+sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
     Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
 sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material attached.
 

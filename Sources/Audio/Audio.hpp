@@ -8,26 +8,18 @@ typedef struct ALCcontext_struct ALCcontext;
 
 namespace acid
 {
-	enum SoundType
-	{
-		SOUND_TYPE_GENERAL = 0,
-		SOUND_TYPE_EFFECT = 1,
-		SOUND_TYPE_MUSIC = 2
-	};
-
 	/// <summary>
 	/// A module used for loading, managing and playing a variety of different sound types.
 	/// </summary>
 	class ACID_EXPORT Audio :
 		public Module
 	{
-	private:
-		ALCdevice *m_alDevice;
-		ALCcontext *m_alContext;
-
-		float m_masterGain;
-		std::map<SoundType, float> m_gains;
 	public:
+		enum class Type
+		{
+			General, Effect, Music
+		};
+
 		/// <summary>
 		/// Gets this engine instance.
 		/// </summary>
@@ -52,8 +44,14 @@ namespace acid
 
 		void SetMasterGain(const float &masterGain) { m_masterGain = masterGain; }
 
-		float GetTypeGain(const SoundType &type) const;
+		float GetTypeGain(const Type &type) const;
 
-		void SetTypeGain(const SoundType &type, const float &volume);
+		void SetTypeGain(const Type &type, const float &volume);
+	private:
+		ALCdevice *m_alDevice;
+		ALCcontext *m_alContext;
+
+		float m_masterGain;
+		std::map<Type, float> m_gains;
 	};
 }

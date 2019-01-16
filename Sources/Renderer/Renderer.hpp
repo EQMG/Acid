@@ -18,23 +18,6 @@ namespace acid
 	class ACID_EXPORT Renderer :
 		public Module
 	{
-	private:
-		std::unique_ptr<RenderManager> m_renderManager;
-		std::vector<std::unique_ptr<RenderStage>> m_renderStages;
-
-		std::unique_ptr<Swapchain> m_swapchain;
-
-		VkPipelineCache m_pipelineCache;
-
-		VkCommandPool m_commandPool;
-		VkSemaphore m_presentSemaphore;
-
-		std::unique_ptr<CommandBuffer> m_commandBuffer;
-
-		std::unique_ptr<Instance> m_instance;
-		std::unique_ptr<PhysicalDevice> m_physicalDevice;
-		std::unique_ptr<Surface> m_surface;
-		std::unique_ptr<LogicalDevice> m_logicalDevice;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -101,5 +84,19 @@ namespace acid
 		bool StartRenderpass(RenderStage &renderStage);
 
 		void EndRenderpass(RenderStage &renderStage);
+
+		std::unique_ptr<RenderManager> m_renderManager;
+		std::vector<std::unique_ptr<RenderStage>> m_renderStages;
+		std::unique_ptr<Swapchain> m_swapchain;
+
+		VkPipelineCache m_pipelineCache;
+		VkCommandPool m_commandPool;
+		VkSemaphore m_presentSemaphore;
+
+		std::unique_ptr<CommandBuffer> m_commandBuffer;
+		std::unique_ptr<Instance> m_instance;
+		std::unique_ptr<PhysicalDevice> m_physicalDevice;
+		std::unique_ptr<Surface> m_surface;
+		std::unique_ptr<LogicalDevice> m_logicalDevice;
 	};
 }

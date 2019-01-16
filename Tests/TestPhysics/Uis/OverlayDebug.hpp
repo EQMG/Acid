@@ -26,6 +26,6 @@ namespace test
 
 		virtual void UpdateObject() override;
 	private:
-		std::unique_ptr<Text> CreateStatus(const std::string &content, const float &positionX, const float &positionY, const TextJustify &justify);
+		std::unique_ptr<Text> CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Text::Justify &justify);
 	};
 }

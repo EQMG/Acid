@@ -6,20 +6,14 @@
 
 namespace acid
 {
-	enum HandlerStatus
-	{
-		HANDLER_STATUS_RESET = 0,
-		HANDLER_STATUS_CHANGED = 1,
-		HANDLER_STATUS_NORMAL = 2
-	};
-
 	class ACID_EXPORT Buffer
 	{
-	protected:
-		VkDeviceSize m_size;
-		VkBuffer m_buffer;
-		VkDeviceMemory m_bufferMemory;
 	public:
+		enum class Status
+		{
+			Reset, Changed, Normal
+		};
+
 		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
 		~Buffer();
@@ -35,5 +29,9 @@ namespace acid
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
 		static void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
+	protected:
+		VkDeviceSize m_size;
+		VkBuffer m_buffer;
+		VkDeviceMemory m_bufferMemory;
 	};
 }

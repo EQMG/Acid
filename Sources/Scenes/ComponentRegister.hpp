@@ -14,15 +14,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT ComponentRegister
 	{
-	private:
-		struct ComponentCreate
-		{
-			std::function<Component *()> m_create;
-			std::function<bool(Component *)> m_isSame;
-		};
-
-		std::mutex m_mutex;
-		std::map<std::string, ComponentCreate> m_components;
 	public:
 		/// <summary>
 		/// Creates a new component register.
@@ -77,5 +68,14 @@ namespace acid
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
 		std::optional<std::string> FindName(Component *compare) const;
+	private:
+		struct ComponentCreate
+		{
+			std::function<Component *()> m_create;
+			std::function<bool(Component *)> m_isSame;
+		};
+
+		std::mutex m_mutex;
+		std::map<std::string, ComponentCreate> m_components;
 	};
 }

@@ -6,10 +6,10 @@
 
 namespace acid
 {
-	const Time UiInputGrabber::CHANGE_TIME = Time::Seconds(0.1f);
-	const float UiInputGrabber::FONT_SIZE = 1.7f;
-	const float UiInputGrabber::SCALE_NORMAL = 1.0f;
-	const float UiInputGrabber::SCALE_SELECTED = 1.1f;
+	static const Time CHANGE_TIME = Time::Seconds(0.1f);
+	static const float FONT_SIZE = 1.7f;
+	static const float SCALE_NORMAL = 1.0f;
+	static const float SCALE_SELECTED = 1.1f;
 
 	UiGrabberJoystick::UiGrabberJoystick(const JoystickPort &joystick) :
 		IUiGrabber(),
@@ -98,11 +98,11 @@ namespace acid
 	}
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Create("Fonts/ProximaNova", "Regular"),
-			TEXT_JUSTIFY_CENTRE, rectangle.GetDimensions().m_x, Colour::WHITE)),
-		m_soundClick(Sound("Sounds/Button1.ogg", Transform::IDENTITY, SOUND_TYPE_EFFECT, false, false, 0.9f)),
+			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
+		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_grabber(grabber),
 		m_prefix(prefix),
 		m_value(value),

@@ -24,10 +24,6 @@ namespace acid
 
 	class ACID_EXPORT Raycast
 	{
-	private:
-		bool m_hasHit;
-		Vector3 m_pointWorld;
-		CollisionObject *m_collisionObject;
 	public:
 		Raycast(bool m_hasHit, const Vector3 &m_pointWorld, CollisionObject *collisionObject) :
 			m_hasHit(m_hasHit),
@@ -41,20 +37,14 @@ namespace acid
 		const Vector3 &GetPointWorld() const { return m_pointWorld; }
 
 		CollisionObject *GetCollisionObject() const { return m_collisionObject; }
+	private:
+		bool m_hasHit;
+		Vector3 m_pointWorld;
+		CollisionObject *m_collisionObject;
 	};
 
 	class ACID_EXPORT ScenePhysics
 	{
-	private:
-		std::unique_ptr<btCollisionConfiguration> m_collisionConfiguration;
-		std::unique_ptr<btBroadphaseInterface> m_broadphase;
-		std::unique_ptr<btCollisionDispatcher> m_dispatcher;
-		std::unique_ptr<btConstraintSolver> m_solver;
-		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
-		CollisionPairs m_pairsLastUpdate;
-
-		Vector3 m_gravity;
-		float m_airDensity;
 	public:
 		ScenePhysics();
 
@@ -77,5 +67,15 @@ namespace acid
 		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
 	private:
 		void CheckForCollisionEvents();
+
+		std::unique_ptr<btCollisionConfiguration> m_collisionConfiguration;
+		std::unique_ptr<btBroadphaseInterface> m_broadphase;
+		std::unique_ptr<btCollisionDispatcher> m_dispatcher;
+		std::unique_ptr<btConstraintSolver> m_solver;
+		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
+		CollisionPairs m_pairsLastUpdate;
+
+		Vector3 m_gravity;
+		float m_airDensity;
 	};
 }

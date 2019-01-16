@@ -11,25 +11,6 @@ namespace acid
 	class ACID_EXPORT PipelineCompute :
 		public Pipeline
 	{
-	private:
-		std::string m_shaderStage;
-		uint32_t m_width;
-		uint32_t m_height;
-		uint32_t m_workgroupSize;
-		bool m_pushDescriptors;
-		std::vector<ShaderDefine> m_defines;
-
-		std::unique_ptr<ShaderProgram> m_shaderProgram;
-
-		VkShaderModule m_shaderModule;
-		VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;
-
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-
-		VkPipeline m_pipeline;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
 	public:
 		/// <summary>
 		/// Creates a new compute pipeline.
@@ -80,5 +61,24 @@ namespace acid
 		void CreatePipelineLayout();
 
 		void CreatePipelineCompute();
+
+		std::string m_shaderStage;
+		uint32_t m_width;
+		uint32_t m_height;
+		uint32_t m_workgroupSize;
+		bool m_pushDescriptors;
+		std::vector<ShaderDefine> m_defines;
+
+		std::unique_ptr<ShaderProgram> m_shaderProgram;
+
+		VkShaderModule m_shaderModule;
+		VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;
+
+		VkDescriptorSetLayout m_descriptorSetLayout;
+		VkDescriptorPool m_descriptorPool;
+
+		VkPipeline m_pipeline;
+		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
 	};
 }

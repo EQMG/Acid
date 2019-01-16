@@ -10,9 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT RenderPipeline
 	{
-	private:
-		GraphicsStage m_graphicsStage;
-		bool m_enabled;
 	public:
 		/// <summary>
 		/// Creates a new render pipeline.
@@ -37,5 +34,8 @@ namespace acid
 		const bool &IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
+	private:
+		GraphicsStage m_graphicsStage;
+		bool m_enabled;
 	};
 }

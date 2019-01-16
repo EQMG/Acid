@@ -7,17 +7,6 @@ namespace acid
 {
 	class ACID_EXPORT Swapchain
 	{
-	private:
-		VkExtent2D m_extent;
-		VkPresentModeKHR m_presentMode;
-
-		uint32_t m_imageCount;
-		std::vector<VkImage> m_images;
-		std::vector<VkImageView> m_imageViews;
-		VkSwapchainKHR m_swapchain;
-
-		VkFence m_fenceImage;
-		uint32_t m_activeImageIndex;
 	public:
 		explicit Swapchain(const VkExtent2D &extent);
 
@@ -40,5 +29,16 @@ namespace acid
 		const uint32_t &GetActiveImageIndex() const { return m_activeImageIndex; }
 
 		bool IsSameExtent(const VkExtent2D &extent2D) { return m_extent.width == extent2D.width && m_extent.height == extent2D.height; }
+	private:
+		VkExtent2D m_extent;
+		VkPresentModeKHR m_presentMode;
+
+		uint32_t m_imageCount;
+		std::vector<VkImage> m_images;
+		std::vector<VkImageView> m_imageViews;
+		VkSwapchainKHR m_swapchain;
+
+		VkFence m_fenceImage;
+		uint32_t m_activeImageIndex;
 	};
 }

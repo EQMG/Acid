@@ -12,10 +12,6 @@ namespace acid
 	class ACID_EXPORT Framebuffers :
 		public NonCopyable
 	{
-	private:
-		std::vector<std::unique_ptr<Texture>> m_imageAttachments;
-
-		std::vector<VkFramebuffer> m_framebuffers;
 	public:
 		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
@@ -26,5 +22,8 @@ namespace acid
 		Texture *GetAttachment(const uint32_t &index) const { return m_imageAttachments[index].get(); }
 
 		const std::vector<VkFramebuffer> &GetFramebuffers() const { return m_framebuffers; }
+	private:
+		std::vector<std::unique_ptr<Texture>> m_imageAttachments;
+		std::vector<VkFramebuffer> m_framebuffers;
 	};
 }

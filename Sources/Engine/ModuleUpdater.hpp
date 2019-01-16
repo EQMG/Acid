@@ -11,11 +11,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT ModuleUpdater
 	{
-	private:
-		Delta m_deltaUpdate;
-		Delta m_deltaRender;
-		Timer m_timerUpdate;
-		Timer m_timerRender;
 	public:
 		ModuleUpdater();
 
@@ -35,5 +30,10 @@ namespace acid
 		/// </summary>
 		/// <returns> The delta between renders. </returns>
 		const Time &GetDeltaRender() const { return m_deltaRender.GetChange(); }
+	private:
+		Delta m_deltaUpdate;
+		Delta m_deltaRender;
+		Timer m_timerUpdate;
+		Timer m_timerRender;
 	};
 }

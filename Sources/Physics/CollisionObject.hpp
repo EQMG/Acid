@@ -20,18 +20,6 @@ namespace acid
 	class ACID_EXPORT CollisionObject :
 		public Component
 	{
-	protected:
-		float m_friction;
-		float m_frictionRolling;
-		float m_frictionSpinning;
-
-		std::unique_ptr<btCollisionShape> m_shape;
-		std::unique_ptr<btCollisionObject> m_body;
-
-		std::vector<std::unique_ptr<Force>> m_forces;
-
-		Delegate<void(CollisionObject *)> m_onCollision;
-		Delegate<void(CollisionObject *)> m_onSeparation;
 	public:
 		/// <summary>
 		/// Creates a new collision object.
@@ -85,5 +73,17 @@ namespace acid
 		void CreateShape(const bool &forceSingle = false);
 
 		virtual void RecalculateMass() = 0;
+
+		float m_friction;
+		float m_frictionRolling;
+		float m_frictionSpinning;
+
+		std::unique_ptr<btCollisionShape> m_shape;
+		std::unique_ptr<btCollisionObject> m_body;
+
+		std::vector<std::unique_ptr<Force>> m_forces;
+
+		Delegate<void(CollisionObject *)> m_onCollision;
+		Delegate<void(CollisionObject *)> m_onSeparation;
 	};
 }

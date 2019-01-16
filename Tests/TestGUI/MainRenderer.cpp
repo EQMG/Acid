@@ -10,8 +10,8 @@ namespace test
 	MainRenderer::MainRenderer()
 	{
 		std::vector<Attachment> renderpassImages0 = {
-			Attachment(0, "depth", ATTACHMENT_TYPE_DEPTH),
-			Attachment(1, "swapchain", ATTACHMENT_TYPE_SWAPCHAIN)
+			Attachment(0, "depth", Attachment::Type::Depth),
+			Attachment(1, "swapchain", Attachment::Type::Swapchain)
 		};
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0, 1})

@@ -11,19 +11,18 @@ namespace acid
 	class ACID_EXPORT RendererShadows :
 		public RenderPipeline
 	{
-	private:
-		PipelineGraphics m_pipeline;
-		UniformHandler m_uniformScene;
 	public:
-		static const uint32_t NUM_CASCADES;
-
-		static const float DEPTH_BIAS_CONSTANT;
-		static const float DEPTH_BIAS_SLOPE;
+		static const uint32_t Cascades;
+		static const float BiasConstants;
+		static const float BiasSlope;
 
 		explicit RendererShadows(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:
 		std::vector<ShaderDefine> GetDefines();
+
+		PipelineGraphics m_pipeline;
+		UniformHandler m_uniformScene;
 	};
 }

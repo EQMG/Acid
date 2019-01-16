@@ -11,9 +11,6 @@ namespace acid
 	class FtpResponseListing :
 		public FtpResponse
 	{
-	private:
-		/// Directory/file names extracted from the data.
-		std::vector<std::string> m_listing;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -27,5 +24,8 @@ namespace acid
 		/// </summary>
 		/// <returns> Array containing the requested listing. </returns>
 		const std::vector<std::string> &GetListing() const { return m_listing; }
+	private:
+		/// Directory/file names extracted from the data.
+		std::vector<std::string> m_listing;
 	};
 }

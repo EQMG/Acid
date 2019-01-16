@@ -7,10 +7,6 @@ namespace acid
 	class ACID_EXPORT FilterPixel :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		float m_pixelSize;
 	public:
 		explicit FilterPixel(const GraphicsStage &graphicsStage, const float &pixelSize = 2.0f);
 
@@ -19,5 +15,9 @@ namespace acid
 		const float &GetPixelSize() const { return m_pixelSize; }
 
 		void SetPixelSize(const float &pixelSize) { m_pixelSize = pixelSize; }
+	private:
+		PushHandler m_pushScene;
+
+		float m_pixelSize;
 	};
 }

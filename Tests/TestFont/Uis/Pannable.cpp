@@ -7,18 +7,18 @@
 namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
 		m_buttonReset(ButtonKeyboard({KEY_ENTER})),
 		m_zoom(1.0f),
-		m_offset(Vector2::ZERO),
+		m_offset(Vector2::Zero),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
-		m_background(std::make_unique<Gui>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false), Texture::Create("Guis/White.png"))),
+		m_background(std::make_unique<Gui>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false), Texture::Create("Guis/White.png"))),
 		m_texts(std::vector<std::pair<Vector3, std::unique_ptr<Text>>>()),
-		m_textFps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.002f), UiBound::BOTTOM_LEFT, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT)),
-		m_textUps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.022f), UiBound::BOTTOM_LEFT, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_LEFT))
+		m_textFps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.002f), UiBound::BottomLeft, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
+		m_textUps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.022f), UiBound::BottomLeft, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
-		m_texts.emplace_back(Vector3(0.0f, 0.8f, 6.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::CENTRE, false), 1.0f, "Acid Font",
-			FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 1.0f, Colour::RED, 0.0f, 0.015f));
+		m_texts.emplace_back(Vector3(0.0f, 0.8f, 6.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::Centre, false), 1.0f, "Acid Font",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
 
 		static const std::string content1 =
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum \n"
@@ -51,8 +51,8 @@ namespace test
 			"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet. \n"
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
-		m_texts.emplace_back(Vector3(0.0f, 0.0f, 2.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::CENTRE, false), 1.0f, content1,
-			FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 10.0f, Colour::BLACK, 0.0f, 0.015f));
+		m_texts.emplace_back(Vector3(0.0f, 0.0f, 2.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::Centre, false), 1.0f, content1,
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
 	}
 
 	void Pannable::UpdateObject()

@@ -52,11 +52,6 @@ namespace acid
 		public UiObject
 	{
 	private:
-		static const Time CHANGE_TIME;
-		static const float FONT_SIZE;
-		static const float SCALE_NORMAL;
-		static const float SCALE_SELECTED;
-
 		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
@@ -74,7 +69,7 @@ namespace acid
 		Delegate<void(UiInputGrabber *, int32_t)> m_onGrabbed;
 	public:
 		UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber,
-			const UiBound &rectangle = UiBound(Vector3::ZERO, UiBound::CENTRE, true, true, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiBound::Centre, true, true, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
 
 		void UpdateObject() override;
 

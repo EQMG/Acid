@@ -13,11 +13,6 @@ namespace acid
 	class ACID_EXPORT PipelineMaterial :
 		public Resource
 	{
-	private:
-		GraphicsStage m_graphicsStage;
-		PipelineCreate m_pipelineCreate;
-		const RenderStage *m_renderStage;
-		std::unique_ptr<PipelineGraphics> m_pipeline;
 	public:
 		/// <summary>
 		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
@@ -46,5 +41,10 @@ namespace acid
 		const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 	private:
 		static std::string ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+
+		GraphicsStage m_graphicsStage;
+		PipelineCreate m_pipelineCreate;
+		const RenderStage *m_renderStage;
+		std::unique_ptr<PipelineGraphics> m_pipeline;
 	};
 }

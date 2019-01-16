@@ -13,14 +13,8 @@ namespace acid
 	class ACID_EXPORT MaterialSkybox :
 		public Material
 	{
-	private:
-		std::shared_ptr<Cubemap> m_cubemap;
-		Colour m_skyColour;
-		float m_blend;
-		Colour m_fogColour;
-		Vector2 m_fogLimits;
 	public:
-		explicit MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::WHITE);
+		explicit MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::White);
 
 		void Start() override;
 
@@ -53,5 +47,11 @@ namespace acid
 		const Vector2 &GetFogLimits() const { return m_fogLimits; }
 
 		void SetFogLimits(const Vector2 &fogLimits) { m_fogLimits = fogLimits; }
+	private:
+		std::shared_ptr<Cubemap> m_cubemap;
+		Colour m_skyColour;
+		float m_blend;
+		Colour m_fogColour;
+		Vector2 m_fogLimits;
 	};
 }

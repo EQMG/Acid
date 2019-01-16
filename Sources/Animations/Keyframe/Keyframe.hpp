@@ -18,9 +18,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Keyframe
 	{
-	private:
-		Time m_timeStamp;
-		std::map<std::string, JointTransform> m_pose;
 	public:
 		/// <summary>
 		/// Creates a new keyframe at a timestamp.
@@ -43,5 +40,8 @@ namespace acid
 		/// </summary>
 		/// <returns> The desired local-space transforms. </returns>
 		const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
+	private:
+		Time m_timeStamp;
+		std::map<std::string, JointTransform> m_pose;
 	};
 }

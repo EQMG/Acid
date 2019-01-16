@@ -8,16 +8,16 @@
 
 namespace acid
 {
-	static const float PI = 3.14159265358979323846264338f;
-	static const float DEG_TO_RAD = PI / 180.0f;
-	static const float RAD_TO_DEG = 180.0f / PI;
-
 	/// <summary>
 	/// A class that holds many various math functions.
 	/// </summary>
 	class ACID_EXPORT Maths
 	{
 	public:
+		static constexpr float Pi = 3.14159265358979323846264338f;
+		static constexpr float DegToRad = Pi / 180.0f;
+		static constexpr float RadToDeg = 180.0f / Pi;
+
 		/// <summary>
 		/// Generates a random value from between a range.
 		/// </summary>

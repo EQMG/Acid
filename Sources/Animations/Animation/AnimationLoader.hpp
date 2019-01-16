@@ -7,12 +7,6 @@ namespace acid
 {
 	class ACID_EXPORT AnimationLoader
 	{
-	private:
-		Metadata *m_libraryAnimations;
-		Metadata *m_libraryVisualScenes;
-
-		Time m_lengthSeconds;
-		std::vector<Keyframe> m_keyframes;
 	public:
 		AnimationLoader(Metadata *libraryAnimations, Metadata *libraryVisualScenes);
 
@@ -33,5 +27,11 @@ namespace acid
 		std::string GetJointName(Metadata *jointData);
 
 		void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
+
+		Metadata *m_libraryAnimations;
+		Metadata *m_libraryVisualScenes;
+
+		Time m_lengthSeconds;
+		std::vector<Keyframe> m_keyframes;
 	};
 }

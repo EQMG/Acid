@@ -6,9 +6,9 @@
 
 namespace acid
 {
-	const Time Time::ZERO = Time();
-	const Time Time::NEGATIVE_INFINITY = Time(-std::numeric_limits<int64_t>::infinity());
-	const Time Time::POSITIVE_INFINITY = Time(+std::numeric_limits<int64_t>::infinity());
+	const Time Time::Zero = Time();
+	const Time Time::PositiveInfinity = Time(+std::numeric_limits<int64_t>::infinity());
+	const Time Time::NegativeInfinity = Time(-std::numeric_limits<int64_t>::infinity());
 
 	Time::Time(const int64_t &microseconds) :
 		m_microseconds(microseconds)

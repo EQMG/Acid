@@ -10,12 +10,8 @@ namespace acid
 	class ACID_EXPORT ColliderCylinder :
 		public Collider
 	{
-	private:
-		std::unique_ptr<btCylinderShape> m_shape;
-		float m_radius;
-		float m_height;
 	public:
-		explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::IDENTITY);
+		explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
 
 		~ColliderCylinder();
 
@@ -36,5 +32,9 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height);
+	private:
+		std::unique_ptr<btCylinderShape> m_shape;
+		float m_radius;
+		float m_height;
 	};
 }

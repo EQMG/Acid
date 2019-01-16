@@ -9,16 +9,6 @@ namespace acid
 	class ACID_EXPORT FilterDof :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		PipelineBlur *m_pipelineBlur;
-
-		float m_focusPoint;
-		float m_nearField;
-		float m_nearTransition;
-		float m_farField;
-		float m_farTransition;
 	public:
 		explicit FilterDof(const GraphicsStage &graphicsStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, const float &nearTransition = 0.125f,
 			const float &farField = 8.0f, const float &farTransition = 3.0f);
@@ -48,5 +38,15 @@ namespace acid
 		const float &GetFarTransition() const { return m_farTransition; }
 
 		void SetFarTransition(const float &farTransition) { m_farTransition = farTransition; }
+	private:
+		PushHandler m_pushScene;
+
+		PipelineBlur *m_pipelineBlur;
+
+		float m_focusPoint;
+		float m_nearField;
+		float m_nearTransition;
+		float m_farField;
+		float m_farTransition;
 	};
 }

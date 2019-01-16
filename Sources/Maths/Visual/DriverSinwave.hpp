@@ -10,9 +10,6 @@ namespace acid
 	class ACID_EXPORT DriverSinwave :
 		public IDriver
 	{
-	private:
-		float m_min;
-		float m_max;
 	public:
 		/// <summary>
 		/// Creates a new sine wave driver.
@@ -47,5 +44,8 @@ namespace acid
 		void SetMax(const float &max) { m_max = max; }
 	protected:
 		float Calculate(const float &factor) override;
+	private:
+		float m_min;
+		float m_max;
 	};
 }

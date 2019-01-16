@@ -12,19 +12,6 @@ namespace acid
 	class ACID_EXPORT Shadows :
 		public Module
 	{
-	private:
-		Vector3 m_lightDirection;
-
-		uint32_t m_shadowSize;
-		int32_t m_shadowPcf;
-		float m_shadowBias;
-		float m_shadowDarkness;
-		float m_shadowTransition;
-
-		float m_shadowBoxOffset;
-		float m_shadowBoxDistance;
-
-		ShadowBox m_shadowBox;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -73,5 +60,18 @@ namespace acid
 		/// </summary>
 		/// <returns> The shadow box. </returns>
 		const ShadowBox &GetShadowBox() const { return m_shadowBox; }
+	private:
+		Vector3 m_lightDirection;
+
+		uint32_t m_shadowSize;
+		int32_t m_shadowPcf;
+		float m_shadowBias;
+		float m_shadowDarkness;
+		float m_shadowTransition;
+
+		float m_shadowBoxOffset;
+		float m_shadowBoxDistance;
+
+		ShadowBox m_shadowBox;
 	};
 }

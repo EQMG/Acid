@@ -24,11 +24,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Animator
 	{
-	private:
-		Joint *m_rootJoint;
-
-		Time m_animationTime;
-		Animation *m_currentAnimation;
 	public:
 		/// <summary>
 		/// Creates a new animator.
@@ -131,5 +126,10 @@ namespace acid
 		/// </summary>
 		/// <param name="animation"> The new animation to carry out. </param>
 		void DoAnimation(Animation *animation);
+	private:
+		Joint *m_rootJoint;
+
+		Time m_animationTime;
+		Animation *m_currentAnimation;
 	};
 }

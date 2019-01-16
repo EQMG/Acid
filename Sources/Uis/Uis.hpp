@@ -11,10 +11,6 @@ namespace acid
 	class ACID_EXPORT Uis :
 		public Module
 	{
-	private:
-		UiSelector m_selector;
-		std::unique_ptr<UiObject> m_container;
-		std::vector<UiObject *> m_objects;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -43,5 +39,9 @@ namespace acid
 		/// </summary>
 		/// <returns> The objects. </returns>
 		const std::vector<UiObject *> &GetObjects() const { return m_objects; };
+	private:
+		UiSelector m_selector;
+		std::unique_ptr<UiObject> m_container;
+		std::vector<UiObject *> m_objects;
 	};
 }

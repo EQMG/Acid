@@ -6,13 +6,13 @@
 
 namespace acid
 {
-	uint32_t PostFilter::GLOBAL_SWITCHING = 0;
+	uint32_t PostFilter::GlobalSwitching = 0;
 
 	PostFilter::PostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<ShaderDefine> &defines) :
 		RenderPipeline(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_pipeline(PipelineGraphics(graphicsStage, shaderStages, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
+			PipelineMode::Polygon, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_attachments(std::map<std::string, const Descriptor *>())
 	{
@@ -81,18 +81,18 @@ namespace acid
 		}
 		else if (it1 == m_attachments.end() && it2 != m_attachments.end())
 		{
-			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(GLOBAL_SWITCHING % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
+			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(GlobalSwitching % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
 			m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
 			return;
 		}
 		else if (it1 != m_attachments.end() && it2 == m_attachments.end())
 		{
 			m_descriptorSet.Push(descriptorName1, GetAttachment(descriptorName1, rendererAttachment1));
-			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(GLOBAL_SWITCHING % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
+			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(GlobalSwitching % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
 			return;
 		}
 
-		if (GLOBAL_SWITCHING % 2 == 1)
+		if (GlobalSwitching % 2 == 1)
 		{
 			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(rendererAttachment1));
 			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(rendererAttachment2));
@@ -103,6 +103,6 @@ namespace acid
 			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(rendererAttachment1));
 		}
 
-		GLOBAL_SWITCHING++;
+		GlobalSwitching++;
 	}
 }

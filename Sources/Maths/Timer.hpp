@@ -10,9 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Timer
 	{
-	private:
-		Time m_startTime;
-		Time m_interval;
 	public:
 		/// <summary>
 		/// Creates a new timer.
@@ -48,5 +45,8 @@ namespace acid
 		/// </summary>
 		/// <param name="interval"> The new timer interval. </param>
 		void SetInterval(const Time &interval);
+	private:
+		Time m_startTime;
+		Time m_interval;
 	};
 }

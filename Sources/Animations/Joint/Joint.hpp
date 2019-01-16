@@ -11,12 +11,6 @@ namespace acid
 	class ACID_EXPORT JointData :
 		public NonCopyable
 	{
-	private:
-		uint32_t m_index;
-		std::string m_nameId;
-		Matrix4 m_bindLocalTransform;
-
-		std::vector<std::unique_ptr<JointData>> m_children;
 	public:
 		JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
 			m_index(index),
@@ -38,6 +32,12 @@ namespace acid
 		{
 			m_children.emplace_back(child);
 		}
+	private:
+		uint32_t m_index;
+		std::string m_nameId;
+		Matrix4 m_bindLocalTransform;
+
+		std::vector<std::unique_ptr<JointData>> m_children;
 	};
 
 	/// <summary>
@@ -62,14 +62,6 @@ namespace acid
 	class ACID_EXPORT Joint :
 		public NonCopyable
 	{
-	private:
-		uint32_t m_index;
-		std::string m_name;
-		std::vector<std::unique_ptr<Joint>> m_children;
-
-		Matrix4 m_localBindTransform;
-		Matrix4 m_animatedTransform;
-		Matrix4 m_inverseBindTransform;
 	public:
 		/// <summary>
 		/// Creates a new skeleton joint.
@@ -140,5 +132,13 @@ namespace acid
 		const Matrix4 &GetInverseBindTransform() const { return m_inverseBindTransform; }
 
 		void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
+	private:
+		uint32_t m_index;
+		std::string m_name;
+		std::vector<std::unique_ptr<Joint>> m_children;
+
+		Matrix4 m_localBindTransform;
+		Matrix4 m_animatedTransform;
+		Matrix4 m_inverseBindTransform;
 	};
 }

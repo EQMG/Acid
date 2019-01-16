@@ -29,32 +29,6 @@ namespace acid
 	class ACID_EXPORT Mouse :
 		public Module
 	{
-	private:
-		std::array<InputAction, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
-		std::string m_mousePath;
-
-		float m_lastMousePositionX;
-		float m_lastMousePositionY;
-		float m_mousePositionX;
-		float m_mousePositionY;
-		float m_mouseDeltaX;
-		float m_mouseDeltaY;
-		float m_mouseDeltaWheel;
-		bool m_windowSelected;
-		bool m_cursorHidden;
-
-		Delegate<void(bool)> m_onEnter;
-		Delegate<void(std::vector<std::string>)> m_onDrop;
-
-		friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
-
-		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
-
-		friend void CallbackCursorEnter(GLFWwindow *window, int32_t entered);
-
-		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
-
-		friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -167,5 +141,31 @@ namespace acid
 		Delegate<void(bool)> &GetEnter() { return m_onEnter; }
 
 		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
+	private:
+		std::array<InputAction, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
+		std::string m_mousePath;
+
+		float m_lastMousePositionX;
+		float m_lastMousePositionY;
+		float m_mousePositionX;
+		float m_mousePositionY;
+		float m_mouseDeltaX;
+		float m_mouseDeltaY;
+		float m_mouseDeltaWheel;
+		bool m_windowSelected;
+		bool m_cursorHidden;
+
+		Delegate<void(bool)> m_onEnter;
+		Delegate<void(std::vector<std::string>)> m_onDrop;
+
+		friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
+
+		friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
+
+		friend void CallbackCursorEnter(GLFWwindow *window, int32_t entered);
+
+		friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
+
+		friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 	};
 }

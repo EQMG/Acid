@@ -15,9 +15,6 @@ namespace acid
 	class ACID_EXPORT RendererContainer :
 		public NonCopyable
 	{
-	private:
-		std::mutex m_mutex;
-		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	public:
 		RendererContainer();
 
@@ -114,5 +111,8 @@ namespace acid
 				}
 			}
 		}
+	private:
+		std::mutex m_mutex;
+		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	};
 }

@@ -13,7 +13,7 @@
 
 namespace acid
 {
-	const uint32_t RendererDeferred::MAX_LIGHTS = 32;
+	static const uint32_t MAX_LIGHTS = 32;
 
 	struct DeferredLight
 	{
@@ -22,19 +22,19 @@ namespace acid
 		float m_radius;
 	};
 
-	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage, const DeferredModel &lightModel) :
+	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage, const Type &type) :
 		RenderPipeline(graphicsStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_storageLights(StorageHandler()),
-		m_lightModel(lightModel),
+		m_type(type),
 		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
+			PipelineMode::Polygon, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
-		m_brdf(m_lightModel == DEFERRED_IBL ? ComputeBrdf(512) : nullptr),
+		m_brdf(m_type == Type::Ibl ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
 		m_ibl(nullptr),
-		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f))
+		m_fog(Fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f))
 	{
 	}
 
@@ -42,7 +42,7 @@ namespace acid
 	{
 		auto camera = Scenes::Get()->GetCamera();
 
-		if (m_lightModel == DEFERRED_IBL)
+		if (m_type == Type::Ibl)
 		{
 			auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
 			auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetCubemap();
@@ -129,7 +129,7 @@ namespace acid
 	std::vector<ShaderDefine> RendererDeferred::GetDefines()
 	{
 		std::vector<ShaderDefine> result = {};
-		result.emplace_back("USE_IBL", String::To<int32_t>(m_lightModel == DEFERRED_IBL));
+		result.emplace_back("USE_IBL", String::To<int32_t>(m_type == Type::Ibl));
 		result.emplace_back("MAX_LIGHTS", String::To(MAX_LIGHTS));
 		return result;
 	}

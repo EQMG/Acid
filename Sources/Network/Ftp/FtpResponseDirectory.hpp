@@ -10,9 +10,6 @@ namespace acid
 	class FtpResponseDirectory :
 		public FtpResponse
 	{
-	private:
-		/// Directory extracted from the response message.
-		std::string m_directory;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -25,5 +22,8 @@ namespace acid
 		/// </summary>
 		/// <returns> Directory name. </returns>
 		const std::string &GetDirectory() const { return m_directory; }
+	private:
+		/// Directory extracted from the response message.
+		std::string m_directory;
 	};
 }

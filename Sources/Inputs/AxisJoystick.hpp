@@ -11,10 +11,6 @@ namespace acid
 	class ACID_EXPORT AxisJoystick :
 		public IAxis
 	{
-	private:
-		JoystickPort m_joystick;
-		uint32_t m_axis;
-		bool m_inverted;
 	public:
 		/// <summary>
 		/// Creates a new axis joystick.
@@ -37,5 +33,9 @@ namespace acid
 		const bool &IsInverted() const { return m_inverted; }
 
 		void SetInverted(const bool &inverted) { m_inverted = inverted; }
+	private:
+		JoystickPort m_joystick;
+		uint32_t m_axis;
+		bool m_inverted;
 	};
 }

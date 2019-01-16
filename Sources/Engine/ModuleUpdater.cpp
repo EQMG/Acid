@@ -18,7 +18,7 @@ namespace acid
 		m_timerRender.SetInterval(Time::Seconds(1.0f / Engine::Get()->GetFpsLimit()));
 
 		// Always-Update.
-		moduleManager.RunUpdate(MODULE_UPDATE_ALWAYS);
+		moduleManager.RunUpdate(Module::Stage::Always);
 
 		if (m_timerUpdate.IsPassedTime())
 		{
@@ -29,13 +29,13 @@ namespace acid
 			m_deltaUpdate.Update();
 
 			// Pre-Update.
-			moduleManager.RunUpdate(MODULE_UPDATE_PRE);
+			moduleManager.RunUpdate(Module::Stage::Pre);
 
 			// Update.
-			moduleManager.RunUpdate(MODULE_UPDATE_NORMAL);
+			moduleManager.RunUpdate(Module::Stage::Normal);
 
 			// Post-Update.
-			moduleManager.RunUpdate(MODULE_UPDATE_POST);
+			moduleManager.RunUpdate(Module::Stage::Post);
 		}
 
 		// Prioritize updates over rendering.
@@ -54,7 +54,7 @@ namespace acid
 			m_deltaRender.Update();
 
 			// Render
-			moduleManager.RunUpdate(MODULE_UPDATE_RENDER);
+			moduleManager.RunUpdate(Module::Stage::Render);
 		}
 	}
 }

@@ -9,24 +9,21 @@
 namespace acid
 {
 	/// <summary>
-	/// Encapsulate an IPv4 network address.
+	/// A utility class for manipulating network addresses.
+	/// It provides a set a implicit constructors and conversion functions
+	/// to easily build or transform an IP address from/to various representations.
 	/// </summary>
 	class ACID_EXPORT IpAddress
 	{
-	private:
-		/// Address stored as an unsigned 32 bits integer.
-		uint32_t m_address;
-		/// Is the address valid?
-		bool m_valid;
 	public:
 		/// Value representing an empty/invalid address.
-		static const IpAddress NONE;
+		static const IpAddress None;
 		/// Value representing any address (0.0.0.0).
-		static const IpAddress ANY;
+		static const IpAddress Any;
 		/// The "localhost" address (for connecting a computer to itself locally).
-		static const IpAddress LOCAL_HOST;
+		static const IpAddress LocalHost;
 		/// The "broadcast" address (for sending UDP messages to everyone on a local network).
-		static const IpAddress BROADCAST;
+		static const IpAddress Broadcast;
 
 		/// <summary>
 		/// Default constructor, this constructor creates an empty (invalid) address.
@@ -100,13 +97,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Public IP address of the computer. </returns>
-		static IpAddress GetPublicAddress(const Time &timeout = Time::ZERO);
-	private:
-		/// <summary>
-		/// Resolve the given address string.
-		/// </summary>
-		/// <param name="address"> Address string. </param>
-		void Resolve(const std::string &address);
+		static IpAddress GetPublicAddress(const Time &timeout = Time::Zero);
 	public:
 		bool operator==(const IpAddress &other) const;
 
@@ -123,5 +114,16 @@ namespace acid
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const IpAddress &address);
 
 		ACID_EXPORT friend std::istream &operator>>(std::istream &stream, IpAddress &address);
+	private:
+		/// <summary>
+		/// Resolve the given address string.
+		/// </summary>
+		/// <param name="address"> Address string. </param>
+		void Resolve(const std::string &address);
+
+		/// Address stored as an unsigned 32 bits integer.
+		uint32_t m_address;
+		/// Is the address valid?
+		bool m_valid;
 	};
 }

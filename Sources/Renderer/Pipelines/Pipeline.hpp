@@ -15,9 +15,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT GraphicsStage
 	{
-	private:
-		uint32_t m_renderpass;
-		uint32_t m_subpass;
 	public:
 		/// <summary>
 		/// Creates a new graphics stage.
@@ -48,16 +45,15 @@ namespace acid
 		{
 			return m_renderpass < other.m_renderpass || m_subpass < other.m_subpass;
 		}
+	private:
+		uint32_t m_renderpass;
+		uint32_t m_subpass;
 	};
 
 	using ShaderDefine = std::pair<std::string, std::string>;
 
 	class ACID_EXPORT VertexInput
 	{
-	private:
-		uint32_t m_binding;
-		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
-		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	public:
 		VertexInput(const uint32_t &binding, const std::vector<VkVertexInputBindingDescription> &bindingDescriptions, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions) :
 			m_binding(binding),
@@ -76,6 +72,10 @@ namespace acid
 		{
 			return m_binding < other.m_binding;
 		}
+	private:
+		uint32_t m_binding;
+		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	};
 
 	/// <summary>

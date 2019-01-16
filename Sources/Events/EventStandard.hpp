@@ -11,10 +11,6 @@ namespace acid
 	class ACID_EXPORT EventStandard :
 		public IEvent
 	{
-	private:
-		std::function<void()> m_onEvent;
-		std::function<bool()> m_triggered;
-		bool m_repeat;
 	public:
 		/// <summary>
 		/// Creates a new standard event.
@@ -29,5 +25,9 @@ namespace acid
 		void OnEvent() override;
 
 		bool RemoveAfterEvent() override { return !m_repeat; }
+	private:
+		std::function<void()> m_onEvent;
+		std::function<bool()> m_triggered;
+		bool m_repeat;
 	};
 }

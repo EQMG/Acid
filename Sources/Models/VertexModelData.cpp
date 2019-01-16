@@ -2,12 +2,12 @@
 
 namespace acid
 {
-	const uint32_t VertexModelData::NO_INDEX = static_cast<uint32_t>(-1);
+	static const int32_t NO_INDEX = -1;
 
 	VertexModelData::VertexModelData(const uint32_t &index, const Vector3 &position) :
 		m_position(position),
-		m_uvIndex(VertexModelData::NO_INDEX),
-		m_normalIndex(VertexModelData::NO_INDEX),
+		m_uvIndex(NO_INDEX),
+		m_normalIndex(NO_INDEX),
 		m_duplicateVertex(nullptr),
 		m_index(index),
 		m_length(position.Length()),
@@ -41,7 +41,7 @@ namespace acid
 
 	bool VertexModelData::IsSet() const
 	{
-		return (static_cast<uint32_t>(m_uvIndex) != NO_INDEX) && (static_cast<uint32_t>(m_normalIndex) != NO_INDEX);
+		return m_uvIndex != NO_INDEX && m_normalIndex != NO_INDEX;
 	}
 
 	bool VertexModelData::HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const

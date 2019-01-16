@@ -7,11 +7,8 @@ namespace acid
 	class ACID_EXPORT EmitterCircle :
 		public Emitter
 	{
-	private:
-		float m_radius;
-		Vector3 m_heading;
 	public:
-		explicit EmitterCircle(const float &radius = 1.0f, const Vector3 &heading = Vector3::UP, const Transform &localTransform = Transform::IDENTITY);
+		explicit EmitterCircle(const float &radius = 1.0f, const Vector3 &heading = Vector3::Up, const Transform &localTransform = Transform::Identity);
 
 		void Start() override;
 
@@ -30,5 +27,8 @@ namespace acid
 		const Vector3 &GetHeading() const { return m_heading; }
 
 		void SetHeading(const Vector3 &heading) { m_heading = heading; }
+	private:
+		float m_radius;
+		Vector3 m_heading;
 	};
 }

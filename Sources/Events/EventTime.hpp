@@ -13,10 +13,6 @@ namespace acid
 	class ACID_EXPORT EventTime :
 		public IEvent
 	{
-	private:
-		std::function<void()> m_onEvent;
-		Timer m_timer;
-		bool m_repeat;
 	public:
 		/// <summary>
 		/// Creates a new time event.
@@ -31,5 +27,9 @@ namespace acid
 		void OnEvent() override;
 
 		bool RemoveAfterEvent() override { return !m_repeat; }
+	private:
+		std::function<void()> m_onEvent;
+		Timer m_timer;
+		bool m_repeat;
 	};
 }

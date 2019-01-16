@@ -10,10 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT IDriver
 	{
-	protected:
-		Time m_length;
-		Time m_actualTime;
-		Time m_currentTime;
 	public:
 		/// <summary>
 		/// Creates a new driver with a length.
@@ -21,8 +17,8 @@ namespace acid
 		/// <param name="length"> The drivers length. </param>
 		explicit IDriver(const Time &length) :
 			m_length(length),
-			m_actualTime(Time::ZERO),
-			m_currentTime(Time::ZERO)
+			m_actualTime(Time::Zero),
+			m_currentTime(Time::Zero)
 		{
 		}
 
@@ -61,5 +57,9 @@ namespace acid
 		/// </param>
 		/// <returns> The calculated value. </returns>
 		virtual float Calculate(const float &factor) = 0;
+
+		Time m_length;
+		Time m_actualTime;
+		Time m_currentTime;
 	};
 }

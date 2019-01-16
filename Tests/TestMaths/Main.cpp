@@ -25,7 +25,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	auto engine = std::make_unique<Engine>(argv[0], true);
-	engine->GetModuleManager().Add<Files>(MODULE_UPDATE_ALWAYS);
+	engine->GetModuleManager().Add<Files>(Module::Stage::Always);
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	{

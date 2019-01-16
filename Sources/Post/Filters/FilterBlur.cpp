@@ -4,10 +4,10 @@
 
 namespace acid
 {
-	FilterBlur::FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const BlurType &blurType) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {ShaderDefine("BLUR_TYPE", String::To(blurType))}),
+	FilterBlur::FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const Type &type) :
+		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Blur.frag"}, {ShaderDefine("BLUR_TYPE", String::To(static_cast<uint32_t>(type)))}),
 		m_pushScene(PushHandler()),
-		m_blurType(blurType),
+		m_type(type),
 		m_direction(direction)
 	{
 	}

@@ -15,18 +15,6 @@ namespace acid
 	class ACID_EXPORT KinematicCharacter :
 		public CollisionObject
 	{
-	private:
-		std::unique_ptr<btKinematicCharacterController> m_controller;
-
-		Vector3 m_gravity;
-		Vector3 m_up;
-		float m_stepHeight;
-		float m_fallSpeed;
-		float m_jumpSpeed;
-		float m_maxHeight;
-		bool m_interpolate;
-
-		btPairCachingGhostObject *m_ghostObject;
 	public:
 		/// <summary>
 		/// Creates a new kinematic character controller.
@@ -85,5 +73,17 @@ namespace acid
 		void RecalculateMass() override;
 	private:
 		static std::unique_ptr<btPairCachingGhostObject> CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape* shape);
+
+		std::unique_ptr<btKinematicCharacterController> m_controller;
+
+		Vector3 m_gravity;
+		Vector3 m_up;
+		float m_stepHeight;
+		float m_fallSpeed;
+		float m_jumpSpeed;
+		float m_maxHeight;
+		bool m_interpolate;
+
+		btPairCachingGhostObject *m_ghostObject;
 	};
 }

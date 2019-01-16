@@ -9,26 +9,17 @@
 
 namespace acid
 {
-	enum AttachmentType
-	{
-		ATTACHMENT_TYPE_IMAGE = 0,
-		ATTACHMENT_TYPE_DEPTH = 1,
-		ATTACHMENT_TYPE_SWAPCHAIN = 2
-	};
-
 	/// <summary>
 	/// A object that represents an attachment in a renderpass.
 	/// </summary>
 	class ACID_EXPORT Attachment
 	{
-	private:
-		uint32_t m_binding;
-		std::string m_name;
-		AttachmentType m_type;
-		bool m_multisampled;
-		VkFormat m_format;
-		Colour m_clearColour;
 	public:
+		enum class Type
+		{
+			Image, Depth, Swapchain
+		};
+
 		/// <summary>
 		/// Creates a new attachment that represents a object in the render pipeline.
 		/// </summary>
@@ -38,7 +29,7 @@ namespace acid
 		/// <param name="type"> The attachment type this represents. </param>
 		/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
 		/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
-		Attachment(const uint32_t &binding, const std::string &name, const AttachmentType &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::BLACK) :
+		Attachment(const uint32_t &binding, const std::string &name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::Black) :
 			m_binding(binding),
 			m_name(name),
 			m_type(type),
@@ -52,13 +43,20 @@ namespace acid
 
 		const std::string &GetName() const { return m_name; }
 
-		const AttachmentType &GetType() const { return m_type; }
+		const Type &GetType() const { return m_type; }
 
 		const bool &IsMultisampled() const { return m_multisampled; }
 
 		const VkFormat &GetFormat() const { return m_format; }
 
 		const Colour &GetClearColour() const { return m_clearColour; }
+	private:
+		uint32_t m_binding;
+		std::string m_name;
+		Type m_type;
+		bool m_multisampled;
+		VkFormat m_format;
+		Colour m_clearColour;
 	};
 
 	class ACID_EXPORT SubpassType

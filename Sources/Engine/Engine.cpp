@@ -14,7 +14,7 @@ namespace acid
 		m_moduleManager(ModuleManager()),
 		m_moduleUpdater(ModuleUpdater()),
 		m_argv0(argv0),
-		m_timeOffset(Time::ZERO),
+		m_timeOffset(Time::Zero),
 		m_fpsLimit(-1.0f),
 		m_running(true),
 		m_error(false)

@@ -13,21 +13,8 @@ namespace acid
 	class ACID_EXPORT MaterialDefault :
 		public Material
 	{
-	private:
-		bool m_animated;
-		Colour m_baseDiffuse;
-		std::shared_ptr<Texture> m_diffuseTexture;
-
-		float m_metallic;
-		float m_roughness;
-		std::shared_ptr<Texture> m_materialTexture;
-		std::shared_ptr<Texture> m_normalTexture;
-
-		bool m_castsShadows;
-		bool m_ignoreLighting;
-		bool m_ignoreFog;
 	public:
-		explicit MaterialDefault(const Colour &baseDiffuse = Colour::WHITE, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
+		explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, const std::shared_ptr<Texture> &diffuseTexture = nullptr,
 			const float &metallic = 0.0f, const float &roughness = 0.0f, const std::shared_ptr<Texture> &materialTexture = nullptr, const std::shared_ptr<Texture> &normalTexture = nullptr,
 			const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
@@ -80,5 +67,18 @@ namespace acid
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 	private:
 		std::vector<ShaderDefine> GetDefines();
+
+		bool m_animated;
+		Colour m_baseDiffuse;
+		std::shared_ptr<Texture> m_diffuseTexture;
+
+		float m_metallic;
+		float m_roughness;
+		std::shared_ptr<Texture> m_materialTexture;
+		std::shared_ptr<Texture> m_normalTexture;
+
+		bool m_castsShadows;
+		bool m_ignoreLighting;
+		bool m_ignoreFog;
 	};
 }

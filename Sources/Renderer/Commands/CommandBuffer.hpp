@@ -7,11 +7,6 @@ namespace acid
 {
 	class ACID_EXPORT CommandBuffer
 	{
-	private:
-		VkQueueFlagBits m_queueType;
-		VkCommandBufferLevel m_bufferLevel;
-		VkCommandBuffer m_commandBuffer;
-		bool m_running;
 	public:
 		explicit CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT, const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
@@ -28,5 +23,10 @@ namespace acid
 		const VkCommandBuffer &GetCommandBuffer() const { return m_commandBuffer; }
 	private:
 		VkQueue GetQueue() const;
+
+		VkQueueFlagBits m_queueType;
+		VkCommandBufferLevel m_bufferLevel;
+		VkCommandBuffer m_commandBuffer;
+		bool m_running;
 	};
 }
