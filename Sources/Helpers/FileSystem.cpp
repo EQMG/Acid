@@ -32,8 +32,8 @@ namespace acid
 	const char FileSystem::Separator = '\\';
 	const char FileSystem::AltSeparator = '/';
 #else
-	const char FileSystem::SEPARATOR = '/';
-	const char FileSystem::ALT_SEPARATOR = '\\';
+	const char FileSystem::Separator = '/';
+	const char FileSystem::AltSeparator = '\\';
 #endif
 
 	std::string FileSystem::GetWorkingDirectory()
@@ -350,7 +350,7 @@ namespace acid
 #if defined(ACID_BUILD_WINDOWS)
 		std::string::size_type end = path.find_last_of(Separator + "/");
 #else
-		std::string::size_type end = path.find_last_of(SEPARATOR);
+		std::string::size_type end = path.find_last_of(Separator);
 #endif
 
 		if (end == path.length() - 1)
@@ -358,7 +358,7 @@ namespace acid
 #if defined(ACID_BUILD_WINDOWS)
 			end = path.find_last_of(Separator + "/", end);
 #else
-			end = path.find_last_of(SEPARATOR, end);
+			end = path.find_last_of(Separator, end);
 #endif
 		}
 
