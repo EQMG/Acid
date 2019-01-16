@@ -12,9 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT File
 	{
-	private:
-		std::string m_filename;
-		std::unique_ptr<Metadata> m_metadata;
 	public:
 		explicit File(const std::string &filename, Metadata *metadata);
 
@@ -31,5 +28,8 @@ namespace acid
 		Metadata *GetMetadata() const { return m_metadata.get(); }
 	private:
 		void Verify();
+
+		std::string m_filename;
+		std::unique_ptr<Metadata> m_metadata;
 	};
 }

@@ -22,16 +22,13 @@ namespace acid
 	class ACID_EXPORT Collider :
 		public Component
 	{
-	protected:
-		Transform m_localTransform;
-		Gizmo *m_gizmo;
 	public:
 		/// <summary>
 		/// Creates a new collider shape.
 		/// </summary>
 		/// <param name="localTransform"> The parent offset of the body. </param>
 		/// <param name="gizmoType"> The gizmo type to use for this collider type. </param>
-		Collider(const Transform &localTransform = Transform::IDENTITY, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
+		Collider(const Transform &localTransform = Transform::Identity, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
 
 		~Collider();
 
@@ -64,6 +61,9 @@ namespace acid
 
 		static btTransform Convert(const Transform &transform);
 
-		static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::ONE);
+		static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::One);
+	protected:
+		Transform m_localTransform;
+		Gizmo *m_gizmo;
 	};
 }

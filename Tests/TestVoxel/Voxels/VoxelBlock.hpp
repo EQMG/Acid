@@ -28,7 +28,7 @@ namespace test
 		Vector3 m_position;
 		std::string m_type;
 	public:
-		explicit VoxelBlock(const Vector3 &position = Vector3::ZERO, const std::string &type = "");
+		explicit VoxelBlock(const Vector3 &position = Vector3::Zero, const std::string &type = "");
 
 		Vector3 GetPosition() const { return m_position; }
 

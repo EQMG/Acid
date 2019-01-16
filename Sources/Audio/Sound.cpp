@@ -10,7 +10,7 @@
 
 namespace acid
 {
-	Sound::Sound(const std::string &filename, const Transform &localTransform, const SoundType &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
+	Sound::Sound(const std::string &filename, const Transform &localTransform, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
 		m_soundBuffer(SoundBuffer::Create(filename)),
 		m_source(0),
 		m_localTransform(localTransform),

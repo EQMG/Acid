@@ -9,9 +9,6 @@ namespace acid
 	class ACID_EXPORT MeshRender :
 		public Component
 	{
-	private:
-		DescriptorsHandler m_descriptorSet;
-		UniformHandler m_uniformObject;
 	public:
 		MeshRender();
 
@@ -26,5 +23,8 @@ namespace acid
 		bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
 
 		bool operator<(const MeshRender &other) const;
+	private:
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 	};
 }

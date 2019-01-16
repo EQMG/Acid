@@ -15,7 +15,7 @@ namespace test
 		int m_test;
 		Vector3 m_rotation;
 	public:
-		explicit Rotate(const Vector3 &direction = Vector3::ZERO, const int &test = 0);
+		explicit Rotate(const Vector3 &direction = Vector3::Zero, const int &test = 0);
 
 		void Start() override;
 

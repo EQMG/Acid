@@ -10,11 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Delta
 	{
-	private:
-		Time m_currentFrameTime;
-		Time m_lastFrameTime;
-		Time m_change;
-		Time m_time;
 	public:
 		/// <summary>
 		/// Creates a new change handler.
@@ -29,5 +24,10 @@ namespace acid
 		const Time &GetChange() const { return m_change; }
 
 		const Time &GetTime() const { return m_time; }
+	private:
+		Time m_currentFrameTime;
+		Time m_lastFrameTime;
+		Time m_change;
+		Time m_time;
 	};
 }

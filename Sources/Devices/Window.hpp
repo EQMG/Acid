@@ -36,49 +36,6 @@ namespace acid
 	class ACID_EXPORT Window :
 		public Module
 	{
-	private:
-		uint32_t m_windowWidth;
-		uint32_t m_windowHeight;
-		uint32_t m_fullscreenWidth;
-		uint32_t m_fullscreenHeight;
-		float m_aspectRatio;
-
-		uint32_t m_positionX;
-		uint32_t m_positionY;
-
-		std::string m_title;
-		std::string m_iconPath;
-		bool m_borderless;
-		bool m_resizable;
-		bool m_floating;
-		bool m_fullscreen;
-
-		bool m_closed;
-		bool m_focused;
-		bool m_iconified;
-
-		GLFWwindow *m_window;
-		std::vector<Monitor> m_monitors;
-
-		Delegate<void(uint32_t, bool)> m_onMonitorConnect;
-		Delegate<void()> m_onClose;
-		Delegate<void(bool)> m_onIconify;
-
-		friend void CallbackError(int32_t error, const char *description);
-
-		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
-
-		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
-
-		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
-
-		friend void CallbackClose(GLFWwindow *window);
-
-		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
-
-		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
-
-		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -298,5 +255,48 @@ namespace acid
 		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
 		VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
+	private:
+		uint32_t m_windowWidth;
+		uint32_t m_windowHeight;
+		uint32_t m_fullscreenWidth;
+		uint32_t m_fullscreenHeight;
+		float m_aspectRatio;
+
+		uint32_t m_positionX;
+		uint32_t m_positionY;
+
+		std::string m_title;
+		std::string m_iconPath;
+		bool m_borderless;
+		bool m_resizable;
+		bool m_floating;
+		bool m_fullscreen;
+
+		bool m_closed;
+		bool m_focused;
+		bool m_iconified;
+
+		GLFWwindow *m_window;
+		std::vector<Monitor> m_monitors;
+
+		Delegate<void(uint32_t, bool)> m_onMonitorConnect;
+		Delegate<void()> m_onClose;
+		Delegate<void(bool)> m_onIconify;
+
+		friend void CallbackError(int32_t error, const char *description);
+
+		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
+
+		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
+
+		friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
+
+		friend void CallbackClose(GLFWwindow *window);
+
+		friend void CallbackFocus(GLFWwindow *window, int32_t focused);
+
+		friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
+
+		friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 	};
 }

@@ -10,10 +10,6 @@ namespace acid
 	class ACID_EXPORT DriverFade :
 		public IDriver
 	{
-	private:
-		float m_start;
-		float m_end;
-		float m_peak;
 	public:
 		/// <summary>
 		/// Creates a new fade driver.
@@ -61,5 +57,9 @@ namespace acid
 		void SetPeak(const float &peak) { m_peak = peak; }
 	protected:
 		float Calculate(const float &factor) override;
+	private:
+		float m_start;
+		float m_end;
+		float m_peak;
 	};
 }

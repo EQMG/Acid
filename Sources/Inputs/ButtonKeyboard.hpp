@@ -11,9 +11,6 @@ namespace acid
 	class ACID_EXPORT ButtonKeyboard :
 		public IButton
 	{
-	private:
-		Key m_key;
-		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new button keyboard.
@@ -28,5 +25,8 @@ namespace acid
 		const Key &GetKey() const { return m_key; }
 
 		void SetKey(const Key &key) { m_key = key; }
+	private:
+		Key m_key;
+		bool m_wasDown;
 	};
 }

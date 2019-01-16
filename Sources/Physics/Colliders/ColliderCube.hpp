@@ -10,11 +10,8 @@ namespace acid
 	class ACID_EXPORT ColliderCube :
 		public Collider
 	{
-	private:
-		std::unique_ptr<btBoxShape> m_shape;
-		Vector3 m_extents;
 	public:
-		explicit ColliderCube(const Vector3 &extents = Vector3::ONE, const Transform &localTransform = Transform::IDENTITY);
+		explicit ColliderCube(const Vector3 &extents = Vector3::One, const Transform &localTransform = Transform::Identity);
 
 		~ColliderCube();
 
@@ -31,5 +28,8 @@ namespace acid
 		const Vector3 &GetExtents() const { return m_extents; }
 
 		void SetExtents(const Vector3 &extents);
+	private:
+		std::unique_ptr<btBoxShape> m_shape;
+		Vector3 m_extents;
 	};
 }

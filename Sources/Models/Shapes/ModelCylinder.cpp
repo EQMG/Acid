@@ -45,7 +45,7 @@ namespace acid
 		for (uint32_t i = 0; i < slices + 1; i++)
 		{
 			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
-			float alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * PI;
+			float alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi;
 			float xDir = std::cos(alpha);
 			float zDir = std::sin(alpha);
 

@@ -13,9 +13,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT JointTransform
 	{
-	private:
-		Vector3 m_position;
-		Quaternion m_rotation;
 	public:
 		/// <summary>
 		/// Creates a new joint transformation.
@@ -70,5 +67,8 @@ namespace acid
 		const Quaternion &GetRotation() const { return m_rotation; }
 
 		void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
+	private:
+		Vector3 m_position;
+		Quaternion m_rotation;
 	};
 }

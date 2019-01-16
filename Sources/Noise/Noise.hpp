@@ -30,98 +30,49 @@
 
 namespace acid
 {
-	enum NoiseType
-	{
-		NOISE_TYPE_VALUE = 0,
-		NOISE_TYPE_VALUE_FRACTAL = 1,
-		NOISE_TYPE_PERLIN = 2,
-		NOISE_TYPE_PERLIN_FRACTAL = 3,
-		NOISE_TYPE_SIMPLEX = 4,
-		NOISE_TYPE_SIMPLEX_FRACTAL = 5,
-		NOISE_TYPE_CELLULAR = 6,
-		NOISE_TYPE_STATIC = 7,
-		NOISE_TYPE_CUBIC = 8,
-		NOISE_TYPE_CUBIC_FRACTAL = 9
-	};
-
-	enum NoiseInterp
-	{
-		NOISE_INTERP_LINEAR = 0,
-		NOISE_INTERP_HERMITE = 1,
-		NOISE_INTERP_QUINTIC = 2
-	};
-
-	enum NoiseFractal
-	{
-		NOISE_FRACTAL_FBM = 0,
-		NOISE_FRACTAL_BILLOW = 1,
-		NOISE_FRACTAL_RIGIDMULTI = 2
-	};
-
-	enum NoiseCellularFunc
-	{
-		NOISE_CELLULAR_EUCLIDEAN = 0,
-		NOISE_CELLULAR_MANHATTAN = 1,
-		NOISE_CELLULAR_NATURAL = 2
-	};
-
-	enum NoiseCellularReturn
-	{
-		NOISE_CELLULAR_CELLVALUE = 0,
-		NOISE_CELLULAR_NOISELOOKUP = 1,
-		NOISE_CELLULAR_DISTANCE = 2,
-		NOISE_CELLULAR_DISTANCE2 = 3,
-		NOISE_CELLULAR_DISTANCE2ADD = 4,
-		NOISE_CELLULAR_DISTANCE2SUB = 5,
-		NOISE_CELLULAR_DISTANCE2MUL = 6,
-		NOISE_CELLULAR_DISTANCE2DIV = 7
-	};
-
 	class ACID_EXPORT Noise
 	{
-	private:
-		int32_t m_seed;
-		std::unique_ptr<uint8_t[]> m_perm;
-		std::unique_ptr<uint8_t[]> m_perm12;
-
-		float m_frequency;
-		NoiseInterp m_interp;
-		NoiseType m_noiseType;
-
-		int32_t m_octaves;
-		float m_lacunarity;
-		float m_gain;
-		NoiseFractal m_fractalType;
-		float m_fractalBounding;
-
-		NoiseCellularFunc m_cellularDistanceFunction;
-		NoiseCellularReturn m_cellularReturnType;
-		std::unique_ptr<Noise> m_cellularNoiseLookup;
-		int32_t m_cellularDistanceIndex0;
-		int32_t m_cellularDistanceIndex1;
-		float m_cellularJitter;
-
-		float m_gradientPerturbAmp;
 	public:
+		enum class Type
+		{
+			Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal
+		};
+		enum class Interp
+		{
+			Linear, Hermite, Quintic
+		};
+		enum class Fractal
+		{
+			FBM, Billow, RigidMulti
+		};
+		enum class CellularDistance
+		{
+			Euclidean, Manhattan, Natural
+		};
+		enum class CellularReturn
+		{
+			CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div
+		};
+
 		/// <summary>
 		/// Creates a new multi-type noise object.
 		/// </summary>
 		/// <param name="seed"> The seed. </param>
 		/// <param name="frequency"> The noise frequency. </param>
 		/// <param name="interp"> The interp type. </param>
-		/// <param name="noiseType"> The noise type. </param>
+		/// <param name="type"> The noise type. </param>
 		/// <param name="octaves"> The amount of octaves to use. </param>
 		/// <param name="lacunarity"> The lacunarity between octaves. </param>
 		/// <param name="fractalType"> The fractal noise type. </param>
 		/// <param name="fractalBounding"> The fractal bounding. </param>
-		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const NoiseInterp &interp = NOISE_INTERP_QUINTIC, const NoiseType &noiseType = NOISE_TYPE_SIMPLEX, const int32_t &octaves = 3,
-		      const float &lacunarity = 2.0f, const float &gain = 0.5f, const NoiseFractal &fractalType = NOISE_FRACTAL_FBM, const float &fractalBounding = 0.0f);
+		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, const int32_t &octaves = 3,
+			const float &lacunarity = 2.0f, const float &gain = 0.5f, const Fractal &fractal = Fractal::FBM, const float &fractalBounding = 0.0f);
 
 		/// <summary>
 		/// Gets the seed used for all noise types.
 		/// </summary>
 		/// <returns> The seed. </returns>
-		const int32_t &GetSeed() const { return m_seed; }
+		int32_t GetSeed() const { return m_seed; }
 
 		/// <summary>
 		/// Sets seed used for all noise types.
@@ -133,7 +84,7 @@ namespace acid
 		/// Gets the frequency used for all noise types.
 		/// </summary>
 		/// <returns> The frequency. </returns>
-		const float &GetFrequency() const { return m_frequency; }
+		float GetFrequency() const { return m_frequency; }
 
 		/// <summary>
 		/// Sets the frequency used for all noise types.
@@ -145,31 +96,31 @@ namespace acid
 		/// Gets the interpolation method used for supported noise types.
 		/// </summary>
 		/// <returns> The interpolation method. </returns>
-		const NoiseInterp &GetInterp() const { return m_interp; }
+		Interp GetInterp() const { return m_interp; }
 
 		/// <summary>
 		/// Sets the interpolation method used to smooth between noise values.
 		/// </summary>
 		/// <param name="interp"> The new interpolation method (Default: Quintic). </param>
-		void SetInterp(const NoiseInterp &interp) { m_interp = interp; }
+		void SetInterp(const Interp &interp) { m_interp = interp; }
 
 		/// <summary>
 		/// Gets the type of noise.
 		/// </summary>
 		/// <returns> The type of noise (Default: Simplex). </returns>
-		const NoiseType &GetNoiseType() const { return m_noiseType; }
+		Type GetType() const { return m_type; }
 
 		/// <summary>
 		/// Sets the type of noise.
 		/// </summary>
-		/// <param name="noiseType"> The new noise type. </param>
-		void SetNoiseType(const NoiseType &noiseType) { m_noiseType = noiseType; }
+		/// <param name="type"> The new noise type. </param>
+		void SetType(const Type &type) { m_type = type; }
 
 		/// <summary>
 		/// Gets the octave count for all fractal noise types.
 		/// </summary>
 		/// <returns> The octave count (Default: 3). </returns>
-		const int32_t &GetFractalOctaves() const { return m_octaves; }
+		int32_t GetFractalOctaves() const { return m_octaves; }
 
 		/// <summary>
 		/// Sets the octave count for all fractal noise types.
@@ -181,7 +132,7 @@ namespace acid
 		/// Gets the octave lacunarity for all fractal noise types.
 		/// </summary>
 		/// <returns> The octave lacunarity. </returns>
-		const float &GetFractalLacunarity() const { return m_lacunarity; }
+		float GetFractalLacunarity() const { return m_lacunarity; }
 
 		/// <summary>
 		/// Sets the octave octave lacunarity for all fractal noise types.
@@ -193,7 +144,7 @@ namespace acid
 		/// Gets the octave gain for all fractal noise types.
 		/// </summary>
 		/// <returns> The octave gain. </returns>
-		const float &GetFractalGain() const { return m_gain; }
+		float GetFractalGain() const { return m_gain; }
 
 		/// <summary>
 		/// Sets the octave gain for all fractal noise types.
@@ -205,48 +156,48 @@ namespace acid
 		/// Gets the method for combining octaves in all fractal noise types.
 		/// </summary>
 		/// <returns> The method for combining octaves. </returns>
-		const NoiseFractal &GetFractalType() const { return m_fractalType; }
+		Fractal GetFractal() const { return m_fractal; }
 
 		/// <summary>
 		/// Sets the method for combining octaves in all fractal noise types.
 		/// </summary>
-		/// <param name="fractalType"> The new method for combining octaves (Default: FBM). </param>
-		void SetFractalType(const NoiseFractal &fractalType) { m_fractalType = fractalType; }
+		/// <param name="fractal"> The new method for combining octaves (Default: FBM). </param>
+		void SetFractal(const Fractal &fractal) { m_fractal = fractal; }
 
 		/// <summary>
 		/// Gets the distance function used in cellular noise calculations.
 		/// </summary>
 		/// <returns> The cellular distance function. </returns>
-		const NoiseCellularFunc &GetCellularDistanceFunction() const { return m_cellularDistanceFunction; }
+		CellularDistance GetCellularDistance() const { return m_cellularDistance; }
 
 		/// <summary>
 		/// Sets the distance function used in cellular noise calculations.
 		/// </summary>
-		/// <param name="cellularDistanceFunction"> The new cellular distance function (Default: Euclidean). </param>
-		void SetCellularDistanceFunction(const NoiseCellularFunc &cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
+		/// <param name="cellularDistance'> The new cellular distance function (Default: Euclidean). </param>
+		void SetCellularDistance(const CellularDistance &cellularDistance) { m_cellularDistance = cellularDistance; }
 
 		/// <summary>
 		/// Gets the return type from cellular noise calculations.
 		/// </summary>
 		/// <returns> The cellular return type. </returns>
-		const NoiseCellularReturn &GetCellularReturnType() const { return m_cellularReturnType; }
+		CellularReturn GetCellularReturn() const { return m_cellularReturn; }
 
 		/// <summary>
 		/// Sets the return type from cellular noise calculations.
 		/// Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function.
 		/// </summary>
-		/// <param name="cellularReturnType"> The new cellular return type (Default: CellValue). </param>
-		void SetCellularReturnType(const NoiseCellularReturn &cellularReturnType) { m_cellularReturnType = cellularReturnType; }
+		/// <param name="cellularReturn> The new cellular return type (Default: CellValue). </param>
+		void SetCellularReturn(const CellularReturn &cellularReturn) { m_cellularReturn = cellularReturn; }
 
 		/// <summary>
 		/// Gets the noise used to calculate a cell value if the cellular return type is NoiseLookup.
 		/// </summary>
 		/// <returns> The cellular noise lookup. </returns>
-		const Noise *GetCellularNoiseLookup() const { return m_cellularNoiseLookup.get(); }
+		Noise *GetCellularNoiseLookup() const { return m_cellularNoiseLookup.get(); }
 
 		/// <summary>
 		/// Sets the noise used to calculate a cell value if cellular return type is NoiseLookup.
-		/// The lookup value is acquired through GetNoise() so ensure you SetNoiseType() on the noise lookup, value, Perlin or simplex is recommended.
+		/// The lookup value is acquired through GetNoise() so ensure you SetType() on the noise lookup, value, Perlin or simplex is recommended.
 		/// </summary>
 		/// <param name="noise"> The new cellular noise lookup. </param>
 		void SetCellularNoiseLookup(Noise *noise) { m_cellularNoiseLookup.reset(noise); }
@@ -270,7 +221,7 @@ namespace acid
 		/// Gets the maximum distance a cellular point can move from its grid position.
 		/// </summary>
 		/// <returns> The cellular maximum distance. </returns>
-		const float &GetCellularJitter() const { return m_cellularJitter; }
+		float GetCellularJitter() const { return m_cellularJitter; }
 
 		/// <summary>
 		/// Sets the maximum distance a cellular point can move from its grid position.
@@ -283,7 +234,7 @@ namespace acid
 		/// Gets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
 		/// </summary>
 		/// <returns> The cellular maximum warp distance. </returns>
-		const float &GetGradientPerturbAmp() const { return m_gradientPerturbAmp; }
+		float GetGradientPerturbAmp() const { return m_gradientPerturbAmp; }
 
 		/// <summary>
 		/// Sets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
@@ -355,7 +306,6 @@ namespace acid
 		float GetWhiteNoise(float x, float y, float z, float w) const;
 
 		float GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z, int32_t w) const;
-
 	private:
 		void CalculateFractalBounding();
 
@@ -482,5 +432,28 @@ namespace acid
 
 		//4D
 		float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const;
+
+		int32_t m_seed;
+		std::unique_ptr<uint8_t[]> m_perm;
+		std::unique_ptr<uint8_t[]> m_perm12;
+
+		float m_frequency;
+		Interp m_interp;
+		Type m_type;
+
+		int32_t m_octaves;
+		float m_lacunarity;
+		float m_gain;
+		Fractal m_fractal;
+		float m_fractalBounding;
+
+		CellularDistance m_cellularDistance;
+		CellularReturn m_cellularReturn;
+		std::unique_ptr<Noise> m_cellularNoiseLookup;
+		int32_t m_cellularDistanceIndex0;
+		int32_t m_cellularDistanceIndex1;
+		float m_cellularJitter;
+
+		float m_gradientPerturbAmp;
 	};
 }

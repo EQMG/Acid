@@ -7,10 +7,8 @@ namespace acid
 	class ACID_EXPORT EmitterPoint :
 		public Emitter
 	{
-	private:
-		Vector3 m_point;
 	public:
-		explicit EmitterPoint(const Transform &localTransform = Transform::IDENTITY);
+		explicit EmitterPoint(const Transform &localTransform = Transform::Identity);
 
 		void Start() override;
 
@@ -25,5 +23,7 @@ namespace acid
 		const Vector3 &GetPoint() const { return m_point; }
 
 		void SetPoint(const Vector3 &point) { m_point = point; }
+	private:
+		Vector3 m_point;
 	};
 }

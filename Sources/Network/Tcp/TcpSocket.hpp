@@ -11,7 +11,27 @@ namespace acid
 	class Packet;
 
 	/// <summary>
-	/// Structure holding the data of a pending packet.
+	/// TCP is a connected protocol, which means that a TCP socket can only communicate with
+	/// the host it is connected to. It can't send or receive anything if it is not connected.
+	///
+	/// The TCP protocol is reliable but adds a slight overhead. It ensures that your data
+	/// will always be received in order and without errors (no data corrupted, lost or duplicated).
+	///
+	/// When a socket is connected to a remote host, you can retrieve informations about this host
+	/// with the GetRemoteAddress and getRemotePort functions. You can also get the local port to
+	/// which the socket is bound (which is automatically chosen when the socket is connected),
+	/// with the GetLocalPort function.
+	///
+	/// Sending and receiving data can use either the low-level or the high-level functions.
+	/// The low-level functions process a raw sequence of bytes, and cannot ensure that one call to
+	/// Send will exactly match one call to Receive at the other end of the socket.
+	///
+	/// The high-level interface uses packets (see acid::Packet), which are easier to use and
+	/// provide more safety regarding the data that is exchanged.
+	/// You can look at the acid::Packet class to get more details about how they work.
+	///
+	/// The socket is automatically disconnected when it is destroyed, but if you want to
+	/// explicitly close the connection while the socket instance is still alive, you can call disconnect.
 	/// </summary>
 	class ACID_EXPORT PendingPacket
 	{
@@ -37,10 +57,6 @@ namespace acid
 	class ACID_EXPORT TcpSocket :
 		public Socket
 	{
-	private:
-		friend class TcpListener;
-		/// Temporary data of the packet currently being received.
-		PendingPacket m_pendingPacket;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -77,7 +93,7 @@ namespace acid
 		/// <param name="remotePort"> Port of the remote peer. </param>
 		/// <param name="timeout"> Optional maximum time to wait. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::ZERO);
+		Socket::Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::Zero);
 
 		/// <summary>
 		/// Disconnect the socket from its remote peer.
@@ -94,7 +110,7 @@ namespace acid
 		/// <param name="data"> Pointer to the sequence of bytes to send. </param>
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(const void *data, const std::size_t &size);
+		Socket::Status Send(const void *data, const std::size_t &size);
 
 		/// <summary>
 		/// Send raw data to the remote peer. This function will fail if the socket is not connected.
@@ -103,7 +119,7 @@ namespace acid
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <param name="sent"> The number of bytes sent will be written here. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(const void *data, const std::size_t &size, std::size_t &sent);
+		Socket::Status Send(const void *data, const std::size_t &size, std::size_t &sent);
 
 		/// <summary>
 		/// Receive raw data from the remote peer.
@@ -114,7 +130,7 @@ namespace acid
 		/// <param name="size"> Maximum number of bytes that can be received. </param>
 		/// <param name="received"> This variable is filled with the actual number of bytes received. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Receive(void *data, const std::size_t &size, std::size_t &received);
+		Socket::Status Receive(void *data, const std::size_t &size, std::size_t &received);
 
 		/// <summary>
 		/// Send a formatted packet of data to the remote peer.
@@ -124,7 +140,7 @@ namespace acid
 		/// </summary>
 		/// <param name="packet"> Packet to send. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Send(Packet &packet);
+		Socket::Status Send(Packet &packet);
 
 		/// <summary>
 		/// Receive a formatted packet of data from the remote peer.
@@ -133,6 +149,10 @@ namespace acid
 		/// </summary>
 		/// <param name="packet"> Packet to fill with the received data. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Receive(Packet &packet);
+		Socket::Status Receive(Packet &packet);
+	private:
+		friend class TcpListener;
+		/// Temporary data of the packet currently being received.
+		PendingPacket m_pendingPacket;
 	};
 }

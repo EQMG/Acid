@@ -17,22 +17,6 @@ namespace acid
 	class ACID_EXPORT ParticleSystem :
 		public Component
 	{
-	private:
-		std::vector<std::shared_ptr<ParticleType>> m_types;
-
-		float m_pps;
-		float m_averageSpeed;
-		float m_gravityEffect;
-		bool m_randomRotation;
-
-		Vector3 m_direction;
-		float m_directionDeviation;
-		float m_speedDeviation;
-		float m_lifeDeviation;
-		float m_stageDeviation;
-		float m_scaleDeviation;
-
-		Timer m_emitTimer;
 	public:
 		/// <summary>
 		/// Creates a new particle system.
@@ -99,5 +83,21 @@ namespace acid
 		float GenerateRotation() const;
 
 		Vector3 GenerateRandomUnitVector() const;
+
+		std::vector<std::shared_ptr<ParticleType>> m_types;
+
+		float m_pps;
+		float m_averageSpeed;
+		float m_gravityEffect;
+		bool m_randomRotation;
+
+		Vector3 m_direction;
+		float m_directionDeviation;
+		float m_speedDeviation;
+		float m_lifeDeviation;
+		float m_stageDeviation;
+		float m_scaleDeviation;
+
+		Timer m_emitTimer;
 	};
 }

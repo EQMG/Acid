@@ -7,12 +7,6 @@ namespace acid
 	class ACID_EXPORT FilterVignette :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		float m_innerRadius;
-		float m_outerRadius;
-		float m_opacity;
 	public:
 		explicit FilterVignette(const GraphicsStage &graphicsStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
 
@@ -29,5 +23,11 @@ namespace acid
 		const float &GetOpacity() const { return m_opacity; }
 
 		void SetOpacity(const float &opacity) { m_opacity = opacity; }
+	private:
+		PushHandler m_pushScene;
+
+		float m_innerRadius;
+		float m_outerRadius;
+		float m_opacity;
 	};
 }

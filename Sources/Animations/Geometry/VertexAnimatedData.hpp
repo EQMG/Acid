@@ -8,18 +8,6 @@ namespace acid
 {
 	class ACID_EXPORT VertexAnimatedData
 	{
-	private:
-		static const int32_t NO_INDEX;
-
-		Vector3 m_position;
-
-		int32_t m_uvIndex;
-		int32_t m_normalIndex;
-		VertexAnimatedData *m_duplicateVertex;
-
-		int32_t m_index;
-
-		VertexWeights m_skinData;
 	public:
 		VertexAnimatedData(const int32_t &index, const Vector3 &position);
 
@@ -46,5 +34,15 @@ namespace acid
 		const VertexWeights &GetSkinData() const { return m_skinData; }
 
 		void SetSkinData(const VertexWeights &skinData) { m_skinData = skinData; }
+	private:
+		Vector3 m_position;
+
+		int32_t m_uvIndex;
+		int32_t m_normalIndex;
+		VertexAnimatedData *m_duplicateVertex;
+
+		int32_t m_index;
+
+		VertexWeights m_skinData;
 	};
 }

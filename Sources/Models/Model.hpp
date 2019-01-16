@@ -17,13 +17,6 @@ namespace acid
 	class ACID_EXPORT Model :
 		public Resource
 	{
-	private:
-		std::unique_ptr<VertexBuffer> m_vertexBuffer;
-		std::unique_ptr<IndexBuffer> m_indexBuffer;
-
-		Vector3 m_minExtents;
-		Vector3 m_maxExtents;
-		float m_radius;
 	public:
 		static std::shared_ptr<Model> Create(const std::string &data);
 
@@ -81,8 +74,8 @@ namespace acid
 				m_indexBuffer = std::make_unique<IndexBuffer>(VK_INDEX_TYPE_UINT32, sizeof(uint32_t), indices.size(), indices.data());
 			}
 
-			m_minExtents = Vector3::POSITIVE_INFINITY;
-			m_maxExtents = Vector3::NEGATIVE_INFINITY;
+			m_minExtents = Vector3::PositiveInfinity;
+			m_maxExtents = Vector3::NegativeInfinity;
 
 			for (const auto &vertex : vertices)
 			{
@@ -97,5 +90,12 @@ namespace acid
 			float max1 = std::abs(m_maxExtents.MinComponent());
 			m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
 		}
+	private:
+		std::unique_ptr<VertexBuffer> m_vertexBuffer;
+		std::unique_ptr<IndexBuffer> m_indexBuffer;
+
+		Vector3 m_minExtents;
+		Vector3 m_maxExtents;
+		float m_radius;
 	};
 }

@@ -36,7 +36,7 @@ namespace test
 		else
 		{
 			materialSkybox->SetSkyColour(SKYBOX_COLOUR_DAY);
-			materialSkybox->SetFogColour(Colour::BLACK);
+			materialSkybox->SetFogColour(Colour::Black);
 			materialSkybox->SetFogLimits(Vector2(-1000000.0f, -1000000.0f));
 		}
 
@@ -48,7 +48,7 @@ namespace test
 		else
 		{
 			materialSkybox->SetBlend(1.0f);
-			GetParent()->GetLocalTransform().SetRotation(Vector3::ZERO);
+			GetParent()->GetLocalTransform().SetRotation(Vector3::Zero);
 		}
 	}
 

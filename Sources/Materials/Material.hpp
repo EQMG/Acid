@@ -15,8 +15,6 @@ namespace acid
 		public Component
 	{
 	protected:
-		std::shared_ptr<PipelineMaterial> m_pipelineMaterial;
-
 		Material() :
 			m_pipelineMaterial(nullptr)
 		{
@@ -42,5 +40,7 @@ namespace acid
 		/// </summary>
 		/// <returns> The material pipeline. </returns>
 		const std::shared_ptr<PipelineMaterial> &GetPipelineMaterial() const { return m_pipelineMaterial; }
+	protected:
+		std::shared_ptr<PipelineMaterial> m_pipelineMaterial;
 	};
 }

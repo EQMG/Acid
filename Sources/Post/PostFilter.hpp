@@ -14,15 +14,6 @@ namespace acid
 	class ACID_EXPORT PostFilter :
 		public RenderPipeline
 	{
-	protected:
-		static uint32_t GLOBAL_SWITCHING;
-
-		DescriptorsHandler m_descriptorSet;
-
-		PipelineGraphics m_pipeline;
-		std::shared_ptr<Model> m_model;
-
-		std::map<std::string, const Descriptor *> m_attachments;
 	public:
 		/// <summary>
 		/// Creates a new post effect filter.
@@ -46,6 +37,8 @@ namespace acid
 
 		bool RemoveAttachment(const std::string &name);
 	protected:
+		static uint32_t GlobalSwitching;
+
 		/// <summary>
 		/// Used instead of `m_descriptorSet.Push()` in instances where a writeColour is the same as samplerColour in a shader.
 		/// By switching between what will be the input and output of each filter previous changes are available to the shader.
@@ -55,5 +48,11 @@ namespace acid
 		/// <param name="rendererAttachment1"> The name of the renderers attachment that will be first option. </param>
 		/// <param name="rendererAttachment2"> The name of the renderers attachment that will be second option. </param>
 		void PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2);
+
+		DescriptorsHandler m_descriptorSet;
+		PipelineGraphics m_pipeline;
+		std::shared_ptr<Model> m_model;
+
+		std::map<std::string, const Descriptor *> m_attachments;
 	};
 }

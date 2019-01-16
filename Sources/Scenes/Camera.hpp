@@ -15,20 +15,6 @@ namespace acid
 	class ACID_EXPORT Camera :
 		public Component
 	{
-	protected:
-		float m_nearPlane;
-		float m_farPlane;
-		float m_fieldOfView;
-
-		Vector3 m_position;
-		Vector3 m_rotation;
-		Vector3 m_velocity;
-
-		Matrix4 m_viewMatrix;
-		Matrix4 m_projectionMatrix;
-
-		Frustum m_viewFrustum;
-		Ray m_viewRay;
 	public:
 		Camera() :
 			m_nearPlane(0.1f),
@@ -111,5 +97,19 @@ namespace acid
 		/// </summary>
 		/// <returns> The cameras view ray. </returns>
 		const Ray &GetViewRay() const { return m_viewRay; }
+	protected:
+		float m_nearPlane;
+		float m_farPlane;
+		float m_fieldOfView;
+
+		Vector3 m_position;
+		Vector3 m_rotation;
+		Vector3 m_velocity;
+
+		Matrix4 m_viewMatrix;
+		Matrix4 m_projectionMatrix;
+
+		Frustum m_viewFrustum;
+		Ray m_viewRay;
 	};
 }

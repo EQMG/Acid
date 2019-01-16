@@ -9,11 +9,8 @@ namespace acid
 	class ACID_EXPORT ColliderSphere :
 		public Collider
 	{
-	private:
-		std::unique_ptr<btSphereShape> m_shape;
-		float m_radius;
 	public:
-		explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform::IDENTITY);
+		explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform::Identity);
 
 		~ColliderSphere();
 
@@ -30,5 +27,8 @@ namespace acid
 		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius);
+	private:
+		std::unique_ptr<btSphereShape> m_shape;
+		float m_radius;
 	};
 }

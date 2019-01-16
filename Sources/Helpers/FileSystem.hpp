@@ -15,8 +15,8 @@ namespace acid
 	class ACID_EXPORT FileSystem
 	{
 	public:
-		static const char SEPARATOR;
-		static const char ALT_SEPARATOR;
+		static const char Separator;
+		static const char AltSeparator;
 
 		/// <summary>
 		/// Gets the current working directory.
@@ -58,6 +58,13 @@ namespace acid
 		/// <param name="path"> The path. </param>
 		/// <returns> If the path is writeable. </returns>
 		static bool IsWriteable(const std::string &path);
+
+		/// <summary>
+		/// Gets the last time a file was modified.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		/// <returns> The last date a file was modified, if it exists. </returns>
+		static long LastModified(const std::string &path);
 
 		/// <summary>
 		/// Finds all the files in a path.
@@ -153,6 +160,6 @@ namespace acid
 		/// <param name="path"> The path to split. </param>
 		/// <param name="delim"> The separator to split by. </param>
 		/// <returns> The split path. </returns>
-		static std::vector<std::string> SplitPath(const std::string &path, const char &delim = SEPARATOR);
+		static std::vector<std::string> SplitPath(const std::string &path, const char &delim = Separator);
 	};
 }

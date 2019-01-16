@@ -57,14 +57,10 @@ namespace acid
 	class ACID_EXPORT Delegate<TReturnType(TArgs...)> :
 		public NonCopyable
 	{
-	private:
+	public:
 		using Invoker = acid::Invoker<TReturnType, TArgs...>;
 		using FunctionType = std::function<TReturnType(TArgs...)>;
-		friend Invoker;
 
-		std::mutex m_mutex;
-		std::vector<FunctionType> m_functionList;
-	public:
 		Delegate() = default;
 
 		~Delegate() = default;
@@ -115,9 +111,14 @@ namespace acid
 			return Invoker::Invoke(*this, args...);
 		}
 	private:
+		friend Invoker;
+
 		constexpr size_t Hash(const FunctionType &function) const
 		{
 			return function.target_type().hash_code();
 		}
+
+		std::mutex m_mutex;
+		std::vector<FunctionType> m_functionList;
 	};
 }

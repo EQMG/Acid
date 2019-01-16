@@ -13,10 +13,6 @@ namespace acid
 	class ACID_EXPORT ModuleManager :
 		public NonCopyable
 	{
-	private:
-		friend class ModuleUpdater;
-		std::mutex m_mutex;
-		std::map<float, std::unique_ptr<Module>> m_modules;
 	public:
 		ModuleManager();
 
@@ -59,7 +55,7 @@ namespace acid
 		/// <param name="module"> The modules object. </param>
 		/// <param name="update"> The modules update type. </param>
 		/// <returns> The registered module. </returns>
-		Module *Add(Module *module, const ModuleUpdate &update);
+		Module *Add(Module *module, const Module::Stage &update);
 
 		/// <summary>
 		/// Registers a module with the register.
@@ -68,7 +64,7 @@ namespace acid
 		/// <param name="T"> The modules type. </param>
 		/// <returns> The registered module. </returns>
 		template<typename T>
-		T *Add(const ModuleUpdate &update)
+		T *Add(const Module::Stage &update)
 		{
 			auto module = static_cast<T *>(malloc(sizeof(T)));
 			Add(module, update);
@@ -102,10 +98,15 @@ namespace acid
 			}
 		}
 	private:
+		friend class ModuleUpdater;
+
 		/// <summary>
 		/// Runs updates for all module update types.
 		/// </summary>
 		/// <param name="update"> The modules update type. </param>
-		void RunUpdate(const ModuleUpdate &update);
+		void RunUpdate(const Module::Stage &update);
+
+		std::mutex m_mutex;
+		std::map<float, std::unique_ptr<Module>> m_modules;
 	};
 }

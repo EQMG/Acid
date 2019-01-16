@@ -10,36 +10,23 @@ namespace acid
 	class DepthStencil;
 	class Texture;
 
-	enum PipelineMode
+	enum class PipelineMode
 	{
-		PIPELINE_MODE_POLYGON = 0,
-		PIPELINE_MODE_MRT = 1
+		Polygon, Mrt
 	};
 
-	enum PipelineDepth
+	enum class PipelineDepth
 	{
-		PIPELINE_DEPTH_NONE = 0,
-		PIPELINE_DEPTH_READ_WRITE = 1,
-		PIPELINE_DEPTH_READ = 2,
-		PIPELINE_DEPTH_WRITE = 3
+		None = 0,
+		Read = 1,
+		Write = 2,
+		ReadWrite = Read | Write
 	};
 
 	class ACID_EXPORT PipelineCreate
 	{
-	private:
-		friend class PipelineGraphics;
-		std::vector<std::string> m_shaderStages;
-		std::vector<VertexInput> m_vertexInputs;
-
-		PipelineMode m_pipelineMode;
-		PipelineDepth m_depthMode;
-		VkPolygonMode m_polygonMode;
-		VkCullModeFlags m_cullMode;
-		bool m_pushDescriptors;
-
-		std::vector<ShaderDefine> m_defines;
 	public:
-		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
+		PipelineCreate(const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PipelineMode::Polygon, const PipelineDepth &depthMode = PipelineDepth::ReadWrite,
 			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
@@ -67,6 +54,19 @@ namespace acid
 		const bool &GetPushDescriptors() const { return m_pushDescriptors; }
 
 		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
+	private:
+		friend class PipelineGraphics;
+
+		std::vector<std::string> m_shaderStages;
+		std::vector<VertexInput> m_vertexInputs;
+
+		PipelineMode m_pipelineMode;
+		PipelineDepth m_depthMode;
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullMode;
+		bool m_pushDescriptors;
+
+		std::vector<ShaderDefine> m_defines;
 	};
 
 	/// <summary>
@@ -75,40 +75,6 @@ namespace acid
 	class ACID_EXPORT PipelineGraphics :
 		public Pipeline
 	{
-	private:
-		GraphicsStage m_graphicsStage;
-		std::vector<std::string> m_shaderStages;
-		std::vector<VertexInput> m_vertexInputs;
-		PipelineMode m_pipelineMode;
-		PipelineDepth m_depthMode;
-		VkPolygonMode m_polygonMode;
-		VkCullModeFlags m_cullMode;
-		bool m_pushDescriptors;
-		std::vector<ShaderDefine> m_defines;
-
-		std::unique_ptr<ShaderProgram> m_shaderProgram;
-
-		std::vector<VkDynamicState> m_dynamicStates;
-
-		std::vector<VkShaderModule> m_modules;
-		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
-
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-
-		VkPipeline m_pipeline;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
-
-		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
-		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
-		std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
-		VkPipelineColorBlendStateCreateInfo m_colourBlendState;
-		VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
-		VkPipelineViewportStateCreateInfo m_viewportState;
-		VkPipelineMultisampleStateCreateInfo m_multisampleState;
-		VkPipelineDynamicStateCreateInfo m_dynamicState;
-		VkPipelineTessellationStateCreateInfo m_tessellationState;
 	public:
 		/// <summary>
 		/// Creates a new pipeline.
@@ -122,7 +88,7 @@ namespace acid
 		/// <param name="cullMode"> The vertex cull mode. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		PipelineGraphics(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PIPELINE_MODE_POLYGON, const PipelineDepth &depthMode = PIPELINE_DEPTH_READ_WRITE,
+		PipelineGraphics(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode = PipelineMode::Polygon, const PipelineDepth &depthMode = PipelineDepth::ReadWrite,
 			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
 
 		/// <summary>
@@ -187,5 +153,39 @@ namespace acid
 		void CreatePipelinePolygon();
 
 		void CreatePipelineMrt();
+
+		GraphicsStage m_graphicsStage;
+		std::vector<std::string> m_shaderStages;
+		std::vector<VertexInput> m_vertexInputs;
+		PipelineMode m_pipelineMode;
+		PipelineDepth m_depthMode;
+		VkPolygonMode m_polygonMode;
+		VkCullModeFlags m_cullMode;
+		bool m_pushDescriptors;
+		std::vector<ShaderDefine> m_defines;
+
+		std::unique_ptr<ShaderProgram> m_shaderProgram;
+
+		std::vector<VkDynamicState> m_dynamicStates;
+
+		std::vector<VkShaderModule> m_modules;
+		std::vector<VkPipelineShaderStageCreateInfo> m_stages;
+
+		VkDescriptorSetLayout m_descriptorSetLayout;
+		VkDescriptorPool m_descriptorPool;
+
+		VkPipeline m_pipeline;
+		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
+
+		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
+		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
+		std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
+		VkPipelineColorBlendStateCreateInfo m_colourBlendState;
+		VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
+		VkPipelineViewportStateCreateInfo m_viewportState;
+		VkPipelineMultisampleStateCreateInfo m_multisampleState;
+		VkPipelineDynamicStateCreateInfo m_dynamicState;
+		VkPipelineTessellationStateCreateInfo m_tessellationState;
 	};
 }

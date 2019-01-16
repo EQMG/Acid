@@ -10,10 +10,8 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Frustum
 	{
-	private:
-		std::array<std::array<float, 4>, 6> m_frustum;
 	public:
-		static const Frustum ZERO;
+		static const Frustum Zero;
 
 		/// <summary>
 		/// Creates a new frustum.
@@ -51,5 +49,7 @@ namespace acid
 		bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
 	private:
 		void NormalizePlane(const int32_t &side);
+
+		std::array<std::array<float, 4>, 6> m_frustum;
 	};
 }

@@ -26,7 +26,7 @@ namespace acid
 #endif
 
 	TcpSocket::TcpSocket() :
-		Socket(SOCKET_TYPE_TCP)
+		Socket(Type::Tcp)
 	{
 	}
 
@@ -63,7 +63,7 @@ namespace acid
 		}
 
 		// We failed to retrieve the address.
-		return IpAddress::NONE;
+		return IpAddress::None;
 	}
 
 	uint16_t TcpSocket::GetRemotePort() const
@@ -84,7 +84,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout)
+	Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout)
 	{
 		// Disconnect the socket if it is already connected.
 		Disconnect();
@@ -95,7 +95,7 @@ namespace acid
 		// Create the remote address
 		sockaddr_in address = Socket::CreateAddress(remoteAddress.ToInteger(), remotePort);
 
-		if (timeout <= Time::ZERO)
+		if (timeout <= Time::Zero)
 		{
 			// We're not using a timeout: just try to connect.
 
@@ -106,7 +106,7 @@ namespace acid
 			}
 
 			// Connection succeeded.
-			return SOCKET_STATUS_DONE;
+			return Socket::Status::Done;
 		}
 		else
 		{
@@ -126,11 +126,11 @@ namespace acid
 			{
 				// We got instantly connected! (it may no happen a lot...).
 				SetBlocking(blocking);
-				return SOCKET_STATUS_DONE;
+				return Socket::Status::Done;
 			}
 
 			// Get the error status.
-			SocketStatus status = Socket::GetErrorStatus();
+			Socket::Status status = Socket::GetErrorStatus();
 
 			// If we were in non-blocking mode, return immediately.
 			if (!blocking)
@@ -139,7 +139,7 @@ namespace acid
 			}
 
 			// Otherwise, wait until something happens to our socket (success, timeout or error).
-			if (status == SOCKET_STATUS_NOT_READY)
+			if (status == Socket::Status::NotReady)
 			{
 				// Setup the selector.
 				fd_set selector;
@@ -156,10 +156,10 @@ namespace acid
 				{
 					// At this point the connection may have been either accepted or refused.
 					// To know whether it's a success or a failure, we must check the address of the connected peer.
-					if (GetRemoteAddress() != IpAddress::NONE)
+					if (GetRemoteAddress() != IpAddress::None)
 					{
 						// Connection accepted.
-						status = SOCKET_STATUS_DONE;
+						status = Socket::Status::Done;
 					}
 					else
 					{
@@ -189,7 +189,7 @@ namespace acid
 		m_pendingPacket = PendingPacket();
 	}
 
-	SocketStatus TcpSocket::Send(const void *data, const std::size_t &size)
+	Socket::Status TcpSocket::Send(const void *data, const std::size_t &size)
 	{
 		if (!IsBlocking())
 		{
@@ -200,13 +200,13 @@ namespace acid
 		return Send(data, size, sent);
 	}
 
-	SocketStatus TcpSocket::Send(const void *data, const std::size_t &size, std::size_t &sent)
+	Socket::Status TcpSocket::Send(const void *data, const std::size_t &size, std::size_t &sent)
 	{
 		// Check the parameters.
 		if (!data || (size == 0))
 		{
 			Log::Error("Cannot send data over the network (no data to send)\n");
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Loop until every byte has been sent.
@@ -220,21 +220,21 @@ namespace acid
 			// Check for errors.
 			if (result < 0)
 			{
-				SocketStatus status = Socket::GetErrorStatus();
+				Socket::Status status = Socket::GetErrorStatus();
 
-				if ((status == SOCKET_STATUS_NOT_READY) && sent)
+				if ((status == Socket::Status::NotReady) && sent)
 				{
-					return SOCKET_STATUS_PARTIAL;
+					return Socket::Status::Partial;
 				}
 
 				return status;
 			}
 		}
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 
-	SocketStatus TcpSocket::Receive(void *data, const std::size_t &size, std::size_t &received)
+	Socket::Status TcpSocket::Receive(void *data, const std::size_t &size, std::size_t &received)
 	{
 		// First clear the variables to fill.
 		received = 0;
@@ -243,7 +243,7 @@ namespace acid
 		if (!data)
 		{
 			Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Receive a chunk of bytes.
@@ -253,11 +253,11 @@ namespace acid
 		if (sizeReceived > 0)
 		{
 			received = static_cast<std::size_t>(sizeReceived);
-			return SOCKET_STATUS_DONE;
+			return Socket::Status::Done;
 		}
 		else if (sizeReceived == 0)
 		{
-			return SOCKET_STATUS_DISCONNECTED;
+			return Socket::Status::Disconnected;
 		}
 		else
 		{
@@ -265,7 +265,7 @@ namespace acid
 		}
 	}
 
-	SocketStatus TcpSocket::Send(Packet &packet)
+	Socket::Status TcpSocket::Send(Packet &packet)
 	{
 		// TCP is a stream protocol, it doesn't preserve messages boundaries.
 		// This means that we have to send the packet size first, so that the
@@ -295,14 +295,14 @@ namespace acid
 
 		// Send the data block.
 		std::size_t sent;
-		SocketStatus status = Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent);
+		Socket::Status status = Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent);
 
 		// In the case of a partial send, record the location to resume from
-		if (status == SOCKET_STATUS_PARTIAL)
+		if (status == Socket::Status::Partial)
 		{
 			packet.m_sendPos += sent;
 		}
-		else if (status == SOCKET_STATUS_DONE)
+		else if (status == Socket::Status::Done)
 		{
 			packet.m_sendPos = 0;
 		}
@@ -310,7 +310,7 @@ namespace acid
 		return status;
 	}
 
-	SocketStatus TcpSocket::Receive(Packet &packet)
+	Socket::Status TcpSocket::Receive(Packet &packet)
 	{
 		// First clear the variables to fill.
 		packet.Clear();
@@ -325,11 +325,10 @@ namespace acid
 			while (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 			{
 				char *data = reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived;
-				SocketStatus status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived,
-				                              received);
+				Socket::Status status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received);
 				m_pendingPacket.m_sizeReceived += received;
 
-				if (status != SOCKET_STATUS_DONE)
+				if (status != Socket::Status::Done)
 				{
 					return status;
 				}
@@ -351,9 +350,9 @@ namespace acid
 		{
 			// Receive a chunk of data.
 			std::size_t sizeToGet = std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()), sizeof(buffer));
-			SocketStatus status = Receive(buffer, sizeToGet, received);
+			Socket::Status status = Receive(buffer, sizeToGet, received);
 
-			if (status != SOCKET_STATUS_DONE)
+			if (status != Socket::Status::Done)
 			{
 				return status;
 			}
@@ -375,6 +374,6 @@ namespace acid
 
 		// Clear the pending packet data.
 		m_pendingPacket = PendingPacket();
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 }

@@ -43,12 +43,12 @@ namespace acid
 		for (uint32_t i = 0; i < longitudeBands + 1; i++)
 		{
 			float iDivLong = static_cast<float>(i) / static_cast<float>(longitudeBands);
-			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * PI;
+			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi;
 
 			for (uint32_t j = 0; j < latitudeBands + 1; j++)
 			{
 				float jDivLat = static_cast<float>(j) / static_cast<float>(latitudeBands);
-				float phi = jDivLat * 2.0f * PI;
+				float phi = jDivLat * 2.0f * Maths::Pi;
 
 				Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
 				Vector3 position = radius * normal;

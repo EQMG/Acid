@@ -10,7 +10,7 @@ namespace acid
 	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
 		RenderPipeline(graphicsStage),
 		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
+			PipelineMode::Polygon, PipelineDepth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

@@ -5,7 +5,20 @@
 namespace acid
 {
 	/// <summary>
-	/// Utility class to build blocks of data to transfer over the network.
+	/// Packets provide a safe and easy way to serialize data,
+	/// in order to send it over the network using sockets (acid::TcpSocket, acid::UdpSocket).
+	///
+	/// Packets solve 2 fundamental problems that arise when transferring data over the network:
+	/// \li data is interpreted correctly according to the endianness
+	/// \li the bounds of the packet are preserved (one send == one receive)
+	///
+	/// The acid::Packet class provides both input and output modes. It is designed to follow the
+	/// behavior of standard C++ streams, using operators >> and << to extract and insert data.
+	///
+	/// It is recommended to use only fixed-size types (like acid::Int32, etc.),
+	/// to avoid possible differences between the sender and the receiver.
+	/// Indeed, the native C++ types may have different sizes on two platforms and your data may be
+	/// corrupted if that happens.
 	/// </summary>
 	class ACID_EXPORT Packet :
 		public DataStream

@@ -9,8 +9,8 @@
 
 namespace acid
 {
-	const Matrix2 Matrix2::IDENTITY = Matrix2(new float[4]{1.0f, 0.0f, 0.0f, 1.0f});
-	const Matrix2 Matrix2::ZERO = Matrix2(0.0f);
+	const Matrix2 Matrix2::Identity = Matrix2(new float[4]{1.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix2 Matrix2::Zero = Matrix2(0.0f);
 
 	Matrix2::Matrix2(const float &diagonal)
 	{

@@ -14,11 +14,6 @@ namespace acid
 	class ACID_EXPORT Scenes :
 		public Module
 	{
-	private:
-		std::unique_ptr<Scene> m_scene;
-
-		ComponentRegister m_componentRegister;
-		ModelRegister m_modelRegister;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -83,5 +78,10 @@ namespace acid
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		bool IsPaused() const { return m_scene != nullptr ? m_scene->IsPaused() : false; }
+	private:
+		std::unique_ptr<Scene> m_scene;
+
+		ComponentRegister m_componentRegister;
+		ModelRegister m_modelRegister;
 	};
 }

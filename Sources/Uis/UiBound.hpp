@@ -16,17 +16,15 @@ namespace acid
 		bool m_aspectSize;
 		Vector2 m_dimensions;
 
-		static const Vector2 TOP_LEFT;
-		static const Vector2 TOP_CENTRE;
-		static const Vector2 TOP_RIGHT;
-
-		static const Vector2 CENTRE_LEFT;
-		static const Vector2 CENTRE;
-		static const Vector2 CENTRE_RIGHT;
-
-		static const Vector2 BOTTOM_LEFT;
-		static const Vector2 BOTTOM_CENTRE;
-		static const Vector2 BOTTOM_RIGHT;
+		static const Vector2 TopLeft;
+		static const Vector2 TopCentre;
+		static const Vector2 TopRight;
+		static const Vector2 CentreLeft;
+		static const Vector2 Centre;
+		static const Vector2 CentreRight;
+		static const Vector2 BottomLeft;
+		static const Vector2 BottomCentre;
+		static const Vector2 BottomRight;
 
 		/// <summary>
 		/// Constructor for rectangle.
@@ -36,7 +34,7 @@ namespace acid
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
-		explicit UiBound(const Vector2 &position, const Vector2 &reference = TOP_LEFT, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+		explicit UiBound(const Vector2 &position, const Vector2 &reference = TopLeft, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Gets the bounds position in the current screen space.

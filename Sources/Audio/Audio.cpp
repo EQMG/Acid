@@ -17,7 +17,7 @@ namespace acid
 		m_alDevice(nullptr),
 		m_alContext(nullptr),
 		m_masterGain(1.0f),
-		m_gains(std::map<SoundType, float>())
+		m_gains(std::map<Audio::Type, float>())
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);
@@ -94,7 +94,7 @@ namespace acid
 		assert(false && "OpenAL Error!");
 	}
 
-	float Audio::GetTypeGain(const SoundType &type) const
+	float Audio::GetTypeGain(const Audio::Type &type) const
 	{
 		auto it = m_gains.find(type);
 
@@ -106,7 +106,7 @@ namespace acid
 		return it->second;
 	}
 
-	void Audio::SetTypeGain(const SoundType &type, const float &volume)
+	void Audio::SetTypeGain(const Audio::Type &type, const float &volume)
 	{
 		auto it = m_gains.find(type);
 

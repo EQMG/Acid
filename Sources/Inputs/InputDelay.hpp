@@ -6,6 +6,12 @@ namespace acid
 {
 	class ACID_EXPORT InputDelay
 	{
+	public:
+		InputDelay();
+
+		void Update(const bool &keyIsDown);
+
+		bool CanInput();
 	private:
 		static const Time DELAY_TIME;
 		static const Time REPEAT_TIME;
@@ -13,11 +19,5 @@ namespace acid
 		Timer m_timerDelay;
 		Timer m_timerRepeat;
 		bool m_delayOver;
-	public:
-		InputDelay();
-
-		void Update(const bool &keyIsDown);
-
-		bool CanInput();
 	};
 }

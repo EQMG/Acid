@@ -9,15 +9,29 @@ namespace acid
 	class Socket;
 
 	/// <summary>
-	/// Multiplexer that allows to read from multiple sockets.
+	/// Socket selectors provide a way to wait until some data is available on a set of sockets,
+	/// instead of just one. This is convenient when you have multiple sockets that may
+	/// possibly receive data, but you don't know which one will be ready first.
+	/// In particular, it avoids to use a thread for each socket; with selectors,
+	/// a single thread can handle all the sockets.
+	///
+	/// All types of sockets can be used in a selector:
+	/// \li acid::TcpListener
+	/// \li acid::TcpSocket
+	/// \li acid::UdpSocket
+	///
+	/// A selector doesn't store its own copies of the sockets (socket classes are not copyable anyway),
+	/// it simply keeps a reference to the original sockets that you pass to the "add" function.
+	/// Therefore, you can't use the selector as a socket container, you must store them outside and make sure
+	/// that they are alive as long as they are used in the selector.
+	///
+	/// Using a selector is simple:
+	/// \li populate the selector with all the sockets that you want to observe
+	/// \li make it wait until there is data available on any of the sockets
+	/// \li test each socket to find out which ones are ready
 	/// </summary>
 	class ACID_EXPORT SocketSelector
 	{
-	private:
-		struct SocketSelectorImpl;
-
-		/// Opaque pointer to the implementation (which requires OS-specific types).
-		std::unique_ptr<SocketSelectorImpl> m_impl;
 	public:
 		/// <summary>
 		/// Default constructor.
@@ -62,7 +76,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeout"> Maximum time to wait, (use Time::Zero for infinity). </param>
 		/// <returns> True if there are sockets ready, false otherwise. </returns>
-		bool Wait(const Time timeout = Time::ZERO);
+		bool Wait(const Time timeout = Time::Zero);
 
 		/// <summary>
 		/// Test a socket to know if it is ready to receive data.
@@ -81,5 +95,10 @@ namespace acid
 		/// <param name="right"> Instance to assign. </param>
 		/// <returns> Reference to self. </returns>
 		SocketSelector &operator=(const SocketSelector &right);
+	private:
+		struct SocketSelectorImpl;
+
+		/// Opaque pointer to the implementation (which requires OS-specific types).
+		std::unique_ptr<SocketSelectorImpl> m_impl;
 	};
 }

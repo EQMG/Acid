@@ -15,9 +15,6 @@ namespace acid
 	class ACID_EXPORT SceneStructure :
 		public NonCopyable
 	{
-	private:
-		std::mutex m_mutex;
-		std::vector<std::unique_ptr<Entity>> m_objects;
 	public:
 		/// <summary>
 		/// Creates a new scene structure.
@@ -159,5 +156,8 @@ namespace acid
 		/// </param>
 		/// <returns> If the structure contains the object. </returns>
 		bool Contains(Entity *object);
+	private:
+		std::mutex m_mutex;
+		std::vector<std::unique_ptr<Entity>> m_objects;
 	};
 }

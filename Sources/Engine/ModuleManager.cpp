@@ -27,20 +27,20 @@ namespace acid
 
 	void ModuleManager::FillRegister()
 	{
-		Add<Window>(MODULE_UPDATE_POST);
-		Add<Renderer>(MODULE_UPDATE_RENDER);
-		Add<Audio>(MODULE_UPDATE_PRE);
-		Add<Joysticks>(MODULE_UPDATE_PRE);
-		Add<Keyboard>(MODULE_UPDATE_PRE);
-		Add<Mouse>(MODULE_UPDATE_PRE);
-		Add<Files>(MODULE_UPDATE_PRE);
-		Add<Scenes>(MODULE_UPDATE_NORMAL);
-		Add<Gizmos>(MODULE_UPDATE_NORMAL);
-		Add<Resources>(MODULE_UPDATE_PRE);
-		Add<Events>(MODULE_UPDATE_ALWAYS);
-		Add<Uis>(MODULE_UPDATE_PRE);
-		Add<Particles>(MODULE_UPDATE_NORMAL);
-		Add<Shadows>(MODULE_UPDATE_NORMAL);
+		Add<Window>(Module::Stage::Post);
+		Add<Renderer>(Module::Stage::Render);
+		Add<Audio>(Module::Stage::Pre);
+		Add<Joysticks>(Module::Stage::Pre);
+		Add<Keyboard>(Module::Stage::Pre);
+		Add<Mouse>(Module::Stage::Pre);
+		Add<Files>(Module::Stage::Pre);
+		Add<Scenes>(Module::Stage::Normal);
+		Add<Gizmos>(Module::Stage::Normal);
+		Add<Resources>(Module::Stage::Pre);
+		Add<Events>(Module::Stage::Always);
+		Add<Uis>(Module::Stage::Pre);
+		Add<Particles>(Module::Stage::Normal);
+		Add<Shadows>(Module::Stage::Normal);
 	}
 
 	bool ModuleManager::Contains(Module *module)
@@ -58,7 +58,7 @@ namespace acid
 		return false;
 	}
 
-	Module *ModuleManager::Add(Module *module, const ModuleUpdate &update)
+	Module *ModuleManager::Add(Module *module, const Module::Stage &update)
 	{
 		if (Contains(module))
 		{
@@ -87,13 +87,13 @@ namespace acid
 		}
 	}
 
-	void ModuleManager::RunUpdate(const ModuleUpdate &update)
+	void ModuleManager::RunUpdate(const Module::Stage &update)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
 		for (auto &[key, module] : m_modules)
 		{
-			if (static_cast<int32_t>(std::floor(key)) == update)
+			if (static_cast<uint32_t>(std::floor(key)) == static_cast<uint32_t>(update))
 			{
 				module->Update();
 			}

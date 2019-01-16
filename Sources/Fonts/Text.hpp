@@ -15,17 +15,6 @@
 namespace acid
 {
 	/// <summary>
-	/// A enum that represents how the text will be justified.
-	/// </summary>
-	enum TextJustify
-	{
-		TEXT_JUSTIFY_LEFT = 0,
-		TEXT_JUSTIFY_CENTRE = 1,
-		TEXT_JUSTIFY_RIGHT = 2,
-		TEXT_JUSTIFY_FULLY = 3
-	};
-
-	/// <summary>
 	/// During the loading of a text this represents one word in the text.
 	/// </summary>
 	class FontWord
@@ -110,33 +99,15 @@ namespace acid
 	class ACID_EXPORT Text :
 		public UiObject
 	{
-	private:
-		DescriptorsHandler m_descriptorSet;
-		UniformHandler m_uniformObject;
-
-		std::unique_ptr<Model> m_model;
-		uint32_t m_numberLines;
-
-		std::string m_string;
-		std::string m_newString;
-		TextJustify m_justify;
-
-		std::shared_ptr<FontType> m_fontType;
-		float m_maxWidth;
-		float m_kerning;
-		float m_leading;
-
-		Colour m_textColour;
-		Colour m_borderColour;
-		bool m_solidBorder;
-		bool m_glowBorder;
-
-		std::unique_ptr<IDriver> m_glowDriver;
-		float m_glowSize;
-
-		std::unique_ptr<IDriver> m_borderDriver;
-		float m_borderSize;
 	public:
+		/// <summary>
+		/// A enum that represents how the text will be justified.
+		/// </summary>
+		enum class Justify
+		{
+			Left, Centre, Right, Fully
+		};
+
 		/// <summary>
 		/// Creates a new text object.
 		/// </summary>
@@ -151,7 +122,7 @@ namespace acid
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
 		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-			const TextJustify &justify = TEXT_JUSTIFY_LEFT, const float &maxWidth = 1.0f, const Colour &textColour = Colour::BLACK, const float &kerning = 0.0f, const float &leading = 0.0f);
+			const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;
 
@@ -185,7 +156,7 @@ namespace acid
 		/// Gets how the text should justify.
 		/// </summary>
 		/// <returns> How the text should justify. </returns>
-		const TextJustify &GetTextJustify() const { return m_justify; }
+		const Justify &GetJustify() const { return m_justify; }
 
 		/// <summary>
 		/// Gets the maximum length of a line of this text.
@@ -338,5 +309,31 @@ namespace acid
 		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
 
 		void NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices);
+
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
+
+		std::unique_ptr<Model> m_model;
+		uint32_t m_numberLines;
+
+		std::string m_string;
+		std::string m_newString;
+		Justify m_justify;
+
+		std::shared_ptr<FontType> m_fontType;
+		float m_maxWidth;
+		float m_kerning;
+		float m_leading;
+
+		Colour m_textColour;
+		Colour m_borderColour;
+		bool m_solidBorder;
+		bool m_glowBorder;
+
+		std::unique_ptr<IDriver> m_glowDriver;
+		float m_glowSize;
+
+		std::unique_ptr<IDriver> m_borderDriver;
+		float m_borderSize;
 	};
 }

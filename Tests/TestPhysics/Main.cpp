@@ -3,6 +3,7 @@
 #include <Helpers/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Files/FileWatcher.hpp>
 #include <Scenes/Scenes.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
@@ -29,7 +30,7 @@ int main(int argc, char **argv)
 	{
 		if (String::Contains(file, "data-"))
 		{
-			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::SEPARATOR, ""));
+			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
 		}
 	}
 
@@ -39,9 +40,26 @@ int main(int argc, char **argv)
 	auto configManager = ConfigManager();
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
+	// Watches all files in the working directory.
+	FileWatcher watcher = FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f));
+	watcher.GetOnChange() += [](std::string path, FileWatcher::Status status) {
+		switch (status)
+		{
+		case FileWatcher::Status::Created:
+			Log::Out("Created '%s'\n", path.c_str());
+			break;
+		case FileWatcher::Status::Modified:
+			Log::Out("Modified '%s'\n", path.c_str());
+			break;
+		case FileWatcher::Status::Erased:
+			Log::Out("Erased '%s'\n", path.c_str());
+			break;
+		}
+	};
+
 	// Registers modules.
 	auto &moduleManager = Engine::Get()->GetModuleManager();
-	moduleManager.Add<World>(MODULE_UPDATE_NORMAL);
+	moduleManager.Add<World>(Module::Stage::Always);
 //	moduleManager.Remove<Shadows>();
 
 	// Registers components.

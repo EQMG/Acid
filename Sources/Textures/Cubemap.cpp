@@ -9,7 +9,7 @@
 
 namespace acid
 {
-	const std::vector<std::string> Cubemap::FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+	static const std::vector<std::string> FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap)

@@ -24,7 +24,7 @@ namespace acid
 			Vector3 position = current->GetPosition();
 			Vector2 textures = m_uvsList.at(current->GetUvIndex());
 			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
-			Vector3 tangent = Vector3::ZERO;
+			Vector3 tangent = Vector3::Zero;
 
 			auto skinData = current->GetSkinData();
 			Vector3 jointIds = Vector3(skinData.GetJointIds()[0], skinData.GetJointIds()[1], skinData.GetJointIds()[2]);
@@ -44,7 +44,7 @@ namespace acid
 		for (uint32_t i = 0; i < positionsCount / 3; i++)
 		{
 			Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]), 1.0f);
-			position = MeshAnimated::CORRECTION.Transform(position);
+			position = MeshAnimated::Correction.Transform(position);
 			VertexAnimatedData *newVertex = new VertexAnimatedData(static_cast<int32_t>(m_positionsList.size()), position);
 			newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
 			m_positionsList.emplace_back(newVertex);
@@ -75,7 +75,7 @@ namespace acid
 		for (uint32_t i = 0; i < normalsCount / 3; i++)
 		{
 			Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]), 0.0f);
-			normal = MeshAnimated::CORRECTION.Transform(normal);
+			normal = MeshAnimated::Correction.Transform(normal);
 			m_normalsList.emplace_back(normal);
 		}
 	}

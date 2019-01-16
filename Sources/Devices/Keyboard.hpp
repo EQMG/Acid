@@ -138,13 +138,6 @@ namespace acid
 	class ACID_EXPORT Keyboard :
 		public Module
 	{
-	private:
-		std::array<InputAction, KEY_END_RANGE> m_keyboardKeys;
-		char m_char;
-
-		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
-
-		friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -168,5 +161,12 @@ namespace acid
 		/// </summary>
 		/// <returns> The current keyboard char. </returns>
 		const char &GetChar() const { return m_char; }
+	private:
+		std::array<InputAction, KEY_END_RANGE> m_keyboardKeys;
+		char m_char;
+
+		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
+
+		friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 	};
 }

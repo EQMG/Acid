@@ -24,9 +24,9 @@ namespace acid
 	FtpResponse Ftp::Connect(const IpAddress &server, const uint16_t &port, const Time &timeout)
 	{
 		// Connect to the server.
-		if (m_commandSocket.Connect(server, port, timeout) != SOCKET_STATUS_DONE)
+		if (m_commandSocket.Connect(server, port, timeout) != Socket::Status::Done)
 		{
-			return FtpResponse(FTP_RESPONSE_CONNECTION_FAILED);
+			return FtpResponse(FtpResponse::Status::ConnectionFailed);
 		}
 
 		// Get the response to the connection.
@@ -78,7 +78,7 @@ namespace acid
 		// Open a data channel on default port (20) using ASCII transfer mode.
 		std::ostringstream directoryData;
 		FtpDataChannel data(*this);
-		FtpResponse response = data.Open(FTP_MODE_ASCII);
+		FtpResponse response = data.Open(FtpDataChannel::Mode::Ascii);
 
 		if (response.IsOk())
 		{
@@ -135,7 +135,7 @@ namespace acid
 		return SendCommand("DELE", name);
 	}
 
-	FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &localPath, const FtpTransferMode &mode)
+	FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &localPath, const FtpDataChannel::Mode &mode)
 	{
 		// Open a data channel using the given transfer mode.
 		FtpDataChannel data(*this);
@@ -170,7 +170,7 @@ namespace acid
 
 				if (!file)
 				{
-					return FtpResponse(FTP_RESPONSE_INVALID_FILE);
+					return FtpResponse(FtpResponse::Status::InvalidFile);
 				}
 
 				// Receive the file data.
@@ -193,14 +193,14 @@ namespace acid
 		return response;
 	}
 
-	FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpTransferMode &mode, const bool &append)
+	FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode, const bool &append)
 	{
 		// Get the contents of the file to send.
 		std::ifstream file(localFile.c_str(), std::ios_base::binary);
 
 		if (!file)
 		{
-			return FtpResponse(FTP_RESPONSE_INVALID_FILE);
+			return FtpResponse(FtpResponse::Status::InvalidFile);
 		}
 
 		// Extract the filename from the file path.
@@ -257,9 +257,9 @@ namespace acid
 		}
 
 		// Send it to the server.
-		if (m_commandSocket.Send(commandStr.c_str(), commandStr.length()) != SOCKET_STATUS_DONE)
+		if (m_commandSocket.Send(commandStr.c_str(), commandStr.length()) != Socket::Status::Done)
 		{
-			return FtpResponse(FTP_RESPONSE_CONNECTION_CLOSED);
+			return FtpResponse(FtpResponse::Status::ConnectionClosed);
 		}
 
 		// Get the response.
@@ -282,9 +282,9 @@ namespace acid
 
 			if (m_receiveBuffer.empty())
 			{
-				if (m_commandSocket.Receive(buffer, sizeof(buffer), length) != SOCKET_STATUS_DONE)
+				if (m_commandSocket.Receive(buffer, sizeof(buffer), length) != Socket::Status::Done)
 				{
-					return FtpResponse(FTP_RESPONSE_CONNECTION_CLOSED);
+					return FtpResponse(FtpResponse::Status::ConnectionClosed);
 				}
 			}
 			else
@@ -353,10 +353,10 @@ namespace acid
 
 							// Save the remaining data for the next time getResponse() is called.
 							m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()),
-							                       length - static_cast<std::size_t>(in.tellg()));
+								length - static_cast<std::size_t>(in.tellg()));
 
 							// Return the response code and message.
-							return FtpResponse(static_cast<FtpResponseStatus>(code), message);
+							return FtpResponse(static_cast<FtpResponse::Status>(code), message);
 						}
 						else
 						{
@@ -402,7 +402,7 @@ namespace acid
 				else
 				{
 					// Error: cannot extract the code, and we are not in a multiline response.
-					return FtpResponse(FTP_RESPONSE_INVALID_RESPONSE);
+					return FtpResponse(FtpResponse::Status::InvalidResponse);
 				}
 			}
 		}

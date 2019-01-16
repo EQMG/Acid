@@ -8,13 +8,6 @@ namespace acid
 {
 	class ACID_EXPORT SkeletonLoader
 	{
-	private:
-		Metadata *m_armatureData;
-
-		std::vector<std::string> m_boneOrder;
-
-		uint32_t m_jointCount;
-		std::unique_ptr<JointData> m_headJoint;
 	public:
 		SkeletonLoader(Metadata *libraryControllers, const std::vector<std::string> &boneOrder);
 
@@ -27,5 +20,11 @@ namespace acid
 		JointData *ExtractMainJointData(const Metadata *jointNode, const bool &isRoot);
 
 		std::optional<uint32_t> GetBoneIndex(const std::string &name);
+
+		Metadata *m_armatureData;
+		std::vector<std::string> m_boneOrder;
+
+		uint32_t m_jointCount;
+		std::unique_ptr<JointData> m_headJoint;
 	};
 }

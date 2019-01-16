@@ -5,7 +5,7 @@
 namespace acid
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType,
-		const TextJustify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
+		const Text::Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -19,7 +19,7 @@ namespace acid
 		m_kerning(kerning),
 		m_leading(leading),
 		m_textColour(textColour),
-		m_borderColour(Colour::WHITE),
+		m_borderColour(Colour::White),
 		m_solidBorder(false),
 		m_glowBorder(false),
 		m_glowDriver(std::make_unique<DriverConstant>(0.0f)),
@@ -209,7 +209,7 @@ namespace acid
 			{
 				auto ascii = static_cast<int32_t>(c);
 
-				if (ascii == FontMetafile::SPACE_ASCII)
+				if (ascii == FontMetafile::SpaceAscii)
 				{
 					bool added = currentLine.AddWord(currentWord);
 
@@ -278,16 +278,16 @@ namespace acid
 		{
 			switch (m_justify)
 			{
-			case TEXT_JUSTIFY_LEFT:
+			case Text::Justify::Left:
 				cursorX = 0.0f;
 				break;
-			case TEXT_JUSTIFY_CENTRE:
+			case Text::Justify::Centre:
 				cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
 				break;
-			case TEXT_JUSTIFY_RIGHT:
+			case Text::Justify::Right:
 				cursorX = line.m_maxLength - line.m_currentLineLength;
 				break;
-			case TEXT_JUSTIFY_FULLY:
+			case Text::Justify::Fully:
 				cursorX = 0.0f;
 				break;
 			}
@@ -300,7 +300,7 @@ namespace acid
 					cursorX += m_kerning + letter.m_advanceX;
 				}
 
-				if (m_justify == TEXT_JUSTIFY_FULLY && lineOrder > 1)
+				if (m_justify == Text::Justify::Fully && lineOrder > 1)
 				{
 					cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
 				}
@@ -310,7 +310,7 @@ namespace acid
 				}
 			}
 
-			cursorY += m_leading + FontMetafile::LINE_HEIGHT;
+			cursorY += m_leading + FontMetafile::LineHeight;
 			lineOrder--;
 		}
 
@@ -372,7 +372,7 @@ namespace acid
 			}
 		}
 
-		if (m_justify == TEXT_JUSTIFY_CENTRE)
+		if (m_justify == Text::Justify::Centre)
 		{
 			minX = 0.0f;
 			maxX = m_maxWidth;

@@ -14,9 +14,6 @@ namespace acid
 	class ACID_EXPORT ShadowRender :
 		public Component
 	{
-	private:
-		DescriptorsHandler m_descriptorSet;
-		UniformHandler m_uniformObject;
 	public:
 		ShadowRender();
 
@@ -29,5 +26,8 @@ namespace acid
 		void Encode(Metadata &metadata) const override;
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+	private:
+		DescriptorsHandler m_descriptorSet;
+		UniformHandler m_uniformObject;
 	};
 }

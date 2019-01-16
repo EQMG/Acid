@@ -13,23 +13,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT ShadowBox
 	{
-	private:
-		Vector3 m_lightDirection;
-		float m_shadowOffset;
-		float m_shadowDistance;
-
-		Matrix4 m_projectionMatrix;
-		Matrix4 m_lightViewMatrix;
-		Matrix4 m_projectionViewMatrix;
-		Matrix4 m_shadowMapSpaceMatrix;
-		Matrix4 m_offset;
-		Vector3 m_centre;
-
-		float m_farHeight, m_farWidth;
-		float m_nearHeight, m_nearWidth;
-
-		Vector3 m_minExtents;
-		Vector3 m_maxExtents;
 	public:
 		/// <summary>
 		/// Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
@@ -46,6 +29,39 @@ namespace acid
 		/// <param name="shadowOffset"> The shadows offset. </param>
 		/// <param name="shadowDistance"> The shadows distance. </param>
 		void Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
+
+		/// <summary>
+		/// Test if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
+		/// </summary>
+		/// <param name="position"> The centre of the bounding sphere in world space. </param>
+		/// <param name="radius"> The radius of the bounding sphere.
+		/// </param>
+		/// <returns> {@code true} if the sphere intersects the box. </returns>
+		bool IsInBox(const Vector3 &position, const float &radius) const;
+
+		const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
+
+		/// <summary>
+		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
+		/// </summary>
+		/// <returns> The to-shadow-map-space matrix. </returns>
+		const Matrix4 &GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+
+		/// <summary>
+		/// Gets the light's "view" matrix
+		/// </summary>
+		/// <returns> The light's "view" matrix. </returns>
+		const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
+
+		const Vector3 &GetMinExtents() const { return m_minExtents; }
+
+		const Vector3 &GetMaxExtents() const { return m_maxExtents; }
+
+		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
+
+		float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
+
+		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
 	private:
 		void UpdateShadowBox(const Camera &camera);
 
@@ -86,38 +102,22 @@ namespace acid
 		void UpdateLightViewMatrix();
 
 		void UpdateViewShadowMatrix();
-	public:
-		/// <summary>
-		/// Test if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
-		/// </summary>
-		/// <param name="position"> The centre of the bounding sphere in world space. </param>
-		/// <param name="radius"> The radius of the bounding sphere.
-		/// </param>
-		/// <returns> {@code true} if the sphere intersects the box. </returns>
-		bool IsInBox(const Vector3 &position, const float &radius) const;
 
-		const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
+		Vector3 m_lightDirection;
+		float m_shadowOffset;
+		float m_shadowDistance;
 
-		/// <summary>
-		/// This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
-		/// </summary>
-		/// <returns> The to-shadow-map-space matrix. </returns>
-		const Matrix4 &GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+		Matrix4 m_projectionMatrix;
+		Matrix4 m_lightViewMatrix;
+		Matrix4 m_projectionViewMatrix;
+		Matrix4 m_shadowMapSpaceMatrix;
+		Matrix4 m_offset;
+		Vector3 m_centre;
 
-		/// <summary>
-		/// Gets the light's "view" matrix
-		/// </summary>
-		/// <returns> The light's "view" matrix. </returns>
-		const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
+		float m_farHeight, m_farWidth;
+		float m_nearHeight, m_nearWidth;
 
-		const Vector3 &GetMinExtents() const { return m_minExtents; }
-
-		const Vector3 &GetMaxExtents() const { return m_maxExtents; }
-
-		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
-
-		float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
-
-		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
+		Vector3 m_minExtents;
+		Vector3 m_maxExtents;
 	};
 }

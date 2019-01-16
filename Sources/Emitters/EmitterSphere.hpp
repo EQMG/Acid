@@ -7,10 +7,8 @@ namespace acid
 	class ACID_EXPORT EmitterSphere :
 		public Emitter
 	{
-	private:
-		float m_radius;
 	public:
-		explicit EmitterSphere(const float &radius = 1.0f, const Transform &localTransform = Transform::IDENTITY);
+		explicit EmitterSphere(const float &radius = 1.0f, const Transform &localTransform = Transform::Identity);
 
 		void Start() override;
 
@@ -25,5 +23,7 @@ namespace acid
 		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius) { m_radius = radius; }
+	private:
+		float m_radius;
 	};
 }

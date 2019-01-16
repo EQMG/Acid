@@ -7,58 +7,43 @@
 namespace acid
 {
 	/// <summary>
-	/// Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
-	/// </summary>
-	enum HttpRequestMethod
-	{
-		/// Request in get mode, standard method to retrieve a page.
-		HTTP_METHOD_GET = 0,
-		/// Request in post mode, usually to send data to a page.
-		HTTP_METHOD_POST = 1,
-		/// Request a page's header only.
-		HTTP_METHOD_HEAD = 2,
-		/// Request in put mode, useful for a REST API.
-		HTTP_METHOD_PUT = 3,
-		/// Request in delete mode, useful for a REST API.
-		HTTP_METHOD_DELETE = 4,
-		/// Request in options mode, describes the communication options for the page.
-		HTTP_METHOD_OPTIONS = 5,
-		/// Request applies partial modifications to a page.
-		HTTP_METHOD_PATCH = 6,
-		/// Request performs a message loop-back test along the path to the target resource.
-		HTTP_METHOD_TRACE = 7,
-		/// Request establishes a tunnel to the server page.
-		HTTP_METHOD_CONNECT = 8
-	};
-
-	/// <summary>
 	/// Define a HTTP request.
 	/// </summary>
 	class ACID_EXPORT HttpRequest
 	{
-	private:
-		using FieldTable = std::map<std::string, std::string>;
-
-		/// Fields of the header associated to their value.
-		FieldTable m_fields;
-		/// Method to use for the request.
-		HttpRequestMethod m_method;
-		/// Target URI of the request.
-		std::string m_uri;
-		/// Major HTTP version.
-		uint32_t m_majorVersion;
-		/// Minor HTTP version.
-		uint32_t m_minorVersion;
-		/// Body of the request.
-		std::string m_body;
 	public:
+		/// <summary>
+		/// Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
+		/// </summary>
+		enum class Method
+		{
+			/// Request in get mode, standard method to retrieve a page.
+			Get,
+			/// Request in post mode, usually to send data to a page.
+			Post,
+			/// Request a page's header only.
+			Head,
+			/// Request in put mode, useful for a REST API.
+			Put,
+			/// Request in delete mode, useful for a REST API.
+			Delete,
+			/// Request in options mode, describes the communication options for the page.
+			Options,
+			/// Request applies partial modifications to a page.
+			Patch,
+			/// Request performs a message loop-back test along the path to the target resource.
+			Trace,
+			/// Request establishes a tunnel to the server page.
+			Connect
+		};
+
 		/// <summary>
 		/// Default constructor, this constructor creates a GET request, with the root URI ("/") and an empty body.
 		/// </summary>
 		/// <param name="uri"> Target URI. </param>
 		/// <param name="method"> Method to use for the request. </param>
 		/// <param name="body"> Content of the request's body. </param>
-		explicit HttpRequest(const std::string &uri = "/", const HttpRequestMethod &method = HTTP_METHOD_GET, const std::string &body = "");
+		explicit HttpRequest(const std::string &uri = "/", const Method &method = Method::Get, const std::string &body = "");
 
 		/// <summary>
 		/// Set the value of a field.
@@ -76,7 +61,7 @@ namespace acid
 		/// The method is HTTP_REQUEST_METHOD_GET by default.
 		/// </summary>
 		/// <param name="method"> Method to use for the request. </param>
-		void SetMethod(const HttpRequestMethod &method) { m_method = method; }
+		void SetMethod(const Method &method) { m_method = method; }
 
 		/// <summary>
 		/// Set the requested URI.
@@ -102,6 +87,7 @@ namespace acid
 		void SetBody(const std::string &body) { m_body = body; }
 	private:
 		friend class Http;
+		using FieldTable = std::map<std::string, std::string>;
 
 		/// <summary>
 		/// Prepare the final request to send to the server.
@@ -116,5 +102,18 @@ namespace acid
 		/// <param name="field"> Name of the field to test. </param>
 		/// <returns> True if the field exists, false otherwise. </returns>
 		bool HasField(const std::string &field) const;
+
+		/// Fields of the header associated to their value.
+		FieldTable m_fields;
+		/// Method to use for the request.
+		Method m_method;
+		/// Target URI of the request.
+		std::string m_uri;
+		/// Major HTTP version.
+		uint32_t m_majorVersion;
+		/// Minor HTTP version.
+		uint32_t m_minorVersion;
+		/// Body of the request.
+		std::string m_body;
 	};
 }

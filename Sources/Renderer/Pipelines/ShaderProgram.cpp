@@ -81,17 +81,17 @@ namespace acid
 
 			switch (uniformBlock->GetType())
 			{
-				case BLOCK_UNIFORM:
+				case UniformBlock::Type::Uniform:
 					descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 					m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
 						descriptorType, uniformBlock->GetStageFlags(), 1));
 					break;
-				case BLOCK_STORAGE:
+				case UniformBlock::Type::Storage:
 					descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 					m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
 						descriptorType, uniformBlock->GetStageFlags(), 1));
 					break;
-				case BLOCK_PUSH:
+				case UniformBlock::Type::Push:
 					// Push constants are described in the pipeline.
 					break;
 				default:
@@ -644,16 +644,16 @@ namespace acid
 			}
 		}
 
-		UniformBlockType type = BLOCK_UNIFORM;
+		UniformBlock::Type type = UniformBlock::Type::Uniform;
 
 		if (strcmp(program.getUniformBlockTType(i)->getStorageQualifierString(), "buffer") == 0)
 		{
-			type = BLOCK_STORAGE;
+			type = UniformBlock::Type::Storage;
 		}
 
 		if (program.getUniformBlockTType(i)->getQualifier().layoutPushConstant)
 		{
-			type = BLOCK_PUSH;
+			type = UniformBlock::Type::Push;
 		}
 
 		m_uniformBlocks.emplace_back(std::make_unique<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));

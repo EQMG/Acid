@@ -106,7 +106,7 @@ namespace test
 	void VoxelChunk::Generate()
 	{
 		auto position = GetParent()->GetLocalTransform().GetPosition();
-		auto noise = Noise(25653345, 0.01f, NOISE_INTERP_QUINTIC, NOISE_TYPE_PERLIN_FRACTAL, 5, 2.0f, 0.5f, NOISE_FRACTAL_FBM);
+		auto noise = Noise(25653345, 0.01f, Noise::Interp::Quintic, Noise::Type::PerlinFractal, 5, 2.0f, 0.5f, Noise::Fractal::FBM);
 
 		for (uint32_t x = 0; x < CHUNK_WIDTH; x++)
 		{

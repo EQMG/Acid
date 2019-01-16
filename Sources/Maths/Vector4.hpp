@@ -17,24 +17,6 @@ namespace acid
 	class ACID_EXPORT Vector4
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_elements[4];
-			};
-
-			struct
-			{
-				float m_x, m_y, m_z, m_w;
-			};
-		};
-
-		static const Vector4 ZERO;
-		static const Vector4 ONE;
-		static const Vector4 POSITIVE_INFINITY;
-		static const Vector4 NEGATIVE_INFINITY;
-
 		/// <summary>
 		/// Constructor for Vector4.
 		/// </summary>
@@ -279,5 +261,23 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Vector4 &vector);
 
 		std::string ToString() const;
+
+		static const Vector4 Zero;
+		static const Vector4 One;
+		static const Vector4 PositiveInfinity;
+		static const Vector4 NegativeInfinity;
+
+		union
+		{
+			struct
+			{
+				float m_elements[4];
+			};
+
+			struct
+			{
+				float m_x, m_y, m_z, m_w;
+			};
+		};
 	};
 }

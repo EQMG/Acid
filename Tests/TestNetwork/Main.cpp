@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 		Http http = Http("http://equilibrium.games/");
 
 		HttpRequest request;
-		request.SetMethod(HTTP_METHOD_POST);
+		request.SetMethod(HttpRequest::Method::Post);
 		request.SetUri("/devblog/");
 		request.SetHttpVersion(1, 1); // HTTP 1.1
 		request.SetField("From", "me");
@@ -42,8 +42,8 @@ int main(int argc, char **argv)
 			Log::Out("Current directory: %s\n", response.GetDirectory());
 		}
 
-		ftp.Download("remote_file_name.txt", "local/destination/path", FTP_MODE_ASCII);
-		ftp.Upload("local_file_name.pdf", "remote/destination/path", FTP_MODE_BINARY);
+		ftp.Download("remote_file_name.txt", "local/destination/path", FtpTransfer::Mode::Ascii);
+		ftp.Upload("local_file_name.pdf", "remote/destination/path", FtpTransfer::Mode::Binary);
 
 		ftp.Disconnect();
 	}*/
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 
 	IpAddress recipient = IpAddress("172.168.0.9");
 	unsigned short port = 54000;
-	if (socket.Send(packet.GetData(), packet.GetDataSize(), recipient, port) != SOCKET_STATUS_DONE)
+	if (socket.Send(packet.GetData(), packet.GetDataSize(), recipient, port) != SocketStatus::Done)
 	{
 		Log::Error("Error OH NO\n");
 		// error...

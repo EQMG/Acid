@@ -14,8 +14,6 @@ namespace acid
 		public IAxis,
 		public NonCopyable
 	{
-	private:
-		std::vector<std::unique_ptr<IAxis>> m_axes;
 	public:
 		/// <summary>
 		/// A template used to create a compound axis of a single type.
@@ -43,5 +41,7 @@ namespace acid
 		explicit AxisCompound(const std::vector<IAxis *> &axes);
 
 		float GetAmount() const override;
+	private:
+		std::vector<std::unique_ptr<IAxis>> m_axes;
 	};
 }

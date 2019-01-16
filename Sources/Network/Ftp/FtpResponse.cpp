@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	FtpResponse::FtpResponse(const FtpResponseStatus &code, const std::string &message) :
+	FtpResponse::FtpResponse(const FtpResponse::Status &code, const std::string &message) :
 		m_status(code),
 		m_message(message)
 	{
@@ -10,6 +10,6 @@ namespace acid
 
 	bool FtpResponse::IsOk() const
 	{
-		return m_status < 400;
+		return static_cast<uint32_t>(m_status) < 400;
 	}
 }

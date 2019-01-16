@@ -137,7 +137,7 @@ namespace acid
 	void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
 	{
 		m_direction = direction;
-		m_directionDeviation = deviation * PI;
+		m_directionDeviation = deviation * Maths::Pi;
 	}
 
 	Particle ParticleSystem::EmitParticle(const Emitter &emitter)
@@ -184,7 +184,7 @@ namespace acid
 
 	Vector3 ParticleSystem::GenerateRandomUnitVector() const
 	{
-		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * PI;
+		float theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
 		float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		float x = rootOneMinusZSquared * std::cos(theta);

@@ -15,9 +15,6 @@ namespace acid
 	class ACID_EXPORT Gizmos :
 		public Module
 	{
-	private:
-		std::mutex m_mutex;
-		std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -43,5 +40,8 @@ namespace acid
 		/// </summary>
 		/// <returns> All gizmods. </returns>
 		const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
+	private:
+		std::mutex m_mutex;
+		std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
 	};
 }

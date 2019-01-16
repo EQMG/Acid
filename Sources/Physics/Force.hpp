@@ -21,7 +21,7 @@ namespace acid
 		/// </summary>
 		/// <param name="force"> The vector of the force is applied. </param>
 		/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
-		Force(const Vector3 &force, const Vector3 &position = Vector3::ZERO);
+		Force(const Vector3 &force, const Vector3 &position = Vector3::Zero);
 
 		/// <summary>
 		/// Creates a new force that times-out.
@@ -29,7 +29,7 @@ namespace acid
 		/// <param name="force"> The vector of the force is applied. </param>
 		/// <param name="time"> How long the force will be applied for. </param>
 		/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
-		Force(const Vector3 &force, const Time &time, const Vector3 &position = Vector3::ZERO);
+		Force(const Vector3 &force, const Time &time, const Vector3 &position = Vector3::Zero);
 
 		void Update();
 

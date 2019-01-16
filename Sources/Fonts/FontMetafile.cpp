@@ -6,18 +6,6 @@
 
 namespace acid
 {
-	const uint32_t FontMetafile::PAD_TOP = 0;
-	const uint32_t FontMetafile::PAD_LEFT = 1;
-	const uint32_t FontMetafile::PAD_BOTTOM = 2;
-	const uint32_t FontMetafile::PAD_RIGHT = 3;
-	const int32_t FontMetafile::DESIRED_PADDING = 8;
-
-	const std::string FontMetafile::SPLITTER = " ";
-	const std::string FontMetafile::NUMBER_SEPARATOR = ",";
-
-	const float FontMetafile::LINE_HEIGHT = 0.03f;
-	const int32_t FontMetafile::SPACE_ASCII = 32;
-
 	std::shared_ptr<FontMetafile> FontMetafile::Create(const std::string &filename)
 	{
 		if (filename.empty())
@@ -95,7 +83,7 @@ namespace acid
 	void FontMetafile::ProcessNextLine(const std::string &line)
 	{
 		m_values.clear();
-		auto parts = String::Split(line, SPLITTER);
+		auto parts = String::Split(line, " ");
 
 		for (const auto &part : parts)
 		{
@@ -115,14 +103,14 @@ namespace acid
 			m_padding.emplace_back(padding);
 		}
 
-		m_paddingWidth = m_padding.at(PAD_LEFT) + m_padding.at(PAD_RIGHT);
-		m_paddingHeight = m_padding.at(PAD_TOP) + m_padding.at(PAD_BOTTOM);
+		m_paddingWidth = m_padding.at(PadLeft) + m_padding.at(PadRight);
+		m_paddingHeight = m_padding.at(PadTop) + m_padding.at(PadBottom);
 	}
 
 	void FontMetafile::LoadLineSizes()
 	{
 		int32_t lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
-		m_verticalPerPixelSize = LINE_HEIGHT / static_cast<float>(lineHeightPixels);
+		m_verticalPerPixelSize = LineHeight / static_cast<float>(lineHeightPixels);
 		m_horizontalPerPixelSize = m_verticalPerPixelSize;
 		m_imageWidth = GetValueOfVariable("scaleW");
 	}
@@ -131,22 +119,22 @@ namespace acid
 	{
 		int32_t id = GetValueOfVariable("id");
 
-		if (id == SPACE_ASCII)
+		if (id == SpaceAscii)
 		{
 			m_spaceWidth = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 			return;
 		}
 
-		float xTextureCoord = (static_cast<float>(GetValueOfVariable("x")) + (m_padding.at(PAD_LEFT) - DESIRED_PADDING)) / m_imageWidth;
-		float yTextureCoord = (static_cast<float>(GetValueOfVariable("y")) + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) / m_imageWidth;
-		int32_t width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DESIRED_PADDING));
-		int32_t height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DESIRED_PADDING));
+		float xTextureCoord = (static_cast<float>(GetValueOfVariable("x")) + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth;
+		float yTextureCoord = (static_cast<float>(GetValueOfVariable("y")) + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth;
+		int32_t width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DesiredPassing));
+		int32_t height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DesiredPassing));
 		float quadWidth = width * m_horizontalPerPixelSize;
 		float quadHeight = height * m_verticalPerPixelSize;
 		float xTexSize = static_cast<float>(width) / m_imageWidth;
 		float yTexSize = static_cast<float>(height) / m_imageWidth;
-		float xOffset = (GetValueOfVariable("xoffset") + m_padding.at(PAD_LEFT) - DESIRED_PADDING) * m_horizontalPerPixelSize;
-		float yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PAD_TOP) - DESIRED_PADDING)) * m_verticalPerPixelSize;
+		float xOffset = (GetValueOfVariable("xoffset") + m_padding.at(PadLeft) - DesiredPassing) * m_horizontalPerPixelSize;
+		float yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize;
 		float xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
 		if (quadHeight > m_maxSizeY)
@@ -166,7 +154,7 @@ namespace acid
 	std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 	{
 		std::vector<int32_t> result = {};
-		auto numbers = String::Split(m_values.at(variable), NUMBER_SEPARATOR);
+		auto numbers = String::Split(m_values.at(variable), ",");
 
 		for (const auto &number : numbers)
 		{

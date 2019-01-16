@@ -8,9 +8,6 @@ namespace acid
 {
 	class ACID_EXPORT VertexWeights
 	{
-	private:
-		std::vector<uint32_t> m_jointIds;
-		std::vector<float> m_weights;
 	public:
 		VertexWeights();
 
@@ -29,5 +26,8 @@ namespace acid
 		const std::vector<uint32_t> &GetJointIds() const { return m_jointIds; }
 
 		const std::vector<float> &GetWeights() const { return m_weights; }
+	private:
+		std::vector<uint32_t> m_jointIds;
+		std::vector<float> m_weights;
 	};
 }

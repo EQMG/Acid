@@ -9,13 +9,6 @@ namespace acid
 		public Descriptor,
 		public Buffer
 	{
-	private:
-		uint32_t m_width, m_height;
-
-		VkImage m_image;
-		VkImageView m_imageView;
-		VkSampler m_sampler;
-		VkFormat m_format;
 	public:
 		DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
@@ -35,5 +28,12 @@ namespace acid
 		const VkImageView &GetImageView() const { return m_imageView; }
 
 		const VkFormat &GetFormat() const { return m_format; }
+	private:
+		uint32_t m_width, m_height;
+
+		VkImage m_image;
+		VkImageView m_imageView;
+		VkSampler m_sampler;
+		VkFormat m_format;
 	};
 }

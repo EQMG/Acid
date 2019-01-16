@@ -14,7 +14,7 @@ namespace test
 	World::World() :
 		m_driverDay(DriverLinear(0.0f, 1.0f, Time::Seconds(300.0f))),
 		m_factorDay(0.0f),
-		m_fog(Fog(Colour::WHITE, 0.001f, 2.0f, -0.1f, 0.3f)),
+		m_fog(Fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)),
 		m_skyboxRotation(Vector3()),
 		m_lightDirection(Vector3())
 	{
@@ -62,12 +62,12 @@ namespace test
 
 	float World::GetSunriseFactor() const
 	{
-		return std::clamp(-(std::sin(2.0f * PI * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
+		return std::clamp(-(std::sin(2.0f * Maths::Pi * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 	}
 
 	float World::GetShadowFactor() const
 	{
-		return std::clamp(1.7f * std::sin(2.0f * PI * GetDayFactor()), 0.0f, 1.0f);
+		return std::clamp(1.7f * std::sin(2.0f * Maths::Pi * GetDayFactor()), 0.0f, 1.0f);
 	}
 
 	float World::GetStarIntensity() const

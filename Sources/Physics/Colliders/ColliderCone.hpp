@@ -10,12 +10,8 @@ namespace acid
 	class ACID_EXPORT ColliderCone :
 		public Collider
 	{
-	private:
-		std::unique_ptr<btConeShape> m_shape;
-		float m_radius;
-		float m_height;
 	public:
-		explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::IDENTITY);
+		explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
 
 		~ColliderCone();
 
@@ -36,5 +32,9 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height);
+	private:
+		std::unique_ptr<btConeShape> m_shape;
+		float m_radius;
+		float m_height;
 	};
 }

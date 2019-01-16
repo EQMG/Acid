@@ -13,11 +13,6 @@ namespace acid
 		public IAxis,
 		public IButton
 	{
-	private:
-		JoystickPort m_joystick;
-		uint32_t m_hat;
-		JoystickHat m_hatFlag;
-		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new joystick button.
@@ -44,5 +39,10 @@ namespace acid
 		const JoystickHat &GetHatFlag() const { return m_hatFlag; }
 
 		void SetHatFlag(const JoystickHat &hatFlag) { m_hatFlag = hatFlag; }
+	private:
+		JoystickPort m_joystick;
+		uint32_t m_hat;
+		JoystickHat m_hatFlag;
+		bool m_wasDown;
 	};
 }

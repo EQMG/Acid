@@ -9,7 +9,19 @@ namespace acid
 	class TcpSocket;
 
 	/// <summary>
-	/// Socket that listens to new TCP connections.
+	/// A listener socket is a special type of socket that listens to a given port
+	/// and waits for connections on that port. This is all it can do.
+	///
+	/// When a new connection is received, you must call accept and the listener returns a
+	/// new instance of acid::TcpSocket that is properly initialized and can be used to
+	/// communicate with the new client.
+	///
+	/// Listener sockets are specific to the TCP protocol, UDP sockets are connectionless
+	/// and can therefore communicate directly. As a consequence,
+	/// a listener socket will always return the new connections as acid::TcpSocket instances.
+	///
+	/// A listener is automatically closed on destruction, like all other types of socket.
+	/// However if you want to stop listening before the socket is destroyed, you can call its Close() function.
 	/// </summary>
 	class ACID_EXPORT TcpListener :
 		public Socket
@@ -36,7 +48,7 @@ namespace acid
 		/// <param name="port"> Port to listen on for incoming connection attempts. </param>
 		/// <param name="address"> Address of the interface to listen on. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Listen(const uint16_t &port, const IpAddress &address = IpAddress::ANY);
+		Socket::Status Listen(const uint16_t &port, const IpAddress &address = IpAddress::Any);
 
 		/// <summary>
 		/// Stop listening and close the socket. This function gracefully stops the listener.
@@ -50,6 +62,6 @@ namespace acid
 		/// </summary>
 		/// <param name="socket"> Socket that will hold the new connection. </param>
 		/// <returns> Status code. </returns>
-		SocketStatus Accept(TcpSocket &socket);
+		Socket::Status Accept(TcpSocket &socket);
 	};
 }

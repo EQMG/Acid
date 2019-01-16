@@ -8,14 +8,14 @@
 
 namespace acid
 {
-	const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
-	const Vector2 Vector2::ONE = Vector2(1.0f, 1.0f);
-	const Vector2 Vector2::LEFT = Vector2(-1.0f, 0.0f);
-	const Vector2 Vector2::RIGHT = Vector2(1.0f, 0.0f);
-	const Vector2 Vector2::UP = Vector2(0.0f, 1.0f);
-	const Vector2 Vector2::DOWN = Vector2(0.0f, -1.0f);
-	const Vector2 Vector2::POSITIVE_INFINITY = Vector2(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
-	const Vector2 Vector2::NEGATIVE_INFINITY = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+	const Vector2 Vector2::Zero = Vector2(0.0f, 0.0f);
+	const Vector2 Vector2::One = Vector2(1.0f, 1.0f);
+	const Vector2 Vector2::Left = Vector2(-1.0f, 0.0f);
+	const Vector2 Vector2::Right = Vector2(1.0f, 0.0f);
+	const Vector2 Vector2::Up = Vector2(0.0f, 1.0f);
+	const Vector2 Vector2::Down = Vector2(0.0f, -1.0f);
+	const Vector2 Vector2::PositiveInfinity = Vector2(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector2 Vector2::NegativeInfinity = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector2::Vector2() :
 		m_x(0.0f),

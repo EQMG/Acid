@@ -9,12 +9,12 @@ namespace acid
 	class ACID_EXPORT RendererFonts :
 		public RenderPipeline
 	{
-	private:
-		PipelineGraphics m_pipeline;
-		UniformHandler m_uniformScene;
 	public:
 		explicit RendererFonts(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+	private:
+		PipelineGraphics m_pipeline;
+		UniformHandler m_uniformScene;
 	};
 }

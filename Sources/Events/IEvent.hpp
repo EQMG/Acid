@@ -10,6 +10,10 @@ namespace acid
 	class ACID_EXPORT IEvent
 	{
 	public:
+		IEvent() = default;
+
+		~IEvent() = default;
+
 		/// <summary>
 		/// Gets if the event has occurred.
 		/// </summary>

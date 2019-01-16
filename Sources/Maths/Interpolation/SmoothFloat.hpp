@@ -10,10 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT SmoothFloat
 	{
-	private:
-		float m_agility;
-		float m_target;
-		float m_actual;
 	public:
 		/// <summary>
 		/// Creates a new smooth float.
@@ -51,5 +47,9 @@ namespace acid
 		/// </summary>
 		/// <returns> The calculated value. </returns>
 		const float &Get() const { return m_actual; }
+	private:
+		float m_agility;
+		float m_target;
+		float m_actual;
 	};
 }

@@ -24,14 +24,14 @@ namespace acid
 
 			switch (image.GetType())
 			{
-			case ATTACHMENT_TYPE_IMAGE:
+			case Attachment::Type::Image:
 				m_imageAttachments.emplace_back(std::make_unique<Texture>(textureWidth, textureHeight, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 					VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, imageSamples));
 				break;
-			case ATTACHMENT_TYPE_DEPTH:
+			case Attachment::Type::Depth:
 				m_imageAttachments.emplace_back(nullptr);
 				break;
-			case ATTACHMENT_TYPE_SWAPCHAIN:
+			case Attachment::Type::Swapchain:
 				m_imageAttachments.emplace_back(nullptr);
 				break;
 			}
@@ -47,13 +47,13 @@ namespace acid
 			{
 				switch (image.GetType())
 				{
-				case ATTACHMENT_TYPE_IMAGE:
+				case Attachment::Type::Image:
 					attachments.emplace_back(GetAttachment(image.GetBinding())->GetImageView());
 					break;
-				case ATTACHMENT_TYPE_DEPTH:
+				case Attachment::Type::Depth:
 					attachments.emplace_back(depthStencil.GetImageView());
 					break;
-				case ATTACHMENT_TYPE_SWAPCHAIN:
+				case Attachment::Type::Swapchain:
 					attachments.emplace_back(swapchain.GetImageViews().at(i));
 					break;
 				}

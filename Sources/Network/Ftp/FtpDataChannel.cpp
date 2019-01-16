@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	FtpResponse FtpDataChannel::Open(const FtpTransferMode &mode)
+	FtpResponse FtpDataChannel::Open(const FtpDataChannel::Mode &mode)
 	{
 		// Open a data connection in active mode (we connect to the server).
 		FtpResponse response = m_ftp.SendCommand("PASV");
@@ -43,25 +43,25 @@ namespace acid
 				// Reconstruct connection port and address.
 				uint16_t port = data[4] * 256 + data[5];
 				IpAddress address(static_cast<uint8_t>(data[0]),
-				                  static_cast<uint8_t>(data[1]),
-				                  static_cast<uint8_t>(data[2]),
-				                  static_cast<uint8_t>(data[3]));
+				    static_cast<uint8_t>(data[1]),
+				    static_cast<uint8_t>(data[2]),
+				    static_cast<uint8_t>(data[3]));
 
 				// Connect the data channel to the server.
-				if (m_dataSocket.Connect(address, port) == SOCKET_STATUS_DONE)
+				if (m_dataSocket.Connect(address, port) == Socket::Status::Done)
 				{
 					// Translate the transfer mode to the corresponding FTP parameter.
 					std::string modeStr;
 
 					switch (mode)
 					{
-						case FTP_MODE_BINARY:
+						case FtpDataChannel::Mode::Binary:
 							modeStr = "I";
 							break;
-						case FTP_MODE_ASCII:
+						case FtpDataChannel::Mode::Ascii:
 							modeStr = "A";
 							break;
-						case FTP_MODE_EBCDIC:
+						case FtpDataChannel::Mode::Ebcdic:
 							modeStr = "E";
 							break;
 					}
@@ -72,7 +72,7 @@ namespace acid
 				else
 				{
 					// Failed to connect to the server.
-					response = FtpResponse(FTP_RESPONSE_CONNECTION_FAILED);
+					response = FtpResponse(FtpResponse::Status::ConnectionFailed);
 				}
 			}
 		}
@@ -86,7 +86,7 @@ namespace acid
 		char buffer[1024];
 		std::size_t received;
 
-		while (m_dataSocket.Receive(buffer, sizeof(buffer), received) == SOCKET_STATUS_DONE)
+		while (m_dataSocket.Receive(buffer, sizeof(buffer), received) == Socket::Status::Done)
 		{
 			stream.write(buffer, static_cast<std::streamsize>(received));
 
@@ -123,7 +123,7 @@ namespace acid
 			if (count > 0)
 			{
 				// We could read more data from the stream: send them.
-				if (m_dataSocket.Send(buffer, count) != SOCKET_STATUS_DONE)
+				if (m_dataSocket.Send(buffer, count) != Socket::Status::Done)
 				{
 					break;
 				}

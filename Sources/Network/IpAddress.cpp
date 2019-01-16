@@ -15,10 +15,10 @@
 
 namespace acid
 {
-	const IpAddress IpAddress::NONE = IpAddress();
-	const IpAddress IpAddress::ANY = IpAddress(0, 0, 0, 0);
-	const IpAddress IpAddress::LOCAL_HOST = IpAddress(127, 0, 0, 1);
-	const IpAddress IpAddress::BROADCAST = IpAddress(255, 255, 255, 255);
+	const IpAddress IpAddress::None = IpAddress();
+	const IpAddress IpAddress::Any = IpAddress(0, 0, 0, 0);
+	const IpAddress IpAddress::LocalHost = IpAddress(127, 0, 0, 1);
+	const IpAddress IpAddress::Broadcast = IpAddress(255, 255, 255, 255);
 
 	IpAddress::IpAddress() :
 		m_address(0),
@@ -109,16 +109,60 @@ namespace acid
 		// (not very hard: the web page contains only our IP address).
 
 		Http server = Http("www.sfml-dev.org");
-		HttpRequest request("/ip-provider.php", HTTP_METHOD_GET);
+		HttpRequest request("/ip-provider.php", HttpRequest::Method::Get);
 		HttpResponse page = server.SendRequest(request, timeout);
 
-		if (page.GetStatus() == HTTP_RESPONSE_OK)
+		if (page.GetStatus() == HttpResponse::Status::Ok)
 		{
 			return IpAddress(page.GetBody());
 		}
 
 		// Something failed: return an invalid address.
 		return IpAddress();
+	}
+
+	bool IpAddress::operator==(const IpAddress &other) const
+	{
+		return !(*this < other) && !(other < *this);
+	}
+
+	bool IpAddress::operator!=(const IpAddress &other) const
+	{
+		return !(*this == other);
+	}
+
+	bool IpAddress::operator<(const IpAddress &other) const
+	{
+		return std::make_pair(m_valid, m_address) < std::make_pair(other.m_valid, other.m_address);
+	}
+
+	bool IpAddress::operator<=(const IpAddress &other) const
+	{
+		return !(other < *this);
+	}
+
+	bool IpAddress::operator>(const IpAddress &other) const
+	{
+		return other < *this;
+	}
+
+	bool IpAddress::operator>=(const IpAddress &other) const
+	{
+		return !(*this < other);
+	}
+
+	std::ostream &operator<<(std::ostream &stream, const IpAddress &address)
+	{
+		return stream << address.ToString();
+	}
+
+	std::istream &operator>>(std::istream &stream, IpAddress &address)
+	{
+		std::string str;
+		stream >> str;
+		address = IpAddress(str);
+
+		return stream;
 	}
 
 	void IpAddress::Resolve(const std::string &address)
@@ -166,49 +210,5 @@ namespace acid
 				}
 			}
 		}
-	}
-
-	bool IpAddress::operator==(const IpAddress &other) const
-	{
-		return !(*this < other) && !(other < *this);
-	}
-
-	bool IpAddress::operator!=(const IpAddress &other) const
-	{
-		return !(*this == other);
-	}
-
-	bool IpAddress::operator<(const IpAddress &other) const
-	{
-		return std::make_pair(m_valid, m_address) < std::make_pair(other.m_valid, other.m_address);
-	}
-
-	bool IpAddress::operator<=(const IpAddress &other) const
-	{
-		return !(other < *this);
-	}
-
-	bool IpAddress::operator>(const IpAddress &other) const
-	{
-		return other < *this;
-	}
-
-	bool IpAddress::operator>=(const IpAddress &other) const
-	{
-		return !(*this < other);
-	}
-
-	std::ostream &operator<<(std::ostream &stream, const IpAddress &address)
-	{
-		return stream << address.ToString();
-	}
-
-	std::istream &operator>>(std::istream &stream, IpAddress &address)
-	{
-		std::string str;
-		stream >> str;
-		address = IpAddress(str);
-
-		return stream;
 	}
 }

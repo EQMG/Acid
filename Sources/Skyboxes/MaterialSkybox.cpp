@@ -18,7 +18,7 @@ namespace acid
 	void MaterialSkybox::Start()
 	{
 		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_MRT, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, {}));
+			PipelineMode::Mrt, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, {}));
 	}
 
 	void MaterialSkybox::Update()

@@ -15,27 +15,6 @@ namespace acid
 		public Resource,
 		public Descriptor
 	{
-	private:
-		static const std::vector<std::string> FILE_SIDES;
-
-		std::string m_filename;
-		std::string m_fileSuffix;
-
-		VkFilter m_filter;
-		VkSamplerAddressMode m_addressMode;
-		bool m_anisotropic;
-		uint32_t m_mipLevels;
-		VkSampleCountFlagBits m_samples;
-		VkImageLayout m_imageLayout;
-
-		uint32_t m_components;
-		uint32_t m_width, m_height;
-
-		VkImage m_image;
-		VkDeviceMemory m_deviceMemory;
-		VkImageView m_imageView;
-		VkSampler m_sampler;
-		VkFormat m_format;
 	public:
 		/// <summary>
 		/// Will find an existing cubemap with the same filename, or create a new cubemap.
@@ -135,5 +114,24 @@ namespace acid
 	private:
 		static std::string ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
 			const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap);
+
+		std::string m_filename;
+		std::string m_fileSuffix;
+
+		VkFilter m_filter;
+		VkSamplerAddressMode m_addressMode;
+		bool m_anisotropic;
+		uint32_t m_mipLevels;
+		VkSampleCountFlagBits m_samples;
+		VkImageLayout m_imageLayout;
+
+		uint32_t m_components;
+		uint32_t m_width, m_height;
+
+		VkImage m_image;
+		VkDeviceMemory m_deviceMemory;
+		VkImageView m_imageView;
+		VkSampler m_sampler;
+		VkFormat m_format;
 	};
 }

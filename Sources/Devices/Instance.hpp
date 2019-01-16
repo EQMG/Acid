@@ -8,22 +8,13 @@ namespace acid
 {
 	class ACID_EXPORT Instance
 	{
-	private:
-		friend class Renderer;
-		bool m_validationLayers;
-		std::vector<const char *> m_instanceLayers;
-		std::vector<const char *> m_instanceExtensions;
-		std::vector<const char *> m_deviceExtensions;
-
-		VkDebugReportCallbackEXT m_debugReportCallback;
-		VkInstance m_instance;
-
+	public:
 		friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,
 			uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData);
-	public:
-		static const std::vector<const char *> VALIDATION_LAYERS;
-		static const std::vector<const char *> INSTANCE_EXTENSIONS;
-		static const std::vector<const char *> DEVICE_EXTENSIONS;
+
+		static const std::vector<const char *> ValidationLayers;
+		static const std::vector<const char *> InstanceExtensions;
+		static const std::vector<const char *> DeviceExtensions;
 
 		Instance();
 
@@ -48,6 +39,8 @@ namespace acid
 
 		const VkInstance &GetInstance() const { return m_instance; }
 	private:
+		friend class Renderer;
+
 		void SetupLayers();
 
 		void SetupExtensions();
@@ -57,5 +50,13 @@ namespace acid
 		void CreateDebugCallback();
 
 		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
+
+		bool m_validationLayers;
+		std::vector<const char *> m_instanceLayers;
+		std::vector<const char *> m_instanceExtensions;
+		std::vector<const char *> m_deviceExtensions;
+
+		VkDebugReportCallbackEXT m_debugReportCallback;
+		VkInstance m_instance;
 	};
 }

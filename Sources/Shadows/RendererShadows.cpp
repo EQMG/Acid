@@ -6,15 +6,15 @@
 
 namespace acid
 {
-	const uint32_t RendererShadows::NUM_CASCADES = 4; // TODO: Relocate to Shadows class.
+	const uint32_t RendererShadows::Cascades = 4; // TODO: Relocate to Shadows class.
 
-	const float RendererShadows::DEPTH_BIAS_CONSTANT = 1.25f;
-	const float RendererShadows::DEPTH_BIAS_SLOPE = 1.75f;
+	const float RendererShadows::BiasConstants = 1.25f;
+	const float RendererShadows::BiasSlope = 1.75f;
 
 	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
 		RenderPipeline(graphicsStage),
 		m_pipeline(PipelineGraphics(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
-			PIPELINE_MODE_POLYGON, PIPELINE_DEPTH_NONE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines()))),
+			PipelineMode::Polygon, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines()))),
 		m_uniformScene(UniformHandler())
 	{
 	}
@@ -25,7 +25,7 @@ namespace acid
 		m_uniformScene.Push("projectionView", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix());
 		m_uniformScene.Push("cameraPosition", camera->GetPosition());
 
-		vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), DEPTH_BIAS_CONSTANT, 0.0f, DEPTH_BIAS_SLOPE);
+		vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), BiasConstants, 0.0f, BiasSlope);
 
 		m_pipeline.BindPipeline(commandBuffer);
 
@@ -40,7 +40,7 @@ namespace acid
 	std::vector<ShaderDefine> RendererShadows::GetDefines()
 	{
 		std::vector<ShaderDefine> result = {};
-		result.emplace_back("NUM_CASCADES", String::To(NUM_CASCADES));
+		result.emplace_back("NUM_CASCADES", String::To(Cascades));
 		return result;
 	}
 }

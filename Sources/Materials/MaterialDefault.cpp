@@ -34,7 +34,7 @@ namespace acid
 
 		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
 		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
-			PIPELINE_MODE_MRT, PIPELINE_DEPTH_READ_WRITE, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()));
+			PipelineMode::Mrt, PipelineDepth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()));
 	}
 
 	void MaterialDefault::Update()
@@ -102,8 +102,8 @@ namespace acid
 		result.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
 		result.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));
 		result.emplace_back("ANIMATED", String::To<int32_t>(m_animated));
-		result.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MAX_JOINTS));
-		result.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MAX_WEIGHTS));
+		result.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MaxJoints));
+		result.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights));
 		return result;
 	}
 }

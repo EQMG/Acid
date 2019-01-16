@@ -15,14 +15,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Surface
 	{
-	private:
-		friend class Renderer;
-		const Instance *m_instance;
-		const PhysicalDevice *m_physicalDevice;
-
-		VkSurfaceKHR m_surface;
-		VkSurfaceCapabilitiesKHR m_capabilities;
-		VkSurfaceFormatKHR m_format;
 	public:
 		Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
 
@@ -33,5 +25,14 @@ namespace acid
 		const VkSurfaceCapabilitiesKHR &GetCapabilities() const { return m_capabilities; }
 
 		const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
+	private:
+		friend class Renderer;
+
+		const Instance *m_instance;
+		const PhysicalDevice *m_physicalDevice;
+
+		VkSurfaceKHR m_surface;
+		VkSurfaceCapabilitiesKHR m_capabilities;
+		VkSurfaceFormatKHR m_format;
 	};
 }

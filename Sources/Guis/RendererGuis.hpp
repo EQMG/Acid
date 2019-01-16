@@ -9,12 +9,12 @@ namespace acid
 	class ACID_EXPORT RendererGuis :
 		public RenderPipeline
 	{
-	private:
-		PipelineGraphics m_pipeline;
-		UniformHandler m_uniformScene;
 	public:
 		explicit RendererGuis(const GraphicsStage &graphicsStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+	private:
+		PipelineGraphics m_pipeline;
+		UniformHandler m_uniformScene;
 	};
 }

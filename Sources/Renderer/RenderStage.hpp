@@ -13,28 +13,6 @@ namespace acid
 {
 	class ACID_EXPORT RenderStage
 	{
-	private:
-		friend class Renderer;
-
-		uint32_t m_stageIndex;
-		RenderpassCreate m_renderpassCreate;
-
-		std::unique_ptr<Renderpass> m_renderpass;
-		std::unique_ptr<DepthStencil> m_depthStencil;
-		std::unique_ptr<Framebuffers> m_framebuffers;
-
-		std::map<std::string, const Descriptor *> m_attachments;
-
-		std::vector<VkClearValue> m_clearValues;
-		std::vector<uint32_t> m_subpassAttachmentCount;
-		std::optional<Attachment> m_depthAttachment;
-		std::optional<Attachment> m_swapchainAttachment;
-		std::vector<bool> m_subpassMultisampled;
-
-		bool m_fitDisplaySize;
-
-		uint32_t m_lastWidth;
-		uint32_t m_lastHeight;
 	public:
 		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain);
 
@@ -71,5 +49,27 @@ namespace acid
 		bool IsMultisampled(const uint32_t &subpass) const { return m_subpassMultisampled[subpass]; }
 
 		const bool &FitDisplaySize() const { return m_fitDisplaySize; }
+	private:
+		friend class Renderer;
+
+		uint32_t m_stageIndex;
+		RenderpassCreate m_renderpassCreate;
+
+		std::unique_ptr<Renderpass> m_renderpass;
+		std::unique_ptr<DepthStencil> m_depthStencil;
+		std::unique_ptr<Framebuffers> m_framebuffers;
+
+		std::map<std::string, const Descriptor *> m_attachments;
+
+		std::vector<VkClearValue> m_clearValues;
+		std::vector<uint32_t> m_subpassAttachmentCount;
+		std::optional<Attachment> m_depthAttachment;
+		std::optional<Attachment> m_swapchainAttachment;
+		std::vector<bool> m_subpassMultisampled;
+
+		bool m_fitDisplaySize;
+
+		uint32_t m_lastWidth;
+		uint32_t m_lastHeight;
 	};
 }

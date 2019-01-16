@@ -8,11 +8,11 @@
 
 namespace acid
 {
-	const Quaternion Quaternion::ZERO = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-	const Quaternion Quaternion::ONE = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
-	const Quaternion Quaternion::W_ONE = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-	const Quaternion Quaternion::POSITIVE_INFINITY = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
-	const Quaternion Quaternion::NEGATIVE_INFINITY = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+	const Quaternion Quaternion::Zero = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+	const Quaternion Quaternion::One = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+	const Quaternion Quaternion::OneW = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+	const Quaternion Quaternion::PositiveInfinity = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Quaternion Quaternion::NegativeInfinity = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Quaternion::Quaternion() :
 		m_x(0.0f),
@@ -32,12 +32,12 @@ namespace acid
 
 	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
 	{
-		float sx = std::sin(pitch * DEG_TO_RAD * 0.5f);
-		float cx = Maths::CosFromSin(sx, pitch * DEG_TO_RAD * 0.5f);
-		float sy = std::sin(yaw * DEG_TO_RAD * 0.5f);
-		float cy = Maths::CosFromSin(sy, yaw * DEG_TO_RAD * 0.5f);
-		float sz = std::sin(roll * DEG_TO_RAD * 0.5f);
-		float cz = Maths::CosFromSin(sz, roll * DEG_TO_RAD * 0.5f);
+		float sx = std::sin(pitch * Maths::DegToRad * 0.5f);
+		float cx = Maths::CosFromSin(sx, pitch * Maths::DegToRad * 0.5f);
+		float sy = std::sin(yaw * Maths::DegToRad * 0.5f);
+		float cy = Maths::CosFromSin(sy, yaw * Maths::DegToRad * 0.5f);
+		float sz = std::sin(roll * Maths::DegToRad * 0.5f);
+		float cz = Maths::CosFromSin(sz, roll * Maths::DegToRad * 0.5f);
 
 		float cycz = cy * cz;
 		float sysz = sy * sz;
@@ -290,7 +290,7 @@ namespace acid
 		result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
 		result.m_y = std::asin(2.0f *  (m_x * m_z + m_y * m_w));
 		result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));
-		return result * RAD_TO_DEG;
+		return result * Maths::RadToDeg;
 	}
 
 	void Quaternion::Decode(const Metadata &metadata)

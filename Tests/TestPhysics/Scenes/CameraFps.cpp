@@ -39,9 +39,9 @@ namespace test
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.6f),
-		m_reangleButton(MOUSE_BUTTON_LEFT),
-		m_joystickVertical(AxisJoystick(JOYSTICK_1, 3, true)),
-		m_joystickHorizontal(AxisJoystick(JOYSTICK_1, 2)),
+		m_reangleButton(MouseButton::MOUSE_BUTTON_LEFT),
+		m_joystickVertical(AxisJoystick(JoystickPort::JOYSTICK_1, 3, true)),
+		m_joystickHorizontal(AxisJoystick(JoystickPort::JOYSTICK_1, 2)),
 		m_paused(false)
 	{
 		m_nearPlane = NEAR_PLANE;

@@ -11,11 +11,6 @@ namespace acid
 {
 	class ACID_EXPORT SelectorJoystick
 	{
-	private:
-		JoystickPort m_joystick;
-		AxisJoystick m_axisX;
-		AxisJoystick m_axisY;
-		std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE> m_inputButtons;
 	public:
 		explicit SelectorJoystick(const JoystickPort &joystick = JOYSTICK_1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1, const std::vector<uint32_t> &inputButtons = {0, 1}) :
 			m_joystick(joystick),
@@ -44,6 +39,11 @@ namespace acid
 		const std::optional<ButtonJoystick> &GetInputButton(const MouseButton &button) const { return m_inputButtons[button]; }
 
 		void SetInputButton(const MouseButton &button, const ButtonJoystick &inputButton) { m_inputButtons[button] = inputButton; }
+	private:
+		JoystickPort m_joystick;
+		AxisJoystick m_axisX;
+		AxisJoystick m_axisY;
+		std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE> m_inputButtons;
 	};
 
 	/// <summary>
@@ -51,17 +51,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT UiSelector
 	{
-	private:
-		struct SelectorMouse
-		{
-			MouseButton m_mouseButton;
-			bool m_isDown;
-			bool m_wasDown;
-		};
-
-		float m_cursorX;
-		float m_cursorY;
-		std::array<SelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
 	public:
 		UiSelector();
 
@@ -84,5 +73,16 @@ namespace acid
 		const bool &IsDown(const MouseButton &button) const { return m_selectorMice[button].m_isDown; }
 
 		const bool &WasDown(const MouseButton &button) const { return m_selectorMice[button].m_wasDown; }
+	private:
+		struct SelectorMouse
+		{
+			MouseButton m_mouseButton;
+			bool m_isDown;
+			bool m_wasDown;
+		};
+
+		float m_cursorX;
+		float m_cursorY;
+		std::array<SelectorMouse, MOUSE_BUTTON_END_RANGE> m_selectorMice;
 	};
 }

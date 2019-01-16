@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	const int32_t VertexAnimatedData::NO_INDEX = -1;
+	static const int32_t NO_INDEX = -1;
 
 	VertexAnimatedData::VertexAnimatedData(const int32_t &index, const Vector3 &position) :
 		m_position(position),

@@ -13,9 +13,6 @@ namespace acid
 	class ACID_EXPORT AxisButton :
 		public IAxis
 	{
-	private:
-		std::unique_ptr<IButton> m_negative;
-		std::unique_ptr<IButton> m_positive;
 	public:
 		/// <summary>
 		/// A template used to create a axis button of a single type.
@@ -45,5 +42,8 @@ namespace acid
 		AxisButton(IButton *negative, IButton *positive);
 
 		float GetAmount() const override;
+	private:
+		std::unique_ptr<IButton> m_negative;
+		std::unique_ptr<IButton> m_positive;
 	};
 }

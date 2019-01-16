@@ -7,10 +7,6 @@ namespace acid
 	class ACID_EXPORT FilterGrain :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		float m_strength;
 	public:
 		explicit FilterGrain(const GraphicsStage &graphicsStage, const float &strength = 2.3f);
 
@@ -19,5 +15,9 @@ namespace acid
 		const float &GetStrength() const { return m_strength; }
 
 		void SetStrength(const float &strength) { m_strength = strength; }
+	private:
+		PushHandler m_pushScene;
+
+		float m_strength;
 	};
 }

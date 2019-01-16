@@ -41,12 +41,12 @@ namespace acid
 
 	float Maths::Radians(const float &degrees)
 	{
-		return degrees * DEG_TO_RAD;
+		return degrees * DegToRad;
 	}
 
 	float Maths::Degrees(const float &radians)
 	{
-		return radians * RAD_TO_DEG;
+		return radians * RadToDeg;
 	}
 
 	float Maths::WrapDegrees(const float &degrees)
@@ -63,11 +63,11 @@ namespace acid
 
 	float Maths::WrapRadians(const float &radians)
 	{
-		float x = std::fmod(radians, 2.0f * PI);
+		float x = std::fmod(radians, 2.0f * Pi);
 
 		if (x < 0.0f)
 		{
-			x += 2.0f * PI;
+			x += 2.0f * Pi;
 		}
 
 		return x;
@@ -106,7 +106,7 @@ namespace acid
 
 	float Maths::CosLerp(const float &a, const float &b, const float &factor)
 	{
-		float ft = factor * PI;
+		float ft = factor * Pi;
 		float f = 1.0f - std::cos(ft) * 0.5f;
 		return (a * (1.0f - f)) + (b * f);
 	}
@@ -121,15 +121,15 @@ namespace acid
 	{
 		// sin(x)^2 + cos(x)^2 = 1
 		float cos = std::sqrt(1.0f - sin * sin);
-		float a = angle + (PI / 2.0f);
-		float b = a - (int)(a / (2.0f * PI)) * (2.0f * PI);
+		float a = angle + (Pi / 2.0f);
+		float b = a - (int)(a / (2.0f * Pi)) * (2.0f * Pi);
 
 		if (b < 0.0f)
 		{
-			b = (2.0f * PI) + b;
+			b = (2.0f * Pi) + b;
 		}
 
-		if (b >= PI)
+		if (b >= Pi)
 		{
 			return -cos;
 		}

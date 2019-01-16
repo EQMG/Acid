@@ -5,10 +5,10 @@
 namespace acid
 {
 	Delta::Delta() :
-		m_currentFrameTime(Time::ZERO),
-		m_lastFrameTime(Time::ZERO),
-		m_change(Time::ZERO),
-		m_time(Time::ZERO)
+		m_currentFrameTime(Time::Zero),
+		m_lastFrameTime(Time::Zero),
+		m_change(Time::Zero),
+		m_time(Time::Zero)
 	{
 	}
 

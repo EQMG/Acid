@@ -7,7 +7,7 @@ namespace acid
 {
 	Animator::Animator(Joint *rootJoint) :
 		m_rootJoint(rootJoint),
-		m_animationTime(Time::ZERO),
+		m_animationTime(Time::Zero),
 		m_currentAnimation(nullptr)
 	{
 	}
@@ -21,7 +21,7 @@ namespace acid
 
 		IncreaseAnimationTime();
 		auto currentPose = CalculateCurrentAnimationPose();
-		ApplyPoseToJoints(currentPose, *m_rootJoint, Matrix4::IDENTITY);
+		ApplyPoseToJoints(currentPose, *m_rootJoint, Matrix4::Identity);
 	}
 
 	void Animator::IncreaseAnimationTime()
@@ -100,7 +100,7 @@ namespace acid
 
 	void Animator::DoAnimation(Animation *animation)
 	{
-		m_animationTime = Time::ZERO;
+		m_animationTime = Time::Zero;
 		m_currentAnimation = animation;
 	}
 }

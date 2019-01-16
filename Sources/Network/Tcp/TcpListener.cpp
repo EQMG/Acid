@@ -11,7 +11,7 @@
 namespace acid
 {
 	TcpListener::TcpListener() :
-		Socket(SOCKET_TYPE_TCP)
+		Socket(Type::Tcp)
 	{
 	}
 
@@ -33,7 +33,7 @@ namespace acid
 		return 0;
 	}
 
-	SocketStatus TcpListener::Listen(const uint16_t &port, const IpAddress &address)
+	Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &address)
 	{
 		// Close the socket if it is already bound.
 		Close();
@@ -42,9 +42,9 @@ namespace acid
 		Create();
 
 		// Check if the address is valid.
-		if ((address == IpAddress::NONE) || (address == IpAddress::BROADCAST))
+		if ((address == IpAddress::None) || (address == IpAddress::Broadcast))
 		{
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Bind the socket to the specified port.
@@ -54,7 +54,7 @@ namespace acid
 		{
 			// Not likely to happen, but...
 			Log::Error("Failed to bind listener socket to port %i\n", port);
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Listen to the bound port.
@@ -62,10 +62,10 @@ namespace acid
 		{
 			// Oops, socket is deaf.
 			Log::Error("Failed to listen to port %i\n", port);
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 
 	void TcpListener::Close()
@@ -74,13 +74,13 @@ namespace acid
 		Socket::Close();
 	}
 
-	SocketStatus TcpListener::Accept(TcpSocket &socket)
+	Socket::Status TcpListener::Accept(TcpSocket &socket)
 	{
 		// Make sure that we're listening.
 		if (GetHandle() == Socket::InvalidSocketHandle())
 		{
 			Log::Error("Failed to accept a new connection, the socket is not listening\n");
-			return SOCKET_STATUS_ERROR;
+			return Socket::Status::Error;
 		}
 
 		// Accept a new connection.
@@ -98,6 +98,6 @@ namespace acid
 		socket.Close();
 		socket.Create(remote);
 
-		return SOCKET_STATUS_DONE;
+		return Socket::Status::Done;
 	}
 }

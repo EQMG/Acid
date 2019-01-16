@@ -13,11 +13,6 @@ namespace acid
 	class EventChange :
 		public IEvent
 	{
-	private:
-		std::function<void(T)> m_onEvent;
-		std::function<T()> m_reference;
-		T m_current;
-		bool m_repeat;
 	public:
 		/// <summary>
 		/// Creates a new change event.
@@ -64,5 +59,10 @@ namespace acid
 		}
 
 		bool RemoveAfterEvent() override { return !m_repeat; }
+	private:
+		std::function<void(T)> m_onEvent;
+		std::function<T()> m_reference;
+		T m_current;
+		bool m_repeat;
 	};
 }

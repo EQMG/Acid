@@ -70,8 +70,8 @@ namespace acid
 			static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount),
 			static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount)
 		);
-		Vector3 normal = Vector3::UP;
-		Colour colour = Colour::WHITE;
+		Vector3 normal = Vector3::Up;
+		Colour colour = Colour::White;
 		return VertexModel(position, uv, normal, colour);
 	}
 }

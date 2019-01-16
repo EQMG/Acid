@@ -17,37 +17,6 @@ namespace acid
 	class ACID_EXPORT Colour
 	{
 	public:
-		union
-		{
-			struct
-			{
-				float m_elements[4];
-			};
-
-			struct
-			{
-				float m_r, m_g, m_b, m_a;
-			};
-		};
-
-		static const Colour CLEAR;
-		static const Colour BLACK;
-		static const Colour GREY;
-		static const Colour SILVER;
-		static const Colour WHITE;
-		static const Colour MAROON;
-		static const Colour RED;
-		static const Colour OLIVE;
-		static const Colour YELLOW;
-		static const Colour GREEN;
-		static const Colour LIME;
-		static const Colour TEAL;
-		static const Colour AQUA;
-		static const Colour NAVY;
-		static const Colour BLUE;
-		static const Colour PURPLE;
-		static const Colour FUCHSIA;
-
 		/// <summary>
 		/// Constructor for colour.
 		/// </summary>
@@ -256,5 +225,36 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Colour &colour);
 
 		std::string ToString() const;
+
+		static const Colour Clear;
+		static const Colour Black;
+		static const Colour Grey;
+		static const Colour Silver;
+		static const Colour White;
+		static const Colour Maroon;
+		static const Colour Red;
+		static const Colour Olive;
+		static const Colour Yellow;
+		static const Colour Green;
+		static const Colour Lime;
+		static const Colour Teal;
+		static const Colour Aqua;
+		static const Colour Navy;
+		static const Colour Blue;
+		static const Colour Purple;
+		static const Colour Fuchsia;
+
+		union
+		{
+			struct
+			{
+				float m_elements[4];
+			};
+
+			struct
+			{
+				float m_r, m_g, m_b, m_a;
+			};
+		};
 	};
 }

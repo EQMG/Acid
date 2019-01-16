@@ -41,13 +41,29 @@ namespace acid
 		UpdateViewShadowMatrix();
 	}
 
+	bool ShadowBox::IsInBox(const Vector3 &position, const float &radius) const
+	{
+		Vector4 entityPos = m_lightViewMatrix.Transform(Vector4(position));
+
+		Vector3 closestPoint = Vector3();
+		closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
+		closestPoint.m_y = std::clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
+		closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
+
+		Vector3 centre = Vector3(entityPos);
+		Vector3 distance = centre - closestPoint;
+		float distanceSquared = distance.LengthSquared();
+
+		return distanceSquared < radius * radius;
+	}
+
 	void ShadowBox::UpdateShadowBox(const Camera &camera)
 	{
 		UpdateSizes(camera);
 
 		Matrix4 rotation = Matrix4();
-		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation().m_y), Vector3::UP);
-		rotation = rotation.Rotate(Maths::Radians(camera.GetRotation().m_x), Vector3::RIGHT);
+		rotation = rotation.Rotate(camera.GetRotation().m_y * Maths::DegToRad, Vector3::Up);
+		rotation = rotation.Rotate(camera.GetRotation().m_x * Maths::DegToRad, Vector3::Right);
 
 		Vector4 forwardVector4 = rotation.Transform(Vector4(0.0f, 0.0f, -1.0f, 0.0f));
 		Vector3 forwardVector = Vector3(forwardVector4);
@@ -108,8 +124,8 @@ namespace acid
 
 	void ShadowBox::UpdateSizes(const Camera &camera)
 	{
-		m_farWidth = m_shadowDistance * std::tan(Maths::Radians(camera.GetFieldOfView()));
-		m_nearWidth = camera.GetNearPlane() * std::tan(Maths::Radians(camera.GetFieldOfView()));
+		m_farWidth = m_shadowDistance * std::tan(camera.GetFieldOfView() * Maths::DegToRad);
+		m_nearWidth = camera.GetNearPlane() * std::tan(camera.GetFieldOfView() * Maths::DegToRad);
 		m_farHeight = m_farWidth / Window::Get()->GetAspectRatio();
 		m_nearHeight = m_nearWidth / Window::Get()->GetAspectRatio();
 	}
@@ -154,7 +170,7 @@ namespace acid
 
 	void ShadowBox::UpdateOrthoProjectionMatrix()
 	{
-		m_projectionMatrix = Matrix4::IDENTITY;
+		m_projectionMatrix = Matrix4::Identity;
 		m_projectionMatrix[0][0] = 2.0f / GetWidth();
 		m_projectionMatrix[1][1] = 2.0f / GetHeight();
 		m_projectionMatrix[2][2] = -2.0f / GetDepth();
@@ -174,17 +190,17 @@ namespace acid
 
 	void ShadowBox::UpdateLightViewMatrix()
 	{
-		m_lightViewMatrix = Matrix4::IDENTITY;
+		m_lightViewMatrix = Matrix4::Identity;
 		float pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
-		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::RIGHT);
-		float yaw = Maths::Degrees(std::atan(m_lightDirection.m_x / m_lightDirection.m_z));
+		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::Right);
+		float yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
 
 		if (m_lightDirection.m_z > 0.0f)
 		{
 			yaw -= 180.0f;
 		}
 
-		m_lightViewMatrix = m_lightViewMatrix.Rotate(-Maths::Radians(yaw), Vector3::UP);
+		m_lightViewMatrix = m_lightViewMatrix.Rotate(-yaw * Maths::DegToRad, Vector3::Up);
 		m_lightViewMatrix = m_lightViewMatrix.Translate(-m_centre);
 	}
 
@@ -192,21 +208,5 @@ namespace acid
 	{
 		m_projectionViewMatrix = m_projectionMatrix * m_lightViewMatrix;
 		m_shadowMapSpaceMatrix = m_offset * m_projectionViewMatrix;
-	}
-
-	bool ShadowBox::IsInBox(const Vector3 &position, const float &radius) const
-	{
-		Vector4 entityPos = m_lightViewMatrix.Transform(Vector4(position));
-
-		Vector3 closestPoint = Vector3();
-		closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
-		closestPoint.m_y = std::clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
-		closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
-
-		Vector3 centre = Vector3(entityPos);
-		Vector3 distance = centre - closestPoint;
-		float distanceSquared = distance.LengthSquared();
-
-		return distanceSquared < radius * radius;
 	}
 }

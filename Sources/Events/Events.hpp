@@ -13,9 +13,6 @@ namespace acid
 	class ACID_EXPORT Events :
 		public Module
 	{
-	private:
-		std::mutex m_mutex;
-		std::vector<std::unique_ptr<IEvent>> m_events;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -48,5 +45,8 @@ namespace acid
 		/// <param name="event"> The event to remove. </param>
 		/// <returns> If the event was removed. </returns>
 		void RemoveEvent(IEvent *event);
+	private:
+		std::mutex m_mutex;
+		std::vector<std::unique_ptr<IEvent>> m_events;
 	};
 }

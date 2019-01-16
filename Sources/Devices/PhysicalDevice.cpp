@@ -77,7 +77,7 @@ namespace acid
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
 
 		// Iterates through all extensions requested.
-		for (const char *currentExtension : Instance::DEVICE_EXTENSIONS)
+		for (const char *currentExtension : Instance::DeviceExtensions)
 		{
 			bool extensionFound = false;
 

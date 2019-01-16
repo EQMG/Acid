@@ -20,16 +20,6 @@ namespace acid
 {
 	class ACID_EXPORT Uniform
 	{
-	private:
-		friend class ShaderProgram;
-		std::string m_name;
-		int32_t m_binding;
-		int32_t m_offset;
-		int32_t m_size;
-		int32_t m_glType;
-		bool m_readOnly;
-		bool m_writeOnly;
-		VkShaderStageFlags m_stageFlags;
 	public:
 		Uniform(const std::string &name, const int32_t &binding, const int32_t &offset, const int32_t &size, const int32_t &glType, const bool &readOnly, const bool &writeOnly, const VkShaderStageFlags &stageFlags) :
 			m_name(name),
@@ -75,28 +65,29 @@ namespace acid
 			result << "Uniform(name '" << m_name << "', binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
 			return result.str();
 		}
-	};
+	private:
+		friend class ShaderProgram;
 
-	enum UniformBlockType
-	{
-		BLOCK_UNIFORM = 0,
-		BLOCK_STORAGE = 1,
-		BLOCK_PUSH = 2
+		std::string m_name;
+		int32_t m_binding;
+		int32_t m_offset;
+		int32_t m_size;
+		int32_t m_glType;
+		bool m_readOnly;
+		bool m_writeOnly;
+		VkShaderStageFlags m_stageFlags;
 	};
 
 	class ACID_EXPORT UniformBlock :
 		public NonCopyable
 	{
-	private:
-		friend class ShaderProgram;
-		std::string m_name;
-		int32_t m_binding;
-		int32_t m_size;
-		VkShaderStageFlags m_stageFlags;
-		UniformBlockType m_type;
-		std::vector<std::unique_ptr<Uniform>> m_uniforms;
 	public:
-		UniformBlock(const std::string &name, const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const UniformBlockType &type) :
+		enum class Type
+		{
+			Uniform, Storage, Push
+		};
+
+		UniformBlock(const std::string &name, const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const Type &type) :
 			m_name(name),
 			m_binding(binding),
 			m_size(size),
@@ -140,26 +131,29 @@ namespace acid
 
 		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
 
-		const UniformBlockType &GetType() const { return m_type; }
+		const Type &GetType() const { return m_type; }
 
 		const std::vector<std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
 
 		std::string ToString() const
 		{
 			std::stringstream result;
-			result << "UniformBlock(name '" << m_name << "', binding " << m_binding << ", size " << m_size << ", type " << m_type << ")";
+			result << "UniformBlock(name '" << m_name << "', binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
 			return result.str();
 		}
+	private:
+		friend class ShaderProgram;
+
+		std::string m_name;
+		int32_t m_binding;
+		int32_t m_size;
+		VkShaderStageFlags m_stageFlags;
+		Type m_type;
+		std::vector<std::unique_ptr<Uniform>> m_uniforms;
 	};
 
 	class ACID_EXPORT VertexAttribute
 	{
-	private:
-		std::string m_name;
-		int32_t m_set;
-		int32_t m_location;
-		int32_t m_size;
-		int32_t m_glType;
 	public:
 		VertexAttribute(const std::string &name, const int32_t &set, const int32_t &location, const int32_t &size, const int32_t &glType) :
 			m_name(name),
@@ -186,23 +180,19 @@ namespace acid
 			result << "VertexAttribute(name '" << m_name << "', set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
 			return result.str();
 		}
+	private:
+		friend class ShaderProgram;
+
+		std::string m_name;
+		int32_t m_set;
+		int32_t m_location;
+		int32_t m_size;
+		int32_t m_glType;
 	};
 
 	class ACID_EXPORT ShaderProgram :
 		public NonCopyable
 	{
-	private:
-		std::string m_name;
-		std::vector<std::unique_ptr<Uniform>> m_uniforms;
-		std::vector<std::unique_ptr<UniformBlock>> m_uniformBlocks;
-		std::vector<std::unique_ptr<VertexAttribute>> m_vertexAttributes;
-
-		std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
-		std::vector<VkDescriptorPoolSize> m_descriptorPools;
-		std::vector<VkDescriptorType> m_descriptorTypes;
-		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
-
-		mutable std::vector<std::string> m_notFoundNames;
 	public:
 		explicit ShaderProgram(const std::string &name);
 
@@ -261,5 +251,17 @@ namespace acid
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
 
 		int32_t ComputeSize(const glslang::TType *ttype);
+
+		std::string m_name;
+		std::vector<std::unique_ptr<Uniform>> m_uniforms;
+		std::vector<std::unique_ptr<UniformBlock>> m_uniformBlocks;
+		std::vector<std::unique_ptr<VertexAttribute>> m_vertexAttributes;
+
+		std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
+		std::vector<VkDescriptorPoolSize> m_descriptorPools;
+		std::vector<VkDescriptorType> m_descriptorTypes;
+		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
+
+		mutable std::vector<std::string> m_notFoundNames;
 	};
 }

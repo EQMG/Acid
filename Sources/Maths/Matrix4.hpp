@@ -20,22 +20,6 @@ namespace acid
 	class ACID_EXPORT Matrix4
 	{
 	public:
-		union
-		{
-			struct
-			{
-				Vector4 m_rows[4];
-			};
-
-			struct
-			{
-				float m_linear[16];
-			};
-		};
-
-		static const Matrix4 IDENTITY;
-		static const Matrix4 ZERO;
-
 		/// <summary>
 		/// Constructor for Matrix4. The matrix is initialised to the identity.
 		/// </summary>
@@ -253,7 +237,7 @@ namespace acid
 		/// <param name="object"> The target position. </param>
 		/// <param name="up"> What view direction is up. </param>
 		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up = Vector3::UP);
+		static Matrix4 LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up = Vector3::Up);
 
 		void Decode(const Metadata &metadata);
 
@@ -316,5 +300,21 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Matrix4 &matrix);
 
 		std::string ToString() const;
+
+		static const Matrix4 Identity;
+		static const Matrix4 Zero;
+
+		union
+		{
+			struct
+			{
+				Vector4 m_rows[4];
+			};
+
+			struct
+			{
+				float m_linear[16];
+			};
+		};
 	};
 }

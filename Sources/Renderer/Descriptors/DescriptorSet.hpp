@@ -12,11 +12,6 @@ namespace acid
 
 	class ACID_EXPORT DescriptorSet
 	{
-	private:
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
-		VkDescriptorPool m_descriptorPool;
-		VkDescriptorSet m_descriptorSet;
 	public:
 		explicit DescriptorSet(const Pipeline &pipeline);
 
@@ -27,5 +22,10 @@ namespace acid
 		void BindDescriptor(const CommandBuffer &commandBuffer);
 
 		const VkDescriptorSet &GetDescriptorSet() const { return m_descriptorSet; }
+	private:
+		VkPipelineLayout m_pipelineLayout;
+		VkPipelineBindPoint m_pipelineBindPoint;
+		VkDescriptorPool m_descriptorPool;
+		VkDescriptorSet m_descriptorSet;
 	};
 }

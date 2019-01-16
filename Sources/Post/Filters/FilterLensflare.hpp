@@ -8,11 +8,6 @@ namespace acid
 	class ACID_EXPORT FilterLensflare :
 		public PostFilter
 	{
-	private:
-		PushHandler m_pushScene;
-
-		Vector3 m_sunPosition;
-		float m_sunHeight;
 	public:
 		explicit FilterLensflare(const GraphicsStage &graphicsStage);
 
@@ -25,5 +20,10 @@ namespace acid
 		const float &GetSunHeight() const { return m_sunHeight; }
 
 		void SetSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
+	private:
+		PushHandler m_pushScene;
+
+		Vector3 m_sunPosition;
+		float m_sunHeight;
 	};
 }

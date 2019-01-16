@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	HttpRequest::HttpRequest(const std::string &uri, const HttpRequestMethod &method, const std::string &body)
+	HttpRequest::HttpRequest(const std::string &uri, const HttpRequest::Method &method, const std::string &body)
 	{
 		SetMethod(method);
 		SetUri(uri);
@@ -43,31 +43,31 @@ namespace acid
 
 		switch (m_method)
 		{
-			case HTTP_METHOD_GET:
+			case HttpRequest::Method::Get:
 				method = "GET";
 				break;
-			case HTTP_METHOD_POST:
+			case HttpRequest::Method::Post:
 				method = "POST";
 				break;
-			case HTTP_METHOD_HEAD:
+			case HttpRequest::Method::Head:
 				method = "HEAD";
 				break;
-			case HTTP_METHOD_PUT:
+			case HttpRequest::Method::Put:
 				method = "PUT";
 				break;
-			case HTTP_METHOD_DELETE:
+			case HttpRequest::Method::Delete:
 				method = "DELETE";
 				break;
-			case HTTP_METHOD_OPTIONS:
+			case HttpRequest::Method::Options:
 				method = "OPTIONS";
 				break;
-			case HTTP_METHOD_PATCH:
+			case HttpRequest::Method::Patch:
 				method = "PATCH";
 				break;
-			case HTTP_METHOD_TRACE:
+			case HttpRequest::Method::Trace:
 				method = "TRACE";
 				break;
-			case HTTP_METHOD_CONNECT:
+			case HttpRequest::Method::Connect:
 				method = "CONNECT";
 				break;
 		}

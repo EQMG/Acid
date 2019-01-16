@@ -13,9 +13,6 @@ namespace acid
 	class ACID_EXPORT FontType :
 		public Resource
 	{
-	private:
-		std::shared_ptr<Texture> m_texture;
-		std::shared_ptr<FontMetafile> m_metadata;
 	public:
 		/// <summary>
 		/// Will find an existing font type with the same filename, or create a new font type.
@@ -42,5 +39,8 @@ namespace acid
 		const std::shared_ptr<FontMetafile> &GetMetadata() const { return m_metadata; }
 	private:
 		static std::string ToFilename(const std::string &filename, const std::string &fontStyle);
+
+		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<FontMetafile> m_metadata;
 	};
 }

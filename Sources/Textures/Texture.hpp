@@ -15,24 +15,6 @@ namespace acid
 		public Resource,
 		public Descriptor
 	{
-	private:
-		std::string m_filename;
-
-		VkFilter m_filter;
-		VkSamplerAddressMode m_addressMode;
-		bool m_anisotropic;
-		uint32_t m_mipLevels;
-		VkSampleCountFlagBits m_samples;
-		VkImageLayout m_imageLayout;
-
-		uint32_t m_components;
-		uint32_t m_width, m_height;
-
-		VkImage m_image;
-		VkDeviceMemory m_deviceMemory;
-		VkImageView m_imageView;
-		VkSampler m_sampler;
-		VkFormat m_format;
 	public:
 		/// <summary>
 		/// Will find an existing texture with the same filename, or create a new texture.
@@ -154,5 +136,23 @@ namespace acid
 	private:
 		static std::string ToName(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 			const bool &anisotropic, const bool &mipmap);
+
+		std::string m_filename;
+
+		VkFilter m_filter;
+		VkSamplerAddressMode m_addressMode;
+		bool m_anisotropic;
+		uint32_t m_mipLevels;
+		VkSampleCountFlagBits m_samples;
+		VkImageLayout m_imageLayout;
+
+		uint32_t m_components;
+		uint32_t m_width, m_height;
+
+		VkImage m_image;
+		VkDeviceMemory m_deviceMemory;
+		VkImageView m_imageView;
+		VkSampler m_sampler;
+		VkFormat m_format;
 	};
 }

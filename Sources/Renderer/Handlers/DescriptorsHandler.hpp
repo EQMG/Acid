@@ -16,21 +16,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT DescriptorsHandler
 	{
-	private:
-		struct DescriptorValue
-		{
-			const Descriptor *descriptor;
-			std::optional<OffsetSize> offsetSize;
-			uint32_t location;
-		};
-
-		const ShaderProgram *m_shaderProgram;
-		bool m_pushDescriptors;
-		std::map<std::string, DescriptorValue> m_descriptors;
-		std::vector<WriteDescriptorSet> m_writeDescriptors;
-		std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
-		std::unique_ptr<DescriptorSet> m_descriptorSet;
-		bool m_changed;
 	public:
 		DescriptorsHandler();
 
@@ -53,5 +38,20 @@ namespace acid
 		void BindDescriptor(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 		const DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
+	private:
+		struct DescriptorValue
+		{
+			const Descriptor *descriptor;
+			std::optional<OffsetSize> offsetSize;
+			uint32_t location;
+		};
+
+		const ShaderProgram *m_shaderProgram;
+		bool m_pushDescriptors;
+		std::map<std::string, DescriptorValue> m_descriptors;
+		std::vector<WriteDescriptorSet> m_writeDescriptors;
+		std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
+		std::unique_ptr<DescriptorSet> m_descriptorSet;
+		bool m_changed;
 	};
 }

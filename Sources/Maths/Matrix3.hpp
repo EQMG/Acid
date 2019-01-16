@@ -17,22 +17,6 @@ namespace acid
 	class ACID_EXPORT Matrix3
 	{
 	public:
-		union
-		{
-			struct
-			{
-				Vector3 m_rows[3];
-			};
-
-			struct
-			{
-				float m_linear[9];
-			};
-		};
-
-		static const Matrix3 IDENTITY;
-		static const Matrix3 ZERO;
-
 		/// <summary>
 		/// Constructor for Matrix3. The matrix is initialised to the identity.
 		/// </summary>
@@ -209,5 +193,21 @@ namespace acid
 		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Matrix3 &matrix);
 
 		std::string ToString() const;
+
+		static const Matrix3 Identity;
+		static const Matrix3 Zero;
+
+		union
+		{
+			struct
+			{
+				Vector3 m_rows[3];
+			};
+
+			struct
+			{
+				float m_linear[9];
+			};
+		};
 	};
 }

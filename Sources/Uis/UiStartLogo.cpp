@@ -14,11 +14,11 @@ namespace acid
 #endif
 
 	UiStartLogo::UiStartLogo(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f))),
-		m_guiBackground(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/Black.png"))),
-		m_guiLogoAcid(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.4f, 0.4f)), Texture::Create("Logos/Flask-02.png"))),
-		m_textCopyright(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.2f), UiBound::CENTRE, true), 1.8f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved.",
-			FontType::Create("Fonts/ProximaNova", "Regular"), TEXT_JUSTIFY_CENTRE, 0.8f, Colour::WHITE, 0.0012f, 0.024f)),
+		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		m_guiBackground(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/Black.png"))),
+		m_guiLogoAcid(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, true, Vector2(0.4f, 0.4f)), Texture::Create("Logos/Flask-02.png"))),
+		m_textCopyright(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.2f), UiBound::Centre, true), 1.8f, "Copyright (C) 2018, Equilibrium Games - All Rights Reserved.",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 0.8f, Colour::White, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
 		Events::Get()->AddEvent<EventTime>([&]()

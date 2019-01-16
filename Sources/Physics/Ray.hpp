@@ -12,25 +12,8 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Ray
 	{
-	private:
-		bool m_useMouse;
-		Vector2 m_screenStart;
-
-		Matrix4 m_viewMatrix;
-		Matrix4 m_projectionMatrix;
-
-		Vector2 m_normalizedCoords;
-		Vector4 m_clipCoords;
-		Vector4 m_eyeCoords;
-
-		Matrix4 m_invertedProjection;
-		Matrix4 m_invertedView;
-		Vector4 m_rayWorld;
-
-		Vector3 m_origin;
-		Vector3 m_currentRay;
 	public:
-		static const Ray ZERO;
+		static const Ray Zero;
 
 		/// <summary>
 		/// Creates a new 3D ray.
@@ -79,5 +62,22 @@ namespace acid
 		void UpdateEyeCoords();
 
 		void UpdateWorldCoords();
+
+		bool m_useMouse;
+		Vector2 m_screenStart;
+
+		Matrix4 m_viewMatrix;
+		Matrix4 m_projectionMatrix;
+
+		Vector2 m_normalizedCoords;
+		Vector4 m_clipCoords;
+		Vector4 m_eyeCoords;
+
+		Matrix4 m_invertedProjection;
+		Matrix4 m_invertedView;
+		Vector4 m_rayWorld;
+
+		Vector3 m_origin;
+		Vector3 m_currentRay;
 	};
 }

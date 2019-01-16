@@ -42,9 +42,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Monitor
 	{
-	private:
-		GLFWmonitor *m_monitor;
-		bool m_primary;
 	public:
 		explicit Monitor(GLFWmonitor *monitor);
 
@@ -95,5 +92,8 @@ namespace acid
 		/// </summary>
 		/// <param name="gammaRamp"> The gamma ramp to use. </param>
 		void SetGammaRamp(const GammaRamp &gammaRamp) const;
+	private:
+		GLFWmonitor *m_monitor;
+		bool m_primary;
 	};
 }

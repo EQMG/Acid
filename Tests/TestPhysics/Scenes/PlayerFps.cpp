@@ -99,7 +99,7 @@ namespace test
 
 				if (m_noclipEnabled)
 				{
-					character->SetGravity(Vector3::ZERO);
+					character->SetGravity(Vector3::Zero);
 				}
 				else
 				{
@@ -115,7 +115,7 @@ namespace test
 
 		transform.SetRotation(Vector3(0.0f, cameraRotation.m_y, 0.0f));
 
-		float theta = Maths::Radians(cameraRotation.m_y);
+		float theta = cameraRotation.m_y * Maths::DegToRad;
 		Vector3 walkDirection = direction;
 		walkDirection.m_x = -(direction.m_z * std::sin(theta) + direction.m_x * std::cos(theta));
 		walkDirection.m_z = -(direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta));

@@ -45,7 +45,7 @@ set(_temp_acid_headers
 		Events/IEvent.hpp
 		Files/File.hpp
 		Files/Files.hpp
-		Fonts/FontMetafile.hpp
+		Files/FileWatcher.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
 		Fonts/RendererFonts.hpp
@@ -274,6 +274,7 @@ set(_temp_acid_sources
 		Events/EventTime.cpp
 		Files/File.cpp
 		Files/Files.cpp
+		Files/FileWatcher.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
 		Fonts/RendererFonts.cpp

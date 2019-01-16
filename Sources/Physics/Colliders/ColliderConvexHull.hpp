@@ -11,12 +11,8 @@ namespace acid
 	class ACID_EXPORT ColliderConvexHull :
 		public Collider
 	{
-	private:
-		std::unique_ptr<btConvexHullShape> m_shape;
-		std::shared_ptr<Model> m_model;
-		uint32_t m_pointCount;
 	public:
-		explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform::IDENTITY);
+		explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform::Identity);
 
 		~ColliderConvexHull();
 
@@ -33,5 +29,9 @@ namespace acid
 		const uint32_t &GetPointCount() const { return m_pointCount; }
 
 		void Initialize(const std::vector<float> &pointCloud);
+	private:
+		std::unique_ptr<btConvexHullShape> m_shape;
+		std::shared_ptr<Model> m_model;
+		uint32_t m_pointCount;
 	};
 }

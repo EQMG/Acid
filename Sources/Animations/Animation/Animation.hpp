@@ -12,9 +12,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Animation
 	{
-	private:
-		Time m_length;
-		std::vector<Keyframe> m_keyframes;
 	public:
 		/// <summary>
 		/// Creates a new animation.
@@ -34,5 +31,8 @@ namespace acid
 		/// </summary>
 		/// <returns> The array of the animation's keyframes. </returns>
 		const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
+	private:
+		Time m_length;
+		std::vector<Keyframe> m_keyframes;
 	};
 }

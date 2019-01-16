@@ -11,10 +11,6 @@ namespace acid
 	class ACID_EXPORT ButtonJoystick :
 		public IButton
 	{
-	private:
-		JoystickPort m_joystick;
-		uint32_t m_button;
-		bool m_wasDown;
 	public:
 		/// <summary>
 		/// Creates a new joystick button.
@@ -34,5 +30,9 @@ namespace acid
 		const uint32_t &GetButton() const { return m_button; }
 
 		void SetButton(const uint32_t &button) { m_button = button; }
+	private:
+		JoystickPort m_joystick;
+		uint32_t m_button;
+		bool m_wasDown;
 	};
 }

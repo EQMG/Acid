@@ -13,14 +13,12 @@ namespace acid
 	class ACID_EXPORT Emitter :
 		public Component
 	{
-	protected:
-		Transform m_localTransform;
 	public:
 		/// <summary>
 		/// Creates a new emitter.
 		/// </summary>
 		/// <param name="localTransform"> The local transform from the parents space. </param>
-		explicit Emitter(const Transform &localTransform = Transform::IDENTITY) :
+		explicit Emitter(const Transform &localTransform = Transform::Identity) :
 			m_localTransform(localTransform)
 		{
 		}
@@ -34,5 +32,7 @@ namespace acid
 		const Transform &GetLocalTransform() const { return m_localTransform; }
 
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
+	protected:
+		Transform m_localTransform;
 	};
 }

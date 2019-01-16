@@ -11,30 +11,7 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Particle
 	{
-	private:
-		std::shared_ptr<ParticleType> m_particleType;
-
-		Vector3 m_position;
-
-		Vector3 m_velocity;
-		Vector3 m_change;
-
-		Vector2 m_textureOffset1;
-		Vector2 m_textureOffset2;
-
-		float m_lifeLength;
-		float m_stageCycles;
-		float m_rotation;
-		float m_scale;
-		float m_gravityEffect;
-
-		float m_elapsedTime;
-		float m_transparency;
-		float m_textureBlendFactor;
-		float m_distanceToCamera;
 	public:
-		static const float FADE_TIME;
-
 		/// <summary>
 		/// Creates a new particle object.
 		/// </summary>
@@ -86,5 +63,25 @@ namespace acid
 		bool operator<(const Particle &other) const;
 	private:
 		Vector2 CalculateTextureOffset(const int32_t &index) const;
+
+		std::shared_ptr<ParticleType> m_particleType;
+
+		Vector3 m_position;
+		Vector3 m_velocity;
+		Vector3 m_change;
+
+		Vector2 m_textureOffset1;
+		Vector2 m_textureOffset2;
+
+		float m_lifeLength;
+		float m_stageCycles;
+		float m_rotation;
+		float m_scale;
+		float m_gravityEffect;
+
+		float m_elapsedTime;
+		float m_transparency;
+		float m_textureBlendFactor;
+		float m_distanceToCamera;
 	};
 }

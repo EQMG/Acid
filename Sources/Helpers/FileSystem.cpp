@@ -29,8 +29,8 @@ typedef struct stat STAT;
 namespace acid
 {
 #if defined(ACID_BUILD_WINDOWS)
-	const char FileSystem::SEPARATOR = '\\';
-	const char FileSystem::ALT_SEPARATOR = '/';
+	const char FileSystem::Separator = '\\';
+	const char FileSystem::AltSeparator = '/';
 #else
 	const char FileSystem::SEPARATOR = '/';
 	const char FileSystem::ALT_SEPARATOR = '\\';
@@ -47,7 +47,7 @@ namespace acid
 	{
 		STAT st;
 
-		if (stat(path.c_str(), & st) == -1)
+		if (stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
@@ -63,7 +63,7 @@ namespace acid
 	{
 		STAT st;
 
-		if (stat(path.c_str(), & st) == -1)
+		if (stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
@@ -79,7 +79,7 @@ namespace acid
 	{
 		STAT st;
 
-		if (stat(path.c_str(), & st) == -1)
+		if (stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
@@ -99,6 +99,18 @@ namespace acid
 	bool FileSystem::IsWriteable(const std::string &path)
 	{
 		return access(path.c_str(), 0x2) == 0;
+	}
+
+	long FileSystem::LastModified(const std::string &path)
+	{
+		STAT st;
+
+		if (stat(path.c_str(), &st) == 0)
+		{
+			return st.st_mtime;
+		}
+
+		return 0;
 	}
 
 	std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const bool &recursive)
@@ -121,7 +133,7 @@ namespace acid
 				continue;
 			}
 
-			std::string relPath = path + SEPARATOR + de->d_name;
+			std::string relPath = path + Separator + de->d_name;
 
 			if (IsDirectory(relPath))
 			{
@@ -158,7 +170,7 @@ namespace acid
 
 			for (const auto &folder : splitFolders)
 			{
-				appended << folder << SEPARATOR;
+				appended << folder << Separator;
 
 				if (!Exists(appended.str()) || !IsDirectory(appended.str()))
 				{
@@ -336,7 +348,7 @@ namespace acid
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		std::string::size_type end = path.find_last_of(SEPARATOR + "/");
+		std::string::size_type end = path.find_last_of(Separator + "/");
 #else
 		std::string::size_type end = path.find_last_of(SEPARATOR);
 #endif
@@ -344,7 +356,7 @@ namespace acid
 		if (end == path.length() - 1)
 		{
 #if defined(ACID_BUILD_WINDOWS)
-			end = path.find_last_of(SEPARATOR + "/", end);
+			end = path.find_last_of(Separator + "/", end);
 #else
 			end = path.find_last_of(SEPARATOR, end);
 #endif
@@ -360,7 +372,7 @@ namespace acid
 
 	std::string FileSystem::FileName(const std::string &path)
 	{
-		std::string::size_type start = path.find_last_of(SEPARATOR);
+		std::string::size_type start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
@@ -384,7 +396,7 @@ namespace acid
 
 	std::string FileSystem::FileSuffix(const std::string &path)
 	{
-		std::string::size_type start = path.find_last_of(SEPARATOR);
+		std::string::size_type start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
@@ -459,9 +471,9 @@ namespace acid
 
 		split.push_back(path.substr(previous_index));
 
-		if (split.size() == 1 && delim == SEPARATOR)
+		if (split.size() == 1 && delim == Separator)
 		{
-			auto alternative = SplitPath(path, ALT_SEPARATOR);
+			auto alternative = SplitPath(path, AltSeparator);
 
 			if (alternative.size() > 1)
 			{

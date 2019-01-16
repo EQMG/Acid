@@ -58,10 +58,10 @@ namespace acid
 
 		switch (m_pipelineMode)
 		{
-		case PIPELINE_MODE_POLYGON:
+		case PipelineMode::Polygon:
 			CreatePipelinePolygon();
 			break;
-		case PIPELINE_MODE_MRT:
+		case PipelineMode::Mrt:
 			CreatePipelineMrt();
 			break;
 		default:
@@ -194,7 +194,7 @@ namespace acid
 
 		for (const auto &uniformBlock : m_shaderProgram->GetUniformBlocks())
 		{
-			if (uniformBlock->GetType() != BLOCK_PUSH)
+			if (uniformBlock->GetType() != UniformBlock::Type::Push)
 			{
 				continue;
 			}
@@ -263,20 +263,20 @@ namespace acid
 
 		switch (m_depthMode)
 		{
-			case PIPELINE_DEPTH_NONE:
+			case PipelineDepth::None:
 				m_depthStencilState.depthTestEnable = VK_FALSE;
 				m_depthStencilState.depthWriteEnable = VK_FALSE;
 				break;
-			case PIPELINE_DEPTH_READ_WRITE:
+			case PipelineDepth::Read:
 				m_depthStencilState.depthTestEnable = VK_TRUE;
+				m_depthStencilState.depthWriteEnable = VK_FALSE;
+				break;
+			case PipelineDepth::Write:
+				m_depthStencilState.depthTestEnable = VK_FALSE;
 				m_depthStencilState.depthWriteEnable = VK_TRUE;
 				break;
-			case PIPELINE_DEPTH_READ:
+			case PipelineDepth::ReadWrite:
 				m_depthStencilState.depthTestEnable = VK_TRUE;
-				m_depthStencilState.depthWriteEnable = VK_FALSE;
-				break;
-			case PIPELINE_DEPTH_WRITE:
-				m_depthStencilState.depthTestEnable = VK_FALSE;
 				m_depthStencilState.depthWriteEnable = VK_TRUE;
 				break;
 		}

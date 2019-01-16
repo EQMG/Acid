@@ -148,7 +148,7 @@ namespace acid
 			return m_parent->GetModelMatrix(); // TODO: Multiply by this 'local' WorldMatrix.
 		}
 
-		return Matrix4::IDENTITY;
+		return Matrix4::Identity;
 	}
 
 	float UiObject::GetAlpha() const

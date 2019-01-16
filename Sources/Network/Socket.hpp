@@ -22,47 +22,45 @@ namespace acid
 #endif
 
 	/// <summary>
-	/// Status codes that may be returned by socket functions.
-	/// </summary>
-	enum SocketStatus
-	{
-		/// The socket has sent / received the data.
-		SOCKET_STATUS_DONE = 0,
-		/// The socket is not ready to send / receive data yet.
-		SOCKET_STATUS_NOT_READY = 1,
-		/// The socket sent a part of the data.
-		SOCKET_STATUS_PARTIAL = 2,
-		/// The TCP socket has been disconnected.
-		SOCKET_STATUS_DISCONNECTED = 3,
-		/// An unexpected error happened.
-		SOCKET_STATUS_ERROR = 4
-	};
-
-	/// <summary>
-	/// Types of protocols that the socket can use.
-	/// </summary>
-	enum SocketType
-	{
-		/// TCP protocol.
-		SOCKET_TYPE_TCP = 0,
-		/// UDP protocol.
-		SOCKET_TYPE_UDP = 1
-	};
-
-	/// <summary>
-	/// Base class for all the socket types.
+	/// This class mainly defines internal stuff to be used by derived classes.
+	///
+	/// The only public features that it defines, and which is therefore common
+	/// to all the socket classes, is the blocking state.
+	/// All sockets can be set as blocking or non-blocking.
+	///
+	/// In blocking mode, socket functions will hang until the operation completes,
+	/// which means that the entire program (well, in fact the current thread if you use multiple ones)
+	/// will be stuck waiting for your socket operation to complete.
+	///
+	/// In non-blocking mode, all the socket functions will return immediately.
+	/// If the socket is not ready to complete the requested operation,
+	/// the function simply returns the proper status code (Socket::NotReady).
+	///
+	/// The default mode, which is blocking, is the one that is generally used,
+	/// in combination with threads or selectors. The non-blocking mode is rather used in real-time
+	/// applications that run an endless loop that can poll the socket often enough,
+	/// and cannot afford blocking this loop.
 	/// </summary>
 	class ACID_EXPORT Socket
 	{
-	private:
-		friend class SocketSelector;
-		/// Type of the socket (TCP or UDP).
-		SocketType m_type;
-		/// Socket descriptor.
-		SocketHandle m_socket;
-		/// Current blocking mode of the socket.
-		bool m_isBlocking;
 	public:
+		/// <summary>
+		/// Status codes that may be returned by socket functions.
+		/// </summary>
+		enum class Status
+		{
+			/// The socket has sent / received the data.
+			Done,
+			/// The socket is not ready to send / receive data yet.
+			NotReady,
+			/// The socket sent a part of the data.
+			Partial,
+			/// The TCP socket has been disconnected.
+			Disconnected,
+			/// An unexpected error happened.
+			Error
+		};
+
 		/// <summary>
 		/// Destructor that closes the socket.
 		/// </summary>
@@ -99,7 +97,7 @@ namespace acid
 		/// Get the last socket error status.
 		/// </summary>
 		/// <returns> Status corresponding to the last socket error. </returns>
-		static SocketStatus GetErrorStatus();
+		static Status GetErrorStatus();
 
 		/// <summary>
 		/// Tell whether the socket is in blocking or non-blocking mode.
@@ -118,11 +116,22 @@ namespace acid
 		void SetBlocking(bool blocking);
 	protected:
 		/// <summary>
+		/// Types of protocols that the socket can use.
+		/// </summary>
+		enum class Type
+		{
+			/// TCP protocol.
+			Tcp,
+			/// UDP protocol.
+			Udp
+		};
+
+		/// <summary>
 		/// Default constructor.
 		/// This constructor can only be accessed by derived classes.
 		/// </summary>
 		/// <param name="type"> Type of the socket (TCP or UDP). </param>
-		Socket(SocketType type);
+		Socket(Type type);
 
 		/// <summary>
 		/// Return the internal handle of the socket.
@@ -150,5 +159,13 @@ namespace acid
 		/// This function can only be accessed by derived classes.
 		/// </summary>
 		void Close();
+	private:
+		friend class SocketSelector;
+		/// Type of the socket (TCP or UDP).
+		Type m_type;
+		/// Socket descriptor.
+		SocketHandle m_socket;
+		/// Current blocking mode of the socket.
+		bool m_isBlocking;
 	};
 }

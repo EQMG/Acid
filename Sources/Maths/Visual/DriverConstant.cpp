@@ -3,7 +3,7 @@
 namespace acid
 {
 	DriverConstant::DriverConstant(const float &constant) :
-		IDriver(Time::POSITIVE_INFINITY),
+		IDriver(Time::PositiveInfinity),
 		m_constant(constant)
 	{
 	}

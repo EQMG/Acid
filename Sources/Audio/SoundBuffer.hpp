@@ -13,9 +13,6 @@ namespace acid
 	class ACID_EXPORT SoundBuffer :
 		public Resource
 	{
-	private:
-		std::string m_filename;
-		uint32_t m_buffer;
 	public:
 		/// <summary>
 		/// Will find an existing sound buffer with the same filename, or create a new sound buffer.
@@ -38,5 +35,8 @@ namespace acid
 		static uint32_t LoadBufferWav(const std::string &filename);
 
 		static uint32_t LoadBufferOgg(const std::string &filename);
+
+		std::string m_filename;
+		uint32_t m_buffer;
 	};
 }

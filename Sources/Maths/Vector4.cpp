@@ -9,10 +9,10 @@
 
 namespace acid
 {
-	const Vector4 Vector4::ZERO = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
-	const Vector4 Vector4::ONE = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	const Vector4 Vector4::POSITIVE_INFINITY = Vector4(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
-	const Vector4 Vector4::NEGATIVE_INFINITY = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
+	const Vector4 Vector4::Zero = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+	const Vector4 Vector4::One = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	const Vector4 Vector4::PositiveInfinity = Vector4(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+	const Vector4 Vector4::NegativeInfinity = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 	Vector4::Vector4() :
 		m_x(0.0f),

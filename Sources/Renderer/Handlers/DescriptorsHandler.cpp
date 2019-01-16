@@ -137,7 +137,7 @@ namespace acid
 			{
 				VkDescriptorType descriptorType = m_shaderProgram->GetDescriptorType(descriptor.location);
 				auto writeDescriptor = descriptor.descriptor->GetWriteDescriptor(descriptor.location,
-					descriptorType, m_pushDescriptors ? nullptr : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
+					descriptorType, m_pushDescriptors ? VK_DESCRIPTOR_TYPE_MAX_ENUM : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
 				m_writeDescriptorSets.emplace_back(writeDescriptor.GetWriteDescriptorSet());
 				m_writeDescriptors.emplace_back(std::move(writeDescriptor));
 			}

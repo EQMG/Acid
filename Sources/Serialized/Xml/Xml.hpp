@@ -26,8 +26,6 @@ namespace acid
 	class ACID_EXPORT Xml :
 		public Metadata
 	{
-	private:
-		std::unique_ptr<Metadata> m_root;
 	public:
 		explicit Xml(const std::string &rootName);
 

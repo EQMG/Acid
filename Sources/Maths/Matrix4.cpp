@@ -11,8 +11,8 @@
 
 namespace acid
 {
-	const Matrix4 Matrix4::IDENTITY = Matrix4(new float[16]{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f});
-	const Matrix4 Matrix4::ZERO = Matrix4(0.0f);
+	const Matrix4 Matrix4::Identity = Matrix4(new float[16]{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix4 Matrix4::Zero = Matrix4(0.0f);
 
 	Matrix4::Matrix4(const float &diagonal)
 	{
@@ -341,12 +341,12 @@ namespace acid
 
 		if (rotation.LengthSquared() != 0.0f)
 		{
-			result = result.Rotate(Maths::Radians(rotation.m_x), Vector3::RIGHT); // Rotate the X component.
-			result = result.Rotate(Maths::Radians(rotation.m_y), Vector3::UP); // Rotate the Y component.
-			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
+			result = result.Rotate(rotation.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
+			result = result.Rotate(rotation.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
+			result = result.Rotate(rotation.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
 		}
 
-		if (scale != Vector3::ONE)
+		if (scale != Vector3::One)
 		{
 			result = result.Scale(scale);
 		}
@@ -372,7 +372,7 @@ namespace acid
 	{
 		Matrix4 result = Matrix4();
 
-		float yScale = 1.0f / std::tan(Maths::Radians(fov / 2.0f));
+		float yScale = 1.0f / std::tan((fov / 2.0f) * Maths::DegToRad);
 		float xScale = yScale / aspectRatio;
 		float length = zFar - zNear;
 
@@ -413,9 +413,9 @@ namespace acid
 
 		if (rotation != 0.0f)
 		{
-			result = result.Rotate(Maths::Radians(rotation.m_x), Vector3::RIGHT); // Rotate the X component.
-			result = result.Rotate(Maths::Radians(-rotation.m_y), Vector3::UP); // Rotate the Y component.
-			result = result.Rotate(Maths::Radians(rotation.m_z), Vector3::FRONT); // Rotate the Z component.
+			result = result.Rotate(rotation.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
+			result = result.Rotate(-rotation.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
+			result = result.Rotate(rotation.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
 		}
 
 		if (position != 0.0f)
@@ -434,9 +434,9 @@ namespace acid
 		{
 			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
 			// result *= rotation.ToRotationMatrix();
-			result = result.Rotate(Maths::Radians(euler.m_x), Vector3::RIGHT); // Rotate the X component.
-			result = result.Rotate(Maths::Radians(-euler.m_y), Vector3::UP); // Rotate the Y component.
-			result = result.Rotate(Maths::Radians(euler.m_z), Vector3::FRONT); // Rotate the Z component.
+			result = result.Rotate(euler.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
+			result = result.Rotate(-euler.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
+			result = result.Rotate(euler.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
 		}
 
 		if (position != 0.0f)
@@ -476,7 +476,7 @@ namespace acid
 		result[2][1] = -f.m_y;
 		result[2][2] = -f.m_z;
 
-		result *= IDENTITY.Translate(Vector3(-camera.m_x, -camera.m_y, -camera.m_z));
+		result *= Identity.Translate(Vector3(-camera.m_x, -camera.m_y, -camera.m_z));
 
 		return result;
 	}
