@@ -4,6 +4,7 @@
 #include <memory>
 #include <mutex>
 #include <vector>
+#include <algorithm>
 #include <functional>
 #include "Helpers/NonCopyable.hpp"
 

@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>APPNAME</string>
 	<key>CFBundleIconFile</key>
-	<string>Resources/Engine/Logos/Flask.icns</string>
+	<string>Resources/Engine/Logos/Acid_01.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.equilibrium.acid</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -29,6 +29,6 @@
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2018 Equilibrium Games. All rights reserved.</string>
+	<string>Copyright (c) 2019 Equilibrium Games. All rights reserved.</string>
 </dict>
 </plist>

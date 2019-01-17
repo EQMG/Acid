@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test PBR");
-	Window::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetIcon("Logos/Acid_01.png");
 //	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
