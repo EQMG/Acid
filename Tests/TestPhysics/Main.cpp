@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcon("Logos/Acid_01.png");
+	Window::Get()->SetIcon("Logos/Icon.png");
 	Mouse::Get()->SetCustomMouse("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
