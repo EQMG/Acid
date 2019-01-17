@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Font");
-	Window::Get()->SetIcon("Logos/Flask.png");
+	Window::Get()->SetIcon("Logos/Acid_01.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 
