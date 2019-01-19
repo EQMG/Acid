@@ -42,7 +42,6 @@ namespace acid
 
 	Mouse::Mouse() :
 		m_mouseButtons(std::array<InputAction, MOUSE_BUTTON_END_RANGE>()),
-		m_mousePath(""),
 		m_lastMousePositionX(0.0f),
 		m_lastMousePositionY(0.0f),
 		m_mousePositionX(0.0f),
@@ -89,14 +88,12 @@ namespace acid
 		}
 	}
 
-	void Mouse::SetCustomMouse(const std::string &filename)
+	void Mouse::SetCursor(const std::string &filename)
 	{
-		m_mousePath = filename;
-
 		uint32_t width = 0;
 		uint32_t height = 0;
 		uint32_t components = 0;
-		uint8_t *data = Texture::LoadPixels(m_mousePath, &width, &height, &components);
+		uint8_t *data = Texture::LoadPixels(filename, &width, &height, &components);
 
 		if (data == nullptr)
 		{
@@ -104,9 +101,9 @@ namespace acid
 		}
 
 		GLFWimage image[1];
-		image[0].pixels = data;
 		image[0].width = width;
 		image[0].height = height;
+		image[0].pixels = data;
 
 		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
 		glfwSetCursor(Window::Get()->GetWindow(), cursor);

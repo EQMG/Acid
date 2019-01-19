@@ -102,7 +102,6 @@ namespace acid
 		m_positionX(0),
 		m_positionY(0),
 		m_title("Acid Loading..."),
-		m_iconPath(""),
 		m_borderless(false),
 		m_resizable(true),
 		m_floating(false),
@@ -245,27 +244,35 @@ namespace acid
 		glfwSetWindowTitle(m_window, m_title.c_str());
 	}
 
-	void Window::SetIcon(const std::string &filename)
+	void Window::SetIcons(const std::vector<std::string> &filenames)
 	{
-		m_iconPath = filename;
+		std::vector<GLFWimage> icons = {};
 
-		uint32_t width = 0;
-		uint32_t height = 0;
-		uint32_t components = 0;
-		uint8_t *data = Texture::LoadPixels(m_iconPath, &width, &height, &components);
-
-		if (data == nullptr)
+		for (const auto &filename : filenames)
 		{
-			return;
+			uint32_t width = 0;
+			uint32_t height = 0;
+			uint32_t components = 0;
+			uint8_t *data = Texture::LoadPixels(filename, &width, &height, &components);
+
+			if (data == nullptr)
+			{
+				continue;
+			}
+
+			GLFWimage icon = {};
+			icon.width = width;
+			icon.height = height;
+			icon.pixels = data;
+			icons.emplace_back(icon);
 		}
 
-		GLFWimage icons[1];
-		icons[0].pixels = data;
-		icons[0].width = width;
-		icons[0].height = height;
+		glfwSetWindowIcon(m_window, icons.size(), icons.data());
 
-		glfwSetWindowIcon(m_window, 1, icons);
-		Texture::DeletePixels(data);
+		for (const auto &icon : icons)
+		{
+			Texture::DeletePixels(icon.pixels);
+		}
 	}
 
 	void Window::SetBorderless(const bool &borderless)

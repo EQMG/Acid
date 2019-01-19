@@ -23,7 +23,9 @@ int main(int argc, char **argv)
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Font");
-	Window::Get()->SetIcon("Logos/Icon.png");
+	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
+		"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
+	Mouse::Get()->SetCursor("Guis/Cursor.png");
 	Renderer::Get()->SetManager(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 

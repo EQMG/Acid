@@ -154,16 +154,10 @@ namespace acid
 		void SetTitle(const std::string &title);
 
 		/// <summary>
-		/// Gets the window's icon file.
+		/// Sets window icon images.
 		/// </summary>
-		/// <returns> The window's icon file. </returns>
-		const std::string &GetIcon() const { return m_iconPath; }
-
-		/// <summary>
-		/// Sets window icon image.
-		/// </summary>
-		/// <param name="filename"> The new icon file. </param>
-		void SetIcon(const std::string &filename);
+		/// <param name="filenames"> The new icon files. </param>
+		void SetIcons(const std::vector<std::string> &filename);
 
 		/// <summary>
 		/// Gets weather the window is borderless or not.
@@ -266,7 +260,6 @@ namespace acid
 		uint32_t m_positionY;
 
 		std::string m_title;
-		std::string m_iconPath;
 		bool m_borderless;
 		bool m_resizable;
 		bool m_floating;

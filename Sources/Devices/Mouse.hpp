@@ -48,16 +48,10 @@ namespace acid
 		InputAction GetButton(const MouseButton &mouseButton) const;
 
 		/// <summary>
-		/// Gets the mouses custom mouse file.
-		/// </summary>
-		/// <returns> The custom mouse file. </returns>
-		const std::string &GetCustomMouse() const { return m_mousePath; }
-
-		/// <summary>
 		/// Sets the custom mouse file.
 		/// </summary>
 		/// <param name="filename"> The new custom mouse file. </param>
-		void SetCustomMouse(const std::string &filename);
+		void SetCursor(const std::string &filename);
 
 		/// <summary>
 		/// Gets the contents of the clipboard as a string.
@@ -143,7 +137,6 @@ namespace acid
 		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
 	private:
 		std::array<InputAction, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
-		std::string m_mousePath;
 
 		float m_lastMousePositionX;
 		float m_lastMousePositionY;
