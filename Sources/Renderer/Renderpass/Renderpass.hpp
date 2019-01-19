@@ -12,29 +12,28 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		SubpassDescription(const VkSubpassDescription &subpassDescription, const std::vector<VkAttachmentReference> &colorAttachments, const std::optional<uint32_t> &depthAttachment) :
-			m_subpassDescription(subpassDescription),
-			m_colorAttachments(std::make_unique<std::vector<VkAttachmentReference>>(colorAttachments)),
-			m_depthStencilAttachment(nullptr)
+		SubpassDescription(const VkPipelineBindPoint &bindPoint, const std::vector<VkAttachmentReference> &colorAttachments, const std::optional<uint32_t> &depthAttachment) :
+			m_subpassDescription({}),
+			m_colorAttachments(colorAttachments),
+			m_depthStencilAttachment({})
 		{
-			m_subpassDescription.colorAttachmentCount = static_cast<uint32_t>(m_colorAttachments->size());
-			m_subpassDescription.pColorAttachments = m_colorAttachments->data();
+			m_subpassDescription.pipelineBindPoint = bindPoint;
+			m_subpassDescription.colorAttachmentCount = static_cast<uint32_t>(m_colorAttachments.size());
+			m_subpassDescription.pColorAttachments = m_colorAttachments.data();
 
 			if (depthAttachment)
 			{
-				VkAttachmentReference depthStencilReference = {};
-				depthStencilReference.attachment = *depthAttachment;
-				depthStencilReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				m_depthStencilAttachment = std::make_unique<VkAttachmentReference>(depthStencilReference);
-				m_subpassDescription.pDepthStencilAttachment = m_depthStencilAttachment.get();
+				m_depthStencilAttachment.attachment = *depthAttachment;
+				m_depthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				m_subpassDescription.pDepthStencilAttachment = &m_depthStencilAttachment;
 			}
 		}
 
 		const VkSubpassDescription &GetSubpassDescription() const { return m_subpassDescription; }
 	private:
 		VkSubpassDescription m_subpassDescription;
-		std::unique_ptr<std::vector<VkAttachmentReference>> m_colorAttachments;
-		std::unique_ptr<VkAttachmentReference> m_depthStencilAttachment;
+		std::vector<VkAttachmentReference> m_colorAttachments;
+		VkAttachmentReference m_depthStencilAttachment;
 	};
 
 	class ACID_EXPORT Renderpass :

@@ -570,8 +570,8 @@ namespace acid
 		samplerCreateInfo.addressModeW = addressMode;
 		samplerCreateInfo.mipLodBias = 0.0f;
 		samplerCreateInfo.anisotropyEnable = static_cast<VkBool32>(anisotropic);
-		samplerCreateInfo.maxAnisotropy = std::min(ANISOTROPY,
-			physicalDevice->GetProperties().limits.maxSamplerAnisotropy);
+		samplerCreateInfo.maxAnisotropy = anisotropic ? std::min(ANISOTROPY,
+			physicalDevice->GetProperties().limits.maxSamplerAnisotropy) : 1.0f;
 		samplerCreateInfo.compareEnable = VK_FALSE;
 		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerCreateInfo.minLod = 0.0f;
@@ -591,10 +591,10 @@ namespace acid
 		imageViewCreateInfo.viewType = type;
 		imageViewCreateInfo.format = format;
 		imageViewCreateInfo.components = {
-			VK_COMPONENT_SWIZZLE_IDENTITY,
-			VK_COMPONENT_SWIZZLE_IDENTITY,
-			VK_COMPONENT_SWIZZLE_IDENTITY,
-			VK_COMPONENT_SWIZZLE_IDENTITY
+			VK_COMPONENT_SWIZZLE_R,
+			VK_COMPONENT_SWIZZLE_G,
+			VK_COMPONENT_SWIZZLE_B,
+			VK_COMPONENT_SWIZZLE_A
 		};
 		imageViewCreateInfo.subresourceRange.aspectMask = imageAspect;
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;

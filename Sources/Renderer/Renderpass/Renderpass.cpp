@@ -75,40 +75,39 @@ namespace acid
 			}
 
 			// Subpass description.
-			VkSubpassDescription subpassDescription = {};
-			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			m_subpasses.emplace_back(std::make_unique<SubpassDescription>(subpassDescription, subpassColourAttachments, depthAttachment));
+			m_subpasses.emplace_back(std::make_unique<SubpassDescription>(VK_PIPELINE_BIND_POINT_GRAPHICS, subpassColourAttachments, depthAttachment));
 
 			// Subpass dependencies.
 			VkSubpassDependency subpassDependency = {};
-			subpassDependency.srcAccessMask = 0;
-			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT; // VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+			subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			subpassDependency.dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-			if (renderpassCreate.GetSubpasses().size() == 1)
+			if (subpassType.GetBinding() == 0)
 			{
 				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-			}
-			else if (subpassType.GetBinding() == 0)
-			{
-				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
+				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+				subpassDependency.srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+				subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 			}
 			else
 			{
 				subpassDependency.srcSubpass = subpassType.GetBinding() - 1;
-				subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 			}
 
 			if (subpassType.GetBinding() == renderpassCreate.GetSubpasses().size())
 			{
 				subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
 				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+				subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
 			}
 			else
 			{
 				subpassDependency.dstSubpass = subpassType.GetBinding();
-				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 			}
 
 			m_dependencies.emplace_back(subpassDependency);
