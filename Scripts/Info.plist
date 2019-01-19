@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>APPNAME</string>
 	<key>CFBundleIconFile</key>
-	<string>Resources/Engine/Logos/Acid_01.icns</string>
+	<string>Resources/Engine/Icons/Icon.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.equilibrium.acid</string>
 	<key>CFBundleInfoDictionaryVersion</key>

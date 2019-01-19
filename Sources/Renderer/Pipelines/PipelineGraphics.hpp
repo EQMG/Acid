@@ -178,6 +178,7 @@ namespace acid
 		VkPipelineLayout m_pipelineLayout;
 		VkPipelineBindPoint m_pipelineBindPoint;
 
+		VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo;
 		VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
 		VkPipelineRasterizationStateCreateInfo m_rasterizationState;
 		std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;

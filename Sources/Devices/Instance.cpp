@@ -13,7 +13,7 @@ namespace acid
 {
 	const std::vector<const char *> Instance::ValidationLayers =
 	{
-		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
+		"VK_LAYER_LUNARG_standard_validation" // , "VK_LAYER_RENDERDOC_Capture"
 	};
 	const std::vector<const char *> Instance::InstanceExtensions =
 	{

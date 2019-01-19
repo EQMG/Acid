@@ -35,6 +35,7 @@ namespace acid
 		m_pipeline(VK_NULL_HANDLE),
 		m_pipelineLayout(VK_NULL_HANDLE),
 		m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS),
+		m_vertexInputStateCreateInfo({}),
 		m_inputAssemblyState({}),
 		m_rasterizationState({}),
 		m_blendAttachmentStates({}),
@@ -174,12 +175,25 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto &descriptorPools = m_shaderProgram->GetDescriptorPools();
+	//	auto &descriptorPools = m_shaderProgram->GetDescriptorPools();
+		std::vector<VkDescriptorPoolSize> descriptorPools(6);
+		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptorPools[0].descriptorCount = 4096;
+		descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descriptorPools[1].descriptorCount = 2048;
+		descriptorPools[2].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+		descriptorPools[2].descriptorCount = 2048;
+		descriptorPools[3].type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
+		descriptorPools[3].descriptorCount = 2048;
+		descriptorPools[4].type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
+		descriptorPools[4].descriptorCount = 2048;
+		descriptorPools[5].type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+		descriptorPools[5].descriptorCount = 2048;
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		descriptorPoolCreateInfo.maxSets = 16384;
+		descriptorPoolCreateInfo.maxSets = 8192; // 16384;
 		descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 		descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
 		Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
@@ -346,20 +360,18 @@ namespace acid
 			}
 		}
 
-		VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
-		vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = bindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
-		m_pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+		m_vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		m_vertexInputStateCreateInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
+		m_vertexInputStateCreateInfo.pVertexBindingDescriptions = bindingDescriptions.data();
+		m_vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+		m_vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 		VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
 		pipelineCreateInfo.pStages = m_stages.data();
 
-		pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
+		pipelineCreateInfo.pVertexInputState = &m_vertexInputStateCreateInfo;
 		pipelineCreateInfo.pInputAssemblyState = &m_inputAssemblyState;
 		pipelineCreateInfo.pTessellationState = &m_tessellationState;
 		pipelineCreateInfo.pViewportState = &m_viewportState;
