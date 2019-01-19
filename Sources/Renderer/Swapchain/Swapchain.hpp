@@ -18,6 +18,10 @@ namespace acid
 
 		const uint32_t &GetImageCount() const { return m_imageCount; }
 
+		const VkSurfaceTransformFlagsKHR &GetPreTransform() const { return m_preTransform; }
+
+		const VkCompositeAlphaFlagBitsKHR &GetCompositeAlpha() const { return m_compositeAlpha; }
+
 		const std::vector<VkImage> &GetImages() const { return m_images; }
 
 		const VkImage &GetActiveImage() const { return m_images[m_activeImageIndex]; }
@@ -34,6 +38,8 @@ namespace acid
 		VkPresentModeKHR m_presentMode;
 
 		uint32_t m_imageCount;
+		VkSurfaceTransformFlagsKHR m_preTransform;
+		VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
 		std::vector<VkImage> m_images;
 		std::vector<VkImageView> m_imageViews;
 		VkSwapchainKHR m_swapchain;

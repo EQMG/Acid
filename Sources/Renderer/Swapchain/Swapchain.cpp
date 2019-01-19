@@ -7,10 +7,19 @@
 
 namespace acid
 {
+	static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = {
+		VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+		VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
+		VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR,
+		VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
+	};
+
 	Swapchain::Swapchain(const VkExtent2D &extent) :
 		m_extent(extent),
 		m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 		m_imageCount(0),
+		m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
+		m_compositeAlpha(VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
 		m_images(std::vector<VkImage>()),
 		m_imageViews(std::vector<VkImageView>()),
 		m_swapchain(VK_NULL_HANDLE),
@@ -38,7 +47,7 @@ namespace acid
 				m_presentMode = presentMode;
 				break;
 			}
-			else if (presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
+			else if (m_presentMode != VK_PRESENT_MODE_MAILBOX_KHR && presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
 			{
 				m_presentMode = presentMode;
 			}
@@ -51,6 +60,25 @@ namespace acid
 			m_imageCount = surfaceCapabilities.maxImageCount;
 		}
 
+		if (surfaceCapabilities.supportedTransforms & VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR)
+		{
+			// We prefer a non-rotated transform.
+			m_preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+		}
+		else
+		{
+			m_preTransform = surfaceCapabilities.currentTransform;
+		}
+
+		for (const auto &compositeAlphaFlag : COMPOSITE_ALPHA_FLAGS)
+		{
+			if (surfaceCapabilities.supportedCompositeAlpha & compositeAlphaFlag)
+			{
+				m_compositeAlpha = compositeAlphaFlag;
+				break;
+			}
+		}
+
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		swapchainCreateInfo.surface = surface->GetSurface();
@@ -60,8 +88,10 @@ namespace acid
 		swapchainCreateInfo.imageExtent = m_extent;
 		swapchainCreateInfo.imageArrayLayers = 1;
 		swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-		swapchainCreateInfo.preTransform = surfaceCapabilities.currentTransform;
+		swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		swapchainCreateInfo.preTransform = static_cast<VkSurfaceTransformFlagBitsKHR>(m_preTransform);
 		swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+		swapchainCreateInfo.compositeAlpha = m_compositeAlpha;
 		swapchainCreateInfo.presentMode = m_presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
 		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
@@ -87,10 +117,6 @@ namespace acid
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 			swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
-		}
-		else
-		{
-			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		}
 
 		Renderer::CheckVk(vkCreateSwapchainKHR(logicalDevice->GetLogicalDevice(), &swapchainCreateInfo, nullptr, &m_swapchain));

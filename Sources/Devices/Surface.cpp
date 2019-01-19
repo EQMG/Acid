@@ -20,17 +20,40 @@ namespace acid
 
 		Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &m_capabilities));
 
-		uint32_t physicalDeviceFormatCount = 0;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &physicalDeviceFormatCount, nullptr);
-		std::vector<VkSurfaceFormatKHR> physicalDeviceFormats(physicalDeviceFormatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &physicalDeviceFormatCount, physicalDeviceFormats.data());
+		uint32_t surfaceFormatCount = 0;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &surfaceFormatCount, nullptr);
+		std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &surfaceFormatCount, surfaceFormats.data());
 
-		m_format.format = VK_FORMAT_B8G8R8A8_UNORM;
-		m_format.colorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-
-		if (physicalDeviceFormats[0].format != VK_FORMAT_UNDEFINED)
+		if ((surfaceFormatCount == 1) && (surfaceFormats[0].format == VK_FORMAT_UNDEFINED))
 		{
-			m_format = physicalDeviceFormats[0];
+			m_format.format = VK_FORMAT_B8G8R8A8_UNORM;
+			m_format.colorSpace = surfaceFormats[0].colorSpace;
+		}
+		else
+		{
+			// iterate over the list of available surface format and
+			// check for the presence of VK_FORMAT_B8G8R8A8_UNORM
+			bool found_B8G8R8A8_UNORM = false;
+
+			for (auto&& surfaceFormat : surfaceFormats)
+			{
+				if (surfaceFormat.format == VK_FORMAT_B8G8R8A8_UNORM)
+				{
+					m_format.format = surfaceFormat.format;
+					m_format.colorSpace = surfaceFormat.colorSpace;
+					found_B8G8R8A8_UNORM = true;
+					break;
+				}
+			}
+
+			// in case VK_FORMAT_B8G8R8A8_UNORM is not available
+			// select the first available color format
+			if (!found_B8G8R8A8_UNORM)
+			{
+				m_format.format = surfaceFormats[0].format;
+				m_format.colorSpace = surfaceFormats[0].colorSpace;
+			}
 		}
 	}
 

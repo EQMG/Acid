@@ -52,7 +52,7 @@ namespace acid
 				m_depthAttachment = image;
 				break;
 			case Attachment::Type::Swapchain:
-				clearValue.color = {0.0f, 0.0f, 0.0f, 1.0f};
+				clearValue.color = {image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a};
 				m_swapchainAttachment = image;
 				break;
 			}
