@@ -4,7 +4,7 @@
 #include <memory>
 #include <optional>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
-#include "Renderer/Pipelines/ShaderProgram.hpp"
+#include "Renderer/Pipelines/Shader.hpp"
 #include "UniformHandler.hpp"
 #include "StorageHandler.hpp"
 #include "PushHandler.hpp"
@@ -46,7 +46,7 @@ namespace acid
 			uint32_t location;
 		};
 
-		const ShaderProgram *m_shaderProgram;
+		const Shader *m_shader;
 		bool m_pushDescriptors;
 		std::map<std::string, DescriptorValue> m_descriptors;
 		std::vector<WriteDescriptorSet> m_writeDescriptors;

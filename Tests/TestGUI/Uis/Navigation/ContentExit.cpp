@@ -8,7 +8,7 @@ namespace test
 		UiObject(parent, UiBound(Vector2(0.45f, 0.5f), UiBound::CentreLeft, false, true, Vector2(0.8f, 0.8f))),
 		m_background(std::make_unique<Gui>(this, GetRectangle(), Texture::Create("Guis/Black.png"))),
 		m_button1(std::make_unique<UiInputButton>(this, "Test Button", UiBound(Vector2(0.65f, 0.79f), UiBound::Centre, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
-		m_input1(std::make_unique<UiInputGrabber>(this, "Test Grabber: ", MOUSE_BUTTON_1, new UiGrabberMouse(), UiBound(Vector2(0.65f, 0.72f), UiBound::Centre, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
+		m_input1(std::make_unique<UiInputGrabber>(this, "Test Grabber: ", MOUSE_BUTTON_1, new UiInputGrabber::GrabberMouse(), UiBound(Vector2(0.65f, 0.72f), UiBound::Centre, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
 		m_slider1(std::make_unique<UiInputSlider>(this, "Test Slider: ", 100.0f, 0.0f, 100.0f, 1, UiBound(Vector2(0.65f, 0.65f), UiBound::Centre, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR)),
 		m_text1(std::make_unique<UiInputText>(this, "Test Text: ", "Hello World", 14, UiBound(Vector2(0.65f, 0.58f), UiBound::Centre, false, true, UiNavigation::BUTTON_SIZE), UiNavigation::BUTTON_COLOUR))
 	{

@@ -7,7 +7,6 @@
 namespace acid
 {
 	class Descriptor;
-
 	class WriteDescriptorSet;
 
 	class ACID_EXPORT DescriptorSet

@@ -11,9 +11,10 @@ layout(set = 0, binding = 0) uniform UboScene
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 modelMatrix;
-	vec4 screenOffset;
-	vec4 colourOffset;
+	vec4 colour;
 	vec2 atlasOffset;
+	vec2 screenDimension;
+	vec2 screenPosition;
 	float atlasRows;
 	float alpha;
 	float depth;
@@ -35,7 +36,7 @@ const vec3 rotation = vec3(3.14159f, 0.0f, 0.0f);
 
 void main()
 {
-	vec4 position = vec4((inPosition.xy * object.screenOffset.xy) + object.screenOffset.zw, 0.0f, 1.0f);
+	vec4 position = vec4((2.0f * inPosition.xy * object.screenDimension) + vec2((2.0f * object.screenPosition.x) - 1.0f, (-2.0f * object.screenPosition.y) + 1.0f), 0.0f, 1.0f);
 
 	if (object.modelMode != 0)
 	{

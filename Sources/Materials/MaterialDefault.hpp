@@ -66,7 +66,7 @@ namespace acid
 
 		void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 	private:
-		std::vector<ShaderDefine> GetDefines();
+		std::vector<Shader::Define> GetDefines();
 
 		bool m_animated;
 		Colour m_baseDiffuse;

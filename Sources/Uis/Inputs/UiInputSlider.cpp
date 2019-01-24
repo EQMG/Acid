@@ -65,8 +65,8 @@ namespace acid
 		}
 		else if (m_updating)
 		{
-			float width = m_background->GetScreenTransform().m_x / 2.0f;
-			float positionX = (m_background->GetScreenTransform().m_z + 1.0f) / 2.0f;
+			float width = m_background->GetScreenDimension().m_x;
+			float positionX = m_background->GetScreenPosition().m_x;
 			float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
 			m_value = cursorX / width;
 			m_value = std::clamp(m_value, 0.0f, 1.0f);

@@ -6,10 +6,10 @@
 
 namespace acid
 {
-	RendererParticles::RendererParticles(const GraphicsStage &graphicsStage) :
-		RenderPipeline(graphicsStage),
-		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"}, {VertexModel::GetVertexInput()},
-			PipelineMode::Polygon, PipelineDepth::Read, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
+	RendererParticles::RendererParticles(const Pipeline::Stage &pipelineStage) :
+		RenderPipeline(pipelineStage),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::Read, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

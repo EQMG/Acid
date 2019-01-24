@@ -4,8 +4,8 @@
 
 namespace acid
 {
-	FilterLensflare::FilterLensflare(const GraphicsStage &graphicsStage) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Lensflare.frag"}, {}),
+	FilterLensflare::FilterLensflare(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Lensflare.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_sunPosition(Vector3()),
 		m_sunHeight(0.0f)

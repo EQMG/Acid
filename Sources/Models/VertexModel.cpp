@@ -10,7 +10,7 @@ namespace acid
 	{
 	}
 
-	VertexInput VertexModel::GetVertexInput(const uint32_t &binding)
+	Shader::VertexInput VertexModel::GetVertexInput(const uint32_t &binding)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
 
@@ -45,6 +45,6 @@ namespace acid
 		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[3].offset = offsetof(VertexModel, m_tangent);
 
-		return VertexInput(binding, bindingDescriptions, attributeDescriptions);
+		return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
 	}
 }

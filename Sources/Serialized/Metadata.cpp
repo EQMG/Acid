@@ -64,13 +64,9 @@ namespace acid
 
 	void Metadata::RemoveChild(Metadata *child)
 	{
-		for (auto it = m_children.begin(); it != m_children.end(); ++it) // TODO: Clean remove.
-		{
-			if ((*it).get() == child)
-			{
-				m_children.erase(it);
-			}
-		}
+		m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [&](std::unique_ptr<Metadata> &c) {
+			return c.get() == child;
+		}), m_children.end());
 	}
 
 	std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const

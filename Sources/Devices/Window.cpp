@@ -26,8 +26,7 @@ namespace acid
 		{
 			Log::Error("Monitor disconnected: %s\n", glfwGetMonitorName(monitor));
 			auto &monitors = Window::Get()->m_monitors;
-			monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m)
-			{
+			monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m) {
 				return monitor == m.GetMonitor();
 			}), monitors.end());
 
@@ -35,6 +34,7 @@ namespace acid
 			{
 				m.SetPrimary(m.GetMonitor() == glfwGetPrimaryMonitor());
 			}
+
 			Window::Get()->m_onMonitorConnect(0, false);
 		}
 	}

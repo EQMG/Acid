@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterGrain(const GraphicsStage &graphicsStage, const float &strength = 2.3f);
+		explicit FilterGrain(const Pipeline::Stage &pipelineStage, const float &strength = 2.3f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

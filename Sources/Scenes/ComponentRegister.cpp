@@ -24,7 +24,6 @@
 namespace acid
 {
 	ComponentRegister::ComponentRegister() :
-		m_mutex(std::mutex()),
 		m_components(std::map<std::string, ComponentCreate>())
 	{
 		Add<ColliderCapsule>("ColliderCapsule");
@@ -52,8 +51,6 @@ namespace acid
 
 	void ComponentRegister::Remove(const std::string &name)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-
 		m_components.erase(name);
 	}
 

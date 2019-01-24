@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterGrey(const GraphicsStage &graphicsStage);
+		explicit FilterGrey(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	};

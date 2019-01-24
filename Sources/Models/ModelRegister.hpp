@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <memory>
-#include <mutex>
 #include <optional>
 #include "Engine/Log.hpp"
 #include "Model.hpp"
@@ -28,8 +27,6 @@ namespace acid
 		template<typename T>
 		void Add(const std::string &type)
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			if (m_models.find(type) != m_models.end())
 			{
 				Log::Error("Model type '%s' is already registered!\n", type.c_str());
@@ -58,7 +55,6 @@ namespace acid
 		std::shared_ptr<Model> Create(const std::string &data) const;
 	private:
 		using ModelCreate = std::function<std::shared_ptr<Model>(std::string)>;
-		std::mutex m_mutex;
 		std::map<std::string, ModelCreate> m_models;
 	};
 }

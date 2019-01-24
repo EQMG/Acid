@@ -15,7 +15,7 @@ namespace acid
 	public:
 		explicit PushHandler(const bool &multipipeline = false);
 
-		explicit PushHandler(const UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit PushHandler(const Shader::UniformBlock *uniformBlock, const bool &multipipeline = false);
 
 		template<typename T>
 		void Push(const T &object, const std::size_t &offset, const std::size_t &size)
@@ -48,12 +48,12 @@ namespace acid
 			Push(object, static_cast<std::size_t>(uniform->GetOffset()), realSize);
 		}
 
-		bool Update(const UniformBlock *uniformBlock);
+		bool Update(const Shader::UniformBlock *uniformBlock);
 
 		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 	private:
 		bool m_multipipeline;
-		const UniformBlock *m_uniformBlock;
+		const Shader::UniformBlock *m_uniformBlock;
 		std::unique_ptr<char[]> m_data;
 	};
 }

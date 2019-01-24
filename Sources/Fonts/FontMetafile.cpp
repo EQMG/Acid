@@ -27,7 +27,7 @@ namespace acid
 
 	FontMetafile::FontMetafile(const std::string &filename) :
 		Resource(filename),
-		m_metadata(std::map<int32_t, FontCharacter>()),
+		m_characters(std::map<int32_t, Character>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),
 		m_verticalPerPixelSize(0.0f),
@@ -68,11 +68,11 @@ namespace acid
 		}
 	}
 
-	std::optional<FontCharacter> FontMetafile::GetCharacter(const int32_t &ascii)
+	std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t &ascii)
 	{
-		auto it = m_metadata.find(ascii);
+		auto it = m_characters.find(ascii);
 
-		if (it != m_metadata.end())
+		if (it != m_characters.end())
 		{
 			return it->second;
 		}
@@ -142,8 +142,8 @@ namespace acid
 			m_maxSizeY = quadHeight;
 		}
 
-		FontCharacter character = FontCharacter(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
-		m_metadata.emplace(character.m_id, character);
+		auto character = Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
+		m_characters.emplace(character.m_id, character);
 	}
 
 	int32_t FontMetafile::GetValueOfVariable(const std::string &variable)

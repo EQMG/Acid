@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <mutex>
 #include <vector>
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/Transform.hpp"
@@ -148,8 +147,6 @@ namespace acid
 		template<typename T>
 		void RemoveComponent()
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			for (auto it = m_components.begin(); it != m_components.end(); ++it)
 			{
 				auto casted = dynamic_cast<T *>((*it).get());
@@ -192,7 +189,6 @@ namespace acid
 		std::string m_name;
 		Transform m_localTransform;
 		mutable Transform m_worldTransform;
-		std::mutex m_mutex;
 		std::vector<std::unique_ptr<Component>> m_components;
 		Entity *m_parent;
 		std::vector<Entity *> m_children;

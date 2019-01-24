@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterPixel(const GraphicsStage &graphicsStage, const float &pixelSize = 2.0f);
+		explicit FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixelSize = 2.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	FilterDarken::FilterDarken(const GraphicsStage &graphicsStage, const float &factor) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Darken.frag"}, {}),
+	FilterDarken::FilterDarken(const Pipeline::Stage &pipelineStage, const float &factor) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Darken.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_factor(factor)
 	{

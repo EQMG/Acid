@@ -16,11 +16,11 @@ namespace acid
 		static const float BiasConstants;
 		static const float BiasSlope;
 
-		explicit RendererShadows(const GraphicsStage &graphicsStage);
+		explicit RendererShadows(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:
-		std::vector<ShaderDefine> GetDefines();
+		std::vector<Shader::Define> GetDefines();
 
 		PipelineGraphics m_pipeline;
 		UniformHandler m_uniformScene;

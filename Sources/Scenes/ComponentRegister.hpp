@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <mutex>
 #include <memory>
 #include <optional>
 #include "Engine/Log.hpp"
@@ -28,8 +27,6 @@ namespace acid
 		template<typename T>
 		void Add(const std::string &name)
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			if (m_components.find(name) != m_components.end())
 			{
 				Log::Error("Component '%s' is already registered!\n", name.c_str());
@@ -75,7 +72,6 @@ namespace acid
 			std::function<bool(Component *)> m_isSame;
 		};
 
-		std::mutex m_mutex;
 		std::map<std::string, ComponentCreate> m_components;
 	};
 }

@@ -4,11 +4,11 @@
 
 namespace acid
 {
-	PipelineBlur::PipelineBlur(const GraphicsStage &graphicsStage, const float &blur, const FilterBlur::Type &blurType,
+	PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, const float &blur, const FilterBlur::Type &blurType,
 	                           const bool &toScreen, const float &inputScale, const float &outputScale) :
-		PostPipeline(graphicsStage),
-		m_filterBlurVertical(FilterBlur(graphicsStage, Vector2(0.0f, blur), blurType)),
-		m_filterBlurHorizontal(FilterBlur(graphicsStage, Vector2(blur, 0.0f), blurType)),
+		PostPipeline(pipelineStage),
+		m_filterBlurVertical(FilterBlur(pipelineStage, Vector2(0.0f, blur), blurType)),
+		m_filterBlurHorizontal(FilterBlur(pipelineStage, Vector2(blur, 0.0f), blurType)),
 		m_toScreen(toScreen),
 		m_inputScale(inputScale),
 		m_outputScale(outputScale),

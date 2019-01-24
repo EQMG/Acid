@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	FilterNegative::FilterNegative(const GraphicsStage &graphicsStage) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Negative.frag"}, {})
+	FilterNegative::FilterNegative(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Negative.frag"}, {})
 	{
 	}
 

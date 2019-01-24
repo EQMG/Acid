@@ -22,7 +22,7 @@ namespace acid
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		explicit PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-			const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<ShaderDefine> &defines = {});
+			const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
 
 		~PipelineCompute();
 
@@ -36,11 +36,11 @@ namespace acid
 
 		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-		const std::vector<ShaderDefine> &GetDefines() const { return m_defines; }
+		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
 
 		bool CmdRender(const CommandBuffer &commandBuffer) const;
 
-		const ShaderProgram *GetShaderProgram() const override { return m_shaderProgram.get(); }
+		const Shader *GetShaderProgram() const override { return m_shader.get(); }
 
 		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 
@@ -67,9 +67,9 @@ namespace acid
 		uint32_t m_height;
 		uint32_t m_workgroupSize;
 		bool m_pushDescriptors;
-		std::vector<ShaderDefine> m_defines;
+		std::vector<Shader::Define> m_defines;
 
-		std::unique_ptr<ShaderProgram> m_shaderProgram;
+		std::unique_ptr<Shader> m_shader;
 
 		VkShaderModule m_shaderModule;
 		VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;

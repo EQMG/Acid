@@ -16,7 +16,7 @@ namespace acid
 			_13 = 13
 		};
 
-		explicit FilterBlur(const GraphicsStage &graphicsStage, const Vector2 &direction, const Type &type = Type::_9);
+		explicit FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2 &direction, const Type &type = Type::_9);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

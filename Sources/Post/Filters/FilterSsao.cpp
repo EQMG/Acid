@@ -13,8 +13,8 @@ namespace acid
 	static const uint32_t SSAO_KERNEL_SIZE = 64;
 	static const float SSAO_RADIUS = 0.5f;
 
-	FilterSsao::FilterSsao(const GraphicsStage &graphicsStage) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Ssao.frag"}, GetDefines()),
+	FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()),
 		m_pushScene(PushHandler()),
 		m_noise(ComputeNoise(SSAO_NOISE_DIM)),
 		m_kernel(std::vector<Vector3>(SSAO_KERNEL_SIZE))
@@ -61,9 +61,9 @@ namespace acid
 		m_model->CmdRender(commandBuffer);
 	}
 
-	std::vector<ShaderDefine> FilterSsao::GetDefines()
+	std::vector<Shader::Define> FilterSsao::GetDefines()
 	{
-		std::vector<ShaderDefine> result = {};
+		std::vector<Shader::Define> result = {};
 		result.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
 		result.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
 		return result;

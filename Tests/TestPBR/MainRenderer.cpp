@@ -43,16 +43,16 @@ namespace test
 	void MainRenderer::Start()
 	{
 		auto &rendererContainer = GetRendererContainer();
-	//	rendererContainer.Add<RendererShadows>(GraphicsStage(0, 0));
+	//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
 
-		rendererContainer.Add<RendererMeshes>(GraphicsStage(1, 0));
+		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
-		rendererContainer.Add<RendererDeferred>(GraphicsStage(1, 1), RendererDeferred::Type::Ibl);
-		rendererContainer.Add<RendererParticles>(GraphicsStage(1, 1));
+		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1), RendererDeferred::Type::Ibl);
+		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
-		rendererContainer.Add<FilterDefault>(GraphicsStage(1, 2), true);
-		rendererContainer.Add<RendererGuis>(GraphicsStage(1, 2));
-		rendererContainer.Add<RendererFonts>(GraphicsStage(1, 2));
+		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
+		rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<RendererFonts>(Pipeline::Stage(1, 2));
 	}
 
 	void MainRenderer::Update()

@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterWobble(const GraphicsStage &graphicsStage, const float &wobbleSpeed = 2.0f);
+		explicit FilterWobble(const Pipeline::Stage &pipelineStage, const float &wobbleSpeed = 2.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

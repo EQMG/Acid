@@ -31,7 +31,7 @@ namespace acid
 
 		virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
-		virtual VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
+		virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
 
 		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 

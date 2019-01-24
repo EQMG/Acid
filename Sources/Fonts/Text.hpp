@@ -15,85 +15,6 @@
 namespace acid
 {
 	/// <summary>
-	/// During the loading of a text this represents one word in the text.
-	/// </summary>
-	class FontWord
-	{
-	public:
-		std::vector<FontCharacter> m_characters;
-		float m_width;
-
-		/// <summary>
-		/// Creates a new text word.
-		/// </summary>
-		FontWord() :
-			m_characters(std::vector<FontCharacter>()),
-			m_width(0.0f)
-		{
-		}
-
-		/// <summary>
-		/// Adds a character to the end of the current word and increases the screen-space width of the word.
-		/// </summary>
-		/// <param name="character"> The character to be added. </param>
-		/// <param name="kerning"> The character kerning. </param>
-		void AddCharacter(const FontCharacter &character, const float &kerning)
-		{
-			m_characters.emplace_back(character);
-			m_width += kerning + character.m_advanceX;
-		}
-	};
-
-	/// <summary>
-	/// Represents a line of text during the loading of a text.
-	/// </summary>
-	class FontLine
-	{
-	public:
-		float m_maxLength;
-		float m_spaceSize;
-
-		std::vector<FontWord> m_words;
-		float m_currentWordsLength;
-		float m_currentLineLength;
-
-		/// <summary>
-		/// Creates a new text line.
-		/// </summary>
-		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
-		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
-		FontLine(const float &spaceWidth, const float &maxLength) :
-			m_maxLength(maxLength),
-			m_spaceSize(spaceWidth),
-			m_words(std::vector<FontWord>()),
-			m_currentWordsLength(0.0f),
-			m_currentLineLength(0.0f)
-		{
-		}
-
-		/// <summary>
-		/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
-		/// </summary>
-		/// <param name="word"> The word to try to add. </param>
-		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
-		bool AddWord(const FontWord &word)
-		{
-			float additionalLength = word.m_width;
-			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
-
-			if (m_currentLineLength + additionalLength <= m_maxLength)
-			{
-				m_words.emplace_back(word);
-				m_currentWordsLength += word.m_width;
-				m_currentLineLength += additionalLength;
-				return true;
-			}
-
-			return false;
-		}
-	};
-
-	/// <summary>
 	/// A object the represents a text in a GUI.
 	/// </summary>
 	class ACID_EXPORT Text :
@@ -292,19 +213,98 @@ namespace acid
 		bool IsLoaded();
 	private:
 		/// <summary>
+		/// During the loading of a text this represents one word in the text.
+		/// </summary>
+		class Word
+		{
+		public:
+			std::vector<FontMetafile::Character> m_characters;
+			float m_width;
+
+			/// <summary>
+			/// Creates a new text word.
+			/// </summary>
+			Word() :
+				m_characters(std::vector<FontMetafile::Character>()),
+				m_width(0.0f)
+			{
+			}
+
+			/// <summary>
+			/// Adds a character to the end of the current word and increases the screen-space width of the word.
+			/// </summary>
+			/// <param name="character"> The character to be added. </param>
+			/// <param name="kerning"> The character kerning. </param>
+			void AddCharacter(const FontMetafile::Character &character, const float &kerning)
+			{
+				m_characters.emplace_back(character);
+				m_width += kerning + character.m_advanceX;
+			}
+		};
+
+		/// <summary>
+		/// Represents a line of text during the loading of a text.
+		/// </summary>
+		class Line
+		{
+		public:
+			float m_maxLength;
+			float m_spaceSize;
+
+			std::vector<Word> m_words;
+			float m_currentWordsLength;
+			float m_currentLineLength;
+
+			/// <summary>
+			/// Creates a new text line.
+			/// </summary>
+			/// <param name="spaceWidth"> The screen-space width of a space character. </param>
+			/// <param name="maxLength"> The screen-space maximum length of a line. </param>
+			Line(const float &spaceWidth, const float &maxLength) :
+				m_maxLength(maxLength),
+				m_spaceSize(spaceWidth),
+				m_words(std::vector<Word>()),
+				m_currentWordsLength(0.0f),
+				m_currentLineLength(0.0f)
+			{
+			}
+
+			/// <summary>
+			/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
+			/// </summary>
+			/// <param name="word"> The word to try to add. </param>
+			/// <returns> {@code true} if the word has successfully been added to the line. </returns>
+			bool AddWord(const Word &word)
+			{
+				float additionalLength = word.m_width;
+				additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
+
+				if (m_currentLineLength + additionalLength <= m_maxLength)
+				{
+					m_words.emplace_back(word);
+					m_currentWordsLength += word.m_width;
+					m_currentLineLength += additionalLength;
+					return true;
+				}
+
+				return false;
+			}
+		};
+
+		/// <summary>
 		/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
 		/// The vertex positions and texture coords and calculated based on the information from the font file.
 		/// Then takes the information about the vertices of all the quads and stores it in a model.
 		/// </summary>
 		void LoadText();
 
-		std::vector<FontLine> CreateStructure();
+		std::vector<Line> CreateStructure();
 
-		void CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord);
+		void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord);
 
-		std::vector<VertexModel> CreateQuad(const std::vector<FontLine> &lines);
+		std::vector<VertexModel> CreateQuad(const std::vector<Line> &lines);
 
-		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<VertexModel> &vertices);
+		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices);
 
 		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
 

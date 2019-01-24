@@ -20,7 +20,7 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage);
+		bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
 
 		bool operator<(const MeshRender &other) const;
 	private:

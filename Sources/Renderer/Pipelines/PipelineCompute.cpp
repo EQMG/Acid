@@ -9,7 +9,7 @@
 namespace acid
 {
 	PipelineCompute::PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-	    const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
+	    const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
 		m_shaderStage(shaderStage),
 		m_width(width),
@@ -17,7 +17,7 @@ namespace acid
 		m_workgroupSize(workgroupSize),
 		m_pushDescriptors(pushDescriptors),
 		m_defines(defines),
-		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStage)),
+		m_shader(std::make_unique<Shader>(m_shaderStage)),
 		m_shaderModule(VK_NULL_HANDLE),
 		m_shaderStageCreateInfo({}),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -42,7 +42,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-	//	Log::Out("%s", m_shaderProgram->ToString().c_str());
+	//	Log::Out("%s", m_shader->ToString().c_str());
 		Log::Out("PipelineCompute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
@@ -86,25 +86,25 @@ namespace acid
 			return;
 		}
 
-		auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());
-		shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
+		auto shaderCode = Shader::InsertDefineBlock(*fileLoaded, defineBlock.str());
+		shaderCode = Shader::ProcessIncludes(shaderCode);
 
-		auto stageFlag = ShaderProgram::GetShaderStage(m_shaderStage);
-		m_shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
+		auto stageFlag = Shader::GetShaderStage(m_shaderStage);
+		m_shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
 
 		m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		m_shaderStageCreateInfo.stage = stageFlag;
 		m_shaderStageCreateInfo.module = m_shaderModule;
 		m_shaderStageCreateInfo.pName = "main";
 
-		m_shaderProgram->ProcessShader();
+		m_shader->ProcessShader();
 	}
 
 	void PipelineCompute::CreateDescriptorLayout()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
+		auto descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -118,7 +118,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto descriptorPools = m_shaderProgram->GetDescriptorPools();
+		auto descriptorPools = m_shader->GetDescriptorPools();
 
 		VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 		descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;

@@ -16,7 +16,7 @@ namespace acid
 			None, Front, Back
 		};
 
-		explicit RendererMeshes(const GraphicsStage &graphicsStage, const Sort &sort = Sort::None);
+		explicit RendererMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort = Sort::None);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:

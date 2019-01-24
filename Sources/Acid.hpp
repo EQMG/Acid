@@ -191,7 +191,7 @@
 #include "Renderer/Pipelines/Pipeline.hpp"
 #include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Renderer/Pipelines/ShaderProgram.hpp"
+#include "Renderer/Pipelines/Shader.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/RendererContainer.hpp"
 #include "Renderer/RenderManager.hpp"

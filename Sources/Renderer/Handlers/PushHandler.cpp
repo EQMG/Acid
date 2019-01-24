@@ -9,14 +9,14 @@ namespace acid
 	{
 	}
 
-	PushHandler::PushHandler(const UniformBlock *uniformBlock, const bool &multipipeline) :
+	PushHandler::PushHandler(const Shader::UniformBlock *uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
 		m_data(std::make_unique<char[]>(m_uniformBlock->GetSize()))
 	{
 	}
 
-	bool PushHandler::Update(const UniformBlock *uniformBlock)
+	bool PushHandler::Update(const Shader::UniformBlock *uniformBlock)
 	{
 		if ((m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{

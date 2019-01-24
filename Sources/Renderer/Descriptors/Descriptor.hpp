@@ -32,7 +32,7 @@ namespace acid
 		uint32_t m_size;
 	};
 
-	class WriteDescriptorSet
+	class ACID_EXPORT WriteDescriptorSet
 	{
 	public:
 		WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :

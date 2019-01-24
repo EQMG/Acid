@@ -11,8 +11,8 @@ namespace test
 	
 	void MaterialVoxel::Start()
 	{
-		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Voxels/Voxel.vert", "Shaders/Voxels/Voxel.frag"}, {VertexModel::GetVertexInput()},
-		    PipelineMode::Mrt, PipelineDepth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}));
+		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineGraphicsCreate({"Shaders/Voxels/Voxel.vert", "Shaders/Voxels/Voxel.frag"}, {VertexModel::GetVertexInput()},
+		    PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, {}));
 	}
 
 	void MaterialVoxel::Update()

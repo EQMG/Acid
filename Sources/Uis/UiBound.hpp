@@ -10,22 +10,6 @@ namespace acid
 	class ACID_EXPORT UiBound
 	{
 	public:
-		Vector2 m_position;
-		Vector2 m_reference;
-		bool m_aspectPosition;
-		bool m_aspectSize;
-		Vector2 m_dimensions;
-
-		static const Vector2 TopLeft;
-		static const Vector2 TopCentre;
-		static const Vector2 TopRight;
-		static const Vector2 CentreLeft;
-		static const Vector2 Centre;
-		static const Vector2 CentreRight;
-		static const Vector2 BottomLeft;
-		static const Vector2 BottomCentre;
-		static const Vector2 BottomRight;
-
 		/// <summary>
 		/// Constructor for rectangle.
 		/// </summary>
@@ -71,5 +55,21 @@ namespace acid
 		bool operator==(const UiBound &other) const;
 
 		bool operator!=(const UiBound &other) const;
+
+		static const Vector2 TopLeft;
+		static const Vector2 TopCentre;
+		static const Vector2 TopRight;
+		static const Vector2 CentreLeft;
+		static const Vector2 Centre;
+		static const Vector2 CentreRight;
+		static const Vector2 BottomLeft;
+		static const Vector2 BottomCentre;
+		static const Vector2 BottomRight;
+
+		Vector2 m_position;
+		Vector2 m_reference;
+		bool m_aspectPosition;
+		bool m_aspectSize;
+		Vector2 m_dimensions;
 	};
 }

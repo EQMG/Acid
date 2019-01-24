@@ -71,7 +71,7 @@ namespace acid
 
 		for (auto &[key, renderPipelines] : stages)
 		{
-			if (renderpass != key.GetRenderpass())
+			if (renderpass != key.first)
 			{
 				// Ends the previous renderpass.
 				if (renderpass)
@@ -79,7 +79,7 @@ namespace acid
 					EndRenderpass(*GetRenderStage(*renderpass));
 				}
 
-				renderpass = key.GetRenderpass();
+				renderpass = key.first;
 				subpass = 0;
 
 				// Starts the next renderpass.
@@ -94,9 +94,9 @@ namespace acid
 			auto renderStage = GetRenderStage(*renderpass);
 
 			// Changes the subpass.
-			if (subpass != key.GetSubpass())
+			if (subpass != key.second)
 			{
-				uint32_t difference = key.GetSubpass() - subpass;
+				uint32_t difference = key.second - subpass;
 
 				if (subpass == renderStage->SubpassCount() - 1)
 				{
@@ -108,7 +108,7 @@ namespace acid
 					vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 				}
 
-				subpass = key.GetSubpass();
+				subpass = key.second;
 			}
 
 			// Renders subpass render pipeline.

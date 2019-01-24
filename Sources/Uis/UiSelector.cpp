@@ -63,14 +63,12 @@ namespace acid
 
 	bool UiSelector::IsSelected(const UiObject &object) const
 	{
-		float width = object.GetScreenTransform().m_x / 2.0f;
-		float height = object.GetScreenTransform().m_y / 2.0f;
-		float positionX = (object.GetScreenTransform().m_z + 1.0f) / 2.0f;
-		float positionY = (object.GetScreenTransform().m_w - 1.0f) / -2.0f;
+		Vector2 dimension = object.GetScreenDimension();
+		Vector2 position = object.GetScreenPosition();
 
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
-			if (m_cursorX >= positionX && m_cursorX <= positionX + width && 1.0f - m_cursorY >= positionY - height && 1.0f - m_cursorY <= positionY)
+			if (m_cursorX >= position.m_x && m_cursorX <= position.m_x + dimension.m_x && 1.0f - m_cursorY >= position.m_y - dimension.m_y && 1.0f - m_cursorY <= position.m_y)
 			{
 				return true;
 			}

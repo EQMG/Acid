@@ -6,10 +6,10 @@
 
 namespace acid
 {
-	RendererGizmos::RendererGizmos(const GraphicsStage &graphicsStage) :
-		RenderPipeline(graphicsStage),
-		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexModel::GetVertexInput()},
-			PipelineMode::Polygon, PipelineDepth::ReadWrite, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE, false, {})),
+	RendererGizmos::RendererGizmos(const Pipeline::Stage &pipelineStage) :
+		RenderPipeline(pipelineStage),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

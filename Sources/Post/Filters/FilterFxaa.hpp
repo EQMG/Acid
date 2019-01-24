@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterFxaa(const GraphicsStage &graphicsStage, const float &spanMax = 8.0f);
+		explicit FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax = 8.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

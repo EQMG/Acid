@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterVignette(const GraphicsStage &graphicsStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
+		explicit FilterVignette(const Pipeline::Stage &pipelineStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

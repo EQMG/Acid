@@ -30,7 +30,9 @@ namespace acid
 	void Thread::Wait()
 	{
 		std::unique_lock<std::mutex> lock(m_queueMutex);
-		m_condition.wait(lock, [this]() { return m_jobQueue.empty(); });
+		m_condition.wait(lock, [&]() {
+			return m_jobQueue.empty();
+		});
 	}
 
 	void Thread::QueueLoop()
@@ -38,10 +40,10 @@ namespace acid
 		while (true)
 		{
 			std::function<void()> job;
+
 			{
 				std::unique_lock<std::mutex> lock(m_queueMutex);
-				m_condition.wait(lock, [this]
-				{
+				m_condition.wait(lock, [&] {
 					return !m_jobQueue.empty() || m_destroying;
 				});
 

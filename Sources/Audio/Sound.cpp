@@ -147,7 +147,7 @@ namespace acid
 	void Sound::SetGain(const float &gain)
 	{
 		m_gain = gain;
-		alSourcef(m_source, AL_GAIN, std::pow(m_gain * Audio::Get()->GetTypeGain(m_type), 2.7183f));
+		alSourcef(m_source, AL_GAIN, m_gain * Audio::Get()->GetTypeGain(m_type));
 		Audio::CheckAl(alGetError());
 	}
 

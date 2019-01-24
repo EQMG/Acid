@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	FilterGrey::FilterGrey(const GraphicsStage &graphicsStage) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grey.frag"}, {})
+	FilterGrey::FilterGrey(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grey.frag"}, {})
 	{
 	}
 
