@@ -49,8 +49,8 @@ namespace acid
 		m_uniformObject.Push("borderColour", m_borderColour);
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
 		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
-		m_uniformObject.Push("screenDimension", GetScreenDimension());
-		m_uniformObject.Push("screenPosition", GetScreenPosition());
+		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
+		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);
 		m_uniformObject.Push("alpha", GetAlpha());
 		m_uniformObject.Push("depth", GetDepth());
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);

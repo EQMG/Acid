@@ -9,24 +9,27 @@
 
 namespace acid
 {
-	class ACID_EXPORT SelectorJoystick
+	/// <summary>
+	/// Represents a virtual cursor that uses a joystick as input.
+	/// </summary>
+	class ACID_EXPORT VirtualJoystick
 	{
 	public:
-		explicit SelectorJoystick(const JoystickPort &joystick = JOYSTICK_1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1, const std::vector<uint32_t> &inputButtons = {0, 1}) :
-			m_joystick(joystick),
-			m_axisX(AxisJoystick(joystick, joystickAxisX)),
-			m_axisY(AxisJoystick(joystick, joystickAxisY)),
+		explicit VirtualJoystick(const JoystickPort &port = JOYSTICK_1, const uint32_t &joystickAxisX = 0, const uint32_t &joystickAxisY = 1, const std::vector<uint32_t> &inputButtons = {0, 1}) :
+			m_port(port),
+			m_axisX(AxisJoystick(port, joystickAxisX)),
+			m_axisY(AxisJoystick(port, joystickAxisY)),
 			m_inputButtons(std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE>())
 		{
 			for (const auto &inputButton : inputButtons)
 			{
-				m_inputButtons[inputButton] = ButtonJoystick(joystick, inputButton);
+				m_inputButtons[inputButton] = ButtonJoystick(m_port, inputButton);
 			}
 		}
 
-		const JoystickPort &GetJoystick() const { return m_joystick; }
+		const JoystickPort &GetPort() const { return m_port; }
 
-		void SetJoystick(const JoystickPort &joystick) { m_joystick = joystick; }
+		void SetPort(const JoystickPort &port) { m_port = port; }
 
 		const AxisJoystick &GetAxisX() const { return m_axisX; }
 
@@ -40,7 +43,7 @@ namespace acid
 
 		void SetInputButton(const MouseButton &button, const ButtonJoystick &inputButton) { m_inputButtons[button] = inputButton; }
 	private:
-		JoystickPort m_joystick;
+		JoystickPort m_port;
 		AxisJoystick m_axisX;
 		AxisJoystick m_axisY;
 		std::array<std::optional<ButtonJoystick>, MOUSE_BUTTON_END_RANGE> m_inputButtons;
@@ -54,7 +57,7 @@ namespace acid
 	public:
 		UiSelector();
 
-		void Update(const bool &paused, const SelectorJoystick &selectorJoystick);
+		void Update(const VirtualJoystick *virtualJoystick);
 
 		/// <summary>
 		/// Gets if the object provided has the cursor hovered above it.

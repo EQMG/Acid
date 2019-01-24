@@ -23,6 +23,15 @@ namespace acid
 		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8
 	};
 
+	enum class CursorHotspot
+	{
+		UpperLeft,
+		UpperRight,
+		BottomLeft,
+		BottomRight,
+		Centered
+	};
+
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the mouse.
 	/// </summary>
@@ -51,7 +60,8 @@ namespace acid
 		/// Sets the custom mouse file.
 		/// </summary>
 		/// <param name="filename"> The new custom mouse file. </param>
-		void SetCursor(const std::string &filename);
+		/// <param name="hotspot"> The hotspot to display the cursor image at. </param>
+		void SetCursor(const std::string &filename, const CursorHotspot &hotspot);
 
 		/// <summary>
 		/// Gets the contents of the clipboard as a string.

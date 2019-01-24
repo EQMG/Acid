@@ -72,7 +72,7 @@ namespace acid
 		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);
 
 		m_screenDimension = screenDimensions * m_scale;
-		m_screenPosition = screenPosition - (m_screenDimension * (Vector2::Down + m_rectangle.GetReference()));
+		m_screenPosition = screenPosition - (m_screenDimension * m_rectangle.GetReference());
 
 		// Update all children objects.
 		for (auto &child : m_children)

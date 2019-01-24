@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	ButtonJoystick::ButtonJoystick(const JoystickPort &joystick, const uint32_t &button) :
-		m_joystick(joystick),
+	ButtonJoystick::ButtonJoystick(const JoystickPort &port, const uint32_t &button) :
+		m_port(port),
 		m_button(button),
 		m_wasDown(false)
 	{
@@ -11,12 +11,12 @@ namespace acid
 
 	bool ButtonJoystick::IsDown() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_joystick))
+		if (!Joysticks::Get()->IsConnected(m_port))
 		{
 			return false;
 		}
 
-		return Joysticks::Get()->GetButton(m_joystick, m_button) != INPUT_ACTION_RELEASE;
+		return Joysticks::Get()->GetButton(m_port, m_button) != INPUT_ACTION_RELEASE;
 	}
 
 	bool ButtonJoystick::WasDown()

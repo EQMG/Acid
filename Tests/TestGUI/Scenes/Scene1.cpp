@@ -12,7 +12,7 @@ namespace test
 	const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
-		Scene(new Camera(), new SelectorJoystick(JOYSTICK_1, 0, 1, {0, 1})),
+		Scene(new Camera(), new VirtualJoystick(JOYSTICK_1, 0, 1, {0, 1})),
 		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
 		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
 		m_buttonPause(ButtonCompound({

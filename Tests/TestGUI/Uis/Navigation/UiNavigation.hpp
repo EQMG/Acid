@@ -48,9 +48,9 @@ namespace test
 		UiTab *m_currentTab;
 		UiTab *m_targetTab;
 	public:
-		static const Colour PANEL_COLOUR;
-		static const Colour BUTTON_COLOUR;
-		static const Vector2 BUTTON_SIZE;
+		static const Colour ColourPanel;
+		static const Colour ColourButton;
+		static const Vector2 ButtonSize;
 
 		explicit UiNavigation(UiObject *parent);
 
