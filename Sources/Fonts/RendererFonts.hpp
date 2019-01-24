@@ -10,7 +10,7 @@ namespace acid
 		public RenderPipeline
 	{
 	public:
-		explicit RendererFonts(const GraphicsStage &graphicsStage);
+		explicit RendererFonts(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:

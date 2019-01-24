@@ -5,9 +5,10 @@
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 modelMatrix;
-	vec4 screenOffset;
-	vec4 colourOffset;
+	vec4 colour;
 	vec2 atlasOffset;
+	vec2 screenDimension;
+	vec2 screenPosition;
 	float atlasRows;
 	float alpha;
 	float depth;
@@ -22,7 +23,7 @@ layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	outColour = texture(samplerColour, inUv) * object.colourOffset;
+	outColour = texture(samplerColour, inUv) * object.colour;
 	outColour.a *= object.alpha;
 
 	if (outColour.a < 0.05f)

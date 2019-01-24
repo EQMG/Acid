@@ -5,11 +5,12 @@
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 modelMatrix;
-	vec4 screenOffset;
 	vec4 colour;
 	vec4 borderColour;
 	vec2 borderSizes;
 	vec2 edgeData;
+	vec2 screenDimension;
+	vec2 screenPosition;
 	float alpha;
 	float depth;
 	int modelMode;

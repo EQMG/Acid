@@ -18,10 +18,10 @@ namespace acid
 		/// <summary>
 		/// Creates a new post effect filter.
 		/// </summary>
-		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
+		/// <param name="pipelineStage"> The pipelines graphics stage. </param>
 		/// <param name="shaderStages"> The pipelines shader stages. </param>
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
-		PostFilter(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<ShaderDefine> &defines = {});
+		PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines = {});
 
 		const DescriptorsHandler &GetDescriptorSet() const { return m_descriptorSet; }
 

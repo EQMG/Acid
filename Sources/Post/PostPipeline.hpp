@@ -15,9 +15,9 @@ namespace acid
 		/// <summary>
 		/// Creates a new post pipeline.
 		/// </summary>
-		/// <param name="graphicsStage"> The pipelines graphics stage. </param>
-		explicit PostPipeline(const GraphicsStage &graphicsStage) :
-			RenderPipeline(graphicsStage)
+		/// <param name="pipelineStage"> The pipelines graphics stage. </param>
+		explicit PostPipeline(const Pipeline::Stage &pipelineStage) :
+			RenderPipeline(pipelineStage)
 		{
 		}
 	};

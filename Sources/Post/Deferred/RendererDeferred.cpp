@@ -15,21 +15,14 @@ namespace acid
 {
 	static const uint32_t MAX_LIGHTS = 32;
 
-	struct DeferredLight
-	{
-		Colour m_colour;
-		Vector3 m_position;
-		float m_radius;
-	};
-
-	RendererDeferred::RendererDeferred(const GraphicsStage &graphicsStage, const Type &type) :
-		RenderPipeline(graphicsStage),
+	RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type) :
+		RenderPipeline(pipelineStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformScene(UniformHandler()),
 		m_storageLights(StorageHandler()),
 		m_type(type),
-		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PipelineMode::Polygon, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_brdf(m_type == Type::Ibl ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
@@ -126,9 +119,9 @@ namespace acid
 		m_model->CmdRender(commandBuffer);
 	}
 
-	std::vector<ShaderDefine> RendererDeferred::GetDefines()
+	std::vector<Shader::Define> RendererDeferred::GetDefines()
 	{
-		std::vector<ShaderDefine> result = {};
+		std::vector<Shader::Define> result = {};
 		result.emplace_back("USE_IBL", String::To<int32_t>(m_type == Type::Ibl));
 		result.emplace_back("MAX_LIGHTS", String::To(MAX_LIGHTS));
 		return result;

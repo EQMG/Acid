@@ -69,9 +69,9 @@ namespace acid
 		/// <param name="child"> The child to disown. </param>
 		void RemoveChild(UiObject *child);
 
-		bool IsVisible() const;
+		bool IsEnabled() const;
 
-		void SetVisible(const bool &visible) { m_visible = visible; }
+		void SetEnabled(const bool &enabled) { m_enabled = enabled; }
 
 		UiBound &GetRectangle() { return m_rectangle; }
 
@@ -85,11 +85,9 @@ namespace acid
 
 		void SetDepth(const float &depth) { m_depth = depth; }
 
-		/// <summary>
-		/// Gets the ui object screen space transform.
-		/// </summary>
-		/// <returns> The screen transform. </returns>
-		const Vector4 &GetScreenTransform() const { return m_screenTransform; }
+		const Vector2 &GetScreenDimension() const { return m_screenDimension; }
+
+		const Vector2 &GetScreenPosition() const { return m_screenPosition; }
 
 		const bool &IsLockRotation() const { return m_lockRotation; }
 
@@ -152,12 +150,13 @@ namespace acid
 		UiObject *m_parent;
 		std::vector<std::unique_ptr<UiObject>> m_children;
 
-		bool m_visible;
+		bool m_enabled;
 		UiBound m_rectangle;
 		Vector4 m_scissor; // TODO: Convert to UiBound.
 		float m_depth;
 
-		Vector4 m_screenTransform;
+		Vector2 m_screenDimension;
+		Vector2 m_screenPosition;
 
 		bool m_lockRotation;
 		std::optional<Transform> m_worldTransform;

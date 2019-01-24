@@ -4,8 +4,8 @@ project(Acid VERSION 0.11.4 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
-option(ACID_INSTALL_EXAMPLES "Installs the examples." ON)
-option(ACID_INSTALL_RESOURCES "Installs the Resources directory." ON)
+option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
+option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

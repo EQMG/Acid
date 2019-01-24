@@ -23,9 +23,9 @@ namespace test
 	void MainRenderer::Start()
 	{
 		auto &rendererContainer = GetRendererContainer();
-		rendererContainer.Add<RendererGuis>(GraphicsStage(0, 0));
-		rendererContainer.Add<RendererFonts>(GraphicsStage(0, 0));
-	//	rendererContainer.Add<RendererFonts2>(GraphicsStage(0, 0));
+		rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
+		rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));
+	//	rendererContainer.Add<RendererFonts2>(Pipeline::Stage(0, 0));
 	}
 
 	void MainRenderer::Update()

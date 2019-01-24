@@ -12,22 +12,6 @@ namespace acid
 	class ACID_EXPORT UiInputText :
 		public UiObject
 	{
-	private:
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_text;
-		Sound m_soundClick;
-
-		std::string m_prefix;
-		std::string m_value;
-		int32_t m_maxLength;
-
-		InputDelay m_inputDelay;
-		int32_t m_lastKey;
-
-		bool m_selected;
-		bool m_mouseOver;
-
-		Delegate<void(UiInputText *, std::string)> m_onType;
 	public:
 		UiInputText(UiObject *parent, const std::string &prefix, const std::string &value, const int32_t &maxLength,
 			const UiBound &rectangle = UiBound(Vector3::Zero, UiBound::Centre, true, true, Vector2(0.36f, 0.05f)),
@@ -44,5 +28,21 @@ namespace acid
 		void SetValue(const std::string &value);
 
 		Delegate<void(UiInputText *, std::string)> &GetOnType() { return m_onType; }
+	private:
+		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<Text> m_text;
+		Sound m_soundClick;
+
+		std::string m_prefix;
+		std::string m_value;
+		int32_t m_maxLength;
+
+		InputDelay m_inputDelay;
+		int32_t m_lastKey;
+
+		bool m_selected;
+		bool m_mouseOver;
+
+		Delegate<void(UiInputText *, std::string)> m_onType;
 	};
 }

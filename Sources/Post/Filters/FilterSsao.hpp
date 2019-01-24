@@ -8,11 +8,11 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterSsao(const GraphicsStage &graphicsStage);
+		explicit FilterSsao(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:
-		std::vector<ShaderDefine> GetDefines();
+		std::vector<Shader::Define> GetDefines();
 
 		static std::shared_ptr<acid::Texture> ComputeNoise(const uint32_t &size);
 	private:

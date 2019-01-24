@@ -11,7 +11,6 @@
 namespace acid
 {
 	ModelRegister::ModelRegister() :
-		m_mutex(std::mutex()),
 		m_models(std::map<std::string, ModelCreate>())
 	{
 		Add<ModelObj>(".obj");
@@ -24,8 +23,6 @@ namespace acid
 
 	void ModelRegister::Remove(const std::string &name)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-
 		m_models.erase(name);
 	}
 

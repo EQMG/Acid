@@ -27,9 +27,10 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenOffset", GetScreenTransform());
-		m_uniformObject.Push("colourOffset", m_colourOffset);
+		m_uniformObject.Push("colour", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
+		m_uniformObject.Push("screenDimension", GetScreenDimension());
+		m_uniformObject.Push("screenPosition", GetScreenPosition());
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
 		m_uniformObject.Push("depth", GetDepth());
@@ -39,7 +40,7 @@ namespace acid
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (!IsVisible() || GetAlpha() == 0.0f)
+		if (!IsEnabled() || GetAlpha() == 0.0f)
 		{
 			return false;
 		}

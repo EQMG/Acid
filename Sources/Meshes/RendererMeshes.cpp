@@ -5,8 +5,8 @@
 
 namespace acid
 {
-	RendererMeshes::RendererMeshes(const GraphicsStage &graphicsStage, const Sort &sort) :
-		RenderPipeline(graphicsStage),
+	RendererMeshes::RendererMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
+		RenderPipeline(pipelineStage),
 		m_sort(sort),
 		m_uniformScene(UniformHandler(true))
 	{
@@ -33,7 +33,7 @@ namespace acid
 
 		for (const auto &meshRender : sceneMeshRenders)
 		{
-			meshRender->CmdRender(commandBuffer, m_uniformScene, GetGraphicsStage());
+			meshRender->CmdRender(commandBuffer, m_uniformScene, GetStage());
 		}
 	}
 }

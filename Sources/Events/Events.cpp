@@ -1,5 +1,7 @@
 #include "Events.hpp"
 
+#include <algorithm>
+
 namespace acid
 {
 	Events::Events() :
@@ -44,12 +46,8 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = m_events.begin(); it != m_events.end(); ++it) // TODO: Clean remove.
-		{
-			if ((*it).get() == event)
-			{
-				m_events.erase(it);
-			}
-		}
+		m_events.erase(std::remove_if(m_events.begin(), m_events.end(), [&](std::unique_ptr<IEvent> &e) {
+			return e.get() == event;
+		}), m_events.end());
 	}
 }

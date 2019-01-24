@@ -33,8 +33,8 @@ namespace acid
 		}
 
 		m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
-		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
-			PipelineMode::Mrt, PipelineDepth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()));
+		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineGraphicsCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
+			PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()));
 	}
 
 	void MaterialDefault::Update()
@@ -95,9 +95,9 @@ namespace acid
 		descriptorSet.Push("samplerNormal", m_normalTexture);
 	}
 
-	std::vector<ShaderDefine> MaterialDefault::GetDefines()
+	std::vector<Shader::Define> MaterialDefault::GetDefines()
 	{
-		std::vector<ShaderDefine> result = {};
+		std::vector<Shader::Define> result = {};
 		result.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));
 		result.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
 		result.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));

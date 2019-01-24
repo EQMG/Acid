@@ -7,10 +7,10 @@
 
 namespace acid
 {
-	RendererGuis::RendererGuis(const GraphicsStage &graphicsStage) :
-		RenderPipeline(graphicsStage),
-		m_pipeline(PipelineGraphics(graphicsStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()},
-			PipelineMode::Polygon, PipelineDepth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
+	RendererGuis::RendererGuis(const Pipeline::Stage &pipelineStage) :
+		RenderPipeline(pipelineStage),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}
@@ -25,7 +25,7 @@ namespace acid
 
 		for (const auto &screenObject : Uis::Get()->GetObjects())
 		{
-			if (!screenObject->IsVisible())
+			if (!screenObject->IsEnabled())
 			{
 				continue;
 			}

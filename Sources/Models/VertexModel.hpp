@@ -31,7 +31,7 @@ namespace acid
 
 		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
 
-		static VertexInput GetVertexInput(const uint32_t &binding = 0);
+		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 	private:
 		Vector3 m_position;
 		Vector2 m_uv;

@@ -1,4 +1,4 @@
-#include "ShaderProgram.hpp"
+#include "Shader.hpp"
 
 #include <SPIRV/GlslangToSpv.h>
 #include "Renderer/Renderer.hpp"
@@ -11,11 +11,11 @@
 
 namespace acid
 {
-	ShaderProgram::ShaderProgram(const std::string &name) :
+	Shader::Shader(const std::string &name) :
 		m_name(name),
-		m_uniforms(std::vector<std::unique_ptr<Uniform>>()),
-		m_uniformBlocks(std::vector<std::unique_ptr<UniformBlock>>()),
-		m_vertexAttributes(std::vector<std::unique_ptr<VertexAttribute>>()),
+		m_uniforms(std::map<std::string, std::unique_ptr<Uniform>>()),
+		m_uniformBlocks(std::map<std::string, std::unique_ptr<UniformBlock>>()),
+		m_attributes(std::map<std::string, std::unique_ptr<Attribute>>()),
 		m_descriptorSetLayouts(std::vector<VkDescriptorSetLayoutBinding>()),
 		m_descriptorPools(std::vector<VkDescriptorPoolSize>()),
 		m_descriptorTypes(std::vector<VkDescriptorType>()),
@@ -24,7 +24,7 @@ namespace acid
 	{
 	}
 
-	bool ShaderProgram::ReportedNotFound(const std::string &name, const bool &reportIfFound) const
+	bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound) const
 	{
 		if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), name) == m_notFoundNames.end())
 		{
@@ -39,43 +39,43 @@ namespace acid
 		return false;
 	}
 
-	void ShaderProgram::ProcessShader()
+	void Shader::ProcessShader()
 	{
 		// Sort uniforms by binding.
-		std::sort(m_uniforms.begin(), m_uniforms.end(),
+		/*std::sort(m_uniforms.begin(), m_uniforms.end(),
 			[](const std::unique_ptr<Uniform> &l, const std::unique_ptr<Uniform> &r)
 		{
 			return l->GetBinding() < r->GetBinding();
-		});
+		});*/
 
 		// Sort uniform blocks by binding.
-		std::sort(m_uniformBlocks.begin(), m_uniformBlocks.end(),
+		/*std::sort(m_uniformBlocks.begin(), m_uniformBlocks.end(),
 			[](const std::unique_ptr<UniformBlock> &l, const std::unique_ptr<UniformBlock> &r)
 		{
 			return l->GetBinding() < r->GetBinding();
-		});
+		});*/
 
 		// Sort uniform block uniforms by offsets.
-		for (auto &uniformBlock : m_uniformBlocks)
+		/*for (auto &uniformBlock : m_uniformBlocks)
 		{
 			std::sort(uniformBlock->m_uniforms.begin(), uniformBlock->m_uniforms.end(),
 				[](const std::unique_ptr<Uniform> &l, const std::unique_ptr<Uniform> &r)
 			{
 				return l->GetOffset() < r->GetOffset();
 			});
-		}
+		}*/
 
 		// Sort attributes by location.
-		std::sort(m_vertexAttributes.begin(), m_vertexAttributes.end(),
+		/*std::sort(m_attributes.begin(), m_attributes.end(),
 			[](const std::unique_ptr<VertexAttribute> &l, const std::unique_ptr<VertexAttribute> &r)
 		{
 			return l->GetLocation() < r->GetLocation();
-		});
+		});*/
 
 		std::map<VkDescriptorType, uint32_t> descriptorPoolCounts = {};
 
 		// Process to descriptors.
-		for (const auto &uniformBlock : m_uniformBlocks)
+		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
@@ -101,7 +101,7 @@ namespace acid
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
 		}
 
-		for (const auto &uniform : m_uniforms)
+		for (const auto &[uniformName, uniform] : m_uniforms)
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
@@ -152,19 +152,19 @@ namespace acid
 		// Process attribute descriptions.
 		uint32_t currentOffset = 4;
 
-		for (const auto &vertexAttribute : m_vertexAttributes)
+		for (const auto &[attributeName, attribute] : m_attributes)
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
-			attributeDescription.location = static_cast<uint32_t>(vertexAttribute->GetLocation());
+			attributeDescription.location = static_cast<uint32_t>(attribute->GetLocation());
 			attributeDescription.binding = 0;
-			attributeDescription.format = GlTypeToVk(vertexAttribute->GetGlType());
+			attributeDescription.format = GlTypeToVk(attribute->GetGlType());
 			attributeDescription.offset = currentOffset;
 			m_attributeDescriptions.emplace_back(attributeDescription);
-			currentOffset += vertexAttribute->GetSize();
+			currentOffset += attribute->GetSize();
 		}
 	}
 
-	VkFormat ShaderProgram::GlTypeToVk(const int32_t &type)
+	VkFormat Shader::GlTypeToVk(const int32_t &type)
 	{
 		switch (type)
 		{
@@ -197,19 +197,19 @@ namespace acid
 		}
 	}
 
-	int32_t ShaderProgram::GetDescriptorLocation(const std::string &descriptor) const
+	int32_t Shader::GetDescriptorLocation(const std::string &descriptor) const
 	{
-		for (const auto &uniform : m_uniforms)
+		for (const auto &[uniformName, uniform] : m_uniforms) // TODO
 		{
-			if (uniform->GetName() == descriptor)
+			if (uniformName == descriptor)
 			{
 				return uniform->GetBinding();
 			}
 		}
 
-		for (const auto &uniformBlock : m_uniformBlocks)
+		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks) // TODO
 		{
-			if (uniformBlock->GetName() == descriptor)
+			if (uniformBlockName == descriptor)
 			{
 				return uniformBlock->GetBinding();
 			}
@@ -218,19 +218,19 @@ namespace acid
 		return -1;
 	}
 
-	std::optional<uint32_t> ShaderProgram::GetDescriptorSize(const std::string &descriptor) const
+	std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &descriptor) const
 	{
-		for (const auto &uniform : m_uniforms)
+		for (const auto &[uniformName, uniform] : m_uniforms) // TODO
 		{
-			if (uniform->GetName() == descriptor)
+			if (uniformName == descriptor)
 			{
 				return uniform->GetSize();
 			}
 		}
 
-		for (const auto &uniformBlock : m_uniformBlocks)
+		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks) // TODO
 		{
-			if (uniformBlock->GetName() == descriptor)
+			if (uniformBlockName == descriptor)
 			{
 				return uniformBlock->GetSize();
 			}
@@ -239,11 +239,11 @@ namespace acid
 		return {};
 	}
 
-	const Uniform *ShaderProgram::GetUniform(const std::string &uniformName) const
+	const Shader::Uniform *Shader::GetUniform(const std::string &name) const
 	{
-		for (const auto &uniform : m_uniforms)
+		for (const auto &[uniformName, uniform] : m_uniforms)
 		{
-			if (uniform->GetName() == uniformName)
+			if (uniformName == name)
 			{
 				return uniform.get();
 			}
@@ -252,11 +252,11 @@ namespace acid
 		return nullptr;
 	}
 
-	const UniformBlock *ShaderProgram::GetUniformBlock(const std::string &blockName) const
+	const Shader::UniformBlock *Shader::GetUniformBlock(const std::string &name) const
 	{
-		for (const auto &uniformBlock : m_uniformBlocks)
+		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 		{
-			if (uniformBlock->GetName() == blockName)
+			if (uniformBlockName == name)
 			{
 				return uniformBlock.get();
 			}
@@ -265,11 +265,11 @@ namespace acid
 		return nullptr;
 	}
 
-	const VertexAttribute *ShaderProgram::GetVertexAttribute(const std::string &attributeName) const
+	const Shader::Attribute *Shader::GetAttribute(const std::string &name) const
 	{
-		for (const auto &attribute : m_vertexAttributes)
+		for (const auto &[attributeName, attribute] : m_attributes)
 		{
-			if (attribute->GetName() == attributeName)
+			if (attributeName == name)
 			{
 				return attribute.get();
 			}
@@ -278,7 +278,7 @@ namespace acid
 		return nullptr;
 	}
 
-	uint32_t ShaderProgram::GetLastDescriptorBinding() const
+	uint32_t Shader::GetLastDescriptorBinding() const
 	{
 		uint32_t binding = 0;
 
@@ -293,7 +293,7 @@ namespace acid
 		return binding;
 	}
 
-	VkShaderStageFlagBits ShaderProgram::GetShaderStage(const std::string &filename)
+	VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)
 	{
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
 
@@ -325,7 +325,7 @@ namespace acid
 		return VK_SHADER_STAGE_ALL;
 	}
 
-	std::string ShaderProgram::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
+	std::string Shader::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
 		// TODO: Needs a rework.
 		std::string result = shaderCode;
@@ -336,7 +336,7 @@ namespace acid
 		return result;
 	}
 
-	std::string ShaderProgram::ProcessIncludes(const std::string &shaderCode)
+	std::string Shader::ProcessIncludes(const std::string &shaderCode)
 	{
 		auto lines = String::Split(shaderCode, "\n", true);
 
@@ -487,7 +487,7 @@ namespace acid
 		return resources;
 	}
 
-	VkShaderModule ShaderProgram::ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag)
+	VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -554,17 +554,17 @@ namespace acid
 		return shaderModule;
 	}
 
-	std::string ShaderProgram::ToString() const
+	std::string Shader::ToString() const
 	{
 		std::stringstream result;
 
-		if (!m_vertexAttributes.empty())
+		if (!m_attributes.empty())
 		{
 			result << "Vertex Attributes: \n";
 
-			for (const auto &vertexAttribute : m_vertexAttributes)
+			for (const auto &[attributeName, attribute] : m_attributes)
 			{
-				result << "  - " << vertexAttribute->ToString() << "\n";
+				result << "  - " << attribute->ToString() << "\n";
 			}
 		}
 
@@ -572,7 +572,7 @@ namespace acid
 		{
 			result << "Uniforms: \n";
 
-			for (const auto &uniform : m_uniforms)
+			for (const auto &[uniformName, uniform] : m_uniforms)
 			{
 				result << "  - " << uniform->ToString() << "\n";
 			}
@@ -582,11 +582,11 @@ namespace acid
 		{
 			result << "Uniform Blocks: \n";
 
-			for (const auto &uniformBlock : m_uniformBlocks)
+			for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 			{
 				result << "  - " << uniformBlock->ToString() << " \n";
 
-				for (const auto &uniform : uniformBlock->GetUniforms())
+				for (const auto &[uniformName, uniform] : uniformBlock->GetUniforms())
 				{
 					result << "	- " << uniform->ToString() << " \n";
 				}
@@ -596,7 +596,7 @@ namespace acid
 		return result.str();
 	}
 
-	void ShaderProgram::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)
+	void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)
 	{
 		if (type == VK_DESCRIPTOR_TYPE_MAX_ENUM)
 		{
@@ -615,7 +615,7 @@ namespace acid
 		}
 	}
 
-	void ShaderProgram::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
+	void Shader::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
 	{
 		for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 		{
@@ -633,11 +633,11 @@ namespace acid
 		}
 	}
 
-	void ShaderProgram::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+	void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
-		for (auto &uniformBlock : m_uniformBlocks)
+		for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 		{
-			if (uniformBlock->GetName() == program.getUniformBlockName(i))
+			if (uniformBlockName == program.getUniformBlockName(i))
 			{
 				uniformBlock->m_stageFlags |= stageFlag;
 				return;
@@ -656,10 +656,10 @@ namespace acid
 			type = UniformBlock::Type::Push;
 		}
 
-		m_uniformBlocks.emplace_back(std::make_unique<UniformBlock>(program.getUniformBlockName(i), program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
+		m_uniformBlocks.emplace(program.getUniformBlockName(i), std::make_unique<UniformBlock>(program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
 	}
 
-	void ShaderProgram::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+	void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		if (program.getUniformBinding(i) == -1)
 		{
@@ -667,11 +667,11 @@ namespace acid
 
 			if (splitName.size() == 2)
 			{
-				for (auto &uniformBlock : m_uniformBlocks)
+				for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 				{
-					if (uniformBlock->GetName() == splitName.at(0))
+					if (uniformBlockName == splitName.at(0))
 					{
-						uniformBlock->AddUniform(new Uniform(splitName.at(1), program.getUniformBinding(i), program.getUniformBufferOffset(i),
+						uniformBlock->m_uniforms.emplace(splitName.at(1), std::make_unique<Uniform>(program.getUniformBinding(i), program.getUniformBufferOffset(i),
 							ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
 						return;
 					}
@@ -679,9 +679,9 @@ namespace acid
 			}
 		}
 
-		for (auto &uniform : m_uniforms)
+		for (auto &[uniformName, uniform] : m_uniforms)
 		{
-			if (uniform->GetName() == program.getUniformName(i))
+			if (uniformName == program.getUniformName(i))
 			{
 				uniform->m_stageFlags |= stageFlag;
 				return;
@@ -689,26 +689,26 @@ namespace acid
 		}
 
 		auto &qualifier = program.getUniformTType(i)->getQualifier();
-		m_uniforms.emplace_back(std::make_unique<Uniform>(program.getUniformName(i), program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i),
+		m_uniforms.emplace(program.getUniformName(i), std::make_unique<Uniform>(program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i),
 			qualifier.readonly, qualifier.writeonly, stageFlag));
 	}
 
-	void ShaderProgram::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+	void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
-		for (const auto &vertexAttribute : m_vertexAttributes)
+		for (const auto &[attributeName, attribute] : m_attributes)
 		{
-			if (vertexAttribute->GetName() == program.getAttributeName(i))
+			if (attributeName == program.getAttributeName(i))
 			{
 				return;
 			}
 		}
 
 		auto &qualifier = program.getAttributeTType(i)->getQualifier();
-		m_vertexAttributes.emplace_back(std::make_unique<VertexAttribute>(program.getAttributeName(i), qualifier.layoutSet,
+		m_attributes.emplace(program.getAttributeName(i), std::make_unique<Attribute>(qualifier.layoutSet,
 			qualifier.layoutLocation, ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
 	}
 
-	int32_t ShaderProgram::ComputeSize(const glslang::TType *ttype)
+	int32_t Shader::ComputeSize(const glslang::TType *ttype)
 	{
 		// glslang::TType::computeNumComponents is available but has many issues resolved in this method.
 		int components = 0;

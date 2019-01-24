@@ -10,7 +10,7 @@ namespace acid
 		public RenderPipeline
 	{
 	public:
-		explicit RendererGuis(const GraphicsStage &graphicsStage);
+		explicit RendererGuis(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:

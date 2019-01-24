@@ -59,8 +59,7 @@ namespace test
 			m_tabs.emplace_back(uiTab);
 			tabYOffset -= 0.075f;
 
-			/*tabButton->GetOnClick() += [&](UiObject *object, MouseButton button) -> void
-			{
+			/*tabButton->GetOnClick() += [&](UiObject *object, MouseButton button) -> void {
 			    if (button == MOUSE_BUTTON_LEFT)
 			    {
 			        SwitchTab(uiTab);
@@ -117,9 +116,8 @@ namespace test
 			m_currentTab->GetContent()->SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(0.1f));
 		}
 
-		Events::Get()->AddEvent<EventTime>([&]()
-		{
+	//	Events::Get()->AddEvent<EventTime>([&]() {
 			m_targetTab->GetContent()->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, Time::Seconds(0.1f));
-		}, Time::Seconds(0.32f));
+	//	}, Time::Seconds(0.32f));
 	}
 }

@@ -14,9 +14,9 @@ namespace acid
 		/// <summary>
 		/// Creates a new render pipeline.
 		/// </summary>
-		/// <param name="graphicsStage"> The graphics stage this renderer will be used in. </param>
-		explicit RenderPipeline(const GraphicsStage &graphicsStage) :
-			m_graphicsStage(graphicsStage),
+		/// <param name="stage"> The stage this renderer will be used in. </param>
+		explicit RenderPipeline(const Pipeline::Stage &stage) :
+			m_stage(stage),
 			m_enabled(true)
 		{
 		}
@@ -29,13 +29,13 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to record render command into. </param>
 		virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
-		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
+		const Pipeline::Stage &GetStage() const { return m_stage; }
 
 		const bool &IsEnabled() const { return m_enabled; };
 
 		void SetEnabled(const bool &enable) { m_enabled = enable; }
 	private:
-		GraphicsStage m_graphicsStage;
+		Pipeline::Stage m_stage;
 		bool m_enabled;
 	};
 }

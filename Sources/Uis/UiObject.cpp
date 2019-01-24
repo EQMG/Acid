@@ -9,12 +9,13 @@ namespace acid
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
 		m_children(std::vector<std::unique_ptr<UiObject>>()),
-		m_visible(true),
+		m_enabled(true),
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_depth(0.0f),
+		m_screenDimension(Vector2()),
+		m_screenPosition(Vector2()),
 		m_lockRotation(true),
-		m_screenTransform(Vector4()),
 		m_worldTransform({}),
 		m_alphaDriver(std::make_unique<DriverConstant>(1.0f)),
 		m_alpha(1.0f),
@@ -38,47 +39,40 @@ namespace acid
 
 	void UiObject::Update(std::vector<UiObject *> &list)
 	{
-		// Click updates.
-		if (IsVisible())
+		if (!m_enabled)
 		{
-			if (Uis::Get()->GetSelector().IsSelected(*this))
+			return;
+		}
+
+		if (Uis::Get()->GetSelector().IsSelected(*this))
+		{
+			for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 			{
-				for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+				if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
 				{
-					if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
-					{
-						m_onClick(this, static_cast<MouseButton>(i));
-					}
+					m_onClick(this, static_cast<MouseButton>(i));
 				}
 			}
+		}
 
+		if (GetAlpha() > 0.0f)
+		{
+			UpdateObject();
 			list.emplace_back(this);
 		}
 
 		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
-		m_alpha = std::clamp(m_alpha, 0.0f, 1.0f);
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
-
-		if (IsVisible() && GetAlpha() != 0.0f)
-		{
-			UpdateObject();
-		}
 
 		// Transform updates.
 		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
 
 		Vector2 screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio);
 		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);
-		Vector2 referenceOffset = Vector2();
 
-		Vector2 dimensions = screenDimensions * m_scale;
-		// TODO: Use parent screen transform as screen position and scale instead of (0,0), (aspect,1) to offset this UI.
-		Vector2 position = screenPosition - (dimensions * Vector2(
-			m_rectangle.GetReference().m_x,
-			-1.0f + m_rectangle.GetReference().m_y
-		));
-		m_screenTransform = Vector4(2.0f * dimensions.m_x, 2.0f * dimensions.m_y, (2.0f * position.m_x) - 1.0f, (-2.0f * position.m_y) + 1.0f);
+		m_screenDimension = screenDimensions * m_scale;
+		m_screenPosition = screenPosition - (m_screenDimension * (Vector2::Down + m_rectangle.GetReference()));
 
 		// Update all children objects.
 		for (auto &child : m_children)
@@ -114,14 +108,14 @@ namespace acid
 		}
 	}
 
-	bool UiObject::IsVisible() const
+	bool UiObject::IsEnabled() const
 	{
 		if (m_parent != nullptr)
 		{
-			return m_visible && m_parent->IsVisible();
+			return m_enabled && m_parent->IsEnabled();
 		}
 
-		return m_visible;
+		return m_enabled;
 	}
 
 	Matrix4 UiObject::GetModelMatrix() const

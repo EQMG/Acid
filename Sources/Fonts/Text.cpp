@@ -45,11 +45,12 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenOffset", GetScreenTransform());
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
 		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
 		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+		m_uniformObject.Push("screenDimension", GetScreenDimension());
+		m_uniformObject.Push("screenPosition", GetScreenPosition());
 		m_uniformObject.Push("alpha", GetAlpha());
 		m_uniformObject.Push("depth", GetDepth());
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
@@ -58,7 +59,7 @@ namespace acid
 	bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (m_model == nullptr || !IsVisible() || GetAlpha() == 0.0f)
+		if (m_model == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
 		{
 			return false;
 		}
@@ -189,11 +190,11 @@ namespace acid
 		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 
-	std::vector<FontLine> Text::CreateStructure()
+	std::vector<Text::Line> Text::CreateStructure()
 	{
-		std::vector<FontLine> lines = {};
-		auto currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-		auto currentWord = FontWord();
+		std::vector<Line> lines = {};
+		auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		auto currentWord = Word();
 
 		auto formattedText = String::ReplaceAll(m_string, "\t", "	");
 		auto textLines = String::Split(formattedText, "\n", true);
@@ -216,11 +217,11 @@ namespace acid
 					if (!added)
 					{
 						lines.emplace_back(currentLine);
-						currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+						currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 						currentLine.AddWord(currentWord);
 					}
 
-					currentWord = FontWord();
+					currentWord = Word();
 					continue;
 				}
 
@@ -236,14 +237,14 @@ namespace acid
 			{
 				bool wordAdded = currentLine.AddWord(currentWord);
 				lines.emplace_back(currentLine);
-				currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+				currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 
 				if (!wordAdded)
 				{
 					currentLine.AddWord(currentWord);
 				}
 
-				currentWord = FontWord();
+				currentWord = Word();
 			}
 		}
 
@@ -251,21 +252,21 @@ namespace acid
 		return lines;
 	}
 
-	void Text::CompleteStructure(std::vector<FontLine> &lines, FontLine &currentLine, const FontWord &currentWord)
+	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord)
 	{
 		bool added = currentLine.AddWord(currentWord);
 
 		if (!added)
 		{
 			lines.emplace_back(currentLine);
-			currentLine = FontLine(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 			currentLine.AddWord(currentWord);
 		}
 
 		lines.emplace_back(currentLine);
 	}
 
-	std::vector<VertexModel> Text::CreateQuad(const std::vector<FontLine> &lines)
+	std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
 	{
 		std::vector<VertexModel> vertices = {};
 		m_numberLines = static_cast<uint32_t>(lines.size());
@@ -317,7 +318,7 @@ namespace acid
 		return vertices;
 	}
 
-	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontCharacter &character, std::vector<VertexModel> &vertices)
+	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices)
 	{
 		float vertexX = cursorX + character.m_offsetX;
 		float vertexY = cursorY + character.m_offsetY;

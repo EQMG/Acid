@@ -30,7 +30,7 @@ namespace acid
 		material->PushUniforms(m_uniformObject);
 	}
 
-	bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const GraphicsStage &graphicsStage)
+	bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 	{
 		// Checks if the mesh is in view.
 		auto rigidbody = GetParent()->GetComponent<Rigidbody>();
@@ -55,7 +55,7 @@ namespace acid
 		auto meshModel = mesh->GetModel();
 		auto materialPipeline = material->GetPipelineMaterial();
 
-		if (meshModel == nullptr || materialPipeline->GetGraphicsStage() != graphicsStage)
+		if (meshModel == nullptr || materialPipeline->GetStage() != pipelineStage)
 		{
 			return false;
 		}

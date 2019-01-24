@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <mutex>
 #include <memory>
 #include "Module.hpp"
 
@@ -85,8 +84,6 @@ namespace acid
 		template<typename T>
 		void Remove()
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
 			{
 				auto casted = dynamic_cast<T *>((*it).second.get());
@@ -106,7 +103,6 @@ namespace acid
 		/// <param name="update"> The modules update type. </param>
 		void RunUpdate(const Module::Stage &update);
 
-		std::mutex m_mutex;
 		std::map<float, std::unique_ptr<Module>> m_modules;
 	};
 }

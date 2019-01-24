@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <mutex>
 #include <memory>
 #include <vector>
 #include "Helpers/NonCopyable.hpp"
@@ -18,7 +17,7 @@ namespace acid
 	public:
 		RendererContainer();
 
-		const std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
+		const std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
 
 		void Clear() { m_stages.clear(); }
 
@@ -91,8 +90,6 @@ namespace acid
 		template<typename T>
 		void Remove()
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 			{
 				for (auto it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it)
@@ -112,7 +109,6 @@ namespace acid
 			}
 		}
 	private:
-		std::mutex m_mutex;
-		std::map<GraphicsStage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
+		std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	};
 }

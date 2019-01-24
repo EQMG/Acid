@@ -11,12 +11,6 @@ namespace acid
 	class ACID_EXPORT UiInputButton :
 		public UiObject
 	{
-	private:
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_text;
-		Sound m_soundClick;
-
-		bool m_mouseOver;
 	public:
 		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::Zero, UiBound::Centre, true, true, Vector2(0.36f, 0.05f)),
 			const Colour &primaryColour = Colour("#171717"));
@@ -26,5 +20,11 @@ namespace acid
 		const std::string &GetString() const { return m_text->GetString(); }
 
 		void SetString(const std::string &string) const { m_text->SetString(string); }
+	private:
+		std::unique_ptr<Gui> m_background;
+		std::unique_ptr<Text> m_text;
+		Sound m_soundClick;
+
+		bool m_mouseOver;
 	};
 }

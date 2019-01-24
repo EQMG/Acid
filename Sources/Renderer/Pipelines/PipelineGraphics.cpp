@@ -14,19 +14,19 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	PipelineGraphics::PipelineGraphics(const GraphicsStage &graphicsStage, const std::vector<std::string> &shaderStages, const std::vector<VertexInput> &vertexInputs, const PipelineMode &pipelineMode, const PipelineDepth &depthMode,
-	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<ShaderDefine> &defines) :
+	PipelineGraphics::PipelineGraphics(const Pipeline::Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode, const Depth &depth,
+	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
-		m_graphicsStage(graphicsStage),
+		m_stage(stage),
 		m_shaderStages(shaderStages),
 		m_vertexInputs(vertexInputs),
-		m_pipelineMode(pipelineMode),
-		m_depthMode(depthMode),
+		m_mode(mode),
+		m_depth(depth),
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
 		m_pushDescriptors(pushDescriptors),
 		m_defines(defines),
-		m_shaderProgram(std::make_unique<ShaderProgram>(m_shaderStages.back())),
+		m_shader(std::make_unique<Shader>(m_shaderStages.back())),
 		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
 		m_modules(std::vector<VkShaderModule>()),
 		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
@@ -57,12 +57,12 @@ namespace acid
 		CreatePipelineLayout();
 		CreateAttributes();
 
-		switch (m_pipelineMode)
+		switch (m_mode)
 		{
-		case PipelineMode::Polygon:
+		case Mode::Polygon:
 			CreatePipelinePolygon();
 			break;
-		case PipelineMode::Mrt:
+		case Mode::Mrt:
 			CreatePipelineMrt();
 			break;
 		default:
@@ -72,15 +72,9 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-	//	Log::Out("%s\n", m_shaderProgram->ToString().c_str());
+	//	Log::Out("%s\n", m_shader->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %ims\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
-	}
-
-	PipelineGraphics::PipelineGraphics(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate) :
-		PipelineGraphics(graphicsStage, pipelineCreate.m_shaderStages, pipelineCreate.m_vertexInputs, pipelineCreate.m_pipelineMode, pipelineCreate.m_depthMode,
-			pipelineCreate.m_polygonMode, pipelineCreate.m_cullMode, pipelineCreate.m_pushDescriptors, pipelineCreate.m_defines)
-	{
 	}
 
 	PipelineGraphics::~PipelineGraphics()
@@ -100,22 +94,22 @@ namespace acid
 
 	const DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetDepthStencil();
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetDepthStencil();
 	}
 
 	const Texture *PipelineGraphics::GetTexture(const uint32_t &index, const int32_t &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetFramebuffers()->GetAttachment(index);
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetFramebuffers()->GetAttachment(index);
 	}
 
 	uint32_t PipelineGraphics::GetWidth(const int32_t &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetWidth();
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetWidth();
 	}
 
 	uint32_t PipelineGraphics::GetHeight(const int32_t &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_graphicsStage.GetRenderpass() : stage)->GetHeight();
+		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetHeight();
 	}
 
 	void PipelineGraphics::CreateShaderProgram()
@@ -139,11 +133,11 @@ namespace acid
 				return;
 			}
 
-			auto shaderCode = ShaderProgram::InsertDefineBlock(*fileLoaded, defineBlock.str());
-			shaderCode = ShaderProgram::ProcessIncludes(shaderCode);
+			auto shaderCode = Shader::InsertDefineBlock(*fileLoaded, defineBlock.str());
+			shaderCode = Shader::ProcessIncludes(shaderCode);
 
-			VkShaderStageFlagBits stageFlag = ShaderProgram::GetShaderStage(shaderStage);
-			VkShaderModule shaderModule = m_shaderProgram->ProcessShader(shaderCode, stageFlag);
+			VkShaderStageFlagBits stageFlag = Shader::GetShaderStage(shaderStage);
+			VkShaderModule shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
 
 			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -154,14 +148,14 @@ namespace acid
 			m_modules.emplace_back(shaderModule);
 		}
 
-		m_shaderProgram->ProcessShader();
+		m_shader->ProcessShader();
 	}
 
 	void PipelineGraphics::CreateDescriptorLayout()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto &descriptorSetLayouts = m_shaderProgram->GetDescriptorSetLayouts();
+		auto &descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
 		VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 		descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -175,7 +169,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	//	auto &descriptorPools = m_shaderProgram->GetDescriptorPools();
+	//	auto &descriptorPools = m_shader->GetDescriptorPools();
 		std::vector<VkDescriptorPoolSize> descriptorPools(6);
 		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPools[0].descriptorCount = 4096;
@@ -206,9 +200,9 @@ namespace acid
 		std::vector<VkPushConstantRange> pushConstantRanges = {};
 		uint32_t currentOffset = 0;
 
-		for (const auto &uniformBlock : m_shaderProgram->GetUniformBlocks())
+		for (const auto &[uniformBlockName, uniformBlock] : m_shader->GetUniformBlocks())
 		{
-			if (uniformBlock->GetType() != UniformBlock::Type::Push)
+			if (uniformBlock->GetType() != Shader::UniformBlock::Type::Push)
 			{
 				continue;
 			}
@@ -275,21 +269,21 @@ namespace acid
 		m_depthStencilState.front = m_depthStencilState.back;
 		m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
 
-		switch (m_depthMode)
+		switch (m_depth)
 		{
-			case PipelineDepth::None:
+			case Depth::None:
 				m_depthStencilState.depthTestEnable = VK_FALSE;
 				m_depthStencilState.depthWriteEnable = VK_FALSE;
 				break;
-			case PipelineDepth::Read:
+			case Depth::Read:
 				m_depthStencilState.depthTestEnable = VK_TRUE;
 				m_depthStencilState.depthWriteEnable = VK_FALSE;
 				break;
-			case PipelineDepth::Write:
+			case Depth::Write:
 				m_depthStencilState.depthTestEnable = VK_FALSE;
 				m_depthStencilState.depthWriteEnable = VK_TRUE;
 				break;
-			case PipelineDepth::ReadWrite:
+			case Depth::ReadWrite:
 				m_depthStencilState.depthTestEnable = VK_TRUE;
 				m_depthStencilState.depthWriteEnable = VK_TRUE;
 				break;
@@ -299,8 +293,8 @@ namespace acid
 		m_viewportState.viewportCount = 1;
 		m_viewportState.scissorCount = 1;
 
-		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
-		bool multisampled = renderStage->IsMultisampled(m_graphicsStage.GetSubpass());
+		auto renderStage = Renderer::Get()->GetRenderStage(m_stage.first);
+		bool multisampled = renderStage->IsMultisampled(m_stage.second);
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.rasterizationSamples = multisampled ? physicalDevice->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
@@ -319,7 +313,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto pipelineCache = Renderer::Get()->GetPipelineCache();
-		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
+		auto renderStage = Renderer::Get()->GetRenderStage(m_stage.first);
 
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {};
@@ -336,7 +330,7 @@ namespace acid
 			{
 				bool shaderContains = false;
 
-				for (const auto &shaderAttribute : m_shaderProgram->GetVertexAttributes())
+				for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
 				{
 					if (attribute.location + lastAttribute == shaderAttribute->GetLocation())
 					{
@@ -383,7 +377,7 @@ namespace acid
 
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
-		pipelineCreateInfo.subpass = m_graphicsStage.GetSubpass();
+		pipelineCreateInfo.subpass = m_stage.second;
 		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 		Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
@@ -398,8 +392,8 @@ namespace acid
 	{
 		std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
 
-		auto renderStage = Renderer::Get()->GetRenderStage(m_graphicsStage.GetRenderpass());
-		uint32_t attachmentCount = renderStage->GetAttachmentCount(m_graphicsStage.GetSubpass());
+		auto renderStage = Renderer::Get()->GetRenderStage(m_stage.first);
+		uint32_t attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
 
 		for (uint32_t i = 0; i < attachmentCount; i++)
 		{

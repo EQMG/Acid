@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterDefault(const GraphicsStage &graphicsStage, const bool &lastFilter = false);
+		explicit FilterDefault(const Pipeline::Stage &pipelineStage, const bool &lastFilter = false);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:

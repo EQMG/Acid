@@ -11,10 +11,10 @@ namespace acid
 	const float RendererShadows::BiasConstants = 1.25f;
 	const float RendererShadows::BiasSlope = 1.75f;
 
-	RendererShadows::RendererShadows(const GraphicsStage &graphicsStage) :
-		RenderPipeline(graphicsStage),
-		m_pipeline(PipelineGraphics(graphicsStage, PipelineCreate({"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
-			PipelineMode::Polygon, PipelineDepth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines()))),
+	RendererShadows::RendererShadows(const Pipeline::Stage &pipelineStage) :
+		RenderPipeline(pipelineStage),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines())),
 		m_uniformScene(UniformHandler())
 	{
 	}
@@ -37,9 +37,9 @@ namespace acid
 		}
 	}
 
-	std::vector<ShaderDefine> RendererShadows::GetDefines()
+	std::vector<Shader::Define> RendererShadows::GetDefines()
 	{
-		std::vector<ShaderDefine> result = {};
+		std::vector<Shader::Define> result = {};
 		result.emplace_back("NUM_CASCADES", String::To(Cascades));
 		return result;
 	}

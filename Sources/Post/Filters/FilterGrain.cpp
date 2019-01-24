@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	FilterGrain::FilterGrain(const GraphicsStage &graphicsStage, const float &strength) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Grain.frag"}, {}),
+	FilterGrain::FilterGrain(const Pipeline::Stage &pipelineStage, const float &strength) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grain.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_strength(strength)
 	{

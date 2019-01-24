@@ -11,13 +11,12 @@ namespace acid
 	static const float SCALE_NORMAL = 1.0f;
 	static const float SCALE_SELECTED = 1.1f;
 
-	UiGrabberJoystick::UiGrabberJoystick(const JoystickPort &joystick) :
-		IUiGrabber(),
+	UiInputGrabber::GrabberJoystick::GrabberJoystick(const JoystickPort &joystick) :
 		m_joystick(joystick)
 	{
 	}
 
-	int32_t UiGrabberJoystick::GetCurrent(Text *object)
+	int32_t UiInputGrabber::GrabberJoystick::GetCurrent(Text *object)
 	{
 		int32_t key = -1;
 
@@ -45,12 +44,12 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberJoystick::GetValue(const int32_t &value)
+	std::string UiInputGrabber::GrabberJoystick::GetValue(const int32_t &value)
 	{
 		return String::To(value);
 	}
 
-	int32_t UiGrabberKeyboard::GetCurrent(Text *object)
+	int32_t UiInputGrabber::GrabberKeyboard::GetCurrent(Text *object)
 	{
 		int32_t key = Keyboard::Get()->GetChar();
 
@@ -62,12 +61,12 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberKeyboard::GetValue(const int32_t &value)
+	std::string UiInputGrabber::GrabberKeyboard::GetValue(const int32_t &value)
 	{
 		return std::string(1, static_cast<char>(value));
 	}
 
-	int32_t UiGrabberMouse::GetCurrent(Text *object)
+	int32_t UiInputGrabber::GrabberMouse::GetCurrent(Text *object)
 	{
 		int32_t key = -1;
 
@@ -92,12 +91,12 @@ namespace acid
 		return key;
 	}
 
-	std::string UiGrabberMouse::GetValue(const int32_t &value)
+	std::string UiInputGrabber::GrabberMouse::GetValue(const int32_t &value)
 	{
 		return String::To(value);
 	}
 
-	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, IUiGrabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, Grabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Create("Fonts/ProximaNova", "Regular"),

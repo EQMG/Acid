@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	FilterSepia::FilterSepia(const GraphicsStage &graphicsStage) :
-		PostFilter(graphicsStage, {"Shaders/Filters/Default.vert", "Shaders/Filters/Sepia.frag"}, {})
+	FilterSepia::FilterSepia(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Sepia.frag"}, {})
 	{
 	}
 

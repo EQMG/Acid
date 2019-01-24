@@ -187,7 +187,7 @@ set(_temp_acid_headers
 		Renderer/Pipelines/Pipeline.hpp
 		Renderer/Pipelines/PipelineCompute.hpp
 		Renderer/Pipelines/PipelineGraphics.hpp
-		Renderer/Pipelines/ShaderProgram.hpp
+		Renderer/Pipelines/Shader.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererContainer.hpp
 		Renderer/RenderManager.hpp
@@ -405,7 +405,7 @@ set(_temp_acid_sources
 		Renderer/Handlers/UniformHandler.cpp
 		Renderer/Pipelines/PipelineCompute.cpp
 		Renderer/Pipelines/PipelineGraphics.cpp
-		Renderer/Pipelines/ShaderProgram.cpp
+		Renderer/Pipelines/Shader.cpp
 		Renderer/Renderer.cpp
 		Renderer/RendererContainer.cpp
 		Renderer/Renderpass/Renderpass.cpp

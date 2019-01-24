@@ -17,16 +17,16 @@ namespace acid
 		/// <summary>
 		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
 		/// </summary>
-		/// <param name="graphicsStage"> Stage the pipeline will be executed on. </param>
+		/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
-		static std::shared_ptr<PipelineMaterial> Create(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		static std::shared_ptr<PipelineMaterial> Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
 
 		/// <summary>
 		/// Creates a new material pipeline.
 		/// </summary>
-		/// <param name="graphicsStage"> Stage the pipeline will be executed on. </param>
+		/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
-		PipelineMaterial(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
 
 		/// <summary>
 		/// Binds this pipeline to the current renderpass.
@@ -34,16 +34,16 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
-		const GraphicsStage &GetGraphicsStage() const { return m_graphicsStage; }
+		const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
 
-		const PipelineCreate &GetPipelineCreate() const { return m_pipelineCreate; }
+		const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
 
 		const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 	private:
-		static std::string ToName(const GraphicsStage &graphicsStage, const PipelineCreate &pipelineCreate);
+		static std::string ToName(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
 
-		GraphicsStage m_graphicsStage;
-		PipelineCreate m_pipelineCreate;
+		Pipeline::Stage m_pipelineStage;
+		PipelineGraphicsCreate m_pipelineCreate;
 		const RenderStage *m_renderStage;
 		std::unique_ptr<PipelineGraphics> m_pipeline;
 	};

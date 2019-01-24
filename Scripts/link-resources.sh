@@ -3,27 +3,22 @@ cd ../
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-if [ -d "${SCRIPTPATH}/Build/Debug/Bin/Resources" ]; then
-  mkdir "${SCRIPTPATH}/Build/Debug/Bin/Resources"
-  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/Debug/Bin/Resources/Engine"
+if [ -d "${SCRIPTPATH}/cmake-build-debug/bin" ]; then
+  mkdir "${SCRIPTPATH}/cmake-build-debug/bin/Resources"
+  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/cmake-build-debug/bin/Resources/Engine"
 fi
 
-if [ -d "${SCRIPTPATH}/Build/Debug/Bin32/Resources" ]; then
-  mkdir "${SCRIPTPATH}/Build/Debug/Bin32/Resources"
-  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/Debug/Bin32/Resources/Engine"
+if [ -d "${SCRIPTPATH}/cmake-build-release/bin" ]; then
+  mkdir "${SCRIPTPATH}/cmake-build-release/bin/Resources"
+  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/cmake-build-debug/bin/Resources/Engine"
 fi
 
-if [ -d "${SCRIPTPATH}/Build/Release/Bin/Resources" ]; then
-  mkdir "${SCRIPTPATH}/Build/Release/Bin/Resources"
-  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/Release/Bin/Resources/Engine"
+if [ -d "${SCRIPTPATH}/Build/bin" ]; then
+  mkdir "${SCRIPTPATH}/Build/bin/Resources"
+  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/bin32/Resources/Engine"
 fi
 
-if [ -d "${SCRIPTPATH}/Build/Release/Bin32/Resources" ]; then
-  mkdir "${SCRIPTPATH}/Build/Release/Bin32/Resources"
-  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/Release/Bin32/Resources/Engine"
-fi
-
-if [ -d "${SCRIPTPATH}/Build/RelWithDebInfo/Bin/Resources" ]; then
-  mkdir "${SCRIPTPATH}/Build/RelWithDebInfo/Bin/Resources"
-  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/RelWithDebInfo/Bin/Resources/Engine"
+if [ -d "${SCRIPTPATH}/Build/bin32" ]; then
+  mkdir "${SCRIPTPATH}/Build/bin32/Resources"
+  ln -s "${SCRIPTPATH}/Resources" "${SCRIPTPATH}/Build/bin32/Resources/Engine"
 fi

@@ -20,7 +20,7 @@ namespace acid
 			Ibl, Simple
 		};
 
-		explicit RendererDeferred(const GraphicsStage &graphicsStage, const Type &type);
+		explicit RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 
@@ -28,7 +28,14 @@ namespace acid
 
 		void SetFog(const Fog &fog) { m_fog = fog; }
 	private:
-		std::vector<ShaderDefine> GetDefines();
+		struct DeferredLight
+		{
+			Colour m_colour;
+			Vector3 m_position;
+			float m_radius;
+		};
+
+		std::vector<Shader::Define> GetDefines();
 
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 

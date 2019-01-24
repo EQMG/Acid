@@ -9,7 +9,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterLensflare(const GraphicsStage &graphicsStage);
+		explicit FilterLensflare(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

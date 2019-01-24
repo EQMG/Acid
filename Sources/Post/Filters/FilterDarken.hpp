@@ -8,7 +8,7 @@ namespace acid
 		public PostFilter
 	{
 	public:
-		explicit FilterDarken(const GraphicsStage &graphicsStage, const float &factor = 0.5f);
+		explicit FilterDarken(const Pipeline::Stage &pipelineStage, const float &factor = 0.5f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 
