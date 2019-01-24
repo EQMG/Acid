@@ -29,8 +29,8 @@ namespace acid
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
 		m_uniformObject.Push("colour", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
-		m_uniformObject.Push("screenDimension", GetScreenDimension());
-		m_uniformObject.Push("screenPosition", GetScreenPosition());
+		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
+		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);
 		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 		m_uniformObject.Push("alpha", GetAlpha());
 		m_uniformObject.Push("depth", GetDepth());

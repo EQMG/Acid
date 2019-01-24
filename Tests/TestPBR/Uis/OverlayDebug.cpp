@@ -7,8 +7,8 @@ namespace test
 {
 	OverlayDebug::OverlayDebug(UiObject *parent) :
 		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
-		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.002f, Text::Justify::Left)),
-		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.022f, Text::Justify::Left)),
+		m_textFps(CreateStatus("FPS: 0", 0.002f, 0.978f, Text::Justify::Left)),
+		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.998f, Text::Justify::Left)),
 		m_timerUpdate(Timer(Time::Seconds(0.333f)))
 	{
 	}

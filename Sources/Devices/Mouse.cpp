@@ -88,7 +88,7 @@ namespace acid
 		}
 	}
 
-	void Mouse::SetCursor(const std::string &filename)
+	void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	{
 		uint32_t width = 0;
 		uint32_t height = 0;
@@ -105,7 +105,27 @@ namespace acid
 		image[0].height = height;
 		image[0].pixels = data;
 
-		GLFWcursor *cursor = glfwCreateCursor(image, 0, 0);
+		GLFWcursor *cursor = nullptr;
+
+		switch (hotspot)
+		{
+		case CursorHotspot::UpperLeft:
+			cursor = glfwCreateCursor(image, 0, 0);
+			break;
+		case CursorHotspot::UpperRight:
+			cursor = glfwCreateCursor(image, image->width - 1, 0);
+			break;
+		case CursorHotspot::BottomLeft:
+			cursor = glfwCreateCursor(image, 0, image->height - 1);
+			break;
+		case CursorHotspot::BottomRight:
+			cursor = glfwCreateCursor(image, image->width - 1, image->height - 1);
+			break;
+		case CursorHotspot::Centered:
+			cursor = glfwCreateCursor(image, image->width / 2, image->height / 2);
+			break;
+		}
+
 		glfwSetCursor(Window::Get()->GetWindow(), cursor);
 		Texture::DeletePixels(data);
 	}

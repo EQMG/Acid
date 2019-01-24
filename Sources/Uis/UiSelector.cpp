@@ -19,20 +19,20 @@ namespace acid
 		}
 	}
 
-	void UiSelector::Update(const bool &paused, const SelectorJoystick &selectorJoystick)
+	void UiSelector::Update(const VirtualJoystick *virtualJoystick)
 	{
 		float delta = Engine::Get()->GetDelta().AsSeconds();
 
 		m_cursorX = Mouse::Get()->GetPositionX();
 		m_cursorY = Mouse::Get()->GetPositionY();
 
-		if (Joysticks::Get()->IsConnected(selectorJoystick.GetJoystick()))
+		if (virtualJoystick != nullptr && Joysticks::Get()->IsConnected(virtualJoystick->GetPort()))
 		{
-			if (paused && (std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisX().GetAmount())) > 0.0f ||
-				std::fabs(Maths::Deadband(0.1f, selectorJoystick.GetAxisY().GetAmount())) > 0.0f))
+			if (std::fabs(Maths::Deadband(0.1f, virtualJoystick->GetAxisX().GetAmount())) > 0.0f ||
+				std::fabs(Maths::Deadband(0.1f, virtualJoystick->GetAxisY().GetAmount())) > 0.0f)
 			{
-				m_cursorX += selectorJoystick.GetAxisX().GetAmount() * 0.75f * delta;
-				m_cursorY += selectorJoystick.GetAxisY().GetAmount() * 0.75f * delta;
+				m_cursorX += virtualJoystick->GetAxisX().GetAmount() * 0.75f * delta;
+				m_cursorY += virtualJoystick->GetAxisY().GetAmount() * 0.75f * delta;
 				m_cursorX = std::clamp(m_cursorX, 0.0f, 1.0f);
 				m_cursorY = std::clamp(m_cursorY, 0.0f, 1.0f);
 				Mouse::Get()->SetPosition(m_cursorX, m_cursorY);
@@ -40,7 +40,7 @@ namespace acid
 
 			for (int32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
 			{
-				auto buttonJoystick = selectorJoystick.GetInputButton(m_selectorMice[i].m_mouseButton);
+				auto buttonJoystick = virtualJoystick->GetInputButton(m_selectorMice[i].m_mouseButton);
 				bool isDown = Mouse::Get()->GetButton(m_selectorMice[i].m_mouseButton) || (buttonJoystick ? buttonJoystick->IsDown() : false);
 
 				if (i == MOUSE_BUTTON_LEFT)
@@ -68,7 +68,8 @@ namespace acid
 
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
-			if (m_cursorX >= position.m_x && m_cursorX <= position.m_x + dimension.m_x && 1.0f - m_cursorY >= position.m_y - dimension.m_y && 1.0f - m_cursorY <= position.m_y)
+			if (m_cursorX >= position.m_x && m_cursorX <= position.m_x + dimension.m_x &&
+				m_cursorY >= position.m_y && m_cursorY <= position.m_y + dimension.m_y)
 			{
 				return true;
 			}

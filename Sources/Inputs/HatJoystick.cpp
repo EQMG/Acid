@@ -2,8 +2,8 @@
 
 namespace acid
 {
-	HatJoystick::HatJoystick(const JoystickPort &joystick, const uint32_t &hat, const JoystickHat &hatFlag) :
-		m_joystick(joystick),
+	HatJoystick::HatJoystick(const JoystickPort &port, const uint32_t &hat, const JoystickHat &hatFlag) :
+		m_port(port),
 		m_hat(hat),
 		m_hatFlag(hatFlag),
 		m_wasDown(false)
@@ -12,12 +12,12 @@ namespace acid
 
 	float HatJoystick::GetAmount() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_joystick))
+		if (!Joysticks::Get()->IsConnected(m_port))
 		{
 			return 0.0f;
 		}
 
-		switch (Joysticks::Get()->GetHat(m_joystick, m_hat))
+		switch (Joysticks::Get()->GetHat(m_port, m_hat))
 		{
 			case JOYSTICK_HAT_CENTERED:
 				return 0.0f;
@@ -44,12 +44,12 @@ namespace acid
 
 	bool HatJoystick::IsDown() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_joystick))
+		if (!Joysticks::Get()->IsConnected(m_port))
 		{
 			return false;
 		}
 
-		return (Joysticks::Get()->GetHat(m_joystick, m_hat) & m_hatFlag) == 1;
+		return (Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlag) == 1;
 	}
 
 	bool HatJoystick::WasDown()

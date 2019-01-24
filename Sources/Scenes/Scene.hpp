@@ -18,10 +18,10 @@ namespace acid
 		/// Creates a new scene.
 		/// </summary>
 		/// <param name="camera"> The scenes camera. </param>
-		/// <param name="selectorJoystick"> The joystick controlled UI selector. </param>
-		Scene(Camera *camera, SelectorJoystick *selectorJoystick) :
+		/// <param name="virtualJoystick"> The joystick virtual controller for UI selectors. </param>
+		Scene(Camera *camera, VirtualJoystick *virtualJoystick) :
 			m_camera(camera),
-			m_selectorJoystick(selectorJoystick),
+			m_virtualJoystick(virtualJoystick),
 			m_physics(std::make_unique<ScenePhysics>()),
 			m_structure(std::make_unique<SceneStructure>()),
 			m_started(false)
@@ -48,16 +48,17 @@ namespace acid
 		void SetCamera(Camera *camera) { m_camera.reset(camera); }
 
 		/// <summary>
-		/// Gets the joystick controlled UI selector.
+		/// Gets the virtual joystick controller for UI selectors.
 		/// </summary>
-		/// <returns> The joystick selector. </returns>
-		SelectorJoystick *GetSelectorJoystick() const { return m_selectorJoystick.get(); };
+		/// <returns> The virtual joystick selector. </returns>
+		VirtualJoystick *GetVirtualJoystick() const { return m_virtualJoystick.get(); };
 
 		/// <summary>
-		/// Sets the joystick controlled UI selector.
+		/// Sets the virtual joystick controller for UI selectors.
 		/// </summary>
-		/// <param name="selectorJoystick"> The new joystick selector. </param>
-		void SetSelectorJoystick(SelectorJoystick *selectorJoystick) { m_selectorJoystick.reset(selectorJoystick); }
+		/// <param name="virtualJoystick"> The new virtual joystick selector. </param>
+		/// <returns> The virtual joystick selector. </returns>
+		void SetVirtualJoystick(VirtualJoystick *virtualJoystick) { m_virtualJoystick.reset(virtualJoystick); }
 
 		/// <summary>
 		/// Gets the scene physics system.
@@ -80,7 +81,7 @@ namespace acid
 		friend class Scenes;
 
 		std::unique_ptr<Camera> m_camera;
-		std::unique_ptr<SelectorJoystick> m_selectorJoystick;
+		std::unique_ptr<VirtualJoystick> m_virtualJoystick;
 		std::unique_ptr<ScenePhysics> m_physics;
 		std::unique_ptr<SceneStructure> m_structure;
 		bool m_started;

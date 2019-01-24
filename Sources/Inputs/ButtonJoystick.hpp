@@ -15,23 +15,23 @@ namespace acid
 		/// <summary>
 		/// Creates a new joystick button.
 		/// </summary>
-		/// <param name="joystick"> The joystick port. </param>
+		/// <param name="port"> The joystick port. </param>
 		/// <param name="button"> The button on the joystick being checked. </param>
-		ButtonJoystick(const JoystickPort &joystick, const uint32_t &button);
+		ButtonJoystick(const JoystickPort &port, const uint32_t &button);
 
 		bool IsDown() const override;
 
 		bool WasDown() override;
 
-		const JoystickPort &GetJoystick() const { return m_joystick; }
+		const JoystickPort &GetPort() const { return m_port; }
 
-		void SetJoystick(const JoystickPort &joystickPort) { m_joystick = joystickPort; }
+		void SetPoer(const JoystickPort &port) { m_port = port; }
 
 		const uint32_t &GetButton() const { return m_button; }
 
 		void SetButton(const uint32_t &button) { m_button = button; }
 	private:
-		JoystickPort m_joystick;
+		JoystickPort m_port;
 		uint32_t m_button;
 		bool m_wasDown;
 	};

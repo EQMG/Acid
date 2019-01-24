@@ -56,10 +56,10 @@ namespace acid
 		Camera *GetCamera() const { return m_scene != nullptr ? m_scene->GetCamera() : nullptr; }
 
 		/// <summary>
-		/// Gets the joystick controlled UI selector.
+		/// Gets the virtual joystick controller for UI selectors.
 		/// </summary>
-		/// <returns> The joystick selector. </returns>
-		SelectorJoystick *GetSelectorJoystick() const { return m_scene != nullptr ? m_scene->GetSelectorJoystick() : nullptr; }
+		/// <returns> The virtual joystick selector. </returns>
+		VirtualJoystick *GetVirtualJoystick() const { return m_scene != nullptr ? m_scene->GetVirtualJoystick() : nullptr; }
 
 		/// <summary>
 		/// Gets the scene physics system.

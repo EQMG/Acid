@@ -46,7 +46,7 @@ namespace test
 	static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
-		Scene(new CameraFps(), new SelectorJoystick(JoystickPort::JOYSTICK_1, 0, 1, {0, 1})),
+		Scene(new CameraFps(), new VirtualJoystick(JoystickPort::JOYSTICK_1, 0, 1, {0, 1})),
 		m_buttonSpawnSphere(ButtonMouse(MouseButton::MOUSE_BUTTON_LEFT)),
 		m_buttonFullscreen(ButtonKeyboard(Key::KEY_F11)),
 		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::KEY_ESCAPE, Key::KEY_M)),
