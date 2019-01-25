@@ -14,7 +14,7 @@ namespace acid
 
 	UiInputText::UiInputText(UiObject *parent, const std::string &prefix, const std::string &value,
 	    const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour) :
-		UiObject(parent, UiBound::Screen),
+		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + value, FontType::Create("Fonts/ProximaNova", "Regular"),
 			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
@@ -28,7 +28,9 @@ namespace acid
 		m_mouseOver(false),
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
+		m_background->GetRectangle().SetReference(UiBound::Centre);
 		m_background->SetColour(primaryColour);
+		m_text->GetRectangle().SetReference(UiBound::Centre);
 	}
 
 	void UiInputText::UpdateObject()
@@ -46,7 +48,7 @@ namespace acid
 					m_value += static_cast<char>(key);
 					m_text->SetString(m_prefix + m_value);
 
-					m_onType(this, m_text->GetString());
+					m_onType(this, m_value);
 
 					m_lastKey = key;
 				}
@@ -60,7 +62,7 @@ namespace acid
 					m_value = m_value.substr(0, m_value.length() - 1);
 					m_text->SetString(m_prefix + m_value);
 
-					m_onType(this, m_text->GetString());
+					m_onType(this, m_value);
 
 					m_lastKey = 8;
 				}

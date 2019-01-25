@@ -7,17 +7,16 @@
 namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound::Screen),
 		m_buttonReset(ButtonKeyboard({KEY_ENTER})),
 		m_zoom(1.0f),
-		m_offset(Vector2::Zero),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
-		m_background(std::make_unique<Gui>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false), Texture::Create("Guis/White.png"))),
-		m_texts(std::vector<std::pair<Vector3, std::unique_ptr<Text>>>()),
-		m_textFps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.002f), UiBound::BottomLeft, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
-		m_textUps(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.002f, 0.022f), UiBound::BottomLeft, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
+		m_background(std::make_unique<Gui>(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false), Texture::Create("Guis/White.png"))),
+		m_texts(std::vector<std::unique_ptr<Text>>()),
+		m_textFps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.978f), UiBound::BottomLeft, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
+		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiBound::BottomLeft, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
-		m_texts.emplace_back(Vector3(0.0f, 0.8f, 6.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::Centre, false), 1.0f, "Acid Font",
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiBound::Centre, true), 6.0f, "Acid Font",
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
 
 		static const std::string content1 =
@@ -51,7 +50,7 @@ namespace test
 			"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet. \n"
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
-		m_texts.emplace_back(Vector3(0.0f, 0.0f, 2.0f), std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(), UiBound::Centre, false), 1.0f, content1,
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiBound::Centre, true), 1.8f, content1,
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
 	}
 
@@ -65,24 +64,23 @@ namespace test
 			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
 		}
 
+		// TODO: Cleanup offset and implement zoom.
+		Vector2 offset = GetRectangle().GetPosition();
+
 		if (m_buttonReset.WasDown())
 		{
-			m_zoom = 1.0f;
-			m_offset = Vector2(0.0f, 0.0f);
+			m_zoom = 1.0f; 
+			offset = Vector2(0.0f, 0.0f);
 		}
 
 		m_zoom *= powf(1.3f, 0.15f * Mouse::Get()->GetDeltaWheel());
 
 		if (Mouse::Get()->GetButton(MOUSE_BUTTON_LEFT))
 		{
-			m_offset.m_x -= Mouse::Get()->GetDeltaX() * Window::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
-			m_offset.m_y += Mouse::Get()->GetDeltaY() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+			offset.m_x -= Mouse::Get()->GetDeltaX() * Window::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+			offset.m_y -= Mouse::Get()->GetDeltaY() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 		}
 
-		for (auto &text : m_texts)
-		{
-			text.second->GetRectangle().SetPosition((m_zoom * (Vector2(text.first) + m_offset)) + Vector2(0.5f * Window::Get()->GetAspectRatio(), 0.5f));
-			dynamic_cast<DriverConstant *>(text.second->GetScaleDriver())->SetConstant(m_zoom * text.first.m_z);
-		}
+		GetRectangle().SetPosition(offset);
 	}
 }

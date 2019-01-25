@@ -16,9 +16,9 @@ namespace acid
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &prefix, const float &value,
 	    const float &progressMin, const float &progressMax, const int32_t &roundTo,
 	    const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
-		UiObject(parent, UiBound::Screen),
+		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
-		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
+		m_slider(std::make_unique<Gui>(m_background.get(), rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Create("Fonts/ProximaNova", "Regular"),
 			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
@@ -33,8 +33,12 @@ namespace acid
 		m_timerChange(Timer(SLIDE_TIME)),
 		m_onSlide(Delegate<void(UiInputSlider *, float)>())
 	{
+		m_background->GetRectangle().SetReference(UiBound::Centre);
 		m_background->SetColour(primaryColour);
-		m_slider->GetRectangle().SetReference(UiBound::CentreLeft);
+		m_text->GetRectangle().SetReference(UiBound::Centre);
+		m_slider->GetRectangle().SetPosition(Vector2::Zero);
+		m_slider->GetRectangle().SetReference(UiBound::TopLeft);
+		m_slider->GetRectangle().SetAspectSize(true);
 		m_slider->SetColour(secondaryColour);
 		SetValue(value);
 	}
@@ -101,10 +105,7 @@ namespace acid
 			m_mouseOver = false;
 		}
 
-		auto backgroundRectangle = m_background->GetRectangle();
-		float aspectRatio = m_background->GetRectangle().IsAspectPosition() ? Window::Get()->GetAspectRatio() : 1.0f;
-		m_slider->GetRectangle().SetDimensions(Vector2(backgroundRectangle.GetDimensions().m_x * m_value, 0.05f));
-		m_slider->GetRectangle().SetPosition(backgroundRectangle.GetPosition() - Vector2(backgroundRectangle.GetDimensions().m_x / 2.0f / aspectRatio * m_slider->GetScale(), 0.0f));
+		m_slider->GetRectangle().SetDimensions(Vector2(m_background->GetRectangle().GetDimensions().m_x * m_value, m_slider->GetRectangle().GetDimensions().m_y));
 	}
 
 	void UiInputSlider::SetPrefix(const std::string &prefix)
