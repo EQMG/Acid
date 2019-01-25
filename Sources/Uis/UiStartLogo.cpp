@@ -14,7 +14,7 @@ namespace acid
 #endif
 
 	UiStartLogo::UiStartLogo(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound::Screen),
 		m_guiBackground(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/Black.png"))),
 		m_guiLogoAcid(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, true, Vector2(0.4f, 0.4f)), Texture::Create("Logos/Acid_01.png"))),
 		m_textCopyright(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.8f), UiBound::Centre, true), 1.8f, "Copyright (C) 2019, Equilibrium Games - All Rights Reserved.",

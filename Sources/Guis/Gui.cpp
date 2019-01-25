@@ -14,7 +14,7 @@ namespace acid
 		m_numberOfRows(1),
 		m_selectedRow(0),
 		m_atlasOffset(Vector2()),
-		m_colourOffset(Colour(1.0f, 1.0f, 1.0f, 1.0f))
+		m_colour(Colour::White)
 	{
 	}
 
@@ -27,7 +27,7 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("colour", m_colourOffset);
+		m_uniformObject.Push("colour", m_colour);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
 		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);

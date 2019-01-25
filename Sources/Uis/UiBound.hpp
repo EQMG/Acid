@@ -14,11 +14,11 @@ namespace acid
 		/// Constructor for rectangle.
 		/// </summary>
 		/// <param name="position"> The object screen position. </param>
-		/// <param name="reference"> The reference pivot vertex (<seealso cref="#TOP_LEFT"/>, <seealso cref="#CENTRE_LEFT"/>, <seealso cref="#BOTTOM_LEFT"/>, ETC). </param>
+		/// <param name="reference"> The reference pivot vertex (<seealso cref="#TopLeft"/>, <seealso cref="#CentreLeft"/>, <seealso cref="#BottomLeft"/>, ETC). </param>
 		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
 		/// <param name="aspectSize"> The if the width will scale with display width. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
-		explicit UiBound(const Vector2 &position, const Vector2 &reference = TopLeft, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+		explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = TopLeft, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Gets the bounds position in the current screen space.
@@ -65,6 +65,8 @@ namespace acid
 		static const Vector2 BottomLeft;
 		static const Vector2 BottomCentre;
 		static const Vector2 BottomRight;
+
+		static const UiBound Screen;
 
 		Vector2 m_position;
 		Vector2 m_reference;

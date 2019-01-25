@@ -97,7 +97,7 @@ namespace acid
 	}
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, Grabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound::Screen),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Create("Fonts/ProximaNova", "Regular"),
 			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
@@ -110,7 +110,7 @@ namespace acid
 		m_mouseOver(false),
 		m_onGrabbed(Delegate<void(UiInputGrabber *, int32_t)>())
 	{
-		m_background->SetColourOffset(primaryColour);
+		m_background->SetColour(primaryColour);
 	}
 
 	void UiInputGrabber::UpdateObject()
@@ -137,7 +137,7 @@ namespace acid
 		}
 
 		// Click updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
+		if (Uis::Get()->GetSelector().IsSelected(*m_background) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
@@ -160,13 +160,13 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver && !m_selected)
+		if (Uis::Get()->GetSelector().IsSelected(*m_background) && !m_mouseOver && !m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && m_mouseOver && !m_selected)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_background) && m_mouseOver && !m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);

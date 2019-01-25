@@ -68,11 +68,15 @@ namespace acid
 		// Transform updates.
 		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
 
-		Vector2 screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio);
-		Vector2 screenPosition = m_rectangle.GetScreenPosition(aspectRatio);
+		m_screenDimension = m_rectangle.GetScreenDimensions(aspectRatio) * m_scale;
+		m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio);
 
-		m_screenDimension = screenDimensions * m_scale;
-		m_screenPosition = screenPosition - (m_screenDimension * m_rectangle.GetReference());
+		Vector2 parentDimensions = m_parent != nullptr ? m_parent->m_screenDimension : Vector2::One;
+		Vector2 parentPosition = m_parent != nullptr ? m_parent->m_screenPosition : Vector2::Zero;
+
+		m_screenPosition *= parentDimensions;
+		m_screenPosition -= m_screenDimension * m_rectangle.GetReference();
+		m_screenPosition += parentPosition;
 
 		// Update all children objects.
 		for (auto &child : m_children)

@@ -39,7 +39,7 @@ namespace test
 	{
 	private:
 		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Gui> m_barBackground;
+		std::unique_ptr<Gui> m_navigation;
 		std::unique_ptr<Text> m_title;
 		std::unique_ptr<Text> m_createdBy;
 		std::vector<std::unique_ptr<UiTab>> m_tabs;

@@ -16,7 +16,7 @@ namespace acid
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &prefix, const float &value,
 	    const float &progressMin, const float &progressMax, const int32_t &roundTo,
 	    const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound::Screen),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_slider(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix, FontType::Create("Fonts/ProximaNova", "Regular"),
@@ -33,16 +33,16 @@ namespace acid
 		m_timerChange(Timer(SLIDE_TIME)),
 		m_onSlide(Delegate<void(UiInputSlider *, float)>())
 	{
-		m_background->SetColourOffset(primaryColour);
+		m_background->SetColour(primaryColour);
 		m_slider->GetRectangle().SetReference(UiBound::CentreLeft);
-		m_slider->SetColourOffset(secondaryColour);
+		m_slider->SetColour(secondaryColour);
 		SetValue(value);
 	}
 
 	void UiInputSlider::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_text) && GetAlpha() == 1.0f &&
+		if (Uis::Get()->GetSelector().IsSelected(*m_background) && GetAlpha() == 1.0f &&
 			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
 		{
 			if (!m_updating && !m_soundClick.IsPlaying())
@@ -86,14 +86,14 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_text) && !m_mouseOver)
+		if (Uis::Get()->GetSelector().IsSelected(*m_background) && !m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_slider->SetScaleDriver<DriverSlide>(m_slider->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_text) && !m_updating && m_mouseOver)
+		else if (!Uis::Get()->GetSelector().IsSelected(*m_background) && !m_updating && m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
