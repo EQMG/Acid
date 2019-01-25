@@ -5,10 +5,11 @@
 #include "Devices/Mouse.hpp"
 #include "Inputs/AxisJoystick.hpp"
 #include "Inputs/ButtonJoystick.hpp"
-#include "UiObject.hpp"
 
 namespace acid
 {
+	class UiObject;
+
 	/// <summary>
 	/// Represents a virtual cursor that uses a joystick as input.
 	/// </summary>

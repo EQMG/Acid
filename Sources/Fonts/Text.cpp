@@ -33,7 +33,7 @@ namespace acid
 
 	void Text::UpdateObject()
 	{
-		if (IsLoaded() && !m_newString.empty())
+		if (!m_newString.empty()) // IsLoaded() && 
 		{
 			m_string = m_newString;
 			LoadText();

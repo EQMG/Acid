@@ -13,16 +13,13 @@ namespace acid
 
 	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle, const Colour &primaryColour) :
 		UiObject(parent, rectangle),
-		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
-		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"),
-			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
+		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
+		m_text(std::make_unique<Text>(this, UiBound::Centre, FONT_SIZE, string,
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_mouseOver(false),
 		m_onPressed(Delegate<void(UiInputButton *, bool)>())
 	{
-		m_background->GetRectangle().SetReference(UiBound::Centre);
-		m_background->SetColour(primaryColour);
-		m_text->GetRectangle().SetReference(UiBound::Centre);
 	}
 
 	void UiInputButton::UpdateObject()

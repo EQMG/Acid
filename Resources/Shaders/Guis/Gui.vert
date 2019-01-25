@@ -11,7 +11,7 @@ layout(set = 0, binding = 0) uniform UboScene
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 modelMatrix;
-	vec4 colour;
+	vec4 colourOffset;
 	vec2 atlasOffset;
 	vec2 screenDimension;
 	vec2 screenPosition;

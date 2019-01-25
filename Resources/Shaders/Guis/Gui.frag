@@ -5,7 +5,7 @@
 layout(set = 0, binding = 1) uniform UboObject
 {
 	mat4 modelMatrix;
-	vec4 colour;
+	vec4 colourOffset;
 	vec2 atlasOffset;
 	vec2 screenDimension;
 	vec2 screenPosition;
@@ -23,7 +23,8 @@ layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	outColour = texture(samplerColour, inUv) * object.colour;
+	outColour = texture(samplerColour, inUv);
+	outColour *= object.colourOffset;
 	outColour.a *= object.alpha;
 
 	if (outColour.a < 0.05f)

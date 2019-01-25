@@ -5,16 +5,16 @@
 
 namespace acid
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture, const Colour &colourOffset) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
 		m_model(ModelRectangle::Create(0.0f, 1.0f)),
 		m_texture(texture),
+		m_colourOffset(colourOffset),
 		m_numberOfRows(1),
 		m_selectedRow(0),
-		m_atlasOffset(Vector2()),
-		m_colour(Colour::White)
+		m_atlasOffset(Vector2())
 	{
 	}
 
@@ -27,7 +27,7 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("colour", m_colour);
+		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
 		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);

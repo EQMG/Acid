@@ -1,6 +1,7 @@
 ﻿#include "ParticleType.hpp"
 
 #include "Resources/Resources.hpp"
+#include "Maths/Maths.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Helpers/String.hpp"
 #include "Scenes/Scenes.hpp"
@@ -42,7 +43,7 @@ namespace acid
 		m_texture(texture),
 		m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
-		m_colour(m_colour),
+		m_colourOffset(colourOffset),
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_scale(scale),
@@ -87,11 +88,11 @@ namespace acid
 			Vector3 blend = Vector3();
 			blend.m_x = particle.GetTextureBlendFactor();
 			blend.m_y = particle.GetTransparency();
-			blend.m_z = static_cast<float>(particle.GetParticleType()->GetNumberOfRows());
+			blend.m_z = static_cast<float>(particle.GetParticleType()->m_numberOfRows);
 
 			ParticleTypeData instanceData = {};
 			instanceData.modelMatrix = modelMatrix;
-			instanceData.colour = particle.GetParticleType()->GetColour();
+			instanceData.colourOffset = particle.GetParticleType()->m_colourOffset;
 			instanceData.offsets = offsets;
 			instanceData.blend = blend;
 			instanceDatas[m_instances] = instanceData;
@@ -135,18 +136,18 @@ namespace acid
 	{
 		m_texture = Texture::Create(metadata.GetChild<std::string>("Texture"));
 		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
-		m_colour = metadata.GetChild<Colour>("Colour");
+		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
 		m_lifeLength = metadata.GetChild<float>("Life Length");
 		m_stageCycles = metadata.GetChild<float>("Stage Cycles");
 		m_scale = metadata.GetChild<float>("Scale");
-		m_name = ToName(m_texture, m_numberOfRows, m_colour, m_lifeLength, m_stageCycles, m_scale);
+		m_name = ToName(m_texture, m_numberOfRows, m_colourOffset, m_lifeLength, m_stageCycles, m_scale);
 	}
 
 	void ParticleType::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetName());
 		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
-		metadata.SetChild<Colour>("Colour", m_colour);
+		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
 		metadata.SetChild<float>("Life Length", m_lifeLength);
 		metadata.SetChild<float>("Stage Cycles", m_stageCycles);
 		metadata.SetChild<float>("Scale", m_scale);

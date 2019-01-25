@@ -12,7 +12,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::Zero, UiBound::Centre, true, true, Vector2(0.36f, 0.05f)),
+		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
 			const Colour &primaryColour = Colour("#171717"));
 
 		void UpdateObject() override;
