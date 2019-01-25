@@ -97,7 +97,7 @@ namespace acid
 	}
 
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, Grabber *grabber, const UiBound &rectangle, const Colour &primaryColour) :
-		UiObject(parent, UiBound::Screen),
+		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, rectangle, Texture::Create("Guis/Button.png"))),
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, prefix + grabber->GetValue(value), FontType::Create("Fonts/ProximaNova", "Regular"),
 			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
@@ -110,7 +110,9 @@ namespace acid
 		m_mouseOver(false),
 		m_onGrabbed(Delegate<void(UiInputGrabber *, int32_t)>())
 	{
+		m_background->GetRectangle().SetReference(UiBound::Centre);
 		m_background->SetColour(primaryColour);
+		m_text->GetRectangle().SetReference(UiBound::Centre);
 	}
 
 	void UiInputGrabber::UpdateObject()

@@ -17,12 +17,11 @@ namespace acid
 		m_text(std::make_unique<Text>(this, rectangle, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"),
 			Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
-		m_mouseOver(false)
+		m_mouseOver(false),
+		m_onPressed(Delegate<void(UiInputButton *, bool)>())
 	{
-	//	m_background->GetRectangle().SetPosition(Vector2::Zero);
 		m_background->GetRectangle().SetReference(UiBound::Centre);
 		m_background->SetColour(primaryColour);
-	//	m_text->GetRectangle().SetPosition(Vector2::Zero);
 		m_text->GetRectangle().SetReference(UiBound::Centre);
 	}
 
@@ -37,6 +36,8 @@ namespace acid
 				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 				m_soundClick.Play();
 			}
+
+			m_onPressed(this, true);
 		}
 
 		// Mouse over updates.
