@@ -57,7 +57,7 @@ namespace acid
 		};
 
 		UiInputGrabber(UiObject *parent, const std::string &prefix, const int32_t &value, Grabber *grabber,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiBound::Centre, true, true, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
 
 		void UpdateObject() override;
 

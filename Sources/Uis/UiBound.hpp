@@ -1,9 +1,33 @@
 #pragma once
 
 #include "Maths/Vector2.hpp"
+#include "Helpers/EnumClass.hpp"
 
 namespace acid
 {
+	class ACID_EXPORT UiReference
+	{
+	public:
+		static const Vector2 TopLeft;
+		static const Vector2 TopCentre;
+		static const Vector2 TopRight;
+		static const Vector2 CentreLeft;
+		static const Vector2 Centre;
+		static const Vector2 CentreRight;
+		static const Vector2 BottomLeft;
+		static const Vector2 BottomCentre;
+		static const Vector2 BottomRight;
+	};
+
+	enum class UiAspect : uint32_t
+	{
+		None = 0,
+		Position = 1,
+		Dimensions = 2,
+		Scale = 4
+	};
+	ENABLE_BITMASK_OPERATORS(UiAspect)
+
 	/// <summary>
 	/// A rectangle made of a position and dimension.
 	/// </summary>
@@ -14,11 +38,11 @@ namespace acid
 		/// Constructor for rectangle.
 		/// </summary>
 		/// <param name="position"> The object screen position. </param>
-		/// <param name="reference"> The reference pivot vertex (<seealso cref="#TopLeft"/>, <seealso cref="#CentreLeft"/>, <seealso cref="#BottomLeft"/>, ETC). </param>
-		/// <param name="aspectPosition"> The if the x position will change with display width. </param>
-		/// <param name="aspectSize"> The if the width will scale with display width. </param>
+		/// <param name="reference"> The reference vertex of the parent bounds, where position is. </param>
+		/// <param name="aspect"> The aspect that will be used for bounding in the parent reference. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
-		explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = TopLeft, const bool &aspectPosition = true, const bool &aspectSize = true, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+		explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft,
+			const bitmask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Gets the bounds position in the current screen space.
@@ -40,13 +64,9 @@ namespace acid
 
 		void SetReference(const Vector2 &reference) { m_reference = reference; }
 
-		const bool &IsAspectPosition() const { return m_aspectPosition; }
+		const bitmask<UiAspect> &GetAspect() const { return m_aspect; }
 
-		void SetAspectPosition(const bool &aspectPosition) { m_aspectPosition = aspectPosition; }
-
-		const bool &IsAspectSize() const { return m_aspectSize; }
-
-		void SetAspectSize(const bool &aspectSize) { m_aspectSize = aspectSize; }
+		void SetAspect(const bitmask<UiAspect> &aspect) { m_aspect = aspect; }
 
 		const Vector2 &GetDimensions() const { return m_dimensions; }
 
@@ -56,22 +76,13 @@ namespace acid
 
 		bool operator!=(const UiBound &other) const;
 
-		static const Vector2 TopLeft;
-		static const Vector2 TopCentre;
-		static const Vector2 TopRight;
-		static const Vector2 CentreLeft;
-		static const Vector2 Centre;
-		static const Vector2 CentreRight;
-		static const Vector2 BottomLeft;
-		static const Vector2 BottomCentre;
-		static const Vector2 BottomRight;
-
 		static const UiBound Screen;
+		static const UiBound Maximum;
+		static const UiBound Centre;
 
 		Vector2 m_position;
 		Vector2 m_reference;
-		bool m_aspectPosition;
-		bool m_aspectSize;
+		bitmask<UiAspect> m_aspect;
 		Vector2 m_dimensions;
 	};
 }

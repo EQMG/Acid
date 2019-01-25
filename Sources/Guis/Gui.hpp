@@ -23,7 +23,8 @@ namespace acid
 		/// </summary>
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture);
+		/// <param name="colourOffset"> The texture colour offset. </param>
+		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture, const Colour &colourOffset = Colour::White);
 
 		void UpdateObject() override;
 
@@ -43,19 +44,19 @@ namespace acid
 
 		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
 
-		const Colour &GetColour() const { return m_colour; }
+		const Colour &GetColourOffset() const { return m_colourOffset; }
 
-		void SetColour(const Colour &colour) { m_colour = colour; }
+		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;
 
 		std::shared_ptr<Model> m_model;
 		std::shared_ptr<Texture> m_texture;
+		Colour m_colourOffset;
 		uint32_t m_numberOfRows;
 		uint32_t m_selectedRow;
 
 		Vector2 m_atlasOffset;
-		Colour m_colour;
 	};
 }

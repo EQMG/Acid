@@ -45,11 +45,11 @@ namespace acid
 		/// </summary>
 		/// <param name="texture"> The particles texture. </param>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
-		/// <param name="colour"> The particles texture colour offset. </param>
+		/// <param name="colourOffset"> The particles texture colour offset. </param>
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colour = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		void Update(const std::vector<Particle> &particles);
 
@@ -67,9 +67,9 @@ namespace acid
 
 		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
 
-		const Colour &GetColour() const { return m_colour; }
+		const Colour &GetColourOffset() const { return m_colourOffset; }
 
-		void SetColour(const Colour &colour) { m_colour = colour; }
+		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 
 		const float &GetLifeLength() const { return m_lifeLength; }
 
@@ -86,18 +86,18 @@ namespace acid
 		struct ParticleTypeData
 		{
 			Matrix4 modelMatrix;
-			Colour colour;
+			Colour colourOffset;
 			Vector4 offsets;
 			Vector3 blend;
 			float _padding;
 		};
 
-		static std::string ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colour, const float &lifeLength, const float &stageCycles, const float &scale);
+		static std::string ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
 
 		std::shared_ptr<Texture> m_texture;
 		std::shared_ptr<Model> m_model;
 		uint32_t m_numberOfRows;
-		Colour m_colour;
+		Colour m_colourOffset;
 		float m_lifeLength;
 		float m_stageCycles;
 		float m_scale;

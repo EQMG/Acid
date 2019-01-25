@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
+#include "UiObject.hpp"
 #include "UiSelector.hpp"
 
 namespace acid

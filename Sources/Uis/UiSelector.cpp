@@ -1,5 +1,6 @@
 ﻿#include "UiSelector.hpp"
 
+#include "UiObject.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid

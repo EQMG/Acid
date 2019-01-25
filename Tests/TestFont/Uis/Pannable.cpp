@@ -11,12 +11,12 @@ namespace test
 		m_buttonReset(ButtonKeyboard({KEY_ENTER})),
 		m_zoom(1.0f),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
-		m_background(std::make_unique<Gui>(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false), Texture::Create("Guis/White.png"))),
+		m_background(std::make_unique<Gui>(parent, UiBound::Screen, Texture::Create("Guis/White.png"))),
 		m_texts(std::vector<std::unique_ptr<Text>>()),
-		m_textFps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.978f), UiBound::BottomLeft, true), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
-		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiBound::BottomLeft, true), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
+		m_textFps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
+		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiBound::Centre, true), 6.0f, "Acid Font",
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre), 6.0f, "Acid Font",
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
 
 		static const std::string content1 =
@@ -50,7 +50,7 @@ namespace test
 			"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet. \n"
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiBound::Centre, true), 1.8f, content1,
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre), 1.8f, content1,
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
 	}
 

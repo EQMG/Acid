@@ -22,30 +22,22 @@ namespace test
 
 	UiNavigation::UiNavigation(UiObject *parent) :
 		UiObject(parent, UiBound::Screen),
-		m_background(nullptr),
-		m_navigation(nullptr),
-		m_title(nullptr),
-		m_createdBy(nullptr),
+		m_background(std::make_unique<Gui>(this, UiBound::Screen, Texture::Create("Guis/White.png"))),
+		m_navigation(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"), ColourPanel)),
+		m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING",
+			FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, ColourButton, 0.0018f)),
+		m_createdBy(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
+			FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f)),
 		m_tabs(std::vector<std::unique_ptr<UiTab>>()),
 		m_driverTarget(nullptr),
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-		m_background = std::make_unique<Gui>(this, UiBound::Screen, Texture::Create("Guis/White.png"));
-
-		m_navigation = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiBound::TopLeft, true, true, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"));
-		m_navigation->SetColour(ColourPanel); // TODO: Blur underneath.
-
-		m_title = std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiBound::TopCentre), 5.5f, "TESTING",
-			FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, ColourButton, 0.0018f);
-		m_createdBy = std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiBound::BottomCentre), 1.2f, "Created By: Equilibrium Games",
-			FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f);
-
 		float tabYOffset = 0.25f;
 
 		for (auto &tab : TABS)
 		{
-			auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2(0.5f, tabYOffset), UiBound::Centre, true, true, Vector2(0.27f, 0.05f)), ColourButton);
+			auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2(0.5f, tabYOffset), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.27f, 0.05f)), ColourButton);
 			auto tabContent = new ContentExit(this);
 			auto uiTab = new UiTab(tab.first, tab.second, tabButton, tabContent);
 			m_tabs.emplace_back(uiTab);
@@ -69,6 +61,7 @@ namespace test
 		//auto d = m_navigation->GetRectangle().GetDimensions();
 		//d.m_x = Mouse::Get()->GetPosition().m_x;
 		//m_navigation->GetRectangle().SetDimensions(d);
+
 		//GetRectangle().SetPosition(Mouse::Get()->GetPosition());
 
 		if (m_driverTarget != nullptr && m_targetTab != nullptr)

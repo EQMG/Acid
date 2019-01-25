@@ -58,6 +58,7 @@ set(_temp_acid_headers
 		Guis/RendererGuis.hpp
 		Helpers/Delegate.hpp
 		Helpers/dirent.h
+		Helpers/EnumClass.hpp
 		Helpers/FileSystem.hpp
 		Helpers/NonCopyable.hpp
 		Helpers/String.hpp

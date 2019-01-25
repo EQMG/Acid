@@ -72,6 +72,11 @@ namespace acid
 
 		if (m_parent != nullptr)
 		{
+			if (m_rectangle.GetAspect() & UiAspect::Scale)
+			{
+				m_screenDimension *= m_parent->m_screenDimension;
+			}
+
 			m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimension) - (m_screenDimension * m_rectangle.GetReference()) + m_parent->m_screenPosition;
 		}
 		else
