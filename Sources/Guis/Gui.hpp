@@ -43,9 +43,9 @@ namespace acid
 
 		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
 
-		const Colour &GetColourOffset() const { return m_colourOffset; }
+		const Colour &GetColour() const { return m_colour; }
 
-		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
+		void SetColour(const Colour &colour) { m_colour = colour; }
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;
@@ -56,6 +56,6 @@ namespace acid
 		uint32_t m_selectedRow;
 
 		Vector2 m_atlasOffset;
-		Colour m_colourOffset;
+		Colour m_colour;
 	};
 }

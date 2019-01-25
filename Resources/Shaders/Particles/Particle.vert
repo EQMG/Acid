@@ -11,7 +11,7 @@ layout(set = 0, binding = 0) uniform UboScene
 struct Instance
 {
 	mat4 modelMatrix;
-	vec4 colourOffset;
+	vec4 colour;
 	vec4 offsets;
 	vec3 blend;
 	float _padding;
@@ -50,7 +50,7 @@ void main()
 	uv.y = 1.0f - uv.y;
 	uv /= instance.blend.z;
 
-	outColourOffset = instance.colourOffset;
+	outColourOffset = instance.colour;
 	outCoords1 = uv + instance.offsets.xy;
 	outCoords2 = uv + instance.offsets.zw;
 	outBlendFactor = instance.blend.x;

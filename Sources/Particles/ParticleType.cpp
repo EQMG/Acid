@@ -42,7 +42,7 @@ namespace acid
 		m_texture(texture),
 		m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
-		m_colourOffset(colourOffset),
+		m_colour(m_colour),
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_scale(scale),
@@ -91,7 +91,7 @@ namespace acid
 
 			ParticleTypeData instanceData = {};
 			instanceData.modelMatrix = modelMatrix;
-			instanceData.colourOffset = particle.GetParticleType()->GetColourOffset();
+			instanceData.colour = particle.GetParticleType()->GetColour();
 			instanceData.offsets = offsets;
 			instanceData.blend = blend;
 			instanceDatas[m_instances] = instanceData;
@@ -135,27 +135,27 @@ namespace acid
 	{
 		m_texture = Texture::Create(metadata.GetChild<std::string>("Texture"));
 		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
-		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
+		m_colour = metadata.GetChild<Colour>("Colour");
 		m_lifeLength = metadata.GetChild<float>("Life Length");
 		m_stageCycles = metadata.GetChild<float>("Stage Cycles");
 		m_scale = metadata.GetChild<float>("Scale");
-		m_name = ToName(m_texture, m_numberOfRows, m_colourOffset, m_lifeLength, m_stageCycles, m_scale);
+		m_name = ToName(m_texture, m_numberOfRows, m_colour, m_lifeLength, m_stageCycles, m_scale);
 	}
 
 	void ParticleType::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetName());
 		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
-		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
+		metadata.SetChild<Colour>("Colour", m_colour);
 		metadata.SetChild<float>("Life Length", m_lifeLength);
 		metadata.SetChild<float>("Stage Cycles", m_stageCycles);
 		metadata.SetChild<float>("Scale", m_scale);
 	}
 
-	std::string ParticleType::ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
+	std::string ParticleType::ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colour, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		std::stringstream result;
-		result << "ParticleType_" << (texture == nullptr ? "nullptr" : texture->GetFilename()) << "_" << numberOfRows << "_" << colourOffset.GetHex() << "_" << lifeLength << "_" << stageCycles << "_" << scale;
+		result << "ParticleType_" << (texture == nullptr ? "nullptr" : texture->GetFilename()) << "_" << numberOfRows << "_" << colour.GetHex() << "_" << lifeLength << "_" << stageCycles << "_" << scale;
 		return result.str();
 	}
 }

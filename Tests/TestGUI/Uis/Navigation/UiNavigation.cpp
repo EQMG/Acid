@@ -21,9 +21,9 @@ namespace test
 	const Vector2 UiNavigation::ButtonSize = Vector2(0.3f, 0.05f);
 
 	UiNavigation::UiNavigation(UiObject *parent) :
-		UiObject(parent, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f))),
+		UiObject(parent, UiBound::Screen),
 		m_background(nullptr),
-		m_barBackground(nullptr),
+		m_navigation(nullptr),
 		m_title(nullptr),
 		m_createdBy(nullptr),
 		m_tabs(std::vector<std::unique_ptr<UiTab>>()),
@@ -31,29 +31,21 @@ namespace test
 		m_currentTab(nullptr),
 		m_targetTab(nullptr)
 	{
-	//	auto guiA = new Gui(this, UiBound(Vector2(0.0f, 0.2f), UiBound::BOTTOM_LEFT, true, true, Vector2(0.5f, 0.6f)), Texture::Create("Guis/White.png"));
-	//	guiA->SetDepth(1.0f);
-	//	guiA->SetColourOffset(Colour::TEAL);
+		m_background = std::make_unique<Gui>(this, UiBound::Screen, Texture::Create("Guis/White.png"));
 
-	//	auto guiB = new Gui(guiA, UiBound(Vector2(0.5f, 0.5f), UiBound::CENTRE, true, true, Vector2(0.35f, 0.35f)), Texture::Create("Guis/White.png"));
-	//	guiB->SetDepth(2.0f);
-	//	guiB->SetColourOffset(Colour::RED);
+		m_navigation = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiBound::TopLeft, true, true, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"));
+		m_navigation->SetColour(ColourPanel); // TODO: Blur underneath.
 
-		m_background = std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiBound::Centre, true, false, Vector2(1.0f, 1.0f)), Texture::Create("Guis/White.png"));
-
-		m_barBackground = std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.5f), UiBound::CentreLeft, true, true, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"));
-		m_barBackground->SetColourOffset(ColourPanel); // TODO: Blur underneath.
-
-		m_title = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.05f), UiBound::TopCentre, false), 5.5f, "TESTING",
+		m_title = std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiBound::TopCentre), 5.5f, "TESTING",
 			FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, ColourButton, 0.0018f);
-		m_createdBy = std::make_unique<Text>(this, UiBound(Vector2(0.2f, 0.985f), UiBound::BottomCentre, false), 1.2f, "Created By: Equilibrium Games",
+		m_createdBy = std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiBound::BottomCentre), 1.2f, "Created By: Equilibrium Games",
 			FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f);
 
 		float tabYOffset = 0.25f;
 
 		for (auto &tab : TABS)
 		{
-			auto tabButton = new UiInputButton(this, tab.first, UiBound(Vector2(0.2f, tabYOffset), UiBound::Centre, false, true, Vector2(0.27f, 0.05f)), ColourButton);
+			auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2(0.5f, tabYOffset), UiBound::Centre, true, true, Vector2(0.27f, 0.05f)), ColourButton);
 			auto tabContent = new ContentExit(this);
 			auto uiTab = new UiTab(tab.first, tab.second, tabButton, tabContent);
 			m_tabs.emplace_back(uiTab);
@@ -74,6 +66,11 @@ namespace test
 
 	void UiNavigation::UpdateObject()
 	{
+		//auto d = m_navigation->GetRectangle().GetDimensions();
+		//d.m_x = Mouse::Get()->GetPosition().m_x;
+		//m_navigation->GetRectangle().SetDimensions(d);
+		//GetRectangle().SetPosition(Mouse::Get()->GetPosition());
+
 		if (m_driverTarget != nullptr && m_targetTab != nullptr)
 		{
 			float progress = m_driverTarget->Update(Engine::Get()->GetDelta());
