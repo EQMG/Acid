@@ -12,14 +12,14 @@ namespace test
 	const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 	Scene1::Scene1() :
-		Scene(new Camera(), new VirtualJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
-		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
+		Scene(new Camera()),
+		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
+		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
 		m_buttonPause(ButtonCompound({
-			new ButtonKeyboard(KEY_ESCAPE),
-			new ButtonJoystick(JOYSTICK_1, 7)
+			new ButtonKeyboard(Key::Escape),
+			new ButtonJoystick(JoystickPort::_1, 7)
 		})),
-		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
+		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer())),
 		m_uiNavigation(std::make_unique<UiNavigation>(Uis::Get()->GetContainer()))

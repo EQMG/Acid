@@ -30,6 +30,10 @@ mkdir Build\Release\Bin32\Resources
 mklink /J Build\Release\Bin32\Resources\Engine Resources
 )
 
+IF EXIST Build\Tests\TestFont\Resources\Engine (
+mklink /J Build\Tests\TestFont\Resources\Engine Resources
+)
+
 IF EXIST Build\Tests\TestGUI\Resources\Engine (
 mklink /J Build\Tests\TestGUI\Resources\Engine Resources
 )
@@ -40,10 +44,6 @@ mklink /J Build\Tests\TestPBR\Resources\Engine Resources
 
 IF EXIST Build\Tests\TestPhysics\Resources\Engine (
 mklink /J Build\Tests\TestPhysics\Resources\Engine Resources
-)
-
-IF EXIST Build\Tests\TestVoxel\Resources\Engine (
-mklink /J Build\Tests\TestVoxel\Resources\Engine Resources
 )
 
 pause

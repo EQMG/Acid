@@ -18,7 +18,9 @@ namespace test
 		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<UiInputButton> m_button1;
 		std::unique_ptr<UiInputButton> m_button2;
-		std::unique_ptr<UiInputGrabber> m_input1;
+		std::unique_ptr<UiGrabberMouse> m_input1;
+		std::unique_ptr<UiGrabberKeyboard> m_input2;
+		std::unique_ptr<UiGrabberJoystick> m_input3;
 		std::unique_ptr<UiInputSlider> m_slider1;
 		std::unique_ptr<UiInputText> m_text1;
 	public:

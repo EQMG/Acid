@@ -26,11 +26,11 @@ namespace test
 	static const float UI_SLIDE_TIME = 0.2f;
 
 	Scene1::Scene1() :
-		Scene(new CameraFps(), new VirtualJoystick(JOYSTICK_1, 0, 1, {0, 1})),
-		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
-		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(KEY_M, KEY_ESCAPE)),
-		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
-		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
+		Scene(new CameraFps()),
+		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
+		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::M, Key::Escape)),
+		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
+		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{

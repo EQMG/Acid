@@ -25,7 +25,7 @@ namespace acid
 
 		const JoystickPort &GetPort() const { return m_port; }
 
-		void SetPoer(const JoystickPort &port) { m_port = port; }
+		void SetPort(const JoystickPort &port) { m_port = port; }
 
 		const uint32_t &GetButton() const { return m_button; }
 

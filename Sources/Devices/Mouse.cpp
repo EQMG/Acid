@@ -8,7 +8,7 @@ namespace acid
 {
 	void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods)
 	{
-		Mouse::Get()->m_mouseButtons[button] = static_cast<InputAction>(action);
+		Mouse::Get()->m_onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), static_cast<InputMod>(mods));
 	}
 
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
@@ -41,7 +41,6 @@ namespace acid
 	}
 
 	Mouse::Mouse() :
-		m_mouseButtons(std::array<InputAction, MOUSE_BUTTON_END_RANGE>()),
 		m_lastMousePositionX(0.0f),
 		m_lastMousePositionY(0.0f),
 		m_mousePositionX(0.0f),
@@ -51,16 +50,10 @@ namespace acid
 		m_mouseDeltaWheel(0.0f),
 		m_windowSelected(true),
 		m_cursorHidden(false),
+		m_onButton(Delegate<void(MouseButton, InputAction, bitmask<InputMod>)>()),
 		m_onEnter(Delegate<void(bool)>()),
 		m_onDrop(Delegate<void(std::vector<std::string>)>())
 	{
-		// Sets the default state of the buttons to released.
-		for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
-		{
-			m_mouseButtons[i] = INPUT_ACTION_RELEASE;
-		}
-
-		// Sets the mouses callbacks.
 		glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
 		glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
 		glfwSetCursorEnterCallback(Window::Get()->GetWindow(), CallbackCursorEnter);
@@ -142,12 +135,8 @@ namespace acid
 
 	InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 	{
-		if (mouseButton < 0 || mouseButton >= MOUSE_BUTTON_END_RANGE)
-		{
-			return INPUT_ACTION_RELEASE;
-		}
-
-		return m_mouseButtons[mouseButton];
+		auto state = glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton));
+		return static_cast<InputAction>(state);
 	}
 
 	void Mouse::SetPosition(const float &cursorX, const float &cursorY)

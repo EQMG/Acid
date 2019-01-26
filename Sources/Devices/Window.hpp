@@ -7,6 +7,7 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
+#include "Helpers/EnumClass.hpp"
 #include "Maths/Vector2.hpp"
 #include "Monitor.hpp"
 
@@ -14,21 +15,22 @@ struct GLFWwindow;
 
 namespace acid
 {
-	enum InputAction
+	enum class InputAction : int32_t
 	{
-		INPUT_ACTION_RELEASE = 0,
-		INPUT_ACTION_PRESS = 1,
-		INPUT_ACTION_REPEAT = 3
+		Release = 0,
+		Press = 1,
+		Repeat = 2
 	};
 
-	enum InputMod
+	enum class InputMod : int32_t
 	{
-		INPUT_MOD_SHIFT = 1,
-		INPUT_MOD_CONTROL = 2,
-		INPUT_MOD_ALT = 4,
-		INPUT_MOD_SUPER = 8
+		None = 0,
+		Shift = 1,
+		Control = 2,
+		Alt = 4,
+		Super = 8
 	};
-	typedef uint32_t InputModFlags;
+	ENABLE_BITMASK_OPERATORS(InputMod)
 
 	/// <summary>
 	/// A module used for the creation, updating and destruction of the display.

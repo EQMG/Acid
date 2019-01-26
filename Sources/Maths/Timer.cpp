@@ -25,11 +25,6 @@ namespace acid
 		m_startTime = Engine::GetTime();
 	}
 
-	Time Timer::GetInterval() const
-	{
-		return m_interval;
-	}
-
 	void Timer::SetInterval(const Time &interval)
 	{
 		if (m_interval == interval)

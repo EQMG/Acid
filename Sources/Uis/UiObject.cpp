@@ -44,11 +44,11 @@ namespace acid
 			return;
 		}
 
-		if (Uis::Get()->GetSelector().IsSelected(*this))
+		if (IsSelected())
 		{
-			for (uint32_t i = 0; i < MOUSE_BUTTON_END_RANGE; i++)
+			for (uint32_t i = 0; i < 8; i++)
 			{
-				if (Uis::Get()->GetSelector().WasDown(static_cast<MouseButton>(i)))
+				if (Mouse::Get()->GetButton(static_cast<MouseButton>(i)) == InputAction::Press)
 				{
 					m_onClick(this, static_cast<MouseButton>(i));
 				}
@@ -93,6 +93,19 @@ namespace acid
 
 	void UiObject::UpdateObject()
 	{
+	}
+
+	bool UiObject::IsSelected() const
+	{
+		Vector2 cursor = Mouse::Get()->GetPosition();
+
+		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
+		{
+			return cursor.m_x >= m_screenPosition.m_x && cursor.m_x <= m_screenPosition.m_x + m_screenDimension.m_x &&
+				cursor.m_y >= m_screenPosition.m_y && cursor.m_y <= m_screenPosition.m_y + m_screenDimension.m_y;
+		}
+
+		return false;
 	}
 
 	void UiObject::SetParent(UiObject *parent)
@@ -167,6 +180,6 @@ namespace acid
 
 	void UiObject::CancelEvent(const MouseButton &button) const
 	{
-		Uis::Get()->GetSelector().CancelWasEvent(button);
+		Uis::Get()->CancelWasEvent(button);
 	}
 }

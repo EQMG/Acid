@@ -38,7 +38,7 @@ namespace acid
 		/// Gets what the interval is.
 		/// </summary>
 		/// <returns> The timers current interval. </returns>
-		Time GetInterval() const;
+		const Time &GetInterval() const { return m_interval; }
 
 		/// <summary>
 		/// Gets the timers interval (resets timer).

@@ -6,6 +6,7 @@
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/AxisJoystick.hpp>
 #include <Physics/KinematicCharacter.hpp>
+#include <Inputs/ButtonJoystick.hpp>
 
 namespace test
 {
@@ -19,32 +20,32 @@ namespace test
 		m_noclipEnabled(false),
 		m_inputForward(AxisCompound({
 		    new AxisButton(
-			    ButtonCompound::Create<ButtonKeyboard>(KEY_S, KEY_DOWN),
-			    ButtonCompound::Create<ButtonKeyboard>(KEY_W, KEY_UP)
+			    ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
+			    ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
 		    ),
-		    new AxisJoystick(JOYSTICK_1, 1, true)
+		    new AxisJoystick(JoystickPort::_1, 1, true)
 		})),
 		m_inputStrafe(AxisCompound({
 		    new AxisButton(
-			    ButtonCompound::Create<ButtonKeyboard>(KEY_D, KEY_RIGHT),
-			    ButtonCompound::Create<ButtonKeyboard>(KEY_A, KEY_LEFT)
+			    ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
+			    ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
 		    ),
-		    new AxisJoystick(JOYSTICK_1, 0, true)
+		    new AxisJoystick(JoystickPort::_1, 0, true)
 		})),
 		m_inputSprint(ButtonCompound({
-			ButtonCompound::Create<ButtonKeyboard>(KEY_LEFT_SHIFT, KEY_RIGHT_SHIFT),
-		    new ButtonJoystick(JOYSTICK_1, 1)
+			ButtonCompound::Create<ButtonKeyboard>(Key::ShiftLeft, Key::ShiftRight),
+		    new ButtonJoystick(JoystickPort::_1, 1)
 		})),
 		m_inputJump(ButtonCompound({
-		    new ButtonKeyboard(KEY_SPACE),
-		    new ButtonJoystick(JOYSTICK_1, 1)
+		    new ButtonKeyboard(Key::Space),
+		    new ButtonJoystick(JoystickPort::_1, 1)
 		})),
 		m_inputCrouch(ButtonCompound({
-			ButtonCompound::Create<ButtonKeyboard>(KEY_LEFT_CONTROL, KEY_RIGHT_CONTROL),
-		    new ButtonJoystick(JOYSTICK_1, 1)
+			ButtonCompound::Create<ButtonKeyboard>(Key::ControlLeft, Key::ControlRight),
+		    new ButtonJoystick(JoystickPort::_1, 1)
 		})),
 		m_toggleNoclip(ButtonCompound({
-		    new ButtonKeyboard(KEY_N),
+		    new ButtonKeyboard(Key::N),
 		}))
 	{
 	}

@@ -233,7 +233,6 @@ set(_temp_acid_headers
 		Uis/UiBound.hpp
 		Uis/UiObject.hpp
 		Uis/Uis.hpp
-		Uis/UiSelector.hpp
 		Uis/UiStartLogo.hpp
 		)
 set(_temp_acid_sources
@@ -442,7 +441,6 @@ set(_temp_acid_sources
 		Uis/UiBound.cpp
 		Uis/UiObject.cpp
 		Uis/Uis.cpp
-		Uis/UiSelector.cpp
 		Uis/UiStartLogo.cpp
 		)
 

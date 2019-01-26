@@ -42,8 +42,7 @@ namespace acid
 	void UiInputSlider::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
+		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_updating && !m_soundClick.IsPlaying())
 			{
@@ -53,7 +52,7 @@ namespace acid
 
 			m_updating = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsDown(MOUSE_BUTTON_LEFT))
+		else if (!Uis::Get()->IsDown(MouseButton::Left))
 		{
 			if (m_updating && !m_soundClick.IsPlaying())
 			{
@@ -67,12 +66,12 @@ namespace acid
 		{
 			float width = m_background->GetScreenDimension().m_x;
 			float positionX = m_background->GetScreenPosition().m_x;
-			float cursorX = Uis::Get()->GetSelector().GetCursorX() - positionX;
+			float cursorX = Mouse::Get()->GetPositionX() - positionX;
 			m_value = cursorX / width;
 			m_value = std::clamp(m_value, 0.0f, 1.0f);
 
 			m_hasChange = true;
-			CancelEvent(MOUSE_BUTTON_LEFT);
+			CancelEvent(MouseButton::Left);
 		}
 
 		// Updates the listener.
@@ -86,13 +85,13 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && !m_mouseOver)
+		if (m_background->IsSelected() && !m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_background) && !m_updating && m_mouseOver)
+		else if (!m_background->IsSelected() && !m_updating && m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);

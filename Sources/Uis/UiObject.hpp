@@ -44,6 +44,14 @@ namespace acid
 		virtual void UpdateObject();
 
 		/// <summary>
+		/// Gets if the object provided has the cursor hovered above it.
+		/// </summary>
+		/// <param name="object"> The object to check with.
+		/// </param>
+		/// <returns> If the object has the cursor inside of its box. </returns>
+		bool IsSelected() const;
+
+		/// <summary>
 		/// Gets the parent object.
 		/// </summary>
 		/// <returns> The parent object. </returns>
