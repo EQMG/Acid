@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	ButtonJoystick::ButtonJoystick(const JoystickPort &port, const uint32_t &button) :
+	ButtonJoystick::ButtonJoystick(const uint32_t &port, const uint32_t &button) :
 		m_port(port),
 		m_button(button),
 		m_wasDown(false)

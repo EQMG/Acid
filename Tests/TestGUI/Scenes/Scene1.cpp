@@ -17,7 +17,7 @@ namespace test
 		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
 		m_buttonPause(ButtonCompound({
 			new ButtonKeyboard(Key::Escape),
-			new ButtonJoystick(JoystickPort::_1, 7)
+			new ButtonJoystick(0, 7)
 		})),
 		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),

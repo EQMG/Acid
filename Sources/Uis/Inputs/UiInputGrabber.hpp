@@ -48,12 +48,12 @@ namespace acid
 		public UiInputGrabber
 	{
 	public:
-		UiGrabberJoystick(UiObject *parent, const std::string &prefix, const JoystickPort &port, const uint32_t &value, const UiBound &rectangle = UiBound(Vector3::Zero,
+		UiGrabberJoystick(UiObject *parent, const std::string &prefix, const uint32_t &port, const uint32_t &value, const UiBound &rectangle = UiBound(Vector3::Zero,
 			UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
 
-		const JoystickPort &GetPort() const { return m_port; }
+		const uint32_t &GetPort() const { return m_port; }
 
-		void SetPort(const JoystickPort &port) { m_port = port; }
+		void SetPort(const uint32_t &port) { m_port = port; }
 
 		const uint32_t &GetValue() const { return m_value; }
 
@@ -63,16 +63,16 @@ namespace acid
 			UpdateText();
 		}
 
-		Delegate<void(UiGrabberJoystick *, JoystickPort, uint32_t)> &GetOnGrabbed() { return m_onGrabbed; }
+		Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)> &GetOnGrabbed() { return m_onGrabbed; }
 	protected:
 		std::string GetTextString() const override
 		{
 			return String::To(m_value);
 		}
 	private:
-		JoystickPort m_port;
+		uint32_t m_port;
 		uint32_t m_value;
-		Delegate<void(UiGrabberJoystick *, JoystickPort, uint32_t)> m_onGrabbed;
+		Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)> m_onGrabbed;
 	};
 
 	class ACID_EXPORT UiGrabberKeyboard :

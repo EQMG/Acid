@@ -84,14 +84,14 @@ namespace acid
 		m_soundClick.Play();
 	}
 
-	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &prefix, const JoystickPort &port,
+	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &prefix, const uint32_t &port,
 		const uint32_t &value, const UiBound &rectangle, const Colour &primaryColour) :
 		UiInputGrabber(parent, prefix, rectangle, primaryColour),
 		m_port(port),
 		m_value(value),
-		m_onGrabbed(Delegate<void(UiGrabberJoystick *, JoystickPort, uint32_t)>())
+		m_onGrabbed(Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)>())
 	{
-		Joysticks::Get()->GetOnButton() += [this](JoystickPort port, uint32_t button, InputAction action) {
+		Joysticks::Get()->GetOnButton() += [this](uint32_t port, uint32_t button, InputAction action) {
 			if (!m_selected || port != m_port)
 			{
 				return;

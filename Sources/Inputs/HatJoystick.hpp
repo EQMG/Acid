@@ -20,7 +20,7 @@ namespace acid
 		/// <param name="port"> The joystick port. </param>
 		/// <param name="hat"> The hat that will be checked. </param>
 		/// <param name="hatFlag"> If this bit is found the hat will trigger <seealso cref="#IsDown()"/>. </param>
-		HatJoystick(const JoystickPort &port, const uint32_t &hat, const JoystickHat &hatFlag);
+		HatJoystick(const uint32_t &port, const uint32_t &hat, const JoystickHat &hatFlag);
 
 		float GetAmount() const override;
 
@@ -28,9 +28,9 @@ namespace acid
 
 		bool WasDown() override;
 
-		const JoystickPort &GetPort() const { return m_port; }
+		const uint32_t &GetPort() const { return m_port; }
 
-		void SetPort(const JoystickPort &port) { m_port = port; }
+		void SetPort(const uint32_t &port) { m_port = port; }
 
 		const uint32_t &GetHat() const { return m_hat; }
 
@@ -40,7 +40,7 @@ namespace acid
 
 		void SetHatFlag(const JoystickHat &hatFlag) { m_hatFlag = hatFlag; }
 	private:
-		JoystickPort m_port;
+		uint32_t m_port;
 		uint32_t m_hat;
 		JoystickHat m_hatFlag;
 		bool m_wasDown;
