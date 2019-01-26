@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	HatJoystick::HatJoystick(const JoystickPort &port, const uint32_t &hat, const JoystickHat &hatFlag) :
+	HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const JoystickHat &hatFlag) :
 		m_port(port),
 		m_hat(hat),
 		m_hatFlag(hatFlag),
@@ -17,29 +17,44 @@ namespace acid
 			return 0.0f;
 		}
 
-		switch (Joysticks::Get()->GetHat(m_port, m_hat))
+		auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
+
+		if (hat & JoystickHat::Up)
 		{
-			case JOYSTICK_HAT_CENTERED:
-				return 0.0f;
-			case JOYSTICK_HAT_UP:
-				return 0.0f;
-			case JOYSTICK_HAT_RIGHT_UP:
+			if (hat & JoystickHat::Right)
+			{
 				return 0.125f;
-			case JOYSTICK_HAT_RIGHT:
-				return 0.25f;
-			case JOYSTICK_HAT_RIGHT_DOWN:
-				return 0.375f;
-			case JOYSTICK_HAT_DOWN:
-				return 0.5f;
-			case JOYSTICK_HAT_LEFT_DOWN:
-				return 0.625f;
-			case JOYSTICK_HAT_LEFT:
-				return 0.75f;
-			case JOYSTICK_HAT_LEFT_UP:
-				return 1.0f;
-			default:
-				return 0.0f;
+			}
+			else if (hat & JoystickHat::Left)
+			{
+				return 0.875f;
+			}
+
+			return 1.0f;
 		}
+		else if (hat & JoystickHat::Down)
+		{
+			if (hat & JoystickHat::Right)
+			{
+				return 0.375f;
+			}
+			else if (hat & JoystickHat::Left)
+			{
+				return 0.625f;
+			}
+
+			return 0.5f;
+		}
+		else if (hat & JoystickHat::Right)
+		{
+			return 0.25f;
+		}
+		else if (hat & JoystickHat::Left)
+		{
+			return 0.75f;
+		}
+
+		return 0.0f;
 	}
 
 	bool HatJoystick::IsDown() const
@@ -49,7 +64,7 @@ namespace acid
 			return false;
 		}
 
-		return (Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlag) == 1;
+		return Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlag;
 	}
 
 	bool HatJoystick::WasDown()

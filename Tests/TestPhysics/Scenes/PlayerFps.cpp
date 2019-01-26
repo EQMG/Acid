@@ -23,26 +23,26 @@ namespace test
 			    ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
 			    ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
 		    ),
-		    new AxisJoystick(JoystickPort::_1, 1, true)
+		    new AxisJoystick(0, 1, true)
 		})),
 		m_inputStrafe(AxisCompound({
 		    new AxisButton(
 			    ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
 			    ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
 		    ),
-		    new AxisJoystick(JoystickPort::_1, 0, true)
+		    new AxisJoystick(0, 0, true)
 		})),
 		m_inputSprint(ButtonCompound({
 			ButtonCompound::Create<ButtonKeyboard>(Key::ShiftLeft, Key::ShiftRight),
-		    new ButtonJoystick(JoystickPort::_1, 1)
+		    new ButtonJoystick(0, 1)
 		})),
 		m_inputJump(ButtonCompound({
 		    new ButtonKeyboard(Key::Space),
-		    new ButtonJoystick(JoystickPort::_1, 1)
+		    new ButtonJoystick(0, 1)
 		})),
 		m_inputCrouch(ButtonCompound({
 			ButtonCompound::Create<ButtonKeyboard>(Key::ControlLeft, Key::ControlRight),
-		    new ButtonJoystick(JoystickPort::_1, 1)
+		    new ButtonJoystick(0, 1)
 		})),
 		m_toggleNoclip(ButtonCompound({
 		    new ButtonKeyboard(Key::N),

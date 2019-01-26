@@ -18,13 +18,13 @@ namespace acid
 		/// <param name="port"> The joystick port. </param>
 		/// <param name="axis"> The axis on the joystick being checked. </param>
 		/// <param name="inverse"> If the axis direction should be inverted. </param>
-		AxisJoystick(const JoystickPort &port, const uint32_t &axis, const bool &inverted = false);
+		AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted = false);
 
 		float GetAmount() const override;
 
-		const JoystickPort &GetPort() const { return m_port; }
+		const uint32_t &GetPort() const { return m_port; }
 
-		void SetPort(const JoystickPort &port) { m_port = port; }
+		void SetPort(const uint32_t &port) { m_port = port; }
 
 		const uint32_t &GetAxis() const { return m_axis; }
 
@@ -34,7 +34,7 @@ namespace acid
 
 		void SetInverted(const bool &inverted) { m_inverted = inverted; }
 	private:
-		JoystickPort m_port;
+		uint32_t m_port;
 		uint32_t m_axis;
 		bool m_inverted;
 	};

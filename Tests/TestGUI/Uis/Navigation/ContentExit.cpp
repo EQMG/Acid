@@ -12,7 +12,7 @@ namespace test
 		m_button2(std::make_unique<UiInputButton>(this, "Button #2", UiBound(Vector2(0.92f, 0.05f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
 		m_input1(std::make_unique<UiGrabberMouse>(this, "Mouse Grabber: ", MouseButton::Left, UiBound(Vector2(0.08f, 0.15f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
 		m_input2(std::make_unique<UiGrabberKeyboard>(this, "Keyboard Grabber: ", Key::W, UiBound(Vector2(0.08f, 0.25f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
-		m_input3(std::make_unique<UiGrabberJoystick>(this, "Joystick Grabber: ", JoystickPort::_1, 3, UiBound(Vector2(0.08f, 0.35f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
+		m_input3(std::make_unique<UiGrabberJoystick>(this, "Joystick Grabber: ", 0, 3, UiBound(Vector2(0.08f, 0.35f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
 		m_slider1(std::make_unique<UiInputSlider>(this, "Volume Slider: ", 100.0f, 0.0f, 100.0f, 1, UiBound(Vector2(0.08f, 0.45f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton)),
 		m_text1(std::make_unique<UiInputText>(this, "Window Title: ", Window::Get()->GetTitle(), 14, UiBound(Vector2(0.08f, 0.55f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiNavigation::ButtonSize), UiNavigation::ColourButton))
 	{
