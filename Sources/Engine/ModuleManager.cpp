@@ -26,7 +26,7 @@ namespace acid
 
 	void ModuleManager::FillRegister()
 	{
-		Add<Window>(Module::Stage::Post);
+		Add<Window>(Module::Stage::Always);
 		Add<Renderer>(Module::Stage::Render);
 		Add<Audio>(Module::Stage::Pre);
 		Add<Joysticks>(Module::Stage::Pre);

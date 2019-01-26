@@ -3,6 +3,7 @@
 #include <Scenes/Scene.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/ButtonCompound.hpp>
+#include <Inputs/ButtonJoystick.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
 #include "Uis/Navigation/UiNavigation.hpp"

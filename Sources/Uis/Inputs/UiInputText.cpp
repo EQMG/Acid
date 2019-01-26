@@ -28,29 +28,13 @@ namespace acid
 		m_mouseOver(false),
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
-	}
-
-	void UiInputText::UpdateObject()
-	{
-		if (m_selected)
-		{
-			int32_t key = Keyboard::Get()->GetChar();
-
-			if (m_value.length() < m_maxLength && key != 0 && Keyboard::Get()->GetKey((Key) toupper(key)))
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods) {
+			if (!m_selected)
 			{
-				m_inputDelay.Update(true);
-
-				if (m_lastKey != key || m_inputDelay.CanInput())
-				{
-					m_value += static_cast<char>(key);
-					m_text->SetString(m_prefix + m_value);
-
-					m_onType(this, m_value);
-
-					m_lastKey = key;
-				}
+				return;
 			}
-			else if (Keyboard::Get()->GetKey(KEY_BACKSPACE))
+
+			if (key == Key::Backspace && action != InputAction::Release)
 			{
 				m_inputDelay.Update(true);
 
@@ -64,7 +48,7 @@ namespace acid
 					m_lastKey = 8;
 				}
 			}
-			else if (Keyboard::Get()->GetKey(KEY_ENTER) && m_lastKey != 13)
+			else if (key == Key::Enter && action != InputAction::Release && m_lastKey != 13)
 			{
 				m_inputDelay.Update(true);
 
@@ -75,16 +59,39 @@ namespace acid
 				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 				m_soundClick.Play();
 			}
+		};
+		Keyboard::Get()->GetOnChar() += [this](char c) {
+			if (!m_selected)
+			{
+				return;
+			}
+
+			if (m_value.length() < m_maxLength)
+			{
+				m_inputDelay.Update(true);
+
+				if (m_lastKey != c || m_inputDelay.CanInput())
+				{
+					m_value += c;
+					m_text->SetString(m_prefix + m_value);
+
+					m_onType(this, m_value);
+
+					m_lastKey = c;
+				}
+			}
 			else
 			{
 				m_inputDelay.Update(false);
 				m_lastKey = 0;
 			}
-		}
+		};
+	}
 
+	void UiInputText::UpdateObject()
+	{
 		// Click updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && GetAlpha() == 1.0f &&
-			Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
+		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
@@ -93,9 +100,9 @@ namespace acid
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 			m_soundClick.Play();
 
-			CancelEvent(MOUSE_BUTTON_LEFT);
+			CancelEvent(MouseButton::Left);
 		}
-		else if (Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT) && m_selected)
+		else if (Uis::Get()->WasDown(MouseButton::Left) && m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
@@ -106,13 +113,13 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && !m_mouseOver && !m_selected)
+		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_background) && m_mouseOver && !m_selected)
+		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);

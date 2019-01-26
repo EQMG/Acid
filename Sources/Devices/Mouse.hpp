@@ -1,26 +1,26 @@
 #pragma once
 
-#include <array>
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
 
 namespace acid
 {
-	enum MouseButton
+	enum class MouseButton : int32_t
 	{
-		MOUSE_BUTTON_1 = 0,
-		MOUSE_BUTTON_2 = 1,
-		MOUSE_BUTTON_3 = 2,
-		MOUSE_BUTTON_4 = 3,
-		MOUSE_BUTTON_5 = 4,
-		MOUSE_BUTTON_6 = 5,
-		MOUSE_BUTTON_7 = 6,
-		MOUSE_BUTTON_8 = 7,
-		MOUSE_BUTTON_LEFT = 0,
-		MOUSE_BUTTON_RIGHT = 1,
-		MOUSE_BUTTON_MIDDLE = 2,
-		MOUSE_BUTTON_END_RANGE = MOUSE_BUTTON_8
+		_1 = 0,
+		_2 = 1,
+		_3 = 2,
+		_4 = 3,
+		_5 = 4,
+		_6 = 5,
+		_7 = 6,
+		_8 = 7,
+		Left = _1,
+		Right = _2,
+		Middle = _3,
+		First = _1,
+		Last = _8
 	};
 
 	enum class CursorHotspot
@@ -142,12 +142,12 @@ namespace acid
 		/// <param name="hidden"> If the system cursor should be hidden when not shown. </param>
 		void SetCursorHidden(const bool &hidden);
 
+		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> &GetOnButton() { return m_onButton; }
+
 		Delegate<void(bool)> &GetEnter() { return m_onEnter; }
 
 		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
 	private:
-		std::array<InputAction, MOUSE_BUTTON_END_RANGE> m_mouseButtons;
-
 		float m_lastMousePositionX;
 		float m_lastMousePositionY;
 		float m_mousePositionX;
@@ -158,6 +158,7 @@ namespace acid
 		bool m_windowSelected;
 		bool m_cursorHidden;
 
+		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> m_onButton;
 		Delegate<void(bool)> m_onEnter;
 		Delegate<void(std::vector<std::string>)> m_onDrop;
 

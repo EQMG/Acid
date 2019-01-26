@@ -44,7 +44,7 @@ namespace test
 			tabYOffset += 0.075f;
 
 			/*tabButton->GetOnClick() += [&](UiObject *object, MouseButton button) -> void {
-			    if (button == MOUSE_BUTTON_LEFT)
+			    if (button == MouseButton::Left)
 			    {
 			        SwitchTab(uiTab);
 				    object->CancelEvent(button);

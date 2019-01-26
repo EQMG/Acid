@@ -25,8 +25,7 @@ namespace acid
 	void UiInputButton::UpdateObject()
 	{
 		// Click updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && GetAlpha() == 1.0f &&
-		    Uis::Get()->GetSelector().WasDown(MOUSE_BUTTON_LEFT))
+		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
 			{
@@ -38,13 +37,13 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (Uis::Get()->GetSelector().IsSelected(*m_background) && !m_mouseOver)
+		if (m_background->IsSelected() && !m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!Uis::Get()->GetSelector().IsSelected(*m_background) && m_mouseOver)
+		else if (!m_background->IsSelected() && m_mouseOver)
 		{
 			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
 			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);

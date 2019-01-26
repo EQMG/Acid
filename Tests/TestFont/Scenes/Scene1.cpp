@@ -7,10 +7,10 @@
 namespace test
 {
 	Scene1::Scene1() :
-		Scene(new Camera(), nullptr),
-		m_buttonFullscreen(ButtonKeyboard(KEY_F11)),
-		m_buttonScreenshot(ButtonKeyboard(KEY_F12)),
-		m_buttonExit(ButtonKeyboard(KEY_DELETE)),
+		Scene(new Camera()),
+		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
+		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
+		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_pannable(std::make_unique<Pannable>(Uis::Get()->GetContainer()))
 	{
 	}

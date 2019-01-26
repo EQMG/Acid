@@ -8,7 +8,7 @@ namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
 		UiObject(parent, UiBound::Screen),
-		m_buttonReset(ButtonKeyboard({KEY_ENTER})),
+		m_buttonReset(ButtonKeyboard({Key::Enter})),
 		m_zoom(1.0f),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
 		m_background(std::make_unique<Gui>(parent, UiBound::Screen, Texture::Create("Guis/White.png"))),
@@ -75,7 +75,7 @@ namespace test
 
 		m_zoom *= powf(1.3f, 0.15f * Mouse::Get()->GetDeltaWheel());
 
-		if (Mouse::Get()->GetButton(MOUSE_BUTTON_LEFT))
+		if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 		{
 			offset.m_x -= Mouse::Get()->GetDeltaX() * Window::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 			offset.m_y -= Mouse::Get()->GetDeltaY() / m_zoom / Engine::Get()->GetDelta().AsSeconds();

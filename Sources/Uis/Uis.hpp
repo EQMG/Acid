@@ -1,8 +1,9 @@
 #pragma once
 
+#include <map>
 #include "Engine/Engine.hpp"
+#include "Devices/Mouse.hpp"
 #include "UiObject.hpp"
-#include "UiSelector.hpp"
 
 namespace acid
 {
@@ -23,6 +24,12 @@ namespace acid
 
 		void Update() override;
 
+		void CancelWasEvent(const MouseButton &button);
+
+		bool IsDown(const MouseButton &button);
+
+		bool WasDown(const MouseButton &button);
+
 		/// <summary>
 		/// Gets the screen container.
 		/// </summary>
@@ -30,18 +37,18 @@ namespace acid
 		UiObject *GetContainer() const { return m_container.get(); }
 
 		/// <summary>
-		/// Gets the main GUI selector.
-		/// </summary>
-		/// <returns> The GUI selector. </returns>
-		UiSelector &GetSelector() { return m_selector; }
-
-		/// <summary>
 		/// The rendering objects from the container. Updated each update.
 		/// </summary>
 		/// <returns> The objects. </returns>
 		const std::vector<UiObject *> &GetObjects() const { return m_objects; };
 	private:
-		UiSelector m_selector;
+		struct SelectorMouse
+		{
+			bool m_isDown;
+			bool m_wasDown;
+		};
+
+		std::map<MouseButton, SelectorMouse> m_selectors;
 		std::unique_ptr<UiObject> m_container;
 		std::vector<UiObject *> m_objects;
 	};
