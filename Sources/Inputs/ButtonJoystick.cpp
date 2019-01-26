@@ -11,11 +11,6 @@ namespace acid
 
 	bool ButtonJoystick::IsDown() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_port))
-		{
-			return false;
-		}
-
 		return Joysticks::Get()->GetButton(m_port, m_button) != InputAction::Release;
 	}
 

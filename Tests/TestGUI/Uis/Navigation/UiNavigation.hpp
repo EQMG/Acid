@@ -44,13 +44,12 @@ namespace test
 		std::unique_ptr<Text> m_createdBy;
 		std::vector<std::unique_ptr<UiTab>> m_tabs;
 
-		std::unique_ptr<IDriver> m_driverTarget;
+		std::unique_ptr<IDriver<float>> m_driverTarget;
 		UiTab *m_currentTab;
 		UiTab *m_targetTab;
 	public:
 		static const Colour ColourPanel;
 		static const Colour ColourButton;
-		static const Vector2 ButtonSize;
 
 		explicit UiNavigation(UiObject *parent);
 

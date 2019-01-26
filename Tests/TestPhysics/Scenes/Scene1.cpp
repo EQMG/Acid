@@ -57,8 +57,8 @@ namespace test
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
-		m_uiStartLogo->SetAlphaDriver<DriverConstant>(1.0f);
-		m_overlayDebug->SetAlphaDriver<DriverConstant>(0.0f);
+		m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(1.0f);
+		m_overlayDebug->SetAlphaDriver<DriverConstant<float>>(0.0f);
 
 		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
 			for (const auto &path : paths)
@@ -298,8 +298,8 @@ namespace test
 
 		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
 		{
-			m_uiStartLogo->SetAlphaDriver<DriverConstant>(0.0f);
-			m_overlayDebug->SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
+			m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(0.0f);
+			m_overlayDebug->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
 			m_uiStartLogo->SetStarting(false);
 			Mouse::Get()->SetCursorHidden(true);
 		}

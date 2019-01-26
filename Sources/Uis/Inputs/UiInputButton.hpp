@@ -13,7 +13,7 @@ namespace acid
 	{
 	public:
 		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
-			const Colour &primaryColour = Colour("#171717"));
+			const Colour &primaryColour = Colour("#1976d2"));
 
 		void UpdateObject() override;
 
@@ -27,6 +27,7 @@ namespace acid
 		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
 
+		Colour m_primaryColour;
 		bool m_mouseOver;
 
 		Delegate<void(UiInputButton *, bool)> m_onPressed;

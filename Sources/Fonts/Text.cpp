@@ -12,7 +12,7 @@ namespace acid
 		m_model(nullptr),
 		m_numberLines(0),
 		m_string(text),
-		m_newString(""),
+		m_newString({}),
 		m_justify(justify),
 		m_fontType(fontType),
 		m_maxWidth(maxWidth),
@@ -22,22 +22,22 @@ namespace acid
 		m_borderColour(Colour::White),
 		m_solidBorder(false),
 		m_glowBorder(false),
-		m_glowDriver(std::make_unique<DriverConstant>(0.0f)),
+		m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 		m_glowSize(0.0f),
-		m_borderDriver(std::make_unique<DriverConstant>(0.0f)),
+		m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 		m_borderSize(0.0f)
 	{
-		SetScaleDriver<DriverConstant>(fontSize);
+		SetScaleDriver<DriverConstant<float>>(fontSize);
 		LoadText();
 	}
 
 	void Text::UpdateObject()
 	{
-		if (!m_newString.empty()) // IsLoaded() && 
+		if (m_newString.has_value())
 		{
-			m_string = m_newString;
+			m_string = *m_newString;
 			LoadText();
-			m_newString = "";
+			m_newString = {};
 		}
 
 		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
@@ -96,14 +96,14 @@ namespace acid
 		}
 	}
 
-	void Text::SetBorderDriver(IDriver *borderDriver)
+	void Text::SetBorderDriver(IDriver<float> *borderDriver)
 	{
 		m_borderDriver.reset(borderDriver);
 		m_solidBorder = true;
 		m_glowBorder = false;
 	}
 
-	void Text::SetGlowDriver(IDriver *glowDriver)
+	void Text::SetGlowDriver(IDriver<float> *glowDriver)
 	{
 		m_glowDriver.reset(glowDriver);
 		m_solidBorder = false;

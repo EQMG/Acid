@@ -115,13 +115,13 @@ namespace acid
 
 		Matrix4 GetModelMatrix() const;
 
-		IDriver *GetAlphaDriver() const { return m_alphaDriver.get(); }
+		IDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
 		/// <summary>
 		/// Sets the alpha driver.
 		/// </summary>
 		/// <param name="alphaDriver"> The new alpha driver. </param>
-		void SetAlphaDriver(IDriver *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
+		void SetAlphaDriver(IDriver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
 		/// <summary>
 		/// Sets a new alpha driver from a type.
@@ -133,13 +133,13 @@ namespace acid
 
 		float GetAlpha() const;
 
-		IDriver *GetScaleDriver() const { return m_scaleDriver.get(); }
+		IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
 		/// <summary>
 		/// Sets the scale driver.
 		/// </summary>
 		/// <param name="scaleDriver"> The new scale driver. </param>
-		void SetScaleDriver(IDriver *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+		void SetScaleDriver(IDriver<float> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
 		/// <summary>
 		/// Sets a new scale driver from a type.
@@ -169,10 +169,10 @@ namespace acid
 		bool m_lockRotation;
 		std::optional<Transform> m_worldTransform;
 
-		std::unique_ptr<IDriver> m_alphaDriver;
+		std::unique_ptr<IDriver<float>> m_alphaDriver;
 		float m_alpha;
 
-		std::unique_ptr<IDriver> m_scaleDriver;
+		std::unique_ptr<IDriver<float>> m_scaleDriver;
 		float m_scale;
 
 		Delegate<void(UiObject *, MouseButton)> m_onClick;

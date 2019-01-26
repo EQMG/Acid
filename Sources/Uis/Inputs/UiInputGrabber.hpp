@@ -16,15 +16,15 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputGrabber(UiObject *parent, const std::string &prefix, const UiBound &rectangle, const Colour &primaryColour);
+		UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour);
 
 		~UiInputGrabber() = default;
 
 		void UpdateObject() override;
 
-		const std::string &GetPrefix() const { return m_prefix; }
+		const std::string &GetTitle() const { return m_title; }
 
-		void SetPrefix(const std::string &prefix);
+		void SetTitle(const std::string &title);
 	protected:
 		void UpdateText();
 
@@ -33,14 +33,17 @@ namespace acid
 		virtual std::string GetTextString() const = 0;
 
 		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_text;
+		std::unique_ptr<Gui> m_slider;
+		std::unique_ptr<Text> m_textTitle;
+		std::unique_ptr<Text> m_textValue;
 		Sound m_soundClick;
 
-		std::string m_prefix;
+		std::string m_title;
 
 		int32_t m_lastKey;
 
 		bool m_selected;
+		Colour m_primaryColour;
 		bool m_mouseOver;
 	};
 
@@ -48,8 +51,9 @@ namespace acid
 		public UiInputGrabber
 	{
 	public:
-		UiGrabberJoystick(UiObject *parent, const std::string &prefix, const uint32_t &port, const uint32_t &value, const UiBound &rectangle = UiBound(Vector3::Zero,
-			UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
+		UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
+			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
 		const uint32_t &GetPort() const { return m_port; }
 
@@ -79,8 +83,9 @@ namespace acid
 		public UiInputGrabber
 	{
 	public:
-		UiGrabberKeyboard(UiObject *parent, const std::string &prefix, const Key &value, const UiBound &rectangle = UiBound(Vector3::Zero,
-			UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
+		UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
+			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
 		const Key &GetValue() const { return m_value; }
 
@@ -105,8 +110,9 @@ namespace acid
 		public UiInputGrabber
 	{
 	public:
-		UiGrabberMouse(UiObject *parent, const std::string &prefix, const MouseButton &value, const UiBound &rectangle = UiBound(Vector3::Zero,
-			UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)), const Colour &primaryColour = Colour("#171717"));
+		UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
+			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
 		const MouseButton &GetValue() const { return m_value; }
 

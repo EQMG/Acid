@@ -302,7 +302,6 @@ set(_temp_acid_sources
 		Materials/PipelineMaterial.cpp
 		Maths/Colour.cpp
 		Maths/Delta.cpp
-		Maths/Interpolation/SmoothFloat.cpp
 		Maths/Maths.cpp
 		Maths/Matrix2.cpp
 		Maths/Matrix3.cpp
@@ -314,12 +313,6 @@ set(_temp_acid_sources
 		Maths/Vector2.cpp
 		Maths/Vector3.cpp
 		Maths/Vector4.cpp
-		Maths/Visual/DriverBounce.cpp
-		Maths/Visual/DriverConstant.cpp
-		Maths/Visual/DriverFade.cpp
-		Maths/Visual/DriverLinear.cpp
-		Maths/Visual/DriverSinwave.cpp
-		Maths/Visual/DriverSlide.cpp
 		Meshes/Mesh.cpp
 		Meshes/MeshRender.cpp
 		Meshes/RendererMeshes.cpp

@@ -13,11 +13,6 @@ namespace acid
 
 	float AxisJoystick::GetAmount() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_port))
-		{
-			return 0.0f;
-		}
-
 		return Joysticks::Get()->GetAxis(m_port, m_axis) * (m_inverted ? -1.0f : 1.0f);
 	}
 }

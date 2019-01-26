@@ -12,11 +12,6 @@ namespace acid
 
 	float HatJoystick::GetAmount() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_port))
-		{
-			return 0.0f;
-		}
-
 		auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
 
 		if (hat & JoystickHat::Up)
@@ -59,11 +54,6 @@ namespace acid
 
 	bool HatJoystick::IsDown() const
 	{
-		if (!Joysticks::Get()->IsConnected(m_port))
-		{
-			return false;
-		}
-
 		return Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlag;
 	}
 

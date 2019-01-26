@@ -21,9 +21,8 @@ namespace acid
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 0.8f, Colour::White, 0.0012f, 0.024f)),
 		m_starting(true)
 	{
-		Events::Get()->AddEvent<EventTime>([&]()
-		{
-			SetAlphaDriver<DriverSlide>(1.0f, 0.0f, Time::Seconds(1.4f));
+		Events::Get()->AddEvent<EventTime>([&]() {
+			SetAlphaDriver<DriverSlide<float>>(1.0f, 0.0f, Time::Seconds(1.4f));
 		}, START_DELAY);
 	}
 
