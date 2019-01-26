@@ -2,6 +2,7 @@
 
 #include "Renderer/Renderer.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
+#include "Maths/Visual/DriverConstant.hpp"
 
 namespace acid
 {
@@ -11,10 +12,11 @@ namespace acid
 		m_uniformObject(UniformHandler()),
 		m_model(ModelRectangle::Create(0.0f, 1.0f)),
 		m_texture(texture),
-		m_colourOffset(colourOffset),
 		m_numberOfRows(1),
 		m_selectedRow(0),
-		m_atlasOffset(Vector2())
+		m_atlasOffset(Vector2()),
+		m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)),
+		m_colourOffset(Colour())
 	{
 	}
 
@@ -24,6 +26,8 @@ namespace acid
 		int32_t column = m_selectedRow % numberOfRows;
 		int32_t row = m_selectedRow / numberOfRows;
 		m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
+
+		m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());

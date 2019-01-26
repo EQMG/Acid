@@ -5,22 +5,28 @@
 
 namespace acid
 {
-	static const Time CHANGE_TIME = Time::Seconds(0.1f);
-	static const float FONT_SIZE = 1.7f;
-	static const float SCALE_NORMAL = 1.0f;
-	static const float SCALE_SELECTED = 1.1f;
+	static const Time SLIDE_TIME = Time::Seconds(0.2f);
+	static const Vector2 SIZE = Vector2(0.3f, 0.045f);
+	static const Vector2 PADDING = Vector2(0.017f, 0.09f);
+	static const float FONT_SIZE = 1.4f;
 
-	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &prefix, const UiBound &rectangle, const Colour &primaryColour) :
+	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
-		m_text(std::make_unique<Text>(this, UiBound::Centre, FONT_SIZE, "",
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
+		m_slider(std::make_unique<Gui>(m_background.get(), UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale, 1.0f - (2.0f * PADDING)),
+			Texture::Create("Guis/Button.png"), secondaryColour)),
+		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.0f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+			FONT_SIZE, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
+		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.0f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+		    FONT_SIZE, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
-		m_prefix(prefix),
+		m_title(title),
 		m_lastKey(0),
 		m_selected(false),
+		m_primaryColour(primaryColour),
 		m_mouseOver(false)
 	{
+		GetRectangle().SetDimensions(SIZE);
 	}
 
 	void UiInputGrabber::UpdateObject()
@@ -28,8 +34,7 @@ namespace acid
 		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
 			m_selected = true;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -39,8 +44,7 @@ namespace acid
 		}
 		else if (Uis::Get()->WasDown(MouseButton::Left) && m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 			m_selected = false;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -50,33 +54,30 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 			m_mouseOver = false;
 		}
 	}
 
-	void UiInputGrabber::SetPrefix(const std::string &prefix)
+	void UiInputGrabber::SetTitle(const std::string &title)
 	{
-		m_prefix = prefix;
-		UpdateText();
+		m_title = title;
+		m_textTitle->SetString(m_title);
 	}
 
 	void UiInputGrabber::UpdateText()
 	{
-		m_text->SetString(m_prefix + GetTextString());
+		m_textValue->SetString(GetTextString());
 	}
 
 	void UiInputGrabber::Deselect()
 	{
-		m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-		m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+		m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 		CancelEvent(MouseButton::Left);
 		m_selected = false;
 
@@ -84,9 +85,9 @@ namespace acid
 		m_soundClick.Play();
 	}
 
-	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &prefix, const uint32_t &port,
-		const uint32_t &value, const UiBound &rectangle, const Colour &primaryColour) :
-		UiInputGrabber(parent, prefix, rectangle, primaryColour),
+	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port,
+		const uint32_t &value, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
+		UiInputGrabber(parent, title, rectangle, primaryColour, secondaryColour),
 		m_port(port),
 		m_value(value),
 		m_onGrabbed(Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)>())
@@ -106,9 +107,9 @@ namespace acid
 		UpdateText();
 	}
 
-	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &prefix, const Key &value,
-		const UiBound &rectangle, const Colour &primaryColour) :
-		UiInputGrabber(parent, prefix, rectangle, primaryColour),
+	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
+		const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
+		UiInputGrabber(parent, title, rectangle, primaryColour, secondaryColour),
 		m_value(value),
 		m_onGrabbed(Delegate<void(UiGrabberKeyboard *, Key)>())
 	{
@@ -127,9 +128,9 @@ namespace acid
 		UpdateText();
 	}
 
-	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &prefix, const MouseButton &value,
-		const UiBound &rectangle, const Colour &primaryColour) :
-		UiInputGrabber(parent, prefix, rectangle, primaryColour),
+	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
+		const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
+		UiInputGrabber(parent, title, rectangle, primaryColour, secondaryColour),
 		m_value(value),
 		m_onGrabbed(Delegate<void(UiGrabberMouse *, MouseButton)>())
 	{
@@ -141,7 +142,12 @@ namespace acid
 
 			if (button == MouseButton::Left)
 			{
-				return;
+				CancelEvent(MouseButton::Left);
+
+				if (m_soundClick.IsPlaying())
+				{
+					return;
+				}
 			}
 
 			m_value = button;

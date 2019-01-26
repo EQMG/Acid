@@ -17,7 +17,7 @@ namespace test
 		public Module
 	{
 	private:
-		DriverLinear m_driverDay;
+		DriverLinear<float> m_driverDay;
 		float m_factorDay;
 
 		Fog m_fog;

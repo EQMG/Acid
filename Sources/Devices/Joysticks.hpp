@@ -1,6 +1,7 @@
 #pragma once
 
-#include <array>
+#include <map>
+#include <optional>
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
@@ -103,16 +104,15 @@ namespace acid
 	private:
 		struct JoystickImpl
 		{
-			uint32_t m_port;
-			bool m_connected;
-			std::string m_name;
-
-			std::vector<float> m_axes;
-			std::vector<InputAction> m_buttons;
-			std::vector<bitmask<JoystickHat>> m_hats;
+			std::string m_name{};
+			std::vector<float> m_axes{};
+			std::vector<InputAction> m_buttons{};
+			std::vector<bitmask<JoystickHat>> m_hats{};
 		};
 
-		std::array<JoystickImpl, 16> m_connected;
+		std::optional<JoystickImpl> GetJoystick(const uint32_t &port) const;
+
+		std::map<uint32_t, JoystickImpl> m_connected;
 		Delegate<void(uint32_t, bool)> m_onConnect;
 		Delegate<void(uint32_t, uint32_t, InputAction)> m_onButton;
 		Delegate<void(uint32_t, uint32_t, float)> m_onAxis;

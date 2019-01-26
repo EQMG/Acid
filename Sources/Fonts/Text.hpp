@@ -139,7 +139,7 @@ namespace acid
 		/// <returns> The border colour of the text. </returns>
 		const Colour &GetBorderColour() const { return m_borderColour; }
 
-		IDriver *GetBorderDriver() const { return m_borderDriver.get(); }
+		IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
 		/// <summary>
 		/// Sets the border colour of the text. This is used with border and glow drivers.
@@ -151,7 +151,7 @@ namespace acid
 		/// Sets the border driver, will disable glowing.
 		/// </summary>
 		/// <param name="borderDriver"> The new border driver. </param>
-		void SetBorderDriver(IDriver *borderDriver);
+		void SetBorderDriver(IDriver<float> *borderDriver);
 
 		/// <summary>
 		/// Sets a new border driver from a type, will disable glowing.
@@ -161,13 +161,13 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
-		IDriver *GetGlowDriver() const { return m_glowDriver.get(); }
+		IDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
 
 		/// <summary>
 		/// Sets the glow driver, will disable solid borders.
 		/// </summary>
 		/// <param name="glowDriver"> The new glow driver. </param>
-		void SetGlowDriver(IDriver *glowDriver);
+		void SetGlowDriver(IDriver<float> *glowDriver);
 
 		/// <summary>
 		/// Sets a new glow driver from a type, will disable solid borders.
@@ -317,7 +317,7 @@ namespace acid
 		uint32_t m_numberLines;
 
 		std::string m_string;
-		std::string m_newString;
+		std::optional<std::string> m_newString;
 		Justify m_justify;
 
 		std::shared_ptr<FontType> m_fontType;
@@ -330,10 +330,10 @@ namespace acid
 		bool m_solidBorder;
 		bool m_glowBorder;
 
-		std::unique_ptr<IDriver> m_glowDriver;
+		std::unique_ptr<IDriver<float>> m_glowDriver;
 		float m_glowSize;
 
-		std::unique_ptr<IDriver> m_borderDriver;
+		std::unique_ptr<IDriver<float>> m_borderDriver;
 		float m_borderSize;
 	};
 }

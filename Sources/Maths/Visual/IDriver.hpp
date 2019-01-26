@@ -8,7 +8,8 @@ namespace acid
 	/// <summary>
 	/// Represents a driver that changes over time.
 	/// </summary>
-	class ACID_EXPORT IDriver
+	template<typename T>
+	class IDriver
 	{
 	public:
 		/// <summary>
@@ -29,7 +30,7 @@ namespace acid
 		/// </summary>
 		/// <param name="delta"> The time between the last update. </param>
 		/// <returns> The calculated value. </returns>
-		float Update(const Time &delta)
+		T Update(const Time &delta)
 		{
 			m_actualTime += delta;
 			m_currentTime += delta;
@@ -56,7 +57,7 @@ namespace acid
 		/// <param name="time"> The time into the drivers life.
 		/// </param>
 		/// <returns> The calculated value. </returns>
-		virtual float Calculate(const float &factor) = 0;
+		virtual T Calculate(const float &factor) = 0;
 
 		Time m_length;
 		Time m_actualTime;

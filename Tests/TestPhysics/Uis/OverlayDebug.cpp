@@ -68,7 +68,7 @@ namespace test
 		auto result = std::make_unique<Text>(this, UiBound(Vector2(positionX, positionY), UiReference::BottomLeft), 1.1f, content, FontType::Create("Fonts/ProximaNova", "Regular"), justify);
 		result->SetTextColour(Colour("#ffffff"));
 		result->SetBorderColour(Colour("#262626"));
-		result->SetBorderDriver<DriverConstant>(0.04f);
+		result->SetBorderDriver<DriverConstant<float>>(0.04f);
 		return result;
 	}
 }

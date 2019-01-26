@@ -44,19 +44,34 @@ namespace acid
 
 		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
 
-		const Colour &GetColourOffset() const { return m_colourOffset; }
+		IDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
 
-		void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
+		/// <summary>
+		/// Sets the colour offset driver.
+		/// </summary>
+		/// <param name="colourDriver"> The new colour offset driver. </param>
+		void SetColourDriver(IDriver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
+
+		/// <summary>
+		/// Sets a new colour offset driver from a type.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetColourDriver(Args &&... args) { SetColourDriver(new T(std::forward<Args>(args)...)); }
+
+		const Colour &GetColourOffset() const { return m_colourOffset; }
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;
 
 		std::shared_ptr<Model> m_model;
 		std::shared_ptr<Texture> m_texture;
-		Colour m_colourOffset;
 		uint32_t m_numberOfRows;
 		uint32_t m_selectedRow;
-
 		Vector2 m_atlasOffset;
+
+		std::unique_ptr<IDriver<Colour>> m_colourDriver;
+		Colour m_colourOffset;
 	};
 }

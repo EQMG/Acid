@@ -7,27 +7,33 @@
 
 namespace acid
 {
-	static const Time CHANGE_TIME = Time::Seconds(0.1f);
-	static const float FONT_SIZE = 1.7f;
-	static const float SCALE_NORMAL = 1.0f;
-	static const float SCALE_SELECTED = 1.1f;
+	static const Time SLIDE_TIME = Time::Seconds(0.2f);
+	static const Vector2 SIZE = Vector2(0.3f, 0.045f);
+	static const Vector2 PADDING = Vector2(0.017f, 0.09f);
+	static const float FONT_SIZE = 1.4f;
 
-	UiInputText::UiInputText(UiObject *parent, const std::string &prefix, const std::string &value,
-	    const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour) :
+	UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value,
+	    const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
-		m_text(std::make_unique<Text>(this, UiBound::Centre, FONT_SIZE, prefix + value,
-		    FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, rectangle.GetDimensions().m_x, Colour::White)),
+		m_slider(std::make_unique<Gui>(m_background.get(), UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale, 1.0f - (2.0f * PADDING)),
+			Texture::Create("Guis/Button.png"), secondaryColour)),
+		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.0f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+			FONT_SIZE, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
+		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.0f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+			FONT_SIZE, value, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
-		m_prefix(prefix),
+		m_title(title),
 		m_value(value),
 		m_maxLength(maxLength),
 		m_inputDelay(InputDelay()),
 		m_lastKey(0),
 		m_selected(false),
+		m_primaryColour(primaryColour),
 		m_mouseOver(false),
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
+		GetRectangle().SetDimensions(SIZE);
 		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods) {
 			if (!m_selected)
 			{
@@ -41,10 +47,8 @@ namespace acid
 				if (m_lastKey != 8 || m_inputDelay.CanInput())
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
-					m_text->SetString(m_prefix + m_value);
-
+					m_textValue->SetString(m_value);
 					m_onType(this, m_value);
-
 					m_lastKey = 8;
 				}
 			}
@@ -52,8 +56,7 @@ namespace acid
 			{
 				m_inputDelay.Update(true);
 
-				m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-				m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 				m_selected = false;
 
 				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -73,10 +76,8 @@ namespace acid
 				if (m_lastKey != c || m_inputDelay.CanInput())
 				{
 					m_value += c;
-					m_text->SetString(m_prefix + m_value);
-
+					m_textValue->SetString(m_value);
 					m_onType(this, m_value);
-
 					m_lastKey = c;
 				}
 			}
@@ -93,8 +94,7 @@ namespace acid
 		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
 			m_selected = true;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -104,8 +104,7 @@ namespace acid
 		}
 		else if (Uis::Get()->WasDown(MouseButton::Left) && m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 			m_selected = false;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -115,27 +114,25 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_SELECTED, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_SELECTED, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)
 		{
-			m_background->SetScaleDriver<DriverSlide>(m_background->GetScale(), SCALE_NORMAL, CHANGE_TIME);
-			m_text->SetScaleDriver<DriverSlide>(m_text->GetScale(), FONT_SIZE * SCALE_NORMAL, CHANGE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
 			m_mouseOver = false;
 		}
 	}
 
-	void UiInputText::SetPrefix(const std::string &prefix)
+	void UiInputText::SetTitle(const std::string &title)
 	{
-		m_prefix = prefix;
-		m_text->SetString(prefix + m_value);
+		m_title = title;
+		m_textTitle->SetString(m_title);
 	}
 
 	void UiInputText::SetValue(const std::string &value)
 	{
 		m_value = value;
-		m_text->SetString(m_prefix + value);
+		m_textValue->SetString(value);
 	}
 }

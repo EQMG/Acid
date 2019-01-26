@@ -7,8 +7,9 @@ namespace acid
 	/// <summary>
 	/// A bounce driver that uses a sine wave.
 	/// </summary>
-	class ACID_EXPORT DriverBounce :
-		public IDriver
+	template<typename T>
+	class DriverBounce :
+		public IDriver<T>
 	{
 	public:
 		/// <summary>
@@ -17,35 +18,50 @@ namespace acid
 		/// <param name="start"> The start value. </param>
 		/// <param name="end"> The end value. </param>
 		/// <param name="length"> The length between two waves. </param>
-		DriverBounce(const float &start, const float &end, const Time &length);
+		DriverBounce(const T &start, const T &end, const Time &length) :
+			IDriver<T>(length),
+			m_start(start),
+			m_end(end)
+		{
+		}
 
 		/// <summary>
 		/// Gets the start time.
 		/// </summary>
 		/// <returns> The start time. </returns>
-		const float &GetStart() const { return m_start; }
+		const T &GetStart() const { return m_start; }
 
 		/// <summary>
 		/// Sets the start time.
 		/// </summary>
 		/// <param name="start"> The new start time. </param>
-		void SetStart(const float &start) { m_start = start; }
+		void SetStart(const T &start) { m_start = start; }
 
 		/// <summary>
 		/// Gets the end time.
 		/// </summary>
 		/// <returns> The ebd time. </returns>
-		const float &GetEnd() const { return m_end; }
+		const T &GetEnd() const { return m_end; }
 
 		/// <summary>
 		/// Sets the end time.
 		/// </summary>
 		/// <param name="end"> The new end time. </param>
-		void SetEnd(const float &end) { m_end = end; }
+		void SetEnd(const T &end) { m_end = end; }
 	protected:
-		float Calculate(const float &factor) override;
+		T Calculate(const float &factor) override
+		{
+			float value = 0.5f + std::sin(Maths::Pi * 2.0f * factor) * 0.5f;
+
+			if (IDriver<T>::m_actualTime > IDriver<T>::GetLength() / 2.0f)
+			{
+				value = 0.0f;
+			}
+
+			return m_start + value * (m_end - m_start);
+		}
 	private:
-		float m_start;
-		float m_end;
+		T m_start;
+		T m_end;
 	};
 }

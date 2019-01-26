@@ -17,9 +17,9 @@ namespace acid
 		m_screenPosition(Vector2()),
 		m_lockRotation(true),
 		m_worldTransform({}),
-		m_alphaDriver(std::make_unique<DriverConstant>(1.0f)),
+		m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_alpha(1.0f),
-		m_scaleDriver(std::make_unique<DriverConstant>(1.0f)),
+		m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_scale(1.0f),
 		m_onClick(Delegate<void(UiObject *, MouseButton)>())
 	{

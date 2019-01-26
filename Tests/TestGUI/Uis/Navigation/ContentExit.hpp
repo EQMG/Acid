@@ -23,6 +23,10 @@ namespace test
 		std::unique_ptr<UiGrabberJoystick> m_input3;
 		std::unique_ptr<UiInputSlider> m_slider1;
 		std::unique_ptr<UiInputText> m_text1;
+		std::unique_ptr<UiInputSlider> m_sliderR;
+		std::unique_ptr<UiInputSlider> m_sliderG;
+		std::unique_ptr<UiInputSlider> m_sliderB;
+		std::unique_ptr<Gui> m_rgbColour;
 	public:
 		explicit ContentExit(UiObject *parent);
 

@@ -7,8 +7,9 @@ namespace acid
 	/// <summary>
 	/// A driver that fades from start to end.
 	/// </summary>
-	class ACID_EXPORT DriverFade :
-		public IDriver
+	template<typename T>
+	class DriverFade :
+		public IDriver<T>
 	{
 	public:
 		/// <summary>
@@ -18,48 +19,67 @@ namespace acid
 		/// <param name="end"> The fade end interval (0.0-1.0). </param>
 		/// <param name="peak"> The peak value. </param>
 		/// <param name="length"> The time taken to get to the end. </param>
-		DriverFade(const float &start, const float &end, const float &peak, const Time &length);
+		DriverFade(const T &start, const T &end, const T &peak, const Time &length) :
+			IDriver<T>(length),
+			m_start(start),
+			m_end(end),
+			m_peak(peak)
+		{
+		}
 
 		/// <summary>
 		/// Gets the start interval.
 		/// </summary>
 		/// <returns> The start interval. </returns>
-		const float &GetStart() const { return m_start; }
+		const T &GetStart() const { return m_start; }
 
 		/// <summary>
 		/// Sets the start interval (0.0-1.0).
 		/// </summary>
 		/// <param name="start"> The new start interval. </param>
-		void SetStart(const float &start) { m_start = start; }
+		void SetStart(const T &start) { m_start = start; }
 
 		/// <summary>
 		/// Gets the end interval.
 		/// </summary>
 		/// <returns> The end interval. </returns>
-		const float &GetEnd() const { return m_end; }
+		const T &GetEnd() const { return m_end; }
 
 		/// <summary>
 		/// Sets the end interval (0.0-1.0).
 		/// </summary>
 		/// <param name="end"> The new end interval. </param>
-		void SetEnd(const float &end) { m_end = end; }
+		void SetEnd(const T &end) { m_end = end; }
 
 		/// <summary>
 		/// Gets the peak value.
 		/// </summary>
 		/// <returns> The peak value. </returns>
-		const float &GetPeak() const { return m_peak; }
+		const T &GetPeak() const { return m_peak; }
 
 		/// <summary>
 		/// Sets the peak value.
 		/// </summary>
 		/// <param name="peak"> The new peak value. </param>
-		void SetPeak(const float &peak) { m_peak = peak; }
+		void SetPeak(const T &peak) { m_peak = peak; }
 	protected:
-		float Calculate(const float &factor) override;
+		T Calculate(const float &factor) override
+		{
+			if (factor < m_start)
+			{
+				return factor / m_start * m_peak;
+			}
+
+			if (factor > m_end)
+			{
+				return (1.0f - (factor - m_end) / (1.0f - m_end)) * m_peak;
+			}
+
+			return m_peak;
+		}
 	private:
-		float m_start;
-		float m_end;
-		float m_peak;
+		T m_start;
+		T m_end;
+		T m_peak;
 	};
 }

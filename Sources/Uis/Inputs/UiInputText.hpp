@@ -13,15 +13,15 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputText(UiObject *parent, const std::string &prefix, const std::string &value, const int32_t &maxLength,
+		UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
 			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
-			const Colour &primaryColour = Colour("#171717"));
+			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
 		void UpdateObject() override;
 
-		const std::string &GetPrefix() const { return m_prefix; }
+		const std::string &GetTitle() const { return m_title; }
 
-		void SetPrefix(const std::string &prefix);
+		void SetTitle(const std::string &title);
 
 		const std::string &GetValue() const { return m_value; }
 
@@ -30,10 +30,12 @@ namespace acid
 		Delegate<void(UiInputText *, std::string)> &GetOnType() { return m_onType; }
 	private:
 		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_text;
+		std::unique_ptr<Gui> m_slider;
+		std::unique_ptr<Text> m_textTitle;
+		std::unique_ptr<Text> m_textValue;
 		Sound m_soundClick;
 
-		std::string m_prefix;
+		std::string m_title;
 		std::string m_value;
 		int32_t m_maxLength;
 
@@ -41,6 +43,7 @@ namespace acid
 		int32_t m_lastKey;
 
 		bool m_selected;
+		Colour m_primaryColour;
 		bool m_mouseOver;
 
 		Delegate<void(UiInputText *, std::string)> m_onType;
