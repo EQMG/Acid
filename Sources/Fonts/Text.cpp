@@ -59,7 +59,7 @@ namespace acid
 	bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (m_model == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
+		if (m_model == nullptr || m_fontType == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
 		{
 			return false;
 		}

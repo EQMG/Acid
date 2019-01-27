@@ -7,11 +7,11 @@
 namespace test
 {
 	ContentExit::ContentExit(UiObject *parent) :
-		UiPanel(parent, UiBound(Vector2(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Dimensions, Vector2(0.8f, 0.8f))),
+		UiPanel(parent, UiBound(Vector2(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Dimensions, Vector2(0.8f, 0.8f))), // , ScrollBar::None
 		m_button1(std::make_unique<UiInputButton>(GetContent(), "Button #1", UiBound(Vector2(0.08f, 0.05f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions))),
 		m_button2(std::make_unique<UiInputButton>(GetContent(), "Button #2", UiBound(Vector2(0.92f, 0.05f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions))),
 		m_button3(std::make_unique<UiInputButton>(GetContent(), "Button #3", UiBound(Vector2(1.02f, 0.05f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions))),
-		m_image1(std::make_unique<Gui>(GetContent(), UiBound(Vector2(1.02f, 0.12f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.5f, 1.0f)), Texture::Create("Guis/Gradient.png"))),
+		m_image1(std::make_unique<Gui>(GetContent(), UiBound(Vector2(1.02f, 0.12f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.3f, 1.0f)), Texture::Create("Guis/Gradient.png"))),
 		m_input1(std::make_unique<UiGrabberMouse>(GetContent(), "Mouse Grabber", MouseButton::Left, UiBound(Vector2(0.08f, 0.12f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions))),
 		m_input2(std::make_unique<UiGrabberKeyboard>(GetContent(), "Keyboard Grabber", Key::W, UiBound(Vector2(0.08f, 0.19f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions))),
 		m_input3(std::make_unique<UiGrabberJoystick>(GetContent(), "Joystick Grabber", 0, 3, UiBound(Vector2(0.08f, 0.26f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions))),
