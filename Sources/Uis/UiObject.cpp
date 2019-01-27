@@ -97,12 +97,15 @@ namespace acid
 
 	bool UiObject::IsSelected() const
 	{
-		Vector2 cursor = Mouse::Get()->GetPosition();
+		if (!m_enabled)
+		{
+			return false;
+		}
 
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
-			return cursor.m_x >= m_screenPosition.m_x && cursor.m_x <= m_screenPosition.m_x + m_screenDimension.m_x &&
-				cursor.m_y >= m_screenPosition.m_y && cursor.m_y <= m_screenPosition.m_y + m_screenDimension.m_y;
+			Vector2 distance = Mouse::Get()->GetPosition() - m_screenPosition;
+			return distance >= Vector2::Zero && distance <= m_screenDimension;
 		}
 
 		return false;

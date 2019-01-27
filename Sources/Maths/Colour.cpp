@@ -241,42 +241,42 @@ namespace acid
 
 	Colour operator+(const float &value, const Colour &left)
 	{
-		return Colour(value, value, value, value).Add(left);
+		return Colour(value, value, value, 0.0f).Add(left);
 	}
 
 	Colour operator-(const float &value, const Colour &left)
 	{
-		return Colour(value, value, value, value).Subtract(left);
+		return Colour(value, value, value, 0.0f).Subtract(left);
 	}
 
 	Colour operator*(const float &value, const Colour &left)
 	{
-		return Colour(value, value, value, value).Multiply(left);
+		return Colour(value, value, value).Multiply(left);
 	}
 
 	Colour operator/(const float &value, const Colour &left)
 	{
-		return Colour(value, value, value, value).Divide(left);
+		return Colour(value, value, value).Divide(left);
 	}
 
 	Colour operator+(const Colour &left, const float &value)
 	{
-		return left.Add(Colour(value, value, value, value));
+		return left.Add(Colour(value, value, value, 0.0f));
 	}
 
 	Colour operator-(const Colour &left, const float &value)
 	{
-		return left.Subtract(Colour(value, value, value, value));
+		return left.Subtract(Colour(value, value, value, 0.0f));
 	}
 
 	Colour operator*(const Colour &left, const float &value)
 	{
-		return left.Multiply(Colour(value, value, value, value));
+		return left.Multiply(Colour(value, value, value));
 	}
 
 	Colour operator/(const Colour &left, const float &value)
 	{
-		return left.Divide(Colour(value, value, value, value));
+		return left.Divide(Colour(value, value, value));
 	}
 
 	Colour &Colour::operator+=(const Colour &other)
@@ -301,22 +301,22 @@ namespace acid
 
 	Colour &Colour::operator+=(const float &value)
 	{
-		return *this = Add(Colour(value, value, value, value));
+		return *this = Add(Colour(value, value, value, 0.0f));
 	}
 
 	Colour &Colour::operator-=(const float &value)
 	{
-		return *this = Subtract(Colour(value, value, value, value));
+		return *this = Subtract(Colour(value, value, value, 0.0f));
 	}
 
 	Colour &Colour::operator*=(const float &value)
 	{
-		return *this = Multiply(Colour(value, value, value, value));
+		return *this = Multiply(Colour(value, value, value));
 	}
 
 	Colour &Colour::operator/=(const float &value)
 	{
-		return *this = Divide(Colour(value, value, value, value));
+		return *this = Divide(Colour(value, value, value));
 	}
 
 	std::ostream &operator<<(std::ostream &stream, const Colour &colour)

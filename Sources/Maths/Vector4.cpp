@@ -166,6 +166,16 @@ namespace acid
 		return Vector4(Maths::SmoothDamp(m_x, target.m_x, rate.m_x), Maths::SmoothDamp(m_y, target.m_y, rate.m_y), Maths::SmoothDamp(m_z, target.m_z, rate.m_z), Maths::SmoothDamp(m_w, target.m_w, rate.m_w));
 	}
 
+	Vector4 Vector4::MinVector(const Vector4 &a, const Vector4 &b)
+	{
+		return Vector4(std::min(a.m_x, b.m_x), std::min(a.m_y, b.m_y), std::min(a.m_z, b.m_z), std::min(a.m_w, b.m_w));
+	}
+
+	Vector4 Vector4::MaxVector(const Vector4 &a, const Vector4 &b)
+	{
+		return Vector4(std::max(a.m_x, b.m_x), std::max(a.m_y, b.m_y), std::max(a.m_z, b.m_z), std::max(a.m_w, b.m_w));
+	}
+
 	void Vector4::Decode(const Metadata &metadata)
 	{
 		m_x = metadata.GetChild<float>("x");

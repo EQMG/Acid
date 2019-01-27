@@ -15,6 +15,7 @@ namespace acid
 	{
 		Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetWidth());
 		Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetHeight()));
+		Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePositionX, Mouse::Get()->m_mousePositionY);
 	}
 
 	void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
@@ -26,6 +27,7 @@ namespace acid
 	void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 	{
 		Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
+		Mouse::Get()->m_onScroll(static_cast<float>(xoffset), static_cast<float>(yoffset));
 	}
 
 	void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
@@ -51,7 +53,9 @@ namespace acid
 		m_windowSelected(true),
 		m_cursorHidden(false),
 		m_onButton(Delegate<void(MouseButton, InputAction, bitmask<InputMod>)>()),
+		m_onPosition(Delegate<void(float, float)>()),
 		m_onEnter(Delegate<void(bool)>()),
+		m_onScroll(Delegate<void(float, float)>()),
 		m_onDrop(Delegate<void(std::vector<std::string>)>())
 	{
 		glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);

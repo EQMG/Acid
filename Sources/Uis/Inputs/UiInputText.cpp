@@ -2,14 +2,13 @@
 
 #include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
 {
 	static const Time SLIDE_TIME = Time::Seconds(0.2f);
 	static const Vector2 SIZE = Vector2(0.3f, 0.045f);
-	static const Vector2 PADDING = Vector2(0.017f, 0.09f);
+	static const Vector2 PADDING = Vector2(0.01f, 0.07f);
 	static const float FONT_SIZE = 1.4f;
 
 	UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value,
@@ -94,7 +93,7 @@ namespace acid
 		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.25f * m_primaryColour, SLIDE_TIME);
 			m_selected = true;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -114,7 +113,7 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.25f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)

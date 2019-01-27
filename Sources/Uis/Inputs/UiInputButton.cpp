@@ -1,7 +1,6 @@
 ﻿#include "UiInputButton.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
@@ -14,7 +13,7 @@ namespace acid
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
 		m_text(std::make_unique<Text>(this, UiBound::Centre, FONT_SIZE, string,
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, SIZE.m_x, Colour::White)),
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_primaryColour(primaryColour),
 		m_mouseOver(false),

@@ -1,8 +1,6 @@
 ﻿#include "UiInputSlider.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
-#include "Renderer/Renderer.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
@@ -10,7 +8,7 @@ namespace acid
 	static const Time SLIDE_TIME = Time::Seconds(0.2f);
 	static const Time CHANGE_TIME = Time::Seconds(0.15f);
 	static const Vector2 SIZE = Vector2(0.3f, 0.045f);
-	static const Vector2 PADDING = Vector2(0.017f, 0.09f);
+	static const Vector2 PADDING = Vector2(0.01f, 0.07f);
 	static const float FONT_SIZE = 1.4f;
 
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value,
@@ -88,7 +86,7 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.2f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.25f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && !m_updating && m_mouseOver)

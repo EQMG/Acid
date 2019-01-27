@@ -14,7 +14,7 @@ namespace acid
 	{
 	public:
 		UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
 		void UpdateObject() override;

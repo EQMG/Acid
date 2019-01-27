@@ -172,6 +172,22 @@ namespace acid
 		/// <returns> The changed vector. </returns>
 		Vector4 SmoothDamp(const Vector4 &target, const Vector4 &rate) const;
 
+		/// <summary>
+		/// Gets the lowest vector size.
+		/// </summary>
+		/// <param name="a"> The first vector to get values from. </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <returns> The lowest vector. </returns>
+		static Vector4 MinVector(const Vector4 &a, const Vector4 &b);
+
+		/// <summary>
+		/// Gets the maximum vector size.
+		/// </summary>
+		/// <param name="a"> The first vector to get values from. </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <returns> The maximum vector. </returns>
+		static Vector4 MaxVector(const Vector4 &a, const Vector4 &b);
+
 		float GetX() const { return m_x; }
 
 		void SetX(const float &x) { m_x = x; }

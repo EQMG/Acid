@@ -198,6 +198,22 @@ namespace acid
 		/// <returns> The cartesian coordinates (x, y). </returns>
 		Vector2 PolarToCartesian() const;
 
+		/// <summary>
+		/// Gets the lowest vector size.
+		/// </summary>
+		/// <param name="a"> The first vector to get values from. </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <returns> The lowest vector. </returns>
+		static Vector2 MinVector(const Vector2 &a, const Vector2 &b);
+
+		/// <summary>
+		/// Gets the maximum vector size.
+		/// </summary>
+		/// <param name="a"> The first vector to get values from. </param>
+		/// <param name="b"> The second vector to get values from. </param>
+		/// <returns> The maximum vector. </returns>
+		static Vector2 MaxVector(const Vector2 &a, const Vector2 &b);
+
 		float GetX() const { return m_x; }
 
 		void SetX(const float &x) { m_x = x; }
