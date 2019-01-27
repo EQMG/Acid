@@ -226,12 +226,14 @@ set(_temp_acid_headers
 		Textures/Texture.hpp
 		Threads/Thread.hpp
 		Threads/ThreadPool.hpp
+		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputButton.hpp
 		Uis/Inputs/UiInputGrabber.hpp
 		Uis/Inputs/UiInputSlider.hpp
 		Uis/Inputs/UiInputText.hpp
 		Uis/UiBound.hpp
 		Uis/UiObject.hpp
+		Uis/UiPanel.hpp
 		Uis/Uis.hpp
 		Uis/UiStartLogo.hpp
 		)
@@ -427,12 +429,14 @@ set(_temp_acid_sources
 		Textures/Texture.cpp
 		Threads/Thread.cpp
 		Threads/ThreadPool.cpp
+		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputButton.cpp
 		Uis/Inputs/UiInputGrabber.cpp
 		Uis/Inputs/UiInputSlider.cpp
 		Uis/Inputs/UiInputText.cpp
 		Uis/UiBound.cpp
 		Uis/UiObject.cpp
+		Uis/UiPanel.cpp
 		Uis/Uis.cpp
 		Uis/UiStartLogo.cpp
 		)

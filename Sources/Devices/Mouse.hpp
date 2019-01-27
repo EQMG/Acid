@@ -144,7 +144,11 @@ namespace acid
 
 		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> &GetOnButton() { return m_onButton; }
 
-		Delegate<void(bool)> &GetEnter() { return m_onEnter; }
+		Delegate<void(float, float)> &GetOnPosition() { return m_onPosition; }
+
+		Delegate<void(bool)> &GetOnEnter() { return m_onEnter; }
+
+		Delegate<void(float, float)> &GetOnScroll() { return m_onScroll; }
 
 		Delegate<void(std::vector<std::string>)> &GetOnDrop() { return m_onDrop; }
 	private:
@@ -159,7 +163,9 @@ namespace acid
 		bool m_cursorHidden;
 
 		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> m_onButton;
+		Delegate<void(float, float)> m_onPosition;
 		Delegate<void(bool)> m_onEnter;
+		Delegate<void(float, float)> m_onScroll;
 		Delegate<void(std::vector<std::string>)> m_onDrop;
 
 		friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);

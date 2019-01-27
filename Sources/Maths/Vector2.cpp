@@ -182,6 +182,16 @@ namespace acid
 		return Vector2(x, y);
 	}
 
+	Vector2 Vector2::MinVector(const Vector2 &a, const Vector2 &b)
+	{
+		return Vector2(std::min(a.m_x, b.m_x), std::min(a.m_y, b.m_y));
+	}
+
+	Vector2 Vector2::MaxVector(const Vector2 &a, const Vector2 &b)
+	{
+		return Vector2(std::max(a.m_x, b.m_x), std::max(a.m_y, b.m_y));
+	}
+
 	void Vector2::Decode(const Metadata &metadata)
 	{
 		m_x = metadata.GetChild<float>("x");

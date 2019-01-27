@@ -12,14 +12,15 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions, Vector2(0.36f, 0.05f)),
+		UiInputButton(UiObject *parent, const std::string &string,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 			const Colour &primaryColour = Colour("#1976d2"));
 
 		void UpdateObject() override;
 
 		const std::string &GetString() const { return m_text->GetString(); }
 
-		void SetString(const std::string &string) const { m_text->SetString(string); }
+		void SetString(const std::string &string) { m_text->SetString(string); }
 
 		Delegate<void(UiInputButton *, bool)> &GetOnPressed() { return m_onPressed; }
 	private:
