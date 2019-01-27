@@ -33,7 +33,6 @@ namespace acid
 		virtual std::string GetTextString() const = 0;
 
 		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Gui> m_slider;
 		std::unique_ptr<Text> m_textTitle;
 		std::unique_ptr<Text> m_textValue;
 		Sound m_soundClick;

@@ -78,7 +78,9 @@ namespace acid
 
 		static const UiBound Screen;
 		static const UiBound Maximum;
+		static const UiBound Left;
 		static const UiBound Centre;
+		static const UiBound Right;
 
 		Vector2 m_position;
 		Vector2 m_reference;

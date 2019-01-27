@@ -14,9 +14,11 @@ namespace acid
 	const Vector2 UiReference::BottomCentre = Vector2(0.5f, 1.0f);
 	const Vector2 UiReference::BottomRight = Vector2(1.0f, 1.0f);
 
-	const UiBound UiBound::Screen = UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position, Vector2(1.0f, 1.0f));
-	const UiBound UiBound::Maximum = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale, Vector2(1.0f, 1.0f));
-	const UiBound UiBound::Centre = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions);
+	const UiBound UiBound::Screen = UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position);
+	const UiBound UiBound::Maximum = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale);
+	const UiBound UiBound::Left = UiBound(Vector2(0.0f, 0.5f), UiReference::CentreLeft);
+	const UiBound UiBound::Centre = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre);
+	const UiBound UiBound::Right = UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight);
 
 	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const bitmask<UiAspect> &aspect, const Vector2 &dimensions) :
 		m_position(position),

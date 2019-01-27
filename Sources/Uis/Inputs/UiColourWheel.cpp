@@ -5,7 +5,7 @@
 
 namespace acid
 {
-//	static const Time SLIDE_TIME = Time::Seconds(0.2f);
+//	static const Time SLIDE_TIME = Time::Seconds(0.1f);
 	static const Vector2 SIZE = Vector2(0.3f, 0.3f);
 //	static const float FONT_SIZE = 1.4f;
 
@@ -22,7 +22,6 @@ namespace acid
 
 	void UiColourWheel::UpdateObject()
 	{
-		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
