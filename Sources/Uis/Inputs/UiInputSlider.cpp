@@ -1,11 +1,12 @@
 ﻿#include "UiInputSlider.hpp"
 
+#include <iomanip>
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
 {
-	static const Time SLIDE_TIME = Time::Seconds(0.2f);
+	static const Time SLIDE_TIME = Time::Seconds(0.1f);
 	static const Time CHANGE_TIME = Time::Seconds(0.15f);
 	static const Vector2 SIZE = Vector2(0.3f, 0.045f);
 	static const Vector2 PADDING = Vector2(0.01f, 0.07f);
@@ -15,12 +16,12 @@ namespace acid
 	    const float &progressMin, const float &progressMax, const int32_t &roundTo,
 	    const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, rectangle),
+		m_slider(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Scale),
+			Texture::Create("Guis/Button_Full.png"), primaryColour)),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
-		m_slider(std::make_unique<Gui>(m_background.get(), UiBound(Vector2(1.0f - PADDING.m_x, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale),
-		    Texture::Create("Guis/Button.png"), secondaryColour)),
-		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.0f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			FONT_SIZE, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
-		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.0f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
 			FONT_SIZE, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_title(title),
@@ -41,7 +42,6 @@ namespace acid
 
 	void UiInputSlider::UpdateObject()
 	{
-		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_updating && !m_soundClick.IsPlaying())
@@ -75,7 +75,6 @@ namespace acid
 			CancelEvent(MouseButton::Left);
 		}
 
-		// Updates the listener.
 		if (m_hasChange && m_timerChange.IsPassedTime())
 		{
 			UpdateText();
@@ -83,10 +82,9 @@ namespace acid
 			m_timerChange.ResetStartTime();
 		}
 
-		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.4f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.3f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && !m_updating && m_mouseOver)
@@ -95,7 +93,7 @@ namespace acid
 			m_mouseOver = false;
 		}
 
-		m_slider->GetRectangle().SetDimensions(Vector2(1.0f - m_value, 1.0f) * (1.0f - (2.0f * PADDING)));
+		m_slider->GetRectangle().SetDimensions(Vector2(m_value, 1.0f));
 	}
 
 	void UiInputSlider::SetTitle(const std::string &title)
@@ -113,7 +111,9 @@ namespace acid
 	void UiInputSlider::UpdateText()
 	{
 		float value = (m_value * (m_progressMax - m_progressMin)) + m_progressMin;
-		value = Maths::RoundToPlace(value, m_roundTo);
-		m_textValue->SetString(String::To(value));
+	//	value = Maths::RoundToPlace(value, m_roundTo);
+		std::stringstream rounded;
+		rounded << std::fixed << std::setprecision(m_roundTo) << value;
+		m_textValue->SetString(rounded.str());
 	}
 }

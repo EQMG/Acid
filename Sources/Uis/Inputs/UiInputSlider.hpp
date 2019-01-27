@@ -13,7 +13,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &progressMin, const float &progressMax, const int32_t &roundTo,
+		UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &progressMin, const float &progressMax, const int32_t &roundTo = 2,
 			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
 
@@ -39,8 +39,8 @@ namespace acid
 	private:
 		void UpdateText();
 
-		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Gui> m_slider;
+		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Text> m_textTitle;
 		std::unique_ptr<Text> m_textValue;
 		Sound m_soundClick;

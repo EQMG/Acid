@@ -3,6 +3,7 @@
 #include <Uis/Inputs/UiInputButton.hpp>
 #include <Uis/Inputs/UiInputGrabber.hpp>
 #include <Uis/Inputs/UiInputSlider.hpp>
+#include <Uis/Inputs/UiInputRadio.hpp>
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/Inputs/UiColourWheel.hpp>
 #include <Uis/UiPanel.hpp>
@@ -19,6 +20,10 @@ namespace test
 		std::unique_ptr<UiInputButton> m_button1;
 		std::unique_ptr<UiInputButton> m_button2;
 		std::unique_ptr<UiInputButton> m_button3;
+		std::unique_ptr<UiInputRadio> m_radio1;
+		std::unique_ptr<UiInputRadio> m_radio2;
+		std::unique_ptr<UiInputRadio> m_radio3;
+		UiRadioManager m_radioManager;
 		std::unique_ptr<Gui> m_image1;
 		std::unique_ptr<UiGrabberMouse> m_input1;
 		std::unique_ptr<UiGrabberKeyboard> m_input2;

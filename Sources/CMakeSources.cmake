@@ -229,6 +229,7 @@ set(_temp_acid_headers
 		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputButton.hpp
 		Uis/Inputs/UiInputGrabber.hpp
+		Uis/Inputs/UiInputRadio.hpp
 		Uis/Inputs/UiInputSlider.hpp
 		Uis/Inputs/UiInputText.hpp
 		Uis/UiBound.hpp
@@ -432,6 +433,7 @@ set(_temp_acid_sources
 		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputButton.cpp
 		Uis/Inputs/UiInputGrabber.cpp
+		Uis/Inputs/UiInputRadio.cpp
 		Uis/Inputs/UiInputSlider.cpp
 		Uis/Inputs/UiInputText.cpp
 		Uis/UiBound.cpp

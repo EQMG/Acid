@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	static const Vector2 SCROLL_BAR = Vector2(0.018f, 0.2f);
+	static const Vector2 SCROLL_BAR = Vector2(0.012f, 0.2f);
 	static const float VALUE_SCALE = 1.1f;
 
 	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const bitmask<ScrollBar> &scrollBars, const Colour &primaryColour, const Colour &secondaryColour) :
@@ -12,9 +12,9 @@ namespace acid
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Panel.png"), primaryColour)),
 		m_content(std::make_unique<UiObject>(this, UiBound::Maximum)),
 		m_scrollX(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x)),
-			Texture::Create("Guis/Button.png"), secondaryColour)),
+			Texture::Create("Guis/Button_Full.png"), secondaryColour)),
 		m_scrollY(std::make_unique<Gui>(this, UiBound(Vector2(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, SCROLL_BAR.m_y)),
-			Texture::Create("Guis/Button.png"), secondaryColour)),
+			Texture::Create("Guis/Button_Full.png"), secondaryColour)),
 		m_scrollBars(scrollBars),
 		m_updatingX(false),
 		m_updatingY(false),
