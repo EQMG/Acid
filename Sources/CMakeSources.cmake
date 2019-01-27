@@ -236,6 +236,7 @@ set(_temp_acid_headers
 		Uis/UiObject.hpp
 		Uis/UiPanel.hpp
 		Uis/Uis.hpp
+		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		)
 set(_temp_acid_sources
@@ -440,6 +441,7 @@ set(_temp_acid_sources
 		Uis/UiObject.cpp
 		Uis/UiPanel.cpp
 		Uis/Uis.cpp
+		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
 

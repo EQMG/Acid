@@ -51,6 +51,7 @@ namespace acid
 			}
 
 			m_updating = true;
+			CancelEvent(MouseButton::Left);
 		}
 		else if (!Uis::Get()->IsDown(MouseButton::Left))
 		{

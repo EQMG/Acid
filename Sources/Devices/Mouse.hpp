@@ -107,6 +107,12 @@ namespace acid
 		void SetPosition(const Vector2 &position);
 
 		/// <summary>
+		/// Gets the mouses delta.
+		/// </summary>
+		/// <returns> The mouses delta. </returns>
+		Vector2 GetDelta() const { return Vector2(GetDeltaX(), GetDeltaY()); }
+
+		/// <summary>
 		/// Gets the mouses delta x.
 		/// </summary>
 		/// <returns> The mouses delta x. </returns>

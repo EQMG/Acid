@@ -5,9 +5,7 @@
 
 namespace acid
 {
-//	static const Time SLIDE_TIME = Time::Seconds(0.1f);
 	static const Vector2 SIZE = Vector2(0.3f, 0.3f);
-//	static const float FONT_SIZE = 1.4f;
 
 	UiColourWheel::UiColourWheel(UiObject *parent, const Colour &colour, const UiBound &rectangle) :
 		UiObject(parent, rectangle),

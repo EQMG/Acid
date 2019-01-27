@@ -4,8 +4,8 @@
 
 namespace acid
 {
-	static const Vector2 SCROLL_BAR = Vector2(0.012f, 0.2f);
-	static const float VALUE_SCALE = 1.1f;
+	static const Vector2 SCROLL_BAR = Vector2(0.015f, 0.2f);
+	static const float VALUE_SCALE = 1.15f;
 
 	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const bitmask<ScrollBar> &scrollBars, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, rectangle),
@@ -102,7 +102,7 @@ namespace acid
 		auto dimension = m_background->GetScreenDimension();
 		object->SetScissor(Vector4(position.m_x, position.m_y, dimension.m_x, dimension.m_y));
 
-		if (size)
+		if (object->IsEnabled() && size)
 		{
 			m_min = Vector2::MinVector(m_min, object->GetScreenPosition());
 			m_max = Vector2::MaxVector(m_max, object->GetScreenPosition() + object->GetScreenDimension());

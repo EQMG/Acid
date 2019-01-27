@@ -45,6 +45,7 @@ namespace acid
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 			m_soundClick.Play();
+			CancelEvent(MouseButton::Left);
 		}
 
 		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
