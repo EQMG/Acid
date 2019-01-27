@@ -39,7 +39,7 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 0.9f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 0.72f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver)

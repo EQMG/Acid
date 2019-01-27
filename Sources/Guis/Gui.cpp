@@ -44,7 +44,7 @@ namespace acid
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (!IsEnabled() || GetAlpha() == 0.0f)
+		if (m_texture == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
 		{
 			return false;
 		}

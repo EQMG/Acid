@@ -93,7 +93,7 @@ namespace acid
 		// Click updates.
 		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.25f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.4f * m_primaryColour, SLIDE_TIME);
 			m_selected = true;
 
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
@@ -113,7 +113,7 @@ namespace acid
 		// Mouse over updates.
 		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.25f * m_primaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.4f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)

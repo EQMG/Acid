@@ -4,43 +4,36 @@
 
 namespace acid
 {
-	static const Vector2 SCROLL_BAR = Vector2(0.018f, 0.1f);
+	static const Vector2 SCROLL_BAR = Vector2(0.018f, 0.2f);
+	static const float VALUE_SCALE = 1.1f;
 
-	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
+	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const bitmask<ScrollBar> &scrollBars, const Colour &primaryColour, const Colour &secondaryColour) :
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Panel.png"), primaryColour)),
-		m_scrollBarX(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 1.0f), UiReference::BottomCentre, UiAspect::Position | UiAspect::Dimensions, Vector2(rectangle.GetDimensions().m_x, SCROLL_BAR.m_x)),
-			Texture::Create("Guis/Panel.png"), secondaryColour)),
-		m_puckX(std::make_unique<Gui>(m_scrollBarX.get(), UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x)),
-			Texture::Create("Guis/Panel.png"), 1.4f * secondaryColour)),
-		m_scrollBarY(std::make_unique<Gui>(this, UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, rectangle.GetDimensions().m_y)),
-			Texture::Create("Guis/Panel.png"), secondaryColour)),
-		m_puckY(std::make_unique<Gui>(m_scrollBarY.get(), UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, SCROLL_BAR.m_y)),
-		    Texture::Create("Guis/Panel.png"), 1.4f * secondaryColour)),
 		m_content(std::make_unique<UiObject>(this, UiBound::Maximum)),
+		m_scrollX(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x)),
+			Texture::Create("Guis/Button.png"), secondaryColour)),
+		m_scrollY(std::make_unique<Gui>(this, UiBound(Vector2(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, SCROLL_BAR.m_y)),
+			Texture::Create("Guis/Button.png"), secondaryColour)),
+		m_scrollBars(scrollBars),
 		m_updatingX(false),
 		m_updatingY(false),
 		m_min(Vector2()),
 		m_max(Vector2())
 	{
-		m_scrollBarX->SetDepth(10.0f);
-		m_puckX->SetDepth(10.1f);
-		m_scrollBarY->SetDepth(10.0f);
-		m_puckY->SetDepth(10.1f);
-
 		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
 			if (m_background->IsSelected() && GetAlpha() == 1.0f)
 			{
-				if (!m_updatingX && m_scrollBarX->IsEnabled())
+				if (!m_updatingX && m_scrollX->IsEnabled())
 				{
-					float value = ScrollByDelta(-0.06f * xOffset, m_puckX.get(), m_scrollBarX.get(), 0);
-					m_puckX->GetRectangle().SetPosition(Vector2(value, 0.0f));
+					float value = ScrollByDelta(-0.06f * xOffset, m_scrollX.get(), m_background.get(), 0);
+					m_scrollX->GetRectangle().SetPosition(Vector2(value, 1.0f));
 				}
 
-				if (!m_updatingY && m_scrollBarY->IsEnabled())
+				if (!m_updatingY && m_scrollY->IsEnabled())
 				{
-					float value = ScrollByDelta(-0.06f * yOffset, m_puckY.get(), m_scrollBarY.get(), 1);
-					m_puckY->GetRectangle().SetPosition(Vector2(0.0f, value));
+					float value = ScrollByDelta(-0.06f * yOffset, m_scrollY.get(), m_background.get(), 1);
+					m_scrollY->GetRectangle().SetPosition(Vector2(1.0f, value));
 				}
 			}
 		};
@@ -49,16 +42,16 @@ namespace acid
 	void UiPanel::UpdateObject()
 	{
 		Vector2 contentSize = (m_max - m_min) / GetScreenDimension();
-		m_scrollBarX->SetEnabled(contentSize.m_x > 1.05f);
-		m_scrollBarY->SetEnabled(contentSize.m_y > 1.05f);
+		m_scrollX->SetEnabled((m_scrollBars & ScrollBar::Horizontal) && contentSize.m_x > 1.05f);
+		m_scrollY->SetEnabled((m_scrollBars & ScrollBar::Vertical) && contentSize.m_y > 1.05f);
 
-		if (m_scrollBarX->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_scrollX->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			m_updatingX = true;
 		}
-		else if (!m_scrollBarX->IsEnabled())
+		else if (!m_scrollX->IsEnabled())
 		{
-			m_puckX->GetRectangle().SetPosition(Vector2());
+			m_scrollX->GetRectangle().SetPosition(Vector2(0.0f, 1.0f));
 		}
 		else if (m_updatingX)
 		{
@@ -67,18 +60,18 @@ namespace acid
 				m_updatingX = false;
 			}
 
-			float value = ScrollByPosition(Mouse::Get()->GetPositionX(), m_puckX.get(), m_scrollBarX.get(), 0);
-			m_puckX->GetRectangle().SetPosition(Vector2(value, 0.0f));
+			float value = ScrollByPosition(Mouse::Get()->GetPositionX(), m_scrollX.get(), m_background.get(), 0);
+			m_scrollX->GetRectangle().SetPosition(Vector2(value, 1.0f));
 			CancelEvent(MouseButton::Left);
 		}
 
-		if (m_scrollBarY->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_scrollY->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			m_updatingY = true;
 		}
-		else if (!m_scrollBarY->IsEnabled())
+		else if (!m_scrollY->IsEnabled())
 		{
-			m_puckY->GetRectangle().SetPosition(Vector2());
+			m_scrollY->GetRectangle().SetPosition(Vector2(1.0f, 0.0f));
 		}
 		else if (m_updatingY)
 		{
@@ -87,24 +80,20 @@ namespace acid
 				m_updatingY = false;
 			}
 
-			float value = ScrollByPosition(Mouse::Get()->GetPositionY(), m_puckY.get(), m_scrollBarY.get(), 1);
-			m_puckY->GetRectangle().SetPosition(Vector2(0.0f, value));
+			float value = ScrollByPosition(Mouse::Get()->GetPositionY(), m_scrollY.get(), m_background.get(), 1);
+			m_scrollY->GetRectangle().SetPosition(Vector2(1.0f, value));
 			CancelEvent(MouseButton::Left);
 		}
 
-		m_content->GetRectangle().SetPosition(0.5f - (Vector2(m_puckX->GetRectangle().GetPosition().m_x, m_puckY->GetRectangle().GetPosition().m_y) / contentSize));
+		m_scrollX->GetRectangle().SetDimensions(Vector2(0.5f * (1.0f / contentSize.m_x), SCROLL_BAR.m_x));
+		m_scrollY->GetRectangle().SetDimensions(Vector2(SCROLL_BAR.m_x, 0.5f * (1.0f / contentSize.m_y)));
+		m_content->GetRectangle().SetPosition(0.5f - (VALUE_SCALE * Vector2(m_scrollX->GetRectangle().GetPosition().m_x, m_scrollY->GetRectangle().GetPosition().m_y) / contentSize));
 
 		m_min = Vector2::PositiveInfinity;
 		m_max = Vector2::NegativeInfinity;
-		SetScissor(m_puckX.get());
-		SetScissor(m_puckY.get());
+		SetScissor(m_scrollX.get());
+		SetScissor(m_scrollY.get());
 		SetScissor(m_content.get(), true);
-	}
-
-	void UiPanel::ResetScrollbars()
-	{
-		m_puckX->GetRectangle().SetPosition(Vector2());
-		m_puckY->GetRectangle().SetPosition(Vector2());
 	}
 
 	void UiPanel::SetScissor(UiObject *object, const bool &size)
@@ -125,10 +114,10 @@ namespace acid
 		}
 	}
 
-	float UiPanel::ScrollByDelta(const float &delta, Gui *puck, Gui *scrollBar, const uint32_t &index)
+	float UiPanel::ScrollByDelta(const float &delta, Gui *puck, UiObject *background, const uint32_t &index)
 	{
 		float puckLength = puck->GetScreenDimension()[index];
-		float barLength = scrollBar->GetScreenDimension()[index];
+		float barLength = background->GetScreenDimension()[index];
 		float maxValue = (barLength - puckLength) / barLength;
 		float value = puck->GetRectangle().GetPosition()[index];
 		value += delta;
@@ -136,12 +125,12 @@ namespace acid
 		return value;
 	}
 
-	float UiPanel::ScrollByPosition(const float &position, Gui *puck, Gui *scrollBar, const uint32_t &index)
+	float UiPanel::ScrollByPosition(const float &position, Gui *puck, UiObject *background, const uint32_t &index)
 	{
 		float puckLength = puck->GetScreenDimension()[index];
-		float barLength = scrollBar->GetScreenDimension()[index];
+		float barLength = background->GetScreenDimension()[index];
 		float maxValue = (barLength - puckLength) / barLength;
-		float positionLength = scrollBar->GetScreenPosition()[index];
+		float positionLength = background->GetScreenPosition()[index];
 		float cursorLength = (position - positionLength) - (puckLength / 2.0f);
 		return std::clamp(cursorLength / barLength, 0.0f, maxValue);
 	}
