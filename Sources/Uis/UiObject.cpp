@@ -181,6 +181,16 @@ namespace acid
 		return m_alpha;
 	}
 
+	float UiObject::GetScale() const
+	{
+		if (m_parent != nullptr)
+		{
+			return m_scale * m_parent->GetScale();
+		}
+
+		return m_scale;
+	}
+
 	void UiObject::CancelEvent(const MouseButton &button) const
 	{
 		Uis::Get()->CancelWasEvent(button);

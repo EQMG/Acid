@@ -7,7 +7,7 @@
 namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
-		UiObject(parent, UiBound::Screen),
+		UiObject(parent, UiBound::Maximum),
 		m_buttonReset(ButtonKeyboard({Key::Enter})),
 		m_zoom(1.0f),
 		m_timerUpdate(Timer(Time::Seconds(0.333f))),
@@ -16,7 +16,7 @@ namespace test
 		m_textFps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
 		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre), 6.0f, "Acid Font",
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
 
 		static const std::string content1 =
@@ -50,7 +50,7 @@ namespace test
 			"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet. \n"
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre), 1.8f, content1,
+		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, content1,
 			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
 	}
 
@@ -64,7 +64,6 @@ namespace test
 			m_textUps->SetString("UPS: " + String::To(static_cast<int>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
 		}
 
-		// TODO: Cleanup offset and implement zoom.
 		Vector2 offset = GetRectangle().GetPosition();
 
 		if (m_buttonReset.WasDown())
@@ -73,12 +72,12 @@ namespace test
 			offset = Vector2(0.0f, 0.0f);
 		}
 
-		m_zoom *= powf(1.3f, 0.15f * Mouse::Get()->GetDeltaWheel());
+		m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetDeltaWheel());
+		dynamic_cast<DriverConstant<float> *>(GetScaleDriver())->SetConstant(m_zoom);
 
 		if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 		{
-			offset.m_x -= Mouse::Get()->GetDeltaX() * Window::Get()->GetAspectRatio() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
-			offset.m_y -= Mouse::Get()->GetDeltaY() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+			offset -= Mouse::Get()->GetDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 		}
 
 		GetRectangle().SetPosition(offset);

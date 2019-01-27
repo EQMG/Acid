@@ -149,7 +149,7 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetScaleDriver(Args &&... args) { SetScaleDriver(new T(std::forward<Args>(args)...)); }
 
-		const float &GetScale() const { return m_scale; }
+		float GetScale() const;
 
 		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
 

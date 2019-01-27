@@ -23,8 +23,6 @@ namespace acid
 		m_onChecked(Delegate<void(UiInputRadio *, bool)>())
 	{
 		GetRectangle().SetDimensions(SIZE);
-		m_background->GetRectangle().SetDimensions(Vector2(SIZE.m_y, SIZE.m_y));
-		m_text->GetRectangle().SetPosition(Vector2(4.0f * SIZE.m_y, 0.5f));
 		UpdateFill();
 	}
 
@@ -41,7 +39,11 @@ namespace acid
 			m_checked = !m_checked;
 			m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, SLIDE_TIME);
 			m_onChecked(this, m_checked);
+			CancelEvent(MouseButton::Left);
 		}
+
+		m_background->GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
+		m_text->GetRectangle().SetPosition(Vector2(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
 
 		if (m_background->IsSelected() && !m_mouseOver)
 		{

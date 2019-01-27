@@ -33,6 +33,7 @@ namespace acid
 			}
 
 			m_onPressed(this, true);
+			CancelEvent(MouseButton::Left);
 		}
 
 		if (m_background->IsSelected() && !m_mouseOver)
