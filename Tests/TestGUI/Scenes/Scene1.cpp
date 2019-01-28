@@ -22,11 +22,11 @@ namespace test
 		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer())),
-		m_uiNavigation(std::make_unique<UiNavigation>(Uis::Get()->GetContainer()))
+		m_editorPanels(std::make_unique<EditorPanels>(Uis::Get()->GetContainer()))
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant<float>>(0.0f);
-		m_uiNavigation->SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_editorPanels->SetAlphaDriver<DriverConstant<float>>(0.0f);
 	}
 
 	void Scene1::Start()
@@ -72,7 +72,7 @@ namespace test
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo->IsStarting() || m_uiNavigation->GetAlpha() != 0.0f;
+		return m_uiStartLogo->IsStarting() || m_editorPanels->GetAlpha() != 0.0f;
 	}
 
 	void Scene1::TogglePause()
@@ -84,11 +84,11 @@ namespace test
 
 		if (IsPaused())
 		{
-			m_uiNavigation->SetAlphaDriver<DriverSlide<float>>(m_uiNavigation->GetAlpha(), 0.0f, UI_SLIDE_TIME);
+			m_editorPanels->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 0.0f, UI_SLIDE_TIME);
 		}
 		else
 		{
-			m_uiNavigation->SetAlphaDriver<DriverSlide<float>>(m_uiNavigation->GetAlpha(), 1.0f, UI_SLIDE_TIME);
+			m_editorPanels->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 1.0f, UI_SLIDE_TIME);
 		}
 	}
 }

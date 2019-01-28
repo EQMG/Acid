@@ -32,7 +32,7 @@ namespace acid
 
 	float Time::AsSeconds() const
 	{
-		return m_microseconds / 1000000.0f;
+		return static_cast<float>(m_microseconds) / 1000000.0f;
 	}
 
 	int32_t Time::AsMilliseconds() const

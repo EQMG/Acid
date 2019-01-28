@@ -13,9 +13,8 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &progressMin, const float &progressMax, const int32_t &roundTo = 2,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
-			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
+		UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 
@@ -23,21 +22,23 @@ namespace acid
 
 		void SetTitle(const std::string &title);
 
-		const float &GetProgressMin() const { return m_progressMin; }
+		const float &GetValueMin() const { return m_valueMin; }
 
-		void SetProgressMin(const float &progressMin) { m_progressMin = progressMin; }
+		void SetValueMin(const float &valueMin) { m_valueMin = valueMin; }
 
-		const float &GetProgressMax() const { return m_progressMax; }
+		const float &GetValueMax() const { return m_valueMax; }
 
-		void SetProgressMax(const float &progressMax) { m_progressMax = progressMax; }
+		void SeValueMax(const float &valueMax) { m_valueMax = valueMax; }
 
 		const float &GetValue() const { return m_value; }
 
 		void SetValue(const float &value);
 
+		const float &GetProgress() const { return m_progress; }
+
 		Delegate<void(UiInputSlider *, float)> &GetOnSlide() { return m_onSlide; }
 	private:
-		void UpdateText();
+		void UpdateValueText();
 
 		std::unique_ptr<Gui> m_slider;
 		std::unique_ptr<Gui> m_background;
@@ -48,11 +49,11 @@ namespace acid
 		std::string m_title;
 		bool m_updating;
 		float m_value;
-		float m_progressMin;
-		float m_progressMax;
+		float m_valueMin;
+		float m_valueMax;
+		float m_progress;
 		int32_t m_roundTo;
 
-		Colour m_primaryColour;
 		bool m_mouseOver;
 
 		bool m_hasChange;

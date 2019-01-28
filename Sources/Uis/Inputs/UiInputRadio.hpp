@@ -14,15 +14,14 @@ namespace acid
 	public:
 		enum class Mark
 		{
-			Fill,
+			Filled,
 			X,
 			Dot,
 			Check
 		};
 
-		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Fill, const bool &checked = false,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
-			const Colour &primaryColour = Colour("#3e4148"));
+		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Filled, const bool &checked = false,
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 
@@ -47,7 +46,6 @@ namespace acid
 		std::unique_ptr<Text> m_text;
 		Sound m_soundClick;
 
-		Colour m_primaryColour;
 		bool m_checked;
 		Mark m_markType;
 		bool m_mouseOver;
