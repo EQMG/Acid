@@ -46,11 +46,11 @@ namespace acid
 
 		if (IsSelected())
 		{
-			for (uint32_t i = 0; i < 8; i++)
+			for (auto button : enum_iterator<MouseButton>())
 			{
-				if (Mouse::Get()->GetButton(static_cast<MouseButton>(i)) == InputAction::Press)
+				if (Uis::Get()->WasDown(button))
 				{
-					m_onClick(this, static_cast<MouseButton>(i));
+					m_onClick(this, button);
 				}
 			}
 		}

@@ -3,6 +3,7 @@
 #include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
+#include "UiInputButton.hpp"
 
 namespace acid
 {
@@ -12,9 +13,9 @@ namespace acid
 	static const float FONT_SIZE = 1.4f;
 
 	UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value,
-	    const int32_t &maxLength, const UiBound &rectangle, const Colour &primaryColour, const Colour &secondaryColour) :
+	    const int32_t &maxLength, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), primaryColour)),
+		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour)),
 		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			FONT_SIZE, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
 		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
@@ -26,7 +27,6 @@ namespace acid
 		m_inputDelay(InputDelay()),
 		m_lastKey(0),
 		m_selected(false),
-		m_primaryColour(primaryColour),
 		m_mouseOver(false),
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
@@ -52,12 +52,7 @@ namespace acid
 			else if (key == Key::Enter && action != InputAction::Release && m_lastKey != 13)
 			{
 				m_inputDelay.Update(true);
-
-				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
-				m_selected = false;
-
-				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-				m_soundClick.Play();
+				SetSelected(false);
 			}
 		};
 		Keyboard::Get()->GetOnChar() += [this](char c) {
@@ -88,37 +83,45 @@ namespace acid
 
 	void UiInputText::UpdateObject()
 	{
-		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
+		if (Uis::Get()->WasDown(MouseButton::Left))
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.3f * m_primaryColour, SLIDE_TIME);
-			m_selected = true;
+			if (m_background->IsSelected())
+			{
+				SetSelected(true);
+				CancelEvent(MouseButton::Left);
+			}
+			else if (m_selected)
+			{
+				SetSelected(false);
+				CancelEvent(MouseButton::Left);
+			}
+		}
 
+		if (!m_selected)
+		{
+			if (m_background->IsSelected() && !m_mouseOver)
+			{
+				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, SLIDE_TIME);
+				m_mouseOver = true;
+			}
+			else if (!m_background->IsSelected() && m_mouseOver)
+			{
+				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, SLIDE_TIME);
+				m_mouseOver = false;
+			}
+		}
+	}
+
+	void UiInputText::SetSelected(const bool &selected)
+	{
+		if (!m_soundClick.IsPlaying())
+		{
 			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
 			m_soundClick.Play();
-
-			CancelEvent(MouseButton::Left);
-		}
-		else if (Uis::Get()->WasDown(MouseButton::Left) && m_selected)
-		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
-			m_selected = false;
-
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-			
-			CancelEvent(MouseButton::Left);
 		}
 
-		if (m_background->IsSelected() && !m_mouseOver && !m_selected)
-		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 1.3f * m_primaryColour, SLIDE_TIME);
-			m_mouseOver = true;
-		}
-		else if (!m_background->IsSelected() && m_mouseOver && !m_selected)
-		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
-			m_mouseOver = false;
-		}
+		m_selected = selected;
+		m_mouseOver = true;
 	}
 
 	void UiInputText::SetTitle(const std::string &title)

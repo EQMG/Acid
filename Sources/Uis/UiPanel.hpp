@@ -18,7 +18,7 @@ namespace acid
 	{
 	public:
 		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
-			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal, const Colour &primaryColour = Colour("#161618"), const Colour &secondaryColour = Colour("#53575f", 0.85f));
+			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 		virtual void UpdateObject() override;
 

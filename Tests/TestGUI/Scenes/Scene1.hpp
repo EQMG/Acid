@@ -6,7 +6,7 @@
 #include <Inputs/ButtonJoystick.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
-#include "Uis/Navigation/UiNavigation.hpp"
+#include "Uis/EditorPanels.hpp"
 
 using namespace acid;
 
@@ -23,7 +23,7 @@ namespace test
 
 		std::unique_ptr<UiStartLogo> m_uiStartLogo;
 		std::unique_ptr<OverlayDebug> m_overlayDebug;
-		std::unique_ptr<UiNavigation> m_uiNavigation;
+		std::unique_ptr<EditorPanels> m_editorPanels;
 	public:
 		Scene1();
 

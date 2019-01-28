@@ -14,10 +14,11 @@ namespace acid
 	{
 	public:
 		UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
-			const Colour &primaryColour = Colour("#3e4148"), const Colour &secondaryColour = Colour("#161618"));
+			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
+
+		void SetSelected(const bool &selected);
 
 		const std::string &GetTitle() const { return m_title; }
 
@@ -42,7 +43,6 @@ namespace acid
 		int32_t m_lastKey;
 
 		bool m_selected;
-		Colour m_primaryColour;
 		bool m_mouseOver;
 
 		Delegate<void(UiInputText *, std::string)> m_onType;

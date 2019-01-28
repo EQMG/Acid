@@ -25,9 +25,6 @@ namespace acid
 			// Resets the timer.
 			m_timerUpdate.ResetStartTime();
 
-			// Updates the engines delta.
-			m_deltaUpdate.Update();
-
 			// Pre-Update.
 			moduleManager.RunUpdate(Module::Stage::Pre);
 
@@ -36,6 +33,9 @@ namespace acid
 
 			// Post-Update.
 			moduleManager.RunUpdate(Module::Stage::Post);
+
+			// Updates the engines delta.
+			m_deltaUpdate.Update();
 		}
 
 		// Prioritize updates over rendering.
@@ -50,11 +50,11 @@ namespace acid
 			// Resets the timer.
 			m_timerRender.ResetStartTime();
 
-			// Updates the render delta, and render time extension.
-			m_deltaRender.Update();
-
 			// Render
 			moduleManager.RunUpdate(Module::Stage::Render);
+
+			// Updates the render delta, and render time extension.
+			m_deltaRender.Update();
 		}
 	}
 }
