@@ -23,6 +23,10 @@ namespace acid
 		m_min(Vector2()),
 		m_max(Vector2())
 	{
+		m_background->SetNinePatches(Vector4(0.0104f, 0.0104f, 0.9792f, 0.9792f));
+		m_scrollX->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+		m_scrollY->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+
 		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
 			if (m_background->IsSelected() && GetAlpha() == 1.0f)
 			{

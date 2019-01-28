@@ -183,7 +183,7 @@ namespace acid
 
 	float UiObject::GetScale() const
 	{
-		if (m_parent != nullptr)
+		if (m_parent != nullptr && m_rectangle.GetAspect() & UiAspect::Scale)
 		{
 			return m_scale * m_parent->GetScale();
 		}

@@ -80,16 +80,19 @@ namespace acid
 		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 		m_uniformScene.Push("view", camera->GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-		m_uniformScene.Push("fogColour", m_fog.GetColour());
 		m_uniformScene.Push("cameraPosition", camera->GetPosition());
+
+		m_uniformScene.Push("lightsCount", lightCount);
+
+		m_uniformScene.Push("fogColour", m_fog.GetColour());
 		m_uniformScene.Push("fogDensity", m_fog.GetDensity());
 		m_uniformScene.Push("fogGradient", m_fog.GetGradient());
+
 		m_uniformScene.Push("shadowDistance", Shadows::Get()->GetShadowBoxDistance());
 		m_uniformScene.Push("shadowTransition", Shadows::Get()->GetShadowTransition());
 		m_uniformScene.Push("shadowBias", Shadows::Get()->GetShadowBias());
 		m_uniformScene.Push("shadowDarkness", Shadows::Get()->GetShadowDarkness());
 		m_uniformScene.Push("shadowPCF", Shadows::Get()->GetShadowPcf());
-		m_uniformScene.Push("lightsCount", lightCount);
 
 		// Updates storage buffers.
 		m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);

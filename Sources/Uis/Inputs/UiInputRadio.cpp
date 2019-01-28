@@ -23,6 +23,8 @@ namespace acid
 		m_onChecked(Delegate<void(UiInputRadio *, bool)>())
 	{
 		GetRectangle().SetDimensions(SIZE);
+		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+
 		m_background->GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
 		m_text->GetRectangle().SetPosition(Vector2(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
 

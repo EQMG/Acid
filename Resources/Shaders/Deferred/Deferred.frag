@@ -7,9 +7,11 @@ layout(set = 0, binding = 0) uniform UboScene
 	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
+	vec3 cameraPosition;
+
+	int lightsCount;
 
 	vec4 fogColour;
-	vec3 cameraPosition;
 	float fogDensity;
 	float fogGradient;
 
@@ -18,8 +20,6 @@ layout(set = 0, binding = 0) uniform UboScene
 	float shadowBias;
 	float shadowDarkness;
 	int shadowPCF;
-
-	int lightsCount;
 } scene;
 
 struct Light

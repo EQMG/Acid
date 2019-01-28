@@ -14,7 +14,8 @@ namespace acid
 		m_texture(texture),
 		m_numberOfRows(1),
 		m_selectedRow(0),
-		m_atlasOffset(Vector2()),
+		m_atlasOffset(Vector2::Zero),
+		m_ninePatches(Vector4::Zero),
 		m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)),
 		m_colourOffset(Colour())
 	{
@@ -31,14 +32,17 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("colourOffset", m_colourOffset);
-		m_uniformObject.Push("atlasOffset", m_atlasOffset);
 		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
 		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);
-		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
+		m_uniformObject.Push("aspectRatio", Window::Get()->GetAspectRatio());
 		m_uniformObject.Push("alpha", GetAlpha());
 		m_uniformObject.Push("depth", GetDepth());
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
+
+		m_uniformObject.Push("colourOffset", m_colourOffset);
+		m_uniformObject.Push("atlasOffset", m_atlasOffset);
+		m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
+		m_uniformObject.Push("ninePatches", m_ninePatches);
 	}
 
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)

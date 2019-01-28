@@ -38,6 +38,8 @@ namespace acid
 		m_onSlide(Delegate<void(UiInputSlider *, float)>())
 	{
 		GetRectangle().SetDimensions(SIZE);
+		m_slider->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 		SetValue(value);
 	}
 

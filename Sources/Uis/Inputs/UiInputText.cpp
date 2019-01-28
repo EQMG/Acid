@@ -31,6 +31,8 @@ namespace acid
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
 		GetRectangle().SetDimensions(SIZE);
+		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+
 		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods) {
 			if (!m_selected)
 			{

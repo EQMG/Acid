@@ -24,6 +24,7 @@ namespace acid
 		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(SIZE);
+		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 	}
 
 	void UiInputGrabber::UpdateObject()
