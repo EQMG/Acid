@@ -22,8 +22,8 @@ layout(location = 2) out vec4 outMaterial;
 
 void main() 
 {
-	vec3 nightColour = texture(samplerCubemap, inUv).rgb;
-	vec3 colour = mix(object.skyColour.rgb, nightColour, object.blendFactor);
+	vec3 cubemapColour = texture(samplerCubemap, inUv).rgb;
+	vec3 colour = mix(object.skyColour.rgb, cubemapColour, object.blendFactor);
 
 	float fadeFactor = 1.0f - smoothstep(object.fogLimits.x, object.fogLimits.y, inWorldPos.y);
 	colour = mix(colour, object.fogColour.rgb, fadeFactor);

@@ -16,6 +16,7 @@ namespace test
 		m_rgbColour(std::make_unique<Gui>(m_section1->GetContent(), UiBound(Vector2(0.0f, 0.35f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.3f, 0.045f)), Texture::Create("Guis/Button_Filled.png"), Colour::Yellow)),
 		m_colourWheel(std::make_unique<UiColourWheel>(m_section1->GetContent(), Colour::Yellow, UiBound(Vector2(0.0f, 0.42f), UiReference::TopLeft)))
 	{
+		m_rgbColour->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 		m_button1->GetOnClick() += [](UiObject *object, MouseButton button) {
 			if (button == MouseButton::Left)
 			{
@@ -23,6 +24,10 @@ namespace test
 			}
 		};
 
+		m_sliderR->GetRectangle().SetDimensions(Vector2(0.09f, 0.045f));
+		m_sliderG->GetRectangle().SetDimensions(Vector2(0.09f, 0.045f));
+		m_sliderB->GetRectangle().SetDimensions(Vector2(0.09f, 0.045f));
+		m_textHex->GetRectangle().SetDimensions(Vector2(0.15f, 0.045f));
 		auto onSlide = [this](UiInputSlider *object, float value) {
 			auto colour = Colour(m_sliderR->GetValue(), m_sliderG->GetValue(), m_sliderB->GetValue()) / 255.0f;
 			dynamic_cast<DriverConstant<Colour> *>(m_rgbColour->GetColourDriver())->SetConstant(colour);

@@ -5,8 +5,8 @@
 layout(push_constant) uniform PushScene
 {
 	vec3 sunPosition;
-	float worldHeight;
 	vec2 displaySize;
+	float worldHeight;
 } scene;
 
 layout(set = 0, binding = 0, rgba8) uniform writeonly image2D writeColour;
