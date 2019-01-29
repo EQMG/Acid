@@ -1,7 +1,7 @@
 #include "Scene1.hpp"
 
 #include <Animations/MeshAnimated.hpp>
-#include <Helpers/FileSystem.hpp>
+#include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>

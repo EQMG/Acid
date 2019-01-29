@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		auto resource = Resources::Get()->Find(ToName(innerRadius, outerRadius, slices, loops));
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(innerRadius, outerRadius, slices, loops));
 
 		if (resource != nullptr)
 		{
@@ -16,23 +16,8 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelDisk>(innerRadius, outerRadius, slices, loops);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
-	}
-
-	std::shared_ptr<ModelDisk> ModelDisk::Create(const std::string &data)
-	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto innerRadius = String::From<float>(split[1]);
-		auto outerRadius = String::From<float>(split[2]);
-		auto slices = String::From<uint32_t>(split[3]);
-		auto loops = String::From<uint32_t>(split[4]);
-		return Create(innerRadius, outerRadius, slices, loops);
 	}
 
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
@@ -82,21 +67,23 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(innerRadius, outerRadius, slices, loops));
+		Model::Initialize(vertices, indices);
 	}
+
+	/*void ModelDisk::Decode(const Metadata &metadata)
+	{
+		m_innerRadius = metadata.GetChild<float>("Inner Radius");
+		m_outerRadius = metadata.GetChild<float>("Outer Radius");
+		m_slices = metadata.GetChild<uint32_t>("Slices");
+		m_loops = metadata.GetChild<uint32_t>("Loops");
+	}*/
 
 	void ModelDisk::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<std::string>("Type", "ModelDisk");
 		metadata.SetChild<float>("Inner Radius", m_innerRadius);
 		metadata.SetChild<float>("Outer Radius", m_outerRadius);
 		metadata.SetChild<uint32_t>("Slices", m_slices);
 		metadata.SetChild<uint32_t>("Loops", m_loops);
-	}
-
-	std::string ModelDisk::ToName(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
-	{
-		std::stringstream result;
-		result << "Disk_" << innerRadius << "_" << outerRadius << "_" << slices << "_" << loops;
-		return result.str();
 	}
 }

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <SPIRV/GlslangToSpv.h>
 #include "Renderer/Renderer.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "RenderPipeline.hpp"
 
 namespace acid

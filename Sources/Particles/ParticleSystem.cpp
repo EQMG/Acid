@@ -59,9 +59,7 @@ namespace acid
 		{
 			for (const auto &typeNode : typesNode->GetChildren())
 			{
-				ParticleType temp = ParticleType();
-				temp.Decode(*typeNode);
-				m_types.emplace_back(ParticleType::Create(temp.GetName()));
+			//	m_types.emplace_back(ParticleType::Create(*typeNode));
 			}
 		}
 

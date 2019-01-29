@@ -3,7 +3,7 @@
 #include <cassert>
 #include <algorithm>
 #include "Renderer/Renderer.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid

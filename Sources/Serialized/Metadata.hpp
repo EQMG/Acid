@@ -6,6 +6,7 @@
 #include <vector>
 #include "Helpers/NonCopyable.hpp"
 #include "Helpers/String.hpp"
+#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -61,6 +62,19 @@ namespace acid
 			}
 
 			return child->Get<T>();
+		}
+
+		template<typename T>
+		std::shared_ptr<T> GetResource(const std::string &name) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				return nullptr;
+			}
+
+			return T::Create(*child);
 		}
 
 		template<typename T>
@@ -166,6 +180,8 @@ namespace acid
 		bool operator==(const Metadata &other) const;
 
 		bool operator!=(const Metadata &other) const;
+
+		bool operator<(const Metadata &other) const;
 	protected:
 		std::string m_name;
 		std::string m_value;

@@ -14,6 +14,8 @@ namespace acid
 		public Resource
 	{
 	public:
+		static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
 		/// </summary>
@@ -34,14 +36,14 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
+		void Encode(Metadata &metadata) const override;
+
 		const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
 
 		const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
 
 		const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 	private:
-		static std::string ToName(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
-
 		Pipeline::Stage m_pipelineStage;
 		PipelineGraphicsCreate m_pipelineCreate;
 		const RenderStage *m_renderStage;

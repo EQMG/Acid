@@ -2,9 +2,10 @@
 
 #include <memory>
 #include <mutex>
-#include <vector>
+#include <map>
 #include "Engine/Engine.hpp"
 #include "Maths/Timer.hpp"
+#include "Serialized/Metadata.hpp"
 #include "Resource.hpp"
 
 namespace acid
@@ -26,16 +27,16 @@ namespace acid
 
 		void Update() override;
 
-		std::shared_ptr<Resource> Find(const std::string &name) const;
+		std::shared_ptr<Resource> Find(const Metadata &metadata) const;
 
-		void Add(const std::shared_ptr<Resource> &resource);
+		void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
 
 		void Remove(const std::shared_ptr<Resource> &resource);
 
 		void Remove(const std::string &filename);
 	private:
 		std::mutex m_mutex;
-		std::vector<std::shared_ptr<Resource>> m_resources;
+		std::map<Metadata, std::shared_ptr<Resource>> m_resources;
 		Timer m_timerPurge;
 	};
 }

@@ -1,7 +1,7 @@
 #include "ModelObj.hpp"
 
 #include <cassert>
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 
 namespace acid
@@ -15,7 +15,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Find(filename);
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(filename);
 
 		if (resource != nullptr)
 		{
@@ -23,22 +23,23 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelObj>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	ModelObj::ModelObj(const std::string &filename) :
-		Model()
+		Model(),
+		m_filename(filename)
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto fileLoaded = Files::Read(filename);
+		auto fileLoaded = Files::Read(m_filename);
 
 		if (!fileLoaded)
 		{
-			Log::Error("OBJ file could not be loaded: '%s'\n", filename.c_str());
+			Log::Error("OBJ file could not be loaded: '%s'\n", m_filename.c_str());
 			return;
 		}
 
@@ -88,7 +89,7 @@ namespace acid
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || String::Contains(line, "//"))
 					{
-						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", filename.c_str());
+						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", m_filename.c_str());
 						assert(false && "Model loading error!");
 					}
 
@@ -115,7 +116,7 @@ namespace acid
 				}
 				else
 				{
-					Log::Error("OBJ '%s' unknown line: '%s'\n", filename.c_str(), line.c_str());
+					Log::Error("OBJ '%s' unknown line: '%s'\n", m_filename.c_str(), line.c_str());
 				}
 			}
 		}
@@ -143,10 +144,21 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("OBJ '%s' loaded in %ims\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("OBJ '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 
-		Model::Initialize(vertices, indices, filename);
+		Model::Initialize(vertices, indices);
+	}
+
+	/*void ModelObj::Decode(const Metadata &metadata)
+	{
+		m_filename = metadata.GetChild<std::string>("Filename");
+	}*/
+
+	void ModelObj::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Type", "ModelObj");
+		metadata.SetChild<std::string>("Filename", m_filename);
 	}
 
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)

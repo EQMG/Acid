@@ -8,34 +8,36 @@
 #include <cassert>
 #include <fstream>
 #include "Files/Files.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.h"
 
 namespace acid
 {
-	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
+	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(filename);
+		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<SoundBuffer>(resource);
 		}
 
+		auto filename = metadata.GetChild<std::string>("Filename");
 		auto result = std::make_shared<SoundBuffer>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
+	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
+	{
+		Metadata metadata = Metadata();
+		metadata.SetChild<std::string>("Filename", filename);
+		return Create(metadata);
+	}
+
 	SoundBuffer::SoundBuffer(const std::string &filename) :
-		Resource(filename),
 		m_filename(filename),
 		m_buffer(0)
 	{

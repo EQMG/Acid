@@ -24,7 +24,7 @@ typedef struct stat STAT;
 #define GetCurrentDir getcwd
 #endif
 
-#include "String.hpp"
+#include "Helpers/String.hpp"
 
 namespace acid
 {

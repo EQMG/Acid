@@ -2,17 +2,21 @@
 
 #include <cassert>
 #include "Maths/Maths.hpp"
-#include "Scenes/Scenes.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
+	std::shared_ptr<Model> Model::Create(const Metadata &metadata)
+	{
+		return nullptr;
+	}
+
 	std::shared_ptr<Model> Model::Create(const std::string &data)
 	{
-		return Scenes::Get()->GetModelRegister().Create(data);
+		return nullptr;
 	}
 
 	Model::Model() :
-		Resource(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
 		m_minExtents(Vector3()),
@@ -46,6 +50,10 @@ namespace acid
 
 		return true;
 	}
+
+	/*void Model::Decode(const Metadata &metadata)
+	{
+	}*/
 
 	void Model::Encode(Metadata &metadata) const
 	{

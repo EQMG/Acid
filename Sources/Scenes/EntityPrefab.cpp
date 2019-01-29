@@ -3,7 +3,8 @@
 #include "Files/File.hpp"
 #include "Serialized/Json/Json.hpp"
 #include "Serialized/Xml/Xml.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Serialized/Yaml/Yaml.hpp"
+#include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
 #include "Scenes.hpp"
@@ -17,7 +18,7 @@ namespace acid
 			return nullptr;
 		}
 
-		auto resource = Resources::Get()->Find(filename);
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(filename);
 
 		if (resource != nullptr)
 		{
@@ -25,12 +26,11 @@ namespace acid
 		}
 
 		auto result = std::make_shared<EntityPrefab>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
 	EntityPrefab::EntityPrefab(const std::string &filename) :
-		Resource(filename),
 		m_filename(filename),
 		m_file(nullptr)
 	{
@@ -39,6 +39,10 @@ namespace acid
 		if (fileExt == ".json")
 		{
 			m_file = std::make_unique<File>(filename, new Json());
+		}
+		else if (fileExt == ".yaml")
+		{
+			m_file = std::make_unique<File>(filename, new Yaml());
 		}
 		else if (fileExt == ".xml")
 		{

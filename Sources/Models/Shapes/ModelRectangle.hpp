@@ -11,14 +11,12 @@ namespace acid
 	public:
 		static std::shared_ptr<ModelRectangle> Create(const float &min, const float &max);
 
-		static std::shared_ptr<ModelRectangle> Create(const std::string &data);
-
 		ModelRectangle(const float &width, const float &height);
+
+	//	void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 	private:
-		static std::string ToName(const float &min, const float &max);
-
 		float m_min;
 		float m_max;
 	};
