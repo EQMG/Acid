@@ -6,15 +6,13 @@
 #include <vector>
 #include <cstdint>
 #include "Files/Files.hpp"
-#include "Resources/Resource.hpp"
 
 namespace acid
 {
 	/// <summary>
 	/// Provides functionality for getting the values from a font file.
 	/// </summary>
-	class ACID_EXPORT FontMetafile :
-		public Resource
+	class ACID_EXPORT FontMetafile
 	{
 	public:
 		/// <summary>
@@ -73,18 +71,12 @@ namespace acid
 		static constexpr int32_t SpaceAscii = 32;
 
 		/// <summary>
-		/// Will find an existing metafile with the same filename, or create a new metafile.
-		/// </summary>
-		/// <param name="filename"> The file to load the metafile from. </param>
-		static std::shared_ptr<FontMetafile> Create(const std::string &filename);
-
-		/// <summary>
 		/// Creates a new meta file.
 		/// </summary>
 		/// <param name="filename"> The font file to load from. </param>
 		explicit FontMetafile(const std::string &filename);
 
-		std::optional<Character> GetCharacter(const int32_t &ascii);
+		std::optional<Character> GetCharacter(const int32_t &ascii) const;
 
 		const std::string &GetFileName() const { return m_filename; }
 

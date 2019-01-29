@@ -48,6 +48,11 @@ namespace acid
 		m_file->Read();
 	}
 
+	void EntityPrefab::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_filename);
+	}
+
 	void EntityPrefab::Write(const Entity &entity)
 	{
 		m_file->GetMetadata()->ClearChildren();

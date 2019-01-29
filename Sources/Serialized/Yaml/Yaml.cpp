@@ -20,8 +20,8 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
-		auto topSection = std::make_unique<YamlSection>(nullptr, "", 0);
-		YamlSection *currentSection = topSection.get();
+		auto topSection = std::make_unique<Section>(nullptr, "", 0);
+		Section *currentSection = topSection.get();
 		uint32_t lastIndentation = 0;
 
 		auto lines = String::Split(data, "\n");
@@ -80,7 +80,7 @@ namespace acid
 			{
 				for (uint32_t i = 0; i < ((indentation - lastIndentation) / 2) - 1; i++)
 				{
-					auto section = new YamlSection(currentSection, "", lastIndentation + (i * 2));
+					auto section = new Section(currentSection, "", lastIndentation + (i * 2));
 					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
@@ -95,16 +95,16 @@ namespace acid
 			{
 				{
 					indentation += 2;
-					auto section = new YamlSection(currentSection, "", indentation);
+					auto section = new Section(currentSection, "", indentation);
 					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
-				auto section = new YamlSection(currentSection, String::Trim(line).erase(0, 1), indentation);
+				auto section = new Section(currentSection, String::Trim(line).erase(0, 1), indentation);
 				currentSection->m_children.emplace_back(section);
 			}
 			else
 			{*/
-				auto section = new YamlSection(currentSection, String::Trim(line), indentation);
+				auto section = new Section(currentSection, String::Trim(line), indentation);
 				currentSection->m_children.emplace_back(section);
 			//}
 
@@ -136,7 +136,7 @@ namespace acid
 		}
 	}
 
-	void Yaml::Convert(const YamlSection *source, Metadata *parent, const bool &isTopSection)
+	void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 	{
 		auto name = String::Trim(source->m_content.substr(0, source->m_content.find(':')));
 		auto value = String::Trim(String::ReplaceFirst(source->m_content, name, ""));

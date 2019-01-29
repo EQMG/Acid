@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	class ACID_EXPORT Json :
+	class ACID_EXPORT Yaml :
 		public Metadata
 	{
 	public:
@@ -15,21 +15,21 @@ namespace acid
 			Section *m_parent;
 			std::vector<std::unique_ptr<Section>> m_children;
 
-			std::string m_name;
+			uint32_t m_indentation;
 			std::string m_content;
 
-			Section(Section *parent, const std::string &name, const std::string &content) :
+			Section(Section *parent, const std::string &content, const uint32_t &indentation) :
 				m_parent(parent),
 				m_children(std::vector<std::unique_ptr<Section>>()),
-				m_name(name),
+				m_indentation(indentation),
 				m_content(content)
 			{
 			}
 		};
 
-		Json();
+		Yaml();
 
-		explicit Json(Metadata *metadata);
+		explicit Yaml(Metadata *metadata);
 
 		void Load(const std::string &data) override;
 
@@ -39,6 +39,6 @@ namespace acid
 
 		static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
 
-		static void AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation, const bool &end = false);
+		static void AppendData(const Metadata *source, const Metadata *parent, std::stringstream &builder, const int32_t &indentation);
 	};
 }

@@ -193,7 +193,7 @@ namespace acid
 	std::vector<Text::Line> Text::CreateStructure()
 	{
 		std::vector<Line> lines = {};
-		auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		auto currentLine = Line(m_fontType->GetMetadata().GetSpaceWidth(), m_maxWidth);
 		auto currentWord = Word();
 
 		auto formattedText = String::ReplaceAll(m_string, "\t", "	");
@@ -217,7 +217,7 @@ namespace acid
 					if (!added)
 					{
 						lines.emplace_back(currentLine);
-						currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+						currentLine = Line(m_fontType->GetMetadata().GetSpaceWidth(), m_maxWidth);
 						currentLine.AddWord(currentWord);
 					}
 
@@ -225,7 +225,7 @@ namespace acid
 					continue;
 				}
 
-				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
+				auto character = m_fontType->GetMetadata().GetCharacter(ascii);
 
 				if (character)
 				{
@@ -237,7 +237,7 @@ namespace acid
 			{
 				bool wordAdded = currentLine.AddWord(currentWord);
 				lines.emplace_back(currentLine);
-				currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+				currentLine = Line(m_fontType->GetMetadata().GetSpaceWidth(), m_maxWidth);
 
 				if (!wordAdded)
 				{
@@ -259,7 +259,7 @@ namespace acid
 		if (!added)
 		{
 			lines.emplace_back(currentLine);
-			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+			currentLine = Line(m_fontType->GetMetadata().GetSpaceWidth(), m_maxWidth);
 			currentLine.AddWord(currentWord);
 		}
 
@@ -307,7 +307,7 @@ namespace acid
 				}
 				else
 				{
-					cursorX += m_fontType->GetMetadata()->GetSpaceWidth();
+					cursorX += m_fontType->GetMetadata().GetSpaceWidth();
 				}
 			}
 
@@ -379,7 +379,7 @@ namespace acid
 			maxX = m_maxWidth;
 		}
 
-	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+	//	maxY = static_cast<float>(GetFontType()->GetMetadata().GetMaxSizeY()) * m_numberLines;
 		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 		for (auto &vertex : vertices)

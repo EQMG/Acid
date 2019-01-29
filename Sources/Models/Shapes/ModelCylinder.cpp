@@ -37,7 +37,12 @@ namespace acid
 	}
 
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
-		Model()
+		Model(),
+		m_radiusBase(radiusBase),
+		m_radiusTop(radiusTop),
+		m_height(height),
+		m_slices(slices),
+		m_stacks(stacks)
 	{
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
@@ -81,6 +86,15 @@ namespace acid
 
 		std::reverse(indices.begin(), indices.end());
 		Model::Initialize(vertices, indices, ToName(radiusBase, radiusTop, height, slices, stacks));
+	}
+
+	void ModelCylinder::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<float>("Radius Base", m_radiusBase);
+		metadata.SetChild<float>("Radius Top", m_radiusTop);
+		metadata.SetChild<float>("Height", m_height);
+		metadata.SetChild<uint32_t>("Slices", m_slices);
+		metadata.SetChild<uint32_t>("Stacks", m_stacks);
 	}
 
 	std::string ModelCylinder::ToName(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)

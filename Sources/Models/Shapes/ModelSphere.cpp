@@ -35,7 +35,10 @@ namespace acid
 	}
 
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
-		Model()
+		Model(),
+		m_latitudeBands(latitudeBands),
+		m_longitudeBands(longitudeBands),
+		m_radius(radius)
 	{
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
@@ -77,6 +80,13 @@ namespace acid
 
 		std::reverse(indices.begin(), indices.end());
 		Model::Initialize(vertices, indices, ToName(latitudeBands, longitudeBands, radius));
+	}
+
+	void ModelSphere::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<uint32_t>("Latitude Bands", m_latitudeBands);
+		metadata.SetChild<uint32_t>("Longitude Bands", m_longitudeBands);
+		metadata.SetChild<float>("Radius", m_radius);
 	}
 
 	std::string ModelSphere::ToName(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)

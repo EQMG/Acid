@@ -33,8 +33,8 @@ namespace acid
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap) :
-		Resource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
 		Descriptor(),
+		Resource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
 		m_filter(filter),
@@ -96,8 +96,8 @@ namespace acid
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		Resource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
 		Descriptor(),
+		Resource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
 		m_filename(""),
 		m_fileSuffix(""),
 		m_filter(filter),
@@ -194,6 +194,16 @@ namespace acid
 		descriptorWrite.descriptorType = descriptorType;
 	//	descriptorWrite.pImageInfo = &imageInfo;
 		return WriteDescriptorSet(descriptorWrite, imageInfo);
+	}
+
+	void Cubemap::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild<std::string>("File Suffix", m_fileSuffix);
+		metadata.SetChild<uint32_t>("Filter", m_filter);
+		metadata.SetChild<uint32_t>("Address Mode", m_addressMode);
+		metadata.SetChild<bool>("Anisotropic", m_anisotropic);
+		metadata.SetChild<bool>("Mipmap", m_mipLevels != 1);
 	}
 
 	uint8_t *Cubemap::GetPixels(const uint32_t &arrayLayer) const

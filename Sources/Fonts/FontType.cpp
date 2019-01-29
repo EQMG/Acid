@@ -36,11 +36,19 @@ namespace acid
 		return Create(filename, fontStyle);
 	}
 
-	FontType::FontType(const std::string &filename, const std::string &fontStyle) :
-		Resource(ToFilename(filename, fontStyle)),
-		m_texture(Texture::Create(filename + "/" + fontStyle + ".png")),
-		m_metadata(FontMetafile::Create(filename + "/" + fontStyle + ".fnt"))
+	FontType::FontType(const std::string &filename, const std::string &style) :
+		Resource(ToFilename(filename, style)),
+		m_filename(filename),
+		m_style(style),
+		m_texture(Texture::Create(m_filename + "/" + m_style + ".png")),
+		m_metadata(FontMetafile(m_filename + "/" + m_style + ".fnt"))
 	{
+	}
+
+	void FontType::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild<std::string>("Style", m_style);
 	}
 
 	std::string FontType::ToFilename(const std::string &filename, const std::string &fontStyle)

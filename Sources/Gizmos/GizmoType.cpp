@@ -98,7 +98,7 @@ namespace acid
 
 	void GizmoType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Model", m_model == nullptr ? "" : m_model->GetName());
+		metadata.SetChild<std::shared_ptr<Model>>("Model", m_model);
 		metadata.SetChild<float>("Line Thickness", m_lineThickness);
 	}
 

@@ -56,6 +56,11 @@ namespace acid
 		alDeleteBuffers(1, &m_buffer);
 	}
 
+	void SoundBuffer::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_filename);
+	}
+
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
 		auto fileLoaded = Files::Read(filename);

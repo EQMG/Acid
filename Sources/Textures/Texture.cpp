@@ -36,8 +36,8 @@ namespace acid
 	}
 
 	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
-		Resource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
 		Descriptor(),
+		Resource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
 		m_filename(filename),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -99,8 +99,8 @@ namespace acid
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-		Resource(ToName("", filter, addressMode, anisotropic, mipmap)),
 		Descriptor(),
+		Resource(ToName("", filter, addressMode, anisotropic, mipmap)),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -197,6 +197,15 @@ namespace acid
 		descriptorWrite.descriptorType = descriptorType;
 	//	descriptorWrite.pImageInfo = &imageInfo;
 		return WriteDescriptorSet(descriptorWrite, imageInfo);
+	}
+
+	void Texture::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild<uint32_t>("Filter", m_filter);
+		metadata.SetChild<uint32_t>("Address Mode", m_addressMode);
+		metadata.SetChild<bool>("Anisotropic", m_anisotropic);
+		metadata.SetChild<bool>("Mipmap", m_mipLevels != 1);
 	}
 
 	uint8_t *Texture::GetPixels() const

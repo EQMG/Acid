@@ -111,15 +111,33 @@ namespace acid
 		}
 
 		template<typename T>
+		T *Ptr(T &obj) { return &obj; }
+
+		template<typename T>
+		T *Ptr(T *obj) { return obj; }
+
+		template<typename T>
+		T *Ptr(std::shared_ptr<T> obj) { return obj.get(); }
+
+		template<typename T>
+		T *Ptr(std::unique_ptr<T> obj) { return obj.get(); }
+
+		template<typename T>
 		void Set(const T &value)
 		{
 			if constexpr (std::is_same_v<std::string, T>)
 			{
 				SetString(value);
 			}
-			else if constexpr (std::is_class_v<T>)
+			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
 			{
-				value.Encode(*this);
+				if (Ptr(value) == nullptr)
+				{
+					SetValue("null");
+					return;
+				}
+
+				Ptr(value)->Encode(*this);
 			}
 			else
 			{
@@ -144,6 +162,10 @@ namespace acid
 		virtual void Load(const std::string &data);
 
 		virtual std::string Write() const;
+
+		bool operator==(const Metadata &other) const;
+
+		bool operator!=(const Metadata &other) const;
 	protected:
 		std::string m_name;
 		std::string m_value;

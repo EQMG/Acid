@@ -213,7 +213,7 @@ set(_temp_acid_headers
 		Serialized/Json/Json.hpp
 		Serialized/Metadata.hpp
 		Serialized/Xml/Xml.hpp
-	#	Serialized/Yaml/Yaml.hpp
+		Serialized/Yaml/Yaml.hpp
 		Shadows/RendererShadows.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
@@ -421,7 +421,7 @@ set(_temp_acid_sources
 		Serialized/Json/Json.cpp
 		Serialized/Metadata.cpp
 		Serialized/Xml/Xml.cpp
-	#	Serialized/Yaml/Yaml.cpp
+		Serialized/Yaml/Yaml.cpp
 		Shadows/RendererShadows.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp

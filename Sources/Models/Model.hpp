@@ -40,6 +40,8 @@ namespace acid
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
 
+		virtual void Encode(Metadata &metadata) const override;
+
 		std::vector<float> GetPointCloud() const;
 
 		const Vector3 &GetMinExtents() const { return m_minExtents; }
