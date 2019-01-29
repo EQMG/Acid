@@ -31,13 +31,12 @@ namespace acid
 		m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 
 		// Updates uniforms.
-		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenDimension", 2.0f * GetScreenDimension());
-		m_uniformObject.Push("screenPosition", 2.0f * GetScreenPosition() - 1.0f);
 		m_uniformObject.Push("aspectRatio", Window::Get()->GetAspectRatio());
-		m_uniformObject.Push("alpha", GetAlpha());
-		m_uniformObject.Push("depth", GetDepth());
+		m_uniformObject.Push("modelMatrix", GetModelMatrix());
+		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimension(), 2.0f * GetScreenPosition() - 1.0f));
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
+		m_uniformObject.Push("depth", GetScreenDepth());
+		m_uniformObject.Push("alpha", GetAlpha());
 
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);

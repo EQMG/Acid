@@ -8,22 +8,18 @@
 
 namespace acid
 {
-	static const Time SLIDE_TIME = Time::Seconds(0.1f);
 	static const Time CHANGE_TIME = Time::Seconds(0.05f);
-	static Vector2 SIZE = Vector2(0.3f, 0.045f);
-	static const Vector2 PADDING = Vector2(0.01f, 0.07f);
-	static const float FONT_SIZE = 1.4f;
 
 	UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax,
 		const int32_t &roundTo, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_slider(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Scale),
+		m_slider(std::make_unique<Gui>(this, UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale),
 			Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour)),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour)),
-		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * PADDING.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
-			FONT_SIZE, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
-		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * PADDING.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
-			FONT_SIZE, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
+		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+			UiInputButton::FontSize, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_title(title),
 		m_updating(false),
@@ -37,7 +33,7 @@ namespace acid
 		m_timerChange(Timer(CHANGE_TIME)),
 		m_onSlide(Delegate<void(UiInputSlider *, float)>())
 	{
-		GetRectangle().SetDimensions(SIZE);
+		GetRectangle().SetDimensions(UiInputButton::Size);
 		m_slider->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 		SetValue(value);
@@ -89,16 +85,16 @@ namespace acid
 
 		if (m_background->IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver && !m_updating)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 
-		m_slider->GetRectangle().SetDimensions(Vector2(m_progress, 1.0f));
+		m_slider->GetRectangle().SetDimensions(Vector2(1.0f - m_progress, 1.0f));
 	}
 
 	void UiInputSlider::SetTitle(const std::string &title)

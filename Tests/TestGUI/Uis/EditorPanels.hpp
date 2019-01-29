@@ -17,6 +17,8 @@ namespace test
 		std::unique_ptr<Hierarchy> m_hierarchy;
 		std::unique_ptr<Inspector> m_inspector;
 		std::unique_ptr<Console> m_console;
+
+		std::unique_ptr<Gui> m_banner;
 	public:
 		explicit EditorPanels(UiObject *parent);
 

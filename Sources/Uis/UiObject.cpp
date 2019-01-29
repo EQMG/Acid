@@ -12,9 +12,10 @@ namespace acid
 		m_enabled(true),
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
-		m_depth(0.0f),
+		m_height(0.0f),
 		m_screenDimension(Vector2()),
 		m_screenPosition(Vector2()),
+		m_screenDepth(0.0f),
 		m_lockRotation(true),
 		m_worldTransform({}),
 		m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
@@ -83,6 +84,8 @@ namespace acid
 		{
 			m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenDimension * m_rectangle.GetReference());
 		}
+
+		m_screenDepth = 0.01f * m_height;
 
 		// Update all children objects.
 		for (auto &child : m_children)

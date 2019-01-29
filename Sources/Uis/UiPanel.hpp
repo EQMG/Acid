@@ -2,17 +2,10 @@
 
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
+#include "UiScrollBar.hpp"
 
 namespace acid
 {
-	enum class ScrollBar
-	{
-		None = 0,
-		Vertical = 1,
-		Horizontal = 2
-	};
-	ENABLE_BITMASK_OPERATORS(ScrollBar)
-
 	class ACID_EXPORT UiPanel :
 		public UiObject
 	{
@@ -30,18 +23,12 @@ namespace acid
 	private:
 		void SetScissor(UiObject *object, const bool &size = false);
 
-		static float ScrollByDelta(const float &delta, Gui *puck, UiObject *background, const uint32_t &index);
-
-		static float ScrollByPosition(const float &position, Gui *puck, UiObject *background, const uint32_t &index);
-
 		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<UiObject> m_content;
-		std::unique_ptr<Gui> m_scrollX;
-		std::unique_ptr<Gui> m_scrollY;
+		std::unique_ptr<UiScrollBar> m_scrollX;
+		std::unique_ptr<UiScrollBar> m_scrollY;
 
 		bitmask<ScrollBar> m_scrollBars;
-		bool m_updatingX;
-		bool m_updatingY;
 		Vector2 m_min;
 		Vector2 m_max;
 	};

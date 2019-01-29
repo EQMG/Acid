@@ -20,15 +20,15 @@ namespace test
 	private:
 		std::unique_ptr<UiSection> m_section1;
 		std::unique_ptr<UiInputButton> m_button1;
-		std::unique_ptr<UiInputRadio> m_radio1;
-		std::unique_ptr<UiInputRadio> m_radio2;
-		std::unique_ptr<UiInputRadio> m_radio3;
-		UiRadioManager m_radioManager;
 		std::unique_ptr<UiGrabberMouse> m_input1;
 		std::unique_ptr<UiGrabberKeyboard> m_input2;
 		std::unique_ptr<UiGrabberJoystick> m_input3;
 		std::unique_ptr<UiInputSlider> m_slider1;
 		std::unique_ptr<UiInputText> m_text1;
+		std::unique_ptr<UiInputRadio> m_radio1;
+		std::unique_ptr<UiInputRadio> m_radio2;
+		std::unique_ptr<UiInputRadio> m_radio3;
+		UiRadioManager m_radioManager;
 	public:
 		explicit Inspector(UiObject *parent);
 

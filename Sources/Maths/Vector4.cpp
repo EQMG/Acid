@@ -4,6 +4,7 @@
 #include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Colour.hpp"
+#include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Maths.hpp"
 
@@ -28,6 +29,15 @@ namespace acid
 		m_z(z),
 		m_w(w)
 	{
+	}
+
+	Vector4::Vector4(const Vector2 &a, const Vector2 &b) :
+		m_x(a.m_x),
+		m_y(a.m_y),
+		m_z(b.m_x),
+		m_w(b.m_y)
+	{
+
 	}
 
 	Vector4::Vector4(const Vector3 &source, const float &w) :
