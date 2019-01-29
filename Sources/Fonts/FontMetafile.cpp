@@ -6,27 +6,7 @@
 
 namespace acid
 {
-	std::shared_ptr<FontMetafile> FontMetafile::Create(const std::string &filename)
-	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(filename);
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<FontMetafile>(resource);
-		}
-
-		auto result = std::make_shared<FontMetafile>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
-		return result;
-	}
-
 	FontMetafile::FontMetafile(const std::string &filename) :
-		Resource(filename),
 		m_characters(std::map<int32_t, Character>()),
 		m_values(std::map<std::string, std::string>()),
 		m_filename(filename),
@@ -68,7 +48,7 @@ namespace acid
 		}
 	}
 
-	std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t &ascii)
+	std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t &ascii) const
 	{
 		auto it = m_characters.find(ascii);
 

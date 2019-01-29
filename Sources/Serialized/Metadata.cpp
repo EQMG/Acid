@@ -178,6 +178,16 @@ namespace acid
 		return (*it).second;
 	}
 
+	bool Metadata::operator==(const Metadata &other) const
+	{
+		return m_name == other.m_name && m_value == other.m_value && m_children == other.m_children && m_attributes == other.m_attributes;
+	}
+
+	bool Metadata::operator!=(const Metadata &other) const
+	{
+		return !(*this == other);
+	}
+
 	void Metadata::Load(const std::string &data)
 	{
 	}

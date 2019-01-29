@@ -145,7 +145,7 @@ namespace acid
 
 	void ParticleType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Texture", m_texture == nullptr ? "" : m_texture->GetName());
+		metadata.SetChild<std::shared_ptr<Texture>>("Texture", m_texture);
 		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
 		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
 		metadata.SetChild<float>("Life Length", m_lifeLength);

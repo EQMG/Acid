@@ -15,7 +15,13 @@ namespace acid
 		static std::shared_ptr<ModelCube> Create(const std::string &data);
 
 		ModelCube(const float &width, const float &height, const float &depth);
+
+		void Encode(Metadata &metadata) const override;
 	private:
 		static std::string ToName(const float &width, const float &height, const float &depth);
+
+		float m_width;
+		float m_height;
+		float m_depth;
 	};
 }

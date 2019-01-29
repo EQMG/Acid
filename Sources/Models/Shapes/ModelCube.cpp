@@ -34,7 +34,10 @@ namespace acid
 	}
 
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
-		Model()
+		Model(),
+		m_width(width),
+		m_height(height),
+		m_depth(depth)
 	{
 		std::vector<VertexModel> vertices = {
 			VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
@@ -83,6 +86,13 @@ namespace acid
 		}
 
 		Model::Initialize(vertices, indices, ToName(width, height, depth));
+	}
+
+	void ModelCube::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<float>("Width", m_width);
+		metadata.SetChild<float>("Height", m_height);
+		metadata.SetChild<float>("Depth", m_depth);
 	}
 
 	std::string ModelCube::ToName(const float &width, const float &height, const float &depth)

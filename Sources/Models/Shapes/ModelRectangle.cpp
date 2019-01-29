@@ -33,7 +33,9 @@ namespace acid
 	}
 
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :
-		Model()
+		Model(),
+		m_min(min),
+		m_max(max)
 	{
 		std::vector<VertexModel> vertices = {
 			VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
@@ -47,6 +49,12 @@ namespace acid
 		};
 
 		Model::Initialize(vertices, indices, ToName(min, max));
+	}
+
+	void ModelRectangle::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<float>("Min", m_min);
+		metadata.SetChild<float>("Max", m_max);
 	}
 
 	std::string ModelRectangle::ToName(const float &min, const float &max)

@@ -36,7 +36,11 @@ namespace acid
 	}
 
 	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
-		Model()
+		Model(),
+		m_innerRadius(innerRadius),
+		m_outerRadius(outerRadius),
+		m_slices(slices),
+		m_loops(loops)
 	{
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
@@ -79,6 +83,14 @@ namespace acid
 
 		std::reverse(indices.begin(), indices.end());
 		Model::Initialize(vertices, indices, ToName(innerRadius, outerRadius, slices, loops));
+	}
+
+	void ModelDisk::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<float>("Inner Radius", m_innerRadius);
+		metadata.SetChild<float>("Outer Radius", m_outerRadius);
+		metadata.SetChild<uint32_t>("Slices", m_slices);
+		metadata.SetChild<uint32_t>("Loops", m_loops);
 	}
 
 	std::string ModelDisk::ToName(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)

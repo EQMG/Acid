@@ -45,7 +45,7 @@ namespace acid
 
 		void Decode(const Metadata &metadata);
 
-		void Encode(Metadata &metadata) const;
+		void Encode(Metadata &metadata) const override;
 
 		const std::shared_ptr<Model> &GetModel() const { return m_model; }
 

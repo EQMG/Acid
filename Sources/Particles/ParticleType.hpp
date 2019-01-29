@@ -57,7 +57,7 @@ namespace acid
 
 		void Decode(const Metadata &metadata);
 
-		void Encode(Metadata &metadata) const;
+		void Encode(Metadata &metadata) const override;
 
 		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
 

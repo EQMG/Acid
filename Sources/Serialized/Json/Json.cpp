@@ -21,8 +21,8 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
-		auto topSection = std::make_unique<JsonSection>(nullptr, "", "");
-		JsonSection *currentSection = nullptr;
+		auto topSection = std::make_unique<Section>(nullptr, "", "");
+		Section *currentSection = nullptr;
 		std::stringstream summation;
 
 		for (const char &c : data)
@@ -50,7 +50,7 @@ namespace acid
 				currentSection->m_content += summation.str();
 				summation.str(std::string());
 
-				auto section = new JsonSection(currentSection, name, "");
+				auto section = new Section(currentSection, name, "");
 				currentSection->m_children.emplace_back(section);
 				currentSection = section;
 			}
@@ -97,7 +97,7 @@ namespace acid
 		}
 	}
 
-	void Json::Convert(const JsonSection *source, Metadata *parent, const bool &isTopSection)
+	void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 	{
 		auto thisValue = parent;
 

@@ -31,6 +31,8 @@ namespace acid
 		/// <param name="filename"> The file name. </param>
 		explicit EntityPrefab(const std::string &filename);
 
+		void Encode(Metadata &metadata) const override;
+
 		void Write(const Entity &entity);
 
 		void Save();

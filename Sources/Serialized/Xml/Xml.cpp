@@ -18,8 +18,8 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
-		auto topNode = std::make_unique<XmlNode>(nullptr, "", "");
-		XmlNode *currentSection = nullptr;
+		auto topNode = std::make_unique<Node>(nullptr, "", "");
+		Node *currentSection = nullptr;
 		std::stringstream summation;
 		bool end = false;
 
@@ -40,7 +40,7 @@ namespace acid
 				}
 				else // Start tag.
 				{
-					auto section = new XmlNode(currentSection, "", "");
+					auto section = new Node(currentSection, "", "");
 					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
@@ -103,7 +103,7 @@ namespace acid
 		}
 	}
 
-	void Xml::Convert(const XmlNode *source, Metadata *parent, const uint32_t &depth)
+	void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 	{
 		int32_t firstSpace = String::FindCharPos(source->m_attributes, ' ');
 		std::string name = String::Trim(String::Substring(source->m_attributes, 0, firstSpace));

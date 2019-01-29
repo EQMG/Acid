@@ -47,6 +47,10 @@ namespace acid
 		return true;
 	}
 
+	void Model::Encode(Metadata &metadata) const
+	{
+	}
+
 	std::vector<float> Model::GetPointCloud() const
 	{
 		if (m_vertexBuffer == nullptr)

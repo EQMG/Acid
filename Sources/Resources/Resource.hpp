@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Engine/Exports.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -17,6 +17,22 @@ namespace acid
 		/// <param name="name"> The unique name to use with this resource, this can be changed later. </param>
 		explicit Resource(const std::string &name) :
 			m_name(name)
+		{
+		}
+
+		/// <summary>
+		/// Used to decode this resource from a loaded data format.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode from. </param>
+		virtual void Decode(const Metadata &metadata)
+		{
+		}
+
+		/// <summary>
+		/// Used to encode this resource into a data format.
+		/// </summary>
+		/// <param name="metadata"> The metadata to encode into. </param>
+		virtual void Encode(Metadata &metadata) const
 		{
 		}
 

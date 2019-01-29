@@ -1,8 +1,7 @@
 #include "ConfigManager.hpp"
 
 #include <Helpers/FileSystem.hpp>
-#include <Serialized/Json/Json.hpp>
-//#include <Serialized/Yaml/Yaml.hpp>
+#include <Serialized/Yaml/Yaml.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Events/Events.hpp>
 #include <Events/EventTime.hpp>
@@ -11,8 +10,8 @@
 namespace test
 {
 	ConfigManager::ConfigManager() :
-		m_audio(std::make_unique<File>("Configs/Audio.json", new Json())),
-		m_graphics(std::make_unique<File>("Configs/Graphics.json", new Json()))
+		m_audio(std::make_unique<File>("Configs/Audio.yaml", new Yaml())),
+		m_graphics(std::make_unique<File>("Configs/Graphics.yaml", new Yaml()))
 	{
 		Load();
 

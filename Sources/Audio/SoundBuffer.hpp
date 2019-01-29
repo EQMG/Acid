@@ -28,6 +28,8 @@ namespace acid
 
 		~SoundBuffer();
 
+		void Encode(Metadata &metadata) const override;
+
 		const std::string &GetFilename() const { return m_filename; };
 
 		const uint32_t &GetBuffer() const { return m_buffer; }

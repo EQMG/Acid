@@ -12,8 +12,8 @@ namespace acid
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class ACID_EXPORT Texture :
-		public Resource,
-		public Descriptor
+		public Descriptor,
+		public Resource
 	{
 	public:
 		/// <summary>
@@ -62,6 +62,8 @@ namespace acid
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
 			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+
+		void Encode(Metadata &metadata) const override;
 
 		/// <summary>
 		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.
