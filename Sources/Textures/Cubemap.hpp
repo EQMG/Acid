@@ -16,6 +16,8 @@ namespace acid
 		public Resource
 	{
 	public:
+		static std::shared_ptr<Cubemap> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing cubemap with the same filename, or create a new cubemap.
 		/// </summary>
@@ -114,9 +116,6 @@ namespace acid
 
 		const VkSampler &GetSampler() const { return m_sampler; }
 	private:
-		static std::string ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
-			const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap);
-
 		std::string m_filename;
 		std::string m_fileSuffix;
 

@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		auto resource = Resources::Get()->Find(ToName(radiusBase, radiusTop, height, slices, stacks));
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(radiusBase, radiusTop, height, slices, stacks));
 
 		if (resource != nullptr)
 		{
@@ -16,24 +16,8 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
-	}
-
-	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const std::string &data)
-	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto radiusBase = String::From<float>(split[1]);
-		auto radiusTop = String::From<float>(split[2]);
-		auto height = String::From<float>(split[3]);
-		auto slices = String::From<uint32_t>(split[4]);
-		auto stacks = String::From<uint32_t>(split[5]);
-		return Create(radiusBase, radiusTop, height, slices, stacks);
 	}
 
 	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
@@ -85,22 +69,25 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(radiusBase, radiusTop, height, slices, stacks));
+		Model::Initialize(vertices, indices);
 	}
+
+	/*void ModelCylinder::Decode(const Metadata &metadata)
+	{
+		m_radiusBase = metadata.GetChild<float>("Radius Base");
+		m_radiusTop = metadata.GetChild<float>("Radius Top");
+		m_height = metadata.GetChild<float>("Height");
+		m_slices = metadata.GetChild<uint32_t>("Slices");
+		m_stacks = metadata.GetChild<uint32_t>("Stacks");
+	}*/
 
 	void ModelCylinder::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<std::string>("Type", "ModelCylinder");
 		metadata.SetChild<float>("Radius Base", m_radiusBase);
 		metadata.SetChild<float>("Radius Top", m_radiusTop);
 		metadata.SetChild<float>("Height", m_height);
 		metadata.SetChild<uint32_t>("Slices", m_slices);
 		metadata.SetChild<uint32_t>("Stacks", m_stacks);
-	}
-
-	std::string ModelCylinder::ToName(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
-	{
-		std::stringstream result;
-		result << "Cylinder_" << radiusBase << "_" << radiusTop << "_" << height << "_" << slices << "_" << stacks;
-		return result.str();
 	}
 }

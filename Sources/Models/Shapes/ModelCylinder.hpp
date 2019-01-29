@@ -12,14 +12,12 @@ namespace acid
 	public:
 		static std::shared_ptr<ModelCylinder> Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
 
-		static std::shared_ptr<ModelCylinder> Create(const std::string &data);
-
 		ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
+
+	//	void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 	private:
-		static std::string ToName(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks);
-
 		float m_radiusBase;
 		float m_radiusTop;
 		float m_height;

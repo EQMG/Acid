@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cassert>
 #include "Renderer/Renderer.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Renderer/Renderer.hpp"
 
 namespace acid

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <physfs.h>
 #include "Engine/Engine.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "FileSystem.hpp"
 
 namespace acid
 {

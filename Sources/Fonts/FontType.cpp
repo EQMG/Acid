@@ -4,40 +4,31 @@
 
 namespace acid
 {
-	std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &fontStyle)
+	std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(ToFilename(filename, fontStyle));
+		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<FontType>(resource);
 		}
 
-		auto result = std::make_shared<FontType>(filename, fontStyle);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto filename = metadata.GetChild<std::string>("Filename");
+		auto style = metadata.GetChild<std::string>("Style");
+		auto result = std::make_shared<FontType>(filename, style);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<FontType> FontType::Create(const std::string &data)
+	std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &style)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		std::string filename = split[1];
-		std::string fontStyle = split[2];
-		return Create(filename, fontStyle);
+		Metadata metadata = Metadata();
+		metadata.SetChild<std::string>("Filename", filename);
+		metadata.SetChild<std::string>("Style", style);
+		return Create(metadata);
 	}
 
 	FontType::FontType(const std::string &filename, const std::string &style) :
-		Resource(ToFilename(filename, style)),
 		m_filename(filename),
 		m_style(style),
 		m_texture(Texture::Create(m_filename + "/" + m_style + ".png")),
@@ -49,10 +40,5 @@ namespace acid
 	{
 		metadata.SetChild<std::string>("Filename", m_filename);
 		metadata.SetChild<std::string>("Style", m_style);
-	}
-
-	std::string FontType::ToFilename(const std::string &filename, const std::string &fontStyle)
-	{
-		return "FontType_" + filename + "_" + fontStyle;
 	}
 }

@@ -9,33 +9,37 @@ namespace acid
 {
 	static const uint32_t MAX_TYPE_INSTANCES = 512;
 
-	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
+	std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 	{
-		auto resource = Resources::Get()->Find(ToName(model, lineThickness, diffuse));
+		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<GizmoType>(resource);
 		}
 
+		auto model = metadata.GetResource<Model>("Model");
+		auto lineThickness = metadata.GetChild<float>("Line Thickness");
+		auto diffuse = metadata.GetChild<Colour>("Diffuse");
 		auto result = std::make_shared<GizmoType>(model, lineThickness, diffuse);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		return result;
 	}
 
-	std::shared_ptr<GizmoType> GizmoType::Create(const std::string &data)
+	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
-		auto split = String::Split(data, "_");
-		auto model = Model::Create(split[1]);
-		auto lineThickness = String::From<float>(split[2]);
-		return Create(model, lineThickness);
+		Metadata metadata = Metadata();
+		metadata.SetChild<std::shared_ptr<Model>>("Model", model);
+		metadata.SetChild<float>("Line Thickness", lineThickness);
+		metadata.SetChild<Colour>("Diffuse", diffuse);
+		return Create(metadata);
 	}
 
 	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse) :
-		Resource(ToName(model, lineThickness, diffuse)),
 		m_model(model),
 		m_lineThickness(lineThickness),
 		m_diffuse(diffuse),
+		m_instances(0),
 		m_descriptorSet(DescriptorsHandler()),
 		m_storageInstances(StorageHandler())
 	{
@@ -90,22 +94,10 @@ namespace acid
 		return true;
 	}
 
-	void GizmoType::Decode(const Metadata &metadata)
-	{
-		m_model = Model::Create(metadata.GetChild<std::string>("Model"));
-		m_lineThickness = metadata.GetChild<float>("Line Thickness");
-	}
-
 	void GizmoType::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::shared_ptr<Model>>("Model", m_model);
 		metadata.SetChild<float>("Line Thickness", m_lineThickness);
-	}
-
-	std::string GizmoType::ToName(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
-	{
-		std::stringstream result;
-		result << "GizmoType_" << (model == nullptr ? "nullptr" : model->GetName()) << "_" << lineThickness << "_" << diffuse; // TODO: Fix saving model name to gizmo.
-		return result.str();
+		metadata.SetChild<Colour>("Diffuse", m_diffuse);
 	}
 }

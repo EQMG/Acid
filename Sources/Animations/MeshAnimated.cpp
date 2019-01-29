@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Serialized/Xml/Xml.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 
 namespace acid
 {
@@ -60,7 +60,7 @@ namespace acid
 
 		auto vertices = geometryLoader.GetVertices();
 		auto indices = geometryLoader.GetIndices();
-		m_model = std::make_shared<Model>(vertices, indices, filename);
+		m_model = std::make_shared<Model>(vertices, indices);
 		m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
 		m_headJoint->CalculateInverseBindTransform(Matrix4::Identity);
 		m_animator = std::make_unique<Animator>(m_headJoint.get());

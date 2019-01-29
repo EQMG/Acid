@@ -8,7 +8,7 @@ namespace acid
 {
 	std::shared_ptr<ModelSphere> ModelSphere::Create(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
 	{
-		auto resource = Resources::Get()->Find(ToName(latitudeBands, longitudeBands, radius));
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(latitudeBands, longitudeBands, radius));
 
 		if (resource != nullptr)
 		{
@@ -16,22 +16,8 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelSphere>(latitudeBands, longitudeBands, radius);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
-	}
-
-	std::shared_ptr<ModelSphere> ModelSphere::Create(const std::string &data)
-	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto latitudeBands = String::From<uint32_t>(split[1]);
-		auto longitudeBands = String::From<uint32_t>(split[2]);
-		auto radius = String::From<float>(split[3]);
-		return Create(latitudeBands, longitudeBands, radius);
 	}
 
 	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
@@ -79,20 +65,21 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(latitudeBands, longitudeBands, radius));
+		Model::Initialize(vertices, indices);
 	}
+
+	/*void ModelSphere::Decode(const Metadata &metadata)
+	{
+		m_latitudeBands = metadata.GetChild<uint32_t>("Latitude Bands");
+		m_longitudeBands = metadata.GetChild<uint32_t>("Longitude Bands");
+		m_radius = metadata.GetChild<float>("Radius");
+	}*/
 
 	void ModelSphere::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<std::string>("Type", "ModelSphere");
 		metadata.SetChild<uint32_t>("Latitude Bands", m_latitudeBands);
 		metadata.SetChild<uint32_t>("Longitude Bands", m_longitudeBands);
 		metadata.SetChild<float>("Radius", m_radius);
-	}
-
-	std::string ModelSphere::ToName(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
-	{
-		std::stringstream result;
-		result << "Sphere_" << latitudeBands << "_" << longitudeBands << "_" << radius;
-		return result.str();
 	}
 }

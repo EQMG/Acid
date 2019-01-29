@@ -7,7 +7,7 @@ namespace acid
 {
 	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
 	{
-		auto resource = Resources::Get()->Find(ToName(min, max));
+		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(min, max));
 
 		if (resource != nullptr)
 		{
@@ -15,21 +15,8 @@ namespace acid
 		}
 
 		auto result = std::make_shared<ModelRectangle>(min, max);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
 		return result;
-	}
-
-	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const std::string &data)
-	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto width = String::From<float>(split[1]);
-		auto height = String::From<float>(split[2]);
-		return Create(width, height);
 	}
 
 	ModelRectangle::ModelRectangle(const float &min, const float &max) :
@@ -48,19 +35,19 @@ namespace acid
 			2, 1, 0
 		};
 
-		Model::Initialize(vertices, indices, ToName(min, max));
+		Model::Initialize(vertices, indices);
 	}
+
+	/*void ModelRectangle::Decode(const Metadata &metadata)
+	{
+		m_min = metadata.GetChild<float>("Min");
+		m_max = metadata.GetChild<float>("Max");
+	}*/
 
 	void ModelRectangle::Encode(Metadata &metadata) const
 	{
+		metadata.SetChild<std::string>("Type", "ModelRectangle");
 		metadata.SetChild<float>("Min", m_min);
 		metadata.SetChild<float>("Max", m_max);
-	}
-
-	std::string ModelRectangle::ToName(const float &min, const float &max)
-	{
-		std::stringstream result;
-		result << "Rectangle_" << min << "_" << max;
-		return result.str();
 	}
 }

@@ -11,30 +11,41 @@ namespace acid
 {
 	static const std::vector<std::string> FILE_SIDES = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
-	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-		const bool &anisotropic, const bool &mipmap)
+	std::shared_ptr<Cubemap> Cubemap::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap));
+		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Cubemap>(resource);
 		}
 
-		auto result = std::make_shared<Cubemap>(filename, fileSuffix, filter, addressMode, anisotropic, mipmap);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto filename = metadata.GetChild<std::string>("Filename");
+		auto fileSuffix = metadata.GetChild<std::string>("File Suffix");
+		auto filter = static_cast<VkFilter>(metadata.GetChild<uint32_t>("Filter"));
+		auto addressMode = static_cast<VkSamplerAddressMode>(metadata.GetChild<uint32_t>("Address Mode"));
+		auto anisotropic = metadata.GetChild<bool>("Anisotropic");
+		auto result = std::make_shared<Cubemap>(filename, fileSuffix, filter, addressMode, anisotropic, true);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		return result;
+	}
+
+	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+		const bool &anisotropic, const bool &mipmap)
+	{
+		Metadata metadata = Metadata();
+		metadata.SetChild<std::string>("Filename", filename);
+		metadata.SetChild<std::string>("File Suffix", fileSuffix);
+		metadata.SetChild<uint32_t>("Filter", filter);
+		metadata.SetChild<uint32_t>("Address Mode", addressMode);
+		metadata.SetChild<bool>("Anisotropic", anisotropic);
+		metadata.SetChild<bool>("Mipmap", mipmap);
+		return Create(metadata);
 	}
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap) :
 		Descriptor(),
-		Resource(ToName(filename, fileSuffix, filter, addressMode, anisotropic, mipmap)),
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
 		m_filter(filter),
@@ -49,6 +60,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
+		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 #if defined(ACID_VERBOSE)
@@ -97,7 +109,6 @@ namespace acid
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 		Descriptor(),
-		Resource(ToName("", "", filter, addressMode, anisotropic, mipmap)),
 		m_filename(""),
 		m_fileSuffix(""),
 		m_filter(filter),
@@ -112,6 +123,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
+		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
@@ -196,6 +208,16 @@ namespace acid
 		return WriteDescriptorSet(descriptorWrite, imageInfo);
 	}
 
+	/*void Cubemap::Decode(const Metadata &metadata)
+	{
+		m_filename = metadata.GetChild<std::string>("Filename");
+		m_fileSuffix = metadata.GetChild<std::string>("File Suffix");
+		m_filter = metadata.GetChild<VkFilter>("Filter");
+		m_addressMode = metadata.GetChild<VkSamplerAddressMode>("Address Mode");
+		m_anisotropic = metadata.GetChild<bool>("Anisotropic");
+	//	m_mipLevels = metadata.GettChild<bool>("Mipmap");
+	}*/
+
 	void Cubemap::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::string>("Filename", m_filename);
@@ -259,13 +281,5 @@ namespace acid
 		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, pixels, bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
-	}
-
-	std::string Cubemap::ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
-		const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
-	{
-		std::stringstream result;
-		result << "Cubemap_" << filename << "_" << fileSuffix << "_" << filter << "_" << addressMode << "_" << anisotropic << "_" << mipmap;
-		return result.str();
 	}
 }

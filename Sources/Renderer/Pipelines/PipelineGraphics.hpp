@@ -140,8 +140,9 @@ namespace acid
 	class ACID_EXPORT PipelineGraphicsCreate
 	{
 	public:
-		PipelineGraphicsCreate(const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
-		    const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
+		explicit PipelineGraphicsCreate(const std::vector<std::string> &shaderStages = {}, const std::vector<Shader::VertexInput> &vertexInputs = {}, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon,
+			const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
+			const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
 			m_mode(mode),

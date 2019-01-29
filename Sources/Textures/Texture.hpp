@@ -16,6 +16,8 @@ namespace acid
 		public Resource
 	{
 	public:
+		static std::shared_ptr<Texture> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing texture with the same filename, or create a new texture.
 		/// </summary>
@@ -136,9 +138,6 @@ namespace acid
 			const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
 			const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
 	private:
-		static std::string ToName(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-			const bool &anisotropic, const bool &mipmap);
-
 		std::string m_filename;
 
 		VkFilter m_filter;

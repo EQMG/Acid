@@ -14,6 +14,8 @@ namespace acid
 		public Resource
 	{
 	public:
+		static std::shared_ptr<SoundBuffer> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing sound buffer with the same filename, or create a new sound buffer.
 		/// </summary>
@@ -24,7 +26,7 @@ namespace acid
 		/// Creates a new sound buffer.
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
-		explicit SoundBuffer(const std::string &filename);
+		explicit SoundBuffer(const std::string &filename = "");
 
 		~SoundBuffer();
 

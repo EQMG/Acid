@@ -5,7 +5,7 @@
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
-#include <Helpers/FileSystem.hpp>
+#include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -111,7 +111,7 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		EntityPrefab prefabPlane = EntityPrefab("Plane.xml");
+		EntityPrefab prefabPlane = EntityPrefab("Plane.yaml");
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 

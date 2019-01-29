@@ -14,18 +14,14 @@ namespace acid
 		public Resource
 	{
 	public:
-		/// <summary>
-		/// Will find an existing font type with the same filename, or create a new font type.
-		/// </summary>
-		/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
-		/// <param name="fontStyle"> The style selected to load as this type. </param>
-		static std::shared_ptr<FontType> Create(const std::string &filename, const std::string &fontStyle);
+		static std::shared_ptr<FontType> Create(const Metadata &metadata);
 
 		/// <summary>
 		/// Will find an existing font type with the same filename, or create a new font type.
 		/// </summary>
-		/// <param name="data"> The combined data for the family file path and selected style. </param>
-		static std::shared_ptr<FontType> Create(const std::string &data);
+		/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
+		/// <param name="style"> The style selected to load as this type. </param>
+		static std::shared_ptr<FontType> Create(const std::string &filename, const std::string &style);
 
 		/// <summary>
 		/// Creates a new text loader.
@@ -40,8 +36,6 @@ namespace acid
 
 		const FontMetafile &GetMetadata() const { return m_metadata; }
 	private:
-		static std::string ToFilename(const std::string &filename, const std::string &fontStyle);
-
 		std::string m_filename;
 		std::string m_style;
 

@@ -1,11 +1,12 @@
 #include "Texture.hpp"
 
 #include "Renderer/Renderer.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Maths/Maths.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resources.hpp"
+#include "Serialized/Metadata.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -16,28 +17,37 @@ namespace acid
 	static const std::string FALLBACK_PATH = "Undefined.png";
 	static const float ANISOTROPY = 16.0f;
 
-	std::shared_ptr<Texture> Texture::Create(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+	std::shared_ptr<Texture> Texture::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(ToName(filename, filter, addressMode, anisotropic, mipmap));
+		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<Texture>(resource);
 		}
 
-		auto result = std::make_shared<Texture>(filename, filter, addressMode, anisotropic, mipmap);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto filename = metadata.GetChild<std::string>("Filename");
+		auto filter = static_cast<VkFilter>(metadata.GetChild<uint32_t>("Filter"));
+		auto addressMode = static_cast<VkSamplerAddressMode>(metadata.GetChild<uint32_t>("Address Mode"));
+		auto anisotropic = metadata.GetChild<bool>("Anisotropic");
+		auto result = std::make_shared<Texture>(filename, filter, addressMode, anisotropic, true);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		return result;
+	}
+
+	std::shared_ptr<Texture> Texture::Create(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+	{
+		Metadata metadata = Metadata();
+		metadata.SetChild<std::string>("Filename", filename);
+		metadata.SetChild<uint32_t>("Filter", filter);
+		metadata.SetChild<uint32_t>("Address Mode", addressMode);
+		metadata.SetChild<bool>("Anisotropic", anisotropic);
+		metadata.SetChild<bool>("Mipmap", mipmap);
+		return Create(metadata);
 	}
 
 	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
 		Descriptor(),
-		Resource(ToName(filename, filter, addressMode, anisotropic, mipmap)),
 		m_filename(filename),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -51,6 +61,7 @@ namespace acid
 		m_image(VK_NULL_HANDLE),
 		m_deviceMemory(VK_NULL_HANDLE),
 		m_imageView(VK_NULL_HANDLE),
+		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 #if defined(ACID_VERBOSE)
@@ -100,7 +111,6 @@ namespace acid
 	Texture::Texture(const uint32_t &width, const uint32_t &height, void *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 		Descriptor(),
-		Resource(ToName("", filter, addressMode, anisotropic, mipmap)),
 		m_filename(""),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -747,13 +757,5 @@ namespace acid
 		imageMemoryBarrier.image = image;
 		imageMemoryBarrier.subresourceRange = subresourceRange;
 		vkCmdPipelineBarrier(cmdbuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
-	}
-
-	std::string Texture::ToName(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-		const bool &anisotropic, const bool &mipmap)
-	{
-		std::stringstream result;
-		result << "Texture_" << filename << "_" << filter << "_" << addressMode << "_" << anisotropic << "_" << mipmap;
-		return result.str();
 	}
 }
