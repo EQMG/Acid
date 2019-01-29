@@ -6,16 +6,14 @@
 
 namespace acid
 {
-	static const Time SLIDE_TIME = Time::Seconds(0.1f);
-	static const Vector2 SIZE = Vector2(0.3f, 0.03375f);
-	static const float FONT_SIZE = 1.4f;
+	static const Vector2 SIZE = Vector2(0.22f, 0.0315f);
 
 	UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType, const bool &checked, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Left, Texture::Create("Guis/Radio.png"), UiInputButton::PrimaryColour)),
 		m_fill(std::make_unique<Gui>(m_background.get(), UiBound::Maximum, nullptr, Colour::White)),
-		m_text(std::make_unique<Text>(this, UiBound::Left, FONT_SIZE, string,
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White)),
+		m_text(std::make_unique<Text>(this, UiBound::Left, UiInputButton::FontSize, string,
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_checked(checked),
 		m_markType(markType),
@@ -26,7 +24,7 @@ namespace acid
 		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 
 		m_background->GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
-		m_text->GetRectangle().SetPosition(Vector2(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
+		m_text->GetRectangle().SetPosition(Vector2(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));
 
 		UpdateFill();
 	}
@@ -43,18 +41,18 @@ namespace acid
 
 			m_checked = !m_checked;
 			m_onChecked(this, m_checked);
-			m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, SLIDE_TIME);
+			m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, UiInputButton::SlideTime);
 			CancelEvent(MouseButton::Left);
 		}
 
 		if (m_background->IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		}
 		else if (!m_background->IsSelected() && m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, SLIDE_TIME);
+			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 	}
@@ -92,6 +90,6 @@ namespace acid
 				break;
 		}
 
-		m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, SLIDE_TIME);
+		m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, UiInputButton::SlideTime);
 	}
 }

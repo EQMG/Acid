@@ -117,7 +117,8 @@ namespace test
 
 		auto terrain = GetStructure()->CreateEntity(Transform());
 		terrain->AddComponent<Mesh>();
-		terrain->AddComponent<MaterialTerrain>(Texture::Create("Objects/Terrain/Grass.png"), Texture::Create("Objects/Terrain/Rocks.png"));
+		terrain->AddComponent<MaterialTerrain>(Texture::Create("Objects/Terrain/Grass.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT),
+			Texture::Create("Objects/Terrain/Rocks.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT));
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<ColliderHeightfield>();

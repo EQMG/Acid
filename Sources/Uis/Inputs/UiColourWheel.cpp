@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	static const Vector2 SIZE = Vector2(0.3f, 0.3f);
+	static const Vector2 SIZE = Vector2(0.22f, 0.22f);
 
 	UiColourWheel::UiColourWheel(UiObject *parent, const Colour &colour, const UiBound &rectangle) :
 		UiObject(parent, rectangle),

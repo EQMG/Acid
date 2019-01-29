@@ -38,7 +38,9 @@ namespace acid
 		m_msaaSamples = GetMaxUsableSampleCount();
 
 		Log::Out("Selected Physical Device: '%s', %i\n", m_properties.deviceName, m_properties.deviceID);
+#if defined(ACID_VERBOSE)
 		Log::Out("Max MSAA Samples: %i\n", m_msaaSamples);
+#endif
 	}
 
 	PhysicalDevice::~PhysicalDevice()

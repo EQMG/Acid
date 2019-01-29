@@ -12,10 +12,15 @@ namespace acid
 		public UiObject
 	{
 	public:
-		static Colour PrimaryColour;
-		static Colour SecondaryColour;
-		static Colour AccentColour;
-		static Colour SelectedColour;
+		static const Vector2 Size;
+		static const Vector2 Padding;
+		static const float FontSize;
+		static const Time SlideTime;
+
+		static const Colour PrimaryColour;
+		static const Colour BackgroundColour;
+		static const Colour AccentColour;
+		static const Colour SelectedColour;
 
 		UiInputButton(UiObject *parent, const std::string &string,
 			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));

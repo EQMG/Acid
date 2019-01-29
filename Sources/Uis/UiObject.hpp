@@ -89,13 +89,15 @@ namespace acid
 
 		void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
 
-		const float &GetDepth() const { return m_depth; }
+		const float &GetHeight() const { return m_height; }
 
-		void SetDepth(const float &depth) { m_depth = depth; }
+		void SetHeight(const float &height) { m_height = height; }
 
 		const Vector2 &GetScreenDimension() const { return m_screenDimension; }
 
 		const Vector2 &GetScreenPosition() const { return m_screenPosition; }
+
+		const float &GetScreenDepth() const { return m_screenDepth; }
 
 		const bool &IsLockRotation() const { return m_lockRotation; }
 
@@ -161,10 +163,11 @@ namespace acid
 		bool m_enabled;
 		UiBound m_rectangle;
 		Vector4 m_scissor; // TODO: Convert to UiBound.
-		float m_depth;
+		float m_height;
 
 		Vector2 m_screenDimension;
 		Vector2 m_screenPosition;
+		float m_screenDepth;
 
 		bool m_lockRotation;
 		std::optional<Transform> m_worldTransform;

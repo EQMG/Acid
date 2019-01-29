@@ -7,6 +7,7 @@
 namespace acid
 {
 	class Colour;
+	class Vector2;
 	class Vector3;
 	class DataStream;
 	class Metadata;
@@ -30,6 +31,13 @@ namespace acid
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
 		Vector4(const float &x, const float &y, const float &z, const float &w);
+
+		/// <summary>
+		/// Constructor for Vector4.
+		/// </summary>
+		/// <param name="a"> The XY value. </param>
+		/// <param name="b"> The ZW value. </param>
+		Vector4(const Vector2 &a, const Vector2 &b);
 
 		/// <summary>
 		/// Constructor for Vector4.

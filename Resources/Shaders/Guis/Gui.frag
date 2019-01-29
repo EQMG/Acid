@@ -4,13 +4,12 @@
 
 layout(set = 0, binding = 1) uniform UboObject
 {
-	mat4 modelMatrix;
-	vec2 screenDimension;
-	vec2 screenPosition;
 	float aspectRatio;
-	float alpha;
-	float depth;
+	mat4 modelMatrix;
+	vec4 screenOffset;
 	int modelMode;
+	float depth;
+	float alpha;
 
 	vec4 colourOffset;
 	vec2 atlasOffset;
@@ -49,22 +48,11 @@ void main()
 	if (object.ninePatches != vec4(0.0f))
 	{
 		vec2 newUV = vec2(
-		    processAxis(inUv.x, object.ninePatches.x, object.ninePatches.x / (object.screenDimension.x / object.screenDimension.y) / object.aspectRatio),
+		    processAxis(inUv.x, object.ninePatches.x, object.ninePatches.x / (object.screenOffset.x / object.screenOffset.y) / object.aspectRatio),
 		    processAxis(inUv.y, object.ninePatches.y, object.ninePatches.y)
 		);
 
 		outColour = texture(samplerColour, newUV);
-		/*outColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
-
-		if (newUV.x < object.ninePatches.x || newUV.x > object.ninePatches.z)
-		{
-			outColour.r = 1.0f;
-		}
-
-		if (newUV.y < object.ninePatches.y || newUV.y > object.ninePatches.w)
-		{
-			outColour.g = 1.0f;
-		}*/
 	}
 	else
 	{
