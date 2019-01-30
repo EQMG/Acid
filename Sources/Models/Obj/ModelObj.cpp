@@ -8,29 +8,35 @@ namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.obj";
 
-	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
+	std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(filename);
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<ModelObj>(resource);
-		}
-
-		auto result = std::make_shared<ModelObj>(filename);
-		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelObj>("");
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
+	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
+	{
+		auto temp = ModelObj(filename);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
+	}
+
 	ModelObj::ModelObj(const std::string &filename) :
-		Model(),
 		m_filename(filename)
 	{
+		Load();
+	}
+
+	void ModelObj::Load()
+	{
+		if (m_filename.empty())
+		{
+			return;
+		}
+
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
@@ -65,8 +71,8 @@ namespace acid
 				else if (prefix == "v")
 				{
 					Vector3 vertex = Vector3(String::From<float>(split[1]),
-						String::From<float>(split[2]),
-						String::From<float>(split[3]));
+					                         String::From<float>(split[2]),
+					                         String::From<float>(split[3]));
 					VertexModelData *newVertex = new VertexModelData(
 						static_cast<int>(verticesList.size()), vertex);
 					verticesList.emplace_back(newVertex);
@@ -74,14 +80,14 @@ namespace acid
 				else if (prefix == "vt")
 				{
 					Vector2 uv = Vector2(String::From<float>(split[1]),
-						1.0f - String::From<float>(split[2]));
+					                     1.0f - String::From<float>(split[2]));
 					uvsList.emplace_back(uv);
 				}
 				else if (prefix == "vn")
 				{
 					Vector3 normal = Vector3(String::From<float>(split[1]),
-						String::From<float>(split[2]),
-						String::From<float>(split[3]));
+					                         String::From<float>(split[2]),
+					                         String::From<float>(split[3]));
 					normalsList.emplace_back(normal);
 				}
 				else if (prefix == "f")
@@ -99,13 +105,13 @@ namespace acid
 
 					VertexModelData *v0 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]),
-							String::From<float>(vertex1[2])), verticesList, indices);
+						        String::From<float>(vertex1[2])), verticesList, indices);
 					VertexModelData *v1 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]),
-							String::From<float>(vertex2[2])), verticesList, indices);
+						        String::From<float>(vertex2[2])), verticesList, indices);
 					VertexModelData *v2 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]),
-							String::From<float>(vertex3[2])), verticesList, indices);
+						        String::From<float>(vertex3[2])), verticesList, indices);
 					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
@@ -150,15 +156,15 @@ namespace acid
 		Model::Initialize(vertices, indices);
 	}
 
-	/*void ModelObj::Decode(const Metadata &metadata)
+	void ModelObj::Decode(const Metadata &metadata)
 	{
-		m_filename = metadata.GetChild<std::string>("Filename");
-	}*/
+		metadata.GetChild("Filename", m_filename);
+	}
 
 	void ModelObj::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::string>("Type", "ModelObj");
-		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild("Filename", m_filename);
 	}
 
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)

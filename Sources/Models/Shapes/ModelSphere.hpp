@@ -10,16 +10,20 @@ namespace acid
 		public Model
 	{
 	public:
-		static std::shared_ptr<ModelSphere> Create(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
+		static std::shared_ptr<ModelSphere> Create(const Metadata &metadata);
 
-		ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius);
+		static std::shared_ptr<ModelSphere> Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands);
 
-	//	void Decode(const Metadata &metadata) override;
+		explicit ModelSphere(const float &radius = 1.0f, const uint32_t &latitudeBands = 20, const uint32_t &longitudeBands = 20);
+
+		void Load() override;
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 	private:
+		float m_radius;
 		uint32_t m_latitudeBands;
 		uint32_t m_longitudeBands;
-		float m_radius;
 	};
 }

@@ -20,7 +20,7 @@ namespace acid
 	public:
 		static std::shared_ptr<Model> Create(const Metadata &metadata);
 
-		static std::shared_ptr<Model> Create(const std::string &data);
+		static std::shared_ptr<Model> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new empty model.
@@ -41,6 +41,10 @@ namespace acid
 		}
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
+
+		virtual void Load() override;
+
+		virtual void Decode(const Metadata &metadata) override;
 
 		virtual void Encode(Metadata &metadata) const override;
 

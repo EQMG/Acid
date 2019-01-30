@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
+#include "Models/ModelRegister.hpp"
 #include "Scene.hpp"
 #include "ComponentRegister.hpp"
 #include "SceneStructure.hpp"
@@ -43,6 +44,12 @@ namespace acid
 		ComponentRegister &GetComponentRegister() { return m_componentRegister; }
 
 		/// <summary>
+		/// Gets the model register used by the engine. The register can be used to register/deregister model types.
+		/// </summary>
+		/// <returns> The model register. </returns>
+		ModelRegister &GetModelRegister() { return m_modelRegister; }
+
+		/// <summary>
 		/// Gets the current camera object.
 		/// </summary>
 		/// <returns> The current camera. </returns>
@@ -69,5 +76,6 @@ namespace acid
 		std::unique_ptr<Scene> m_scene;
 
 		ComponentRegister m_componentRegister;
+		ModelRegister m_modelRegister;
 	};
 }

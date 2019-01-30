@@ -313,16 +313,16 @@ namespace acid
 
 	void Vector3::Decode(const Metadata &metadata)
 	{
-		m_x = metadata.GetChild<float>("x");
-		m_y = metadata.GetChild<float>("y");
-		m_z = metadata.GetChild<float>("z");
+		metadata.GetChild("x", m_x);
+		metadata.GetChild("y", m_y);
+		metadata.GetChild("z", m_z);
 	}
 
 	void Vector3::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("x", m_x);
-		metadata.SetChild<float>("y", m_y);
-		metadata.SetChild<float>("z", m_z);
+		metadata.SetChild("x", m_x);
+		metadata.SetChild("y", m_y);
+		metadata.SetChild("z", m_z);
 	}
 
 	bool Vector3::operator==(const Vector3 &other) const

@@ -22,14 +22,14 @@ namespace acid
 
 	void EmitterSphere::Decode(const Metadata &metadata)
 	{
-		m_radius = metadata.GetChild<float>("Radius");
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Radius", m_radius);
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void EmitterSphere::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Radius", m_radius);
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Radius", m_radius);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	Vector3 EmitterSphere::GeneratePosition() const

@@ -164,7 +164,7 @@ namespace acid
 
 	void Colour::Encode(Metadata &metadata) const
 	{
-		metadata.Set<std::string>(GetHex());
+		metadata.Set(GetHex());
 	}
 
 	bool Colour::operator==(const Colour &other) const

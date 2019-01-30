@@ -43,32 +43,32 @@ namespace acid
 
 	void MaterialDefault::Decode(const Metadata &metadata)
 	{
-		m_baseDiffuse = metadata.GetChild<Colour>("Base Diffuse");
-		m_diffuseTexture = metadata.GetResource<Texture>("Diffuse Texture");
+		metadata.GetChild("Base Diffuse", m_baseDiffuse);
+		metadata.GetResource("Diffuse Texture", m_diffuseTexture);
 
-		m_metallic = metadata.GetChild<float>("Metallic");
-		m_roughness = metadata.GetChild<float>("Roughness");
-		m_materialTexture = metadata.GetResource<Texture>("Material Texture");
-		m_normalTexture = metadata.GetResource<Texture>("Normal Texture");
+		metadata.GetChild("Metallic", m_metallic);
+		metadata.GetChild("Roughness", m_roughness);
+		metadata.GetResource("Material Texture", m_materialTexture);
+		metadata.GetResource("Normal Texture", m_normalTexture);
 
-		m_castsShadows = metadata.GetChild<bool>("Casts Shadows");
-		m_ignoreLighting = metadata.GetChild<bool>("Ignore Lighting");
-		m_ignoreFog = metadata.GetChild<bool>("Ignore Fog");
+		metadata.GetChild("Casts Shadows", m_castsShadows);
+		metadata.GetChild("Ignore Lighting", m_ignoreLighting);
+		metadata.GetChild("Ignore Fog", m_ignoreFog);
 	}
 
 	void MaterialDefault::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Colour>("Base Diffuse", m_baseDiffuse);
-		metadata.SetChild<std::shared_ptr<Texture>>("Diffuse Texture", m_diffuseTexture);
+		metadata.SetChild("Base Diffuse", m_baseDiffuse);
+		metadata.SetResource<Texture>("Diffuse Texture", m_diffuseTexture);
 
-		metadata.SetChild<float>("Metallic", m_metallic);
-		metadata.SetChild<float>("Roughness", m_roughness);
-		metadata.SetChild<std::shared_ptr<Texture>>("Material Texture", m_materialTexture);
-		metadata.SetChild<std::shared_ptr<Texture>>("Normal Texture", m_normalTexture);
+		metadata.SetChild("Metallic", m_metallic);
+		metadata.SetChild("Roughness", m_roughness);
+		metadata.SetResource<Texture>("Material Texture", m_materialTexture);
+		metadata.SetResource<Texture>("Normal Texture", m_normalTexture);
 
-		metadata.SetChild<bool>("Casts Shadows", m_castsShadows);
-		metadata.SetChild<bool>("Ignore Lighting", m_ignoreLighting);
-		metadata.SetChild<bool>("Ignore Fog", m_ignoreFog);
+		metadata.SetChild("Casts Shadows", m_castsShadows);
+		metadata.SetChild("Ignore Lighting", m_ignoreLighting);
+		metadata.SetChild("Ignore Fog", m_ignoreFog);
 	}
 
 	void MaterialDefault::PushUniforms(UniformHandler &uniformObject)

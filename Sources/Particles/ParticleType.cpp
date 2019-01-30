@@ -12,18 +12,20 @@ namespace acid
 	static const uint32_t INSTANCE_STEPS = 128;
 	static const float FRUSTUM_BUFFER = 1.4f;
 
+	std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
+	{
+		auto result = std::make_shared<ParticleType>(nullptr);
+		result->Decode(metadata);
+		result->Load();
+		return result;
+	}
+
 	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
 	{
-		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale));
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<ParticleType>(resource);
-		}
-
-		auto result = std::make_shared<ParticleType>(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
-		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
-		return result;
+		auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
 	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
@@ -121,21 +123,21 @@ namespace acid
 
 	void ParticleType::Decode(const Metadata &metadata)
 	{
-		m_texture = metadata.GetResource<Texture>("Texture");
-		m_numberOfRows = metadata.GetChild<uint32_t>("Number Of Rows");
-		m_colourOffset = metadata.GetChild<Colour>("Colour Offset");
-		m_lifeLength = metadata.GetChild<float>("Life Length");
-		m_stageCycles = metadata.GetChild<float>("Stage Cycles");
-		m_scale = metadata.GetChild<float>("Scale");
+		metadata.GetResource("Texture", m_texture);
+		metadata.GetChild("Number Of Rows", m_numberOfRows);
+		metadata.GetChild("Colour Offset", m_colourOffset);
+		metadata.GetChild("Life Length", m_lifeLength);
+		metadata.GetChild("Stage Cycles", m_stageCycles);
+		metadata.GetChild("Scale", m_scale);
 	}
 
 	void ParticleType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<Texture>>("Texture", m_texture);
-		metadata.SetChild<uint32_t>("Number Of Rows", m_numberOfRows);
-		metadata.SetChild<Colour>("Colour Offset", m_colourOffset);
-		metadata.SetChild<float>("Life Length", m_lifeLength);
-		metadata.SetChild<float>("Stage Cycles", m_stageCycles);
-		metadata.SetChild<float>("Scale", m_scale);
+		metadata.SetResource("Texture", m_texture);
+		metadata.SetChild("Number Of Rows", m_numberOfRows);
+		metadata.SetChild("Colour Offset", m_colourOffset);
+		metadata.SetChild("Life Length", m_lifeLength);
+		metadata.SetChild("Stage Cycles", m_stageCycles);
+		metadata.SetChild("Scale", m_scale);
 	}
 }

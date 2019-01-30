@@ -122,41 +122,52 @@ namespace acid
 		static std::string Uppercase(const std::string &str);
 
 		/// <summary>
-		/// Converts a tyoe to a string.
+		/// Converts a type to a string.
 		/// </summary>
 		/// <param name="val"> The value to convert. </param>
 		/// <returns> The value as a string. </returns>
 		template<typename T>
-		static std::string To(const T &val)
+		static constexpr std::string To(const T &val)
 		{
 			if constexpr (std::is_enum_v<T>)
 			{
-				return std::to_string(static_cast<int32_t>(val));
+				typedef typename std::underlying_type<T>::type safe_type;
+				return std::to_string(static_cast<safe_type>(val));
 			}
 			else if constexpr (std::is_same_v<bool, T>)
 			{
 				return val ? "true" : "false";
 			}
-
-			return std::to_string(static_cast<T>(val));
+			else
+			{
+				return std::to_string(static_cast<T>(val));
+			}
 		}
 
+		/// <summary>
+		/// Converts a string to a type.
+		/// </summary>
+		/// <param name="str"> The string to convert. </param>
+		/// <returns> The string as a value. </returns>
 		template<typename T>
-		static T From(const std::string &str)
+		static constexpr T From(const std::string &str)
 		{
 			if constexpr (std::is_enum_v<T>)
 			{
-				return static_cast<T>(From<int32_t>(str));
+				typedef typename std::underlying_type<T>::type safe_type;
+				return static_cast<T>(From<safe_type>(str));
 			}
 			else if constexpr (std::is_same_v<bool, T>)
 			{
 				return Lowercase(str) == "true" || From<int32_t>(str) == 1;
 			}
-
-			std::istringstream ss(str);
-			T num;
-			ss >> num;
-			return num;
+			else
+			{
+				std::istringstream iss(str);
+				T temp;
+				const bool isValid = !(iss >> temp).fail();
+				return temp;
+			}
 		}
 	};
 }

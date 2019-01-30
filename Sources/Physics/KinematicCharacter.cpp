@@ -69,28 +69,28 @@ namespace acid
 
 	void KinematicCharacter::Decode(const Metadata &metadata)
 	{
-		m_friction = metadata.GetChild<float>("Friction");
-		m_frictionRolling = metadata.GetChild<float>("Friction Rolling");
-		m_frictionSpinning = metadata.GetChild<float>("Friction Spinning");
-		m_up = metadata.GetChild<Vector3>("Up");
-		m_stepHeight = metadata.GetChild<float>("Step Height");
-		m_fallSpeed = metadata.GetChild<float>("Fall Speed");
-		m_jumpSpeed = metadata.GetChild<float>("Jump Speed");
-		m_maxHeight = metadata.GetChild<float>("Max Height");
-		m_interpolate = metadata.GetChild<bool>("Interpolate");
+		metadata.GetChild("Friction", m_friction);
+		metadata.GetChild("Friction Rolling", m_frictionRolling);
+		metadata.GetChild("Friction Spinning", m_frictionSpinning);
+		metadata.GetChild("Up", m_up);
+		metadata.GetChild("Step Height", m_stepHeight);
+		metadata.GetChild("Fall Speed", m_fallSpeed);
+		metadata.GetChild("Jump Speed", m_jumpSpeed);
+		metadata.GetChild("Max Height", m_maxHeight);
+		metadata.GetChild("Interpolate", m_interpolate);
 	}
 
 	void KinematicCharacter::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Friction", m_friction);
-		metadata.SetChild<float>("Friction Rolling", m_frictionRolling);
-		metadata.SetChild<float>("Friction Spinning", m_frictionSpinning);
-		metadata.SetChild<Vector3>("Up", m_up);
-		metadata.SetChild<float>("Step Height", m_stepHeight);
-		metadata.SetChild<float>("Fall Speed", m_fallSpeed);
-		metadata.SetChild<float>("Jump Speed", m_jumpSpeed);
-		metadata.SetChild<float>("Max Height", m_maxHeight);
-		metadata.SetChild<bool>("Interpolate", m_interpolate);
+		metadata.SetChild("Friction", m_friction);
+		metadata.SetChild("Friction Rolling", m_frictionRolling);
+		metadata.SetChild("Friction Spinning", m_frictionSpinning);
+		metadata.SetChild("Up", m_up);
+		metadata.SetChild("Step Height", m_stepHeight);
+		metadata.SetChild("Fall Speed", m_fallSpeed);
+		metadata.SetChild("Jump Speed", m_jumpSpeed);
+		metadata.SetChild("Max Height", m_maxHeight);
+		metadata.SetChild("Interpolate", m_interpolate);
 	}
 
 	bool KinematicCharacter::InFrustum(const Frustum &frustum)

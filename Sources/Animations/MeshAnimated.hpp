@@ -27,6 +27,8 @@ namespace acid
 
 		void Update() override;
 
+		void Load(); // override
+
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
@@ -36,8 +38,6 @@ namespace acid
 		Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const override { return VertexAnimated::GetVertexInput(binding); }
 
 		void SetModel(const std::shared_ptr<Model> &model) override { m_model = model; }
-
-		void TrySetModel(const std::string &filename) override; // TODO: Remove
 
 		const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 	private:

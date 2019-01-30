@@ -17,23 +17,17 @@ namespace acid
 {
 	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	{
-		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<SoundBuffer>(resource);
-		}
-
-		auto filename = metadata.GetChild<std::string>("Filename");
-		auto result = std::make_shared<SoundBuffer>(filename);
-		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<SoundBuffer>("");
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
 	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 	{
+		auto temp = SoundBuffer(filename);
 		Metadata metadata = Metadata();
-		metadata.SetChild<std::string>("Filename", filename);
+		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
@@ -41,6 +35,20 @@ namespace acid
 		m_filename(filename),
 		m_buffer(0)
 	{
+		Load();
+	}
+
+	SoundBuffer::~SoundBuffer()
+	{
+		alDeleteBuffers(1, &m_buffer);
+	}
+
+	void SoundBuffer::Load()
+	{
+#if defined(ACID_VERBOSE)
+		auto debugStart = Engine::GetTime();
+#endif
+
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 		if (fileExt == ".wav")
@@ -51,16 +59,21 @@ namespace acid
 		{
 			m_buffer = LoadBufferOgg(m_filename);
 		}
+
+#if defined(ACID_VERBOSE)
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Sound Buffer '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+#endif
 	}
 
-	SoundBuffer::~SoundBuffer()
+	void SoundBuffer::Decode(const Metadata &metadata)
 	{
-		alDeleteBuffers(1, &m_buffer);
+		metadata.GetChild("Filename", m_filename);
 	}
 
 	void SoundBuffer::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild("Filename", m_filename);
 	}
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)

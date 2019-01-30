@@ -10,7 +10,10 @@
   "MaterialSkybox": {
     "Cubemap": {
       "Filename": "Objects/SkyboxClouds",
-      "Suffix": ".png"
+      "Suffix": ".png",
+      "Sides": [
+        "Right", "Left", "Top", "Bottom", "Back", "Front"
+      ]
     },
     "Sky Colour": "#FFFFFF"
   },
