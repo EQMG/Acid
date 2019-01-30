@@ -10,7 +10,15 @@ namespace acid
 
 	std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	{
+		auto resource = Resources::Get()->Find(metadata);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ModelObj>(resource);
+		}
+
 		auto result = std::make_shared<ModelObj>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;

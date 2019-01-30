@@ -19,7 +19,15 @@ namespace acid
 
 	std::shared_ptr<Texture> Texture::Create(const Metadata &metadata)
 	{
+		auto resource = Resources::Get()->Find(metadata);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<Texture>(resource);
+		}
+
 		auto result = std::make_shared<Texture>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;

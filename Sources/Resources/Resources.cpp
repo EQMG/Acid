@@ -49,14 +49,14 @@ namespace acid
 
 	void Resources::Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource)
 	{
-		/*std::lock_guard<std::mutex> lock(m_mutex);
+		std::lock_guard<std::mutex> lock(m_mutex);
 
 		if (m_resources.find(metadata) != m_resources.end())
 		{
 			return;
 		}
 
-		m_resources.emplace(metadata, resource);*/
+	//	m_resources.emplace(metadata, resource);
 	}
 
 	void Resources::Remove(const std::shared_ptr<Resource> &resource)

@@ -8,7 +8,15 @@ namespace acid
 {
 	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 	{
+		auto resource = Resources::Get()->Find(metadata);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<ModelCylinder>(resource);
+		}
+
 		auto result = std::make_shared<ModelCylinder>(0.0f, 0.0f);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;

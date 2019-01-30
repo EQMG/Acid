@@ -17,7 +17,15 @@ namespace acid
 {
 	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	{
+		auto resource = Resources::Get()->Find(metadata);
+
+		if (resource != nullptr)
+		{
+			return std::dynamic_pointer_cast<SoundBuffer>(resource);
+		}
+
 		auto result = std::make_shared<SoundBuffer>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;

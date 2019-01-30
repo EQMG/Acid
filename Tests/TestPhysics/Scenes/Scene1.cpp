@@ -259,7 +259,7 @@ namespace test
 		{
 			// TODO: Threading.
 			std::thread t([this](){
-				auto sceneFile = File("Scene1.json", new Json());
+				auto sceneFile = File("Scene1.yaml", new Yaml());
 				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())
