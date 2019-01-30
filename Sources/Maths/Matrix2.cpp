@@ -234,14 +234,14 @@ namespace acid
 
 	void Matrix2::Decode(const Metadata &metadata)
 	{
-		m_rows[0] = metadata.GetChild<Vector2>("m0");
-		m_rows[1] = metadata.GetChild<Vector2>("m1");
+		metadata.GetChild("m0", m_rows[0]);
+		metadata.GetChild("m1", m_rows[1]);
 	}
 
 	void Matrix2::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Vector2>("m0", m_rows[0]);
-		metadata.SetChild<Vector2>("m1", m_rows[1]);
+		metadata.SetChild("m0", m_rows[0]);
+		metadata.SetChild("m1", m_rows[1]);
 	}
 
 	bool Matrix2::operator==(const Matrix2 &other) const

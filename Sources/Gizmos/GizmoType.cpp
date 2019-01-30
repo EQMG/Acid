@@ -11,27 +11,17 @@ namespace acid
 
 	std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 	{
-		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<GizmoType>(resource);
-		}
-
-		auto model = metadata.GetResource<Model>("Model");
-		auto lineThickness = metadata.GetChild<float>("Line Thickness");
-		auto diffuse = metadata.GetChild<Colour>("Diffuse");
-		auto result = std::make_shared<GizmoType>(model, lineThickness, diffuse);
-		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<GizmoType>(nullptr);
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
 	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
 	{
+		auto temp = GizmoType(model, lineThickness, diffuse);
 		Metadata metadata = Metadata();
-		metadata.SetChild<std::shared_ptr<Model>>("Model", model);
-		metadata.SetChild<float>("Line Thickness", lineThickness);
-		metadata.SetChild<Colour>("Diffuse", diffuse);
+		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
@@ -94,10 +84,17 @@ namespace acid
 		return true;
 	}
 
+	void GizmoType::Decode(const Metadata &metadata)
+	{
+		metadata.GetResource("Model", m_model);
+		metadata.GetChild("Line Thickness", m_lineThickness);
+		metadata.GetChild("Diffuse", m_diffuse);
+	}
+
 	void GizmoType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<Model>>("Model", m_model);
-		metadata.SetChild<float>("Line Thickness", m_lineThickness);
-		metadata.SetChild<Colour>("Diffuse", m_diffuse);
+		metadata.SetResource("Model", m_model);
+		metadata.SetChild("Line Thickness", m_lineThickness);
+		metadata.SetChild("Diffuse", m_diffuse);
 	}
 }

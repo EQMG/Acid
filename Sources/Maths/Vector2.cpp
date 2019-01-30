@@ -194,14 +194,14 @@ namespace acid
 
 	void Vector2::Decode(const Metadata &metadata)
 	{
-		m_x = metadata.GetChild<float>("x");
-		m_y = metadata.GetChild<float>("y");
+		metadata.GetChild("x", m_x);
+		metadata.GetChild("y", m_y);
 	}
 
 	void Vector2::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("x", m_x);
-		metadata.SetChild<float>("y", m_y);
+		metadata.SetChild("x", m_x);
+		metadata.SetChild("y", m_y);
 	}
 
 	bool Vector2::operator==(const Vector2 &other) const

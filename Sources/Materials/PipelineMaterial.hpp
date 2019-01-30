@@ -36,6 +36,8 @@ namespace acid
 		/// <param name="commandBuffer"> The command buffer to write to. </param>
 		bool BindPipeline(const CommandBuffer &commandBuffer);
 
+		void Decode(const Metadata &metadata) override;
+
 		void Encode(Metadata &metadata) const override;
 
 		const Pipeline::Stage &GetStage() const { return m_pipelineStage; }

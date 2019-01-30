@@ -59,7 +59,7 @@ namespace test
 			for (float j = 0.0f; j < 5.0f; j++)
 			{
 				auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
-				sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 1.0f));
+				sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
 				sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Testing/Diffuse.png"),
 					j / 4.0f, i / 4.0f, Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
 				sphere->AddComponent<MeshRender>();

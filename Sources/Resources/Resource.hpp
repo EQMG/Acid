@@ -12,11 +12,23 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Resource
 	{
+	protected:
+		Resource() = default;
+
+		~Resource() = default;
+
+		/// <summary>
+		/// Used by the resource after it has been decoded, and in constructors.
+		/// </summary>
+		virtual void Load()
+		{
+		}
 	public:
 		/// <summary>
-		/// Creates a new resource.
+		/// Used to decode this resource from a loaded data format.
 		/// </summary>
-		explicit Resource()
+		/// <param name="metadata"> The metadata to decode from. </param>
+		virtual void Decode(const Metadata &metadata)
 		{
 		}
 

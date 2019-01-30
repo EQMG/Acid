@@ -65,6 +65,33 @@ namespace acid
 		}
 
 		template<typename T>
+		void GetChild(const std::string &name, T &dest) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				return;
+			}
+
+			dest = child->Get<T>();
+		}
+
+		template<typename T>
+		T GetChildDefault(const std::string &name, const T &value)
+		{
+			auto child = FindChild(name, false);
+
+			if (child == nullptr)
+			{
+				child = AddChild(new Metadata(name));
+				child->Set(value);
+			}
+
+			return child->Get<T>();
+		}
+
+		template<typename T>
 		std::shared_ptr<T> GetResource(const std::string &name) const
 		{
 			auto child = FindChild(name);
@@ -78,17 +105,17 @@ namespace acid
 		}
 
 		template<typename T>
-		T GetChild(const std::string &name, const T &value)
+		void GetResource(const std::string &name, std::shared_ptr<T> &dest) const
 		{
-			auto child = FindChild(name, false);
+			auto child = FindChild(name);
 
 			if (child == nullptr)
 			{
-				child = AddChild(new Metadata(name));
-				child->Set(value);
+				dest = nullptr;
+				return;
 			}
 
-			return child->Get<T>();
+			dest = T::Create(*child);
 		}
 
 		template<typename T>
@@ -103,6 +130,20 @@ namespace acid
 			}
 
 			child->Set<T>(value);
+		}
+
+		template<typename T>
+		void SetResource(const std::string &name, const std::shared_ptr<T> &value)
+		{
+			auto child = FindChild(name, false);
+
+			if (child == nullptr)
+			{
+				child = new Metadata(name, "");
+				m_children.emplace_back(child);
+			}
+
+			child->Set<std::shared_ptr<T>>(value);
 		}
 
 		template<typename T>

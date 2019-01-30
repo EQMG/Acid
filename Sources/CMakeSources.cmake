@@ -43,8 +43,10 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
+		Files/dirent.h
 		Files/File.hpp
 		Files/Files.hpp
+		Files/FileSystem.hpp
 		Files/FileWatcher.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
@@ -57,9 +59,7 @@ set(_temp_acid_headers
 		Guis/Gui.hpp
 		Guis/RendererGuis.hpp
 		Helpers/Delegate.hpp
-		Files/dirent.h
 		Helpers/EnumClass.hpp
-		Files/FileSystem.hpp
 		Helpers/NonCopyable.hpp
 		Helpers/String.hpp
 		Inputs/AxisButton.hpp
@@ -104,6 +104,7 @@ set(_temp_acid_headers
 		Meshes/RendererMeshes.hpp
 		Models/IVertex.hpp
 		Models/Model.hpp
+		Models/ModelRegister.hpp
 		Models/Obj/ModelObj.hpp
 		Models/Shapes/MeshPattern.hpp
 		Models/Shapes/MeshSimple.hpp
@@ -278,6 +279,7 @@ set(_temp_acid_sources
 		Events/EventTime.cpp
 		Files/File.cpp
 		Files/Files.cpp
+		Files/FileSystem.cpp
 		Files/FileWatcher.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
@@ -289,7 +291,6 @@ set(_temp_acid_sources
 		Gizmos/RendererGizmos.cpp
 		Guis/Gui.cpp
 		Guis/RendererGuis.cpp
-		Files/FileSystem.cpp
 		Helpers/String.cpp
 		Inputs/AxisButton.cpp
 		Inputs/AxisCompound.cpp
@@ -321,6 +322,7 @@ set(_temp_acid_sources
 		Meshes/MeshRender.cpp
 		Meshes/RendererMeshes.cpp
 		Models/Model.cpp
+		Models/ModelRegister.cpp
 		Models/Obj/ModelObj.cpp
 		Models/Shapes/MeshPattern.cpp
 		Models/Shapes/MeshSimple.cpp

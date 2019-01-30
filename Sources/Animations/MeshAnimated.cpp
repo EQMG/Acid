@@ -20,7 +20,7 @@ namespace acid
 		m_animation(nullptr),
 		m_jointMatrices(std::vector<Matrix4>())
 	{
-		TrySetModel(m_filename);
+		Load();
 	}
 
 	void MeshAnimated::Update()
@@ -39,19 +39,14 @@ namespace acid
 		}
 	}
 
-	void MeshAnimated::Decode(const Metadata &metadata)
+	void MeshAnimated::Load()
 	{
-		TrySetModel(metadata.GetChild<std::string>("Model"));
-	}
+		if (m_filename.empty())
+		{
+			return;
+		}
 
-	void MeshAnimated::Encode(Metadata &metadata) const
-	{
-		metadata.SetChild<std::string>("Model", m_filename);
-	}
-
-	void MeshAnimated::TrySetModel(const std::string &filename)
-	{
-		File file = File(filename, new Xml("COLLADA"));
+		File file = File(m_filename, new Xml("COLLADA"));
 		file.Read();
 
 		SkinLoader skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
@@ -66,9 +61,19 @@ namespace acid
 		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"),
-			file.GetMetadata()->FindChild("library_visual_scenes"));
+		                                                  file.GetMetadata()->FindChild("library_visual_scenes"));
 		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 		m_animator->DoAnimation(m_animation.get());
+	}
+
+	void MeshAnimated::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Model", m_filename);
+	}
+
+	void MeshAnimated::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild("Model", m_filename);
 	}
 
 	Joint *MeshAnimated::CreateJoints(const JointData &data)

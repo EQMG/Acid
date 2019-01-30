@@ -14,7 +14,7 @@ namespace acid
 	private:
 		std::vector<Shader::Define> GetDefines();
 
-		static std::shared_ptr<acid::Texture> ComputeNoise(const uint32_t &size);
+		static std::shared_ptr<Texture> ComputeNoise(const uint32_t &size);
 	private:
 		PushHandler m_pushScene;
 

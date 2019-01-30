@@ -33,11 +33,13 @@ namespace acid
 		/// <param name="model"> The model that the gizmo will render. </param>
 		/// <param name="lineThickness"> The thickness that the model will be rendered at. </param>
 		/// <param name="diffuse"> The default diffuse colour for gizmos. </param>
-		explicit GizmoType(const std::shared_ptr<Model> &model = nullptr, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::White);
+		explicit GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::White);
 
 		void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 

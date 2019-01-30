@@ -1,8 +1,11 @@
 ﻿#pragma once
 
+#include <set>
 #include <array>
 #include <string>
 #include <vector>
+#include <type_traits>
+#include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"
 
 namespace acid
@@ -162,6 +165,36 @@ namespace acid
 		{
 			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth,
 				m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
+		}
+
+		void Decode(const Metadata &metadata)
+		{
+
+		}
+
+		void Encode(Metadata &metadata) const
+		{
+		//	metadata.SetChild<std::vector<std::string>>("Shaders", m_shaderStages);
+		//	metadata.SetChild<std::vector<std::string>>("Defines", m_defines);
+
+			/*auto shadersNode = metadata.FindChild("Shaders", false);
+			auto definesNode = metadata.FindChild("Defines", false);
+
+			if (shadersNode == nullptr)
+			{
+				shadersNode = metadata.AddChild(new Metadata("Shaders"));
+			}
+
+			if (definesNode == nullptr)
+			{
+				definesNode = metadata.AddChild(new Metadata("Defines"));
+			}
+
+
+			for (const auto &define : m_defines)
+			{
+				definesNode->AddChild(new Metadata(define.first, define.second));
+			}*/
 		}
 
 		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }

@@ -7,30 +7,19 @@ namespace acid
 {
 	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metadata)
 	{
-		std::shared_ptr<Resource> resource = Resources::Get()->Find(metadata);
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<PipelineMaterial>(resource);
-		}
-
-		Pipeline::Stage pipelineStage = {};
-		pipelineStage.first = metadata.GetChild<uint32_t>("Renderpass");
-		pipelineStage.second = metadata.GetChild<uint32_t>("Subpass");
-		PipelineGraphicsCreate pipelineCreate = PipelineGraphicsCreate();
-		auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
-		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<PipelineMaterial>(Pipeline::Stage(0, 0), PipelineGraphicsCreate());
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
 	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 	{
-	//	Metadata metadata = Metadata();
-	//	metadata.SetChild<std::string>("Filename", filename);
-	//	metadata.SetChild<std::string>("Style", style);
-	//	return Create(metadata);
-
 		return std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
+		/*auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);*/
 	}
 
 	PipelineMaterial::PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate) :
@@ -59,32 +48,17 @@ namespace acid
 		return true;
 	}
 
+	void PipelineMaterial::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Renderpass", m_pipelineStage.first);
+		metadata.GetChild("Subpass", m_pipelineStage.second);
+		metadata.GetChild("Pipeline Create", m_pipelineCreate);
+	}
+
 	void PipelineMaterial::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<uint32_t>("Renderpass", m_pipelineStage.first);
-		metadata.SetChild<uint32_t>("Subpass", m_pipelineStage.second);
-
-		auto shadersNode = metadata.FindChild("Shaders", false);
-		auto definesNode = metadata.FindChild("Defines", false);
-
-		if (shadersNode == nullptr)
-		{
-			shadersNode = metadata.AddChild(new Metadata("Shaders"));
-		}
-
-		if (definesNode == nullptr)
-		{
-			definesNode = metadata.AddChild(new Metadata("Defines"));
-		}
-
-		for (const auto &shaderStage : m_pipelineCreate.GetShaderStages())
-		{
-			shadersNode->AddChild(new Metadata(shaderStage));
-		}
-
-		for (const auto &define : m_pipelineCreate.GetDefines())
-		{
-			definesNode->AddChild(new Metadata(define.first, define.second));
-		}
+		metadata.SetChild("Renderpass", m_pipelineStage.first);
+		metadata.SetChild("Subpass", m_pipelineStage.second);
+		metadata.SetChild("Pipeline Create", m_pipelineCreate);
 	}
 }

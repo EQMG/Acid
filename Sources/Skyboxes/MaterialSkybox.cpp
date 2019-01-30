@@ -27,14 +27,14 @@ namespace acid
 
 	void MaterialSkybox::Decode(const Metadata &metadata)
 	{
-	//	m_cubemap = metadata.GetResource<Cubemap>("Cubemap");
-		m_skyColour = metadata.GetChild<Colour>("Sky Colour");
+		metadata.GetResource("Cubemap", m_cubemap);
+		metadata.GetChild("Sky Colour", m_skyColour);
 	}
 
 	void MaterialSkybox::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<Cubemap>>("Cubemap", m_cubemap);
-		metadata.SetChild<Colour>("Sky Colour", m_skyColour.GetHex());
+		metadata.SetResource("Cubemap", m_cubemap);
+		metadata.SetChild("Sky Colour", m_skyColour);
 	}
 
 	void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)

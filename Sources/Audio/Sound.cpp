@@ -53,12 +53,12 @@ namespace acid
 
 	void Sound::Decode(const Metadata &metadata)
 	{
-		m_soundBuffer = SoundBuffer::Create(metadata.GetChild<std::string>("Buffer"));
+		metadata.GetResource("Buffer", m_soundBuffer);
 	}
 
 	void Sound::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<SoundBuffer>>("Buffer", m_soundBuffer);
+		metadata.SetResource("Buffer", m_soundBuffer);
 	}
 
 	void Sound::Play(const bool &loop)

@@ -5,27 +5,38 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelCube> ModelCube::Create(const float &width, const float &height, const float &depth)
+	std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 	{
-		std::shared_ptr<Resource> resource = nullptr; // FIXME: Resources::Get()->Find(ToName(width, height, depth));
-
-		if (resource != nullptr)
-		{
-			return std::dynamic_pointer_cast<ModelCube>(resource);
-		}
-
-		auto result = std::make_shared<ModelCube>(width, height, depth);
-		// Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelCube>(0.0f, 0.0f, 0.0f);
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
+	std::shared_ptr<ModelCube> ModelCube::Create(const float &width, const float &height, const float &depth)
+	{
+		auto temp = ModelCube(width, height, depth);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
+	}
+
 	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
-		Model(),
 		m_width(width),
 		m_height(height),
 		m_depth(depth)
 	{
-		std::vector<VertexModel> vertices = {
+		Load();
+	}
+
+	void ModelCube::Load()
+	{
+		if (m_width == 0.0f && m_height == 0.0f && m_depth == 0.0f)
+		{
+			return;
+		}
+
+		static std::vector<VertexModel> vertices = {
 			VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.625f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2(0.375f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
@@ -51,7 +62,7 @@ namespace acid
 			VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2(0.375f, 0.25f), Vector3(0.0f, -1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
 			VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2(0.875f, 0.25f), Vector3(0.0f, 1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
 		};
-		std::vector<uint32_t> indices = {
+		static std::vector<uint32_t> indices = {
 			1, 2, 0, // Front
 			3, 6, 8,
 			7, 4, 9, // Back
@@ -68,24 +79,24 @@ namespace acid
 
 		for (auto &vertex : vertices)
 		{
-			vertex.SetPosition(vertex.GetPosition() * Vector3(width, height, depth));
+			vertex.SetPosition(vertex.GetPosition() * Vector3(m_width, m_height, m_depth));
 		}
 
 		Model::Initialize(vertices, indices);
 	}
 
-	/*void ModelCube::Decode(const Metadata &metadata)
+	void ModelCube::Decode(const Metadata &metadata)
 	{
-		m_width = metadata.GetChild<float>("Width");
-		m_height = metadata.GetChild<float>("Height");
-		m_depth = metadata.GetChild<float>("Depth");
-	}*/
+		metadata.GetChild("Width", m_width);
+		metadata.GetChild("Height", m_height);
+		metadata.GetChild("Depth", m_depth);
+	}
 
 	void ModelCube::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild<std::string>("Type", "ModelCube");
-		metadata.SetChild<float>("Width", m_width);
-		metadata.SetChild<float>("Height", m_height);
-		metadata.SetChild<float>("Depth", m_depth);
+		metadata.SetChild("Width", m_width);
+		metadata.SetChild("Height", m_height);
+		metadata.SetChild("Depth", m_depth);
 	}
 }

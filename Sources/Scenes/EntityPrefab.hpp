@@ -19,6 +19,8 @@ namespace acid
 		public Resource
 	{
 	public:
+		static std::shared_ptr<EntityPrefab> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing prefab object with the same filename, or create a new prefab object.
 		/// </summary>
@@ -30,6 +32,10 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file name. </param>
 		explicit EntityPrefab(const std::string &filename);
+
+		void Load() override;
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 

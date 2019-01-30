@@ -251,16 +251,16 @@ namespace acid
 
 	void Matrix3::Decode(const Metadata &metadata)
 	{
-		m_rows[0] = metadata.GetChild<Vector3>("m0");
-		m_rows[1] = metadata.GetChild<Vector3>("m1");
-		m_rows[2] = metadata.GetChild<Vector3>("m2");
+		metadata.GetChild("m0", m_rows[0]);
+		metadata.GetChild("m1", m_rows[1]);
+		metadata.GetChild("m2", m_rows[2]);
 	}
 
 	void Matrix3::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Vector3>("m0", m_rows[0]);
-		metadata.SetChild<Vector3>("m1", m_rows[1]);
-		metadata.SetChild<Vector3>("m2", m_rows[2]);
+		metadata.SetChild("m0", m_rows[0]);
+		metadata.SetChild("m1", m_rows[1]);
+		metadata.SetChild("m2", m_rows[2]);
 	}
 
 	bool Matrix3::operator==(const Matrix3 &other) const

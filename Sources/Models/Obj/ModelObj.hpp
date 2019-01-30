@@ -15,6 +15,8 @@ namespace acid
 		public Model
 	{
 	public:
+		static std::shared_ptr<ModelObj> Create(const Metadata &metadata);
+
 		/// <summary>
 		/// Will find an existing OBJ model with the same filename, or create a new OBJ model.
 		/// </summary>
@@ -26,6 +28,10 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file to load the model from. </param>
 		explicit ModelObj(const std::string &filename);
+
+		void Load() override;
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 	private:

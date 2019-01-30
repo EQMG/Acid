@@ -59,21 +59,21 @@ namespace acid
 		{
 			for (const auto &typeNode : typesNode->GetChildren())
 			{
-			//	m_types.emplace_back(ParticleType::Create(*typeNode));
+				m_types.emplace_back(ParticleType::Create(*typeNode));
 			}
 		}
 
-		m_pps = metadata.GetChild<float>("PPS");
+		metadata.GetChild("PPS", m_pps);
+		metadata.GetChild("Average Speed", m_averageSpeed);
+		metadata.GetChild("Gravity Effect", m_gravityEffect);
+		metadata.GetChild("Random Rotation", m_randomRotation);
+		metadata.GetChild("Direction", m_direction);
+		metadata.GetChild("Direction Deviation", m_directionDeviation);
+		metadata.GetChild("Speed Deviation", m_speedDeviation);
+		metadata.GetChild("Life Deviation", m_lifeDeviation);
+		metadata.GetChild("Stage Deviation", m_stageDeviation);
+		metadata.GetChild("Scale Deviation", m_scaleDeviation);
 		m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
-		m_averageSpeed = metadata.GetChild<float>("Average Speed");
-		m_gravityEffect = metadata.GetChild<float>("Gravity Effect");
-		m_randomRotation = metadata.GetChild<bool>("Random Rotation");
-		m_direction = metadata.GetChild<Vector3>("Direction");
-		m_directionDeviation = metadata.GetChild<float>("Direction Deviation");
-		m_speedDeviation = metadata.GetChild<float>("Speed Deviation");
-		m_lifeDeviation = metadata.GetChild<float>("Life Deviation");
-		m_stageDeviation = metadata.GetChild<float>("Stage Deviation");
-		m_scaleDeviation = metadata.GetChild<float>("Scale Deviation");
 	}
 
 	void ParticleSystem::Encode(Metadata &metadata) const
@@ -90,16 +90,16 @@ namespace acid
 			type->Encode(*typesNode->AddChild(new Metadata()));
 		}
 
-		metadata.SetChild<float>("PPS", m_pps);
-		metadata.SetChild<float>("Average Speed", m_averageSpeed);
-		metadata.SetChild<float>("Gravity Effect", m_gravityEffect);
-		metadata.SetChild<bool>("Random Rotation", m_randomRotation);
-		metadata.SetChild<Vector3>("Direction", m_direction);
-		metadata.SetChild<float>("Direction Deviation", m_directionDeviation);
-		metadata.SetChild<float>("Speed Deviation", m_speedDeviation);
-		metadata.SetChild<float>("Life Deviation", m_lifeDeviation);
-		metadata.SetChild<float>("Stage Deviation", m_stageDeviation);
-		metadata.SetChild<float>("Scale Deviation", m_scaleDeviation);
+		metadata.SetChild("PPS", m_pps);
+		metadata.SetChild("Average Speed", m_averageSpeed);
+		metadata.SetChild("Gravity Effect", m_gravityEffect);
+		metadata.SetChild("Random Rotation", m_randomRotation);
+		metadata.SetChild("Direction", m_direction);
+		metadata.SetChild("Direction Deviation", m_directionDeviation);
+		metadata.SetChild("Speed Deviation", m_speedDeviation);
+		metadata.SetChild("Life Deviation", m_lifeDeviation);
+		metadata.SetChild("Stage Deviation", m_stageDeviation);
+		metadata.SetChild("Scale Deviation", m_scaleDeviation);
 	}
 
 	void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)

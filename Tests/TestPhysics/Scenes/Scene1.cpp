@@ -212,7 +212,7 @@ namespace test
 
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
 			sphere->AddComponent<HeightDespawn>();
-			sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 0.5f));
+			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
