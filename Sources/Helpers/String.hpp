@@ -127,7 +127,7 @@ namespace acid
 		/// <param name="val"> The value to convert. </param>
 		/// <returns> The value as a string. </returns>
 		template<typename T>
-		static constexpr std::string To(const T &val)
+		static std::string To(const T &val)
 		{
 			if constexpr (std::is_enum_v<T>)
 			{
@@ -150,7 +150,7 @@ namespace acid
 		/// <param name="str"> The string to convert. </param>
 		/// <returns> The string as a value. </returns>
 		template<typename T>
-		static constexpr T From(const std::string &str)
+		static T From(const std::string &str)
 		{
 			if constexpr (std::is_enum_v<T>)
 			{

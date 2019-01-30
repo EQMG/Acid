@@ -4,7 +4,6 @@
 #include <Guis/RendererGuis.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-//#include "Fonts2/RendererFonts2.hpp"
 
 namespace test
 {
@@ -25,15 +24,9 @@ namespace test
 		auto &rendererContainer = GetRendererContainer();
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
 		rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));
-	//	rendererContainer.Add<RendererFonts2>(Pipeline::Stage(0, 0));
 	}
 
 	void MainRenderer::Update()
 	{
-	//	auto rendererFonts2 = Renderer::Get()->GetRendererRegister().Get<RendererFonts2>();
-	//	rendererFonts2->Update();
-
-	//	auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-	//	renderpassCreate0.SetScale(0.8f);
 	}
 }

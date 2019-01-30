@@ -8,7 +8,7 @@ namespace acid
 	class Metadata;
 
 	/// <summary>
-	/// A managed resource object.
+	/// A managed resource object. Implementations contain Create functions that can take a metadata object or pass parameters to the constructor.
 	/// </summary>
 	class ACID_EXPORT Resource
 	{
