@@ -42,14 +42,6 @@ namespace acid
 
 	Metadata *Metadata::AddChild(Metadata *child)
 	{
-		/*auto child = FindChild(value->m_name);
-
-		if (child != nullptr)
-		{
-			child->m_value = value->m_value;
-			return child;
-		}*/
-
 		m_children.emplace_back(child);
 		return child;
 	}
@@ -69,7 +61,7 @@ namespace acid
 		{
 			if (child->m_name == name)
 			{
-				result.push_back(child.get());
+				result.emplace_back(child.get());
 			}
 		}
 
@@ -170,9 +162,24 @@ namespace acid
 		return (*it).second;
 	}
 
+	Metadata *Metadata::Clone() const
+	{
+		auto result = new Metadata(m_name, m_value, m_attributes);
+
+		for (const auto &child : m_children)
+		{
+			result->m_children.emplace_back(child->Clone());
+		}
+
+		return result;
+	}
+
 	bool Metadata::operator==(const Metadata &other) const
 	{
-		return m_name == other.m_name && m_value == other.m_value && m_children == other.m_children && m_attributes == other.m_attributes;
+		return m_name == other.m_name && m_value == other.m_value && m_attributes == other.m_attributes &&  // m_children == other.m_children
+			std::equal(m_children.begin(), m_children.end(), other.m_children.begin(), [](const std::unique_ptr<Metadata> &left, const std::unique_ptr<Metadata> &right) -> bool {
+				return *left == *right;
+			});
 	}
 
 	bool Metadata::operator!=(const Metadata &other) const
@@ -182,7 +189,7 @@ namespace acid
 
 	bool Metadata::operator<(const Metadata &other) const
 	{
-		return m_name < other.m_name || m_value < other.m_value || m_children < other.m_children || m_attributes < other.m_attributes;
+		return m_name < other.m_name || m_value < other.m_value || m_attributes < other.m_attributes || m_children < other.m_children;
 	}
 
 	void Metadata::Load(const std::string &data)

@@ -19,19 +19,24 @@ namespace acid
 		public Resource
 	{
 	public:
+		/// <summary>
+		/// Will find an existing entity prefab with the same values, or create a new entity prefab.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
 		static std::shared_ptr<EntityPrefab> Create(const Metadata &metadata);
 
 		/// <summary>
-		/// Will find an existing prefab object with the same filename, or create a new prefab object.
+		/// Will find an existing entity prefab with the same values, or create a new entity prefab.
 		/// </summary>
-		/// <param name="filename"> The file to load the prefab object from. </param>
+		/// <param name="filename"> The file name. </param>
 		static std::shared_ptr<EntityPrefab> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new entity prefab.
 		/// </summary>
 		/// <param name="filename"> The file name. </param>
-		explicit EntityPrefab(const std::string &filename);
+		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+		explicit EntityPrefab(const std::string &filename, const bool &load = true);
 
 		void Load() override;
 

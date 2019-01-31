@@ -23,18 +23,21 @@ namespace acid
 
 	std::shared_ptr<ModelCube> ModelCube::Create(const float &width, const float &height, const float &depth)
 	{
-		auto temp = ModelCube(width, height, depth);
+		auto temp = ModelCube(width, height, depth, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelCube::ModelCube(const float &width, const float &height, const float &depth) :
+	ModelCube::ModelCube(const float &width, const float &height, const float &depth, const bool &load) :
 		m_width(width),
 		m_height(height),
 		m_depth(depth)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelCube::Load()

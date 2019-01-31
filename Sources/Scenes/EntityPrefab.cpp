@@ -29,17 +29,20 @@ namespace acid
 
 	std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 	{
-		auto temp = EntityPrefab(filename);
+		auto temp = EntityPrefab(filename, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	EntityPrefab::EntityPrefab(const std::string &filename) :
+	EntityPrefab::EntityPrefab(const std::string &filename, const bool &load) :
 		m_filename(filename),
 		m_file(nullptr)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void EntityPrefab::Load()

@@ -28,14 +28,14 @@ namespace acid
 	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 		const bool &anisotropic, const bool &mipmap)
 	{
-		auto temp = Cubemap(filename, fileSuffix, filter, addressMode, anisotropic, mipmap);
+		auto temp = Cubemap(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
 	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-		const bool &anisotropic, const bool &mipmap) :
+		const bool &anisotropic, const bool &mipmap, const bool &load) :
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
 		m_fileSides(std::vector<std::string>{"Right", "Left", "Top", "Bottom", "Back", "Front"}),
@@ -56,7 +56,10 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, uint8_t *pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,

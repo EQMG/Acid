@@ -24,18 +24,21 @@ namespace acid
 
 	std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands)
 	{
-		auto temp = ModelSphere(radius, latitudeBands, longitudeBands);
+		auto temp = ModelSphere(radius, latitudeBands, longitudeBands, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands) :
+	ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands, const bool &load) :
 		m_radius(radius),
 		m_latitudeBands(latitudeBands),
 		m_longitudeBands(longitudeBands)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelSphere::Load()

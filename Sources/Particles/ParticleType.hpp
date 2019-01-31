@@ -23,10 +23,14 @@ namespace acid
 		public Resource
 	{
 	public:
+		/// <summary>
+		/// Will find an existing particle type with the same values, or create a new particle type.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
 		static std::shared_ptr<ParticleType> Create(const Metadata &metadata);
 
 		/// <summary>
-		/// Will find an existing particle type with the same filename, or create a new particle type.
+		/// Will find an existing particle type with the same values, or create a new particle type.
 		/// </summary>
 		/// <param name="texture"> The particles texture. </param>
 		/// <param name="numberOfRows"> The number of texture rows. </param>

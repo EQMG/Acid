@@ -4,8 +4,8 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include "Helpers/NonCopyable.hpp"
 #include "Helpers/String.hpp"
+#include "Helpers/NonCopyable.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid
@@ -149,7 +149,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = new Metadata(name, "");
+				child = new Metadata(name);
 				m_children.emplace_back(child);
 			}
 
@@ -182,7 +182,7 @@ namespace acid
 
 			if (child == nullptr)
 			{
-				child = new Metadata(name, "");
+				child = new Metadata(name);
 				m_children.emplace_back(child);
 			}
 
@@ -260,6 +260,8 @@ namespace acid
 		virtual void Load(const std::string &data);
 
 		virtual std::string Write() const;
+
+		Metadata *Clone() const;
 
 		bool operator==(const Metadata &other) const;
 

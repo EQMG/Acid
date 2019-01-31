@@ -35,13 +35,13 @@ namespace acid
 
 	std::shared_ptr<Texture> Texture::Create(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
 	{
-		auto temp = Texture(filename, filter, addressMode, anisotropic, mipmap);
+		auto temp = Texture(filename, filter, addressMode, anisotropic, mipmap, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap) :
+	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
 		m_filename(filename),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -60,7 +60,10 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	Texture::Texture(const uint32_t &width, const uint32_t &height, uint8_t *pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,

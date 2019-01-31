@@ -32,11 +32,9 @@ namespace acid
 		void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
 
 		void Remove(const std::shared_ptr<Resource> &resource);
-
-		void Remove(const std::string &filename);
 	private:
 		std::mutex m_mutex;
-		std::map<Metadata, std::shared_ptr<Resource>> m_resources;
+		std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
 		Timer m_timerPurge;
 	};
 }

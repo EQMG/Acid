@@ -16,10 +16,14 @@ namespace acid
 		public Resource
 	{
 	public:
+		/// <summary>
+		/// Will find an existing texture with the same values, or create a new texture.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
 		static std::shared_ptr<Texture> Create(const Metadata &metadata);
 
 		/// <summary>
-		/// Will find an existing texture with the same filename, or create a new texture.
+		/// Will find an existing texture with the same values, or create a new texture.
 		/// </summary>
 		/// <param name="filename"> The file to load the texture from. </param>
 		/// <param name="filter"> The type of filtering will be use on the texture. </param>
@@ -37,8 +41,9 @@ namespace acid
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
 		explicit Texture(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-			const bool &anisotropic = true, const bool &mipmap = true);
+			const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.

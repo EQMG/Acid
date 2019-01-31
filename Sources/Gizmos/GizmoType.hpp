@@ -17,10 +17,14 @@ namespace acid
 		public Resource
 	{
 	public:
+		/// <summary>
+		/// Will find an existing gizmo type with the same values, or create a new gizmo type.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
 		static std::shared_ptr<GizmoType> Create(const Metadata &metadata);
 
 		/// <summary>
-		/// Will find an existing gizmo type with the same filename, or create a new gizmo type.
+		/// Will find an existing gizmo type with the same values, or create a new gizmo type.
 		/// </summary>
 		/// <param name="model"> The model that the gizmo will render. </param>
 		/// <param name="lineThickness"> The thickness that the model will be rendered at. </param>

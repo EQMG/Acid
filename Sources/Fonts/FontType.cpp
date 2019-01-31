@@ -22,19 +22,24 @@ namespace acid
 
 	std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &style)
 	{
-		auto temp = FontType(filename, style);
+		auto temp = FontType(filename, style, false);
+		temp.m_filename = filename;
+		temp.m_style = style;
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	FontType::FontType(const std::string &filename, const std::string &style) :
+	FontType::FontType(const std::string &filename, const std::string &style, const bool &load) :
 		m_filename(filename),
 		m_style(style),
 		m_texture(nullptr),
 		m_metadata(nullptr)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void FontType::Load()
