@@ -33,17 +33,20 @@ namespace acid
 
 	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 	{
-		auto temp = SoundBuffer(filename);
+		auto temp = SoundBuffer(filename, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	SoundBuffer::SoundBuffer(const std::string &filename) :
+	SoundBuffer::SoundBuffer(const std::string &filename, const bool &load) :
 		m_filename(filename),
 		m_buffer(0)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	SoundBuffer::~SoundBuffer()

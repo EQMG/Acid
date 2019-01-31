@@ -15,7 +15,7 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
+		/// Will find an existing material pipeline with the same values, or create a new material pipeline.
 		/// </summary>
 		/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
 		/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>

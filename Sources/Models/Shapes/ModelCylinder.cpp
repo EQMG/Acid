@@ -24,20 +24,23 @@ namespace acid
 
 	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		auto temp = ModelCylinder(radiusBase, radiusTop, height, slices, stacks);
+		auto temp = ModelCylinder(radiusBase, radiusTop, height, slices, stacks, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
+	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks, const bool &load) :
 		m_radiusBase(radiusBase),
 		m_radiusTop(radiusTop),
 		m_height(height),
 		m_slices(slices),
 		m_stacks(stacks)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelCylinder::Load()

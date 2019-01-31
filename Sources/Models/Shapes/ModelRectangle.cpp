@@ -23,17 +23,20 @@ namespace acid
 
 	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
 	{
-		auto temp = ModelRectangle(min, max);
+		auto temp = ModelRectangle(min, max, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelRectangle::ModelRectangle(const float &min, const float &max) :
+	ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &load) :
 		m_min(min),
 		m_max(max)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelRectangle::Load()

@@ -26,16 +26,19 @@ namespace acid
 
 	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 	{
-		auto temp = ModelObj(filename);
+		auto temp = ModelObj(filename, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelObj::ModelObj(const std::string &filename) :
+	ModelObj::ModelObj(const std::string &filename, const bool &load) :
 		m_filename(filename)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelObj::Load()
@@ -158,7 +161,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("OBJ '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Model OBJ '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 
 		Model::Initialize(vertices, indices);

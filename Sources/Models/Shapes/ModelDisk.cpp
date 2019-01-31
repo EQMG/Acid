@@ -24,19 +24,22 @@ namespace acid
 
 	std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		auto temp = ModelDisk(innerRadius, outerRadius, slices, loops);
+		auto temp = ModelDisk(innerRadius, outerRadius, slices, loops, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
+	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops, const bool &load) :
 		m_innerRadius(innerRadius),
 		m_outerRadius(outerRadius),
 		m_slices(slices),
 		m_loops(loops)
 	{
-		Load();
+		if (load)
+		{
+			Load();
+		}
 	}
 
 	void ModelDisk::Load()

@@ -16,10 +16,14 @@ namespace acid
 		public Resource
 	{
 	public:
+		/// <summary>
+		/// Will find an existing cubemap with the same values, or create a new cubemap.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
 		static std::shared_ptr<Cubemap> Create(const Metadata &metadata);
 
 		/// <summary>
-		/// Will find an existing cubemap with the same filename, or create a new cubemap.
+		/// Will find an existing cubemap with the same values, or create a new cubemap.
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
 		/// <param name="fileSuffix"> The files suffix type (ex .png). </param>
@@ -39,8 +43,9 @@ namespace acid
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
 		explicit Cubemap(const std::string &filename, const std::string &fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
-			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>
 		/// A new cubemap object from a array of pixels.
