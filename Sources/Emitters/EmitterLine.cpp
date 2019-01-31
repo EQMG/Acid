@@ -22,16 +22,16 @@ namespace acid
 
 	void EmitterLine::Decode(const Metadata &metadata)
 	{
-		m_length = metadata.GetChild<float>("Length");
-		m_axis = metadata.GetChild<Vector3>("Axis");
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Length", m_length);
+		metadata.GetChild("Axis", m_axis);
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void EmitterLine::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Length", m_length);
-		metadata.SetChild<Vector3>("Axis", m_axis);
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Length", m_length);
+		metadata.SetChild("Axis", m_axis);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	Vector3 EmitterLine::GeneratePosition() const

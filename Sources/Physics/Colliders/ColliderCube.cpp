@@ -28,14 +28,14 @@ namespace acid
 
 	void ColliderCube::Decode(const Metadata &metadata)
 	{
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
-		m_extents = metadata.GetChild<Vector3>("Extents");
+		metadata.GetChild("Local Transform", m_localTransform);
+		metadata.GetChild("Extents", m_extents);
 	}
 
 	void ColliderCube::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
-		metadata.SetChild<Vector3>("Extents", m_extents);
+		metadata.SetChild("Local Transform", m_localTransform);
+		metadata.SetChild("Extents", m_extents);
 	}
 
 	btCollisionShape *ColliderCube::GetCollisionShape() const

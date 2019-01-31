@@ -20,14 +20,14 @@ namespace acid
 
 	void EmitterPoint::Decode(const Metadata &metadata)
 	{
-		m_point = metadata.GetChild<Vector3>("Point");
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Point", m_point);
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void EmitterPoint::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Vector3>("Point", m_point);
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Point", m_point);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	Vector3 EmitterPoint::GeneratePosition() const

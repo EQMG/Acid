@@ -18,7 +18,9 @@ namespace acid
 		public Resource
 	{
 	public:
-		static std::shared_ptr<Model> Create(const std::string &data);
+		static std::shared_ptr<Model> Create(const Metadata &metadata);
+
+		static std::shared_ptr<Model> Create(const std::string &filename);
 
 		/// <summary>
 		/// Creates a new empty model.
@@ -32,13 +34,17 @@ namespace acid
 		/// <param name="vertices"> The model vertices. </param>
 		/// <param name="indices"> The model indices. </param>
 		template<typename T>
-		explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}, const std::string &name = "") :
+		explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
 			Model()
 		{
-			Initialize(vertices, indices, name);
+			Initialize(vertices, indices);
 		}
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
+
+		virtual void Load() override;
+
+		virtual void Decode(const Metadata &metadata) override;
 
 		virtual void Encode(Metadata &metadata) const override;
 
@@ -61,10 +67,9 @@ namespace acid
 		const IndexBuffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
 	protected:
 		template<typename T>
-		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}, const std::string &name = "")
+		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
 		{
 			static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
-			m_name = name;
 
 			if (!vertices.empty())
 			{

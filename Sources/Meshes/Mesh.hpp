@@ -25,17 +25,15 @@ namespace acid
 
 		void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+		virtual void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+		virtual void Encode(Metadata &metadata) const override;
 
 		virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 		virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
 
 		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
-
-		virtual void TrySetModel(const std::string &filename); // TODO: Remove
 	private:
 		std::shared_ptr<Model> m_model;
 	};

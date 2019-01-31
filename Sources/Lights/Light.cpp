@@ -13,15 +13,6 @@ namespace acid
 	{
 	}
 
-	Light::Light(const Light &source) :
-		m_colour(source.m_colour),
-		m_radius(source.m_radius),
-		m_position(Vector3()),
-		m_localTransform(source.m_localTransform),
-		m_worldTransform(source.m_worldTransform)
-	{
-	}
-
 	void Light::Start()
 	{
 	}
@@ -32,16 +23,16 @@ namespace acid
 
 	void Light::Decode(const Metadata &metadata)
 	{
-		m_colour = metadata.GetChild<Colour>("Colour");
-		m_radius = metadata.GetChild<float>("Radius");
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Colour", m_colour);
+		metadata.GetChild("Radius", m_radius);
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void Light::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Colour>("Colour", m_colour);
-		metadata.SetChild<float>("Radius", m_radius);
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Colour", m_colour);
+		metadata.SetChild("Radius", m_radius);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	Transform Light::GetWorldTransform() const

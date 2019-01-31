@@ -5,7 +5,7 @@
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
-#include <Helpers/FileSystem.hpp>
+#include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -111,7 +111,7 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		EntityPrefab prefabPlane = EntityPrefab("Plane.xml");
+		EntityPrefab prefabPlane = EntityPrefab("Plane.yaml");
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
@@ -212,7 +212,7 @@ namespace test
 
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
 			sphere->AddComponent<HeightDespawn>();
-			sphere->AddComponent<Mesh>(ModelSphere::Create(30, 30, 0.5f));
+			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
@@ -259,7 +259,7 @@ namespace test
 		{
 			// TODO: Threading.
 			std::thread t([this](){
-				auto sceneFile = File("Scene1.json", new Json());
+				auto sceneFile = File("Scene1.yaml", new Yaml());
 				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())

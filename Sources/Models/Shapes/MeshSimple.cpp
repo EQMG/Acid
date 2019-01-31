@@ -3,7 +3,6 @@
 namespace acid
 {
 	MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale) :
-		Model(),
 		m_sideLength(sideLength),
 		m_squareSize(squareSize),
 		m_vertexCount(vertexCount),

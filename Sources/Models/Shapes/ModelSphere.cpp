@@ -6,67 +6,75 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelSphere> ModelSphere::Create(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
+	std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
 	{
-		auto resource = Resources::Get()->Find(ToName(latitudeBands, longitudeBands, radius));
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelSphere>(resource);
 		}
 
-		auto result = std::make_shared<ModelSphere>(latitudeBands, longitudeBands, radius);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelSphere>(0.0f);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<ModelSphere> ModelSphere::Create(const std::string &data)
+	std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto latitudeBands = String::From<uint32_t>(split[1]);
-		auto longitudeBands = String::From<uint32_t>(split[2]);
-		auto radius = String::From<float>(split[3]);
-		return Create(latitudeBands, longitudeBands, radius);
+		auto temp = ModelSphere(radius, latitudeBands, longitudeBands, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
-	ModelSphere::ModelSphere(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius) :
-		Model(),
+	ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands, const bool &load) :
+		m_radius(radius),
 		m_latitudeBands(latitudeBands),
-		m_longitudeBands(longitudeBands),
-		m_radius(radius)
+		m_longitudeBands(longitudeBands)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void ModelSphere::Load()
+	{
+		if (m_radius == 0.0f)
+		{
+			return;
+		}
+
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
 
-		for (uint32_t i = 0; i < longitudeBands + 1; i++)
+		for (uint32_t i = 0; i < m_longitudeBands + 1; i++)
 		{
-			float iDivLong = static_cast<float>(i) / static_cast<float>(longitudeBands);
-			float theta = (i == 0 || i == longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi;
+			float iDivLong = static_cast<float>(i) / static_cast<float>(m_longitudeBands);
+			float theta = (i == 0 || i == m_longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi;
 
-			for (uint32_t j = 0; j < latitudeBands + 1; j++)
+			for (uint32_t j = 0; j < m_latitudeBands + 1; j++)
 			{
-				float jDivLat = static_cast<float>(j) / static_cast<float>(latitudeBands);
+				float jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
 				float phi = jDivLat * 2.0f * Maths::Pi;
 
 				Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
-				Vector3 position = radius * normal;
+				Vector3 position = m_radius * normal;
 				Vector2 uvs = Vector2(1.0f - jDivLat, 1.0f - iDivLong);
 				Vector3 tangent = Vector3();
 				vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 			}
 		}
 
-		for (uint32_t i = 0; i < longitudeBands; i++)
+		for (uint32_t i = 0; i < m_longitudeBands; i++)
 		{
-			for (uint32_t j = 0; j < latitudeBands; j++)
+			for (uint32_t j = 0; j < m_latitudeBands; j++)
 			{
-				uint32_t first = j + ((latitudeBands + 1) * i);
-				uint32_t second = j + ((latitudeBands + 1) * (i + 1));
+				uint32_t first = j + ((m_latitudeBands + 1) * i);
+				uint32_t second = j + ((m_latitudeBands + 1) * (i + 1));
 
 				indices.emplace_back(first);
 				indices.emplace_back(second + 1);
@@ -79,20 +87,21 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(latitudeBands, longitudeBands, radius));
+		Model::Initialize(vertices, indices);
+	}
+
+	void ModelSphere::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Latitude Bands", m_latitudeBands);
+		metadata.GetChild("Longitude Bands", m_longitudeBands);
+		metadata.GetChild("Radius", m_radius);
 	}
 
 	void ModelSphere::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<uint32_t>("Latitude Bands", m_latitudeBands);
-		metadata.SetChild<uint32_t>("Longitude Bands", m_longitudeBands);
-		metadata.SetChild<float>("Radius", m_radius);
-	}
-
-	std::string ModelSphere::ToName(const uint32_t &latitudeBands, const uint32_t &longitudeBands, const float &radius)
-	{
-		std::stringstream result;
-		result << "Sphere_" << latitudeBands << "_" << longitudeBands << "_" << radius;
-		return result.str();
+		metadata.SetChild<std::string>("Type", "ModelSphere");
+		metadata.SetChild("Latitude Bands", m_latitudeBands);
+		metadata.SetChild("Longitude Bands", m_longitudeBands);
+		metadata.SetChild("Radius", m_radius);
 	}
 }

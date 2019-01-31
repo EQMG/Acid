@@ -3,16 +3,23 @@
 #include <cassert>
 #include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Resources/Resources.hpp"
+#include "Obj/ModelObj.hpp"
 
 namespace acid
 {
-	std::shared_ptr<Model> Model::Create(const std::string &data)
+	std::shared_ptr<Model> Model::Create(const Metadata &metadata)
 	{
-		return Scenes::Get()->GetModelRegister().Create(data);
+		auto result = Scenes::Get()->GetModelRegister().Create(metadata);
+		return result;
+	}
+
+	std::shared_ptr<Model> Model::Create(const std::string &filename)
+	{
+		return ModelObj::Create(filename); // TODO: Abstract to model register.
 	}
 
 	Model::Model() :
-		Resource(""),
 		m_vertexBuffer(nullptr),
 		m_indexBuffer(nullptr),
 		m_minExtents(Vector3()),
@@ -45,6 +52,14 @@ namespace acid
 		}
 
 		return true;
+	}
+
+	void Model::Load()
+	{
+	}
+
+	void Model::Decode(const Metadata &metadata)
+	{
 	}
 
 	void Model::Encode(Metadata &metadata) const

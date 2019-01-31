@@ -4,55 +4,64 @@
 
 namespace acid
 {
-	std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &fontStyle)
+	std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(ToFilename(filename, fontStyle));
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<FontType>(resource);
 		}
 
-		auto result = std::make_shared<FontType>(filename, fontStyle);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<FontType>("", "");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<FontType> FontType::Create(const std::string &data)
+	std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &style)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		std::string filename = split[1];
-		std::string fontStyle = split[2];
-		return Create(filename, fontStyle);
+		auto temp = FontType(filename, style, false);
+		temp.m_filename = filename;
+		temp.m_style = style;
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
-	FontType::FontType(const std::string &filename, const std::string &style) :
-		Resource(ToFilename(filename, style)),
+	FontType::FontType(const std::string &filename, const std::string &style, const bool &load) :
 		m_filename(filename),
 		m_style(style),
-		m_texture(Texture::Create(m_filename + "/" + m_style + ".png")),
-		m_metadata(FontMetafile(m_filename + "/" + m_style + ".fnt"))
+		m_texture(nullptr),
+		m_metadata(nullptr)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void FontType::Load()
+	{
+		if (m_filename.empty() || m_style.empty())
+		{
+			return;
+		}
+
+		m_texture = Texture::Create(m_filename + "/" + m_style + ".png");
+		m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
+	}
+
+	void FontType::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Filename", m_filename);
+		metadata.GetChild("Style", m_style);
 	}
 
 	void FontType::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Filename", m_filename);
-		metadata.SetChild<std::string>("Style", m_style);
-	}
-
-	std::string FontType::ToFilename(const std::string &filename, const std::string &fontStyle)
-	{
-		return "FontType_" + filename + "_" + fontStyle;
+		metadata.SetChild("Filename", m_filename);
+		metadata.SetChild("Style", m_style);
 	}
 }

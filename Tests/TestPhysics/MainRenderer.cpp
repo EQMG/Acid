@@ -61,7 +61,7 @@ namespace test
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
 		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1), RendererDeferred::Type::Simple);
-	//	rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
+		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
 	//	rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));

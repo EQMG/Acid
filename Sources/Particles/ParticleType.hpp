@@ -24,7 +24,13 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Will find an existing particle type with the same filename, or create a new particle type.
+		/// Will find an existing particle type with the same values, or create a new particle type.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
+		static std::shared_ptr<ParticleType> Create(const Metadata &metadata);
+
+		/// <summary>
+		/// Will find an existing particle type with the same values, or create a new particle type.
 		/// </summary>
 		/// <param name="texture"> The particles texture. </param>
 		/// <param name="numberOfRows"> The number of texture rows. </param>
@@ -35,12 +41,6 @@ namespace acid
 		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		/// <summary>
-		/// Will find an existing particle type with the same filename, or create a new particle type.
-		/// </summary>
-		/// <param name="data"> The combined data for the particle type. </param>
-		static std::shared_ptr<ParticleType> Create(const std::string &data);
-
-		/// <summary>
 		/// Creates a new particle type.
 		/// </summary>
 		/// <param name="texture"> The particles texture. </param>
@@ -49,13 +49,13 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		explicit ParticleType(const std::shared_ptr<Texture> &texture = nullptr, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+		explicit ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		void Update(const std::vector<Particle> &particles);
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-		void Decode(const Metadata &metadata);
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 
@@ -91,8 +91,6 @@ namespace acid
 			Vector3 blend;
 			float _padding;
 		};
-
-		static std::string ToName(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale);
 
 		std::shared_ptr<Texture> m_texture;
 		std::shared_ptr<Model> m_model;

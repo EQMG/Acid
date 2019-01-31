@@ -1,25 +1,29 @@
 #pragma once
 
 #include <string>
-#include "Serialized/Metadata.hpp"
+#include "Engine/Exports.hpp"
 
 namespace acid
 {
+	class Metadata;
+
 	/// <summary>
-	/// A managed resource object.
+	/// A managed resource object. Implementations contain Create functions that can take a metadata object or pass parameters to the constructor.
 	/// </summary>
 	class ACID_EXPORT Resource
 	{
-	public:
+	protected:
+		Resource() = default;
+
+		~Resource() = default;
+
 		/// <summary>
-		/// Creates a new resource with a unique name.
+		/// Used by the resource after it has been decoded, and in constructors.
 		/// </summary>
-		/// <param name="name"> The unique name to use with this resource, this can be changed later. </param>
-		explicit Resource(const std::string &name) :
-			m_name(name)
+		virtual void Load()
 		{
 		}
-
+	public:
 		/// <summary>
 		/// Used to decode this resource from a loaded data format.
 		/// </summary>
@@ -35,13 +39,5 @@ namespace acid
 		virtual void Encode(Metadata &metadata) const
 		{
 		}
-
-		/// <summary>
-		/// Gets a unique name (most likely a filename) associated with this resource object.
-		/// </summary>
-		/// <returns> The objects unique name. </returns>
-		virtual const std::string &GetName() const { return m_name; };
-	protected:
-		std::string m_name;
 	};
 }

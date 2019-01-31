@@ -1,8 +1,11 @@
 ﻿#pragma once
 
+#include <set>
 #include <array>
 #include <string>
 #include <vector>
+#include <type_traits>
+#include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"
 
 namespace acid
@@ -140,8 +143,9 @@ namespace acid
 	class ACID_EXPORT PipelineGraphicsCreate
 	{
 	public:
-		PipelineGraphicsCreate(const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
-		    const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
+		explicit PipelineGraphicsCreate(const std::vector<std::string> &shaderStages = {}, const std::vector<Shader::VertexInput> &vertexInputs = {}, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon,
+			const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
+			const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
 			m_mode(mode),
@@ -161,6 +165,30 @@ namespace acid
 		{
 			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth,
 				m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
+		}
+
+		void Decode(const Metadata &metadata)
+		{
+			metadata.GetChild("Shader Stages", m_shaderStages);
+		//	metadata.GetChild("Vertex Inputs", m_vertexInputs);
+			metadata.GetChild("Mode", m_mode);
+			metadata.GetChild("Depth", m_depth);
+			metadata.GetChild("Polygon Mode", m_polygonMode);
+			metadata.GetChild("Cull Mode", m_cullMode);
+			metadata.GetChild("Push Descriptors", m_pushDescriptors);
+			metadata.GetChild("Defines", m_defines);
+		}
+
+		void Encode(Metadata &metadata) const
+		{
+			metadata.SetChild("Shader Stages", m_shaderStages);
+		//	metadata.SetChild("Vertex Inputs", m_vertexInputs);
+			metadata.SetChild("Mode", m_mode);
+			metadata.SetChild("Depth", m_depth);
+			metadata.SetChild("Polygon Mode", m_polygonMode);
+			metadata.SetChild("Cull Mode", m_cullMode);
+			metadata.SetChild("Push Descriptors", m_pushDescriptors);
+			metadata.SetChild("Defines", m_defines);
 		}
 
 		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }

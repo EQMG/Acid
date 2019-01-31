@@ -29,16 +29,16 @@ namespace acid
 
 	void ColliderCylinder::Decode(const Metadata &metadata)
 	{
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
-		m_radius = metadata.GetChild<float>("Radius");
-		m_height = metadata.GetChild<float>("Height");
+		metadata.GetChild("Local Transform", m_localTransform);
+		metadata.GetChild("Radius", m_radius);
+		metadata.GetChild("Height", m_height);
 	}
 
 	void ColliderCylinder::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
-		metadata.SetChild<float>("Radius", m_radius);
-		metadata.SetChild<float>("Height", m_height);
+		metadata.SetChild("Local Transform", m_localTransform);
+		metadata.SetChild("Radius", m_radius);
+		metadata.SetChild("Height", m_height);
 	}
 
 	btCollisionShape *ColliderCylinder::GetCollisionShape() const

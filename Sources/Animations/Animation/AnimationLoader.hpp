@@ -8,7 +8,7 @@ namespace acid
 	class ACID_EXPORT AnimationLoader
 	{
 	public:
-		AnimationLoader(Metadata *libraryAnimations, Metadata *libraryVisualScenes);
+		AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes);
 
 		const Time &GetLengthSeconds() const { return m_lengthSeconds; }
 
@@ -20,16 +20,16 @@ namespace acid
 
 		void CreateKeyframe(const std::vector<Time> &times);
 
-		void LoadJointTransforms(Metadata *jointData, const std::string &rootNodeId);
+		void LoadJointTransforms(const Metadata *jointData, const std::string &rootNodeId);
 
-		std::string GetDataId(Metadata *jointData);
+		std::string GetDataId(const Metadata *jointData);
 
-		std::string GetJointName(Metadata *jointData);
+		std::string GetJointName(const Metadata *jointData);
 
 		void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
 
-		Metadata *m_libraryAnimations;
-		Metadata *m_libraryVisualScenes;
+		const Metadata *m_libraryAnimations;
+		const Metadata *m_libraryVisualScenes;
 
 		Time m_lengthSeconds;
 		std::vector<Keyframe> m_keyframes;

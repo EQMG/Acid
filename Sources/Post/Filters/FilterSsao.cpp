@@ -1,6 +1,6 @@
 #include "FilterSsao.hpp"
 
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Maths.hpp"
@@ -69,9 +69,9 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<acid::Texture> FilterSsao::ComputeNoise(const uint32_t &size)
+	std::shared_ptr<Texture> FilterSsao::ComputeNoise(const uint32_t &size)
 	{
-		std::vector<Colour> ssaoNoise(size * size);
+		/*std::vector<Colour> ssaoNoise(size * size);
 
 		for (uint32_t i = 0; i < size * size; i++)
 		{
@@ -90,6 +90,7 @@ namespace acid
 		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
 #endif
 
-		return result;
+		return result;*/
+		return nullptr;
 	}
 }

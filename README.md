@@ -4,11 +4,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
 
-Acid is a high speed, cross-platform, game engine written in C++17. Features are broken down into modules, modules can be added or removed from Acid with ease.
+Acid is an open-source, cross-platform game engine written in modern C++17 with a focus on modularity and simplicity. Features are broken down into modules, modules can be loaded or unloaded from Acid with ease. Acid uses an Entity Component System that breaks entity features between serializable Components.
 
-Vulkan is used as the only rendering API, as a result Vulkan can be used directly in games, but should be avoided. Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK), eventually OpenGL and DirectX will be supported in a similar way.
+Vulkan is used as the only rendering API, as a result, Vulkan functions can be used directly in games, but should be avoided. Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK), eventually, DirectX will be supported in a similar way.
 
-Acid is licensed under MIT and is open to contributions, use the 'Compiling' section in the [README.md](README.md) to get started with Acid.
+Acid is licensed under the MIT licence and is open to contributions, read [Compiling](#Compiling) to get started with development.
 
 ## Links
 Readme   [Read more](https://equilibrium-games.github.io/Acid/)
@@ -21,33 +21,26 @@ Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
 ## Features
 This is a list of current features in Acid:
- * Multiplatform (32bit and 64bit)
+ * Multiplatform (Windows, Linux, MacOS, 32bit and 64bit)
  * Multithreaded command buffers and thread safety
  * On the fly GLSL to SPIR-V compilation and reflection
- * Modular rendering pipeline and compute
+ * Graphics and compute pipelines
  * Deferred rendering (PBR, Simple)
- * Bullet physics
  * Networking (HTTP, FTP, UDP, TCP)
- * Frustum culling
+ * Serialization (JSON, YAML, XML)
  * Resource management
- * Event listener system
- * File path searches, and packaging
- * GUI and SDF font rendering
+ * Bullet physics
  * Entity component system
  * Particle effect systems
- * Audio and music
- * Skyboxes and fog (OGG, WAV)
+ * Event listeners
+ * File path searching, and packaging
+ * GUI and SDF font rendering
+ * Audio systems (OGG, WAV)
  * Shadow mapping
  * Post effects (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ)
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
- * Entity prefab loading/saving (JSON, XML)
- * Time, vectors, and matrices
- * Flexible input classes
- * Steam integration (WIP)
- * C# generated files (https://github.com/Equilibrium-Games/Acid-Sharp)
- * Scene editor (https://github.com/Equilibrium-Games/Acid-Editor)
 
 ## Dependencies
 Acid uses the following libraries:
@@ -135,7 +128,7 @@ The `ACID_RESOURCES_DIR` variable will also be available, which will point to th
 
 Make sure you have environment variables `VULKAN_SDK` and `OPENALDIR` set to the paths you have Vulkan and OpenAL installed into.
 
-Ensure you are using a compiler with full C++17 support, on Windows it is recommend you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
+Ensure you are using a compiler with full C++17 support, on Windows it is recommended that you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
 
 If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both "Desktop development with C++" and "Windows SDK" if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.
 
@@ -144,4 +137,4 @@ On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installe
 Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 
 ## Contributing
-You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acid's code style from the [Documents/GUIDELINES.md](Documents/GUIDELINES.md).
+You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the [Documents/GUIDELINES.md](Documents/GUIDELINES.md).

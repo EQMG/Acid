@@ -5,62 +5,76 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
+	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 	{
-		auto resource = Resources::Get()->Find(ToName(min, max));
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelRectangle>(resource);
 		}
 
-		auto result = std::make_shared<ModelRectangle>(min, max);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelRectangle>(0.0f, 0.0f);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const std::string &data)
+	std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto width = String::From<float>(split[1]);
-		auto height = String::From<float>(split[2]);
-		return Create(width, height);
+		auto temp = ModelRectangle(min, max, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
-	ModelRectangle::ModelRectangle(const float &min, const float &max) :
-		Model(),
+	ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &load) :
 		m_min(min),
 		m_max(max)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void ModelRectangle::Load()
+	{
+		if (m_min == m_max)
+		{
+			return;
+		}
+
 		std::vector<VertexModel> vertices = {
-			VertexModel(Vector3(min, min, 0.0f), Vector2(0.0f, 0.0f)),
-			VertexModel(Vector3(max, min, 0.0f), Vector2(1.0f, 0.0f)),
-			VertexModel(Vector3(max, max, 0.0f), Vector2(1.0f, 1.0f)),
-			VertexModel(Vector3(min, max, 0.0f), Vector2(0.0f, 1.0f)),
+			VertexModel(Vector3(m_min, m_min, 0.0f), Vector2(0.0f, 0.0f)),
+			VertexModel(Vector3(m_max, m_min, 0.0f), Vector2(1.0f, 0.0f)),
+			VertexModel(Vector3(m_max, m_max, 0.0f), Vector2(1.0f, 1.0f)),
+			VertexModel(Vector3(m_min, m_max, 0.0f), Vector2(0.0f, 1.0f)),
 		};
-		std::vector<uint32_t> indices = {
+		static std::vector<uint32_t> indices = {
 			0, 3, 2,
 			2, 1, 0
 		};
 
-		Model::Initialize(vertices, indices, ToName(min, max));
+	//	for (auto &vertex : vertices)
+	//	{
+	//		vertex.SetPosition(vertex.GetPosition() * Vector3(m_min, m_max, 1.0f));
+	//	}
+
+		Model::Initialize(vertices, indices);
+	}
+
+	void ModelRectangle::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Min", m_min);
+		metadata.GetChild("Max", m_max);
 	}
 
 	void ModelRectangle::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Min", m_min);
-		metadata.SetChild<float>("Max", m_max);
-	}
-
-	std::string ModelRectangle::ToName(const float &min, const float &max)
-	{
-		std::stringstream result;
-		result << "Rectangle_" << min << "_" << max;
-		return result.str();
+		metadata.SetChild<std::string>("Type", "ModelRectangle");
+		metadata.SetChild("Min", m_min);
+		metadata.SetChild("Max", m_max);
 	}
 }

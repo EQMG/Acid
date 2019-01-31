@@ -12,7 +12,7 @@ environment:
       ARCHITECTURE: x64
       GEN: "Visual Studio 15 2017 Win64"
       CFG: Release
-      OUT_POST: "64"
+      OUT_POST: "" # "64"
 #    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 #      ARCHITECTURE: x86
 #      GEN: "Visual Studio 15 2017"
@@ -34,17 +34,16 @@ install:
 build_script:
   - mkdir Build && cd Build
   - cmake -G"%GEN%" ..
-  - cmake --build . --config %CFG% --clean-first
+  - cmake --build . --config %CFG% --target install --clean-first
 
 after_build:
-  - mkdir Artifacts\Acid\%CFG%_%ARCHITECTURE%
-  - mkdir Artifacts\Tests\%CFG%_%ARCHITECTURE%
-#  - xcopy Build\%CFG%\Lib%OUT_POST%\%CFG% Artifacts\Acid\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
-#  - xcopy Build\%CFG%\Bin%OUT_POST%\%CFG% Artifacts\Tests\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
-#  - xcopy Resources Artifacts\Tests\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
+  - cd ../
+  - mkdir Artifacts\%CFG%_%ARCHITECTURE%
+  - xcopy Build\lib%OUT_POST%\%CFG% Artifacts\%CFG%_%ARCHITECTURE%\lib\ /s/h/e/k/f/c
+  - xcopy Build\bin%OUT_POST%\%CFG% Artifacts\%CFG%_%ARCHITECTURE%\bin\ /s/h/e/k/f/c
+  - xcopy Build\install\include\Acid Artifacts\%CFG%_%ARCHITECTURE%\include\Acid\ /s/h/e/k/f/c
+  - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\bin\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Artifacts\Acid\%CFG%_%ARCHITECTURE%\
+  - path: Artifacts\%CFG%_%ARCHITECTURE%\
     name: Acid (%CFG% %ARCHITECTURE%)
-  - path: Artifacts\Tests\%CFG%_%ARCHITECTURE%\
-    name: Acid Tests (%CFG% %ARCHITECTURE%)

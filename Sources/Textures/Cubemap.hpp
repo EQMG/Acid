@@ -17,7 +17,13 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Will find an existing cubemap with the same filename, or create a new cubemap.
+		/// Will find an existing cubemap with the same values, or create a new cubemap.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
+		static std::shared_ptr<Cubemap> Create(const Metadata &metadata);
+
+		/// <summary>
+		/// Will find an existing cubemap with the same values, or create a new cubemap.
 		/// </summary>
 		/// <param name="filename"> The file base name (path without extension or face name). </param>
 		/// <param name="fileSuffix"> The files suffix type (ex .png). </param>
@@ -37,8 +43,9 @@ namespace acid
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
 		explicit Cubemap(const std::string &filename, const std::string &fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
-			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>
 		/// A new cubemap object from a array of pixels.
@@ -54,7 +61,7 @@ namespace acid
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		Cubemap(const uint32_t &width, const uint32_t &height, void *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		Cubemap(const uint32_t &width, const uint32_t &height, uint8_t *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 			const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
 			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
@@ -64,6 +71,10 @@ namespace acid
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
 			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+
+		void Load() override;
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 
@@ -96,11 +107,13 @@ namespace acid
 
 		const bool &IsAnisotropic() const { return m_anisotropic; }
 
-		const uint32_t &GetMipLevels() const { return m_mipLevels; }
+		const bool &IsMipmap() const { return m_mipmap; }
 
 		const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
 
-		const VkImageLayout &GetImageLayout() const { return m_imageLayout; }
+		const VkImageLayout &GetLayout() const { return m_layout; }
+
+		const VkImageUsageFlags &GetUsage() const { return m_usage; }
 
 		const uint32_t &GetComponents() const { return m_components; }
 
@@ -110,29 +123,31 @@ namespace acid
 
 		const VkImage &GetImage() const { return m_image; }
 
-		const VkImageView &GetImageView() const { return m_imageView; }
+		const VkDeviceMemory &GetDMemory() { return m_memory; }
+
+		const VkImageView &GetView() const { return m_view; }
 
 		const VkSampler &GetSampler() const { return m_sampler; }
 	private:
-		static std::string ToName(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter,
-			const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap);
-
 		std::string m_filename;
 		std::string m_fileSuffix;
+		std::vector<std::string> m_fileSides;
 
 		VkFilter m_filter;
 		VkSamplerAddressMode m_addressMode;
 		bool m_anisotropic;
-		uint32_t m_mipLevels;
+		bool m_mipmap;
 		VkSampleCountFlagBits m_samples;
-		VkImageLayout m_imageLayout;
+		VkImageLayout m_layout;
+		VkImageUsageFlags m_usage;
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
+		uint8_t *m_pixels;
 
 		VkImage m_image;
-		VkDeviceMemory m_deviceMemory;
-		VkImageView m_imageView;
+		VkDeviceMemory m_memory;
+		VkImageView m_view;
 		VkSampler m_sampler;
 		VkFormat m_format;
 	};

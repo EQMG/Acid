@@ -23,12 +23,6 @@ namespace acid
 		/// <param name="upperLimit"> At what height will there be skybox no Fog. </param>
 		explicit Fog(const Colour &colour = Colour::White, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
 
-		/// <summary>
-		/// Constructor for Fog.
-		/// </summary>
-		/// <param name="source"> Creates this fog out of a existing one. </param>
-		Fog(const Fog &source);
-
 		const Colour &GetColour() const { return m_colour; }
 
 		void SetColour(const Colour &colour) { m_colour = colour; }

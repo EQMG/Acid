@@ -483,18 +483,18 @@ namespace acid
 
 	void Matrix4::Decode(const Metadata &metadata)
 	{
-		m_rows[0] = metadata.GetChild<Vector4>("m0");
-		m_rows[1] = metadata.GetChild<Vector4>("m1");
-		m_rows[2] = metadata.GetChild<Vector4>("m2");
-		m_rows[3] = metadata.GetChild<Vector4>("m3");
+		metadata.GetChild("m0", m_rows[0]);
+		metadata.GetChild("m1", m_rows[1]);
+		metadata.GetChild("m2", m_rows[2]);
+		metadata.GetChild("m3", m_rows[3]);
 	}
 
 	void Matrix4::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Vector4>("m0", m_rows[0]);
-		metadata.SetChild<Vector4>("m1", m_rows[1]);
-		metadata.SetChild<Vector4>("m2", m_rows[2]);
-		metadata.SetChild<Vector4>("m3", m_rows[3]);
+		metadata.SetChild("m0", m_rows[0]);
+		metadata.SetChild("m1", m_rows[1]);
+		metadata.SetChild("m2", m_rows[2]);
+		metadata.SetChild("m3", m_rows[3]);
 	}
 
 	bool Matrix4::operator==(const Matrix4 &other) const
