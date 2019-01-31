@@ -14,8 +14,6 @@ namespace acid
 		public Resource
 	{
 	public:
-		static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
-
 		/// <summary>
 		/// Will find an existing pipeline with the same stage and create info, or create a new pipeline.
 		/// </summary>

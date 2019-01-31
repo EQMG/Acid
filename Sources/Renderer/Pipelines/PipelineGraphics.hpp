@@ -169,32 +169,26 @@ namespace acid
 
 		void Decode(const Metadata &metadata)
 		{
-
+			metadata.GetChild("Shader Stages", m_shaderStages);
+		//	metadata.GetChild("Vertex Inputs", m_vertexInputs);
+			metadata.GetChild("Mode", m_mode);
+			metadata.GetChild("Depth", m_depth);
+			metadata.GetChild("Polygon Mode", m_polygonMode);
+			metadata.GetChild("Cull Mode", m_cullMode);
+			metadata.GetChild("Push Descriptors", m_pushDescriptors);
+			metadata.GetChild("Defines", m_defines);
 		}
 
 		void Encode(Metadata &metadata) const
 		{
-		//	metadata.SetChild<std::vector<std::string>>("Shaders", m_shaderStages);
-		//	metadata.SetChild<std::vector<std::string>>("Defines", m_defines);
-
-			/*auto shadersNode = metadata.FindChild("Shaders", false);
-			auto definesNode = metadata.FindChild("Defines", false);
-
-			if (shadersNode == nullptr)
-			{
-				shadersNode = metadata.AddChild(new Metadata("Shaders"));
-			}
-
-			if (definesNode == nullptr)
-			{
-				definesNode = metadata.AddChild(new Metadata("Defines"));
-			}
-
-
-			for (const auto &define : m_defines)
-			{
-				definesNode->AddChild(new Metadata(define.first, define.second));
-			}*/
+			metadata.SetChild("Shader Stages", m_shaderStages);
+		//	metadata.SetChild("Vertex Inputs", m_vertexInputs);
+			metadata.SetChild("Mode", m_mode);
+			metadata.SetChild("Depth", m_depth);
+			metadata.SetChild("Polygon Mode", m_polygonMode);
+			metadata.SetChild("Cull Mode", m_cullMode);
+			metadata.SetChild("Push Descriptors", m_pushDescriptors);
+			metadata.SetChild("Defines", m_defines);
 		}
 
 		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }

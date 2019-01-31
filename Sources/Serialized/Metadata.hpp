@@ -49,6 +49,11 @@ namespace acid
 
 		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
+		template<typename T> struct is_vector : public std::false_type {};
+
+		template<typename T, typename A>
+		struct is_vector<std::vector<T, A>> : public std::true_type {};
+
 		template<typename T>
 		T GetChild(const std::string &name) const
 		{
@@ -72,7 +77,28 @@ namespace acid
 				return;
 			}
 
-			dest = child->Get<T>();
+			if constexpr (is_vector<T>::value)
+			{
+				dest = T();
+
+				for (const auto &child2 : child->GetChildren())
+				{
+					typedef typename T::value_type base_type;
+
+					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
+					{
+						dest.emplace_back(child2->GetName(), child2->Get<std::string>());
+					}
+					else
+					{
+						dest.emplace_back(child2->Get<base_type>());
+					}
+				}
+			}
+			else
+			{
+				dest = child->Get<T>();
+			}
 		}
 
 		template<typename T>
@@ -127,7 +153,26 @@ namespace acid
 				m_children.emplace_back(child);
 			}
 
-			child->Set<T>(value);
+			if constexpr (is_vector<T>::value)
+			{
+				for (const auto &x : value)
+				{
+					typedef typename T::value_type base_type;
+
+					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
+					{
+						child->AddChild(new Metadata(x.first, x.second));
+					}
+					else
+					{
+						child->AddChild(new Metadata("", x));
+					}
+				}
+			}
+			else
+			{
+				child->Set<T>(value);
+			}
 		}
 
 		template<typename T>
