@@ -5,8 +5,12 @@
 
 namespace acid
 {
-	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metadata)
+	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 	{
+		auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+
 		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
@@ -14,20 +18,11 @@ namespace acid
 			return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 		}
 
-		auto result = std::make_shared<PipelineMaterial>(Pipeline::Stage(0, 0), PipelineGraphicsCreate());
+		auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
 		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-		result->Decode(metadata);
-		result->Load();
+	//	result->Decode(metadata);
+	//	result->Load();
 		return result;
-	}
-
-	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
-	{
-		return std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate); // TODO: Implement resource
-		/*auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
-		Metadata metadata = Metadata();
-		temp.Encode(metadata);
-		return Create(metadata);*/
 	}
 
 	PipelineMaterial::PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate) :

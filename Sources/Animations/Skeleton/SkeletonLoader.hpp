@@ -9,7 +9,7 @@ namespace acid
 	class ACID_EXPORT SkeletonLoader
 	{
 	public:
-		SkeletonLoader(Metadata *libraryControllers, const std::vector<std::string> &boneOrder);
+		SkeletonLoader(const Metadata *libraryControllers, const std::vector<std::string> &boneOrder);
 
 		const uint32_t &GetJointCount() const { return m_jointCount; }
 
@@ -21,7 +21,7 @@ namespace acid
 
 		std::optional<uint32_t> GetBoneIndex(const std::string &name);
 
-		Metadata *m_armatureData;
+		const Metadata *m_armatureData;
 		std::vector<std::string> m_boneOrder;
 
 		uint32_t m_jointCount;

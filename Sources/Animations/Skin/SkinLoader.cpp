@@ -2,7 +2,7 @@
 
 namespace acid
 {
-	SkinLoader::SkinLoader(Metadata *libraryControllers, const uint32_t &maxWeights) :
+	SkinLoader::SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights) :
 		m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
 		m_maxWeights(maxWeights),
 		m_jointOrder(std::vector<std::string>()),
@@ -40,7 +40,7 @@ namespace acid
 		return weights;
 	}
 
-	std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(Metadata *weightsDataNode)
+	std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weightsDataNode)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
 		std::vector<uint32_t> counts(rawData.size());
@@ -53,7 +53,7 @@ namespace acid
 		return counts;
 	}
 
-	void SkinLoader::GetSkinWeights(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
+	void SkinLoader::GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
 	{
 		auto rawData = String::Split(weightsDataNode->FindChild("v")->GetString(), " ");
 		uint32_t pointer = 0;
