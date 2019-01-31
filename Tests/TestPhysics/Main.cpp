@@ -35,10 +35,10 @@ int main(int argc, char **argv)
 	}
 
 	Files::Get()->AddSearchPath("Resources/Engine");
+	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Loads configs from a config manager.
 	auto configManager = ConfigManager();
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Watches all files in the working directory.
 	FileWatcher watcher = FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f));

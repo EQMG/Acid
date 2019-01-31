@@ -11,33 +11,50 @@
 namespace acid
 {
 	ModelRegister::ModelRegister() :
-		m_models(std::map<std::string, ModelCreate>())
+		m_modelMetadatas(std::map<std::string, ModelMetadataCreate>()),
+		m_modelExtensions(std::map<std::string, ModelFilenameCreate>())
 	{
-		Add<ModelObj>("ModelObj");
-		Add<ModelCube>("ModelCube");
-		Add<ModelCylinder>("ModelCylinder");
-		Add<ModelDisk>("ModelDisk");
-		Add<ModelRectangle>("ModelRectangle");
-		Add<ModelSphere>("ModelSphere");
+		AddMetadata<ModelObj>("ModelObj");
+		AddExtension<ModelObj>(".obj");
+		AddMetadata<ModelCube>("ModelCube");
+		AddMetadata<ModelCylinder>("ModelCylinder");
+		AddMetadata<ModelDisk>("ModelDisk");
+		AddMetadata<ModelRectangle>("ModelRectangle");
+		AddMetadata<ModelSphere>("ModelSphere");
 	}
 
 	void ModelRegister::Remove(const std::string &name)
 	{
-		m_models.erase(name);
+		m_modelMetadatas.erase(name);
+		m_modelExtensions.erase(name);
 	}
 
 	std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 	{
 		auto typeName = metadata.GetChild<std::string>("Type");
 
-		auto it = m_models.find(typeName);
+		auto it = m_modelMetadatas.find(typeName);
 
-		if (it == m_models.end())
+		if (it == m_modelMetadatas.end())
 		{
 			Log::Error("Could not find registered model by name: '%s'\n", typeName.c_str());
 			return nullptr;
 		}
 
 		return ((*it).second)(metadata);
+	}
+
+	std::shared_ptr<Model> ModelRegister::Create(const std::string &filename) const
+	{
+		auto fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+		auto it = m_modelExtensions.find(fileExt);
+
+		if (it == m_modelExtensions.end())
+		{
+			Log::Error("Could not find registered model by extension: '%s'\n", fileExt.c_str());
+			return nullptr;
+		}
+
+		return ((*it).second)(filename);
 	}
 }
