@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
+	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Registers modules.
 

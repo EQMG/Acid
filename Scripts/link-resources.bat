@@ -30,19 +30,33 @@ mkdir Build\Release\Bin32\Resources
 mklink /J Build\Release\Bin32\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestFont\Resources\Engine (
+IF EXIST Build\bin\Debug (
+mkdir Build\bin\Debug\Resources
+mklink /J Build\bin\Debug\Resources\Engine Resources
+)
+
+IF EXIST Build\bin\Release (
+mkdir Build\bin\Release\Resources
+mklink /J Build\bin\Release\Resources\Engine Resources
+)
+
+IF EXIST Build\Tests\TestFont (
+mkdir Build\Tests\TestFont\Resources
 mklink /J Build\Tests\TestFont\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestGUI\Resources\Engine (
+IF EXIST Build\Tests\TestGUI (
+mkdir Build\Tests\TestGUI\Resources
 mklink /J Build\Tests\TestGUI\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestPBR\Resources\Engine (
+IF EXIST Build\Tests\TestPBR (
+mkdir Build\Tests\TestPBR\Resources
 mklink /J Build\Tests\TestPBR\Resources\Engine Resources
 )
 
-IF EXIST Build\Tests\TestPhysics\Resources\Engine (
+IF EXIST Build\Tests\TestPhysics (
+mkdir Build\Tests\TestPhysics\Resources
 mklink /J Build\Tests\TestPhysics\Resources\Engine Resources
 )
 

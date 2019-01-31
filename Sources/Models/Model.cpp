@@ -4,19 +4,17 @@
 #include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"
-#include "Obj/ModelObj.hpp"
 
 namespace acid
 {
 	std::shared_ptr<Model> Model::Create(const Metadata &metadata)
 	{
-		auto result = Scenes::Get()->GetModelRegister().Create(metadata);
-		return result;
+		return Scenes::Get()->GetModelRegister().Create(metadata);
 	}
 
 	std::shared_ptr<Model> Model::Create(const std::string &filename)
 	{
-		return ModelObj::Create(filename); // TODO: Abstract to model register.
+		return Scenes::Get()->GetModelRegister().Create(filename);
 	}
 
 	Model::Model() :
