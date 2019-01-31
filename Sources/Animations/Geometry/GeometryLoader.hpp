@@ -11,7 +11,7 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		GeometryLoader(Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights);
+		GeometryLoader(const Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights);
 
 		const std::vector<VertexAnimated> &GetVertices() const { return m_vertices; }
 
@@ -31,7 +31,7 @@ namespace acid
 
 		void RemoveUnusedVertices();
 
-		Metadata *m_meshData;
+		const Metadata *m_meshData;
 
 		std::vector<VertexWeights> m_vertexWeights;
 

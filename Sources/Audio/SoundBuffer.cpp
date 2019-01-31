@@ -8,37 +8,58 @@
 #include <cassert>
 #include <fstream>
 #include "Files/Files.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.h"
 
 namespace acid
 {
-	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
+	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(filename);
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<SoundBuffer>(resource);
 		}
 
-		auto result = std::make_shared<SoundBuffer>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<SoundBuffer>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	SoundBuffer::SoundBuffer(const std::string &filename) :
-		Resource(filename),
+	std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
+	{
+		auto temp = SoundBuffer(filename, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
+	}
+
+	SoundBuffer::SoundBuffer(const std::string &filename, const bool &load) :
 		m_filename(filename),
 		m_buffer(0)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	SoundBuffer::~SoundBuffer()
+	{
+		alDeleteBuffers(1, &m_buffer);
+	}
+
+	void SoundBuffer::Load()
+	{
+#if defined(ACID_VERBOSE)
+		auto debugStart = Engine::GetTime();
+#endif
+
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 		if (fileExt == ".wav")
@@ -49,16 +70,21 @@ namespace acid
 		{
 			m_buffer = LoadBufferOgg(m_filename);
 		}
+
+#if defined(ACID_VERBOSE)
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Sound Buffer '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+#endif
 	}
 
-	SoundBuffer::~SoundBuffer()
+	void SoundBuffer::Decode(const Metadata &metadata)
 	{
-		alDeleteBuffers(1, &m_buffer);
+		metadata.GetChild("Filename", m_filename);
 	}
 
 	void SoundBuffer::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild("Filename", m_filename);
 	}
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)

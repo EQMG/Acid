@@ -48,7 +48,7 @@ namespace acid
 				switch (image.GetType())
 				{
 				case Attachment::Type::Image:
-					attachments.emplace_back(GetAttachment(image.GetBinding())->GetImageView());
+					attachments.emplace_back(GetAttachment(image.GetBinding())->GetView());
 					break;
 				case Attachment::Type::Depth:
 					attachments.emplace_back(depthStencil.GetImageView());

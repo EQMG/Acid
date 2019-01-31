@@ -6,55 +6,62 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
+	std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
 	{
-		auto resource = Resources::Get()->Find(ToName(innerRadius, outerRadius, slices, loops));
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelDisk>(resource);
 		}
 
-		auto result = std::make_shared<ModelDisk>(innerRadius, outerRadius, slices, loops);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelDisk>(0.0f, 0.0f);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<ModelDisk> ModelDisk::Create(const std::string &data)
+	std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto innerRadius = String::From<float>(split[1]);
-		auto outerRadius = String::From<float>(split[2]);
-		auto slices = String::From<uint32_t>(split[3]);
-		auto loops = String::From<uint32_t>(split[4]);
-		return Create(innerRadius, outerRadius, slices, loops);
+		auto temp = ModelDisk(innerRadius, outerRadius, slices, loops, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
-	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops) :
-		Model(),
+	ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops, const bool &load) :
 		m_innerRadius(innerRadius),
 		m_outerRadius(outerRadius),
 		m_slices(slices),
 		m_loops(loops)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void ModelDisk::Load()
+	{
+		if (m_innerRadius == 0.0f && m_outerRadius == 0.0f)
+		{
+			return;
+		}
+
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
 
-		for (uint32_t i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < m_slices; i++)
 		{
-			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
+			float iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
 			float alpha = iDivSlices * 2.0f * Maths::Pi;
 			float xDir = std::cos(alpha), yDir = std::sin(alpha);
 
-			for (uint32_t j = 0; j < loops + 1; j++)
+			for (uint32_t j = 0; j < m_loops + 1; j++)
 			{
-				float jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
-				float radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
+				float jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
+				float radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
 				Vector3 position = Vector3(radius * xDir, 0.0f, radius * yDir);
 				Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivLoops);
@@ -64,12 +71,12 @@ namespace acid
 			}
 		}
 
-		for (uint32_t i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < m_slices; i++)
 		{
-			for (uint32_t j = 0; j < loops; j++)
+			for (uint32_t j = 0; j < m_loops; j++)
 			{
-				uint32_t first = i * (loops + 1) + j;
-				uint32_t second = (first + loops + 1) % (slices * (loops + 1));
+				uint32_t first = i * (m_loops + 1) + j;
+				uint32_t second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
 
 				indices.emplace_back(first);
 				indices.emplace_back(second + 1);
@@ -82,21 +89,23 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(innerRadius, outerRadius, slices, loops));
+		Model::Initialize(vertices, indices);
+	}
+
+	void ModelDisk::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Inner Radius", m_innerRadius);
+		metadata.GetChild("Outer Radius", m_outerRadius);
+		metadata.GetChild("Slices", m_slices);
+		metadata.GetChild("Loops", m_loops);
 	}
 
 	void ModelDisk::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Inner Radius", m_innerRadius);
-		metadata.SetChild<float>("Outer Radius", m_outerRadius);
-		metadata.SetChild<uint32_t>("Slices", m_slices);
-		metadata.SetChild<uint32_t>("Loops", m_loops);
-	}
-
-	std::string ModelDisk::ToName(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
-	{
-		std::stringstream result;
-		result << "Disk_" << innerRadius << "_" << outerRadius << "_" << slices << "_" << loops;
-		return result.str();
+		metadata.SetChild<std::string>("Type", "ModelDisk");
+		metadata.SetChild("Inner Radius", m_innerRadius);
+		metadata.SetChild("Outer Radius", m_outerRadius);
+		metadata.SetChild("Slices", m_slices);
+		metadata.SetChild("Loops", m_loops);
 	}
 }

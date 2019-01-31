@@ -15,7 +15,13 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Will find an existing sound buffer with the same filename, or create a new sound buffer.
+		/// Will find an existing sound buffer with the same values, or create a new sound buffer.
+		/// </summary>
+		/// <param name="metadata"> The metadata to decode values from. </param>
+		static std::shared_ptr<SoundBuffer> Create(const Metadata &metadata);
+
+		/// <summary>
+		/// Will find an existing sound buffer with the same values, or create a new sound buffer.
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
 		static std::shared_ptr<SoundBuffer> Create(const std::string &filename);
@@ -24,9 +30,14 @@ namespace acid
 		/// Creates a new sound buffer.
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
-		explicit SoundBuffer(const std::string &filename);
+		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+		explicit SoundBuffer(const std::string &filename, const bool &load = true);
 
 		~SoundBuffer();
+
+		void Load() override;
+
+		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
 

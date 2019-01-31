@@ -188,18 +188,18 @@ namespace acid
 
 	void Vector4::Decode(const Metadata &metadata)
 	{
-		m_x = metadata.GetChild<float>("x");
-		m_y = metadata.GetChild<float>("y");
-		m_z = metadata.GetChild<float>("z");
-		m_w = metadata.GetChild<float>("w");
+		metadata.GetChild("x", m_x);
+		metadata.GetChild("y", m_y);
+		metadata.GetChild("z", m_z);
+		metadata.GetChild("w", m_w);
 	}
 
 	void Vector4::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("x", m_x);
-		metadata.SetChild<float>("y", m_y);
-		metadata.SetChild<float>("z", m_z);
-		metadata.SetChild<float>("w", m_w);
+		metadata.SetChild("x", m_x);
+		metadata.SetChild("y", m_y);
+		metadata.SetChild("z", m_z);
+		metadata.SetChild("w", m_w);
 	}
 
 	bool Vector4::operator==(const Vector4 &other) const

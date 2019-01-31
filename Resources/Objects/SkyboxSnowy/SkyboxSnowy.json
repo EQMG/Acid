@@ -1,10 +1,17 @@
 {
   "Mesh": {
-    "Model": "Sphere_10_10_1.0"
+    "Model": {
+      "Type": "ModelSphere",
+      "Latitude Bands": 10,
+      "Longitude Bands": 10,
+      "Radius": 1.0
+    }
   },
   "MaterialSkybox": {
-    "Cubemap Texture": "Objects/SkyboxSnowy",
-    "Cubemap Suffix": ".png",
+    "Cubemap": {
+      "Filename": "Objects/SkyboxSnowy",
+      "Suffix": ".png"
+    },
     "Sky Colour": "#FFFFFF"
   },
   "SkyboxCycle": {

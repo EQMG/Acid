@@ -1,6 +1,11 @@
 {
   "Mesh": {
-    "Model": "Entities/Testing/Model.obj"
+    "Model": {
+      "Type": "ModelObj",
+      "Filename": "Entities/Testing/Model.obj",
+      "Longitude Bands": 10,
+      "Radius": 1.0
+    }
   },
   "MaterialDefault": {
     "Diffuse Colour": "#C7BEBE",

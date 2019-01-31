@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid

@@ -94,22 +94,22 @@ namespace acid
 
 	void Rigidbody::Decode(const Metadata &metadata)
 	{
-		m_friction = metadata.GetChild<float>("Friction");
-		m_frictionRolling = metadata.GetChild<float>("Friction Rolling");
-		m_frictionSpinning = metadata.GetChild<float>("Friction Spinning");
-		m_mass = metadata.GetChild<float>("Mass");
-		m_linearFactor = metadata.GetChild<Vector3>("Linear Factor");
-		m_angularFactor = metadata.GetChild<Vector3>("Angular Factor");
+		metadata.GetChild("Friction", m_friction);
+		metadata.GetChild("Friction Rolling", m_frictionRolling);
+		metadata.GetChild("Friction Spinning", m_frictionSpinning);
+		metadata.GetChild("Mass", m_mass);
+		metadata.GetChild("Linear Factor", m_linearFactor);
+		metadata.GetChild("Angular Factor", m_angularFactor);
 	}
 
 	void Rigidbody::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Friction", m_friction);
-		metadata.SetChild<float>("Friction Rolling", m_frictionRolling);
-		metadata.SetChild<float>("Friction Spinning", m_frictionSpinning);
-		metadata.SetChild<float>("Mass", m_mass);
-		metadata.SetChild<Vector3>("Linear Factor", m_linearFactor);
-		metadata.SetChild<Vector3>("Angular Factor", m_angularFactor);
+		metadata.SetChild("Friction", m_friction);
+		metadata.SetChild("Friction Rolling", m_frictionRolling);
+		metadata.SetChild("Friction Spinning", m_frictionSpinning);
+		metadata.SetChild("Mass", m_mass);
+		metadata.SetChild("Linear Factor", m_linearFactor);
+		metadata.SetChild("Angular Factor", m_angularFactor);
 	}
 
 	bool Rigidbody::InFrustum(const Frustum &frustum)

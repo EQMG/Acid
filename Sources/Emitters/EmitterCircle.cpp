@@ -21,16 +21,16 @@ namespace acid
 
 	void EmitterCircle::Decode(const Metadata &metadata)
 	{
-		m_radius = metadata.GetChild<float>("Radius");
-		m_heading = metadata.GetChild<Vector3>("Heading");
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Radius", m_radius);
+		metadata.GetChild("Heading", m_heading);
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void EmitterCircle::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Radius", m_radius);
-		metadata.SetChild<Vector3>("Heading", m_heading);
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Radius", m_radius);
+		metadata.SetChild("Heading", m_heading);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	Vector3 EmitterCircle::GeneratePosition() const

@@ -7,7 +7,11 @@ namespace acid
 {
 	std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 	{
-		auto resource = Resources::Get()->Find(ToName(pipelineStage, pipelineCreate));
+		auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
@@ -15,12 +19,13 @@ namespace acid
 		}
 
 		auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+	//	result->Decode(metadata);
+	//	result->Load();
 		return result;
 	}
 
 	PipelineMaterial::PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate) :
-		Resource(ToName(pipelineStage, pipelineCreate)),
 		m_pipelineStage(pipelineStage),
 		m_pipelineCreate(pipelineCreate),
 		m_renderStage(nullptr),
@@ -46,21 +51,17 @@ namespace acid
 		return true;
 	}
 
-	std::string PipelineMaterial::ToName(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
+	void PipelineMaterial::Decode(const Metadata &metadata)
 	{
-		std::stringstream result;
-		result << "Material_" << pipelineStage.first << "_" << pipelineStage.second << "_";
+		metadata.GetChild("Renderpass", m_pipelineStage.first);
+		metadata.GetChild("Subpass", m_pipelineStage.second);
+		metadata.GetChild("Pipeline Create", m_pipelineCreate);
+	}
 
-		for (const auto &stage : pipelineCreate.GetShaderStages())
-		{
-			result << stage << "_";
-		}
-
-		for (const auto &element : pipelineCreate.GetDefines())
-		{
-			result << element.first << "=" << element.second << "_";
-		}
-
-		return result.str();
+	void PipelineMaterial::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild("Renderpass", m_pipelineStage.first);
+		metadata.SetChild("Subpass", m_pipelineStage.second);
+		metadata.SetChild("Pipeline Create", m_pipelineCreate);
 	}
 }

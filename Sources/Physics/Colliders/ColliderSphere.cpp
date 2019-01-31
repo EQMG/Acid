@@ -28,14 +28,14 @@ namespace acid
 
 	void ColliderSphere::Decode(const Metadata &metadata)
 	{
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
-		m_radius = metadata.GetChild<float>("Radius");
+		metadata.GetChild("Local Transform", m_localTransform);
+		metadata.GetChild("Radius", m_radius);
 	}
 
 	void ColliderSphere::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
-		metadata.SetChild<float>("Radius", m_radius);
+		metadata.SetChild("Local Transform", m_localTransform);
+		metadata.SetChild("Radius", m_radius);
 	}
 
 	btCollisionShape *ColliderSphere::GetCollisionShape() const

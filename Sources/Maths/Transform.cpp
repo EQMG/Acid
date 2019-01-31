@@ -46,17 +46,17 @@ namespace acid
 
 	void Transform::Decode(const Metadata &metadata)
 	{
-		m_position = metadata.GetChild<Vector3>("Position");
-		m_rotation = metadata.GetChild<Vector3>("Rotation");
-		m_scaling = metadata.GetChild<Vector3>("Scaling");
+		metadata.GetChild("Position", m_position);
+		metadata.GetChild("Rotation", m_rotation);
+		metadata.GetChild("Scaling", m_scaling);
 		m_dirty = true;
 	}
 
 	void Transform::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Vector3>("Position", m_position);
-		metadata.SetChild<Vector3>("Rotation", m_rotation);
-		metadata.SetChild<Vector3>("Scaling", m_scaling);
+		metadata.SetChild("Position", m_position);
+		metadata.SetChild("Rotation", m_rotation);
+		metadata.SetChild("Scaling", m_scaling);
 	}
 
 	Transform Transform::Multiply(const Transform &other) const

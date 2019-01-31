@@ -9,7 +9,7 @@ namespace acid
 	class ACID_EXPORT SkinLoader
 	{
 	public:
-		SkinLoader(Metadata *libraryControllers, const uint32_t &maxWeights);
+		SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights);
 
 		const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
 
@@ -19,11 +19,11 @@ namespace acid
 
 		std::vector<float> LoadWeights();
 
-		std::vector<uint32_t> GetEffectiveJointsCounts(Metadata *weightsDataNode);
+		std::vector<uint32_t> GetEffectiveJointsCounts(const Metadata *weightsDataNode);
 
-		void GetSkinWeights(Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
+		void GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 
-		Metadata *m_skinData;
+		const Metadata *m_skinData;
 		uint32_t m_maxWeights;
 
 		std::vector<std::string> m_jointOrder;

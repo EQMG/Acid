@@ -1,44 +1,62 @@
 #include "ModelObj.hpp"
 
 #include <cassert>
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 
 namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.obj";
 
-	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
+	std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(filename);
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelObj>(resource);
 		}
 
-		auto result = std::make_shared<ModelObj>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelObj>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	ModelObj::ModelObj(const std::string &filename) :
-		Model()
+	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 	{
+		auto temp = ModelObj(filename, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
+	}
+
+	ModelObj::ModelObj(const std::string &filename, const bool &load) :
+		m_filename(filename)
+	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void ModelObj::Load()
+	{
+		if (m_filename.empty())
+		{
+			return;
+		}
+
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto fileLoaded = Files::Read(filename);
+		auto fileLoaded = Files::Read(m_filename);
 
 		if (!fileLoaded)
 		{
-			Log::Error("OBJ file could not be loaded: '%s'\n", filename.c_str());
+			Log::Error("OBJ file could not be loaded: '%s'\n", m_filename.c_str());
 			return;
 		}
 
@@ -64,8 +82,8 @@ namespace acid
 				else if (prefix == "v")
 				{
 					Vector3 vertex = Vector3(String::From<float>(split[1]),
-						String::From<float>(split[2]),
-						String::From<float>(split[3]));
+					                         String::From<float>(split[2]),
+					                         String::From<float>(split[3]));
 					VertexModelData *newVertex = new VertexModelData(
 						static_cast<int>(verticesList.size()), vertex);
 					verticesList.emplace_back(newVertex);
@@ -73,14 +91,14 @@ namespace acid
 				else if (prefix == "vt")
 				{
 					Vector2 uv = Vector2(String::From<float>(split[1]),
-						1.0f - String::From<float>(split[2]));
+					                     1.0f - String::From<float>(split[2]));
 					uvsList.emplace_back(uv);
 				}
 				else if (prefix == "vn")
 				{
 					Vector3 normal = Vector3(String::From<float>(split[1]),
-						String::From<float>(split[2]),
-						String::From<float>(split[3]));
+					                         String::From<float>(split[2]),
+					                         String::From<float>(split[3]));
 					normalsList.emplace_back(normal);
 				}
 				else if (prefix == "f")
@@ -88,7 +106,7 @@ namespace acid
 					// The split length of 3 faced + 1 for the f prefix.
 					if (split.size() != 4 || String::Contains(line, "//"))
 					{
-						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", filename.c_str());
+						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", m_filename.c_str());
 						assert(false && "Model loading error!");
 					}
 
@@ -98,13 +116,13 @@ namespace acid
 
 					VertexModelData *v0 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]),
-							String::From<float>(vertex1[2])), verticesList, indices);
+						        String::From<float>(vertex1[2])), verticesList, indices);
 					VertexModelData *v1 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]),
-							String::From<float>(vertex2[2])), verticesList, indices);
+						        String::From<float>(vertex2[2])), verticesList, indices);
 					VertexModelData *v2 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]),
-							String::From<float>(vertex3[2])), verticesList, indices);
+						        String::From<float>(vertex3[2])), verticesList, indices);
 					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
@@ -115,7 +133,7 @@ namespace acid
 				}
 				else
 				{
-					Log::Error("OBJ '%s' unknown line: '%s'\n", filename.c_str(), line.c_str());
+					Log::Error("OBJ '%s' unknown line: '%s'\n", m_filename.c_str(), line.c_str());
 				}
 			}
 		}
@@ -143,10 +161,21 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("OBJ '%s' loaded in %ims\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Model OBJ '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 
-		Model::Initialize(vertices, indices, filename);
+		Model::Initialize(vertices, indices);
+	}
+
+	void ModelObj::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Filename", m_filename);
+	}
+
+	void ModelObj::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild<std::string>("Type", "ModelObj");
+		metadata.SetChild("Filename", m_filename);
 	}
 
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)

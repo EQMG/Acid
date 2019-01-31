@@ -1,6 +1,6 @@
 #include "ModelRegister.hpp"
 
-#include "Helpers/FileSystem.hpp"
+#include "Files/FileSystem.hpp"
 #include "Obj/ModelObj.hpp"
 #include "Shapes/ModelCube.hpp"
 #include "Shapes/ModelCylinder.hpp"
@@ -13,12 +13,12 @@ namespace acid
 	ModelRegister::ModelRegister() :
 		m_models(std::map<std::string, ModelCreate>())
 	{
-		Add<ModelObj>(".obj");
-		Add<ModelCube>("Cube_");
-		Add<ModelCylinder>("Cylinder_");
-		Add<ModelDisk>("Disk_");
-		Add<ModelRectangle>("Rectangle_");
-		Add<ModelSphere>("Sphere_");
+		Add<ModelObj>("ModelObj");
+		Add<ModelCube>("ModelCube");
+		Add<ModelCylinder>("ModelCylinder");
+		Add<ModelDisk>("ModelDisk");
+		Add<ModelRectangle>("ModelRectangle");
+		Add<ModelSphere>("ModelSphere");
 	}
 
 	void ModelRegister::Remove(const std::string &name)
@@ -26,27 +26,18 @@ namespace acid
 		m_models.erase(name);
 	}
 
-	std::shared_ptr<Model> ModelRegister::Create(const std::string &data) const
+	std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 	{
-		auto fileExt = String::Lowercase(FileSystem::FileSuffix(data));
-		auto split = String::Split(data, "_");
+		auto typeName = metadata.GetChild<std::string>("Type");
 
-		auto it = m_models.find(fileExt);
+		auto it = m_models.find(typeName);
 
 		if (it == m_models.end())
 		{
-			if (!split.empty())
-			{
-				it = m_models.find(split[0] + "_");
-			}
-
-			if (it == m_models.end())
-			{
-				Log::Error("Could not find registered model from data: '%s'\n", data.c_str());
-				return nullptr;
-			}
+			Log::Error("Could not find registered model by name: '%s'\n", typeName.c_str());
+			return nullptr;
 		}
 
-		return ((*it).second)(data);
+		return ((*it).second)(metadata);
 	}
 }

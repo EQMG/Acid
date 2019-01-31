@@ -1,6 +1,6 @@
 #include "ConfigManager.hpp"
 
-#include <Helpers/FileSystem.hpp>
+#include <Files/FileSystem.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Events/Events.hpp>
@@ -25,21 +25,21 @@ namespace test
 	{
 		m_audio->Read();
 		auto audioData = m_audio->GetMetadata();
-		Audio::Get()->SetMasterGain(audioData->GetChild<float>("Master Volume", 1.0f));
-		Audio::Get()->SetTypeGain(Audio::Type::General, audioData->GetChild<float>("General Volume", 1.0f));
-		Audio::Get()->SetTypeGain(Audio::Type::Effect, audioData->GetChild<float>("Effect Volume", 1.0f));
-		Audio::Get()->SetTypeGain(Audio::Type::Music, audioData->GetChild<float>("Music Volume", 1.0f));
+		Audio::Get()->SetMasterGain(audioData->GetChildDefault<float>("Master Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::General, audioData->GetChildDefault<float>("General Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::Effect, audioData->GetChildDefault<float>("Effect Volume", 1.0f));
+		Audio::Get()->SetTypeGain(Audio::Type::Music, audioData->GetChildDefault<float>("Music Volume", 1.0f));
 
 		m_graphics->Read();
 		auto graphicsData = m_graphics->GetMetadata();
-	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChild<bool>("Antialiasing", true));
-		Window::Get()->SetDimensions(graphicsData->GetChild<Vector2>("Dimensions", -Vector2::One));
-		Window::Get()->SetPosition(graphicsData->GetChild<Vector2>("Position", -Vector2::One));
-		Window::Get()->SetBorderless(graphicsData->GetChild<bool>("Borderless", false));
-		Window::Get()->SetResizable(graphicsData->GetChild<bool>("Resizable", true));
-		Window::Get()->SetFloating(graphicsData->GetChild<bool>("Floating", false));
-		Window::Get()->SetFullscreen(graphicsData->GetChild<bool>("Fullscreen", false));
-		Engine::Get()->SetFpsLimit(graphicsData->GetChild<float>("FPS Limit", 0.0f));
+	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
+		Window::Get()->SetDimensions(graphicsData->GetChildDefault<Vector2>("Dimensions", -Vector2::One));
+		Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2>("Position", -Vector2::One));
+		Window::Get()->SetBorderless(graphicsData->GetChildDefault<bool>("Borderless", false));
+		Window::Get()->SetResizable(graphicsData->GetChildDefault<bool>("Resizable", true));
+		Window::Get()->SetFloating(graphicsData->GetChildDefault<bool>("Floating", false));
+		Window::Get()->SetFullscreen(graphicsData->GetChildDefault<bool>("Fullscreen", false));
+		Engine::Get()->SetFpsLimit(graphicsData->GetChildDefault<float>("FPS Limit", 0.0f));
 	}
 
 	void ConfigManager::Save()

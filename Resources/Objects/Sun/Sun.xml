@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EntityDefinition name="Sun">
 	<Mesh>
-		<Model>Sphere_24_24_1.0</Model>
+		<Model>
+			<Type>ModelSphere</Type>
+			<Latitude_Bands>24</Latitude_Bands>
+			<Longitude_Bands>24</Longitude_Bands>
+			<Radius>1.0</Radius>
+		</Model>
 	</Mesh>
 	<MaterialDefault>
 		<Diffuse_Colour>#FFCC00</Diffuse_Colour>
-		<Diffuse_Texture></Diffuse_Texture>
+		<Diffuse_Texture>null</Diffuse_Texture>
 		<Metallic>1.0</Metallic>
 		<Roughness>0.0</Roughness>
-		<Material_Texture></Material_Texture>
-		<Normal_Texture></Normal_Texture>
+		<Material_Texture>null</Material_Texture>
+		<Normal_Texture>null</Normal_Texture>
 		<Casts_Shadows>false</Casts_Shadows>
 		<Ignore_Lighting>true</Ignore_Lighting>
 		<Ignore_Fog>true</Ignore_Fog>

@@ -4,7 +4,8 @@ namespace acid
 {
 	Scenes::Scenes() :
 		m_scene(nullptr),
-		m_componentRegister(ComponentRegister())
+		m_componentRegister(ComponentRegister()),
+		m_modelRegister(ModelRegister())
 	{
 	}
 

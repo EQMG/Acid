@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(Metadata *libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, const std::vector<std::string> &boneOrder) :
 		m_armatureData(nullptr),
 		m_boneOrder(boneOrder),
 		m_jointCount(0),

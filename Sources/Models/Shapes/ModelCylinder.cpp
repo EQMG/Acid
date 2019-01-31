@@ -6,60 +6,66 @@
 
 namespace acid
 {
-	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
+	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 	{
-		auto resource = Resources::Get()->Find(ToName(radiusBase, radiusTop, height, slices, stacks));
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<ModelCylinder>(resource);
 		}
 
-		auto result = std::make_shared<ModelCylinder>(radiusBase, radiusTop, height, slices, stacks);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<ModelCylinder>(0.0f, 0.0f);
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const std::string &data)
+	std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 	{
-		if (data.empty())
-		{
-			return nullptr;
-		}
-
-		auto split = String::Split(data, "_");
-		auto radiusBase = String::From<float>(split[1]);
-		auto radiusTop = String::From<float>(split[2]);
-		auto height = String::From<float>(split[3]);
-		auto slices = String::From<uint32_t>(split[4]);
-		auto stacks = String::From<uint32_t>(split[5]);
-		return Create(radiusBase, radiusTop, height, slices, stacks);
+		auto temp = ModelCylinder(radiusBase, radiusTop, height, slices, stacks, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
 	}
 
-	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks) :
-		Model(),
+	ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks, const bool &load) :
 		m_radiusBase(radiusBase),
 		m_radiusTop(radiusTop),
 		m_height(height),
 		m_slices(slices),
 		m_stacks(stacks)
 	{
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void ModelCylinder::Load()
+	{
+		if (m_radiusBase == 0.0f && m_radiusTop == 0.0f)
+		{
+			return;
+		}
+
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};
 
-		for (uint32_t i = 0; i < slices + 1; i++)
+		for (uint32_t i = 0; i < m_slices + 1; i++)
 		{
-			float iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
-			float alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi;
+			float iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
+			float alpha = (i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi;
 			float xDir = std::cos(alpha);
 			float zDir = std::sin(alpha);
 
-			for (uint32_t j = 0; j < stacks + 1; j++)
+			for (uint32_t j = 0; j < m_stacks + 1; j++)
 			{
-				float jDivStacks = static_cast<float>(j) / static_cast<float>(stacks);
-				float radius = radiusBase * (1.0f - jDivStacks) + radiusTop * jDivStacks;
+				float jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
+				float radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
 
-				Vector3 position = Vector3(xDir * radius, jDivStacks * height - (height / 2.0f), zDir * radius);
+				Vector3 position = Vector3(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
 				Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivStacks);
 				Vector3 normal = Vector3(xDir, 0.0f, zDir);
 				Vector3 tangent = Vector3();
@@ -67,12 +73,12 @@ namespace acid
 			}
 		}
 
-		for (uint32_t i = 0; i < slices; i++)
+		for (uint32_t i = 0; i < m_slices; i++)
 		{
-			for (uint32_t j = 0; j < stacks; j++)
+			for (uint32_t j = 0; j < m_stacks; j++)
 			{
-				uint32_t first = j + ((stacks + 1) * i);
-				uint32_t second = j + ((stacks + 1) * (i + 1));
+				uint32_t first = j + ((m_stacks + 1) * i);
+				uint32_t second = j + ((m_stacks + 1) * (i + 1));
 
 				indices.emplace_back(first);
 				indices.emplace_back(second);
@@ -85,22 +91,25 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices, ToName(radiusBase, radiusTop, height, slices, stacks));
+		Model::Initialize(vertices, indices);
+	}
+
+	void ModelCylinder::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Radius Base", m_radiusBase);
+		metadata.GetChild("Radius Top", m_radiusTop);
+		metadata.GetChild("Height", m_height);
+		metadata.GetChild("Slices", m_slices);
+		metadata.GetChild("Stacks", m_stacks);
 	}
 
 	void ModelCylinder::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<float>("Radius Base", m_radiusBase);
-		metadata.SetChild<float>("Radius Top", m_radiusTop);
-		metadata.SetChild<float>("Height", m_height);
-		metadata.SetChild<uint32_t>("Slices", m_slices);
-		metadata.SetChild<uint32_t>("Stacks", m_stacks);
-	}
-
-	std::string ModelCylinder::ToName(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
-	{
-		std::stringstream result;
-		result << "Cylinder_" << radiusBase << "_" << radiusTop << "_" << height << "_" << slices << "_" << stacks;
-		return result.str();
+		metadata.SetChild<std::string>("Type", "ModelCylinder");
+		metadata.SetChild("Radius Base", m_radiusBase);
+		metadata.SetChild("Radius Top", m_radiusTop);
+		metadata.SetChild("Height", m_height);
+		metadata.SetChild("Slices", m_slices);
+		metadata.SetChild("Stacks", m_stacks);
 	}
 }

@@ -4,8 +4,9 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include "Helpers/NonCopyable.hpp"
 #include "Helpers/String.hpp"
+#include "Helpers/NonCopyable.hpp"
+#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -16,9 +17,7 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes);
-
-		explicit Metadata(const std::string &name = "", const std::string &value = "");
+		explicit Metadata(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
 
 		const std::string &GetName() const { return m_name; }
 
@@ -50,6 +49,11 @@ namespace acid
 
 		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
+		template<typename T> struct is_vector : public std::false_type {};
+
+		template<typename T, typename A>
+		struct is_vector<std::vector<T, A>> : public std::true_type {};
+
 		template<typename T>
 		T GetChild(const std::string &name) const
 		{
@@ -64,7 +68,41 @@ namespace acid
 		}
 
 		template<typename T>
-		T GetChild(const std::string &name, const T &value)
+		void GetChild(const std::string &name, T &dest) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				return;
+			}
+
+			if constexpr (is_vector<T>::value)
+			{
+				dest = T();
+
+				for (const auto &child2 : child->GetChildren())
+				{
+					typedef typename T::value_type base_type;
+
+					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
+					{
+						dest.emplace_back(child2->GetName(), child2->Get<std::string>());
+					}
+					else
+					{
+						dest.emplace_back(child2->Get<base_type>());
+					}
+				}
+			}
+			else
+			{
+				dest = child->Get<T>();
+			}
+		}
+
+		template<typename T>
+		T GetChildDefault(const std::string &name, const T &value)
 		{
 			auto child = FindChild(name, false);
 
@@ -78,17 +116,77 @@ namespace acid
 		}
 
 		template<typename T>
+		std::shared_ptr<T> GetResource(const std::string &name) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				return nullptr;
+			}
+
+			return T::Create(*child);
+		}
+
+		template<typename T>
+		void GetResource(const std::string &name, std::shared_ptr<T> &dest) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				dest = nullptr;
+				return;
+			}
+
+			dest = T::Create(*child);
+		}
+
+		template<typename T>
 		void SetChild(const std::string &name, const T &value)
 		{
 			auto child = FindChild(name, false);
 
 			if (child == nullptr)
 			{
-				child = new Metadata(name, "");
+				child = new Metadata(name);
 				m_children.emplace_back(child);
 			}
 
-			child->Set<T>(value);
+			if constexpr (is_vector<T>::value)
+			{
+				for (const auto &x : value)
+				{
+					typedef typename T::value_type base_type;
+
+					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
+					{
+						child->AddChild(new Metadata(x.first, x.second));
+					}
+					else
+					{
+						child->AddChild(new Metadata("", x));
+					}
+				}
+			}
+			else
+			{
+				child->Set<T>(value);
+			}
+		}
+
+		template<typename T>
+		void SetResource(const std::string &name, const std::shared_ptr<T> &value)
+		{
+			auto child = FindChild(name, false);
+
+			if (child == nullptr)
+			{
+				child = new Metadata(name);
+				m_children.emplace_back(child);
+			}
+
+			child->Set<std::shared_ptr<T>>(value);
 		}
 
 		template<typename T>
@@ -163,9 +261,13 @@ namespace acid
 
 		virtual std::string Write() const;
 
+		Metadata *Clone() const;
+
 		bool operator==(const Metadata &other) const;
 
 		bool operator!=(const Metadata &other) const;
+
+		bool operator<(const Metadata &other) const;
 	protected:
 		std::string m_name;
 		std::string m_value;

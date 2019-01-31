@@ -3,54 +3,84 @@
 #include "Files/File.hpp"
 #include "Serialized/Json/Json.hpp"
 #include "Serialized/Xml/Xml.hpp"
-#include "Helpers/FileSystem.hpp"
+#include "Serialized/Yaml/Yaml.hpp"
+#include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
 #include "Scenes.hpp"
 
 namespace acid
 {
-	std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
+	std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 	{
-		if (filename.empty())
-		{
-			return nullptr;
-		}
-
-		auto resource = Resources::Get()->Find(filename);
+		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
 			return std::dynamic_pointer_cast<EntityPrefab>(resource);
 		}
 
-		auto result = std::make_shared<EntityPrefab>(filename);
-		Resources::Get()->Add(std::dynamic_pointer_cast<Resource>(result));
+		auto result = std::make_shared<EntityPrefab>("");
+		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
+		result->Decode(metadata);
+		result->Load();
 		return result;
 	}
 
-	EntityPrefab::EntityPrefab(const std::string &filename) :
-		Resource(filename),
+	std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
+	{
+		auto temp = EntityPrefab(filename, false);
+		Metadata metadata = Metadata();
+		temp.Encode(metadata);
+		return Create(metadata);
+	}
+
+	EntityPrefab::EntityPrefab(const std::string &filename, const bool &load) :
 		m_filename(filename),
 		m_file(nullptr)
 	{
-		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+		if (load)
+		{
+			Load();
+		}
+	}
+
+	void EntityPrefab::Load()
+	{
+		if (m_filename.empty())
+		{
+			return;
+		}
+
+		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 		if (fileExt == ".json")
 		{
-			m_file = std::make_unique<File>(filename, new Json());
+			m_file = std::make_unique<File>(m_filename, new Json());
+		}
+		else if (fileExt == ".yaml")
+		{
+			m_file = std::make_unique<File>(m_filename, new Yaml());
 		}
 		else if (fileExt == ".xml")
 		{
-			m_file = std::make_unique<File>(filename, new Xml("EntityDefinition"));
+			m_file = std::make_unique<File>(m_filename, new Xml("EntityDefinition"));
 		}
 
-		m_file->Read();
+		if (m_file != nullptr)
+		{
+			m_file->Read();
+		}
+	}
+
+	void EntityPrefab::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Filename", m_filename);
 	}
 
 	void EntityPrefab::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Filename", m_filename);
+		metadata.SetChild("Filename", m_filename);
 	}
 
 	void EntityPrefab::Write(const Entity &entity)

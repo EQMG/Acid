@@ -17,16 +17,11 @@ namespace acid
 
 	void Mesh::Decode(const Metadata &metadata)
 	{
-		TrySetModel(metadata.GetChild<std::string>("Model"));
+		metadata.GetResource("Model", m_model);
 	}
 
 	void Mesh::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<Model>>("Model", m_model);
-	}
-
-	void Mesh::TrySetModel(const std::string &filename)
-	{
-		m_model = Model::Create(filename);
+		metadata.SetResource("Model", m_model);
 	}
 }

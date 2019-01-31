@@ -61,12 +61,12 @@ namespace acid
 
 	void ColliderConvexHull::Decode(const Metadata &metadata)
 	{
-		m_localTransform = metadata.GetChild<Transform>("Local Transform");
+		metadata.GetChild("Local Transform", m_localTransform);
 	}
 
 	void ColliderConvexHull::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<Transform>("Local Transform", m_localTransform);
+		metadata.SetChild("Local Transform", m_localTransform);
 	}
 
 	btCollisionShape *ColliderConvexHull::GetCollisionShape() const

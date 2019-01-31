@@ -22,12 +22,6 @@ namespace acid
 		/// <param name="localTransform"> The local transform from the parents space. </param>
 		explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f, const Transform &localTransform = Transform::Identity);
 
-		/// <summary>
-		/// Creates a new point light from a source object.
-		/// </summary>
-		/// <param name="source"> The source light object. </param>
-		Light(const Light &source);
-
 		void Start() override;
 
 		void Update() override;
