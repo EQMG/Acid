@@ -17,7 +17,6 @@ set(_temp_acid_headers
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
-		Audio/stb_vorbis.h
 		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
@@ -44,7 +43,6 @@ set(_temp_acid_headers
 		Events/EventStandard.hpp
 		Events/EventTime.hpp
 		Events/IEvent.hpp
-		Files/dirent.h
 		Files/File.hpp
 		Files/Files.hpp
 		Files/FileSystem.hpp
@@ -222,8 +220,6 @@ set(_temp_acid_headers
 		Skyboxes/MaterialSkybox.hpp
 		Textures/Cubemap.hpp
 		Textures/DepthStencil.hpp
-		Textures/stb_image.h
-		Textures/stb_image_write.h
 		Textures/Texture.hpp
 		Threads/Thread.hpp
 		Threads/ThreadPool.hpp

@@ -72,7 +72,7 @@ namespace acid
 	protected:
 		void RecalculateMass() override;
 	private:
-		static std::unique_ptr<btPairCachingGhostObject> CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape* shape);
+		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape* shape);
 
 		std::unique_ptr<btKinematicCharacterController> m_controller;
 

@@ -122,8 +122,7 @@ namespace acid
 			m_shape.release();
 		}
 
-		m_shape = std::make_unique<btCompoundShape>();
-		auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+		auto compoundShape = new btCompoundShape();
 
 		for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 		{
@@ -135,6 +134,7 @@ namespace acid
 			compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
 		}
 
+		m_shape.reset(compoundShape);
 		RecalculateMass();
 	}
 }

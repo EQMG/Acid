@@ -52,7 +52,7 @@ target_compile_definitions(Acid
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
 		# Works on both single and mutli configuration
-		$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_VERBOSE>
+		ACID_VERBOSE # $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_VERBOSE>
 		# Windows
 		$<$<PLATFORM_ID:Windows>:ACID_BUILD_WINDOWS WIN32_LEAN_AND_MEAN NOMINMAX>
 		# Linux
@@ -106,6 +106,8 @@ target_link_libraries(Acid
 		${SPIRV_LIBRARY}
 		# Windows only
 		$<$<PLATFORM_ID:Windows>:ws2_32>
+		INTERFACE
+		$<$<CXX_COMPILER_ID:MSVC>:dbghelp>
 		)
 
 # Installs all headers, preserving their file structure

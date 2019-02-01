@@ -10,7 +10,8 @@ option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
-set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Adds a postfix for debug-built libraries.")
+set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")
+set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "Set RelWithDebInfo library postfix")
 # Removes any dll prefix name on windows, unix will keep a prefix set as "lib"
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
@@ -121,7 +122,7 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")
 		set(${_glslang_option} ON CACHE INTERNAL "")
 	endforeach()
-
+	
 	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
 	# Used in target_link_libraries()
 	set(SPIRV_LIBRARY "SPIRV")
@@ -166,6 +167,7 @@ endif()
 # Allows automation of "BUILD_TESTING"
 include(CTest)
 if(BUILD_TESTS)
+	add_subdirectory(Tests/Editor)
 	add_subdirectory(Tests/TestFont)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)

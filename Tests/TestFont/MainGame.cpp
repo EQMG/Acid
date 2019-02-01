@@ -8,12 +8,7 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 
-//#if !defined(ACID_VERBOSE) && defined(ACID_BUILD_WINDOWS)
-//#include <windows.h>
-//int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
-//#else
 int main(int argc, char **argv)
-//#endif
 {
 	using namespace test;
 

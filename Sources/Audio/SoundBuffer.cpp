@@ -11,7 +11,7 @@
 #include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
-#include "stb_vorbis.h"
+#include "stb_vorbis.c"
 
 namespace acid
 {
@@ -56,6 +56,11 @@ namespace acid
 
 	void SoundBuffer::Load()
 	{
+		if (m_filename.empty())
+		{
+			return;
+		}
+
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif

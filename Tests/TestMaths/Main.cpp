@@ -12,19 +12,18 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Transform.hpp>
 
-
-#include <Engine/Engine.hpp>
+/*#include <Engine/Engine.hpp>
 #include <Files/File.hpp>
 #include <Serialized/Json/Json.hpp>
 #include <Serialized/Xml/Xml.hpp>
 #include <Files/Files.hpp>
-#include <Serialized/Yaml/Yaml.hpp>
+#include <Serialized/Yaml/Yaml.hpp>*/
 
 using namespace acid;
 
 int main(int argc, char **argv)
 {
-	auto engine = std::make_unique<Engine>(argv[0], true);
+	/*auto engine = std::make_unique<Engine>(argv[0], true);
 	engine->GetModuleManager().Add<Files>(Module::Stage::Always);
 	Files::Get()->AddSearchPath("Resources/Engine");
 
@@ -48,9 +47,9 @@ int main(int argc, char **argv)
 		auto dataJson2 = File("Example1.json", new Json(dataJson.GetMetadata()));
 		dataJson2.Write();
 
-	}
+	}*/
 
-	/*{
+	{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
@@ -122,6 +121,6 @@ int main(int argc, char **argv)
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
-	std::cin.get();*/
+	std::cin.get();
 	return EXIT_SUCCESS;
 }
