@@ -12,6 +12,7 @@ namespace test
 		m_console(nullptr), // std::make_unique<Console>(this)
 		m_banner(std::make_unique<Gui>(this, UiBound(Vector2(0.5f, 0.5f), UiReference::Centre), Texture::Create("Guis/Banner.png"), Colour::White))
 	{
+		m_banner->SetEnabled(false);
 		m_banner->SetNinePatches(Vector4(0.195f, 0.0f, 0.847f, 0.06f));
 		m_banner->SetHeight(1.0f);
 	}
