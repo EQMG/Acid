@@ -128,13 +128,9 @@ namespace acid
 
 	void UiObject::RemoveChild(UiObject *child)
 	{
-		for (auto it = m_children.begin(); it != m_children.end(); ++it)
-		{
-			if ((*it).get() == child)
-			{
-				m_children.erase(it);
-			}
-		}
+		m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [child](std::unique_ptr<UiObject> &c) {
+			return c.get() == child;
+		}), m_children.end());
 	}
 
 	bool UiObject::IsEnabled() const

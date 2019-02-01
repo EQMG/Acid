@@ -72,7 +72,7 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
+		for (auto it = m_resources.begin(); it != m_resources.end(); ++it) // TODO: Clean remove.
 		{
 			if ((*it).second == resource)
 			{

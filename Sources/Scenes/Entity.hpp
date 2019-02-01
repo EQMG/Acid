@@ -154,7 +154,6 @@ namespace acid
 				if (casted != nullptr)
 				{
 					(*it)->SetParent(nullptr);
-
 					m_components.erase(it);
 				}
 			}

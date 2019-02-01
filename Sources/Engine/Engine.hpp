@@ -5,6 +5,7 @@
 #include "Log.hpp"
 #include "ModuleManager.hpp"
 #include "ModuleUpdater.hpp"
+#include "Game.hpp"
 
 /// <summary>
 /// The base Acid namespace.
@@ -42,6 +43,18 @@ namespace acid
 		/// </summary>
 		/// <returns> The engines module manager. </returns>
 		ModuleManager &GetModuleManager() { return m_moduleManager; }
+
+		/// <summary>
+		/// Gets the current game.
+		/// </summary>
+		/// <returns> The renderer manager. </returns>
+		Game *GetGame() const { return m_game.get(); }
+
+		/// <summary>
+		/// Sets the current game to a new game.
+		/// </summary>
+		/// <param name="game"> The new game. </param>
+		void SetGame(Game *game) { m_game.reset(game); }
 
 		/// <summary>
 		/// Gets the current time of the engine instance.
@@ -113,6 +126,8 @@ namespace acid
 
 		ModuleManager m_moduleManager;
 		ModuleUpdater m_moduleUpdater;
+
+		std::unique_ptr<Game> m_game;
 
 		std::string m_argv0;
 		Time m_timeOffset;

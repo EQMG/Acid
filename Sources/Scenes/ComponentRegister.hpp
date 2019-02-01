@@ -34,10 +34,10 @@ namespace acid
 			}
 
 			ComponentCreate componentCreate = {};
-			componentCreate.m_create = []() -> Component * {
+			componentCreate.m_create = []() {
 				return new T();
 			};
-			componentCreate.m_isSame = [](Component *component) -> bool {
+			componentCreate.m_isSame = [](Component *component) {
 				return dynamic_cast<T *>(component) != nullptr; // TODO: Ignore type inheritance
 			};
 

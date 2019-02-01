@@ -13,6 +13,7 @@ namespace acid
 	Engine::Engine(const std::string &argv0, const bool &emptyRegister) :
 		m_moduleManager(ModuleManager()),
 		m_moduleUpdater(ModuleUpdater()),
+		m_game(nullptr),
 		m_argv0(argv0),
 		m_timeOffset(Time::Zero),
 		m_fpsLimit(-1.0f),
@@ -32,6 +33,17 @@ namespace acid
 	{
 		while (m_running)
 		{
+			if (m_game != nullptr)
+			{
+				if (!m_game->m_started)
+				{
+					m_game->Start();
+					m_game->m_started = true;
+				}
+
+				m_game->Update();
+			}
+
 			// TODO: Catch exceptions.
 			m_moduleUpdater.Update(m_moduleManager);
 		}

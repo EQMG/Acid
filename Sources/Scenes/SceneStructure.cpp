@@ -38,25 +38,16 @@ namespace acid
 		m_objects.emplace_back(std::move(object));
 	}
 
-	bool SceneStructure::Remove(Entity *object)
+	void SceneStructure::Remove(Entity *object)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
-		{
-			if ((*it).get() != object)
-			{
-				continue;
-			}
-
-			m_objects.erase(it);
-			return true;
-		}
-
-		return false;
+		m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), [object](std::unique_ptr<Entity> &e) {
+			return e.get() == object;
+		}), m_objects.end());
 	}
 
-	bool SceneStructure::Move(Entity *object, SceneStructure &structure)
+	void SceneStructure::Move(Entity *object, SceneStructure &structure)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -69,10 +60,7 @@ namespace acid
 
 			structure.Add(std::move(*it));
 			m_objects.erase(it);
-			return true;
 		}
-
-		return false;
 	}
 
 	void SceneStructure::Clear()

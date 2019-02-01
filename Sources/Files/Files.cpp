@@ -9,7 +9,8 @@
 
 namespace acid
 {
-	Files::Files()
+	Files::Files() :
+		m_searchPaths(std::vector<std::string>())
 	{
 		PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	}
@@ -28,7 +29,10 @@ namespace acid
 		if (PHYSFS_mount(path.c_str(), nullptr, true) == 0)
 		{
 			Log::Error("File System error while adding a path or zip(%s): %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+			return;
 		}
+
+		m_searchPaths.emplace_back(path);
 	}
 
 	void Files::RemoveSearchPath(const std::string &path)
@@ -36,6 +40,17 @@ namespace acid
 		if (PHYSFS_unmount(path.c_str()) == 0)
 		{
 			Log::Error("File System error while removing a path: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+			return;
+		}
+
+		m_searchPaths.erase(std::remove(m_searchPaths.begin(), m_searchPaths.end(), path), m_searchPaths.end());
+	}
+
+	void Files::ClearSearchPath()
+	{
+		for (const auto &path : std::vector<std::string>(m_searchPaths))
+		{
+			RemoveSearchPath(path);
 		}
 	}
 
@@ -64,5 +79,31 @@ namespace acid
 		}
 
 		return std::string(data.begin(), data.end());
+	}
+
+	std::vector<std::string> Files::FilesInPath(const std::string &path, const bool &recursive)
+	{
+		std::vector<std::string> result = {};
+		char **rc = PHYSFS_enumerateFiles(path.c_str());
+		char **i;
+
+		for (i = rc; *i != NULL; i++)
+		{
+			/*if (IsDirectory(*i))
+			{
+				if (recursive)
+				{
+					auto filesInFound = FilesInPath(*i, recursive);
+					result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+				}
+			}
+			else
+			{*/
+				result.emplace_back(std::string(*i));
+			//}
+		}
+
+		PHYSFS_freeList(rc);
+		return result;
 	}
 }
