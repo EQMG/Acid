@@ -13,7 +13,7 @@ set(TESTGUI_SOURCES
 	)
 set(TESTGUI_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestGUI/")
 
-add_executable(TestGUI ${TESTGUI_SOURCES})
+add_library(TestGUI ${TESTGUI_SOURCES})
 add_dependencies(TestGUI Acid)
 
 target_compile_features(TestGUI PUBLIC cxx_std_17)
@@ -25,22 +25,22 @@ set_target_properties(TestGUI PROPERTIES
 target_include_directories(TestGUI PRIVATE ${ACID_INCLUDE_DIR} ${TESTGUI_INCLUDE_DIR})
 target_link_libraries(TestGUI PRIVATE Acid)
 
-if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	set_target_properties(TestGUI PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
-elseif(UNIX AND APPLE)
-	set_target_properties(TestGUI PROPERTIES
-		MACOSX_BUNDLE_BUNDLE_NAME "Test GUI"
-		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
-		MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
-		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
-		)
-endif()
+#if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+#	set_target_properties(TestGUI PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
+#elseif(UNIX AND APPLE)
+#	set_target_properties(TestGUI PROPERTIES
+#		MACOSX_BUNDLE_BUNDLE_NAME "Test GUI"
+#		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
+#		MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
+#		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
+#		)
+#endif()
 
-add_test(NAME "GUI" COMMAND "TestGUI")
+#add_test(NAME "GUI" COMMAND "TestGUI")
 
 if(ACID_INSTALL_EXAMPLES)
-	install(TARGETS TestGUI
-			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-			)
+#	install(TARGETS TestGUI
+#			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+#			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+#			)
 endif()

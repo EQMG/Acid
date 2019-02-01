@@ -40,6 +40,11 @@ mkdir Build\bin\Release\Resources
 mklink /J Build\bin\Release\Resources\Engine Resources
 )
 
+IF EXIST Build\bin (
+mkdir Build\bin\Resources
+mklink /J Build\bin\Resources\Engine Resources
+)
+
 IF EXIST Build\Tests\TestFont (
 mkdir Build\Tests\TestFont\Resources
 mklink /J Build\Tests\TestFont\Resources\Engine Resources

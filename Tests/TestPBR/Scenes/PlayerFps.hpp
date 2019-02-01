@@ -12,6 +12,16 @@ namespace test
 	class PlayerFps :
 		public Component
 	{
+	public:
+		PlayerFps();
+
+		void Start() override;
+
+		void Update() override;
+
+		void Decode(const Metadata &metadata) override;
+
+		void Encode(Metadata &metadata) const override;
 	private:
 		Vector3 m_velocity;
 		bool m_jumping;
@@ -26,15 +36,5 @@ namespace test
 
 		Vector3 m_amountMove;
 		Vector3 m_amountRotate;
-	public:
-		PlayerFps();
-
-		void Start() override;
-
-		void Update() override;
-
-		void Decode(const Metadata &metadata) override;
-
-		void Encode(Metadata &metadata) const override;
 	};
 }

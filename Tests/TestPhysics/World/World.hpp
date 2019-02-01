@@ -16,14 +16,6 @@ namespace test
 	class World :
 		public Module
 	{
-	private:
-		DriverLinear<float> m_driverDay;
-		float m_factorDay;
-
-		Fog m_fog;
-
-		Vector3 m_skyboxRotation;
-		Vector3 m_lightDirection;
 	public:
 		/// <summary>
 		/// Gets this engine instance.
@@ -48,5 +40,13 @@ namespace test
 		Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
 
 		Vector3 GetLightDirection() const { return m_lightDirection; }
+	private:
+		DriverLinear<float> m_driverDay;
+		float m_factorDay;
+
+		Fog m_fog;
+
+		Vector3 m_skyboxRotation;
+		Vector3 m_lightDirection;
 	};
 }

@@ -65,6 +65,8 @@ namespace acid
 
 		const std::vector<std::unique_ptr<UiObject>> &GetChildren() const { return m_children; }
 
+		void ClearChildren() { m_children.clear(); }
+
 		/// <summary>
 		/// Adds a child to this objects children.
 		/// </summary>

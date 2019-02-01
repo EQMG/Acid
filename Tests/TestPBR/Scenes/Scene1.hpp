@@ -13,14 +13,6 @@ namespace test
 	class Scene1 :
 		public Scene
 	{
-	private:
-		ButtonKeyboard m_buttonFullscreen;
-		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
-		ButtonKeyboard m_buttonScreenshot;
-		ButtonKeyboard m_buttonExit;
-		Sound m_soundScreenshot;
-
-		std::unique_ptr<OverlayDebug> m_overlayDebug;
 	public:
 		Scene1();
 
@@ -29,5 +21,13 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
+	private:
+		ButtonKeyboard m_buttonFullscreen;
+		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
+		ButtonKeyboard m_buttonScreenshot;
+		ButtonKeyboard m_buttonExit;
+		Sound m_soundScreenshot;
+
+		std::unique_ptr<OverlayDebug> m_overlayDebug;
 	};
 }

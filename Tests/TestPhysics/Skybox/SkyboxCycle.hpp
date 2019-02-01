@@ -10,9 +10,6 @@ namespace test
 	class SkyboxCycle :
 		public Component
 	{
-	private:
-		bool m_enableFog;
-		bool m_enableRotation;
 	public:
 		explicit SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
 
@@ -23,5 +20,8 @@ namespace test
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+	private:
+		bool m_enableFog;
+		bool m_enableRotation;
 	};
 }

@@ -7,8 +7,8 @@
 
 namespace test
 {
-	const float NameTag::TEXT_SIZE = 8.0f;
-	const float NameTag::VIEW_DISTANCE = 16.0f;
+	static const float TEXT_SIZE = 8.0f;
+	static const float VIEW_DISTANCE = 16.0f;
 
 	NameTag::NameTag(const std::string &name, const float &heightOffset) :
 		m_name(name),

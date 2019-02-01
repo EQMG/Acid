@@ -4,6 +4,18 @@
 // Acid exports (prerequisites) file.
 //
 
+#if defined(ACID_BUILD_MSVC)
+#  pragma section(".state", read, write)
+#  define ACID_STATE __declspec(allocate(".state"))
+#else
+#  if defined(ACID_BUILD_MACOS)
+#    define ACID_STATE __attribute__((used, section("__DATA,__state")))
+#  else
+#    pragma section(".state", read, write)
+#    define ACID_STATE __attribute__((section(".state")))
+#  endif
+#endif
+
 #if defined(ACID_BUILD_WINDOWS)
 #  ifdef ACID_BUILD_MSVC
 #	ifdef ACID_STATICLIB

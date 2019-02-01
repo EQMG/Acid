@@ -122,7 +122,7 @@ namespace acid
 		/// <param name="error"> If a bad error occurred. </param>
 		void RequestClose(const bool &error);
 	private:
-		static Engine *INSTANCE;
+		static ACID_STATE Engine *INSTANCE;
 
 		ModuleManager m_moduleManager;
 		ModuleUpdater m_moduleUpdater;

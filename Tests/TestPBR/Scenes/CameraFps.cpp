@@ -8,26 +8,26 @@
 
 namespace test
 {
-	const float CameraFps::NEAR_PLANE = 0.1f;
-	const float CameraFps::FAR_PLANE = 2048.0f;
-	const float CameraFps::FIELD_OF_VIEW = 65.0f;
+	static const float NEAR_PLANE = 0.1f;
+	static const float FAR_PLANE = 2048.0f;
+	static const float FIELD_OF_VIEW = 65.0f;
 
-	const float CameraFps::ROTATE_AGILITY = 32.0f;
-	const float CameraFps::PITCH_AGILITY = 32.0f;
+	static const float ROTATE_AGILITY = 32.0f;
+	static const float PITCH_AGILITY = 32.0f;
 
-	const float CameraFps::VIEW_HEIGHT = 1.8f;
+	static const float VIEW_HEIGHT = 1.8f;
 
-	const float CameraFps::INFLUENCE_OF_JOYSTICK_DY = 4.5f;
-	const float CameraFps::INFLUENCE_OF_JOYSTICK_DX = 4.5f;
+	static const float INFLUENCE_OF_JOYSTICK_DY = 4.5f;
+	static const float INFLUENCE_OF_JOYSTICK_DX = 4.5f;
 
-	const float CameraFps::INFLUENCE_OF_MOUSE_DY = 10000.0f;
-	const float CameraFps::INFLUENCE_OF_MOUSE_DX = 10000.0f;
+	static const float INFLUENCE_OF_MOUSE_DY = 10000.0f;
+	static const float INFLUENCE_OF_MOUSE_DX = 10000.0f;
 
-	const float CameraFps::MAX_HORIZONTAL_CHANGE = 30.0f;
-	const float CameraFps::MAX_VERTICAL_CHANGE = 30.0f;
+	static const float MAX_HORIZONTAL_CHANGE = 30.0f;
+	static const float MAX_VERTICAL_CHANGE = 30.0f;
 
-	const float CameraFps::MAX_ANGLE_OF_ELEVATION = 85.0f;
-	const float CameraFps::MIN_ANGLE_OF_ELEVATION = -85.0f;
+	static const float MAX_ANGLE_OF_ELEVATION = 85.0f;
+	static const float MIN_ANGLE_OF_ELEVATION = -85.0f;
 
 	CameraFps::CameraFps() :
 		m_angleOfElevation(25.0f),

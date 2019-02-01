@@ -26,6 +26,11 @@ namespace acid
 
 	void Files::AddSearchPath(const std::string &path)
 	{
+		if (std::find(m_searchPaths.begin(), m_searchPaths.end(), path) != m_searchPaths.end())
+		{
+			return;
+		}
+
 		if (PHYSFS_mount(path.c_str(), nullptr, true) == 0)
 		{
 			Log::Error("File System error while adding a path or zip(%s): %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
@@ -37,13 +42,20 @@ namespace acid
 
 	void Files::RemoveSearchPath(const std::string &path)
 	{
+		auto it = std::find(m_searchPaths.begin(), m_searchPaths.end(), path);
+
+		if (it == m_searchPaths.end())
+		{
+			return;
+		}
+
 		if (PHYSFS_unmount(path.c_str()) == 0)
 		{
 			Log::Error("File System error while removing a path: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return;
 		}
 
-		m_searchPaths.erase(std::remove(m_searchPaths.begin(), m_searchPaths.end(), path), m_searchPaths.end());
+		m_searchPaths.erase(it);
 	}
 
 	void Files::ClearSearchPath()

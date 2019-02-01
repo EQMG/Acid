@@ -17,6 +17,10 @@ namespace test
 	class Hierarchy :
 		public UiPanel
 	{
+	public:
+		explicit Hierarchy(UiObject *parent);
+
+		void UpdateObject() override;
 	private:
 		std::unique_ptr<UiSection> m_section1;
 		std::unique_ptr<UiInputButton> m_button1;
@@ -27,9 +31,5 @@ namespace test
 		std::unique_ptr<UiInputText> m_textHex;
 		std::unique_ptr<Gui> m_rgbColour;
 		std::unique_ptr<UiColourWheel> m_colourWheel;
-	public:
-		explicit Hierarchy(UiObject *parent);
-
-		void UpdateObject() override;
 	};
 }
