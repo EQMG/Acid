@@ -10,6 +10,7 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - g++-7
+        - ninja-build
         - tree
         - xorg-dev
         - libglu1-mesa-dev
@@ -40,6 +41,7 @@ matrix:
         packages:
         - clang-6.0
         - g++-7
+        - ninja-build
         - tree
         - xorg-dev
         - libglu1-mesa-dev
@@ -70,11 +72,12 @@ matrix:
     - BUILD_TYPE=Release
     before_install:
     - brew update
-    - brew tap caskroom/cask
     - brew install tree
     - brew install openal-soft
     - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
+    - brew install ninja
+    - brew tap caskroom/cask
     - brew cask install apenngrace/vulkan/vulkan-sdk
 
 script:
@@ -92,6 +95,6 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make all
     else
-      xcodebuild -target Acid -configuration $BUILD_TYPE
+      xcodebuild -quiet -target Acid -configuration $BUILD_TYPE
     fi
 - cd ../

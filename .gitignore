@@ -5,6 +5,8 @@
 cmake-build-debug/*
 cmake-build-release/*
 Build/*
+Build64/*
+Build32/*
 Release/*
 CMakeSettings.json
 .DS_Store

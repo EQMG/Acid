@@ -12,17 +12,18 @@ environment:
       ARCHITECTURE: x64
       GEN: "Visual Studio 15 2017 Win64"
       CFG: Release
-      OUT_POST: "" # "64"
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-#      ARCHITECTURE: x86
-#      GEN: "Visual Studio 15 2017"
-#      CFG: Release
-#      OUT_POST: "32"
+      OUT_POST: "64"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      ARCHITECTURE: x86
+      GEN: "Visual Studio 15 2017"
+      CFG: Release
+      OUT_POST: "32"
   VULKAN_SDK: "C:\\VulkanSDK\\1.1.97.0"
   VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.97.0/windows/VulkanSDK-1.1.97.0-Installer.exe
   OPENALDIR: "C:\\openal-soft"
   OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.19.1-bin.zip
   NINJA_URL: https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip
+  MSVC_HOME: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community"
 
 install:
   - git submodule update --init --recursive
@@ -40,16 +41,18 @@ install:
   - ninja --version
 
 build_script:
-  - mkdir Build && cd Build
-  - cmake -G"%GEN%" ..
-  - cmake --build . --config %CFG% --target install --clean-first
+  - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
+  - mkdir Build%OUT_POST% && cd Build%OUT_POST%
+  - cmake -DCMAKE_BUILD_TYPE=%CFG% -GNinja ..
+  - ninja # cmake --build . --config %CFG% --target install --clean-first
+  - ninja install
+  - cd ../
 
 after_build:
-  - cd ../
   - mkdir Artifacts\%CFG%_%ARCHITECTURE%
-  - xcopy Build\lib%OUT_POST%\%CFG% Artifacts\%CFG%_%ARCHITECTURE%\lib\ /s/h/e/k/f/c
-  - xcopy Build\bin%OUT_POST%\%CFG% Artifacts\%CFG%_%ARCHITECTURE%\bin\ /s/h/e/k/f/c
-  - xcopy Build\install\include\Acid Artifacts\%CFG%_%ARCHITECTURE%\include\Acid\ /s/h/e/k/f/c
+  - xcopy Build%OUT_POST%\lib Artifacts\%CFG%_%ARCHITECTURE%\lib\ /s/h/e/k/f/c
+  - xcopy Build%OUT_POST%\bin Artifacts\%CFG%_%ARCHITECTURE%\bin\ /s/h/e/k/f/c
+  - xcopy Build%OUT_POST%\install\include\Acid Artifacts\%CFG%_%ARCHITECTURE%\include\Acid\ /s/h/e/k/f/c
   - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\bin\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:

@@ -237,15 +237,6 @@ Usage
 
 `static bool CR_STATE bInitialized = false;`
 
-#### `CR_ROLLBACK` macro
-
-Used to enable or disable crash handling and automatic plugin rollback. Rollback functionality is enabled by default
-except for MingW.
-
-Usage
-
-`#define CR_ROLLBACK 0`
-
 #### Overridable macros
 
 You can define these macros before including cr.h in host (CR_HOST) to customize cr.h
@@ -474,21 +465,13 @@ struct cr_plugin {
 
 #else // #ifndef CR_HOST
 
-#ifdef __MINGW32__
-#define CR_ROLLBACK 0
-#else
-#ifndef CR_ROLLBACK
-#define CR_ROLLBACK 1
-#endif  // #ifndef CR_ROLLBACK
-#endif  // #ifdef __MINGW32__
-
 // Overridable macros
 #ifndef CR_LOG
 #   ifdef CR_DEBUG
 #       include <stdio.h>
 #       define CR_LOG(...)     fprintf(stdout, __VA_ARGS__)
 #   else
-#       define CR_LOG(...)
+#       define CR_LOG(...)     
 #   endif
 #endif
 
@@ -506,7 +489,7 @@ struct cr_plugin {
 #       include <stdio.h>
 #       define CR_TRACE        fprintf(stdout, "CR_TRACE: %s\n", __FUNCTION__);
 #   else
-#       define CR_TRACE
+#       define CR_TRACE     
 #   endif
 #endif
 
@@ -602,7 +585,7 @@ static std::string cr_version_path(const std::string &basepath,
     // length exceeds pdb folder path length. This is not relevant on other platforms.
     if (ver.size() > folder.size()) {
         fname = fname.substr(0, fname.size() - (ver.size() - folder.size()));
-    }
+    }    
 #endif
     if (!temppath.empty()) {
         folder = temppath;
@@ -730,7 +713,7 @@ static bool cr_copy(const std::string &from, const std::string &to) {
     return CopyFile(_from.c_str(), _to.c_str(), FALSE) ? true : false;
 }
 
-static void cr_del(const std::string& path) {
+static void cr_del(const std::string& path) {   
     CR_WINDOWS_ConvertPath(_path, path);
     DeleteFile(_path.c_str());
 }
@@ -1023,7 +1006,7 @@ static void cr_pe_section_save(cr_plugin &ctx, cr_plugin_section_type::e type,
     }
 }
 
-/*static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
+static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
                                         const std::string &imagefile,
                                         bool rollback) {
     (void)imagefile;
@@ -1066,7 +1049,7 @@ static void cr_pe_section_save(cr_plugin &ctx, cr_plugin_section_type::e type,
         }
     }
     return result;
-}*/
+}
 
 static void cr_so_unload(cr_plugin &ctx) {
     auto p = (cr_internal *)ctx.p;
@@ -1126,13 +1109,13 @@ static int cr_seh_filter(cr_plugin &ctx, unsigned long seh) {
 
 static int cr_plugin_main(cr_plugin &ctx, cr_op operation) {
     auto p = (cr_internal *)ctx.p;
-#if CR_ROLLBACK
+#ifndef __MINGW32__
     __try {
 #endif
         if (p->main) {
             return p->main(&ctx, operation);
         }
-#if CR_ROLLBACK
+#ifndef __MINGW32__
     } __except (cr_seh_filter(ctx, GetExceptionCode())) {
         return -1;
     }
@@ -1362,7 +1345,7 @@ static int cr_dl_header_handler(struct dl_phdr_info *info, size_t size,
     return 0;
 }
 
-/*static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
+static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
                                         const std::string &imagefile,
                                         bool rollback) {
     CR_ASSERT(handle);
@@ -1416,7 +1399,7 @@ static int cr_dl_header_handler(struct dl_phdr_info *info, size_t size,
     }
 
     return result;
-}*/
+}
 
 #elif defined(CR_OSX)
 #include <dlfcn.h>
@@ -1460,7 +1443,7 @@ void cr_macho_section_save(cr_plugin &ctx, cr_plugin_section_type::e type,
 //
 // Some useful references:
 // man 3 dyld
-/*static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
+static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
                                         const std::string &imagefile,
                                         bool rollback) {
     bool result = true;
@@ -1523,7 +1506,7 @@ void cr_macho_section_save(cr_plugin &ctx, cr_plugin_section_type::e type,
     }
 
     return result;
-}*/
+}
 
 #endif
 
@@ -1571,7 +1554,6 @@ static void cr_signal_handler(int sig, siginfo_t *si, void *uap) {
 
 static void cr_plat_init() {
     CR_TRACE
-#if CR_ROLLBACK
     struct sigaction sa;
     sa.sa_flags = SA_SIGINFO | SA_RESTART | SA_NODEFER;
     sigemptyset(&sa.sa_mask);
@@ -1592,7 +1574,6 @@ static void cr_plat_init() {
     if (sigaction(SIGABRT, &sa, nullptr) == -1) {
         CR_ERROR("Failed to setup SIGABRT handler\n");
     }
-#endif
 }
 
 static cr_failure cr_signal_to_failure(int sig) {
@@ -1612,18 +1593,17 @@ static cr_failure cr_signal_to_failure(int sig) {
 }
 
 static int cr_plugin_main(cr_plugin &ctx, cr_op operation) {
-#if CR_ROLLBACK
     if (int sig = sigsetjmp(env, 1)) {
         ctx.version = ctx.version > 0 ? ctx.version - 1 : 0;
         ctx.failure = cr_signal_to_failure(sig);
         CR_LOG("1 FAILURE: %d (CR: %d)\n", sig, ctx.failure);
         return -1;
-    }
-#endif
-    auto p = (cr_internal *)ctx.p;
-    CR_ASSERT(p);
-    if (p->main) {
-        return p->main(&ctx, operation);
+    } else {
+        auto p = (cr_internal *)ctx.p;
+        CR_ASSERT(p);
+        if (p->main) {
+            return p->main(&ctx, operation);
+        }
     }
 
     return -1;
@@ -1664,10 +1644,9 @@ static bool cr_plugin_load_internal(cr_plugin &ctx, bool rollback) {
             return false;
         }
 
-     //   if (!cr_plugin_validate_sections(ctx, new_dll, new_file, rollback)) {
-     //
-     //       return false;
-    //    }
+        if (!cr_plugin_validate_sections(ctx, new_dll, new_file, rollback)) {
+            return false;
+        }
 
         if (rollback) {
             cr_plugin_sections_reload(ctx, cr_plugin_section_version::backup);
