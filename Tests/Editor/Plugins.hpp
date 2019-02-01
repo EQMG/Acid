@@ -32,5 +32,6 @@ namespace test
 		FileWatcher m_watcher;
 		std::unique_ptr<cr_plugin> m_plugin;
 		bool m_update;
+		bool m_reload;
 	};
 }

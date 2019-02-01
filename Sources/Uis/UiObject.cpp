@@ -8,25 +8,27 @@ namespace acid
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
-		m_children(std::vector<std::unique_ptr<UiObject>>()),
+		m_children(std::vector<UiObject *>()),
 		m_enabled(true),
 		m_rectangle(UiBound(rectangle)),
 		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
 		m_height(0.0f),
-		m_screenDimension(Vector2()),
-		m_screenPosition(Vector2()),
-		m_screenDepth(0.0f),
 		m_lockRotation(true),
 		m_worldTransform({}),
 		m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_scale(1.0f),
+		m_screenDimensions(Vector2()),
+		m_screenPosition(Vector2()),
+		m_screenDepth(0.0f),
+		m_screenAlpha(1.0f),
+		m_screenScale(1.0f),
 		m_onClick(Delegate<void(UiObject *, MouseButton)>())
 	{
-		if (parent != nullptr)
+		if (m_parent != nullptr)
 		{
-			parent->AddChild(this);
+			m_parent->AddChild(this);
 		}
 	}
 
@@ -36,9 +38,14 @@ namespace acid
 		{
 			m_parent->RemoveChild(this);
 		}
+
+		for (auto &child : m_children)
+		{
+			child->m_parent = nullptr;
+		}
 	}
 
-	void UiObject::Update(std::vector<UiObject *> &list)
+	void UiObject::Update(UiObject *parent, std::vector<UiObject *> &list)
 	{
 		if (!m_enabled)
 		{
@@ -56,11 +63,7 @@ namespace acid
 			}
 		}
 
-		if (GetAlpha() > 0.0f)
-		{
-			UpdateObject();
-			list.emplace_back(this);
-		}
+		UpdateObject();
 
 		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
@@ -69,28 +72,36 @@ namespace acid
 		// Transform updates.
 		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
 
-		m_screenDimension = m_rectangle.GetScreenDimensions(aspectRatio) * m_scale;
+		m_screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio) * m_scale;
+		m_screenDepth = 0.01f * m_height;
+		m_screenScale = m_scale;
+		m_screenAlpha = m_alpha;
 
-		if (m_parent != nullptr)
+		if (parent != nullptr)
 		{
 			if (m_rectangle.GetAspect() & UiAspect::Scale)
 			{
-				m_screenDimension *= m_parent->m_screenDimension;
+				m_screenDimensions *= parent->m_screenDimensions;
+				m_screenScale *= parent->m_screenScale;
 			}
 
-			m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimension) - (m_screenDimension * m_rectangle.GetReference()) + m_parent->m_screenPosition;
+			m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + parent->m_screenPosition;
+			m_screenAlpha *= parent->m_screenAlpha;
 		}
 		else
 		{
-			m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenDimension * m_rectangle.GetReference());
+			m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenDimensions * m_rectangle.GetReference());
 		}
 
-		m_screenDepth = 0.01f * m_height;
+		if (m_screenAlpha > 0.0f)
+		{
+			list.emplace_back(this);
+		}
 
 		// Update all children objects.
 		for (auto &child : m_children)
 		{
-			child->Update(list);
+			child->Update(this, list);
 		}
 	}
 
@@ -108,7 +119,7 @@ namespace acid
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
 			Vector2 distance = Mouse::Get()->GetPosition() - m_screenPosition;
-			return distance >= Vector2::Zero && distance <= m_screenDimension;
+			return distance >= Vector2::Zero && distance <= m_screenDimensions;
 		}
 
 		return false;
@@ -128,21 +139,9 @@ namespace acid
 
 	void UiObject::RemoveChild(UiObject *child)
 	{
-		m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [child](std::unique_ptr<UiObject> &c) {
-			return c.get() == child;
-		}), m_children.end());
+		m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
 	}
-
-	bool UiObject::IsEnabled() const
-	{
-		if (m_parent != nullptr)
-		{
-			return m_enabled && m_parent->IsEnabled();
-		}
-
-		return m_enabled;
-	}
-
+	
 	Matrix4 UiObject::GetModelMatrix() const
 	{
 		if (m_worldTransform)
@@ -168,26 +167,6 @@ namespace acid
 		}
 
 		return Matrix4::Identity;
-	}
-
-	float UiObject::GetAlpha() const
-	{
-		if (m_parent != nullptr)
-		{
-			return m_alpha * m_parent->GetAlpha();
-		}
-
-		return m_alpha;
-	}
-
-	float UiObject::GetScale() const
-	{
-		if (m_parent != nullptr && m_rectangle.GetAspect() & UiAspect::Scale)
-		{
-			return m_scale * m_parent->GetScale();
-		}
-
-		return m_scale;
 	}
 
 	void UiObject::CancelEvent(const MouseButton &button) const

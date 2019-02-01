@@ -15,6 +15,8 @@ namespace acid
 	public:
 		ModuleManager();
 
+		~ModuleManager();
+
 		/// <summary>
 		/// Fills the module register with default modules.
 		/// </summary>

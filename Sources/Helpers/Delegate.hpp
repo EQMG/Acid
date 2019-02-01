@@ -64,7 +64,7 @@ namespace acid
 
 		Delegate() = default;
 
-		~Delegate() = default;
+		virtual ~Delegate() = default;
 
 		Delegate &Connect(FunctionType &&function)
 		{

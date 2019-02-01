@@ -1,4 +1,5 @@
 ﻿#include "Gui.hpp"
+#include "Gui.hpp"
 
 #include "Renderer/Renderer.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
@@ -33,10 +34,10 @@ namespace acid
 		// Updates uniforms.
 		m_uniformObject.Push("aspectRatio", Window::Get()->GetAspectRatio());
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimension(), 2.0f * GetScreenPosition() - 1.0f));
+		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 		m_uniformObject.Push("depth", GetScreenDepth());
-		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("alpha", GetScreenAlpha());
 
 		m_uniformObject.Push("colourOffset", m_colourOffset);
 		m_uniformObject.Push("atlasOffset", m_atlasOffset);
@@ -47,7 +48,7 @@ namespace acid
 	bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (m_texture == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
+		if (m_texture == nullptr || !IsEnabled())
 		{
 			return false;
 		}

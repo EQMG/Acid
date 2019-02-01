@@ -161,7 +161,7 @@ if(ACID_INSTALL_RESOURCES)
 	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
 			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
 			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
-		)
+			)
 endif()
 
 # Allows automation of "BUILD_TESTING"

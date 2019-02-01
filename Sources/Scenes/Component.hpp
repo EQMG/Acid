@@ -21,7 +21,7 @@ namespace acid
 		{
 		}
 
-		~Component() = default;
+		virtual ~Component() = default;
 
 		/// <summary>
 		/// Run when starting the component if <seealso cref="#m_started"/> is false.

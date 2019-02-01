@@ -30,7 +30,7 @@ namespace acid
 		{
 		}
 
-		~Camera() = default;
+		virtual ~Camera() = default;
 
 		/// <summary>
 		/// Gets the distance of the near pane of the view frustum.

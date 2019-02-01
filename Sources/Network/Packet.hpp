@@ -29,7 +29,7 @@ namespace acid
 		/// </summary>
 		Packet();
 
-		~Packet() = default;
+		virtual ~Packet() = default;
 	protected:
 		friend class TcpSocket;
 		friend class UdpSocket;

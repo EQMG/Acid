@@ -18,7 +18,7 @@ namespace acid
 	public:
 		UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle);
 
-		~UiInputGrabber() = default;
+		virtual ~UiInputGrabber() = default;
 
 		void UpdateObject() override;
 

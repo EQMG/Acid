@@ -34,6 +34,6 @@ if(TARGET Acid::Acid)
 endif()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Acid
-	FOUND_VAR ACID_FOUND
-	REQUIRED_VARS _ACID_TARGET_LOCATION
-	)
+		FOUND_VAR ACID_FOUND
+		REQUIRED_VARS _ACID_TARGET_LOCATION
+		)

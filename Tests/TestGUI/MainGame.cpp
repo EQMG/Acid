@@ -8,37 +8,35 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 
+#if defined(ACID_RELOAD)
 #include <Engine/cr.h>
 
 CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 {
-	Log::Out("[Game_Main] Engine instance: %i\n", Engine::Get() != nullptr);
+	Log::Out("[Guest] Engine instance: %p\n", (void *)Engine::Get());
 
 	if (Engine::Get() != nullptr)
 	{
-		Log::Out("[Game_Main] Game instance: %i\n", Engine::Get()->GetGame() != nullptr);
+		Log::Out("[Guest] Game instance: %p\n", (void *)Engine::Get()->GetGame());
 	}
 
 	switch (operation) {
 	case CR_LOAD:
-		Log::Out("[Game_Main] Loaded!\n");
-	//	Engine::Get()->SetGame(nullptr);
+		Log::Out("[Guest] Operation load, %i\n", ctx->version);
 		if (Engine::Get()->GetGame() == nullptr)
 		{
 			Engine::Get()->SetGame(new test::MainGame());
 		}
 		return 0;
 	case CR_UNLOAD:
-		Log::Out("[Game_Main] Unloaded!\n");
-	//	delete dynamic_cast<test::MainGame *>(Engine::Get()->GetGame());
-	//	Engine::Get()->SetGame(nullptr);
+		Log::Out("[Guest] Operation unload, %i\n", ctx->version);
 		return 0;
 	}
 
 	return 0;
 }
-
-/*int main(int argc, char **argv)
+#else
+int main(int argc, char **argv)
 {
 	using namespace test;
 
@@ -53,16 +51,17 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 	std::cout << "Press enter to continue...";
 	std::cin.get();
 	return exitCode;
-}*/
+}
+#endif
 
 namespace test
 {
 	MainGame::MainGame()
 	{
-		Log::Out("[Game] Constructor!\n");
+		Log::Out("[Game] Constructor\n");
 		// Registers file search paths.
 		Files::Get()->AddSearchPath("Resources/Engine");
-		Log::Out("[Game] Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+		Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 		// Registers modules.
 		auto &moduleManager = Engine::Get()->GetModuleManager();
@@ -81,12 +80,12 @@ namespace test
 
 	MainGame::~MainGame()
 	{
-		Log::Out("[Game] Destructor!\n");
+		Log::Out("[Game] Destructor\n");
 	//	Files::Get()->ClearSearchPath();
 
-	//	Uis::Get()->GetContainer()->ClearChildren();
-	//	Renderer::Get()->SetManager(nullptr);
-	//	Scenes::Get()->SetScene(nullptr);
+		Uis::Get()->GetContainer()->ClearChildren();
+		Renderer::Get()->SetManager(nullptr);
+		Scenes::Get()->SetScene(nullptr);
 	}
 
 	void MainGame::Start()

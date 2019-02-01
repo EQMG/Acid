@@ -16,7 +16,7 @@ namespace acid
 
 		}
 
-		~Game() = default;
+		virtual ~Game() = default;
 
 		/// <summary>
 		/// Run when starting the game if <seealso cref="#m_started"/> is false.

@@ -96,8 +96,7 @@ target_link_libraries(Acid
 		${CMAKE_DL_LIBS}
 		# Windows
 		$<$<PLATFORM_ID:Windows>:ws2_32>
-		# MSVC
-		$<$<CXX_COMPILER_ID:MSVC>:dbghelp>
+		$<$<PLATFORM_ID:Windows>:dbghelp>
 		PRIVATE
 		# More IMPORTED
 		glfw
@@ -130,31 +129,31 @@ if(_ACID_ALL_SYSTEM_LIBS)
 			)
 	# Install the auto-generated export
 	install(EXPORT AcidTargets
-		# Makes the end-user imported library Acid::Acid instead of just Acid
-		NAMESPACE Acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
+			# Makes the end-user imported library Acid::Acid instead of just Acid
+			NAMESPACE Acid::
+			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+			)
 	# Defines write_basic_package_version_file
 	include(CMakePackageConfigHelpers)
 	# Dynamically writes the path to the resources dir (if installed) into the AcidConfig.cmake file
 	configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/AcidConfig.cmake.in"
-		"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
-		INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		PATH_VARS CMAKE_INSTALL_DATADIR
-		NO_CHECK_REQUIRED_COMPONENTS_MACRO
-	)
+			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
+			INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+			PATH_VARS CMAKE_INSTALL_DATADIR
+			NO_CHECK_REQUIRED_COMPONENTS_MACRO
+			)
 	# Auto-generates a version file based on the current version specified in project()
 	write_basic_package_version_file(
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			COMPATIBILITY SameMajorVersion
-	)
+			)
 	# Install the auto-generated version file and AcidConfig
 	install(
 			FILES
 			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-	)
+			)
 else()
 	# Install without an export since we're using 1 (or more) non-system libs
 	install(TARGETS Acid

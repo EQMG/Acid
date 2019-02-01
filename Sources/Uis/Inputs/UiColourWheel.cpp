@@ -20,7 +20,7 @@ namespace acid
 
 	void UiColourWheel::UpdateObject()
 	{
-		if (m_background->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_background->IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
 			{
@@ -28,8 +28,8 @@ namespace acid
 				m_soundClick.Play();
 			}
 
-			Vector2 distance = Mouse::Get()->GetPosition() - (m_background->GetScreenPosition() + (m_background->GetScreenDimension() / 2.0f));
-			distance /= 0.5f * m_background->GetScreenDimension();
+			Vector2 distance = Mouse::Get()->GetPosition() - (m_background->GetScreenPosition() + (m_background->GetScreenDimensions() / 2.0f));
+			distance /= 0.5f * m_background->GetScreenDimensions();
 
 		//	m_colour = Colour(); // TODO: Pick colour.
 

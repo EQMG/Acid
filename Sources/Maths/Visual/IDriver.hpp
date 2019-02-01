@@ -23,7 +23,7 @@ namespace acid
 		{
 		}
 
-		~IDriver() = default;
+		virtual ~IDriver() = default;
 
 		/// <summary>
 		/// Updates the driver with the passed time.

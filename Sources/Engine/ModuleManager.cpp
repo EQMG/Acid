@@ -24,6 +24,14 @@ namespace acid
 	{
 	}
 
+	ModuleManager::~ModuleManager()
+	{
+	//	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it)
+	//	{
+	//		it->second->~Module();
+	//	}
+	}
+
 	void ModuleManager::FillRegister()
 	{
 		Add<Window>(Module::Stage::Always);

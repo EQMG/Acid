@@ -23,7 +23,7 @@ namespace acid
 
 		Pipeline() = default;
 
-		~Pipeline() = default;
+		virtual ~Pipeline() = default;
 
 		void BindPipeline(const CommandBuffer &commandBuffer) const
 		{

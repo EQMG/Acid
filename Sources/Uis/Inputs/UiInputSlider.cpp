@@ -64,7 +64,7 @@ namespace acid
 		}
 		else if (m_updating)
 		{
-			float width = m_background->GetScreenDimension().m_x;
+			float width = m_background->GetScreenDimensions().m_x;
 			float positionX = m_background->GetScreenPosition().m_x;
 			float cursorX = Mouse::Get()->GetPositionX() - positionX;
 			m_progress = cursorX / width;

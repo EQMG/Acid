@@ -139,27 +139,11 @@ namespace acid
 		/// <returns> The border colour of the text. </returns>
 		const Colour &GetBorderColour() const { return m_borderColour; }
 
-		IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
-
 		/// <summary>
 		/// Sets the border colour of the text. This is used with border and glow drivers.
 		/// </summary>
 		/// <param name="borderColour"> The new border colour of the text. </param>
 		void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
-
-		/// <summary>
-		/// Sets the border driver, will disable glowing.
-		/// </summary>
-		/// <param name="borderDriver"> The new border driver. </param>
-		void SetBorderDriver(IDriver<float> *borderDriver);
-
-		/// <summary>
-		/// Sets a new border driver from a type, will disable glowing.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
 		IDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
 
@@ -176,6 +160,22 @@ namespace acid
 		/// <param name="args"> The type driver arguments. </param>
 		template<typename T, typename... Args>
 		void SetGlowDriver(Args &&... args) { SetGlowDriver(new T(std::forward<Args>(args)...)); }
+
+		IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
+
+		/// <summary>
+		/// Sets the border driver, will disable glowing.
+		/// </summary>
+		/// <param name="borderDriver"> The new border driver. </param>
+		void SetBorderDriver(IDriver<float> *borderDriver);
+
+		/// <summary>
+		/// Sets a new border driver from a type, will disable glowing.
+		/// </summary>
+		/// <param name="T"> The type of driver to set. </param>
+		/// <param name="args"> The type driver arguments. </param>
+		template<typename T, typename... Args>
+		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.

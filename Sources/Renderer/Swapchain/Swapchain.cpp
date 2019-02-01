@@ -140,14 +140,14 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceImage, nullptr);
+		vkDestroySwapchainKHR(logicalDevice->GetLogicalDevice(), m_swapchain, nullptr);
 
 		for (const auto &imageView : m_imageViews)
 		{
 			vkDestroyImageView(logicalDevice->GetLogicalDevice(), imageView, nullptr);
 		}
 
-		vkDestroySwapchainKHR(logicalDevice->GetLogicalDevice(), m_swapchain, nullptr);
+		vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceImage, nullptr);
 	}
 
 	VkResult Swapchain::AcquireNextImage()
