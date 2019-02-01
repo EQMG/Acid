@@ -1,16 +1,16 @@
 file(GLOB_RECURSE TESTPHYSICS_HEADER_FILES
-	"*.h"
-	"*.hpp"
-	)
+		"*.h"
+		"*.hpp"
+		)
 file(GLOB_RECURSE TESTPHYSICS_SOURCE_FILES
-	"*.c"
-	"*.cpp"
-	"*.rc"
-	)
+		"*.c"
+		"*.cpp"
+		"*.rc"
+		)
 set(TESTPHYSICS_SOURCES
-	${TESTPHYSICS_HEADER_FILES}
-	${TESTPHYSICS_SOURCE_FILES}
-	)
+		${TESTPHYSICS_HEADER_FILES}
+		${TESTPHYSICS_SOURCE_FILES}
+		)
 set(TESTPHYSICS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPhysics/")
 
 add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
@@ -18,9 +18,9 @@ add_dependencies(TestPhysics Acid)
 
 target_compile_features(TestPhysics PUBLIC cxx_std_17)
 set_target_properties(TestPhysics PROPERTIES
-	POSITION_INDEPENDENT_CODE ON
-	FOLDER "Acid"
-	)
+		POSITION_INDEPENDENT_CODE ON
+		FOLDER "Acid"
+		)
 
 target_include_directories(TestPhysics PRIVATE ${ACID_INCLUDE_DIR} ${TESTPHYSICS_INCLUDE_DIR})
 target_link_libraries(TestPhysics PRIVATE Acid)
@@ -29,11 +29,11 @@ if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPhysics PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
 elseif(UNIX AND APPLE)
 	set_target_properties(TestPhysics PROPERTIES
-		MACOSX_BUNDLE_BUNDLE_NAME "Test Physics"
-		MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
-		MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
-		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
-		)
+			MACOSX_BUNDLE_BUNDLE_NAME "Test Physics"
+			MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
+			MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
+			MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
+			)
 endif()
 
 add_test(NAME "Physics" COMMAND "TestPhysics")

@@ -21,7 +21,7 @@ namespace acid
 		{
 		}
 
-		~RenderPipeline() = default;
+		virtual ~RenderPipeline() = default;
 
 		/// <summary>
 		/// Runs the render pipeline in the current renderpass.

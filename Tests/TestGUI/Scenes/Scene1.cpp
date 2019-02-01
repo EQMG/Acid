@@ -72,7 +72,7 @@ namespace test
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo->IsStarting() || m_editorPanels->GetAlpha() != 0.0f;
+		return m_uiStartLogo->IsStarting() || m_editorPanels->GetScreenAlpha() != 0.0f;
 	}
 
 	void Scene1::TogglePause()

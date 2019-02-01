@@ -16,7 +16,7 @@ namespace acid
 
 		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
 
-		~Buffer();
+		virtual ~Buffer();
 
 		void CopyBuffer(void *data) const;
 

@@ -22,7 +22,7 @@ namespace acid
 
 		Module() = default;
 
-		~Module() = default;
+		virtual ~Module() = default;
 
 		/// <summary>
 		/// The update function for the module.

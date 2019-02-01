@@ -12,10 +12,10 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Resource
 	{
-	protected:
+	public:
 		Resource() = default;
 
-		~Resource() = default;
+		virtual ~Resource() = default;
 
 		/// <summary>
 		/// Used by the resource after it has been decoded, and in constructors.
@@ -23,7 +23,7 @@ namespace acid
 		virtual void Load()
 		{
 		}
-	public:
+
 		/// <summary>
 		/// Used to decode this resource from a loaded data format.
 		/// </summary>

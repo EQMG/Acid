@@ -12,7 +12,7 @@ namespace acid
 	public:
 		IEvent() = default;
 
-		~IEvent() = default;
+		virtual ~IEvent() = default;
 
 		/// <summary>
 		/// Gets if the event has occurred.

@@ -2,8 +2,7 @@
 
 #include <thread>
 
-#define CR_ROLLBACK 0
-#define CR_HOST CR_DISABLE
+#define CR_HOST CR_UNSAFE
 #include <Engine/cr.h>
 
 #include <Devices/Keyboard.hpp>
@@ -15,27 +14,23 @@ namespace test
 		m_loadedPath(FileSystem::GetWorkingDirectory() + FileSystem::Separator + CR_PLUGIN("TestGUI")),
 		m_watcher(FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(0.5f))),
 		m_plugin(std::make_unique<cr_plugin>()),
-		m_update(true)
+		m_update(true),
+		m_reload(false)
 	{
 		cr_plugin_load(*m_plugin, m_loadedPath.c_str());
 
 		// Watches the DLL path.
-		m_watcher.GetOnChange() += [this](std::string path, FileWatcher::Status status)
-		{
+		m_watcher.GetOnChange() += [this](std::string path, FileWatcher::Status status) {
 			if (path == m_loadedPath)
 			{
-				Log::Out("Reloading by change\n");
 				m_update = true;
-				//cr_plugin_update(*m_plugin);
 			}
 		};
 
-		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods)
-		{
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods) {
 			if (key == Key::L && action == InputAction::Press)
 			{
-				Log::Out("Reloading by key\n");
-				//cr_plugin_unload(*m_plugin, false, false);
+				m_reload = true;
 			}
 		};
 	}
@@ -49,10 +44,18 @@ namespace test
 	{
 		if (m_update)
 		{
-		//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+			Log::Out("[Host] Updating plugin\n");
 			cr_plugin_update(*m_plugin);
-		//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			m_update = false;
+		}
+
+		if (m_reload)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+			Log::Out("[Host] Reloading plugin\n");
+			Engine::Get()->SetGame(nullptr);
+			m_reload = false;
 		}
 	}
 }

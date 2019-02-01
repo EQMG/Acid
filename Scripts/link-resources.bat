@@ -1,3 +1,4 @@
+@echo off
 cd ../
 
 IF EXIST cmake-build-debug\bin (
@@ -13,6 +14,16 @@ mklink /J cmake-build-release\bin\Resources\Engine Resources
 IF EXIST Build\Debug\Bin (
 mkdir Build\Debug\Bin\Resources
 mklink /J Build\Debug\Bin\Resources\Engine Resources
+)
+
+IF EXIST Build\x64-Debug\Bin (
+mkdir Build\x64-Debug\Bin\Resources
+mklink /J Build\x64-Debug\Bin\Resources\Engine Resources
+)
+
+IF EXIST Build\x64-Release\Bin (
+mkdir Build\x64-Release\Bin\Resources
+mklink /J Build\x64-Release\Bin\Resources\Engine Resources
 )
 
 IF EXIST Build\Debug\Bin32 (

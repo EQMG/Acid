@@ -29,17 +29,17 @@ namespace acid
 
 	Renderer::~Renderer()
 	{
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
+		auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 		Renderer::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 		glslang::FinalizeProcess();
 
-		vkDestroyPipelineCache(logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
+		vkDestroyPipelineCache(m_logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
 
-		vkDestroyCommandPool(logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
-		vkDestroySemaphore(logicalDevice->GetLogicalDevice(), m_presentSemaphore, nullptr);
+	//	m_commandBuffer.reset();
+		vkDestroyCommandPool(m_logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
+		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentSemaphore, nullptr);
 	}
 
 	void Renderer::Update()
@@ -213,8 +213,6 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto surface = Renderer::Get()->GetSurface();
 		auto width = Window::Get()->GetWidth();
 		auto height = Window::Get()->GetHeight();
 
@@ -228,14 +226,14 @@ namespace acid
 		imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 
 		VkSubresourceLayout subresourceLayout;
-		vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
+		vkGetImageSubresourceLayout(m_logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
 
 		// Creates the screenshot image file.
 		FileSystem::Create(filename);
 
 		// Map image memory so we can start copying from it.
 		char *data;
-		vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
+		vkMapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
 		data += subresourceLayout.offset;
 
 		// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'll have to manually swizzle color components
@@ -245,7 +243,7 @@ namespace acid
 		if (!supportsBlit)
 		{
 			std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), surface->GetFormat().format) != formatsBGR.end();
+			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), m_surface->GetFormat().format) != formatsBGR.end();
 		}
 
 		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subresourceLayout.size));
@@ -270,9 +268,9 @@ namespace acid
 		Texture::WritePixels(filename, pixels.get(), width, height, 4);
 
 		// Clean up resources.
-		vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
-		vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
-		vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+		vkUnmapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory);
+		vkFreeMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
+		vkDestroyImage(m_logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
@@ -307,29 +305,26 @@ namespace acid
 
 	void Renderer::CreateCommandPool()
 	{
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
+		auto graphicsFamily = m_logicalDevice->GetGraphicsFamily();
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Renderer::CheckVk(vkCreateSemaphore(logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentSemaphore));
+		Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentSemaphore));
 
 		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
-		Renderer::CheckVk(vkCreateCommandPool(logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
+		Renderer::CheckVk(vkCreateCommandPool(m_logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
 	}
 
 	void Renderer::CreatePipelineCache()
 	{
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-		Renderer::CheckVk(vkCreatePipelineCache(logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+		Renderer::CheckVk(vkCreatePipelineCache(m_logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
@@ -351,8 +346,7 @@ namespace acid
 
 	void Renderer::RecreatePass(RenderStage &renderStage)
 	{
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
+		auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 		VkExtent2D displayExtent = {
 			Window::Get()->GetWidth(),
@@ -380,8 +374,7 @@ namespace acid
 			return false;
 		}
 
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto graphicsQueue = logicalDevice->GetGraphicsQueue();
+		auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 		Renderer::CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -443,8 +436,7 @@ namespace acid
 
 	void Renderer::EndRenderpass(RenderStage &renderStage)
 	{
-		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		auto presentQueue = logicalDevice->GetPresentQueue();
+		auto presentQueue = m_logicalDevice->GetPresentQueue();
 
 		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
 

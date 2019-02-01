@@ -76,8 +76,8 @@ namespace acid
 
 	float UiScrollBar::ScrollByDelta(const float &delta)
 	{
-		float puckLength = m_scroll->GetScreenDimension()[m_index];
-		float barLength = GetParent()->GetScreenDimension()[m_index];
+		float puckLength = m_scroll->GetScreenDimensions()[m_index];
+		float barLength = GetParent()->GetScreenDimensions()[m_index];
 		float maxValue = (barLength - puckLength) / barLength;
 		float value = m_scroll->GetRectangle().GetPosition()[m_index];
 		value += delta;
@@ -86,8 +86,8 @@ namespace acid
 
 	float UiScrollBar::ScrollByPosition(const float &position)
 	{
-		float puckLength = m_scroll->GetScreenDimension()[m_index];
-		float barLength = GetParent()->GetScreenDimension()[m_index];
+		float puckLength = m_scroll->GetScreenDimensions()[m_index];
+		float barLength = GetParent()->GetScreenDimensions()[m_index];
 		float maxValue = (barLength - puckLength) / barLength;
 		float positionLength = GetParent()->GetScreenPosition()[m_index];
 		float cursorLength = (position - positionLength) - (puckLength / 2.0f);

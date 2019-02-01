@@ -27,7 +27,7 @@ namespace acid
 
 	void UiSection::UpdateObject()
 	{
-		if (m_icon->IsSelected() && GetAlpha() == 1.0f && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_icon->IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
 			{

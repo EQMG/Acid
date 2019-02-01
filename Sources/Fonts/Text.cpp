@@ -1,4 +1,5 @@
 ﻿#include "Text.hpp"
+#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
 
@@ -45,10 +46,10 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimension(), 2.0f * GetScreenPosition() - 1.0f));
+		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
 		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 		m_uniformObject.Push("depth", GetScreenDepth());
-		m_uniformObject.Push("alpha", GetAlpha());
+		m_uniformObject.Push("alpha", GetScreenAlpha());
 
 		m_uniformObject.Push("colour", m_textColour);
 		m_uniformObject.Push("borderColour", m_borderColour);
@@ -59,7 +60,7 @@ namespace acid
 	bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 	{
 		// Gets if this should be rendered.
-		if (m_model == nullptr || m_fontType == nullptr || !IsEnabled() || GetAlpha() == 0.0f)
+		if (m_model == nullptr || m_fontType == nullptr || !IsEnabled())
 		{
 			return false;
 		}
@@ -153,13 +154,15 @@ namespace acid
 
 	float Text::CalculateEdgeStart()
 	{
-		float size = 0.5f * GetScale();
+		float scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+		float size = 0.5f * scale;
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
 	float Text::CalculateAntialiasSize()
 	{
-		float size = 0.5f * GetScale();
+		float scale = GetScreenScale(); //  (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+		float size = 0.5f * scale;
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}

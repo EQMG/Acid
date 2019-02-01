@@ -30,7 +30,7 @@ namespace acid
 		/// <param name="gizmoType"> The gizmo type to use for this collider type. </param>
 		Collider(const Transform &localTransform = Transform::Identity, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
 
-		~Collider();
+		virtual ~Collider();
 
 		void Update() override;
 

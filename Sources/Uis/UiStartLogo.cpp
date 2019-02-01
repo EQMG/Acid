@@ -7,12 +7,11 @@
 
 namespace acid
 {
-//#if defined(ACID_VERBOSE)
-//	const Time START_DELAY = Time::Seconds(1.5f);
-//#else
-//	const Time START_DELAY = Time::Seconds(3.0f);
-//#endif
-	const Time START_DELAY = Time::Seconds(0.5f);
+#if defined(ACID_VERBOSE)
+	const Time START_DELAY = Time::Seconds(0.8f);
+#else
+	const Time START_DELAY = Time::Seconds(3.0f);
+#endif
 
 	UiStartLogo::UiStartLogo(UiObject *parent) :
 		UiObject(parent, UiBound::Screen),

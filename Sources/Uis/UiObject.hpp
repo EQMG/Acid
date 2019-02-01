@@ -30,13 +30,14 @@ namespace acid
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		UiObject(UiObject *parent, const UiBound &rectangle);
 
-		~UiObject();
+		virtual ~UiObject();
 
 		/// <summary>
 		/// Updates this screen object and the extended object.
 		/// </summary>
+		/// <param name="parent"> The object that contains this object. </param>
 		/// <param name="list"> The list to add to. </param>
-		void Update(std::vector<UiObject *> &list);
+		void Update(UiObject *parent, std::vector<UiObject *> &list);
 
 		/// <summary>
 		/// Updates the implementation.
@@ -63,9 +64,7 @@ namespace acid
 		/// <param name="parent"> The new parent object. </param>
 		void SetParent(UiObject *parent);
 
-		const std::vector<std::unique_ptr<UiObject>> &GetChildren() const { return m_children; }
-
-		void ClearChildren() { m_children.clear(); }
+		const std::vector<UiObject *> &GetChildren() const { return m_children; }
 
 		/// <summary>
 		/// Adds a child to this objects children.
@@ -79,7 +78,9 @@ namespace acid
 		/// <param name="child"> The child to disown. </param>
 		void RemoveChild(UiObject *child);
 
-		bool IsEnabled() const;
+		void ClearChildren() { m_children.clear(); }
+
+		bool IsEnabled() const { return m_enabled; }
 
 		void SetEnabled(const bool &enabled) { m_enabled = enabled; }
 
@@ -94,12 +95,6 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height) { m_height = height; }
-
-		const Vector2 &GetScreenDimension() const { return m_screenDimension; }
-
-		const Vector2 &GetScreenPosition() const { return m_screenPosition; }
-
-		const float &GetScreenDepth() const { return m_screenDepth; }
 
 		const bool &IsLockRotation() const { return m_lockRotation; }
 
@@ -135,7 +130,7 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetAlphaDriver(Args &&... args) { SetAlphaDriver(new T(std::forward<Args>(args)...)); }
 
-		float GetAlpha() const;
+		const float &GetAlpha() const { return m_alpha; }
 
 		IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
@@ -153,23 +148,29 @@ namespace acid
 		template<typename T, typename... Args>
 		void SetScaleDriver(Args &&... args) { SetScaleDriver(new T(std::forward<Args>(args)...)); }
 
-		float GetScale() const;
+		const float &GetScale() const { return m_scale; }
+
+		const Vector2 &GetScreenDimensions() const { return m_screenDimensions; }
+
+		const Vector2 &GetScreenPosition() const { return m_screenPosition; }
+
+		const float &GetScreenDepth() const { return m_screenDepth; }
+
+		const float &GetScreenAlpha() const { return m_screenAlpha; }
+
+		const float &GetScreenScale() const { return m_screenScale; }
 
 		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
 
 		void CancelEvent(const MouseButton &button) const;
 	private:
 		UiObject *m_parent;
-		std::vector<std::unique_ptr<UiObject>> m_children;
+		std::vector<UiObject *> m_children;
 
 		bool m_enabled;
 		UiBound m_rectangle;
 		Vector4 m_scissor; // TODO: Convert to UiBound.
 		float m_height;
-
-		Vector2 m_screenDimension;
-		Vector2 m_screenPosition;
-		float m_screenDepth;
 
 		bool m_lockRotation;
 		std::optional<Transform> m_worldTransform;
@@ -179,6 +180,12 @@ namespace acid
 
 		std::unique_ptr<IDriver<float>> m_scaleDriver;
 		float m_scale;
+
+		Vector2 m_screenDimensions;
+		Vector2 m_screenPosition;
+		float m_screenDepth;
+		float m_screenAlpha;
+		float m_screenScale;
 
 		Delegate<void(UiObject *, MouseButton)> m_onClick;
 	};
