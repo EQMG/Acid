@@ -52,16 +52,14 @@ namespace acid
 		/// Removes an object from the spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
-		/// <returns> If the object was removed. </returns>
-		bool Remove(Entity *object);
+		void Remove(Entity *object);
 
 		/// <summary>
 		/// Moves an object to another spatial structure.
 		/// </summary>
 		/// <param name="object"> The object to remove. </param>
 		/// <param name="structure"> The structure to move to. </param>
-		/// <returns> If the object was moved. </returns>
-		bool Move(Entity *object, SceneStructure &structure);
+		void Move(Entity *object, SceneStructure &structure);
 
 		/// <summary>
 		/// Removes all objects from the spatial structure..

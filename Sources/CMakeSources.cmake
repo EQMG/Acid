@@ -34,6 +34,7 @@ set(_temp_acid_headers
 		Emitters/EmitterSphere.hpp
 		Engine/Engine.hpp
 		Engine/Exports.hpp
+		Engine/Game.hpp
 		Engine/Log.hpp
 		Engine/Module.hpp
 		Engine/ModuleManager.hpp

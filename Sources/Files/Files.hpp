@@ -39,10 +39,25 @@ namespace acid
 		void RemoveSearchPath(const std::string &path);
 
 		/// <summary>
+		/// Clears all file search paths.
+		/// </summary>
+		void ClearSearchPath();
+
+		/// <summary>
 		/// Reads a file found by real or partial path.
 		/// </summary>
 		/// <param name="path"> The path to read. </param>
 		/// <returns> The data read from the file. </returns>
 		static std::optional<std::string> Read(const std::string &path);
+
+		/// <summary>
+		/// Finds all the files in a path.
+		/// </summary>
+		/// <param name="path"> The path to search. </param>
+		/// <param name="recursive"> If paths will be recursively searched. </param>
+		/// <returns> The files found. </returns>
+		static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
+	private:
+		std::vector<std::string> m_searchPaths;
 	};
 }

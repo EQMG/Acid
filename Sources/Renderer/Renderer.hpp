@@ -44,7 +44,7 @@ namespace acid
 		void CaptureScreenshot(const std::string &filename);
 
 		/// <summary>
-		/// Gets the renderer manager.
+		/// Gets the current renderer manager.
 		/// </summary>
 		/// <returns> The renderer manager. </returns>
 		RenderManager *GetManager() const { return m_renderManager.get(); }

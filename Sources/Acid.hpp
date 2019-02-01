@@ -37,6 +37,7 @@
 #include "Emitters/EmitterSphere.hpp"
 #include "Engine/Engine.hpp"
 #include "Engine/Exports.hpp"
+#include "Engine/Game.hpp"
 #include "Engine/Log.hpp"
 #include "Engine/Module.hpp"
 #include "Engine/ModuleManager.hpp"

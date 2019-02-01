@@ -13,13 +13,15 @@ namespace acid
 	class ACID_EXPORT Component
 	{
 	public:
-		explicit Component() :
+		Component() :
 			m_started(false),
 			m_enabled(true),
 			m_removed(false),
 			m_parent(nullptr)
 		{
 		}
+
+		~Component() = default;
 
 		/// <summary>
 		/// Run when starting the component if <seealso cref="#m_started"/> is false.
@@ -72,7 +74,6 @@ namespace acid
 		void SetParent(Entity *parent) { m_parent = parent; }
 	private:
 		friend class Entity;
-
 		bool m_started;
 		bool m_enabled;
 		bool m_removed;
