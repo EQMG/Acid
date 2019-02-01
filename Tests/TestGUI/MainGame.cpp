@@ -8,12 +8,37 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 
-//#if !defined(ACID_VERBOSE) && defined(ACID_BUILD_WINDOWS)
-//#include <windows.h>
-//int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
-//#else
+/*#include "../Editor/cr.h"
+
+static unsigned int CR_STATE version = 1;
+
+CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
+{
+	assert(ctx);
+
+	if (ctx->version < version)
+	{
+		Log::Error("A rollback happened due to failure: %x!\n", ctx->failure);
+	}
+
+	version = ctx->version;
+	Log::Out("Loaded version: %d\n", ctx->version);
+
+	switch (operation) {
+	case CR_LOAD:
+	//	Engine::Get()->SetGame(new test::MainGame());
+		printf("Loaded!\n");
+		return 0;
+	case CR_UNLOAD:
+	//	Engine::Get()->SetGame(nullptr);
+		printf("Unloaded!\n");
+		return 0;
+	}
+
+	return 0;
+}*/
+
 int main(int argc, char **argv)
-//#endif
 {
 	using namespace test;
 
@@ -45,7 +70,7 @@ namespace test
 		auto &componentRegister = Scenes::Get()->GetComponentRegister();
 
 		// Sets values to modules.
-		Window::Get()->SetTitle("Test Guis");
+		Window::Get()->SetTitle("Test GUI");
 		Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
 			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
 	//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);

@@ -66,7 +66,7 @@ namespace acid
 	protected:
 		void RecalculateMass() override;
 	private:
-		static std::unique_ptr<btRigidBody> CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
+		static btRigidBody *CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
 
 		float m_mass;
 		Vector3 m_gravity;

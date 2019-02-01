@@ -36,14 +36,14 @@ namespace acid
 
 		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 
-		m_body = CreateGhostObject(1.0f, worldTransform, m_shape.get());
-		m_ghostObject = dynamic_cast<btPairCachingGhostObject *>(m_body.get());
+		m_ghostObject = CreateGhostObject(1.0f, worldTransform, m_shape.get());
 		m_ghostObject->setFriction(m_friction);
 		m_ghostObject->setRollingFriction(m_frictionRolling);
 		m_ghostObject->setSpinningFriction(m_frictionSpinning);
 		m_ghostObject->setUserPointer(this);
+		m_body.reset(m_ghostObject);
 
-		m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject, dynamic_cast<btConvexShape *>(m_shape.get()), 0.03f);
+		m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject, static_cast<btConvexShape *>(m_shape.get()), 0.03f);
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
 		m_controller->setGravity(Collider::Convert(m_gravity));
@@ -172,7 +172,7 @@ namespace acid
 	{
 	}
 
-	std::unique_ptr<btPairCachingGhostObject> KinematicCharacter::CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape)
+	btPairCachingGhostObject *KinematicCharacter::CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape)
 	{
 		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
 
@@ -184,7 +184,7 @@ namespace acid
 			shape->calculateLocalInertia(mass, localInertia);
 		}
 
-		auto ghostObject = std::make_unique<btPairCachingGhostObject>();
+		auto ghostObject = new btPairCachingGhostObject();
 		ghostObject->setWorldTransform(startTransform);
 		Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 		ghostObject->setCollisionShape(shape);

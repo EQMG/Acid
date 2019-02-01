@@ -9,12 +9,7 @@
 #include "Scenes/Scene1.hpp"
 #include "MainRenderer.hpp"
 
-//#if !defined(ACID_VERBOSE) && defined(ACID_BUILD_WINDOWS)
-//#include <windows.h>
-//int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
-//#else
 int main(int argc, char **argv)
-//#endif
 {
 	using namespace test;
 
@@ -47,7 +42,7 @@ namespace test
 		componentRegister.Add<PlayerFps>("PlayerFps");
 
 		// Sets values to modules.
-		Window::Get()->SetTitle("Test Physics");
+		Window::Get()->SetTitle("Test PBR");
 		Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
 			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
 	//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
