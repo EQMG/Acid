@@ -17,6 +17,10 @@ namespace test
 	class Inspector :
 		public UiPanel
 	{
+	public:
+		explicit Inspector(UiObject *parent);
+
+		void UpdateObject() override;
 	private:
 		std::unique_ptr<UiSection> m_section1;
 		std::unique_ptr<UiInputButton> m_button1;
@@ -29,9 +33,5 @@ namespace test
 		std::unique_ptr<UiInputRadio> m_radio2;
 		std::unique_ptr<UiInputRadio> m_radio3;
 		UiRadioManager m_radioManager;
-	public:
-		explicit Inspector(UiObject *parent);
-
-		void UpdateObject() override;
 	};
 }

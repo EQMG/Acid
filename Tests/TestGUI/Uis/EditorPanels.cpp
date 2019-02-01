@@ -14,11 +14,11 @@ namespace test
 	{
 		m_banner->SetNinePatches(Vector4(0.195f, 0.0f, 0.847f, 0.06f));
 		m_banner->SetHeight(1.0f);
-		m_banner->SetEnabled(false);
 	}
 
 	void EditorPanels::UpdateObject()
 	{
-		m_banner->GetRectangle().SetDimensions(-2.0f * (0.5f - Mouse::Get()->GetPosition()) * Vector2(Window::Get()->GetAspectRatio(), 1.0f));
+	//	m_banner->SetEnabled(true);
+	//	m_banner->GetRectangle().SetDimensions(-2.0f * (0.5f - Mouse::Get()->GetPosition()) * Vector2(Window::Get()->GetAspectRatio(), 1.0f));
 	}
 }

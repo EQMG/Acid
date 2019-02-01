@@ -92,6 +92,12 @@ target_link_libraries(Acid
 		# All IMPORTED targets, which automatically handles includes
 		Threads::Threads
 		Vulkan::Vulkan
+		# Unix
+		${CMAKE_DL_LIBS}
+		# Windows
+		$<$<PLATFORM_ID:Windows>:ws2_32>
+		# MSVC
+		$<$<CXX_COMPILER_ID:MSVC>:dbghelp>
 		PRIVATE
 		# More IMPORTED
 		glfw
@@ -104,10 +110,6 @@ target_link_libraries(Acid
 		${FREETYPE_LIBRARIES}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARY}
-		# Windows only
-		$<$<PLATFORM_ID:Windows>:ws2_32>
-		INTERFACE
-		$<$<CXX_COMPILER_ID:MSVC>:dbghelp>
 		)
 
 # Installs all headers, preserving their file structure

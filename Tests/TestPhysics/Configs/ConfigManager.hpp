@@ -8,14 +8,14 @@ namespace test
 {
 	class ConfigManager
 	{
-	private:
-		std::unique_ptr<File> m_audio;
-		std::unique_ptr<File> m_graphics;
 	public:
 		ConfigManager();
 
 		void Load();
 
 		void Save();
+	private:
+		std::unique_ptr<File> m_audio;
+		std::unique_ptr<File> m_graphics;
 	};
 }

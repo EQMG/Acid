@@ -11,12 +11,12 @@ namespace test
 	class Console :
 		public UiPanel
 	{
-	private:
-		std::unique_ptr<Text> m_text;
-		Timer m_timerChange;
 	public:
 		explicit Console(UiObject *parent);
 
 		void UpdateObject() override;
+	private:
+		std::unique_ptr<Text> m_text;
+		Timer m_timerChange;
 	};
 }

@@ -10,9 +10,6 @@ namespace test
 	class MaterialTerrain :
 		public Material
 	{
-	private:
-		std::shared_ptr<Texture> m_textureR;
-		std::shared_ptr<Texture> m_textureG;
 	public:
 		explicit MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
 
@@ -35,5 +32,8 @@ namespace test
 		const std::shared_ptr<Texture> &GetTextureG() const { return m_textureG; }
 
 		void SetTextureG(const std::shared_ptr<Texture> &textureG) { m_textureG = textureG; }
+	private:
+		std::shared_ptr<Texture> m_textureR;
+		std::shared_ptr<Texture> m_textureG;
 	};
 }

@@ -12,6 +12,10 @@ namespace test
 	class EditorPanels :
 		public UiObject
 	{
+	public:
+		explicit EditorPanels(UiObject *parent);
+
+		void UpdateObject() override;
 	private:
 		std::unique_ptr<Gui> m_background;
 		std::unique_ptr<Hierarchy> m_hierarchy;
@@ -19,9 +23,5 @@ namespace test
 		std::unique_ptr<Console> m_console;
 
 		std::unique_ptr<Gui> m_banner;
-	public:
-		explicit EditorPanels(UiObject *parent);
-
-		void UpdateObject() override;
 	};
 }

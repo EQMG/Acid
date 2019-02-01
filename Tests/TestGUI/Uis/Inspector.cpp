@@ -16,7 +16,7 @@ namespace test
 		m_text1(std::make_unique<UiInputText>(m_section1->GetContent(), "Title", Window::Get()->GetTitle(), 14, UiBound(Vector2(0.0f, 0.30f), UiReference::TopLeft))),
 		m_radio1(std::make_unique<UiInputRadio>(m_section1->GetContent(), "First Value", UiInputRadio::Mark::X, false, UiBound(Vector2(0.0f, 0.36f), UiReference::TopLeft))),
 		m_radio2(std::make_unique<UiInputRadio>(m_section1->GetContent(), "Second Value", UiInputRadio::Mark::X, true, UiBound(Vector2(0.0f, 0.405f), UiReference::TopLeft))),
-		m_radio3(std::make_unique<UiInputRadio>(m_section1->GetContent(), "Third Value", UiInputRadio::Mark::X, false, UiBound(Vector2(0.0f, 0.45), UiReference::TopLeft))),
+		m_radio3(std::make_unique<UiInputRadio>(m_section1->GetContent(), "Third Value", UiInputRadio::Mark::X, false, UiBound(Vector2(0.0f, 0.45f), UiReference::TopLeft))),
 		m_radioManager(UiRadioManager(UiInputRadio::Mark::Filled, false, {m_radio1.get(), m_radio2.get(), m_radio3.get()}))
 	{
 		m_slider1->GetOnSlide() += [](UiInputSlider *object, float value) {

@@ -11,12 +11,6 @@ namespace test
 	class Scene1 :
 		public Scene
 	{
-	private:
-		ButtonKeyboard m_buttonFullscreen;
-		ButtonKeyboard m_buttonScreenshot;
-		ButtonKeyboard m_buttonExit;
-
-		std::unique_ptr<Pannable> m_pannable;
 	public:
 		Scene1();
 
@@ -25,5 +19,11 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
+	private:
+		ButtonKeyboard m_buttonFullscreen;
+		ButtonKeyboard m_buttonScreenshot;
+		ButtonKeyboard m_buttonExit;
+
+		std::unique_ptr<Pannable> m_pannable;
 	};
 }

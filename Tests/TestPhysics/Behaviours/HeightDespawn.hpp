@@ -9,8 +9,6 @@ namespace test
 	class HeightDespawn :
 		public Component
 	{
-	private:
-		float m_removeHeight;
 	public:
 		explicit HeightDespawn(const float &removeHeight = -100.0f);
 
@@ -21,5 +19,7 @@ namespace test
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+	private:
+		float m_removeHeight;
 	};
 }

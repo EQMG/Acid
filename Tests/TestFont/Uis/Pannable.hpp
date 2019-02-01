@@ -13,6 +13,10 @@ namespace test
 	class Pannable :
 		public UiObject
 	{
+	public:
+		explicit Pannable(UiObject *parent);
+
+		virtual void UpdateObject() override;
 	private:
 		ButtonKeyboard m_buttonReset;
 
@@ -24,9 +28,5 @@ namespace test
 
 		std::unique_ptr<Text> m_textFps;
 		std::unique_ptr<Text> m_textUps;
-	public:
-		explicit Pannable(UiObject *parent);
-
-		virtual void UpdateObject() override;
 	};
 }

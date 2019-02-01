@@ -7,19 +7,17 @@ using namespace acid;
 
 namespace test
 {
-	enum CelestialType
-	{
-		CELESTIAL_SUN = 0,
-		CELESTIAL_MOON = 1
-	};
-
 	class CelestialBody :
 		public Component
 	{
-	private:
-		CelestialType m_type;
 	public:
-		explicit CelestialBody(const CelestialType &type = CELESTIAL_SUN);
+		enum class Type
+		{
+			Sun = 0,
+			Moon = 1
+		};
+
+		explicit CelestialBody(const Type &type = Type::Sun);
 
 		void Start() override;
 
@@ -29,8 +27,10 @@ namespace test
 
 		void Encode(Metadata &metadata) const override;
 
-		CelestialType GetType() const { return m_type; }
+		Type GetType() const { return m_type; }
 
-		void SetType(const CelestialType &type) { m_type = type; }
+		void SetType(const Type &type) { m_type = type; }
+	private:
+		Type m_type;
 	};
 }

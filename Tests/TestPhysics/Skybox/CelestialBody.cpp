@@ -14,7 +14,7 @@ namespace test
 	static const Colour MOON_COLOUR_NIGHT = Colour("#666699");
 	static const Colour MOON_COLOUR_DAY = Colour("#000000");
 
-	CelestialBody::CelestialBody(const CelestialType &type) :
+	CelestialBody::CelestialBody(const Type &type) :
 		m_type(type)
 	{
 	}
@@ -30,7 +30,7 @@ namespace test
 
 		switch (m_type)
 		{
-		case CELESTIAL_SUN:
+		case Type::Sun:
 		{
 			Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
 		//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
@@ -52,7 +52,7 @@ namespace test
 			}
 		}
 			break;
-		case CELESTIAL_MOON:
+		case Type::Moon:
 		{
 			Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
 		//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
@@ -72,11 +72,11 @@ namespace test
 
 	void CelestialBody::Decode(const Metadata &metadata)
 	{
-	//	m_type = metadata.GetChild<CelestialType>("Type"); // TODO: Node child enum type.
+		metadata.GetChild("Type", m_type);
 	}
 
 	void CelestialBody::Encode(Metadata &metadata) const
 	{
-	//	metadata.SetChild<CelestialType>("Type", m_type);
+		metadata.SetChild("Type", m_type);
 	}
 }
