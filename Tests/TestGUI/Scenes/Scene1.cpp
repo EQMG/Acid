@@ -60,24 +60,24 @@ namespace test
 			TogglePause();
 		}
 
-		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
+		if (m_uiStartLogo != nullptr && !m_uiStartLogo->IsStarting())
 		{
-			m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(0.0f);
+		//	m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(0.0f);
 			m_overlayDebug->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
-		//  m_uiNavigation->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, SLIDE_TIME);
-			m_uiStartLogo->SetStarting(false);
+		//  m_editorPanels->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, SLIDE_TIME);
+			m_uiStartLogo = nullptr;
 			TogglePause();
 		}
 	}
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo->IsStarting() || m_editorPanels->GetScreenAlpha() != 0.0f;
+		return m_uiStartLogo != nullptr || m_editorPanels->GetScreenAlpha() != 0.0f;
 	}
 
 	void Scene1::TogglePause()
 	{
-		if (m_uiStartLogo->IsStarting())
+		if (m_uiStartLogo != nullptr)
 		{
 			return;
 		}

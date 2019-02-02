@@ -29,7 +29,7 @@ namespace acid
 		m_scrollX->GetRectangle().SetDimensions(Vector2(0.5f * (1.0f / contentSize.m_x), SCROLL_BAR.m_x));
 		m_scrollY->GetRectangle().SetDimensions(Vector2(SCROLL_BAR.m_x, 0.5f * (1.0f / contentSize.m_y)));
 
-	//	m_content->GetRectangle().SetPosition(0.5f - (Vector2(m_scrollX->GetProgress(), m_scrollY->GetProgress()) * contentSize));
+		m_content->GetRectangle().SetPosition(0.5f - (Vector2(m_scrollX->GetProgress(), m_scrollY->GetProgress()) * contentSize));
 
 		m_min = Vector2::PositiveInfinity;
 		m_max = Vector2::NegativeInfinity;

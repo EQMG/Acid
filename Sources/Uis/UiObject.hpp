@@ -35,9 +35,8 @@ namespace acid
 		/// <summary>
 		/// Updates this screen object and the extended object.
 		/// </summary>
-		/// <param name="parent"> The object that contains this object. </param>
 		/// <param name="list"> The list to add to. </param>
-		void Update(UiObject *parent, std::vector<UiObject *> &list);
+		void Update(std::vector<UiObject *> &list);
 
 		/// <summary>
 		/// Updates the implementation.

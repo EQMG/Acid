@@ -1,5 +1,4 @@
 ﻿#include "Text.hpp"
-#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
 

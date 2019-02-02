@@ -5,7 +5,7 @@
 
 using namespace acid;
 
-class cr_plugin;
+struct cr_plugin;
 
 namespace test
 {
@@ -32,6 +32,5 @@ namespace test
 		FileWatcher m_watcher;
 		std::unique_ptr<cr_plugin> m_plugin;
 		bool m_update;
-		bool m_reload;
 	};
 }

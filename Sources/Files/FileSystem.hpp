@@ -67,6 +67,12 @@ namespace acid
 		static long LastModified(const std::string &path);
 
 		/// <summary>
+		/// Sets the time of modification of a file to now.
+		/// </summary>
+		/// <param name="path"> The path. </param>
+		static void Touch(const std::string &path);
+
+		/// <summary>
 		/// Finds all the files in a path.
 		/// </summary>
 		/// <param name="path"> The path to search. </param>

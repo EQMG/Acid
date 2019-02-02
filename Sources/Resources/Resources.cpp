@@ -7,7 +7,7 @@ namespace acid
 	Resources::Resources() :
 		m_mutex(std::mutex()),
 		m_resources(std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>>()),
-		m_timerPurge(Timer(Time::Seconds(5.0f)))
+		m_timerPurge(Timer(Time::Seconds(4.0f)))
 	{
 	}
 
@@ -21,11 +21,8 @@ namespace acid
 
 			for (auto it = m_resources.begin(); it != m_resources.end();)
 			{
-				if ((*it).second.use_count() <= 1)
+				if (it->second.use_count() <= 1)
 				{
-#if defined(ACID_VERBOSE)
-				//	Log::Out("Resource '%s' erased\n", (*it)->GetName().c_str());
-#endif
 					it = m_resources.erase(it);
 					continue;
 				}
