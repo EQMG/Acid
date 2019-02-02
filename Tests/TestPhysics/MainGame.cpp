@@ -2,6 +2,7 @@
 
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
 #include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
@@ -37,7 +38,10 @@ namespace test
 {
 	MainGame::MainGame() :
 		m_configs(nullptr),
-		m_fileWatcher(FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)))
+		m_fileWatcher(FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f))),
+		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
+		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
+		m_buttonExit(ButtonKeyboard(Key::Delete))
 	{
 		// Registers file search paths.
 		for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
@@ -109,5 +113,24 @@ namespace test
 
 	void MainGame::Update()
 	{
+		if (m_buttonFullscreen.WasDown())
+		{
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+		}
+
+		if (m_buttonScreenshot.WasDown())
+		{
+			// TODO: Threading.
+			std::thread t([](){
+				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+				Renderer::Get()->CaptureScreenshot(filename);
+			});
+			t.detach();
+		}
+
+		if (m_buttonExit.WasDown())
+		{
+			Engine::Get()->RequestClose(false);
+		}
 	}
 }

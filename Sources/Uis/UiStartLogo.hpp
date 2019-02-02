@@ -13,13 +13,10 @@ namespace acid
 
 		void UpdateObject() override;
 
-		void Start();
-
-		const bool &IsStarting() const { return m_starting; }
+		bool IsStarting() const { return GetAlpha() > 0.0f; }
 	private:
 		std::unique_ptr<Gui> m_guiBackground;
 		std::unique_ptr<Gui> m_guiLogoAcid;
 		std::unique_ptr<Text> m_textCopyright;
-		bool m_starting;
 	};
 }

@@ -25,8 +25,13 @@ namespace acid
 
 	KinematicCharacter::~KinematicCharacter()
 	{
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject);
+		auto physics = Scenes::Get()->GetPhysics();
+
+		if (physics != nullptr)
+		{
+			physics->GetDynamicsWorld()->removeAction(m_controller.get());
+			physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject);
+		}
 	}
 
 	void KinematicCharacter::Start()

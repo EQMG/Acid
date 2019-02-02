@@ -1,9 +1,7 @@
 #pragma once
 
-#include <Audio/Sound.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/ButtonCompound.hpp>
 #include <Scenes/Scene.hpp>
+#include <Inputs/ButtonCompound.hpp>
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
@@ -22,11 +20,8 @@ namespace test
 
 		bool IsPaused() const override;
 	private:
-		ButtonKeyboard m_buttonFullscreen;
-		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
-		ButtonKeyboard m_buttonScreenshot;
-		ButtonKeyboard m_buttonExit;
-		Sound m_soundScreenshot;
+		ButtonCompound m_buttonPause;
+		bool m_paused;
 
 		std::unique_ptr<OverlayDebug> m_overlayDebug;
 	};

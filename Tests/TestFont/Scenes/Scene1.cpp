@@ -8,9 +8,6 @@ namespace test
 {
 	Scene1::Scene1() :
 		Scene(new Camera()),
-		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
-		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
-		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_pannable(std::make_unique<Pannable>(Uis::Get()->GetContainer()))
 	{
 	}
@@ -21,21 +18,6 @@ namespace test
 
 	void Scene1::Update()
 	{
-		if (m_buttonFullscreen.WasDown())
-		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-
-		if (m_buttonScreenshot.WasDown())
-		{
-			std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
-			Renderer::Get()->CaptureScreenshot(filename);
-		}
-
-		if (m_buttonExit.WasDown())
-		{
-			Engine::Get()->RequestClose(false);
-		}
 	}
 
 	bool Scene1::IsPaused() const

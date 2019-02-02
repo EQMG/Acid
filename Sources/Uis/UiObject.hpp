@@ -4,6 +4,7 @@
 #include <optional>
 #include <memory>
 #include <vector>
+#include "Helpers/NonCopyable.hpp"
 #include "Helpers/Delegate.hpp"
 #include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
@@ -79,7 +80,7 @@ namespace acid
 
 		void ClearChildren() { m_children.clear(); }
 
-		bool IsEnabled() const { return m_enabled; }
+		bool IsEnabled() const;
 
 		void SetEnabled(const bool &enabled) { m_enabled = enabled; }
 

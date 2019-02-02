@@ -19,8 +19,8 @@ namespace acid
 		/// <param name="camera"> The scenes camera. </param>
 		Scene(Camera *camera) :
 			m_camera(camera),
-			m_physics(std::make_unique<ScenePhysics>()),
 			m_structure(std::make_unique<SceneStructure>()),
+			m_physics(std::make_unique<ScenePhysics>()),
 			m_started(false)
 		{
 		}
@@ -45,16 +45,16 @@ namespace acid
 		void SetCamera(Camera *camera) { m_camera.reset(camera); }
 
 		/// <summary>
-		/// Gets the scene physics system.
-		/// </summary>
-		/// <returns> The scenes physics system. </returns>
-		ScenePhysics *GetPhysics() const { return m_physics.get(); }
-
-		/// <summary>
 		/// Gets the scene object structure.
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
 		SceneStructure *GetStructure() { return m_structure.get(); }
+
+		/// <summary>
+		/// Gets the scene physics system.
+		/// </summary>
+		/// <returns> The scenes physics system. </returns>
+		ScenePhysics *GetPhysics() const { return m_physics.get(); }
 
 		/// <summary>
 		/// Gets if the scene is paused.
@@ -65,8 +65,8 @@ namespace acid
 		friend class Scenes;
 
 		std::unique_ptr<Camera> m_camera;
-		std::unique_ptr<ScenePhysics> m_physics;
 		std::unique_ptr<SceneStructure> m_structure;
+		std::unique_ptr<ScenePhysics> m_physics;
 		bool m_started;
 	};
 }
