@@ -20,7 +20,7 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Gets this engine instance.
+		/// Gets the engines instance.
 		/// </summary>
 		/// <returns> The current engine instance. </returns>
 		static Engine *Get() { return INSTANCE; }

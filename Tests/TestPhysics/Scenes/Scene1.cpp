@@ -299,17 +299,16 @@ namespace test
 			Engine::Get()->RequestClose(false);
 		}
 
-		if (m_uiStartLogo->GetAlpha() == 0.0f && m_uiStartLogo->IsStarting())
+		if (m_uiStartLogo != nullptr && m_uiStartLogo->IsStarting())
 		{
-			m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(0.0f);
 			m_overlayDebug->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
-			m_uiStartLogo->SetStarting(false);
+			m_uiStartLogo = nullptr;
 			Mouse::Get()->SetCursorHidden(true);
 		}
 	}
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo->IsStarting();
+		return m_uiStartLogo != nullptr;
 	}
 }

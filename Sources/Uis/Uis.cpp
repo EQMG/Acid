@@ -23,7 +23,7 @@ namespace acid
 		}
 
 		m_objects.clear();
-		m_container->Update(nullptr, m_objects);
+		m_container->Update(m_objects);
 	}
 
 	void Uis::CancelWasEvent(const MouseButton &button)

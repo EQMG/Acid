@@ -113,6 +113,16 @@ namespace acid
 		return 0;
 	}
 
+	void FileSystem::Touch(const std::string &path)
+	{
+		auto data = ReadBinaryFile(path);
+
+		if (data)
+		{
+			WriteBinaryFile(path, *data);
+		}
+	}
+
 	std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const bool &recursive)
 	{
 		std::vector<std::string> result = {};

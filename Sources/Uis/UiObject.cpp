@@ -45,7 +45,7 @@ namespace acid
 		}
 	}
 
-	void UiObject::Update(UiObject *parent, std::vector<UiObject *> &list)
+	void UiObject::Update(std::vector<UiObject *> &list)
 	{
 		if (!m_enabled)
 		{
@@ -63,11 +63,11 @@ namespace acid
 			}
 		}
 
-		UpdateObject();
-
 		// Alpha and scale updates.
 		m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
 		m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
+
+		UpdateObject();
 
 		// Transform updates.
 		float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
@@ -77,22 +77,23 @@ namespace acid
 		m_screenScale = m_scale;
 		m_screenAlpha = m_alpha;
 
-		if (parent != nullptr)
+		if (m_parent != nullptr)
 		{
 			if (m_rectangle.GetAspect() & UiAspect::Scale)
 			{
-				m_screenDimensions *= parent->m_screenDimensions;
-				m_screenScale *= parent->m_screenScale;
+				m_screenDimensions *= m_parent->m_screenDimensions;
+				m_screenScale *= m_parent->m_screenScale;
 			}
 
-			m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + parent->m_screenPosition;
-			m_screenAlpha *= parent->m_screenAlpha;
+			m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + m_parent->m_screenPosition;
+			m_screenAlpha *= m_parent->m_screenAlpha;
 		}
 		else
 		{
 			m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenDimensions * m_rectangle.GetReference());
 		}
 
+		// Adds this object to the list if it is visible.
 		if (m_screenAlpha > 0.0f)
 		{
 			list.emplace_back(this);
@@ -101,7 +102,7 @@ namespace acid
 		// Update all children objects.
 		for (auto &child : m_children)
 		{
-			child->Update(this, list);
+			child->Update(list);
 		}
 	}
 

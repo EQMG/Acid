@@ -13,9 +13,9 @@ namespace acid
 
 		void UpdateObject() override;
 
-		const bool &IsStarting() const { return m_starting; }
+		void Start();
 
-		void SetStarting(const bool &starting) { m_starting = starting; }
+		const bool &IsStarting() const { return m_starting; }
 	private:
 		std::unique_ptr<Gui> m_guiBackground;
 		std::unique_ptr<Gui> m_guiLogoAcid;

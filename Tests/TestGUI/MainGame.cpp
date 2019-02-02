@@ -74,8 +74,14 @@ namespace test
 		Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
 			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
 	//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-		Renderer::Get()->SetManager(new MainRenderer());
-		Scenes::Get()->SetScene(new Scene1());
+		if (Renderer::Get()->GetManager() == nullptr)
+		{
+			Renderer::Get()->SetManager(new MainRenderer());
+		}
+		if (Scenes::Get()->GetScene() == nullptr)
+		{
+			Scenes::Get()->SetScene(new Scene1());
+		}
 	}
 
 	MainGame::~MainGame()
@@ -83,9 +89,9 @@ namespace test
 		Log::Out("[Game] Destructor\n");
 	//	Files::Get()->ClearSearchPath();
 
-		Uis::Get()->GetContainer()->ClearChildren();
-		Renderer::Get()->SetManager(nullptr);
-		Scenes::Get()->SetScene(nullptr);
+	//	Uis::Get()->GetContainer()->ClearChildren();
+	//	Renderer::Get()->SetManager(nullptr);
+	//	Scenes::Get()->SetScene(nullptr);
 	}
 
 	void MainGame::Start()
