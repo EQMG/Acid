@@ -2,7 +2,8 @@
 
 #include <Animations/MeshAnimated.hpp>
 #include <Files/FileSystem.hpp>
-#include <Devices/Mouse.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/ButtonJoystick.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -27,11 +28,11 @@ namespace test
 
 	Scene1::Scene1() :
 		Scene(new CameraFps()),
-		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
-		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::M, Key::Escape)),
-		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
-		m_buttonExit(ButtonKeyboard(Key::Delete)),
-		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
+		m_buttonPause(ButtonCompound({
+		    new ButtonKeyboard(Key::Escape),
+		    new ButtonJoystick(0, 7)
+		})),
+		m_paused(false),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
 	}
@@ -82,31 +83,14 @@ namespace test
 
 	void Scene1::Update()
 	{
-		if (m_buttonFullscreen.WasDown())
+		if (m_buttonPause.WasDown())
 		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-
-		if (m_buttonCaptureMouse->WasDown())
-		{
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
-		}
-
-		if (m_buttonScreenshot.WasDown())
-		{
-			m_soundScreenshot.Play();
-			std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
-			Renderer::Get()->CaptureScreenshot(filename);
-		}
-
-		if (m_buttonExit.WasDown())
-		{
-			Engine::Get()->RequestClose(false);
+			m_paused = !m_paused;
 		}
 	}
 
 	bool Scene1::IsPaused() const
 	{
-		return false;
+		return m_paused;
 	}
 }

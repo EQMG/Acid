@@ -36,7 +36,7 @@ namespace acid
 		m_dynamicsWorld->getSolverInfo().m_minimumSolverBatchSize = 128;
 		m_dynamicsWorld->getSolverInfo().m_globalCfm = 0.00001f;
 
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().water_density = 0.0f;
 		softDynamicsWorld->getWorldInfo().water_offset = 0.0f;
 		softDynamicsWorld->getWorldInfo().water_normal = btVector3(0.0f, 0.0f, 0.0f);
@@ -86,7 +86,7 @@ namespace acid
 	void ScenePhysics::SetAirDensity(const float &airDensity)
 	{
 		m_airDensity = airDensity;
-		auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
+		auto softDynamicsWorld = dynamic_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 		softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 		softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 	}

@@ -29,16 +29,10 @@
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Terrain/MaterialTerrain.hpp>
-#include <Terrain/Terrain.hpp>
 #include <Uis/Uis.hpp>
 #include <Serialized/Json/Json.hpp>
 #include <Serialized/Xml/Xml.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
-#include "Behaviours/HeightDespawn.hpp"
-#include "Behaviours/NameTag.hpp"
-#include "Behaviours/Rotate.hpp"
-#include "Skybox/CelestialBody.hpp"
 #include "CameraFps.hpp"
 
 namespace test
@@ -48,30 +42,17 @@ namespace test
 	Scene1::Scene1() :
 		Scene(new CameraFps()),
 		m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
+		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
 		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::Escape, Key::M)),
+		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
 		m_buttonSave(ButtonKeyboard(Key::K)),
+		m_buttonExit(ButtonKeyboard(Key::Delete)),
+		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
 		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
 		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
 	{
 		m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(1.0f);
 		m_overlayDebug->SetAlphaDriver<DriverConstant<float>>(0.0f);
-
-		Mouse::Get()->GetOnDrop() += [](std::vector<std::string> paths) {
-			for (const auto &path : paths)
-			{
-				Log::Out("File dropped: '%s'\n", path.c_str());
-			}
-		};
-		Window::Get()->GetOnMonitorConnect() += [](uint32_t index, bool connected) {
-			auto monitor = Window::Get()->GetMonitors()[index];
-			Log::Out("Monitor '%s' action: %i\n", monitor.GetName().c_str(), connected);
-		};
-		Window::Get()->GetOnClose() += []() {
-			Log::Out("Window has closed!\n");
-		};
-		Window::Get()->GetOnIconify() += [](bool iconified) {
-			Log::Out("Iconified: %i\n", iconified);
-		};
 	}
 
 	void Scene1::Start()
@@ -109,20 +90,6 @@ namespace test
 		plane->AddComponent<MeshRender>();
 		plane->AddComponent<ShadowRender>();
 
-		EntityPrefab prefabPlane = EntityPrefab("Plane.yaml");
-		prefabPlane.Write(*plane);
-		prefabPlane.Save();
-
-		auto terrain = GetStructure()->CreateEntity(Transform());
-		terrain->AddComponent<Mesh>();
-		terrain->AddComponent<MaterialTerrain>(Texture::Create("Objects/Terrain/Grass.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT),
-			Texture::Create("Objects/Terrain/Rocks.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT));
-		terrain->AddComponent<Terrain>(150.0f, 2.0f);
-		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
-		terrain->AddComponent<ColliderHeightfield>();
-		terrain->AddComponent<MeshRender>();
-		terrain->AddComponent<ShadowRender>();
-
 		static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
 		for (int i = 0; i < 5; i++)
@@ -138,43 +105,6 @@ namespace test
 				cube->AddComponent<ShadowRender>();
 			}
 		}
-
-		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
-	//	teapot->AddComponent<Rigidbody>(1.0f);
-	//	teapot->AddComponent<ColliderConvexHull>();
-		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
-		teapot->AddComponent<NameTag>("Vector3", 1.4f);
-		teapot->AddComponent<MeshRender>();
-		teapot->AddComponent<ShadowRender>();
-		auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3(0.0f, 10.0f, 0.0f), Vector3(), 3.0f));
-		teapotCone->SetParent(teapot);
-		teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
-		teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
-		teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
-		teapotCone->AddComponent<MeshRender>();
-		teapotCone->AddComponent<ShadowRender>();
-
-		auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.0f, 1.0f);
-	//	teapot2->AddComponent<Rigidbody>(1.0f);
-	//	teapot2->AddComponent<ColliderConvexHull>();
-		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);
-		teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
-		teapot2->AddComponent<MeshRender>();
-		teapot2->AddComponent<ShadowRender>();
-
-		auto teapot3 = GetStructure()->CreateEntity(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.0f, 1.0f);
-	//	teapot3->AddComponent<Rigidbody>(1.0f);
-	//	teapot3->AddComponent<ColliderConvexHull>();
-		teapot3->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 2);
-		teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
-		teapot3->AddComponent<MeshRender>();
-		teapot3->AddComponent<ShadowRender>();
 
 		auto cone = GetStructure()->CreateEntity(Transform(Vector3(-3.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 		cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
@@ -195,10 +125,6 @@ namespace test
 
 		auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
 	//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
-
-		EntityPrefab prefabSmokeSystem = EntityPrefab("SmokeSystem.json");
-		prefabSmokeSystem.Write(*smokeSystem);
-		prefabSmokeSystem.Save();
 	}
 
 	void Scene1::Update()
@@ -209,7 +135,6 @@ namespace test
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
-			sphere->AddComponent<HeightDespawn>();
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
@@ -217,7 +142,6 @@ namespace test
 		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
-			sphere->AddComponent<NameTag>("Sphere", 0.6f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
@@ -231,9 +155,26 @@ namespace test
 		//		Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 		}
 
+		if (m_buttonFullscreen.WasDown())
+		{
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+		}
+
 		if (m_buttonCaptureMouse->WasDown())
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
+		}
+
+		if (m_buttonScreenshot.WasDown())
+		{
+			m_soundScreenshot.Play();
+
+			// TODO: Threading.
+			std::thread t([](){
+				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+				Renderer::Get()->CaptureScreenshot(filename);
+			});
+			t.detach();
 		}
 
 		if (m_buttonSave.WasDown())
@@ -271,6 +212,11 @@ namespace test
 				sceneFile.Write();
 			});
 			t.detach();
+		}
+
+		if (m_buttonExit.WasDown())
+		{
+			Engine::Get()->RequestClose(false);
 		}
 
 		if (m_uiStartLogo != nullptr && !m_uiStartLogo->IsStarting())

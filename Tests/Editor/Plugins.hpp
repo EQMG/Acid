@@ -2,6 +2,7 @@
 
 #include <Engine/Engine.hpp>
 #include <Files/FileWatcher.hpp>
+#include "Uis/Panels.hpp"
 
 using namespace acid;
 
@@ -32,5 +33,7 @@ namespace test
 		FileWatcher m_watcher;
 		std::unique_ptr<cr_plugin> m_plugin;
 		bool m_update;
+
+		std::unique_ptr<Panels> m_panels;
 	};
 }

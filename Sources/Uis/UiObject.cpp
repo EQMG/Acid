@@ -128,8 +128,16 @@ namespace acid
 
 	void UiObject::SetParent(UiObject *parent)
 	{
-		m_parent->RemoveChild(this);
-		parent->AddChild(this);
+		if (m_parent != nullptr)
+		{
+			m_parent->RemoveChild(this);
+		}
+
+		if (parent != nullptr)
+		{
+			parent->AddChild(this);
+		}
+
 		m_parent = parent;
 	}
 
@@ -142,7 +150,18 @@ namespace acid
 	{
 		m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
 	}
-	
+
+	bool UiObject::IsEnabled() const
+	{
+		// TODO: m_enabled getter, update m_enabled on object update.
+		if (m_parent != nullptr)
+		{
+			return m_enabled && m_parent->IsEnabled();
+		}
+
+		return m_enabled;
+	}
+
 	Matrix4 UiObject::GetModelMatrix() const
 	{
 		if (m_worldTransform)

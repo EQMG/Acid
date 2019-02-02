@@ -17,14 +17,11 @@ namespace acid
 		m_scroll->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
 
 		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
-			if (GetParent()->IsSelected())
+			if (GetParent()->IsSelected() && !m_updating && m_scroll->IsEnabled())
 			{
-				if (!m_updating && m_scroll->IsEnabled())
-				{
-					Vector3 position = Vector2::Zero;
-					position[m_index] = ScrollByDelta(-0.06f * (m_index == 0 ? xOffset : yOffset));
-					m_scroll->GetRectangle().SetPosition(position);
-				}
+				Vector3 position = Vector2::Zero;
+				position[m_index] = ScrollByDelta(-0.06f * (m_index == 0 ? xOffset : yOffset));
+				m_scroll->GetRectangle().SetPosition(position);
 			}
 		};
 	}
@@ -34,12 +31,6 @@ namespace acid
 		if (m_scroll->IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			m_updating = true;
-		}
-		else if (!m_scroll->IsEnabled())
-		{
-			Vector3 position = Vector2::Zero;
-			position[m_index] = 0.0f;
-			m_scroll->GetRectangle().SetPosition(position);
 		}
 		else if (m_updating)
 		{

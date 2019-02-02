@@ -33,7 +33,12 @@ namespace acid
 			delete body->getMotionState();
 		}
 
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_body.get());
+		auto physics = Scenes::Get()->GetPhysics();
+
+		if (physics != nullptr)
+		{
+			physics->GetDynamicsWorld()->removeCollisionObject(m_body.get());
+		}
 	}
 
 	void Rigidbody::Start()

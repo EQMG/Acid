@@ -61,7 +61,7 @@ namespace acid
 			const std::vector<UiInputRadio *> &inputs = {}) :
 			m_markType(markType),
 			m_multiple(multiple),
-			m_inputs(std::vector<std::unique_ptr<UiInputRadio>>())
+			m_inputs(inputs)
 		{
 			for (auto &input : inputs)
 			{
@@ -71,14 +71,13 @@ namespace acid
 					{
 						for (auto &input2 : m_inputs)
 						{
-							if (input2.get() != object)
+							if (input2 != object)
 							{
 								input2->SetChecked(false);
 							}
 						}
 					}
 				};
-				m_inputs.emplace_back(input);
 			}
 		}
 
@@ -94,10 +93,22 @@ namespace acid
 			}
 		}
 
-		const std::vector<std::unique_ptr<UiInputRadio>> &GetInputs() const { return m_inputs; }
+		const std::vector<UiInputRadio *> &GetInputs() const { return m_inputs; }
+
+		void AddInput(UiInputRadio *input)
+		{
+			m_inputs.emplace_back(input);
+		}
+
+		void RemoveInput(UiInputRadio *input)
+		{
+			m_inputs.erase(std::remove(m_inputs.begin(), m_inputs.end(), input), m_inputs.end());
+		}
+
+		void ClearInputs() { m_inputs.clear(); }
 	private:
 		UiInputRadio::Mark m_markType;
 		bool m_multiple;
-		std::vector<std::unique_ptr<UiInputRadio>> m_inputs;
+		std::vector<UiInputRadio *> m_inputs;
 	};
 }

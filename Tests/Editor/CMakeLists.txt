@@ -14,7 +14,7 @@ set(EDITOR_SOURCES
 set(EDITOR_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/Editor/")
 
 add_executable(Editor ${EDITOR_SOURCES})
-add_dependencies(Editor Acid TestGUI)
+add_dependencies(Editor Acid EditorTest)
 
 target_compile_features(Editor PUBLIC cxx_std_17)
 set_target_properties(Editor PROPERTIES

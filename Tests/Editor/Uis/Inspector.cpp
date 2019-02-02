@@ -7,8 +7,8 @@ namespace test
 {
 	Inspector::Inspector(UiObject *parent) :
 		UiPanel(parent, UiBound(Vector2(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, Vector2(0.3f, 1.0f)), ScrollBar::None),
-		m_section1(std::make_unique<UiSection>(GetContent(), "Section Left", UiBound(Vector2(0.08f, 0.05f), UiReference::TopLeft))),
-		m_button1(std::make_unique<UiInputButton>(m_section1->GetContent(), "Button #1", UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft))),
+		m_section1(std::make_unique<UiSection>(GetContent(), "Section Right", UiBound(Vector2(0.08f, 0.05f), UiReference::TopLeft))),
+		m_button1(std::make_unique<UiInputButton>(m_section1->GetContent(), "Button #2", UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft))),
 		m_input1(std::make_unique<UiGrabberMouse>(m_section1->GetContent(), "Mouse Grabber", MouseButton::Left, UiBound(Vector2(0.0f, 0.06f), UiReference::TopLeft))),
 		m_input2(std::make_unique<UiGrabberKeyboard>(m_section1->GetContent(), "Keyboard Grabber", Key::W, UiBound(Vector2(0.0f, 0.12f), UiReference::TopLeft))),
 		m_input3(std::make_unique<UiGrabberJoystick>(m_section1->GetContent(), "Joystick Grabber", 0, 3, UiBound(Vector2(0.0f, 0.18f), UiReference::TopLeft))),
