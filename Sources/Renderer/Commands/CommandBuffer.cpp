@@ -52,7 +52,7 @@ namespace acid
 		m_running = false;
 	}
 
-	void CommandBuffer::Submit(VkSemaphore signalSemaphore, VkFence fence, const bool &createFence)
+	void CommandBuffer::SubmitIdle()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		auto queueSelected = GetQueue();
@@ -62,40 +62,54 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
+		VkFence fence = VK_NULL_HANDLE;
+
+		VkFenceCreateInfo fenceCreateInfo = {};
+		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
+
+		Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
+
+		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
+
+		Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+
+		vkDestroyFence(logicalDevice->GetLogicalDevice(), fence, nullptr);
+	}
+
+	void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &signalSemaphore, VkFence fence)
+	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		auto queueSelected = GetQueue();
+
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &m_commandBuffer;
+
+		if (waitSemaphore != VK_NULL_HANDLE)
+		{
+			// Pipeline stages used to wait at for graphics queue submissions.
+			static VkPipelineStageFlags submitPipelineStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+
+			submitInfo.pWaitDstStageMask = &submitPipelineStages;
+			submitInfo.waitSemaphoreCount = 1;
+			submitInfo.pWaitSemaphores = &waitSemaphore;
+		}
+
 		if (signalSemaphore != VK_NULL_HANDLE)
 		{
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &signalSemaphore;
 		}
 
-		bool createdFence = false;
-
-		if (fence == VK_NULL_HANDLE && createFence)
-		{
-			VkFenceCreateInfo fenceCreateInfo = {};
-			fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-			fenceCreateInfo.flags = 0;
-			Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
-
-			createdFence = true;
-		}
-
 		if (fence != VK_NULL_HANDLE)
 		{
 			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
+		//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 		}
 
 		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
-
-		if (fence != VK_NULL_HANDLE)
-		{
-			Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
-
-			if (createdFence)
-			{
-				vkDestroyFence(logicalDevice->GetLogicalDevice(), fence, nullptr);
-			}
-		}
 	}
 
 	VkQueue CommandBuffer::GetQueue() const

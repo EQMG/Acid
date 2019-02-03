@@ -96,7 +96,7 @@ namespace acid
 		/// <summary>
 		/// Gets the dimensions of the window in pixels.
 		/// </summary>
-		/// <returns> The dimension of the window. </returns>
+		/// <returns> The dimensions of the window. </returns>
 		Vector2 GetDimensions() const { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
 
 		/// <summary>

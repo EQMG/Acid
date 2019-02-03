@@ -3,8 +3,10 @@
 #include <set>
 #include <array>
 #include <string>
+#include <optional>
 #include <vector>
 #include <type_traits>
+#include "Maths/Vector2.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"
 
@@ -50,13 +52,48 @@ namespace acid
 
 		~PipelineGraphics();
 
-		const DepthStencil *GetDepthStencil(const int32_t &stage = -1) const;
+		/// <summary>
+		/// Gets the depth stencil used in a stage.
+		/// </summary>
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
+		/// <returns> The depth stencil that is found. </returns>
+		const DepthStencil *GetDepthStencil(const std::optional<uint32_t> &stage = {}) const;
 
-		const Texture *GetTexture(const uint32_t &index, const int32_t &stage = -1) const;
+		/// <summary>
+		/// Gets a texture used in a stage by the index given to it in the renderpass.
+		/// </summary>
+		/// <param name="index"> The renderpass texture index. </param>
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
+		/// <returns> The texture that is found. </returns>
+		const Texture *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
-		uint32_t GetWidth(const int32_t &stage = -1) const;
+		/// <summary>
+		/// Gets the height of the render stage in pixels.
+		/// </summary>
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
+		/// <returns> The height of the render stage. </returns>
+		uint32_t GetWidth(const std::optional<uint32_t> &stage = {}) const;
 
-		uint32_t GetHeight(const int32_t &stage = -1) const;
+		/// <summary>
+		/// Gets the height of the render stage in pixels.
+		/// </summary>
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
+		/// <returns> The height of the render stage. </returns>
+		uint32_t GetHeight(const std::optional<uint32_t> &stage = {}) const;
+
+		/// <summary>
+		/// Gets the dimensions of the render stage in pixels.
+		/// </summary>
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
+		/// <returns> The dimensions of the render stage. </returns>
+		Vector2 GetDimensions(const std::optional<uint32_t> &stage = {}) const;
+
+		/// <summary>
+		/// Gets the aspect ratio between the render stages wid
+		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>th and height.
+		/// </summary>
+		/// <returns> The aspect ratio. </returns>
+		float GetAspectRatio(const std::optional<uint32_t> &stage = {}) const;
 
 		const Pipeline::Stage &GetStage() const { return m_stage; }
 

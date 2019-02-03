@@ -53,11 +53,11 @@ namespace acid
 			}
 		}
 
-		m_imageCount = surfaceCapabilities.minImageCount + 1;
+		uint32_t desiredImageCount = surfaceCapabilities.minImageCount + 1;
 
-		if (surfaceCapabilities.maxImageCount > 0 && m_imageCount > surfaceCapabilities.maxImageCount)
+		if (surfaceCapabilities.maxImageCount > 0 && desiredImageCount > surfaceCapabilities.maxImageCount)
 		{
-			m_imageCount = surfaceCapabilities.maxImageCount;
+			desiredImageCount = surfaceCapabilities.maxImageCount;
 		}
 
 		if (surfaceCapabilities.supportedTransforms & VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR)
@@ -82,7 +82,7 @@ namespace acid
 		VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 		swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		swapchainCreateInfo.surface = surface->GetSurface();
-		swapchainCreateInfo.minImageCount = m_imageCount;
+		swapchainCreateInfo.minImageCount = desiredImageCount;
 		swapchainCreateInfo.imageFormat = surfaceFormat.format;
 		swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
 		swapchainCreateInfo.imageExtent = m_extent;
@@ -150,11 +150,11 @@ namespace acid
 		vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceImage, nullptr);
 	}
 
-	VkResult Swapchain::AcquireNextImage()
+	VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), VK_NULL_HANDLE, m_fenceImage, &m_activeImageIndex);
+		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, m_fenceImage, &m_activeImageIndex);
 
 		if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 		{
@@ -166,5 +166,17 @@ namespace acid
 
 		Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
 		return VK_SUCCESS;
+	}
+
+	VkResult Swapchain::QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore)
+	{
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = 1;
+		presentInfo.pWaitSemaphores = &waitSemaphore;
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = &m_swapchain;
+		presentInfo.pImageIndices = &m_activeImageIndex;
+		return vkQueuePresentKHR(presentQueue, &presentInfo);
 	}
 }

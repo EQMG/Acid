@@ -92,24 +92,35 @@ namespace acid
 		vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
 	}
 
-	const DepthStencil *PipelineGraphics::GetDepthStencil(const int32_t &stage) const
+	const DepthStencil *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetDepthStencil();
+		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetDepthStencil();
 	}
 
-	const Texture *PipelineGraphics::GetTexture(const uint32_t &index, const int32_t &stage) const
+	const Texture *PipelineGraphics::GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetFramebuffers()->GetAttachment(index);
+		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 	}
 
-	uint32_t PipelineGraphics::GetWidth(const int32_t &stage) const
+	uint32_t PipelineGraphics::GetWidth(const std::optional<uint32_t> &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetWidth();
+		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetWidth();
 	}
 
-	uint32_t PipelineGraphics::GetHeight(const int32_t &stage) const
+	uint32_t PipelineGraphics::GetHeight(const std::optional<uint32_t> &stage) const
 	{
-		return Renderer::Get()->GetRenderStage(stage == -1 ? m_stage.first : stage)->GetHeight();
+		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetHeight();
+	}
+
+	Vector2 PipelineGraphics::GetDimensions(const std::optional<uint32_t> &stage) const
+	{
+		auto renderStage = Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first);
+		return Vector2(static_cast<float>(renderStage->GetWidth()), static_cast<float>(renderStage->GetHeight()));
+	}
+
+	float PipelineGraphics::GetAspectRatio(const std::optional<uint32_t> &stage) const
+	{
+		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetAspectRatio();
 	}
 
 	void PipelineGraphics::CreateShaderProgram()

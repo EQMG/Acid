@@ -19,7 +19,7 @@ namespace acid
 	{
 		// Updates uniforms.
 		m_pushScene.Push("screenColour", m_screenColour);
-		m_pushScene.Push("curveAmountX", m_curveAmountX * Window::Get()->GetAspectRatio());
+		m_pushScene.Push("curveAmountX", m_curveAmountX * m_pipeline.GetAspectRatio());
 		m_pushScene.Push("curveAmountY", m_curveAmountY);
 		m_pushScene.Push("scanLineSize", m_scanLineSize);
 		m_pushScene.Push("scanIntensity", m_scanIntensity);

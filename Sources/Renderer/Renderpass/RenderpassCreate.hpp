@@ -6,6 +6,7 @@
 #include <vulkan/vulkan.h>
 #include "Engine/Log.hpp"
 #include "Maths/Colour.hpp"
+#include "Maths/Vector2.hpp"
 
 namespace acid
 {
@@ -84,14 +85,16 @@ namespace acid
 		
 		uint32_t m_width;
 		uint32_t m_height;
-		float m_scale;
+		Vector2 m_scale;
+		Vector2 m_offset;
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0, const float &scale = 1.0f) :
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0, const Vector2& scale = Vector2::One, const Vector2& offset = Vector2::Zero) :
 			m_images(images),
 			m_subpasses(subpasses),
 			m_width(width),
 			m_height(height),
-			m_scale(scale)
+			m_scale(scale),
+			m_offset(offset)
 		{
 		}
 
@@ -143,8 +146,12 @@ namespace acid
 
 		void SetHeight(const uint32_t &height) { m_height = height; }
 
-		const float &GetScale() const { return m_scale; }
+		const Vector2& GetScale() const { return m_scale; }
 
-		void SetScale(const float &scale) { m_scale = scale; }
+		void SetScale(const Vector2 &scale) { m_scale = scale; }
+
+		const Vector2 &GetOffset() const { return m_offset; }
+
+		void SetOffset(const Vector2 &offset) { m_offset = offset; }
 	};
 }

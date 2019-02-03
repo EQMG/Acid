@@ -150,7 +150,7 @@ namespace acid
 		descriptorSet.BindDescriptor(commandBuffer, compute);
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
 		// Saves the brdf texture.
@@ -189,7 +189,7 @@ namespace acid
 		descriptorSet.BindDescriptor(commandBuffer, compute);
 		compute.CmdRender(commandBuffer);
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
 		// Saves the ibl texture.
