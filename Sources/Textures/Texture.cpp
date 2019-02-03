@@ -438,7 +438,7 @@ namespace acid
 		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 	}
 
 	void Texture::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
@@ -458,7 +458,7 @@ namespace acid
 		vkCmdCopyBufferToImage(commandBuffer.GetCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 	}
 
 	void Texture::CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
@@ -561,7 +561,7 @@ namespace acid
 			1, &barrier);
 
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 	}
 
 	void Texture::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels)
@@ -729,7 +729,7 @@ namespace acid
 		}
 
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 
 		return supportsBlit;
 	}

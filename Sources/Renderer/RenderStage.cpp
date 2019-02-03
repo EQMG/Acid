@@ -19,8 +19,9 @@ namespace acid
 		m_swapchainAttachment({}),
 		m_subpassMultisampled(std::vector<bool>(m_renderpassCreate.GetSubpasses().size())),
 		m_fitDisplaySize(m_renderpassCreate.GetHeight() == 0),
-		m_lastWidth(m_renderpassCreate.GetWidth()),
-		m_lastHeight(m_renderpassCreate.GetHeight())
+		m_width(0.0f),
+		m_height(0.0f),
+		m_outOfDate(false)
 	{
 		for (const auto &image : m_renderpassCreate.GetImages())
 		{
@@ -60,7 +61,31 @@ namespace acid
 			m_clearValues.emplace_back(clearValue);
 		}
 
+		Update();
 		Rebuild(swapchain);
+	}
+
+	void RenderStage::Update()
+	{
+		uint32_t lastWidth = m_width;
+		uint32_t lastHeight = m_height;
+
+		if (m_fitDisplaySize)
+		{
+			m_width = Window::Get()->GetWidth();
+			m_height = Window::Get()->GetHeight();
+		}
+		else
+		{
+			m_width = m_renderpassCreate.GetWidth();
+			m_height = m_renderpassCreate.GetHeight();
+		}
+
+		m_width = static_cast<uint32_t>(m_renderpassCreate.GetScale().m_x * static_cast<float>(m_width));
+		m_height = static_cast<uint32_t>(m_renderpassCreate.GetScale().m_y * static_cast<float>(m_height));
+		m_aspectRatio = static_cast<float>(m_width) / static_cast<float>(m_height);
+
+		m_outOfDate = m_width != lastWidth || m_height != lastHeight;
 	}
 
 	void RenderStage::Rebuild(const Swapchain &swapchain)
@@ -76,7 +101,7 @@ namespace acid
 
 		if (m_depthAttachment)
 		{
-			m_depthStencil = std::make_unique<DepthStencil>(GetWidth(), GetHeight(), m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
+			m_depthStencil = std::make_unique<DepthStencil>(m_width, m_height, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 		}
 
 		if (m_renderpass == nullptr)
@@ -84,7 +109,8 @@ namespace acid
 			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surface->GetFormat().format, msaaSamples);
 		}
 
-		m_framebuffers = std::make_unique<Framebuffers>(GetWidth(), GetHeight(), m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
+		m_framebuffers = std::make_unique<Framebuffers>(m_width, m_height, m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
+		m_outOfDate = false;
 
 		m_attachments.clear();
 
@@ -104,48 +130,6 @@ namespace acid
 		auto debugEnd = Engine::GetTime();
 		Log::Out("Renderstage '%i' built in %ims\n", m_stageIndex, (debugEnd - debugStart).AsMilliseconds());
 #endif
-	}
-
-	uint32_t RenderStage::GetWidth() const
-	{
-		uint32_t width = 0;
-
-		if (m_fitDisplaySize)
-		{
-			width = Window::Get()->GetWidth();
-		}
-		else
-		{
-			width = m_renderpassCreate.GetWidth();
-		}
-
-		return static_cast<uint32_t>(m_renderpassCreate.GetScale() * static_cast<float>(width));
-	}
-
-	uint32_t RenderStage::GetHeight() const
-	{
-		uint32_t height = 0;
-
-		if (m_fitDisplaySize)
-		{
-			height = Window::Get()->GetHeight();
-		}
-		else
-		{
-			height = m_renderpassCreate.GetHeight();
-		}
-
-		return static_cast<uint32_t>(m_renderpassCreate.GetScale() * static_cast<float>(height));
-	}
-
-	bool RenderStage::IsOutOfDate(const VkExtent2D &extent2D)
-	{
-		uint32_t currentWidth = GetWidth();
-		uint32_t currentHeight = GetHeight();
-		bool outOfDate = currentWidth != m_lastWidth || currentHeight != m_lastHeight;
-		m_lastWidth = currentWidth;
-		m_lastHeight = currentHeight;
-		return outOfDate;
 	}
 
 	const Descriptor *RenderStage::GetAttachment(const std::string &name) const

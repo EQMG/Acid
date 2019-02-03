@@ -135,9 +135,21 @@ namespace acid
 
 			for (const auto &[descriptorName, descriptor] : m_descriptors)
 			{
-				VkDescriptorType descriptorType = m_shader->GetDescriptorType(descriptor.location);
+				auto descriptorType = m_shader->GetDescriptorType(descriptor.location);
+
+				if (!descriptorType)
+				{
+#if defined(ACID_VERBOSE)
+					if (m_shader->ReportedNotFound(descriptorName, true))
+					{
+						Log::Error("Could not find descriptor in shader '%s' of name '%s' at location '%i'\n", m_shader->GetName().c_str(), descriptorName.c_str(), descriptor.location);
+					}
+#endif
+					continue;
+				}
+
 				auto writeDescriptor = descriptor.descriptor->GetWriteDescriptor(descriptor.location,
-					descriptorType, m_pushDescriptors ? VK_NULL_HANDLE : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
+					*descriptorType, m_pushDescriptors ? VK_NULL_HANDLE : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
 				m_writeDescriptorSets.emplace_back(writeDescriptor.GetWriteDescriptorSet());
 				m_writeDescriptors.emplace_back(std::move(writeDescriptor));
 			}

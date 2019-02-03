@@ -96,6 +96,6 @@ namespace acid
 		vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
 
 		commandBuffer.End();
-		commandBuffer.Submit();
+		commandBuffer.SubmitIdle();
 	}
 }

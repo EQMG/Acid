@@ -19,7 +19,7 @@ namespace acid
 		m_attributes(std::map<std::string, std::unique_ptr<Attribute>>()),
 		m_descriptorSetLayouts(std::vector<VkDescriptorSetLayoutBinding>()),
 		m_descriptorPools(std::vector<VkDescriptorPoolSize>()),
-		m_descriptorTypes(std::vector<VkDescriptorType>()),
+		m_descriptorTypes(std::map<uint32_t, VkDescriptorType>()),
 		m_attributeDescriptions(std::vector<VkVertexInputAttributeDescription>()),
 		m_notFoundNames(std::vector<std::string>())
 	{
@@ -147,7 +147,7 @@ namespace acid
 		// Gets the descriptor type for each descriptor.
 		for (const auto &descriptor : m_descriptorSetLayouts)
 		{
-			m_descriptorTypes.emplace_back(descriptor.descriptorType);
+			m_descriptorTypes.emplace(descriptor.binding, descriptor.descriptorType);
 		}
 
 		// Process attribute descriptions.
@@ -292,6 +292,18 @@ namespace acid
 		}
 
 		return binding;
+	}
+
+	std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
+	{
+		auto it = m_descriptorTypes.find(location); 
+
+		if (it == m_descriptorTypes.end())
+		{
+			return {};
+		}
+
+		return it->second;
 	}
 
 	VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)

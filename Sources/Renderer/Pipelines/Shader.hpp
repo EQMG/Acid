@@ -234,7 +234,7 @@ namespace acid
 
 		const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
 
-		const VkDescriptorType &GetDescriptorType(const uint32_t &location) const { return m_descriptorTypes[location]; }
+		std::optional<VkDescriptorType> GetDescriptorType(const uint32_t &location) const;
 
 		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
@@ -267,7 +267,7 @@ namespace acid
 
 		std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
 		std::vector<VkDescriptorPoolSize> m_descriptorPools;
-		std::vector<VkDescriptorType> m_descriptorTypes;
+		std::map<uint32_t, VkDescriptorType> m_descriptorTypes;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 
 		mutable std::vector<std::string> m_notFoundNames;

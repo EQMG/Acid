@@ -16,15 +16,35 @@ namespace acid
 	public:
 		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain);
 
+		void Update();
+
 		void Rebuild(const Swapchain &swapchain);
 
 		uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate.GetSubpasses().size()); };
 
-		uint32_t GetWidth() const;
+		/// <summary>
+		/// Gets the height of the render stage in pixels.
+		/// </summary>
+		/// <returns> The height of the render stage. </returns>
+		const uint32_t &GetWidth() const { return m_width; }
 
-		uint32_t GetHeight() const;
+		/// <summary>
+		/// Gets the height of the render stage in pixels.
+		/// </summary>
+		/// <returns> The height of the render stage. </returns>
+		const uint32_t &GetHeight() const { return m_height; }
 
-		bool IsOutOfDate(const VkExtent2D &extent2D);
+		/// <summary>
+		/// Gets the aspect ratio between the render stages width and height.
+		/// </summary>
+		/// <returns> The aspect ratio. </returns>
+		const float &GetAspectRatio() const { return m_aspectRatio; }
+
+		/// <summary>
+		/// Gets if the width or height has changed between the last update and now.
+		/// </summary>
+		/// <returns> If the width or height has changed. </returns>
+		const bool &IsOutOfDate() const { return m_outOfDate; }
 
 		RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
 
@@ -69,7 +89,9 @@ namespace acid
 
 		bool m_fitDisplaySize;
 
-		uint32_t m_lastWidth;
-		uint32_t m_lastHeight;
+		uint32_t m_width;
+		uint32_t m_height;
+		float m_aspectRatio;
+		bool m_outOfDate;
 	};
 }
