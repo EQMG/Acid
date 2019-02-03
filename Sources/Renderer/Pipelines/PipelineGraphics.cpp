@@ -309,8 +309,7 @@ namespace acid
 
 		m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		m_multisampleState.rasterizationSamples = multisampled ? physicalDevice->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
-		m_multisampleState.sampleShadingEnable = VK_TRUE;
-		m_multisampleState.minSampleShading = 0.2f;
+		m_multisampleState.sampleShadingEnable = VK_FALSE;
 
 		m_dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		m_dynamicState.dynamicStateCount = static_cast<uint32_t>(m_dynamicStates.size());

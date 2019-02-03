@@ -49,7 +49,7 @@ namespace acid
 			auto axes = glfwGetJoystickAxes(port, &axeCount);
 			joystick.m_axes.resize(static_cast<uint32_t>(axeCount));
 
-			for (uint32_t i = 0; i < axeCount; i++)
+			for (uint32_t i = 0; i < static_cast<uint32_t>(axeCount); i++)
 			{
 				if (joystick.m_axes[i] != axes[i])
 				{
@@ -62,7 +62,7 @@ namespace acid
 			auto buttons = glfwGetJoystickButtons(port, &buttonCount);
 			joystick.m_buttons.resize(static_cast<uint32_t>(buttonCount));
 
-			for (uint32_t i = 0; i < buttonCount; i++)
+			for (uint32_t i = 0; i < static_cast<uint32_t>(buttonCount); i++)
 			{
 				if (buttons[i] != GLFW_RELEASE && joystick.m_buttons[i] != InputAction::Release)
 				{
@@ -79,7 +79,7 @@ namespace acid
 			auto hats = glfwGetJoystickHats(port, &hatCount);
 			joystick.m_hats.resize(static_cast<uint32_t>(hatCount));
 
-			for (uint32_t i = 0; i < hatCount; i++)
+			for (uint32_t i = 0; i < static_cast<uint32_t>(hatCount); i++)
 			{
 				if (joystick.m_hats[i] != make_bitmask<JoystickHat>(hats[i]))
 				{
@@ -104,19 +104,19 @@ namespace acid
 	uint32_t Joysticks::GetAxisCount(const uint32_t &port) const
 	{
 		auto joystick = GetJoystick(port);
-		return joystick ? joystick->m_axes.size() : 0;
+		return joystick ? static_cast<uint32_t>(joystick->m_axes.size()) : 0;
 	}
 
 	uint32_t Joysticks::GetButtonCount(const uint32_t &port) const
 	{
 		auto joystick = GetJoystick(port);
-		return joystick ? joystick->m_buttons.size() : 0;
+		return joystick ? static_cast<uint32_t>(joystick->m_buttons.size()) : 0;
 	}
 
 	uint32_t Joysticks::GetHatCount(const uint32_t &port) const
 	{
 		auto joystick = GetJoystick(port);
-		return joystick ? joystick->m_hats.size() : 0;
+		return joystick ? static_cast<uint32_t>(joystick->m_hats.size()) : 0;
 	}
 
 	float Joysticks::GetAxis(const uint32_t &port, const uint32_t &axis) const

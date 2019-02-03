@@ -63,8 +63,6 @@ namespace acid
 
 		const VkCommandPool &GetCommandPool() const { return m_commandPool; }
 
-		const CommandBuffer *GetCommandBuffer() const { return m_commandBuffer.get(); }
-
 		const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
 
 		const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
@@ -96,7 +94,8 @@ namespace acid
 		std::vector<VkFence> m_flightFences;
 		size_t m_currentFrame;
 
-		std::unique_ptr<CommandBuffer> m_commandBuffer;
+		std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers;
+
 		std::unique_ptr<Instance> m_instance;
 		std::unique_ptr<PhysicalDevice> m_physicalDevice;
 		std::unique_ptr<Surface> m_surface;

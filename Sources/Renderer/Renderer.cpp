@@ -20,7 +20,7 @@ namespace acid
 		m_renderCompletes(std::vector<VkSemaphore>()),
 		m_flightFences(std::vector<VkFence>()),
 		m_currentFrame(0),
-		m_commandBuffer(nullptr),
+		m_commandBuffers(std::vector<std::unique_ptr<CommandBuffer>>()),
 		m_instance(std::make_unique<Instance>()),
 		m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
 		m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
@@ -79,6 +79,18 @@ namespace acid
 		std::optional<uint32_t> renderpass = {};
 		uint32_t subpass = 0;
 
+		VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
+
+		if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+		{
+			return;
+		}
+
+		if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
+		{
+			return;
+		}
+
 		for (auto &[key, renderPipelines] : stages)
 		{
 			if (renderpass != key.first)
@@ -117,7 +129,7 @@ namespace acid
 
 				for (uint32_t d = 0; d < difference; d++)
 				{
-					vkCmdNextSubpass(m_commandBuffer->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
+					vkCmdNextSubpass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
 				}
 
 				subpass = key.second;
@@ -131,7 +143,7 @@ namespace acid
 					continue;
 				}
 
-				renderPipeline->Render(*m_commandBuffer);
+				renderPipeline->Render(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 			}
 		}
 
@@ -328,6 +340,7 @@ namespace acid
 		m_presentCompletes.resize(MAX_FRAMES_IN_FLIGHT);
 		m_renderCompletes.resize(MAX_FRAMES_IN_FLIGHT);
 		m_flightFences.resize(MAX_FRAMES_IN_FLIGHT);
+		m_commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
 
 		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -343,9 +356,9 @@ namespace acid
 			Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
 
 			Renderer::CheckVk(vkCreateFence(m_logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_flightFences[i]));
-		}
 
-		m_commandBuffer = std::make_unique<CommandBuffer>(false);
+			m_commandBuffers[i] = std::make_unique<CommandBuffer>(false);
+		}
 	}
 
 	void Renderer::CreatePipelineCache()
@@ -402,26 +415,10 @@ namespace acid
 			return false;
 		}
 
-		if (renderStage.HasSwapchain())
-		{
-			VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
-
-			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-			{
-				RecreatePass(renderStage);
-				return false;
-			}
-
-			if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
-			{
-				return false;
-			}
-		}
-
-		if (!m_commandBuffer->IsRunning())
+		if (!m_commandBuffers[m_swapchain->GetActiveImageIndex()]->IsRunning())
 		{
 			Renderer::CheckVk(vkWaitForFences(m_logicalDevice->GetLogicalDevice(), 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
-			m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
+			m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
 		}
 
 		VkRect2D renderArea = {};
@@ -438,12 +435,12 @@ namespace acid
 		viewport.height = static_cast<float>(renderArea.extent.height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
-		vkCmdSetViewport(m_commandBuffer->GetCommandBuffer(), 0, 1, &viewport);
+		vkCmdSetViewport(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &viewport);
 
 		VkRect2D scissor = {};
 		scissor.offset = { 0, 0 };
 		scissor.extent = renderArea.extent;
-		vkCmdSetScissor(m_commandBuffer->GetCommandBuffer(), 0, 1, &scissor);
+		vkCmdSetScissor(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &scissor);
 
 		auto clearValues = renderStage.GetClearValues();
 
@@ -454,7 +451,7 @@ namespace acid
 		renderPassBeginInfo.renderArea = renderArea;
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
-		vkCmdBeginRenderPass(m_commandBuffer->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+		vkCmdBeginRenderPass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		return true;
 	}
@@ -463,15 +460,15 @@ namespace acid
 	{
 		auto presentQueue = m_logicalDevice->GetPresentQueue();
 
-		vkCmdEndRenderPass(m_commandBuffer->GetCommandBuffer());
+		vkCmdEndRenderPass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer());
 
 		if (!renderStage.HasSwapchain())
 		{
 			return;
 		}
 
-		m_commandBuffer->End();
-		m_commandBuffer->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
+		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
+		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
 		VkResult presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
 
 		if (!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
