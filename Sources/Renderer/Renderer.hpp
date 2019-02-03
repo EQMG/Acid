@@ -91,9 +91,9 @@ namespace acid
 
 		VkPipelineCache m_pipelineCache;
 		VkCommandPool m_commandPool;
-		VkSemaphore m_presentComplete;
-		VkSemaphore m_renderComplete;
-		VkFence m_flightFence;
+		std::vector<VkSemaphore> m_presentCompletes;
+		std::vector<VkSemaphore> m_renderCompletes;
+		std::vector<VkFence> m_flightFences;
 		size_t m_currentFrame;
 
 		std::unique_ptr<CommandBuffer> m_commandBuffer;

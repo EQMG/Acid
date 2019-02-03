@@ -8,7 +8,7 @@
 
 namespace acid
 {
-	static const int MAX_FRAMES_IN_FLIGHT = 2;
+	static const int MAX_FRAMES_IN_FLIGHT = 2; // TODO: Get from on runtime m_swapchain.m_imageCount
 
 	Renderer::Renderer() :
 		m_renderManager(nullptr),
@@ -16,9 +16,9 @@ namespace acid
 		m_swapchain(nullptr),
 		m_pipelineCache(VK_NULL_HANDLE),
 		m_commandPool(VK_NULL_HANDLE),
-		m_presentComplete(VK_NULL_HANDLE),
-		m_renderComplete(VK_NULL_HANDLE),
-		m_flightFence(VK_NULL_HANDLE),
+		m_presentCompletes(std::vector<VkSemaphore>()),
+		m_renderCompletes(std::vector<VkSemaphore>()),
+		m_flightFences(std::vector<VkFence>()),
 		m_currentFrame(0),
 		m_commandBuffer(nullptr),
 		m_instance(std::make_unique<Instance>()),
@@ -42,10 +42,14 @@ namespace acid
 
 		vkDestroyPipelineCache(m_logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
 
-		vkDestroyFence(m_logicalDevice->GetLogicalDevice(), m_flightFence, nullptr);
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+		{
+			vkDestroyFence(m_logicalDevice->GetLogicalDevice(), m_flightFences[i], nullptr);
+			vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_renderCompletes[i], nullptr);
+			vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentCompletes[i], nullptr);
+		}
+
 		vkDestroyCommandPool(m_logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
-		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_renderComplete, nullptr);
-		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentComplete, nullptr);
 	}
 
 	void Renderer::Update()
@@ -321,18 +325,25 @@ namespace acid
 		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
 		Renderer::CheckVk(vkCreateCommandPool(m_logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
 
-		VkSemaphoreCreateInfo presentSemaphoreCreateInfo = {};
-		presentSemaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &presentSemaphoreCreateInfo, nullptr, &m_presentComplete));
+		m_presentCompletes.resize(MAX_FRAMES_IN_FLIGHT);
+		m_renderCompletes.resize(MAX_FRAMES_IN_FLIGHT);
+		m_flightFences.resize(MAX_FRAMES_IN_FLIGHT);
 
-		VkSemaphoreCreateInfo renderSemaphoreCreateInfo = {};
-		renderSemaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &renderSemaphoreCreateInfo, nullptr, &m_renderComplete));
+		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
+		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		VkFenceCreateInfo flightFenceCreateInfo = {};
-		flightFenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-		flightFenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-		Renderer::CheckVk(vkCreateFence(m_logicalDevice->GetLogicalDevice(), &flightFenceCreateInfo, nullptr, &m_flightFence));
+		VkFenceCreateInfo fenceCreateInfo = {};
+		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+		{
+			Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
+
+			Renderer::CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
+
+			Renderer::CheckVk(vkCreateFence(m_logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_flightFences[i]));
+		}
 
 		m_commandBuffer = std::make_unique<CommandBuffer>(false);
 	}
@@ -393,7 +404,7 @@ namespace acid
 
 		if (renderStage.HasSwapchain())
 		{
-			VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentComplete);
+			VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
 			if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 			{
@@ -409,7 +420,7 @@ namespace acid
 
 		if (!m_commandBuffer->IsRunning())
 		{
-			Renderer::CheckVk(vkWaitForFences(m_logicalDevice->GetLogicalDevice(), 1, &m_flightFence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+			Renderer::CheckVk(vkWaitForFences(m_logicalDevice->GetLogicalDevice(), 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
 			m_commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
 		}
 
@@ -460,9 +471,8 @@ namespace acid
 		}
 
 		m_commandBuffer->End();
-		m_commandBuffer->Submit(m_presentComplete, m_renderComplete, m_flightFence);
-
-		VkResult presentResult = m_swapchain->QueuePresent(presentQueue, m_renderComplete);
+		m_commandBuffer->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
+		VkResult presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
 
 		if (!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
 		{
@@ -477,7 +487,6 @@ namespace acid
 			}
 		}
 
-		Renderer::CheckVk(vkQueueWaitIdle(presentQueue));
 		m_currentFrame = (m_currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 	}
 }
