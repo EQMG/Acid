@@ -148,7 +148,7 @@ namespace acid
 		int32_t monitorCount;
 		GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
 
-		for (uint32_t i = 0; i < monitorCount; i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 		{
 			m_monitors.emplace_back(Monitor(monitors[i]));
 		}
@@ -267,7 +267,7 @@ namespace acid
 			icons.emplace_back(icon);
 		}
 
-		glfwSetWindowIcon(m_window, icons.size(), icons.data());
+		glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());
 
 		for (const auto &icon : icons)
 		{

@@ -2,15 +2,17 @@
 
 #include <Post/PostFilter.hpp>
 
-namespace acid
+using namespace acid;
+
+namespace test
 {
 	class FilterBlit :
 		public PostFilter
 	{
 	public:
-		explicit FilterBlit(const Pipeline::Stage& pipelineStage);
+		explicit FilterBlit(const Pipeline::Stage &pipelineStage);
 
-		void Render(const CommandBuffer& commandBuffer) override;
+		void Render(const CommandBuffer &commandBuffer) override;
 	private:
 		bool m_lastFilter;
 	};
