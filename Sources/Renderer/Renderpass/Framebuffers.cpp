@@ -15,9 +15,6 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		auto textureWidth = renderpassCreate.GetWidth() == 0 ? Window::Get()->GetWidth() : renderpassCreate.GetWidth();
-		auto textureHeight = renderpassCreate.GetHeight() == 0 ? Window::Get()->GetHeight() : renderpassCreate.GetHeight();
-
 		for (const auto &image : renderpassCreate.GetImages())
 		{
 			auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
@@ -25,7 +22,7 @@ namespace acid
 			switch (image.GetType())
 			{
 			case Attachment::Type::Image:
-				m_imageAttachments.emplace_back(std::make_unique<Texture>(textureWidth, textureHeight, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+				m_imageAttachments.emplace_back(std::make_unique<Texture>(width, height, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 					VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, imageSamples));
 				break;
 			case Attachment::Type::Depth:
@@ -67,7 +64,7 @@ namespace acid
 			framebufferCreateInfo.width = width;
 			framebufferCreateInfo.height = height;
 			framebufferCreateInfo.layers = 1;
-			Renderer::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers.at(i)));
+			Renderer::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
 		}
 	}
 

@@ -95,7 +95,9 @@ void main()
 	float roughness = material.g;
 	bool ignoreFog = material.b == (1.0f / 3.0f) || material.b == (3.0f / 3.0f);
 	bool ignoreLighting = material.b == (2.0f / 3.0f) || material.b == (3.0f / 3.0f);
-
+	
+	//outColour = vec4(texture(samplerDepth, inUv).rgb, 1.0f);
+#if 1
 	outColour = vec4(diffuse.rgb, 1.0f);
 
 	if (!ignoreLighting && normal != vec3(0.0f))
@@ -145,4 +147,5 @@ void main()
 //	{
 //		outColour = texture(samplerShadows, inUv / 0.4f);
 //	}
+#endif
 }

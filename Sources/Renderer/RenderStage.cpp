@@ -61,7 +61,6 @@ namespace acid
 			m_clearValues.emplace_back(clearValue);
 		}
 
-		Update();
 		Rebuild(swapchain);
 	}
 
@@ -93,6 +92,8 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
+
+		Update();
 
 		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 		auto surface = Renderer::Get()->GetSurface();

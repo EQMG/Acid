@@ -154,7 +154,7 @@ namespace acid
 
 		if (m_pixels != nullptr || m_mipmap)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, 0, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 6);
 		}
 
 		if (m_pixels != nullptr)
@@ -176,11 +176,11 @@ namespace acid
 		}
 		else if (m_pixels != nullptr)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, mipLevels, 0, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 6);
 		}
 		else
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, mipLevels, 0, 6);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 6);
 		}
 
 		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, mipLevels);
