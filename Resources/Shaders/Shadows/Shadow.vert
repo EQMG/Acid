@@ -2,18 +2,18 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboScene
+layout(binding = 0) uniform UboScene
 {
 	mat4 projectionView;
 	vec3 cameraPos;
 } scene;
 
-layout(set = 0, binding = 1) uniform UboObject
+layout(binding = 1) uniform UboObject
 {
 	mat4 transform;
 } object;
 
-layout(set = 0, location = 0) in vec3 inPosition;
+layout(location = 0) in vec3 inPosition;
 
 out gl_PerVertex
 {

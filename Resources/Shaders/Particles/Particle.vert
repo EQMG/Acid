@@ -17,12 +17,12 @@ struct Instance
 	float _padding;
 };
 
-layout(set = 0, binding = 1) buffer Instances
+layout(binding = 1) buffer Instances
 {
 	Instance data[];
 } instances;
 
-layout(set = 0, location = 0) in vec3 inPosition;
+layout(location = 0) in vec3 inPosition;
 
 layout(location = 0) out vec2 outCoords1;
 layout(location = 1) out vec2 outCoords2;

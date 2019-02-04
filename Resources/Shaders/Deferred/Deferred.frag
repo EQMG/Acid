@@ -2,9 +2,8 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboScene
+layout(binding = 0) uniform UboScene
 {
-	mat4 projection;
 	mat4 view;
 	mat4 shadowSpace;
 	vec3 cameraPosition;
@@ -29,19 +28,19 @@ struct Light
 	float radius;
 };
 
-layout(set = 0, binding = 1) buffer Lights
+layout(binding = 1) buffer Lights
 {
 	Light lights[];
 } lights;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 3) uniform sampler2D samplerDiffuse;
-layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 5) uniform sampler2D samplerMaterial;
-layout(set = 0, binding = 6) uniform sampler2D samplerShadows;
+layout(binding = 2) uniform sampler2D samplerPosition;
+layout(binding = 3) uniform sampler2D samplerDiffuse;
+layout(binding = 4) uniform sampler2D samplerNormal;
+layout(binding = 5) uniform sampler2D samplerMaterial;
+layout(binding = 6) uniform sampler2D samplerShadows;
 #if USE_IBL
-layout(set = 0, binding = 7) uniform sampler2D samplerBrdf;
-layout(set = 0, binding = 8) uniform samplerCube samplerIbl;
+layout(binding = 7) uniform sampler2D samplerBrdf;
+layout(binding = 8) uniform samplerCube samplerIbl;
 #endif
 
 layout(location = 0) in vec2 inUv;
@@ -49,13 +48,6 @@ layout(location = 0) in vec2 inUv;
 layout(location = 0) out vec4 outColour;
 
 #include "Shaders/Lighting.glsl"
-
-vec3 depthToWorld(vec2 uv, float depth)
-{
-	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
-	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0f);
-	return p.xyz / p.w;
-}
 
 /*float shadow(vec4 shadowCoords)
 {
@@ -83,8 +75,7 @@ vec3 depthToWorld(vec2 uv, float depth)
 
 void main()
 {
-	float depth = texture(samplerDepth, inUv).r;
-	vec3 worldPosition = depthToWorld(inUv, depth).xyz;
+	vec3 worldPosition = texture(samplerPosition, inUv).rgb;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
 	vec4 diffuse = texture(samplerDiffuse, inUv);
@@ -96,8 +87,6 @@ void main()
 	bool ignoreFog = material.b == (1.0f / 3.0f) || material.b == (3.0f / 3.0f);
 	bool ignoreLighting = material.b == (2.0f / 3.0f) || material.b == (3.0f / 3.0f);
 	
-	//outColour = vec4(texture(samplerDepth, inUv).rgb, 1.0f);
-#if 1
 	outColour = vec4(diffuse.rgb, 1.0f);
 
 	if (!ignoreLighting && normal != vec3(0.0f))
@@ -147,5 +136,4 @@ void main()
 //	{
 //		outColour = texture(samplerShadows, inUv / 0.4f);
 //	}
-#endif
 }

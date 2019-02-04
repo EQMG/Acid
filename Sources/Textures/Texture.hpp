@@ -128,6 +128,18 @@ namespace acid
 
 		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height);
 
+		/// <summary>
+		/// Gets if this depth image has a depth component.
+		/// </summary>
+		/// <returns> If this has a depth component. </returns>
+		static bool HasDepth(const VkFormat &format);
+
+		/// <summary>
+		/// Gets if this depth image has a stencil component.
+		/// </summary>
+		/// <returns> If this has a stencil component. </returns>
+		static bool HasStencil(const VkFormat &format);
+
 		static void CreateImage(VkImage &image, VkDeviceMemory &memory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples,
 			const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
 

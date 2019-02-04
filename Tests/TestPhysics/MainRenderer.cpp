@@ -20,6 +20,7 @@
 #include <Post/Filters/FilterTiltshift.hpp>
 #include <Post/Filters/FilterTone.hpp>
 #include <Post/Filters/FilterVignette.hpp>
+#include <Post/Pipelines/PipelineBlur.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
@@ -39,14 +40,15 @@ namespace test
 		std::vector<Attachment> renderpassImages1 = {
 			Attachment(0, "depth", Attachment::Type::Depth, false),
 			Attachment(1, "swapchain", Attachment::Type::Swapchain),
-			Attachment(2, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-			Attachment(3, "normals", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-			Attachment(4, "materials", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-			Attachment(5, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM)
+			Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+			Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+			Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM)
 		};
 		std::vector<SubpassType> renderpassSubpasses1 = {
-			SubpassType(0, {0, 2, 3, 4}),
-			SubpassType(1, {0, 5}),
+			SubpassType(0, {0, 2, 3, 4, 5}),
+			SubpassType(1, {0, 6}),
 			SubpassType(2, {0, 1})
 		};
 		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages1, renderpassSubpasses1));
@@ -60,21 +62,21 @@ namespace test
 
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
-		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1), RendererDeferred::Type::Simple);
+		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1), RendererDeferred::Type::Ibl);
 		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
-	//	rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
-	//	rendererContainer.Add()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
+	//	auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
 	//	rendererContainer.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
 	//	rendererContainer.Add<FilterEmboss>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterCrt>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//	rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
-	//	rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
 	//	rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));

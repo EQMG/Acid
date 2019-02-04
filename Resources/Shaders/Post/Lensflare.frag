@@ -9,10 +9,10 @@ layout(push_constant) uniform PushScene
 	float worldHeight;
 } scene;
 
-layout(set = 0, binding = 0, rgba8) uniform writeonly image2D writeColour;
+layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerColour;
-layout(set = 0, binding = 2) uniform sampler2D samplerMaterial;
+layout(binding = 1) uniform sampler2D samplerColour;
+layout(binding = 2) uniform sampler2D samplerMaterial;
 
 layout(location = 0) in vec2 inUv;
 

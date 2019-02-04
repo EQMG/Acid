@@ -3,12 +3,12 @@
 
 #define UDIST_BIAS 0.001
 
-layout (set = 0, binding = 1) buffer CellBuffer
+layout(binding = 1) buffer CellBuffer
 {
 	uint cells[];
 } cell_buffer;
 
-layout (set = 0, binding = 2) buffer PointBuffer
+layout(binding = 2) buffer PointBuffer
 {
 	vec2 points[];
 } point_buffer;

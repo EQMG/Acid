@@ -2,14 +2,14 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboScene
+layout(binding = 0) uniform UboScene
 {
 	mat4 projection;
 	mat4 view;
 	vec3 cameraPos;
 } scene;
 
-layout(set = 0, binding = 1) uniform UboObject
+layout(binding = 1) uniform UboObject
 {
 #if ANIMATED
 	mat4 jointTransforms[MAX_JOINTS];
@@ -23,21 +23,22 @@ layout(set = 0, binding = 1) uniform UboObject
 	float ignoreLighting;
 } object;
 
-layout(set = 0, location = 0) in vec3 inPosition;
-layout(set = 0, location = 1) in vec2 inUv;
-layout(set = 0, location = 2) in vec3 inNormal;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inUv;
+layout(location = 2) in vec3 inNormal;
 #if NORMAL_MAPPING
-layout(set = 0, location = 3) in vec3 inTangent;
+layout(location = 3) in vec3 inTangent;
 #endif
 #if ANIMATED
-layout(set = 0, location = 4) in vec3 inJointIds;
-layout(set = 0, location = 5) in vec3 inWeights;
+layout(location = 4) in vec3 inJointIds;
+layout(location = 5) in vec3 inWeights;
 #endif
 
-layout(location = 0) out vec2 outUv;
-layout(location = 1) out vec3 outNormal;
+layout(location = 0) out vec4 outPosition;
+layout(location = 1) out vec2 outUv;
+layout(location = 2) out vec3 outNormal;
 #if NORMAL_MAPPING
-layout(location = 2) out vec3 outTangent;
+layout(location = 3) out vec3 outTangent;
 #endif
 
 out gl_PerVertex
@@ -66,15 +67,14 @@ void main()
 #endif
 
 	vec4 worldPosition = object.transform * position;
+    mat3 normalMatrix = transpose(inverse(mat3(object.transform)));
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
+	outPosition = worldPosition;
 	outUv = inUv;
-	outNormal = normal.xyz;
-
+	outNormal = normalMatrix * normalize(normal.xyz);
 #if NORMAL_MAPPING
-	mat3 matrixNormal = transpose(inverse(mat3(object.transform)));
-	outNormal = matrixNormal * normalize(inNormal);
-	outTangent = matrixNormal * normalize(inTangent);
+	outTangent = normalMatrix * normalize(inTangent);
 #endif
 }

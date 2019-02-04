@@ -77,7 +77,6 @@ namespace acid
 		}
 
 		// Updates uniforms.
-		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 		m_uniformScene.Push("view", camera->GetViewMatrix());
 		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
 		m_uniformScene.Push("cameraPosition", camera->GetPosition());
@@ -100,13 +99,13 @@ namespace acid
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", m_uniformScene);
 		m_descriptorSet.Push("Lights", m_storageLights);
-		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
+		m_descriptorSet.Push("samplerPosition", Renderer::Get()->GetAttachment("position"));
 		m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
-		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normals"));
-		m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("materials"));
+		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
+		m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
 		m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
-		m_descriptorSet.Push("samplerIbl", m_ibl);
+		m_descriptorSet.Push("samplerIbl", m_skybox);
 
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 

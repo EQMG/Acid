@@ -17,7 +17,7 @@ struct GlyphInfo
     uvec4 cell_info;
 };
 
-layout (set = 0, binding = 0) buffer GlyphBuffer
+layout(binding = 0) buffer GlyphBuffer
 {
 	GlyphInfo glyphs[];
 } glyph_buffer;
@@ -36,10 +36,10 @@ void main()
     GlyphInfo gi = glyph_buffer.glyphs[in_glyph_index];
 
     vec2 pos[4];
-	 pos[0] = vec2(in_rect.x, in_rect.y);
-	 pos[1] = vec2(in_rect.z, in_rect.y);
-	 pos[2] = vec2(in_rect.x, in_rect.w);
-	 pos[3] = vec2(in_rect.z, in_rect.w);
+	pos[0] = vec2(in_rect.x, in_rect.y);
+	pos[1] = vec2(in_rect.z, in_rect.y);
+	pos[2] = vec2(in_rect.x, in_rect.w);
+	pos[3] = vec2(in_rect.z, in_rect.w);
 
     vec2 glyph_pos[4];
     glyph_pos[0] = vec2(gi.bbox.x, gi.bbox.y);
@@ -48,9 +48,9 @@ void main()
     glyph_pos[3] = vec2(gi.bbox.z, gi.bbox.w);
 
     vec2 cell_coord[4];
-    cell_coord[0] = vec2(0,              0);
+    cell_coord[0] = vec2(0, 0);
     cell_coord[1] = vec2(gi.cell_info.z, 0);
-    cell_coord[2] = vec2(0,              gi.cell_info.w);
+    cell_coord[2] = vec2(0, gi.cell_info.w);
     cell_coord[3] = vec2(gi.cell_info.z, gi.cell_info.w);
 
 

@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 1) uniform UboObject
+layout(binding = 1) uniform UboObject
 {
 #if ANIMATED
 	mat4 jointTransforms[MAX_JOINTS];
@@ -17,24 +17,26 @@ layout(set = 0, binding = 1) uniform UboObject
 } object;
 
 #if DIFFUSE_MAPPING
-layout(set = 0, binding = 2) uniform sampler2D samplerDiffuse;
+layout(binding = 2) uniform sampler2D samplerDiffuse;
 #endif
 #if MATERIAL_MAPPING
-layout(set = 0, binding = 3) uniform sampler2D samplerMaterial;
+layout(binding = 3) uniform sampler2D samplerMaterial;
 #endif
 #if NORMAL_MAPPING
-layout(set = 0, binding = 4) uniform sampler2D samplerNormal;
+layout(binding = 4) uniform sampler2D samplerNormal;
 #endif
 
-layout(location = 0) in vec2 inUv;
-layout(location = 1) in vec3 inNormal;
+layout(location = 0) in vec4 inPosition;
+layout(location = 1) in vec2 inUv;
+layout(location = 2) in vec3 inNormal;
 #if NORMAL_MAPPING
-layout(location = 2) in vec3 inTangent;
+layout(location = 3) in vec3 inTangent;
 #endif
 
-layout(location = 0) out vec4 outDiffuse;
-layout(location = 1) out vec4 outNormal;
-layout(location = 2) out vec4 outMaterial;
+layout(location = 0) out vec4 outPosition;
+layout(location = 1) out vec4 outDiffuse;
+layout(location = 2) out vec4 outNormal;
+layout(location = 3) out vec4 outMaterial;
 
 void main()
 {
@@ -69,7 +71,8 @@ void main()
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
+	outPosition = inPosition;
 	outDiffuse = diffuse;
-	outNormal = vec4(normal, 1.0f);
+	outNormal = vec4(normalize(normal), 1.0f);
 	outMaterial = vec4(material, 1.0f);
 }
