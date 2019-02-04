@@ -4,9 +4,9 @@
 #include <map>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include "Renderpass/Framebuffers.hpp"
 #include "Renderpass/Renderpass.hpp"
-#include "Swapchain/Framebuffers.hpp"
-#include "Swapchain/Swapchain.hpp"
+#include "Renderpass/Swapchain.hpp"
 #include "Textures/DepthStencil.hpp"
 
 namespace acid

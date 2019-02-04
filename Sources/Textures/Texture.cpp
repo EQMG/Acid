@@ -156,7 +156,7 @@ namespace acid
 
 		if (m_pixels != nullptr || m_mipmap)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, 0, 1);
+			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 1);
 		}
 
 		if (m_pixels != nullptr)
@@ -178,11 +178,11 @@ namespace acid
 		}
 		else if (m_pixels != nullptr)
 		{
-			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, mipLevels, 0, 1);
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 1);
 		}
 		else
 		{
-			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, mipLevels, 0, 1);
+			TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, mipLevels, 0, 1);
 		}
 
 		CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, mipLevels);
@@ -357,7 +357,7 @@ namespace acid
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
-	void Texture::TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
+	void Texture::TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const VkImageAspectFlags &aspectMask, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 	{
 		CommandBuffer commandBuffer = CommandBuffer();
 
@@ -368,24 +368,11 @@ namespace acid
 		imageMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 		imageMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 		imageMemoryBarrier.image = image;
+		imageMemoryBarrier.subresourceRange.aspectMask = aspectMask;
 		imageMemoryBarrier.subresourceRange.baseMipLevel = 0;
 		imageMemoryBarrier.subresourceRange.levelCount = mipLevels;
 		imageMemoryBarrier.subresourceRange.baseArrayLayer = baseArrayLayer;
 		imageMemoryBarrier.subresourceRange.layerCount = layerCount;
-
-		if (dstImageLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
-		{
-			imageMemoryBarrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
-
-			if (HasStencilComponent(format))
-			{
-				imageMemoryBarrier.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
-			}
-		}
-		else
-		{
-			imageMemoryBarrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		}
 
 		VkPipelineStageFlags srcStageMask;
 		VkPipelineStageFlags dstStageMask;
@@ -581,12 +568,12 @@ namespace acid
 		samplerCreateInfo.anisotropyEnable = static_cast<VkBool32>(anisotropic);
 		samplerCreateInfo.maxAnisotropy = anisotropic ? std::min(ANISOTROPY,
 			physicalDevice->GetProperties().limits.maxSamplerAnisotropy) : 1.0f;
-		samplerCreateInfo.compareEnable = VK_FALSE;
-		samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
+	//	samplerCreateInfo.compareEnable = VK_FALSE;
+	//	samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerCreateInfo.minLod = 0.0f;
 		samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
-		samplerCreateInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-		samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
+		samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+	//	samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
 		Renderer::CheckVk(vkCreateSampler(logicalDevice->GetLogicalDevice(), &samplerCreateInfo, nullptr, &sampler));
 	}
 
@@ -599,6 +586,7 @@ namespace acid
 		imageViewCreateInfo.image = image;
 		imageViewCreateInfo.viewType = type;
 		imageViewCreateInfo.format = format;
+		imageViewCreateInfo.subresourceRange = {};
 		imageViewCreateInfo.components = {
 			VK_COMPONENT_SWIZZLE_R,
 			VK_COMPONENT_SWIZZLE_G,

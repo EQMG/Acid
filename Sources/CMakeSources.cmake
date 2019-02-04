@@ -191,12 +191,12 @@ set(_temp_acid_headers
 		Renderer/Renderer.hpp
 		Renderer/RendererContainer.hpp
 		Renderer/RenderManager.hpp
+		Renderer/Renderpass/Framebuffers.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/RenderpassCreate.hpp
+		Renderer/Renderpass/Swapchain.hpp
 		Renderer/RenderPipeline.hpp
 		Renderer/RenderStage.hpp
-		Renderer/Swapchain/Framebuffers.hpp
-		Renderer/Swapchain/Swapchain.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
@@ -403,10 +403,10 @@ set(_temp_acid_sources
 		Renderer/Pipelines/Shader.cpp
 		Renderer/Renderer.cpp
 		Renderer/RendererContainer.cpp
+		Renderer/Renderpass/Framebuffers.cpp
 		Renderer/Renderpass/Renderpass.cpp
+		Renderer/Renderpass/Swapchain.cpp
 		Renderer/RenderStage.cpp
-		Renderer/Swapchain/Framebuffers.cpp
-		Renderer/Swapchain/Swapchain.cpp
 		Resources/Resources.cpp
 		Scenes/ComponentRegister.cpp
 		Scenes/Entity.cpp
