@@ -13,11 +13,11 @@ layout(push_constant) uniform PushScene
 	float farPlane;
 } scene;
 
-layout(set = 0, binding = 0, rgba8) uniform writeonly image2D writeColour;
+layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
-layout(set = 0, binding = 1) uniform sampler2D samplerDepth;
-layout(set = 0, binding = 2) uniform sampler2D samplerNormal;
-layout(set = 0, binding = 3) uniform sampler2D samplerNoise;
+layout(binding = 1) uniform sampler2D samplerDepth;
+layout(binding = 2) uniform sampler2D samplerNormal;
+layout(binding = 3) uniform sampler2D samplerNoise;
 
 layout(location = 0) in vec2 inUv;
 

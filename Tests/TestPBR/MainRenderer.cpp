@@ -27,14 +27,15 @@ namespace test
 		std::vector<Attachment> renderpassImages1 = {
 			Attachment(0, "depth", Attachment::Type::Depth, false),
 			Attachment(1, "swapchain", Attachment::Type::Swapchain),
-			Attachment(2, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-			Attachment(3, "normals", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-			Attachment(4, "materials", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-			Attachment(5, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM)
+			Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+			Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+			Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+			Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM)
 		};
 		std::vector<SubpassType> renderpassSubpasses1 = {
-			SubpassType(0, {0, 2, 3, 4}),
-			SubpassType(1, {0, 5}),
+			SubpassType(0, {0, 2, 3, 4, 5}),
+			SubpassType(1, {0, 6}),
 			SubpassType(2, {0, 1})
 		};
 		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages1, renderpassSubpasses1));

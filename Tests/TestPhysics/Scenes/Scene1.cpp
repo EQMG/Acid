@@ -86,15 +86,13 @@ namespace test
 		auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated model.
-#if !defined(ACID_BUILD_MSVC)
-		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
-		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-		animatedObject->AddComponent<Rigidbody>(0.0f);
-		animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
-		animatedObject->AddComponent<MeshRender>();
-		animatedObject->AddComponent<ShadowRender>();
-#endif
+//		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
+//		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+//		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+//	//	animatedObject->AddComponent<Rigidbody>(0.0f);
+//	//	animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
+//		animatedObject->AddComponent<MeshRender>();
+//		animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
@@ -131,7 +129,7 @@ namespace test
 			{
 				auto cube = GetStructure()->CreateEntity(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
 				cube->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
+				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))], nullptr, 0.1f, 0.3f);
 				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 				cube->AddComponent<ColliderCube>();
 				cube->AddComponent<MeshRender>();
@@ -141,7 +139,7 @@ namespace test
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
+		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f);
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
@@ -151,14 +149,14 @@ namespace test
 		auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3(0.0f, 10.0f, 0.0f), Vector3(), 3.0f));
 		teapotCone->SetParent(teapot);
 		teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
-		teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.0f, 1.0f);
+		teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f);
 		teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
 		teapotCone->AddComponent<MeshRender>();
 		teapotCone->AddComponent<ShadowRender>();
 
 		auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.0f, 1.0f);
+		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.1f, 0.7f);
 	//	teapot2->AddComponent<Rigidbody>(1.0f);
 	//	teapot2->AddComponent<ColliderConvexHull>();
 		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);
@@ -168,7 +166,7 @@ namespace test
 
 		auto teapot3 = GetStructure()->CreateEntity(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.0f, 1.0f);
+		teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f);
 	//	teapot3->AddComponent<Rigidbody>(1.0f);
 	//	teapot3->AddComponent<ColliderConvexHull>();
 		teapot3->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 2);
@@ -215,9 +213,9 @@ namespace test
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
 		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
-			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
+			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.12f, 0.8f);
 			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
-			sphere->AddComponent<NameTag>("Sphere", 0.6f);
+		//	sphere->AddComponent<NameTag>("Sphere", 0.6f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 

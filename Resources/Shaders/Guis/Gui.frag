@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 1) uniform UboObject
+layout(binding = 1) uniform UboObject
 {
 	float aspectRatio;
 	mat4 modelMatrix;
@@ -17,7 +17,7 @@ layout(set = 0, binding = 1) uniform UboObject
 	vec4 ninePatches;
 } object;
 
-layout(set = 0, binding = 2) uniform sampler2D samplerColour;
+layout(binding = 2) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUv;
 

@@ -124,7 +124,7 @@ If you installed Acid using only system libs, then `find_package(Acid)` will wor
 When using `find_package(Acid)` the imported target `Acid::Acid` will be created.  
 The `ACID_RESOURCES_DIR` variable will also be available, which will point to the on-disk location of `Acid/Resources` (if installed).
 
-[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/) and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
+[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/), [OpenAL](https://www.openal.org/downloads/), and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
 
 Make sure you have environment variables `VULKAN_SDK` and `OPENALDIR` set to the paths you have Vulkan and OpenAL installed into.
 

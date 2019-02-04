@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboScene
+layout(binding = 0) uniform UboScene
 {
 	mat4 projection;
 	mat4 view;
@@ -14,12 +14,12 @@ struct Instance
 	vec4 diffuse;
 };
 
-layout(set = 0, binding = 1) buffer Instances
+layout(binding = 1) buffer Instances
 {
 	Instance data[];
 } instances;
 
-layout(set = 0, location = 0) in vec3 inPosition;
+layout(location = 0) in vec3 inPosition;
 
 layout(location = 0) out vec4 outDiffuse;
 
