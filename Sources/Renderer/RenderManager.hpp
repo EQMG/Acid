@@ -16,12 +16,11 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new render manager, once created fill <seealso cref="#m_renderpassCreates"/> with renderpasses.
+		/// Creates a new render manager.
 		/// </summary>
 		explicit RenderManager() :
 			m_started(false),
-			m_rendererContainer(RendererContainer()),
-			m_renderpassCreates(std::vector<RenderpassCreate>())
+			m_rendererContainer(RendererContainer())
 		{
 		}
 
@@ -45,7 +44,5 @@ namespace acid
 
 		bool m_started;
 		RendererContainer m_rendererContainer;
-	protected:
-		std::vector<RenderpassCreate> m_renderpassCreates;
 	};
 }

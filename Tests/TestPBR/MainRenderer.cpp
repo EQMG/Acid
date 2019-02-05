@@ -16,13 +16,19 @@ namespace test
 {
 	MainRenderer::MainRenderer()
 	{
+	}
+
+	void MainRenderer::Start()
+	{
+		std::vector<RenderStage *> renderStages = {};
+
 		std::vector<Attachment> renderpassImages0 = {
 			Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM)
 		};
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0})
 		};
-		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096));
+		renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096)));
 
 		std::vector<Attachment> renderpassImages1 = {
 			Attachment(0, "depth", Attachment::Type::Depth, false),
@@ -38,12 +44,11 @@ namespace test
 			SubpassType(1, {0, 6}),
 			SubpassType(2, {0, 1})
 		};
-		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages1, renderpassSubpasses1));
-	}
+		renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages1, renderpassSubpasses1)));
+		Renderer::Get()->SetRenderStages(renderStages);
 
-	void MainRenderer::Start()
-	{
 		auto &rendererContainer = GetRendererContainer();
+		rendererContainer.Clear();
 	//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
 
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));

@@ -13,7 +13,7 @@
 
 namespace acid
 {
-	static const uint32_t MAX_LIGHTS = 32;
+	static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 	RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type) :
 		RenderPipeline(pipelineStage),
@@ -43,7 +43,7 @@ namespace acid
 			if (m_skybox != skybox)
 			{
 				m_skybox = skybox;
-				m_ibl = ComputeIbl(m_skybox);
+			//	m_ibl = ComputeIbl(m_skybox);
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace acid
 		m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
 		m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 		m_descriptorSet.Push("samplerBrdf", m_brdf);
-		m_descriptorSet.Push("samplerIbl", m_skybox);
+		m_descriptorSet.Push("samplerIbl", m_skybox); // m_ibl
 
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 

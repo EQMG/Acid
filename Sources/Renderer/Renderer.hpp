@@ -56,6 +56,8 @@ namespace acid
 
 		RenderStage *GetRenderStage(const uint32_t &index) const;
 
+		void SetRenderStages(const std::vector<RenderStage *> &renderStages);
+
 		const Descriptor *GetAttachment(const std::string &name) const;
 
 		const Swapchain *GetSwapchain() const { return m_swapchain.get(); }
@@ -73,8 +75,6 @@ namespace acid
 		void CreateCommandPool();
 
 		void CreatePipelineCache();
-
-		void CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates);
 
 		void RecreatePass(RenderStage &renderStage);
 

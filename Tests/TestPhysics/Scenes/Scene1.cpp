@@ -86,13 +86,13 @@ namespace test
 		auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated model.
-//		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
-//		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-//		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-//	//	animatedObject->AddComponent<Rigidbody>(0.0f);
-//	//	animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
-//		animatedObject->AddComponent<MeshRender>();
-//		animatedObject->AddComponent<ShadowRender>();
+		/*auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
+		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+	//	animatedObject->AddComponent<Rigidbody>(0.0f);
+	//	animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
+		animatedObject->AddComponent<MeshRender>();
+		animatedObject->AddComponent<ShadowRender>();*/
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));

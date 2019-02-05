@@ -29,6 +29,8 @@ namespace acid
 
 		m_pipeline.BindPipeline(commandBuffer);
 
+	//	vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), 1.25f, 0.0f, 1.75f);
+
 		auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
 		for (const auto &shadowRender : sceneShadowRenders)

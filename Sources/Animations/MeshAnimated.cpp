@@ -61,7 +61,7 @@ namespace acid
 		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"),
-		                                                  file.GetMetadata()->FindChild("library_visual_scenes"));
+			file.GetMetadata()->FindChild("library_visual_scenes"));
 		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 		m_animator->DoAnimation(m_animation.get());
 	}
