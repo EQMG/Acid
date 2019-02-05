@@ -4,7 +4,7 @@
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
-#include <BulletCollision/BroadphaseCollision/btAxisSweep3.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletDynamics/ConstraintSolver/btNNCGConstraintSolver.h>
@@ -14,6 +14,7 @@
 #include <BulletDynamics/MLCPSolvers/btLemkeSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <LinearMath/btAlignedObjectArray.h>
 #include "Engine/Engine.hpp"
 #include "Scenes/Entity.hpp"
 #include "Physics/Colliders/Collider.hpp"
@@ -23,10 +24,11 @@ namespace acid
 {
 	ScenePhysics::ScenePhysics() :
 		m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
-		m_broadphase(std::make_unique<btAxisSweep3>(btVector3(-1000.0f, -1000.0f, -1000.0f), btVector3(1000.0f, 1000.0f, 1000.0f))),
+		m_broadphase(std::make_unique<btDbvtBroadphase>()),
 		m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
 		m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
 		m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
+		m_collisionShapes(std::make_unique<btAlignedObjectArray<btCollisionShape *>>()),
 		m_pairsLastUpdate(CollisionPairs()),
 		m_gravity(Vector3(0.0f, -9.81f, 0.0f)),
 		m_airDensity(1.2f)

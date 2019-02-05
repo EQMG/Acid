@@ -19,7 +19,7 @@ namespace acid
 		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
 			if (GetParent()->IsSelected() && !m_updating && m_scroll->IsEnabled())
 			{
-				Vector3 position = Vector2::Zero;
+				Vector2 position = Vector2::Zero;
 				position[m_index] = ScrollByDelta(-0.06f * (m_index == 0 ? xOffset : yOffset));
 				m_scroll->GetRectangle().SetPosition(position);
 			}
@@ -39,7 +39,7 @@ namespace acid
 				m_updating = false;
 			}
 
-			Vector3 position = Vector2::Zero;
+			Vector2 position = Vector2::Zero;
 			position[m_index] = ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 			m_scroll->GetRectangle().SetPosition(position);
 			CancelEvent(MouseButton::Left);

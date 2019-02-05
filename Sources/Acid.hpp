@@ -211,7 +211,6 @@
 #include "Scenes/ScenePhysics.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Scenes/SceneStructure.hpp"
-#include "Serialized/DataStream.hpp"
 #include "Serialized/Json/Json.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Serialized/Xml/Xml.hpp"

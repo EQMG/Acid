@@ -79,7 +79,7 @@ namespace acid
 		float m_frictionSpinning;
 
 		std::unique_ptr<btCollisionShape> m_shape;
-		std::unique_ptr<btCollisionObject> m_body;
+		btCollisionObject *m_body;
 
 		std::vector<std::unique_ptr<Force>> m_forces;
 

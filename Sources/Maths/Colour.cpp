@@ -1,8 +1,6 @@
 #include "Colour.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 #include "Maths.hpp"
@@ -27,14 +25,6 @@ namespace acid
 	const Colour Colour::Purple = Colour("#800080");
 	const Colour Colour::Fuchsia = Colour("#FF00FF");
 
-	Colour::Colour() :
-		m_r(0.0f),
-		m_g(0.0f),
-		m_b(0.0f),
-		m_a(1.0f)
-	{
-	}
-
 	Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 		m_r(r),
 		m_g(g),
@@ -51,14 +41,6 @@ namespace acid
 		m_g = static_cast<float>(g) / 255.0f;
 		m_b = static_cast<float>(b) / 255.0f;
 		m_a = a;
-	}
-
-	Colour::Colour(const Colour &source) :
-		m_r(source.m_r),
-		m_g(source.m_g),
-		m_b(source.m_b),
-		m_a(source.m_a)
-	{
 	}
 
 	Colour::Colour(const Vector3 &source, const float &a) :
@@ -323,16 +305,6 @@ namespace acid
 	{
 		stream << colour.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Colour &colour)
-	{
-		return stream << colour.m_r << colour.m_g << colour.m_b << colour.m_a;
-	}
-
-	DataStream &operator>>(DataStream &stream, Colour &colour)
-	{
-		return stream >> colour.m_r >> colour.m_g >> colour.m_b >> colour.m_a;
 	}
 
 	std::string Colour::ToString() const

@@ -1,8 +1,6 @@
 #include "Vector4.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Colour.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
@@ -14,14 +12,6 @@ namespace acid
 	const Vector4 Vector4::One = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	const Vector4 Vector4::PositiveInfinity = Vector4(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 	const Vector4 Vector4::NegativeInfinity = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
-
-	Vector4::Vector4() :
-		m_x(0.0f),
-		m_y(0.0f),
-		m_z(0.0f),
-		m_w(1.0f)
-	{
-	}
 
 	Vector4::Vector4(const float &x, const float &y, const float &z, const float &w) :
 		m_x(x),
@@ -45,14 +35,6 @@ namespace acid
 		m_y(source.m_y),
 		m_z(source.m_z),
 		m_w(w)
-	{
-	}
-
-	Vector4::Vector4(const Vector4 &source) :
-		m_x(source.m_x),
-		m_y(source.m_y),
-		m_z(source.m_z),
-		m_w(source.m_w)
 	{
 	}
 
@@ -363,16 +345,6 @@ namespace acid
 	{
 		stream << vector.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Vector4 &vector)
-	{
-		return stream << vector.m_x << vector.m_y << vector.m_z << vector.m_w;
-	}
-
-	DataStream &operator>>(DataStream &stream, Vector4 &vector)
-	{
-		return stream >> vector.m_x >> vector.m_y >> vector.m_z >> vector.m_w;
 	}
 
 	std::string Vector4::ToString() const

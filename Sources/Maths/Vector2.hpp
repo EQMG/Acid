@@ -3,13 +3,10 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
-	class Vector3;
-	class DataStream;
-	class Metadata;
-
 	/// <summary>
 	/// Holds a 2-tuple vector.
 	/// </summary>
@@ -19,26 +16,9 @@ namespace acid
 		/// <summary>
 		/// Constructor for Vector2.
 		/// </summary>
-		Vector2();
-
-		/// <summary>
-		/// Constructor for Vector2.
-		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
-		Vector2(const float &x, const float &y);
-
-		/// <summary>
-		/// Constructor for Vector2.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Vector2(const Vector2 &source);
-
-		/// <summary>
-		/// Constructor for Vector2.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Vector2(const Vector3 &source);
+		Vector2(const float &x = 0.0f, const float &y = 0.0f);
 
 		/// <summary>
 		/// Adds this vector to another vector.
@@ -289,10 +269,6 @@ namespace acid
 		Vector2 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector2 &vector);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Vector2 &vector);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Vector2 &vector);
 
 		std::string ToString() const;
 

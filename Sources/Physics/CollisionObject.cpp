@@ -81,7 +81,7 @@ namespace acid
 
 	void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore)
 	{
-		m_body->setIgnoreCollisionCheck(other->m_body.get(), ignore);
+		m_body->setIgnoreCollisionCheck(other->m_body, ignore);
 	}
 
 	void CollisionObject::SetFriction(const float &friction)

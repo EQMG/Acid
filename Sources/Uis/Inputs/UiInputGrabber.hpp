@@ -50,7 +50,7 @@ namespace acid
 	{
 	public:
 		UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const uint32_t &GetPort() const { return m_port; }
 
@@ -81,7 +81,7 @@ namespace acid
 	{
 	public:
 		UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const Key &GetValue() const { return m_value; }
 
@@ -107,7 +107,7 @@ namespace acid
 	{
 	public:
 		UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
-			const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const MouseButton &GetValue() const { return m_value; }
 

@@ -4,7 +4,6 @@
 
 namespace acid
 {
-	class DataStream;
 	class Metadata;
 
 	/// <summary>
@@ -48,10 +47,6 @@ namespace acid
 		void Encode(Metadata &metadata) const;
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Fog &fog);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Fog &fog);
 
 		std::string ToString() const;
 	private:

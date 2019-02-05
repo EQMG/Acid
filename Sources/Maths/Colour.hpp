@@ -2,14 +2,13 @@
 
 #include <ostream>
 #include <string>
+#include "Serialized/Metadata.hpp"
 #include "Engine/Exports.hpp"
 
 namespace acid
 {
 	class Vector3;
 	class Vector4;
-	class DataStream;
-	class Metadata;
 
 	/// <summary>
 	/// Holds a RGBA colour.
@@ -20,16 +19,11 @@ namespace acid
 		/// <summary>
 		/// Constructor for colour.
 		/// </summary>
-		Colour();
-
-		/// <summary>
-		/// Constructor for colour.
-		/// </summary>
 		/// <param name="r"> The new R value. </param>
 		/// <param name="g"> The new G value. </param>
 		/// <param name="b"> The new B value. </param>
 		/// <param name="a"> The new A value. </param>
-		Colour(const float &r, const float &g, const float &b, const float &a = 1.0f);
+		Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f);
 
 		/// <summary>
 		/// Constructor for colour.
@@ -37,12 +31,6 @@ namespace acid
 		/// <param name="hex"> The new values from HEX. </param>
 		/// <param name="a"> The new A value. </param>
 		Colour(const std::string &hex, const float &a = 1.0f);
-
-		/// <summary>
-		/// Constructor for colour.
-		/// </summary>
-		/// <param name="source"> Creates this colour out of a existing one. </param>
-		Colour(const Colour &source);
 
 		/// <summary>
 		/// Constructor for colour.
@@ -219,10 +207,6 @@ namespace acid
 		Colour &operator/=(const float &value);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Colour &colour);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Colour &colour);
 
 		std::string ToString() const;
 

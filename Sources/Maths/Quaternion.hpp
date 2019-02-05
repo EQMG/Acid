@@ -2,14 +2,13 @@
 
 #include <ostream>
 #include <string>
+#include "Serialized/Metadata.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
 namespace acid
 {
 	class Vector3;
-	class DataStream;
-	class Metadata;
 
 	/// <summary>
 	/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
@@ -20,24 +19,11 @@ namespace acid
 		/// <summary>
 		/// Constructor for Quaternion.
 		/// </summary>
-		Quaternion();
-
-		/// <summary>
-		/// Constructor for Quaternion.
-		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
-		Quaternion(const float &x, const float &y, const float &z, const float &w);
-
-		/// <summary>
-		/// Constructor for Quaternion.
-		/// </summary>
-		/// <param name="pitch"> Start pitch. </param>
-		/// <param name="yaw"> Start yaw. </param>
-		/// <param name="roll"> Start roll. </param>
-		Quaternion(const float &pitch, const float &yaw, const float &roll);
+		Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -45,12 +31,6 @@ namespace acid
 		/// <param name="source"> Creates this quaternion out of a existing vector (pitch, yaw roll). </param>>
 		/// <param name="w"> Start w. </param>
 		Quaternion(const Vector3 &source, const float &w = 1.0f);
-
-		/// <summary>
-		/// Constructor for Quaternion.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Quaternion(const Quaternion &source);
 
 		/// <summary>
 		/// Constructor for Quaternion.
@@ -239,10 +219,6 @@ namespace acid
 		Quaternion &operator*=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Quaternion &quaternion);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Quaternion &quaternion);
 
 		std::string ToString() const;
 

@@ -53,6 +53,10 @@ target_compile_definitions(Acid
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
 		# Works on both single and mutli configuration
 		ACID_VERBOSE # $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_VERBOSE>
+		# 32-bit
+		$<$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>:ACID_BUILD_32BIT>
+		# 64-bit
+		$<$<EQUAL:8,${CMAKE_SIZEOF_VOID_P}>:ACID_BUILD_64BIT>
 		# Windows
 		$<$<PLATFORM_ID:Windows>:ACID_BUILD_WINDOWS WIN32_LEAN_AND_MEAN NOMINMAX>
 		# Linux
@@ -70,6 +74,11 @@ target_compile_options(Acid
 		PUBLIC
 		# Disables symbol warnings.
 		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592>
+		PRIVATE
+		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
+		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
+		# Enabled SSE2 for MSVC for 32-bit.
+		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		)
 
 target_include_directories(Acid

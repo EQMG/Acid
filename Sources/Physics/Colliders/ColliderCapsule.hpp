@@ -33,7 +33,7 @@ namespace acid
 
 		void SetHeight(const float &height);
 	private:
-		std::unique_ptr<btCapsuleShape> m_shape;
+		btCapsuleShape *m_shape;
 		float m_radius;
 		float m_height;
 	};

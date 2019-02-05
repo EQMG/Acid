@@ -1,8 +1,6 @@
 #include "Vector3.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Colour.hpp"
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"
@@ -22,13 +20,6 @@ namespace acid
 	const Vector3 Vector3::PositiveInfinity = Vector3(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 	const Vector3 Vector3::NegativeInfinity = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-	Vector3::Vector3() :
-		m_x(0.0f),
-		m_y(0.0f),
-		m_z(0.0f)
-	{
-	}
-
 	Vector3::Vector3(const float &x, const float &y, const float &z) :
 		m_x(x),
 		m_y(y),
@@ -40,13 +31,6 @@ namespace acid
 		m_x(source.m_x),
 		m_y(source.m_y),
 		m_z(z)
-	{
-	}
-
-	Vector3::Vector3(const Vector3 &source) :
-		m_x(source.m_x),
-		m_y(source.m_y),
-		m_z(source.m_z)
 	{
 	}
 
@@ -163,7 +147,23 @@ namespace acid
 
 	Quaternion Vector3::ToQuaternion() const
 	{
-		return Quaternion(m_x, m_y, m_z);
+		float sx = std::sin(m_x * Maths::DegToRad * 0.5f);
+		float cx = Maths::CosFromSin(sx, m_x * Maths::DegToRad * 0.5f);
+		float sy = std::sin(m_y * Maths::DegToRad * 0.5f);
+		float cy = Maths::CosFromSin(sy, m_y * Maths::DegToRad * 0.5f);
+		float sz = std::sin(m_z * Maths::DegToRad * 0.5f);
+		float cz = Maths::CosFromSin(sz, m_z * Maths::DegToRad * 0.5f);
+
+		float cycz = cy * cz;
+		float sysz = sy * sz;
+		float sycz = sy * cz;
+		float cysz = cy * sz;
+
+		float w = cx * cycz - sx * sysz;
+		float x = sx * cycz + cx * sysz;
+		float y = cx * sycz - sx * cysz;
+		float z = cx * cysz + sx * sycz;
+		return Quaternion(x, y, z, w);
 	}
 
 	float Vector3::DistanceSquared(const Vector3 &other) const
@@ -486,16 +486,6 @@ namespace acid
 	{
 		stream << vector.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Vector3 &vector)
-	{
-		return stream << vector.m_x << vector.m_y << vector.m_z;
-	}
-
-	DataStream &operator>>(DataStream &stream, Vector3 &vector)
-	{
-		return stream >> vector.m_x >> vector.m_y >> vector.m_z;
 	}
 
 	std::string Vector3::ToString() const

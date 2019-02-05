@@ -208,7 +208,6 @@ set(_temp_acid_headers
 		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
-		Serialized/DataStream.hpp
 		Serialized/Json/Json.hpp
 		Serialized/Metadata.hpp
 		Serialized/Xml/Xml.hpp
@@ -414,7 +413,6 @@ set(_temp_acid_sources
 		Scenes/ScenePhysics.cpp
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
-		Serialized/DataStream.cpp
 		Serialized/Json/Json.cpp
 		Serialized/Metadata.cpp
 		Serialized/Xml/Xml.cpp

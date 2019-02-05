@@ -1,6 +1,5 @@
 #include "Fog.hpp"
 
-#include "Serialized/DataStream.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -36,16 +35,6 @@ namespace acid
 	{
 		stream << colour.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Fog &fog)
-	{
-		return stream << fog.m_colour << fog.m_density << fog.m_gradient << fog.m_lowerLimit << fog.m_upperLimit;
-	}
-
-	DataStream &operator>>(DataStream &stream, Fog &fog)
-	{
-		return stream >> fog.m_colour >> fog.m_density >> fog.m_gradient >> fog.m_lowerLimit >> fog.m_upperLimit;
 	}
 
 	std::string Fog::ToString() const

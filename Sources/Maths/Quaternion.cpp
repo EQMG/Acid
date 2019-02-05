@@ -1,8 +1,6 @@
 #include "Quaternion.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Matrix3.hpp"
 #include "Maths.hpp"
 
@@ -14,14 +12,6 @@ namespace acid
 	const Quaternion Quaternion::PositiveInfinity = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 	const Quaternion Quaternion::NegativeInfinity = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-	Quaternion::Quaternion() :
-		m_x(0.0f),
-		m_y(0.0f),
-		m_z(0.0f),
-		m_w(1.0f)
-	{
-	}
-
 	Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) :
 		m_x(x),
 		m_y(y),
@@ -30,38 +20,11 @@ namespace acid
 	{
 	}
 
-	Quaternion::Quaternion(const float &pitch, const float &yaw, const float &roll)
-	{
-		float sx = std::sin(pitch * Maths::DegToRad * 0.5f);
-		float cx = Maths::CosFromSin(sx, pitch * Maths::DegToRad * 0.5f);
-		float sy = std::sin(yaw * Maths::DegToRad * 0.5f);
-		float cy = Maths::CosFromSin(sy, yaw * Maths::DegToRad * 0.5f);
-		float sz = std::sin(roll * Maths::DegToRad * 0.5f);
-		float cz = Maths::CosFromSin(sz, roll * Maths::DegToRad * 0.5f);
-
-		float cycz = cy * cz;
-		float sysz = sy * sz;
-		float sycz = sy * cz;
-		float cysz = cy * sz;
-		m_w = cx * cycz - sx * sysz;
-		m_x = sx * cycz + cx * sysz;
-		m_y = cx * sycz - sx * cysz;
-		m_z = cx * cysz + sx * sycz;
-	}
-
 	Quaternion::Quaternion(const Vector3 &source, const float &w) :
 		m_x(source.m_x),
 		m_y(source.m_y),
 		m_z(source.m_z),
 		m_w(w)
-	{
-	}
-
-	Quaternion::Quaternion(const Quaternion &source) :
-		m_x(source.m_x),
-		m_y(source.m_y),
-		m_z(source.m_z),
-		m_w(source.m_w)
 	{
 	}
 
@@ -415,16 +378,6 @@ namespace acid
 	{
 		stream << quaternion.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Quaternion &quaternion)
-	{
-		return stream << quaternion.m_x << quaternion.m_y << quaternion.m_z << quaternion.m_w;
-	}
-
-	DataStream &operator>>(DataStream &stream, Quaternion &quaternion)
-	{
-		return stream >> quaternion.m_x >> quaternion.m_y >> quaternion.m_z >> quaternion.m_w;
 	}
 
 	std::string Quaternion::ToString() const

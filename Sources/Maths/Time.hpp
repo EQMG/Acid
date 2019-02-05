@@ -5,18 +5,12 @@
 
 namespace acid
 {
-	class DataStream;
-
 	/// <summary>
 	/// Represents a time value stored in microseconds.
 	/// </summary>
 	class ACID_EXPORT Time
 	{
 	public:
-		static const Time Zero;
-		static const Time PositiveInfinity;
-		static const Time NegativeInfinity;
-
 		/// <summary>
 		/// Constructor for time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
 		/// </summary>
@@ -110,9 +104,9 @@ namespace acid
 
 		Time &operator%=(const Time &other);
 
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Time &time);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Time &time);
+		static const Time Zero;
+		static const Time PositiveInfinity;
+		static const Time NegativeInfinity;
 	private:
 		int64_t m_microseconds;
 	};

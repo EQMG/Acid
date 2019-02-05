@@ -1,15 +1,13 @@
 #include "Matrix3.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 #include "Matrix2.hpp"
 #include "Matrix4.hpp"
 
 namespace acid
 {
-	const Matrix3 Matrix3::Identity = Matrix3(new float[9]{1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix3 Matrix3::Identity = Matrix3(1.0f);
 	const Matrix3 Matrix3::Zero = Matrix3(0.0f);
 
 	Matrix3::Matrix3(const float &diagonal)
@@ -18,11 +16,6 @@ namespace acid
 		m_rows[0][0] = diagonal;
 		m_rows[1][1] = diagonal;
 		m_rows[2][2] = diagonal;
-	}
-
-	Matrix3::Matrix3(const Matrix3 &source)
-	{
-		memcpy(m_rows, source.m_rows, 3 * 3 * sizeof(float));
 	}
 
 	Matrix3::Matrix3(const Matrix2 &source)
@@ -394,16 +387,6 @@ namespace acid
 	{
 		stream << matrix.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Matrix3 &matrix)
-	{
-		return stream << matrix.m_rows[0] << matrix.m_rows[1] << matrix.m_rows[2];
-	}
-
-	DataStream &operator>>(DataStream &stream, Matrix3 &matrix)
-	{
-		return stream >> matrix.m_rows[0] >> matrix.m_rows[1] >> matrix.m_rows[2];
 	}
 
 	std::string Matrix3::ToString() const
