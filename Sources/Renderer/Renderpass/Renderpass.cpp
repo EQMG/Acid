@@ -5,15 +5,14 @@
 
 namespace acid
 {
-	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
-		m_renderPass(VK_NULL_HANDLE),
-		m_attachments(std::vector<VkAttachmentDescription>()),
-		m_subpasses(std::vector<std::unique_ptr<SubpassDescription>>()),
-		m_dependencies(std::vector<VkSubpassDependency>())
+	Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
+		m_renderpass(VK_NULL_HANDLE)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Creates the renderpasses attachment descriptions,
+		std::vector<VkAttachmentDescription> attachments = {};
+
 		for (const auto &image : renderpassCreate.GetImages())
 		{
 			auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
@@ -33,7 +32,7 @@ namespace acid
 				break;
 			case Attachment::Type::Depth:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				attachment.format = depthStencil.GetFormat();
+				attachment.format = depthFormat;
 				break;
 			case Attachment::Type::Swapchain:
 				attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
@@ -41,10 +40,13 @@ namespace acid
 				break;
 			}
 
-			m_attachments.emplace_back(attachment);
+			attachments.emplace_back(attachment);
 		}
 
 		// Creates each subpass and its dependencies.
+		std::vector<std::unique_ptr<SubpassDescription>> subpasses = {};
+		std::vector<VkSubpassDependency> dependencies = {};
+
 		for (const auto &subpassType : renderpassCreate.GetSubpasses())
 		{
 			// Attachments.
@@ -62,20 +64,20 @@ namespace acid
 					continue;
 				}
 
-				if (renderpassCreate.GetImages().at(*attachment).GetType() == Attachment::Type::Depth)
+				if (attachment->GetType() == Attachment::Type::Depth)
 				{
-					depthAttachment = *attachment;
+					depthAttachment = attachment->GetBinding();
 					continue;
 				}
 
 				VkAttachmentReference attachmentReference = {};
-				attachmentReference.attachment = *attachment;
+				attachmentReference.attachment = attachment->GetBinding();
 				attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				subpassColourAttachments.emplace_back(attachmentReference);
 			}
 
 			// Subpass description.
-			m_subpasses.emplace_back(std::make_unique<SubpassDescription>(VK_PIPELINE_BIND_POINT_GRAPHICS, subpassColourAttachments, depthAttachment));
+			subpasses.emplace_back(std::make_unique<SubpassDescription>(VK_PIPELINE_BIND_POINT_GRAPHICS, subpassColourAttachments, depthAttachment));
 
 			// Subpass dependencies.
 			VkSubpassDependency subpassDependency = {};
@@ -110,12 +112,12 @@ namespace acid
 				subpassDependency.dstSubpass = subpassType.GetBinding();
 			}
 
-			m_dependencies.emplace_back(subpassDependency);
+			dependencies.emplace_back(subpassDependency);
 		}
 
 		std::vector<VkSubpassDescription> subpassDescriptions = {};
 
-		for (const auto &subpass : m_subpasses)
+		for (const auto &subpass : subpasses)
 		{
 			subpassDescriptions.emplace_back(subpass->GetSubpassDescription());
 		}
@@ -123,19 +125,19 @@ namespace acid
 		// Creates the render pass.
 		VkRenderPassCreateInfo renderPassCreateInfo = {};
 		renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-		renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(m_attachments.size());
-		renderPassCreateInfo.pAttachments = m_attachments.data();
+		renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+		renderPassCreateInfo.pAttachments = attachments.data();
 		renderPassCreateInfo.subpassCount = static_cast<uint32_t>(subpassDescriptions.size());
 		renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
-		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(m_dependencies.size());
-		renderPassCreateInfo.pDependencies = m_dependencies.data();
-		Renderer::CheckVk(vkCreateRenderPass(logicalDevice->GetLogicalDevice(), &renderPassCreateInfo, nullptr, &m_renderPass));
+		renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
+		renderPassCreateInfo.pDependencies = dependencies.data();
+		Renderer::CheckVk(vkCreateRenderPass(logicalDevice->GetLogicalDevice(), &renderPassCreateInfo, nullptr, &m_renderpass));
 	}
 
 	Renderpass::~Renderpass()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkDestroyRenderPass(logicalDevice->GetLogicalDevice(), m_renderPass, nullptr);
+		vkDestroyRenderPass(logicalDevice->GetLogicalDevice(), m_renderpass, nullptr);
 	}
 }

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include <algorithm>
 #include <vulkan/vulkan.h>
 #include "Engine/Log.hpp"
 #include "Maths/Colour.hpp"
@@ -83,68 +84,60 @@ namespace acid
 		std::vector<Attachment> m_images;
 		std::vector<SubpassType> m_subpasses;
 		
-		uint32_t m_width;
-		uint32_t m_height;
+		std::optional<uint32_t> m_width;
+		std::optional<uint32_t> m_height;
 		Vector2 m_scale;
 		Vector2 m_offset;
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const uint32_t &width = 0, const uint32_t &height = 0, const Vector2& scale = Vector2::One, const Vector2& offset = Vector2::Zero) :
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
 			m_images(images),
 			m_subpasses(subpasses),
 			m_width(width),
 			m_height(height),
-			m_scale(scale),
-			m_offset(offset)
+			m_scale(Vector2::One),
+			m_offset(Vector2::Zero)
 		{
 		}
 
-		std::optional<uint32_t> GetAttachment(const std::string &name) const
+		std::optional<Attachment> GetAttachment(const std::string &name) const
 		{
-			uint32_t attachment = 0;
+			auto it = std::find_if(m_images.begin(), m_images.end(), [name](const Attachment &a) {
+				return a.GetName() == name;
+			});
 
-			for (const auto &image : m_images)
+			if (it == m_images.end())
 			{
-				if (image.GetName() == name)
-				{
-					return attachment;
-				}
-
-				attachment++;
+				return {};
 			}
 
-		//	Log::Error("Filed to find a renderpass attachment by name: '%i'\n", name.c_str());
-			return {};
+			return *it;
 		}
 
-		std::optional<uint32_t> GetAttachment(const uint32_t &binding) const
+		std::optional<Attachment> GetAttachment(const uint32_t &binding) const
 		{
-			uint32_t attachment = 0;
+			auto it = std::find_if(m_images.begin(), m_images.end(), [binding](const Attachment &a) {
+				return a.GetBinding() == binding;
+			});
 
-			for (const auto &image : m_images)
+			if (it == m_images.end())
 			{
-				if (image.GetBinding() == binding)
-				{
-					return attachment;
-				}
-
-				attachment++;
+				return {};
 			}
 
-		//	Log::Error("Filed to find a renderpass attachment bound to: %i\n", binding);
-			return {};
+			return *it;
 		}
 
 		const std::vector<Attachment> &GetImages() const { return m_images; }
 
 		const std::vector<SubpassType> &GetSubpasses() const { return m_subpasses; }
 
-		const uint32_t &GetWidth() const { return m_width; }
+		const std::optional<uint32_t> &GetWidth() const { return m_width; }
 
-		void SetWidth(const uint32_t &width) { m_width = width; }
+		void SetWidth(const std::optional<uint32_t> &width) { m_width = width; }
 
-		const uint32_t &GetHeight() const { return m_height; }
+		const std::optional<uint32_t> &GetHeight() const { return m_height; }
 
-		void SetHeight(const uint32_t &height) { m_height = height; }
+		void SetHeight(const std::optional<uint32_t> &height) { m_height = height; }
 
 		const Vector2& GetScale() const { return m_scale; }
 

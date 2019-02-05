@@ -59,8 +59,6 @@ namespace acid
 
 		if (!m_renderManager->m_started)
 		{
-			m_renderManager->GetRendererContainer().Clear();
-			CreateRenderpass(m_renderManager->m_renderpassCreates);
 			m_renderManager->Start();
 			m_renderManager->m_started = true;
 		}
@@ -310,40 +308,7 @@ namespace acid
 		return m_renderStages.at(index).get();
 	}
 
-	const Descriptor *Renderer::GetAttachment(const std::string &name) const
-	{
-		for (const auto &renderStage : m_renderStages) // TODO: Generate a map on creation.
-		{
-			auto attachment = renderStage->GetAttachment(name);
-
-			if (attachment != nullptr)
-			{
-				return attachment;
-			}
-		}
-
-		return nullptr;
-	}
-
-	void Renderer::CreateCommandPool()
-	{
-		auto graphicsFamily = m_logicalDevice->GetGraphicsFamily();
-
-		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
-		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
-		Renderer::CheckVk(vkCreateCommandPool(m_logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
-	}
-
-	void Renderer::CreatePipelineCache()
-	{
-		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
-		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-		Renderer::CheckVk(vkCreatePipelineCache(m_logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
-	}
-
-	void Renderer::CreateRenderpass(const std::vector<RenderpassCreate> &renderpassCreates)
+	void Renderer::SetRenderStages(const std::vector<RenderStage *> &renderStages)
 	{
 		VkExtent2D displayExtent = {
 			Window::Get()->GetWidth(),
@@ -386,11 +351,44 @@ namespace acid
 			}
 		}
 
-		for (const auto &renderpassCreate : renderpassCreates)
+		for (const auto &renderStage : renderStages)
 		{
-			m_renderStages.emplace_back(std::make_unique<RenderStage>(static_cast<uint32_t>(m_renderStages.size()),
-				renderpassCreate, *m_swapchain));
+			renderStage->Rebuild(*m_swapchain);
+			m_renderStages.emplace_back(renderStage);
 		}
+	}
+
+	const Descriptor *Renderer::GetAttachment(const std::string &name) const
+	{
+		for (const auto &renderStage : m_renderStages) // TODO: Generate a map on creation.
+		{
+			auto attachment = renderStage->GetAttachment(name);
+
+			if (attachment != nullptr)
+			{
+				return attachment;
+			}
+		}
+
+		return nullptr;
+	}
+
+	void Renderer::CreateCommandPool()
+	{
+		auto graphicsFamily = m_logicalDevice->GetGraphicsFamily();
+
+		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
+		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
+		Renderer::CheckVk(vkCreateCommandPool(m_logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
+	}
+
+	void Renderer::CreatePipelineCache()
+	{
+		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
+		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
+		Renderer::CheckVk(vkCreatePipelineCache(m_logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 	}
 
 	void Renderer::RecreatePass(RenderStage &renderStage)

@@ -6,8 +6,7 @@
 
 namespace acid
 {
-	RenderStage::RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain) :
-		m_stageIndex(stageIndex),
+	RenderStage::RenderStage(const RenderpassCreate &renderpassCreate) :
 		m_renderpassCreate(renderpassCreate),
 		m_renderpass(nullptr),
 		m_depthStencil(nullptr),
@@ -18,9 +17,8 @@ namespace acid
 		m_depthAttachment({}),
 		m_swapchainAttachment({}),
 		m_subpassMultisampled(std::vector<bool>(m_renderpassCreate.GetSubpasses().size())),
-		m_fitDisplaySize(m_renderpassCreate.GetHeight() == 0),
-		m_width(0.0f),
-		m_height(0.0f),
+		m_width(0),
+		m_height(0),
 		m_outOfDate(false)
 	{
 		for (const auto &image : m_renderpassCreate.GetImages())
@@ -60,8 +58,6 @@ namespace acid
 
 			m_clearValues.emplace_back(clearValue);
 		}
-
-		Rebuild(swapchain);
 	}
 
 	void RenderStage::Update()
@@ -69,15 +65,22 @@ namespace acid
 		uint32_t lastWidth = m_width;
 		uint32_t lastHeight = m_height;
 
-		if (m_fitDisplaySize)
+		if (m_renderpassCreate.GetWidth())
 		{
-			m_width = Window::Get()->GetWidth();
-			m_height = Window::Get()->GetHeight();
+			m_width = *m_renderpassCreate.GetWidth();
 		}
 		else
 		{
-			m_width = m_renderpassCreate.GetWidth();
-			m_height = m_renderpassCreate.GetHeight();
+			m_width = Window::Get()->GetWidth();
+		}
+
+		if (m_renderpassCreate.GetHeight())
+		{
+			m_height = *m_renderpassCreate.GetHeight();
+		}
+		else
+		{
+			m_height = Window::Get()->GetHeight();
 		}
 
 		m_width = static_cast<uint32_t>(m_renderpassCreate.GetScale().m_x * static_cast<float>(m_width));
@@ -107,7 +110,7 @@ namespace acid
 
 		if (m_renderpass == nullptr)
 		{
-			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, *m_depthStencil, surface->GetFormat().format, msaaSamples);
+			m_renderpass = std::make_unique<Renderpass>(m_renderpassCreate, m_depthStencil->GetFormat(), surface->GetFormat().format, msaaSamples);
 		}
 
 		m_framebuffers = std::make_unique<Framebuffers>(m_width, m_height, m_renderpassCreate, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
@@ -129,7 +132,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("Renderstage '%i' built in %ims\n", m_stageIndex, (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Renderstage built in %ims\n", (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
 

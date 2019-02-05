@@ -8,8 +8,7 @@ namespace acid
 {
 	class DepthStencil;
 
-	class ACID_EXPORT Renderpass :
-		public NonCopyable
+	class ACID_EXPORT Renderpass
 	{
 	public:
 		class SubpassDescription :
@@ -40,15 +39,12 @@ namespace acid
 			VkAttachmentReference m_depthStencilAttachment;
 		};
 
-		Renderpass(const RenderpassCreate &renderpassCreate, const DepthStencil &depthStencil, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Renderpass();
 
-		const VkRenderPass &GetRenderpass() const { return m_renderPass; }
+		const VkRenderPass &GetRenderpass() const { return m_renderpass; }
 	private:
-		VkRenderPass m_renderPass;
-		std::vector<VkAttachmentDescription> m_attachments;
-		std::vector<std::unique_ptr<SubpassDescription>> m_subpasses;
-		std::vector<VkSubpassDependency> m_dependencies;
+		VkRenderPass m_renderpass;
 	};
 }

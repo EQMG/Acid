@@ -14,7 +14,7 @@ namespace acid
 	class ACID_EXPORT RenderStage
 	{
 	public:
-		RenderStage(const uint32_t &stageIndex, const RenderpassCreate &renderpassCreate, const Swapchain &swapchain);
+		RenderStage(const RenderpassCreate &renderpassCreate);
 
 		void Update();
 
@@ -67,12 +67,9 @@ namespace acid
 		bool HasSwapchain() const { return m_swapchainAttachment.has_value(); }
 
 		bool IsMultisampled(const uint32_t &subpass) const { return m_subpassMultisampled[subpass]; }
-
-		const bool &FitDisplaySize() const { return m_fitDisplaySize; }
 	private:
 		friend class Renderer;
 
-		uint32_t m_stageIndex;
 		RenderpassCreate m_renderpassCreate;
 
 		std::unique_ptr<Renderpass> m_renderpass;
@@ -86,8 +83,6 @@ namespace acid
 		std::optional<Attachment> m_depthAttachment;
 		std::optional<Attachment> m_swapchainAttachment;
 		std::vector<bool> m_subpassMultisampled;
-
-		bool m_fitDisplaySize;
 
 		uint32_t m_width;
 		uint32_t m_height;
