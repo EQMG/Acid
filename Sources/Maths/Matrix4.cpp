@@ -1,8 +1,6 @@
 #include "Matrix4.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Matrix2.hpp"
 #include "Matrix3.hpp"
 #include "Quaternion.hpp"
@@ -11,7 +9,7 @@
 
 namespace acid
 {
-	const Matrix4 Matrix4::Identity = Matrix4(new float[16]{1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix4 Matrix4::Identity = Matrix4(1.0f);
 	const Matrix4 Matrix4::Zero = Matrix4(0.0f);
 
 	Matrix4::Matrix4(const float &diagonal)
@@ -21,11 +19,6 @@ namespace acid
 		m_rows[1][1] = diagonal;
 		m_rows[2][2] = diagonal;
 		m_rows[3][3] = diagonal;
-	}
-
-	Matrix4::Matrix4(const Matrix4 &source)
-	{
-		memcpy(m_rows, source.m_rows, 4 * sizeof(Vector4));
 	}
 
 	Matrix4::Matrix4(const Matrix2 &source)
@@ -628,16 +621,6 @@ namespace acid
 	{
 		stream << matrix.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Matrix4 &matrix)
-	{
-		return stream << matrix.m_rows[0] << matrix.m_rows[1] << matrix.m_rows[2] << matrix.m_rows[3];
-	}
-
-	DataStream &operator>>(DataStream &stream, Matrix4 &matrix)
-	{
-		return stream >> matrix.m_rows[0] >> matrix.m_rows[1] >> matrix.m_rows[2] >> matrix.m_rows[3];
 	}
 
 	std::string Matrix4::ToString() const

@@ -74,8 +74,6 @@ namespace acid
 	private:
 		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape* shape);
 
-		std::unique_ptr<btKinematicCharacterController> m_controller;
-
 		Vector3 m_gravity;
 		Vector3 m_up;
 		float m_stepHeight;
@@ -85,5 +83,6 @@ namespace acid
 		bool m_interpolate;
 
 		btPairCachingGhostObject *m_ghostObject;
+		btKinematicCharacterController* m_controller;
 	};
 }

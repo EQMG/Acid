@@ -2,14 +2,12 @@
 
 #include "Engine/Exports.hpp"
 #include "Scenes/Component.hpp"
+#include "Serialized/Metadata.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
 namespace acid
 {
-	class DataStream;
-	class Metadata;
-
 	/// <summary>
 	/// Holds position, rotation, and scale components.
 	/// </summary>
@@ -81,10 +79,6 @@ namespace acid
 		Transform &operator*=(const Transform &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Transform &transform);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Transform &transform);
 
 		std::string ToString() const;
 

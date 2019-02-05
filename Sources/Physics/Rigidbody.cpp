@@ -26,7 +26,7 @@ namespace acid
 
 	Rigidbody::~Rigidbody()
 	{
-		btRigidBody *body = btRigidBody::upcast(m_body.get());
+		btRigidBody *body = btRigidBody::upcast(m_body);
 
 		if (body && body->getMotionState())
 		{
@@ -37,7 +37,8 @@ namespace acid
 
 		if (physics != nullptr)
 		{
-			physics->GetDynamicsWorld()->removeCollisionObject(m_body.get());
+			// FIXME: Are these being deleted?
+			physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody);
 		}
 	}
 
@@ -59,7 +60,7 @@ namespace acid
 		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 		m_rigidBody->setUserPointer(this);
-		m_body.reset(m_rigidBody);
+		m_body = m_rigidBody;
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody);
 		m_rigidBody->activate(true);
 		RecalculateMass();
@@ -88,7 +89,7 @@ namespace acid
 
 		auto &transform = GetParent()->GetLocalTransform();
 		btTransform motionTransform;
-		m_motionState->getWorldTransform(motionTransform);
+		m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
 		transform = Collider::Convert(motionTransform, transform.GetScaling());
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));

@@ -9,6 +9,12 @@ namespace test
 {
 	MainRenderer::MainRenderer()
 	{
+	}
+
+	void MainRenderer::Start()
+	{
+		std::vector<RenderStage *> renderStages = {};
+
 		std::vector<Attachment> renderpassImages0 = {
 			Attachment(0, "depth", Attachment::Type::Depth),
 			Attachment(1, "swapchain", Attachment::Type::Swapchain)
@@ -16,11 +22,10 @@ namespace test
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0, 1})
 		};
-		m_renderpassCreates.emplace_back(RenderpassCreate(renderpassImages0, renderpassSubpasses0));
-	}
+		renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages0, renderpassSubpasses0)));
 
-	void MainRenderer::Start()
-	{
+		Renderer::Get()->SetRenderStages(renderStages);
+
 		auto &rendererContainer = GetRendererContainer();
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
 		rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));

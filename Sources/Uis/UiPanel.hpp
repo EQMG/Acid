@@ -10,7 +10,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
+		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 		virtual void UpdateObject() override;

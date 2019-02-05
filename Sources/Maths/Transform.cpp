@@ -1,8 +1,6 @@
 ﻿#include "Transform.hpp"
 
 #include "Scenes/Entity.hpp"
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Quaternion.hpp"
 
 namespace acid
@@ -132,16 +130,6 @@ namespace acid
 	{
 		stream << transform.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Transform &transform)
-	{
-		return stream << transform.m_position << transform.m_rotation << transform.m_scaling;
-	}
-
-	DataStream &operator>>(DataStream &stream, Transform &transform)
-	{
-		return stream >> transform.m_position >> transform.m_rotation >> transform.m_scaling;
 	}
 
 	std::string Transform::ToString() const

@@ -13,6 +13,9 @@ class btBroadphaseInterface;
 class btCollisionDispatcher;
 class btConstraintSolver;
 class btDiscreteDynamicsWorld;
+class btCollisionShape;
+template<typename T>
+class btAlignedObjectArray;
 
 namespace acid
 {
@@ -65,6 +68,8 @@ namespace acid
 		btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }
 
 		btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
+
+		btAlignedObjectArray<btCollisionShape *> *GetCollisionShapes() { return m_collisionShapes.get(); }
 	private:
 		void CheckForCollisionEvents();
 
@@ -73,6 +78,7 @@ namespace acid
 		std::unique_ptr<btCollisionDispatcher> m_dispatcher;
 		std::unique_ptr<btConstraintSolver> m_solver;
 		std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
+		std::unique_ptr<btAlignedObjectArray<btCollisionShape *>> m_collisionShapes;
 		CollisionPairs m_pairsLastUpdate;
 
 		Vector3 m_gravity;

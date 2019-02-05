@@ -17,7 +17,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle = UiBound(Vector3::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		virtual void UpdateObject() override;
 

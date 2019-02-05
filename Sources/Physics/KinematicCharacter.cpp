@@ -11,7 +11,6 @@ namespace acid
 {
 	KinematicCharacter::KinematicCharacter(const float &friction) :
 		CollisionObject(friction),
-		m_controller(nullptr),
 		m_gravity(Vector3::Zero),
 		m_up(Vector3::Up),
 		m_stepHeight(0.0f),
@@ -19,7 +18,8 @@ namespace acid
 		m_jumpSpeed(10.0f),
 		m_maxHeight(1.5f),
 		m_interpolate(true),
-		m_ghostObject(nullptr)
+		m_ghostObject(nullptr),
+		m_controller(nullptr)
 	{
 	}
 
@@ -29,8 +29,9 @@ namespace acid
 
 		if (physics != nullptr)
 		{
-			physics->GetDynamicsWorld()->removeAction(m_controller.get());
+			// FIXME: Are these being deleted?
 			physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject);
+			physics->GetDynamicsWorld()->removeAction(m_controller);
 		}
 	}
 
@@ -46,11 +47,10 @@ namespace acid
 		m_ghostObject->setRollingFriction(m_frictionRolling);
 		m_ghostObject->setSpinningFriction(m_frictionSpinning);
 		m_ghostObject->setUserPointer(this);
-		m_body.reset(m_ghostObject);
-
-		m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject, static_cast<btConvexShape *>(m_shape.get()), 0.03f);
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
+		m_body = m_ghostObject;
+
+		m_controller = new btKinematicCharacterController(m_ghostObject, static_cast<btConvexShape *>(m_shape.get()), 0.03f);
 		m_controller->setGravity(Collider::Convert(m_gravity));
 		m_controller->setUp(Collider::Convert(m_up));
 		m_controller->setStepHeight(m_stepHeight);
@@ -58,6 +58,7 @@ namespace acid
 		m_controller->setJumpSpeed(m_jumpSpeed);
 		m_controller->setMaxJumpHeight(m_maxHeight);
 		m_controller->setUpInterpolate(m_interpolate);
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller);
 	}
 
 	void KinematicCharacter::Update()

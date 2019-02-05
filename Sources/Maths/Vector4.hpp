@@ -3,14 +3,13 @@
 #include <ostream>
 #include <string>
 #include "Engine/Exports.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
 	class Colour;
 	class Vector2;
 	class Vector3;
-	class DataStream;
-	class Metadata;
 
 	/// <summary>
 	/// Holds a 4-tuple vector.
@@ -21,16 +20,11 @@ namespace acid
 		/// <summary>
 		/// Constructor for Vector4.
 		/// </summary>
-		Vector4();
-
-		/// <summary>
-		/// Constructor for Vector4.
-		/// </summary>
 		/// <param name="x"> Start x. </param>
 		/// <param name="y"> Start y. </param>
 		/// <param name="z"> Start z. </param>
 		/// <param name="w"> Start w. </param>
-		Vector4(const float &x, const float &y, const float &z, const float &w);
+		Vector4(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
 
 		/// <summary>
 		/// Constructor for Vector4.
@@ -45,12 +39,6 @@ namespace acid
 		/// <param name="source"> Creates this vector out of a existing one. </param>>
 		/// <param name="w"> Start w. </param>
 		Vector4(const Vector3 &source, const float &w = 1.0f);
-
-		/// <summary>
-		/// Constructor for Vector4.
-		/// </summary>
-		/// <param name="source"> Creates this vector out of a existing one. </param>
-		Vector4(const Vector4 &source);
 
 		/// <summary>
 		/// Constructor for Vector4.
@@ -279,10 +267,6 @@ namespace acid
 		Vector4 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector4 &vector);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Vector4 &vector);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Vector4 &vector);
 
 		std::string ToString() const;
 

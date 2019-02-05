@@ -2,14 +2,13 @@
 
 #include <ostream>
 #include <string>
+#include "Serialized/Metadata.hpp"
 #include "Vector2.hpp"
 
 namespace acid
 {
 	class Matrix3;
 	class Matrix4;
-	class DataStream;
-	class Metadata;
 
 	/// <summary>
 	/// Holds a row major 2x2 matrix.
@@ -22,12 +21,6 @@ namespace acid
 		/// </summary>
 		/// <param name="diagonal"> The value set to the diagonals. </param>
 		Matrix2(const float &diagonal = 1.0f);
-
-		/// <summary>
-		/// Constructor for Matrix2.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a existing one. </param>
-		Matrix2(const Matrix2 &source);
 
 		/// <summary>
 		/// Constructor for Matrix2.
@@ -180,10 +173,6 @@ namespace acid
 		Matrix2 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Matrix2 &matrix);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Matrix2 &matrix);
 
 		std::string ToString() const;
 

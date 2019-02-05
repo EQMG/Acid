@@ -1,9 +1,6 @@
 #include "Vector2.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
-#include "Vector3.hpp"
 #include "Maths.hpp"
 
 namespace acid
@@ -17,27 +14,9 @@ namespace acid
 	const Vector2 Vector2::PositiveInfinity = Vector2(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 	const Vector2 Vector2::NegativeInfinity = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-	Vector2::Vector2() :
-		m_x(0.0f),
-		m_y(0.0f)
-	{
-	}
-
 	Vector2::Vector2(const float &x, const float &y) :
 		m_x(x),
 		m_y(y)
-	{
-	}
-
-	Vector2::Vector2(const Vector2 &source) :
-		m_x(source.m_x),
-		m_y(source.m_y)
-	{
-	}
-
-	Vector2::Vector2(const Vector3 &source) :
-		m_x(source.m_x),
-		m_y(source.m_y)
 	{
 	}
 
@@ -365,16 +344,6 @@ namespace acid
 	{
 		stream << vector.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Vector2 &vector)
-	{
-		return stream << vector.m_x << vector.m_y;
-	}
-
-	DataStream &operator>>(DataStream &stream, Vector2 &vector)
-	{
-		return stream >> vector.m_x >> vector.m_y;
 	}
 
 	std::string Vector2::ToString() const

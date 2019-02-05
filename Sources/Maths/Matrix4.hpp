@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <string>
+#include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
@@ -11,8 +12,6 @@ namespace acid
 	class Matrix3;
 	class Quaternion;
 	class Vector2;
-	class DataStream;
-	class Metadata;
 
 	/// <summary>
 	/// Holds a row major 4x4 matrix.
@@ -25,12 +24,6 @@ namespace acid
 		/// </summary>
 		/// <param name="diagonal"> The value set to the diagonals. </param>
 		Matrix4(const float &diagonal = 1.0f);
-
-		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a existing one. </param>
-		Matrix4(const Matrix4 &source);
 
 		/// <summary>
 		/// Constructor for Matrix4.
@@ -294,10 +287,6 @@ namespace acid
 		Matrix4 &operator/=(const float &other);
 
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
-
-		ACID_EXPORT friend DataStream &operator<<(DataStream &stream, const Matrix4 &matrix);
-
-		ACID_EXPORT friend DataStream &operator>>(DataStream &stream, Matrix4 &matrix);
 
 		std::string ToString() const;
 

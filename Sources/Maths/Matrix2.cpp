@@ -1,15 +1,13 @@
 #include "Matrix2.hpp"
 
 #include <cassert>
-#include "Serialized/DataStream.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 
 namespace acid
 {
-	const Matrix2 Matrix2::Identity = Matrix2(new float[4]{1.0f, 0.0f, 0.0f, 1.0f});
+	const Matrix2 Matrix2::Identity = Matrix2(1.0f);
 	const Matrix2 Matrix2::Zero = Matrix2(0.0f);
 
 	Matrix2::Matrix2(const float &diagonal)
@@ -17,11 +15,6 @@ namespace acid
 		memset(m_rows, 0, 2 * 2 * sizeof(float));
 		m_rows[0][0] = diagonal;
 		m_rows[1][1] = diagonal;
-	}
-
-	Matrix2::Matrix2(const Matrix2 &source)
-	{
-		memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 	}
 
 	Matrix2::Matrix2(const Matrix3 &source)
@@ -375,16 +368,6 @@ namespace acid
 	{
 		stream << matrix.ToString();
 		return stream;
-	}
-
-	DataStream &operator<<(DataStream &stream, const Matrix2 &matrix)
-	{
-		return stream << matrix.m_rows[0] << matrix.m_rows[1];
-	}
-
-	DataStream &operator>>(DataStream &stream, Matrix2 &matrix)
-	{
-		return stream >> matrix.m_rows[0] >> matrix.m_rows[1];
 	}
 
 	std::string Matrix2::ToString() const
