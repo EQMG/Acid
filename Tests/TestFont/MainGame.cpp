@@ -51,13 +51,6 @@ namespace test
 		Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 		Renderer::Get()->SetManager(new MainRenderer());
 		Scenes::Get()->SetScene(new Scene1());
-
-		/*Keyboard::Get()->GetOnKey() += [](Key key, InputAction action, bitmask<InputMod> mods) {
-			if (key == Key::L && action == InputAction::Press)
-			{
-				Uis::Get()->GetContainer()->ClearChildren();
-			}
-		};*/
 	}
 
 	MainGame::~MainGame()
