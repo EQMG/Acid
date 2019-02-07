@@ -101,7 +101,7 @@ namespace acid
 
 	float Maths::Lerp(const float &a, const float &b, const float &factor)
 	{
-		return a + factor * (b - a);
+		return a * (1.0f - factor) + b * factor;
 	}
 
 	float Maths::CosLerp(const float &a, const float &b, const float &factor)
