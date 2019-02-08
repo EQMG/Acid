@@ -577,7 +577,7 @@ namespace acid
 
 			for (const auto &[attributeName, attribute] : m_attributes)
 			{
-				result << "  - " << attribute->ToString() << "\n";
+				result << "  - " << attributeName << ": " << attribute->ToString() << "\n";
 			}
 		}
 
@@ -587,7 +587,7 @@ namespace acid
 
 			for (const auto &[uniformName, uniform] : m_uniforms)
 			{
-				result << "  - " << uniform->ToString() << "\n";
+				result << "  - " << uniformName << ": " << uniform->ToString() << "\n";
 			}
 		}
 
@@ -597,11 +597,11 @@ namespace acid
 
 			for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 			{
-				result << "  - " << uniformBlock->ToString() << " \n";
+				result << "  - " << uniformBlockName << ": " << uniformBlock->ToString() << " \n";
 
 				for (const auto &[uniformName, uniform] : uniformBlock->GetUniforms())
 				{
-					result << "	- " << uniform->ToString() << " \n";
+					result << "	- " << uniformName << ": " << uniform->ToString() << " \n";
 				}
 			}
 		}

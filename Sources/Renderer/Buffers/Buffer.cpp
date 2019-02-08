@@ -58,7 +58,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
+		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data));
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 	}
 

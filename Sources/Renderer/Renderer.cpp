@@ -424,7 +424,7 @@ namespace acid
 		if (!m_commandBuffers[m_swapchain->GetActiveImageIndex()]->IsRunning())
 		{
 			Renderer::CheckVk(vkWaitForFences(m_logicalDevice->GetLogicalDevice(), 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
-			m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT);
+			m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 		}
 
 		VkRect2D renderArea = {};
