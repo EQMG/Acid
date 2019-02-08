@@ -22,7 +22,7 @@ namespace acid
 		m_storageLights(StorageHandler()),
 		m_type(type),
 		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_brdf(m_type == Type::Ibl ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),

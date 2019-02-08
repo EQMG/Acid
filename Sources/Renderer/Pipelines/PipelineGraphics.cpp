@@ -15,13 +15,14 @@ namespace acid
 	};
 
 	PipelineGraphics::PipelineGraphics(const Pipeline::Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode, const Depth &depth,
-	    const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
+		const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
 		m_stage(stage),
 		m_shaderStages(shaderStages),
 		m_vertexInputs(vertexInputs),
 		m_mode(mode),
 		m_depth(depth),
+		m_topology(topology),
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
 		m_pushDescriptors(pushDescriptors),
@@ -181,7 +182,7 @@ namespace acid
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 	//	auto &descriptorPools = m_shader->GetDescriptorPools();
-		std::vector<VkDescriptorPoolSize> descriptorPools(6);
+		std::vector<VkDescriptorPoolSize> descriptorPools(6); // TODO: Cleanup!
 		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPools[0].descriptorCount = 4096;
 		descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -240,7 +241,7 @@ namespace acid
 		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		m_inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+		m_inputAssemblyState.topology = m_topology;
 		m_inputAssemblyState.primitiveRestartEnable = VK_FALSE;
 
 		m_rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
@@ -250,18 +251,18 @@ namespace acid
 		m_rasterizationState.cullMode = m_cullMode;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
-		m_rasterizationState.depthBiasConstantFactor = 0.0f;
-		m_rasterizationState.depthBiasClamp = 0.0f;
-		m_rasterizationState.depthBiasSlopeFactor = 0.0f;
+	//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
+	//	m_rasterizationState.depthBiasClamp = 0.0f;
+	//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
 		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
 		m_blendAttachmentStates[0].srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 		m_blendAttachmentStates[0].dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 		m_blendAttachmentStates[0].colorBlendOp = VK_BLEND_OP_ADD;
-		m_blendAttachmentStates[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-		m_blendAttachmentStates[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_ADD;
+		m_blendAttachmentStates[0].srcAlphaBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+		m_blendAttachmentStates[0].dstAlphaBlendFactor = VK_BLEND_FACTOR_DST_ALPHA;
+		m_blendAttachmentStates[0].alphaBlendOp = VK_BLEND_OP_MAX;
 		m_blendAttachmentStates[0].colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
 			VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 

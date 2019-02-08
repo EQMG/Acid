@@ -43,12 +43,14 @@ namespace acid
 		/// <param name="vertexInputs"> The vertex inputs that will be used as a shaders input. </param>
 		/// <param name="pipelineMode"> The mode this pipeline will run in. </param>
 		/// <param name="depthMode"> The depth read/write that will be used. </param>
+		/// <param name="topology"> The topology of the input assembly. </param>
 		/// <param name="polygonMode"> The polygon draw mode. </param>
 		/// <param name="cullMode"> The vertex cull mode. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		PipelineGraphics(const Pipeline::Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite,
-			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
+			const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, 
+			const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
 
 		~PipelineGraphics();
 
@@ -105,6 +107,8 @@ namespace acid
 
 		const Depth &GetDepth() const { return m_depth; }
 
+		const VkPrimitiveTopology &GetTopology() const { return m_topology; }
+
 		const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
 
 		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
@@ -146,6 +150,7 @@ namespace acid
 		std::vector<Shader::VertexInput> m_vertexInputs;
 		Mode m_mode;
 		Depth m_depth;
+		VkPrimitiveTopology m_topology;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
 		bool m_pushDescriptors;
@@ -181,12 +186,13 @@ namespace acid
 	{
 	public:
 		explicit PipelineGraphicsCreate(const std::vector<std::string> &shaderStages = {}, const std::vector<Shader::VertexInput> &vertexInputs = {}, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon,
-			const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
-			const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
+			const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, 
+			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
 			m_mode(mode),
 			m_depth(depth),
+			m_topology(topology),
 			m_polygonMode(polygonMode),
 			m_cullMode(cullMode),
 			m_pushDescriptors(pushDescriptors),
@@ -200,7 +206,7 @@ namespace acid
 		/// <param name="pipelineStage"> The pipelines graphics stage. </param>
 		PipelineGraphics *Create(const Pipeline::Stage &pipelineStage)
 		{
-			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth,
+			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth, m_topology,
 				m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
 		}
 
@@ -236,6 +242,8 @@ namespace acid
 
 		const PipelineGraphics::Depth &GetDepth() const { return m_depth; }
 
+		const VkPrimitiveTopology &GetTopology() const { return m_topology; }
+
 		const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
 
 		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
@@ -249,6 +257,7 @@ namespace acid
 
 		PipelineGraphics::Mode m_mode;
 		PipelineGraphics::Depth m_depth;
+		VkPrimitiveTopology m_topology;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
 		bool m_pushDescriptors;

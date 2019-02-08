@@ -12,7 +12,7 @@ namespace acid
 		RenderPipeline(pipelineStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_pipeline(PipelineGraphics(pipelineStage, shaderStages, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_attachments(std::map<std::string, const Descriptor *>())
 	{
