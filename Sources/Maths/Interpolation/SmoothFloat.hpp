@@ -9,7 +9,7 @@ namespace acid
 	/// A class that smoothly increases its value.
 	/// </summary>
 	template<typename T>
-	class ACID_EXPORT SmoothFloat
+	class SmoothFloat
 	{
 	public:
 		/// <summary>

@@ -19,7 +19,7 @@ namespace acid
 	static void add_outline_point(Outline *o, Vector2 point)
 	{
 		if (o->point_capacity == o->num_of_points)
-			dyn_array_grow((void **) &o->points, &o->point_capacity, sizeof(Vector2));
+			dyn_array_grow(&o->points, &o->point_capacity, sizeof(Vector2));
 
 		o->points[o->num_of_points] = point;
 		//memcpy(o->points[o->num_of_points], point, sizeof(Vector2));

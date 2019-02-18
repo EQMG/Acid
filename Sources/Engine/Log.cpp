@@ -2,7 +2,7 @@
 
 #include <cstring>
 #if defined(ACID_BUILD_WINDOWS)
-#include <windows.h>
+#include <Windows.h>
 #endif
 #include "Files/FileSystem.hpp"
 

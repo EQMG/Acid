@@ -77,14 +77,12 @@ namespace acid
 	std::string Engine::GetDateTime()
 	{
 		time_t rawtime;
-		struct tm *timeinfo;
 		char buffer[80];
 
 		time(&rawtime);
-		timeinfo = localtime(&rawtime);
+		struct tm* timeinfo = localtime(&rawtime);
 
 		strftime(buffer, sizeof(buffer), "%Y-%m-%d-%I%M%S", timeinfo);
-		std::string str = std::string(buffer);
-		return str;
+		return std::string(buffer);
 	}
 }

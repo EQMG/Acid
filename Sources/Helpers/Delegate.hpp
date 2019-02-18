@@ -55,7 +55,7 @@ namespace acid
 	};
 
 	template<typename TReturnType, typename... TArgs>
-	class ACID_EXPORT Delegate<TReturnType(TArgs...)> :
+	class Delegate<TReturnType(TArgs...)> :
 		public NonCopyable
 	{
 	public:

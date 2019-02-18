@@ -2,7 +2,6 @@
 
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid
