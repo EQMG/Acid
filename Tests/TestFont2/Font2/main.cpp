@@ -8,6 +8,7 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
+#include <Maths/Colour.hpp>
 #include "Outline.hpp"
 
 using namespace acid;
@@ -17,8 +18,8 @@ using namespace acid;
 
 #define WIDTH 1280
 #define HEIGHT 720
-#define MAX_VISIBLE_GLYPHS 4096
 
+#define MAX_VISIBLE_GLYPHS 4096
 #define NUMBER_OF_GLYPHS 96
 
 struct CellInfo
@@ -34,6 +35,7 @@ struct GlyphInstance
 	Rect rect;
 	uint32_t glyph_index;
 	float sharpness;
+	Colour colour;
 };
 
 struct HostGlyphInfo
@@ -124,28 +126,13 @@ static uint32_t align_uint32(uint32_t value, uint32_t alignment)
 	return (value + alignment - 1) / alignment * alignment;
 }
 
-static void load_font(Render *r)
+static void load_font(const char *font_face, Render *r)
 {
 	FT_Library library;
 	FT_CHECK(FT_Init_FreeType(&library));
 
 	FT_Face face;
-	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/Alice-Regular.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/Lobster-Regular.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/LobsterTwo-Bold.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/LobsterTwo-Italic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/LobsterTwo-Regular.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-Bold.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-Italic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-Light.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-LightItalic.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-Regular.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-SemiBold.ttf", 0, &face));
-//	FT_CHECK(FT_New_Face(library, "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf", 0, &face));
+	FT_CHECK(FT_New_Face(library, font_face, 0, &face));
 
 	FT_CHECK(FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96));
 
@@ -165,7 +152,6 @@ static void load_font(Render *r)
 
 		hgi->bbox = o->bbox;
 		hgi->advance = face->glyph->metrics.horiAdvance / 64.0f;
-
 
 		total_points += o->num_of_points;
 		total_cells += o->cell_count_x * o->cell_count_y;
@@ -226,12 +212,12 @@ static void create_instance(Render *r)
 	VkApplicationInfo app_info = {};
 	app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	app_info.pNext = NULL;
-	app_info.pApplicationName = "Font rendering demo";
+	app_info.pApplicationName = "Font Renderer";
 	app_info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	app_info.apiVersion = VK_API_VERSION_1_0;
 
 	uint32_t requiredInstanceExtensionCount;
-	const char ** requiredInstanceExtensions = glfwGetRequiredInstanceExtensions(&requiredInstanceExtensionCount);
+	const char **requiredInstanceExtensions = glfwGetRequiredInstanceExtensions(&requiredInstanceExtensionCount);
 
 	VkInstanceCreateInfo instance_info = {};
 	instance_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -641,7 +627,7 @@ static void end_text(Render *r)
 		0, NULL);
 }
 
-static void append_text(Render *r, float x, float y, float scale, std::string text)
+static void append_text(Render *r, float x, float y, float scale, std::string text, Colour colour)
 {
 //	printf("%s\n", text.c_str());
 	for (char c : text)
@@ -664,6 +650,7 @@ static void append_text(Render *r, float x, float y, float scale, std::string te
 		{
 			inst->glyph_index = glyph_index;
 			inst->sharpness = scale;
+			inst->colour = colour;
 
 			r->glyph_instance_count++;
 		}
@@ -672,7 +659,7 @@ static void append_text(Render *r, float x, float y, float scale, std::string te
 	}
 }
 
-static void record_current_command_buffer(Render *r)
+static void record_command_buffer(Render *r)
 {
 	VkCommandBuffer cmd_buf = r->command_buffer;
 
@@ -684,8 +671,8 @@ static void record_current_command_buffer(Render *r)
 
 	begin_text(r);
 
-	append_text(r, 5.0f, 25.0f, 0.02f, "Frame Time: " + String::To(1000.0f / r->fps) + "ms");
-	append_text(r, 5.0f, 55.0f, 0.02f, "Fps: " + String::To(r->fps));
+	append_text(r, 5.0f, 25.0f, 0.02f, "Frame Time: " + String::To(1000.0f / r->fps) + "ms", Colour::Red);
+	append_text(r, 5.0f, 55.0f, 0.02f, "Fps: " + String::To(r->fps), Colour::Green);
 
 	static std::vector<std::string> lines = {
 		"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
@@ -730,7 +717,7 @@ static void record_current_command_buffer(Render *r)
 			r->canvas_scale * (10.0f - r->canvas_offset[0]),
 			r->canvas_scale * (30.0f - r->canvas_offset[1] + i * 30.0f),
 			0.02f * r->canvas_scale,
-			lines[i]);
+			lines[i], Colour::Blue);
 	}
 
 	end_text(r);
@@ -759,12 +746,6 @@ static void record_current_command_buffer(Render *r)
 
 	vkCmdEndRenderPass(cmd_buf);
 	VK_CHECK(vkEndCommandBuffer(cmd_buf));
-}
-
-static void record_command_buffer(Render *r)
-{
-	record_current_command_buffer(r);
-
 }
 
 static void create_command_buffer(Render *r)
@@ -967,9 +948,9 @@ static void stage_buffer(Render *r, VkBuffer buffer, void *data, size_t size)
 	vkFreeMemory(r->device, staging_buffer_memory, NULL);
 }
 
-static void create_storage_buffer(Render *r)
+static void create_storage_buffer(const char *font_face, Render *r)
 {
-	load_font(r);
+	load_font(font_face, r);
 
 	VkBufferCreateInfo storage_ci = {};
 	storage_ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -1100,16 +1081,17 @@ static void create_pipeline(Render *r)
 		{ 0, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE, };
 
 	VkVertexInputAttributeDescription vertex_input_attributes[] = {
-		{ 0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, 0 },
-		{ 1, 0, VK_FORMAT_R32_UINT, 16 },
-		{ 2, 0, VK_FORMAT_R32_SFLOAT, 20 },
+		{ 0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, rect) },
+		{ 1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyph_index) },
+		{ 2, 0, VK_FORMAT_R32_SFLOAT, offsetof(GlyphInstance, sharpness) },
+		{ 3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour) },
 	};
 
 	VkPipelineVertexInputStateCreateInfo vertex_input_state = {};
 	vertex_input_state.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 	vertex_input_state.vertexBindingDescriptionCount = 1;
 	vertex_input_state.pVertexBindingDescriptions = &vertex_input_binding;
-	vertex_input_state.vertexAttributeDescriptionCount = 3;
+	vertex_input_state.vertexAttributeDescriptionCount = 4;
 	vertex_input_state.pVertexAttributeDescriptions = vertex_input_attributes;
 	
 	VkPipelineInputAssemblyStateCreateInfo input_assembly_state = {};
@@ -1205,7 +1187,7 @@ static void create_swap_chain_objects(Render *r)
 	create_command_buffer_fence(r);
 }
 
-static void create_vulkan_objects(Render *r)
+static void create_vulkan_objects(const char *font_face, Render *r)
 {
 	create_instance(r);
 	create_surface(r);
@@ -1214,7 +1196,7 @@ static void create_vulkan_objects(Render *r)
 	create_device(r);
 	create_command_pool(r);
 	create_layout(r);
-	create_storage_buffer(r);
+	create_storage_buffer(font_face, r);
 	create_instance_buffer(r);
 	create_descriptor_pool(r);
 	create_descriptor_set(r);
@@ -1335,8 +1317,8 @@ static void update(Render *r)
 
 static void render_frame(Render *r)
 {
-	VkResult res = vkAcquireNextImageKHR(
-		r->device, r->swapchain, std::numeric_limits<uint32_t>::max(), r->image_available_semaphore, VK_NULL_HANDLE, &r->image_index);
+	VkResult res = vkAcquireNextImageKHR(r->device, r->swapchain, std::numeric_limits<uint32_t>::max(), 
+		r->image_available_semaphore, VK_NULL_HANDLE, &r->image_index);
 
 	if (res == VK_ERROR_OUT_OF_DATE_KHR)
 	{
@@ -1352,7 +1334,7 @@ static void render_frame(Render *r)
 	vkWaitForFences(r->device, 1, &current_fence, VK_TRUE, std::numeric_limits<uint64_t>::max());
 	vkResetFences(r->device, 1, &current_fence);
 
-	record_current_command_buffer(r);
+	record_command_buffer(r);
 
 	VkSemaphore wait_semaphores[] = { r->image_available_semaphore };
 	VkPipelineStageFlags wait_stages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
@@ -1431,7 +1413,7 @@ int main(int argc, const char **args)
 
 	Render render = {};
 	render.canvas_scale = 3.0f;
-	render.target_canvas_scale = 3.0f;
+	render.target_canvas_scale = render.canvas_scale;
 	render.window = window;
 
 	glfwSetWindowUserPointer(window, &render);
@@ -1440,21 +1422,48 @@ int main(int argc, const char **args)
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	create_vulkan_objects(&render);
+//	const char *font_face = "Resources/Engine/Fonts/Alice-Regular.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/marediv.ttf";
+	const char *font_face = "Resources/Engine/Fonts/Lobster-Regular.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Regular.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Bold.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Italic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Light.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-LightItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Regular.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBold.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Black.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-BlackItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Bold.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-BoldItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Italic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Light.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-LightItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Medium.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-MediumItalic.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Regular.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-Thin.ttf";
+//	const char *font_face = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
+
+	create_vulkan_objects(font_face, &render);
 
 	while (!glfwWindowShouldClose(window))
 	{
 		update(&render);
 		render_frame(&render);
-
 		glfwPollEvents();
 	}
 
 	destroy_vulkan_objects(&render);
-
 	glfwDestroyWindow(window);
 	glfwTerminate();
-
 	return 0;
 }
 #endif

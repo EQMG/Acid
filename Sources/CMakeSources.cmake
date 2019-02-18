@@ -172,11 +172,9 @@ set(_temp_acid_headers
 		Post/PostFilter.hpp
 		Post/PostPipeline.hpp
 		Renderer/Buffers/Buffer.hpp
-		Renderer/Buffers/IndexBuffer.hpp
 		Renderer/Buffers/InstanceBuffer.hpp
 		Renderer/Buffers/StorageBuffer.hpp
 		Renderer/Buffers/UniformBuffer.hpp
-		Renderer/Buffers/VertexBuffer.hpp
 		Renderer/Commands/CommandBuffer.hpp
 		Renderer/Descriptors/Descriptor.hpp
 		Renderer/Descriptors/DescriptorSet.hpp
@@ -386,11 +384,9 @@ set(_temp_acid_sources
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
 		Renderer/Buffers/Buffer.cpp
-		Renderer/Buffers/IndexBuffer.cpp
 		Renderer/Buffers/InstanceBuffer.cpp
 		Renderer/Buffers/StorageBuffer.cpp
 		Renderer/Buffers/UniformBuffer.cpp
-		Renderer/Buffers/VertexBuffer.cpp
 		Renderer/Commands/CommandBuffer.cpp
 		Renderer/Descriptors/DescriptorSet.cpp
 		Renderer/Handlers/DescriptorsHandler.cpp

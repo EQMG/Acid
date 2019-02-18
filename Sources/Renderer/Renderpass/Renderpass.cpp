@@ -87,6 +87,18 @@ namespace acid
 			subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 			subpassDependency.dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
+			if (subpassType.GetBinding() == renderpassCreate.GetSubpasses().size())
+			{
+				subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
+				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+				subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			}
+			else
+			{
+				subpassDependency.dstSubpass = subpassType.GetBinding();
+			}
+
 			if (subpassType.GetBinding() == 0)
 			{
 				subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
@@ -98,18 +110,6 @@ namespace acid
 			else
 			{
 				subpassDependency.srcSubpass = subpassType.GetBinding() - 1;
-			}
-
-			if (subpassType.GetBinding() == renderpassCreate.GetSubpasses().size())
-			{
-				subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
-				subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
-				subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-				subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-			}
-			else
-			{
-				subpassDependency.dstSubpass = subpassType.GetBinding();
 			}
 
 			dependencies.emplace_back(subpassDependency);

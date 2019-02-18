@@ -14,7 +14,14 @@ namespace acid
 			Reset, Changed, Normal
 		};
 
-		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties);
+		/// <summary>
+		/// Creates a new buffer with optional data.
+		/// </summary>
+		///	<param name="size"> Size of the buffer in bytes </param>
+		///	<param name="usage"> Usage flag bitmask for the buffer (i.e. index, vertex, uniform buffer) </param>
+		///	<param name="properties"> Memory properties for this buffer (i.e. device local, host visible, coherent) </param>
+		///	<param name="data"> Pointer to the data that should be copied to the buffer after creation (optional, if not set, no data is copied over) </param>
+		Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data = nullptr);
 
 		virtual ~Buffer();
 
