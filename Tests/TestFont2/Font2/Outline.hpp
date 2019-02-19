@@ -22,18 +22,18 @@ namespace acid
 		Rect bbox;
 
 		Vector2 *points;
-		uint32_t num_of_points;
-		uint32_t point_capacity;
+		uint32_t pointCount;
+		uint32_t pointCapacity;
 
 		ContourRange *contours;
-		uint32_t num_of_contours;
-		uint32_t contour_capacity;
+		uint32_t contourCount;
+		uint32_t contourCapacity;
 
 		uint32_t *cells;
-		uint32_t cell_count_x;
-		uint32_t cell_count_y;
+		uint32_t cellCountX;
+		uint32_t cellCountY;
 
-		uint32_t corner_fix_begin;
+		uint32_t cornerFixBegin;
 	};
 
 	struct PointU16
@@ -49,7 +49,7 @@ namespace acid
 
 	void OutlineSubdivide(Outline *o);
 
-//  void OutlineFixCorners(Outline *o);
+//	void OutlineFixCorners(Outline *o);
 
 	void OutlineDestroy(Outline *o);
 
@@ -58,11 +58,10 @@ namespace acid
 	void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout);
 
 	template<typename T>
-	static inline void DynArrayGrow(T **data, uint32_t *capacity, size_t element_size)
+	static void DynArrayGrow(T **data, uint32_t *capacity, size_t element_size)
 	{
 		*capacity = *capacity ? *capacity * 2 : 8;
-		T *new_data = (T *)realloc(*data, *capacity * element_size);
-		//	assert(new_data);
-		*data = new_data;
+		T *newData = static_cast<T *>(realloc(*data, *capacity * element_size));
+		*data = newData;
 	}
 }
