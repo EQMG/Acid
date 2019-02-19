@@ -1,20 +1,12 @@
 #include "Geometry.hpp"
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cassert>
+#include <algorithm>
+#include <Maths/Maths.hpp>
 
 namespace acid
 {
-	enum
-	{
-		FD_QUADRATIC_SOLUTION_NONE,
-		FD_QUADRATIC_SOLUTION_ALL,
-		FD_QUADRATIC_SOLUTION_TOUCH,
-		FD_QUADRATIC_SOLUTION_ONE,
-		FD_QUADRATIC_SOLUTION_TWO,
-	};
-
-	static uint32_t solve_quadratic(float a, float b, float c, float *x1, float *x2)
+	static QuadraticSolution solve_quadratic(float a, float b, float c, float *x1, float *x2)
 	{
 		float discriminant = b * b - 4.0f * a * c;
 
@@ -26,10 +18,10 @@ namespace acid
 			*x1 = 2.0f * c / common;
 
 			if (a == 0.0f)
-				return FD_QUADRATIC_SOLUTION_ONE;
+				return QuadraticSolution::One;
 
 			*x2 = common / (2.0f * a);
-			return FD_QUADRATIC_SOLUTION_TWO;
+			return QuadraticSolution::Two;
 		}
 		if (discriminant == 0.0f)
 		{
@@ -38,24 +30,24 @@ namespace acid
 				if (a == 0.0f)
 				{
 					if (c == 0.0f)
-						return FD_QUADRATIC_SOLUTION_ALL;
+						return QuadraticSolution::All;
 					else
-						return FD_QUADRATIC_SOLUTION_NONE;
+						return QuadraticSolution::None;
 				}
 				else
 				{
 					*x1 = 0.0f;
-					return FD_QUADRATIC_SOLUTION_TOUCH;
+					return QuadraticSolution::Touch;
 				}
 			}
 			else
 			{
 				*x1 = 2.0f * c / -b;
-				return FD_QUADRATIC_SOLUTION_TOUCH;
+				return QuadraticSolution::Touch;
 			}
 		}
 
-		return FD_QUADRATIC_SOLUTION_NONE;
+		return QuadraticSolution::None;
 	}
 
 	static float line_vertical_intersect(float x, const Vector2 p1, const Vector2 p2)
@@ -145,7 +137,7 @@ namespace acid
 		return false;
 	}
 
-	bool bbox_bezier2_intersect(const Rect *bbox, const Vector2 bezier[3])
+	bool BboxBezier2Intersect(const Rect *bbox, const Vector2 bezier[3])
 	{
 		if (is_point_inside_bbox_exclusive(bbox, bezier[0]))
 			return true;
@@ -157,13 +149,13 @@ namespace acid
 		Vector2 tl = {bbox->min_x, bbox->max_y};
 		Vector2 tr = {bbox->max_x, bbox->max_y};
 
-		return bezier2_line_is_intersecting(bezier, bl, br) ||
-			bezier2_line_is_intersecting(bezier, br, tr) ||
-			bezier2_line_is_intersecting(bezier, tr, tl) ||
-			bezier2_line_is_intersecting(bezier, tl, bl);
+		return Bezier2LineIsIntersecting(bezier, bl, br) ||
+			Bezier2LineIsIntersecting(bezier, br, tr) ||
+			Bezier2LineIsIntersecting(bezier, tr, tl) ||
+			Bezier2LineIsIntersecting(bezier, tl, bl);
 	}
 
-	float line_signed_distance(const Vector2 a, const Vector2 b, const Vector2 p)
+	float LineSignedDistance(const Vector2 a, const Vector2 b, const Vector2 p)
 	{
 		Vector2 line_dir = b - a;
 		assert(line_dir.Length() > 0.0f);
@@ -176,7 +168,7 @@ namespace acid
 		return perp_dir.Dot(dir_to_a);
 	}
 
-	float line_calculate_t(const Vector2 a, const Vector2 b, const Vector2 p)
+	float LineCalculateT(const Vector2 a, const Vector2 b, const Vector2 p)
 	{
 		Vector2 ab = b - a;
 		Vector2 ap = p - a;
@@ -192,13 +184,13 @@ namespace acid
 		r = q0.Lerp(q1, t);
 	}
 
-	void bezier2_point(Vector2 &r, const Vector2 bezier[3], float t)
+	void Bezier2Point(Vector2 &r, const Vector2 bezier[3], float t)
 	{
 		Vector2 q0, q1;
 		bezier2_points(q0, q1, r, bezier, t);
 	}
 
-	void bezier2_split_lr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], float t)
+	void Bezier2SplitLr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], float t)
 	{
 		Vector2 q0, q1, r;
 		bezier2_points(q0, q1, r, bezier, t);
@@ -212,7 +204,7 @@ namespace acid
 		right[2] = bezier[2];
 	}
 
-	void bezier2_split_5p(Vector2 ret[5], const Vector2 bezier[3], float t)
+	void Bezier2Split_5P(Vector2 ret[5], const Vector2 bezier[3], float t)
 	{
 		Vector2 q0, q1, r;
 		bezier2_points(q0, q1, r, bezier, t);
@@ -224,7 +216,7 @@ namespace acid
 		ret[4] = bezier[2];
 	}
 
-	void bezier2_split_3p(Vector2 ret[3], const Vector2 bezier[3], float t)
+	void Bezier2Split_3P(Vector2 ret[3], const Vector2 bezier[3], float t)
 	{
 		Vector2 q0, q1, r;
 		bezier2_points(q0, q1, r, bezier, t);
@@ -234,7 +226,7 @@ namespace acid
 		ret[2] = q1;
 	}
 
-	void bezier2_derivative(const Vector2 bezier[3], Vector2 derivative[2])
+	void Bezier2Derivative(const Vector2 bezier[3], Vector2 derivative[2])
 	{
 		derivative[0] = bezier[1] - bezier[0];
 		derivative[0] *= 2.0f;
@@ -248,10 +240,10 @@ namespace acid
 		return Maths::Lerp(Maths::Lerp(p0, p1, t), Maths::Lerp(p1, p2, t), t);
 	}
 
-	void bezier2_bbox(const Vector2 bezier[3], Rect *bbox)
+	void Bezier2Bbox(const Vector2 bezier[3], Rect *bbox)
 	{
 		Vector2 deriv[2];
-		bezier2_derivative(bezier, deriv);
+		Bezier2Derivative(bezier, deriv);
 
 		float tx = deriv[0][0] / (deriv[0][0] - deriv[1][0]);
 		float ty = deriv[0][1] / (deriv[0][1] - deriv[1][1]);
@@ -299,7 +291,7 @@ namespace acid
 		*c = v[0] / *l;
 	}
 
-	void bezier2_align_to_self(Vector2 r[3], const Vector2 bezier[3])
+	void Bezier2AlignToSelf(Vector2 r[3], const Vector2 bezier[3])
 	{
 		float l, s, c;
 		align_lsc(bezier[0], bezier[2], &l, &s, &c);
@@ -309,7 +301,7 @@ namespace acid
 		r[2] = Vector2(l, 0.0f);
 	}
 
-	void bezier2_align_to_line(Vector2 r[3], const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
+	void Bezier2AlignToLine(Vector2 r[3], const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
 	{
 		float l, s, c;
 		align_lsc(line0, line1, &l, &s, &c);
@@ -319,7 +311,7 @@ namespace acid
 		align_point(r[2], bezier[2], line0, s, c);
 	}
 
-	bool bezier2_line_is_intersecting(const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
+	bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
 	{
 		float l, si, co;
 		align_lsc(line0, line1, &l, &si, &co);
@@ -338,26 +330,22 @@ namespace acid
 		float c = y0;
 
 		float t0, t1, xt0, xt1;
-		uint32_t sol = solve_quadratic(a, b, c, &t0, &t1);
+		auto sol = solve_quadratic(a, b, c, &t0, &t1);
 
 		switch (sol)
 		{
-		case FD_QUADRATIC_SOLUTION_NONE:
-		case FD_QUADRATIC_SOLUTION_ALL:
+		case QuadraticSolution::None:
+		case QuadraticSolution::All:
 			return false;
-
-		case FD_QUADRATIC_SOLUTION_TOUCH:
-		case FD_QUADRATIC_SOLUTION_ONE:
+		case QuadraticSolution::Touch:
+		case QuadraticSolution::One:
 			xt0 = bezier2_component(x0, x1, x2, t0);
 			return is_between(t0, 0, 1) && is_between(xt0, 0, l);
-
-		case FD_QUADRATIC_SOLUTION_TWO:
+		case QuadraticSolution::Two:
 			xt0 = bezier2_component(x0, x1, x2, t0);
 			xt1 = bezier2_component(x0, x1, x2, t1);
-
 			return (is_between(t0, 0, 1) && is_between(xt0, 0, l)) ||
 				(is_between(t1, 0, 1) && is_between(xt1, 0, l));
-
 		default:
 			assert(false);
 			return false;
