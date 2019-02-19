@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	static QuadraticSolution solve_quadratic(float a, float b, float c, float *x1, float *x2)
+	QuadraticSolution SolveQuadratic(const float &a, const float &b, const float &c, float &x1, float &x2)
 	{
 		float discriminant = b * b - 4.0f * a * c;
 
@@ -15,14 +15,14 @@ namespace acid
 			float sqrt_d = std::sqrt(discriminant);
 			float common = b >= 0.0f ? -b - sqrt_d : -b + sqrt_d;
 
-			*x1 = 2.0f * c / common;
+			x1 = 2.0f * c / common;
 
 			if (a == 0.0f)
 			{
 				return QuadraticSolution::One;
 			}
 
-			*x2 = common / (2.0f * a);
+			x2 = common / (2.0f * a);
 			return QuadraticSolution::Two;
 		}
 
@@ -40,101 +40,101 @@ namespace acid
 					return QuadraticSolution::None;
 				}
 
-				*x1 = 0.0f;
+				x1 = 0.0f;
 				return QuadraticSolution::Touch;
 			}
 
-			*x1 = 2.0f * c / -b;
+			x1 = 2.0f * c / -b;
 			return QuadraticSolution::Touch;
 		}
 
 		return QuadraticSolution::None;
 	}
 
-	static float line_vertical_intersect(float x, const Vector2 p1, const Vector2 p2)
+	float LineVerticalIntersect(const float &x, const Vector2 &p1, const Vector2 &p2)
 	{
 		float m = (p2.m_y - p1.m_y) / (p2.m_x - p1.m_x);
 		return p1.m_y - m * (p1.m_x - x);
 	}
 
-	static float line_horizontal_intersect(float y, const Vector2 p1, const Vector2 p2)
+	float LineHorizontalIntersect(const float &y, const Vector2 &p1, const Vector2 &p2)
 	{
 		float n = (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
 		return p1.m_x - n * (p1.m_y - y);
 	}
 
-	static bool is_between(float value, float min, float max)
+	bool IsBetween(const float &value, const float &min, const float &max)
 	{
 		return value >= min && value <= max;
 	}
 
-	static bool is_between_exclusive(float value, float min, float max)
+	bool IsBetweenExclusive(const float &value, const float &min, const float &max)
 	{
 		return value > min && value < max;
 	}
 
-	static bool is_point_inside_bbox(const Rect *bbox, const Vector2 p)
+	bool IsPointInsideBbox(const Rect &bbox, const Vector2 &p)
 	{
-		return is_between(p.m_x, bbox->min_x, bbox->max_x) && is_between(p.m_y, bbox->min_y, bbox->max_y);
+		return IsBetween(p.m_x, bbox.min_x, bbox.max_x) && IsBetween(p.m_y, bbox.min_y, bbox.max_y);
 	}
 
-	static bool is_point_inside_bbox_exclusive(const Rect *bbox, const Vector2 p)
+	bool IsPointInsideBboxExclusive(const Rect &bbox, const Vector2 &p)
 	{
-		return is_between_exclusive(p.m_x, bbox->min_x, bbox->max_x) &&
-			is_between_exclusive(p.m_y, bbox->min_y, bbox->max_y);
+		return IsBetweenExclusive(p.m_x, bbox.min_x, bbox.max_x) &&
+			IsBetweenExclusive(p.m_y, bbox.min_y, bbox.max_y);
 	}
 
-	static bool is_intersection_in_line_segment(const Vector2 p1, const Vector2 p2, const Vector2 i)
+	bool IsIntersectionInLineSegment(const Vector2 &p1, const Vector2 &p2, const Vector2 &i)
 	{
 		float pxMin = std::min(p1.m_x, p2.m_x);
 		float pxMax = std::max(p1.m_x, p2.m_x);
 		float pyMin = std::min(p1.m_y, p2.m_y);
 		float pyMax = std::max(p1.m_y, p2.m_y);
-		return is_between(i[0], pxMin, pxMax) && is_between(i[1], pyMin, pyMax);
+		return IsBetween(i[0], pxMin, pxMax) && IsBetween(i[1], pyMin, pyMax);
 	}
 
-	static bool is_line_segment_intersecting_bbox(const Rect *bbox, const Vector2 p1, const Vector2 p2)
+	bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2 &p1, const Vector2 &p2)
 	{
-		if (is_point_inside_bbox_exclusive(bbox, p1))
+		if (IsPointInsideBboxExclusive(bbox, p1))
 		{
 			return true;
 		}
 
-		if (is_point_inside_bbox_exclusive(bbox, p2))
+		if (IsPointInsideBboxExclusive(bbox, p2))
 		{
 			return true;
 		}
 
-		float xTop = line_horizontal_intersect(bbox->max_y, p1, p2);
-		float xBottom = line_horizontal_intersect(bbox->min_y, p1, p2);
-		float yLeft = line_vertical_intersect(bbox->min_x, p1, p2);
-		float yRight = line_vertical_intersect(bbox->max_x, p1, p2);
+		float xTop = LineHorizontalIntersect(bbox.max_y, p1, p2);
+		float xBottom = LineHorizontalIntersect(bbox.min_y, p1, p2);
+		float yLeft = LineVerticalIntersect(bbox.min_x, p1, p2);
+		float yRight = LineVerticalIntersect(bbox.max_x, p1, p2);
 
-		Vector2 top = {xTop, bbox->max_y};
-		Vector2 bottom = {xBottom, bbox->min_y};
-		Vector2 left = {bbox->min_x, yLeft};
-		Vector2 right = {bbox->max_x, yRight};
+		Vector2 top = Vector2(xTop, bbox.max_y);
+		Vector2 bottom = Vector2(xBottom, bbox.min_y);
+		Vector2 left = Vector2(bbox.min_x, yLeft);
+		Vector2 right = Vector2(bbox.max_x, yRight);
 
-		if (is_between(xTop, bbox->min_x, bbox->max_x) &&
-			is_intersection_in_line_segment(p1, p2, top))
+		if (IsBetween(xTop, bbox.min_x, bbox.max_x) &&
+			IsIntersectionInLineSegment(p1, p2, top))
 		{
 			return true;
 		}
 
-		if (is_between(xBottom, bbox->min_x, bbox->max_x) &&
-			is_intersection_in_line_segment(p1, p2, bottom))
+		if (IsBetween(xBottom, bbox.min_x, bbox.max_x) &&
+			IsIntersectionInLineSegment(p1, p2, bottom))
 		{
 			return true;
 		}
 
-		if (is_between(yLeft, bbox->min_y, bbox->max_y) &&
-			is_intersection_in_line_segment(p1, p2, left))
+		if (IsBetween(yLeft, bbox.min_y, bbox.max_y) &&
+			IsIntersectionInLineSegment(p1, p2, left))
 		{
 			return true;
 		}
 
-		if (is_between(yRight, bbox->min_y, bbox->max_y) &&
-			is_intersection_in_line_segment(p1, p2, right))
+		if (IsBetween(yRight, bbox.min_y, bbox.max_y) &&
+			IsIntersectionInLineSegment(p1, p2, right))
 		{
 			return true;
 		}
@@ -142,22 +142,22 @@ namespace acid
 		return false;
 	}
 
-	bool BboxBezier2Intersect(const Rect *bbox, const Vector2 bezier[3])
+	bool BboxBezier2Intersect(const Rect &bbox, const Vector2 bezier[3])
 	{
-		if (is_point_inside_bbox_exclusive(bbox, bezier[0]))
+		if (IsPointInsideBboxExclusive(bbox, bezier[0]))
 		{
 			return true;
 		}
 
-		if (is_point_inside_bbox_exclusive(bbox, bezier[2]))
+		if (IsPointInsideBboxExclusive(bbox, bezier[2]))
 		{
 			return true;
 		}
 
-		Vector2 bl = {bbox->min_x, bbox->min_y};
-		Vector2 br = {bbox->max_x, bbox->min_y};
-		Vector2 tl = {bbox->min_x, bbox->max_y};
-		Vector2 tr = {bbox->max_x, bbox->max_y};
+		Vector2 bl = Vector2(bbox.min_x, bbox.min_y);
+		Vector2 br = Vector2(bbox.max_x, bbox.min_y);
+		Vector2 tl = Vector2(bbox.min_x, bbox.max_y);
+		Vector2 tr = Vector2(bbox.max_x, bbox.max_y);
 
 		return Bezier2LineIsIntersecting(bezier, bl, br) ||
 			Bezier2LineIsIntersecting(bezier, br, tr) ||
@@ -165,7 +165,7 @@ namespace acid
 			Bezier2LineIsIntersecting(bezier, tl, bl);
 	}
 
-	float LineSignedDistance(const Vector2 a, const Vector2 b, const Vector2 p)
+	float LineSignedDistance(const Vector2 &a, const Vector2 &b, const Vector2 &p)
 	{
 		Vector2 lineDir = b - a;
 		assert(lineDir.Length() > 0.0f);
@@ -178,7 +178,7 @@ namespace acid
 		return perpDir.Dot(dirToA);
 	}
 
-	float LineCalculateT(const Vector2 a, const Vector2 b, const Vector2 p)
+	float LineCalculateT(const Vector2 &a, const Vector2 &b, const Vector2 &p)
 	{
 		Vector2 ab = b - a;
 		Vector2 ap = p - a;
@@ -187,23 +187,23 @@ namespace acid
 		return std::clamp(t, 0.0f, 1.0f);
 	}
 
-	static void bezier2_points(Vector2 &q0, Vector2 &q1, Vector2 &r, const Vector2 bezier[3], float t)
+	void Bezier2Points(Vector2 &q0, Vector2 &q1, Vector2 &r, const Vector2 bezier[3], const float &t)
 	{
 		q0 = bezier[0].Lerp(bezier[1], t);
 		q1 = bezier[1].Lerp(bezier[2], t);
 		r = q0.Lerp(q1, t);
 	}
 
-	void Bezier2Point(Vector2 &r, const Vector2 bezier[3], float t)
+	void Bezier2Point(Vector2 &r, const Vector2 bezier[3], const float &t)
 	{
 		Vector2 q0, q1;
-		bezier2_points(q0, q1, r, bezier, t);
+		Bezier2Points(q0, q1, r, bezier, t);
 	}
 
-	void Bezier2SplitLr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], float t)
+	void Bezier2SplitLr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], const float &t)
 	{
 		Vector2 q0, q1, r;
-		bezier2_points(q0, q1, r, bezier, t);
+		Bezier2Points(q0, q1, r, bezier, t);
 
 		left[0] = bezier[0];
 		left[1] = q0;
@@ -214,10 +214,10 @@ namespace acid
 		right[2] = bezier[2];
 	}
 
-	void Bezier2Split_5P(Vector2 ret[5], const Vector2 bezier[3], float t)
+	void Bezier2Split_5P(Vector2 ret[5], const Vector2 bezier[3], const float &t)
 	{
 		Vector2 q0, q1, r;
-		bezier2_points(q0, q1, r, bezier, t);
+		Bezier2Points(q0, q1, r, bezier, t);
 
 		ret[0] = bezier[0];
 		ret[1] = q0;
@@ -226,10 +226,10 @@ namespace acid
 		ret[4] = bezier[2];
 	}
 
-	void Bezier2Split_3P(Vector2 ret[3], const Vector2 bezier[3], float t)
+	void Bezier2Split_3P(Vector2 ret[3], const Vector2 bezier[3], const float &t)
 	{
 		Vector2 q0, q1, r;
-		bezier2_points(q0, q1, r, bezier, t);
+		Bezier2Points(q0, q1, r, bezier, t);
 
 		ret[0] = q0;
 		ret[1] = r;
@@ -245,12 +245,12 @@ namespace acid
 		derivative[1] *= 2.0f;
 	}
 
-	static float bezier2_component(float p0, float p1, float p2, float t)
+	float Bezier2Component(const float &p0, const float &p1, const float &p2, const float &t)
 	{
 		return Maths::Lerp(Maths::Lerp(p0, p1, t), Maths::Lerp(p1, p2, t), t);
 	}
 
-	void Bezier2Bbox(const Vector2 bezier[3], Rect *bbox)
+	void Bezier2Bbox(const Vector2 bezier[3], Rect &bbox)
 	{
 		Vector2 deriv[2];
 		Bezier2Derivative(bezier, deriv);
@@ -258,41 +258,41 @@ namespace acid
 		float tx = deriv[0].m_x / (deriv[0].m_x - deriv[1].m_x);
 		float ty = deriv[0].m_y / (deriv[0].m_y - deriv[1].m_y);
 
-		bbox->min_x = std::min(bezier[0].m_x, bezier[2].m_x);
-		bbox->min_y = std::min(bezier[0].m_y, bezier[2].m_y);
-		bbox->max_x = std::max(bezier[0].m_x, bezier[2].m_x);
-		bbox->max_y = std::max(bezier[0].m_y, bezier[2].m_y);
+		bbox.min_x = std::min(bezier[0].m_x, bezier[2].m_x);
+		bbox.min_y = std::min(bezier[0].m_y, bezier[2].m_y);
+		bbox.max_x = std::max(bezier[0].m_x, bezier[2].m_x);
+		bbox.max_y = std::max(bezier[0].m_y, bezier[2].m_y);
 
 		if (0.0f <= tx && tx <= 1.0f)
 		{
-			float x = bezier2_component(bezier[0].m_x, bezier[1].m_x, bezier[2].m_x, tx);
+			float x = Bezier2Component(bezier[0].m_x, bezier[1].m_x, bezier[2].m_x, tx);
 
 			if (deriv[0].m_x < deriv[1].m_x)
 			{
-				bbox->min_x = std::min(bbox->min_x, x);
+				bbox.min_x = std::min(bbox.min_x, x);
 			}
 			else
 			{
-				bbox->max_x = std::max(bbox->max_x, x);
+				bbox.max_x = std::max(bbox.max_x, x);
 			}
 		}
 
 		if (0.0f <= ty && ty <= 1.0f)
 		{
-			float y = bezier2_component(bezier[0].m_y, bezier[1].m_y, bezier[2].m_y, ty);
+			float y = Bezier2Component(bezier[0].m_y, bezier[1].m_y, bezier[2].m_y, ty);
 
 			if (deriv[0].m_y < deriv[1].m_y)
 			{
-				bbox->min_y = std::min(bbox->min_y, y);
+				bbox.min_y = std::min(bbox.min_y, y);
 			}
 			else
 			{
-				bbox->max_y = std::max(bbox->max_y, y);
+				bbox.max_y = std::max(bbox.max_y, y);
 			}
 		}
 	}
 
-	static void align_point(Vector2 &r, const Vector2 p, const Vector2 t, float s, float c)
+	void AlignPoint(Vector2 &r, const Vector2 &p, const Vector2 &t, const float &s, const float &c)
 	{
 		Vector2 tmp = p - t;
 
@@ -300,44 +300,44 @@ namespace acid
 		r.m_y = tmp.m_x * s + tmp.m_y * c;
 	}
 
-	static void align_lsc(const Vector2 p0, const Vector2 p1, float *l, float *s, float *c)
+	void AlignLsc(const Vector2 &p0, const Vector2 &p1, float &l, float &s, float &c)
 	{
 		Vector2 v = p1 - p0;
 
-		*l = v.Length();
-		*s = -v.m_y / *l;
-		*c = v.m_x / *l;
+		l = v.Length();
+		s = -v.m_y / l;
+		c = v.m_x / l;
 	}
 
 	void Bezier2AlignToSelf(Vector2 r[3], const Vector2 bezier[3])
 	{
 		float l, s, c;
-		align_lsc(bezier[0], bezier[2], &l, &s, &c);
+		AlignLsc(bezier[0], bezier[2], l, s, c);
 
 		r[0] = Vector2(0.0f, 0.0f);
-		align_point(r[1], bezier[1], bezier[0], s, c);
+		AlignPoint(r[1], bezier[1], bezier[0], s, c);
 		r[2] = Vector2(l, 0.0f);
 	}
 
-	void Bezier2AlignToLine(Vector2 r[3], const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
+	void Bezier2AlignToLine(Vector2 r[3], const Vector2 bezier[3], const Vector2 &line0, const Vector2 &line1)
 	{
 		float l, s, c;
-		align_lsc(line0, line1, &l, &s, &c);
+		AlignLsc(line0, line1, l, s, c);
 
-		align_point(r[0], bezier[0], line0, s, c);
-		align_point(r[1], bezier[1], line0, s, c);
-		align_point(r[2], bezier[2], line0, s, c);
+		AlignPoint(r[0], bezier[0], line0, s, c);
+		AlignPoint(r[1], bezier[1], line0, s, c);
+		AlignPoint(r[2], bezier[2], line0, s, c);
 	}
 
-	bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 line0, const Vector2 line1)
+	bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 &line0, const Vector2 &line1)
 	{
 		float l, si, co;
-		align_lsc(line0, line1, &l, &si, &co);
+		AlignLsc(line0, line1, l, si, co);
 
 		Vector2 bez[3];
-		align_point(bez[0], bezier[0], line0, si, co);
-		align_point(bez[1], bezier[1], line0, si, co);
-		align_point(bez[2], bezier[2], line0, si, co);
+		AlignPoint(bez[0], bezier[0], line0, si, co);
+		AlignPoint(bez[1], bezier[1], line0, si, co);
+		AlignPoint(bez[2], bezier[2], line0, si, co);
 
 		float x0 = bez[0].m_x, y0 = bez[0].m_y;
 		float x1 = bez[1].m_x, y1 = bez[1].m_y;
@@ -348,7 +348,7 @@ namespace acid
 		float c = y0;
 
 		float t0, t1, xt0, xt1;
-		auto sol = solve_quadratic(a, b, c, &t0, &t1);
+		auto sol = SolveQuadratic(a, b, c, t0, t1);
 
 		switch (sol)
 		{
@@ -357,13 +357,13 @@ namespace acid
 			return false;
 		case QuadraticSolution::Touch:
 		case QuadraticSolution::One:
-			xt0 = bezier2_component(x0, x1, x2, t0);
-			return is_between(t0, 0, 1) && is_between(xt0, 0, l);
+			xt0 = Bezier2Component(x0, x1, x2, t0);
+			return IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l);
 		case QuadraticSolution::Two:
-			xt0 = bezier2_component(x0, x1, x2, t0);
-			xt1 = bezier2_component(x0, x1, x2, t1);
-			return (is_between(t0, 0, 1) && is_between(xt0, 0, l)) ||
-				(is_between(t1, 0, 1) && is_between(xt1, 0, l));
+			xt0 = Bezier2Component(x0, x1, x2, t0);
+			xt1 = Bezier2Component(x0, x1, x2, t1);
+			return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) ||
+				(IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
 		default:
 			assert(false);
 			return false;
