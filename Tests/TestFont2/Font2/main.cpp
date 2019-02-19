@@ -22,16 +22,16 @@ using namespace acid;
 
 struct CellInfo
 {
-	uint32_t point_offset;
-	uint32_t cell_offset;
-	uint32_t cell_count_x;
-	uint32_t cell_count_y;
+	uint32_t pointOffset;
+	uint32_t cellOffset;
+	uint32_t cellCountX;
+	uint32_t cellCountY;
 };
 
 struct GlyphInstance
 {
 	Rect rect;
-	uint32_t glyph_index;
+	uint32_t glyphIndex;
 	float sharpness;
 	Colour colour;
 };
@@ -46,76 +46,76 @@ struct DeviceGlyphInfo
 {
 	Rect bbox;
 	//Rect cbox;
-	CellInfo cell_info;
+	CellInfo cellInfo;
 };
 
 struct Render
 {
 	uint32_t frame;
-	uint32_t fps_temp;
+	uint32_t fpsTemp;
 	uint32_t fps;
 	float time;
-	float delta_time;
+	float deltaTime;
 
-	Vector2 mouse_pos;
-	Vector2 old_mouse_pos;
-	Vector2 canvas_offset;
-	float canvas_scale;
-	float target_canvas_scale;
+	Vector2 mousePos;
+	Vector2 oldMousePos;
+	Vector2 canvasOffset;
+	float canvasScale;
+	float targetCanvasScale;
 
 	Outline outlines[NUMBER_OF_GLYPHS];
-	HostGlyphInfo glyph_infos[NUMBER_OF_GLYPHS];
+	HostGlyphInfo glyphInfos[NUMBER_OF_GLYPHS];
 
-	void *glyph_data;
-	uint32_t glyph_data_size;
-	uint32_t glyph_info_size;
-	uint32_t glyph_cells_size;
-	uint32_t glyph_points_size;
-	uint32_t glyph_info_offset;
-	uint32_t glyph_cells_offset;
-	uint32_t glyph_points_offset;
+	void *glyphData;
+	uint32_t glyphDataSize;
+	uint32_t glyphInfoSize;
+	uint32_t glyphCellsSize;
+	uint32_t glyphPointsSize;
+	uint32_t glyphInfoOffset;
+	uint32_t glyphCellsOffset;
+	uint32_t glyphPointsOffset;
 
-	GlyphInstance *glyph_instances;
-	uint32_t glyph_instance_count;
+	GlyphInstance *glyphInstances;
+	uint32_t glyphInstanceCount;
 
 	GLFWwindow *window;
 	VkInstance instance;
-	VkPhysicalDevice physical_device;
-	VkPhysicalDeviceMemoryProperties memory_properties;
-	VkPhysicalDeviceProperties device_properties;
-	uint32_t graphics_queue_family;
-	uint32_t present_queue_family;
+	VkPhysicalDevice physicalDevice;
+	VkPhysicalDeviceMemoryProperties memoryProperties;
+	VkPhysicalDeviceProperties deviceProperties;
+	uint32_t queueFamilyGraphics;
+	uint32_t queueFamilyPresent;
 	VkDevice device;
-	VkQueue graphics_queue;
-	VkQueue present_queue;
+	VkQueue queueGraphics;
+	VkQueue queuePresent;
 	VkSurfaceKHR surface;
 	VkFormat format;
-	VkColorSpaceKHR color_space;
-	VkPresentModeKHR present_mode;
+	VkColorSpaceKHR colorSpace;
+	VkPresentModeKHR presentMode;
 	VkSwapchainKHR swapchain;
-	VkExtent2D swapchain_extent;
-	uint32_t image_index;
-	uint32_t image_count;
+	VkExtent2D swapchainExtent;
+	uint32_t imageIndex;
+	uint32_t imageCount;
 	std::vector<VkImage> images;
-	std::vector<VkImageView> image_views;
-	VkRenderPass render_pass;
+	std::vector<VkImageView> imageViews;
+	VkRenderPass renderPass;
 	std::vector<VkFramebuffer> framebuffers;
-	VkSemaphore image_available_semaphore;
-	VkSemaphore render_finished_semaphore;
+	VkSemaphore imageAvailableSemaphore;
+	VkSemaphore renderFinishedSemaphore;
 
-	VkDeviceMemory storage_buffer_memory;
-	VkBuffer storage_buffer;
-	VkDeviceMemory instance_buffer_memory;
-	VkBuffer instance_buffer;
-	VkDeviceMemory instance_staging_buffer_memory;
-	VkBuffer instance_staging_buffer;
-	VkCommandPool command_pool;
-	VkCommandBuffer command_buffer;
-	VkFence command_buffer_fence;
-	VkDescriptorPool descriptor_pool;
-	VkDescriptorSet descriptor_set;
-	VkDescriptorSetLayout set_layout;
-	VkPipelineLayout pipeline_layout;
+	VkDeviceMemory storageBufferMemory;
+	VkBuffer storageBuffer;
+	VkDeviceMemory instanceBufferMemory;
+	VkBuffer instanceBuffer;
+	VkDeviceMemory instanceStagingBufferMemory;
+	VkBuffer instanceStagingBuffer;
+	VkCommandPool commandPool;
+	VkCommandBuffer commandBuffer;
+	VkFence commandBufferFence;
+	VkDescriptorPool descriptorPool;
+	VkDescriptorSet descriptorSet;
+	VkDescriptorSetLayout setLayout;
+	VkPipelineLayout pipelineLayout;
 	VkPipeline pipeline;
 };
 
@@ -141,35 +141,35 @@ static void LoadFont(std::string filename, Render *r)
 	{
 		char c = ' ' + i;
 		Outline *o = &r->outlines[i];
-		HostGlyphInfo *hgi = &r->glyph_infos[i];
+		HostGlyphInfo *hgi = &r->glyphInfos[i];
 
-		FT_UInt glyph_index = FT_Get_Char_Index(face, c);
-		FT_CHECK(FT_Load_Glyph(face, glyph_index, FT_LOAD_NO_HINTING));
+		FT_UInt glyphIndex = FT_Get_Char_Index(face, c);
+		FT_CHECK(FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING));
 
 		OutlineConvert(&face->glyph->outline, o, c);
 
 		hgi->bbox = o->bbox;
 		hgi->advance = face->glyph->metrics.horiAdvance / 64.0f;
 
-		totalPoints += o->num_of_points;
-		totalCells += o->cell_count_x * o->cell_count_y;
+		totalPoints += o->pointCount;
+		totalCells += o->cellCountX * o->cellCountY;
 	}
 
-	r->glyph_info_size = sizeof(DeviceGlyphInfo) * NUMBER_OF_GLYPHS;
-	r->glyph_cells_size = sizeof(uint32_t) * totalCells;
-	r->glyph_points_size = sizeof(Vector2) * totalPoints;
+	r->glyphInfoSize = sizeof(DeviceGlyphInfo) * NUMBER_OF_GLYPHS;
+	r->glyphCellsSize = sizeof(uint32_t) * totalCells;
+	r->glyphPointsSize = sizeof(Vector2) * totalPoints;
 
-	uint32_t alignment = r->device_properties.limits.minStorageBufferOffsetAlignment;
-	r->glyph_info_offset = 0;
-	r->glyph_cells_offset = AlignUint32(r->glyph_info_size, alignment);
-	r->glyph_points_offset = AlignUint32(r->glyph_info_size + r->glyph_cells_size, alignment);
-	r->glyph_data_size = r->glyph_points_offset + r->glyph_points_size;
+	uint32_t alignment = r->deviceProperties.limits.minStorageBufferOffsetAlignment;
+	r->glyphInfoOffset = 0;
+	r->glyphCellsOffset = AlignUint32(r->glyphInfoSize, alignment);
+	r->glyphPointsOffset = AlignUint32(r->glyphInfoSize + r->glyphCellsSize, alignment);
+	r->glyphDataSize = r->glyphPointsOffset + r->glyphPointsSize;
 
-	r->glyph_data = malloc(r->glyph_data_size);
+	r->glyphData = malloc(r->glyphDataSize);
 
-	DeviceGlyphInfo *device_glyph_infos = (DeviceGlyphInfo*)((char*)r->glyph_data + r->glyph_info_offset);
-	uint32_t *cells = (uint32_t*)((char*)r->glyph_data + r->glyph_cells_offset);
-	Vector2 *points = (Vector2*)((char*)r->glyph_data + r->glyph_points_offset);
+	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo*>(static_cast<char*>(r->glyphData) + r->glyphInfoOffset);
+	auto cells = reinterpret_cast<uint32_t*>(static_cast<char*>(r->glyphData) + r->glyphCellsOffset);
+	auto points = reinterpret_cast<Vector2*>(static_cast<char*>(r->glyphData) + r->glyphPointsOffset);
 
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
@@ -177,22 +177,22 @@ static void LoadFont(std::string filename, Render *r)
 	for (uint32_t i = 0; i < NUMBER_OF_GLYPHS; i++)
 	{
 		Outline *o = &r->outlines[i];
-		DeviceGlyphInfo *dgi = &device_glyph_infos[i];
+		DeviceGlyphInfo *dgi = &deviceGlyphInfos[i];
 
-		dgi->cell_info.cell_count_x = o->cell_count_x;
-		dgi->cell_info.cell_count_y = o->cell_count_y;
-		dgi->cell_info.point_offset = pointOffset;
-		dgi->cell_info.cell_offset = cellOffset;
+		dgi->cellInfo.cellCountX = o->cellCountX;
+		dgi->cellInfo.cellCountY = o->cellCountY;
+		dgi->cellInfo.pointOffset = pointOffset;
+		dgi->cellInfo.cellOffset = cellOffset;
 		dgi->bbox = o->bbox;
 
-		uint32_t cell_count = o->cell_count_x * o->cell_count_y;
-		memcpy(cells + cellOffset, o->cells, sizeof(uint32_t) * cell_count);
-		memcpy(points + pointOffset, o->points, sizeof(Vector2) * o->num_of_points);
+		uint32_t cellCount = o->cellCountX * o->cellCountY;
+		memcpy(cells + cellOffset, o->cells, sizeof(uint32_t) * cellCount);
+		memcpy(points + pointOffset, o->points, sizeof(Vector2) * o->pointCount);
 
 	//	OutlineU16Points(o, &dgi->cbox, points + point_offset);
 
-		pointOffset += o->num_of_points;
-		cellOffset += cell_count;
+		pointOffset += o->pointCount;
+		cellOffset += cellCount;
 	}
 
 	assert(pointOffset == totalPoints);
@@ -244,10 +244,10 @@ static void PickPhysicalDevice(Render *r)
 	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 	VK_CHECK(vkEnumeratePhysicalDevices(r->instance, &physicalDeviceCount, physicalDevices.data()));
 
-	r->physical_device = physicalDevices[0];
+	r->physicalDevice = physicalDevices[0];
 
-	vkGetPhysicalDeviceMemoryProperties(r->physical_device, &r->memory_properties);
-	vkGetPhysicalDeviceProperties(r->physical_device, &r->device_properties);
+	vkGetPhysicalDeviceMemoryProperties(r->physicalDevice, &r->memoryProperties);
+	vkGetPhysicalDeviceProperties(r->physicalDevice, &r->deviceProperties);
 }
 
 static void CreateDevice(Render *r)
@@ -262,33 +262,33 @@ static void CreateDevice(Render *r)
 
 	float queuePriority = 1.0f;
 
-	if (r->graphics_queue_family == r->present_queue_family)
+	if (r->queueFamilyGraphics == r->queueFamilyPresent)
 	{
 		VkDeviceQueueCreateInfo queue_info = {};
 		queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		queue_info.pNext = nullptr;
-		queue_info.queueFamilyIndex = r->graphics_queue_family;
+		queue_info.queueFamilyIndex = r->queueFamilyGraphics;
 		queue_info.queueCount = 1;
 		queue_info.pQueuePriorities = &queuePriority;
 
 		deviceCreateInfo.pQueueCreateInfos = &queue_info;
 		deviceCreateInfo.queueCreateInfoCount = 1;
 
-		VK_CHECK(vkCreateDevice(r->physical_device, &deviceCreateInfo, NULL, &r->device));
+		VK_CHECK(vkCreateDevice(r->physicalDevice, &deviceCreateInfo, NULL, &r->device));
 	}
 	else
 	{
 		VkDeviceQueueCreateInfo queueGraphicsCreateInfo = {};
 		queueGraphicsCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		queueGraphicsCreateInfo.pNext = nullptr;
-		queueGraphicsCreateInfo.queueFamilyIndex = r->graphics_queue_family;
+		queueGraphicsCreateInfo.queueFamilyIndex = r->queueFamilyGraphics;
 		queueGraphicsCreateInfo.queueCount = 1;
 		queueGraphicsCreateInfo.pQueuePriorities = &queuePriority;
 
 		VkDeviceQueueCreateInfo queuePresentCreateInfo = {};
 		queuePresentCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		queuePresentCreateInfo.pNext = nullptr;
-		queuePresentCreateInfo.queueFamilyIndex = r->present_queue_family;
+		queuePresentCreateInfo.queueFamilyIndex = r->queueFamilyPresent;
 		queuePresentCreateInfo.queueCount = 1;
 		queuePresentCreateInfo.pQueuePriorities = &queuePriority;
 
@@ -297,54 +297,54 @@ static void CreateDevice(Render *r)
 		deviceCreateInfo.queueCreateInfoCount = queueCreateInfos.size();
 		deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
 
-		VK_CHECK(vkCreateDevice(r->physical_device, &deviceCreateInfo, NULL, &r->device));
+		VK_CHECK(vkCreateDevice(r->physicalDevice, &deviceCreateInfo, NULL, &r->device));
 	}
 
-	vkGetDeviceQueue(r->device, r->graphics_queue_family, 0, &r->graphics_queue);
-	vkGetDeviceQueue(r->device, r->present_queue_family, 0, &r->present_queue);
+	vkGetDeviceQueue(r->device, r->queueFamilyGraphics, 0, &r->queueGraphics);
+	vkGetDeviceQueue(r->device, r->queueFamilyPresent, 0, &r->queuePresent);
 }
 
 static void FindQueueFamilies(Render *r)
 {
 	uint32_t familyCount;
-	vkGetPhysicalDeviceQueueFamilyProperties(r->physical_device, &familyCount, nullptr);
+	vkGetPhysicalDeviceQueueFamilyProperties(r->physicalDevice, &familyCount, nullptr);
 	std::vector<VkQueueFamilyProperties> properties(familyCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(r->physical_device, &familyCount, properties.data());
+	vkGetPhysicalDeviceQueueFamilyProperties(r->physicalDevice, &familyCount, properties.data());
 
-	r->graphics_queue_family = std::numeric_limits<uint32_t>::max();
-	r->present_queue_family = std::numeric_limits<uint32_t>::max();
+	r->queueFamilyGraphics = std::numeric_limits<uint32_t>::max();
+	r->queueFamilyPresent = std::numeric_limits<uint32_t>::max();
 
 	for (uint32_t i = 0; i < familyCount; i++)
 	{
 		if (properties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
 		{
 			VkBool32 present;
-			VK_CHECK(vkGetPhysicalDeviceSurfaceSupportKHR(r->physical_device, i, r->surface, &present));
+			VK_CHECK(vkGetPhysicalDeviceSurfaceSupportKHR(r->physicalDevice, i, r->surface, &present));
 
 			if (present)
 			{
-				r->graphics_queue_family = i;
-				r->present_queue_family = i;
+				r->queueFamilyGraphics = i;
+				r->queueFamilyPresent = i;
 				break;
 			}
 
-			if (r->graphics_queue_family == std::numeric_limits<uint32_t>::max())
+			if (r->queueFamilyGraphics == std::numeric_limits<uint32_t>::max())
 			{
-				r->graphics_queue_family = i;
+				r->queueFamilyGraphics = i;
 			}
 		}
 	}
 
-	if (r->present_queue_family == std::numeric_limits<uint32_t>::max())
+	if (r->queueFamilyPresent == std::numeric_limits<uint32_t>::max())
 	{
 		for (uint32_t i = 0; i < familyCount; i++)
 		{
 			VkBool32 present;
-			VK_CHECK(vkGetPhysicalDeviceSurfaceSupportKHR(r->physical_device, i, r->surface, &present));
+			VK_CHECK(vkGetPhysicalDeviceSurfaceSupportKHR(r->physicalDevice, i, r->surface, &present));
 
 			if (present)
 			{
-				r->present_queue_family = i;
+				r->queueFamilyPresent = i;
 				break;
 			}
 		}
@@ -354,12 +354,12 @@ static void FindQueueFamilies(Render *r)
 static void ChooseSurfaceFormat(Render *r)
 {
 	uint32_t formatCount;
-	VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(r->physical_device, r->surface, &formatCount, NULL));
+	VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(r->physicalDevice, r->surface, &formatCount, NULL));
 
 	assert(formatCount > 0);
 
 	std::vector<VkSurfaceFormatKHR> formats(formatCount);
-	VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(r->physical_device, r->surface, &formatCount, formats.data()));
+	VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(r->physicalDevice, r->surface, &formatCount, formats.data()));
 	/*
 	if (format_count == 1 && formats[0].format == VK_FORMAT_UNDEFINED)
 		r->format = VK_FORMAT_B8G8R8A8_UNORM;
@@ -371,28 +371,28 @@ static void ChooseSurfaceFormat(Render *r)
 static void ChoosePresentMode(Render *r)
 {
 	uint32_t presentModeCount;
-	VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(r->physical_device, r->surface, &presentModeCount, NULL));
+	VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(r->physicalDevice, r->surface, &presentModeCount, NULL));
 	assert(presentModeCount > 0);
 	std::vector<VkPresentModeKHR> present_modes(presentModeCount);
-	VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(r->physical_device, r->surface, &presentModeCount, present_modes.data()));
+	VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(r->physicalDevice, r->surface, &presentModeCount, present_modes.data()));
 
 	for (uint32_t i = 0; i < presentModeCount; i++)
 	{
 		if (present_modes[i] == VK_PRESENT_MODE_MAILBOX_KHR)
 		{
-			r->present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
+			r->presentMode = VK_PRESENT_MODE_MAILBOX_KHR;
 			return;
 		}
 	}
 
-//	r->present_mode = VK_PRESENT_MODE_FIFO_KHR;
-	r->present_mode = VK_PRESENT_MODE_IMMEDIATE_KHR;
+//	r->presentMode = VK_PRESENT_MODE_FIFO_KHR;
+	r->presentMode = VK_PRESENT_MODE_IMMEDIATE_KHR;
 }
 
 static void CreateSwapChain(Render *r)
 {
 	VkSurfaceCapabilitiesKHR capabilities;
-	VK_CHECK(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(r->physical_device, r->surface, &capabilities));
+	VK_CHECK(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(r->physicalDevice, r->surface, &capabilities));
 
 	uint32_t minImageCount = capabilities.minImageCount + 1;
 
@@ -414,12 +414,12 @@ static void CreateSwapChain(Render *r)
 	swapchainCreateInfo.surface = r->surface;
 	swapchainCreateInfo.minImageCount = minImageCount;
 	swapchainCreateInfo.imageFormat = r->format;
-	swapchainCreateInfo.imageColorSpace = r->color_space;
+	swapchainCreateInfo.imageColorSpace = r->colorSpace;
 	swapchainCreateInfo.imageArrayLayers = 1;
 	swapchainCreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 	swapchainCreateInfo.preTransform = capabilities.currentTransform;
 	swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-	swapchainCreateInfo.presentMode = r->present_mode;
+	swapchainCreateInfo.presentMode = r->presentMode;
 	swapchainCreateInfo.clipped = VK_TRUE;
 	swapchainCreateInfo.oldSwapchain = oldSwapchain;
 
@@ -438,11 +438,11 @@ static void CreateSwapChain(Render *r)
 		swapchainCreateInfo.imageExtent.height = h;
 	}
 
-	r->swapchain_extent = swapchainCreateInfo.imageExtent;
+	r->swapchainExtent = swapchainCreateInfo.imageExtent;
 
-	if (r->graphics_queue_family != r->present_queue_family)
+	if (r->queueFamilyGraphics != r->queueFamilyPresent)
 	{
-		uint32_t families[] = { r->graphics_queue_family, r->present_queue_family };
+		uint32_t families[] = { r->queueFamilyGraphics, r->queueFamilyPresent };
 		swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 		swapchainCreateInfo.queueFamilyIndexCount = 2;
 		swapchainCreateInfo.pQueueFamilyIndices = families;
@@ -461,17 +461,17 @@ static void CreateSwapChain(Render *r)
 		vkDestroySwapchainKHR(r->device, oldSwapchain, nullptr);
 	}
 
-	VK_CHECK(vkGetSwapchainImagesKHR(r->device, r->swapchain, &r->image_count, NULL));
+	VK_CHECK(vkGetSwapchainImagesKHR(r->device, r->swapchain, &r->imageCount, NULL));
 
-	r->images.resize(r->image_count);
-	VK_CHECK(vkGetSwapchainImagesKHR(r->device, r->swapchain, &r->image_count, r->images.data()));
+	r->images.resize(r->imageCount);
+	VK_CHECK(vkGetSwapchainImagesKHR(r->device, r->swapchain, &r->imageCount, r->images.data()));
 }
 
 static void CreateImageViews(Render *r)
 {
-	r->image_views.resize(r->image_count);
+	r->imageViews.resize(r->imageCount);
 
-	for (uint32_t i = 0; i < r->image_count; i++)
+	for (uint32_t i = 0; i < r->imageCount; i++)
 	{
 		VkImageViewCreateInfo viewCreateInfo = {};
 		viewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -486,7 +486,7 @@ static void CreateImageViews(Render *r)
 		viewCreateInfo.subresourceRange.baseArrayLayer = 0;
 		viewCreateInfo.subresourceRange.layerCount = 1;
 
-		VK_CHECK(vkCreateImageView(r->device, &viewCreateInfo, NULL, &r->image_views[i]));
+		VK_CHECK(vkCreateImageView(r->device, &viewCreateInfo, NULL, &r->imageViews[i]));
 	}
 }
 
@@ -530,26 +530,26 @@ static void CreateRenderPass(Render *r)
 	renderPassCreateInfo.dependencyCount = 1;
 	renderPassCreateInfo.pDependencies = &subpassDependency;
 
-	VK_CHECK(vkCreateRenderPass(r->device, &renderPassCreateInfo, NULL, &r->render_pass));
+	VK_CHECK(vkCreateRenderPass(r->device, &renderPassCreateInfo, NULL, &r->renderPass));
 }
 
 static void CreateFramebuffers(Render *r)
 {
-	r->framebuffers.resize(r->image_count);
+	r->framebuffers.resize(r->imageCount);
 
-	for (uint32_t i = 0; i < r->image_count; i++)
+	for (uint32_t i = 0; i < r->imageCount; i++)
 	{
 		VkImageView attachments[] = {
-			r->image_views[i],
+			r->imageViews[i],
 		};
 
 		VkFramebufferCreateInfo framebufferCreateInfo = {};
 		framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-		framebufferCreateInfo.renderPass = r->render_pass;
+		framebufferCreateInfo.renderPass = r->renderPass;
 		framebufferCreateInfo.attachmentCount = 1;
 		framebufferCreateInfo.pAttachments = attachments;
-		framebufferCreateInfo.width = r->swapchain_extent.width;
-		framebufferCreateInfo.height = r->swapchain_extent.height;
+		framebufferCreateInfo.width = r->swapchainExtent.width;
+		framebufferCreateInfo.height = r->swapchainExtent.height;
 		framebufferCreateInfo.layers = 1;
 
 		VK_CHECK(vkCreateFramebuffer(r->device, &framebufferCreateInfo, NULL, &r->framebuffers[i]));
@@ -561,31 +561,31 @@ static void CreateCommandPool(Render *r)
 	VkCommandPoolCreateInfo commandPoolCreateInfo = {};
 	commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 	commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-	commandPoolCreateInfo.queueFamilyIndex = r->graphics_queue_family;
+	commandPoolCreateInfo.queueFamilyIndex = r->queueFamilyGraphics;
 
-	VK_CHECK(vkCreateCommandPool(r->device, &commandPoolCreateInfo, NULL, &r->command_pool));
+	VK_CHECK(vkCreateCommandPool(r->device, &commandPoolCreateInfo, NULL, &r->commandPool));
 }
 
 static void BeginText(Render *r)
 {
-	r->glyph_instance_count = 0;
+	r->glyphInstanceCount = 0;
 	uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 
-	VK_CHECK(vkMapMemory(r->device, r->instance_staging_buffer_memory, 0, size, 0, reinterpret_cast<void **>(&r->glyph_instances)));
+	VK_CHECK(vkMapMemory(r->device, r->instanceStagingBufferMemory, 0, size, 0, reinterpret_cast<void **>(&r->glyphInstances)));
 }
 
 static void EndText(Render *r)
 {
-	VkCommandBuffer commandBuffer = r->command_buffer;
+	VkCommandBuffer commandBuffer = r->commandBuffer;
 	uint32_t size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 
-	vkUnmapMemory(r->device, r->instance_staging_buffer_memory);
+	vkUnmapMemory(r->device, r->instanceStagingBufferMemory);
 
 	VkBufferMemoryBarrier barrier = {};
 	barrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
 	barrier.srcAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 	barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-	barrier.buffer = r->instance_buffer;
+	barrier.buffer = r->instanceBuffer;
 	barrier.offset = 0;
 	barrier.size = size;
 
@@ -603,7 +603,7 @@ static void EndText(Render *r)
 	copy.dstOffset = 0;
 	copy.size = size;
 
-	vkCmdCopyBuffer(commandBuffer, r->instance_staging_buffer, r->instance_buffer, 1, &copy);
+	vkCmdCopyBuffer(commandBuffer, r->instanceStagingBuffer, r->instanceBuffer, 1, &copy);
 
 	barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 	barrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
@@ -622,29 +622,29 @@ static void AppendText(Render *r, float x, float y, float scale, std::string tex
 {
 	for (char c : text)
 	{
-		if (r->glyph_instance_count >= MAX_VISIBLE_GLYPHS)
+		if (r->glyphInstanceCount >= MAX_VISIBLE_GLYPHS)
 		{
 			break;
 		}
 
 		uint32_t glyphIndex = c - 32;
 
-		HostGlyphInfo *gi = &r->glyph_infos[glyphIndex];
-		GlyphInstance *inst = &r->glyph_instances[r->glyph_instance_count];
+		HostGlyphInfo *gi = &r->glyphInfos[glyphIndex];
+		GlyphInstance *inst = &r->glyphInstances[r->glyphInstanceCount];
 
-		inst->rect.min_x = (x + gi->bbox.min_x * scale) / (r->swapchain_extent.width / 2.0f) - 1.0f;
-		inst->rect.min_y = (y - gi->bbox.min_y * scale) / (r->swapchain_extent.height / 2.0f) - 1.0f;
-		inst->rect.max_x = (x + gi->bbox.max_x * scale) / (r->swapchain_extent.width / 2.0f) - 1.0f;
-		inst->rect.max_y = (y - gi->bbox.max_y * scale) / (r->swapchain_extent.height / 2.0f) - 1.0f;
+		inst->rect.min_x = (x + gi->bbox.min_x * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
+		inst->rect.min_y = (y - gi->bbox.min_y * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
+		inst->rect.max_x = (x + gi->bbox.max_x * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
+		inst->rect.max_y = (y - gi->bbox.max_y * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
 
 		if (inst->rect.min_x <= 1 && inst->rect.max_x >= -1 &&
 			inst->rect.max_y <= 1 && inst->rect.min_y >= -1)
 		{
-			inst->glyph_index = glyphIndex;
+			inst->glyphIndex = glyphIndex;
 			inst->sharpness = scale;
 			inst->colour = colour;
 
-			r->glyph_instance_count++;
+			r->glyphInstanceCount++;
 		}
 
 		x += gi->advance * scale;
@@ -653,7 +653,7 @@ static void AppendText(Render *r, float x, float y, float scale, std::string tex
 
 static void RecordCommandBuffer(Render *r)
 {
-	VkCommandBuffer commandBuffer = r->command_buffer;
+	VkCommandBuffer commandBuffer = r->commandBuffer;
 
 	VkCommandBufferBeginInfo begin_info = {};
 	begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -662,9 +662,6 @@ static void RecordCommandBuffer(Render *r)
 	VK_CHECK(vkBeginCommandBuffer(commandBuffer, &begin_info));
 
 	BeginText(r);
-
-	AppendText(r, 5.0f, 25.0f, 0.02f, "Frame Time: " + String::To(1000.0f / r->fps) + "ms", Colour::Red);
-	AppendText(r, 5.0f, 55.0f, 0.02f, "Fps: " + String::To(r->fps), Colour::Green);
 
 	static std::vector<std::string> lines = {
 		"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
@@ -706,35 +703,38 @@ static void RecordCommandBuffer(Render *r)
 	for (uint32_t i = 0; i < lines.size(); i++)
 	{
 		AppendText(r,
-		            r->canvas_scale * (10.0f - r->canvas_offset[0]),
-		            r->canvas_scale * (30.0f - r->canvas_offset[1] + i * 30.0f),
-		            0.02f * r->canvas_scale,
+		            r->canvasScale * (10.0f - r->canvasOffset.m_x),
+		            r->canvasScale * (30.0f - r->canvasOffset.m_y + i * 30.0f),
+		            0.02f * r->canvasScale,
 		            lines[i], Colour::Blue);
 	}
 
+	AppendText(r, 5.0f, 25.0f, 0.02f, "Frame Time: " + String::To(1000.0f / r->fps) + "ms", Colour::Red);
+	AppendText(r, 5.0f, 55.0f, 0.02f, "Fps: " + String::To(r->fps), Colour::Green);
+
 	EndText(r);
 
-	VkClearValue clear_value = {1.0f, 1.0f, 1.0f, 1.0f};
-	VkRenderPassBeginInfo render_pass_bi = {};
-	render_pass_bi.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-	render_pass_bi.renderPass = r->render_pass;
-	render_pass_bi.framebuffer = r->framebuffers[r->image_index];
-	render_pass_bi.renderArea = {};
-	render_pass_bi.renderArea.offset = {0, 0},
-		render_pass_bi.renderArea.extent = r->swapchain_extent;
-	render_pass_bi.clearValueCount = 1;
-	render_pass_bi.pClearValues = &clear_value;
+	VkClearValue clearValue = {1.0f, 1.0f, 1.0f, 1.0f};
+	VkRenderPassBeginInfo renderPassBeginInfo = {};
+	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+	renderPassBeginInfo.renderPass = r->renderPass;
+	renderPassBeginInfo.framebuffer = r->framebuffers[r->imageIndex];
+	renderPassBeginInfo.renderArea = {};
+	renderPassBeginInfo.renderArea.offset = {0, 0},
+	renderPassBeginInfo.renderArea.extent = r->swapchainExtent;
+	renderPassBeginInfo.clearValueCount = 1;
+	renderPassBeginInfo.pClearValues = &clearValue;
 
-	vkCmdBeginRenderPass(commandBuffer, &render_pass_bi, VK_SUBPASS_CONTENTS_INLINE);
+	vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 	VkDeviceSize offsets[] = {0};
-	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &r->instance_buffer, offsets);
+	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &r->instanceBuffer, offsets);
 
-	vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
-	                        r->pipeline_layout, 0, 1, &r->descriptor_set, 0, nullptr);
+	vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,r->pipelineLayout, 0, 1, 
+		&r->descriptorSet, 0, nullptr);
 
 	vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, r->pipeline);
-	vkCmdDraw(commandBuffer, 4, r->glyph_instance_count, 0, 0);
+	vkCmdDraw(commandBuffer, 4, r->glyphInstanceCount, 0, 0);
 
 	vkCmdEndRenderPass(commandBuffer);
 	VK_CHECK(vkEndCommandBuffer(commandBuffer));
@@ -744,11 +744,11 @@ static void CreateCommandBuffer(Render *r)
 {
 	VkCommandBufferAllocateInfo allocateInfo = {};
 	allocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	allocateInfo.commandPool = r->command_pool;
+	allocateInfo.commandPool = r->commandPool;
 	allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 	allocateInfo.commandBufferCount = 1;
 
-	VK_CHECK(vkAllocateCommandBuffers(r->device, &allocateInfo, &r->command_buffer));
+	VK_CHECK(vkAllocateCommandBuffers(r->device, &allocateInfo, &r->commandBuffer));
 
 	RecordCommandBuffer(r);
 }
@@ -759,7 +759,7 @@ static void CreateCommandBufferFence(Render *r)
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 	fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-	VK_CHECK(vkCreateFence(r->device, &fenceCreateInfo, NULL, &r->command_buffer_fence));
+	VK_CHECK(vkCreateFence(r->device, &fenceCreateInfo, NULL, &r->commandBufferFence));
 }
 
 static void CreateSemaphores(Render *r)
@@ -767,8 +767,8 @@ static void CreateSemaphores(Render *r)
 	VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 	semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-	VK_CHECK(vkCreateSemaphore(r->device, &semaphoreCreateInfo, NULL, &r->image_available_semaphore));
-	VK_CHECK(vkCreateSemaphore(r->device, &semaphoreCreateInfo, NULL, &r->render_finished_semaphore));
+	VK_CHECK(vkCreateSemaphore(r->device, &semaphoreCreateInfo, NULL, &r->imageAvailableSemaphore));
+	VK_CHECK(vkCreateSemaphore(r->device, &semaphoreCreateInfo, NULL, &r->renderFinishedSemaphore));
 }
 
 static VkShaderModule LoadShaderModule(VkDevice device, const char *path)
@@ -819,23 +819,23 @@ static void CreateLayout(Render *r)
 	descriptorLayoutCreateInfo.bindingCount = bindings.size();
 	descriptorLayoutCreateInfo.pBindings = bindings.data();
 
-	VK_CHECK(vkCreateDescriptorSetLayout(r->device, &descriptorLayoutCreateInfo, NULL, &r->set_layout));
+	VK_CHECK(vkCreateDescriptorSetLayout(r->device, &descriptorLayoutCreateInfo, NULL, &r->setLayout));
 
 	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipelineLayoutCreateInfo.setLayoutCount = 1;
-	pipelineLayoutCreateInfo.pSetLayouts = &r->set_layout;
+	pipelineLayoutCreateInfo.pSetLayouts = &r->setLayout;
 
-	VK_CHECK(vkCreatePipelineLayout(r->device, &pipelineLayoutCreateInfo, NULL, &r->pipeline_layout));
+	VK_CHECK(vkCreatePipelineLayout(r->device, &pipelineLayoutCreateInfo, NULL, &r->pipelineLayout));
 }
 
 static uint32_t FindMemoryType(Render *r, uint32_t type_bits, VkMemoryPropertyFlags flags)
 {
-	for (uint32_t i = 0; i < r->memory_properties.memoryTypeCount; i++)
+	for (uint32_t i = 0; i < r->memoryProperties.memoryTypeCount; i++)
 	{
 		if (type_bits & 1 << i)
 		{
-			VkMemoryPropertyFlags f = r->memory_properties.memoryTypes[i].propertyFlags;
+			VkMemoryPropertyFlags f = r->memoryProperties.memoryTypes[i].propertyFlags;
 
 			if ((f & flags) == flags)
 			{
@@ -859,8 +859,7 @@ static VkDeviceMemory AllocRequiredMemory(Render *r, VkMemoryRequirements *req, 
 	return memory;
 }
 
-static void CreateBufferWithMemory(
-	Render *r, VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags,
+static void CreateBufferWithMemory(Render *r, VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags,
 	VkDeviceMemory *memory, VkBuffer *buffer)
 {
 	VK_CHECK(vkCreateBuffer(r->device, ci, NULL, buffer));
@@ -876,7 +875,7 @@ VkCommandBuffer BeginOneTimeCmdbuf(Render *r)
 {
 	VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 	commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	commandBufferAllocateInfo.commandPool = r->command_pool;
+	commandBufferAllocateInfo.commandPool = r->commandPool;
 	commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 	commandBufferAllocateInfo.commandBufferCount = 1;
 
@@ -900,9 +899,9 @@ void EndOneTimeCmdbuf(Render *r, VkCommandBuffer cmd_buffer)
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &cmd_buffer;
 
-	VK_CHECK(vkQueueSubmit(r->graphics_queue, 1, &submitInfo, VK_NULL_HANDLE));
-	VK_CHECK(vkQueueWaitIdle(r->graphics_queue));
-	vkFreeCommandBuffers(r->device, r->command_pool, 1, &cmd_buffer);
+	VK_CHECK(vkQueueSubmit(r->queueGraphics, 1, &submitInfo, VK_NULL_HANDLE));
+	VK_CHECK(vkQueueWaitIdle(r->queueGraphics));
+	vkFreeCommandBuffers(r->device, r->commandPool, 1, &cmd_buffer);
 }
 
 static void CopyBuffer(Render *r, VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
@@ -925,9 +924,8 @@ static void StageBuffer(Render *r, VkBuffer buffer, void *data, size_t size)
 	VkBuffer stagingBuffer;
 	VkDeviceMemory stagingBufferMemory;
 
-	CreateBufferWithMemory(r, &stagingCreateInfo,
-	                          VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-	                          &stagingBufferMemory, &stagingBuffer);
+	CreateBufferWithMemory(r, &stagingCreateInfo, VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+		&stagingBufferMemory, &stagingBuffer);
 
 	void *stagingBufferPtr;
 	VK_CHECK(vkMapMemory(r->device, stagingBufferMemory, 0, stagingCreateInfo.size, 0, &stagingBufferPtr));
@@ -948,17 +946,17 @@ static void CreateStorageBuffer(std::string filename, Render *r)
 
 	VkBufferCreateInfo storageCreateInfo = {};
 	storageCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	storageCreateInfo.size = r->glyph_data_size;
+	storageCreateInfo.size = r->glyphDataSize;
 	storageCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
 	storageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	CreateBufferWithMemory(r, &storageCreateInfo, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-	                          &r->storage_buffer_memory, &r->storage_buffer);
+		&r->storageBufferMemory, &r->storageBuffer);
 
-	StageBuffer(r, r->storage_buffer, r->glyph_data, storageCreateInfo.size);
+	StageBuffer(r, r->storageBuffer, r->glyphData, storageCreateInfo.size);
 
-	free(r->glyph_data);
-	r->glyph_data = nullptr;
+	free(r->glyphData);
+	r->glyphData = nullptr;
 }
 
 static void CreateInstanceBuffer(Render *r)
@@ -970,7 +968,7 @@ static void CreateInstanceBuffer(Render *r)
 	bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	CreateBufferWithMemory(r, &bufferCreateInfo, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-	                          &r->instance_buffer_memory, &r->instance_buffer);
+		&r->instanceBufferMemory, &r->instanceBuffer);
 
 	VkBufferCreateInfo stagingCreateInfo = {};
 	stagingCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -978,9 +976,8 @@ static void CreateInstanceBuffer(Render *r)
 	stagingCreateInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 	stagingCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-	CreateBufferWithMemory(r, &stagingCreateInfo,
-	                          VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-	                          &r->instance_staging_buffer_memory, &r->instance_staging_buffer);
+	CreateBufferWithMemory(r, &stagingCreateInfo, VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+		&r->instanceStagingBufferMemory, &r->instanceStagingBuffer);
 }
 
 static void CreateDescriptorPool(Render *r)
@@ -995,38 +992,38 @@ static void CreateDescriptorPool(Render *r)
 	poolCreateInfo.poolSizeCount = 1;
 	poolCreateInfo.pPoolSizes = poolSizes;
 
-	VK_CHECK(vkCreateDescriptorPool(r->device, &poolCreateInfo, NULL, &r->descriptor_pool));
+	VK_CHECK(vkCreateDescriptorPool(r->device, &poolCreateInfo, NULL, &r->descriptorPool));
 }
 
 static void CreateDescriptorSet(Render *r)
 {
 	VkDescriptorSetAllocateInfo setAllocateInfo = {};
 	setAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-	setAllocateInfo.descriptorPool = r->descriptor_pool;
+	setAllocateInfo.descriptorPool = r->descriptorPool;
 	setAllocateInfo.descriptorSetCount = 1;
-	setAllocateInfo.pSetLayouts = &r->set_layout;
+	setAllocateInfo.pSetLayouts = &r->setLayout;
 
-	VK_CHECK(vkAllocateDescriptorSets(r->device, &setAllocateInfo, &r->descriptor_set));
+	VK_CHECK(vkAllocateDescriptorSets(r->device, &setAllocateInfo, &r->descriptorSet));
 
 	VkDescriptorBufferInfo glyphInfo = {};
-	glyphInfo.buffer = r->storage_buffer;
-	glyphInfo.offset = r->glyph_info_offset;
-	glyphInfo.range = r->glyph_info_size;
+	glyphInfo.buffer = r->storageBuffer;
+	glyphInfo.offset = r->glyphInfoOffset;
+	glyphInfo.range = r->glyphInfoSize;
 
 	VkDescriptorBufferInfo cellsInfo = {};
-	cellsInfo.buffer = r->storage_buffer;
-	cellsInfo.offset = r->glyph_cells_offset;
-	cellsInfo.range = r->glyph_cells_size;
+	cellsInfo.buffer = r->storageBuffer;
+	cellsInfo.offset = r->glyphCellsOffset;
+	cellsInfo.range = r->glyphCellsSize;
 
 	VkDescriptorBufferInfo pointsInfo = {};
-	pointsInfo.buffer = r->storage_buffer;
-	pointsInfo.offset = r->glyph_points_offset;
-	pointsInfo.range = r->glyph_points_size;
+	pointsInfo.buffer = r->storageBuffer;
+	pointsInfo.offset = r->glyphPointsOffset;
+	pointsInfo.range = r->glyphPointsSize;
 
 	std::array<VkWriteDescriptorSet, 3> writes = {};
 
 	writes[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	writes[0].dstSet = r->descriptor_set;
+	writes[0].dstSet = r->descriptorSet;
 	writes[0].dstBinding = 0;
 	writes[0].dstArrayElement = 0;
 	writes[0].descriptorCount = 1;
@@ -1034,7 +1031,7 @@ static void CreateDescriptorSet(Render *r)
 	writes[0].pBufferInfo = &glyphInfo;
 
 	writes[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	writes[1].dstSet = r->descriptor_set;
+	writes[1].dstSet = r->descriptorSet;
 	writes[1].dstBinding = 1;
 	writes[1].dstArrayElement = 0;
 	writes[1].descriptorCount = 1;
@@ -1042,7 +1039,7 @@ static void CreateDescriptorSet(Render *r)
 	writes[1].pBufferInfo = &cellsInfo;
 
 	writes[2].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	writes[2].dstSet = r->descriptor_set;
+	writes[2].dstSet = r->descriptorSet;
 	writes[2].dstBinding = 2;
 	writes[2].dstArrayElement = 0;
 	writes[2].descriptorCount = 1;
@@ -1076,7 +1073,7 @@ static void CreatePipeline(Render *r)
 
 	VkVertexInputAttributeDescription vertexInputAttributes[] = {
 		{0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, rect)},
-		{1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyph_index)},
+		{1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyphIndex)},
 		{2, 0, VK_FORMAT_R32_SFLOAT, offsetof(GlyphInstance, sharpness)},
 		{3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour)},
 	};
@@ -1096,14 +1093,14 @@ static void CreatePipeline(Render *r)
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
 	viewport.y = 0.0f;
-	viewport.width = static_cast<float>(r->swapchain_extent.width);
-	viewport.height = static_cast<float>(r->swapchain_extent.height);
+	viewport.width = static_cast<float>(r->swapchainExtent.width);
+	viewport.height = static_cast<float>(r->swapchainExtent.height);
 	viewport.minDepth = 0.0f;
 	viewport.maxDepth = 1.0f;
 
 	VkRect2D scissor = {};
 	scissor.offset = {0, 0};
-	scissor.extent = r->swapchain_extent;
+	scissor.extent = r->swapchainExtent;
 
 	VkPipelineViewportStateCreateInfo viewportState = {};
 	viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -1154,17 +1151,12 @@ static void CreatePipeline(Render *r)
 	pipelineInfo.pRasterizationState = &rasterizerState;
 	pipelineInfo.pMultisampleState = &multisampling;
 	pipelineInfo.pColorBlendState = &blendSate;
-	pipelineInfo.layout = r->pipeline_layout;
-	pipelineInfo.renderPass = r->render_pass;
+	pipelineInfo.layout = r->pipelineLayout;
+	pipelineInfo.renderPass = r->renderPass;
 	pipelineInfo.subpass = 0;
 
-	VK_CHECK(vkCreateGraphicsPipelines(
-		r->device,
-		VK_NULL_HANDLE,
-		1,
-		&pipelineInfo,
-		NULL,
-		&r->pipeline));
+	VK_CHECK(vkCreateGraphicsPipelines(r->device, VK_NULL_HANDLE, 1,
+		&pipelineInfo, nullptr, &r->pipeline));
 
 	vkDestroyShaderModule(r->device, vsFont, nullptr);
 	vkDestroyShaderModule(r->device, fsFont, nullptr);
@@ -1204,17 +1196,21 @@ static void DestroySwapChainObjects(Render *r)
 {
 	VK_DESTROY(vkDestroyPipeline, r->device, r->pipeline);
 
-	vkDestroyFence(r->device, r->command_buffer_fence, nullptr);
+	vkDestroyFence(r->device, r->commandBufferFence, nullptr);
 
-	vkFreeCommandBuffers(r->device, r->command_pool, 1, &r->command_buffer);
+	vkFreeCommandBuffers(r->device, r->commandPool, 1, &r->commandBuffer);
 
-	for (uint32_t i = 0; i < r->image_count; i++)
+	for (uint32_t i = 0; i < r->imageCount; i++)
+	{
 		vkDestroyFramebuffer(r->device, r->framebuffers[i], nullptr);
+	}
 
-	VK_DESTROY(vkDestroyRenderPass, r->device, r->render_pass);
+	VK_DESTROY(vkDestroyRenderPass, r->device, r->renderPass);
 
-	for (uint32_t i = 0; i < r->image_count; i++)
-		vkDestroyImageView(r->device, r->image_views[i], nullptr);
+	for (uint32_t i = 0; i < r->imageCount; i++)
+	{
+		vkDestroyImageView(r->device, r->imageViews[i], nullptr);
+	}
 }
 
 static void DestroyVulkanObjects(Render *r)
@@ -1222,20 +1218,20 @@ static void DestroyVulkanObjects(Render *r)
 //	vkDeviceWaitIdle(r->device);
 
 	DestroySwapChainObjects(r);
-
-	VK_DESTROY(vkDestroyBuffer, r->device, r->instance_staging_buffer);
-	VK_DESTROY(vkFreeMemory, r->device, r->instance_staging_buffer_memory);
-	VK_DESTROY(vkDestroyBuffer, r->device, r->instance_buffer);
-	VK_DESTROY(vkFreeMemory, r->device, r->instance_buffer_memory);
-	VK_DESTROY(vkDestroyBuffer, r->device, r->storage_buffer);
-	VK_DESTROY(vkFreeMemory, r->device, r->storage_buffer_memory);
-	VK_DESTROY(vkDestroyDescriptorPool, r->device, r->descriptor_pool);
-	VK_DESTROY(vkDestroyDescriptorSetLayout, r->device, r->set_layout);
-	VK_DESTROY(vkDestroyPipelineLayout, r->device, r->pipeline_layout);
+	
+	VK_DESTROY(vkDestroyBuffer, r->device, r->instanceStagingBuffer);
+	VK_DESTROY(vkFreeMemory, r->device, r->instanceStagingBufferMemory);
+	VK_DESTROY(vkDestroyBuffer, r->device, r->instanceBuffer);
+	VK_DESTROY(vkFreeMemory, r->device, r->instanceBufferMemory);
+	VK_DESTROY(vkDestroyBuffer, r->device, r->storageBuffer);
+	VK_DESTROY(vkFreeMemory, r->device, r->storageBufferMemory);
+	VK_DESTROY(vkDestroyDescriptorPool, r->device, r->descriptorPool);
+	VK_DESTROY(vkDestroyDescriptorSetLayout, r->device, r->setLayout);
+	VK_DESTROY(vkDestroyPipelineLayout, r->device, r->pipelineLayout);
 	VK_DESTROY(vkDestroySwapchainKHR, r->device, r->swapchain);
-	VK_DESTROY(vkDestroySemaphore, r->device, r->image_available_semaphore);
-	VK_DESTROY(vkDestroySemaphore, r->device, r->render_finished_semaphore);
-	VK_DESTROY(vkDestroyCommandPool, r->device, r->command_pool);
+	VK_DESTROY(vkDestroySemaphore, r->device, r->imageAvailableSemaphore);
+	VK_DESTROY(vkDestroySemaphore, r->device, r->renderFinishedSemaphore);
+	VK_DESTROY(vkDestroyCommandPool, r->device, r->commandPool);
 
 	vkDestroyDevice(r->device, nullptr);
 	r->device = nullptr;
@@ -1259,60 +1255,60 @@ static void RecreateSwapChain(Render *r)
 static void Update(Render *r)
 {
 	r->frame++;
-	r->fps_temp++;
+	r->fpsTemp++;
 
 	auto curr = static_cast<float>(glfwGetTime());
 
 	if (floorf(curr) > floorf(r->time))
 	{
-		r->fps = r->fps_temp;
-		r->fps_temp = 0;
+		r->fps = r->fpsTemp;
+		r->fpsTemp = 0;
 	}
 
-	r->delta_time = (float)(curr - r->time);
+	r->deltaTime = (float)(curr - r->time);
 	r->time = curr;
 
 	double xpos, ypos;
 	glfwGetCursorPos(r->window, &xpos, &ypos);
 
-	r->mouse_pos.m_x = static_cast<float>(xpos);
-	r->mouse_pos.m_y = static_cast<float>(ypos);
+	r->mousePos.m_x = static_cast<float>(xpos);
+	r->mousePos.m_y = static_cast<float>(ypos);
 
-	Vector2 mouseDelta = r->old_mouse_pos - r->mouse_pos;
+	Vector2 mouseDelta = r->oldMousePos - r->mousePos;
 
 	if (glfwGetMouseButton(r->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
-		mouseDelta *= 1.0f / r->canvas_scale;
-		r->canvas_offset += mouseDelta;
+		mouseDelta *= 1.0f / r->canvasScale;
+		r->canvasOffset += mouseDelta;
 	}
 
-	r->old_mouse_pos = r->mouse_pos;
+	r->oldMousePos = r->mousePos;
 
 	Vector2 swapchainExtent = {
-		static_cast<float>(r->swapchain_extent.width),
-		static_cast<float>(r->swapchain_extent.height)
+		static_cast<float>(r->swapchainExtent.width),
+		static_cast<float>(r->swapchainExtent.height)
 	};
 
-	Vector2 oldSize = swapchainExtent * (1.0f / r->canvas_scale);
+	Vector2 oldSize = swapchainExtent * (1.0f / r->canvasScale);
 
-	if (r->canvas_scale != r->target_canvas_scale)
+	if (r->canvasScale != r->targetCanvasScale)
 	{
-		r->canvas_scale = Maths::Lerp(r->canvas_scale, r->target_canvas_scale, r->delta_time * 30.0f);
+		r->canvasScale = Maths::Lerp(r->canvasScale, r->targetCanvasScale, r->deltaTime * 30.0f);
 
-		Vector2 newSize = swapchainExtent * (1.0f / r->canvas_scale);
+		Vector2 newSize = swapchainExtent * (1.0f / r->canvasScale);
 		Vector2 tmp = oldSize - newSize;
 
-		tmp.m_x *= r->mouse_pos.m_x / swapchainExtent.m_x;
-		tmp.m_y *= r->mouse_pos.m_y / swapchainExtent.m_y;
+		tmp.m_x *= r->mousePos.m_x / swapchainExtent.m_x;
+		tmp.m_y *= r->mousePos.m_y / swapchainExtent.m_y;
 
-		r->canvas_offset += tmp;
+		r->canvasOffset += tmp;
 	}
 }
 
 static void RenderFrame(Render *r)
 {
 	VkResult res = vkAcquireNextImageKHR(r->device, r->swapchain, std::numeric_limits<uint32_t>::max(),
-	                                     r->image_available_semaphore, nullptr, &r->image_index);
+		r->imageAvailableSemaphore, nullptr, &r->imageIndex);
 
 	if (res == VK_ERROR_OUT_OF_DATE_KHR)
 	{
@@ -1324,15 +1320,15 @@ static void RenderFrame(Render *r)
 		return;
 	}
 
-	VkFence currentFence = r->command_buffer_fence;
+	VkFence currentFence = r->commandBufferFence;
 	vkWaitForFences(r->device, 1, &currentFence, VK_TRUE, std::numeric_limits<uint64_t>::max());
 	vkResetFences(r->device, 1, &currentFence);
 
 	RecordCommandBuffer(r);
 
-	VkSemaphore waitSemaphores[] = {r->image_available_semaphore};
+	VkSemaphore waitSemaphores[] = {r->imageAvailableSemaphore};
 	VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
-	VkSemaphore signalSemaphores[] = {r->render_finished_semaphore};
+	VkSemaphore signalSemaphores[] = {r->renderFinishedSemaphore};
 
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -1340,11 +1336,11 @@ static void RenderFrame(Render *r)
 	submitInfo.pWaitSemaphores = waitSemaphores;
 	submitInfo.pWaitDstStageMask = waitStages;
 	submitInfo.commandBufferCount = 1;
-	submitInfo.pCommandBuffers = &r->command_buffer;
+	submitInfo.pCommandBuffers = &r->commandBuffer;
 	submitInfo.signalSemaphoreCount = 1;
 	submitInfo.pSignalSemaphores = signalSemaphores;
 
-	res = vkQueueSubmit(r->graphics_queue, 1, &submitInfo, currentFence);
+	res = vkQueueSubmit(r->queueGraphics, 1, &submitInfo, currentFence);
 
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -1352,18 +1348,18 @@ static void RenderFrame(Render *r)
 	presentInfo.pWaitSemaphores = signalSemaphores;
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = &r->swapchain;
-	presentInfo.pImageIndices = &r->image_index;
+	presentInfo.pImageIndices = &r->imageIndex;
 
-	res = vkQueuePresentKHR(r->present_queue, &presentInfo);
+	res = vkQueuePresentKHR(r->queuePresent, &presentInfo);
 
 	if (res == VK_ERROR_OUT_OF_DATE_KHR || res == VK_SUBOPTIMAL_KHR)
 	{
 		RecreateSwapChain(r);
-		//return true;
+	//	return true;
 	}
 	else
 	{
-		//return res == VK_SUCCESS;
+	//	return res == VK_SUCCESS;
 	}
 }
 
@@ -1395,7 +1391,7 @@ void ScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	Render *r = (Render *)(glfwGetWindowUserPointer(window));
 
-	r->target_canvas_scale *= powf(1.3f, (float)yoffset);
+	r->targetCanvasScale *= powf(1.3f, (float)yoffset);
 }
 
 int main(int argc, const char **args)
@@ -1406,8 +1402,8 @@ int main(int argc, const char **args)
 	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan window", nullptr, nullptr);
 
 	Render render = {};
-	render.canvas_scale = 3.0f;
-	render.target_canvas_scale = render.canvas_scale;
+	render.canvasScale = 3.0f;
+	render.targetCanvasScale = render.canvasScale;
 	render.window = window;
 
 	glfwSetWindowUserPointer(window, &render);
@@ -1445,7 +1441,6 @@ int main(int argc, const char **args)
 //	std::string filename = "Resources/Engine/Fonts/Roboto-Regular.ttf";
 //	std::string filename = "Resources/Engine/Fonts/Roboto-Thin.ttf";
 //	std::string filename = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
-
 	CreateVulkanObjects(filename, &render);
 
 	while (!glfwWindowShouldClose(window))
