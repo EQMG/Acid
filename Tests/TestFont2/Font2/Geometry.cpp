@@ -75,13 +75,13 @@ namespace acid
 
 	bool IsPointInsideBbox(const Rect &bbox, const Vector2 &p)
 	{
-		return IsBetween(p.m_x, bbox.min_x, bbox.max_x) && IsBetween(p.m_y, bbox.min_y, bbox.max_y);
+		return IsBetween(p.m_x, bbox.minX, bbox.maxX) && IsBetween(p.m_y, bbox.minY, bbox.maxY);
 	}
 
 	bool IsPointInsideBboxExclusive(const Rect &bbox, const Vector2 &p)
 	{
-		return IsBetweenExclusive(p.m_x, bbox.min_x, bbox.max_x) &&
-			IsBetweenExclusive(p.m_y, bbox.min_y, bbox.max_y);
+		return IsBetweenExclusive(p.m_x, bbox.minX, bbox.maxX) &&
+			IsBetweenExclusive(p.m_y, bbox.minY, bbox.maxY);
 	}
 
 	bool IsIntersectionInLineSegment(const Vector2 &p1, const Vector2 &p2, const Vector2 &i)
@@ -105,35 +105,35 @@ namespace acid
 			return true;
 		}
 
-		float xTop = LineHorizontalIntersect(bbox.max_y, p1, p2);
-		float xBottom = LineHorizontalIntersect(bbox.min_y, p1, p2);
-		float yLeft = LineVerticalIntersect(bbox.min_x, p1, p2);
-		float yRight = LineVerticalIntersect(bbox.max_x, p1, p2);
+		float xTop = LineHorizontalIntersect(bbox.maxY, p1, p2);
+		float xBottom = LineHorizontalIntersect(bbox.minY, p1, p2);
+		float yLeft = LineVerticalIntersect(bbox.minX, p1, p2);
+		float yRight = LineVerticalIntersect(bbox.maxX, p1, p2);
 
-		Vector2 top = Vector2(xTop, bbox.max_y);
-		Vector2 bottom = Vector2(xBottom, bbox.min_y);
-		Vector2 left = Vector2(bbox.min_x, yLeft);
-		Vector2 right = Vector2(bbox.max_x, yRight);
+		Vector2 top = Vector2(xTop, bbox.maxY);
+		Vector2 bottom = Vector2(xBottom, bbox.minY);
+		Vector2 left = Vector2(bbox.minX, yLeft);
+		Vector2 right = Vector2(bbox.maxX, yRight);
 
-		if (IsBetween(xTop, bbox.min_x, bbox.max_x) &&
+		if (IsBetween(xTop, bbox.minX, bbox.maxX) &&
 			IsIntersectionInLineSegment(p1, p2, top))
 		{
 			return true;
 		}
 
-		if (IsBetween(xBottom, bbox.min_x, bbox.max_x) &&
+		if (IsBetween(xBottom, bbox.minX, bbox.maxX) &&
 			IsIntersectionInLineSegment(p1, p2, bottom))
 		{
 			return true;
 		}
 
-		if (IsBetween(yLeft, bbox.min_y, bbox.max_y) &&
+		if (IsBetween(yLeft, bbox.minY, bbox.maxY) &&
 			IsIntersectionInLineSegment(p1, p2, left))
 		{
 			return true;
 		}
 
-		if (IsBetween(yRight, bbox.min_y, bbox.max_y) &&
+		if (IsBetween(yRight, bbox.minY, bbox.maxY) &&
 			IsIntersectionInLineSegment(p1, p2, right))
 		{
 			return true;
@@ -154,10 +154,10 @@ namespace acid
 			return true;
 		}
 
-		Vector2 bl = Vector2(bbox.min_x, bbox.min_y);
-		Vector2 br = Vector2(bbox.max_x, bbox.min_y);
-		Vector2 tl = Vector2(bbox.min_x, bbox.max_y);
-		Vector2 tr = Vector2(bbox.max_x, bbox.max_y);
+		Vector2 bl = Vector2(bbox.minX, bbox.minY);
+		Vector2 br = Vector2(bbox.maxX, bbox.minY);
+		Vector2 tl = Vector2(bbox.minX, bbox.maxY);
+		Vector2 tr = Vector2(bbox.maxX, bbox.maxY);
 
 		return Bezier2LineIsIntersecting(bezier, bl, br) ||
 			Bezier2LineIsIntersecting(bezier, br, tr) ||
@@ -258,10 +258,10 @@ namespace acid
 		float tx = deriv[0].m_x / (deriv[0].m_x - deriv[1].m_x);
 		float ty = deriv[0].m_y / (deriv[0].m_y - deriv[1].m_y);
 
-		bbox.min_x = std::min(bezier[0].m_x, bezier[2].m_x);
-		bbox.min_y = std::min(bezier[0].m_y, bezier[2].m_y);
-		bbox.max_x = std::max(bezier[0].m_x, bezier[2].m_x);
-		bbox.max_y = std::max(bezier[0].m_y, bezier[2].m_y);
+		bbox.minX = std::min(bezier[0].m_x, bezier[2].m_x);
+		bbox.minY = std::min(bezier[0].m_y, bezier[2].m_y);
+		bbox.maxX = std::max(bezier[0].m_x, bezier[2].m_x);
+		bbox.maxY = std::max(bezier[0].m_y, bezier[2].m_y);
 
 		if (0.0f <= tx && tx <= 1.0f)
 		{
@@ -269,11 +269,11 @@ namespace acid
 
 			if (deriv[0].m_x < deriv[1].m_x)
 			{
-				bbox.min_x = std::min(bbox.min_x, x);
+				bbox.minX = std::min(bbox.minX, x);
 			}
 			else
 			{
-				bbox.max_x = std::max(bbox.max_x, x);
+				bbox.maxX = std::max(bbox.maxX, x);
 			}
 		}
 
@@ -283,11 +283,11 @@ namespace acid
 
 			if (deriv[0].m_y < deriv[1].m_y)
 			{
-				bbox.min_y = std::min(bbox.min_y, y);
+				bbox.minY = std::min(bbox.minY, y);
 			}
 			else
 			{
-				bbox.max_y = std::max(bbox.max_y, y);
+				bbox.maxY = std::max(bbox.maxY, y);
 			}
 		}
 	}

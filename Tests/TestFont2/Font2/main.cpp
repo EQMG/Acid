@@ -63,10 +63,9 @@ struct Render
 	float canvasScale;
 	float targetCanvasScale;
 
-	Outline outlines[NUMBER_OF_GLYPHS];
-	HostGlyphInfo glyphInfos[NUMBER_OF_GLYPHS];
+	std::vector<HostGlyphInfo> glyphInfos;
 
-	void *glyphData;
+	std::unique_ptr<char[]> glyphData;
 	uint32_t glyphDataSize;
 	uint32_t glyphInfoSize;
 	uint32_t glyphCellsSize;
@@ -119,12 +118,12 @@ struct Render
 	VkPipeline pipeline;
 };
 
-static uint32_t AlignUint32(uint32_t value, uint32_t alignment)
+static uint32_t AlignUint32(const uint32_t &value, const uint32_t &alignment)
 {
 	return (value + alignment - 1) / alignment * alignment;
 }
 
-static void LoadFont(std::string filename, Render *r)
+static void LoadFont(const std::string &filename, Render *r)
 {
 	FT_Library library;
 	FT_CHECK(FT_Init_FreeType(&library));
@@ -137,10 +136,13 @@ static void LoadFont(std::string filename, Render *r)
 	uint32_t totalPoints = 0;
 	uint32_t totalCells = 0;
 
+	std::vector<Outline> outlines(NUMBER_OF_GLYPHS);
+	r->glyphInfos = std::vector<HostGlyphInfo>(NUMBER_OF_GLYPHS);
+
 	for (uint32_t i = 0; i < NUMBER_OF_GLYPHS; i++)
 	{
 		char c = ' ' + i;
-		Outline *o = &r->outlines[i];
+		Outline *o = &outlines[i];
 		HostGlyphInfo *hgi = &r->glyphInfos[i];
 
 		FT_UInt glyphIndex = FT_Get_Char_Index(face, c);
@@ -151,7 +153,7 @@ static void LoadFont(std::string filename, Render *r)
 		hgi->bbox = o->bbox;
 		hgi->advance = face->glyph->metrics.horiAdvance / 64.0f;
 
-		totalPoints += o->pointCount;
+		totalPoints += o->points.size();
 		totalCells += o->cellCountX * o->cellCountY;
 	}
 
@@ -164,19 +166,18 @@ static void LoadFont(std::string filename, Render *r)
 	r->glyphCellsOffset = AlignUint32(r->glyphInfoSize, alignment);
 	r->glyphPointsOffset = AlignUint32(r->glyphInfoSize + r->glyphCellsSize, alignment);
 	r->glyphDataSize = r->glyphPointsOffset + r->glyphPointsSize;
+	r->glyphData = std::make_unique<char[]>(r->glyphDataSize);
 
-	r->glyphData = malloc(r->glyphDataSize);
-
-	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo*>(static_cast<char*>(r->glyphData) + r->glyphInfoOffset);
-	auto cells = reinterpret_cast<uint32_t*>(static_cast<char*>(r->glyphData) + r->glyphCellsOffset);
-	auto points = reinterpret_cast<Vector2*>(static_cast<char*>(r->glyphData) + r->glyphPointsOffset);
+	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo*>(r->glyphData.get() + r->glyphInfoOffset);
+	auto cells = reinterpret_cast<uint32_t*>(r->glyphData.get() + r->glyphCellsOffset);
+	auto points = reinterpret_cast<Vector2*>(r->glyphData.get() + r->glyphPointsOffset);
 
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
 
 	for (uint32_t i = 0; i < NUMBER_OF_GLYPHS; i++)
 	{
-		Outline *o = &r->outlines[i];
+		Outline *o = &outlines[i];
 		DeviceGlyphInfo *dgi = &deviceGlyphInfos[i];
 
 		dgi->cellInfo.cellCountX = o->cellCountX;
@@ -185,23 +186,17 @@ static void LoadFont(std::string filename, Render *r)
 		dgi->cellInfo.cellOffset = cellOffset;
 		dgi->bbox = o->bbox;
 
-		uint32_t cellCount = o->cellCountX * o->cellCountY;
-		memcpy(cells + cellOffset, o->cells, sizeof(uint32_t) * cellCount);
-		memcpy(points + pointOffset, o->points, sizeof(Vector2) * o->pointCount);
+		memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
+		memcpy(points + pointOffset, o->points.data(), sizeof(Vector2) * o->points.size());
 
 	//	OutlineU16Points(o, &dgi->cbox, points + point_offset);
 
-		pointOffset += o->pointCount;
-		cellOffset += cellCount;
+		pointOffset += o->points.size();
+		cellOffset += o->cells.size();
 	}
 
 	assert(pointOffset == totalPoints);
 	assert(cellOffset == totalCells);
-
-	for (auto &outline : r->outlines)
-	{
-		OutlineDestroy(&outline);
-	}
 
 	FT_CHECK(FT_Done_Face(face));
 	FT_CHECK(FT_Done_FreeType(library));
@@ -618,8 +613,10 @@ static void EndText(Render *r)
 		0, nullptr);
 }
 
-static void AppendText(Render *r, float x, float y, float scale, std::string text, Colour colour)
+static void AppendText(Render *r, const float &x, const float &y, const float &scale, const std::string &text, const Colour &colour)
 {
+	float localX = x;
+
 	for (char c : text)
 	{
 		if (r->glyphInstanceCount >= MAX_VISIBLE_GLYPHS)
@@ -632,13 +629,13 @@ static void AppendText(Render *r, float x, float y, float scale, std::string tex
 		HostGlyphInfo *gi = &r->glyphInfos[glyphIndex];
 		GlyphInstance *inst = &r->glyphInstances[r->glyphInstanceCount];
 
-		inst->rect.min_x = (x + gi->bbox.min_x * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
-		inst->rect.min_y = (y - gi->bbox.min_y * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
-		inst->rect.max_x = (x + gi->bbox.max_x * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
-		inst->rect.max_y = (y - gi->bbox.max_y * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
+		inst->rect.minX = (localX + gi->bbox.minX * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
+		inst->rect.minY = (y - gi->bbox.minY * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
+		inst->rect.maxX = (localX + gi->bbox.maxX * scale) / (r->swapchainExtent.width / 2.0f) - 1.0f;
+		inst->rect.maxY = (y - gi->bbox.maxY * scale) / (r->swapchainExtent.height / 2.0f) - 1.0f;
 
-		if (inst->rect.min_x <= 1 && inst->rect.max_x >= -1 &&
-			inst->rect.max_y <= 1 && inst->rect.min_y >= -1)
+		if (inst->rect.minX <= 1 && inst->rect.maxX >= -1 &&
+			inst->rect.maxY <= 1 && inst->rect.minY >= -1)
 		{
 			inst->glyphIndex = glyphIndex;
 			inst->sharpness = scale;
@@ -647,7 +644,7 @@ static void AppendText(Render *r, float x, float y, float scale, std::string tex
 			r->glyphInstanceCount++;
 		}
 
-		x += gi->advance * scale;
+		localX += gi->advance * scale;
 	}
 }
 
@@ -771,7 +768,7 @@ static void CreateSemaphores(Render *r)
 	VK_CHECK(vkCreateSemaphore(r->device, &semaphoreCreateInfo, NULL, &r->renderFinishedSemaphore));
 }
 
-static VkShaderModule LoadShaderModule(VkDevice device, const char *path)
+static VkShaderModule LoadShaderModule(const VkDevice &device, const char *path)
 {
 	FILE *f = fopen(path, "rb");
 	fseek(f, 0, SEEK_END);
@@ -784,7 +781,7 @@ static VkShaderModule LoadShaderModule(VkDevice device, const char *path)
 
 	VkShaderModuleCreateInfo moduleCreateInfo = {};
 	moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-	moduleCreateInfo.codeSize = size_t(size);
+	moduleCreateInfo.codeSize = static_cast<std::size_t>(size);
 	moduleCreateInfo.pCode = code.data();
 
 	VkShaderModule ret;
@@ -829,7 +826,7 @@ static void CreateLayout(Render *r)
 	VK_CHECK(vkCreatePipelineLayout(r->device, &pipelineLayoutCreateInfo, NULL, &r->pipelineLayout));
 }
 
-static uint32_t FindMemoryType(Render *r, uint32_t type_bits, VkMemoryPropertyFlags flags)
+static uint32_t FindMemoryType(Render *r, const uint32_t &type_bits, const VkMemoryPropertyFlags &flags)
 {
 	for (uint32_t i = 0; i < r->memoryProperties.memoryTypeCount; i++)
 	{
@@ -847,7 +844,7 @@ static uint32_t FindMemoryType(Render *r, uint32_t type_bits, VkMemoryPropertyFl
 	return std::numeric_limits<uint32_t>::max();
 }
 
-static VkDeviceMemory AllocRequiredMemory(Render *r, VkMemoryRequirements *req, VkMemoryPropertyFlags flags)
+static VkDeviceMemory AllocRequiredMemory(Render *r, VkMemoryRequirements *req, const VkMemoryPropertyFlags &flags)
 {
 	VkMemoryAllocateInfo memoryAllocateInfo = {};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -859,7 +856,7 @@ static VkDeviceMemory AllocRequiredMemory(Render *r, VkMemoryRequirements *req, 
 	return memory;
 }
 
-static void CreateBufferWithMemory(Render *r, VkBufferCreateInfo *ci, VkMemoryPropertyFlags flags,
+static void CreateBufferWithMemory(Render *r, VkBufferCreateInfo *ci, const VkMemoryPropertyFlags &flags,
 	VkDeviceMemory *memory, VkBuffer *buffer)
 {
 	VK_CHECK(vkCreateBuffer(r->device, ci, NULL, buffer));
@@ -890,30 +887,30 @@ VkCommandBuffer BeginOneTimeCmdbuf(Render *r)
 	return commandBuffer;
 }
 
-void EndOneTimeCmdbuf(Render *r, VkCommandBuffer cmd_buffer)
+void EndOneTimeCmdbuf(Render *r, const VkCommandBuffer &commandBuffer)
 {
-	VK_CHECK(vkEndCommandBuffer(cmd_buffer));
+	VK_CHECK(vkEndCommandBuffer(commandBuffer));
 
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
-	submitInfo.pCommandBuffers = &cmd_buffer;
+	submitInfo.pCommandBuffers = &commandBuffer;
 
 	VK_CHECK(vkQueueSubmit(r->queueGraphics, 1, &submitInfo, VK_NULL_HANDLE));
 	VK_CHECK(vkQueueWaitIdle(r->queueGraphics));
-	vkFreeCommandBuffers(r->device, r->commandPool, 1, &cmd_buffer);
+	vkFreeCommandBuffers(r->device, r->commandPool, 1, &commandBuffer);
 }
 
-static void CopyBuffer(Render *r, VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
+static void CopyBuffer(Render *r, const VkBuffer &srcBuffer, const VkBuffer &dstBuffer, const VkDeviceSize &size)
 {
 	VkCommandBuffer commandBuffer = BeginOneTimeCmdbuf(r);
 	VkBufferCopy copy = {0, 0, size};
 
-	vkCmdCopyBuffer(commandBuffer, src_buffer, dst_buffer, 1, &copy);
+	vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copy);
 	EndOneTimeCmdbuf(r, commandBuffer);
 }
 
-static void StageBuffer(Render *r, VkBuffer buffer, void *data, size_t size)
+static void StageBuffer(Render *r, const VkBuffer &buffer, const void *data, const std::size_t &size)
 {
 	VkBufferCreateInfo stagingCreateInfo = {};
 	stagingCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -940,7 +937,7 @@ static void StageBuffer(Render *r, VkBuffer buffer, void *data, size_t size)
 	vkFreeMemory(r->device, stagingBufferMemory, nullptr);
 }
 
-static void CreateStorageBuffer(std::string filename, Render *r)
+static void CreateStorageBuffer(const std::string &filename, Render *r)
 {
 	LoadFont(filename, r);
 
@@ -953,9 +950,8 @@ static void CreateStorageBuffer(std::string filename, Render *r)
 	CreateBufferWithMemory(r, &storageCreateInfo, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
 		&r->storageBufferMemory, &r->storageBuffer);
 
-	StageBuffer(r, r->storageBuffer, r->glyphData, storageCreateInfo.size);
+	StageBuffer(r, r->storageBuffer, r->glyphData.get(), storageCreateInfo.size);
 
-	free(r->glyphData);
 	r->glyphData = nullptr;
 }
 
@@ -1173,7 +1169,7 @@ static void CreateSwapChainObjects(Render *r)
 	CreateCommandBufferFence(r);
 }
 
-static void CreateVulkanObjects(std::string filename, Render *r)
+static void CreateVulkanObjects(const std::string &filename, Render *r)
 {
 	CreateInstance(r);
 	CreateSurface(r);
