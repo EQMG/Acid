@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_BBOX_H
@@ -42,24 +41,24 @@ namespace acid
 		uint16_t x, y;
 	};
 
-	void outline_convert(FT_Outline *outline, Outline *o, char c);
+	void OutlineConvert(FT_Outline *outline, Outline *o, char c);
 
-	void outline_decompose(FT_Outline *outline, Outline *o);
+	void OutlineDecompose(FT_Outline *outline, Outline *o);
 
-	void outline_make_cells(Outline *o);
+	void OutlineMakeCells(Outline *o);
 
-	void outline_subdivide(Outline *o);
+	void OutlineSubdivide(Outline *o);
 
-	//  void outline_fix_corners(Outline *o);
+//  void OutlineFixCorners(Outline *o);
 
-	void outline_destroy(Outline *o);
+	void OutlineDestroy(Outline *o);
 
-	void outline_cbox(Outline *o, Rect *cbox);
+	void OutlineCbox(Outline *o, Rect *cbox);
 
-	void outline_u16_points(Outline *o, Rect *cbox, PointU16 *pout);
+	void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout);
 
 	template<typename T>
-	static inline void dyn_array_grow(T **data, uint32_t *capacity, size_t element_size)
+	static inline void DynArrayGrow(T **data, uint32_t *capacity, size_t element_size)
 	{
 		*capacity = *capacity ? *capacity * 2 : 8;
 		T *new_data = (T *)realloc(*data, *capacity * element_size);

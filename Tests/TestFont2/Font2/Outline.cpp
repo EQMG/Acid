@@ -1,9 +1,8 @@
 #include "Outline.hpp"
 
-#include <stdlib.h>
-#include <memory.h>
 #include <cassert>
 #include <vector>
+#include <algorithm>
 
 namespace acid
 {
@@ -19,7 +18,7 @@ namespace acid
 	static void add_outline_point(Outline *o, Vector2 point)
 	{
 		if (o->point_capacity == o->num_of_points)
-			dyn_array_grow(&o->points, &o->point_capacity, sizeof(Vector2));
+			DynArrayGrow(&o->points, &o->point_capacity, sizeof(Vector2));
 
 		o->points[o->num_of_points] = point;
 		//memcpy(o->points[o->num_of_points], point, sizeof(Vector2));
@@ -29,7 +28,7 @@ namespace acid
 	static void add_outline_contour(Outline *o, ContourRange *range)
 	{
 		if (o->contour_capacity == o->num_of_contours)
-			dyn_array_grow(&o->contours, &o->contour_capacity, sizeof(ContourRange));
+			DynArrayGrow(&o->contours, &o->contour_capacity, sizeof(ContourRange));
 
 		o->contours[o->num_of_contours] = *range;
 		o->num_of_contours++;
@@ -98,7 +97,7 @@ namespace acid
 		return line_to_func(to, o);
 	}
 
-	void outline_decompose(FT_Outline *outline, Outline *o)
+	void OutlineDecompose(FT_Outline *outline, Outline *o)
 	{
 		memset(o, 0, sizeof(Outline));
 
@@ -187,7 +186,7 @@ namespace acid
 				Vector2 &p1 = o->points[i + 1];
 				Vector2 &p2 = o->points[i + 2];
 
-				float t = line_calculate_t(p0, p2, p);
+				float t = LineCalculateT(p0, p2, p);
 
 				Vector2 p02 = p0.Lerp(p2, t);
 
@@ -195,13 +194,13 @@ namespace acid
 
 				if (udist < mindist + 0.0001f)
 				{
-					float d = line_signed_distance(p0, p2, p);
+					float d = LineSignedDistance(p0, p2, p);
 
 					if (udist >= mindist && i > contour_begin)
 					{
 						float lastd = i == contour_end - 2 && j == contour_begin
-							              ? line_signed_distance(p0, p2, o->points[contour_begin + 2])
-							              : line_signed_distance(p0, p2, o->points[i - 2]);
+							              ? LineSignedDistance(p0, p2, o->points[contour_begin + 2])
+							              : LineSignedDistance(p0, p2, o->points[i - 2]);
 
 						if (lastd < 0.0)
 							v = std::max(d, v);
@@ -312,7 +311,7 @@ namespace acid
 	static bool for_each_wipcell_add_bezier(Outline *o, Outline *u, uint32_t i, uint32_t j, uint32_t contour_index, WIPCell *cells)
 	{
 		Rect bezier_bbox;
-		bezier2_bbox(&o->points[i], &bezier_bbox);
+		Bezier2Bbox(&o->points[i], &bezier_bbox);
 
 		float outline_bbox_w = o->bbox.max_x - o->bbox.min_x;
 		float outline_bbox_h = o->bbox.max_y - o->bbox.min_y;
@@ -333,7 +332,7 @@ namespace acid
 			for (uint32_t x = min_x; x <= max_x; x++)
 			{
 				WIPCell *cell = &cells[y * o->cell_count_x + x];
-				if (bbox_bezier2_intersect(&cell->bbox, &o->points[i]))
+				if (BboxBezier2Intersect(&cell->bbox, &o->points[i]))
 					ret &= wipcell_add_bezier(o, u, i, j, contour_index, cell);
 			}
 		}
@@ -485,7 +484,7 @@ namespace acid
 
 		if (!ret)
 		{
-			outline_destroy(&u);
+			OutlineDestroy(&u);
 			return ret;
 		}
 
@@ -495,7 +494,7 @@ namespace acid
 
 		copy_wipcell_values(&u, cells.data());
 
-		outline_destroy(o);
+		OutlineDestroy(o);
 		*o = u;
 		return ret;
 	}
@@ -512,7 +511,7 @@ namespace acid
 		return v;
 	}
 
-	void outline_make_cells(Outline *o)
+	void OutlineMakeCells(Outline *o)
 	{
 		if (o->num_of_points > FD_OUTLINE_MAX_POINTS)
 			return;
@@ -564,7 +563,7 @@ namespace acid
 	}
 
 	/*
-	void outline_fix_corners(Outline *o)
+	void OutlineFixCorners(Outline *o)
 	{
 		float fix_dist = 0.001f;
 	
@@ -613,7 +612,7 @@ namespace acid
 	}
 	*/
 
-	void outline_subdivide(Outline *o)
+	void OutlineSubdivide(Outline *o)
 	{
 		Outline u = {};
 		u.bbox = o->bbox;
@@ -635,7 +634,7 @@ namespace acid
 				//Vector2 &p2 = o->points[i + 2];
 
 				Vector2 newp[3];
-				bezier2_split_3p(newp, &o->points[i], 0.5f);
+				Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
 				add_outline_point(&u, p0);
 				add_outline_point(&u, newp[0]);
@@ -647,7 +646,7 @@ namespace acid
 			add_outline_point(&u, o->points[contour_end]);
 		}
 
-		outline_destroy(o);
+		OutlineDestroy(o);
 		*o = u;
 	}
 
@@ -726,14 +725,14 @@ namespace acid
 					//Vector2 &q1 = o->points[j + 1];
 					Vector2 &q2 = o->points[j + 2];
 
-					if (bezier2_line_is_intersecting(bezier, q0, q2))
+					if (Bezier2LineIsIntersecting(bezier, q0, q2))
 						subdivide = true;
 				}
 
 				if (subdivide)
 				{
 					Vector2 newp[3];
-					bezier2_split_3p(newp, &o->points[i], 0.5f);
+					Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
 					add_outline_point(&u, p0);
 					add_outline_point(&u, newp[0]);
@@ -751,11 +750,11 @@ namespace acid
 			add_outline_point(&u, o->points[contour_end]);
 		}
 
-		outline_destroy(o);
+		OutlineDestroy(o);
 		*o = u;
 	}
 
-	void outline_convert(FT_Outline *outline, Outline *o, char c)
+	void OutlineConvert(FT_Outline *outline, Outline *o, char c)
 	{
 		if (c == '&')
 		{
@@ -765,17 +764,17 @@ namespace acid
 		clock_t t = clock();
 		for (int i = 0; i < 1000; i++)
 		{*/
-		outline_decompose(outline, o);
-		//outline_fix_corners(o);
+		OutlineDecompose(outline, o);
+		//OutlineFixCorners(o);
 		//outline_subdivide(o);
 		outline_fix_thin_lines(o);
-		outline_make_cells(o);
+		OutlineMakeCells(o);
 		//}
 
 		//printf("  %d ms\n", clock() - t);
 	}
 
-	void outline_destroy(Outline *o)
+	void OutlineDestroy(Outline *o)
 	{
 		if (o->contours)
 			free(o->contours);
@@ -786,7 +785,7 @@ namespace acid
 		memset(o, 0, sizeof(Outline));
 	}
 
-	void outline_cbox(Outline *o, Rect *cbox)
+	void OutlineCbox(Outline *o, Rect *cbox)
 	{
 		if (o->num_of_points == 0)
 			return;
@@ -813,9 +812,9 @@ namespace acid
 		return (uint16_t)((x - min) / (max - min) * std::numeric_limits<uint16_t>::max());
 	}
 
-	void outline_u16_points(Outline *o, Rect *cbox, PointU16 *pout)
+	void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout)
 	{
-		outline_cbox(o, cbox);
+		OutlineCbox(o, cbox);
 
 		for (uint32_t i = 0; i < o->num_of_points; i++)
 		{

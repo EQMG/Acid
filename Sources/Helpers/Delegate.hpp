@@ -1,7 +1,5 @@
 #pragma once
 
-#include <list>
-#include <memory>
 #include <mutex>
 #include <vector>
 #include <algorithm>
@@ -60,7 +58,7 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		using Invoker = Invoker<TReturnType, TArgs...>;
+		using Invoker = acid::Invoker<TReturnType, TArgs...>;
 		using FunctionType = std::function<TReturnType(TArgs ...)>;
 
 		Delegate() = default;
