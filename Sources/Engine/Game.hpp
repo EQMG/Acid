@@ -13,7 +13,6 @@ namespace acid
 		Game() :
 			m_started(false)
 		{
-
 		}
 
 		virtual ~Game() = default;
@@ -27,6 +26,7 @@ namespace acid
 		/// Run before the module update pass.
 		/// </summary>
 		virtual void Update() = 0;
+
 	private:
 		friend class Engine;
 		bool m_started;

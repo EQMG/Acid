@@ -53,6 +53,7 @@ namespace acid
 		{
 			return m_start + factor * (m_end - m_start);
 		}
+
 	private:
 		T m_start;
 		T m_end;

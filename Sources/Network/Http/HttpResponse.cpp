@@ -5,7 +5,7 @@
 namespace acid
 {
 	HttpResponse::HttpResponse() :
-		m_status(HttpResponse::Status::ConnectionFailed),
+		m_status(Status::ConnectionFailed),
 		m_majorVersion(0),
 		m_minorVersion(0)
 	{
@@ -19,11 +19,8 @@ namespace acid
 		{
 			return it->second;
 		}
-		else
-		{
-			static const std::string empty = "";
-			return empty;
-		}
+		static const std::string empty = "";
+		return empty;
 	}
 
 	void HttpResponse::Parse(const std::string &data)
@@ -36,8 +33,8 @@ namespace acid
 		if (in >> version)
 		{
 			if ((version.size() >= 8) && (version[6] == '.') &&
-			    (String::Lowercase(version.substr(0, 5)) == "http/") &&
-			    isdigit(version[5]) && isdigit(version[7]))
+				(String::Lowercase(version.substr(0, 5)) == "http/") &&
+				isdigit(version[5]) && isdigit(version[7]))
 			{
 				m_majorVersion = version[5] - '0';
 				m_minorVersion = version[7] - '0';
@@ -45,7 +42,7 @@ namespace acid
 			else
 			{
 				// Invalid HTTP version.
-				m_status = HttpResponse::Status::InvalidResponse;
+				m_status = Status::InvalidResponse;
 				return;
 			}
 		}
@@ -55,12 +52,12 @@ namespace acid
 
 		if (in >> status)
 		{
-			m_status = static_cast<HttpResponse::Status>(status);
+			m_status = static_cast<Status>(status);
 		}
 		else
 		{
 			// Invalid status code.
-			m_status = HttpResponse::Status::InvalidResponse;
+			m_status = Status::InvalidResponse;
 			return;
 		}
 

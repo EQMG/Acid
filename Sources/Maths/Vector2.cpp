@@ -81,7 +81,7 @@ namespace acid
 	Vector2 Vector2::Rotate(const float &angle, const Vector2 &rotationAxis) const
 	{
 		return Vector2(((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x),
-			((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y));
+		               ((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y));
 	}
 
 	Vector2 Vector2::Negate() const

@@ -23,6 +23,7 @@ namespace test
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+
 	private:
 		uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
 

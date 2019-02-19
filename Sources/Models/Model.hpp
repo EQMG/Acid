@@ -41,11 +41,11 @@ namespace acid
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1);
 
-		virtual void Load() override;
+		void Load() override;
 
-		virtual void Decode(const Metadata &metadata) override;
+		void Decode(const Metadata &metadata) override;
 
-		virtual void Encode(Metadata &metadata) const override;
+		void Encode(Metadata &metadata) const override;
 
 		std::vector<float> GetPointCloud() const;
 
@@ -122,6 +122,7 @@ namespace acid
 			float max1 = std::abs(m_maxExtents.MinComponent());
 			m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
 		}
+
 	private:
 		std::unique_ptr<Buffer> m_vertexBuffer;
 		std::unique_ptr<Buffer> m_indexBuffer;

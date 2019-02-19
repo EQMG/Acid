@@ -36,6 +36,7 @@ namespace acid
 		void SetAttachment(const std::string &descriptorName, const Descriptor *descriptor);
 
 		bool RemoveAttachment(const std::string &name);
+
 	protected:
 		static uint32_t GlobalSwitching;
 

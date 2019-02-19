@@ -35,6 +35,7 @@ namespace acid
 		void Load(const std::string &data) override;
 
 		std::string Write() const override;
+
 	private:
 		void AddChildren(const Metadata *source, Metadata *destination);
 

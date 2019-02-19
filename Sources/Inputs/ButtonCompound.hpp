@@ -44,6 +44,7 @@ namespace acid
 		bool IsDown() const override;
 
 		bool WasDown() override;
+
 	private:
 		std::vector<std::unique_ptr<IButton>> m_buttons;
 		bool m_useAnd;

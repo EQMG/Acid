@@ -111,7 +111,7 @@ namespace acid
 			m_shape.reset(colliders[0]->GetCollisionShape());
 			return;
 		}
-		else if (colliders.empty())
+		if (colliders.empty())
 		{
 			m_shape = nullptr;
 			return;

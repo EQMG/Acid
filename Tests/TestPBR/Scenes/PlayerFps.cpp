@@ -24,33 +24,33 @@ namespace test
 		m_jumping(false),
 		m_noclipEnabled(true),
 		m_inputForward(AxisCompound({
-		    new AxisButton(
-		        ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
-		        ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
-		    ),
-		    new AxisJoystick(0, 1, true)
+			new AxisButton(
+				ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
+				ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
+			),
+			new AxisJoystick(0, 1, true)
 		})),
 		m_inputStrafe(AxisCompound({
-		    new AxisButton(
-		        ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
-		        ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
-		    ),
-		    new AxisJoystick(0, 0, true)
+			new AxisButton(
+				ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
+				ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
+			),
+			new AxisJoystick(0, 0, true)
 		})),
 		m_inputSprint(ButtonCompound({
-		    ButtonCompound::Create<ButtonKeyboard>(Key::ShiftLeft, Key::ShiftRight),
-		    new ButtonJoystick(0, 1)
+			ButtonCompound::Create<ButtonKeyboard>(Key::ShiftLeft, Key::ShiftRight),
+			new ButtonJoystick(0, 1)
 		})),
 		m_inputJump(ButtonCompound({
-		    new ButtonKeyboard(Key::Space),
-		    new ButtonJoystick(0, 1)
+			new ButtonKeyboard(Key::Space),
+			new ButtonJoystick(0, 1)
 		})),
 		m_inputCrouch(ButtonCompound({
-		    ButtonCompound::Create<ButtonKeyboard>(Key::ControlLeft, Key::ControlRight),
-		    new ButtonJoystick(0, 1)
+			ButtonCompound::Create<ButtonKeyboard>(Key::ControlLeft, Key::ControlRight),
+			new ButtonJoystick(0, 1)
 		})),
 		m_toggleNoclip(ButtonCompound({
-		    ButtonCompound::Create<ButtonKeyboard>(Key::N)
+			ButtonCompound::Create<ButtonKeyboard>(Key::N)
 		})),
 		m_amountMove(Vector3()),
 		m_amountRotate(Vector3())

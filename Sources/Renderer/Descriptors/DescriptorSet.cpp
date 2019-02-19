@@ -9,11 +9,11 @@ namespace acid
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),
-		m_descriptorSet(VK_NULL_HANDLE)
+		m_descriptorSet(nullptr)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		VkDescriptorSetLayout layouts[1] = { pipeline.GetDescriptorSetLayout() };
+		VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
 
 		VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
 		descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;

@@ -24,7 +24,8 @@ namespace acid
 	public:
 		enum class Mode
 		{
-			Polygon, Mrt
+			Polygon,
+			Mrt
 		};
 
 		enum class Depth
@@ -48,9 +49,9 @@ namespace acid
 		/// <param name="cullMode"> The vertex cull mode. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		PipelineGraphics(const Pipeline::Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite,
-			const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, 
-			const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
+		PipelineGraphics(const Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite,
+		                 const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
+		                 const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
 
 		~PipelineGraphics();
 
@@ -97,7 +98,7 @@ namespace acid
 		/// <returns> The aspect ratio. </returns>
 		float GetAspectRatio(const std::optional<uint32_t> &stage = {}) const;
 
-		const Pipeline::Stage &GetStage() const { return m_stage; }
+		const Stage &GetStage() const { return m_stage; }
 
 		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
 
@@ -145,7 +146,7 @@ namespace acid
 
 		void CreatePipelineMrt();
 
-		Pipeline::Stage m_stage;
+		Stage m_stage;
 		std::vector<std::string> m_shaderStages;
 		std::vector<Shader::VertexInput> m_vertexInputs;
 		Mode m_mode;
@@ -186,8 +187,9 @@ namespace acid
 	{
 	public:
 		explicit PipelineGraphicsCreate(const std::vector<std::string> &shaderStages = {}, const std::vector<Shader::VertexInput> &vertexInputs = {}, const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon,
-			const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, 
-			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
+		                                const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+		                                const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
+		                                const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {}) :
 			m_shaderStages(shaderStages),
 			m_vertexInputs(vertexInputs),
 			m_mode(mode),
@@ -207,13 +209,13 @@ namespace acid
 		PipelineGraphics *Create(const Pipeline::Stage &pipelineStage)
 		{
 			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth, m_topology,
-				m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
+			                            m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
 		}
 
 		void Decode(const Metadata &metadata)
 		{
 			metadata.GetChild("Shader Stages", m_shaderStages);
-		//	metadata.GetChild("Vertex Inputs", m_vertexInputs);
+			//	metadata.GetChild("Vertex Inputs", m_vertexInputs);
 			metadata.GetChild("Mode", m_mode);
 			metadata.GetChild("Depth", m_depth);
 			metadata.GetChild("Polygon Mode", m_polygonMode);
@@ -225,7 +227,7 @@ namespace acid
 		void Encode(Metadata &metadata) const
 		{
 			metadata.SetChild("Shader Stages", m_shaderStages);
-		//	metadata.SetChild("Vertex Inputs", m_vertexInputs);
+			//	metadata.SetChild("Vertex Inputs", m_vertexInputs);
 			metadata.SetChild("Mode", m_mode);
 			metadata.SetChild("Depth", m_depth);
 			metadata.SetChild("Polygon Mode", m_polygonMode);

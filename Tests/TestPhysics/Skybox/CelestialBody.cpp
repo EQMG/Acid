@@ -31,39 +31,39 @@ namespace test
 		switch (m_type)
 		{
 		case Type::Sun:
-		{
-			Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
-		//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
-			transform.SetPosition(sunPosition);
-
-			if (componentLight != nullptr)
 			{
-				Colour sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
-				sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
-				componentLight->SetColour(sunColour);
-			}
+				Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
+				//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
+				transform.SetPosition(sunPosition);
 
-			auto filterLensflare = Renderer::Get()->GetManager()->GetRendererContainer().Get<FilterLensflare>();
+				if (componentLight != nullptr)
+				{
+					Colour sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
+					sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
+					componentLight->SetColour(sunColour);
+				}
 
-			if (filterLensflare != nullptr)
-			{
-				filterLensflare->SetSunPosition(transform.GetPosition());
-				filterLensflare->SetSunHeight(transform.GetPosition().m_y);
+				auto filterLensflare = Renderer::Get()->GetManager()->GetRendererContainer().Get<FilterLensflare>();
+
+				if (filterLensflare != nullptr)
+				{
+					filterLensflare->SetSunPosition(transform.GetPosition());
+					filterLensflare->SetSunHeight(transform.GetPosition().m_y);
+				}
 			}
-		}
 			break;
 		case Type::Moon:
-		{
-			Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
-		//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
-			transform.SetPosition(moonPosition);
-
-			if (componentLight != nullptr)
 			{
-				Colour moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
-				componentLight->SetColour(moonColour);
+				Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
+				//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
+				transform.SetPosition(moonPosition);
+
+				if (componentLight != nullptr)
+				{
+					Colour moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
+					componentLight->SetColour(moonColour);
+				}
 			}
-		}
 			break;
 		default:
 			break;

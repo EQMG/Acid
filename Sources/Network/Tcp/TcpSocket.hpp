@@ -93,7 +93,7 @@ namespace acid
 		/// <param name="remotePort"> Port of the remote peer. </param>
 		/// <param name="timeout"> Optional maximum time to wait. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::Zero);
+		Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::Zero);
 
 		/// <summary>
 		/// Disconnect the socket from its remote peer.
@@ -110,7 +110,7 @@ namespace acid
 		/// <param name="data"> Pointer to the sequence of bytes to send. </param>
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Send(const void *data, const std::size_t &size);
+		Status Send(const void *data, const std::size_t &size);
 
 		/// <summary>
 		/// Send raw data to the remote peer. This function will fail if the socket is not connected.
@@ -119,7 +119,7 @@ namespace acid
 		/// <param name="size"> Number of bytes to send. </param>
 		/// <param name="sent"> The number of bytes sent will be written here. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Send(const void *data, const std::size_t &size, std::size_t &sent);
+		Status Send(const void *data, const std::size_t &size, std::size_t &sent);
 
 		/// <summary>
 		/// Receive raw data from the remote peer.
@@ -130,7 +130,7 @@ namespace acid
 		/// <param name="size"> Maximum number of bytes that can be received. </param>
 		/// <param name="received"> This variable is filled with the actual number of bytes received. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Receive(void *data, const std::size_t &size, std::size_t &received);
+		Status Receive(void *data, const std::size_t &size, std::size_t &received);
 
 		/// <summary>
 		/// Send a formatted packet of data to the remote peer.
@@ -140,7 +140,7 @@ namespace acid
 		/// </summary>
 		/// <param name="packet"> Packet to send. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Send(Packet &packet);
+		Status Send(Packet &packet);
 
 		/// <summary>
 		/// Receive a formatted packet of data from the remote peer.
@@ -149,7 +149,8 @@ namespace acid
 		/// </summary>
 		/// <param name="packet"> Packet to fill with the received data. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Receive(Packet &packet);
+		Status Receive(Packet &packet);
+
 	private:
 		friend class TcpListener;
 		/// Temporary data of the packet currently being received.

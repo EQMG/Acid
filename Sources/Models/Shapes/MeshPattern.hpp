@@ -11,6 +11,7 @@ namespace acid
 	{
 	public:
 		MeshPattern(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
+
 	protected:
 		void GenerateMesh();
 

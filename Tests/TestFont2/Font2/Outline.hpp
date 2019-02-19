@@ -50,7 +50,7 @@ namespace acid
 
 	void outline_subdivide(Outline *o);
 
-//  void outline_fix_corners(Outline *o);
+	//  void outline_fix_corners(Outline *o);
 
 	void outline_destroy(Outline *o);
 
@@ -62,8 +62,8 @@ namespace acid
 	static inline void dyn_array_grow(T **data, uint32_t *capacity, size_t element_size)
 	{
 		*capacity = *capacity ? *capacity * 2 : 8;
-		T *new_data = (T *) realloc(*data, *capacity * element_size);
-	//	assert(new_data);
+		T *new_data = (T *)realloc(*data, *capacity * element_size);
+		//	assert(new_data);
 		*data = new_data;
 	}
 }

@@ -48,7 +48,8 @@ namespace acid
 
 	void Metadata::RemoveChild(Metadata *child)
 	{
-		m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [&](std::unique_ptr<Metadata> &c) {
+		m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [&](std::unique_ptr<Metadata> &c)
+		{
 			return c.get() == child;
 		}), m_children.end());
 	}
@@ -177,7 +178,8 @@ namespace acid
 	bool Metadata::operator==(const Metadata &other) const
 	{
 		return m_name == other.m_name && m_value == other.m_value && m_attributes == other.m_attributes && m_children.size() == other.m_children.size() &&
-			std::equal(m_children.begin(), m_children.end(), other.m_children.begin(), [](const std::unique_ptr<Metadata> &left, const std::unique_ptr<Metadata> &right) {
+			std::equal(m_children.begin(), m_children.end(), other.m_children.begin(), [](const std::unique_ptr<Metadata> &left, const std::unique_ptr<Metadata> &right)
+			{
 				return *left == *right;
 			});
 	}

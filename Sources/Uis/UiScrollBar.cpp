@@ -9,14 +9,15 @@ namespace acid
 	UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
 		m_scroll(std::make_unique<Gui>(this, UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale),
-			Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour)),
+		                               Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour)),
 		m_index(type == ScrollBar::Horizontal ? 0 : 1),
 		m_updating(false),
 		m_mouseOver(false)
 	{
 		m_scroll->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
 
-		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset) {
+		Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset)
+		{
 			if (GetParent()->IsSelected() && !m_updating && m_scroll->IsEnabled())
 			{
 				Vector2 position = Vector2::Zero;

@@ -99,7 +99,7 @@ namespace acid
 		char **rc = PHYSFS_enumerateFiles(path.c_str());
 		char **i;
 
-		for (i = rc; *i != NULL; i++)
+		for (i = rc; *i != nullptr; i++)
 		{
 			/*if (IsDirectory(*i))
 			{
@@ -111,7 +111,7 @@ namespace acid
 			}
 			else
 			{*/
-				result.emplace_back(std::string(*i));
+			result.emplace_back(std::string(*i));
 			//}
 		}
 

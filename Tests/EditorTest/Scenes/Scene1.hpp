@@ -24,6 +24,7 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
+
 	private:
 		ButtonMouse m_buttonSpawnSphere;
 		ButtonKeyboard m_buttonFullscreen;

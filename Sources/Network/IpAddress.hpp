@@ -98,6 +98,7 @@ namespace acid
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Public IP address of the computer. </returns>
 		static IpAddress GetPublicAddress(const Time &timeout = Time::Zero);
+
 	public:
 		bool operator==(const IpAddress &other) const;
 
@@ -114,6 +115,7 @@ namespace acid
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const IpAddress &address);
 
 		ACID_EXPORT friend std::istream &operator>>(std::istream &stream, IpAddress &address);
+
 	private:
 		/// <summary>
 		/// Resolve the given address string.

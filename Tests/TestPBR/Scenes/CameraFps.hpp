@@ -20,6 +20,7 @@ namespace test
 		void Update() override;
 
 		void ReflectView(const float &height);
+
 	private:
 		void CalculateHorizontalAngle();
 

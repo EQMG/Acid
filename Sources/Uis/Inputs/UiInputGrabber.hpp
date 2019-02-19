@@ -27,6 +27,7 @@ namespace acid
 		const std::string &GetTitle() const { return m_title; }
 
 		void SetTitle(const std::string &title);
+
 	protected:
 		void UpdateText();
 
@@ -50,7 +51,7 @@ namespace acid
 	{
 	public:
 		UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		                  const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const uint32_t &GetPort() const { return m_port; }
 
@@ -70,6 +71,7 @@ namespace acid
 		{
 			return String::To(m_value);
 		}
+
 	private:
 		uint32_t m_port;
 		uint32_t m_value;
@@ -81,7 +83,7 @@ namespace acid
 	{
 	public:
 		UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		                  const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const Key &GetValue() const { return m_value; }
 
@@ -97,6 +99,7 @@ namespace acid
 		{
 			return Keyboard::ToString(m_value);
 		}
+
 	private:
 		Key m_value;
 		Delegate<void(UiGrabberKeyboard *, Key)> m_onGrabbed;
@@ -107,7 +110,7 @@ namespace acid
 	{
 	public:
 		UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		               const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		const MouseButton &GetValue() const { return m_value; }
 
@@ -123,6 +126,7 @@ namespace acid
 		{
 			return String::To(static_cast<int32_t>(m_value));
 		}
+
 	private:
 		MouseButton m_value;
 		Delegate<void(UiGrabberMouse *, MouseButton)> m_onGrabbed;

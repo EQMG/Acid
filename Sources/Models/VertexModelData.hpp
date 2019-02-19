@@ -38,6 +38,7 @@ namespace acid
 		bool IsSet() const;
 
 		bool HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const;
+
 	private:
 		Vector3 m_position;
 

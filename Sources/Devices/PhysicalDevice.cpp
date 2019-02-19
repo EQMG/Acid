@@ -147,35 +147,35 @@ namespace acid
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
-			case 1:
-				Log::Out("Type: Integrated\n");
-				break;
-			case 2:
-				Log::Out("Type: Discrete\n");
-				break;
-			case 3:
-				Log::Out("Type: Virtual\n");
-				break;
-			case 4:
-				Log::Out("Type: CPU\n");
-				break;
-			default:
-				Log::Out("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
+		case 1:
+			Log::Out("Type: Integrated\n");
+			break;
+		case 2:
+			Log::Out("Type: Discrete\n");
+			break;
+		case 3:
+			Log::Out("Type: Virtual\n");
+			break;
+		case 4:
+			Log::Out("Type: CPU\n");
+			break;
+		default:
+			Log::Out("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)
 		{
-			case 0x8086:
-				Log::Out("Vendor: Intel\n");
-				break;
-			case 0x10DE:
-				Log::Out("Vendor: NVIDIA\n");
-				break;
-			case 0x1002:
-				Log::Out("Vendor: AMD\n");
-				break;
-			default:
-				Log::Out("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+		case 0x8086:
+			Log::Out("Vendor: Intel\n");
+			break;
+		case 0x10DE:
+			Log::Out("Vendor: NVIDIA\n");
+			break;
+		case 0x1002:
+			Log::Out("Vendor: AMD\n");
+			break;
+		default:
+			Log::Out("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
 		}
 
 		uint32_t supportedVersion[] = {

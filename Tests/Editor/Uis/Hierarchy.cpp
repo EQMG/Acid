@@ -14,11 +14,12 @@ namespace test
 		m_sliderB(std::make_unique<UiInputSlider>(m_section1->GetContent(), "B", 0.0f, 0.0f, 255.0f, 0, UiBound(Vector2(0.1475f, 0.06f), UiReference::TopLeft))),
 		m_textHex(std::make_unique<UiInputText>(m_section1->GetContent(), "Hex", Colour::Yellow.GetHex(), 14, UiBound(Vector2(0.0f, 0.12f), UiReference::TopLeft))),
 		m_rgbColour(std::make_unique<Gui>(m_section1->GetContent(), UiBound(Vector2(0.0f, 0.18f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, UiInputButton::Size),
-			Texture::Create("Guis/Button_Filled.png"), Colour::Yellow)),
+		                                  Texture::Create("Guis/Button_Filled.png"), Colour::Yellow)),
 		m_colourWheel(std::make_unique<UiColourWheel>(m_section1->GetContent(), Colour::Yellow, UiBound(Vector2(0.0f, 0.24f), UiReference::TopLeft)))
 	{
 		m_rgbColour->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
-		m_button1->GetOnClick() += [](UiObject *object, MouseButton button) {
+		m_button1->GetOnClick() += [](UiObject *object, MouseButton button)
+		{
 			if (button == MouseButton::Left)
 			{
 				Log::Out("Button #1 pressed!\n");
@@ -28,7 +29,8 @@ namespace test
 		m_sliderR->GetRectangle().SetDimensions(Vector2(0.071f, 0.042f));
 		m_sliderG->GetRectangle().SetDimensions(Vector2(0.071f, 0.042f));
 		m_sliderB->GetRectangle().SetDimensions(Vector2(0.071f, 0.042f));
-		auto onSlide = [this](UiInputSlider *object, float value) {
+		auto onSlide = [this](UiInputSlider *object, float value)
+		{
 			auto colour = Colour(m_sliderR->GetValue(), m_sliderG->GetValue(), m_sliderB->GetValue()) / 255.0f;
 			dynamic_cast<DriverConstant<Colour> *>(m_rgbColour->GetColourDriver())->SetConstant(colour);
 			m_colourWheel->SetColour(colour);

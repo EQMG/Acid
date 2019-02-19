@@ -6,8 +6,8 @@ namespace acid
 {
 	Light::Light(const Colour &colour, const float &radius, const Transform &localTransform) :
 		m_colour(colour),
-		m_radius(radius),
 		m_position(Vector3()),
+		m_radius(radius),
 		m_localTransform(localTransform),
 		m_worldTransform(Transform())
 	{

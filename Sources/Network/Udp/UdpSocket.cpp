@@ -22,7 +22,7 @@ namespace acid
 
 	uint16_t UdpSocket::GetLocalPort() const
 	{
-		if (GetHandle() != Socket::InvalidSocketHandle())
+		if (GetHandle() != InvalidSocketHandle())
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
@@ -49,19 +49,19 @@ namespace acid
 		// Check if the address is valid/
 		if ((address == IpAddress::None) || (address == IpAddress::Broadcast))
 		{
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Bind the socket/
-		sockaddr_in addr = Socket::CreateAddress(address.ToInteger(), port);
+		sockaddr_in addr = CreateAddress(address.ToInteger(), port);
 
 		if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 		{
 			Log::Error("Failed to bind socket to port %i\n", port);
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 
 	void UdpSocket::Unbind()
@@ -79,23 +79,23 @@ namespace acid
 		if (size > MAX_DATAGRAM_SIZE)
 		{
 			Log::Error("Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MAX_DATAGRAM_SIZE)\n");
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Build the target address.
-		sockaddr_in address = Socket::CreateAddress(remoteAddress.ToInteger(), remotePort);
+		sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 		// Send the data (unlike TCP, all the data is always sent in one call).
 		int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0,
-			reinterpret_cast<sockaddr *>(&address), sizeof(address));
+		                  reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 		// Check for errors.
 		if (sent < 0)
 		{
-			return Socket::GetErrorStatus();
+			return GetErrorStatus();
 		}
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 
 	Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
@@ -109,21 +109,21 @@ namespace acid
 		if (!data)
 		{
 			Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Data that will be filled with the other computer's address.
-		sockaddr_in address = Socket::CreateAddress(INADDR_ANY, 0);
+		sockaddr_in address = CreateAddress(INADDR_ANY, 0);
 
 		// Receive a chunk of bytes.
 		SocketAddrLength addressSize = sizeof(address);
 		int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0,
-			reinterpret_cast<sockaddr *>(&address), &addressSize);
+		                            reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 		// Check for errors.
 		if (sizeReceived < 0)
 		{
-			return Socket::GetErrorStatus();
+			return GetErrorStatus();
 		}
 
 		// Fill the sender informations.
@@ -131,7 +131,7 @@ namespace acid
 		remoteAddress = IpAddress(ntohl(address.sin_addr.s_addr));
 		remotePort = ntohs(address.sin_port);
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 
 	Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort)
@@ -157,12 +157,12 @@ namespace acid
 
 		// Receive the datagram.
 		std::size_t received = 0;
-		Socket::Status status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
+		Status status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
 
 		// If we received valid data, we can copy it to the user packet.
 		packet.Clear();
 
-		if ((status == Socket::Status::Done) && (received > 0))
+		if ((status == Status::Done) && (received > 0))
 		{
 			packet.OnReceive(&m_buffer[0], received);
 		}

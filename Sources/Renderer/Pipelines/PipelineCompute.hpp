@@ -22,7 +22,7 @@ namespace acid
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		explicit PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-			const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
+		                         const uint32_t &workgroupSize = 16, const bool &pushDescriptors = false, const std::vector<Shader::Define> &defines = {});
 
 		~PipelineCompute();
 

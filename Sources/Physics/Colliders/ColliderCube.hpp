@@ -28,6 +28,7 @@ namespace acid
 		const Vector3 &GetExtents() const { return m_extents; }
 
 		void SetExtents(const Vector3 &extents);
+
 	private:
 		std::unique_ptr<btBoxShape> m_shape;
 		Vector3 m_extents;

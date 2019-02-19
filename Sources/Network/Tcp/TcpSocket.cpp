@@ -32,7 +32,7 @@ namespace acid
 
 	uint16_t TcpSocket::GetLocalPort() const
 	{
-		if (GetHandle() != Socket::InvalidSocketHandle())
+		if (GetHandle() != InvalidSocketHandle())
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
@@ -50,7 +50,7 @@ namespace acid
 
 	IpAddress TcpSocket::GetRemoteAddress() const
 	{
-		if (GetHandle() != Socket::InvalidSocketHandle())
+		if (GetHandle() != InvalidSocketHandle())
 		{
 			// Retrieve informations about the remote end of the socket.
 			sockaddr_in address;
@@ -68,7 +68,7 @@ namespace acid
 
 	uint16_t TcpSocket::GetRemotePort() const
 	{
-		if (GetHandle() != Socket::InvalidSocketHandle())
+		if (GetHandle() != InvalidSocketHandle())
 		{
 			// Retrieve informations about the remote end of the socket.
 			sockaddr_in address;
@@ -93,7 +93,7 @@ namespace acid
 		Create();
 
 		// Create the remote address
-		sockaddr_in address = Socket::CreateAddress(remoteAddress.ToInteger(), remotePort);
+		sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 		if (timeout <= Time::Zero)
 		{
@@ -102,82 +102,79 @@ namespace acid
 			// Connect the socket
 			if (connect(GetHandle(), reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1)
 			{
-				return Socket::GetErrorStatus();
+				return GetErrorStatus();
 			}
 
 			// Connection succeeded.
-			return Socket::Status::Done;
+			return Status::Done;
 		}
-		else
+		// We're using a timeout: we'll need a few tricks to make it work.
+
+		// Save the previous blocking state.
+		bool blocking = IsBlocking();
+
+		// Switch to non-blocking to enable our connection timeout.
+		if (blocking)
 		{
-			// We're using a timeout: we'll need a few tricks to make it work.
+			SetBlocking(false);
+		}
 
-			// Save the previous blocking state.
-			bool blocking = IsBlocking();
+		// Try to connect to the remote address
+		if (connect(GetHandle(), reinterpret_cast<sockaddr *>(&address), sizeof(address)) >= 0)
+		{
+			// We got instantly connected! (it may no happen a lot...).
+			SetBlocking(blocking);
+			return Status::Done;
+		}
 
-			// Switch to non-blocking to enable our connection timeout.
-			if (blocking)
+		// Get the error status.
+		Status status = GetErrorStatus();
+
+		// If we were in non-blocking mode, return immediately.
+		if (!blocking)
+		{
+			return status;
+		}
+
+		// Otherwise, wait until something happens to our socket (success, timeout or error).
+		if (status == Status::NotReady)
+		{
+			// Setup the selector.
+			fd_set selector;
+			FD_ZERO(&selector);
+			FD_SET(GetHandle(), &selector);
+
+			// Setup the timeout.
+			timeval time = {};
+			time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
+			time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
+
+			// Wait for something to write on our socket (which means that the connection request has returned).
+			if (select(static_cast<int>(GetHandle() + 1), nullptr, &selector, nullptr, &time) > 0)
 			{
-				SetBlocking(false);
-			}
-
-			// Try to connect to the remote address
-			if (connect(GetHandle(), reinterpret_cast<sockaddr *>(&address), sizeof(address)) >= 0)
-			{
-				// We got instantly connected! (it may no happen a lot...).
-				SetBlocking(blocking);
-				return Socket::Status::Done;
-			}
-
-			// Get the error status.
-			Socket::Status status = Socket::GetErrorStatus();
-
-			// If we were in non-blocking mode, return immediately.
-			if (!blocking)
-			{
-				return status;
-			}
-
-			// Otherwise, wait until something happens to our socket (success, timeout or error).
-			if (status == Socket::Status::NotReady)
-			{
-				// Setup the selector.
-				fd_set selector;
-				FD_ZERO(&selector);
-				FD_SET(GetHandle(), &selector);
-
-				// Setup the timeout.
-				timeval time = {};
-				time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
-				time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
-
-				// Wait for something to write on our socket (which means that the connection request has returned).
-				if (select(static_cast<int>(GetHandle() + 1), nullptr, &selector, nullptr, &time) > 0)
+				// At this point the connection may have been either accepted or refused.
+				// To know whether it's a success or a failure, we must check the address of the connected peer.
+				if (GetRemoteAddress() != IpAddress::None)
 				{
-					// At this point the connection may have been either accepted or refused.
-					// To know whether it's a success or a failure, we must check the address of the connected peer.
-					if (GetRemoteAddress() != IpAddress::None)
-					{
-						// Connection accepted.
-						status = Socket::Status::Done;
-					}
-					else
-					{
-						// Connection refused.
-						status = Socket::GetErrorStatus();
-					}
+					// Connection accepted.
+					status = Status::Done;
 				}
 				else
 				{
-					// Failed to connect before timeout is over.
-					status = Socket::GetErrorStatus();
+					// Connection refused.
+					status = GetErrorStatus();
 				}
 			}
-
-			// Switch back to blocking mode.
-			SetBlocking(true);
-			return status;
+			else
+			{
+				// Failed to connect before timeout is over.
+				status = GetErrorStatus();
+			}
 		}
+
+		// Switch back to blocking mode.
+		SetBlocking(true);
+		return status;
 	}
 
 	void TcpSocket::Disconnect()
@@ -206,7 +203,7 @@ namespace acid
 		if (!data || (size == 0))
 		{
 			Log::Error("Cannot send data over the network (no data to send)\n");
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Loop until every byte has been sent.
@@ -215,23 +212,23 @@ namespace acid
 		for (sent = 0; sent < size; sent += result)
 		{
 			// Send a chunk of data
-			result = ::send(GetHandle(), static_cast<const char *>(data) + sent, static_cast<int>(size - sent), flags);
+			result = send(GetHandle(), static_cast<const char *>(data) + sent, static_cast<int>(size - sent), flags);
 
 			// Check for errors.
 			if (result < 0)
 			{
-				Socket::Status status = Socket::GetErrorStatus();
+				Status status = GetErrorStatus();
 
-				if ((status == Socket::Status::NotReady) && sent)
+				if ((status == Status::NotReady) && sent)
 				{
-					return Socket::Status::Partial;
+					return Status::Partial;
 				}
 
 				return status;
 			}
 		}
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 
 	Socket::Status TcpSocket::Receive(void *data, const std::size_t &size, std::size_t &received)
@@ -243,7 +240,7 @@ namespace acid
 		if (!data)
 		{
 			Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Receive a chunk of bytes.
@@ -253,16 +250,13 @@ namespace acid
 		if (sizeReceived > 0)
 		{
 			received = static_cast<std::size_t>(sizeReceived);
-			return Socket::Status::Done;
+			return Status::Done;
 		}
-		else if (sizeReceived == 0)
+		if (sizeReceived == 0)
 		{
-			return Socket::Status::Disconnected;
+			return Status::Disconnected;
 		}
-		else
-		{
-			return Socket::GetErrorStatus();
-		}
+		return GetErrorStatus();
 	}
 
 	Socket::Status TcpSocket::Send(Packet &packet)
@@ -295,14 +289,14 @@ namespace acid
 
 		// Send the data block.
 		std::size_t sent;
-		Socket::Status status = Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent);
+		Status status = Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent);
 
 		// In the case of a partial send, record the location to resume from
-		if (status == Socket::Status::Partial)
+		if (status == Status::Partial)
 		{
 			packet.m_sendPos += sent;
 		}
-		else if (status == Socket::Status::Done)
+		else if (status == Status::Done)
 		{
 			packet.m_sendPos = 0;
 		}
@@ -325,10 +319,10 @@ namespace acid
 			while (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 			{
 				char *data = reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived;
-				Socket::Status status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received);
+				Status status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received);
 				m_pendingPacket.m_sizeReceived += received;
 
-				if (status != Socket::Status::Done)
+				if (status != Status::Done)
 				{
 					return status;
 				}
@@ -350,9 +344,9 @@ namespace acid
 		{
 			// Receive a chunk of data.
 			std::size_t sizeToGet = std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()), sizeof(buffer));
-			Socket::Status status = Receive(buffer, sizeToGet, received);
+			Status status = Receive(buffer, sizeToGet, received);
 
-			if (status != Socket::Status::Done)
+			if (status != Status::Done)
 			{
 				return status;
 			}
@@ -374,6 +368,6 @@ namespace acid
 
 		// Clear the pending packet data.
 		m_pendingPacket = PendingPacket();
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 }

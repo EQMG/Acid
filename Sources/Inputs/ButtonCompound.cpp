@@ -21,7 +21,7 @@ namespace acid
 			{
 				return false;
 			}
-			else if (!m_useAnd && button->IsDown())
+			if (!m_useAnd && button->IsDown())
 			{
 				return true;
 			}

@@ -141,13 +141,13 @@ namespace acid
 			// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
 			auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
 			data = (static_cast<int64_t>(bytes[0]) << 56) |
-			       (static_cast<int64_t>(bytes[1]) << 48) |
-			       (static_cast<int64_t>(bytes[2]) << 40) |
-			       (static_cast<int64_t>(bytes[3]) << 32) |
-			       (static_cast<int64_t>(bytes[4]) << 24) |
-			       (static_cast<int64_t>(bytes[5]) << 16) |
-			       (static_cast<int64_t>(bytes[6]) << 8) |
-			       (static_cast<int64_t>(bytes[7]));
+				(static_cast<int64_t>(bytes[1]) << 48) |
+				(static_cast<int64_t>(bytes[2]) << 40) |
+				(static_cast<int64_t>(bytes[3]) << 32) |
+				(static_cast<int64_t>(bytes[4]) << 24) |
+				(static_cast<int64_t>(bytes[5]) << 16) |
+				(static_cast<int64_t>(bytes[6]) << 8) |
+				(static_cast<int64_t>(bytes[7]));
 			m_readPos += sizeof(data);
 		}
 
@@ -161,13 +161,13 @@ namespace acid
 			// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
 			auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
 			data = (static_cast<uint64_t>(bytes[0]) << 56) |
-			       (static_cast<uint64_t>(bytes[1]) << 48) |
-			       (static_cast<uint64_t>(bytes[2]) << 40) |
-			       (static_cast<uint64_t>(bytes[3]) << 32) |
-			       (static_cast<uint64_t>(bytes[4]) << 24) |
-			       (static_cast<uint64_t>(bytes[5]) << 16) |
-			       (static_cast<uint64_t>(bytes[6]) << 8) |
-			       (static_cast<uint64_t>(bytes[7]));
+				(static_cast<uint64_t>(bytes[1]) << 48) |
+				(static_cast<uint64_t>(bytes[2]) << 40) |
+				(static_cast<uint64_t>(bytes[3]) << 32) |
+				(static_cast<uint64_t>(bytes[4]) << 24) |
+				(static_cast<uint64_t>(bytes[5]) << 16) |
+				(static_cast<uint64_t>(bytes[6]) << 8) |
+				(static_cast<uint64_t>(bytes[7]));
 			m_readPos += sizeof(data);
 		}
 
@@ -430,7 +430,7 @@ namespace acid
 
 		return *this;
 	}
-	
+
 	std::pair<const void *, std::size_t> Packet::OnSend()
 	{
 		return std::make_pair(GetData(), GetDataSize());

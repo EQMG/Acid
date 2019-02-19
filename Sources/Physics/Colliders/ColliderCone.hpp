@@ -32,6 +32,7 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height);
+
 	private:
 		std::unique_ptr<btConeShape> m_shape;
 		float m_radius;

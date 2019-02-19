@@ -46,7 +46,7 @@ namespace acid
 			/// <param name="sizeY"> The height of the character's quad in screen space. </param>
 			/// <param name="advanceX"> How far in pixels the cursor should advance after adding this character. </param>
 			Character(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY,
-			              const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
+			          const float &offsetX, const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
 				m_id(id),
 				m_textureCoordX(textureCoordX),
 				m_textureCoordY(textureCoordY),

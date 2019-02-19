@@ -27,6 +27,7 @@ namespace acid
 		const float &GetRadius() const { return m_radius; }
 
 		void SetRadius(const float &radius);
+
 	private:
 		std::unique_ptr<btSphereShape> m_shape;
 		float m_radius;

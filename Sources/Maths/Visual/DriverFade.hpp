@@ -77,6 +77,7 @@ namespace acid
 
 			return m_peak;
 		}
+
 	private:
 		T m_start;
 		T m_end;

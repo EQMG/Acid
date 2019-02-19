@@ -52,7 +52,7 @@ namespace acid
 		{
 			GizmoTypeData instanceData = {};
 			instanceData.modelMatrix = gizmo->GetTransform().GetWorldMatrix();
-			instanceData.diffuse = gizmo->GetDiffuse();			
+			instanceData.diffuse = gizmo->GetDiffuse();
 			instanceDatas[m_instances] = instanceData;
 
 			m_instances++;

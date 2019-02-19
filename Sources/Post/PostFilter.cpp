@@ -12,7 +12,7 @@ namespace acid
 		RenderPipeline(pipelineStage),
 		m_descriptorSet(DescriptorsHandler()),
 		m_pipeline(PipelineGraphics(pipelineStage, shaderStages, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
+		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_attachments(std::map<std::string, const Descriptor *>())
 	{
@@ -79,13 +79,13 @@ namespace acid
 			m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
 			return;
 		}
-		else if (it1 == m_attachments.end() && it2 != m_attachments.end())
+		if (it1 == m_attachments.end() && it2 != m_attachments.end())
 		{
 			m_descriptorSet.Push(descriptorName1, Renderer::Get()->GetAttachment(GlobalSwitching % 2 == 1 ? rendererAttachment1 : rendererAttachment2));
 			m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
 			return;
 		}
-		else if (it1 != m_attachments.end() && it2 == m_attachments.end())
+		if (it1 != m_attachments.end() && it2 == m_attachments.end())
 		{
 			m_descriptorSet.Push(descriptorName1, GetAttachment(descriptorName1, rendererAttachment1));
 			m_descriptorSet.Push(descriptorName2, Renderer::Get()->GetAttachment(GlobalSwitching % 2 == 1 ? rendererAttachment1 : rendererAttachment2));

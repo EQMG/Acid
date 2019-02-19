@@ -1,6 +1,5 @@
 #include "Log.hpp"
 
-#include <cstring>
 #if defined(ACID_BUILD_WINDOWS)
 #include <Windows.h>
 #endif

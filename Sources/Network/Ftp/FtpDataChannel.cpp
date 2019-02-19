@@ -11,7 +11,7 @@ namespace acid
 	{
 	}
 
-	FtpResponse FtpDataChannel::Open(const FtpDataChannel::Mode &mode)
+	FtpResponse FtpDataChannel::Open(const Mode &mode)
 	{
 		// Open a data connection in active mode (we connect to the server).
 		FtpResponse response = m_ftp.SendCommand("PASV");
@@ -43,9 +43,9 @@ namespace acid
 				// Reconstruct connection port and address.
 				uint16_t port = data[4] * 256 + data[5];
 				IpAddress address(static_cast<uint8_t>(data[0]),
-				    static_cast<uint8_t>(data[1]),
-				    static_cast<uint8_t>(data[2]),
-				    static_cast<uint8_t>(data[3]));
+				                  static_cast<uint8_t>(data[1]),
+				                  static_cast<uint8_t>(data[2]),
+				                  static_cast<uint8_t>(data[3]));
 
 				// Connect the data channel to the server.
 				if (m_dataSocket.Connect(address, port) == Socket::Status::Done)
@@ -55,15 +55,15 @@ namespace acid
 
 					switch (mode)
 					{
-						case FtpDataChannel::Mode::Binary:
-							modeStr = "I";
-							break;
-						case FtpDataChannel::Mode::Ascii:
-							modeStr = "A";
-							break;
-						case FtpDataChannel::Mode::Ebcdic:
-							modeStr = "E";
-							break;
+					case Mode::Binary:
+						modeStr = "I";
+						break;
+					case Mode::Ascii:
+						modeStr = "A";
+						break;
+					case Mode::Ebcdic:
+						modeStr = "E";
+						break;
 					}
 
 					// Set the transfer mode.

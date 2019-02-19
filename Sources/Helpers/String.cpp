@@ -6,7 +6,7 @@ namespace acid
 {
 	std::vector<std::string> String::Split(const std::string &str, const std::string &sep, const bool &trim)
 	{
-		char *copy = (char *) malloc(strlen(str.c_str()) + 1);
+		char *copy = (char *)malloc(strlen(str.c_str()) + 1);
 		strcpy(copy, str.c_str());
 
 		std::vector<std::string> arr;
@@ -148,14 +148,14 @@ namespace acid
 	std::string String::Lowercase(const std::string &str)
 	{
 		std::string result = str;
-		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+		std::transform(result.begin(), result.end(), result.begin(), tolower);
 		return result;
 	}
 
 	std::string String::Uppercase(const std::string &str)
 	{
 		std::string result = str;
-		std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+		std::transform(result.begin(), result.end(), result.begin(), toupper);
 		return result;
 	}
 }

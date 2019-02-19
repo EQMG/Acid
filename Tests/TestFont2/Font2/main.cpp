@@ -211,7 +211,7 @@ static void create_instance(Render *r)
 {
 	VkApplicationInfo app_info = {};
 	app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	app_info.pNext = NULL;
+	app_info.pNext = nullptr;
 	app_info.pApplicationName = "Font Renderer";
 	app_info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	app_info.apiVersion = VK_API_VERSION_1_0;
@@ -221,10 +221,10 @@ static void create_instance(Render *r)
 
 	VkInstanceCreateInfo instance_info = {};
 	instance_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	instance_info.pNext = NULL;
+	instance_info.pNext = nullptr;
 	instance_info.flags = 0;
-	instance_info.pApplicationInfo = &app_info; 
-	instance_info.enabledExtensionCount = requiredInstanceExtensionCount; 
+	instance_info.pApplicationInfo = &app_info;
+	instance_info.enabledExtensionCount = requiredInstanceExtensionCount;
 	instance_info.ppEnabledExtensionNames = requiredInstanceExtensions;
 
 	VK_CHECK(vkCreateInstance(&instance_info, NULL, &r->instance));
@@ -252,11 +252,11 @@ static void pick_physical_device(Render *r)
 
 static void create_device(Render *r)
 {
-	char const * extensions[] = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+	char const *extensions[] = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 
 	VkDeviceCreateInfo device_info = {};
 	device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	device_info.pNext = NULL;
+	device_info.pNext = nullptr;
 	device_info.enabledExtensionCount = 1;
 	device_info.ppEnabledExtensionNames = extensions;
 
@@ -266,11 +266,11 @@ static void create_device(Render *r)
 	{
 		VkDeviceQueueCreateInfo queue_info = {};
 		queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queue_info.pNext = NULL;
+		queue_info.pNext = nullptr;
 		queue_info.queueFamilyIndex = r->graphics_queue_family;
 		queue_info.queueCount = 1;
 		queue_info.pQueuePriorities = &queue_priority;
-		
+
 		device_info.pQueueCreateInfos = &queue_info;
 		device_info.queueCreateInfoCount = 1;
 
@@ -280,20 +280,19 @@ static void create_device(Render *r)
 	{
 		VkDeviceQueueCreateInfo queue_graphics = {};
 		queue_graphics.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queue_graphics.pNext = NULL;
+		queue_graphics.pNext = nullptr;
 		queue_graphics.queueFamilyIndex = r->graphics_queue_family;
 		queue_graphics.queueCount = 1;
 		queue_graphics.pQueuePriorities = &queue_priority;
 
 		VkDeviceQueueCreateInfo queue_present = {};
 		queue_present.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queue_present.pNext = NULL;
+		queue_present.pNext = nullptr;
 		queue_present.queueFamilyIndex = r->present_queue_family;
 		queue_present.queueCount = 1;
 		queue_present.pQueuePriorities = &queue_priority;
 
-
-		std::array<VkDeviceQueueCreateInfo, 2> queue_infos = { queue_graphics, queue_present };
+		std::array<VkDeviceQueueCreateInfo, 2> queue_infos = {queue_graphics, queue_present};
 
 		device_info.queueCreateInfoCount = queue_infos.size();
 		device_info.pQueueCreateInfos = queue_infos.data();
@@ -309,7 +308,7 @@ static void find_queue_families(Render *r)
 {
 	uint32_t family_count;
 
-	vkGetPhysicalDeviceQueueFamilyProperties(r->physical_device, &family_count, NULL);
+	vkGetPhysicalDeviceQueueFamilyProperties(r->physical_device, &family_count, nullptr);
 
 	std::vector<VkQueueFamilyProperties> properties(family_count);
 	vkGetPhysicalDeviceQueueFamilyProperties(r->physical_device, &family_count, properties.data());
@@ -330,11 +329,8 @@ static void find_queue_families(Render *r)
 				r->present_queue_family = i;
 				break;
 			}
-			else
-			{
-				if (r->graphics_queue_family == std::numeric_limits<uint32_t>::max())
-					r->graphics_queue_family = i;
-			}
+			if (r->graphics_queue_family == std::numeric_limits<uint32_t>::max())
+				r->graphics_queue_family = i;
 		}
 	}
 
@@ -381,10 +377,9 @@ static void choose_present_mode(Render *r)
 
 	assert(present_mode_count > 0);
 
-	std::vector<VkPresentModeKHR>	present_modes(present_mode_count);
+	std::vector<VkPresentModeKHR> present_modes(present_mode_count);
 	VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(
 		r->physical_device, r->surface, &present_mode_count, present_modes.data()));
-
 
 	for (uint32_t i = 0; i < present_mode_count; i++)
 	{
@@ -412,11 +407,11 @@ static void create_swap_chain(Render *r)
 	choose_present_mode(r);
 
 	VkSwapchainKHR old_swapchain = r->swapchain;
-	r->swapchain = VK_NULL_HANDLE;
+	r->swapchain = nullptr;
 
 	VkSwapchainCreateInfoKHR swapchain_info = {};
 	swapchain_info.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-	swapchain_info.pNext = NULL;
+	swapchain_info.pNext = nullptr;
 	swapchain_info.flags = 0;
 	swapchain_info.surface = r->surface;
 	swapchain_info.minImageCount = min_image_count;
@@ -451,7 +446,7 @@ static void create_swap_chain(Render *r)
 
 	if (r->graphics_queue_family != r->present_queue_family)
 	{
-		uint32_t families[] = { r->graphics_queue_family, r->present_queue_family };
+		uint32_t families[] = {r->graphics_queue_family, r->present_queue_family};
 		swapchain_info.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 		swapchain_info.queueFamilyIndexCount = 2;
 		swapchain_info.pQueueFamilyIndices = families;
@@ -460,13 +455,13 @@ static void create_swap_chain(Render *r)
 	{
 		swapchain_info.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		swapchain_info.queueFamilyIndexCount = 0;
-		swapchain_info.pQueueFamilyIndices = NULL;
+		swapchain_info.pQueueFamilyIndices = nullptr;
 	}
 
 	VK_CHECK(vkCreateSwapchainKHR(r->device, &swapchain_info, NULL, &r->swapchain));
 
 	if (old_swapchain)
-		vkDestroySwapchainKHR(r->device, old_swapchain, NULL);
+		vkDestroySwapchainKHR(r->device, old_swapchain, nullptr);
 
 	VK_CHECK(vkGetSwapchainImagesKHR(r->device, r->swapchain, &r->image_count, NULL));
 
@@ -509,7 +504,7 @@ static void create_render_pass(Render *r)
 	color_attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 	color_attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
-	std::array<VkAttachmentDescription, 1> attachments = { color_attachment };
+	std::array<VkAttachmentDescription, 1> attachments = {color_attachment};
 
 	VkAttachmentReference color_attachment_ref = {};
 	color_attachment_ref.attachment = 0;
@@ -573,7 +568,6 @@ static void create_command_pool(Render *r)
 	VK_CHECK(vkCreateCommandPool(r->device, &ci, NULL, &r->command_pool));
 }
 
-
 static void begin_text(Render *r)
 {
 	r->glyph_instance_count = 0;
@@ -597,21 +591,21 @@ static void end_text(Render *r)
 	barrier.buffer = r->instance_buffer;
 	barrier.offset = 0;
 	barrier.size = size;
-	
+
 	vkCmdPipelineBarrier(
 		cmd_buf,
 		VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
 		VK_PIPELINE_STAGE_TRANSFER_BIT,
 		0,
-		0, NULL,
+		0, nullptr,
 		1, &barrier,
-		0, NULL);
+		0, nullptr);
 
 	VkBufferCopy copy = {};
 	copy.srcOffset = 0;
 	copy.dstOffset = 0;
 	copy.size = size;
-	
+
 	vkCmdCopyBuffer(cmd_buf, r->instance_staging_buffer, r->instance_buffer, 1, &copy);
 
 	barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
@@ -622,14 +616,14 @@ static void end_text(Render *r)
 		VK_PIPELINE_STAGE_TRANSFER_BIT,
 		VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
 		0,
-		0, NULL,
+		0, nullptr,
 		1, &barrier,
-		0, NULL);
+		0, nullptr);
 }
 
 static void append_text(Render *r, float x, float y, float scale, std::string text, Colour colour)
 {
-//	printf("%s\n", text.c_str());
+	//	printf("%s\n", text.c_str());
 	for (char c : text)
 	{
 		if (r->glyph_instance_count >= MAX_VISIBLE_GLYPHS)
@@ -714,32 +708,32 @@ static void record_command_buffer(Render *r)
 	for (uint32_t i = 0; i < lines.size(); i++)
 	{
 		append_text(r,
-			r->canvas_scale * (10.0f - r->canvas_offset[0]),
-			r->canvas_scale * (30.0f - r->canvas_offset[1] + i * 30.0f),
-			0.02f * r->canvas_scale,
-			lines[i], Colour::Blue);
+		            r->canvas_scale * (10.0f - r->canvas_offset[0]),
+		            r->canvas_scale * (30.0f - r->canvas_offset[1] + i * 30.0f),
+		            0.02f * r->canvas_scale,
+		            lines[i], Colour::Blue);
 	}
 
 	end_text(r);
 
-	VkClearValue clear_value = { 1.0f, 1.0f, 1.0f, 1.0f };
+	VkClearValue clear_value = {1.0f, 1.0f, 1.0f, 1.0f};
 	VkRenderPassBeginInfo render_pass_bi = {};
 	render_pass_bi.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	render_pass_bi.renderPass = r->render_pass;
 	render_pass_bi.framebuffer = r->framebuffers[r->image_index];
 	render_pass_bi.renderArea = {};
-	render_pass_bi.renderArea.offset = { 0, 0 },
-	render_pass_bi.renderArea.extent = r->swapchain_extent;
+	render_pass_bi.renderArea.offset = {0, 0},
+		render_pass_bi.renderArea.extent = r->swapchain_extent;
 	render_pass_bi.clearValueCount = 1;
 	render_pass_bi.pClearValues = &clear_value;
-	
+
 	vkCmdBeginRenderPass(cmd_buf, &render_pass_bi, VK_SUBPASS_CONTENTS_INLINE);
 
-	VkDeviceSize offsets[] = { 0 };
+	VkDeviceSize offsets[] = {0};
 	vkCmdBindVertexBuffers(cmd_buf, 0, 1, &r->instance_buffer, offsets);
 
 	vkCmdBindDescriptorSets(cmd_buf, VK_PIPELINE_BIND_POINT_GRAPHICS,
-		r->pipeline_layout, 0, 1, &r->descriptor_set, 0, NULL);
+	                        r->pipeline_layout, 0, 1, &r->descriptor_set, 0, nullptr);
 
 	vkCmdBindPipeline(cmd_buf, VK_PIPELINE_BIND_POINT_GRAPHICS, r->pipeline);
 	vkCmdDraw(cmd_buf, 4, r->glyph_instance_count, 0, 0);
@@ -765,7 +759,7 @@ static void create_command_buffer_fence(Render *r)
 	VkFenceCreateInfo ci = {};
 	ci.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 	ci.flags = VK_FENCE_CREATE_SIGNALED_BIT;
-	
+
 	VK_CHECK(vkCreateFence(r->device, &ci, NULL, &r->command_buffer_fence));
 }
 
@@ -820,19 +814,19 @@ static void create_layout(Render *r)
 	buffer_point_binding.descriptorCount = 1;
 	buffer_point_binding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-	std::array<VkDescriptorSetLayoutBinding, 3> bindings = { buffer_glyph_binding, buffer_cell_binding, buffer_point_binding };
+	std::array<VkDescriptorSetLayoutBinding, 3> bindings = {buffer_glyph_binding, buffer_cell_binding, buffer_point_binding};
 
 	VkDescriptorSetLayoutCreateInfo layout_ci = {};
 	layout_ci.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 	layout_ci.bindingCount = bindings.size();
 	layout_ci.pBindings = bindings.data();
-	
+
 	VK_CHECK(vkCreateDescriptorSetLayout(r->device, &layout_ci, NULL, &r->set_layout));
 
 	VkPipelineLayoutCreateInfo pipeline_ci = {};
 	pipeline_ci.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipeline_ci.setLayoutCount = 1;
-	pipeline_ci.pSetLayouts = &r->set_layout;	
+	pipeline_ci.pSetLayouts = &r->set_layout;
 
 	VK_CHECK(vkCreatePipelineLayout(r->device, &pipeline_ci, NULL, &r->pipeline_layout));
 }
@@ -858,7 +852,7 @@ static VkDeviceMemory alloc_required_memory(Render *r, VkMemoryRequirements *req
 	VkMemoryAllocateInfo alloc_info = {};
 	alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	alloc_info.allocationSize = req->size;
-	alloc_info.memoryTypeIndex = find_memory_type(r, req->memoryTypeBits, flags);	
+	alloc_info.memoryTypeIndex = find_memory_type(r, req->memoryTypeBits, flags);
 
 	VkDeviceMemory mem;
 	VK_CHECK(vkAllocateMemory(r->device, &alloc_info, NULL, &mem));
@@ -884,14 +878,14 @@ VkCommandBuffer begin_one_time_cmdbuf(Render *r)
 	cmd_alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 	cmd_alloc_info.commandPool = r->command_pool;
 	cmd_alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-	cmd_alloc_info.commandBufferCount = 1;	
+	cmd_alloc_info.commandBufferCount = 1;
 
 	VkCommandBuffer cmd_buffer;
 	VK_CHECK(vkAllocateCommandBuffers(r->device, &cmd_alloc_info, &cmd_buffer));
 
 	VkCommandBufferBeginInfo begin_info = {};
 	begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-	begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;	
+	begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
 	VK_CHECK(vkBeginCommandBuffer(cmd_buffer, &begin_info));
 	return cmd_buffer;
@@ -904,7 +898,7 @@ void end_one_time_cmdbuf(Render *r, VkCommandBuffer cmd_buffer)
 	VkSubmitInfo submit_info = {};
 	submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submit_info.commandBufferCount = 1;
-	submit_info.pCommandBuffers = &cmd_buffer;	
+	submit_info.pCommandBuffers = &cmd_buffer;
 
 	VK_CHECK(vkQueueSubmit(r->graphics_queue, 1, &submit_info, VK_NULL_HANDLE));
 	VK_CHECK(vkQueueWaitIdle(r->graphics_queue));
@@ -914,7 +908,7 @@ void end_one_time_cmdbuf(Render *r, VkCommandBuffer cmd_buffer)
 static void copy_buffer(Render *r, VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
 {
 	VkCommandBuffer cmd_buf = begin_one_time_cmdbuf(r);
-	VkBufferCopy copy = { 0, 0, size };
+	VkBufferCopy copy = {0, 0, size};
 
 	vkCmdCopyBuffer(cmd_buf, src_buffer, dst_buffer, 1, &copy);
 	end_one_time_cmdbuf(r, cmd_buf);
@@ -926,14 +920,14 @@ static void stage_buffer(Render *r, VkBuffer buffer, void *data, size_t size)
 	staging_ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	staging_ci.size = size;
 	staging_ci.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-	staging_ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;	
+	staging_ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	VkBuffer staging_buffer;
 	VkDeviceMemory staging_buffer_memory;
 
 	create_buffer_with_memory(r, &staging_ci,
-		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-		&staging_buffer_memory, &staging_buffer);
+	                          VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+	                          &staging_buffer_memory, &staging_buffer);
 
 	void *staging_buffer_ptr;
 	VK_CHECK(vkMapMemory(r->device, staging_buffer_memory, 0, staging_ci.size, 0, &staging_buffer_ptr));
@@ -944,8 +938,8 @@ static void stage_buffer(Render *r, VkBuffer buffer, void *data, size_t size)
 
 	copy_buffer(r, staging_buffer, buffer, size);
 
-	vkDestroyBuffer(r->device, staging_buffer, NULL);
-	vkFreeMemory(r->device, staging_buffer_memory, NULL);
+	vkDestroyBuffer(r->device, staging_buffer, nullptr);
+	vkFreeMemory(r->device, staging_buffer_memory, nullptr);
 }
 
 static void create_storage_buffer(const char *font_face, Render *r)
@@ -956,15 +950,15 @@ static void create_storage_buffer(const char *font_face, Render *r)
 	storage_ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	storage_ci.size = r->glyph_data_size;
 	storage_ci.usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
-	storage_ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;	
+	storage_ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	create_buffer_with_memory(r, &storage_ci, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		&r->storage_buffer_memory, &r->storage_buffer);
+	                          &r->storage_buffer_memory, &r->storage_buffer);
 
 	stage_buffer(r, r->storage_buffer, r->glyph_data, storage_ci.size);
 
 	free(r->glyph_data);
-	r->glyph_data = NULL;
+	r->glyph_data = nullptr;
 }
 
 static void create_instance_buffer(Render *r)
@@ -973,10 +967,10 @@ static void create_instance_buffer(Render *r)
 	ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	ci.size = MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance);
 	ci.usage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-	ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;	
+	ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	create_buffer_with_memory(r, &ci, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		&r->instance_buffer_memory, &r->instance_buffer);
+	                          &r->instance_buffer_memory, &r->instance_buffer);
 
 	VkBufferCreateInfo staging_ci = {};
 	staging_ci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -985,21 +979,21 @@ static void create_instance_buffer(Render *r)
 	staging_ci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 	create_buffer_with_memory(r, &staging_ci,
-		VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-		&r->instance_staging_buffer_memory, &r->instance_staging_buffer);
+	                          VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+	                          &r->instance_staging_buffer_memory, &r->instance_staging_buffer);
 }
 
 static void create_descriptor_pool(Render *r)
 {
 	VkDescriptorPoolSize pool_sizes[] = {
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 3 },
+		{VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 3},
 	};
 
 	VkDescriptorPoolCreateInfo ci = {};
 	ci.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	ci.maxSets = 1;
 	ci.poolSizeCount = 1;
-	ci.pPoolSizes = pool_sizes;	
+	ci.pPoolSizes = pool_sizes;
 
 	VK_CHECK(vkCreateDescriptorPool(r->device, &ci, NULL, &r->descriptor_pool));
 }
@@ -1010,7 +1004,7 @@ static void create_descriptor_set(Render *r)
 	alloc_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 	alloc_info.descriptorPool = r->descriptor_pool;
 	alloc_info.descriptorSetCount = 1;
-	alloc_info.pSetLayouts = &r->set_layout;	
+	alloc_info.pSetLayouts = &r->set_layout;
 
 	VK_CHECK(vkAllocateDescriptorSets(r->device, &alloc_info, &r->descriptor_set));
 
@@ -1027,7 +1021,7 @@ static void create_descriptor_set(Render *r)
 	VkDescriptorBufferInfo points_info = {};
 	points_info.buffer = r->storage_buffer;
 	points_info.offset = r->glyph_points_offset;
-	points_info.range = r->glyph_points_size;	
+	points_info.range = r->glyph_points_size;
 
 	std::array<VkWriteDescriptorSet, 3> writes = {};
 
@@ -1055,7 +1049,7 @@ static void create_descriptor_set(Render *r)
 	writes[2].descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 	writes[2].pBufferInfo = &points_info;
 
-	vkUpdateDescriptorSets(r->device, writes.size(), writes.data(), 0, NULL);
+	vkUpdateDescriptorSets(r->device, writes.size(), writes.data(), 0, nullptr);
 }
 
 static void create_pipeline(Render *r)
@@ -1075,16 +1069,16 @@ static void create_pipeline(Render *r)
 	frag_shader_stage_info.module = fs_font;
 	frag_shader_stage_info.pName = "main";
 
-	VkPipelineShaderStageCreateInfo shader_stages[] = { vert_shader_stage_info, frag_shader_stage_info };
+	VkPipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
 
 	VkVertexInputBindingDescription vertex_input_binding =
-		{ 0, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE, };
+		{0, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE,};
 
 	VkVertexInputAttributeDescription vertex_input_attributes[] = {
-		{ 0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, rect) },
-		{ 1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyph_index) },
-		{ 2, 0, VK_FORMAT_R32_SFLOAT, offsetof(GlyphInstance, sharpness) },
-		{ 3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour) },
+		{0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, rect)},
+		{1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyph_index)},
+		{2, 0, VK_FORMAT_R32_SFLOAT, offsetof(GlyphInstance, sharpness)},
+		{3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour)},
 	};
 
 	VkPipelineVertexInputStateCreateInfo vertex_input_state = {};
@@ -1093,11 +1087,11 @@ static void create_pipeline(Render *r)
 	vertex_input_state.pVertexBindingDescriptions = &vertex_input_binding;
 	vertex_input_state.vertexAttributeDescriptionCount = 4;
 	vertex_input_state.pVertexAttributeDescriptions = vertex_input_attributes;
-	
+
 	VkPipelineInputAssemblyStateCreateInfo input_assembly_state = {};
 	input_assembly_state.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 	input_assembly_state.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
-	input_assembly_state.primitiveRestartEnable = VK_FALSE;	
+	input_assembly_state.primitiveRestartEnable = VK_FALSE;
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
@@ -1105,11 +1099,11 @@ static void create_pipeline(Render *r)
 	viewport.width = (float)r->swapchain_extent.width;
 	viewport.height = (float)r->swapchain_extent.height;
 	viewport.minDepth = 0.0f;
-	viewport.maxDepth = 1.0f;	
+	viewport.maxDepth = 1.0f;
 
 	VkRect2D scissor = {};
-	scissor.offset = { 0, 0 };
-	scissor.extent = r->swapchain_extent;	
+	scissor.offset = {0, 0};
+	scissor.extent = r->swapchain_extent;
 
 	VkPipelineViewportStateCreateInfo viewport_state = {};
 	viewport_state.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -1142,7 +1136,7 @@ static void create_pipeline(Render *r)
 	blend_attachment_state.dstAlphaBlendFactor = VK_BLEND_FACTOR_DST_ALPHA;
 	blend_attachment_state.alphaBlendOp = VK_BLEND_OP_MAX;
 	blend_attachment_state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-	
+
 	VkPipelineColorBlendStateCreateInfo blend_sate = {};
 	blend_sate.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 	blend_sate.logicOpEnable = VK_FALSE;
@@ -1162,7 +1156,7 @@ static void create_pipeline(Render *r)
 	pipeline_info.pColorBlendState = &blend_sate;
 	pipeline_info.layout = r->pipeline_layout;
 	pipeline_info.renderPass = r->render_pass;
-	pipeline_info.subpass = 0;	
+	pipeline_info.subpass = 0;
 
 	VK_CHECK(vkCreateGraphicsPipelines(
 		r->device,
@@ -1172,8 +1166,8 @@ static void create_pipeline(Render *r)
 		NULL,
 		&r->pipeline));
 
-	vkDestroyShaderModule(r->device, vs_font, NULL);
-	vkDestroyShaderModule(r->device, fs_font, NULL);
+	vkDestroyShaderModule(r->device, vs_font, nullptr);
+	vkDestroyShaderModule(r->device, fs_font, nullptr);
 }
 
 static void create_swap_chain_objects(Render *r)
@@ -1210,22 +1204,22 @@ static void destroy_swap_chain_objects(Render *r)
 {
 	VK_DESTROY(vkDestroyPipeline, r->device, r->pipeline);
 
-	vkDestroyFence(r->device, r->command_buffer_fence, NULL);
+	vkDestroyFence(r->device, r->command_buffer_fence, nullptr);
 
 	vkFreeCommandBuffers(r->device, r->command_pool, 1, &r->command_buffer);
 
 	for (uint32_t i = 0; i < r->image_count; i++)
-		vkDestroyFramebuffer(r->device, r->framebuffers[i], NULL);
+		vkDestroyFramebuffer(r->device, r->framebuffers[i], nullptr);
 
 	VK_DESTROY(vkDestroyRenderPass, r->device, r->render_pass);
 
 	for (uint32_t i = 0; i < r->image_count; i++)
-		vkDestroyImageView(r->device, r->image_views[i], NULL);
+		vkDestroyImageView(r->device, r->image_views[i], nullptr);
 }
 
 static void destroy_vulkan_objects(Render *r)
 {
-//	vkDeviceWaitIdle(r->device);
+	//	vkDeviceWaitIdle(r->device);
 
 	destroy_swap_chain_objects(r);
 
@@ -1243,14 +1237,14 @@ static void destroy_vulkan_objects(Render *r)
 	VK_DESTROY(vkDestroySemaphore, r->device, r->render_finished_semaphore);
 	VK_DESTROY(vkDestroyCommandPool, r->device, r->command_pool);
 
-	vkDestroyDevice(r->device, NULL);
-	r->device = VK_NULL_HANDLE;
+	vkDestroyDevice(r->device, nullptr);
+	r->device = nullptr;
 
-	vkDestroySurfaceKHR(r->instance, r->surface, NULL);
-	r->surface = VK_NULL_HANDLE;
+	vkDestroySurfaceKHR(r->instance, r->surface, nullptr);
+	r->surface = nullptr;
 
-	vkDestroyInstance(r->instance, NULL);
-	r->instance = VK_NULL_HANDLE;
+	vkDestroyInstance(r->instance, nullptr);
+	r->instance = nullptr;
 }
 
 static void recreate_swap_chain(Render *r)
@@ -1317,15 +1311,15 @@ static void update(Render *r)
 
 static void render_frame(Render *r)
 {
-	VkResult res = vkAcquireNextImageKHR(r->device, r->swapchain, std::numeric_limits<uint32_t>::max(), 
-		r->image_available_semaphore, VK_NULL_HANDLE, &r->image_index);
+	VkResult res = vkAcquireNextImageKHR(r->device, r->swapchain, std::numeric_limits<uint32_t>::max(),
+	                                     r->image_available_semaphore, nullptr, &r->image_index);
 
 	if (res == VK_ERROR_OUT_OF_DATE_KHR)
 	{
 		recreate_swap_chain(r);
 		return;
 	}
-	else if (res != VK_SUCCESS && res != VK_SUBOPTIMAL_KHR)
+	if (res != VK_SUCCESS && res != VK_SUBOPTIMAL_KHR)
 	{
 		return;
 	}
@@ -1336,9 +1330,9 @@ static void render_frame(Render *r)
 
 	record_command_buffer(r);
 
-	VkSemaphore wait_semaphores[] = { r->image_available_semaphore };
-	VkPipelineStageFlags wait_stages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-	VkSemaphore signal_semaphores[] = { r->render_finished_semaphore };
+	VkSemaphore wait_semaphores[] = {r->image_available_semaphore};
+	VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+	VkSemaphore signal_semaphores[] = {r->render_finished_semaphore};
 
 	VkSubmitInfo submit_info = {};
 	submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -1373,15 +1367,15 @@ static void render_frame(Render *r)
 	}
 }
 
-
-static void on_window_resized(GLFWwindow* window, int width, int height)
+static void on_window_resized(GLFWwindow *window, int width, int height)
 {
-	if (width == 0 || height == 0) return;
+	if (width == 0 || height == 0)
+		return;
 
 	recreate_swap_chain((Render *)(glfwGetWindowUserPointer(window)));
 }
 
-void window_refresh_callback(GLFWwindow* window)
+void window_refresh_callback(GLFWwindow *window)
 {
 	Render *r = (Render *)(glfwGetWindowUserPointer(window));
 
@@ -1389,7 +1383,7 @@ void window_refresh_callback(GLFWwindow* window)
 	render_frame(r);
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
 	Render *render = (Render *)(glfwGetWindowUserPointer(window));
 	if (button == GLFW_MOUSE_BUTTON_LEFT)
@@ -1397,7 +1391,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	}
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	Render *r = (Render *)(glfwGetWindowUserPointer(window));
 
@@ -1409,7 +1403,7 @@ int main(int argc, const char **args)
 	glfwInit();
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan window", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan window", nullptr, nullptr);
 
 	Render render = {};
 	render.canvas_scale = 3.0f;
@@ -1422,35 +1416,35 @@ int main(int argc, const char **args)
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-//	const char *font_face = "Resources/Engine/Fonts/Alice-Regular.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/marediv.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Alice-Regular.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/marediv.ttf";
 	const char *font_face = "Resources/Engine/Fonts/Lobster-Regular.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Regular.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Bold.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Italic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Light.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-LightItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Regular.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBold.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Black.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-BlackItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Bold.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-BoldItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Italic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Light.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-LightItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Medium.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-MediumItalic.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Regular.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-Thin.ttf";
-//	const char *font_face = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/LobsterTwo-Regular.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Bold.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Italic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Light.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-LightItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-Regular.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBold.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Black.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-BlackItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Bold.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-BoldItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Italic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Light.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-LightItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Medium.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-MediumItalic.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Regular.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-Thin.ttf";
+	//	const char *font_face = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
 
 	create_vulkan_objects(font_face, &render);
 

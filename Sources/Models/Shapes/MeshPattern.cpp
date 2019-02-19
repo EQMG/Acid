@@ -56,7 +56,7 @@ namespace acid
 			}
 		}
 
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	VertexModel MeshPattern::GetVertex(const uint32_t &col, const uint32_t &row)

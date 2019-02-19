@@ -10,42 +10,42 @@ namespace acid
 {
 	RendererFonts2::RendererFonts2(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
-		m_pipeline(PipelineGraphics(pipelineStage, { "Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag" }, { VertexModel::GetVertexInput() },
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_NONE, false, {})),
+		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag"}, {VertexModel::GetVertexInput()},
+		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_NONE, false, {})),
 		m_descriptorSet(DescriptorsHandler())
 	{
 		Log::Out("%s\n", m_pipeline.GetShaderProgram()->ToString().c_str());
 
-	//	std::string filename = "Resources/Engine/Fonts/Alice-Regular.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/marediv.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Alice-Regular.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/marediv.ttf";
 		std::string filename = "Resources/Engine/Fonts/Lobster-Regular.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Regular.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-Bold.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-Italic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-Light.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-LightItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-Regular.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-SemiBold.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Black.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-BlackItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Bold.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-BoldItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Italic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Light.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-LightItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Medium.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-MediumItalic.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Regular.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-Thin.ttf";
-	//	std::string filename = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
-	//	LoadFont(filename);
+		//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Regular.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-Bold.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-BoldItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-ExtraBold.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-ExtraBoldItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-Italic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-Light.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-LightItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-Regular.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-SemiBold.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/OpenSans-SemiBoldItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Black.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-BlackItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Bold.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-BoldItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Italic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Light.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-LightItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Medium.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-MediumItalic.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Regular.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-Thin.ttf";
+		//	std::string filename = "Resources/Engine/Fonts/Roboto-ThinItalic.ttf";
+		//	LoadFont(filename);
 	}
 
 	void RendererFonts2::Render(const CommandBuffer &commandBuffer)

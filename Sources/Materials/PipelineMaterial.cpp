@@ -20,8 +20,8 @@ namespace acid
 
 		auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
 		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	//	result->Decode(metadata);
-	//	result->Load();
+		//	result->Decode(metadata);
+		//	result->Load();
 		return result;
 	}
 
@@ -41,7 +41,7 @@ namespace acid
 		{
 			return false;
 		}
-		else if (m_renderStage != renderStage)
+		if (m_renderStage != renderStage)
 		{
 			m_renderStage = renderStage;
 			m_pipeline.reset(m_pipelineCreate.Create(m_pipelineStage));

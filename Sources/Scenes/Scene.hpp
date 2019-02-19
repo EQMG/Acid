@@ -61,6 +61,7 @@ namespace acid
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		virtual bool IsPaused() const = 0;
+
 	private:
 		friend class Scenes;
 

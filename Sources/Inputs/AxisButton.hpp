@@ -31,7 +31,7 @@ namespace acid
 			}
 
 			return new AxisButton(buttons.size() > 0 ? buttons[0] : nullptr,
-				buttons.size() > 1 ? buttons[1] : nullptr);
+			                      buttons.size() > 1 ? buttons[1] : nullptr);
 		}
 
 		/// <summary>
@@ -42,6 +42,7 @@ namespace acid
 		AxisButton(IButton *negative, IButton *positive);
 
 		float GetAmount() const override;
+
 	private:
 		std::unique_ptr<IButton> m_negative;
 		std::unique_ptr<IButton> m_positive;

@@ -49,6 +49,7 @@ namespace acid
 		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
 
 		std::string ToString() const;
+
 	private:
 		Colour m_colour;
 		float m_density;

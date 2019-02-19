@@ -16,7 +16,8 @@ namespace test
 	public:
 		explicit Pannable(UiObject *parent);
 
-		virtual void UpdateObject() override;
+		void UpdateObject() override;
+
 	private:
 		ButtonKeyboard m_buttonReset;
 

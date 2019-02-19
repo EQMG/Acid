@@ -39,7 +39,8 @@ namespace acid
 
 		for (auto &[gizmoType, gizmos] : m_gizmos)
 		{
-			gizmos.erase(std::remove_if(gizmos.begin(), gizmos.end(), [&](std::unique_ptr<Gizmo> &g) {
+			gizmos.erase(std::remove_if(gizmos.begin(), gizmos.end(), [&](std::unique_ptr<Gizmo> &g)
+			{
 				return g.get() == gizmo;
 			}), gizmos.end());
 		}

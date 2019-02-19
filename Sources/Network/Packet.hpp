@@ -26,7 +26,7 @@ namespace acid
 	{
 	public:
 		/// A bool-like type that cannot be converted to integer or pointer types.
-		typedef bool (Packet::*BoolType)(const std::size_t&);
+		typedef bool (Packet::*BoolType)(const std::size_t &);
 
 		/// <summary>
 		/// Default constructor, creates an empty packet.
@@ -161,6 +161,7 @@ namespace acid
 		Packet &operator<<(const wchar_t *data);
 
 		Packet &operator<<(const std::wstring &data);
+
 	protected:
 		friend class TcpSocket;
 		friend class UdpSocket;

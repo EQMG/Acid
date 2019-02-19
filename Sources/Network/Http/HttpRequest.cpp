@@ -4,7 +4,7 @@
 
 namespace acid
 {
-	HttpRequest::HttpRequest(const std::string &uri, const HttpRequest::Method &method, const std::string &body)
+	HttpRequest::HttpRequest(const std::string &uri, const Method &method, const std::string &body)
 	{
 		SetMethod(method);
 		SetUri(uri);
@@ -43,33 +43,33 @@ namespace acid
 
 		switch (m_method)
 		{
-			case HttpRequest::Method::Get:
-				method = "GET";
-				break;
-			case HttpRequest::Method::Post:
-				method = "POST";
-				break;
-			case HttpRequest::Method::Head:
-				method = "HEAD";
-				break;
-			case HttpRequest::Method::Put:
-				method = "PUT";
-				break;
-			case HttpRequest::Method::Delete:
-				method = "DELETE";
-				break;
-			case HttpRequest::Method::Options:
-				method = "OPTIONS";
-				break;
-			case HttpRequest::Method::Patch:
-				method = "PATCH";
-				break;
-			case HttpRequest::Method::Trace:
-				method = "TRACE";
-				break;
-			case HttpRequest::Method::Connect:
-				method = "CONNECT";
-				break;
+		case Method::Get:
+			method = "GET";
+			break;
+		case Method::Post:
+			method = "POST";
+			break;
+		case Method::Head:
+			method = "HEAD";
+			break;
+		case Method::Put:
+			method = "PUT";
+			break;
+		case Method::Delete:
+			method = "DELETE";
+			break;
+		case Method::Options:
+			method = "OPTIONS";
+			break;
+		case Method::Patch:
+			method = "PATCH";
+			break;
+		case Method::Trace:
+			method = "TRACE";
+			break;
+		case Method::Connect:
+			method = "CONNECT";
+			break;
 		}
 
 		// Write the first line containing the request type.

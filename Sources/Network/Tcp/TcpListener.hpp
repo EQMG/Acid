@@ -48,7 +48,7 @@ namespace acid
 		/// <param name="port"> Port to listen on for incoming connection attempts. </param>
 		/// <param name="address"> Address of the interface to listen on. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Listen(const uint16_t &port, const IpAddress &address = IpAddress::Any);
+		Status Listen(const uint16_t &port, const IpAddress &address = IpAddress::Any);
 
 		/// <summary>
 		/// Stop listening and close the socket. This function gracefully stops the listener.
@@ -62,6 +62,6 @@ namespace acid
 		/// </summary>
 		/// <param name="socket"> Socket that will hold the new connection. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Accept(TcpSocket &socket);
+		Status Accept(TcpSocket &socket);
 	};
 }

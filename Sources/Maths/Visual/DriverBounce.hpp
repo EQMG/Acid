@@ -60,6 +60,7 @@ namespace acid
 
 			return m_start + value * (m_end - m_start);
 		}
+
 	private:
 		T m_start;
 		T m_end;

@@ -1,7 +1,6 @@
 ﻿#include "Renderpass.hpp"
 
 #include "Renderer/Renderer.hpp"
-#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {

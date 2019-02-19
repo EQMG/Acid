@@ -16,7 +16,7 @@ namespace acid
 
 		bool emplaced = false;
 
-		do 
+		do
 		{
 			auto stage = m_stages.find(renderer->GetStage());
 
@@ -29,7 +29,8 @@ namespace acid
 				(*stage).second.emplace_back(renderer);
 				emplaced = true;
 			}
-		} while (!emplaced);
+		}
+		while (!emplaced);
 
 		return renderer;
 	}

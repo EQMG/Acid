@@ -20,6 +20,7 @@ namespace test
 		void Start() override;
 
 		void Update() override;
+
 	private:
 		std::unique_ptr<ConfigManager> m_configs;
 		FileWatcher m_fileWatcher;

@@ -18,7 +18,9 @@ namespace acid
 	public:
 		enum class Status
 		{
-			Created, Modified, Erased
+			Created,
+			Modified,
+			Erased
 		};
 
 		/// <summary>

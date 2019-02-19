@@ -19,44 +19,44 @@ namespace test
 	PlayerFps::PlayerFps() :
 		m_noclipEnabled(false),
 		m_inputForward(AxisCompound({
-		    new AxisButton(
-			    ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
-			    ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
-		    ),
-		    new AxisJoystick(0, 1, true)
+			new AxisButton(
+				ButtonCompound::Create<ButtonKeyboard>(Key::S, Key::Down),
+				ButtonCompound::Create<ButtonKeyboard>(Key::W, Key::Up)
+			),
+			new AxisJoystick(0, 1, true)
 		})),
 		m_inputStrafe(AxisCompound({
-		    new AxisButton(
-			    ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
-			    ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
-		    ),
-		    new AxisJoystick(0, 0, true)
+			new AxisButton(
+				ButtonCompound::Create<ButtonKeyboard>(Key::D, Key::Right),
+				ButtonCompound::Create<ButtonKeyboard>(Key::A, Key::Left)
+			),
+			new AxisJoystick(0, 0, true)
 		})),
 		m_inputSprint(ButtonCompound({
 			ButtonCompound::Create<ButtonKeyboard>(Key::ShiftLeft, Key::ShiftRight),
-		    new ButtonJoystick(0, 1)
+			new ButtonJoystick(0, 1)
 		})),
 		m_inputJump(ButtonCompound({
-		    new ButtonKeyboard(Key::Space),
-		    new ButtonJoystick(0, 1)
+			new ButtonKeyboard(Key::Space),
+			new ButtonJoystick(0, 1)
 		})),
 		m_inputCrouch(ButtonCompound({
 			ButtonCompound::Create<ButtonKeyboard>(Key::ControlLeft, Key::ControlRight),
-		    new ButtonJoystick(0, 1)
+			new ButtonJoystick(0, 1)
 		})),
 		m_toggleNoclip(ButtonCompound({
-		    new ButtonKeyboard(Key::N),
+			new ButtonKeyboard(Key::N),
 		}))
 	{
 	}
 
 	void PlayerFps::Start()
 	{
-	//	auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
-	//		Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
-	//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
-	//		Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+		//	auto collisionObject = GetParent()->GetComponent<CollisionObject>();
+		//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
+		//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 	}
 
 	void PlayerFps::Update()
@@ -121,7 +121,7 @@ namespace test
 		walkDirection.m_x = -(direction.m_z * std::sin(theta) + direction.m_x * std::cos(theta));
 		walkDirection.m_z = -(direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta));
 
-	//	walkDirection = walkDirection.Normalize();
+		//	walkDirection = walkDirection.Normalize();
 		walkDirection *= m_inputSprint.IsDown() ? RUN_SPEED : m_inputCrouch.IsDown() ? CROUCH_SPEED : WALK_SPEED;
 		walkDirection *= m_noclipEnabled ? NOCLIP_SPEED : 1.0f;
 		character->SetWalkDirection(0.02f * walkDirection);

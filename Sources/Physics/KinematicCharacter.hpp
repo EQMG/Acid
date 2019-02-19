@@ -69,10 +69,12 @@ namespace acid
 		void Jump(const Vector3 &direction);
 
 		void SetWalkDirection(const Vector3 &direction);
+
 	protected:
 		void RecalculateMass() override;
+
 	private:
-		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape* shape);
+		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape);
 
 		Vector3 m_gravity;
 		Vector3 m_up;
@@ -83,6 +85,6 @@ namespace acid
 		bool m_interpolate;
 
 		btPairCachingGhostObject *m_ghostObject;
-		btKinematicCharacterController* m_controller;
+		btKinematicCharacterController *m_controller;
 	};
 }

@@ -11,9 +11,9 @@ namespace acid
 	{
 	public:
 		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
-			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
+		        const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
-		virtual void UpdateObject() override;
+		void UpdateObject() override;
 
 		UiObject *GetContent() const { return m_content.get(); }
 

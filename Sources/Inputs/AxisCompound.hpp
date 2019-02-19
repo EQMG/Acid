@@ -41,6 +41,7 @@ namespace acid
 		explicit AxisCompound(const std::vector<IAxis *> &axes);
 
 		float GetAmount() const override;
+
 	private:
 		std::vector<std::unique_ptr<IAxis>> m_axes;
 	};

@@ -31,14 +31,16 @@ namespace acid
 			*x2 = common / (2.0f * a);
 			return FD_QUADRATIC_SOLUTION_TWO;
 		}
-		else if (discriminant == 0.0f)
+		if (discriminant == 0.0f)
 		{
 			if (b == 0.0f)
 			{
 				if (a == 0.0f)
 				{
-					if (c == 0.0f) return FD_QUADRATIC_SOLUTION_ALL;
-					else return FD_QUADRATIC_SOLUTION_NONE;
+					if (c == 0.0f)
+						return FD_QUADRATIC_SOLUTION_ALL;
+					else
+						return FD_QUADRATIC_SOLUTION_NONE;
 				}
 				else
 				{
@@ -86,7 +88,7 @@ namespace acid
 	static inline bool is_point_inside_bbox_exclusive(const Rect *bbox, const Vector2 p)
 	{
 		return is_between_exclusive(p[0], bbox->min_x, bbox->max_x) &&
-		       is_between_exclusive(p[1], bbox->min_y, bbox->max_y);
+			is_between_exclusive(p[1], bbox->min_y, bbox->max_y);
 	}
 
 	static bool is_intersection_in_line_segment(const Vector2 p1, const Vector2 p2, const Vector2 i)
@@ -101,8 +103,10 @@ namespace acid
 
 	static bool is_line_segment_intersecting_bbox(const Rect *bbox, const Vector2 p1, const Vector2 p2)
 	{
-		if (is_point_inside_bbox_exclusive(bbox, p1)) return true;
-		if (is_point_inside_bbox_exclusive(bbox, p2)) return true;
+		if (is_point_inside_bbox_exclusive(bbox, p1))
+			return true;
+		if (is_point_inside_bbox_exclusive(bbox, p2))
+			return true;
 
 		float x_top = line_horizontal_intersect(bbox->max_y, p1, p2);
 		float x_bottom = line_horizontal_intersect(bbox->min_y, p1, p2);
@@ -115,25 +119,25 @@ namespace acid
 		Vector2 right = {bbox->max_x, y_right};
 
 		if (is_between(x_top, bbox->min_x, bbox->max_x) &&
-		    is_intersection_in_line_segment(p1, p2, top))
+			is_intersection_in_line_segment(p1, p2, top))
 		{
 			return true;
 		}
 
 		if (is_between(x_bottom, bbox->min_x, bbox->max_x) &&
-		    is_intersection_in_line_segment(p1, p2, bottom))
+			is_intersection_in_line_segment(p1, p2, bottom))
 		{
 			return true;
 		}
 
 		if (is_between(y_left, bbox->min_y, bbox->max_y) &&
-		    is_intersection_in_line_segment(p1, p2, left))
+			is_intersection_in_line_segment(p1, p2, left))
 		{
 			return true;
 		}
 
 		if (is_between(y_right, bbox->min_y, bbox->max_y) &&
-		    is_intersection_in_line_segment(p1, p2, right))
+			is_intersection_in_line_segment(p1, p2, right))
 		{
 			return true;
 		}
@@ -143,8 +147,10 @@ namespace acid
 
 	bool bbox_bezier2_intersect(const Rect *bbox, const Vector2 bezier[3])
 	{
-		if (is_point_inside_bbox_exclusive(bbox, bezier[0])) return true;
-		if (is_point_inside_bbox_exclusive(bbox, bezier[2])) return true;
+		if (is_point_inside_bbox_exclusive(bbox, bezier[0]))
+			return true;
+		if (is_point_inside_bbox_exclusive(bbox, bezier[2]))
+			return true;
 
 		Vector2 bl = {bbox->min_x, bbox->min_y};
 		Vector2 br = {bbox->max_x, bbox->min_y};
@@ -152,9 +158,9 @@ namespace acid
 		Vector2 tr = {bbox->max_x, bbox->max_y};
 
 		return bezier2_line_is_intersecting(bezier, bl, br) ||
-		       bezier2_line_is_intersecting(bezier, br, tr) ||
-		       bezier2_line_is_intersecting(bezier, tr, tl) ||
-		       bezier2_line_is_intersecting(bezier, tl, bl);
+			bezier2_line_is_intersecting(bezier, br, tr) ||
+			bezier2_line_is_intersecting(bezier, tr, tl) ||
+			bezier2_line_is_intersecting(bezier, tl, bl);
 	}
 
 	float line_signed_distance(const Vector2 a, const Vector2 b, const Vector2 p)
@@ -261,7 +267,8 @@ namespace acid
 
 			if (deriv[0][0] < deriv[1][0])
 				bbox->min_x = std::min(bbox->min_x, x);
-			else bbox->max_x = std::max(bbox->max_x, x);
+			else
+				bbox->max_x = std::max(bbox->max_x, x);
 		}
 
 		if (0.0f <= ty && ty <= 1.0f)
@@ -270,7 +277,8 @@ namespace acid
 
 			if (deriv[0][1] < deriv[1][1])
 				bbox->min_y = std::min(bbox->min_y, y);
-			else bbox->max_y = std::max(bbox->max_y, y);
+			else
+				bbox->max_y = std::max(bbox->max_y, y);
 		}
 	}
 
@@ -334,25 +342,25 @@ namespace acid
 
 		switch (sol)
 		{
-			case FD_QUADRATIC_SOLUTION_NONE:
-			case FD_QUADRATIC_SOLUTION_ALL:
-				return false;
+		case FD_QUADRATIC_SOLUTION_NONE:
+		case FD_QUADRATIC_SOLUTION_ALL:
+			return false;
 
-			case FD_QUADRATIC_SOLUTION_TOUCH:
-			case FD_QUADRATIC_SOLUTION_ONE:
-				xt0 = bezier2_component(x0, x1, x2, t0);
-				return is_between(t0, 0, 1) && is_between(xt0, 0, l);
+		case FD_QUADRATIC_SOLUTION_TOUCH:
+		case FD_QUADRATIC_SOLUTION_ONE:
+			xt0 = bezier2_component(x0, x1, x2, t0);
+			return is_between(t0, 0, 1) && is_between(xt0, 0, l);
 
-			case FD_QUADRATIC_SOLUTION_TWO:
-				xt0 = bezier2_component(x0, x1, x2, t0);
-				xt1 = bezier2_component(x0, x1, x2, t1);
+		case FD_QUADRATIC_SOLUTION_TWO:
+			xt0 = bezier2_component(x0, x1, x2, t0);
+			xt1 = bezier2_component(x0, x1, x2, t1);
 
-				return (is_between(t0, 0, 1) && is_between(xt0, 0, l)) ||
-				       (is_between(t1, 0, 1) && is_between(xt1, 0, l));
+			return (is_between(t0, 0, 1) && is_between(xt0, 0, l)) ||
+				(is_between(t1, 0, 1) && is_between(xt1, 0, l));
 
-			default:
-				assert(false);
-				return false;
+		default:
+			assert(false);
+			return false;
 		}
 	}
 }

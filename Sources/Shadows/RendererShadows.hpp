@@ -19,6 +19,7 @@ namespace acid
 		explicit RendererShadows(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+
 	private:
 		std::vector<Shader::Define> GetDefines();
 

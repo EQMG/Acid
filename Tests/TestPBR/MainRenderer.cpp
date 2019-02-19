@@ -49,7 +49,7 @@ namespace test
 
 		auto &rendererContainer = GetRendererContainer();
 		rendererContainer.Clear();
-	//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+		//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
 
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 

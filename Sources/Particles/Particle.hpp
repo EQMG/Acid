@@ -61,6 +61,7 @@ namespace acid
 		const float &DistanceToCamera() const { return m_distanceToCamera; }
 
 		bool operator<(const Particle &other) const;
+
 	private:
 		Vector2 CalculateTextureOffset(const int32_t &index) const;
 

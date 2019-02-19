@@ -92,9 +92,9 @@ namespace acid
 		/// <returns> The list of all object in range. </returns>
 		std::vector<Entity *> QueryFrustum(const Frustum &range);
 
-	//	std::vector<Entity *> QuerySphere(const Vector3 &centre, const Vector3 &radius);
+		//	std::vector<Entity *> QuerySphere(const Vector3 &centre, const Vector3 &radius);
 
-	//	std::vector<Entity *> QueryCube(const Vector3 &min, const Vector3 &max);
+		//	std::vector<Entity *> QueryCube(const Vector3 &min, const Vector3 &max);
 
 		/// <summary>
 		/// Returns a set of all components of a type in the spatial structure.
@@ -154,6 +154,7 @@ namespace acid
 		/// </param>
 		/// <returns> If the structure contains the object. </returns>
 		bool Contains(Entity *object);
+
 	private:
 		std::mutex m_mutex;
 		std::vector<std::unique_ptr<Entity>> m_objects;

@@ -12,7 +12,8 @@ namespace acid
 		public IVertex
 	{
 	public:
-		VertexAnimated(const Vector3 &position = Vector3::Zero, const Vector2 &uv = Vector2::Zero, const Vector3 &normal = Vector3::Zero, const Vector3 &tangent = Vector3::Zero, const Vector3 &jointId = Vector3::Zero, const Vector3 &vertexWeight = Vector3::Zero);
+		VertexAnimated(const Vector3 &position = Vector3::Zero, const Vector2 &uv = Vector2::Zero, const Vector3 &normal = Vector3::Zero, const Vector3 &tangent = Vector3::Zero, const Vector3 &jointId = Vector3::Zero,
+		               const Vector3 &vertexWeight = Vector3::Zero);
 
 		const Vector3 &GetPosition() const override { return m_position; };
 
@@ -39,6 +40,7 @@ namespace acid
 		void SetVertexWeight(const Vector3 &vertexWeight) { m_vertexWeight = vertexWeight; };
 
 		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
+
 	private:
 		Vector3 m_position;
 		Vector2 m_uv;

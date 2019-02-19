@@ -215,10 +215,10 @@ namespace acid
 		{
 			return rmdir(path.c_str()) == 0;
 		}
-		else if (IsFile(path))
+		if (IsFile(path))
 		{
 #if defined(ACID_BUILD_WINDOWS)
-			return ::remove(path.c_str()) == 0;
+			return remove(path.c_str()) == 0;
 #else
 			return ::remove(path.c_str()) == 0;
 #endif
@@ -229,7 +229,7 @@ namespace acid
 
 	std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 	{
-		if (!FileSystem::Exists(filename))
+		if (!Exists(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};
@@ -432,10 +432,7 @@ namespace acid
 		{
 			return "";
 		}
-		else
-		{
-			return path.substr(end);
-		}
+		return path.substr(end);
 	}
 
 	std::string FileSystem::JoinPath(const std::vector<std::string> &parts)

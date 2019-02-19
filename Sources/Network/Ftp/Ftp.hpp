@@ -195,6 +195,7 @@ namespace acid
 		/// <param name="parameter"> Command parameter. </param>
 		/// <returns> Server response to the request. </returns>
 		FtpResponse SendCommand(const std::string &command, const std::string &parameter = "");
+
 	private:
 		/// <summary>
 		/// Receive a response from the server.

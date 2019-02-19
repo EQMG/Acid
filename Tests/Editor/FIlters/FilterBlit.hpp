@@ -13,6 +13,7 @@ namespace test
 		explicit FilterBlit(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+
 	private:
 		bool m_lastFilter;
 	};

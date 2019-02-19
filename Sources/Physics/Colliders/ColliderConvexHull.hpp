@@ -29,6 +29,7 @@ namespace acid
 		const uint32_t &GetPointCount() const { return m_pointCount; }
 
 		void Initialize(const std::vector<float> &pointCloud);
+
 	private:
 		std::unique_ptr<btConvexHullShape> m_shape;
 		std::shared_ptr<Model> m_model;

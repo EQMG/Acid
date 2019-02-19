@@ -32,6 +32,7 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height);
+
 	private:
 		std::unique_ptr<btCylinderShape> m_shape;
 		float m_radius;

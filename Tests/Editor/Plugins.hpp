@@ -28,6 +28,7 @@ namespace test
 		~Plugins();
 
 		void Update() override;
+
 	private:
 		std::string m_loadedPath;
 		FileWatcher m_watcher;

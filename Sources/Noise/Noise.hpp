@@ -35,23 +35,49 @@ namespace acid
 	public:
 		enum class Type
 		{
-			Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal
+			Value,
+			ValueFractal,
+			Perlin,
+			PerlinFractal,
+			Simplex,
+			SimplexFractal,
+			Cellular,
+			WhiteNoise,
+			Cubic,
+			CubicFractal
 		};
+
 		enum class Interp
 		{
-			Linear, Hermite, Quintic
+			Linear,
+			Hermite,
+			Quintic
 		};
+
 		enum class Fractal
 		{
-			FBM, Billow, RigidMulti
+			FBM,
+			Billow,
+			RigidMulti
 		};
+
 		enum class CellularDistance
 		{
-			Euclidean, Manhattan, Natural
+			Euclidean,
+			Manhattan,
+			Natural
 		};
+
 		enum class CellularReturn
 		{
-			CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div
+			CellValue,
+			NoiseLookup,
+			Distance,
+			Distance2,
+			Distance2Add,
+			Distance2Sub,
+			Distance2Mul,
+			Distance2Div
 		};
 
 		/// <summary>
@@ -66,7 +92,7 @@ namespace acid
 		/// <param name="fractalType"> The fractal noise type. </param>
 		/// <param name="fractalBounding"> The fractal bounding. </param>
 		explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, const int32_t &octaves = 3,
-			const float &lacunarity = 2.0f, const float &gain = 0.5f, const Fractal &fractal = Fractal::FBM, const float &fractalBounding = 0.0f);
+		               const float &lacunarity = 2.0f, const float &gain = 0.5f, const Fractal &fractal = Fractal::FBM, const float &fractalBounding = 0.0f);
 
 		/// <summary>
 		/// Gets the seed used for all noise types.
@@ -306,6 +332,7 @@ namespace acid
 		float GetWhiteNoise(float x, float y, float z, float w) const;
 
 		float GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z, int32_t w) const;
+
 	private:
 		void CalculateFractalBounding();
 

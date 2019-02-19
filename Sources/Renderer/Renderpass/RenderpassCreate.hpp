@@ -19,7 +19,9 @@ namespace acid
 	public:
 		enum class Type
 		{
-			Image, Depth, Swapchain
+			Image,
+			Depth,
+			Swapchain
 		};
 
 		/// <summary>
@@ -83,7 +85,7 @@ namespace acid
 	private:
 		std::vector<Attachment> m_images;
 		std::vector<SubpassType> m_subpasses;
-		
+
 		std::optional<uint32_t> m_width;
 		std::optional<uint32_t> m_height;
 		Vector2 m_scale;
@@ -101,7 +103,8 @@ namespace acid
 
 		std::optional<Attachment> GetAttachment(const std::string &name) const
 		{
-			auto it = std::find_if(m_images.begin(), m_images.end(), [name](const Attachment &a) {
+			auto it = std::find_if(m_images.begin(), m_images.end(), [name](const Attachment &a)
+			{
 				return a.GetName() == name;
 			});
 
@@ -115,7 +118,8 @@ namespace acid
 
 		std::optional<Attachment> GetAttachment(const uint32_t &binding) const
 		{
-			auto it = std::find_if(m_images.begin(), m_images.end(), [binding](const Attachment &a) {
+			auto it = std::find_if(m_images.begin(), m_images.end(), [binding](const Attachment &a)
+			{
 				return a.GetBinding() == binding;
 			});
 
@@ -139,7 +143,7 @@ namespace acid
 
 		void SetHeight(const std::optional<uint32_t> &height) { m_height = height; }
 
-		const Vector2& GetScale() const { return m_scale; }
+		const Vector2 &GetScale() const { return m_scale; }
 
 		void SetScale(const Vector2 &scale) { m_scale = scale; }
 

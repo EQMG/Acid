@@ -11,10 +11,12 @@ namespace acid
 		explicit FilterSsao(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+
 	private:
 		std::vector<Shader::Define> GetDefines();
 
 		static std::shared_ptr<Texture> ComputeNoise(const uint32_t &size);
+
 	private:
 		PushHandler m_pushScene;
 

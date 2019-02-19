@@ -18,6 +18,7 @@ namespace test
 		void Start() override;
 
 		void Update() override;
+
 	private:
 		void CalculateHorizontalAngle();
 
@@ -28,7 +29,7 @@ namespace test
 		void UpdatePitchAngle(const float &delta);
 
 		void UpdatePosition();
-		
+
 		float m_angleOfElevation;
 		float m_angleAroundPlayer;
 

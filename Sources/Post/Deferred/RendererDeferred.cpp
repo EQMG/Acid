@@ -22,7 +22,7 @@ namespace acid
 		m_storageLights(StorageHandler()),
 		m_type(type),
 		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
+		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines())),
 		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
 		m_brdf(m_type == Type::Ibl ? ComputeBrdf(512) : nullptr),
 		m_skybox(nullptr),
@@ -43,7 +43,7 @@ namespace acid
 			if (m_skybox != skybox)
 			{
 				m_skybox = skybox;
-			//	m_ibl = ComputeIbl(m_skybox);
+				//	m_ibl = ComputeIbl(m_skybox);
 			}
 		}
 
@@ -55,13 +55,13 @@ namespace acid
 
 		for (const auto &light : sceneLights)
 		{
-		//	auto position = *light->GetPosition();
-		//	float radius = light->GetRadius();
+			//	auto position = *light->GetPosition();
+			//	float radius = light->GetRadius();
 
-		//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
-		//	{
-		//		continue;
-		//	}
+			//	if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
+			//	{
+			//		continue;
+			//	}
 
 			DeferredLight deferredLight = {};
 			deferredLight.m_colour = light->GetColour();
@@ -162,7 +162,7 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<Cubemap> RendererDeferred::ComputeIbl(const std::shared_ptr<acid::Cubemap> &source)
+	std::shared_ptr<Cubemap> RendererDeferred::ComputeIbl(const std::shared_ptr<Cubemap> &source)
 	{
 		if (source == nullptr)
 		{
@@ -199,7 +199,7 @@ namespace acid
 #endif
 
 		return std::make_shared<Cubemap>(source->GetWidth(), source->GetHeight(), convolution.GetPixels(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
-			VK_SAMPLE_COUNT_1_BIT, true, true);
+		                                 VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		                                 VK_SAMPLE_COUNT_1_BIT, true, true);
 	}
 }

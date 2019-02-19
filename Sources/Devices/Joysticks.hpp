@@ -16,6 +16,7 @@ namespace acid
 		Down = 4,
 		Left = 8
 	};
+
 	ENABLE_BITMASK_OPERATORS(JoystickHat)
 
 	/// <summary>

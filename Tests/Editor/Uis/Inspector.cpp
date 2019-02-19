@@ -19,10 +19,12 @@ namespace test
 		m_radio3(std::make_unique<UiInputRadio>(m_section1->GetContent(), "Third Value", UiInputRadio::Mark::X, false, UiBound(Vector2(0.0f, 0.45f), UiReference::TopLeft))),
 		m_radioManager(UiRadioManager(UiInputRadio::Mark::Filled, false, {m_radio1.get(), m_radio2.get(), m_radio3.get()}))
 	{
-		m_slider1->GetOnSlide() += [](UiInputSlider *object, float value) {
+		m_slider1->GetOnSlide() += [](UiInputSlider *object, float value)
+		{
 			Audio::Get()->SetTypeGain(Audio::Type::Effect, value);
 		};
-		m_text1->GetOnType() += [](UiInputText *object, std::string text) {
+		m_text1->GetOnType() += [](UiInputText *object, std::string text)
+		{
 			Window::Get()->SetTitle(text);
 		};
 	}

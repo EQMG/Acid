@@ -11,7 +11,7 @@ namespace acid
 	{
 	public:
 		explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, const float &nearTransition = 0.125f,
-			const float &farField = 8.0f, const float &farTransition = 3.0f);
+		                   const float &farField = 8.0f, const float &farTransition = 3.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

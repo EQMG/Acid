@@ -13,7 +13,7 @@ namespace acid
 		m_background(std::make_unique<Gui>(this, UiBound::Left, Texture::Create("Guis/Radio.png"), UiInputButton::PrimaryColour)),
 		m_fill(std::make_unique<Gui>(m_background.get(), UiBound::Maximum, nullptr, Colour::White)),
 		m_text(std::make_unique<Text>(this, UiBound::Left, UiInputButton::FontSize, string,
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+		                              FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_checked(checked),
 		m_markType(markType),
@@ -63,7 +63,7 @@ namespace acid
 		UpdateFill();
 	}
 
-	void UiInputRadio::SetMarkType(const UiInputRadio::Mark &markType)
+	void UiInputRadio::SetMarkType(const Mark &markType)
 	{
 		m_markType = markType;
 		UpdateFill();
@@ -71,23 +71,23 @@ namespace acid
 
 	void UiInputRadio::UpdateFill()
 	{
-		switch(m_markType)
+		switch (m_markType)
 		{
-			case Mark::Filled:
-				m_fill->SetTexture(Texture::Create("Guis/Radio_Filled.png"));
-				break;
-			case Mark::X:
-				m_fill->SetTexture(Texture::Create("Guis/Radio_X.png"));
-				break;
-			case Mark::Check:
-				m_fill->SetTexture(Texture::Create("Guis/Radio_Check.png"));
-				break;
-			case Mark::Dot:
-				m_fill->SetTexture(Texture::Create("Guis/Radio_Dot.png"));
-				break;
-			default:
-				m_fill->SetTexture(nullptr);
-				break;
+		case Mark::Filled:
+			m_fill->SetTexture(Texture::Create("Guis/Radio_Filled.png"));
+			break;
+		case Mark::X:
+			m_fill->SetTexture(Texture::Create("Guis/Radio_X.png"));
+			break;
+		case Mark::Check:
+			m_fill->SetTexture(Texture::Create("Guis/Radio_Check.png"));
+			break;
+		case Mark::Dot:
+			m_fill->SetTexture(Texture::Create("Guis/Radio_Dot.png"));
+			break;
+		default:
+			m_fill->SetTexture(nullptr);
+			break;
 		}
 
 		m_fill->SetAlphaDriver<DriverSlide<float>>(m_fill->GetAlpha(), m_checked ? 1.0f : 0.0f, UiInputButton::SlideTime);

@@ -89,7 +89,7 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	void ModelDisk::Decode(const Metadata &metadata)

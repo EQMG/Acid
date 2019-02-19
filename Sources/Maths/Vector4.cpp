@@ -27,7 +27,6 @@ namespace acid
 		m_z(b.m_x),
 		m_w(b.m_y)
 	{
-
 	}
 
 	Vector4::Vector4(const Vector3 &source, const float &w) :

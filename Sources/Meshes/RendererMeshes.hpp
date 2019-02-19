@@ -13,12 +13,15 @@ namespace acid
 	public:
 		enum class Sort
 		{
-			None, Front, Back
+			None,
+			Front,
+			Back
 		};
 
 		explicit RendererMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort = Sort::None);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+
 	private:
 		Sort m_sort;
 		UniformHandler m_uniformScene;

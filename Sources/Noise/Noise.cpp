@@ -365,7 +365,7 @@ namespace acid
 	};
 
 	Noise::Noise(const int32_t &seed, const float &frequency, const Interp &interp, const Type &type, const int32_t &octaves,
-		const float &lacunarity, const float &gain, const Fractal &fractal, const float &fractalBounding) :
+	             const float &lacunarity, const float &gain, const Fractal &fractal, const float &fractalBounding) :
 		m_seed(seed),
 		m_perm(std::unique_ptr<uint8_t[]>(new uint8_t[512])),
 		m_perm12(std::unique_ptr<uint8_t[]>(new uint8_t[512])),
@@ -527,8 +527,8 @@ namespace acid
 	float Noise::GetWhiteNoise(float x, float y) const
 	{
 		return ValueCoord2d(m_seed,
-			*reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
-			*reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16));
+		                    *reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
+		                    *reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16));
 	}
 
 	float Noise::GetWhiteNoiseInt(int32_t x, int32_t y) const
@@ -747,9 +747,9 @@ namespace acid
 	float Noise::GetWhiteNoise(float x, float y, float z) const
 	{
 		return ValueCoord3d(m_seed,
-			*reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
-			*reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16),
-			*reinterpret_cast<int32_t *>(&z) ^ (*reinterpret_cast<int32_t *>(&z) >> 16));
+		                    *reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
+		                    *reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16),
+		                    *reinterpret_cast<int32_t *>(&z) ^ (*reinterpret_cast<int32_t *>(&z) >> 16));
 	}
 
 	float Noise::GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z) const
@@ -890,10 +890,10 @@ namespace acid
 	float Noise::GetWhiteNoise(float x, float y, float z, float w) const
 	{
 		return ValueCoord4d(m_seed,
-			*reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
-			*reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16),
-			*reinterpret_cast<int32_t *>(&z) ^ (*reinterpret_cast<int32_t *>(&z) >> 16),
-			*reinterpret_cast<int32_t *>(&w) ^ (*reinterpret_cast<int32_t *>(&w) >> 16));
+		                    *reinterpret_cast<int32_t *>(&x) ^ (*reinterpret_cast<int32_t *>(&x) >> 16),
+		                    *reinterpret_cast<int32_t *>(&y) ^ (*reinterpret_cast<int32_t *>(&y) >> 16),
+		                    *reinterpret_cast<int32_t *>(&z) ^ (*reinterpret_cast<int32_t *>(&z) >> 16),
+		                    *reinterpret_cast<int32_t *>(&w) ^ (*reinterpret_cast<int32_t *>(&w) >> 16));
 	}
 
 	float Noise::GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z, int32_t w) const

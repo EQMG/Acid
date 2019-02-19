@@ -11,7 +11,9 @@ namespace acid
 	public:
 		enum class Status
 		{
-			Reset, Changed, Normal
+			Reset,
+			Changed,
+			Normal
 		};
 
 		/// <summary>
@@ -36,6 +38,7 @@ namespace acid
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
 		static void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
+
 	protected:
 		VkDeviceSize m_size;
 		VkBuffer m_buffer;
