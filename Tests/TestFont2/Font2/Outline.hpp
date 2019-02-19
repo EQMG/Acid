@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_BBOX_H
@@ -9,7 +10,6 @@
 namespace acid
 {
 #define FT_CHECK(r) do { FT_Error err = (r); assert(!err); } while (0)
-
 #define FD_OUTLINE_MAX_POINTS (255 * 2)
 
 	struct WIPCell
@@ -30,15 +30,11 @@ namespace acid
 	{
 		Rect bbox;
 
-		Vector2 *points;
-		uint32_t pointCount;
-		uint32_t pointCapacity;
+		std::vector<Vector2> points;
 
-		ContourRange *contours;
-		uint32_t contourCount;
-		uint32_t contourCapacity;
+		std::vector<ContourRange> contours;
 
-		uint32_t *cells;
+		std::vector<uint32_t> cells;
 		uint32_t cellCountX;
 		uint32_t cellCountY;
 
@@ -51,8 +47,6 @@ namespace acid
 	};
 
 	// private
-	static void AddOutlinePoint(Outline *o, const Vector2 &point);
-	static void AddOutlineContour(Outline *o, const ContourRange &range);
 	static void OutlineAddOddPoint(Outline *o);
 	static void ConvertPoint(const FT_Vector *v, Vector2 &out);
 	static int32_t MoveToFunc(const FT_Vector *to, Outline *o);
@@ -84,23 +78,13 @@ namespace acid
 
 	void OutlineSubdivide(Outline *o);
 
-//	void OutlineFixCorners(Outline *o);
+	void OutlineFixCorners(Outline *o);
 
 	static void OutlineFixThinLines(Outline *o); // private
-
-	void OutlineDestroy(Outline *o);
 
 	void OutlineCbox(Outline *o, Rect *cbox);
 
 	static uint16_t GenU16Value(const float &x, const float &min, const float &max); // private
 
 	void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout);
-
-	template<typename T>
-	static void DynArrayGrow(T **data, uint32_t *capacity, size_t element_size)
-	{
-		*capacity = *capacity ? *capacity * 2 : 8;
-		T *newData = static_cast<T *>(realloc(*data, *capacity * element_size));
-		*data = newData;
-	}
 }

@@ -7,34 +7,12 @@
 
 namespace acid
 {
-	void AddOutlinePoint(Outline *o, const Vector2 &point)
-	{
-		if (o->pointCapacity == o->pointCount)
-		{
-			DynArrayGrow(&o->points, &o->pointCapacity, sizeof(Vector2));
-		}
-
-		o->points[o->pointCount] = point;
-		o->pointCount++;
-	}
-
-	void AddOutlineContour(Outline *o, const ContourRange &range)
-	{
-		if (o->contourCapacity == o->contourCount)
-		{
-			DynArrayGrow(&o->contours, &o->contourCapacity, sizeof(ContourRange));
-		}
-
-		o->contours[o->contourCount] = range;
-		o->contourCount++;
-	}
-
 	void OutlineAddOddPoint(Outline *o)
 	{
-		if (o->pointCount % 2 != 0)
+		if (o->points.size() % 2 != 0)
 		{
-			Vector2 p = Vector2(o->bbox.min_x, o->bbox.min_y);
-			AddOutlinePoint(o, p);
+			Vector2 p = Vector2(o->bbox.minX, o->bbox.minY);
+			o->points.emplace_back(p);
 		}
 	}
 
@@ -48,31 +26,31 @@ namespace acid
 	{
 		Vector2 p = Vector2();
 
-		if (o->contourCount > 0)
+		if (!o->contours.empty())
 		{
-			o->contours[o->contourCount - 1].end = o->pointCount - 1;
-			AddOutlinePoint(o, p);
+			o->contours[o->contours.size() - 1].end = o->points.size() - 1;
+			o->points.emplace_back(p);
 		}
 
-		assert(o->pointCount % 2 == 0);
+		assert(o->points.size() % 2 == 0);
 
-		ContourRange range = {o->pointCount, std::numeric_limits<uint32_t>::max()};
-		AddOutlineContour(o, range);
+		ContourRange range = {o->points.size(), std::numeric_limits<uint32_t>::max()};
+		o->contours.emplace_back(range);
 
 		ConvertPoint(to, p);
-		AddOutlinePoint(o, p);
+		o->points.emplace_back(p);
 		return 0;
 	}
 
 	int32_t LineToFunc(const FT_Vector *to, Outline *o)
 	{
-		uint32_t last = o->pointCount - 1;
+		uint32_t last = o->points.size() - 1;
 
 		Vector2 toP;
 		ConvertPoint(to, toP);
 		Vector2 p = o->points[last].Lerp(toP, 0.5f);
-		AddOutlinePoint(o, p);
-		AddOutlinePoint(o, toP);
+		o->points.emplace_back(p);
+		o->points.emplace_back(toP);
 		return 0;
 	}
 
@@ -80,10 +58,10 @@ namespace acid
 	{
 		Vector2 p;
 		ConvertPoint(control, p);
-		AddOutlinePoint(o, p);
+		o->points.emplace_back(p);
 
 		ConvertPoint(to, p);
-		AddOutlinePoint(o, p);
+		o->points.emplace_back(p);
 		return 0;
 	}
 
@@ -108,15 +86,15 @@ namespace acid
 
 	void OutlineDecompose(FT_Outline *outline, Outline *o)
 	{
-		memset(o, 0, sizeof(Outline));
+		memset(o, 0, sizeof(Outline)); // TODO: Remove
 
 		FT_BBox outlineBbox;
 		FT_CHECK(FT_Outline_Get_BBox(outline, &outlineBbox));
 
-		o->bbox.min_x = static_cast<float>(outlineBbox.xMin) / 64.0f;
-		o->bbox.min_y = static_cast<float>(outlineBbox.yMin) / 64.0f;
-		o->bbox.max_x = static_cast<float>(outlineBbox.xMax) / 64.0f;
-		o->bbox.max_y = static_cast<float>(outlineBbox.yMax) / 64.0f;
+		o->bbox.minX = static_cast<float>(outlineBbox.xMin) / 64.0f;
+		o->bbox.minY = static_cast<float>(outlineBbox.yMin) / 64.0f;
+		o->bbox.maxX = static_cast<float>(outlineBbox.xMax) / 64.0f;
+		o->bbox.maxY = static_cast<float>(outlineBbox.yMax) / 64.0f;
 
 		FT_Outline_Funcs funcs = {};
 		funcs.move_to = reinterpret_cast<FT_Outline_MoveToFunc>(MoveToFunc);
@@ -126,9 +104,9 @@ namespace acid
 
 		FT_CHECK(FT_Outline_Decompose(outline, &funcs, o));
 
-		if (o->contourCount > 0)
+		if (!o->contours.empty())
 		{
-			o->contours[o->contourCount - 1].end = o->pointCount - 1;
+			o->contours[o->contours.size() - 1].end = o->points.size() - 1;
 		}
 	}
 
@@ -184,24 +162,24 @@ namespace acid
 	{
 		// TODO: Optimize
 		Vector2 p = Vector2(
-			(bbox.max_x + bbox.min_x) / 2.0f,
-			(bbox.max_y + bbox.min_y) / 2.0f
+			(bbox.maxX + bbox.minX) / 2.0f,
+			(bbox.maxY + bbox.minY) / 2.0f
 		);
 
 		float mindist = std::numeric_limits<float>::max();
 		float v = std::numeric_limits<float>::max();
 		uint32_t j = std::numeric_limits<uint32_t>::max();
 
-		for (uint32_t contourIndex = 0; contourIndex < o->contourCount; contourIndex++)
+		for (uint32_t contourIndex = 0; contourIndex < o->contours.size(); contourIndex++)
 		{
 			uint32_t contourBegin = o->contours[contourIndex].begin;
 			uint32_t contourEnd = o->contours[contourIndex].end;
 
 			for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 			{
-				Vector2 &p0 = o->points[i];
-				Vector2 &p1 = o->points[i + 1];
-				Vector2 &p2 = o->points[i + 2];
+				Vector2 p0 = o->points[i];
+				Vector2 p1 = o->points[i + 1];
+				Vector2 p2 = o->points[i + 2];
 
 				float t = LineCalculateT(p0, p2, p);
 
@@ -351,13 +329,13 @@ namespace acid
 		Rect bezierBbox;
 		Bezier2Bbox(&o->points[i], bezierBbox);
 
-		float outlineBboxW = o->bbox.max_x - o->bbox.min_x;
-		float outlineBboxH = o->bbox.max_y - o->bbox.min_y;
+		float outlineBboxW = o->bbox.maxX - o->bbox.minX;
+		float outlineBboxH = o->bbox.maxY - o->bbox.minY;
 
-		auto minX = static_cast<uint32_t>((bezierBbox.min_x - o->bbox.min_x) / outlineBboxW * o->cellCountX);
-		auto minY = static_cast<uint32_t>((bezierBbox.min_y - o->bbox.min_y) / outlineBboxH * o->cellCountY);
-		auto maxX = static_cast<uint32_t>((bezierBbox.max_x - o->bbox.min_x) / outlineBboxW * o->cellCountX);
-		auto maxY = static_cast<uint32_t>((bezierBbox.max_y - o->bbox.min_y) / outlineBboxH * o->cellCountY);
+		auto minX = static_cast<uint32_t>((bezierBbox.minX - o->bbox.minX) / outlineBboxW * o->cellCountX);
+		auto minY = static_cast<uint32_t>((bezierBbox.minY - o->bbox.minY) / outlineBboxH * o->cellCountY);
+		auto maxX = static_cast<uint32_t>((bezierBbox.maxX - o->bbox.minX) / outlineBboxW * o->cellCountX);
+		auto maxY = static_cast<uint32_t>((bezierBbox.maxY - o->bbox.minY) / outlineBboxH * o->cellCountY);
 
 		if (maxX >= o->cellCountX)
 		{
@@ -406,7 +384,7 @@ namespace acid
 
 	void CopyWipcellValues(Outline *u, const WIPCell *cells)
 	{
-		u->cells = static_cast<uint32_t *>(malloc(sizeof(uint32_t) * u->cellCountX * u->cellCountY));
+		u->cells = std::vector<uint32_t>(u->cellCountX * u->cellCountY);
 
 		for (uint32_t y = 0; y < u->cellCountY; y++)
 		{
@@ -420,18 +398,18 @@ namespace acid
 
 	void InitWipcells(const Outline *o, WIPCell *cells)
 	{
-		float w = o->bbox.max_x - o->bbox.min_x;
-		float h = o->bbox.max_y - o->bbox.min_y;
+		float w = o->bbox.maxX - o->bbox.minX;
+		float h = o->bbox.maxY - o->bbox.minY;
 
 		for (uint32_t y = 0; y < o->cellCountY; y++)
 		{
 			for (uint32_t x = 0; x < o->cellCountX; x++)
 			{
 				Rect bbox = {
-					o->bbox.min_x + (static_cast<float>(x) / o->cellCountX) * w,
-					o->bbox.min_y + (static_cast<float>(y) / o->cellCountY) * h,
-					o->bbox.min_x + (static_cast<float>(x + 1) / o->cellCountX) * w,
-					o->bbox.min_y + (static_cast<float>(y + 1) / o->cellCountY) * h,
+					o->bbox.minX + (static_cast<float>(x) / o->cellCountX) * w,
+					o->bbox.minY + (static_cast<float>(y) / o->cellCountY) * h,
+					o->bbox.minX + (static_cast<float>(x + 1) / o->cellCountX) * w,
+					o->bbox.minY + (static_cast<float>(y + 1) / o->cellCountY) * h,
 				};
 
 				uint32_t i = y * o->cellCountX + x;
@@ -448,14 +426,14 @@ namespace acid
 	{
 		OutlineAddOddPoint(o);
 
-		uint32_t i = o->pointCount;
-		float y = o->bbox.max_y + 1000.0f;
-		Vector2 f0 = Vector2(o->bbox.min_x, y);
-		Vector2 f1 = Vector2(o->bbox.min_x + 10.0f, y);
-		Vector2 f2 = Vector2(o->bbox.min_x + 20.0f, y);
-		AddOutlinePoint(o, f0);
-		AddOutlinePoint(o, f1);
-		AddOutlinePoint(o, f2);
+		uint32_t i = o->points.size();
+		float y = o->bbox.maxY + 1000.0f;
+		Vector2 f0 = Vector2(o->bbox.minX, y);
+		Vector2 f1 = Vector2(o->bbox.minX + 10.0f, y);
+		Vector2 f2 = Vector2(o->bbox.minX + 20.0f, y);
+		o->points.emplace_back(f0);
+		o->points.emplace_back(f1);
+		o->points.emplace_back(f2);
 
 		return i;
 	}
@@ -495,15 +473,15 @@ namespace acid
 		u.cellCountX = o->cellCountX;
 		u.cellCountY = o->cellCountY;
 
-		for (uint32_t contourIndex = 0; contourIndex < o->contourCount; contourIndex++)
+		for (uint32_t contourIndex = 0; contourIndex < o->contours.size(); contourIndex++)
 		{
 			uint32_t contourBegin = o->contours[contourIndex].begin;
 			uint32_t contourEnd = o->contours[contourIndex].end;
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.pointCount, u.pointCount + contourEnd - contourBegin};
-			AddOutlineContour(&u, urange);
+			ContourRange urange = {u.points.size(), u.points.size() + contourEnd - contourBegin};
+			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 			{
@@ -511,9 +489,9 @@ namespace acid
 				Vector2 &p1 = o->points[i + 1];
 			//	Vector2 &p2 = o->points[i + 2];
 
-				uint32_t j = u.pointCount;
-				AddOutlinePoint(&u, p0);
-				AddOutlinePoint(&u, p1);
+				uint32_t j = u.points.size();
+				u.points.emplace_back(p0);
+				u.points.emplace_back(p1);
 
 				ret &= ForEachWipcellAddBezier(o, &u, i, j, contourIndex, cells.data());
 			}
@@ -525,17 +503,16 @@ namespace acid
 
 			for (uint32_t i = contourBegin; i < continuationEnd; i += 2)
 			{
-				AddOutlinePoint(&u, o->points[i]);
-				AddOutlinePoint(&u, o->points[i + 1]);
+				u.points.emplace_back(o->points[i]);
+				u.points.emplace_back(o->points[i + 1]);
 			}
 
 			Vector2 &plast = o->points[continuationEnd];
-			AddOutlinePoint(&u, plast);
+			u.points.emplace_back(plast);
 		}
 
 		if (!ret)
 		{
-			OutlineDestroy(&u);
 			return ret;
 		}
 
@@ -545,7 +522,6 @@ namespace acid
 
 		CopyWipcellValues(&u, cells.data());
 
-		OutlineDestroy(o);
 		*o = u;
 		return ret;
 	}
@@ -564,13 +540,13 @@ namespace acid
 
 	void OutlineMakeCells(Outline *o)
 	{
-		if (o->pointCount > FD_OUTLINE_MAX_POINTS)
+		if (o->points.size() > FD_OUTLINE_MAX_POINTS)
 		{
 			return;
 		}
 
-		float w = o->bbox.max_x - o->bbox.min_x;
-		float h = o->bbox.max_y - o->bbox.min_y;
+		float w = o->bbox.maxX - o->bbox.minX;
+		float h = o->bbox.maxY - o->bbox.minY;
 
 		float multiplier = 0.5f;
 
@@ -579,7 +555,7 @@ namespace acid
 			multiplier = 1.0f;
 		}
 
-		uint32_t c = Uint32ToPow2(static_cast<uint32_t>(sqrtf(o->pointCount * 0.75f)));
+		uint32_t c = Uint32ToPow2(static_cast<uint32_t>(std::sqrt(o->points.size() * 0.75f)));
 
 		o->cellCountX = c;
 		o->cellCountY = c;
@@ -638,15 +614,15 @@ namespace acid
 		Outline u = {};
 		u.bbox = o->bbox;
 
-		for (uint32_t contourIndex = 0; contourIndex < o->contourCount; contourIndex++)
+		for (uint32_t contourIndex = 0; contourIndex < o->contours.size(); contourIndex++)
 		{
 			uint32_t contourBegin = o->contours[contourIndex].begin;
 			uint32_t contour_end = o->contours[contourIndex].end;
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.pointCount, std::numeric_limits<uint32_t>::max()};
-			AddOutlineContour(&u, urange);
+			ContourRange urange = {u.points.size(), std::numeric_limits<uint32_t>::max()};
+			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contour_end; i += 2)
 			{
@@ -657,25 +633,24 @@ namespace acid
 				Vector2 newp[3];
 				Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
-				AddOutlinePoint(&u, p0);
-				AddOutlinePoint(&u, newp[0]);
-				AddOutlinePoint(&u, newp[1]);
-				AddOutlinePoint(&u, newp[2]);
+				u.points.emplace_back(p0);
+				u.points.emplace_back(newp[0]);
+				u.points.emplace_back(newp[1]);
+				u.points.emplace_back(newp[2]);
 			}
 
-			u.contours[contourIndex].end = u.pointCount;
-			AddOutlinePoint(&u, o->points[contour_end]);
+			u.contours[contourIndex].end = u.points.size();
+			u.points.emplace_back(o->points[contour_end]);
 		}
 
-		OutlineDestroy(o);
 		*o = u;
 	}
 
-	/*void OutlineFixCorners(Outline *o)
+	void OutlineFixCorners(Outline *o)
 	{
 		float fixDist = 0.001f;
 
-		for (uint32_t contourIndex = 0; contourIndex < o->contourCount; contourIndex++)
+		for (uint32_t contourIndex = 0; contourIndex < o->contours.size(); contourIndex++)
 		{
 			uint32_t contourBegin = o->contours[contourIndex].begin;
 			uint32_t contourEnd = o->contours[contourIndex].end;
@@ -713,15 +688,15 @@ namespace acid
 
 					if (o->cornerFixBegin == 0)
 					{
-						o->cornerFixBegin = o->pointCount;
+						o->cornerFixBegin = o->points.size();
 					}
 
-					AddOutlinePoint(o, f0);
-					AddOutlinePoint(o, f1);
+					o->points.emplace_back(f0);
+					o->points.emplace_back(f1);
 				}
 			}
 		}
-	}*/
+	}
 
 	void OutlineFixThinLines(Outline *o)
 	{
@@ -729,15 +704,15 @@ namespace acid
 		Outline u = {};
 		u.bbox = o->bbox;
 
-		for (uint32_t contourIndex = 0; contourIndex < o->contourCount; contourIndex++)
+		for (uint32_t contourIndex = 0; contourIndex < o->contours.size(); contourIndex++)
 		{
 			uint32_t contourBegin = o->contours[contourIndex].begin;
 			uint32_t contourEnd = o->contours[contourIndex].end;
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.pointCount, std::numeric_limits<uint32_t>::max()};
-			AddOutlineContour(&u, urange);
+			ContourRange urange = {u.points.size(), std::numeric_limits<uint32_t>::max()};
+			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 			{
@@ -830,67 +805,43 @@ namespace acid
 					Vector2 newp[3];
 					Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
-					AddOutlinePoint(&u, p0);
-					AddOutlinePoint(&u, newp[0]);
-					AddOutlinePoint(&u, newp[1]);
-					AddOutlinePoint(&u, newp[2]);
+					u.points.emplace_back(p0);
+					u.points.emplace_back(newp[0]);
+					u.points.emplace_back(newp[1]);
+					u.points.emplace_back(newp[2]);
 				}
 				else
 				{
-					AddOutlinePoint(&u, p0);
-					AddOutlinePoint(&u, p1);
+					u.points.emplace_back(p0);
+					u.points.emplace_back(p1);
 				}
 			}
 
-			u.contours[contourIndex].end = u.pointCount;
-			AddOutlinePoint(&u, o->points[contourEnd]);
+			u.contours[contourIndex].end = u.points.size();
+			u.points.emplace_back(o->points[contourEnd]);
 		}
 
-		OutlineDestroy(o);
 		*o = u;
-	}
-
-	void OutlineDestroy(Outline *o)
-	{
-		if (o->contours)
-		{
-			free(o->contours);
-		}
-
-		if (o->points)
-		{
-			free(o->points);
-		}
-
-		if (o->cells)
-		{
-			free(o->cells);
-		}
-
-		memset(o, 0, sizeof(Outline));
 	}
 
 	void OutlineCbox(Outline *o, Rect *cbox)
 	{
-		if (o->pointCount == 0)
+		if (o->points.empty())
 		{
 			return;
 		}
 
-		cbox->min_x = o->points[0].m_x;
-		cbox->min_y = o->points[0].m_y;
-		cbox->max_x = o->points[0].m_x;
-		cbox->max_y = o->points[0].m_y;
+		cbox->minX = o->points[0].m_x;
+		cbox->minY = o->points[0].m_y;
+		cbox->maxX = o->points[0].m_x;
+		cbox->maxY = o->points[0].m_y;
 
-		for (uint32_t i = 1; i < o->pointCount; i++)
+		for (const auto &point : o->points)
 		{
-			float x = o->points[i].m_x;
-			float y = o->points[i].m_y;
-
-			cbox->min_x = std::min(cbox->min_x, x);
-			cbox->min_y = std::min(cbox->min_y, y);
-			cbox->max_x = std::max(cbox->max_x, x);
-			cbox->max_y = std::max(cbox->max_y, y);
+			cbox->minX = std::min(cbox->minX, point.m_x);
+			cbox->minY = std::min(cbox->minY, point.m_y);
+			cbox->maxX = std::max(cbox->maxX, point.m_x);
+			cbox->maxY = std::max(cbox->maxY, point.m_y);
 		}
 	}
 
@@ -903,13 +854,13 @@ namespace acid
 	{
 		OutlineCbox(o, cbox);
 
-		for (uint32_t i = 0; i < o->pointCount; i++)
+		for (uint32_t i = 0; i < o->points.size(); i++)
 		{
 			float x = o->points[i].m_x;
 			float y = o->points[i].m_y;
 
-			pout[i].x = GenU16Value(x, cbox->min_x, cbox->max_x);
-			pout[i].y = GenU16Value(y, cbox->min_y, cbox->max_y);
+			pout[i].x = GenU16Value(x, cbox->minX, cbox->maxX);
+			pout[i].y = GenU16Value(y, cbox->minY, cbox->maxY);
 		}
 	}
 }
