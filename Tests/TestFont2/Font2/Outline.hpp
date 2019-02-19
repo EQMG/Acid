@@ -12,6 +12,15 @@ namespace acid
 
 #define FD_OUTLINE_MAX_POINTS (255 * 2)
 
+	struct WIPCell
+	{
+		Rect bbox;
+		uint32_t value;
+		uint32_t from;
+		uint32_t to;
+		uint32_t startLength;
+	};
+
 	struct ContourRange
 	{
 		uint32_t begin, end;
@@ -41,9 +50,35 @@ namespace acid
 		uint16_t x, y;
 	};
 
+	// private
+	static void AddOutlinePoint(Outline *o, const Vector2 &point);
+	static void AddOutlineContour(Outline *o, const ContourRange &range);
+	static void OutlineAddOddPoint(Outline *o);
+	static void ConvertPoint(const FT_Vector *v, Vector2 &out);
+	static int32_t MoveToFunc(const FT_Vector *to, Outline *o);
+	static int32_t LineToFunc(const FT_Vector *to, Outline *o);
+	static int32_t ConicToFunc(const FT_Vector *control, const FT_Vector *to, Outline *o);
+	static int32_t CubicToFunc(const FT_Vector *control1, const FT_Vector *control2, const FT_Vector *to, Outline *o);
+
 	void OutlineConvert(FT_Outline *outline, Outline *o, char c);
 
 	void OutlineDecompose(FT_Outline *outline, Outline *o);
+
+	// private
+	static uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to);
+	static bool IsCellFilled(const Outline *o, const Rect &bbox);
+	static bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell &cell);
+	static bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell &cell, uint32_t &maxStartLength);
+	static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell *cells);
+	static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells,
+		uint32_t &maxStartLength);
+	static void CopyWipcellValues(Outline *u, const WIPCell *cells);
+	static void InitWipcells(const Outline *o, WIPCell *cells);
+	static uint32_t OutlineAddFilledLine(Outline *o);
+	static uint32_t MakeCellFromSingleEdge(const uint32_t &e);
+	static void SetFilledCells(const Outline *u, WIPCell *cells, const uint32_t &filledCell);
+	static bool TryToFitInCellCount(Outline *o);
+	static uint32_t Uint32ToPow2(uint32_t v);
 
 	void OutlineMakeCells(Outline *o);
 
@@ -51,9 +86,13 @@ namespace acid
 
 //	void OutlineFixCorners(Outline *o);
 
+	static void OutlineFixThinLines(Outline *o); // private
+
 	void OutlineDestroy(Outline *o);
 
 	void OutlineCbox(Outline *o, Rect *cbox);
+
+	static uint16_t GenU16Value(const float &x, const float &min, const float &max); // private
 
 	void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout);
 
