@@ -20,6 +20,7 @@ namespace test
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+
 	private:
 		std::string m_name;
 		float m_heightOffset;

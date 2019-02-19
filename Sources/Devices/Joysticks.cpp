@@ -6,7 +6,6 @@ namespace acid
 {
 	void CallbackJoystick(int32_t id, int32_t event)
 	{
-
 		if (event == GLFW_CONNECTED)
 		{
 			printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(id), id);
@@ -149,7 +148,7 @@ namespace acid
 
 		if (!joystick || hat > joystick->m_hats.size())
 		{
-			return JoystickHat::Centered;
+			return Centered;
 		}
 
 		return joystick->m_hats[hat];

@@ -17,9 +17,9 @@ namespace acid
 		explicit RendererFonts2(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
+
 	private:
 		PipelineGraphics m_pipeline;
 		DescriptorsHandler m_descriptorSet;
-
 	};
 }

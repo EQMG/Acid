@@ -8,7 +8,7 @@ struct sockaddr_in;
 
 namespace acid
 {
-// Define the low-level socket handle type, specific to each platform.
+	// Define the low-level socket handle type, specific to each platform.
 #if defined(ACID_BUILD_WINDOWS)
 #if defined(_WIN64)
 	using SocketHandle = unsigned __int64;
@@ -114,6 +114,7 @@ namespace acid
 		/// </summary>
 		/// <param name="blocking"> True to set the socket as blocking, false for non-blocking. </param>
 		void SetBlocking(bool blocking);
+
 	protected:
 		/// <summary>
 		/// Types of protocols that the socket can use.
@@ -159,6 +160,7 @@ namespace acid
 		/// This function can only be accessed by derived classes.
 		/// </summary>
 		void Close();
+
 	private:
 		friend class SocketSelector;
 		/// Type of the socket (TCP or UDP).

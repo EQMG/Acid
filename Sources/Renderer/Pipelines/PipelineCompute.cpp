@@ -4,12 +4,11 @@
 #include <cassert>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
-#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
 	PipelineCompute::PipelineCompute(const std::string &shaderStage, const uint32_t &width, const uint32_t &height,
-	    const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
+	                                 const uint32_t &workgroupSize, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
 		m_shaderStage(shaderStage),
 		m_width(width),
@@ -42,7 +41,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-	//	Log::Out("%s", m_shader->ToString().c_str());
+		//	Log::Out("%s", m_shader->ToString().c_str());
 		Log::Out("PipelineCompute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
@@ -149,7 +148,7 @@ namespace acid
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.stage = m_shaderStageCreateInfo;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineHandle = nullptr;
 		pipelineCreateInfo.basePipelineIndex = -1;
 		vkCreateComputePipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 	}

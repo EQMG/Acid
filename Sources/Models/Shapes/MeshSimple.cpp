@@ -43,7 +43,7 @@ namespace acid
 			}
 		}
 
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	VertexModel MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
@@ -58,6 +58,6 @@ namespace acid
 		);
 		Vector3 normal = Vector3::Up;
 		Colour colour = Colour::White;
-		return VertexModel(position, uv, normal, colour); 
+		return VertexModel(position, uv, normal, colour);
 	}
 }

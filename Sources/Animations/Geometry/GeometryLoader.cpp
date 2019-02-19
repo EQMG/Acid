@@ -105,10 +105,7 @@ namespace acid
 			m_indices.emplace_back(positionIndex);
 			return currentVertex;
 		}
-		else
-		{
-			return DealWithAlreadyProcessedVertex(currentVertex, uvIndex, normalIndex);
-		}
+		return DealWithAlreadyProcessedVertex(currentVertex, uvIndex, normalIndex);
 	}
 
 	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int32_t &newUvIndex, const int32_t &newNormalIndex)
@@ -118,35 +115,29 @@ namespace acid
 			m_indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
-		else
+		VertexAnimatedData *anotherVertex = nullptr;
+
+		for (const auto &position : m_positionsList)
 		{
-			VertexAnimatedData *anotherVertex = nullptr;
-
-			for (const auto &position : m_positionsList)
+			if (position.get() == previousVertex->GetDuplicateVertex())
 			{
-				if (position.get() == previousVertex->GetDuplicateVertex())
-				{
-					anotherVertex = position.get();
-					break;
-				}
-			}
-
-			if (anotherVertex != nullptr)
-			{
-				return DealWithAlreadyProcessedVertex(anotherVertex, newUvIndex, newNormalIndex);
-			}
-			else
-			{
-				auto duplicateVertex = new VertexAnimatedData(static_cast<uint32_t>(m_positionsList.size()), previousVertex->GetPosition());
-				duplicateVertex->SetUvIndex(newUvIndex);
-				duplicateVertex->SetNormalIndex(newNormalIndex);
-				duplicateVertex->SetSkinData(previousVertex->GetSkinData());
-				previousVertex->SetDuplicateVertex(duplicateVertex);
-				m_positionsList.emplace_back(duplicateVertex);
-				m_indices.emplace_back(duplicateVertex->GetIndex());
-				return duplicateVertex;
+				anotherVertex = position.get();
+				break;
 			}
 		}
+
+		if (anotherVertex != nullptr)
+		{
+			return DealWithAlreadyProcessedVertex(anotherVertex, newUvIndex, newNormalIndex);
+		}
+		auto duplicateVertex = new VertexAnimatedData(static_cast<uint32_t>(m_positionsList.size()), previousVertex->GetPosition());
+		duplicateVertex->SetUvIndex(newUvIndex);
+		duplicateVertex->SetNormalIndex(newNormalIndex);
+		duplicateVertex->SetSkinData(previousVertex->GetSkinData());
+		previousVertex->SetDuplicateVertex(duplicateVertex);
+		m_positionsList.emplace_back(duplicateVertex);
+		m_indices.emplace_back(duplicateVertex->GetIndex());
+		return duplicateVertex;
 	}
 
 	void GeometryLoader::RemoveUnusedVertices()

@@ -10,7 +10,7 @@
 #include <vulkan/vulkan.h>
 #include "Helpers/NonCopyable.hpp"
 
-namespace glslang 
+namespace glslang
 {
 	class TProgram;
 	class TType;
@@ -50,6 +50,7 @@ namespace acid
 			{
 				return m_binding < other.m_binding;
 			}
+
 		private:
 			uint32_t m_binding;
 			std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
@@ -100,6 +101,7 @@ namespace acid
 				result << "Uniform(binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
 				return result.str();
 			}
+
 		private:
 			friend class Shader;
 
@@ -118,7 +120,9 @@ namespace acid
 		public:
 			enum class Type
 			{
-				Uniform, Storage, Push
+				Uniform,
+				Storage,
+				Push
 			};
 
 			UniformBlock(const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const Type &type) :
@@ -158,6 +162,7 @@ namespace acid
 				result << "UniformBlock(binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
 				return result.str();
 			}
+
 		private:
 			friend class Shader;
 
@@ -193,6 +198,7 @@ namespace acid
 				result << "VertexAttribute(set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
 				return result.str();
 			}
+
 		private:
 			friend class Shader;
 
@@ -247,6 +253,7 @@ namespace acid
 		VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag);
 
 		std::string ToString() const;
+
 	private:
 		void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
 

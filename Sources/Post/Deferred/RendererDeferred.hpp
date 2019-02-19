@@ -17,7 +17,8 @@ namespace acid
 	public:
 		enum class Type
 		{
-			Ibl, Simple
+			Ibl,
+			Simple
 		};
 
 		explicit RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type);
@@ -39,7 +40,7 @@ namespace acid
 
 		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
 
-		static std::shared_ptr<Cubemap> ComputeIbl(const std::shared_ptr<acid::Cubemap> &source);
+		static std::shared_ptr<Cubemap> ComputeIbl(const std::shared_ptr<Cubemap> &source);
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;

@@ -15,7 +15,7 @@ namespace test
 		m_heightOffset(heightOffset),
 		m_transform(Transform()),
 		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiReference::BottomCentre),
-			TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
+		                              TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
 		m_text->SetTextColour(Colour("#ffffff"));
 		m_text->SetBorderColour(Colour("#262626"));

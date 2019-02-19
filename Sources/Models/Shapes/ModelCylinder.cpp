@@ -91,7 +91,7 @@ namespace acid
 		}
 
 		std::reverse(indices.begin(), indices.end());
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	void ModelCylinder::Decode(const Metadata &metadata)

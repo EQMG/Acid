@@ -65,7 +65,7 @@ namespace acid
 		/// <param name="port"> Port to bind the socket to. </param>
 		/// <param name="address"> Address of the interface to bind to. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Bind(const uint16_t &port, const IpAddress &address = IpAddress::Any);
+		Status Bind(const uint16_t &port, const IpAddress &address = IpAddress::Any);
 
 		/// <summary>
 		/// Unbind the socket from the local port to which it is bound.
@@ -84,7 +84,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the receiver. </param>
 		/// <param name="remotePort"> Port of the receiver to send the data to. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort);
+		Status Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort);
 
 		/// <summary>
 		/// Receive raw data from a remote peer.
@@ -98,7 +98,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the peer that sent the data. </param>
 		/// <param name="remotePort"> Port of the peer that sent the data. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
+		Status Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
 
 		/// <summary>
 		/// Send a formatted packet of data to a remote peer.
@@ -108,7 +108,7 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the receiver. </param>
 		/// <param name="remotePort"> Port of the receiver to send the data to. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort);
+		Status Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort);
 
 		/// <summary>
 		/// Receive a formatted packet of data from a remote peer.
@@ -118,7 +118,8 @@ namespace acid
 		/// <param name="remoteAddress"> Address of the peer that sent the data. </param>
 		/// <param name="remotePort"> Port of the peer that sent the data. </param>
 		/// <returns> Status code. </returns>
-		Socket::Status Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort);
+		Status Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort);
+
 	private:
 		/// Temporary buffer holding the received data in Receive(Packet).
 		std::vector<char> m_buffer;

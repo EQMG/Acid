@@ -27,6 +27,7 @@ namespace acid
 		{
 			return !(*this == other);
 		}
+
 	private:
 		uint32_t m_offset;
 		uint32_t m_size;
@@ -62,7 +63,7 @@ namespace acid
 	{
 	public:
 		virtual WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const = 0;
+		                                              const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const = 0;
 
 		Descriptor() = default;
 

@@ -38,14 +38,14 @@ namespace acid
 		/// Gets the collision shape defined in this collider.
 		/// </summary>
 		/// <returns> The collision shape. </returns>
-		virtual btCollisionShape* GetCollisionShape() const = 0;
+		virtual btCollisionShape *GetCollisionShape() const = 0;
 
 		/// <summary>
 		/// Tests whether a ray is intersecting this shape.
 		/// </summary>
 		/// <param name="ray"> The ray being tested for intersection. </param>
 		/// <returns> If the ray intersects, relative intersect location. </returns>
-	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
+		//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 		const Transform &GetLocalTransform() const { return m_localTransform; }
 
@@ -62,6 +62,7 @@ namespace acid
 		static btTransform Convert(const Transform &transform);
 
 		static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::One);
+
 	protected:
 		Transform m_localTransform;
 		Gizmo *m_gizmo;

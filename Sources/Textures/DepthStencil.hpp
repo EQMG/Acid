@@ -17,7 +17,7 @@ namespace acid
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
 		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-			const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+		                                      const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
 
 		const uint32_t &GetWidth() const { return m_width; }
 

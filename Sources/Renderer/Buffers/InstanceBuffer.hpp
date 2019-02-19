@@ -11,6 +11,7 @@ namespace acid
 		explicit InstanceBuffer(const VkDeviceSize &size);
 
 		void Update(const void *newData);
+
 	private:
 		VkDescriptorBufferInfo m_bufferInfo;
 	};

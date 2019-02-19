@@ -5,7 +5,7 @@
 namespace acid
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType,
-		const Text::Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
+	           const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -281,16 +281,16 @@ namespace acid
 		{
 			switch (m_justify)
 			{
-			case Text::Justify::Left:
+			case Justify::Left:
 				cursorX = 0.0f;
 				break;
-			case Text::Justify::Centre:
+			case Justify::Centre:
 				cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
 				break;
-			case Text::Justify::Right:
+			case Justify::Right:
 				cursorX = line.m_maxLength - line.m_currentLineLength;
 				break;
-			case Text::Justify::Fully:
+			case Justify::Fully:
 				cursorX = 0.0f;
 				break;
 			}
@@ -303,7 +303,7 @@ namespace acid
 					cursorX += m_kerning + letter.m_advanceX;
 				}
 
-				if (m_justify == Text::Justify::Fully && lineOrder > 1)
+				if (m_justify == Justify::Fully && lineOrder > 1)
 				{
 					cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
 				}
@@ -375,13 +375,13 @@ namespace acid
 			}
 		}
 
-		if (m_justify == Text::Justify::Centre)
+		if (m_justify == Justify::Centre)
 		{
 			minX = 0.0f;
 			maxX = m_maxWidth;
 		}
 
-	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+		//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
 		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 		for (auto &vertex : vertices)

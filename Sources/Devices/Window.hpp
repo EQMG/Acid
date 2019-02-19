@@ -30,6 +30,7 @@ namespace acid
 		Alt = 4,
 		Super = 8
 	};
+
 	ENABLE_BITMASK_OPERATORS(InputMod)
 
 	/// <summary>
@@ -242,7 +243,7 @@ namespace acid
 
 		Delegate<void()> &GetOnClose() { return m_onClose; }
 
-		Delegate<void(bool)> &GetOnIconify() {return m_onIconify; }
+		Delegate<void(bool)> &GetOnIconify() { return m_onIconify; }
 
 		ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
 
@@ -251,6 +252,7 @@ namespace acid
 		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
 		VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
+
 	private:
 		uint32_t m_windowWidth;
 		uint32_t m_windowHeight;
@@ -280,7 +282,7 @@ namespace acid
 
 		friend void CallbackError(int32_t error, const char *description);
 
-		friend void CallbackMonitor(GLFWmonitor* monitor, int32_t event);
+		friend void CallbackMonitor(GLFWmonitor *monitor, int32_t event);
 
 		friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
 

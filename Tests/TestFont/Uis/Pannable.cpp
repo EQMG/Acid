@@ -17,7 +17,7 @@ namespace test
 		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
 	{
 		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
+		                                            FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
 
 		static const std::string content1 =
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum \n"
@@ -51,7 +51,7 @@ namespace test
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
 			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
 		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, content1,
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
+		                                            FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.0f, 0.015f));
 	}
 
 	void Pannable::UpdateObject()
@@ -68,7 +68,7 @@ namespace test
 
 		if (m_buttonReset.WasDown())
 		{
-			m_zoom = 1.0f; 
+			m_zoom = 1.0f;
 			offset = Vector2(0.0f, 0.0f);
 		}
 

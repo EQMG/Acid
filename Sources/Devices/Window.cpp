@@ -26,7 +26,8 @@ namespace acid
 		{
 			Log::Error("Monitor disconnected: %s\n", glfwGetMonitorName(monitor));
 			auto &monitors = Window::Get()->m_monitors;
-			monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m) {
+			monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m)
+			{
 				return monitor == m.GetMonitor();
 			}), monitors.end());
 
@@ -224,7 +225,7 @@ namespace acid
 	void Window::SetDimensions(const Vector2 &size)
 	{
 		SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x),
-			size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
+		              size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
 	}
 
 	void Window::SetPosition(const uint32_t &x, const uint32_t &y)
@@ -235,7 +236,7 @@ namespace acid
 	void Window::SetPosition(const Vector2 &position)
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+		            position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 
 	void Window::SetTitle(const std::string &title)
@@ -336,30 +337,30 @@ namespace acid
 	{
 		switch (result)
 		{
-			case GLFW_TRUE:
-				return "Success";
-			case GLFW_NOT_INITIALIZED:
-				return "GLFW has not been initialized";
-			case GLFW_NO_CURRENT_CONTEXT:
-				return "No context is current for this thread";
-			case GLFW_INVALID_ENUM:
-				return "One of the arguments to the function was an invalid enum value";
-			case GLFW_INVALID_VALUE:
-				return "One of the arguments to the function was an invalid value";
-			case GLFW_OUT_OF_MEMORY:
-				return "A memory allocation failed";
-			case GLFW_API_UNAVAILABLE:
-				return "GLFW could not find support for the requested API on the system";
-			case GLFW_VERSION_UNAVAILABLE:
-				return "The requested OpenGL or OpenGL ES version is not available";
-			case GLFW_PLATFORM_ERROR:
-				return "A platform-specific error occurred that does not match any of the more specific categories";
-			case GLFW_FORMAT_UNAVAILABLE:
-				return "The requested format is not supported or available";
-			case GLFW_NO_WINDOW_CONTEXT:
-				return "The specified window does not have an OpenGL or OpenGL ES context";
-			default:
-				return "ERROR: UNKNOWN GLFW ERROR";
+		case GLFW_TRUE:
+			return "Success";
+		case GLFW_NOT_INITIALIZED:
+			return "GLFW has not been initialized";
+		case GLFW_NO_CURRENT_CONTEXT:
+			return "No context is current for this thread";
+		case GLFW_INVALID_ENUM:
+			return "One of the arguments to the function was an invalid enum value";
+		case GLFW_INVALID_VALUE:
+			return "One of the arguments to the function was an invalid value";
+		case GLFW_OUT_OF_MEMORY:
+			return "A memory allocation failed";
+		case GLFW_API_UNAVAILABLE:
+			return "GLFW could not find support for the requested API on the system";
+		case GLFW_VERSION_UNAVAILABLE:
+			return "The requested OpenGL or OpenGL ES version is not available";
+		case GLFW_PLATFORM_ERROR:
+			return "A platform-specific error occurred that does not match any of the more specific categories";
+		case GLFW_FORMAT_UNAVAILABLE:
+			return "The requested format is not supported or available";
+		case GLFW_NO_WINDOW_CONTEXT:
+			return "The specified window does not have an OpenGL or OpenGL ES context";
+		default:
+			return "ERROR: UNKNOWN GLFW ERROR";
 		}
 	}
 

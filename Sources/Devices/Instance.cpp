@@ -25,14 +25,14 @@ namespace acid
 	};
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,
-		uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
+	                                             uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
 	{
 		Log::Error("%s\n", pMessage);
 		return static_cast<VkBool32>(false);
 	}
 
 	VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo,
-		const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
+	                                                   const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
 	{
 		auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
 
@@ -55,7 +55,7 @@ namespace acid
 	}
 
 	void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout,
-		uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites)
+	                                          uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites)
 	{
 		auto func = reinterpret_cast<PFN_vkCmdPushDescriptorSetKHR>(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSetKHR"));
 
@@ -66,9 +66,8 @@ namespace acid
 	}
 
 	uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties,
-		const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+	                                       const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
 	{
-
 		for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
 		{
 			if (memoryRequirements->memoryTypeBits & (1 << i))

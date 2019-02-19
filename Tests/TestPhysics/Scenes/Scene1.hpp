@@ -22,6 +22,7 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
+
 	private:
 		ButtonMouse m_buttonSpawnSphere;
 		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;

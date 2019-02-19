@@ -77,6 +77,6 @@ namespace acid
 	{
 		m_invertedView = m_viewMatrix.Invert();
 		m_rayWorld = m_invertedView.Transform(m_eyeCoords);
-		m_currentRay = m_rayWorld; 
+		m_currentRay = m_rayWorld;
 	}
 }

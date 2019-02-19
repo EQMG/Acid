@@ -49,7 +49,6 @@ namespace test
 
 	void CameraFps::Start()
 	{
-
 	}
 
 	void CameraFps::Update()

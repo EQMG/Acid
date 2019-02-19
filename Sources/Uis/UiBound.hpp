@@ -26,6 +26,7 @@ namespace acid
 		Dimensions = 2,
 		Scale = 4
 	};
+
 	ENABLE_BITMASK_OPERATORS(UiAspect)
 
 	/// <summary>
@@ -42,7 +43,7 @@ namespace acid
 		/// <param name="aspect"> The aspect that will be used for bounding in the parent reference. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
 		explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft,
-			const bitmask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+		                 const bitmask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Gets the bounds position in the current screen space.

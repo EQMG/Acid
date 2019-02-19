@@ -108,6 +108,7 @@ namespace acid
 				}
 			}
 		}
+
 	private:
 		std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
 	};

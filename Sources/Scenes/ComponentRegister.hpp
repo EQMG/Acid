@@ -34,10 +34,12 @@ namespace acid
 			}
 
 			ComponentCreate componentCreate = {};
-			componentCreate.m_create = []() {
+			componentCreate.m_create = []()
+			{
 				return new T();
 			};
-			componentCreate.m_isSame = [](Component *component) {
+			componentCreate.m_isSame = [](Component *component)
+			{
 				return dynamic_cast<T *>(component) != nullptr; // TODO: Ignore type inheritance
 			};
 
@@ -63,6 +65,7 @@ namespace acid
 		/// <param name="compare"> The components to get the registered name of. </param>
 		/// <returns> The name registered to the component. </returns>
 		std::optional<std::string> FindName(Component *compare) const;
+
 	private:
 		struct ComponentCreate
 		{

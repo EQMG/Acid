@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
-#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -14,8 +13,8 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	PipelineGraphics::PipelineGraphics(const Pipeline::Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode, const Depth &depth,
-		const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
+	PipelineGraphics::PipelineGraphics(const Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode, const Depth &depth,
+	                                   const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
 		m_stage(stage),
 		m_shaderStages(shaderStages),
@@ -73,7 +72,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-	//	Log::Out("%s\n", m_shader->ToString().c_str());
+		//	Log::Out("%s\n", m_shader->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %ims\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
@@ -181,7 +180,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	//	auto &descriptorPools = m_shader->GetDescriptorPools();
+		//	auto &descriptorPools = m_shader->GetDescriptorPools();
 		std::vector<VkDescriptorPoolSize> descriptorPools(6); // TODO: Cleanup!
 		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPools[0].descriptorCount = 4096;
@@ -251,9 +250,9 @@ namespace acid
 		m_rasterizationState.cullMode = m_cullMode;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
-	//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
-	//	m_rasterizationState.depthBiasClamp = 0.0f;
-	//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
+		//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
+		//	m_rasterizationState.depthBiasClamp = 0.0f;
+		//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
 		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
@@ -283,22 +282,22 @@ namespace acid
 
 		switch (m_depth)
 		{
-			case Depth::None:
-				m_depthStencilState.depthTestEnable = VK_FALSE;
-				m_depthStencilState.depthWriteEnable = VK_FALSE;
-				break;
-			case Depth::Read:
-				m_depthStencilState.depthTestEnable = VK_TRUE;
-				m_depthStencilState.depthWriteEnable = VK_FALSE;
-				break;
-			case Depth::Write:
-				m_depthStencilState.depthTestEnable = VK_FALSE;
-				m_depthStencilState.depthWriteEnable = VK_TRUE;
-				break;
-			case Depth::ReadWrite:
-				m_depthStencilState.depthTestEnable = VK_TRUE;
-				m_depthStencilState.depthWriteEnable = VK_TRUE;
-				break;
+		case Depth::None:
+			m_depthStencilState.depthTestEnable = VK_FALSE;
+			m_depthStencilState.depthWriteEnable = VK_FALSE;
+			break;
+		case Depth::Read:
+			m_depthStencilState.depthTestEnable = VK_TRUE;
+			m_depthStencilState.depthWriteEnable = VK_FALSE;
+			break;
+		case Depth::Write:
+			m_depthStencilState.depthTestEnable = VK_FALSE;
+			m_depthStencilState.depthWriteEnable = VK_TRUE;
+			break;
+		case Depth::ReadWrite:
+			m_depthStencilState.depthTestEnable = VK_TRUE;
+			m_depthStencilState.depthWriteEnable = VK_TRUE;
+			break;
 		}
 
 		m_viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -389,7 +388,7 @@ namespace acid
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		pipelineCreateInfo.subpass = m_stage.second;
-		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
+		pipelineCreateInfo.basePipelineHandle = nullptr;
 		pipelineCreateInfo.basePipelineIndex = -1;
 		Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}

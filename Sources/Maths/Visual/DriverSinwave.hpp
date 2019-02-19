@@ -54,6 +54,7 @@ namespace acid
 			float value = 0.5f + std::sin(2.0f * Maths::Pi * factor) * 0.5f;
 			return m_min + value * (m_max - m_min);
 		}
+
 	private:
 		T m_min;
 		T m_max;

@@ -59,25 +59,26 @@ namespace test
 		m_configs = std::make_unique<ConfigManager>();
 
 		// Watches all files in the working directory.
-		m_fileWatcher.GetOnChange() += [](std::string path, FileWatcher::Status status) {
+		m_fileWatcher.GetOnChange() += [](std::string path, FileWatcher::Status status)
+		{
 			switch (status)
 			{
-				case FileWatcher::Status::Created:
-					Log::Out("Created '%s'\n", path.c_str());
-					break;
-				case FileWatcher::Status::Modified:
-					Log::Out("Modified '%s'\n", path.c_str());
-					break;
-				case FileWatcher::Status::Erased:
-					Log::Out("Erased '%s'\n", path.c_str());
-					break;
+			case FileWatcher::Status::Created:
+				Log::Out("Created '%s'\n", path.c_str());
+				break;
+			case FileWatcher::Status::Modified:
+				Log::Out("Modified '%s'\n", path.c_str());
+				break;
+			case FileWatcher::Status::Erased:
+				Log::Out("Erased '%s'\n", path.c_str());
+				break;
 			}
 		};
 
 		// Registers modules.
 		auto &moduleManager = Engine::Get()->GetModuleManager();
 		moduleManager.Add<World>(Module::Stage::Always);
-	//	moduleManager.Remove<Shadows>();
+		//	moduleManager.Remove<Shadows>();
 
 		// Registers components.
 		auto &componentRegister = Scenes::Get()->GetComponentRegister();
@@ -91,9 +92,11 @@ namespace test
 
 		// Sets values to modules.
 		Window::Get()->SetTitle("Test Physics");
-		Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
-			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
-	//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
+		Window::Get()->SetIcons({
+			"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
+			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
+		});
+		//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 		Renderer::Get()->SetManager(new MainRenderer());
 		Scenes::Get()->SetScene(new Scene1());
 	}
@@ -121,7 +124,8 @@ namespace test
 		if (m_buttonScreenshot.WasDown())
 		{
 			// TODO: Threading.
-			std::thread t([](){
+			std::thread t([]()
+			{
 				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
 				Renderer::Get()->CaptureScreenshot(filename);
 			});

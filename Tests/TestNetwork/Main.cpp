@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		Log::Out("HTTP version: %i.%i\n", response.GetMajorHttpVersion(), response.GetMinorHttpVersion());
 		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type").c_str());
 		Log::Out("Body: %s\n", response.GetBody().c_str());
-	};
+	}
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
 	/*{
 		Ftp ftp;

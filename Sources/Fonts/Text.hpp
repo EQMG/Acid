@@ -26,7 +26,10 @@ namespace acid
 		/// </summary>
 		enum class Justify
 		{
-			Left, Centre, Right, Fully
+			Left,
+			Centre,
+			Right,
+			Fully
 		};
 
 		/// <summary>
@@ -43,7 +46,7 @@ namespace acid
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
 		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-			const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+		     const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;
 
@@ -211,6 +214,7 @@ namespace acid
 		/// </summary>
 		/// <returns> If the text has been loaded to a model. </returns>
 		bool IsLoaded();
+
 	private:
 		/// <summary>
 		/// During the loading of a text this represents one word in the text.

@@ -36,6 +36,7 @@ namespace acid
 		void Send(std::istream &stream);
 
 		void Receive(std::ostream &stream);
+
 	private:
 		/// Reference to the owner Ftp instance.
 		Ftp &m_ftp;

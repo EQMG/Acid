@@ -108,7 +108,7 @@ namespace acid
 
 	Vector3 Vector3::Rotate(const Vector3 &rotation) const
 	{
-		Matrix4 matrix = Matrix4::TransformationMatrix(Vector3::Zero, rotation, Vector3::One);
+		Matrix4 matrix = Matrix4::TransformationMatrix(Zero, rotation, One);
 		Vector4 direction4 = Vector4(m_x, m_y, m_z, 1.0f);
 		direction4 = matrix.Transform(direction4);
 		return Vector3(direction4.m_x, direction4.m_y, direction4.m_z);
@@ -262,7 +262,8 @@ namespace acid
 		{
 			Vector3 randomVector = RandomUnitVector();
 			direction = randomVector.Cross(normal);
-		} while (direction.Length() == 0.0f);
+		}
+		while (direction.Length() == 0.0f);
 
 		direction.Normalize();
 		direction *= radius;
@@ -296,9 +297,9 @@ namespace acid
 
 		if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
 		{
-			Vector3 rotateAxis = coneDirection.Cross(Vector3::Front);
+			Vector3 rotateAxis = coneDirection.Cross(Front);
 			rotateAxis.Normalize();
-			float rotateAngle = std::acos(coneDirection.Dot(Vector3::Front));
+			float rotateAngle = std::acos(coneDirection.Dot(Front));
 			Matrix4 rotationMatrix = Matrix4();
 			rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
 			direction = rotationMatrix.Transform(direction);

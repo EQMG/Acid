@@ -19,7 +19,7 @@ namespace acid
 	public:
 		using ReturnType = std::vector<TReturnType>;
 
-		static ReturnType Invoke(Delegate<TReturnType(TArgs...)> &delegate, TArgs... params)
+		static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params)
 		{
 			std::lock_guard<std::mutex> lock(delegate.m_mutex);
 			ReturnType returnValues;
@@ -39,7 +39,7 @@ namespace acid
 	public:
 		using ReturnType = void;
 
-		static void Invoke(Delegate<void(TArgs...)>& delegate, TArgs... params)
+		static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params)
 		{
 			std::lock_guard<std::mutex> lock(delegate.m_mutex);
 
@@ -48,19 +48,20 @@ namespace acid
 				return;
 			}
 
-			std::for_each(delegate.m_functionList.begin(), delegate.m_functionList.end(), [&](auto &f) {
+			std::for_each(delegate.m_functionList.begin(), delegate.m_functionList.end(), [&](auto &f)
+			{
 				f(params...);
 			});
 		}
 	};
 
 	template<typename TReturnType, typename... TArgs>
-	class Delegate<TReturnType(TArgs...)> :
+	class Delegate<TReturnType(TArgs ...)> :
 		public NonCopyable
 	{
 	public:
-		using Invoker = acid::Invoker<TReturnType, TArgs...>;
-		using FunctionType = std::function<TReturnType(TArgs...)>;
+		using Invoker = Invoker<TReturnType, TArgs...>;
+		using FunctionType = std::function<TReturnType(TArgs ...)>;
 
 		Delegate() = default;
 
@@ -79,13 +80,13 @@ namespace acid
 
 			m_functionList.remove_if([&](FunctionType &f)
 			{
-			    return Hash(f) == Hash(function);
+				return Hash(f) == Hash(function);
 			});
 
 			return *this;
 		}
 
-		typename Invoker::ReturnType Invoke(TArgs... args)
+		typename Invoker::ReturnType Invoke(TArgs ... args)
 		{
 			return Invoker::Invoke(*this, args...);
 		}
@@ -107,10 +108,11 @@ namespace acid
 			return Remove(function);
 		}
 
-		typename Invoker::ReturnType operator()(TArgs... args)
+		typename Invoker::ReturnType operator()(TArgs ... args)
 		{
 			return Invoker::Invoke(*this, args...);
 		}
+
 	private:
 		friend Invoker;
 

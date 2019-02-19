@@ -63,8 +63,10 @@ namespace acid
 		const Vector3 &GetAngularVelocity() const { return m_angularVelocity; }
 
 		void SetAngularVelocity(const Vector3 &angularVelocity);
+
 	protected:
 		void RecalculateMass() override;
+
 	private:
 		static btRigidBody *CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
 

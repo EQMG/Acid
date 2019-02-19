@@ -30,7 +30,8 @@ namespace acid
 	void Thread::Wait()
 	{
 		std::unique_lock<std::mutex> lock(m_queueMutex);
-		m_condition.wait(lock, [&]() {
+		m_condition.wait(lock, [&]()
+		{
 			return m_jobQueue.empty();
 		});
 	}
@@ -43,7 +44,8 @@ namespace acid
 
 			{
 				std::unique_lock<std::mutex> lock(m_queueMutex);
-				m_condition.wait(lock, [&] {
+				m_condition.wait(lock, [&]
+				{
 					return !m_jobQueue.empty() || m_destroying;
 				});
 

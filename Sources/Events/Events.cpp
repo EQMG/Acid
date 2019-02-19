@@ -46,7 +46,8 @@ namespace acid
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 
-		m_events.erase(std::remove_if(m_events.begin(), m_events.end(), [&](std::unique_ptr<IEvent> &e) {
+		m_events.erase(std::remove_if(m_events.begin(), m_events.end(), [&](std::unique_ptr<IEvent> &e)
+		{
 			return e.get() == event;
 		}), m_events.end());
 	}

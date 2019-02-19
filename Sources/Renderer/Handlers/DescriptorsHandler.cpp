@@ -149,7 +149,7 @@ namespace acid
 				}
 
 				auto writeDescriptor = descriptor.descriptor->GetWriteDescriptor(descriptor.location,
-					*descriptorType, m_pushDescriptors ? VK_NULL_HANDLE : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
+				                                                                 *descriptorType, m_pushDescriptors ? VK_NULL_HANDLE : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
 				m_writeDescriptorSets.emplace_back(writeDescriptor.GetWriteDescriptorSet());
 				m_writeDescriptors.emplace_back(std::move(writeDescriptor));
 			}
@@ -172,7 +172,7 @@ namespace acid
 			auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 			Instance::FvkCmdPushDescriptorSetKHR(logicalDevice->GetLogicalDevice(), commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(),
-				0, static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
+			                                     0, static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 		}
 		else
 		{

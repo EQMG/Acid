@@ -58,11 +58,11 @@ namespace test
 
 		if (IsPaused())
 		{
-		//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 0.0f, UI_SLIDE_TIME);
+			//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 0.0f, UI_SLIDE_TIME);
 		}
 		else
 		{
-		//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 1.0f, UI_SLIDE_TIME);
+			//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 1.0f, UI_SLIDE_TIME);
 		}
 	}
 }

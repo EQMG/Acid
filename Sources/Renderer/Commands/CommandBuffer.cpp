@@ -8,7 +8,7 @@ namespace acid
 	CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
 		m_queueType(queueType),
 		m_bufferLevel(bufferLevel),
-		m_commandBuffer(VK_NULL_HANDLE),
+		m_commandBuffer(nullptr),
 		m_running(false)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
@@ -62,7 +62,7 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
-		VkFence fence = VK_NULL_HANDLE;
+		VkFence fence = nullptr;
 
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -87,7 +87,7 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
-		if (waitSemaphore != VK_NULL_HANDLE)
+		if (waitSemaphore != nullptr)
 		{
 			// Pipeline stages used to wait at for graphics queue submissions.
 			static VkPipelineStageFlags submitPipelineStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -97,16 +97,16 @@ namespace acid
 			submitInfo.pWaitSemaphores = &waitSemaphore;
 		}
 
-		if (signalSemaphore != VK_NULL_HANDLE)
+		if (signalSemaphore != nullptr)
 		{
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &signalSemaphore;
 		}
 
-		if (fence != VK_NULL_HANDLE)
+		if (fence != nullptr)
 		{
 			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
-		//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+			//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 		}
 
 		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));

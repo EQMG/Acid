@@ -17,7 +17,7 @@ namespace acid
 	{
 	public:
 		explicit Sound(const std::string &filename, const Transform &localTransform = Transform::Identity, const Audio::Type &type = Audio::Type::General,
-			const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
+		               const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 		~Sound();
 
@@ -62,6 +62,7 @@ namespace acid
 		const float &GetPitch() const { return m_pitch; }
 
 		void SetPitch(const float &pitch);
+
 	private:
 		std::shared_ptr<SoundBuffer> m_soundBuffer;
 		uint32_t m_source;

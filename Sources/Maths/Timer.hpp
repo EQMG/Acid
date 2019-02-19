@@ -45,6 +45,7 @@ namespace acid
 		/// </summary>
 		/// <param name="interval"> The new timer interval. </param>
 		void SetInterval(const Time &interval);
+
 	private:
 		Time m_startTime;
 		Time m_interval;

@@ -38,6 +38,7 @@ namespace acid
 		{
 			return m_constant;
 		}
+
 	private:
 		T m_constant;
 	};

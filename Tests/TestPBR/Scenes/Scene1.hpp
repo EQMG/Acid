@@ -19,6 +19,7 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
+
 	private:
 		ButtonCompound m_buttonPause;
 		bool m_paused;

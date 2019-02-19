@@ -51,6 +51,7 @@ namespace acid
 		bool Update(const Shader::UniformBlock *uniformBlock);
 
 		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
+
 	private:
 		bool m_multipipeline;
 		const Shader::UniformBlock *m_uniformBlock;

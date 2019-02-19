@@ -21,7 +21,7 @@ namespace acid
 
 	void FileWatcher::QueueLoop()
 	{
-		while( m_running)
+		while (m_running)
 		{
 			// Wait for "delay" milliseconds
 			std::this_thread::sleep_for(std::chrono::microseconds(m_delay.AsMicroseconds()));

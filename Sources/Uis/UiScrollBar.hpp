@@ -11,6 +11,7 @@ namespace acid
 		Vertical = 1,
 		Horizontal = 2
 	};
+
 	ENABLE_BITMASK_OPERATORS(ScrollBar)
 
 	class ACID_EXPORT UiScrollBar :
@@ -19,9 +20,10 @@ namespace acid
 	public:
 		UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
-		virtual void UpdateObject() override;
+		void UpdateObject() override;
 
 		float GetProgress() const;
+
 	private:
 		float ScrollByDelta(const float &delta);
 

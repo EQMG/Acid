@@ -93,7 +93,7 @@ namespace acid
 			vertex.SetPosition(vertex.GetPosition() * Vector3(m_width, m_height, m_depth));
 		}
 
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	void ModelCube::Decode(const Metadata &metadata)

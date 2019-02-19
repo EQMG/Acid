@@ -94,14 +94,16 @@ namespace acid
 
 	void Entity::RemoveComponent(Component *component)
 	{
-		m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c) {
+		m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c)
+		{
 			return c.get() == component;
 		}), m_components.end());
 	}
 
 	void Entity::RemoveComponent(const std::string &name)
 	{
-		m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c) {
+		m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c)
+		{
 			auto componentName = Scenes::Get()->GetComponentRegister().FindName(c.get());
 			return componentName && name == *componentName;
 		}), m_components.end());

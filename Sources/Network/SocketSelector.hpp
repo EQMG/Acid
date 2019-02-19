@@ -76,7 +76,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeout"> Maximum time to wait, (use Time::Zero for infinity). </param>
 		/// <returns> True if there are sockets ready, false otherwise. </returns>
-		bool Wait(const Time timeout = Time::Zero);
+		bool Wait(Time timeout = Time::Zero);
 
 		/// <summary>
 		/// Test a socket to know if it is ready to receive data.
@@ -95,6 +95,7 @@ namespace acid
 		/// <param name="right"> Instance to assign. </param>
 		/// <returns> Reference to self. </returns>
 		SocketSelector &operator=(const SocketSelector &right);
+
 	private:
 		struct SocketSelectorImpl;
 

@@ -16,9 +16,9 @@ namespace acid
 
 	bool bbox_bezier2_intersect(const Rect *bbox, const Vector2 bezier[3]);
 
-	float line_signed_distance(const Vector2 a, const Vector2 b, const Vector2 p);
+	float line_signed_distance(Vector2 a, Vector2 b, Vector2 p);
 
-	float line_calculate_t(const Vector2 a, const Vector2 b, const Vector2 p);
+	float line_calculate_t(Vector2 a, Vector2 b, Vector2 p);
 
 	void bezier2_point(Vector2 &r, const Vector2 bezier[3], float t);
 
@@ -34,7 +34,7 @@ namespace acid
 
 	void bezier2_align_to_self(Vector2 r[3], const Vector2 bezier[3]);
 
-	void bezier2_align_to_line(Vector2 r[3], const Vector2 bezier[3], const Vector2 line0, const Vector2 line1);
+	void bezier2_align_to_line(Vector2 r[3], const Vector2 bezier[3], Vector2 line0, Vector2 line1);
 
-	bool bezier2_line_is_intersecting(const Vector2 bezier[3], const Vector2 line0, const Vector2 line1);
+	bool bezier2_line_is_intersecting(const Vector2 bezier[3], Vector2 line0, Vector2 line1);
 }

@@ -57,6 +57,7 @@ namespace acid
 		/// <param name="recursive"> If paths will be recursively searched. </param>
 		/// <returns> The files found. </returns>
 		static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
+
 	private:
 		std::vector<std::string> m_searchPaths;
 	};

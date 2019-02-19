@@ -21,8 +21,8 @@ namespace acid
 		/// <param name="reference"> The reference function to get the value from. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
 		EventChange(const std::function<void(T)> &onEvent, const std::function<T()> &reference, const bool &repeat = true) :
-			m_reference(reference),
 			m_onEvent(onEvent),
+			m_reference(reference),
 			m_current(m_reference()),
 			m_repeat(repeat)
 		{
@@ -35,11 +35,11 @@ namespace acid
 		/// <param name="reference"> The reference to listen to. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
 		EventChange(const std::function<void(T)> &onEvent, T *reference, const bool &repeat = true) :
+			m_onEvent(onEvent),
 			m_reference([reference]() -> T
 			{
 				return *reference;
 			}),
-			m_onEvent(onEvent),
 			m_current(m_reference()),
 			m_repeat(repeat)
 		{

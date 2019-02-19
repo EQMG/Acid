@@ -13,7 +13,7 @@ namespace acid
 	{
 	public:
 		UiColourWheel(UiObject *parent, const Colour &colour = Colour::Red,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		              const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 

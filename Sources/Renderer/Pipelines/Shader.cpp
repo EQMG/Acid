@@ -82,21 +82,21 @@ namespace acid
 
 			switch (uniformBlock->GetType())
 			{
-				case UniformBlock::Type::Uniform:
-					descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						descriptorType, uniformBlock->GetStageFlags(), 1));
-					break;
-				case UniformBlock::Type::Storage:
-					descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-					m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
-						descriptorType, uniformBlock->GetStageFlags(), 1));
-					break;
-				case UniformBlock::Type::Push:
-					// Push constants are described in the pipeline.
-					break;
-				default:
-					break;
+			case UniformBlock::Type::Uniform:
+				descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
+				                                                                          descriptorType, uniformBlock->GetStageFlags(), 1));
+				break;
+			case UniformBlock::Type::Storage:
+				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+				m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()),
+				                                                                          descriptorType, uniformBlock->GetStageFlags(), 1));
+				break;
+			case UniformBlock::Type::Push:
+				// Push constants are described in the pipeline.
+				break;
+			default:
+				break;
 			}
 
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
@@ -114,13 +114,13 @@ namespace acid
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
 				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				m_descriptorSetLayouts.emplace_back(Texture::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()),
-					descriptorType, uniform->GetStageFlags(), 1));
+				                                                                    descriptorType, uniform->GetStageFlags(), 1));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
 				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				m_descriptorSetLayouts.emplace_back(Cubemap::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()),
-					descriptorType, uniform->GetStageFlags(), 1));
+				                                                                    descriptorType, uniform->GetStageFlags(), 1));
 				break;
 			default:
 				break;
@@ -139,10 +139,10 @@ namespace acid
 
 		// Sort descriptors by binding.
 		std::sort(m_descriptorSetLayouts.begin(), m_descriptorSetLayouts.end(),
-		[](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
-		{
-		    return l.binding < r.binding;
-		});
+		          [](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
+		          {
+			          return l.binding < r.binding;
+		          });
 
 		// Gets the descriptor type for each descriptor.
 		for (const auto &descriptor : m_descriptorSetLayouts)
@@ -296,7 +296,7 @@ namespace acid
 
 	std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
 	{
-		auto it = m_descriptorTypes.find(location); 
+		auto it = m_descriptorTypes.find(location);
 
 		if (it == m_descriptorTypes.end())
 		{
@@ -314,23 +314,23 @@ namespace acid
 		{
 			return VK_SHADER_STAGE_COMPUTE_BIT;
 		}
-		else if (fileExt == ".vert")
+		if (fileExt == ".vert")
 		{
 			return VK_SHADER_STAGE_VERTEX_BIT;
 		}
-		else if (fileExt == ".tesc")
+		if (fileExt == ".tesc")
 		{
 			return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
 		}
-		else if (fileExt == ".tese")
+		if (fileExt == ".tese")
 		{
 			return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
 		}
-		else if (fileExt == ".geom")
+		if (fileExt == ".geom")
 		{
 			return VK_SHADER_STAGE_GEOMETRY_BIT;
 		}
-		else if (fileExt == ".frag")
+		if (fileExt == ".frag")
 		{
 			return VK_SHADER_STAGE_FRAGMENT_BIT;
 		}
@@ -540,7 +540,7 @@ namespace acid
 		}
 
 		program.buildReflection();
-	//	program.dumpReflection();
+		//	program.dumpReflection();
 		LoadProgram(program, stageFlag);
 
 		glslang::SpvOptions spvOptions;
@@ -556,13 +556,13 @@ namespace acid
 
 		spv::SpvBuildLogger logger;
 		std::vector<uint32_t> spirv;
-		glslang::GlslangToSpv(*program.getIntermediate((EShLanguage)language), spirv, &logger, &spvOptions);
+		GlslangToSpv(*program.getIntermediate((EShLanguage)language), spirv, &logger, &spvOptions);
 
 		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
 		shaderModuleCreateInfo.pCode = spirv.data();
-		VkShaderModule shaderModule = VK_NULL_HANDLE;
+		VkShaderModule shaderModule = nullptr;
 		Renderer::CheckVk(vkCreateShaderModule(logicalDevice->GetLogicalDevice(), &shaderModuleCreateInfo, nullptr, &shaderModule));
 		return shaderModule;
 	}
@@ -685,7 +685,7 @@ namespace acid
 					if (uniformBlockName == splitName.at(0))
 					{
 						uniformBlock->m_uniforms.emplace(splitName.at(1), std::make_unique<Uniform>(program.getUniformBinding(i), program.getUniformBufferOffset(i),
-							ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
+						                                                                            ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
 						return;
 					}
 				}
@@ -703,7 +703,7 @@ namespace acid
 
 		auto &qualifier = program.getUniformTType(i)->getQualifier();
 		m_uniforms.emplace(program.getUniformName(i), std::make_unique<Uniform>(program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i),
-			qualifier.readonly, qualifier.writeonly, stageFlag));
+		                                                                        qualifier.readonly, qualifier.writeonly, stageFlag));
 	}
 
 	void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
@@ -718,7 +718,7 @@ namespace acid
 
 		auto &qualifier = program.getAttributeTType(i)->getQualifier();
 		m_attributes.emplace(program.getAttributeName(i), std::make_unique<Attribute>(qualifier.layoutSet,
-			qualifier.layoutLocation, ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
+		                                                                              qualifier.layoutLocation, ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
 	}
 
 	int32_t Shader::ComputeSize(const glslang::TType *ttype)

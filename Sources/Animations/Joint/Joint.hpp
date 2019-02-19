@@ -32,6 +32,7 @@ namespace acid
 		{
 			m_children.emplace_back(child);
 		}
+
 	private:
 		uint32_t m_index;
 		std::string m_nameId;

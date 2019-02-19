@@ -21,7 +21,7 @@ namespace acid
 		};
 
 		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Filled, const bool &checked = false,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		             const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 
@@ -58,7 +58,7 @@ namespace acid
 	{
 	public:
 		explicit UiRadioManager(const UiInputRadio::Mark &markType = UiInputRadio::Mark::X, const bool &multiple = false,
-			const std::vector<UiInputRadio *> &inputs = {}) :
+		                        const std::vector<UiInputRadio *> &inputs = {}) :
 			m_markType(markType),
 			m_multiple(multiple),
 			m_inputs(inputs)
@@ -66,7 +66,8 @@ namespace acid
 			for (auto &input : inputs)
 			{
 				input->SetMarkType(markType);
-				input->GetOnChecked() += [this](UiInputRadio *object, bool value) {
+				input->GetOnChecked() += [this](UiInputRadio *object, bool value)
+				{
 					if (!m_multiple)
 					{
 						for (auto &input2 : m_inputs)

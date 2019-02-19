@@ -36,7 +36,7 @@ namespace acid
 
 			uint32_t indentation = 0;
 			bool comment = false;
-		//	bool array = false;
+			//	bool array = false;
 
 			for (const auto &c : line)
 			{
@@ -46,7 +46,7 @@ namespace acid
 				}
 				else if (c == '-')
 				{
-				//	array = true;
+					//	array = true;
 					indentation += 2;
 					break;
 				}
@@ -104,8 +104,8 @@ namespace acid
 			}
 			else
 			{*/
-				auto section = new Section(currentSection, String::Trim(line), indentation);
-				currentSection->m_children.emplace_back(section);
+			auto section = new Section(currentSection, String::Trim(line), indentation);
+			currentSection->m_children.emplace_back(section);
 			//}
 
 			lastIndentation = indentation;
@@ -150,7 +150,7 @@ namespace acid
 			parent->AddAttribute(name, value);
 			return;
 		}
-		else if (!isTopSection)
+		if (!isTopSection)
 		{
 			thisValue = new Metadata(name, value);
 			parent->AddChild(thisValue);

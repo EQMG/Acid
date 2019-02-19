@@ -353,29 +353,26 @@ namespace acid
 
 							// Save the remaining data for the next time getResponse() is called.
 							m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()),
-								length - static_cast<std::size_t>(in.tellg()));
+							                       length - static_cast<std::size_t>(in.tellg()));
 
 							// Return the response code and message.
 							return FtpResponse(static_cast<FtpResponse::Status>(code), message);
 						}
-						else
+						// The line we just read was actually not a response, only a new part of the current multiline response.
+
+						// Extract the line.
+						std::string line;
+						std::getline(in, line);
+
+						if (!line.empty())
 						{
-							// The line we just read was actually not a response, only a new part of the current multiline response.
+							// Remove the ending '\r' (all lines are terminated by "\r\n").
+							line.erase(line.length() - 1);
 
-							// Extract the line.
-							std::string line;
-							std::getline(in, line);
-
-							if (!line.empty())
-							{
-								// Remove the ending '\r' (all lines are terminated by "\r\n").
-								line.erase(line.length() - 1);
-
-								// Append it to the current message.
-								std::ostringstream out;
-								out << code << separator << line << "\n";
-								message += out.str();
-							}
+							// Append it to the current message.
+							std::ostringstream out;
+							out << code << separator << line << "\n";
+							message += out.str();
 						}
 					}
 				}

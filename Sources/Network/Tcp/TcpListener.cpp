@@ -17,7 +17,7 @@ namespace acid
 
 	uint16_t TcpListener::GetLocalPort() const
 	{
-		if (GetHandle() != Socket::InvalidSocketHandle())
+		if (GetHandle() != InvalidSocketHandle())
 		{
 			// Retrieve informations about the local end of the socket.
 			sockaddr_in address;
@@ -44,17 +44,17 @@ namespace acid
 		// Check if the address is valid.
 		if ((address == IpAddress::None) || (address == IpAddress::Broadcast))
 		{
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Bind the socket to the specified port.
-		sockaddr_in addr = Socket::CreateAddress(address.ToInteger(), port);
+		sockaddr_in addr = CreateAddress(address.ToInteger(), port);
 
 		if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 		{
 			// Not likely to happen, but...
 			Log::Error("Failed to bind listener socket to port %i\n", port);
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Listen to the bound port.
@@ -62,10 +62,10 @@ namespace acid
 		{
 			// Oops, socket is deaf.
 			Log::Error("Failed to listen to port %i\n", port);
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 
 	void TcpListener::Close()
@@ -77,10 +77,10 @@ namespace acid
 	Socket::Status TcpListener::Accept(TcpSocket &socket)
 	{
 		// Make sure that we're listening.
-		if (GetHandle() == Socket::InvalidSocketHandle())
+		if (GetHandle() == InvalidSocketHandle())
 		{
 			Log::Error("Failed to accept a new connection, the socket is not listening\n");
-			return Socket::Status::Error;
+			return Status::Error;
 		}
 
 		// Accept a new connection.
@@ -89,15 +89,15 @@ namespace acid
 		SocketHandle remote = accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length);
 
 		// Check for errors.
-		if (remote == Socket::InvalidSocketHandle())
+		if (remote == InvalidSocketHandle())
 		{
-			return Socket::GetErrorStatus();
+			return GetErrorStatus();
 		}
 
 		// Initialize the new connected socket.
 		socket.Close();
 		socket.Create(remote);
 
-		return Socket::Status::Done;
+		return Status::Done;
 	}
 }

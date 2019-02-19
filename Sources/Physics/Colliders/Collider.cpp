@@ -68,11 +68,11 @@ namespace acid
 	{
 		btQuaternion rotation = btQuaternion();
 		rotation.setEulerZYX(transform.GetRotation().m_y * Maths::DegToRad,
-			transform.GetRotation().m_x * Maths::DegToRad, transform.GetRotation().m_z * Maths::DegToRad);
+		                     transform.GetRotation().m_x * Maths::DegToRad, transform.GetRotation().m_z * Maths::DegToRad);
 
 		btTransform worldTransform = btTransform();
 		worldTransform.setIdentity();
-		worldTransform.setOrigin(Collider::Convert(transform.GetPosition()));
+		worldTransform.setOrigin(Convert(transform.GetPosition()));
 		worldTransform.setRotation(rotation);
 		return worldTransform;
 	}
@@ -82,6 +82,6 @@ namespace acid
 		btVector3 position = transform.getOrigin();
 		float yaw, pitch, roll;
 		transform.getBasis().getEulerYPR(yaw, pitch, roll);
-		return Transform(Collider::Convert(position), Vector3(pitch, yaw, roll) * Maths::RadToDeg, scaling);
+		return Transform(Convert(position), Vector3(pitch, yaw, roll) * Maths::RadToDeg, scaling);
 	}
 }

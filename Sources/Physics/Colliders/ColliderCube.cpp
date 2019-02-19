@@ -7,7 +7,7 @@ namespace acid
 {
 	ColliderCube::ColliderCube(const Vector3 &extents, const Transform &localTransform) :
 		Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cube.obj"), 3.0f, Colour::Red)),
-		m_shape(std::make_unique<btBoxShape>(Collider::Convert(extents / 2.0f))),
+		m_shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),
 		m_extents(extents)
 	{
 		m_localTransform.SetScaling(m_extents);
@@ -46,7 +46,7 @@ namespace acid
 	void ColliderCube::SetExtents(const Vector3 &extents)
 	{
 		m_extents = extents;
-		m_shape->setImplicitShapeDimensions(Collider::Convert(m_extents));
+		m_shape->setImplicitShapeDimensions(Convert(m_extents));
 		m_localTransform.SetScaling(m_extents);
 	}
 }

@@ -55,6 +55,7 @@ namespace acid
 			return m_start + realTime * (m_end - m_start);
 			//	return Maths::CosInterpolate(m_start, m_end, realTime);
 		}
+
 	private:
 		T m_start;
 		T m_end;

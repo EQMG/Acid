@@ -14,6 +14,7 @@ namespace test
 		void Load();
 
 		void Save();
+
 	private:
 		std::unique_ptr<File> m_audio;
 		std::unique_ptr<File> m_graphics;

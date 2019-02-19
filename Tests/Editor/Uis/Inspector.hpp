@@ -21,6 +21,7 @@ namespace test
 		explicit Inspector(UiObject *parent);
 
 		void UpdateObject() override;
+
 	private:
 		std::unique_ptr<UiSection> m_section1;
 		std::unique_ptr<UiInputButton> m_button1;

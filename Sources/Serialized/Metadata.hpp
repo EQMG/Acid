@@ -49,10 +49,15 @@ namespace acid
 
 		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
-		template<typename T> struct is_vector : public std::false_type {};
+		template<typename T>
+		struct is_vector : public std::false_type
+		{
+		};
 
 		template<typename T, typename A>
-		struct is_vector<std::vector<T, A>> : public std::true_type {};
+		struct is_vector<std::vector<T, A>> : public std::true_type
+		{
+		};
 
 		template<typename T>
 		T GetChild(const std::string &name) const
@@ -268,6 +273,7 @@ namespace acid
 		bool operator!=(const Metadata &other) const;
 
 		bool operator<(const Metadata &other) const;
+
 	protected:
 		std::string m_name;
 		std::string m_value;

@@ -12,7 +12,6 @@ namespace acid
 	const uint32_t MeshAnimated::MaxWeights = 3;
 
 	MeshAnimated::MeshAnimated(const std::string &filename) :
-		Mesh(),
 		m_filename(filename),
 		m_model(nullptr),
 		m_headJoint(nullptr),
@@ -35,7 +34,7 @@ namespace acid
 			m_jointMatrices.clear();
 			m_jointMatrices.resize(MaxJoints);
 			AddJointsToArray(*m_headJoint, m_jointMatrices);
-		//	m_jointMatrices.shrink_to_fit();
+			//	m_jointMatrices.shrink_to_fit();
 		}
 	}
 
@@ -61,7 +60,7 @@ namespace acid
 		m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 		AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"),
-			file.GetMetadata()->FindChild("library_visual_scenes"));
+		                                                  file.GetMetadata()->FindChild("library_visual_scenes"));
 		m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 		m_animator->DoAnimation(m_animation.get());
 	}

@@ -17,7 +17,7 @@ namespace acid
 {
 	Socket::Socket(Type type) :
 		m_type(type),
-		m_socket(Socket::InvalidSocketHandle()),
+		m_socket(InvalidSocketHandle()),
 		m_isBlocking(true)
 	{
 	}
@@ -91,24 +91,24 @@ namespace acid
 #if defined(ACID_BUILD_WINDOWS)
 		switch (WSAGetLastError())
 		{
-			case WSAEWOULDBLOCK:
-				return Status::NotReady;
-			case WSAEALREADY:
-				return Status::NotReady;
-			case WSAECONNABORTED:
-				return Status::Disconnected;
-			case WSAECONNRESET:
-				return Status::Disconnected;
-			case WSAETIMEDOUT:
-				return Status::Disconnected;
-			case WSAENETRESET:
-				return Status::Disconnected;
-			case WSAENOTCONN:
-				return Status::Disconnected;
-			case WSAEISCONN:
-				return Status::Done; // When connecting a non-blocking socket
-			default:
-				return Status::Error;
+		case WSAEWOULDBLOCK:
+			return Status::NotReady;
+		case WSAEALREADY:
+			return Status::NotReady;
+		case WSAECONNABORTED:
+			return Status::Disconnected;
+		case WSAECONNRESET:
+			return Status::Disconnected;
+		case WSAETIMEDOUT:
+			return Status::Disconnected;
+		case WSAENETRESET:
+			return Status::Disconnected;
+		case WSAENOTCONN:
+			return Status::Disconnected;
+		case WSAEISCONN:
+			return Status::Done; // When connecting a non-blocking socket
+		default:
+			return Status::Error;
 		}
 #else
 		// The followings are sometimes equal to EWOULDBLOCK,
@@ -165,9 +165,9 @@ namespace acid
 	void Socket::SetBlocking(bool blocking)
 	{
 		// Apply if the socket is already created.
-		if (m_socket != Socket::InvalidSocketHandle())
+		if (m_socket != InvalidSocketHandle())
 		{
-			Socket::SetHandleBlocking(m_socket, blocking);
+			SetHandleBlocking(m_socket, blocking);
 		}
 
 		m_isBlocking = blocking;
@@ -176,11 +176,11 @@ namespace acid
 	void Socket::Create()
 	{
 		// Don't create the socket if it already exists.
-		if (m_socket == Socket::InvalidSocketHandle())
+		if (m_socket == InvalidSocketHandle())
 		{
 			SocketHandle handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
 
-			if (handle == Socket::InvalidSocketHandle())
+			if (handle == InvalidSocketHandle())
 			{
 				Log::Error("Failed to create socket\n");
 				return;
@@ -193,7 +193,7 @@ namespace acid
 	void Socket::Create(SocketHandle handle)
 	{
 		// Don't create the socket if it already exists.
-		if (m_socket == Socket::InvalidSocketHandle())
+		if (m_socket == InvalidSocketHandle())
 		{
 			// Assign the new handle.
 			m_socket = handle;
@@ -235,10 +235,10 @@ namespace acid
 	void Socket::Close()
 	{
 		// Close the socket.
-		if (m_socket != Socket::InvalidSocketHandle())
+		if (m_socket != InvalidSocketHandle())
 		{
-			Socket::CloseSocketHandle(m_socket);
-			m_socket = Socket::InvalidSocketHandle();
+			CloseSocketHandle(m_socket);
+			m_socket = InvalidSocketHandle();
 		}
 	}
 }

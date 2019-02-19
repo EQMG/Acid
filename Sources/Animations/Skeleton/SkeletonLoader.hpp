@@ -16,7 +16,7 @@ namespace acid
 		const JointData *GetHeadJoint() const { return m_headJoint.get(); }
 	private:
 		JointData *LoadJointData(const Metadata *jointNode, const bool &isRoot);
-				  
+
 		JointData *ExtractMainJointData(const Metadata *jointNode, const bool &isRoot);
 
 		std::optional<uint32_t> GetBoneIndex(const std::string &name);

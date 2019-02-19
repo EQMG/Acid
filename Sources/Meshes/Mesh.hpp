@@ -25,9 +25,9 @@ namespace acid
 
 		void Update() override;
 
-		virtual void Decode(const Metadata &metadata) override;
+		void Decode(const Metadata &metadata) override;
 
-		virtual void Encode(Metadata &metadata) const override;
+		void Encode(Metadata &metadata) const override;
 
 		virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 

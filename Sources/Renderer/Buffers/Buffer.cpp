@@ -22,7 +22,7 @@ namespace acid
 		auto presentFamily = logicalDevice->GetPresentFamily();
 		auto computeFamily = logicalDevice->GetComputeFamily();
 
-		std::array<uint32_t, 3> queueFamily = { graphicsFamily, presentFamily, computeFamily };
+		std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
 
 		// Create the buffer handle.
 		VkBufferCreateInfo bufferCreateInfo = {};
@@ -30,8 +30,8 @@ namespace acid
 		bufferCreateInfo.size = size;
 		bufferCreateInfo.usage = usage;
 		bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-	//	bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
-	//	bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
+		//	bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
+		//	bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
 		Renderer::CheckVk(vkCreateBuffer(logicalDevice->GetLogicalDevice(), &bufferCreateInfo, nullptr, &m_buffer));
 
 		// Create the memory backing up the buffer handle.
@@ -50,9 +50,9 @@ namespace acid
 			void *mapped;
 			Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, size, 0, &mapped));
 			memcpy(mapped, data, size);
-			
+
 			// If host coherency hasn't been requested, do a manual flush to make writes visible.
-			if ((properties &VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
+			if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
 			{
 				VkMappedMemoryRange mappedMemoryRange = {};
 				mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;

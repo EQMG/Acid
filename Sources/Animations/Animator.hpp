@@ -126,6 +126,7 @@ namespace acid
 		/// </summary>
 		/// <param name="animation"> The new animation to carry out. </param>
 		void DoAnimation(Animation *animation);
+
 	private:
 		Joint *m_rootJoint;
 

@@ -6,7 +6,7 @@ namespace test
 		MeshSimple(sideLength, squareSize, vertexCount, textureScale),
 		m_heightmap(heightmap)
 	{
-		MeshSimple::GenerateMesh();
+		GenerateMesh();
 	}
 
 	VertexModel MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
@@ -42,7 +42,7 @@ namespace test
 		Vector3 positionL = GetPosition(x - 1.0f, z);
 		Vector3 positionR = GetPosition(x + 1.0f, z);
 		Vector3 positionD = GetPosition(x, z - 1.0f);
-	//	Vector3 positionU = GetPosition(x, z + 1.0f);
+		//	Vector3 positionU = GetPosition(x, z + 1.0f);
 
 		Vector3 normal = (positionL - positionR).Cross(positionR - positionD);
 		return normal.Normalize();

@@ -33,7 +33,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+	                                                     const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
@@ -53,7 +53,7 @@ namespace acid
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-	//	descriptorWrite.pBufferInfo = &bufferInfo;
+		//	descriptorWrite.pBufferInfo = &bufferInfo;
 		return WriteDescriptorSet(descriptorWrite, bufferInfo);
 	}
 }

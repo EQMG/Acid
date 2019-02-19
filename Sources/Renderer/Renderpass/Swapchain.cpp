@@ -3,7 +3,6 @@
 #include <array>
 #include <cassert>
 #include "Renderer/Renderer.hpp"
-#include "Renderer/Renderer.hpp"
 
 namespace acid
 {
@@ -47,7 +46,7 @@ namespace acid
 				m_presentMode = presentMode;
 				break;
 			}
-			else if (m_presentMode != VK_PRESENT_MODE_MAILBOX_KHR && presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
+			if (m_presentMode != VK_PRESENT_MODE_MAILBOX_KHR && presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
 			{
 				m_presentMode = presentMode;
 			}
@@ -94,7 +93,7 @@ namespace acid
 		swapchainCreateInfo.compositeAlpha = m_compositeAlpha;
 		swapchainCreateInfo.presentMode = m_presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
-		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
+		swapchainCreateInfo.oldSwapchain = nullptr;
 
 		if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT)
 		{
@@ -113,7 +112,7 @@ namespace acid
 
 		if (graphicsFamily != presentFamily)
 		{
-			std::array<uint32_t, 2> queueFamily = { graphicsFamily, presentFamily };
+			std::array<uint32_t, 2> queueFamily = {graphicsFamily, presentFamily};
 			swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 			swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
@@ -154,7 +153,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE, &m_activeImageIndex);
+		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, nullptr, &m_activeImageIndex);
 
 		if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 		{
@@ -162,9 +161,9 @@ namespace acid
 			return acquireResult;
 		}
 
-	//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+		//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-	//	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
+		//	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
 		return VK_SUCCESS;
 	}
 

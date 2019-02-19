@@ -80,7 +80,7 @@ namespace acid
 		char buffer[80];
 
 		time(&rawtime);
-		struct tm* timeinfo = localtime(&rawtime);
+		struct tm *timeinfo = localtime(&rawtime);
 
 		strftime(buffer, sizeof(buffer), "%Y-%m-%d-%I%M%S", timeinfo);
 		return std::string(buffer);

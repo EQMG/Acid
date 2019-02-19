@@ -14,7 +14,7 @@ namespace acid
 	{
 	public:
 		UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		            const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 

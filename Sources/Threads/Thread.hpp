@@ -26,6 +26,7 @@ namespace acid
 		/// Waits until all jobs have been finished.
 		/// </summary>
 		void Wait();
+
 	private:
 		void QueueLoop();
 

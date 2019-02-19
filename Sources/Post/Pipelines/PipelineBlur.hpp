@@ -10,7 +10,7 @@ namespace acid
 	{
 	public:
 		explicit PipelineBlur(const Pipeline::Stage &pipelineStage, const float &blur = 2.0f, const FilterBlur::Type &blurType = FilterBlur::Type::_9,
-			const bool &toScreen = false, const float &inputScale = 0.5f, const float &outputScale = 1.0f);
+		                      const bool &toScreen = false, const float &inputScale = 0.5f, const float &outputScale = 1.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

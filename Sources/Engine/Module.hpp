@@ -17,7 +17,11 @@ namespace acid
 		/// </summary>
 		enum class Stage
 		{
-			Always, Pre, Normal, Post, Render
+			Always,
+			Pre,
+			Normal,
+			Post,
+			Render
 		};
 
 		Module() = default;

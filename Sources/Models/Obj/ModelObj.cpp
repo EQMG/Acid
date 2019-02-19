@@ -79,7 +79,7 @@ namespace acid
 				{
 					continue;
 				}
-				else if (prefix == "v")
+				if (prefix == "v")
 				{
 					Vector3 vertex = Vector3(String::From<float>(split[1]),
 					                         String::From<float>(split[2]),
@@ -164,7 +164,7 @@ namespace acid
 		Log::Out("Model OBJ '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 
-		Model::Initialize(vertices, indices);
+		Initialize(vertices, indices);
 	}
 
 	void ModelObj::Decode(const Metadata &metadata)
@@ -196,7 +196,8 @@ namespace acid
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, vertices, indices);
 	}
 
-	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
+	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices,
+	                                                              std::vector<uint32_t> &indices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{

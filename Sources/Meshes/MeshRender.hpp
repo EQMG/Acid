@@ -23,6 +23,7 @@ namespace acid
 		bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
 
 		bool operator<(const MeshRender &other) const;
+
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;

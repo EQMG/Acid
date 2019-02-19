@@ -41,7 +41,7 @@ namespace acid
 		}
 
 		// Input might be scaled for faster blur.
-	//	Texture::CopyImage(dynamic_cast<Texture *>(Renderer::Get()->GetAttachment("resolved"))->GetImage(), m_halfRes->GetImage(), m_halfRes->GetDeviceMemory(), width / 2, height / 2, false, 0, 1);
+		//	Texture::CopyImage(dynamic_cast<Texture *>(Renderer::Get()->GetAttachment("resolved"))->GetImage(), m_halfRes->GetImage(), m_halfRes->GetDeviceMemory(), width / 2, height / 2, false, 0, 1);
 
 		m_filterBlurVertical.SetDirection(Vector2(0.0f, m_blur));
 		m_filterBlurHorizontal.SetDirection(Vector2(m_blur, 0.0f));

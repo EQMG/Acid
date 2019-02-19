@@ -95,9 +95,9 @@ namespace acid
 	Quaternion Quaternion::Multiply(const Quaternion &other) const
 	{
 		return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y,
-			m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
-			m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
-			m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
+		                  m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
+		                  m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
+		                  m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
 	}
 
 	Vector3 Quaternion::Multiply(const Vector3 &other) const
@@ -251,7 +251,7 @@ namespace acid
 	{
 		Vector3 result = Vector3();
 		result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
-		result.m_y = std::asin(2.0f *  (m_x * m_z + m_y * m_w));
+		result.m_y = std::asin(2.0f * (m_x * m_z + m_y * m_w));
 		result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));
 		return result * Maths::RadToDeg;
 	}

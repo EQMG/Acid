@@ -18,6 +18,7 @@ namespace test
 		void Start() override;
 
 		void Update() override;
+
 	private:
 		ButtonKeyboard m_buttonFullscreen;
 		ButtonKeyboard m_buttonScreenshot;

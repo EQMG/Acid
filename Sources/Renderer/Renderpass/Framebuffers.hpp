@@ -13,7 +13,8 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const DepthStencil &depthStencil,
+		             const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Framebuffers();
 

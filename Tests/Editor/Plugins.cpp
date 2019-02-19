@@ -19,14 +19,16 @@ namespace test
 		cr_plugin_load(*m_plugin, m_loadedPath.c_str());
 
 		// Watches the DLL path.
-		m_watcher.GetOnChange() += [this](std::string path, FileWatcher::Status status) {
+		m_watcher.GetOnChange() += [this](std::string path, FileWatcher::Status status)
+		{
 			if (path == m_loadedPath)
 			{
 				m_update = true;
 			}
 		};
 
-		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods) {
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods)
+		{
 			if (key == Key::R && action == InputAction::Press)
 			{
 				FileSystem::Touch(m_loadedPath);

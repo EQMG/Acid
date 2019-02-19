@@ -128,7 +128,7 @@ namespace acid
 			{
 				switch (c)
 				{
-					case '"':
+				case '"':
 					{
 						if (currentKey.empty())
 						{
@@ -142,7 +142,7 @@ namespace acid
 						summation.clear();
 						break;
 					}
-					case '=':
+				case '=':
 					{
 						if (!currentKey.empty())
 						{
@@ -151,7 +151,7 @@ namespace acid
 
 						break;
 					}
-					default:
+				default:
 					{
 						summation += c;
 						break;

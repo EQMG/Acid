@@ -17,7 +17,7 @@ namespace acid
 		/// </summary>
 		/// <param name="presentCompleteSemaphore"> A optional semaphore that is signaled when the image is ready for use. </param>
 		/// <returns> Result of the image acquisition. </returns>
-		VkResult AcquireNextImage(const VkSemaphore &presentCompleteSemaphore = VK_NULL_HANDLE);
+		VkResult AcquireNextImage(const VkSemaphore &presentCompleteSemaphore = nullptr);
 
 		/// <summary>
 		/// Queue an image for presentation using the internal acquired image for queue presentation.
@@ -25,7 +25,7 @@ namespace acid
 		/// <param name="presentQueue"> Presentation queue for presenting the image. </param>
 		/// <param name="waitSemaphore"> A optional semaphore that is waited on before the image is presented. </param>
 		/// <returns> Result of the queue presentation. </returns>
-		VkResult QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore = VK_NULL_HANDLE);
+		VkResult QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore = nullptr);
 
 		const VkExtent2D &GetExtent() const { return m_extent; }
 

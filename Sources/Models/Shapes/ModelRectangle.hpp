@@ -38,6 +38,7 @@ namespace acid
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+
 	private:
 		float m_min;
 		float m_max;
