@@ -63,7 +63,7 @@ namespace test
 		auto &rendererContainer = GetRendererContainer();
 		rendererContainer.Clear();
 
-		//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+	//	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
 
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
@@ -71,19 +71,19 @@ namespace test
 		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
 		rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
-		//	auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
-		//	rendererContainer.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
-		//	rendererContainer.Add<FilterEmboss>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterCrt>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
-		//	rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
+	//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
+	//	auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
+	//	rendererContainer.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
+	//	rendererContainer.Add<FilterEmboss>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterCrt>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
 		rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-		//	rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<RendererFonts>(Pipeline::Stage(1, 2));
 	}
@@ -94,9 +94,9 @@ namespace test
 		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
 		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
 
-		//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
-		//	renderpassCreate1.SetScale(0.75f);
+	//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
+	//	renderpassCreate1.SetScale(0.75f);
 
-		//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
+	//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	}
 }
