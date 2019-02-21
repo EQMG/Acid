@@ -169,7 +169,7 @@ include(CTest)
 if(BUILD_TESTS)
 	add_subdirectory(Tests/Editor)
 	add_subdirectory(Tests/EditorTest)
-
+	
 	add_subdirectory(Tests/TestFont)
 #	add_subdirectory(Tests/TestFont2)
 	add_subdirectory(Tests/TestGUI)

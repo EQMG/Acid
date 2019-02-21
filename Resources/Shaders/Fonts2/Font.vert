@@ -10,24 +10,24 @@ struct GlyphInfo
     // cell offset
     // cell count in x
     // cell count in y
-    uvec4 cell_info;
+    uvec4 cellInfo;
 };
 
 layout(binding = 0) buffer GlyphBuffer
 {
 	GlyphInfo glyphs[];
-} glyph_buffer;
+} glyphBuffer;
 
-layout(location = 0) in vec4 in_rect;
-layout(location = 1) in uint in_glyph_index;
-layout(location = 2) in float in_sharpness;
-layout(location = 3) in vec4 in_color;
+layout(location = 0) in vec4 inRect;
+layout(location = 1) in uint inGlyphIndex;
+layout(location = 2) in float inSharpness;
+layout(location = 3) in vec4 inColour;
 
-layout(location = 0) out vec2 out_glyph_pos;
-layout(location = 1) out uvec4 out_cell_info;
-layout(location = 2) out float out_sharpness;
-layout(location = 3) out vec2 out_cell_coord;
-layout(location = 4) out vec4 out_color;
+layout(location = 0) out vec2 outGlyphPos;
+layout(location = 1) out uvec4 outCellInfo;
+layout(location = 2) out float outSharpness;
+layout(location = 3) out vec2 outCellCoord;
+layout(location = 4) out vec4 outColour;
 
 out gl_PerVertex
 {
@@ -36,30 +36,30 @@ out gl_PerVertex
 
 void main()
 {
-    GlyphInfo gi = glyph_buffer.glyphs[in_glyph_index];
+    GlyphInfo gi = glyphBuffer.glyphs[inGlyphIndex];
 
     vec2 pos[4];
-	pos[0] = vec2(in_rect.x, in_rect.y);
-	pos[1] = vec2(in_rect.z, in_rect.y);
-	pos[2] = vec2(in_rect.x, in_rect.w);
-	pos[3] = vec2(in_rect.z, in_rect.w);
+	pos[0] = vec2(inRect.x, inRect.y);
+	pos[1] = vec2(inRect.z, inRect.y);
+	pos[2] = vec2(inRect.x, inRect.w);
+	pos[3] = vec2(inRect.z, inRect.w);
 
-    vec2 glyph_pos[4];
-    glyph_pos[0] = vec2(gi.bbox.x, gi.bbox.y);
-    glyph_pos[1] = vec2(gi.bbox.z, gi.bbox.y);
-    glyph_pos[2] = vec2(gi.bbox.x, gi.bbox.w);
-    glyph_pos[3] = vec2(gi.bbox.z, gi.bbox.w);
+    vec2 glyphPos[4];
+    glyphPos[0] = vec2(gi.bbox.x, gi.bbox.y);
+    glyphPos[1] = vec2(gi.bbox.z, gi.bbox.y);
+    glyphPos[2] = vec2(gi.bbox.x, gi.bbox.w);
+    glyphPos[3] = vec2(gi.bbox.z, gi.bbox.w);
 
-    vec2 cell_coord[4];
-    cell_coord[0] = vec2(0.0f, 0.0f);
-    cell_coord[1] = vec2(gi.cell_info.z, 0.0f);
-    cell_coord[2] = vec2(0.0f, gi.cell_info.w);
-    cell_coord[3] = vec2(gi.cell_info.z, gi.cell_info.w);
+    vec2 cellCoord[4];
+    cellCoord[0] = vec2(0.0f, 0.0f);
+    cellCoord[1] = vec2(gi.cellInfo.z, 0.0f);
+    cellCoord[2] = vec2(0.0f, gi.cellInfo.w);
+    cellCoord[3] = vec2(gi.cellInfo.z, gi.cellInfo.w);
 
     gl_Position = vec4(pos[gl_VertexIndex], 0.0f, 1.0f);
-    out_glyph_pos = glyph_pos[gl_VertexIndex];
-    out_cell_info = gi.cell_info;
-    out_sharpness = in_sharpness;
-    out_cell_coord = cell_coord[gl_VertexIndex];
-	out_color = in_color;
+    outGlyphPos = glyphPos[gl_VertexIndex];
+    outCellInfo = gi.cellInfo;
+    outSharpness = inSharpness;
+    outCellCoord = cellCoord[gl_VertexIndex];
+	outColour = inColour;
 }
