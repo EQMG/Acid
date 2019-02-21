@@ -70,13 +70,8 @@ namespace acid
 		return LineToFunc(to, o);
 	}
 
-	void OutlineConvert(FT_Outline *outline, Outline *o, char c)
+	void OutlineConvert(FT_Outline *outline, Outline *o)
 	{
-		if (c == '&')
-		{
-			printf("");
-		}
-
 		OutlineDecompose(outline, o);
 	//	OutlineFixCorners(o);
 	//	OutlineSubdivide(o);

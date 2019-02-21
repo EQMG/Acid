@@ -1,8 +1,9 @@
-#if 1
+﻿#if 1
 #include <memory>
 #include <array>
 #include <cassert>
 #include <vector>
+#include <map>
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 #include <Maths/Maths.hpp>
@@ -18,7 +19,6 @@ using namespace acid;
 #define HEIGHT 720
 
 #define MAX_VISIBLE_GLYPHS 4096
-#define NUMBER_OF_GLYPHS 96
 
 struct CellInfo
 {
@@ -45,7 +45,7 @@ struct HostGlyphInfo
 struct DeviceGlyphInfo
 {
 	Rect bbox;
-	//Rect cbox;
+//	Rect cbox;
 	CellInfo cellInfo;
 };
 
@@ -63,6 +63,7 @@ struct Render
 	float canvasScale;
 	float targetCanvasScale;
 
+	std::map<wchar_t, uint32_t> charmap;
 	std::vector<HostGlyphInfo> glyphInfos;
 
 	std::unique_ptr<char[]> glyphData;
@@ -129,35 +130,45 @@ static void LoadFont(const std::string &filename, Render *r)
 	FT_CHECK(FT_Init_FreeType(&library));
 
 	FT_Face face;
-	FT_CHECK(FT_New_Face(library, filename.c_str(), 0, &face));
-
+	FT_CHECK(FT_New_Face(library, filename.c_str(), 0, &face)); // TODO: FT_New_Memory_Face
 	FT_CHECK(FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96));
 
 	uint32_t totalPoints = 0;
 	uint32_t totalCells = 0;
+	printf("Glyph Count: %i\n", face->num_glyphs);
 
-	std::vector<Outline> outlines(NUMBER_OF_GLYPHS);
-	r->glyphInfos = std::vector<HostGlyphInfo>(NUMBER_OF_GLYPHS);
+	r->charmap = std::map<wchar_t, uint32_t>();
+	r->glyphInfos = std::vector<HostGlyphInfo>(face->num_glyphs);
+	std::vector<Outline> outlines(face->num_glyphs);
 
-	for (uint32_t i = 0; i < NUMBER_OF_GLYPHS; i++)
+	FT_UInt glyphIndex;
+	FT_ULong charcode = FT_Get_First_Char(face, &glyphIndex);
+	uint32_t i = 0;
+
+	while (glyphIndex != 0)
 	{
-		char c = ' ' + i;
-		Outline *o = &outlines[i];
-		HostGlyphInfo *hgi = &r->glyphInfos[i];
-
-		FT_UInt glyphIndex = FT_Get_Char_Index(face, c);
 		FT_CHECK(FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING));
+		printf("%i(%i) = %c\n", i, glyphIndex, charcode);
 
-		OutlineConvert(&face->glyph->outline, o, c);
+		r->charmap.emplace(charcode, i);
+		HostGlyphInfo *hgi = &r->glyphInfos[i];
+		Outline *o = &outlines[i];
+
+		OutlineConvert(&face->glyph->outline, o);
 
 		hgi->bbox = o->bbox;
 		hgi->advance = face->glyph->metrics.horiAdvance / 64.0f;
 
 		totalPoints += o->points.size();
-		totalCells += o->cellCountX * o->cellCountY;
+		totalCells += o->cells.size();
+
+		charcode = FT_Get_Next_Char(face, charcode, &glyphIndex);
+		i++;
 	}
 
-	r->glyphInfoSize = sizeof(DeviceGlyphInfo) * NUMBER_OF_GLYPHS;
+//	printf("Glyph count: %i\n", i);
+
+	r->glyphInfoSize = sizeof(DeviceGlyphInfo) * r->glyphInfos.size();
 	r->glyphCellsSize = sizeof(uint32_t) * totalCells;
 	r->glyphPointsSize = sizeof(Vector2) * totalPoints;
 
@@ -165,6 +176,7 @@ static void LoadFont(const std::string &filename, Render *r)
 	r->glyphInfoOffset = 0;
 	r->glyphCellsOffset = AlignUint32(r->glyphInfoSize, alignment);
 	r->glyphPointsOffset = AlignUint32(r->glyphInfoSize + r->glyphCellsSize, alignment);
+
 	r->glyphDataSize = r->glyphPointsOffset + r->glyphPointsSize;
 	r->glyphData = std::make_unique<char[]>(r->glyphDataSize);
 
@@ -175,7 +187,7 @@ static void LoadFont(const std::string &filename, Render *r)
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
 
-	for (uint32_t i = 0; i < NUMBER_OF_GLYPHS; i++)
+	for (uint32_t i = 0; i < r->glyphInfos.size(); i++)
 	{
 		Outline *o = &outlines[i];
 		DeviceGlyphInfo *dgi = &deviceGlyphInfos[i];
@@ -189,7 +201,7 @@ static void LoadFont(const std::string &filename, Render *r)
 		memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
 		memcpy(points + pointOffset, o->points.data(), sizeof(Vector2) * o->points.size());
 
-	//	OutlineU16Points(o, &dgi->cbox, points + point_offset);
+	//	OutlineU16Points(o, &dgi->cbox, reinterpret_cast<PointU16 *>(reinterpret_cast<char *>(points) + pointOffset));
 
 		pointOffset += o->points.size();
 		cellOffset += o->cells.size();
@@ -584,14 +596,8 @@ static void EndText(Render *r)
 	barrier.offset = 0;
 	barrier.size = size;
 
-	vkCmdPipelineBarrier(
-		commandBuffer,
-		VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
-		VK_PIPELINE_STAGE_TRANSFER_BIT,
-		0,
-		0, nullptr,
-		1, &barrier,
-		0, nullptr);
+	vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT,
+		0, 0, nullptr, 1, &barrier, 0, nullptr);
 
 	VkBufferCopy copy = {};
 	copy.srcOffset = 0;
@@ -603,29 +609,22 @@ static void EndText(Render *r)
 	barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 	barrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
-	vkCmdPipelineBarrier(
-		commandBuffer,
-		VK_PIPELINE_STAGE_TRANSFER_BIT,
-		VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
-		0,
-		0, nullptr,
-		1, &barrier,
-		0, nullptr);
+	vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+		0, 0, nullptr, 1, &barrier, 0, nullptr);
 }
 
-static void AppendText(Render *r, const float &x, const float &y, const float &scale, const std::string &text, const Colour &colour)
+static void AppendText(Render *r, const float &x, const float &y, const float &scale, const std::wstring &text, const Colour &colour)
 {
 	float localX = x;
 
-	for (char c : text)
+	for (const auto &c : text)
 	{
 		if (r->glyphInstanceCount >= MAX_VISIBLE_GLYPHS)
 		{
 			break;
 		}
 
-		uint32_t glyphIndex = c - 32;
-
+		uint32_t glyphIndex = r->charmap[c];
 		HostGlyphInfo *gi = &r->glyphInfos[glyphIndex];
 		GlyphInstance *inst = &r->glyphInstances[r->glyphInstanceCount];
 
@@ -648,6 +647,12 @@ static void AppendText(Render *r, const float &x, const float &y, const float &s
 	}
 }
 
+static void AppendText(Render *r, const float &x, const float &y, const float &scale, const std::string &text, const Colour &colour)
+{
+	std::wstring wsTmp(text.begin(), text.end());
+	AppendText(r, x, y, scale, wsTmp, colour);
+}
+
 static void RecordCommandBuffer(Render *r)
 {
 	VkCommandBuffer commandBuffer = r->commandBuffer;
@@ -660,50 +665,49 @@ static void RecordCommandBuffer(Render *r)
 
 	BeginText(r);
 
-	static std::vector<std::string> lines = {
-		"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
-		"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et",
-		"arcu scelerisque, eget viverra ante dapibus. Proin enim neque, vehicula id congue quis, consequat sit amet tortor.Aenean ac",
-		"lorem sit amet magna rhoncus rhoncus ac ac neque. Cras sed rutrum sem. Donec placerat ultricies ex, a gravida lorem commodo ut.",
-		"Mauris faucibus aliquet ligula, vitae condimentum dui semper et. Aenean pellentesque ac ligula a varius. Suspendisse congue",
-		"lorem lorem, ac consectetur ipsum condimentum id.",
-		"",
-		"Vestibulum quis erat sem. Fusce efficitur libero et leo sagittis, ac volutpat felis ullamcorper. Curabitur fringilla eros eget ex",
-		"lobortis, at posuere sem consectetur. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis",
-		"egestas. Vivamus eu enim leo. Morbi ultricies lorem et pellentesque vestibulum. Proin eu ultricies sem. Quisque laoreet, ligula",
-		"non molestie congue, odio nunc tempus arcu, vel aliquet leo turpis non enim. Sed risus dui, condimentum et eros a, molestie",
-		"imperdiet nisl. Vivamus quis ante venenatis, cursus magna ut, tincidunt elit. Aenean nisl risus, porttitor et viverra quis,",
-		"tempus vitae nisl.",
-		"",
-		"Suspendisse ut scelerisque tellus. In ac quam sem.Curabitur suscipit massa nisl. Ut et metus sed lacus dapibus molestie. Nullam",
-		"porttitor sit amet magna quis dapibus. Nulla tincidunt, arcu sit amet hendrerit consequat, felis leo blandit libero, eu posuere",
-		"nisl quam interdum nulla. Quisque nec efficitur libero. Quisque quis orci vitae metus feugiat aliquam eu et nulla. Etiam aliquet",
-		"ante vitae lacus aliquam, et gravida elit mollis. Proin molestie, justo tempus rhoncus aliquam, tellus erat venenatis erat,",
-		"porttitor dapibus nunc purus id enim. Integer a nunc ut velit porta maximus. Nullam rutrum nisi in sagittis pharetra. Proin id",
-		"pharetra augue, sed vulputate lorem. Aenean dapibus, turpis nec ullamcorper pharetra, ex augue congue nibh, condimentum",
-		"vestibulum arcu urna quis ex.",
-		"",
-		"Vestibulum non dignissim nibh, quis vestibulum odio. Ut sed viverra ante, fringilla convallis tellus. Donec in est rutrum,",
-		"imperdiet dolor a, vestibulum magna. In nec justo tellus. Ut non erat eu leo ornare imperdiet in sit amet lorem. Nullam quis",
-		"nisl diam. Aliquam laoreet dui et ligula posuere cursus.",
-		"",
-		"Donec vestibulum ante eget arcu dapibus lobortis.Curabitur condimentum tellus felis, id luctus mi ultrices quis. Aenean nulla",
-		"justo, venenatis vel risus et, suscipit faucibus nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada",
-		"fames ac turpis egestas. Sed lacinia metus eleifend lacinia blandit.Morbi est nibh, dapibus nec arcu quis, volutpat lacinia",
-		"dolor. Vestibulum quis viverra erat.Maecenas ultricies odio neque, et eleifend arcu auctor in. Suspendisse placerat massa nisl,",
-		"non condimentum ligula sodales at.Phasellus eros urna, elementum in ultricies quis, vulputate id magna. Donec efficitur rutrum",
-		"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet.",
-		"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus.Fusce",
-		"auctor arcu a purus bibendum, eget blandit nisi lobortis.",
+	static std::vector<std::wstring> lines = {
+		L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§",
+		L"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum",
+		L"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et",
+		L"arcu scelerisque, eget viverra ante dapibus. Proin enim neque, vehicula id congue quis, consequat sit amet tortor.Aenean ac",
+		L"lorem sit amet magna rhoncus rhoncus ac ac neque. Cras sed rutrum sem. Donec placerat ultricies ex, a gravida lorem commodo ut.",
+		L"Mauris faucibus aliquet ligula, vitae condimentum dui semper et. Aenean pellentesque ac ligula a varius. Suspendisse congue",
+		L"lorem lorem, ac consectetur ipsum condimentum id.",
+		L"",
+		L"Vestibulum quis erat sem. Fusce efficitur libero et leo sagittis, ac volutpat felis ullamcorper. Curabitur fringilla eros eget ex",
+		L"lobortis, at posuere sem consectetur. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis",
+		L"egestas. Vivamus eu enim leo. Morbi ultricies lorem et pellentesque vestibulum. Proin eu ultricies sem. Quisque laoreet, ligula",
+		L"non molestie congue, odio nunc tempus arcu, vel aliquet leo turpis non enim. Sed risus dui, condimentum et eros a, molestie",
+		L"imperdiet nisl. Vivamus quis ante venenatis, cursus magna ut, tincidunt elit. Aenean nisl risus, porttitor et viverra quis,",
+		L"tempus vitae nisl.",
+		L"",
+		L"Suspendisse ut scelerisque tellus. In ac quam sem.Curabitur suscipit massa nisl. Ut et metus sed lacus dapibus molestie. Nullam",
+		L"porttitor sit amet magna quis dapibus. Nulla tincidunt, arcu sit amet hendrerit consequat, felis leo blandit libero, eu posuere",
+		L"nisl quam interdum nulla. Quisque nec efficitur libero. Quisque quis orci vitae metus feugiat aliquam eu et nulla. Etiam aliquet",
+		L"ante vitae lacus aliquam, et gravida elit mollis. Proin molestie, justo tempus rhoncus aliquam, tellus erat venenatis erat,",
+		L"porttitor dapibus nunc purus id enim. Integer a nunc ut velit porta maximus. Nullam rutrum nisi in sagittis pharetra. Proin id",
+		L"pharetra augue, sed vulputate lorem. Aenean dapibus, turpis nec ullamcorper pharetra, ex augue congue nibh, condimentum",
+		L"vestibulum arcu urna quis ex.",
+		L"",
+		L"Vestibulum non dignissim nibh, quis vestibulum odio. Ut sed viverra ante, fringilla convallis tellus. Donec in est rutrum,",
+		L"imperdiet dolor a, vestibulum magna. In nec justo tellus. Ut non erat eu leo ornare imperdiet in sit amet lorem. Nullam quis",
+		L"nisl diam. Aliquam laoreet dui et ligula posuere cursus.",
+		L"",
+		L"Donec vestibulum ante eget arcu dapibus lobortis.Curabitur condimentum tellus felis, id luctus mi ultrices quis. Aenean nulla",
+		L"justo, venenatis vel risus et, suscipit faucibus nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada",
+		L"fames ac turpis egestas. Sed lacinia metus eleifend lacinia blandit.Morbi est nibh, dapibus nec arcu quis, volutpat lacinia",
+		L"dolor. Vestibulum quis viverra erat.Maecenas ultricies odio neque, et eleifend arcu auctor in. Suspendisse placerat massa nisl,",
+		L"non condimentum ligula sodales at.Phasellus eros urna, elementum in ultricies quis, vulputate id magna. Donec efficitur rutrum",
+		L"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet.",
+		L"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus.Fusce",
+		L"auctor arcu a purus bibendum, eget blandit nisi lobortis."
 	};
 
 	for (uint32_t i = 0; i < lines.size(); i++)
 	{
-		AppendText(r,
-		            r->canvasScale * (10.0f - r->canvasOffset.m_x),
-		            r->canvasScale * (30.0f - r->canvasOffset.m_y + i * 30.0f),
-		            0.02f * r->canvasScale,
-		            lines[i], Colour::Blue);
+		AppendText(r, r->canvasScale * (10.0f - r->canvasOffset.m_x),
+			r->canvasScale * (30.0f - r->canvasOffset.m_y + i * 30.0f),
+		    0.02f * r->canvasScale, lines[i], Colour::Black);
 	}
 
 	AppendText(r, 5.0f, 25.0f, 0.02f, "Frame Time: " + String::To(1000.0f / r->fps) + "ms", Colour::Red);
@@ -1065,13 +1069,13 @@ static void CreatePipeline(Render *r)
 	VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
 
 	VkVertexInputBindingDescription vertexInputBinding =
-		{0, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE,};
+		{0, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE};
 
 	VkVertexInputAttributeDescription vertexInputAttributes[] = {
 		{0, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, rect)},
 		{1, 0, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, glyphIndex)},
 		{2, 0, VK_FORMAT_R32_SFLOAT, offsetof(GlyphInstance, sharpness)},
-		{3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour)},
+		{3, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, colour)}
 	};
 
 	VkPipelineVertexInputStateCreateInfo vertexInputState = {};
@@ -1362,7 +1366,9 @@ static void RenderFrame(Render *r)
 static void OnWindowResized(GLFWwindow *window, int width, int height)
 {
 	if (width == 0 || height == 0)
+	{
 		return;
+	}
 
 	RecreateSwapChain((Render *)(glfwGetWindowUserPointer(window)));
 }
@@ -1378,6 +1384,7 @@ void WindowRefreshCallback(GLFWwindow *window)
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
 	Render *render = (Render *)(glfwGetWindowUserPointer(window));
+
 	if (button == GLFW_MOUSE_BUTTON_LEFT)
 	{
 	}
@@ -1408,9 +1415,9 @@ int main(int argc, const char **args)
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwSetScrollCallback(window, ScrollCallback);
 
-//	std::string filename = "Resources/Engine/Fonts/Alice-Regular.ttf";
+	std::string filename = "Resources/Engine/Fonts/Alice-Regular.ttf";
 //	std::string filename = "Resources/Engine/Fonts/marediv.ttf";
-	std::string filename = "Resources/Engine/Fonts/Lobster-Regular.ttf";
+//	std::string filename = "Resources/Engine/Fonts/Lobster-Regular.ttf";
 //	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Bold.ttf";
 //	std::string filename = "Resources/Engine/Fonts/LobsterTwo-BoldItalic.ttf";
 //	std::string filename = "Resources/Engine/Fonts/LobsterTwo-Italic.ttf";
