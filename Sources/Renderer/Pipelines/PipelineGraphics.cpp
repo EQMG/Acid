@@ -250,9 +250,9 @@ namespace acid
 		m_rasterizationState.cullMode = m_cullMode;
 		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
-		//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
-		//	m_rasterizationState.depthBiasClamp = 0.0f;
-		//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
+	//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
+	//	m_rasterizationState.depthBiasClamp = 0.0f;
+	//	m_rasterizationState.depthBiasSlopeFactor = 0.0f;
 		m_rasterizationState.lineWidth = 1.0f;
 
 		m_blendAttachmentStates[0].blendEnable = VK_TRUE;
@@ -338,7 +338,7 @@ namespace acid
 
 			for (const auto &attribute : vertexInput.GetAttributeDescriptions())
 			{
-				bool shaderContains = false;
+				/*bool shaderContains = false;
 
 				for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
 				{
@@ -352,7 +352,7 @@ namespace acid
 				if (!shaderContains)
 				{
 					continue;
-				}
+				}*/
 
 				auto &newAttribute = attributeDescriptions.emplace_back(attribute);
 				newAttribute.location += lastAttribute;

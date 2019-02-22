@@ -2,7 +2,6 @@
 
 #include "Maths/Matrix4.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Scenes/Component.hpp"
 #include "Animation/AnimationLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Geometry/VertexAnimated.hpp"

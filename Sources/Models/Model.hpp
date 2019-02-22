@@ -64,6 +64,12 @@ namespace acid
 		const Buffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
 
 		const Buffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
+
+		const uint32_t GetVertexCount() const { return m_vertexCount; }
+
+		const uint32_t GetIndexCount() const { return m_indexCount; }
+
+		VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
 	protected:
 		template<typename T>
 		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/IVertex.hpp"
@@ -13,7 +12,7 @@ namespace acid
 	{
 	public:
 		VertexAnimated(const Vector3 &position = Vector3::Zero, const Vector2 &uv = Vector2::Zero, const Vector3 &normal = Vector3::Zero, const Vector3 &tangent = Vector3::Zero, const Vector3 &jointId = Vector3::Zero,
-		               const Vector3 &vertexWeight = Vector3::Zero);
+			const Vector3 &vertexWeight = Vector3::Zero);
 
 		const Vector3 &GetPosition() const override { return m_position; };
 

@@ -1,16 +1,15 @@
 ﻿#pragma once
 
-#include <string>
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
 #include "Textures/Texture.hpp"
-#include "Serialized/Metadata.hpp"
 
 namespace acid
 {
@@ -53,13 +52,13 @@ namespace acid
 		explicit ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f, const float &stageCycles = 1.0f,
 		                      const float &scale = 1.0f);
 
-		void Update(const std::vector<Particle> &particles);
-
-		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<Particle> &particles);
 
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+
+		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 
 		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
 
@@ -85,13 +84,14 @@ namespace acid
 
 		void SetScale(const float &scale) { m_scale = scale; }
 	private:
+		bool UpdateInstanceBuffer(const CommandBuffer &commandBuffer, const std::vector<Particle> &particles);
+
 		struct ParticleTypeData
 		{
-			Matrix4 modelMatrix;
+			Matrix4 mvp;
 			Colour colourOffset;
 			Vector4 offsets;
 			Vector3 blend;
-			float _padding;
 		};
 
 		std::shared_ptr<Texture> m_texture;
@@ -106,6 +106,6 @@ namespace acid
 		uint32_t m_instances;
 
 		DescriptorsHandler m_descriptorSet;
-		StorageHandler m_storageInstances;
+		InstanceBuffer m_instanceBuffer;
 	};
 }

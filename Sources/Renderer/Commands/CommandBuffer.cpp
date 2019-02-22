@@ -1,7 +1,6 @@
 #include "CommandBuffer.hpp"
 
 #include "Renderer/Renderer.hpp"
-#include "Renderer/Renderer.hpp"
 
 namespace acid
 {

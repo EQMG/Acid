@@ -1,7 +1,6 @@
 #include "Animator.hpp"
 
 #include "Engine/Engine.hpp"
-#include "Maths/Maths.hpp"
 
 namespace acid
 {

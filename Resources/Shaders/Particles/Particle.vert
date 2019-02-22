@@ -8,21 +8,15 @@ layout(set = 0, binding = 0) uniform UboScene
 	mat4 view;
 } scene;
 
-struct Instance
-{
-	mat4 modelMatrix;
-	vec4 colourOffset;
-	vec4 offsets;
-	vec3 blend;
-	float _padding;
-};
-
-layout(binding = 1) buffer Instances
-{
-	Instance data[];
-} instances;
-
 layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inUv;
+layout(location = 2) in vec3 inNormal;
+layout(location = 3) in vec3 inTangent;
+
+layout(location = 4) in mat4 inMvp;
+layout(location = 8) in vec4 inColourOffset;
+layout(location = 9) in vec4 inOffsets;
+layout(location = 10) in vec3 inBlend;
 
 layout(location = 0) out vec2 outCoords1;
 layout(location = 1) out vec2 outCoords2;
@@ -35,24 +29,17 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
-#include "Shaders/Billboard.glsl"
-
 void main() 
 {
-	Instance instance = instances.data[gl_InstanceIndex];
-
-	mat4 modelMatrix = modelMatrix(instance.modelMatrix, scene.view, true, vec3(3.14159f, 0.0f, instance.modelMatrix[1][0]));
-	vec4 worldPosition = modelMatrix * vec4(inPosition, 1.0f);
+	vec4 worldPosition = inMvp * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	vec2 uv = inPosition.xy + vec2(0.5f, 0.5f);
-	uv.y = 1.0f - uv.y;
-	uv /= instance.blend.z;
+	vec2 uv = inUv / inBlend.z;
 
-	outColourOffset = instance.colourOffset;
-	outCoords1 = uv + instance.offsets.xy;
-	outCoords2 = uv + instance.offsets.zw;
-	outBlendFactor = instance.blend.x;
-	outTransparency = instance.blend.y;
+	outColourOffset = inColourOffset;
+	outCoords1 = uv + inOffsets.xy;
+	outCoords2 = uv + inOffsets.zw;
+	outBlendFactor = inBlend.x;
+	outTransparency = inBlend.y;
 }

@@ -40,8 +40,7 @@ namespace acid
 				continue;
 			}
 
-			std::sort((*it).second.begin(), (*it).second.end());
-			(*it).first->Update((*it).second);
+			std::sort((*it).second.begin(), (*it).second.end()); // TODO: Do in render pass and optimize.
 			++it;
 		}
 	}

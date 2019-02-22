@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"

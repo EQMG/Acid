@@ -9,14 +9,26 @@ namespace acid
 	{
 	}
 
-	void InstanceBuffer::Update(const void *newData)
+	void InstanceBuffer::Map(const CommandBuffer &commandBuffer, void **data)
+	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, data));
+	}
+
+	void InstanceBuffer::Unmap(const CommandBuffer &commandBuffer)
+	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
+	}
+
+	void InstanceBuffer::Update(const CommandBuffer &commandBuffer, const void *newData)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		// Copies the data to the buffer.
 		void *data;
-		vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
-		memcpy(data, newData, static_cast<std::size_t>(m_size));
-		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
+		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, &data));
+		std::memcpy(data, newData, static_cast<std::size_t>(m_size));
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
 	}
 }

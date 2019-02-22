@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 2) uniform sampler2D samplerColour;
+layout(binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inCoords1;
 layout(location = 1) in vec2 inCoords2;
