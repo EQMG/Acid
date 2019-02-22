@@ -2,7 +2,6 @@
 
 #include <vulkan/vulkan.h>
 #include "Renderer/Descriptors/Descriptor.hpp"
-#include "Renderer/Pipelines/Shader.hpp"
 #include "Buffer.hpp"
 
 namespace acid

@@ -10,9 +10,10 @@ namespace acid
 	public:
 		explicit InstanceBuffer(const VkDeviceSize &size);
 
-		void Update(const void *newData);
+		void Map(const CommandBuffer &commandBuffer, void **data);
 
-	private:
-		VkDescriptorBufferInfo m_bufferInfo;
+		void Unmap(const CommandBuffer &commandBuffer);
+
+		void Update(const CommandBuffer &commandBuffer, const void *newData);
 	};
 }

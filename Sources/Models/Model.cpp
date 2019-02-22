@@ -35,7 +35,7 @@ namespace acid
 			VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, vertexBuffers, offsets);
-			vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_indexBuffer->GetBuffer(), 0, VK_INDEX_TYPE_UINT32);
+			vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_indexBuffer->GetBuffer(), 0, GetIndexType());
 			vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_indexCount, instances, 0, 0, 0);
 		}
 		else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)

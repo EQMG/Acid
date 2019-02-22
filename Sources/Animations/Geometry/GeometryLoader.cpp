@@ -105,6 +105,7 @@ namespace acid
 			m_indices.emplace_back(positionIndex);
 			return currentVertex;
 		}
+
 		return DealWithAlreadyProcessedVertex(currentVertex, uvIndex, normalIndex);
 	}
 
@@ -115,6 +116,7 @@ namespace acid
 			m_indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;
 		}
+
 		VertexAnimatedData *anotherVertex = nullptr;
 
 		for (const auto &position : m_positionsList)
@@ -130,6 +132,7 @@ namespace acid
 		{
 			return DealWithAlreadyProcessedVertex(anotherVertex, newUvIndex, newNormalIndex);
 		}
+
 		auto duplicateVertex = new VertexAnimatedData(static_cast<uint32_t>(m_positionsList.size()), previousVertex->GetPosition());
 		duplicateVertex->SetUvIndex(newUvIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);

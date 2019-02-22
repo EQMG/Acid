@@ -34,7 +34,7 @@ namespace acid
 			m_jointMatrices.clear();
 			m_jointMatrices.resize(MaxJoints);
 			AddJointsToArray(*m_headJoint, m_jointMatrices);
-			//	m_jointMatrices.shrink_to_fit();
+		//	m_jointMatrices.shrink_to_fit();
 		}
 	}
 

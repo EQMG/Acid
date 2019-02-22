@@ -2,7 +2,6 @@
 
 #include <map>
 #include <string>
-#include <vector>
 #include "Maths/Time.hpp"
 #include "Animations/Joint/JointTransform.hpp"
 
