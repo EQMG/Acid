@@ -3,7 +3,6 @@
 #include <cassert>
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"

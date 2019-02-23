@@ -43,7 +43,6 @@ namespace acid
 		void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 
 		Transform GetWorldTransform() const;
-
 	private:
 		Colour m_colour;
 		Vector3 m_position;

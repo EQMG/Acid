@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Collider.hpp"
 
 class btCapsuleShape;
@@ -32,7 +31,6 @@ namespace acid
 		const float &GetHeight() const { return m_height; }
 
 		void SetHeight(const float &height);
-
 	private:
 		btCapsuleShape *m_shape;
 		float m_radius;

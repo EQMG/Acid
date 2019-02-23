@@ -7,11 +7,6 @@
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
-#include <BulletDynamics/ConstraintSolver/btNNCGConstraintSolver.h>
-#include <BulletDynamics/MLCPSolvers/btMLCPSolver.h>
-#include <BulletDynamics/MLCPSolvers/btSolveProjectedGaussSeidel.h>
-#include <BulletDynamics/MLCPSolvers/btDantzigSolver.h>
-#include <BulletDynamics/MLCPSolvers/btLemkeSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <LinearMath/btAlignedObjectArray.h>
@@ -136,13 +131,13 @@ namespace acid
 			}
 		}
 
-		// create another list for pairs that were removed this update.
+		// Creates another list for pairs that were removed this update.
 		CollisionPairs removedPairs;
 
 		// This handy function gets the difference between two sets. It takes the difference between collision pairs from the last update,
 		// and this update and pushes them into the removed pairs list.
-		std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(),
-		                    std::inserter(removedPairs, removedPairs.begin()));
+		std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(), 
+			std::inserter(removedPairs, removedPairs.begin()));
 
 		// Iterate through all of the removed pairs sending separation events for them.
 		for (const auto &removedPair : removedPairs)

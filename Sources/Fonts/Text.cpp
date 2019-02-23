@@ -5,7 +5,7 @@
 namespace acid
 {
 	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType,
-	           const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
+		const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
 		m_descriptorSet(DescriptorsHandler()),
 		m_uniformObject(UniformHandler()),
@@ -160,7 +160,7 @@ namespace acid
 
 	float Text::CalculateAntialiasSize()
 	{
-		float scale = GetScreenScale(); //  (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+		float scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
 		float size = 0.5f * scale;
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
@@ -381,7 +381,7 @@ namespace acid
 			maxX = m_maxWidth;
 		}
 
-		//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
 		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 		for (auto &vertex : vertices)

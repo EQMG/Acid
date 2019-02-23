@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-#include <winsock2.h>
+#include <WinSock2.h>
 #else
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -9,7 +9,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #endif
-#include <cstdio>
 #include <cstring>
 #include "Engine/Log.hpp"
 

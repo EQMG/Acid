@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <vulkan/vulkan.h>
-#include "Helpers/String.hpp"
 #include "Files/Files.hpp"
 #include "Renderer/Commands/CommandBuffer.hpp"
 #include "Shader.hpp"

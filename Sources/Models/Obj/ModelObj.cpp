@@ -81,24 +81,19 @@ namespace acid
 				}
 				if (prefix == "v")
 				{
-					Vector3 vertex = Vector3(String::From<float>(split[1]),
-					                         String::From<float>(split[2]),
-					                         String::From<float>(split[3]));
+					Vector3 vertex = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
 					VertexModelData *newVertex = new VertexModelData(
 						static_cast<int>(verticesList.size()), vertex);
 					verticesList.emplace_back(newVertex);
 				}
 				else if (prefix == "vt")
 				{
-					Vector2 uv = Vector2(String::From<float>(split[1]),
-					                     1.0f - String::From<float>(split[2]));
+					Vector2 uv = Vector2(String::From<float>(split[1]), 1.0f - String::From<float>(split[2]));
 					uvsList.emplace_back(uv);
 				}
 				else if (prefix == "vn")
 				{
-					Vector3 normal = Vector3(String::From<float>(split[1]),
-					                         String::From<float>(split[2]),
-					                         String::From<float>(split[3]));
+					Vector3 normal = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
 					normalsList.emplace_back(normal);
 				}
 				else if (prefix == "f")
@@ -116,13 +111,13 @@ namespace acid
 
 					VertexModelData *v0 = ProcessDataVertex(
 						Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]),
-						        String::From<float>(vertex1[2])), verticesList, indices);
+							String::From<float>(vertex1[2])), verticesList, indices);
 					VertexModelData *v1 = ProcessDataVertex(
-						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]),
-						        String::From<float>(vertex2[2])), verticesList, indices);
+						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]), 
+							String::From<float>(vertex2[2])), verticesList, indices);
 					VertexModelData *v2 = ProcessDataVertex(
-						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]),
-						        String::From<float>(vertex3[2])), verticesList, indices);
+						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]), 
+							String::From<float>(vertex3[2])), verticesList, indices);
 					CalculateTangents(v0, v1, v2, uvsList);
 				}
 				else if (prefix == "o")
@@ -196,8 +191,8 @@ namespace acid
 		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, vertices, indices);
 	}
 
-	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices,
-	                                                              std::vector<uint32_t> &indices)
+	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, 
+		std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
 		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
 		{

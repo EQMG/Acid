@@ -1,7 +1,6 @@
 #include "Ftp.hpp"
 
 #include <algorithm>
-#include <cctype>
 #include <sstream>
 #include <fstream>
 #include <iterator>
@@ -352,8 +351,8 @@ namespace acid
 							}
 
 							// Save the remaining data for the next time getResponse() is called.
-							m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()),
-							                       length - static_cast<std::size_t>(in.tellg()));
+							m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()), 
+								length - static_cast<std::size_t>(in.tellg()));
 
 							// Return the response code and message.
 							return FtpResponse(static_cast<FtpResponse::Status>(code), message);

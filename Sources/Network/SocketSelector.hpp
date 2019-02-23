@@ -95,7 +95,6 @@ namespace acid
 		/// <param name="right"> Instance to assign. </param>
 		/// <returns> Reference to self. </returns>
 		SocketSelector &operator=(const SocketSelector &right);
-
 	private:
 		struct SocketSelectorImpl;
 

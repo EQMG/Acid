@@ -14,8 +14,6 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		static const uint32_t HardwareConcurrency;
-
 		explicit ThreadPool(const uint32_t &threadCount = HardwareConcurrency);
 
 		/// <summary>
@@ -24,6 +22,8 @@ namespace acid
 		void Wait();
 
 		std::vector<std::unique_ptr<Thread>> &GetThreads() { return m_threads; }
+
+		static const uint32_t HardwareConcurrency;
 	private:
 		std::vector<std::unique_ptr<Thread>> m_threads;
 	};

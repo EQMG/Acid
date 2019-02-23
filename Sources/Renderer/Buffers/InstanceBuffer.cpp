@@ -1,5 +1,6 @@
 ﻿#include "InstanceBuffer.hpp"
 
+#include <cstring>
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -9,13 +10,13 @@ namespace acid
 	{
 	}
 
-	void InstanceBuffer::Map(const CommandBuffer &commandBuffer, void **data)
+	void InstanceBuffer::Map(void **data)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, data));
 	}
 
-	void InstanceBuffer::Unmap(const CommandBuffer &commandBuffer)
+	void InstanceBuffer::Unmap()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
@@ -28,7 +29,7 @@ namespace acid
 		// Copies the data to the buffer.
 		void *data;
 		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, &data));
-		std::memcpy(data, newData, static_cast<std::size_t>(m_size));
+		memcpy(data, newData, static_cast<std::size_t>(m_size));
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
 	}
 }

@@ -77,9 +77,9 @@ namespace acid
 		out << "HTTP/" << m_majorVersion << "." << m_minorVersion << "\r\n";
 
 		// Write fields.
-		for (auto i = m_fields.begin(); i != m_fields.end(); ++i)
+		for (const auto &field : m_fields)
 		{
-			out << i->first << ": " << i->second << "\r\n";
+			out << field.first << ": " << field.second << "\r\n";
 		}
 
 		// Use an extra \r\n to separate the header from the body.

@@ -23,7 +23,8 @@ namespace acid
 		/// <param name="rotation"> The particles rotation. </param>
 		/// <param name="scale"> The particles scale. </param>
 		/// <param name="gravityEffect"> The particles gravity effect. </param>
-		Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles, const float &rotation, const float &scale, const float &gravityEffect);
+		Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, 
+			const float &stageCycles, const float &rotation, const float &scale, const float &gravityEffect);
 
 		/// <summary>
 		/// Updates the particle.
@@ -61,7 +62,6 @@ namespace acid
 		const float &DistanceToCamera() const { return m_distanceToCamera; }
 
 		bool operator<(const Particle &other) const;
-
 	private:
 		Vector2 CalculateTextureOffset(const int32_t &index) const;
 

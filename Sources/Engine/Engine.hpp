@@ -2,9 +2,9 @@
 
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/Time.hpp"
-#include "Log.hpp"
 #include "ModuleManager.hpp"
 #include "ModuleUpdater.hpp"
+#include "Log.hpp"
 #include "Game.hpp"
 
 /// <summary>
@@ -121,7 +121,6 @@ namespace acid
 		/// </summary>
 		/// <param name="error"> If a bad error occurred. </param>
 		void RequestClose(const bool &error);
-
 	private:
 		static ACID_STATE Engine *INSTANCE;
 

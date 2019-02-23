@@ -32,7 +32,6 @@ namespace acid
 		void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
 
 		void Remove(const std::shared_ptr<Resource> &resource);
-
 	private:
 		std::mutex m_mutex;
 		std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;

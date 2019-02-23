@@ -5,7 +5,6 @@
 #include <optional>
 #include <algorithm>
 #include <vulkan/vulkan.h>
-#include "Engine/Log.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 
@@ -19,9 +18,7 @@ namespace acid
 	public:
 		enum class Type
 		{
-			Image,
-			Depth,
-			Swapchain
+			Image, Depth, Swapchain
 		};
 
 		/// <summary>
@@ -33,7 +30,8 @@ namespace acid
 		/// <param name="type"> The attachment type this represents. </param>
 		/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
 		/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
-		Attachment(const uint32_t &binding, const std::string &name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::Black) :
+		Attachment(const uint32_t &binding, const std::string &name, const Type &type, const bool &multisampled = false, 
+			const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::Black) :
 			m_binding(binding),
 			m_name(name),
 			m_type(type),
@@ -65,9 +63,6 @@ namespace acid
 
 	class ACID_EXPORT SubpassType
 	{
-	private:
-		uint32_t m_binding;
-		std::vector<uint32_t> m_attachmentBindings;
 	public:
 		SubpassType(const uint32_t &binding, const std::vector<uint32_t> &attachmentBindings) :
 			m_binding(binding),
@@ -78,20 +73,16 @@ namespace acid
 		const uint32_t &GetBinding() const { return m_binding; }
 
 		const std::vector<uint32_t> &GetAttachmentBindings() const { return m_attachmentBindings; }
+	private:
+		uint32_t m_binding;
+		std::vector<uint32_t> m_attachmentBindings;
 	};
 
 	class ACID_EXPORT RenderpassCreate
 	{
-	private:
-		std::vector<Attachment> m_images;
-		std::vector<SubpassType> m_subpasses;
-
-		std::optional<uint32_t> m_width;
-		std::optional<uint32_t> m_height;
-		Vector2 m_scale;
-		Vector2 m_offset;
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
+		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, 
+			const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
 			m_images(images),
 			m_subpasses(subpasses),
 			m_width(width),
@@ -150,5 +141,13 @@ namespace acid
 		const Vector2 &GetOffset() const { return m_offset; }
 
 		void SetOffset(const Vector2 &offset) { m_offset = offset; }
+	private:
+		std::vector<Attachment> m_images;
+		std::vector<SubpassType> m_subpasses;
+
+		std::optional<uint32_t> m_width;
+		std::optional<uint32_t> m_height;
+		Vector2 m_scale;
+		Vector2 m_offset;
 	};
 }

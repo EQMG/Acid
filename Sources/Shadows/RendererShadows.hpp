@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Models/Model.hpp"
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Shadows.hpp"
 
 namespace acid
 {
@@ -19,7 +17,6 @@ namespace acid
 		explicit RendererShadows(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
-
 	private:
 		std::vector<Shader::Define> GetDefines();
 

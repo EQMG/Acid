@@ -60,7 +60,6 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The filename to output into. </param>
 		static void OpenLog(const std::string &filename);
-
 	private:
 		static ACID_STATE std::mutex MUTEX;
 		static ACID_STATE std::ofstream STREAM;

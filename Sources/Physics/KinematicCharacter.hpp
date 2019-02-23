@@ -69,10 +69,8 @@ namespace acid
 		void Jump(const Vector3 &direction);
 
 		void SetWalkDirection(const Vector3 &direction);
-
 	protected:
 		void RecalculateMass() override;
-
 	private:
 		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape);
 

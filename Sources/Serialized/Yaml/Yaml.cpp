@@ -36,7 +36,7 @@ namespace acid
 
 			uint32_t indentation = 0;
 			bool comment = false;
-			//	bool array = false;
+		//	bool array = false;
 
 			for (const auto &c : line)
 			{

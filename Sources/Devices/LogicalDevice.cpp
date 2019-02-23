@@ -5,7 +5,6 @@
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
 #include "Surface.hpp"
-#include "Window.hpp"
 
 namespace acid
 {

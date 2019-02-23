@@ -157,7 +157,7 @@ namespace acid
 
 		if (it == m_attributes.end())
 		{
-			return nullptr;
+			return "";
 		}
 
 		return (*it).second;

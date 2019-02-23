@@ -1,6 +1,7 @@
 #include "Matrix2.hpp"
 
 #include <cassert>
+#include <cstring>
 #include "Maths.hpp"
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"

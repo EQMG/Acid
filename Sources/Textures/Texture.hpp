@@ -30,8 +30,8 @@ namespace acid
 		/// <param name="addressMode"> The sampler address mode to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		static std::shared_ptr<Texture> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		                                       const bool &anisotropic = true, const bool &mipmap = true);
+		static std::shared_ptr<Texture> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, 
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new texture object.
@@ -43,7 +43,7 @@ namespace acid
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
 		explicit Texture(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		                 const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
+			const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>
 		/// A new texture object from a array of pixels.
@@ -59,16 +59,17 @@ namespace acid
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		Texture(const uint32_t &width, const uint32_t &height, uint8_t *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		        const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		        const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
+		Texture(const uint32_t &width, const uint32_t &height, uint8_t *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, 
+			const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, 
+			const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
 		~Texture();
 
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
 
-		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		                                      const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+		WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, 
+			const std::optional<OffsetSize> &offsetSize) const override;
 
 		void Load() override;
 
@@ -140,29 +141,31 @@ namespace acid
 		/// <returns> If this has a stencil component. </returns>
 		static bool HasStencil(const VkFormat &format);
 
-		static void CreateImage(VkImage &image, VkDeviceMemory &memory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples,
-		                        const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
+		static void CreateImage(VkImage &image, VkDeviceMemory &memory, const uint32_t &width, const uint32_t &height, const VkImageType &type, const VkSampleCountFlagBits &samples, 
+			const uint32_t &mipLevels, const VkFormat &format, const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &arrayLayers);
 
 		static bool HasStencilComponent(const VkFormat &format);
 
-		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const VkImageAspectFlags &aspectMask, const uint32_t &mipLevels,
-		                                  const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+		static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, 
+			const VkImageAspectFlags &aspectMask, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
-		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+		static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const uint32_t &width, const uint32_t &height, 
+			const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
-		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+		static void CreateMipmaps(const VkImage &image, const uint32_t &width, const uint32_t &height, const VkImageLayout &dstImageLayout, 
+			const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
-		static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels);
+		static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic,
+			const uint32_t &mipLevels);
 
-		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer,
-		                            const uint32_t &layerCount);
+		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, 
+			const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
 		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
-		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask,
-		                                     const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout,
-		                                     const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
-
+		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, 
+			const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, 
+			const VkPipelineStageFlags &dstStageMask, const VkImageSubresourceRange &subresourceRange);
 	private:
 		std::string m_filename;
 

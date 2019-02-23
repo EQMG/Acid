@@ -6,7 +6,6 @@
 #include <vector>
 #include "Helpers/String.hpp"
 #include "Helpers/NonCopyable.hpp"
-#include "Resources/Resource.hpp"
 
 namespace acid
 {
@@ -273,7 +272,6 @@ namespace acid
 		bool operator!=(const Metadata &other) const;
 
 		bool operator<(const Metadata &other) const;
-
 	protected:
 		std::string m_name;
 		std::string m_value;

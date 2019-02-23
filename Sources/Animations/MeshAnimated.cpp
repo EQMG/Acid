@@ -4,6 +4,7 @@
 #include "Files/File.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Files/FileSystem.hpp"
+#include "Skeleton/SkeletonLoader.hpp"
 
 namespace acid
 {

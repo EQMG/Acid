@@ -6,8 +6,6 @@
 #include "Maths/Transform.hpp"
 #include "Gizmos/Gizmos.hpp"
 #include "Scenes/Component.hpp"
-#include "Physics/Frustum.hpp"
-#include "Physics/Ray.hpp"
 
 class btCollisionShape;
 class btVector3;
@@ -45,7 +43,7 @@ namespace acid
 		/// </summary>
 		/// <param name="ray"> The ray being tested for intersection. </param>
 		/// <returns> If the ray intersects, relative intersect location. </returns>
-		//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
+	//	virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 		const Transform &GetLocalTransform() const { return m_localTransform; }
 
@@ -62,7 +60,6 @@ namespace acid
 		static btTransform Convert(const Transform &transform);
 
 		static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::One);
-
 	protected:
 		Transform m_localTransform;
 		Gizmo *m_gizmo;

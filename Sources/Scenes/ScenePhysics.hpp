@@ -1,8 +1,6 @@
 #pragma once
 
 #include <set>
-#include <iterator>
-#include <algorithm>
 #include <memory>
 #include <optional>
 #include "Maths/Vector3.hpp"

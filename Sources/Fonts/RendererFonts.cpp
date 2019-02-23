@@ -10,7 +10,7 @@ namespace acid
 	RendererFonts::RendererFonts(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
 		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexModel::GetVertexInput()},
-		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

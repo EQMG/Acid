@@ -161,9 +161,9 @@ namespace acid
 			return acquireResult;
 		}
 
-		//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+	//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-		//	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
+	//	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
 		return VK_SUCCESS;
 	}
 

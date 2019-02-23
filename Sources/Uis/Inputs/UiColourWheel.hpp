@@ -1,8 +1,6 @@
 #pragma once
 
-#include <functional>
 #include "Audio/Sound.hpp"
-#include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
 
@@ -12,8 +10,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiColourWheel(UiObject *parent, const Colour &colour = Colour::Red,
-		              const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiColourWheel(UiObject *parent, const Colour &colour = Colour::Red, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 

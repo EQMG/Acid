@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <SPIRV/GlslangToSpv.h>
-#include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 #include "RenderPipeline.hpp"
 
@@ -190,8 +189,8 @@ namespace acid
 			return "A requested format is not supported on this device";
 		case VK_ERROR_SURFACE_LOST_KHR:
 			return "A surface is no longer available";
-			//	case VK_ERROR_OUT_OF_POOL_MEMORY:
-			//		return "A allocation failed due to having no more space in the descriptor pool";
+		//	case VK_ERROR_OUT_OF_POOL_MEMORY:
+		//		return "A allocation failed due to having no more space in the descriptor pool";
 		case VK_SUBOPTIMAL_KHR:
 			return "A swapchain no longer matches the surface properties exactly, but can still be used";
 		case VK_ERROR_OUT_OF_DATE_KHR:
@@ -223,8 +222,7 @@ namespace acid
 
 	void Renderer::UpdateSurfaceCapabilities()
 	{
-		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(),
-		                                                  m_surface->GetSurface(), &m_surface->m_capabilities));
+		CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface->GetSurface(), &m_surface->m_capabilities));
 	}
 
 	void Renderer::CaptureScreenshot(const std::string &filename)

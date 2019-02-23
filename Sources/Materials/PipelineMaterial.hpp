@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Models/Model.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Renderer/RenderStage.hpp"
-#include "Resources/Resource.hpp"
 
 namespace acid
 {

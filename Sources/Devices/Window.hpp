@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 #include <optional>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
@@ -252,7 +251,6 @@ namespace acid
 		std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 
 		VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
-
 	private:
 		uint32_t m_windowWidth;
 		uint32_t m_windowHeight;

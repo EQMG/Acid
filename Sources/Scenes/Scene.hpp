@@ -17,7 +17,7 @@ namespace acid
 		/// Creates a new scene.
 		/// </summary>
 		/// <param name="camera"> The scenes camera. </param>
-		Scene(Camera *camera) :
+		explicit Scene(Camera *camera) :
 			m_camera(camera),
 			m_structure(std::make_unique<SceneStructure>()),
 			m_physics(std::make_unique<ScenePhysics>()),
@@ -61,7 +61,6 @@ namespace acid
 		/// </summary>
 		/// <returns> If the scene is paused. </returns>
 		virtual bool IsPaused() const = 0;
-
 	private:
 		friend class Scenes;
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
@@ -12,8 +11,7 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiSection(UiObject *parent, const std::string &string,
-		          const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 

@@ -67,8 +67,7 @@ namespace acid
 	btTransform Collider::Convert(const Transform &transform)
 	{
 		btQuaternion rotation = btQuaternion();
-		rotation.setEulerZYX(transform.GetRotation().m_y * Maths::DegToRad,
-		                     transform.GetRotation().m_x * Maths::DegToRad, transform.GetRotation().m_z * Maths::DegToRad);
+		rotation.setEulerZYX(transform.GetRotation().m_y * Maths::DegToRad, transform.GetRotation().m_x * Maths::DegToRad, transform.GetRotation().m_z * Maths::DegToRad);
 
 		btTransform worldTransform = btTransform();
 		worldTransform.setIdentity();

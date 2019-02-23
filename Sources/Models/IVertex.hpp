@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Maths/Vector3.hpp"
 
 namespace acid

@@ -22,8 +22,7 @@ namespace acid
 		static const Colour AccentColour;
 		static const Colour SelectedColour;
 
-		UiInputButton(UiObject *parent, const std::string &string,
-		              const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 

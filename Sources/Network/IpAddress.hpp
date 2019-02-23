@@ -16,15 +16,6 @@ namespace acid
 	class ACID_EXPORT IpAddress
 	{
 	public:
-		/// Value representing an empty/invalid address.
-		static const IpAddress None;
-		/// Value representing any address (0.0.0.0).
-		static const IpAddress Any;
-		/// The "localhost" address (for connecting a computer to itself locally).
-		static const IpAddress LocalHost;
-		/// The "broadcast" address (for sending UDP messages to everyone on a local network).
-		static const IpAddress Broadcast;
-
 		/// <summary>
 		/// Default constructor, this constructor creates an empty (invalid) address.
 		/// </summary>
@@ -99,7 +90,6 @@ namespace acid
 		/// <returns> Public IP address of the computer. </returns>
 		static IpAddress GetPublicAddress(const Time &timeout = Time::Zero);
 
-	public:
 		bool operator==(const IpAddress &other) const;
 
 		bool operator!=(const IpAddress &other) const;
@@ -116,6 +106,14 @@ namespace acid
 
 		ACID_EXPORT friend std::istream &operator>>(std::istream &stream, IpAddress &address);
 
+		/// Value representing an empty/invalid address.
+		static const IpAddress None;
+		/// Value representing any address (0.0.0.0).
+		static const IpAddress Any;
+		/// The "localhost" address (for connecting a computer to itself locally).
+		static const IpAddress LocalHost;
+		/// The "broadcast" address (for sending UDP messages to everyone on a local network).
+		static const IpAddress Broadcast;
 	private:
 		/// <summary>
 		/// Resolve the given address string.

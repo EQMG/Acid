@@ -114,7 +114,7 @@ namespace acid
 
 	void KinematicCharacter::ClearForces()
 	{
-		//	m_controller->clearForces();
+	//	m_controller->clearForces();
 	}
 
 	void KinematicCharacter::SetGravity(const Vector3 &gravity)

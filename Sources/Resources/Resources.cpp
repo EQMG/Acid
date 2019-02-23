@@ -1,7 +1,5 @@
 #include "Resources.hpp"
 
-#include <algorithm>
-
 namespace acid
 {
 	Resources::Resources() :

@@ -353,7 +353,7 @@ static _WDIR*
 _wopendir(
     const wchar_t *dirname)
 {
-    _WDIR *dirp = NULL;
+    _WDIR *dirp;
     DWORD n;
     wchar_t *p;
 
@@ -678,9 +678,6 @@ opendir(
     const char *dirname)
 {
     struct DIR *dirp;
-    int error;
-    wchar_t wname[PATH_MAX + 1];
-    size_t n;
 
     /* Must have directory name */
     if (dirname == NULL  ||  dirname[0] == '\0') {
@@ -693,25 +690,31 @@ opendir(
     if (!dirp) {
         return NULL;
     }
+    {
+        int error;
+        wchar_t wname[PATH_MAX + 1];
+        size_t n;
 
-    /* Convert directory name to wide-character string */
-    error = dirent_mbstowcs_s(
-        &n, wname, PATH_MAX + 1, dirname, PATH_MAX + 1);
-    if (error) {
-        /*
-         * Cannot convert file name to wide-character string.  This
-         * occurs if the string contains invalid multi-byte sequences or
-         * the output buffer is too small to contain the resulting
-         * string.
-         */
-        goto exit_free;
-    }
+        /* Convert directory name to wide-character string */
+        error = dirent_mbstowcs_s(
+            &n, wname, PATH_MAX + 1, dirname, PATH_MAX + 1);
+        if (error) {
+            /*
+             * Cannot convert file name to wide-character string.  This
+             * occurs if the string contains invalid multi-byte sequences or
+             * the output buffer is too small to contain the resulting
+             * string.
+             */
+            goto exit_free;
+        }
 
 
-    /* Open directory stream using wide-character name */
-    dirp->wdirp = _wopendir (wname);
-    if (!dirp->wdirp) {
-        goto exit_free;
+        /* Open directory stream using wide-character name */
+        dirp->wdirp = _wopendir (wname);
+        if (!dirp->wdirp) {
+            goto exit_free;
+        }
+
     }
 
     /* Success */

@@ -1,6 +1,7 @@
 ﻿#include "UiInputGrabber.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
+#include "Uis/Uis.hpp"
 #include "UiInputButton.hpp"
 
 namespace acid
@@ -9,9 +10,9 @@ namespace acid
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour)),
 		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
-		                                   UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
-		                                   UiInputButton::FontSize, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+			UiInputButton::FontSize, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_title(title),
 		m_lastKey(0),
@@ -76,8 +77,7 @@ namespace acid
 		m_textValue->SetString(GetTextString());
 	}
 
-	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port,
-	                                     const uint32_t &value, const UiBound &rectangle) :
+	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_port(port),
 		m_value(value),
@@ -99,8 +99,7 @@ namespace acid
 		};
 	}
 
-	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
-	                                     const UiBound &rectangle) :
+	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_value(value),
 		m_onGrabbed(Delegate<void(UiGrabberKeyboard *, Key)>())
@@ -121,8 +120,7 @@ namespace acid
 		};
 	}
 
-	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
-	                               const UiBound &rectangle) :
+	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_value(value),
 		m_onGrabbed(Delegate<void(UiGrabberMouse *, MouseButton)>())

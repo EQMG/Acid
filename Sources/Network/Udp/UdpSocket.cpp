@@ -1,11 +1,10 @@
 #include "UdpSocket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-#include <winsock2.h>
+#include <WinSock2.h>
 #else
 #include <netinet/in.h>
 #endif
-#include <algorithm>
 #include "Engine/Log.hpp"
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
@@ -86,8 +85,8 @@ namespace acid
 		sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 		// Send the data (unlike TCP, all the data is always sent in one call).
-		int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0,
-		                  reinterpret_cast<sockaddr *>(&address), sizeof(address));
+		int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, 
+			reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 		// Check for errors.
 		if (sent < 0)
@@ -117,8 +116,8 @@ namespace acid
 
 		// Receive a chunk of bytes.
 		SocketAddrLength addressSize = sizeof(address);
-		int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0,
-		                            reinterpret_cast<sockaddr *>(&address), &addressSize);
+		int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, 
+			reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 		// Check for errors.
 		if (sizeReceived < 0)

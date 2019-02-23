@@ -163,7 +163,6 @@ namespace acid
 		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
 
 		void CancelEvent(const MouseButton &button) const;
-
 	private:
 		UiObject *m_parent;
 		std::vector<UiObject *> m_children;

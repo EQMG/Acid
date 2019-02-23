@@ -17,9 +17,7 @@ namespace acid
 	public:
 		enum class Type
 		{
-			General,
-			Effect,
-			Music
+			General, Effect, Music
 		};
 
 		/// <summary>
@@ -49,7 +47,6 @@ namespace acid
 		float GetTypeGain(const Type &type) const;
 
 		void SetTypeGain(const Type &type, const float &volume);
-
 	private:
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;

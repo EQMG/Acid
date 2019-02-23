@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <memory>
-#include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
@@ -51,7 +50,6 @@ namespace acid
 		bool Update(const Shader::UniformBlock *uniformBlock);
 
 		void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
-
 	private:
 		bool m_multipipeline;
 		const Shader::UniformBlock *m_uniformBlock;

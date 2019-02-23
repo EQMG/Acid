@@ -5,8 +5,8 @@
 
 namespace acid
 {
-	FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField,
-	                     const float &nearTransition, const float &farField, const float &farTransition) :
+	FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField, 
+		const float &nearTransition, const float &farField, const float &farTransition) :
 		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Dof.frag"}, {}),
 		m_pushScene(PushHandler()),
 		m_pipelineBlur(pipelineBlur),
@@ -32,9 +32,9 @@ namespace acid
 
 		// Updates descriptors.
 		m_descriptorSet.Push("PushScene", m_pushScene);
-		//	m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
+	//	m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
-		//	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
+	//	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
 		m_descriptorSet.Push("samplerBlured", m_pipelineBlur == nullptr ? nullptr : m_pipelineBlur->GetOutput());
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);

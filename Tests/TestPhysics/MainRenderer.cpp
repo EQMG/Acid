@@ -3,7 +3,6 @@
 #include <Fonts/RendererFonts.hpp>
 #include <Gizmos/RendererGizmos.hpp>
 #include <Guis/RendererGuis.hpp>
-#include <Devices/Keyboard.hpp>
 #include <Meshes/RendererMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Particles/RendererParticles.hpp>
@@ -22,8 +21,8 @@
 #include <Post/Filters/FilterVignette.hpp>
 #include <Post/Pipelines/PipelineBlur.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
+#include <Shadows/Shadows.hpp>
 
 namespace test
 {

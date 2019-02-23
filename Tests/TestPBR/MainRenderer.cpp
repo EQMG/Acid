@@ -1,6 +1,5 @@
 #include "MainRenderer.hpp"
 
-#include <Devices/Keyboard.hpp>
 #include <Fonts/RendererFonts.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Meshes/RendererMeshes.hpp>
@@ -9,8 +8,8 @@
 #include <Post/Deferred/RendererDeferred.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
+#include <Shadows/Shadows.hpp>
 
 namespace test
 {

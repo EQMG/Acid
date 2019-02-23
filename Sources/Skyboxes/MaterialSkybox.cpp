@@ -1,7 +1,6 @@
 #include "MaterialSkybox.hpp"
 
 #include "Models/VertexModel.hpp"
-#include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -17,8 +16,8 @@ namespace acid
 
 	void MaterialSkybox::Start()
 	{
-		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineGraphicsCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()},
-		                                                                             PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, {}));
+		m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineGraphicsCreate({"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexModel::GetVertexInput()}, 
+			PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, {}));
 	}
 
 	void MaterialSkybox::Update()
