@@ -13,7 +13,7 @@ layout(location = 1) in vec2 inUv;
 layout(location = 2) in vec3 inNormal;
 layout(location = 3) in vec3 inTangent;
 
-layout(location = 4) in mat4 inMvp;
+layout(location = 4) in mat4 inModelMatrix;
 layout(location = 8) in vec4 inColourOffset;
 layout(location = 9) in vec4 inOffsets;
 layout(location = 10) in vec3 inBlend;
@@ -24,14 +24,14 @@ layout(location = 2) out vec4 outColourOffset;
 layout(location = 3) out float outBlendFactor;
 layout(location = 4) out float outTransparency;
 
-out gl_PerVertex 
+out gl_PerVertex
 {
 	vec4 gl_Position;
 };
 
-void main() 
+void main()
 {
-	vec4 worldPosition = inMvp * vec4(inPosition, 1.0f);
+	vec4 worldPosition = inModelMatrix * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 

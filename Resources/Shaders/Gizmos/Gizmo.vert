@@ -8,18 +8,13 @@ layout(binding = 0) uniform UboScene
 	mat4 view;
 } scene;
 
-struct Instance
-{
-	mat4 transform;
-	vec4 diffuse;
-};
-
-layout(binding = 1) buffer Instances
-{
-	Instance data[];
-} instances;
-
 layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inUv;
+layout(location = 2) in vec3 inNormal;
+layout(location = 3) in vec3 inTangent;
+
+layout(location = 4) in mat4 inModelMatrix;
+layout(location = 8) in vec4 inDiffuse;
 
 layout(location = 0) out vec4 outDiffuse;
 
@@ -30,11 +25,9 @@ out gl_PerVertex
 
 void main()
 {
-	Instance instance = instances.data[gl_InstanceIndex];
-
-	vec4 worldPosition = instance.transform * vec4(inPosition, 1.0f);
+	vec4 worldPosition = inModelMatrix * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	outDiffuse = instance.diffuse;
+	outDiffuse = inDiffuse;
 }

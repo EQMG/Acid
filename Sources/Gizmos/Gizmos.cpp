@@ -10,12 +10,12 @@ namespace acid
 
 	void Gizmos::Update()
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
+		/*std::lock_guard<std::mutex> lock(m_mutex);
 
 		for (auto &[gizmoType, gizmos] : m_gizmos)
 		{
 			gizmoType->Update(gizmos);
-		}
+		}*/
 	}
 
 	Gizmo *Gizmos::AddGizmo(Gizmo *gizmo)

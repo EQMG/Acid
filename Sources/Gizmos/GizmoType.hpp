@@ -3,6 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Models/Model.hpp"
+#include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
@@ -38,13 +39,13 @@ namespace acid
 		/// <param name="diffuse"> The default diffuse colour for gizmos. </param>
 		explicit GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::White);
 
-		void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
-
-		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<std::unique_ptr<Gizmo>> &gizmos);
 
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
+
+		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 
 		const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
@@ -58,6 +59,8 @@ namespace acid
 
 		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
 	private:
+		bool UpdateInstanceBuffer(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
+
 		struct GizmoTypeData
 		{
 			Matrix4 modelMatrix;
@@ -68,9 +71,10 @@ namespace acid
 		float m_lineThickness;
 		Colour m_diffuse;
 
+		uint32_t m_maxInstances;
 		uint32_t m_instances;
 
 		DescriptorsHandler m_descriptorSet;
-		StorageHandler m_storageInstances;
+		InstanceBuffer m_instanceBuffer;
 	};
 }
