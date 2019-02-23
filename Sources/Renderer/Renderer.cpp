@@ -66,11 +66,6 @@ namespace acid
 
 		auto &stages = m_renderManager->GetRendererContainer().GetStages();
 
-		if (stages.empty())
-		{
-			return;
-		}
-
 		std::optional<uint32_t> renderpass = {};
 		uint32_t subpass = 0;
 
@@ -145,7 +140,12 @@ namespace acid
 		// Ends the last renderpass.
 		if (renderpass)
 		{
-			EndRenderpass(*GetRenderStage(*renderpass));
+			auto renderStage = GetRenderStage(*renderpass);
+
+			if (renderStage != nullptr)
+			{
+				EndRenderpass(*renderStage);
+			}
 		}
 	}
 

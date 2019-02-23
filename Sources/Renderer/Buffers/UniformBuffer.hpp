@@ -11,7 +11,7 @@ namespace acid
 		public Buffer
 	{
 	public:
-		explicit UniformBuffer(const VkDeviceSize &size);
+		explicit UniformBuffer(const VkDeviceSize &size, const void *data = nullptr);
 
 		void Update(const void *newData);
 

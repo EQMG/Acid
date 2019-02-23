@@ -72,8 +72,9 @@ namespace acid
 			return std::vector<float>();
 		}
 
-		std::vector<float> result(3 * m_vertexBuffer->GetSize());
-		m_vertexBuffer->CopyBuffer(result.data());
+		std::vector<float> result(m_vertexBuffer->GetSize() / sizeof(float));
+		m_vertexBuffer->Map(reinterpret_cast<void **>(result.data()));
+		m_vertexBuffer->Unmap();
 		return result;
 	}
 }

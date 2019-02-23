@@ -11,7 +11,7 @@ namespace acid
 		public Buffer
 	{
 	public:
-		explicit StorageBuffer(const VkDeviceSize &size);
+		explicit StorageBuffer(const VkDeviceSize &size, const void *data = nullptr);
 
 		void Update(const void *newData);
 

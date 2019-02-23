@@ -24,7 +24,9 @@ namespace acid
 
 		virtual ~Buffer();
 
-		void CopyBuffer(void *data) const;
+		void Map(void **data);
+
+		void Unmap();
 
 		const VkDeviceSize &GetSize() const { return m_size; }
 
@@ -34,7 +36,7 @@ namespace acid
 
 		static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
-		static void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
+		static void CopyBuffer(const CommandBuffer &commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, const VkDeviceSize &size);
 	protected:
 		VkDeviceSize m_size;
 		VkBuffer m_buffer;

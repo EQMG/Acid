@@ -12,11 +12,6 @@ namespace acid
 		m_buffer(VK_NULL_HANDLE),
 		m_bufferMemory(VK_NULL_HANDLE)
 	{
-		if (m_size == 0)
-		{
-			return;
-		}
-
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 		auto graphicsFamily = logicalDevice->GetGraphicsFamily();
@@ -78,27 +73,29 @@ namespace acid
 		vkFreeMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, nullptr);
 	}
 
-	void Buffer::CopyBuffer(void *data) const
+	void Buffer::Map(void **data)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, data));
+	}
 
-		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data));
-		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
+	void Buffer::Unmap()
+	{
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+		vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
 	}
 
 	uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 	{
 		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+		auto memoryProperties = physicalDevice->GetMemoryProperties();
 
-		VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
-		vkGetPhysicalDeviceMemoryProperties(physicalDevice->GetPhysicalDevice(), &physicalDeviceMemoryProperties);
-
-		for (uint32_t i = 0; i < physicalDeviceMemoryProperties.memoryTypeCount; i++)
+		for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
 		{
 			uint32_t memoryTypeBits = 1 << i;
 			bool isRequiredMemoryType = typeFilter & memoryTypeBits;
 
-			auto properties = physicalDeviceMemoryProperties.memoryTypes[i].propertyFlags;
+			auto properties = memoryProperties.memoryTypes[i].propertyFlags;
 			bool hasRequiredProperties = (properties & requiredProperties) == requiredProperties;
 
 			if (isRequiredMemoryType && hasRequiredProperties)
@@ -111,15 +108,10 @@ namespace acid
 		return 0;
 	}
 
-	void Buffer::CopyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
+	void Buffer::CopyBuffer(const CommandBuffer &commandBuffer, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
 	{
-		CommandBuffer commandBuffer = CommandBuffer();
-
 		VkBufferCopy copyRegion = {};
 		copyRegion.size = size;
 		vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
-
-		commandBuffer.End();
-		commandBuffer.SubmitIdle();
 	}
 }

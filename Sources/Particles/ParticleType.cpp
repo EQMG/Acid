@@ -132,8 +132,7 @@ namespace acid
 
 			instance->colourOffset = particle.GetParticleType()->m_colourOffset;
 
-			instance->offsets = Vector4(particle.GetTextureOffset1(), 
-				particle.GetTextureOffset2());
+			instance->offsets = Vector4(particle.GetTextureOffset1(),  particle.GetTextureOffset2());
 
 			instance->blend = Vector3(particle.GetTextureBlendFactor(),
 				particle.GetTransparency(),
@@ -172,7 +171,7 @@ namespace acid
 		// The vertex input description.
 		bindingDescriptions[0].binding = binding;
 		bindingDescriptions[0].stride = sizeof(ParticleTypeData);
-		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
 
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(7);
 

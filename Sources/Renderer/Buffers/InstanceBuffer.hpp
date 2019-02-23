@@ -10,10 +10,6 @@ namespace acid
 	public:
 		explicit InstanceBuffer(const VkDeviceSize &size);
 
-		void Map(void **data);
-
-		void Unmap();
-
 		void Update(const CommandBuffer &commandBuffer, const void *newData);
 	};
 }
