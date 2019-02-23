@@ -71,6 +71,8 @@ namespace acid
 
 		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 
+	//	Renderer::CheckVk(vkQueueWaitIdle(queueSelected)); // Can be used instead of waiting for a fence.
+
 		Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
 		vkDestroyFence(logicalDevice->GetLogicalDevice(), fence, nullptr);

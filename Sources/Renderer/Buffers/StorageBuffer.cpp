@@ -5,8 +5,8 @@
 
 namespace acid
 {
-	StorageBuffer::StorageBuffer(const VkDeviceSize &size) :
-		Buffer(size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+	StorageBuffer::StorageBuffer(const VkDeviceSize &size, const void *data) :
+		Buffer(size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, data)
 	{
 	}
 
