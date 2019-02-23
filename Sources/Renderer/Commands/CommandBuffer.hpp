@@ -40,7 +40,7 @@ namespace acid
 		/// <param name="waitSemaphore"> A optional semaphore that will waited upon before the command buffer is executed. </param>
 		/// <param name="signalSemaphore"> A optional that is signaled once the command buffer has been excecuted. </param>
 		/// <param name="fence"> A optional fence that is signaled once the command buffer has completed. </param>
-		void Submit(const VkSemaphore &waitSemaphore = nullptr, const VkSemaphore &signalSemaphore = nullptr, VkFence fence = nullptr);
+		void Submit(const VkSemaphore &waitSemaphore = VK_NULL_HANDLE, const VkSemaphore &signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
 		const bool &IsRunning() const { return m_running; }
 

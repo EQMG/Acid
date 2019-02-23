@@ -388,7 +388,7 @@ namespace acid
 		pipelineCreateInfo.layout = m_pipelineLayout;
 		pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
 		pipelineCreateInfo.subpass = m_stage.second;
-		pipelineCreateInfo.basePipelineHandle = nullptr;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 		Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 	}

@@ -93,7 +93,7 @@ namespace acid
 		swapchainCreateInfo.compositeAlpha = m_compositeAlpha;
 		swapchainCreateInfo.presentMode = m_presentMode;
 		swapchainCreateInfo.clipped = VK_TRUE;
-		swapchainCreateInfo.oldSwapchain = nullptr;
+		swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
 		if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT)
 		{
@@ -153,7 +153,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, nullptr, &m_activeImageIndex);
+		VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE, &m_activeImageIndex);
 
 		if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 		{

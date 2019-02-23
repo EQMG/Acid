@@ -562,7 +562,8 @@ namespace acid
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
 		shaderModuleCreateInfo.pCode = spirv.data();
-		VkShaderModule shaderModule = nullptr;
+		
+		VkShaderModule shaderModule;
 		Renderer::CheckVk(vkCreateShaderModule(logicalDevice->GetLogicalDevice(), &shaderModuleCreateInfo, nullptr, &shaderModule));
 		return shaderModule;
 	}

@@ -148,7 +148,7 @@ namespace acid
 		pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
 		pipelineCreateInfo.stage = m_shaderStageCreateInfo;
 		pipelineCreateInfo.layout = m_pipelineLayout;
-		pipelineCreateInfo.basePipelineHandle = nullptr;
+		pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 		pipelineCreateInfo.basePipelineIndex = -1;
 		vkCreateComputePipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 	}

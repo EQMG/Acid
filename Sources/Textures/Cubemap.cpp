@@ -78,10 +78,10 @@ namespace acid
 		m_width(width),
 		m_height(height),
 		m_pixels(pixels),
-		m_image(nullptr),
-		m_memory(nullptr),
-		m_view(nullptr),
-		m_sampler(nullptr),
+		m_image(VK_NULL_HANDLE),
+		m_memory(VK_NULL_HANDLE),
+		m_view(VK_NULL_HANDLE),
+		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
 		Load();

@@ -9,7 +9,7 @@ namespace acid
 		m_pipelineLayout(pipeline.GetPipelineLayout()),
 		m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
 		m_descriptorPool(pipeline.GetDescriptorPool()),
-		m_descriptorSet(nullptr)
+		m_descriptorSet(VK_NULL_HANDLE)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 

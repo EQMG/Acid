@@ -61,10 +61,10 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
-		VkFence fence = nullptr;
-
 		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		
+		VkFence fence;
 		Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
 
 		Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
@@ -86,7 +86,7 @@ namespace acid
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_commandBuffer;
 
-		if (waitSemaphore != nullptr)
+		if (waitSemaphore != VK_NULL_HANDLE)
 		{
 			// Pipeline stages used to wait at for graphics queue submissions.
 			static VkPipelineStageFlags submitPipelineStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -96,13 +96,13 @@ namespace acid
 			submitInfo.pWaitSemaphores = &waitSemaphore;
 		}
 
-		if (signalSemaphore != nullptr)
+		if (signalSemaphore != VK_NULL_HANDLE)
 		{
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &signalSemaphore;
 		}
 
-		if (fence != nullptr)
+		if (fence != VK_NULL_HANDLE)
 		{
 			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
 			//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
