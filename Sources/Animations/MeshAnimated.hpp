@@ -5,7 +5,6 @@
 #include "Animation/AnimationLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Geometry/VertexAnimated.hpp"
-#include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"
 

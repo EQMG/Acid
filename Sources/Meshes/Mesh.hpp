@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
 #include "Scenes/Component.hpp"

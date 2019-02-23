@@ -10,8 +10,8 @@ namespace acid
 	void FilterTone::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates descriptors.
-		//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-		//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
+	//	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
+	//	m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 		PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 

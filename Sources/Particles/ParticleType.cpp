@@ -28,7 +28,8 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale)
+	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, 
+		const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 		Metadata metadata = Metadata();
@@ -36,7 +37,8 @@ namespace acid
 		return Create(metadata);
 	}
 
-	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
+	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset,
+		const float &lifeLength, const float &stageCycles, const float &scale) :
 		m_texture(texture),
 		m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
@@ -53,7 +55,7 @@ namespace acid
 
 	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<Particle> &particles)
 	{
-		bool updatedBuffer = UpdateInstanceBuffer(commandBuffer, particles);
+		bool updatedBuffer = UpdateInstanceBuffer(particles);
 
 		if (!updatedBuffer)
 		{
@@ -81,7 +83,7 @@ namespace acid
 		return true;
 	}
 
-	bool ParticleType::UpdateInstanceBuffer(const CommandBuffer &commandBuffer, const std::vector<Particle> &particles)
+	bool ParticleType::UpdateInstanceBuffer(const std::vector<Particle> &particles)
 	{
 		if (particles.empty())
 		{
@@ -95,7 +97,7 @@ namespace acid
 		m_instances = 0;
 
 		ParticleTypeData *particleInstances;
-		m_instanceBuffer.Map(commandBuffer, reinterpret_cast<void **>(&particleInstances));
+		m_instanceBuffer.Map(reinterpret_cast<void **>(&particleInstances));
 
 		for (const auto &particle : particles)
 		{
@@ -139,7 +141,7 @@ namespace acid
 			m_instances++;
 		}
 
-		m_instanceBuffer.Unmap(commandBuffer);
+		m_instanceBuffer.Unmap();
 		return m_instances != 0;
 	}
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 

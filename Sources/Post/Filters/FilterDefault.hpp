@@ -11,7 +11,6 @@ namespace acid
 		explicit FilterDefault(const Pipeline::Stage &pipelineStage, const bool &lastFilter = false);
 
 		void Render(const CommandBuffer &commandBuffer) override;
-
 	private:
 		bool m_lastFilter;
 	};

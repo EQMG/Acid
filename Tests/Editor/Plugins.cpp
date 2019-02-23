@@ -6,6 +6,7 @@
 #include <Files/FileSystem.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Uis/Uis.hpp>
 
 namespace test
 {

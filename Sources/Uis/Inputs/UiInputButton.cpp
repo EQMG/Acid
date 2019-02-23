@@ -18,8 +18,7 @@ namespace acid
 	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
 		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button_Filled.png"), AccentColour)),
-		m_text(std::make_unique<Text>(this, UiBound::Centre, FontSize, string,
-		                              FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+		m_text(std::make_unique<Text>(this, UiBound::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_mouseOver(false)
 	{

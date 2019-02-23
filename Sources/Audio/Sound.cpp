@@ -5,7 +5,6 @@
 #else
 #include <al.h>
 #endif
-#include "Maths/Maths.hpp"
 #include "Scenes/Entity.hpp"
 
 namespace acid

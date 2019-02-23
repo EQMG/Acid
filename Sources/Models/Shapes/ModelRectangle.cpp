@@ -57,10 +57,10 @@ namespace acid
 			2, 1, 0
 		};
 
-		//	for (auto &vertex : vertices)
-		//	{
-		//		vertex.SetPosition(vertex.GetPosition() * Vector3(m_min, m_max, 1.0f));
-		//	}
+	//	for (auto &vertex : vertices)
+	//	{
+	//		vertex.SetPosition(vertex.GetPosition() * Vector3(m_min, m_max, 1.0f));
+	//	}
 
 		Initialize(vertices, indices);
 	}

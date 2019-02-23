@@ -18,7 +18,7 @@ namespace acid
 
 	ColliderCapsule::~ColliderCapsule()
 	{
-		//	Scenes::Get()->GetPhysics()->GetCollisionShapes()->remove(m_shape);
+	//	Scenes::Get()->GetPhysics()->GetCollisionShapes()->remove(m_shape);
 	}
 
 	void ColliderCapsule::Start()

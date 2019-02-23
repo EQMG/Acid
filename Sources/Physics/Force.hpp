@@ -10,11 +10,6 @@ namespace acid
 	/// </summary>
 	class ACID_EXPORT Force
 	{
-	private:
-		Vector3 m_force;
-		bool m_neverExpires;
-		Time m_timeLeft;
-		Vector3 m_position;
 	public:
 		/// <summary>
 		/// Creates a new force that never times-out.
@@ -46,5 +41,10 @@ namespace acid
 		const Vector3 &GetPosition() const { return m_position; }
 
 		void SetPosition(const Vector3 &position) { m_position = position; }
+	private:
+		Vector3 m_force;
+		bool m_neverExpires;
+		Time m_timeLeft;
+		Vector3 m_position;
 	};
 }

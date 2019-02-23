@@ -1,5 +1,6 @@
 #include "MainGame.hpp"
 
+#include <iostream>
 #include <thread>
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>

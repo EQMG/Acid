@@ -3,7 +3,6 @@
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Particles.hpp"
 
 namespace acid
 {
@@ -14,7 +13,6 @@ namespace acid
 		explicit RendererParticles(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
-
 	private:
 		PipelineGraphics m_pipeline;
 		UniformHandler m_uniformScene;

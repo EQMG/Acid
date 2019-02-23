@@ -1,7 +1,5 @@
 #include "UiBound.hpp"
 
-#include "Engine/Log.hpp"
-
 namespace acid
 {
 	const Vector2 UiReference::TopLeft = Vector2(0.0f, 0.0f);

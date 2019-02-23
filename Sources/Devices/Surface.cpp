@@ -1,6 +1,5 @@
 #include "Surface.hpp"
 
-#include <cassert>
 #include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
@@ -32,7 +31,7 @@ namespace acid
 		}
 		else
 		{
-			// iterate over the list of available surface format and
+			// Iterate over the list of available surface format and
 			// check for the presence of VK_FORMAT_B8G8R8A8_UNORM
 			bool found_B8G8R8A8_UNORM = false;
 
@@ -47,7 +46,7 @@ namespace acid
 				}
 			}
 
-			// in case VK_FORMAT_B8G8R8A8_UNORM is not available
+			// In case VK_FORMAT_B8G8R8A8_UNORM is not available
 			// select the first available color format
 			if (!found_B8G8R8A8_UNORM)
 			{

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>
 #include <sstream>
 #include <string>
 #include <map>
@@ -120,9 +119,7 @@ namespace acid
 		public:
 			enum class Type
 			{
-				Uniform,
-				Storage,
-				Push
+				Uniform, Storage, Push
 			};
 
 			UniformBlock(const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const Type &type) :
@@ -162,7 +159,6 @@ namespace acid
 				result << "UniformBlock(binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
 				return result.str();
 			}
-
 		private:
 			friend class Shader;
 
@@ -253,7 +249,6 @@ namespace acid
 		VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag);
 
 		std::string ToString() const;
-
 	private:
 		void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
 

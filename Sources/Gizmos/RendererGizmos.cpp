@@ -9,7 +9,7 @@ namespace acid
 	RendererGizmos::RendererGizmos(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
 		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexModel::GetVertexInput()},
-		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE, false, {})),
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE, false, {})),
 		m_uniformScene(UniformHandler())
 	{
 	}

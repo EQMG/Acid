@@ -1,7 +1,5 @@
 #pragma once
 
-#include <functional>
-#include "Helpers/String.hpp"
 #include "Models/Model.hpp"
 
 namespace acid
@@ -41,7 +39,6 @@ namespace acid
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
-
 	private:
 		float m_radius;
 		uint32_t m_latitudeBands;

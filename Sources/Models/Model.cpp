@@ -1,7 +1,6 @@
 #include "Model.hpp"
 
 #include <cassert>
-#include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"
 

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
+#include <vector>
 #include "Engine/Exports.hpp"
 #include "Maths/Time.hpp"
 #include "Network/Socket.hpp"

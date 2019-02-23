@@ -1,12 +1,12 @@
 #include "MainGame.hpp"
 
+#include <iostream>
 #include <thread>
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Uis/Uis.hpp>
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 

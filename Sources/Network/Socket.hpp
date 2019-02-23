@@ -1,7 +1,6 @@
 #pragma once
 
-#include <stdint.h>
-#include <vector>
+#include <cstdint>
 #include "Engine/Exports.hpp"
 
 struct sockaddr_in;
@@ -114,7 +113,6 @@ namespace acid
 		/// </summary>
 		/// <param name="blocking"> True to set the socket as blocking, false for non-blocking. </param>
 		void SetBlocking(bool blocking);
-
 	protected:
 		/// <summary>
 		/// Types of protocols that the socket can use.
@@ -160,7 +158,6 @@ namespace acid
 		/// This function can only be accessed by derived classes.
 		/// </summary>
 		void Close();
-
 	private:
 		friend class SocketSelector;
 		/// Type of the socket (TCP or UDP).

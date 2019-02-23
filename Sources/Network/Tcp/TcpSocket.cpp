@@ -1,7 +1,7 @@
 #include "TcpSocket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-#include <winsock2.h>
+#include <WinSock2.h>
 #else
 #include <sys/select.h>
 #include <netinet/in.h>
@@ -252,10 +252,12 @@ namespace acid
 			received = static_cast<std::size_t>(sizeReceived);
 			return Status::Done;
 		}
+
 		if (sizeReceived == 0)
 		{
 			return Status::Disconnected;
 		}
+
 		return GetErrorStatus();
 	}
 

@@ -42,10 +42,10 @@ namespace acid
 
 				// Reconstruct connection port and address.
 				uint16_t port = data[4] * 256 + data[5];
-				IpAddress address(static_cast<uint8_t>(data[0]),
-				                  static_cast<uint8_t>(data[1]),
-				                  static_cast<uint8_t>(data[2]),
-				                  static_cast<uint8_t>(data[3]));
+				IpAddress address(static_cast<uint8_t>(data[0]), 
+					static_cast<uint8_t>(data[1]), 
+					static_cast<uint8_t>(data[2]), 
+					static_cast<uint8_t>(data[3]));
 
 				// Connect the data channel to the server.
 				if (m_dataSocket.Connect(address, port) == Socket::Status::Done)

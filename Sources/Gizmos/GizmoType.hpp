@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Models/Model.hpp"

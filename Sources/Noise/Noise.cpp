@@ -365,7 +365,7 @@ namespace acid
 	};
 
 	Noise::Noise(const int32_t &seed, const float &frequency, const Interp &interp, const Type &type, const int32_t &octaves,
-	             const float &lacunarity, const float &gain, const Fractal &fractal, const float &fractalBounding) :
+		const float &lacunarity, const float &gain, const Fractal &fractal, const float &fractalBounding) :
 		m_seed(seed),
 		m_perm(std::unique_ptr<uint8_t[]>(new uint8_t[512])),
 		m_perm12(std::unique_ptr<uint8_t[]>(new uint8_t[512])),

@@ -2,9 +2,7 @@
 
 #include <cassert>
 #include <algorithm>
-#include <sys/types.h>
 #include <sys/stat.h>
-
 #if defined(ACID_BUILD_WINDOWS)
 #include <io.h>
 #include <direct.h>
@@ -23,7 +21,6 @@ typedef struct stat STAT;
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
-
 #include "Helpers/String.hpp"
 
 namespace acid

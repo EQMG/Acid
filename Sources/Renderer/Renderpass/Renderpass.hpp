@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <memory>
 #include "Helpers/NonCopyable.hpp"
 #include "RenderpassCreate.hpp"
 
@@ -15,7 +14,8 @@ namespace acid
 			public NonCopyable
 		{
 		public:
-			SubpassDescription(const VkPipelineBindPoint &bindPoint, const std::vector<VkAttachmentReference> &colorAttachments, const std::optional<uint32_t> &depthAttachment) :
+			SubpassDescription(const VkPipelineBindPoint &bindPoint, const std::vector<VkAttachmentReference> &colorAttachments, 
+				const std::optional<uint32_t> &depthAttachment) :
 				m_subpassDescription({}),
 				m_colorAttachments(colorAttachments),
 				m_depthStencilAttachment({})
@@ -39,7 +39,8 @@ namespace acid
 			VkAttachmentReference m_depthStencilAttachment;
 		};
 
-		Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, 
+			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 		~Renderpass();
 

@@ -1,11 +1,11 @@
 ﻿#include "StorageBuffer.hpp"
 
+#include <cstring>
 #include "Renderer/Renderer.hpp"
 
 namespace acid
 {
 	StorageBuffer::StorageBuffer(const VkDeviceSize &size) :
-		Descriptor(),
 		Buffer(size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
 	{
 	}
@@ -21,7 +21,8 @@ namespace acid
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 	}
 
-	VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
+	VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType,
+		const VkShaderStageFlags &stage, const uint32_t &count)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
@@ -33,7 +34,7 @@ namespace acid
 	}
 
 	WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-	                                                     const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorBufferInfo bufferInfo = {};
 		bufferInfo.buffer = m_buffer;
@@ -53,7 +54,7 @@ namespace acid
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		//	descriptorWrite.pBufferInfo = &bufferInfo;
+	//	descriptorWrite.pBufferInfo = &bufferInfo;
 		return WriteDescriptorSet(descriptorWrite, bufferInfo);
 	}
 }

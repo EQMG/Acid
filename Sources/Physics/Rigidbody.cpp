@@ -52,7 +52,7 @@ namespace acid
 		m_motionState = std::make_unique<btDefaultMotionState>(worldTransform);
 		m_rigidBody = CreateRigidBody(m_mass, m_motionState.get(), m_shape.get());
 		m_rigidBody->setWorldTransform(worldTransform);
-		//	m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
+	//	m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
 		m_rigidBody->setFriction(m_friction);
 		m_rigidBody->setRollingFriction(m_frictionRolling);
 		m_rigidBody->setSpinningFriction(m_frictionSpinning);
@@ -93,7 +93,7 @@ namespace acid
 		transform = Collider::Convert(motionTransform, transform.GetScaling());
 
 		m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
-		//	m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
+	//	m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
 		m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
 		m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
 	}
@@ -208,7 +208,7 @@ namespace acid
 		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, motionState, shape, localInertia);
 		auto body = new btRigidBody(cInfo);
-		//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
+	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 		return body;
 	}
 }

@@ -1,6 +1,7 @@
 ﻿#include "Buffer.hpp"
 
 #include <array>
+#include <cstring>
 #include <cassert>
 #include "Renderer/Renderer.hpp"
 
@@ -49,7 +50,7 @@ namespace acid
 		{
 			void *mapped;
 			Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, size, 0, &mapped));
-			std::memcpy(mapped, data, size);
+			memcpy(mapped, data, size);
 
 			// If host coherency hasn't been requested, do a manual flush to make writes visible.
 			if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)

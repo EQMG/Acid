@@ -3,6 +3,7 @@
 #include "Models/VertexModel.hpp"
 #include "Scenes/Scenes.hpp"
 #include "ShadowRender.hpp"
+#include "Shadows.hpp"
 
 namespace acid
 {
@@ -14,7 +15,7 @@ namespace acid
 	RendererShadows::RendererShadows(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
 		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()},
-		                            PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines())),
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT, false, GetDefines())),
 		m_uniformScene(UniformHandler())
 	{
 	}
@@ -29,7 +30,7 @@ namespace acid
 
 		m_pipeline.BindPipeline(commandBuffer);
 
-		//	vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), 1.25f, 0.0f, 1.75f);
+	//	vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), 1.25f, 0.0f, 1.75f);
 
 		auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 

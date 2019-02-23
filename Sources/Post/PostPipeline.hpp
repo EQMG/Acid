@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Renderer/RenderPipeline.hpp"
-#include "PostFilter.hpp"
 
 namespace acid
 {

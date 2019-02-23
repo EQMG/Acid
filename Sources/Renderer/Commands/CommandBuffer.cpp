@@ -105,7 +105,7 @@ namespace acid
 		if (fence != VK_NULL_HANDLE)
 		{
 			Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
-			//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+		//	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 		}
 
 		Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));

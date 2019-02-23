@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include "Helpers/String.hpp"
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
@@ -39,12 +38,11 @@ namespace acid
 		void Decode(const Metadata &metadata) override;
 
 		void Encode(Metadata &metadata) const override;
-
 	private:
 		static VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
-		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, std::vector<std::unique_ptr<VertexModelData>> &vertices,
-		                                                           std::vector<uint32_t> &indices);
+		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, 
+			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
 		static void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);
 

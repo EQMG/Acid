@@ -96,7 +96,6 @@ namespace acid
 				}
 			}
 		}
-
 	private:
 		friend class ModuleUpdater;
 

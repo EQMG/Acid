@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <string>
 #include <vector>
@@ -128,7 +129,6 @@ namespace acid
 			float max1 = std::abs(m_maxExtents.MinComponent());
 			m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
 		}
-
 	private:
 		std::unique_ptr<Buffer> m_vertexBuffer;
 		std::unique_ptr<Buffer> m_indexBuffer;

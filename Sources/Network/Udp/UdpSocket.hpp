@@ -119,7 +119,6 @@ namespace acid
 		/// <param name="remotePort"> Port of the peer that sent the data. </param>
 		/// <returns> Status code. </returns>
 		Status Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort);
-
 	private:
 		/// Temporary buffer holding the received data in Receive(Packet).
 		std::vector<char> m_buffer;

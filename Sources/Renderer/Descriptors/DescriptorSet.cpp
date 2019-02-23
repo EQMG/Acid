@@ -1,7 +1,6 @@
 #include "DescriptorSet.hpp"
 
 #include "Renderer/Renderer.hpp"
-#include "Descriptor.hpp"
 
 namespace acid
 {
@@ -34,11 +33,13 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 
+			0, nullptr);
 	}
 
 	void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 	{
-		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
+		vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, 
+			&m_descriptorSet, 0, nullptr);
 	}
 }

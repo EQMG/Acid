@@ -13,8 +13,9 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	PipelineGraphics::PipelineGraphics(const Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, const Mode &mode, const Depth &depth,
-	                                   const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
+	PipelineGraphics::PipelineGraphics(const Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, 
+		const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, 
+		const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
 		Pipeline(),
 		m_stage(stage),
 		m_shaderStages(shaderStages),
@@ -72,7 +73,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		//	Log::Out("%s\n", m_shader->ToString().c_str());
+	//	Log::Out("%s\n", m_shader->ToString().c_str());
 		Log::Out("Pipeline '%s' created in %ims\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds());
 #endif
 	}
@@ -180,7 +181,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		//	auto &descriptorPools = m_shader->GetDescriptorPools();
+	//	auto &descriptorPools = m_shader->GetDescriptorPools();
 		std::vector<VkDescriptorPoolSize> descriptorPools(6); // TODO: Cleanup!
 		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPools[0].descriptorCount = 4096;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
@@ -32,7 +31,6 @@ namespace acid
 		void SetTangent(const Vector3 &tangent) { m_tangent = tangent; };
 
 		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
-
 	private:
 		Vector3 m_position;
 		Vector2 m_uv;

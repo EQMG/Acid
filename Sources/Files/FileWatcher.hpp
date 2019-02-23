@@ -3,8 +3,6 @@
 #include <thread>
 #include <unordered_map>
 #include <string>
-#include <functional>
-#include "Engine/Engine.hpp"
 #include "Maths/Time.hpp"
 #include "Helpers/Delegate.hpp"
 
@@ -18,9 +16,7 @@ namespace acid
 	public:
 		enum class Status
 		{
-			Created,
-			Modified,
-			Erased
+			Created, Modified, Erased
 		};
 
 		/// <summary>

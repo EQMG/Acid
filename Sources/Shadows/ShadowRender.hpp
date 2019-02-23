@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Scenes/Component.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
@@ -26,7 +25,6 @@ namespace acid
 		void Encode(Metadata &metadata) const override;
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
-
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;

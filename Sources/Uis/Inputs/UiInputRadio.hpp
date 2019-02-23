@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
@@ -14,14 +13,11 @@ namespace acid
 	public:
 		enum class Mark
 		{
-			Filled,
-			X,
-			Dot,
-			Check
+			Filled, X, Dot, Check
 		};
 
-		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Filled, const bool &checked = false,
-		             const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Filled, const bool &checked = false, 
+			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 
@@ -57,8 +53,7 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		explicit UiRadioManager(const UiInputRadio::Mark &markType = UiInputRadio::Mark::X, const bool &multiple = false,
-		                        const std::vector<UiInputRadio *> &inputs = {}) :
+		explicit UiRadioManager(const UiInputRadio::Mark &markType = UiInputRadio::Mark::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
 			m_markType(markType),
 			m_multiple(multiple),
 			m_inputs(inputs)

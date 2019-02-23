@@ -1,8 +1,7 @@
 ﻿#include "Cubemap.hpp"
 
+#include <cstring>
 #include "Renderer/Renderer.hpp"
-#include "Helpers/String.hpp"
-#include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Texture.hpp"
@@ -25,8 +24,8 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	                                         const bool &anisotropic, const bool &mipmap)
+	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
+		const bool &anisotropic, const bool &mipmap)
 	{
 		auto temp = Cubemap(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 		Metadata metadata = Metadata();
@@ -34,8 +33,8 @@ namespace acid
 		return Create(metadata);
 	}
 
-	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	                 const bool &anisotropic, const bool &mipmap, const bool &load) :
+	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
+		const bool &anisotropic, const bool &mipmap, const bool &load) :
 		m_filename(filename),
 		m_fileSuffix(fileSuffix),
 		m_fileSides(std::vector<std::string>{"Right", "Left", "Top", "Bottom", "Back", "Front"}),
@@ -63,7 +62,7 @@ namespace acid
 	}
 
 	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, uint8_t *pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
-	                 const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
+		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 		m_filename(""),
 		m_fileSuffix(""),
 		m_fileSides(std::vector<std::string>{"Right", "Left", "Top", "Bottom", "Back", "Front"}),
@@ -108,8 +107,8 @@ namespace acid
 		return descriptorSetLayoutBinding;
 	}
 
-	WriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-	                                               const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+	WriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, 
+		const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};
 		imageInfo.sampler = m_sampler;
@@ -159,8 +158,8 @@ namespace acid
 
 		if (m_pixels != nullptr)
 		{
-			Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, 
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
 			Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
@@ -192,7 +191,7 @@ namespace acid
 	{
 		metadata.GetChild("Filename", m_filename);
 		metadata.GetChild("Suffix", m_fileSuffix);
-		//	metadata.GetChild("Sides", m_fileSides);
+	//	metadata.GetChild("Sides", m_fileSides);
 		metadata.GetChild("Filter", m_filter);
 		metadata.GetChild("Address Mode", m_addressMode);
 		metadata.GetChild("Anisotropic", m_anisotropic);
@@ -203,7 +202,7 @@ namespace acid
 	{
 		metadata.SetChild("Filename", m_filename);
 		metadata.SetChild("Suffix", m_fileSuffix);
-		//	metadata.SetChild("Sides", m_fileSides);
+	//	metadata.SetChild("Sides", m_fileSides);
 		metadata.SetChild("Filter", m_filter);
 		metadata.SetChild("Address Mode", m_addressMode);
 		metadata.SetChild("Anisotropic", m_anisotropic);
@@ -241,7 +240,7 @@ namespace acid
 
 	uint8_t *Cubemap::GetPixels() const
 	{
-		auto result = (uint8_t *)malloc(m_width * m_height * 4 * 6);
+		auto result = new uint8_t[m_width * m_height * 4 * 6];
 
 		for (uint32_t i = 0; i < 6; i++)
 		{
@@ -256,8 +255,7 @@ namespace acid
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-		Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		                              VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		Buffer bufferStaging = Buffer(m_width * m_height * 4 * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);

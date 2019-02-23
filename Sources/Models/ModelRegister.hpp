@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <memory>
-#include <optional>
 #include "Engine/Log.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Model.hpp"
@@ -81,7 +80,6 @@ namespace acid
 		/// <param name="filename"> The models filename to load from. </param>
 		/// <returns> The new model. </returns>
 		std::shared_ptr<Model> Create(const std::string &filename) const;
-
 	private:
 		using ModelMetadataCreate = std::function<std::shared_ptr<Model>(const Metadata &)>;
 		using ModelFilenameCreate = std::function<std::shared_ptr<Model>(const std::string &)>;

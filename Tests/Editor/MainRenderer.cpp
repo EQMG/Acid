@@ -23,6 +23,7 @@
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
+#include <Shadows/Shadows.hpp>
 #include "FIlters/FilterBlit.hpp"
 
 namespace test

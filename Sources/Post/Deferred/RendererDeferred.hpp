@@ -1,6 +1,5 @@
 #pragma once
 
-#include <future>
 #include "Lights/Fog.hpp"
 #include "Models/Model.hpp"
 #include "Renderer/RenderPipeline.hpp"
@@ -17,8 +16,7 @@ namespace acid
 	public:
 		enum class Type
 		{
-			Ibl,
-			Simple
+			Ibl, Simple
 		};
 
 		explicit RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type);

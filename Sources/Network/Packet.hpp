@@ -161,7 +161,6 @@ namespace acid
 		Packet &operator<<(const wchar_t *data);
 
 		Packet &operator<<(const std::wstring &data);
-
 	protected:
 		friend class TcpSocket;
 		friend class UdpSocket;

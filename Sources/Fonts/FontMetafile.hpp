@@ -21,17 +21,6 @@ namespace acid
 		class Character
 		{
 		public:
-			int32_t m_id;
-			float m_textureCoordX;
-			float m_textureCoordY;
-			float m_maxTextureCoordX;
-			float m_maxTextureCoordY;
-			float m_offsetX;
-			float m_offsetY;
-			float m_sizeX;
-			float m_sizeY;
-			float m_advanceX;
-
 			/// <summary>
 			/// Creates a new character.
 			/// </summary>
@@ -59,6 +48,17 @@ namespace acid
 				m_advanceX(advanceX)
 			{
 			}
+
+			int32_t m_id;
+			float m_textureCoordX;
+			float m_textureCoordY;
+			float m_maxTextureCoordX;
+			float m_maxTextureCoordY;
+			float m_offsetX;
+			float m_offsetY;
+			float m_sizeX;
+			float m_sizeY;
+			float m_advanceX;
 		};
 
 		static constexpr uint32_t PadTop = 0;

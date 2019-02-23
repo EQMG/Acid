@@ -184,7 +184,6 @@ namespace acid
 		void AddChild(Entity *child);
 
 		void RemoveChild(Entity *child);
-
 	private:
 		std::string m_name;
 		Transform m_localTransform;

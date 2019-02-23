@@ -2,10 +2,7 @@
 
 #include <string>
 #include <unordered_map>
-#include <vector>
-#include "Files/Files.hpp"
 #include "Files/File.hpp"
-#include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <string>
 #include "Engine/Exports.hpp"
 #include "Network/Tcp/TcpSocket.hpp"
@@ -78,7 +77,6 @@ namespace acid
 		/// <param name="timeout"> Maximum time to wait. </param>
 		/// <returns> Server's response. </returns>
 		HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = Time::Zero);
-
 	private:
 		/// Connection to the host.
 		TcpSocket m_connection;

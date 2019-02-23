@@ -26,10 +26,7 @@ namespace acid
 		/// </summary>
 		enum class Justify
 		{
-			Left,
-			Centre,
-			Right,
-			Fully
+			Left, Centre, Right, Fully
 		};
 
 		/// <summary>
@@ -46,7 +43,7 @@ namespace acid
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
 		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-		     const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+			const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;
 
@@ -214,7 +211,6 @@ namespace acid
 		/// </summary>
 		/// <returns> If the text has been loaded to a model. </returns>
 		bool IsLoaded();
-
 	private:
 		/// <summary>
 		/// During the loading of a text this represents one word in the text.
@@ -222,9 +218,6 @@ namespace acid
 		class Word
 		{
 		public:
-			std::vector<FontMetafile::Character> m_characters;
-			float m_width;
-
 			/// <summary>
 			/// Creates a new text word.
 			/// </summary>
@@ -244,6 +237,9 @@ namespace acid
 				m_characters.emplace_back(character);
 				m_width += kerning + character.m_advanceX;
 			}
+
+			std::vector<FontMetafile::Character> m_characters;
+			float m_width;
 		};
 
 		/// <summary>
@@ -252,13 +248,6 @@ namespace acid
 		class Line
 		{
 		public:
-			float m_maxLength;
-			float m_spaceSize;
-
-			std::vector<Word> m_words;
-			float m_currentWordsLength;
-			float m_currentLineLength;
-
 			/// <summary>
 			/// Creates a new text line.
 			/// </summary>
@@ -293,6 +282,13 @@ namespace acid
 
 				return false;
 			}
+
+			float m_maxLength;
+			float m_spaceSize;
+
+			std::vector<Word> m_words;
+			float m_currentWordsLength;
+			float m_currentLineLength;
 		};
 
 		/// <summary>

@@ -14,6 +14,8 @@ class btCollisionObject;
 
 namespace acid
 {
+	class Frustum;
+
 	/// <summary>
 	/// Represents a object in a scene effected by physics.
 	/// </summary>

@@ -1,7 +1,6 @@
 #include "RenderStage.hpp"
 
 #include <algorithm>
-#include <cassert>
 #include "Renderer.hpp"
 
 namespace acid

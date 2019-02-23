@@ -1,10 +1,8 @@
 #pragma once
 
-#include <cstring>
 #include <locale>
 #include <sstream>
 #include <string>
-#include <typeinfo>
 #include <vector>
 #include "Engine/Exports.hpp"
 
