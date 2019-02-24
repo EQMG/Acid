@@ -16,7 +16,7 @@ namespace acid
 		/// <summary>
 		/// Creates a new frustum.
 		/// </summary>
-		Frustum();
+		explicit Frustum();
 
 		/// <summary>
 		/// Updates a frustum from the view and projection matrix.

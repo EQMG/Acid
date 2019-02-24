@@ -1,5 +1,6 @@
 #include "Shader.hpp"
 
+#include <utility>
 #include <SPIRV/GlslangToSpv.h>
 #include <glslang/Public/ShaderLang.h>
 #include "Renderer/Renderer.hpp"
@@ -12,16 +13,8 @@
 
 namespace acid
 {
-	Shader::Shader(const std::string &name) :
-		m_name(name),
-		m_uniforms(std::map<std::string, std::unique_ptr<Uniform>>()),
-		m_uniformBlocks(std::map<std::string, std::unique_ptr<UniformBlock>>()),
-		m_attributes(std::map<std::string, std::unique_ptr<Attribute>>()),
-		m_descriptorSetLayouts(std::vector<VkDescriptorSetLayoutBinding>()),
-		m_descriptorPools(std::vector<VkDescriptorPoolSize>()),
-		m_descriptorTypes(std::map<uint32_t, VkDescriptorType>()),
-		m_attributeDescriptions(std::vector<VkVertexInputAttributeDescription>()),
-		m_notFoundNames(std::vector<std::string>())
+	Shader::Shader(std::string name) :
+		m_name(std::move(name))
 	{
 	}
 

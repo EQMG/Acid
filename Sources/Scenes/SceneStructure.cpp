@@ -4,9 +4,7 @@
 
 namespace acid
 {
-	SceneStructure::SceneStructure() :
-		m_mutex(std::mutex()),
-		m_objects(std::vector<std::unique_ptr<Entity>>())
+	SceneStructure::SceneStructure()
 	{
 	}
 

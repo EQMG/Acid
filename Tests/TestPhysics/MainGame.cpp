@@ -39,10 +39,10 @@ namespace test
 {
 	MainGame::MainGame() :
 		m_configs(nullptr),
-		m_fileWatcher(FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f))),
-		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
-		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
-		m_buttonExit(ButtonKeyboard(Key::Delete))
+		m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
+		m_buttonFullscreen(Key::F11),
+		m_buttonScreenshot(Key::F12),
+		m_buttonExit(Key::Delete)
 	{
 		// Registers file search paths.
 		for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))

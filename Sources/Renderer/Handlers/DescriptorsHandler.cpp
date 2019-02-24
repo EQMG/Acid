@@ -7,9 +7,6 @@ namespace acid
 	DescriptorsHandler::DescriptorsHandler() :
 		m_shader(nullptr),
 		m_pushDescriptors(false),
-		m_descriptors(std::map<std::string, DescriptorValue>()),
-		m_writeDescriptors(std::vector<WriteDescriptorSet>()),
-		m_writeDescriptorSets(std::vector<VkWriteDescriptorSet>()),
 		m_descriptorSet(nullptr),
 		m_changed(false)
 	{
@@ -18,9 +15,6 @@ namespace acid
 	DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
 		m_shader(pipeline.GetShaderProgram()),
 		m_pushDescriptors(pipeline.IsPushDescriptors()),
-		m_descriptors(std::map<std::string, DescriptorValue>()),
-		m_writeDescriptors(std::vector<WriteDescriptorSet>()),
-		m_writeDescriptorSets(std::vector<VkWriteDescriptorSet>()),
 		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
 		m_changed(true)
 	{

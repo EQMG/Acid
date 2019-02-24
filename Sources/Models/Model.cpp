@@ -21,13 +21,11 @@ namespace acid
 		m_indexBuffer(nullptr),
 		m_vertexCount(0),
 		m_indexCount(0),
-		m_minExtents(Vector3()),
-		m_maxExtents(Vector3()),
 		m_radius(0.0f)
 	{
 	}
 
-	bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances)
+	bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances) const
 	{
 		if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 		{

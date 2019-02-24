@@ -43,10 +43,6 @@ namespace acid
 #endif
 	}
 
-	PhysicalDevice::~PhysicalDevice()
-	{
-	}
-
 	VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices)
 	{
 		// Maps to hold devices and sort by rank.

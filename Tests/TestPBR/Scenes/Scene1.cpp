@@ -33,7 +33,7 @@ namespace test
 			new ButtonJoystick(0, 7)
 		})),
 		m_paused(false),
-		m_overlayDebug(Uis::Get()->GetContainer())
+		m_overlayDebug(&Uis::Get()->GetContainer())
 	{
 	}
 

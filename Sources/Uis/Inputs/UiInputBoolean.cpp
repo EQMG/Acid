@@ -18,8 +18,7 @@ namespace acid
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_title(title),
 		m_value(value),
-		m_mouseOver(false),
-		m_onChange(Delegate<void(UiInputBoolean *, bool)>())
+		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(UiInputButton::Size);
 		m_slider.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
@@ -54,7 +53,7 @@ namespace acid
 			m_mouseOver = false;
 		}
 
-		m_slider.GetRectangle().SetDimensions(Vector2(m_value, 1.0f));
+		m_slider.GetRectangle().SetDimensions(Vector2(1.0f - m_value, 1.0f));
 	}
 
 	void UiInputBoolean::SetTitle(const std::string &title)

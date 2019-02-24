@@ -35,7 +35,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			ModelRectangle::Load();
 		}
 	}
 

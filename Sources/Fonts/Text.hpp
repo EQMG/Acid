@@ -42,7 +42,7 @@ namespace acid
 		/// <param name="textColour"> The colour of this text. </param>
 		/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
 		/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
-		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
+		Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
 			const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 		void UpdateObject() override;
@@ -186,31 +186,31 @@ namespace acid
 		/// Gets the calculated border size.
 		/// </summary>
 		/// <returns> The border size. </returns>
-		float GetTotalBorderSize();
+		float GetTotalBorderSize() const;
 
 		/// <summary>
 		/// Gets the size of the glow.
 		/// </summary>
 		/// <returns> The glow size. </returns>
-		float GetGlowSize();
+		float GetGlowSize() const;
 
 		/// <summary>
 		/// Gets the distance field edge before antialias.
 		/// </summary>
 		/// <returns> The distance field edge. </returns>
-		float CalculateEdgeStart();
+		float CalculateEdgeStart() const;
 
 		/// <summary>
 		/// Gets the distance field antialias distance.
 		/// </summary>
 		/// <returns> The distance field antialias distance. </returns>
-		float CalculateAntialiasSize();
+		float CalculateAntialiasSize() const;
 
 		/// <summary>
 		/// Gets if the text has been loaded to a model.
 		/// </summary>
 		/// <returns> If the text has been loaded to a model. </returns>
-		bool IsLoaded();
+		bool IsLoaded() const;
 	private:
 		/// <summary>
 		/// During the loading of a text this represents one word in the text.
@@ -298,17 +298,17 @@ namespace acid
 		/// </summary>
 		void LoadText();
 
-		std::vector<Line> CreateStructure();
+		std::vector<Line> CreateStructure() const;
 
-		void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord);
+		void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const;
 
 		std::vector<VertexModel> CreateQuad(const std::vector<Line> &lines);
 
-		void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices);
+		static void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices);
 
-		void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
+		static void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
 
-		void NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices);
+		void NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const;
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;

@@ -10,7 +10,6 @@
 namespace acid
 {
 	Ftp::Ftp() :
-		m_commandSocket(TcpSocket()),
 		m_receiveBuffer("")
 	{
 	}

@@ -44,7 +44,7 @@ namespace acid
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-		explicit Cubemap(const std::string &filename, const std::string &fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR, 
+		explicit Cubemap(std::string filename, std::string fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
 			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>

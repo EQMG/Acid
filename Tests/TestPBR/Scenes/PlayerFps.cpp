@@ -20,7 +20,6 @@ namespace test
 	const Vector3 DAMP_NORMAL = Vector3(20.0f, 1.0f, 20.0f);
 
 	PlayerFps::PlayerFps() :
-		m_velocity(Vector3()),
 		m_jumping(false),
 		m_noclipEnabled(true),
 		m_inputForward(AxisCompound({
@@ -51,9 +50,7 @@ namespace test
 		})),
 		m_toggleNoclip(ButtonCompound({
 			ButtonCompound::Create<ButtonKeyboard>(Key::N)
-		})),
-		m_amountMove(Vector3()),
-		m_amountRotate(Vector3())
+		}))
 	{
 	}
 

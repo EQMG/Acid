@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <optional>
 #include <vector>
 #include "Maths/Vector3.hpp"
 
@@ -11,21 +12,21 @@ namespace acid
 	public:
 		VertexModelData(const uint32_t &index, const Vector3 &position);
 
-		const Vector3 &GetPosition() const { return m_position; }
+		const uint32_t &GetIndex() const { return m_index; }
 
-		const int32_t &GetUvIndex() const { return m_uvIndex; }
+		const std::optional<uint32_t> &GetUvIndex() const { return m_uvIndex; }
 
-		void SetUvIndex(const int32_t &uvIndex) { m_uvIndex = uvIndex; }
+		void SetUvIndex(const std::optional<uint32_t> &uvIndex) { m_uvIndex = uvIndex; }
 
-		const int32_t &GetNormalIndex() const { return m_normalIndex; }
+		const std::optional<uint32_t> &GetNormalIndex() const { return m_normalIndex; }
 
-		void SetNormalIndex(const int32_t &normalIndex) { m_normalIndex = normalIndex; }
+		void SetNormalIndex(const std::optional<uint32_t> &normalIndex) { m_normalIndex = normalIndex; }
 
 		VertexModelData *GetDuplicateVertex() const { return m_duplicateVertex; }
 
 		void SetDuplicateVertex(VertexModelData *duplicateVertex) { m_duplicateVertex = duplicateVertex; }
 
-		const uint32_t &GetIndex() const { return m_index; }
+		const Vector3 &GetPosition() const { return m_position; }
 
 		const float &GetLength() const { return m_length; }
 
@@ -37,17 +38,14 @@ namespace acid
 
 		bool IsSet() const;
 
-		bool HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const;
+		bool HasSameTextureAndNormal(const std::optional<uint32_t> &textureIndexOther, const std::optional<uint32_t> &normalIndexOther) const;
 	private:
-		Vector3 m_position;
-
-		int32_t m_uvIndex;
-		int32_t m_normalIndex;
-		VertexModelData *m_duplicateVertex;
-
 		uint32_t m_index;
+		std::optional<uint32_t> m_uvIndex;
+		std::optional<uint32_t> m_normalIndex;
+		VertexModelData *m_duplicateVertex;
+		Vector3 m_position;
 		float m_length;
-
 		std::vector<Vector3> m_tangents;
 		Vector3 m_averagedTangent;
 	};

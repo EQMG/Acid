@@ -11,7 +11,6 @@ namespace acid
 		m_position(position),
 		m_rotation(rotation),
 		m_scaling(scaling),
-		m_worldMatrix(Matrix4()),
 		m_dirty(true)
 	{
 	}
@@ -20,7 +19,6 @@ namespace acid
 		m_position(position),
 		m_rotation(rotation),
 		m_scaling(Vector3(scale, scale, scale)),
-		m_worldMatrix(Matrix4()),
 		m_dirty(true)
 	{
 	}
@@ -29,7 +27,6 @@ namespace acid
 		m_position(source.m_position),
 		m_rotation(source.m_rotation),
 		m_scaling(source.m_scaling),
-		m_worldMatrix(Matrix4()),
 		m_dirty(true)
 	{
 	}

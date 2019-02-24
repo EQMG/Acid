@@ -1,11 +1,12 @@
 #include "EventTime.hpp"
 
+#include <utility>
+
 namespace acid
 {
-	EventTime::EventTime(const std::function<void()> &onEvent, const Time &interval, const bool &repeat) :
-		IEvent(),
-		m_onEvent(onEvent),
-		m_timer(Timer(interval)),
+	EventTime::EventTime(std::function<void()> onEvent, const Time &interval, const bool &repeat) :
+		m_onEvent(std::move(onEvent)),
+		m_timer(interval),
 		m_repeat(repeat)
 	{
 	}

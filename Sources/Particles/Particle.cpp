@@ -1,19 +1,17 @@
 ﻿#include "Particle.hpp"
 
+#include <utility>
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
 	static const float FADE_TIME = 1.0f;
 
-	Particle::Particle(const std::shared_ptr<ParticleType> &particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, 
+	Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, 
 		const float &stageCycles, const float &rotation, const float &scale, const float &gravityEffect) :
-		m_particleType(particleType),
+		m_particleType(std::move(particleType)),
 		m_position(position),
 		m_velocity(velocity),
-		m_change(Vector3()),
-		m_textureOffset1(Vector2()),
-		m_textureOffset2(Vector2()),
 		m_lifeLength(lifeLength),
 		m_stageCycles(stageCycles),
 		m_rotation(rotation),

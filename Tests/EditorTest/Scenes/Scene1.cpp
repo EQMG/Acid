@@ -41,15 +41,15 @@ namespace test
 
 	Scene1::Scene1() :
 		Scene(new CameraFps()),
-		m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
-		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
+		m_buttonSpawnSphere(MouseButton::Left),
+		m_buttonFullscreen(Key::F11),
 		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::Escape, Key::M)),
-		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
-		m_buttonSave(ButtonKeyboard(Key::K)),
-		m_buttonExit(ButtonKeyboard(Key::Delete)),
-		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
-		m_uiStartLogo(Uis::Get()->GetContainer()),
-		m_overlayDebug(Uis::Get()->GetContainer())
+		m_buttonScreenshot(Key::F12),
+		m_buttonSave(Key::K),
+		m_buttonExit(Key::Delete),
+		m_soundScreenshot("Sounds/Screenshot.ogg"),
+		m_uiStartLogo(&Uis::Get()->GetContainer()),
+		m_overlayDebug(&Uis::Get()->GetContainer())
 	{
 		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
 		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);

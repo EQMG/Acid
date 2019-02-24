@@ -1,10 +1,12 @@
 #include "Keyframe.hpp"
 
+#include <utility>
+
 namespace acid
 {
-	Keyframe::Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose) :
+	Keyframe::Keyframe(const Time &timeStamp, std::map<std::string, JointTransform> pose) :
 		m_timeStamp(timeStamp),
-		m_pose(pose)
+		m_pose(std::move(pose))
 	{
 	}
 

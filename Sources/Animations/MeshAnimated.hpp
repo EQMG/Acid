@@ -21,7 +21,7 @@ namespace acid
 		static const uint32_t MaxJoints;
 		static const uint32_t MaxWeights;
 
-		explicit MeshAnimated(const std::string &filename = "");
+		explicit MeshAnimated(std::string filename = "");
 
 		void Update() override;
 
@@ -39,9 +39,9 @@ namespace acid
 
 		const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 	private:
-		Joint *CreateJoints(const JointData &data);
+		static Joint *CreateJoints(const JointData &data);
 
-		void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
+		static void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 
 		std::string m_filename;
 		std::shared_ptr<Model> m_model;

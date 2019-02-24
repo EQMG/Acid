@@ -22,12 +22,7 @@ namespace acid
 		}
 	}
 
-	Joysticks::Joysticks() :
-		m_connected(std::map<uint32_t, JoystickImpl>()),
-		m_onConnect(Delegate<void(uint32_t, bool)>()),
-		m_onButton(Delegate<void(uint32_t, uint32_t, InputAction)>()),
-		m_onAxis(Delegate<void(uint32_t, uint32_t, float)>()),
-		m_onHat(Delegate<void(uint32_t, uint32_t, bitmask<JoystickHat>)>())
+	Joysticks::Joysticks()
 	{
 		glfwSetJoystickCallback(CallbackJoystick);
 

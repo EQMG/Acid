@@ -12,11 +12,6 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Creates a new change handler.
-		/// </summary>
-		Delta();
-
-		/// <summary>
 		/// Updates change and times.
 		/// </summary>
 		void Update();

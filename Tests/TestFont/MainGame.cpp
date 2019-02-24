@@ -30,9 +30,9 @@ int main(int argc, char **argv)
 namespace test
 {
 	MainGame::MainGame() :
-		m_buttonFullscreen(ButtonKeyboard(Key::F11)),
-		m_buttonScreenshot(ButtonKeyboard(Key::F12)),
-		m_buttonExit(ButtonKeyboard(Key::Delete))
+		m_buttonFullscreen(Key::F11),
+		m_buttonScreenshot(Key::F12),
+		m_buttonExit(Key::Delete)
 	{
 		// Registers file search paths.
 		Files::Get()->AddSearchPath("Resources/Engine");

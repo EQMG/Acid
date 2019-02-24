@@ -9,7 +9,7 @@ namespace acid
 	class ACID_EXPORT SkeletonLoader
 	{
 	public:
-		SkeletonLoader(const Metadata *libraryControllers, const std::vector<std::string> &boneOrder);
+		SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder);
 
 		const uint32_t &GetJointCount() const { return m_jointCount; }
 

@@ -84,14 +84,6 @@ namespace acid
 	}
 
 	Instance::Instance() :
-#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
-		m_validationLayers(true),
-#else
-		m_validationLayers(false),
-#endif
-		m_instanceLayers(std::vector<const char *>()),
-		m_instanceExtensions(std::vector<const char *>()),
-		m_deviceExtensions(std::vector<const char *>()),
 		m_debugReportCallback(VK_NULL_HANDLE),
 		m_instance(VK_NULL_HANDLE)
 	{
@@ -119,29 +111,28 @@ namespace acid
 #endif
 
 		// Sets up the layers.
-		if (m_validationLayers)
+#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+		for (const auto &layerName : ValidationLayers)
 		{
-			for (const auto &layerName : ValidationLayers)
+			bool layerFound = false;
+
+			for (const auto &layerProperties : instanceLayerProperties)
 			{
-				bool layerFound = false;
-
-				for (const auto &layerProperties : instanceLayerProperties)
+				if (strcmp(layerName, layerProperties.layerName) == 0)
 				{
-					if (strcmp(layerName, layerProperties.layerName) == 0)
-					{
-						layerFound = true;
-						break;
-					}
+					layerFound = true;
+					break;
 				}
-
-				if (!layerFound)
-				{
-					Log::Error("Vulkan validation layer not found: '%s'\n", layerName);
-				}
-
-				m_instanceLayers.emplace_back(layerName);
 			}
+
+			if (!layerFound)
+			{
+				Log::Error("Vulkan validation layer not found: '%s'\n", layerName);
+			}
+
+			m_instanceLayers.emplace_back(layerName);
 		}
+#endif
 
 		for (const auto &layerName : DeviceExtensions)
 		{
@@ -164,11 +155,10 @@ namespace acid
 			m_instanceExtensions.emplace_back(instanceExtension);
 		}
 
-		if (m_validationLayers)
-		{
-			m_instanceExtensions.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-			m_instanceExtensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-		}
+#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+		m_instanceExtensions.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+		m_instanceExtensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+#endif
 	}
 
 	void Instance::CreateInstance()
@@ -193,21 +183,20 @@ namespace acid
 
 	void Instance::CreateDebugCallback()
 	{
-		if (m_validationLayers)
-		{
-			VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
-			debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
-			debugReportCallbackCreateInfo.pNext = nullptr;
-			debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
-			debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
-			debugReportCallbackCreateInfo.pUserData = nullptr;
-			Renderer::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
-		}
+#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+		VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
+		debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+		debugReportCallbackCreateInfo.pNext = nullptr;
+		debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+		debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
+		debugReportCallbackCreateInfo.pUserData = nullptr;
+		Renderer::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+#endif
 	}
 
 	void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
 	{
-		Log::Out("-- Avalable Layers For: '%s' --\n", type.c_str());
+		Log::Out("-- Available Layers For: '%s' --\n", type.c_str());
 
 		for (const auto &layer : layerProperties)
 		{

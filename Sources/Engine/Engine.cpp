@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 
 #include <chrono>
+#include <utility>
 
 namespace acid
 {
@@ -10,12 +11,9 @@ namespace acid
 	Engine *Engine::INSTANCE = nullptr;
 	std::chrono::time_point<HighResolutionClock> TIME_START = HighResolutionClock::now();
 
-	Engine::Engine(const std::string &argv0, const bool &emptyRegister) :
-		m_moduleManager(ModuleManager()),
-		m_moduleUpdater(ModuleUpdater()),
+	Engine::Engine(std::string argv0, const bool &emptyRegister) :
 		m_game(nullptr),
-		m_argv0(argv0),
-		m_timeOffset(Time::Zero),
+		m_argv0(std::move(argv0)),
 		m_fpsLimit(-1.0f),
 		m_running(true),
 		m_error(false)

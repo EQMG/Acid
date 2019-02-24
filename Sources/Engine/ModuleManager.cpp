@@ -19,8 +19,7 @@
 
 namespace acid
 {
-	ModuleManager::ModuleManager() :
-		m_modules(std::map<float, std::unique_ptr<Module>>())
+	ModuleManager::ModuleManager()
 	{
 	}
 

@@ -31,7 +31,7 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file to load the model from. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-		explicit ModelObj(const std::string &filename, const bool &load = true);
+		explicit ModelObj(std::string filename, const bool &load = true);
 
 		void Load() override;
 

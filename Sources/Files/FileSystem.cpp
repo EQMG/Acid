@@ -125,7 +125,7 @@ namespace acid
 		std::vector<std::string> result = {};
 
 		struct dirent *de;
-		DIR *dr = opendir(path.c_str());
+		auto dr = opendir(path.c_str());
 
 		if (dr == nullptr)
 		{
@@ -140,7 +140,7 @@ namespace acid
 				continue;
 			}
 
-			std::string relPath = path + Separator + de->d_name;
+			auto relPath = path + Separator + de->d_name;
 
 			if (IsDirectory(relPath))
 			{
@@ -171,7 +171,7 @@ namespace acid
 
 		if (lastFolderPos != std::string::npos)
 		{
-			std::string folderPath = path.substr(0, lastFolderPos);
+			auto folderPath = path.substr(0, lastFolderPos);
 			auto splitFolders = SplitPath(folderPath);
 			std::stringstream appended;
 
@@ -195,7 +195,7 @@ namespace acid
 			return true;
 		}
 
-		FILE *file = fopen(path.c_str(), "rb+");
+		auto file = fopen(path.c_str(), "rb+");
 
 		if (file == nullptr)
 		{
@@ -232,7 +232,7 @@ namespace acid
 			return {};
 		}
 
-		FILE *file = fopen(filename.c_str(), "rb");
+		auto file = fopen(filename.c_str(), "rb");
 
 		if (file == nullptr)
 		{
@@ -254,7 +254,7 @@ namespace acid
 
 	bool FileSystem::WriteTextFile(const std::string &filename, const std::string &data)
 	{
-		FILE *file = fopen(filename.c_str(), "ab");
+		auto file = fopen(filename.c_str(), "ab");
 
 		if (file == nullptr)
 		{
@@ -270,14 +270,14 @@ namespace acid
 	{
 		std::vector<char> data = {};
 
-		const int32_t bufferSize = 1024;
-		const bool useFile = filename.c_str() && strcmp("-", filename.c_str());
+		const auto bufferSize = 1024;
+		const auto useFile = filename.c_str() && strcmp("-", filename.c_str()) != 0;
 
-		if (FILE *fp = (useFile ? fopen(filename.c_str(), mode.c_str()) : stdin))
+		if (auto fp = (useFile ? fopen(filename.c_str(), mode.c_str()) : stdin))
 		{
 			char buf[bufferSize];
 
-			while (size_t len = fread(buf, sizeof(char), bufferSize, fp))
+			while (auto len = fread(buf, sizeof(char), bufferSize, fp))
 			{
 				data.insert(data.end(), buf, buf + len);
 			}
@@ -315,11 +315,11 @@ namespace acid
 
 	bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<char> &data, const std::string &mode)
 	{
-		const bool useStdout = !filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0');
+		const auto useStdout = !filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0');
 
-		if (FILE *fp = (useStdout ? stdout : fopen(filename.c_str(), mode.c_str())))
+		if (auto fp = (useStdout ? stdout : fopen(filename.c_str(), mode.c_str())))
 		{
-			size_t written = fwrite(data.data(), sizeof(char), data.size(), fp);
+			auto written = fwrite(data.data(), sizeof(char), data.size(), fp);
 
 			if (data.size() != written)
 			{
@@ -355,9 +355,9 @@ namespace acid
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		std::string::size_type end = path.find_last_of(Separator + "/");
+		auto end = path.find_last_of(Separator + "/");
 #else
-		std::string::size_type end = path.find_last_of(Separator);
+		auto end = path.find_last_of(Separator);
 #endif
 
 		if (end == path.length() - 1)
@@ -379,13 +379,13 @@ namespace acid
 
 	std::string FileSystem::FileName(const std::string &path)
 	{
-		std::string::size_type start = path.find_last_of(Separator);
+		auto start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
 		if (start == std::string::npos)
 		{
-			start = path.find_last_of("/");
+			start = path.find_last_of('/');
 		}
 #endif
 
@@ -403,13 +403,13 @@ namespace acid
 
 	std::string FileSystem::FileSuffix(const std::string &path)
 	{
-		std::string::size_type start = path.find_last_of(Separator);
+		auto start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
 		// WIN32 also understands '/' as the separator.
 		if (start == std::string::npos)
 		{
-			start = path.find_last_of("/");
+			start = path.find_last_of('/');
 		}
 #endif
 
@@ -423,12 +423,13 @@ namespace acid
 			start++; // We do not want the separator.
 		}
 
-		std::string::size_type end = path.find_last_of(".");
+		auto end = path.find_last_of('.');
 
 		if (end == std::string::npos || end < start)
 		{
 			return "";
 		}
+
 		return path.substr(end);
 	}
 
@@ -453,12 +454,12 @@ namespace acid
 	std::vector<std::string> FileSystem::SplitPath(const std::string &path, const char &delim)
 	{
 		std::vector<std::string> split;
-		std::string::size_type previous_index = 0;
-		auto separator_index = path.find(delim);
+		std::string::size_type previousIndex = 0;
+		auto separatorIndex = path.find(delim);
 
-		while (separator_index != std::string::npos)
+		while (separatorIndex != std::string::npos)
 		{
-			auto part = path.substr(previous_index, separator_index - previous_index);
+			auto part = path.substr(previousIndex, separatorIndex - previousIndex);
 
 			if (part != "..")
 			{
@@ -469,11 +470,11 @@ namespace acid
 				split.pop_back();
 			}
 
-			previous_index = separator_index + 1;
-			separator_index = path.find(delim, previous_index);
+			previousIndex = separatorIndex + 1;
+			separatorIndex = path.find(delim, previousIndex);
 		}
 
-		split.push_back(path.substr(previous_index));
+		split.push_back(path.substr(previousIndex));
 
 		if (split.size() == 1 && delim == Separator)
 		{

@@ -20,7 +20,7 @@ namespace acid
 		/// <param name="onEvent"> A function called when the event is triggered. </param>
 		/// <param name="interval"> The amount of time in the future to run the event. </param>
 		/// <param name="repeat"> If the event will repeat after the first run. </param>
-		EventTime(const std::function<void()> &onEvent, const Time &interval, const bool &repeat = false);
+		EventTime(std::function<void()> onEvent, const Time &interval, const bool &repeat = false);
 
 		bool EventTriggered() override;
 

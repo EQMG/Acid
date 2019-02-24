@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <optional>
 #include <algorithm>
@@ -30,10 +31,10 @@ namespace acid
 		/// <param name="type"> The attachment type this represents. </param>
 		/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
 		/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
-		Attachment(const uint32_t &binding, const std::string &name, const Type &type, const bool &multisampled = false, 
+		Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, 
 			const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::Black) :
 			m_binding(binding),
-			m_name(name),
+			m_name(std::move(name)),
 			m_type(type),
 			m_multisampled(multisampled),
 			m_format(format),
@@ -64,9 +65,9 @@ namespace acid
 	class ACID_EXPORT SubpassType
 	{
 	public:
-		SubpassType(const uint32_t &binding, const std::vector<uint32_t> &attachmentBindings) :
+		SubpassType(const uint32_t &binding, std::vector<uint32_t> attachmentBindings) :
 			m_binding(binding),
-			m_attachmentBindings(std::vector<uint32_t>(attachmentBindings))
+			m_attachmentBindings(std::move(attachmentBindings))
 		{
 		}
 
@@ -81,10 +82,10 @@ namespace acid
 	class ACID_EXPORT RenderpassCreate
 	{
 	public:
-		RenderpassCreate(const std::vector<Attachment> &images = {}, const std::vector<SubpassType> &subpasses = {}, 
+		RenderpassCreate(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, 
 			const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
-			m_images(images),
-			m_subpasses(subpasses),
+			m_images(std::move(images)),
+			m_subpasses(std::move(subpasses)),
 			m_width(width),
 			m_height(height),
 			m_scale(Vector2::One),

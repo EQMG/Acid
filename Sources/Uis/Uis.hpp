@@ -34,7 +34,7 @@ namespace acid
 		/// Gets the screen container.
 		/// </summary>
 		/// <returns> The screen container. </returns>
-		UiObject *GetContainer() const { return m_container.get(); }
+		UiObject &GetContainer() { return m_container; }
 
 		/// <summary>
 		/// The rendering objects from the container. Updated each update.
@@ -49,7 +49,7 @@ namespace acid
 		};
 
 		std::map<MouseButton, SelectorMouse> m_selectors;
-		std::unique_ptr<UiObject> m_container;
+		UiObject m_container;
 		std::vector<UiObject *> m_objects;
 	};
 }

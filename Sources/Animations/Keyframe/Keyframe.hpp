@@ -23,7 +23,7 @@ namespace acid
 		/// </summary>
 		/// <param name="timeStamp"> The time that this keyframe occurs during the animation. </param>
 		/// <param name="pose"> The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to. </param>
-		Keyframe(const Time &timeStamp, const std::map<std::string, JointTransform> &pose);
+		Keyframe(const Time &timeStamp, std::map<std::string, JointTransform> pose);
 
 		void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform);
 

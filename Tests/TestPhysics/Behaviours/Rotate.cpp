@@ -10,8 +10,7 @@ namespace test
 {
 	Rotate::Rotate(const Vector3 &direction, const int &test) :
 		m_direction(direction),
-		m_test(test),
-		m_rotation(Vector3())
+		m_test(test)
 	{
 	}
 

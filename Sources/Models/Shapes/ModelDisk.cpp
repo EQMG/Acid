@@ -38,7 +38,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			ModelDisk::Load();
 		}
 	}
 

@@ -9,8 +9,6 @@ namespace acid
 	class ACID_EXPORT VertexWeights
 	{
 	public:
-		VertexWeights();
-
 		void AddJointEffect(const uint32_t &jointId, const float &weight);
 
 		void LimitJointNumber(const uint32_t &max);

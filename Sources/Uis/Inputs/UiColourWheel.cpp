@@ -12,8 +12,7 @@ namespace acid
 		m_background(this, UiBound::Maximum, Texture::Create("Guis/ColourWheel.png")),
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_colour(colour),
-		m_mouseOver(false),
-		m_onPressed(Delegate<void(UiColourWheel *, Colour)>())
+		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(SIZE);
 	}

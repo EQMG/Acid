@@ -4,14 +4,6 @@
 
 namespace acid
 {
-	Delta::Delta() :
-		m_currentFrameTime(Time::Zero),
-		m_lastFrameTime(Time::Zero),
-		m_change(Time::Zero),
-		m_time(Time::Zero)
-	{
-	}
-
 	void Delta::Update()
 	{
 		m_currentFrameTime = Engine::GetTime();

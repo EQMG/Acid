@@ -4,9 +4,7 @@
 
 namespace acid
 {
-	Particles::Particles() :
-		m_mutex(std::mutex()),
-		m_particles(std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>())
+	Particles::Particles()
 	{
 	}
 

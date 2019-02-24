@@ -1,24 +1,24 @@
 ﻿#include "ParticleSystem.hpp"
 
+#include <utility>
 #include "Maths/Maths.hpp"
 #include "Scenes/Entity.hpp"
 #include "Particles.hpp"
 
 namespace acid
 {
-	ParticleSystem::ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
-		m_types(types),
+	ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
+		m_types(std::move(types)),
 		m_pps(pps),
 		m_averageSpeed(averageSpeed),
 		m_gravityEffect(gravityEffect),
 		m_randomRotation(false),
-		m_direction(Vector3()),
 		m_directionDeviation(0.0f),
 		m_speedDeviation(0.0f),
 		m_lifeDeviation(0.0f),
 		m_stageDeviation(0.0f),
 		m_scaleDeviation(0.0f),
-		m_emitTimer(Timer(Time::Seconds(1.0f / m_pps)))
+		m_emitTimer(Time::Seconds(1.0f / m_pps))
 	{
 	}
 

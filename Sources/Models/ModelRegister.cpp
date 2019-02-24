@@ -10,9 +10,7 @@
 
 namespace acid
 {
-	ModelRegister::ModelRegister() :
-		m_modelMetadatas(std::map<std::string, ModelMetadataCreate>()),
-		m_modelExtensions(std::map<std::string, ModelFilenameCreate>())
+	ModelRegister::ModelRegister()
 	{
 		AddMetadata<ModelObj>("ModelObj");
 		AddExtension<ModelObj>(".obj");

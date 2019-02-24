@@ -12,9 +12,7 @@ namespace acid
 		m_content(this, UiBound::Maximum),
 		m_scrollX(this, ScrollBar::Horizontal, UiBound(Vector2(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x))),
 		m_scrollY(this, ScrollBar::Vertical, UiBound(Vector2(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, SCROLL_BAR.m_y))),
-		m_scrollBars(scrollBars),
-		m_min(Vector2()),
-		m_max(Vector2())
+		m_scrollBars(scrollBars)
 	{
 	}
 

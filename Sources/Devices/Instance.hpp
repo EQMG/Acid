@@ -51,7 +51,6 @@ namespace acid
 
 		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
 
-		bool m_validationLayers;
 		std::vector<const char *> m_instanceLayers;
 		std::vector<const char *> m_instanceExtensions;
 		std::vector<const char *> m_deviceExtensions;

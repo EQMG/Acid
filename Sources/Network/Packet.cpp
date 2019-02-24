@@ -12,7 +12,6 @@
 namespace acid
 {
 	Packet::Packet() :
-		m_data(std::vector<char>()),
 		m_readPos(0),
 		m_sendPos(0),
 		m_isValid(true)
@@ -23,7 +22,7 @@ namespace acid
 	{
 		if (data && (sizeInBytes > 0))
 		{
-			std::size_t start = m_data.size();
+			auto start = m_data.size();
 			m_data.resize(start + sizeInBytes);
 			std::memcpy(&m_data[start], data, sizeInBytes);
 		}

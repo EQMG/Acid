@@ -1,17 +1,16 @@
 #include "RenderStage.hpp"
 
 #include <algorithm>
+#include <utility>
 #include "Renderer.hpp"
 
 namespace acid
 {
-	RenderStage::RenderStage(const RenderpassCreate &renderpassCreate) :
-		m_renderpassCreate(renderpassCreate),
+	RenderStage::RenderStage(RenderpassCreate renderpassCreate) :
+		m_renderpassCreate(std::move(renderpassCreate)),
 		m_renderpass(nullptr),
 		m_depthStencil(nullptr),
 		m_framebuffers(nullptr),
-		m_attachments(std::map<std::string, const Descriptor *>()),
-		m_clearValues(std::vector<VkClearValue>()),
 		m_subpassAttachmentCount(std::vector<uint32_t>(m_renderpassCreate.GetSubpasses().size())),
 		m_depthAttachment({}),
 		m_swapchainAttachment({}),

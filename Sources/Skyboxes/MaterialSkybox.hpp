@@ -14,7 +14,7 @@ namespace acid
 		public Material
 	{
 	public:
-		explicit MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap = nullptr, const Colour &skyColour = Colour::White);
+		explicit MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour &skyColour = Colour::White);
 
 		void Start() override;
 

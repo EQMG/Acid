@@ -3,8 +3,8 @@
 namespace acid
 {
 	InputDelay::InputDelay(const Time &delay, const Time &repeat) :
-		m_timerDelay(Timer(delay)),
-		m_timerRepeat(Timer(repeat)),
+		m_timerDelay(delay),
+		m_timerRepeat(repeat),
 		m_delayOver(false)
 	{
 	}

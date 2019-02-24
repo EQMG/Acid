@@ -8,7 +8,6 @@
 namespace acid
 {
 	Http::Http() :
-		m_host(),
 		m_port(0)
 	{
 	}

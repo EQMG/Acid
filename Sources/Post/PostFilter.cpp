@@ -9,11 +9,9 @@ namespace acid
 
 	PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines) :
 		RenderPipeline(pipelineStage),
-		m_descriptorSet(DescriptorsHandler()),
-		m_pipeline(PipelineGraphics(pipelineStage, shaderStages, {VertexModel::GetVertexInput()}, PipelineGraphics::Mode::Polygon, 
-			PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines)),
-		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
-		m_attachments(std::map<std::string, const Descriptor *>())
+		m_pipeline(pipelineStage, shaderStages, {VertexModel::GetVertexInput()}, PipelineGraphics::Mode::Polygon, 
+			PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, defines),
+		m_model(ModelRectangle::Create(-1.0f, 1.0f))
 	{
 	}
 

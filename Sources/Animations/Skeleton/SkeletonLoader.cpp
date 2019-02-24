@@ -1,12 +1,13 @@
 #include "SkeletonLoader.hpp"
 
+#include <utility>
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid
 {
-	SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, const std::vector<std::string> &boneOrder) :
+	SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder) :
 		m_armatureData(nullptr),
-		m_boneOrder(boneOrder),
+		m_boneOrder(std::move(boneOrder)),
 		m_jointCount(0),
 		m_headJoint(nullptr)
 	{

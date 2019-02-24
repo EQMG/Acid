@@ -5,9 +5,7 @@
 
 namespace acid
 {
-	ShadowRender::ShadowRender() :
-		m_descriptorSet(DescriptorsHandler()),
-		m_uniformObject(UniformHandler())
+	ShadowRender::ShadowRender()
 	{
 	}
 
@@ -51,7 +49,6 @@ namespace acid
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-		mesh->GetModel()->CmdRender(commandBuffer);
-		return true;
+		return mesh->GetModel()->CmdRender(commandBuffer);
 	}
 }

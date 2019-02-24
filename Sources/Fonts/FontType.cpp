@@ -1,4 +1,5 @@
 ﻿#include "FontType.hpp"
+#include <utility>
 
 #include "Resources/Resources.hpp"
 
@@ -30,15 +31,15 @@ namespace acid
 		return Create(metadata);
 	}
 
-	FontType::FontType(const std::string &filename, const std::string &style, const bool &load) :
-		m_filename(filename),
-		m_style(style),
+	FontType::FontType(std::string filename, std::string style, const bool &load) :
+		m_filename(std::move(filename)),
+		m_style(std::move(style)),
 		m_texture(nullptr),
 		m_metadata(nullptr)
 	{
 		if (load)
 		{
-			Load();
+			FontType::Load();
 		}
 	}
 

@@ -7,21 +7,12 @@
 namespace acid
 {
 	ShadowBox::ShadowBox() :
-		m_lightDirection(Vector3()),
 		m_shadowOffset(0.0f),
 		m_shadowDistance(0.0f),
-		m_projectionMatrix(Matrix4()),
-		m_lightViewMatrix(Matrix4()),
-		m_projectionViewMatrix(Matrix4()),
-		m_shadowMapSpaceMatrix(Matrix4()),
-		m_offset(Matrix4()),
-		m_centre(Vector3()),
 		m_farHeight(0.0f),
 		m_farWidth(0.0f),
 		m_nearHeight(0.0f),
-		m_nearWidth(0.0f),
-		m_minExtents(Vector3()),
-		m_maxExtents(Vector3())
+		m_nearWidth(0.0f)
 	{
 		// Creates the offset for part of the conversion to shadow map space.
 		m_offset = m_offset.Translate(Vector3(0.5f, 0.5f, 0.5f));
@@ -43,16 +34,16 @@ namespace acid
 
 	bool ShadowBox::IsInBox(const Vector3 &position, const float &radius) const
 	{
-		Vector4 entityPos = m_lightViewMatrix.Transform(Vector4(position));
+		auto entityPos = m_lightViewMatrix.Transform(Vector4(position));
 
-		Vector3 closestPoint = Vector3();
+		auto closestPoint = Vector3();
 		closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
 		closestPoint.m_y = std::clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
 		closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
 
-		Vector3 centre = Vector3(entityPos);
-		Vector3 distance = centre - closestPoint;
-		float distanceSquared = distance.LengthSquared();
+		auto centre = Vector3(entityPos);
+		auto distance = centre - closestPoint;
+		auto distanceSquared = distance.LengthSquared();
 
 		return distanceSquared < radius * radius;
 	}
@@ -61,23 +52,23 @@ namespace acid
 	{
 		UpdateSizes(camera);
 
-		Matrix4 rotation = Matrix4();
+		auto rotation = Matrix4();
 		rotation = rotation.Rotate(camera.GetRotation().m_y * Maths::DegToRad, Vector3::Up);
 		rotation = rotation.Rotate(camera.GetRotation().m_x * Maths::DegToRad, Vector3::Right);
 
-		Vector4 forwardVector4 = rotation.Transform(Vector4(0.0f, 0.0f, -1.0f, 0.0f));
-		Vector3 forwardVector = Vector3(forwardVector4);
+		auto forwardVector4 = rotation.Transform(Vector4(0.0f, 0.0f, -1.0f, 0.0f));
+		auto forwardVector = Vector3(forwardVector4);
 
-		Vector3 toFar = forwardVector * m_shadowDistance;
-		Vector3 toNear = forwardVector * camera.GetNearPlane();
-		Vector3 centreNear = toNear + camera.GetPosition();
-		Vector3 centreFar = toFar + camera.GetPosition();
+		auto toFar = forwardVector * m_shadowDistance;
+		auto toNear = forwardVector * camera.GetNearPlane();
+		auto centreNear = toNear + camera.GetPosition();
+		auto centreFar = toFar + camera.GetPosition();
 
 		auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
 		for (uint32_t i = 0; i < 8; i++)
 		{
-			Vector4 point = points[i];
+			auto point = points[i];
 
 			if (i == 0)
 			{
@@ -132,21 +123,21 @@ namespace acid
 
 	std::array<Vector4, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar)
 	{
-		Vector4 upVector4 = rotation.Transform(Vector4(0.0f, 1.0f, 0.0f, 0.0f));
-		Vector3 upVector = Vector3(upVector4);
-		Vector3 rightVector = forwardVector.Cross(upVector);
-		Vector3 downVector = -upVector;
-		Vector3 leftVector = -rightVector;
-
-		Vector3 farUpVector = upVector * m_farHeight;
-		Vector3 farDownVector = downVector * m_farHeight;
-		Vector3 nearUpVector = upVector * m_nearHeight;
-		Vector3 nearDownVector = downVector * m_nearHeight;
-
-		Vector3 farTop = centreFar + farUpVector;
-		Vector3 farBottom = centreFar + farDownVector;
-		Vector3 nearTop = centreNear + nearUpVector;
-		Vector3 nearBottom = centreNear + nearDownVector;
+		auto upVector4 = rotation.Transform(Vector4(0.0f, 1.0f, 0.0f, 0.0f));
+		auto upVector = Vector3(upVector4);
+		auto rightVector = forwardVector.Cross(upVector);
+		auto downVector = -upVector;
+		auto leftVector = -rightVector;
+		
+		auto farUpVector = upVector * m_farHeight;
+		auto farDownVector = downVector * m_farHeight;
+		auto nearUpVector = upVector * m_nearHeight;
+		auto nearDownVector = downVector * m_nearHeight;
+		
+		auto farTop = centreFar + farUpVector;
+		auto farBottom = centreFar + farDownVector;
+		auto nearTop = centreNear + nearUpVector;
+		auto nearBottom = centreNear + nearDownVector;
 
 		auto points = std::array<Vector4, 8>();
 		points[0] = CalculateLightSpaceFrustumCorner(farTop, rightVector, m_farWidth);
@@ -160,10 +151,10 @@ namespace acid
 		return points;
 	}
 
-	Vector4 ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width)
+	Vector4 ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const
 	{
-		Vector3 point = startPoint + (direction * width);
-		Vector4 point4 = Vector4(point);
+		auto point = startPoint + (direction * width);
+		auto point4 = Vector4(point);
 		point4 = m_lightViewMatrix.Transform(point4);
 		return point4;
 	}
@@ -179,11 +170,11 @@ namespace acid
 
 	void ShadowBox::UpdateCenter()
 	{
-		float x = (m_minExtents.m_x + m_maxExtents.m_x) / 2.0f;
-		float y = (m_minExtents.m_y + m_maxExtents.m_y) / 2.0f;
-		float z = (m_minExtents.m_z + m_maxExtents.m_z) / 2.0f;
-		Vector4 centre = Vector4(x, y, z, 1.0f);
-		Matrix4 invertedLight = m_lightViewMatrix.Invert();
+		auto x = (m_minExtents.m_x + m_maxExtents.m_x) / 2.0f;
+		auto y = (m_minExtents.m_y + m_maxExtents.m_y) / 2.0f;
+		auto z = (m_minExtents.m_z + m_maxExtents.m_z) / 2.0f;
+		auto centre = Vector4(x, y, z, 1.0f);
+		auto invertedLight = m_lightViewMatrix.Invert();
 
 		m_centre = invertedLight.Transform(centre);
 	}
@@ -191,9 +182,9 @@ namespace acid
 	void ShadowBox::UpdateLightViewMatrix()
 	{
 		m_lightViewMatrix = Matrix4::Identity;
-		float pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
+		auto pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 		m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::Right);
-		float yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
+		auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
 
 		if (m_lightDirection.m_z > 0.0f)
 		{

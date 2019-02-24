@@ -4,7 +4,6 @@ namespace acid
 {
 	FilterWobble::FilterWobble(const Pipeline::Stage &pipelineStage, const float &wobbleSpeed) :
 		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Wobble.frag"}, {}),
-		m_pushScene(PushHandler()),
 		m_wobbleSpeed(wobbleSpeed),
 		m_wobbleAmount(0.0f)
 	{

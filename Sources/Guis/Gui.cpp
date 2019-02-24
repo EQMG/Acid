@@ -1,4 +1,5 @@
 ﻿#include "Gui.hpp"
+#include <utility>
 
 #include "Renderer/Renderer.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
@@ -6,18 +7,13 @@
 
 namespace acid
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture, const Colour &colourOffset) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const Colour &colourOffset) :
 		UiObject(parent, rectangle),
-		m_descriptorSet(DescriptorsHandler()),
-		m_uniformObject(UniformHandler()),
 		m_model(ModelRectangle::Create(0.0f, 1.0f)),
-		m_texture(texture),
+		m_texture(std::move(texture)),
 		m_numberOfRows(1),
 		m_selectedRow(0),
-		m_atlasOffset(Vector2::Zero),
-		m_ninePatches(Vector4::Zero),
-		m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)),
-		m_colourOffset(Colour())
+		m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset))
 	{
 	}
 

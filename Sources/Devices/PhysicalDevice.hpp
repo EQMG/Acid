@@ -13,8 +13,6 @@ namespace acid
 	public:
 		explicit PhysicalDevice(const Instance *instance);
 
-		~PhysicalDevice();
-
 		const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }
 
 		const VkPhysicalDeviceProperties &GetProperties() const { return m_properties; }

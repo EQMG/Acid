@@ -1,21 +1,22 @@
 #include "MaterialDefault.hpp"
 
+#include <utility>
 #include "Animations/MeshAnimated.hpp"
 #include "Models/VertexModel.hpp"
 #include "Scenes/Entity.hpp"
 
 namespace acid
 {
-	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, const std::shared_ptr<Texture> &diffuseTexture, 
-		const float &metallic, const float &roughness, const std::shared_ptr<Texture> &materialTexture, const std::shared_ptr<Texture> &normalTexture, 
+	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Texture> diffuseTexture, 
+		const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture, 
 		const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		m_animated(false),
 		m_baseDiffuse(baseDiffuse),
-		m_diffuseTexture(diffuseTexture),
+		m_diffuseTexture(std::move(diffuseTexture)),
 		m_metallic(metallic),
 		m_roughness(roughness),
-		m_materialTexture(materialTexture),
-		m_normalTexture(normalTexture),
+		m_materialTexture(std::move(materialTexture)),
+		m_normalTexture(std::move(normalTexture)),
 		m_castsShadows(castsShadows),
 		m_ignoreLighting(ignoreLighting),
 		m_ignoreFog(ignoreFog)
@@ -95,7 +96,7 @@ namespace acid
 		descriptorSet.Push("samplerNormal", m_normalTexture);
 	}
 
-	std::vector<Shader::Define> MaterialDefault::GetDefines()
+	std::vector<Shader::Define> MaterialDefault::GetDefines() const
 	{
 		std::vector<Shader::Define> result = {};
 		result.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));

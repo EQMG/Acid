@@ -7,8 +7,7 @@
 
 namespace acid
 {
-	Files::Files() :
-		m_searchPaths(std::vector<std::string>())
+	Files::Files()
 	{
 		PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	}
@@ -81,7 +80,7 @@ namespace acid
 
 		auto size = PHYSFS_fileLength(fs_file);
 		std::vector<uint8_t> data(size);
-		PHYSFS_readBytes(fs_file, data.data(), (PHYSFS_uint64)size);
+		PHYSFS_readBytes(fs_file, data.data(), static_cast<PHYSFS_uint64>(size));
 
 		if (PHYSFS_close(fs_file) != 0)
 		{

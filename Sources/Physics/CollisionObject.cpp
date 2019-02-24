@@ -14,10 +14,7 @@ namespace acid
 		m_frictionRolling(0.1f),
 		m_frictionSpinning(0.2f),
 		m_shape(nullptr),
-		m_body(nullptr),
-		m_forces(std::vector<std::unique_ptr<Force>>()),
-		m_onCollision(Delegate<void(CollisionObject *)>()),
-		m_onSeparation(Delegate<void(CollisionObject *)>())
+		m_body(nullptr)
 	{
 	}
 

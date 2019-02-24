@@ -16,7 +16,7 @@ namespace test
 		void Save();
 
 	private:
-		std::unique_ptr<File> m_audio;
-		std::unique_ptr<File> m_graphics;
+		File m_audio;
+		File m_graphics;
 	};
 }

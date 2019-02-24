@@ -26,6 +26,6 @@ namespace test
 		float m_heightOffset;
 
 		Transform m_transform;
-		std::unique_ptr<Text> m_text;
+		Text m_text;
 	};
 }

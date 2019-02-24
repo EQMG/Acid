@@ -110,11 +110,7 @@ namespace acid
 		m_closed(false),
 		m_focused(true),
 		m_iconified(false),
-		m_window(nullptr),
-		m_monitors(std::vector<Monitor>()),
-		m_onMonitorConnect(Delegate<void(uint32_t, bool)>()),
-		m_onClose(Delegate<void()>()),
-		m_onIconify(Delegate<void(bool)>())
+		m_window(nullptr)
 	{
 		// Set the error error callback
 		glfwSetErrorCallback(CallbackError);

@@ -14,9 +14,7 @@ namespace test
 	World::World() :
 		m_driverDay(DriverLinear<float>(0.0f, 1.0f, Time::Seconds(300.0f))),
 		m_factorDay(0.0f),
-		m_fog(Fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)),
-		m_skyboxRotation(Vector3()),
-		m_lightDirection(Vector3())
+		m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 	{
 		m_driverDay.Update(Time::Seconds(50.0f)); // Starts during daytime.
 	}

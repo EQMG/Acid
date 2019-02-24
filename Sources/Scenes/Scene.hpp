@@ -48,7 +48,7 @@ namespace acid
 		/// Gets the scene object structure.
 		/// </summary>
 		/// <returns> The scene object structure. </returns>
-		SceneStructure *GetStructure() { return m_structure.get(); }
+		SceneStructure *GetStructure() const { return m_structure.get(); }
 
 		/// <summary>
 		/// Gets the scene physics system.

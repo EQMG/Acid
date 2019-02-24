@@ -14,7 +14,7 @@ namespace acid
 	class ACID_EXPORT RenderStage
 	{
 	public:
-		RenderStage(const RenderpassCreate &renderpassCreate);
+		RenderStage(RenderpassCreate renderpassCreate);
 
 		void Update();
 

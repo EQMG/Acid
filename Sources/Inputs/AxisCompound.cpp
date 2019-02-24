@@ -4,8 +4,7 @@
 
 namespace acid
 {
-	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes) :
-		m_axes(std::vector<std::unique_ptr<IAxis>>())
+	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes)
 	{
 		for (const auto &axis : axes)
 		{
@@ -15,7 +14,7 @@ namespace acid
 
 	float AxisCompound::GetAmount() const
 	{
-		float result = 0.0f;
+		auto result = 0.0f;
 
 		for (const auto &axis : m_axes)
 		{

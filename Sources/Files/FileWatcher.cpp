@@ -8,9 +8,7 @@ namespace acid
 	FileWatcher::FileWatcher(const std::string &path, const Time &delay) :
 		m_path(path),
 		m_delay(delay),
-		m_onChange(Delegate<void(std::string, Status)>()),
 		m_thread(std::thread(&FileWatcher::QueueLoop, this)),
-		m_paths(std::unordered_map<std::string, long>()),
 		m_running(true)
 	{
 		for (auto &file : FileSystem::FilesInPath(m_path))

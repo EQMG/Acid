@@ -10,8 +10,6 @@ namespace acid
 		public Component
 	{
 	public:
-		MeshRender();
-
 		void Start() override;
 
 		void Update() override;

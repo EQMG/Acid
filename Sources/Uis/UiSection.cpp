@@ -16,8 +16,7 @@ namespace acid
 		m_content(this, UiBound(Vector2(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions)),
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_collapsed(false),
-		m_mouseOver(false),
-		m_onCollapsed(Delegate<void(UiSection *, bool)>())
+		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(SIZE);
 		m_icon.GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));

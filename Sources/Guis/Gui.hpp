@@ -21,10 +21,11 @@ namespace acid
 		/// <summary>
 		/// Creates a new GUI object.
 		/// </summary>
+		/// <param name="parent"> The parent screen object. </param>
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="colourOffset"> The texture colour offset. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, const std::shared_ptr<Texture> &texture, const Colour &colourOffset = Colour::White);
+		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const Colour &colourOffset = Colour::White);
 
 		void UpdateObject() override;
 

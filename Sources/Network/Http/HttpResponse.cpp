@@ -19,6 +19,7 @@ namespace acid
 		{
 			return it->second;
 		}
+
 		static const std::string empty = "";
 		return empty;
 	}

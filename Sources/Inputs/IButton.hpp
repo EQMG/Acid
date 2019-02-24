@@ -10,6 +10,8 @@ namespace acid
 	class ACID_EXPORT IButton
 	{
 	public:
+		virtual ~IButton() = default;
+
 		/// <summary>
 		/// Returns whether this button is currently pressed.
 		/// </summary>
