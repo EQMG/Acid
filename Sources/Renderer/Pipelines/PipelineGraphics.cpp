@@ -339,6 +339,7 @@ namespace acid
 
 			for (const auto &attribute : vertexInput.GetAttributeDescriptions())
 			{
+				// TODO: Remove attributes not cntained in shader wile preserving lastAttribute.
 				/*bool shaderContains = false;
 
 				for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
