@@ -12,11 +12,10 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		JointData(const uint32_t &index, const std::string &nameId, const Matrix4 &bindLocalTransform) :
+		JointData(const uint32_t &index, std::string nameId, const Matrix4 &bindLocalTransform) :
 			m_index(index),
-			m_nameId(nameId),
-			m_bindLocalTransform(bindLocalTransform),
-			m_children(std::vector<std::unique_ptr<JointData>>())
+			m_nameId(std::move(nameId)),
+			m_bindLocalTransform(bindLocalTransform)
 		{
 		}
 

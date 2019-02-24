@@ -62,8 +62,8 @@ namespace acid
 
 			for (uint32_t i = 0; i < count; i++)
 			{
-				uint32_t jointId = String::From<uint32_t>(rawData[pointer++]);
-				uint32_t weightId = String::From<uint32_t>(rawData[pointer++]);
+				auto jointId = String::From<uint32_t>(rawData[pointer++]);
+				auto weightId = String::From<uint32_t>(rawData[pointer++]);
 				skinData.AddJointEffect(jointId, weights[weightId]);
 			}
 

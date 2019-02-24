@@ -57,7 +57,7 @@ namespace acid
 				return;
 			}
 
-			if (m_value.length() < m_maxLength)
+			if (m_value.length() < static_cast<uint32_t>(m_maxLength))
 			{
 				m_inputDelay.Update(true);
 

@@ -49,7 +49,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		explicit ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+		explicit ParticleType(std::shared_ptr<Texture> texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 			const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<Particle> &particles);

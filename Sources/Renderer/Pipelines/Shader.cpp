@@ -504,9 +504,9 @@ namespace acid
 		TBuiltInResource resources = GetResources();
 
 		// Enable SPIR-V and Vulkan rules when parsing GLSL.
-		EShMessages messages = (EShMessages)(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
+		auto messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
 #if defined(ACID_VERBOSE)
-		messages = (EShMessages)(messages | EShMsgDebugInfo);
+		messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
 		const char *shaderSource = shaderCode.c_str();

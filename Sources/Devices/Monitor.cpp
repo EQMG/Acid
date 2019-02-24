@@ -38,7 +38,7 @@ namespace acid
 		const GLFWvidmode *videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
 		std::vector<VideoMode> modes(static_cast<uint32_t>(videoModeCount));
 
-		for (uint32_t i = 0; i < videoModeCount; i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++)
 		{
 			modes[i] = *reinterpret_cast<const VideoMode *>(&videoModes[i]);
 		}

@@ -61,7 +61,7 @@ namespace acid
 		return {previousFrame, nextFrame};
 	}
 
-	float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame)
+	float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const
 	{
 		Time totalTime = nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp();
 		Time currentTime = m_animationTime - previousFrame.GetTimeStamp();

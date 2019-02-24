@@ -39,13 +39,13 @@ namespace acid
 		return Create(metadata);
 	}
 
-	SoundBuffer::SoundBuffer(const std::string &filename, const bool &load) :
-		m_filename(filename),
+	SoundBuffer::SoundBuffer(std::string filename, const bool &load) :
+		m_filename(std::move(filename)),
 		m_buffer(0)
 	{
 		if (load)
 		{
-			Load();
+			SoundBuffer::Load();
 		}
 	}
 
@@ -174,7 +174,8 @@ namespace acid
 		int32_t channels;
 		int32_t samplesPerSec;
 		int16_t *data;
-		int32_t size = stb_vorbis_decode_memory((uint8_t*)fileLoaded->data(), (uint32_t)fileLoaded->size(), &channels, &samplesPerSec, &data);
+		auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t*>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), 
+			&channels, &samplesPerSec, &data);
 
 		if (size == -1)
 		{

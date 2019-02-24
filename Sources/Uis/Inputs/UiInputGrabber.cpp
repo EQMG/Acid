@@ -80,8 +80,7 @@ namespace acid
 	UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_port(port),
-		m_value(value),
-		m_onGrabbed(Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)>())
+		m_value(value)
 	{
 		UpdateText();
 
@@ -101,8 +100,7 @@ namespace acid
 
 	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
-		m_value(value),
-		m_onGrabbed(Delegate<void(UiGrabberKeyboard *, Key)>())
+		m_value(value)
 	{
 		UpdateText();
 
@@ -122,8 +120,7 @@ namespace acid
 
 	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
-		m_value(value),
-		m_onGrabbed(Delegate<void(UiGrabberMouse *, MouseButton)>())
+		m_value(value)
 	{
 		UpdateText();
 

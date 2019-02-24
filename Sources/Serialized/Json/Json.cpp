@@ -111,7 +111,7 @@ namespace acid
 
 		for (const auto &data : contentSplit)
 		{
-			std::string name = "";
+			std::string name;
 			std::string value = data;
 
 			if (String::Contains(data, ":"))

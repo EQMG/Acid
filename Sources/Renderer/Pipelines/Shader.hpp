@@ -32,10 +32,10 @@ namespace acid
 		class VertexInput
 		{
 		public:
-			VertexInput(const uint32_t &binding, const std::vector<VkVertexInputBindingDescription> &bindingDescriptions, const std::vector<VkVertexInputAttributeDescription> &attributeDescriptions) :
+			VertexInput(const uint32_t &binding, std::vector<VkVertexInputBindingDescription> bindingDescriptions, std::vector<VkVertexInputAttributeDescription> attributeDescriptions) :
 				m_binding(binding),
-				m_bindingDescriptions(bindingDescriptions),
-				m_attributeDescriptions(attributeDescriptions)
+				m_bindingDescriptions(std::move(bindingDescriptions)),
+				m_attributeDescriptions(std::move(attributeDescriptions))
 			{
 			}
 

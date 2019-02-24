@@ -24,7 +24,7 @@ namespace acid
 		/// </summary>
 		/// <param name="path"> The path to watch recursively. </param>
 		/// <param name="delay"> How frequently to check for changes. </param>
-		explicit FileWatcher(const std::string &path, const Time &delay = Time::Seconds(5.0f));
+		explicit FileWatcher(std::string path, const Time &delay = Time::Seconds(5.0f));
 
 		const std::string &GetPath() const { return m_path; }
 

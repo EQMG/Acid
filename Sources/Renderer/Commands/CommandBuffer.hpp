@@ -50,7 +50,6 @@ namespace acid
 		VkQueue GetQueue() const;
 
 		VkQueueFlagBits m_queueType;
-		VkCommandBufferLevel m_bufferLevel;
 		VkCommandBuffer m_commandBuffer;
 		bool m_running;
 	};

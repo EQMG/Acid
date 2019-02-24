@@ -159,7 +159,7 @@ namespace acid
 		/// Sets window icon images.
 		/// </summary>
 		/// <param name="filenames"> The new icon files. </param>
-		void SetIcons(const std::vector<std::string> &filename);
+		void SetIcons(const std::vector<std::string> &filenames);
 
 		/// <summary>
 		/// Gets weather the window is borderless or not.

@@ -222,7 +222,6 @@ namespace acid
 			/// Creates a new text word.
 			/// </summary>
 			Word() :
-				m_characters(std::vector<FontMetafile::Character>()),
 				m_width(0.0f)
 			{
 			}
@@ -256,7 +255,6 @@ namespace acid
 			Line(const float &spaceWidth, const float &maxLength) :
 				m_maxLength(maxLength),
 				m_spaceSize(spaceWidth),
-				m_words(std::vector<Word>()),
 				m_currentWordsLength(0.0f),
 				m_currentLineLength(0.0f)
 			{

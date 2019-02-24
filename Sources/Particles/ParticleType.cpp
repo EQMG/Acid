@@ -1,4 +1,5 @@
 ﻿#include "ParticleType.hpp"
+#include <utility>
 
 #include "Resources/Resources.hpp"
 #include "Maths/Maths.hpp"
@@ -37,9 +38,9 @@ namespace acid
 		return Create(metadata);
 	}
 
-	ParticleType::ParticleType(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset,
+	ParticleType::ParticleType(std::shared_ptr<Texture> texture, const uint32_t &numberOfRows, const Colour &colourOffset,
 		const float &lifeLength, const float &stageCycles, const float &scale) :
-		m_texture(texture),
+		m_texture(std::move(texture)),
 		m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 		m_numberOfRows(numberOfRows),
 		m_colourOffset(colourOffset),

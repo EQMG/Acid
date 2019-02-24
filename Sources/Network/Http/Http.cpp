@@ -12,7 +12,8 @@ namespace acid
 	{
 	}
 
-	Http::Http(const std::string &host, const uint16_t &port)
+	Http::Http(const std::string &host, const uint16_t &port) :
+		m_port(port)
 	{
 		SetHost(host, port);
 	}

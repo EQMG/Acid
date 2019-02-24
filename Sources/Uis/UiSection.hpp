@@ -25,7 +25,6 @@ namespace acid
 		Sound m_soundClick;
 
 		bool m_collapsed;
-		bool m_mouseOver;
 
 		Delegate<void(UiSection *, bool)> m_onCollapsed;
 	};

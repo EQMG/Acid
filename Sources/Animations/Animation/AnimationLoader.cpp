@@ -6,9 +6,7 @@ namespace acid
 {
 	AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes) :
 		m_libraryAnimations(libraryAnimations),
-		m_libraryVisualScenes(libraryVisualScenes),
-		m_lengthSeconds(Time::Zero),
-		m_keyframes(std::vector<Keyframe>())
+		m_libraryVisualScenes(libraryVisualScenes)
 	{
 		auto animationNodes = m_libraryAnimations->FindChildren("animation");
 
@@ -34,6 +32,7 @@ namespace acid
 		auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
 		auto rawTimes = String::Split(timeData->GetValue(), " ");
 		std::vector<Time> times = {};
+		times.reserve(rawTimes.size());
 
 		for (const auto &rawTime : rawTimes)
 		{

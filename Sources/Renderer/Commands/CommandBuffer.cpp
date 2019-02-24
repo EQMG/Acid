@@ -6,7 +6,6 @@ namespace acid
 {
 	CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
 		m_queueType(queueType),
-		m_bufferLevel(bufferLevel),
 		m_commandBuffer(nullptr),
 		m_running(false)
 	{

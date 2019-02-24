@@ -34,7 +34,7 @@ namespace acid
 	{
 		std::vector<std::string> files(static_cast<uint32_t>(count));
 
-		for (uint32_t i = 0; i < count; i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(count); i++)
 		{
 			files[i] = paths[i];
 		}

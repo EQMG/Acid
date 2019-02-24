@@ -20,8 +20,8 @@ namespace acid
 			return it->second;
 		}
 
-		static const std::string empty = "";
-		return empty;
+		static const std::string Empty = "";
+		return Empty;
 	}
 
 	void HttpResponse::Parse(const std::string &data)
