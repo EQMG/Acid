@@ -13,14 +13,14 @@ namespace acid
 	void Log::Out(const std::string &string)
 	{
 		std::lock_guard<std::mutex> lock(MUTEX);
-		fprintf(stdout, string.c_str());
+		fprintf(stdout, "%s", string.c_str());
 		STREAM << string;
 	}
 
 	void Log::Error(const std::string &string)
 	{
 		std::lock_guard<std::mutex> lock(MUTEX);
-		fprintf(stderr, string.c_str());
+		fprintf(stderr, "%s", string.c_str());
 		STREAM << string;
 	}
 

@@ -120,7 +120,7 @@ namespace acid
 		/// </summary>
 		/// <param name="code"> Response status code. </param>
 		/// <param name="message"> Response message. </param>
-		explicit FtpResponse(const Status &code = Status::InvalidResponse, const std::string &message = "");
+		explicit FtpResponse(const Status &code = Status::InvalidResponse, std::string message = "");
 
 		/// <summary>
 		/// Check if the status code means a success.

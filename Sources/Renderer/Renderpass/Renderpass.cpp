@@ -115,6 +115,7 @@ namespace acid
 		}
 
 		std::vector<VkSubpassDescription> subpassDescriptions = {};
+		subpassDescriptions.reserve(subpasses.size());
 
 		for (const auto &subpass : subpasses)
 		{

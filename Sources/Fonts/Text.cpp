@@ -83,8 +83,7 @@ namespace acid
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-		m_model->CmdRender(commandBuffer);
-		return true;
+		return m_model->CmdRender(commandBuffer);
 	}
 
 	void Text::SetString(const std::string &newString)

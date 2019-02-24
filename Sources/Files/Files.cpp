@@ -65,9 +65,9 @@ namespace acid
 
 	std::optional<std::string> Files::Read(const std::string &path)
 	{
-		auto fs_file = PHYSFS_openRead(path.c_str());
+		auto fsFile = PHYSFS_openRead(path.c_str());
 
-		if (fs_file == nullptr)
+		if (fsFile == nullptr)
 		{
 			if (!FileSystem::Exists(path) || !FileSystem::IsFile(path))
 			{
@@ -78,11 +78,11 @@ namespace acid
 			return FileSystem::ReadTextFile(path);
 		}
 
-		auto size = PHYSFS_fileLength(fs_file);
+		auto size = PHYSFS_fileLength(fsFile);
 		std::vector<uint8_t> data(size);
-		PHYSFS_readBytes(fs_file, data.data(), static_cast<PHYSFS_uint64>(size));
+		PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
-		if (PHYSFS_close(fs_file) != 0)
+		if (PHYSFS_close(fsFile) != 0)
 		{
 			Log::Error("Error while closing file %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		}
@@ -93,7 +93,7 @@ namespace acid
 	std::vector<std::string> Files::FilesInPath(const std::string &path, const bool &recursive)
 	{
 		std::vector<std::string> result = {};
-		char **rc = PHYSFS_enumerateFiles(path.c_str());
+		auto rc = PHYSFS_enumerateFiles(path.c_str());
 		char **i;
 
 		for (i = rc; *i != nullptr; i++)

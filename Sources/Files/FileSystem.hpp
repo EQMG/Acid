@@ -27,7 +27,7 @@ namespace acid
 		/// <summary>
 		/// Gets if a file exists.
 		/// </summary>
-		/// <param name="filename"> The filename. </param>
+		/// <param name="path"> The path. </param>
 		/// <returns> If the file exists. </returns>
 		static bool Exists(const std::string &path);
 

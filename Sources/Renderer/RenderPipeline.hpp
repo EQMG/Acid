@@ -15,8 +15,8 @@ namespace acid
 		/// Creates a new render pipeline.
 		/// </summary>
 		/// <param name="stage"> The stage this renderer will be used in. </param>
-		explicit RenderPipeline(const Pipeline::Stage &stage) :
-			m_stage(stage),
+		explicit RenderPipeline(Pipeline::Stage stage) :
+			m_stage(std::move(stage)),
 			m_enabled(true)
 		{
 		}

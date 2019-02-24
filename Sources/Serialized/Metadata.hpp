@@ -36,7 +36,7 @@ namespace acid
 
 		void ClearChildren() { m_children.clear(); }
 
-		Metadata *AddChild(Metadata *value);
+		Metadata *AddChild(Metadata *child);
 
 		void RemoveChild(Metadata *child);
 

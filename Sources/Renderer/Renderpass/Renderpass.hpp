@@ -14,10 +14,10 @@ namespace acid
 			public NonCopyable
 		{
 		public:
-			SubpassDescription(const VkPipelineBindPoint &bindPoint, const std::vector<VkAttachmentReference> &colorAttachments, 
+			SubpassDescription(const VkPipelineBindPoint &bindPoint, std::vector<VkAttachmentReference> colorAttachments, 
 				const std::optional<uint32_t> &depthAttachment) :
 				m_subpassDescription({}),
-				m_colorAttachments(colorAttachments),
+				m_colorAttachments(std::move(colorAttachments)),
 				m_depthStencilAttachment({})
 			{
 				m_subpassDescription.pipelineBindPoint = bindPoint;

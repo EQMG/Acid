@@ -31,7 +31,7 @@ namespace acid
 		{
 			Colour m_colour;
 			Vector3 m_position;
-			float m_radius;
+			float m_radius{};
 		};
 
 		std::vector<Shader::Define> GetDefines();

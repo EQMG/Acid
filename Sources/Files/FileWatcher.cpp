@@ -1,12 +1,13 @@
 #include "FileWatcher.hpp"
 
 #include <chrono>
+#include <utility>
 #include "FileSystem.hpp"
 
 namespace acid
 {
-	FileWatcher::FileWatcher(const std::string &path, const Time &delay) :
-		m_path(path),
+	FileWatcher::FileWatcher(std::string path, const Time &delay) :
+		m_path(std::move(path)),
 		m_delay(delay),
 		m_thread(std::thread(&FileWatcher::QueueLoop, this)),
 		m_running(true)

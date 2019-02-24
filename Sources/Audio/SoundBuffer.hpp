@@ -31,7 +31,7 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file to load the sound buffer from. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-		explicit SoundBuffer(const std::string &filename, const bool &load = true);
+		explicit SoundBuffer(std::string filename, const bool &load = true);
 
 		~SoundBuffer();
 

@@ -78,7 +78,7 @@ namespace acid
 		/// <param name="nextFrame"> The next keyframe in the animation.
 		/// </param>
 		/// <returns> A number between 0 and 1 indicating how far between the two keyframes the current animation time is. </returns>
-		float CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame);
+		float CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const;
 
 		/// <summary>
 		/// Calculates all the local-space joint transforms for the desired current pose by interpolating between
