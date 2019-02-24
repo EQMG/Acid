@@ -20,7 +20,7 @@ namespace acid
 
 		Delegate<void(UiColourWheel *, Colour)> &GetOnPressed() { return m_onPressed; }
 	private:
-		std::unique_ptr<Gui> m_background;
+		Gui m_background;
 		Sound m_soundClick;
 
 		Colour m_colour;

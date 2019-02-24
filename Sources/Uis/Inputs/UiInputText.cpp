@@ -9,11 +9,11 @@ namespace acid
 {
 	UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour)),
-		m_textTitle(std::make_unique<Text>(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
-			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
-		m_textValue(std::make_unique<Text>(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
-			UiInputButton::FontSize, value, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
+		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+		m_textTitle(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
+		m_textValue(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
+			UiInputButton::FontSize, value, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
 		m_title(title),
 		m_value(value),
@@ -25,7 +25,7 @@ namespace acid
 		m_onType(Delegate<void(UiInputText *, std::string)>())
 	{
 		GetRectangle().SetDimensions(UiInputButton::Size);
-		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+		m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 
 		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods)
 		{
@@ -41,7 +41,7 @@ namespace acid
 				if (m_lastKey != 8 || m_inputDelay.CanInput())
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
-					m_textValue->SetString(m_value);
+					m_textValue.SetString(m_value);
 					m_onType(this, m_value);
 					m_lastKey = 8;
 				}
@@ -66,7 +66,7 @@ namespace acid
 				if (m_lastKey != c || m_inputDelay.CanInput())
 				{
 					m_value += c;
-					m_textValue->SetString(m_value);
+					m_textValue.SetString(m_value);
 					m_onType(this, m_value);
 					m_lastKey = c;
 				}
@@ -83,7 +83,7 @@ namespace acid
 	{
 		if (Uis::Get()->WasDown(MouseButton::Left))
 		{
-			if (m_background->IsSelected())
+			if (m_background.IsSelected())
 			{
 				SetSelected(true);
 				CancelEvent(MouseButton::Left);
@@ -97,14 +97,14 @@ namespace acid
 
 		if (!m_selected)
 		{
-			if (m_background->IsSelected() && !m_mouseOver)
+			if (m_background.IsSelected() && !m_mouseOver)
 			{
-				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 				m_mouseOver = true;
 			}
-			else if (!m_background->IsSelected() && m_mouseOver)
+			else if (!m_background.IsSelected() && m_mouseOver)
 			{
-				m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 				m_mouseOver = false;
 			}
 		}
@@ -125,12 +125,12 @@ namespace acid
 	void UiInputText::SetTitle(const std::string &title)
 	{
 		m_title = title;
-		m_textTitle->SetString(m_title);
+		m_textTitle.SetString(m_title);
 	}
 
 	void UiInputText::SetValue(const std::string &value)
 	{
 		m_value = value;
-		m_textValue->SetString(value);
+		m_textValue.SetString(value);
 	}
 }

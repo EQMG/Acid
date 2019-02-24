@@ -39,10 +39,10 @@ namespace acid
 	private:
 		void UpdateValueText();
 
-		std::unique_ptr<Gui> m_slider;
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_textTitle;
-		std::unique_ptr<Text> m_textValue;
+		Gui m_slider;
+		Gui m_background;
+		Text m_textTitle;
+		Text m_textValue;
 		Sound m_soundClick;
 
 		std::string m_title;

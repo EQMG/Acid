@@ -17,18 +17,18 @@ namespace acid
 
 	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/Button_Filled.png"), AccentColour)),
-		m_text(std::make_unique<Text>(this, UiBound::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)),
-		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
+		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button_Filled.png"), AccentColour),
+		m_text(this, UiBound::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
+		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(Size);
-		m_background->SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+		m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 	}
 
 	void UiInputButton::UpdateObject()
 	{
-		if (m_background->IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
 			{
@@ -39,14 +39,14 @@ namespace acid
 			CancelEvent(MouseButton::Left);
 		}
 
-		if (m_background->IsSelected() && !m_mouseOver)
+		if (m_background.IsSelected() && !m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), SelectedColour, SlideTime);
+			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), SelectedColour, SlideTime);
 			m_mouseOver = true;
 		}
-		else if (!m_background->IsSelected() && m_mouseOver)
+		else if (!m_background.IsSelected() && m_mouseOver)
 		{
-			m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), AccentColour, SlideTime);
+			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), AccentColour, SlideTime);
 			m_mouseOver = false;
 		}
 	}

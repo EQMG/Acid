@@ -48,11 +48,17 @@ namespace test
 		m_buttonSave(ButtonKeyboard(Key::K)),
 		m_buttonExit(ButtonKeyboard(Key::Delete)),
 		m_soundScreenshot(Sound("Sounds/Screenshot.ogg")),
-		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
-		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
+		m_uiStartLogo(Uis::Get()->GetContainer()),
+		m_overlayDebug(Uis::Get()->GetContainer())
 	{
-		m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(1.0f);
-		m_overlayDebug->SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
+		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);
+
+		m_uiStartLogo.GetOnFinished() += [&](UiStartLogo *object)
+		{
+			m_overlayDebug.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
+			Mouse::Get()->SetCursorHidden(true);
+		};
 	}
 
 	void Scene1::Start()
@@ -79,7 +85,7 @@ namespace test
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
-		//	sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
+	//	sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
 		sun->AddComponent<Light>(Colour::White);
 
 		auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
@@ -124,7 +130,7 @@ namespace test
 		cylinder->AddComponent<ShadowRender>();
 
 		auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3(-15.0f, 4.0f, 12.0f)));
-		//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
+	//	smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
 	}
 
 	void Scene1::Update()
@@ -139,20 +145,20 @@ namespace test
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
-			//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
+		//	sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
-			//	auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
-			//	Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
+		//	auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
+		//	Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
 
-			//	auto collisionObject = sphere->GetComponent<CollisionObject>();
-			//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
-			//		Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
-			//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
-			//		Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+		//	auto collisionObject = sphere->GetComponent<CollisionObject>();
+		//	collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
+		//	collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
+		//		Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 		}
 
 		if (m_buttonFullscreen.WasDown())
@@ -196,10 +202,10 @@ namespace test
 
 					for (auto &component : entity->GetComponents())
 					{
-						//	if (component->IsFromPrefab())
-						//	{
-						//		continue;
-						//	}
+					//	if (component->IsFromPrefab())
+					//	{
+					//		continue;
+					//	}
 
 						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
 
@@ -220,17 +226,10 @@ namespace test
 		{
 			Engine::Get()->RequestClose(false);
 		}
-
-		if (m_uiStartLogo != nullptr && !m_uiStartLogo->IsStarting())
-		{
-			m_overlayDebug->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
-			m_uiStartLogo = nullptr;
-			Mouse::Get()->SetCursorHidden(true);
-		}
 	}
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo != nullptr;
+		return !m_uiStartLogo.IsFinished();
 	}
 }

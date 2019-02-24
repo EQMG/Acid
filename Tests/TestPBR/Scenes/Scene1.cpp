@@ -33,7 +33,7 @@ namespace test
 			new ButtonJoystick(0, 7)
 		})),
 		m_paused(false),
-		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
+		m_overlayDebug(Uis::Get()->GetContainer())
 	{
 	}
 
@@ -44,8 +44,8 @@ namespace test
 
 		// Player.
 		auto playerObject = GetStructure()->CreateEntity(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
-		//	playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
-		//	playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
+	//	playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
+	//	playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
 		playerObject->AddComponent<PlayerFps>();
 
 		// Skybox.

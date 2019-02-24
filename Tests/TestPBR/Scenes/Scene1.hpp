@@ -24,6 +24,6 @@ namespace test
 		ButtonCompound m_buttonPause;
 		bool m_paused;
 
-		std::unique_ptr<OverlayDebug> m_overlayDebug;
+		OverlayDebug m_overlayDebug;
 	};
 }

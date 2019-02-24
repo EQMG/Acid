@@ -18,8 +18,7 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
-
 	private:
-		std::unique_ptr<Pannable> m_pannable;
+		Pannable m_pannable;
 	};
 }

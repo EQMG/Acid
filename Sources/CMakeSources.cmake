@@ -221,6 +221,7 @@ set(_temp_acid_headers
 		Threads/Thread.hpp
 		Threads/ThreadPool.hpp
 		Uis/Inputs/UiColourWheel.hpp
+		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
 		Uis/Inputs/UiInputGrabber.hpp
 		Uis/Inputs/UiInputRadio.hpp
@@ -424,6 +425,7 @@ set(_temp_acid_sources
 		Threads/Thread.cpp
 		Threads/ThreadPool.cpp
 		Uis/Inputs/UiColourWheel.cpp
+		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp
 		Uis/Inputs/UiInputGrabber.cpp
 		Uis/Inputs/UiInputRadio.cpp

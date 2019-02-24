@@ -35,6 +35,6 @@ namespace test
 		std::unique_ptr<cr_plugin> m_plugin;
 		bool m_update;
 
-		std::unique_ptr<Panels> m_panels;
+		Panels m_panels;
 	};
 }

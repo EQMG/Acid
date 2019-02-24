@@ -34,7 +34,7 @@ namespace test
 		ButtonKeyboard m_buttonExit;
 		Sound m_soundScreenshot;
 
-		std::unique_ptr<UiStartLogo> m_uiStartLogo;
-		std::unique_ptr<OverlayDebug> m_overlayDebug;
+		UiStartLogo m_uiStartLogo;
+		OverlayDebug m_overlayDebug;
 	};
 }

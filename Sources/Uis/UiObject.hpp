@@ -4,7 +4,6 @@
 #include <optional>
 #include <memory>
 #include <vector>
-#include "Helpers/NonCopyable.hpp"
 #include "Helpers/Delegate.hpp"
 #include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
@@ -20,8 +19,7 @@ namespace acid
 	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
 	/// This class can be extended to create a representation for GUI textures, fonts, etc.
 	/// </summary>
-	class ACID_EXPORT UiObject :
-		public NonCopyable
+	class ACID_EXPORT UiObject
 	{
 	public:
 		/// <summary>

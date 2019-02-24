@@ -10,17 +10,16 @@ namespace test
 		UiObject(parent, UiBound::Maximum),
 		m_buttonReset(ButtonKeyboard({Key::Enter})),
 		m_zoom(1.0f),
-		m_background(std::make_unique<Gui>(parent, UiBound::Screen, Texture::Create("Guis/White.png"))),
-		m_texts(std::vector<std::unique_ptr<Text>>()),
-		m_textFrameTime(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
-		m_textFps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)),
-		m_textUps(std::make_unique<Text>(parent, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
+		m_background(parent, UiBound::Screen, Texture::Create("Guis/White.png")),
+		m_title(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f),
+		m_body(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, "",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.002f, 0.015),
+		m_textFrameTime(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
+		m_textFps(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
+		m_textUps(parent, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 	{
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f));
-
-		static const std::string content1 =
-			"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
+		m_body.SetString("Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
 			"@&(3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum \n"
 			"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et \n"
 			"arcu scelerisque, eget viverra ante dapibus. Proin enim neque, vehicula id congue quis, consequat sit amet tortor.Aenean ac \n"
@@ -50,16 +49,14 @@ namespace test
 			"non condimentum ligula sodales at. Phasellus eros urna, elementum in ultricies quis, vulputate id magna. Donec efficitur rutrum \n"
 			"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet. \n"
 			"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus. Fusce \n"
-			"auctor arcu a purus bibendum, eget blandit nisi lobortis.";
-		m_texts.emplace_back(std::make_unique<Text>(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, content1,
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.002f, 0.015f));
+			"auctor arcu a purus bibendum, eget blandit nisi lobortis.");
 	}
 
 	void Pannable::UpdateObject()
 	{
-		m_textFrameTime->SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
-		m_textFps->SetString("FPS: " + String::To(Engine::Get()->GetFps()));
-		m_textUps->SetString("UPS: " + String::To(Engine::Get()->GetUps()));
+		m_textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
+		m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
+		m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
 		Vector2 offset = GetRectangle().GetPosition();
 

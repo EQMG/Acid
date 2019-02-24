@@ -15,10 +15,8 @@ namespace test
 
 		void UpdateObject() override;
 	private:
-		std::unique_ptr<Text> CreateStatus(const std::string &content, const float &positionX, const float &positionY, const Text::Justify &justify);
-
-		std::unique_ptr<Text> m_textFrameTime;
-		std::unique_ptr<Text> m_textFps;
-		std::unique_ptr<Text> m_textUps;
+		Text m_textFrameTime;
+		Text m_textFps;
+		Text m_textUps;
 	};
 }

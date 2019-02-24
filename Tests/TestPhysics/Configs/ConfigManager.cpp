@@ -32,7 +32,7 @@ namespace test
 
 		m_graphics->Read();
 		auto graphicsData = m_graphics->GetMetadata();
-		//	Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
+	//	Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
 		Window::Get()->SetDimensions(graphicsData->GetChildDefault<Vector2>("Dimensions", -Vector2::One));
 		Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2>("Position", -Vector2::One));
 		Window::Get()->SetBorderless(graphicsData->GetChildDefault<bool>("Borderless", false));
@@ -52,7 +52,7 @@ namespace test
 		m_audio->Write();
 
 		auto graphicsData = m_graphics->GetMetadata();
-		//	graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
+	//	graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
 		graphicsData->SetChild<Vector2>("Dimensions", Window::Get()->GetDimensions());
 		graphicsData->SetChild<Vector2>("Position", Window::Get()->GetPosition());
 		graphicsData->SetChild<bool>("Borderless", Window::Get()->IsBorderless());

@@ -13,10 +13,15 @@ namespace acid
 
 		void UpdateObject() override;
 
-		bool IsStarting() const { return GetAlpha() > 0.0f; }
+		bool IsFinished() const { return m_finished; }
+
+		Delegate<void(UiStartLogo *)> &GetOnFinished() { return m_onFinished; }
 	private:
-		std::unique_ptr<Gui> m_guiBackground;
-		std::unique_ptr<Gui> m_guiLogoAcid;
-		std::unique_ptr<Text> m_textCopyright;
+		Gui m_guiBackground;
+		Gui m_guiLogoAcid;
+		Text m_textCopyright;
+		bool m_finished;
+
+		Delegate<void(UiStartLogo *)> m_onFinished;
 	};
 }
