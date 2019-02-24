@@ -24,9 +24,5 @@ namespace test
 		std::unique_ptr<Text> m_textPosition;
 		std::unique_ptr<Text> m_textTime;
 		Timer m_timerUpdate;
-
-		float m_accumulatedFps;
-		float m_accumulatedUps;
-		uint32_t m_ticksPassed;
 	};
 }

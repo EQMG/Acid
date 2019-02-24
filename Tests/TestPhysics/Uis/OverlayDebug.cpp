@@ -13,31 +13,18 @@ namespace test
 		m_textUps(CreateStatus("UPS: 0", 0.002f, 0.958f, Text::Justify::Left)),
 		m_textPosition(CreateStatus("Pos: 0.0, 0.0, 0.0", 0.002f, 0.978f, Text::Justify::Left)),
 		m_textTime(CreateStatus("Time: 0:00", 0.002f, 0.998f, Text::Justify::Left)),
-		m_timerUpdate(Timer(Time::Seconds(0.5f))),
-		m_accumulatedFps(0.0f),
-		m_accumulatedUps(0.0f),
-		m_ticksPassed(0)
+		m_timerUpdate(Timer(Time::Seconds(0.5f)))
 	{
 	}
 
 	void OverlayDebug::UpdateObject()
 	{
-		m_accumulatedFps += 1.0f / Engine::Get()->GetDeltaRender().AsSeconds();
-		m_accumulatedUps += 1.0f / Engine::Get()->GetDelta().AsSeconds();
-		m_ticksPassed++;
-
 		if (m_timerUpdate.IsPassedTime())
 		{
 			m_timerUpdate.ResetStartTime();
 
-			float fps = m_accumulatedFps / static_cast<float>(m_ticksPassed);
-			float ups = m_accumulatedUps / static_cast<float>(m_ticksPassed);
-			m_accumulatedFps = 0.0f;
-			m_accumulatedUps = 0.0f;
-			m_ticksPassed = 0;
-
-			m_textFps->SetString("FPS: " + String::To(static_cast<int>(fps)));
-			m_textUps->SetString("UPS: " + String::To(static_cast<int>(ups)));
+			m_textFps->SetString("FPS: " + String::To(static_cast(Engine::Get()->GetFps())));
+			m_textUps->SetString("UPS: " + String::To(static_cast(Engine::Get()->GetUps())));
 
 			if (Scenes::Get()->GetCamera() != nullptr)
 			{

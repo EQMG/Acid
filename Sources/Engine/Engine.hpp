@@ -117,6 +117,18 @@ namespace acid
 		const Time &GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
 		/// <summary>
+		/// Gets the average UPS over a short interval.
+		/// </summary>
+		/// <returns> The UPS. </returns>
+		const uint32_t &GetUps() const { return m_moduleUpdater.GetUps(); }
+
+		/// <summary>
+		/// Gets the average FPS over a short interval.
+		/// </summary>
+		/// <returns> The FPS. </returns>
+		const uint32_t &GetFps() const { return m_moduleUpdater.GetFps(); }
+
+		/// <summary>
 		/// Requests the engine to delete and stop the game-loop.
 		/// </summary>
 		/// <param name="error"> If a bad error occurred. </param>

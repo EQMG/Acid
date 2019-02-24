@@ -20,8 +20,8 @@ namespace test
 		{
 			m_timerUpdate.ResetStartTime();
 
-			m_textFps->SetString("FPS: " + String::To(static_cast<int32_t>(1.0f / Engine::Get()->GetDeltaRender().AsSeconds())));
-			m_textUps->SetString("UPS: " + String::To(static_cast<int32_t>(1.0f / Engine::Get()->GetDelta().AsSeconds())));
+			m_textFps->SetString("FPS: " + String::To(Engine::Get()->GetFps()));
+			m_textUps->SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 		}
 	}
 

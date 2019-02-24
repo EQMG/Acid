@@ -9,7 +9,9 @@ namespace acid
 		m_deltaUpdate(Delta()),
 		m_deltaRender(Delta()),
 		m_timerUpdate(Timer(Time::Seconds(1.0f / 68.0f))),
-		m_timerRender(Timer(Time::Seconds(1.0f / -1.0f)))
+		m_timerRender(Timer(Time::Seconds(1.0f / -1.0f))),
+		m_ups(ChangePerSecond()),
+		m_fps(ChangePerSecond())
 	{
 	}
 
@@ -24,6 +26,7 @@ namespace acid
 		{
 			// Resets the timer.
 			m_timerUpdate.ResetStartTime();
+			m_ups.Update(Engine::GetTime().AsSeconds());
 
 			// Pre-Update.
 			moduleManager.RunUpdate(Module::Stage::Pre);
@@ -49,6 +52,7 @@ namespace acid
 		{
 			// Resets the timer.
 			m_timerRender.ResetStartTime();
+			m_fps.Update(Engine::GetTime().AsSeconds());
 
 			// Render
 			moduleManager.RunUpdate(Module::Stage::Render);
