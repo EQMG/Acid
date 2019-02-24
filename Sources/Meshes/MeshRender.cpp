@@ -7,12 +7,6 @@
 
 namespace acid
 {
-	MeshRender::MeshRender() :
-		m_descriptorSet(DescriptorsHandler()),
-		m_uniformObject(UniformHandler())
-	{
-	}
-
 	void MeshRender::Start()
 	{
 	}

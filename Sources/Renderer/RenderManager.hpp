@@ -17,8 +17,7 @@ namespace acid
 		/// Creates a new render manager.
 		/// </summary>
 		explicit RenderManager() :
-			m_started(false),
-			m_rendererContainer(RendererContainer())
+			m_started(false)
 		{
 		}
 

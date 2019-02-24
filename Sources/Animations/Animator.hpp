@@ -69,7 +69,7 @@ namespace acid
 		/// then the next keyframe is used as both the previous and next keyframe. The reverse happens if there is no next keyframe.
 		/// </summary>
 		/// <returns> The previous and next keyframes, in an array which therefore will always have a length of 2. </returns>
-		std::array<Keyframe, 2> GetPreviousAndNextFrames();
+		std::array<Keyframe, 2> GetPreviousAndNextFrames() const;
 
 		/// <summary>
 		/// Calculates how far between the previous and next keyframe the current animation time is, and returns it as a value between 0 and 1.
@@ -90,7 +90,7 @@ namespace acid
 		/// </param>
 		/// <returns> The local-space transforms for all the joints for the desired current pose.
 		/// They are returned in a map, indexed by the name of the joint to which they should be applied. </returns>
-		std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression);
+		std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression) const;
 
 		/// <summary>
 		/// This method applies the current pose to a given joint, and all of its descendants.
@@ -117,7 +117,7 @@ namespace acid
 		/// <param name="currentPose"> A map of the local-space transforms for all the joints for the desired pose. The map is indexed by the name of the joint which the transform corresponds to. </param>
 		/// <param name="joint"> The current joint which the pose should be applied to. </param>
 		/// <param name="parentTransform"> The desired model-space transform of the parent joint for the pose. </param>
-		void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform);
+		static void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform);
 
 		const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 

@@ -1,10 +1,12 @@
 #include "EventStandard.hpp"
 
+#include <utility>
+
 namespace acid
 {
-	EventStandard::EventStandard(const std::function<void()> &onEvent, const std::function<bool()> &triggered, const bool &repeat) :
-		m_onEvent(onEvent),
-		m_triggered(triggered),
+	EventStandard::EventStandard(std::function<void()> onEvent, std::function<bool()> triggered, const bool &repeat) :
+		m_onEvent(std::move(onEvent)),
+		m_triggered(std::move(triggered)),
 		m_repeat(repeat)
 	{
 	}

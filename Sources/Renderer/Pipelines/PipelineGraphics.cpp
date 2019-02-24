@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <algorithm>
+#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 
@@ -13,24 +14,21 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	PipelineGraphics::PipelineGraphics(const Stage &stage, const std::vector<std::string> &shaderStages, const std::vector<Shader::VertexInput> &vertexInputs, 
+	PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, 
 		const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, 
-		const bool &pushDescriptors, const std::vector<Shader::Define> &defines) :
-		Pipeline(),
-		m_stage(stage),
-		m_shaderStages(shaderStages),
-		m_vertexInputs(vertexInputs),
+		const bool &pushDescriptors, std::vector<Shader::Define> defines) :
+		m_stage(std::move(stage)),
+		m_shaderStages(std::move(shaderStages)),
+		m_vertexInputs(std::move(vertexInputs)),
 		m_mode(mode),
 		m_depth(depth),
 		m_topology(topology),
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
 		m_pushDescriptors(pushDescriptors),
-		m_defines(defines),
+		m_defines(std::move(defines)),
 		m_shader(std::make_unique<Shader>(m_shaderStages.back())),
 		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
-		m_modules(std::vector<VkShaderModule>()),
-		m_stages(std::vector<VkPipelineShaderStageCreateInfo>()),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
 		m_descriptorPool(VK_NULL_HANDLE),
 		m_pipeline(VK_NULL_HANDLE),

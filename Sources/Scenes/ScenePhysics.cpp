@@ -24,8 +24,7 @@ namespace acid
 		m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
 		m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
 		m_collisionShapes(std::make_unique<btAlignedObjectArray<btCollisionShape *>>()),
-		m_pairsLastUpdate(CollisionPairs()),
-		m_gravity(Vector3(0.0f, -9.81f, 0.0f)),
+		m_gravity(0.0f, -9.81f, 0.0f),
 		m_airDensity(1.2f)
 	{
 		m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));

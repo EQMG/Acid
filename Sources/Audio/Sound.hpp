@@ -37,7 +37,7 @@ namespace acid
 
 		void Stop();
 
-		bool IsPlaying();
+		bool IsPlaying() const;
 
 		const Transform &GetLocalTransform() const { return m_localTransform; }
 

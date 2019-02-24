@@ -3,9 +3,7 @@
 namespace acid
 {
 	Resources::Resources() :
-		m_mutex(std::mutex()),
-		m_resources(std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>>()),
-		m_timerPurge(Timer(Time::Seconds(4.0f)))
+		m_timerPurge(Time::Seconds(4.0f))
 	{
 	}
 

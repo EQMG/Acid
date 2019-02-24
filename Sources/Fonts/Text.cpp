@@ -1,20 +1,19 @@
 ﻿#include "Text.hpp"
 
+#include <utility>
 #include "Maths/Visual/DriverConstant.hpp"
 
 namespace acid
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, const std::string &text, const std::shared_ptr<FontType> &fontType,
+	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType,
 		const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
 		UiObject(parent, rectangle),
-		m_descriptorSet(DescriptorsHandler()),
-		m_uniformObject(UniformHandler()),
 		m_model(nullptr),
 		m_numberLines(0),
-		m_string(text),
+		m_string(std::move(text)),
 		m_newString({}),
 		m_justify(justify),
-		m_fontType(fontType),
+		m_fontType(std::move(fontType)),
 		m_maxWidth(maxWidth),
 		m_kerning(kerning),
 		m_leading(leading),
@@ -116,7 +115,7 @@ namespace acid
 		m_glowBorder = false;
 	}
 
-	float Text::GetTotalBorderSize()
+	float Text::GetTotalBorderSize() const
 	{
 		if (m_solidBorder)
 		{
@@ -136,7 +135,7 @@ namespace acid
 		return 0.0f;
 	}
 
-	float Text::GetGlowSize()
+	float Text::GetGlowSize() const
 	{
 		if (m_solidBorder)
 		{
@@ -151,22 +150,22 @@ namespace acid
 		return 0.0f;
 	}
 
-	float Text::CalculateEdgeStart()
+	float Text::CalculateEdgeStart() const
 	{
-		float scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-		float size = 0.5f * scale;
+		auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+		auto size = 0.5f * scale;
 		return 1.0f / 300.0f * size + 137.0f / 300.0f;
 	}
 
-	float Text::CalculateAntialiasSize()
+	float Text::CalculateAntialiasSize() const
 	{
-		float scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-		float size = 0.5f * scale;
+		auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+		auto size = 0.5f * scale;
 		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 		return 0.1f / size;
 	}
 
-	bool Text::IsLoaded()
+	bool Text::IsLoaded() const
 	{
 		return !m_string.empty() && m_model != nullptr;
 	}
@@ -184,7 +183,7 @@ namespace acid
 		auto vertices = CreateQuad(lines);
 
 		// Calculates the bounds and normalizes the vertices.
-		Vector2 bounding = Vector2();
+		Vector2 bounding;
 		NormalizeQuad(bounding, vertices);
 
 		// Loads the mesh data.
@@ -192,7 +191,7 @@ namespace acid
 		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
 	}
 
-	std::vector<Text::Line> Text::CreateStructure()
+	std::vector<Text::Line> Text::CreateStructure() const
 	{
 		std::vector<Line> lines = {};
 		auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
@@ -254,9 +253,9 @@ namespace acid
 		return lines;
 	}
 
-	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord)
+	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const
 	{
-		bool added = currentLine.AddWord(currentWord);
+		auto added = currentLine.AddWord(currentWord);
 
 		if (!added)
 		{
@@ -273,8 +272,8 @@ namespace acid
 		std::vector<VertexModel> vertices = {};
 		m_numberLines = static_cast<uint32_t>(lines.size());
 
-		float cursorX = 0.0f;
-		float cursorY = 0.0f;
+		auto cursorX = 0.0f;
+		auto cursorY = 0.0f;
 		auto lineOrder = static_cast<int32_t>(lines.size());
 
 		for (const auto &line : lines)
@@ -322,15 +321,15 @@ namespace acid
 
 	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices)
 	{
-		float vertexX = cursorX + character.m_offsetX;
-		float vertexY = cursorY + character.m_offsetY;
-		float vertexMaxX = vertexX + character.m_sizeX;
-		float vertexMaxY = vertexY + character.m_sizeY;
-
-		float textureX = character.m_textureCoordX;
-		float textureY = character.m_textureCoordY;
-		float textureMaxX = character.m_maxTextureCoordX;
-		float textureMaxY = character.m_maxTextureCoordY;
+		auto vertexX = cursorX + character.m_offsetX;
+		auto vertexY = cursorY + character.m_offsetY;
+		auto vertexMaxX = vertexX + character.m_sizeX;
+		auto vertexMaxY = vertexY + character.m_sizeY;
+		
+		auto textureX = character.m_textureCoordX;
+		auto textureY = character.m_textureCoordY;
+		auto textureMaxX = character.m_maxTextureCoordX;
+		auto textureMaxY = character.m_maxTextureCoordY;
 
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
@@ -345,16 +344,16 @@ namespace acid
 		vertices.emplace_back(VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty))));
 	}
 
-	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices)
+	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const
 	{
-		float minX = +std::numeric_limits<float>::infinity();
-		float minY = +std::numeric_limits<float>::infinity();
-		float maxX = -std::numeric_limits<float>::infinity();
-		float maxY = -std::numeric_limits<float>::infinity();
+		auto minX = +std::numeric_limits<float>::infinity();
+		auto minY = +std::numeric_limits<float>::infinity();
+		auto maxX = -std::numeric_limits<float>::infinity();
+		auto maxY = -std::numeric_limits<float>::infinity();
 
 		for (const auto &vertex : vertices)
 		{
-			Vector3 position = vertex.GetPosition();
+			auto position = vertex.GetPosition();
 
 			if (position.m_x < minX)
 			{
@@ -386,8 +385,7 @@ namespace acid
 
 		for (auto &vertex : vertices)
 		{
-			Vector3 position = Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f);
-			vertex.SetPosition(position);
+			vertex.SetPosition(Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
 		}
 	}
 }

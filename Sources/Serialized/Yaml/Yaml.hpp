@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
@@ -19,11 +20,10 @@ namespace acid
 			uint32_t m_indentation;
 			std::string m_content;
 
-			Section(Section *parent, const std::string &content, const uint32_t &indentation) :
+			Section(Section *parent, std::string content, const uint32_t &indentation) :
 				m_parent(parent),
-				m_children(std::vector<std::unique_ptr<Section>>()),
 				m_indentation(indentation),
-				m_content(content)
+				m_content(std::move(content))
 			{
 			}
 		};
@@ -36,7 +36,7 @@ namespace acid
 
 		std::string Write() const override;
 	private:
-		void AddChildren(const Metadata *source, Metadata *destination);
+		static void AddChildren(const Metadata *source, Metadata *destination);
 
 		static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
 

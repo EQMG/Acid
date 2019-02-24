@@ -90,7 +90,7 @@ namespace acid
 		/// <param name="width"> The distance of the corner from the start point.
 		/// </param>
 		/// <returns> The relevant corner vertex of the view frustum in light space. </returns>
-		Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width);
+		Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
 
 		void UpdateOrthoProjectionMatrix();
 

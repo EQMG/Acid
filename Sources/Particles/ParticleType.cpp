@@ -48,8 +48,7 @@ namespace acid
 		m_scale(scale),
 		m_maxInstances(0),
 		m_instances(0),
-		m_descriptorSet(DescriptorsHandler()),
-		m_instanceBuffer(InstanceBuffer(sizeof(ParticleTypeData) * MAX_INSTANCES))
+		m_instanceBuffer(sizeof(ParticleTypeData) * MAX_INSTANCES)
 	{
 	}
 

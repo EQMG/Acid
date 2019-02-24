@@ -10,7 +10,7 @@ namespace acid
 
 	float AxisButton::GetAmount() const
 	{
-		float result = 0.0f;
+		auto result = 0.0f;
 
 		if (m_positive->IsDown())
 		{

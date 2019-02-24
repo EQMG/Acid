@@ -1,6 +1,7 @@
 ﻿#include "Cubemap.hpp"
 
 #include <cstring>
+#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
@@ -33,10 +34,10 @@ namespace acid
 		return Create(metadata);
 	}
 
-	Cubemap::Cubemap(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
+	Cubemap::Cubemap(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
 		const bool &anisotropic, const bool &mipmap, const bool &load) :
-		m_filename(filename),
-		m_fileSuffix(fileSuffix),
+		m_filename(std::move(filename)),
+		m_fileSuffix(std::move(fileSuffix)),
 		m_fileSides(std::vector<std::string>{"Right", "Left", "Top", "Bottom", "Back", "Front"}),
 		m_filter(filter),
 		m_addressMode(addressMode),
@@ -57,7 +58,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			Cubemap::Load();
 		}
 	}
 
@@ -83,7 +84,7 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(VK_FORMAT_R8G8B8A8_UNORM)
 	{
-		Load();
+		Cubemap::Load();
 	}
 
 	Cubemap::~Cubemap()

@@ -2,12 +2,6 @@
 
 namespace acid
 {
-	VertexWeights::VertexWeights() :
-		m_jointIds(std::vector<uint32_t>()),
-		m_weights(std::vector<float>())
-	{
-	}
-
 	void VertexWeights::AddJointEffect(const uint32_t &jointId, const float &weight)
 	{
 		for (uint32_t i = 0; i < m_weights.size(); i++)

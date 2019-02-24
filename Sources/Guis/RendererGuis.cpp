@@ -9,9 +9,8 @@ namespace acid
 {
 	RendererGuis::RendererGuis(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
-		m_pipeline(PipelineGraphics(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})),
-		m_uniformScene(UniformHandler())
+		m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()},
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, {})
 	{
 	}
 
@@ -30,7 +29,7 @@ namespace acid
 				continue;
 			}
 
-			Gui *object = dynamic_cast<Gui *>(screenObject);
+			auto object = dynamic_cast<Gui *>(screenObject);
 
 			if (object != nullptr)
 			{

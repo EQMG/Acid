@@ -13,7 +13,7 @@ namespace test
 		m_textFps(this, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_textUps(this, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_textTime(this, UiBound(Vector2(0.002f, 0.938f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-		m_timerUpdate(Timer(Time::Seconds(0.5f)))
+		m_timerUpdate(Time::Seconds(0.5f))
 	{
 	}
 

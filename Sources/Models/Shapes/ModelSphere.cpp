@@ -37,7 +37,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			ModelSphere::Load();
 		}
 	}
 

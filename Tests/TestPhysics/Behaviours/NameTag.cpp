@@ -14,17 +14,17 @@ namespace test
 		m_name(name),
 		m_heightOffset(heightOffset),
 		m_transform(Transform()),
-		m_text(std::make_unique<Text>(Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiReference::BottomCentre),
-		                              TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left))
+		m_text(&Uis::Get()->GetContainer(), UiBound(Vector2(0.5f, 0.5f), UiReference::BottomCentre),
+			TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 	{
-		m_text->SetTextColour(Colour("#ffffff"));
-		m_text->SetBorderColour(Colour("#262626"));
-		m_text->SetBorderDriver<DriverConstant<float>>(0.1f);
+		m_text.SetTextColour(Colour("#ffffff"));
+		m_text.SetBorderColour(Colour("#262626"));
+		m_text.SetBorderDriver<DriverConstant<float>>(0.1f);
 	}
 
 	void NameTag::Start()
 	{
-		m_text->SetString(m_name);
+		m_text.SetString(m_name);
 	}
 
 	void NameTag::Update()
@@ -38,11 +38,11 @@ namespace test
 
 		// Quick way to change alpha values, only if you know the driver type for sure!
 		float toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);
-		dynamic_cast<DriverConstant<float> *>(m_text->GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
+		dynamic_cast<DriverConstant<float> *>(m_text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
 
 		// Will always face the screen, like a particle.
-		m_text->SetLockRotation(true);
-		m_text->SetWorldTransform(m_transform);
+		m_text.SetLockRotation(true);
+		m_text.SetWorldTransform(m_transform);
 	}
 
 	void NameTag::Decode(const Metadata &metadata)

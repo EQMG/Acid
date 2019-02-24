@@ -3,7 +3,6 @@
 namespace acid
 {
 	ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons, const bool &useAnd) :
-		m_buttons(std::vector<std::unique_ptr<IButton>>()),
 		m_useAnd(useAnd),
 		m_wasDown(false)
 	{

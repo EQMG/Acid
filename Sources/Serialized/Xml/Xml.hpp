@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
@@ -19,11 +20,10 @@ namespace acid
 			std::string m_attributes;
 			std::string m_content;
 
-			Node(Node *parent, const std::string &attributes, const std::string &content) :
+			Node(Node *parent, std::string attributes, std::string content) :
 				m_parent(parent),
-				m_children(std::vector<std::unique_ptr<Node>>()),
-				m_attributes(attributes),
-				m_content(content)
+				m_attributes(std::move(attributes)),
+				m_content(std::move(content))
 			{
 			}
 		};
@@ -36,7 +36,7 @@ namespace acid
 
 		std::string Write() const override;
 	private:
-		void AddChildren(const Metadata *source, Metadata *destination);
+		static void AddChildren(const Metadata *source, Metadata *destination);
 
 		static void Convert(const Node *source, Metadata *parent, const uint32_t &depth);
 

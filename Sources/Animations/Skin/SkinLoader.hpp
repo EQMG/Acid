@@ -17,9 +17,9 @@ namespace acid
 	private:
 		void LoadJointsList();
 
-		std::vector<float> LoadWeights();
+		std::vector<float> LoadWeights() const;
 
-		std::vector<uint32_t> GetEffectiveJointsCounts(const Metadata *weightsDataNode);
+		std::vector<uint32_t> GetEffectiveJointsCounts(const Metadata *weightsDataNode) const;
 
 		void GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 

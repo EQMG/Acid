@@ -10,6 +10,8 @@ namespace acid
 	class ACID_EXPORT IAxis
 	{
 	public:
+		virtual ~IAxis() = default;
+
 		/// <summary>
 		/// Gets the current value along the axis. -1 is smallest input, 1 is largest input.
 		/// </summary>

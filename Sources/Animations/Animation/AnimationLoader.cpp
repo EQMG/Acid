@@ -23,13 +23,13 @@ namespace acid
 		}
 	}
 
-	std::string AnimationLoader::FindRootJointName()
+	std::string AnimationLoader::FindRootJointName() const
 	{
 		auto skeleton = m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 		return skeleton->FindChild("node")->FindAttribute("id");
 	}
 
-	std::vector<Time> AnimationLoader::GetKeyTimes()
+	std::vector<Time> AnimationLoader::GetKeyTimes() const
 	{
 		auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
 		auto rawTimes = String::Split(timeData->GetValue(), " ");

@@ -14,17 +14,17 @@ namespace acid
 
 		const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
 	private:
-		std::string FindRootJointName();
+		std::string FindRootJointName() const;
 
-		std::vector<Time> GetKeyTimes();
+		std::vector<Time> GetKeyTimes() const;
 
 		void CreateKeyframe(const std::vector<Time> &times);
 
 		void LoadJointTransforms(const Metadata *jointData, const std::string &rootNodeId);
 
-		std::string GetDataId(const Metadata *jointData);
+		static std::string GetDataId(const Metadata *jointData);
 
-		std::string GetJointName(const Metadata *jointData);
+		static std::string GetJointName(const Metadata *jointData);
 
 		void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
 

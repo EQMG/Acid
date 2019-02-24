@@ -13,10 +13,6 @@ namespace acid
 		m_soundBuffer(SoundBuffer::Create(filename)),
 		m_source(0),
 		m_localTransform(localTransform),
-		m_worldTransform(Transform()),
-		m_position(Vector3()),
-		m_direction(Vector3()),
-		m_velocity(Vector3()),
 		m_type(type),
 		m_gain(gain),
 		m_pitch(pitch)
@@ -104,7 +100,7 @@ namespace acid
 		Audio::CheckAl(alGetError());
 	}
 
-	bool Sound::IsPlaying()
+	bool Sound::IsPlaying() const
 	{
 		ALenum state;
 		alGetSourcei(m_source, AL_SOURCE_STATE, &state);

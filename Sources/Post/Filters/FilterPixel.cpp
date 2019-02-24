@@ -4,7 +4,6 @@ namespace acid
 {
 	FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixelSize) :
 		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Pixel.frag"}, {}),
-		m_pushScene(PushHandler()),
 		m_pixelSize(pixelSize)
 	{
 	}

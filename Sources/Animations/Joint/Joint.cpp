@@ -1,14 +1,13 @@
 #include "Joint.hpp"
 
+#include <utility>
+
 namespace acid
 {
-	Joint::Joint(const uint32_t &index, const std::string &name, const Matrix4 &bindLocalTransform) :
+	Joint::Joint(const uint32_t &index, std::string name, const Matrix4 &bindLocalTransform) :
 		m_index(index),
-		m_name(name),
-		m_children(std::vector<std::unique_ptr<Joint>>()),
-		m_localBindTransform(bindLocalTransform),
-		m_animatedTransform(Matrix4()),
-		m_inverseBindTransform(Matrix4())
+		m_name(std::move(name)),
+		m_localBindTransform(bindLocalTransform)
 	{
 	}
 

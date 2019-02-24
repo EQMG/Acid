@@ -23,8 +23,7 @@
 
 namespace acid
 {
-	ComponentRegister::ComponentRegister() :
-		m_components(std::map<std::string, ComponentCreate>())
+	ComponentRegister::ComponentRegister()
 	{
 		Add<ColliderCapsule>("ColliderCapsule");
 		Add<ColliderCone>("ColliderCone");

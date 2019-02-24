@@ -1,4 +1,5 @@
 #include "GizmoType.hpp"
+#include <utility>
 
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
@@ -34,14 +35,13 @@ namespace acid
 		return Create(metadata);
 	}
 
-	GizmoType::GizmoType(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse) :
-		m_model(model),
+	GizmoType::GizmoType(std::shared_ptr<Model> model, const float &lineThickness, const Colour &diffuse) :
+		m_model(std::move(model)),
 		m_lineThickness(lineThickness),
 		m_diffuse(diffuse),
 		m_maxInstances(0),
 		m_instances(0),
-		m_descriptorSet(DescriptorsHandler()),
-		m_instanceBuffer(InstanceBuffer(sizeof(GizmoTypeData) * MAX_INSTANCES))
+		m_instanceBuffer(sizeof(GizmoTypeData) * MAX_INSTANCES)
 	{
 	}
 
@@ -104,7 +104,7 @@ namespace acid
 		//		continue;
 		//	}
 
-			GizmoTypeData *instance = &gizmoInstances[m_instances];
+			auto instance = &gizmoInstances[m_instances];
 			instance->modelMatrix = gizmo->GetTransform().GetWorldMatrix();
 			instance->diffuse = gizmo->GetDiffuse();
 			m_instances++;

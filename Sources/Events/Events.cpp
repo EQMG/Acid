@@ -4,9 +4,7 @@
 
 namespace acid
 {
-	Events::Events() :
-		m_mutex(std::mutex()),
-		m_events(std::vector<std::unique_ptr<IEvent>>())
+	Events::Events()
 	{
 	}
 

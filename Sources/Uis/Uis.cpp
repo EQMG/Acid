@@ -3,9 +3,7 @@
 namespace acid
 {
 	Uis::Uis() :
-		m_selectors(std::map<MouseButton, SelectorMouse>()),
-		m_container(std::make_unique<UiObject>(nullptr, UiBound::Screen)),
-		m_objects(std::vector<UiObject *>())
+		m_container(nullptr, UiBound::Screen)
 	{
 		for (auto button : enum_iterator<MouseButton>())
 		{
@@ -23,7 +21,7 @@ namespace acid
 		}
 
 		m_objects.clear();
-		m_container->Update(m_objects);
+		m_container.Update(m_objects);
 	}
 
 	void Uis::CancelWasEvent(const MouseButton &button)

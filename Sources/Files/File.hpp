@@ -13,7 +13,7 @@ namespace acid
 	class ACID_EXPORT File
 	{
 	public:
-		explicit File(const std::string &filename, Metadata *metadata);
+		explicit File(std::string filename, Metadata *metadata);
 
 		void Read();
 

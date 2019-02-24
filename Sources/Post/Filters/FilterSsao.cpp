@@ -15,9 +15,8 @@ namespace acid
 
 	FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()),
-		m_pushScene(PushHandler()),
 		m_noise(ComputeNoise(SSAO_NOISE_DIM)),
-		m_kernel(std::vector<Vector3>(SSAO_KERNEL_SIZE))
+		m_kernel(SSAO_KERNEL_SIZE)
 	{
 		for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
 		{

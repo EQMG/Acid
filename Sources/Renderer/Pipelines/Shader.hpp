@@ -204,7 +204,7 @@ namespace acid
 			int32_t m_glType;
 		};
 
-		explicit Shader(const std::string &name);
+		explicit Shader(std::string name);
 
 		const std::string &GetName() const { return m_name; }
 
@@ -212,7 +212,7 @@ namespace acid
 
 		void ProcessShader();
 
-		VkFormat GlTypeToVk(const int32_t &type);
+		static VkFormat GlTypeToVk(const int32_t &type);
 
 		int32_t GetDescriptorLocation(const std::string &descriptor) const;
 

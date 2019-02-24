@@ -44,11 +44,9 @@ namespace acid
 		/// <returns> The FPS. </returns>
 		const uint32_t &GetFps() const { return m_fps.m_value; }
 	private:
-		struct ChangePerSecond
+		class ChangePerSecond
 		{
-			uint32_t m_valueTemp, m_value;
-			float m_valueTime;
-
+		public:
 			void Update(const float &time)
 			{
 				m_valueTemp++;
@@ -61,6 +59,9 @@ namespace acid
 
 				m_valueTime = time;
 			}
+
+			uint32_t m_valueTemp, m_value;
+			float m_valueTime;
 		};
 
 		Delta m_deltaUpdate;

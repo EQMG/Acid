@@ -1,4 +1,5 @@
 #include "MeshAnimated.hpp"
+#include <utility>
 
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
@@ -12,13 +13,12 @@ namespace acid
 	const uint32_t MeshAnimated::MaxJoints = 50;
 	const uint32_t MeshAnimated::MaxWeights = 3;
 
-	MeshAnimated::MeshAnimated(const std::string &filename) :
-		m_filename(filename),
+	MeshAnimated::MeshAnimated(std::string filename) :
+		m_filename(std::move(filename)),
 		m_model(nullptr),
 		m_headJoint(nullptr),
 		m_animator(nullptr),
-		m_animation(nullptr),
-		m_jointMatrices(std::vector<Matrix4>())
+		m_animation(nullptr)
 	{
 		Load();
 	}

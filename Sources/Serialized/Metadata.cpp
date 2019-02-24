@@ -1,15 +1,15 @@
 #include "Metadata.hpp"
 
 #include <algorithm>
+#include <utility>
 #include "Engine/Log.hpp"
 
 namespace acid
 {
-	Metadata::Metadata(const std::string &name, const std::string &value, const std::map<std::string, std::string> &attributes) :
+	Metadata::Metadata(const std::string &name, const std::string &value, std::map<std::string, std::string> attributes) :
 		m_name(String::Trim(String::RemoveAll(name, '\"'))), // TODO: Remove first and last.
 		m_value(String::Trim(value)),
-		m_children(std::vector<std::unique_ptr<Metadata>>()),
-		m_attributes(attributes)
+		m_attributes(std::move(attributes))
 	{
 	}
 

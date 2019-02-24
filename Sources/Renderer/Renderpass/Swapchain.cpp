@@ -19,8 +19,6 @@ namespace acid
 		m_imageCount(0),
 		m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
 		m_compositeAlpha(VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-		m_images(std::vector<VkImage>()),
-		m_imageViews(std::vector<VkImageView>()),
 		m_swapchain(VK_NULL_HANDLE),
 		m_fenceImage(VK_NULL_HANDLE),
 		m_activeImageIndex(std::numeric_limits<uint32_t>::max())

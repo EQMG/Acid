@@ -6,12 +6,10 @@
 namespace acid
 {
 	ModuleUpdater::ModuleUpdater() :
-		m_deltaUpdate(Delta()),
-		m_deltaRender(Delta()),
-		m_timerUpdate(Timer(Time::Seconds(1.0f / 68.0f))),
-		m_timerRender(Timer(Time::Seconds(1.0f / -1.0f))),
-		m_ups(ChangePerSecond()),
-		m_fps(ChangePerSecond())
+		m_timerUpdate(Time::Seconds(1.0f / 68.0f)),
+		m_timerRender(Time::Seconds(1.0f / -1.0f)),
+		m_ups(),
+		m_fps()
 	{
 	}
 

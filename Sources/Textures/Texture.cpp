@@ -1,6 +1,7 @@
 #include "Texture.hpp"
 
 #include <cstring>
+#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
@@ -42,8 +43,8 @@ namespace acid
 		return Create(metadata);
 	}
 
-	Texture::Texture(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
-		m_filename(filename),
+	Texture::Texture(std::string filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
+		m_filename(std::move(filename)),
 		m_filter(filter),
 		m_addressMode(addressMode),
 		m_anisotropic(anisotropic),
@@ -63,7 +64,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			Texture::Load();
 		}
 	}
 
@@ -87,7 +88,7 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format)
 	{
-		Load();
+		Texture::Load();
 	}
 
 	Texture::~Texture()
@@ -126,7 +127,7 @@ namespace acid
 		descriptorWrite.dstArrayElement = 0;
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = descriptorType;
-		//	descriptorWrite.pImageInfo = &imageInfo;
+	//	descriptorWrite.pImageInfo = &imageInfo;
 		return WriteDescriptorSet(descriptorWrite, imageInfo);
 	}
 
@@ -263,7 +264,8 @@ namespace acid
 			return LoadPixels(FALLBACK_PATH, width, height, components);
 		}
 
-		auto data = stbi_load_from_memory((uint8_t*)fileLoaded->data(), (uint32_t)fileLoaded->size(), (int32_t *)width, (int32_t *)height, (int32_t *)components, STBI_rgb_alpha);
+		auto data = stbi_load_from_memory(reinterpret_cast<uint8_t*>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), 
+			reinterpret_cast<int32_t *>(width), reinterpret_cast<int32_t *>(height), reinterpret_cast<int32_t *>(components), STBI_rgb_alpha);
 
 		if (data == nullptr)
 		{
@@ -286,7 +288,7 @@ namespace acid
 
 			if (pixels == nullptr)
 			{
-				pixels = (stbi_uc *)malloc(sizeSide * fileSides.size());
+				pixels = static_cast<stbi_uc *>(malloc(sizeSide * fileSides.size()));
 				offset = pixels;
 			}
 
@@ -606,13 +608,13 @@ namespace acid
 		imageViewCreateInfo.image = image;
 		imageViewCreateInfo.viewType = type;
 		imageViewCreateInfo.format = format;
-		imageViewCreateInfo.subresourceRange = {};
 		imageViewCreateInfo.components = {
 			VK_COMPONENT_SWIZZLE_R,
 			VK_COMPONENT_SWIZZLE_G,
 			VK_COMPONENT_SWIZZLE_B,
 			VK_COMPONENT_SWIZZLE_A
 		};
+		imageViewCreateInfo.subresourceRange = {};
 		imageViewCreateInfo.subresourceRange.aspectMask = imageAspect;
 		imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
 		imageViewCreateInfo.subresourceRange.levelCount = mipLevels;

@@ -9,15 +9,10 @@ namespace acid
 {
 	Renderer::Renderer() :
 		m_renderManager(nullptr),
-		m_renderStages(std::vector<std::unique_ptr<RenderStage>>()),
 		m_swapchain(nullptr),
 		m_pipelineCache(VK_NULL_HANDLE),
 		m_commandPool(VK_NULL_HANDLE),
-		m_presentCompletes(std::vector<VkSemaphore>()),
-		m_renderCompletes(std::vector<VkSemaphore>()),
-		m_flightFences(std::vector<VkFence>()),
 		m_currentFrame(0),
-		m_commandBuffers(std::vector<std::unique_ptr<CommandBuffer>>()),
 		m_instance(std::make_unique<Instance>()),
 		m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
 		m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
@@ -189,8 +184,8 @@ namespace acid
 			return "A requested format is not supported on this device";
 		case VK_ERROR_SURFACE_LOST_KHR:
 			return "A surface is no longer available";
-		//	case VK_ERROR_OUT_OF_POOL_MEMORY:
-		//		return "A allocation failed due to having no more space in the descriptor pool";
+	//	case VK_ERROR_OUT_OF_POOL_MEMORY:
+	//		return "A allocation failed due to having no more space in the descriptor pool";
 		case VK_SUBOPTIMAL_KHR:
 			return "A swapchain no longer matches the surface properties exactly, but can still be used";
 		case VK_ERROR_OUT_OF_DATE_KHR:
@@ -264,13 +259,13 @@ namespace acid
 			colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), m_surface->GetFormat().format) != formatsBGR.end();
 		}
 
-		std::unique_ptr<uint8_t[]> pixels((uint8_t*)malloc(subresourceLayout.size));
+		std::unique_ptr<uint8_t[]> pixels(static_cast<uint8_t*>(malloc(subresourceLayout.size)));
 
 		if (colourSwizzle)
 		{
 			for (uint32_t i = 0; i < width * height; i++)
 			{
-				auto pixelOffset = (uint8_t *)data + (i * 4);
+				auto pixelOffset = reinterpret_cast<uint8_t *>(data) + (i * 4);
 				pixels.get()[i * 4] = pixelOffset[2];
 				pixels.get()[i * 4 + 1] = pixelOffset[1];
 				pixels.get()[i * 4 + 2] = pixelOffset[0];
@@ -279,7 +274,7 @@ namespace acid
 		}
 		else
 		{
-			memcpy(pixels.get(), (uint8_t *)data, subresourceLayout.size);
+			memcpy(pixels.get(), reinterpret_cast<uint8_t *>(data), subresourceLayout.size);
 		}
 
 		// Writes the image.

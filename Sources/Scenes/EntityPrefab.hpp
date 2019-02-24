@@ -33,7 +33,7 @@ namespace acid
 		/// </summary>
 		/// <param name="filename"> The file name. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-		explicit EntityPrefab(const std::string &filename, const bool &load = true);
+		explicit EntityPrefab(std::string filename, const bool &load = true);
 
 		void Load() override;
 

@@ -7,9 +7,7 @@
 namespace acid
 {
 	Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass,
-		const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples) :
-		m_imageAttachments(std::vector<std::unique_ptr<Texture>>()),
-		m_framebuffers(std::vector<VkFramebuffer>())
+		const Swapchain &swapchain, const DepthStencil &depthStencil, const VkSampleCountFlagBits &samples)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 

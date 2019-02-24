@@ -6,17 +6,7 @@ namespace acid
 
 	Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
 		m_useMouse(useMouse),
-		m_screenStart(Vector2(screenStart)),
-		m_viewMatrix(Matrix4()),
-		m_projectionMatrix(Matrix4()),
-		m_normalizedCoords(Vector2()),
-		m_clipCoords(Vector4()),
-		m_eyeCoords(Vector4()),
-		m_invertedProjection(Matrix4()),
-		m_invertedView(Matrix4()),
-		m_rayWorld(Vector4()),
-		m_origin(Vector3()),
-		m_currentRay(Vector3())
+		m_screenStart(screenStart)
 	{
 	}
 

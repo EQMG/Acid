@@ -2,9 +2,7 @@
 
 namespace acid
 {
-	Gizmos::Gizmos() :
-		m_mutex(std::mutex()),
-		m_gizmos(std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>())
+	Gizmos::Gizmos()
 	{
 	}
 

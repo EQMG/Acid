@@ -16,8 +16,7 @@ namespace acid
 	Audio::Audio() :
 		m_alDevice(nullptr),
 		m_alContext(nullptr),
-		m_masterGain(1.0f),
-		m_gains(std::map<Type, float>())
+		m_masterGain(1.0f)
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);

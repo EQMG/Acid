@@ -1,16 +1,16 @@
 #include "MaterialSkybox.hpp"
+#include <utility>
 
 #include "Models/VertexModel.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
-	MaterialSkybox::MaterialSkybox(const std::shared_ptr<Cubemap> &cubemap, const Colour &skyColour) :
-		m_cubemap(cubemap),
+	MaterialSkybox::MaterialSkybox(std::shared_ptr<Cubemap> cubemap, const Colour &skyColour) :
+		m_cubemap(std::move(cubemap)),
 		m_skyColour(skyColour),
 		m_blend(1.0f),
-		m_fogColour(Colour()),
-		m_fogLimits(Vector2(-10000.0f, -10000.0f))
+		m_fogLimits(-10000.0f, -10000.0f)
 	{
 	}
 

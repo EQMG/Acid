@@ -29,8 +29,7 @@ namespace acid
 		m_roundTo(roundTo),
 		m_mouseOver(false),
 		m_hasChange(false),
-		m_timerChange(Timer(CHANGE_TIME)),
-		m_onSlide(Delegate<void(UiInputSlider *, float)>())
+		m_timerChange(CHANGE_TIME)
 	{
 		GetRectangle().SetDimensions(UiInputButton::Size);
 		m_slider.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));

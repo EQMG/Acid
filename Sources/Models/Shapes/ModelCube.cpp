@@ -36,7 +36,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			ModelCube::Load();
 		}
 	}
 

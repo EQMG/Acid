@@ -30,7 +30,7 @@ namespace acid
 		/// </summary>
 		/// <param name="argv0"> The first argument passed to main. </param>
 		/// <param name="emptyRegister"> If the module register will start empty. </param>
-		explicit Engine(const std::string &argv0, const bool &emptyRegister = false);
+		explicit Engine(std::string argv0, const bool &emptyRegister = false);
 
 		/// <summary>
 		/// The update function for the updater.

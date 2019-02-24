@@ -25,7 +25,7 @@ namespace acid
 		/// <param name="pps"> Particles per second. </param>
 		/// <param name="averageSpeed"> Particle average speed. </param>
 		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
-		explicit ParticleSystem(const std::vector<std::shared_ptr<ParticleType>> &types = {}, const float &pps = 5.0f, 
+		explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, const float &pps = 5.0f, 
 			const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f);
 
 		void Start() override;

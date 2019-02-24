@@ -49,9 +49,9 @@ namespace test
 		Scene(new CameraFps()),
 		m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
 		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::Escape, Key::M)),
-		m_buttonSave(ButtonKeyboard(Key::K)),
-		m_uiStartLogo(Uis::Get()->GetContainer()),
-		m_overlayDebug(Uis::Get()->GetContainer())
+		m_buttonSave(Key::K),
+		m_uiStartLogo(&Uis::Get()->GetContainer()),
+		m_overlayDebug(&Uis::Get()->GetContainer())
 	{
 		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
 		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);

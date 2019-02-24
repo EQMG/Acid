@@ -18,7 +18,7 @@ namespace acid
 		/// </summary>
 		/// <param name="length"> The length of the animation. </param>
 		/// <param name="keyframes"> All the keyframes for the animation, ordered by time of appearance in the animation. </param>
-		Animation(const Time &length, const std::vector<Keyframe> &keyframes);
+		Animation(const Time &length, std::vector<Keyframe> keyframes);
 
 		/// <summary>
 		/// Gets the length of the animation.

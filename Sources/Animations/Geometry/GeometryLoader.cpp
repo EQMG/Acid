@@ -1,17 +1,13 @@
 #include "GeometryLoader.hpp"
 
+#include <utility>
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid
 {
-	GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, const std::vector<VertexWeights> &vertexWeights) :
+	GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights) :
 		m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
-		m_vertexWeights(vertexWeights),
-		m_positionsList(std::vector<std::unique_ptr<VertexAnimatedData>>()),
-		m_uvsList(std::vector<Vector2>()),
-		m_normalsList(std::vector<Vector3>()),
-		m_vertices(std::vector<VertexAnimated>()),
-		m_indices(std::vector<uint32_t>())
+		m_vertexWeights(std::move(vertexWeights))
 	{
 		LoadVertices();
 		LoadUvs();
@@ -22,8 +18,8 @@ namespace acid
 		for (const auto &current : m_positionsList)
 		{
 			Vector3 position = current->GetPosition();
-			Vector2 textures = m_uvsList.at(current->GetUvIndex());
-			Vector3 normal = m_normalsList.at(current->GetNormalIndex());
+			Vector2 textures = m_uvsList[*current->GetUvIndex()];
+			Vector3 normal = m_normalsList[*current->GetNormalIndex()];
 			Vector3 tangent = Vector3::Zero;
 
 			auto skinData = current->GetSkinData();

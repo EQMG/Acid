@@ -1,6 +1,7 @@
 #include "ModelObj.hpp"
 
 #include <cassert>
+#include <utility>
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 
@@ -32,12 +33,12 @@ namespace acid
 		return Create(metadata);
 	}
 
-	ModelObj::ModelObj(const std::string &filename, const bool &load) :
-		m_filename(filename)
+	ModelObj::ModelObj(std::string filename, const bool &load) :
+		m_filename(std::move(filename))
 	{
 		if (load)
 		{
-			Load();
+			ModelObj::Load();
 		}
 	}
 
@@ -147,10 +148,10 @@ namespace acid
 				current->SetNormalIndex(0);
 			}
 
-			Vector3 position = current->GetPosition();
-			Vector2 uvs = uvsList[current->GetUvIndex()];
-			Vector3 normal = normalsList[current->GetNormalIndex()];
-			Vector3 tangent = current->GetAverageTangent();
+			auto position = current->GetPosition();
+			auto uvs = uvsList[*current->GetUvIndex()];
+			auto normal = normalsList[*current->GetNormalIndex()];
+			auto tangent = current->GetAverageTangent();
 			vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 		}
 
@@ -175,9 +176,9 @@ namespace acid
 
 	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
-		int32_t index = static_cast<int>(vertex.m_x) - 1;
-		int32_t textureIndex = static_cast<int>(vertex.m_y) - 1;
-		int32_t normalIndex = static_cast<int>(vertex.m_z) - 1;
+		auto index = static_cast<int>(vertex.m_x) - 1;
+		auto textureIndex = static_cast<int>(vertex.m_y) - 1;
+		auto normalIndex = static_cast<int>(vertex.m_z) - 1;
 		auto currentVertex = vertices[index].get();
 
 		if (!currentVertex->IsSet())
@@ -200,14 +201,14 @@ namespace acid
 			return previousVertex;
 		}
 
-		VertexModelData *anotherVertex = previousVertex->GetDuplicateVertex();
+		auto *anotherVertex = previousVertex->GetDuplicateVertex();
 
 		if (anotherVertex != nullptr)
 		{
 			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, vertices, indices);
 		}
 
-		VertexModelData *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices.size()), previousVertex->GetPosition());
+		auto *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices.size()), previousVertex->GetPosition());
 		duplicateVertex->SetUvIndex(newTextureIndex);
 		duplicateVertex->SetNormalIndex(newNormalIndex);
 		previousVertex->SetDuplicateVertex(duplicateVertex);
@@ -218,20 +219,20 @@ namespace acid
 
 	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs)
 	{
-		Vector2 uv0 = uvs[v0->GetUvIndex()];
-		Vector2 uv1 = uvs[v1->GetUvIndex()];
-		Vector2 uv2 = uvs[v2->GetUvIndex()];
+		auto uv0 = uvs[*v0->GetUvIndex()];
+		auto uv1 = uvs[*v1->GetUvIndex()];
+		auto uv2 = uvs[*v2->GetUvIndex()];
 
-		Vector2 deltaUv1 = uv1 - uv0;
-		Vector2 deltaUv2 = uv2 - uv0;
-		float r = 1.0f / (deltaUv1.m_x * deltaUv2.m_y - deltaUv1.m_y * deltaUv2.m_x);
+		auto deltaUv1 = uv1 - uv0;
+		auto deltaUv2 = uv2 - uv0;
+		auto r = 1.0f / (deltaUv1.m_x * deltaUv2.m_y - deltaUv1.m_y * deltaUv2.m_x);
 
-		Vector3 deltaPos1 = v1->GetPosition() - v0->GetPosition();
-		Vector3 deltaPos2 = v2->GetPosition() - v0->GetPosition();
+		auto deltaPos1 = v1->GetPosition() - v0->GetPosition();
+		auto deltaPos2 = v2->GetPosition() - v0->GetPosition();
 		deltaPos1 *= deltaUv2.m_y;
 		deltaPos2 *= deltaUv1.m_y;
 
-		Vector3 tangent = Vector3(r * (deltaPos1 - deltaPos2));
+		auto tangent = Vector3(r * (deltaPos1 - deltaPos2));
 
 		v0->AddTangent(tangent);
 		v1->AddTangent(tangent);

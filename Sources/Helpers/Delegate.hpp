@@ -13,7 +13,6 @@ namespace acid
 	template<typename TReturnType, typename... TArgs>
 	struct Invoker
 	{
-	public:
 		using ReturnType = std::vector<TReturnType>;
 
 		static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params)
@@ -33,7 +32,6 @@ namespace acid
 	template<typename... TArgs>
 	struct Invoker<void, TArgs...>
 	{
-	public:
 		using ReturnType = void;
 
 		static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params)
@@ -53,7 +51,7 @@ namespace acid
 	};
 
 	template<typename TReturnType, typename... TArgs>
-	class Delegate<TReturnType(TArgs ...)>
+	class Delegate<TReturnType(TArgs ...)> final
 	{
 	public:
 		using Invoker = acid::Invoker<TReturnType, TArgs...>;
@@ -111,7 +109,7 @@ namespace acid
 	private:
 		friend Invoker;
 
-		constexpr size_t Hash(const FunctionType &function) const
+		static constexpr size_t Hash(const FunctionType &function)
 		{
 			return function.target_type().hash_code();
 		}

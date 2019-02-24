@@ -39,7 +39,7 @@ namespace acid
 	{
 		if (load)
 		{
-			Load();
+			ModelCylinder::Load();
 		}
 	}
 

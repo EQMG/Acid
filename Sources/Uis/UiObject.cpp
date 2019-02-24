@@ -8,10 +8,9 @@ namespace acid
 {
 	UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 		m_parent(parent),
-		m_children(std::vector<UiObject *>()),
 		m_enabled(true),
-		m_rectangle(UiBound(rectangle)),
-		m_scissor(Vector4(0.0f, 0.0f, 1.0f, 1.0f)),
+		m_rectangle(rectangle),
+		m_scissor(0.0f, 0.0f, 1.0f, 1.0f),
 		m_height(0.0f),
 		m_lockRotation(true),
 		m_worldTransform({}),
@@ -19,12 +18,9 @@ namespace acid
 		m_alpha(1.0f),
 		m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 		m_scale(1.0f),
-		m_screenDimensions(Vector2()),
-		m_screenPosition(Vector2()),
 		m_screenDepth(0.0f),
 		m_screenAlpha(1.0f),
-		m_screenScale(1.0f),
-		m_onClick(Delegate<void(UiObject *, MouseButton)>())
+		m_screenScale(1.0f)
 	{
 		if (m_parent != nullptr)
 		{

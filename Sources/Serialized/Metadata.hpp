@@ -16,7 +16,7 @@ namespace acid
 		public NonCopyable
 	{
 	public:
-		explicit Metadata(const std::string &name = "", const std::string &value = "", const std::map<std::string, std::string> &attributes = {});
+		explicit Metadata(const std::string &name = "", const std::string &value = "", std::map<std::string, std::string> attributes = {});
 
 		const std::string &GetName() const { return m_name; }
 

@@ -40,7 +40,7 @@ namespace acid
 		return InterpolatePoses(frames[0], frames[1], progression);
 	}
 
-	std::array<Keyframe, 2> Animator::GetPreviousAndNextFrames()
+	std::array<Keyframe, 2> Animator::GetPreviousAndNextFrames() const
 	{
 		auto allFrames = m_currentAnimation->GetKeyframes();
 		Keyframe previousFrame = allFrames[0];
@@ -68,7 +68,7 @@ namespace acid
 		return currentTime / totalTime;
 	}
 
-	std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression)
+	std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression) const
 	{
 		auto currentPose = std::map<std::string, Matrix4>();
 

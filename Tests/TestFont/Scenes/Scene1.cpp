@@ -8,7 +8,7 @@ namespace test
 {
 	Scene1::Scene1() :
 		Scene(new Camera()),
-		m_pannable(Pannable(Uis::Get()->GetContainer()))
+		m_pannable(&Uis::Get()->GetContainer())
 	{
 	}
 

@@ -32,14 +32,12 @@ namespace test
 	CameraFps::CameraFps() :
 		m_angleOfElevation(25.0f),
 		m_angleAroundPlayer(0.0f),
-		m_targetPosition(Vector3()),
-		m_targetRotation(Vector3()),
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
 		m_sensitivity(0.6f),
 		m_reangleButton(MouseButton::Left),
-		m_joystickVertical(AxisJoystick(0, 3, true)),
-		m_joystickHorizontal(AxisJoystick(0, 2)),
+		m_joystickVertical(0, 3, true),
+		m_joystickHorizontal(0, 2),
 		m_paused(false)
 	{
 		m_nearPlane = NEAR_PLANE;

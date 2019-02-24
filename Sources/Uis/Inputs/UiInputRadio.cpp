@@ -16,8 +16,7 @@ namespace acid
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_checked(checked),
 		m_markType(markType),
-		m_mouseOver(false),
-		m_onChecked(Delegate<void(UiInputRadio *, bool)>())
+		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(SIZE);
 		m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));

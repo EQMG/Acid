@@ -60,18 +60,18 @@ namespace test
 
 		// Registers modules.
 		auto &moduleManager = Engine::Get()->GetModuleManager();
-		//	moduleManager.Remove<Shadows>();
+	//	moduleManager.Remove<Shadows>();
 
 		// Registers components.
 		auto &componentRegister = Scenes::Get()->GetComponentRegister();
 		componentRegister.Add<PlayerFps>("PlayerFps");
 
 		// Sets values to modules.
-		//	Window::Get()->SetTitle("Test Physics");
-		//	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
-		//		"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
-		//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-		//	Renderer::Get()->SetManager(new MainRenderer());
+	//	Window::Get()->SetTitle("Test Physics");
+	//	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
+	//		"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
+	//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
+	//	Renderer::Get()->SetManager(new MainRenderer());
 		Scenes::Get()->SetScene(new Scene1());
 	}
 
@@ -82,7 +82,7 @@ namespace test
 
 		//	Renderer::Get()->SetManager(nullptr);
 		Scenes::Get()->SetScene(nullptr);
-		Uis::Get()->GetContainer()->ClearChildren();
+		Uis::Get()->GetContainer().ClearChildren();
 	}
 
 	void MainGame::Start()

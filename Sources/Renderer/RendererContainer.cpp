@@ -2,8 +2,7 @@
 
 namespace acid
 {
-	RendererContainer::RendererContainer() :
-		m_stages(std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>>())
+	RendererContainer::RendererContainer()
 	{
 	}
 

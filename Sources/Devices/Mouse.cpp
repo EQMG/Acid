@@ -51,12 +51,7 @@ namespace acid
 		m_mouseDeltaY(0.0f),
 		m_mouseDeltaWheel(0.0f),
 		m_windowSelected(true),
-		m_cursorHidden(false),
-		m_onButton(Delegate<void(MouseButton, InputAction, bitmask<InputMod>)>()),
-		m_onPosition(Delegate<void(float, float)>()),
-		m_onEnter(Delegate<void(bool)>()),
-		m_onScroll(Delegate<void(float, float)>()),
-		m_onDrop(Delegate<void(std::vector<std::string>)>())
+		m_cursorHidden(false)
 	{
 		glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
 		glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
@@ -153,7 +148,7 @@ namespace acid
 	void Mouse::SetPosition(const Vector2 &position)
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-		            position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 
 	void Mouse::SetCursorHidden(const bool &hidden)

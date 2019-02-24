@@ -20,13 +20,7 @@ namespace acid
 			m_nearPlane(0.1f),
 			m_farPlane(1000.0f),
 			m_fieldOfView(45.0f),
-			m_position(Vector3()),
-			m_rotation(Vector3()),
-			m_velocity(Vector3()),
-			m_viewMatrix(Matrix4()),
-			m_projectionMatrix(Matrix4()),
-			m_viewFrustum(Frustum()),
-			m_viewRay(Ray(false, Vector2(0.5f, 0.5f)))
+			m_viewRay(false, Vector2(0.5f, 0.5f))
 		{
 		}
 

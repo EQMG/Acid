@@ -18,9 +18,9 @@ namespace test
 			new ButtonKeyboard(Key::Escape),
 			new ButtonJoystick(0, 7)
 		})),
-		m_uiStartLogo(Uis::Get()->GetContainer()),
-		m_overlayDebug(Uis::Get()->GetContainer()),
-		m_uiNavigation(Uis::Get()->GetContainer())
+		m_uiStartLogo(&Uis::Get()->GetContainer()),
+		m_overlayDebug(&Uis::Get()->GetContainer()),
+		m_uiNavigation(&Uis::Get()->GetContainer())
 	{
 		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
 		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);

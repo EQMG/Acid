@@ -1,4 +1,5 @@
 #include "File.hpp"
+#include <utility>
 
 #include "Engine/Engine.hpp"
 #include "Files.hpp"
@@ -6,8 +7,8 @@
 
 namespace acid
 {
-	File::File(const std::string &filename, Metadata *metadata) :
-		m_filename(filename),
+	File::File(std::string filename, Metadata *metadata) :
+		m_filename(std::move(filename)),
 		m_metadata(metadata)
 	{
 	}

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include "Engine/Engine.hpp"
 #include "Maths/Transform.hpp"
 #include "GizmoType.hpp"
 

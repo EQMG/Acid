@@ -9,9 +9,7 @@ namespace acid
 	Entity::Entity(const Transform &transform) :
 		m_name(""),
 		m_localTransform(transform),
-		m_components(std::vector<std::unique_ptr<Component>>()),
 		m_parent(nullptr),
-		m_children(std::vector<Entity *>()),
 		m_removed(false)
 	{
 	}

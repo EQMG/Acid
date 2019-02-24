@@ -1,4 +1,5 @@
 #include "EntityPrefab.hpp"
+#include <utility>
 
 #include "Files/File.hpp"
 #include "Serialized/Json/Json.hpp"
@@ -35,13 +36,13 @@ namespace acid
 		return Create(metadata);
 	}
 
-	EntityPrefab::EntityPrefab(const std::string &filename, const bool &load) :
-		m_filename(filename),
+	EntityPrefab::EntityPrefab(std::string filename, const bool &load) :
+		m_filename(std::move(filename)),
 		m_file(nullptr)
 	{
 		if (load)
 		{
-			Load();
+			EntityPrefab::Load();
 		}
 	}
 
