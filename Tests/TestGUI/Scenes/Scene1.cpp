@@ -18,11 +18,20 @@ namespace test
 			new ButtonKeyboard(Key::Escape),
 			new ButtonJoystick(0, 7)
 		})),
-		m_uiStartLogo(std::make_unique<UiStartLogo>(Uis::Get()->GetContainer())),
-		m_overlayDebug(std::make_unique<OverlayDebug>(Uis::Get()->GetContainer()))
+		m_uiStartLogo(Uis::Get()->GetContainer()),
+		m_overlayDebug(Uis::Get()->GetContainer()),
+		m_uiNavigation(Uis::Get()->GetContainer())
 	{
-		m_uiStartLogo->SetAlphaDriver<DriverConstant<float>>(1.0f);
-		m_overlayDebug->SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
+		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiNavigation.SetAlphaDriver<DriverConstant<float>>(0.0f);
+
+		m_uiStartLogo.GetOnFinished() += [&](UiStartLogo *object)
+		{
+			m_overlayDebug.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
+		//  m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, SLIDE_TIME);
+			TogglePause();
+		};
 	}
 
 	void Scene1::Start()
@@ -35,34 +44,27 @@ namespace test
 		{
 			TogglePause();
 		}
-
-		if (m_uiStartLogo != nullptr && !m_uiStartLogo->IsStarting())
-		{
-			m_overlayDebug->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
-			m_uiStartLogo = nullptr;
-			TogglePause();
-		}
 	}
 
 	bool Scene1::IsPaused() const
 	{
-		return m_uiStartLogo != nullptr;
+		return !m_uiStartLogo.IsFinished() || m_uiNavigation.GetAlpha() > 0.0f;
 	}
 
 	void Scene1::TogglePause()
 	{
-		if (m_uiStartLogo != nullptr)
+		if (!m_uiStartLogo.IsFinished())
 		{
 			return;
 		}
 
 		if (IsPaused())
 		{
-			//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 0.0f, UI_SLIDE_TIME);
+			m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(m_uiNavigation.GetAlpha(), 0.0f, UI_SLIDE_TIME);
 		}
 		else
 		{
-			//	m_uis->SetAlphaDriver<DriverSlide<float>>(m_editorPanels->GetAlpha(), 1.0f, UI_SLIDE_TIME);
+			m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(m_uiNavigation.GetAlpha(), 1.0f, UI_SLIDE_TIME);
 		}
 	}
 }

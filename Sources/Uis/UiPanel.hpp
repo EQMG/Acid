@@ -15,7 +15,7 @@ namespace acid
 
 		void UpdateObject() override;
 
-		UiObject *GetContent() const { return m_content.get(); }
+		UiObject &GetContent() { return m_content; }
 
 		const bitmask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
 
@@ -23,10 +23,10 @@ namespace acid
 	private:
 		void SetScissor(UiObject *object, const bool &size = false);
 
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<UiObject> m_content;
-		std::unique_ptr<UiScrollBar> m_scrollX;
-		std::unique_ptr<UiScrollBar> m_scrollY;
+		Gui m_background;
+		UiObject m_content;
+		UiScrollBar m_scrollX;
+		UiScrollBar m_scrollY;
 
 		bitmask<ScrollBar> m_scrollBars;
 		Vector2 m_min;

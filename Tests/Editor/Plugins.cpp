@@ -15,7 +15,7 @@ namespace test
 		m_watcher(FileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(0.5f))),
 		m_plugin(std::make_unique<cr_plugin>()),
 		m_update(true),
-		m_panels(std::make_unique<Panels>(Uis::Get()->GetContainer()))
+		m_panels(Uis::Get()->GetContainer())
 	{
 		cr_plugin_load(*m_plugin, m_loadedPath.c_str());
 
@@ -48,10 +48,10 @@ namespace test
 		{
 			Log::Out("[Host] Updating plugin\n");
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			m_panels->SetParent(nullptr);
+			m_panels.SetParent(nullptr);
 			cr_plugin_unload(*m_plugin, false, false);
 			cr_plugin_update(*m_plugin);
-			m_panels->SetParent(Uis::Get()->GetContainer());
+			m_panels.SetParent(Uis::Get()->GetContainer());
 			m_update = false;
 		}
 	}

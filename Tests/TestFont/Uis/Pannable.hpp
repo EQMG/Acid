@@ -21,11 +21,12 @@ namespace test
 
 		float m_zoom;
 
-		std::unique_ptr<Gui> m_background;
-		std::vector<std::unique_ptr<Text>> m_texts;
+		Gui m_background;
+		Text m_title;
+		Text m_body;
 
-		std::unique_ptr<Text> m_textFrameTime;
-		std::unique_ptr<Text> m_textFps;
-		std::unique_ptr<Text> m_textUps;
+		Text m_textFrameTime;
+		Text m_textFps;
+		Text m_textUps;
 	};
 }

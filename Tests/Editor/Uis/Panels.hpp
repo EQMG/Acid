@@ -14,9 +14,8 @@ namespace test
 		explicit Panels(UiObject *parent);
 
 		void UpdateObject() override;
-
 	private:
-		std::unique_ptr<Hierarchy> m_hierarchy;
-		std::unique_ptr<Inspector> m_inspector;
+		Hierarchy m_hierarchy;
+		Inspector m_inspector;
 	};
 }

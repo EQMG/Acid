@@ -4,7 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
-#include "Helpers/NonCopyable.hpp"
 
 namespace acid
 {
@@ -54,8 +53,7 @@ namespace acid
 	};
 
 	template<typename TReturnType, typename... TArgs>
-	class Delegate<TReturnType(TArgs ...)> :
-		public NonCopyable
+	class Delegate<TReturnType(TArgs ...)>
 	{
 	public:
 		using Invoker = acid::Invoker<TReturnType, TArgs...>;
@@ -110,7 +108,6 @@ namespace acid
 		{
 			return Invoker::Invoke(*this, args...);
 		}
-
 	private:
 		friend Invoker;
 

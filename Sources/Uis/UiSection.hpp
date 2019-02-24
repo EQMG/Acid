@@ -15,13 +15,13 @@ namespace acid
 
 		void UpdateObject() override;
 
-		UiObject *GetContent() const { return m_content.get(); }
+		UiObject &GetContent() { return m_content; }
 
 		Delegate<void(UiSection *, bool)> &GetOnCollapsed() { return m_onCollapsed; }
 	private:
-		std::unique_ptr<Gui> m_icon;
-		std::unique_ptr<Text> m_text;
-		std::unique_ptr<UiObject> m_content;
+		Gui m_icon;
+		Text m_text;
+		UiObject m_content;
 		Sound m_soundClick;
 
 		bool m_collapsed;

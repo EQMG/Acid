@@ -224,6 +224,7 @@
 #include "Threads/Thread.hpp"
 #include "Threads/ThreadPool.hpp"
 #include "Uis/Inputs/UiColourWheel.hpp"
+#include "Uis/Inputs/UiInputBoolean.hpp"
 #include "Uis/Inputs/UiInputButton.hpp"
 #include "Uis/Inputs/UiInputGrabber.hpp"
 #include "Uis/Inputs/UiInputRadio.hpp"

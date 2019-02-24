@@ -22,14 +22,13 @@ namespace acid
 
 		void UpdateObject() override;
 
-		float GetProgress() const;
-
+		float GetProgress();
 	private:
 		float ScrollByDelta(const float &delta);
 
 		float ScrollByPosition(const float &position);
 
-		std::unique_ptr<Gui> m_scroll;
+		Gui m_scroll;
 		uint32_t m_index;
 		bool m_updating;
 		bool m_mouseOver;

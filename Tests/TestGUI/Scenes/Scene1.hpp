@@ -3,6 +3,7 @@
 #include <Scenes/Scene.hpp>
 #include <Inputs/ButtonCompound.hpp>
 #include <Uis/UiStartLogo.hpp>
+#include "Uis/Navigation/UiNavigation.hpp"
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
@@ -22,11 +23,11 @@ namespace test
 		bool IsPaused() const override;
 
 		void TogglePause();
-
 	private:
 		ButtonCompound m_buttonPause;
 
-		std::unique_ptr<UiStartLogo> m_uiStartLogo;
-		std::unique_ptr<OverlayDebug> m_overlayDebug;
+		UiStartLogo m_uiStartLogo;
+		OverlayDebug m_overlayDebug;
+		UiNavigation m_uiNavigation;
 	};
 }

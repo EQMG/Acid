@@ -21,9 +21,9 @@ namespace acid
 
 		void UpdateObject() override;
 
-		const std::string &GetString() const { return m_text->GetString(); }
+		const std::string &GetString() const { return m_text.GetString(); }
 
-		void SetString(const std::string &string) { m_text->SetString(string); }
+		void SetString(const std::string &string) { m_text.SetString(string); }
 
 		const bool &IsChecked() const { return m_checked; }
 
@@ -37,9 +37,9 @@ namespace acid
 	private:
 		void UpdateFill();
 
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Gui> m_fill;
-		std::unique_ptr<Text> m_text;
+		Gui m_background;
+		Gui m_fill;
+		Text m_text;
 		Sound m_soundClick;
 
 		bool m_checked;

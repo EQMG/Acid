@@ -23,16 +23,16 @@ namespace test
 		void UpdateObject() override;
 
 	private:
-		std::unique_ptr<UiSection> m_section1;
-		std::unique_ptr<UiInputButton> m_button1;
-		std::unique_ptr<UiGrabberMouse> m_input1;
-		std::unique_ptr<UiGrabberKeyboard> m_input2;
-		std::unique_ptr<UiGrabberJoystick> m_input3;
-		std::unique_ptr<UiInputSlider> m_slider1;
-		std::unique_ptr<UiInputText> m_text1;
-		std::unique_ptr<UiInputRadio> m_radio1;
-		std::unique_ptr<UiInputRadio> m_radio2;
-		std::unique_ptr<UiInputRadio> m_radio3;
-		UiRadioManager m_radioManager;
+		UiSection m_section1;
+		UiInputButton m_button1;
+		UiGrabberMouse m_input1;
+		UiGrabberKeyboard m_input2;
+		UiGrabberJoystick m_input3;
+		UiInputSlider m_slider1;
+		UiInputText m_text1;
+		UiInputRadio m_radio1;
+		UiInputRadio m_radio2;
+		UiInputRadio m_radio3;
+		UiRadioManager m_radioManager1;
 	};
 }

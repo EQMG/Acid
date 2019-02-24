@@ -29,9 +29,9 @@ namespace acid
 
 		Delegate<void(UiInputText *, std::string)> &GetOnType() { return m_onType; }
 	private:
-		std::unique_ptr<Gui> m_background;
-		std::unique_ptr<Text> m_textTitle;
-		std::unique_ptr<Text> m_textValue;
+		Gui m_background;
+		Text m_textTitle;
+		Text m_textValue;
 		Sound m_soundClick;
 
 		std::string m_title;

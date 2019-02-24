@@ -9,8 +9,8 @@ namespace acid
 
 	UiColourWheel::UiColourWheel(UiObject *parent, const Colour &colour, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(std::make_unique<Gui>(this, UiBound::Maximum, Texture::Create("Guis/ColourWheel.png"))),
-		m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
+		m_background(this, UiBound::Maximum, Texture::Create("Guis/ColourWheel.png")),
+		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_colour(colour),
 		m_mouseOver(false),
 		m_onPressed(Delegate<void(UiColourWheel *, Colour)>())
@@ -20,7 +20,7 @@ namespace acid
 
 	void UiColourWheel::UpdateObject()
 	{
-		if (m_background->IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
+		if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 		{
 			if (!m_soundClick.IsPlaying())
 			{
@@ -28,8 +28,8 @@ namespace acid
 				m_soundClick.Play();
 			}
 
-			Vector2 distance = Mouse::Get()->GetPosition() - (m_background->GetScreenPosition() + (m_background->GetScreenDimensions() / 2.0f));
-			distance /= 0.5f * m_background->GetScreenDimensions();
+			Vector2 distance = Mouse::Get()->GetPosition() - (m_background.GetScreenPosition() + (m_background.GetScreenDimensions() / 2.0f));
+			distance /= 0.5f * m_background.GetScreenDimensions();
 
 		//	m_colour = Colour(); // TODO: Pick colour.
 
@@ -37,14 +37,14 @@ namespace acid
 		}
 
 		// Mouse over updates.
-		if (m_background->IsSelected() && !m_mouseOver)
+		if (m_background.IsSelected() && !m_mouseOver)
 		{
-		//	m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), 0.9f * m_primaryColour, SLIDE_TIME);
+		//	m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), 0.9f * m_primaryColour, SLIDE_TIME);
 			m_mouseOver = true;
 		}
-		else if (!m_background->IsSelected() && m_mouseOver)
+		else if (!m_background.IsSelected() && m_mouseOver)
 		{
-		//	m_background->SetColourDriver<DriverSlide<Colour>>(m_background->GetColourOffset(), m_primaryColour, SLIDE_TIME);
+		//	m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), m_primaryColour, SLIDE_TIME);
 			m_mouseOver = false;
 		}
 	}
