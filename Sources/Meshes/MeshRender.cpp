@@ -77,8 +77,7 @@ namespace acid
 
 		// Draws the object.
 		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-		meshModel->CmdRender(commandBuffer);
-		return true;
+		return meshModel->CmdRender(commandBuffer);
 	}
 
 	void MeshRender::Decode(const Metadata &metadata)

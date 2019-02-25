@@ -1,6 +1,7 @@
 #include "Json.hpp"
 
 #include <utility>
+#include "Files/Files.hpp"
 #include "Helpers/String.hpp"
 
 namespace acid
@@ -16,7 +17,7 @@ namespace acid
 		AddChildren(metadata, this);
 	}
 
-	void Json::Load(const std::string &data)
+	void Json::Load(std::istream *inStream)
 	{
 		ClearChildren();
 		ClearAttributes();
@@ -25,62 +26,69 @@ namespace acid
 		Section *currentSection = nullptr;
 		std::stringstream summation;
 
-		for (const char &c : data)
+		size_t lineNum = 0;
+		std::string linebuf;
+
+		while (inStream->peek() != -1)
 		{
-			if (c == '{' || c == '[')
+			Files::SafeGetLine(*inStream, linebuf);
+			lineNum++;
+
+			for (const char &c : linebuf)
 			{
-				if (currentSection == nullptr)
+				if (c == '{' || c == '[')
 				{
-					currentSection = topSection.get();
-					continue;
-				}
-
-				std::string name;
-
-				if (!summation.str().empty())
-				{
-					auto contentSplit = String::Split(summation.str(), "\"");
-
-					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
+					if (currentSection == nullptr)
 					{
-						name = contentSplit.at(contentSplit.size() - 2);
+						currentSection = topSection.get();
+						continue;
+					}
+
+					std::string name;
+
+					if (!summation.str().empty())
+					{
+						auto contentSplit = String::Split(summation.str(), "\"");
+
+						if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
+						{
+							name = contentSplit.at(contentSplit.size() - 2);
+						}
+					}
+
+					currentSection->m_content += summation.str();
+					summation.str(std::string());
+
+					auto section = new Section(currentSection, name, "");
+					currentSection->m_children.emplace_back(section);
+					currentSection = section;
+				}
+				else if (c == '}' || c == ']')
+				{
+					currentSection->m_content += summation.str();
+					summation.str(std::string());
+
+					if (currentSection->m_parent != nullptr)
+					{
+						currentSection = currentSection->m_parent;
 					}
 				}
-
-				currentSection->m_content += summation.str();
-				summation.str(std::string());
-
-				auto section = new Section(currentSection, name, "");
-				currentSection->m_children.emplace_back(section);
-				currentSection = section;
-			}
-			else if (c == '}' || c == ']')
-			{
-				currentSection->m_content += summation.str();
-				summation.str(std::string());
-
-				if (currentSection->m_parent != nullptr)
+				else if (c == '\n')
 				{
-					currentSection = currentSection->m_parent;
 				}
-			}
-			else if (c == '\n')
-			{
-			}
-			else
-			{
-				summation << c;
+				else
+				{
+					summation << c;
+				}
 			}
 		}
 
 		Convert(topSection.get(), this, true);
 	}
 
-	std::string Json::Write() const
+	void Json::Write(std::ostream *outStream) const
 	{
-		std::stringstream data;
-		AppendData(this, data, 0);
-		return data.str();
+		AppendData(this, outStream, 0);
 	}
 
 	void Json::AddChildren(const Metadata *source, Metadata *destination)
@@ -151,7 +159,7 @@ namespace acid
 		}
 	}
 
-	void Json::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation, const bool &end)
+	void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const bool &end)
 	{
 		std::stringstream indents;
 
@@ -173,56 +181,56 @@ namespace acid
 			}
 		}
 
-		builder << indents.str();
+		*outStream << indents.str();
 
 		if (source->GetName().empty())
 		{
-			builder << openBrace << "\n";
+			*outStream << openBrace << "\n";
 		}
 		else if (source->GetValue().empty())
 		{
-			builder << "\"" << source->GetName() << "\": " << openBrace << "\n";
+			*outStream << "\"" << source->GetName() << "\": " << openBrace << "\n";
 		}
 		else
 		{
-			builder << "\"" << source->GetName() << "\": " << source->GetValue();
+			*outStream << "\"" << source->GetName() << "\": " << source->GetValue();
 
 			if (!(end && source->GetAttributes().empty()))
 			{
-				builder << ", ";
+				*outStream << ", ";
 			}
 
-			builder << "\n";
+			*outStream << "\n";
 		}
 
 		for (const auto &attribute : source->GetAttributes())
 		{
-			builder << indents.str() << "  \"_" << attribute.first + "\": \"" << attribute.second << "\"";
+			*outStream << indents.str() << "  \"_" << attribute.first + "\": \"" << attribute.second << "\"";
 
 			if (!(end && source->GetChildren().empty()))
 			{
-				builder << ", ";
+				*outStream << ", ";
 			}
 
-			builder << "\n";
+			*outStream << "\n";
 		}
 
 		for (const auto &child : source->GetChildren())
 		{
-			AppendData(child.get(), builder, indentation + 1, child == source->GetChildren().back());
+			AppendData(child.get(), outStream, indentation + 1, child == source->GetChildren().back());
 		}
 
 		if (source->GetValue().empty())
 		{
-			builder << indents.str();
+			*outStream << indents.str();
 
 			if (end || indentation == 0)
 			{
-				builder << closeBrace << "\n";
+				*outStream << closeBrace << "\n";
 			}
 			else
 			{
-				builder << closeBrace << ",\n";
+				*outStream << closeBrace << ",\n";
 			}
 		}
 	}

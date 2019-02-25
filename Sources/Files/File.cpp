@@ -1,6 +1,6 @@
 #include "File.hpp"
-#include <utility>
 
+#include <utility>
 #include "Engine/Engine.hpp"
 #include "Files.hpp"
 #include "FileSystem.hpp"
@@ -19,15 +19,17 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto fileLoaded = Files::Read(m_filename);
-
-		if (!fileLoaded)
+		if (Files::ExistsInPath(m_filename))
 		{
-			Log::Error("File could not be loaded: '%s'\n", m_filename.c_str());
-			return;
+			ifstream inStream(m_filename);
+			m_metadata->Load(&inStream);
 		}
-
-		m_metadata->Load(*fileLoaded);
+		else if (FileSystem::Exists(m_filename))
+		{
+			std::ifstream inStream(m_filename);
+			m_metadata->Load(&inStream);
+			inStream.close();
+		}
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
@@ -41,11 +43,18 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		std::string data = m_metadata->Write();
-
-		Verify();
-		FileSystem::ClearFile(m_filename);
-		FileSystem::WriteTextFile(m_filename, data);
+		if (Files::ExistsInPath(m_filename))
+		{
+			ofstream outStream(m_filename);
+			m_metadata->Write(&outStream);
+		}
+		else // if (FileSystem::Exists(m_filename))
+		{
+			FileSystem::Create(m_filename);
+			std::ofstream outStream(m_filename);
+			m_metadata->Write(&outStream);
+			outStream.close();
+		}
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
@@ -56,16 +65,5 @@ namespace acid
 	void File::Clear()
 	{
 		m_metadata->ClearChildren();
-
-		Verify();
-		FileSystem::ClearFile(m_filename);
-	}
-
-	void File::Verify()
-	{
-		if (!FileSystem::Exists(m_filename))
-		{
-			FileSystem::Create(m_filename);
-		}
 	}
 }

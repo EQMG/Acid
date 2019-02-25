@@ -261,9 +261,9 @@ namespace acid
 
 		std::string FindAttribute(const std::string &attribute) const;
 
-		virtual void Load(const std::string &data);
+		virtual void Load(std::istream *inStream);
 
-		virtual std::string Write() const;
+		virtual void Write(std::ostream *outStream) const;
 
 		Metadata *Clone() const;
 

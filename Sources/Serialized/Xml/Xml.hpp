@@ -32,14 +32,14 @@ namespace acid
 
 		Xml(const std::string &rootName, Metadata *metadata);
 
-		void Load(const std::string &data) override;
+		void Load(std::istream *inStream) override;
 
-		std::string Write() const override;
+		void Write(std::ostream *outStream) const override;
 	private:
 		static void AddChildren(const Metadata *source, Metadata *destination);
 
 		static void Convert(const Node *source, Metadata *parent, const uint32_t &depth);
 
-		static void AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation);
+		static void AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation);
 	};
 }

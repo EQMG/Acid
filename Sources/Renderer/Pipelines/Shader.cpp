@@ -14,7 +14,8 @@
 namespace acid
 {
 	Shader::Shader(std::string name) :
-		m_name(std::move(name))
+		m_name(std::move(name)),
+		m_lastDescriptorBinding(0)
 	{
 	}
 
@@ -35,37 +36,6 @@ namespace acid
 
 	void Shader::ProcessShader()
 	{
-		// Sort uniforms by binding.
-		/*std::sort(m_uniforms.begin(), m_uniforms.end(),
-			[](const std::unique_ptr<Uniform> &l, const std::unique_ptr<Uniform> &r)
-			{
-				return l->GetBinding() < r->GetBinding();
-			});*/
-
-		// Sort uniform blocks by binding.
-		/*std::sort(m_uniformBlocks.begin(), m_uniformBlocks.end(),
-			[](const std::unique_ptr<UniformBlock> &l, const std::unique_ptr<UniformBlock> &r)
-			{
-				return l->GetBinding() < r->GetBinding();
-			});*/
-
-		// Sort uniform block uniforms by offsets.
-		/*for (auto &uniformBlock : m_uniformBlocks)
-		{
-			std::sort(uniformBlock->m_uniforms.begin(), uniformBlock->m_uniforms.end(),
-				[](const std::unique_ptr<Uniform> &l, const std::unique_ptr<Uniform> &r)
-				{
-					return l->GetOffset() < r->GetOffset();
-				});
-		}*/
-
-		// Sort attributes by location.
-		/*std::sort(m_attributes.begin(), m_attributes.end(),
-			[](const std::unique_ptr<VertexAttribute> &l, const std::unique_ptr<VertexAttribute> &r)
-			{
-				return l->GetLocation() < r->GetLocation();
-			});*/
-
 		std::map<VkDescriptorType, uint32_t> descriptorPoolCounts = {};
 
 		// Process to descriptors.
@@ -93,6 +63,8 @@ namespace acid
 			}
 
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
+			m_descriptorLocations.emplace(uniformBlockName, uniformBlock->GetBinding());
+			m_descriptorSizes.emplace(uniformBlockName, uniformBlock->GetSize());
 		}
 
 		for (const auto &[uniformName, uniform] : m_uniforms)
@@ -120,6 +92,8 @@ namespace acid
 			}
 
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
+			m_descriptorLocations.emplace(uniformName, uniform->GetBinding());
+			m_descriptorSizes.emplace(uniformName, uniform->GetSize());
 		}
 
 		for (const auto &[type, descriptorCount] : descriptorPoolCounts)
@@ -136,6 +110,12 @@ namespace acid
 			{
 			    return l.binding < r.binding;
 			});
+
+		// Gets the last descriptors binding.
+		if (!m_descriptorSetLayouts.empty())
+		{
+			m_lastDescriptorBinding = m_descriptorSetLayouts.back().binding;
+		}
 
 		// Gets the descriptor type for each descriptor.
 		for (const auto &descriptor : m_descriptorSetLayouts)
@@ -191,100 +171,64 @@ namespace acid
 		}
 	}
 
-	int32_t Shader::GetDescriptorLocation(const std::string &descriptor) const
+	std::optional<uint32_t> Shader::GetDescriptorLocation(const std::string &name) const
 	{
-		for (const auto &[uniformName, uniform] : m_uniforms) // TODO
+		auto it = m_descriptorLocations.find(name);
+
+		if (it == m_descriptorLocations.end())
 		{
-			if (uniformName == descriptor)
-			{
-				return uniform->GetBinding();
-			}
+			return {};
 		}
 
-		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks) // TODO
-		{
-			if (uniformBlockName == descriptor)
-			{
-				return uniformBlock->GetBinding();
-			}
-		}
-
-		return -1;
+		return it->second;
 	}
 
-	std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &descriptor) const
+	std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &name) const
 	{
-		for (const auto &[uniformName, uniform] : m_uniforms) // TODO
+		auto it = m_descriptorSizes.find(name);
+
+		if (it == m_descriptorSizes.end())
 		{
-			if (uniformName == descriptor)
-			{
-				return uniform->GetSize();
-			}
+			return {};
 		}
 
-		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks) // TODO
-		{
-			if (uniformBlockName == descriptor)
-			{
-				return uniformBlock->GetSize();
-			}
-		}
-
-		return {};
+		return it->second;
 	}
 
 	const Shader::Uniform *Shader::GetUniform(const std::string &name) const
 	{
-		for (const auto &[uniformName, uniform] : m_uniforms)
+		auto it = m_uniforms.find(name);
+
+		if (it == m_uniforms.end())
 		{
-			if (uniformName == name)
-			{
-				return uniform.get();
-			}
+			return nullptr;
 		}
 
-		return nullptr;
+		return it->second.get();
 	}
 
 	const Shader::UniformBlock *Shader::GetUniformBlock(const std::string &name) const
 	{
-		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
+		auto it = m_uniformBlocks.find(name);
+
+		if (it == m_uniformBlocks.end())
 		{
-			if (uniformBlockName == name)
-			{
-				return uniformBlock.get();
-			}
+			return nullptr;
 		}
 
-		return nullptr;
+		return it->second.get();
 	}
 
 	const Shader::Attribute *Shader::GetAttribute(const std::string &name) const
 	{
-		for (const auto &[attributeName, attribute] : m_attributes)
+		auto it = m_attributes.find(name);
+
+		if (it == m_attributes.end())
 		{
-			if (attributeName == name)
-			{
-				return attribute.get();
-			}
+			return nullptr;
 		}
 
-		return nullptr;
-	}
-
-	uint32_t Shader::GetLastDescriptorBinding() const
-	{
-		uint32_t binding = 0;
-
-		for (const auto &descriptor : m_descriptorSetLayouts)
-		{
-			if (descriptor.binding > binding)
-			{
-				binding = descriptor.binding;
-			}
-		}
-
-		return binding;
+		return it->second.get();
 	}
 
 	std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
@@ -651,7 +595,7 @@ namespace acid
 			}
 		}
 
-		UniformBlock::Type type = UniformBlock::Type::Uniform;
+		auto type = UniformBlock::Type::Uniform;
 
 		if (strcmp(program.getUniformBlockTType(i)->getStorageQualifierString(), "buffer") == 0)
 		{
@@ -702,16 +646,18 @@ namespace acid
 
 	void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
+		std::string name = program.getAttributeName(i);
+
 		for (const auto &[attributeName, attribute] : m_attributes)
 		{
-			if (attributeName == program.getAttributeName(i))
+			if (attributeName == name)
 			{
 				return;
 			}
 		}
 
 		auto &qualifier = program.getAttributeTType(i)->getQualifier();
-		m_attributes.emplace(program.getAttributeName(i), std::make_unique<Attribute>(qualifier.layoutSet, qualifier.layoutLocation, 
+		m_attributes.emplace(name, std::make_unique<Attribute>(qualifier.layoutSet, qualifier.layoutLocation,
 			ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
 	}
 
@@ -740,7 +686,7 @@ namespace acid
 		{
 			int32_t arraySize = 1;
 
-			for (int d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
+			for (uint32_t d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
 			{
 				auto dimSize = ttype->getArraySizes()->getDimSize(d);
 

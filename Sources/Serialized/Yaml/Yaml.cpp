@@ -1,5 +1,6 @@
 #include "Yaml.hpp"
 
+#include "Files/Files.hpp"
 #include "Helpers/String.hpp"
 
 namespace acid
@@ -15,7 +16,7 @@ namespace acid
 		AddChildren(metadata, this);
 	}
 
-	void Yaml::Load(const std::string &data)
+	void Yaml::Load(std::istream *inStream)
 	{
 		ClearChildren();
 		ClearAttributes();
@@ -24,12 +25,16 @@ namespace acid
 		Section *currentSection = topSection.get();
 		uint32_t lastIndentation = 0;
 
-		auto lines = String::Split(data, "\n");
+		size_t lineNum = 0;
+		std::string linebuf;
 
-		for (const auto &line : lines)
+		while (inStream->peek() != -1)
 		{
+			Files::SafeGetLine(*inStream, linebuf);
+			lineNum++;
+
 			// Start marker.
-			if (line == "---")
+			if (linebuf == "---")
 			{
 				continue;
 			}
@@ -38,7 +43,7 @@ namespace acid
 			bool comment = false;
 		//	bool array = false;
 
-			for (const auto &c : line)
+			for (const auto &c : linebuf)
 			{
 				if (c == ' ')
 				{
@@ -104,7 +109,7 @@ namespace acid
 			}
 			else
 			{*/
-			auto section = new Section(currentSection, String::Trim(line), indentation);
+			auto section = new Section(currentSection, String::Trim(linebuf), indentation);
 			currentSection->m_children.emplace_back(section);
 			//}
 
@@ -114,12 +119,10 @@ namespace acid
 		Convert(topSection.get(), this, true);
 	}
 
-	std::string Yaml::Write() const
+	void Yaml::Write(std::ostream *outStream) const
 	{
-		std::stringstream data;
-		data << "---\n";
-		AppendData(this, nullptr, data, 0);
-		return data.str();
+		*outStream << "---\n";
+		AppendData(this, nullptr, outStream, 0);
 	}
 
 	void Yaml::AddChildren(const Metadata *source, Metadata *destination)
@@ -162,7 +165,7 @@ namespace acid
 		}
 	}
 
-	void Yaml::AppendData(const Metadata *source, const Metadata *parent, std::stringstream &builder, const int32_t &indentation)
+	void Yaml::AppendData(const Metadata *source, const Metadata *parent, std::ostream *outStream, const int32_t &indentation)
 	{
 		std::stringstream indents;
 
@@ -173,39 +176,39 @@ namespace acid
 
 		if (parent != nullptr && !(parent->GetChildren()[0].get() == source && parent->GetName().empty() && parent->GetValue().empty()))
 		{
-			builder << indents.str();
+			*outStream << indents.str();
 		}
 
 		if (parent != nullptr && parent->GetValue().empty() && parent->GetChildren()[0]->GetName().empty())
 		{
-			builder.seekp(-2, std::stringstream::cur);
-			builder << "- ";
+			outStream->seekp(-2, std::stringstream::cur);
+			*outStream << "- ";
 		}
 
 		if (!source->GetName().empty())
 		{
 			if (source->GetValue().empty())
 			{
-				builder << source->GetName() << ": \n";
+				*outStream << source->GetName() << ": \n";
 			}
 			else
 			{
-				builder << source->GetName() << ": " << source->GetValue() << "\n";
+				*outStream << source->GetName() << ": " << source->GetValue() << "\n";
 			}
 		}
 		else if (!source->GetValue().empty())
 		{
-			builder << source->GetValue() << "\n";
+			*outStream << source->GetValue() << "\n";
 		}
 
 		for (const auto &attribute : source->GetAttributes())
 		{
-			builder << indents.str() << "  _" << attribute.first + ": " << attribute.second << "\n";
+			*outStream << indents.str() << "  _" << attribute.first + ": " << attribute.second << "\n";
 		}
 
 		for (const auto &child : source->GetChildren())
 		{
-			AppendData(child.get(), source, builder, indentation + !source->GetName().empty());
+			AppendData(child.get(), source, outStream, indentation + !source->GetName().empty());
 		}
 	}
 }

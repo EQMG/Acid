@@ -194,12 +194,11 @@ namespace acid
 		return m_name < other.m_name || m_value < other.m_value || m_attributes < other.m_attributes || m_children < other.m_children;
 	}
 
-	void Metadata::Load(const std::string &data)
+	void Metadata::Load(std::istream *inStream)
 	{
 	}
 
-	std::string Metadata::Write() const
+	void Metadata::Write(std::ostream *outStream) const
 	{
-		return "";
 	}
 }

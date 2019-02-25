@@ -77,12 +77,15 @@ namespace acid
 
 		void RecreatePass(RenderStage &renderStage);
 
+		void RecreateAttachmentsMap();
+
 		bool StartRenderpass(RenderStage &renderStage);
 
 		void EndRenderpass(RenderStage &renderStage);
 
 		std::unique_ptr<RenderManager> m_renderManager;
 		std::vector<std::unique_ptr<RenderStage>> m_renderStages;
+		std::map<std::string, const Descriptor *> m_attachments;
 		std::unique_ptr<Swapchain> m_swapchain;
 
 		VkPipelineCache m_pipelineCache;

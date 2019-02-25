@@ -27,8 +27,6 @@ namespace acid
 
 		Metadata *GetMetadata() const { return m_metadata.get(); }
 	private:
-		void Verify();
-
 		std::string m_filename;
 		std::unique_ptr<Metadata> m_metadata;
 	};
