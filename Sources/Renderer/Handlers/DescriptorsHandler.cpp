@@ -44,9 +44,9 @@ namespace acid
 		}
 
 		// When adding the descriptor find the location in the shader.
-		int32_t location = m_shader->GetDescriptorLocation(descriptorName);
+		auto location = m_shader->GetDescriptorLocation(descriptorName);
 
-		if (location == -1)
+		if (!location)
 		{
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
@@ -59,7 +59,7 @@ namespace acid
 		}
 
 		// Adds the new descriptor value.
-		m_descriptors.emplace(descriptorName, DescriptorValue{descriptor, offsetSize, static_cast<uint32_t>(location)});
+		m_descriptors.emplace(descriptorName, DescriptorValue{descriptor, offsetSize, *location});
 		m_changed = true;
 	}
 

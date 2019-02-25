@@ -17,29 +17,27 @@ namespace acid
 		m_paddingHeight(0),
 		m_maxSizeY(0.0f)
 	{
-		auto fileLoaded = Files::Read(m_filename);
+		ifstream inStream(m_filename);
 
-		if (!fileLoaded)
+		size_t lineNum = 0;
+		std::string linebuf;
+
+		while (inStream.peek() != -1)
 		{
-			Log::Error("Font Metafile could not be loaded: '%s'\n", m_filename.c_str());
-			return;
-		}
+			Files::SafeGetLine(inStream, linebuf);
+			lineNum++;
 
-		auto lines = String::Split(*fileLoaded, "\n");
+			ProcessNextLine(linebuf);
 
-		for (const auto &line : lines)
-		{
-			ProcessNextLine(line);
-
-			if (String::Contains(line, "info"))
+			if (String::Contains(linebuf, "info"))
 			{
 				LoadPaddingData();
 			}
-			else if (String::Contains(line, "common"))
+			else if (String::Contains(linebuf, "common"))
 			{
 				LoadLineSizes();
 			}
-			else if (String::Contains(line, "char") && !String::Contains(line, "chars"))
+			else if (String::Contains(linebuf, "char") && !String::Contains(linebuf, "chars"))
 			{
 				LoadCharacterData();
 			}

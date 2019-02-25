@@ -5,6 +5,10 @@
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 
+#define IS_SPACE(x) (((x) == ' ') || ((x) == '\t'))
+#define IS_DIGIT(x) (static_cast<uint32_t>((x) - '0') < static_cast<uint32_t>(10))
+#define IS_NEW_LINE(x) (((x) == '\r') || ((x) == '\n') || ((x) == '\0'))
+
 namespace acid
 {
 	static const std::string FALLBACK_PATH = "Undefined.obj";
@@ -53,84 +57,93 @@ namespace acid
 		auto debugStart = Engine::GetTime();
 #endif
 
-		auto fileLoaded = Files::Read(m_filename);
-
-		if (!fileLoaded)
-		{
-			Log::Error("OBJ file could not be loaded: '%s'\n", m_filename.c_str());
-			return;
-		}
-
-		auto lines = String::Split(*fileLoaded, "\n");
+		ifstream inStream(m_filename);
 
 		std::vector<uint32_t> indices = {};
 		std::vector<std::unique_ptr<VertexModelData>> verticesList = {};
 		std::vector<Vector2> uvsList = {};
 		std::vector<Vector3> normalsList = {};
 
-		for (const auto &line : lines)
+		size_t lineNum = 0;
+		std::string linebuf;
+
+		while (inStream.peek() != -1)
 		{
-			auto split = String::Split(line, " ", true);
+			Files::SafeGetLine(inStream, linebuf);
+			lineNum++;
 
-			if (!split.empty())
+			const char *token = linebuf.c_str();
+			token += strspn(token, " \t");
+
+			if (token[0] == '\0' || token[0] == '#')
 			{
-				std::string prefix = split[0];
+				continue;
+			}
 
-				if (prefix == "#")
-				{
-					continue;
-				}
-				if (prefix == "v")
-				{
-					Vector3 vertex = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
-					VertexModelData *newVertex = new VertexModelData(
-						static_cast<int>(verticesList.size()), vertex);
-					verticesList.emplace_back(newVertex);
-				}
-				else if (prefix == "vt")
-				{
-					Vector2 uv = Vector2(String::From<float>(split[1]), 1.0f - String::From<float>(split[2]));
-					uvsList.emplace_back(uv);
-				}
-				else if (prefix == "vn")
-				{
-					Vector3 normal = Vector3(String::From<float>(split[1]), String::From<float>(split[2]), String::From<float>(split[3]));
-					normalsList.emplace_back(normal);
-				}
-				else if (prefix == "f")
-				{
-					// The split length of 3 faced + 1 for the f prefix.
-					if (split.size() != 4 || String::Contains(line, "//"))
-					{
-						Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", m_filename.c_str());
-						assert(false && "Model loading error!");
-					}
+			if (token[0] == 'v' && IS_SPACE(token[1]))
+			{
+				token += 2;
+				verticesList.emplace_back(new VertexModelData(static_cast<uint32_t>(verticesList.size()), 
+					Vector3(*ParseReal<float>(&token), *ParseReal<float>(&token), *ParseReal<float>(&token))));
+			}
+			else if (token[0] == 'v' && token[1] == 't' && IS_SPACE(token[2]))
+			{
+				token += 3;
+				uvsList.emplace_back(Vector2(*ParseReal<float>(&token), 1.0f - *ParseReal<float>(&token)));
+			}
+			else if (token[0] == 'v' && token[1] == 'n' && IS_SPACE(token[2]))
+			{
+				token += 3;
+				normalsList.emplace_back(Vector3(*ParseReal<float>(&token), *ParseReal<float>(&token), *ParseReal<float>(&token)));
+			}
+			else if (token[0] == 'f' && IS_SPACE(token[1]))
+			{
+				token += 2;
+				token += strspn(token, " \t");
 
-					auto vertex1 = String::Split(split[1], "/");
-					auto vertex2 = String::Split(split[2], "/");
-					auto vertex3 = String::Split(split[3], "/");
+				/*auto startControl = " \t/";
+				auto endControl = " \t\r/";
 
-					VertexModelData *v0 = ProcessDataVertex(
-						Vector3(String::From<float>(vertex1[0]), String::From<float>(vertex1[1]),
-							String::From<float>(vertex1[2])), verticesList, indices);
-					VertexModelData *v1 = ProcessDataVertex(
-						Vector3(String::From<float>(vertex2[0]), String::From<float>(vertex2[1]), 
-							String::From<float>(vertex2[2])), verticesList, indices);
-					VertexModelData *v2 = ProcessDataVertex(
-						Vector3(String::From<float>(vertex3[0]), String::From<float>(vertex3[1]), 
-							String::From<float>(vertex3[2])), verticesList, indices);
-					CalculateTangents(v0, v1, v2, uvsList);
-				}
-				else if (prefix == "o")
-				{
-				}
-				else if (prefix == "s")
-				{
-				}
-				else
-				{
-					Log::Error("OBJ '%s' unknown line: '%s'\n", m_filename.c_str(), line.c_str());
-				}
+				auto v0 = ProcessDataVertex(ParseReal<uint32_t>(&token, startControl, endControl), ParseReal<uint32_t>(&token, startControl, endControl), 
+					ParseReal<uint32_t>(&token, startControl, endControl), verticesList, indices);
+				auto v1 = ProcessDataVertex(ParseReal<uint32_t>(&token, startControl, endControl), ParseReal<uint32_t>(&token, startControl, endControl),
+					ParseReal<uint32_t>(&token, startControl, endControl), verticesList, indices);
+				auto v2 = ProcessDataVertex(ParseReal<uint32_t>(&token, startControl, endControl), ParseReal<uint32_t>(&token, startControl, endControl),
+					ParseReal<uint32_t>(&token, startControl, endControl), verticesList, indices);
+				CalculateTangents(v0, v1, v2, uvsList);*/
+				auto split = String::Split(linebuf, " ", true);
+
+				// The split length of 3 faced + 1 for the f prefix.
+			//	if (split.size() != 4 || String::Contains(linebuf, "//"))
+			//	{
+			//		Log::Error("Error reading the OBJ '%s', it does not appear to be UV mapped!\n", m_filename.c_str());
+			//		assert(false && "Model loading error!");
+			//	}
+
+				auto vertex1 = String::Split(split[1], "/");
+				auto vertex2 = String::Split(split[2], "/");
+				auto vertex3 = String::Split(split[3], "/");
+
+				VertexModelData *v0 = ProcessDataVertex(String::From<uint32_t>(vertex1[0]),
+					String::From<uint32_t>(vertex1[1]), String::From<uint32_t>(vertex1[2]), verticesList, indices);
+				VertexModelData *v1 = ProcessDataVertex(String::From<uint32_t>(vertex2[0]),
+					String::From<uint32_t>(vertex2[1]), String::From<uint32_t>(vertex2[2]), verticesList, indices);
+				VertexModelData *v2 = ProcessDataVertex(String::From<uint32_t>(vertex3[0]),
+					String::From<uint32_t>(vertex3[1]), String::From<uint32_t>(vertex3[2]), verticesList, indices);
+				CalculateTangents(v0, v1, v2, uvsList);
+			}
+			else if (token[0] == 'o' && IS_SPACE(token[1]))
+			{
+				token += 1;
+
+			}
+			else if (0 == strncmp(token, "mtllib", 6) && IS_SPACE(token[6]))
+			{
+				token += 7;
+			}
+			else if (0 == strncmp(token, "usemtl", 6) && IS_SPACE(token[6]))
+			{
+				token += 7;
 			}
 		}
 
@@ -141,16 +154,9 @@ namespace acid
 		for (auto &current : verticesList)
 		{
 			current->AverageTangents();
-
-			if (!current->IsSet())
-			{
-				current->SetUvIndex(0);
-				current->SetNormalIndex(0);
-			}
-
 			auto position = current->GetPosition();
-			auto uvs = uvsList[*current->GetUvIndex()];
-			auto normal = normalsList[*current->GetNormalIndex()];
+			auto uvs = current->GetUvIndex() ? uvsList[*current->GetUvIndex()] : Vector2::Zero;
+			auto normal = current->GetNormalIndex() ? normalsList[*current->GetNormalIndex()] : Vector3::Zero;
 			auto tangent = current->GetAverageTangent();
 			vertices.emplace_back(VertexModel(position, uvs, normal, tangent));
 		}
@@ -174,28 +180,39 @@ namespace acid
 		metadata.SetChild("Filename", m_filename);
 	}
 
-	VertexModelData *ModelObj::ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
+	VertexModelData *ModelObj::ProcessDataVertex(const std::optional<uint32_t> &vertexIndex, const std::optional<uint32_t> &uvIndex, const std::optional<uint32_t> &normalIndex,
+		std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
-		auto index = static_cast<int>(vertex.m_x) - 1;
-		auto textureIndex = static_cast<int>(vertex.m_y) - 1;
-		auto normalIndex = static_cast<int>(vertex.m_z) - 1;
-		auto currentVertex = vertices[index].get();
+		if (!vertexIndex)
+		{
+			return nullptr;
+		}
+
+		auto currentVertex = vertices[*vertexIndex - 1].get();
 
 		if (!currentVertex->IsSet())
 		{
-			currentVertex->SetUvIndex(textureIndex);
-			currentVertex->SetNormalIndex(normalIndex);
-			indices.emplace_back(index);
+			if (uvIndex)
+			{
+				currentVertex->SetUvIndex(*uvIndex - 1);
+			}
+
+			if (normalIndex)
+			{
+				currentVertex->SetNormalIndex(*normalIndex - 1);
+			}
+
+			indices.emplace_back(*vertexIndex - 1);
 			return currentVertex;
 		}
 
-		return DealWithAlreadyProcessedDataVertex(currentVertex, textureIndex, normalIndex, vertices, indices);
+		return DealWithAlreadyProcessedDataVertex(currentVertex, uvIndex, normalIndex, vertices, indices);
 	}
 
-	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, 
+	VertexModelData *ModelObj::DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const std::optional<uint32_t> &newUvIndex, const std::optional<uint32_t> &newNormalIndex,
 		std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices)
 	{
-		if (previousVertex->HasSameTextureAndNormal(newTextureIndex, newNormalIndex))
+		if (previousVertex->HasSameUvAndNormal(newUvIndex, newNormalIndex))
 		{
 			indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;
@@ -205,12 +222,21 @@ namespace acid
 
 		if (anotherVertex != nullptr)
 		{
-			return DealWithAlreadyProcessedDataVertex(anotherVertex, newTextureIndex, newNormalIndex, vertices, indices);
+			return DealWithAlreadyProcessedDataVertex(anotherVertex, newUvIndex, newNormalIndex, vertices, indices);
 		}
 
 		auto *duplicateVertex = new VertexModelData(static_cast<uint32_t>(vertices.size()), previousVertex->GetPosition());
-		duplicateVertex->SetUvIndex(newTextureIndex);
-		duplicateVertex->SetNormalIndex(newNormalIndex);
+		
+		if (newUvIndex)
+		{
+			duplicateVertex->SetUvIndex(*newUvIndex - 1);
+		}
+
+		if (newNormalIndex)
+		{
+			duplicateVertex->SetNormalIndex(*newNormalIndex - 1);
+		}
+
 		previousVertex->SetDuplicateVertex(duplicateVertex);
 		vertices.emplace_back(duplicateVertex);
 		indices.emplace_back(duplicateVertex->GetIndex());
@@ -219,6 +245,7 @@ namespace acid
 
 	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs)
 	{
+		// TODO: Handle v0,v1,v2 being null, or a uvIndex not being set...
 		auto uv0 = uvs[*v0->GetUvIndex()];
 		auto uv1 = uvs[*v1->GetUvIndex()];
 		auto uv2 = uvs[*v2->GetUvIndex()];

@@ -32,14 +32,14 @@ namespace acid
 
 		explicit Yaml(Metadata *metadata);
 
-		void Load(const std::string &data) override;
+		void Load(std::istream *inStream) override;
 
-		std::string Write() const override;
+		void Write(std::ostream *outStream) const override;
 	private:
 		static void AddChildren(const Metadata *source, Metadata *destination);
 
 		static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
 
-		static void AppendData(const Metadata *source, const Metadata *parent, std::stringstream &builder, const int32_t &indentation);
+		static void AppendData(const Metadata *source, const Metadata *parent, std::ostream *outStream, const int32_t &indentation);
 	};
 }

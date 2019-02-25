@@ -349,21 +349,20 @@ namespace acid
 			renderStage->Rebuild(*m_swapchain);
 			m_renderStages.emplace_back(renderStage);
 		}
+
+		RecreateAttachmentsMap();
 	}
 
 	const Descriptor *Renderer::GetAttachment(const std::string &name) const
 	{
-		for (const auto &renderStage : m_renderStages) // TODO: Generate a map on creation.
-		{
-			auto attachment = renderStage->GetAttachment(name);
+		auto it = m_attachments.find(name);
 
-			if (attachment != nullptr)
-			{
-				return attachment;
-			}
+		if (it == m_attachments.end())
+		{
+			return nullptr;
 		}
 
-		return nullptr;
+		return it->second;
 	}
 
 	void Renderer::CreateCommandPool()
@@ -404,6 +403,17 @@ namespace acid
 		}
 
 		renderStage.Rebuild(*m_swapchain);
+		RecreateAttachmentsMap(); // TODO: Maybe not recreate a single change.
+	}
+
+	void Renderer::RecreateAttachmentsMap()
+	{
+		m_attachments.clear();
+
+		for (const auto &renderStage : m_renderStages)
+		{
+			m_attachments.insert(renderStage->m_attachments.begin(), renderStage->m_attachments.end());
+		}
 	}
 
 	bool Renderer::StartRenderpass(RenderStage &renderStage)

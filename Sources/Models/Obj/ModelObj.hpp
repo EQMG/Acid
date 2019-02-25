@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "Helpers/String.hpp"
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
@@ -39,9 +40,29 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 	private:
-		static VertexModelData *ProcessDataVertex(const Vector3 &vertex, std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
+		template<typename T>
+		std::optional<T> ParseReal(const char **token, const char *startControl = " \t", const char *endControl = " \t\r")
+		{
+			(*token) += strspn((*token), startControl);
+			auto end = (*token) + strcspn((*token), endControl);
 
-		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const int32_t &newTextureIndex, const int32_t &newNormalIndex, 
+			std::istringstream iss(std::string(*token, end));
+			T temp;
+			const bool isValid = !(iss >> temp).fail();
+
+			if (!isValid)
+			{
+				return {};
+			}
+
+			(*token) = end;
+			return temp;
+		}
+
+		static VertexModelData *ProcessDataVertex(const std::optional<uint32_t> &vertexIndex, const std::optional<uint32_t> &uvIndex, const std::optional<uint32_t> &normalIndex, 
+			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
+
+		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const std::optional<uint32_t> &newUvIndex, const std::optional<uint32_t> &newNormalIndex,
 			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
 		static void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);

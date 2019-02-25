@@ -146,8 +146,8 @@ namespace acid
 			auto shaderCode = Shader::InsertDefineBlock(*fileLoaded, defineBlock.str());
 			shaderCode = Shader::ProcessIncludes(shaderCode);
 
-			VkShaderStageFlagBits stageFlag = Shader::GetShaderStage(shaderStage);
-			VkShaderModule shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
+			auto stageFlag = Shader::GetShaderStage(shaderStage);
+			auto shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
 
 			VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 			pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -337,7 +337,6 @@ namespace acid
 
 			for (const auto &attribute : vertexInput.GetAttributeDescriptions())
 			{
-				// TODO: Remove attributes not cntained in shader wile preserving lastAttribute.
 				/*bool shaderContains = false;
 
 				for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())

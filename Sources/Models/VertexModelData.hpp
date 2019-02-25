@@ -38,7 +38,7 @@ namespace acid
 
 		bool IsSet() const;
 
-		bool HasSameTextureAndNormal(const std::optional<uint32_t> &textureIndexOther, const std::optional<uint32_t> &normalIndexOther) const;
+		bool HasSameUvAndNormal(const std::optional<uint32_t> &uvIndexOther, const std::optional<uint32_t> &normalIndexOther) const;
 	private:
 		uint32_t m_index;
 		std::optional<uint32_t> m_uvIndex;

@@ -214,9 +214,9 @@ namespace acid
 
 		static VkFormat GlTypeToVk(const int32_t &type);
 
-		int32_t GetDescriptorLocation(const std::string &descriptor) const;
+		std::optional<uint32_t> GetDescriptorLocation(const std::string &name) const;
 
-		std::optional<uint32_t> GetDescriptorSize(const std::string &descriptor) const;
+		std::optional<uint32_t> GetDescriptorSize(const std::string &name) const;
 
 		const Uniform *GetUniform(const std::string &name) const;
 
@@ -224,7 +224,7 @@ namespace acid
 
 		const Attribute *GetAttribute(const std::string &name) const;
 
-		uint32_t GetLastDescriptorBinding() const;
+		const uint32_t &GetLastDescriptorBinding() const { return m_lastDescriptorBinding;  }
 
 		const std::map<std::string, std::unique_ptr<Uniform>> &GetUniforms() const { return m_uniforms; };
 
@@ -250,7 +250,7 @@ namespace acid
 
 		std::string ToString() const;
 	private:
-		void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
+		static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
 
 		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag);
 
@@ -260,14 +260,18 @@ namespace acid
 
 		void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
 
-		int32_t ComputeSize(const glslang::TType *ttype);
+		static int32_t ComputeSize(const glslang::TType *ttype);
 
 		std::string m_name;
 		std::map<std::string, std::unique_ptr<Uniform>> m_uniforms;
 		std::map<std::string, std::unique_ptr<UniformBlock>> m_uniformBlocks;
 		std::map<std::string, std::unique_ptr<Attribute>> m_attributes;
 
+		std::map<std::string, uint32_t> m_descriptorLocations;
+		std::map<std::string, uint32_t> m_descriptorSizes;
+
 		std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
+		uint32_t m_lastDescriptorBinding;
 		std::vector<VkDescriptorPoolSize> m_descriptorPools;
 		std::map<uint32_t, VkDescriptorType> m_descriptorTypes;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;

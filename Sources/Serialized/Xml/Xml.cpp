@@ -1,5 +1,7 @@
 #include "Xml.hpp"
 
+#include "Files/Files.hpp"
+
 namespace acid
 {
 	Xml::Xml(const std::string &rootName) :
@@ -13,7 +15,7 @@ namespace acid
 		AddChildren(metadata, this);
 	}
 
-	void Xml::Load(const std::string &data)
+	void Xml::Load(std::istream *inStream)
 	{
 		ClearChildren();
 		ClearAttributes();
@@ -23,55 +25,64 @@ namespace acid
 		std::stringstream summation;
 		bool end = false;
 
-		for (auto it = data.begin(); it != data.end(); ++it)
+		size_t lineNum = 0;
+		std::string linebuf;
+
+		while (inStream->peek() != -1)
 		{
-			if (*it == '<')
+			Files::SafeGetLine(*inStream, linebuf);
+			lineNum++;
+
+			for (auto it = linebuf.begin(); it != linebuf.end(); ++it)
 			{
-				if (*(it + 1) == '?') // Prolog.
+				if (*it == '<')
 				{
-					currentSection = topNode.get();
-					continue;
-				}
-
-				if (*(it + 1) == '/') // End tag.
-				{
-					currentSection->m_content += summation.str();
-					end = true;
-				}
-				else // Start tag.
-				{
-					auto section = new Node(currentSection, "", "");
-					currentSection->m_children.emplace_back(section);
-					currentSection = section;
-				}
-
-				summation.str(std::string());
-			}
-			else if (*it == '>')
-			{
-				if (!end)
-				{
-					currentSection->m_attributes += summation.str();
-				}
-
-				summation.str(std::string());
-
-				if (end || *(it - 1) == '/') // End tag.
-				{
-					end = false;
-
-					if (currentSection->m_parent != nullptr)
+					if (*(it + 1) == '?') // Prolog.
 					{
-						currentSection = currentSection->m_parent;
+						currentSection = topNode.get();
+						continue;
+					}
+
+					if (*(it + 1) == '/') // End tag.
+					{
+						currentSection->m_content += summation.str();
+						end = true;
+					}
+					else // Start tag.
+					{
+						auto section = new Node(currentSection, "", "");
+						currentSection->m_children.emplace_back(section);
+						currentSection = section;
+					}
+
+					summation.str(std::string());
+				}
+				else if (*it == '>')
+				{
+					if (!end)
+					{
+						currentSection->m_attributes += summation.str();
+					}
+
+					summation.str(std::string());
+
+					if (end || *(it - 1) == '/') // End tag.
+					{
+						end = false;
+
+						if (currentSection->m_parent != nullptr)
+						{
+							currentSection = currentSection->m_parent;
+						}
 					}
 				}
-			}
-			else if (*it == '\n')
-			{
-			}
-			else
-			{
-				summation << *it;
+				else if (*it == '\n')
+				{
+				}
+				else
+				{
+					summation << *it;
+				}
 			}
 		}
 
@@ -81,12 +92,12 @@ namespace acid
 		}
 	}
 
-	std::string Xml::Write() const
+	void Xml::Write(std::ostream *inStream) const
 	{
-		std::stringstream data;
-		data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		AppendData(this, data, 0);
-		return data.str();
+	//	std::stringstream data;
+	//	data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	//	AppendData(this, data, 0);
+	//	return data.str();
 	}
 
 	void Xml::AddChildren(const Metadata *source, Metadata *destination)
@@ -189,7 +200,7 @@ namespace acid
 		}
 	}
 
-	void Xml::AppendData(const Metadata *source, std::stringstream &builder, const int32_t &indentation)
+	void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation)
 	{
 		std::stringstream indents;
 
@@ -210,15 +221,15 @@ namespace acid
 
 		std::string nameAndAttribs = String::Trim(nameAttributes.str());
 
-		builder << indents.str();
+		*outStream << indents.str();
 
 		if (source->GetName()[0] == '?')
 		{
-			builder << "<" << nameAndAttribs << "?>\n";
+			*outStream << "<" << nameAndAttribs << "?>\n";
 
 			for (const auto &child : source->GetChildren())
 			{
-				AppendData(child.get(), builder, indentation);
+				AppendData(child.get(), outStream, indentation);
 			}
 
 			return;
@@ -226,24 +237,24 @@ namespace acid
 
 		if (source->GetChildren().empty() && source->GetValue().empty())
 		{
-			builder << "<" << nameAndAttribs << "/>\n";
+			*outStream << "<" << nameAndAttribs << "/>\n";
 			return;
 		}
 
-		builder << "<" << nameAndAttribs << ">" << source->GetString();
+		*outStream << "<" << nameAndAttribs << ">" << source->GetString();
 
 		if (!source->GetChildren().empty())
 		{
-			builder << "\n";
+			*outStream << "\n";
 
 			for (const auto &child : source->GetChildren())
 			{
-				AppendData(child.get(), builder, indentation + 1);
+				AppendData(child.get(), outStream, indentation + 1);
 			}
 
-			builder << indents.str();
+			*outStream << indents.str();
 		}
 
-		builder << "</" << name << ">\n";
+		*outStream << "</" << name << ">\n";
 	}
 }
