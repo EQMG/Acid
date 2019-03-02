@@ -8,17 +8,21 @@ namespace acid
 
 	void Gizmos::Update()
 	{
-		/*std::lock_guard<std::mutex> lock(m_mutex);
-
-		for (auto &[gizmoType, gizmos] : m_gizmos)
+		for (auto it = m_gizmos.begin(); it != m_gizmos.end();)
 		{
-			gizmoType->Update(gizmos);
-		}*/
+			if (it->second.empty())
+			{
+				it = m_gizmos.erase(it);
+				continue;
+			}
+
+			(*it).first->Update((*it).second);
+			++it;
+		}
 	}
 
 	Gizmo *Gizmos::AddGizmo(Gizmo *gizmo)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
 		auto it = m_gizmos.find(gizmo->GetGizmoType());
 
 		if (it == m_gizmos.end())
@@ -33,20 +37,19 @@ namespace acid
 
 	void Gizmos::RemoveGizmo(Gizmo *gizmo)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
+		auto it = m_gizmos.find(gizmo->GetGizmoType());
 
-		for (auto &[gizmoType, gizmos] : m_gizmos)
+		if (it != m_gizmos.end())
 		{
-			gizmos.erase(std::remove_if(gizmos.begin(), gizmos.end(), [&](std::unique_ptr<Gizmo> &g)
-			{
-				return g.get() == gizmo;
-			}), gizmos.end());
+			it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](std::unique_ptr<Gizmo> & g)
+				{
+					return g.get() == gizmo;
+				}), it->second.end());
 		}
 	}
 
 	void Gizmos::Clear()
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
 		m_gizmos.clear();
 	}
 }

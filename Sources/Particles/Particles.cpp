@@ -15,8 +15,6 @@ namespace acid
 			return;
 		}
 
-		std::lock_guard<std::mutex> lock(m_mutex);
-
 		for (auto it = m_particles.begin(); it != m_particles.end();)
 		{
 			for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
@@ -38,14 +36,14 @@ namespace acid
 				continue;
 			}
 
-			std::sort((*it).second.begin(), (*it).second.end()); // TODO: Do in render pass and optimize.
+			std::sort((*it).second.begin(), (*it).second.end());
+			(*it).first->Update((*it).second);
 			++it;
 		}
 	}
 
 	void Particles::AddParticle(const Particle &particle)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
 		auto it = m_particles.find(particle.GetParticleType());
 
 		if (it == m_particles.end())
@@ -57,9 +55,21 @@ namespace acid
 		(*it).second.emplace_back(particle);
 	}
 
+	/*void Particles::RemoveParticle(const Particle &particle)
+	{
+		auto it = m_particles.find(particle.GetParticleType());
+
+		if (it != m_particles.end())
+		{
+			it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](Particle &p)
+				{
+					return p == particle;
+				}), it->second.end());
+		}
+	}*/
+
 	void Particles::Clear()
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
 		m_particles.clear();
 	}
 }

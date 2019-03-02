@@ -13,8 +13,6 @@ namespace acid
 		{
 			m_timerPurge.ResetStartTime();
 
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			for (auto it = m_resources.begin(); it != m_resources.end();)
 			{
 				if ((*it).second.use_count() <= 1)
@@ -51,8 +49,6 @@ namespace acid
 
 	void Resources::Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-
 		if (Find(metadata) != nullptr)
 		{
 			return;
@@ -63,8 +59,6 @@ namespace acid
 
 	void Resources::Remove(const std::shared_ptr<Resource> &resource)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
-
 		for (auto it = m_resources.begin(); it != m_resources.end(); ++it) // TODO: Clean remove.
 		{
 			if ((*it).second == resource)

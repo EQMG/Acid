@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <mutex>
 #include "Engine/Engine.hpp"
 #include "IEvent.hpp"
 
@@ -46,7 +45,6 @@ namespace acid
 		/// <returns> If the event was removed. </returns>
 		void RemoveEvent(IEvent *event);
 	private:
-		std::mutex m_mutex;
 		std::vector<std::unique_ptr<IEvent>> m_events;
 	};
 }

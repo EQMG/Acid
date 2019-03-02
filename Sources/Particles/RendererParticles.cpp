@@ -25,7 +25,7 @@ namespace acid
 
 		for (auto &[type, typeParticles] : particles)
 		{
-			type->CmdRender(commandBuffer, m_pipeline, m_uniformScene, typeParticles);
+			type->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}
 	}
 }

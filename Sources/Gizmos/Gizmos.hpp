@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <mutex>
 #include <vector>
 #include <memory>
 #include "Engine/Engine.hpp"
@@ -41,7 +40,6 @@ namespace acid
 		/// <returns> All gizmods. </returns>
 		const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
 	private:
-		std::mutex m_mutex;
 		std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
 	};
 }

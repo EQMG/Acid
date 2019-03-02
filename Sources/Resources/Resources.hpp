@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <mutex>
 #include <map>
 #include "Engine/Engine.hpp"
 #include "Maths/Timer.hpp"
@@ -33,7 +32,6 @@ namespace acid
 
 		void Remove(const std::shared_ptr<Resource> &resource);
 	private:
-		std::mutex m_mutex;
 		std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
 		Timer m_timerPurge;
 	};

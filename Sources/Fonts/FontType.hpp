@@ -31,9 +31,9 @@ namespace acid
 		/// Creates a new font type.
 		/// </summary>
 		/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
-		/// <param name="fontStyle"> The style selected to load as this type. </param>
+		/// <param name="style"> The style selected to load as this type. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-		FontType(std::string filename, std::string fontStyle, const bool &load = true);
+		FontType(std::string filename, std::string style, const bool &load = true);
 
 		void Load() override;
 

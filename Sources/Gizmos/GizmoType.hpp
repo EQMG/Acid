@@ -39,7 +39,9 @@ namespace acid
 		/// <param name="diffuse"> The default diffuse colour for gizmos. </param>
 		explicit GizmoType(std::shared_ptr<Model> model, const float &lineThickness = 1.0f, const Colour &diffuse = Colour::White);
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<std::unique_ptr<Gizmo>> &gizmos);
+		void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
+
+		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
 		void Decode(const Metadata &metadata) override;
 
@@ -59,8 +61,6 @@ namespace acid
 
 		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
 	private:
-		bool UpdateInstanceBuffer(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
-
 		struct GizmoTypeData
 		{
 			Matrix4 modelMatrix;

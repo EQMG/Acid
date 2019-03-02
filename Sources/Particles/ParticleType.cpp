@@ -53,11 +53,63 @@ namespace acid
 	{
 	}
 
-	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<Particle> &particles)
+	void ParticleType::Update(const std::vector<Particle> &particles)
 	{
-		bool updatedBuffer = UpdateInstanceBuffer(particles);
+		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
+	//	uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(particles.size()) / static_cast<float>(INSTANCE_STEPS)));
+	//	m_maxInstances = std::max(m_maxInstances, instances);
+		m_maxInstances = MAX_INSTANCES;
+		m_instances = 0;
 
-		if (!updatedBuffer)
+		if (particles.empty())
+		{
+			return;
+		}
+
+		ParticleTypeData *particleInstances;
+		m_instanceBuffer.Map(reinterpret_cast<void **>(&particleInstances));
+
+		for (const auto &particle : particles)
+		{
+			if (m_instances >= m_maxInstances)
+			{
+				break;
+			}
+
+			if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER *particle.GetScale()))
+			{
+				continue;
+			}
+
+			auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
+			ParticleTypeData *instance = &particleInstances[m_instances];
+			instance->modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
+
+			for (int32_t row = 0; row < 3; row++)
+			{
+				for (int32_t col = 0; col < 3; col++)
+				{
+					instance->modelMatrix[row][col] = viewMatrix[col][row];
+				}
+			}
+
+			instance->modelMatrix = instance->modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3::Front);
+			instance->modelMatrix = instance->modelMatrix.Scale(particle.GetScale() * Vector3::One);
+			// TODO: Multiply MVP by View and Projection (And run update every frame?)
+
+			instance->colourOffset = particle.GetParticleType()->m_colourOffset;
+			instance->offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
+			instance->blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(),
+				static_cast<float>(particle.GetParticleType()->m_numberOfRows));
+			m_instances++;
+		}
+
+		m_instanceBuffer.Unmap();
+	}
+
+	bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+	{
+		if (m_instances == 0)
 		{
 			return false;
 		}
@@ -81,61 +133,6 @@ namespace acid
 		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexType());
 		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexCount(), m_instances, 0, 0, 0);
 		return true;
-	}
-
-	bool ParticleType::UpdateInstanceBuffer(const std::vector<Particle> &particles)
-	{
-		if (particles.empty())
-		{
-			return false;
-		}
-
-		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
-	//	uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(particles.size()) / static_cast<float>(INSTANCE_STEPS)));
-	//	m_maxInstances = std::max(m_maxInstances, instances);
-		m_maxInstances = MAX_INSTANCES;
-		m_instances = 0;
-
-		ParticleTypeData *particleInstances;
-		m_instanceBuffer.Map(reinterpret_cast<void **>(&particleInstances));
-
-		for (const auto &particle : particles)
-		{
-			if (m_instances >= m_maxInstances)
-			{
-				break;
-			}
-
-			if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale()))
-			{
-				continue;
-			}
-
-			auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
-			ParticleTypeData *instance = &particleInstances[m_instances];
-			instance->modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
-
-			for (int32_t row = 0; row < 3; row++)
-			{
-				for (int32_t col = 0; col < 3; col++)
-				{
-					instance->modelMatrix[row][col] = viewMatrix[col][row];
-				}
-			}
-
-			instance->modelMatrix = instance->modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3::Front);
-			instance->modelMatrix = instance->modelMatrix.Scale(particle.GetScale() * Vector3::One);
-			// TODO: Multiply MVP by View and Projection
-
-			instance->colourOffset = particle.GetParticleType()->m_colourOffset;
-			instance->offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
-			instance->blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(),
-				static_cast<float>(particle.GetParticleType()->m_numberOfRows));
-			m_instances++;
-		}
-
-		m_instanceBuffer.Unmap();
-		return m_instances != 0;
 	}
 
 	void ParticleType::Decode(const Metadata &metadata)

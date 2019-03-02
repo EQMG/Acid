@@ -4,6 +4,9 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
+#include "Uis/Inputs/UiInputBoolean.hpp"
+#include "Uis/Inputs/UiInputSlider.hpp"
+#include "Uis/UiPanel.hpp"
 
 using namespace acid;
 
@@ -19,9 +22,12 @@ namespace test
 	private:
 		ButtonKeyboard m_buttonReset;
 
+		UiPanel m_settings;
+		UiInputSlider m_masterVolume;
+		UiInputBoolean m_antialiasing;
+
 		float m_zoom;
 
-		Gui m_background;
 		Text m_title;
 		Text m_body;
 
