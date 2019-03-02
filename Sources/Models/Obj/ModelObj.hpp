@@ -40,29 +40,10 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 	private:
-		template<typename T>
-		std::optional<T> ParseReal(const char **token, const char *startControl = " \t", const char *endControl = " \t\r")
-		{
-			(*token) += strspn((*token), startControl);
-			auto end = (*token) + strcspn((*token), endControl);
-
-			std::istringstream iss(std::string(*token, end));
-			T temp;
-			const bool isValid = !(iss >> temp).fail();
-
-			if (!isValid)
-			{
-				return {};
-			}
-
-			(*token) = end;
-			return temp;
-		}
-
-		static VertexModelData *ProcessDataVertex(const std::optional<uint32_t> &vertexIndex, const std::optional<uint32_t> &uvIndex, const std::optional<uint32_t> &normalIndex, 
+		static VertexModelData *ProcessDataVertex(const uint32_t &vertexIndex, const std::optional<uint32_t> &uvIndex, const uint32_t &normalIndex, 
 			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
-		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const std::optional<uint32_t> &newUvIndex, const std::optional<uint32_t> &newNormalIndex,
+		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const std::optional<uint32_t> &newUvIndex, const uint32_t &newNormalIndex,
 			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
 		static void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);

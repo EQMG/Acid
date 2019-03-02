@@ -41,15 +41,50 @@ namespace acid
 		m_diffuse(diffuse),
 		m_maxInstances(0),
 		m_instances(0),
-		m_instanceBuffer(sizeof(GizmoTypeData) * MAX_INSTANCES)
+		m_instanceBuffer(sizeof(GizmoTypeData) *MAX_INSTANCES)
 	{
 	}
 
-	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene, const std::vector<std::unique_ptr<Gizmo>> &gizmos)
+	void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 	{
-		bool updatedBuffer = UpdateInstanceBuffer(gizmos);
+		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
+	//	uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(gizmos.size()) / static_cast<float>(INSTANCE_STEPS)));
+	//	m_maxInstances = std::max(m_maxInstances, instances);
+		m_maxInstances = MAX_INSTANCES;
+		m_instances = 0;
 
-		if (!updatedBuffer)
+		if (gizmos.empty())
+		{
+			return;
+		}
+
+		GizmoTypeData *gizmoInstances;
+		m_instanceBuffer.Map(reinterpret_cast<void **>(&gizmoInstances));
+
+		for (const auto &gizmo : gizmos)
+		{
+			if (m_instances >= m_maxInstances)
+			{
+				break;
+			}
+
+			//	if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(gizmo->GetTransform().GetPosition(), FRUSTUM_BUFFER * gizmo->GetTransform().GetPosition().GetScale()))
+			//	{
+			//		continue;
+			//	}
+
+			auto instance = &gizmoInstances[m_instances];
+			instance->modelMatrix = gizmo->GetTransform().GetWorldMatrix();
+			instance->diffuse = gizmo->GetDiffuse();
+			m_instances++;
+		}
+
+		m_instanceBuffer.Unmap();
+	}
+
+	bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+	{
+		if (m_instances == 0)
 		{
 			return false;
 		}
@@ -68,50 +103,12 @@ namespace acid
 		// Draws the instanced objects.
 		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-		VkBuffer vertexBuffers[] = {m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer()};
-		VkDeviceSize offsets[] = {0, 0};
+		VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer() };
+		VkDeviceSize offsets[] = { 0, 0 };
 		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 2, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexType());
 		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexCount(), m_instances, 0, 0, 0);
 		return true;
-	}
-
-	bool GizmoType::UpdateInstanceBuffer(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
-	{
-		if (gizmos.empty())
-		{
-			return false;
-		}
-
-		// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
-	//	uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(gizmos.size()) / static_cast<float>(INSTANCE_STEPS)));
-	//	m_maxInstances = std::max(m_maxInstances, instances);
-		m_maxInstances = MAX_INSTANCES;
-		m_instances = 0;
-
-		GizmoTypeData *gizmoInstances;
-		m_instanceBuffer.Map(reinterpret_cast<void **>(&gizmoInstances));
-
-		for (const auto &gizmo : gizmos)
-		{
-			if (m_instances >= m_maxInstances)
-			{
-				break;
-			}
-
-		//	if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(gizmo->GetTransform().GetPosition(), FRUSTUM_BUFFER * gizmo->GetTransform().GetPosition().GetScale()))
-		//	{
-		//		continue;
-		//	}
-
-			auto instance = &gizmoInstances[m_instances];
-			instance->modelMatrix = gizmo->GetTransform().GetWorldMatrix();
-			instance->diffuse = gizmo->GetDiffuse();
-			m_instances++;
-		}
-
-		m_instanceBuffer.Unmap();
-		return m_instances != 0;
 	}
 
 	void GizmoType::Decode(const Metadata &metadata)

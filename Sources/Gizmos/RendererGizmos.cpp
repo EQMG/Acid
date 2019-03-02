@@ -25,7 +25,7 @@ namespace acid
 
 		for (const auto &[type, typeGizmos] : gizmos)
 		{
-			type->CmdRender(commandBuffer, m_pipeline, m_uniformScene, typeGizmos);
+			type->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}
 	}
 }

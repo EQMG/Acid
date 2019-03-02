@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <optional>
 #include "Engine/Exports.hpp"
 
 namespace acid
@@ -15,11 +16,11 @@ namespace acid
 	{
 	public:
 		/// <summary>
-		/// Splits a string by a seperator.
+		/// Splits a string by a separator.
 		/// </summary>
 		/// <param name="str"> The string. </param>
-		/// <param name="sep"> The seperator. </param>
-		/// <param name="trim"> If each object should be timmed. </param>
+		/// <param name="sep"> The separator. </param>
+		/// <param name="trim"> If each object should be trimmed. </param>
 		/// <returns> The split string vector. </returns>
 		static std::vector<std::string> Split(const std::string &str, const std::string &sep, const bool &trim = false);
 
@@ -142,6 +143,16 @@ namespace acid
 			}
 		}
 
+		template<typename T>
+		struct is_optional : public std::false_type
+		{
+		};
+
+		template<typename T>
+		struct is_optional<std::optional<T>> : public std::true_type
+		{
+		};
+
 		/// <summary>
 		/// Converts a string to a type.
 		/// </summary>
@@ -162,9 +173,25 @@ namespace acid
 			else
 			{
 				std::istringstream iss(str);
-				T temp;
-				const bool isValid = !(iss >> temp).fail();
-				return temp;
+
+				if constexpr (is_optional<T>::value)
+				{
+					typedef typename T::value_type base_type;
+					base_type temp;
+
+					if ((iss >> temp).fail())
+					{
+						return {};
+					}
+
+					return temp;
+				}
+				else
+				{
+					T temp;
+					iss >> temp;
+					return temp;
+				}
 			}
 		}
 	};

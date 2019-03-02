@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <mutex>
 #include <vector>
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
@@ -27,6 +26,8 @@ namespace acid
 
 		void AddParticle(const Particle &particle);
 
+	//	void RemoveParticle(const Particle &particle);
+
 		/// <summary>
 		/// Clears all particles from the scene.
 		/// </summary>
@@ -38,7 +39,6 @@ namespace acid
 		/// <returns> All particles. </returns>
 		const std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> &GetParticles() const { return m_particles; }
 	private:
-		std::mutex m_mutex;
 		std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
 	};
 }

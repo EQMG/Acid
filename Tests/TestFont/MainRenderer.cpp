@@ -17,7 +17,7 @@ namespace test
 
 		std::vector<Attachment> renderpassImages0 = {
 			Attachment(0, "depth", Attachment::Type::Depth),
-			Attachment(1, "swapchain", Attachment::Type::Swapchain)
+			Attachment(1, "swapchain", Attachment::Type::Swapchain, false, VK_FORMAT_R8G8B8A8_UNORM, Colour::White)
 		};
 		std::vector<SubpassType> renderpassSubpasses0 = {
 			SubpassType(0, {0, 1})

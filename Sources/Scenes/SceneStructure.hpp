@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <mutex>
 #include <vector>
 #include "Physics/Rigidbody.hpp"
 #include "Entity.hpp"
@@ -102,8 +101,6 @@ namespace acid
 		template<typename T>
 		std::vector<T *> QueryComponents(const bool &allowDisabled = false)
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			std::vector<T *> result = {};
 
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
@@ -130,8 +127,6 @@ namespace acid
 		template<typename T>
 		T *GetComponent(const bool &allowDisabled = false)
 		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-
 			for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 			{
 				auto component = (*it)->GetComponent<T>();
@@ -153,7 +148,6 @@ namespace acid
 		/// <returns> If the structure contains the object. </returns>
 		bool Contains(Entity *object);
 	private:
-		std::mutex m_mutex;
 		std::vector<std::unique_ptr<Entity>> m_objects;
 	};
 }
