@@ -63,6 +63,7 @@ set(_temp_acid_headers
 		Helpers/Delegate.hpp
 		Helpers/EnumClass.hpp
 		Helpers/NonCopyable.hpp
+		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp

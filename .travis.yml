@@ -10,8 +10,6 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - g++-7
-        - ninja-build
-        - tree
         - xorg-dev
         - libglu1-mesa-dev
         - libvulkan1
@@ -41,8 +39,6 @@ matrix:
         packages:
         - clang-6.0
         - g++-7
-        - ninja-build
-        - tree
         - xorg-dev
         - libglu1-mesa-dev
         - libvulkan1
@@ -73,11 +69,8 @@ matrix:
     before_install:
     - export http_proxy='';
     - brew update
-    - brew install tree
     - brew install openal-soft
-    - brew install glfw3 --HEAD
     - brew install cmake || brew upgrade cmake
-    - brew install ninja
     - brew tap caskroom/cask
     - brew cask install apenngrace/vulkan/vulkan-sdk
 
