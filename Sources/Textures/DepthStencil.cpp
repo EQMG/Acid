@@ -1,6 +1,6 @@
 #include "DepthStencil.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 #include "Texture.hpp"
 
@@ -40,7 +40,7 @@ namespace acid
 
 		if (m_format == VK_FORMAT_UNDEFINED)
 		{
-			assert(false && "Vulkan runtime error, depth stencil format not selected!");
+			throw std::runtime_error("No depth stencil format could be selected");
 		}
 
 		VkImageAspectFlags aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;

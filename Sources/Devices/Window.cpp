@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include <algorithm>
 #include <GLFW/glfw3.h>
 #include "Renderer/Renderer.hpp"
@@ -118,15 +118,13 @@ namespace acid
 		// Initialize the GLFW library.
 		if (glfwInit() == GLFW_FALSE)
 		{
-			Log::Error("GLFW error: Failed to initialize!\n");
-			assert(false && "GLFW runtime error!");
+			throw std::runtime_error("GLFW failed to initialize");
 		}
 
 		// Checks Vulkan support on GLFW.
 		if (glfwVulkanSupported() == GLFW_FALSE)
 		{
-			Log::Error("GLFW error: Failed to find Vulkan support!\n");
-			assert(false && "GLFW runtime error!");
+			throw std::runtime_error("GLFW failed to find Vulkan support");
 		}
 
 		// Set the monitor callback
@@ -159,7 +157,7 @@ namespace acid
 		if (m_window == nullptr)
 		{
 			glfwTerminate();
-			assert(false && "Filed to create the GLFW window!");
+			throw std::runtime_error("GLFW failed to create the window");
 		}
 
 		// Sets the user pointer.
@@ -371,7 +369,7 @@ namespace acid
 
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("GLFW Error", failure);
-		assert(false && "GLFW error!");
+		throw std::runtime_error("GLFW error");
 	}
 
 	std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const

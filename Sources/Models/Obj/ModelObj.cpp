@@ -1,6 +1,5 @@
 #include "ModelObj.hpp"
 
-#include <cassert>
 #include <utility>
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"

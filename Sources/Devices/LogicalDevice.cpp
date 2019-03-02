@@ -1,6 +1,6 @@
 #include "LogicalDevice.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
@@ -90,7 +90,7 @@ namespace acid
 
 		if (graphicsFamily == -1)
 		{
-			assert(false && "Vulkan runtime error, failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT!");
+			throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
 		}
 	}
 

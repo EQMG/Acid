@@ -1,6 +1,7 @@
 #include "Outline.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include <vector>
 #include <algorithm>
 #include <ft2build.h>
@@ -11,8 +12,6 @@
 namespace acid
 {
 	static const uint32_t FD_OUTLINE_MAX_POINTS = 255 * 2;
-
-#define FT_CHECK(r) do { FT_Error err = (r); assert(!err); } while (0)
 
 	void OutlineAddOddPoint(Outline *o)
 	{
@@ -41,7 +40,7 @@ namespace acid
 
 		assert(o->points.size() % 2 == 0);
 
-		ContourRange range = {o->points.size(), std::numeric_limits<uint32_t>::max()};
+		ContourRange range = {static_cast<uint32_t>(o->points.size()), std::numeric_limits<uint32_t>::max()};
 		o->contours.emplace_back(range);
 
 		ConvertPoint(to, p);
@@ -91,7 +90,11 @@ namespace acid
 		memset(o, 0, sizeof(Outline)); // TODO: Remove
 
 		FT_BBox outlineBbox;
-		FT_CHECK(FT_Outline_Get_BBox(outline, &outlineBbox));
+
+		if (FT_Outline_Get_BBox(outline, &outlineBbox) != 0)
+		{
+			throw std::runtime_error("Freetype failed to get a bbox outline");
+		}
 
 		o->bbox.minX = static_cast<float>(outlineBbox.xMin) / 64.0f;
 		o->bbox.minY = static_cast<float>(outlineBbox.yMin) / 64.0f;
@@ -104,7 +107,10 @@ namespace acid
 		funcs.conic_to = reinterpret_cast<FT_Outline_ConicToFunc>(ConicToFunc);
 		funcs.cubic_to = reinterpret_cast<FT_Outline_CubicToFunc>(CubicToFunc);
 
-		FT_CHECK(FT_Outline_Decompose(outline, &funcs, o));
+		if (FT_Outline_Decompose(outline, &funcs, o) != 0)
+		{
+			throw std::runtime_error("Freetype failed to decompose a outline");
+		}
 
 		if (!o->contours.empty())
 		{
@@ -482,7 +488,7 @@ namespace acid
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.points.size(), u.points.size() + contourEnd - contourBegin};
+			ContourRange urange = { static_cast<uint32_t>(u.points.size()), static_cast<uint32_t>(u.points.size()) + contourEnd - contourBegin};
 			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contourEnd; i += 2)
@@ -623,7 +629,7 @@ namespace acid
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.points.size(), std::numeric_limits<uint32_t>::max()};
+			ContourRange urange = { static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max()};
 			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contour_end; i += 2)
@@ -713,7 +719,7 @@ namespace acid
 
 			OutlineAddOddPoint(&u);
 
-			ContourRange urange = {u.points.size(), std::numeric_limits<uint32_t>::max()};
+			ContourRange urange = { static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max()};
 			u.contours.emplace_back(urange);
 
 			for (uint32_t i = contourBegin; i < contourEnd; i += 2)

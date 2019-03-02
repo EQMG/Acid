@@ -1,6 +1,5 @@
 #include "CollisionObject.hpp"
 
-#include <cassert>
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include "Scenes/Entity.hpp"

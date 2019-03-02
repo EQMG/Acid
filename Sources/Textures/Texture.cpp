@@ -1,6 +1,7 @@
 #include "Texture.hpp"
 
 #include <cstring>
+#include <stdexcept>
 #include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
@@ -426,7 +427,7 @@ namespace acid
 			imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
 			break;
 		default:
-			assert(false && "Unsupported image layout transition source!");
+			throw std::runtime_error("Unsupported image layout transition source");
 		}
 
 		// Destination access mask controls the dependency for the new image layout.
@@ -453,7 +454,7 @@ namespace acid
 			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 			break;
 		default:
-			assert(false && "Unsupported image layout transition destination!");
+			throw std::runtime_error("Unsupported image layout transition destination");
 		}
 
 		VkPipelineStageFlags srcStageMask = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
