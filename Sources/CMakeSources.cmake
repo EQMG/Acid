@@ -49,7 +49,10 @@ set(_temp_acid_headers
 		Files/FileWatcher.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
+		Fonts/Geometry.hpp
+		Fonts/Outline.hpp
 		Fonts/RendererFonts.hpp
+		Fonts/RendererFonts2.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
 		Gizmos/Gizmos.hpp
@@ -278,7 +281,10 @@ set(_temp_acid_sources
 		Files/FileWatcher.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
+		Fonts/Geometry.cpp
+		Fonts/Outline.cpp
 		Fonts/RendererFonts.cpp
+		Fonts/RendererFonts2.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
 		Gizmos/Gizmos.cpp
