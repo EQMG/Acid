@@ -1,6 +1,7 @@
 #include "Vector2.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include "Maths.hpp"
 
 namespace acid
@@ -92,6 +93,12 @@ namespace acid
 	Vector2 Vector2::Normalize() const
 	{
 		float l = Length();
+
+		if (l == 0.0f)
+		{
+			throw std::runtime_error("Can't normalize a zero length vector");
+		}
+
 		return Vector2(m_x / l, m_y / l);
 	}
 

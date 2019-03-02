@@ -1,6 +1,7 @@
 #include "Vector4.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include "Colour.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
@@ -106,6 +107,12 @@ namespace acid
 	Vector4 Vector4::Normalize() const
 	{
 		float l = Length();
+
+		if (l == 0.0f)
+		{
+			throw std::runtime_error("Can't normalize a zero length vector");
+		}
+
 		return Vector4(m_x / l, m_y / l, m_z / l, m_w / l);
 	}
 

@@ -1,8 +1,8 @@
 ﻿#include "Buffer.hpp"
 
 #include <array>
+#include <stdexcept>
 #include <cstring>
-#include <cassert>
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -104,7 +104,7 @@ namespace acid
 			}
 		}
 
-		assert(false && "Failed to find a valid memory type for buffer!");
+		throw std::runtime_error("Failed to find a valid memory type for buffer");
 		return 0;
 	}
 

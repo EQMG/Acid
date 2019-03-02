@@ -1,5 +1,6 @@
 ﻿#include "FontType.hpp"
 
+#include <stdexcept>
 #include <utility>
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -9,8 +10,6 @@
 
 namespace acid
 {
-#define FT_CHECK(r) do { FT_Error err = (r); assert(!err); } while (0)
-
 	static const uint32_t MAX_VISIBLE_GLYPHS = 4096;
 
 	std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
@@ -227,11 +226,23 @@ namespace acid
 		}
 
 		FT_Library library;
-		FT_CHECK(FT_Init_FreeType(&library));
+
+		if (FT_Init_FreeType(&library) != 0)
+		{
+			throw std::runtime_error("Freetype failed to initialize");
+		}
 
 		FT_Face face;
-		FT_CHECK(FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face));
-		FT_CHECK(FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96));
+
+		if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0)
+		{
+			throw std::runtime_error("Freetype failed to create face from memory");
+		}
+
+		if (FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96) != 0)
+		{
+			throw std::runtime_error("Freetype failed to set char size");
+		}
 
 		uint32_t totalPoints = 0;
 		uint32_t totalCells = 0;
@@ -249,7 +260,10 @@ namespace acid
 
 		while (glyphIndex != 0)
 		{
-			FT_CHECK(FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING));
+			if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING) != 0)
+			{
+				throw std::runtime_error("Freetype failed to load a glyph");
+			}
 
 			m_charmap.emplace(charcode, i);
 			HostGlyphInfo *hgi = &m_glyphInfos[i];
@@ -316,7 +330,14 @@ namespace acid
 		assert(pointOffset == totalPoints);
 		assert(cellOffset == totalCells);
 
-		FT_CHECK(FT_Done_Face(face));
-		FT_CHECK(FT_Done_FreeType(library));
+		if (FT_Done_Face(face) != 0)
+		{
+			throw std::runtime_error("Freetype failed to destory face");
+		}
+
+		if (FT_Done_FreeType(library) != 0)
+		{
+			throw std::runtime_error("Freetype failed to destory library");
+		}
 	}
 }

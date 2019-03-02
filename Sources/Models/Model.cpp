@@ -1,6 +1,6 @@
 #include "Model.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"
 
@@ -44,7 +44,7 @@ namespace acid
 		}
 		else
 		{
-			assert(false && "Cannot render model, no buffers exist for it!");
+			throw std::runtime_error("Model with no buffers cannot be rendered");
 			return false;
 		}
 

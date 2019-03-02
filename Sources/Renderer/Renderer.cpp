@@ -1,6 +1,6 @@
 #include "Renderer.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/FileSystem.hpp"
 #include "RenderPipeline.hpp"
@@ -212,7 +212,7 @@ namespace acid
 
 		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("Vulkan Error", failure);
-		assert(false && "Vulkan error!");
+		throw std::runtime_error("Vulkan error");
 	}
 
 	void Renderer::UpdateSurfaceCapabilities()

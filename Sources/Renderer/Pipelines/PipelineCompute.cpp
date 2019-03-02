@@ -1,7 +1,7 @@
 #include "PipelineCompute.hpp"
 
 #include <cmath>
-#include <cassert>
+#include <stdexcept>
 #include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
@@ -81,7 +81,7 @@ namespace acid
 		if (!fileLoaded)
 		{
 			Log::Error("Shader Stage could not be loaded: '%s'\n", m_shaderStage.c_str());
-			assert(false && "Could not create compute pipeline, missing shader stage!");
+			throw std::runtime_error("Could not create compute pipeline, missing shader stage");
 			return;
 		}
 

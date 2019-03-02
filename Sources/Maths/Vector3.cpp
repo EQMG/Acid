@@ -1,6 +1,7 @@
 #include "Vector3.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include "Colour.hpp"
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"
@@ -122,6 +123,12 @@ namespace acid
 	Vector3 Vector3::Normalize() const
 	{
 		float l = Length();
+
+		if (l == 0.0f)
+		{
+			throw std::runtime_error("Can't normalize a zero length vector");
+		}
+
 		return Vector3(m_x / l, m_y / l, m_z / l);
 	}
 

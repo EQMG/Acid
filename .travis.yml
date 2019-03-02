@@ -9,13 +9,13 @@ matrix:
         sources:
         - ubuntu-toolchain-r-test
         packages:
+        - pkg-config
         - g++-7
         - xorg-dev
         - libglu1-mesa-dev
-        - libvulkan1
         - libvulkan-dev
-        - libopenal1
         - libopenal-dev
+        - libfreetype6-dev
     language: cpp
     compiler: gcc
     env:
@@ -37,14 +37,14 @@ matrix:
         - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main'
           key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
+        - pkg-config
         - clang-6.0
         - g++-7
         - xorg-dev
         - libglu1-mesa-dev
-        - libvulkan1
         - libvulkan-dev
-        - libopenal1
         - libopenal-dev
+        - libfreetype6-dev
     language: cpp
     compiler: clang
     env:
@@ -67,16 +67,18 @@ matrix:
     - GSL_CXX_STANDARD=17
     - BUILD_TYPE=Release
     before_install:
-    - export http_proxy='';
     - brew update
-    - brew install openal-soft
+    - brew install pkg-config
     - brew install cmake || brew upgrade cmake
+    - brew install openal-soft
+    - brew install freetype
     - brew tap caskroom/cask
     - brew cask install apenngrace/vulkan/vulkan-sdk
 
 script:
 - cd $TRAVIS_BUILD_DIR
 - git submodule update --init --recursive
+- pkg-config --cflags freetype2
 - mkdir Build && cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then

@@ -1,6 +1,6 @@
 #include "Audio.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -90,7 +90,7 @@ namespace acid
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("OpenAL Error", failure);
-		assert(false && "OpenAL Error!");
+		throw std::runtime_error("OpenAL Error");
 	}
 
 	float Audio::GetTypeGain(const Type &type) const

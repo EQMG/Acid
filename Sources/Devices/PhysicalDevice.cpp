@@ -1,6 +1,6 @@
 #include "PhysicalDevice.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include <cstring>
 #include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
@@ -29,7 +29,7 @@ namespace acid
 
 		if (m_physicalDevice == nullptr)
 		{
-			assert(false && "Vulkan runtime error, failed to find a suitable gpu!");
+			throw std::runtime_error("Vulkan runtime error, failed to find a suitable GPU");
 		}
 
 		vkGetPhysicalDeviceProperties(m_physicalDevice, &m_properties);
