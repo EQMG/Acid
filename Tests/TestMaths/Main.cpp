@@ -12,6 +12,8 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Transform.hpp>
 
+#include <Helpers/RingBuffer.hpp>
+
 /*#include <Engine/Engine.hpp>
 #include <Files/File.hpp>
 #include <Serialized/Json/Json.hpp>
@@ -23,6 +25,70 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
+	{
+		RingBuffer<int32_t> buffer(4);
+
+		if (!buffer.push(1, 2, 3, 4))
+		{
+			return false;
+		}
+
+		buffer[1] = 11;
+
+		for (const auto &i : buffer)
+		{
+			Log::Out("%i, ", i);
+		}
+		Log::Out("\n");
+
+		if (buffer.front() != 1)
+		{
+			return false;
+		}
+
+		buffer.pop();
+
+		if (buffer.front() != 2)
+		{
+			return false;
+		}
+
+		buffer.pop();
+
+		if (buffer.front() != 3)
+		{
+			return false;
+		}
+
+		buffer.pop();
+
+		if (!buffer.push(5))
+		{
+			return false;
+		}
+
+		buffer.resize(2);
+
+		if (buffer.front() != 4)
+		{
+			return false;
+		}
+
+		buffer.pop();
+
+		if (buffer.front() != 5)
+		{
+			return false;
+		}
+
+		buffer.pop();
+
+		if (buffer.size() != 0)
+		{
+			return false;
+		}
+	}
+
 	/*auto engine = std::make_unique<Engine>(argv[0], true);
 	engine->GetModuleManager().Add<Files>(Module::Stage::Always);
 	Files::Get()->AddSearchPath("Resources/Engine");
