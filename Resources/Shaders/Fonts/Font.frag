@@ -18,13 +18,13 @@ layout(binding = 1) uniform UboObject
 
 layout(binding = 2) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	float distance = texture(samplerColour, inUv).a;
+	float distance = texture(samplerColour, inUV).a;
 	float alpha = smoothstep((1.0f - object.edgeData.x) - object.edgeData.y, 1.0f - object.edgeData.x, distance);
 	float outlineAlpha = smoothstep((1.0f - object.borderSizes.x) - object.borderSizes.y, 1.0f - object.borderSizes.x, distance);
 	float overallAlpha = alpha + (1.0f - alpha) * outlineAlpha;

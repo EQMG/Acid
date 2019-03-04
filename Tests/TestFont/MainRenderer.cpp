@@ -1,6 +1,7 @@
 #include "MainRenderer.hpp"
 
 #include <Fonts/RendererFonts.hpp>
+#include <Fonts/RendererFonts2.hpp>
 #include <Guis/RendererGuis.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
@@ -31,6 +32,7 @@ namespace test
 
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
 		rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));
+		rendererContainer.Add<RendererFonts2>(Pipeline::Stage(0, 0));
 	}
 
 	void MainRenderer::Update()

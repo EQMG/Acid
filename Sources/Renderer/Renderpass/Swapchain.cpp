@@ -1,7 +1,7 @@
 ﻿#include "Swapchain.hpp"
 
 #include <array>
-#include <cassert>
+#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 
 namespace acid
@@ -155,7 +155,7 @@ namespace acid
 
 		if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 		{
-			assert(false && "Renderer failed to acquire swapchain image!");
+			throw std::runtime_error("Failed to acquire swapchain image");
 			return acquireResult;
 		}
 

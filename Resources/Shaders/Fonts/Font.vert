@@ -23,9 +23,9 @@ layout(binding = 1) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec2 inUv;
+layout(location = 1) in vec2 inUV;
 
-layout(location = 0) out vec2 outUv;
+layout(location = 0) out vec2 outUV;
 
 out gl_PerVertex 
 {
@@ -53,5 +53,5 @@ void main()
 
 	gl_Position.z -= object.depth;
 
-	outUv = inUv;
+	outUV = inUV;
 }

@@ -27,18 +27,18 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &diffuse)
+	std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &colour)
 	{
-		auto temp = GizmoType(model, lineThickness, diffuse);
+		auto temp = GizmoType(model, lineThickness, colour);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	GizmoType::GizmoType(std::shared_ptr<Model> model, const float &lineThickness, const Colour &diffuse) :
+	GizmoType::GizmoType(std::shared_ptr<Model> model, const float &lineThickness, const Colour &colour) :
 		m_model(std::move(model)),
 		m_lineThickness(lineThickness),
-		m_diffuse(diffuse),
+		m_colour(colour),
 		m_maxInstances(0),
 		m_instances(0),
 		m_instanceBuffer(sizeof(GizmoTypeData) *MAX_INSTANCES)
@@ -75,7 +75,7 @@ namespace acid
 
 			auto instance = &gizmoInstances[m_instances];
 			instance->modelMatrix = gizmo->GetTransform().GetWorldMatrix();
-			instance->diffuse = gizmo->GetDiffuse();
+			instance->colour = gizmo->GetColour();
 			m_instances++;
 		}
 
@@ -115,14 +115,14 @@ namespace acid
 	{
 		metadata.GetResource("Model", m_model);
 		metadata.GetChild("Line Thickness", m_lineThickness);
-		metadata.GetChild("Diffuse", m_diffuse);
+		metadata.GetChild("Colour", m_colour);
 	}
 
 	void GizmoType::Encode(Metadata &metadata) const
 	{
 		metadata.SetResource("Model", m_model);
 		metadata.SetChild("Line Thickness", m_lineThickness);
-		metadata.SetChild("Diffuse", m_diffuse);
+		metadata.SetChild("Colour", m_colour);
 	}
 
 	Shader::VertexInput GizmoType::GetVertexInput(const uint32_t &binding)
@@ -160,11 +160,11 @@ namespace acid
 		attributeDescriptions[3].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 		attributeDescriptions[3].offset = offsetof(GizmoTypeData, modelMatrix) + offsetof(Matrix4, m_rows[3]);
 
-		// Diffuse attribute.
+		// Colour attribute.
 		attributeDescriptions[4].binding = binding;
 		attributeDescriptions[4].location = 4;
 		attributeDescriptions[4].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-		attributeDescriptions[4].offset = offsetof(GizmoTypeData, diffuse);
+		attributeDescriptions[4].offset = offsetof(GizmoTypeData, colour);
 
 		return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
 	}

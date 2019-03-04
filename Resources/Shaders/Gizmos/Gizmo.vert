@@ -11,9 +11,9 @@ layout(binding = 0) uniform UboScene
 layout(location = 0) in vec3 inPosition;
 
 layout(location = 4) in mat4 inModelMatrix;
-layout(location = 8) in vec4 inDiffuse;
+layout(location = 8) in vec4 inColour;
 
-layout(location = 0) out vec4 outDiffuse;
+layout(location = 0) out vec4 outColour;
 
 out gl_PerVertex
 {
@@ -26,5 +26,5 @@ void main()
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	outDiffuse = inDiffuse;
+	outColour = inColour;
 }

@@ -32,12 +32,6 @@ namespace acid
 
 		const Vector3 &GetPosition() const { return m_position; }
 
-		void AddTangent(const Vector3 &tangent);
-
-		void AverageTangents();
-
-		const Vector3 &GetAverageTangent() const { return m_averagedTangent; }
-
 		bool IsSet() const;
 
 		bool HasSameUvAndNormal(const std::optional<uint32_t> &uvIndexOther, const std::optional<uint32_t> &normalIndexOther) const;
@@ -48,7 +42,5 @@ namespace acid
 		std::optional<uint32_t> m_normalIndex;
 		VertexModelData *m_duplicateVertex;
 		Vector3 m_position;
-		std::vector<Vector3> m_tangents;
-		Vector3 m_averagedTangent;
 	};
 }

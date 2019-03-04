@@ -1,6 +1,6 @@
 #include "Instance.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include <cstring>
 #include "Renderer/Renderer.hpp"
 #include "Window.hpp"
@@ -79,7 +79,7 @@ namespace acid
 			}
 		}
 
-		assert(false && "Vulkan runtime error, couldn't find proper memory type!");
+		throw std::runtime_error("Couldn't find a proper memory type");
 		return std::numeric_limits<uint32_t>::max();
 	}
 

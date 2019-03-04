@@ -14,7 +14,7 @@ layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 layout(binding = 1) uniform sampler2D samplerColour;
 layout(binding = 2) uniform sampler2D samplerMaterial;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 bool insideScreen(vec2 test) 
 {
@@ -29,7 +29,7 @@ void main()
 	float metallic = texture(samplerMaterial, sunCoord).r;
 	bool process = scene.sunPosition.z >= 0.0f && (metallic > 0.4f || !insideScreen(sunCoord));
 
-	vec2 uv = (inUv - 0.5f) * (scene.displaySize.x / scene.displaySize.y);
+	vec2 uv = (inUV - 0.5f) * (scene.displaySize.x / scene.displaySize.y);
 
 	vec2 uvd = uv * length(uv);
 	vec3 flare = vec3(0.0f);
@@ -67,7 +67,7 @@ void main()
 	// Adds a bit of darkining around the edge of the screen.
 //  colour = colour * 1.3f - vec3(length(uvd) * 0.05f);
 
-	vec4 colour = texture(samplerColour, inUv) + vec4(flare, 0.0f);
+	vec4 colour = texture(samplerColour, inUV) + vec4(flare, 0.0f);
 
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

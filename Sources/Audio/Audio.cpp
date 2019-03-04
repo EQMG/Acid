@@ -1,6 +1,6 @@
 #include "Audio.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -55,7 +55,7 @@ namespace acid
 		ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
 		alListenerfv(AL_ORIENTATION, orientation);
 
-		CheckAl(alGetError());
+	//	CheckAl(alGetError());
 	}
 
 	std::string Audio::StringifyResultAl(const int32_t &result)
@@ -90,7 +90,7 @@ namespace acid
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("OpenAL Error", failure);
-		assert(false && "OpenAL Error!");
+		throw std::runtime_error("OpenAL Error");
 	}
 
 	float Audio::GetTypeGain(const Type &type) const

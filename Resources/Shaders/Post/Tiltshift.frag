@@ -14,12 +14,12 @@ layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
 layout(binding = 1) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 void main() 
 {
 	// Work out how much to blur based on the mid point.
-	float amount = pow((inUv.y * scene.centre) * 2.0f - 1.0f, 2.0f) * scene.blurAmount;
+	float amount = pow((inUV.y * scene.centre) * 2.0f - 1.0f, 2.0f) * scene.blurAmount;
 	float offsetMin = (float(scene.steps - 1.0f)) / -2.0f;
 	float offsetMax = (float(scene.steps - 1.0f)) / 2.0f;
 		
@@ -32,7 +32,7 @@ void main()
 		for (float offsetY = offsetMin; offsetY <= offsetMax; ++offsetY) 
 		{
 			// Copy the coord so we can mess with it.
-			vec2 tempUv = inUv.xy;
+			vec2 tempUv = inUV.xy;
 
 			// Work out which uv we want to sample now.
 			tempUv.x += offsetX * amount * scene.stepSize;
@@ -46,5 +46,5 @@ void main()
 	// Because we are doing an average, we divide by the amount (x AND y, hence steps * steps).
 	colour /= float(scene.steps * scene.steps);
 
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

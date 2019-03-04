@@ -1,6 +1,7 @@
 #include "Matrix2.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include <cstring>
 #include "Maths.hpp"
 #include "Matrix3.hpp"
@@ -145,8 +146,12 @@ namespace acid
 		Matrix2 result = Matrix2();
 
 		float det = Determinant();
-		assert(det != 0.0f && "Determinant cannot be zero!");
 
+		if (det == 0.0f)
+		{
+			throw std::runtime_error("Can't invert a matrix with a determinant of zero");
+		}
+		
 		for (int32_t j = 0; j < 2; j++)
 		{
 			for (int32_t i = 0; i < 2; i++)

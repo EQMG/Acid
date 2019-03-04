@@ -1,6 +1,7 @@
 #include "Colour.hpp"
 
 #include <cassert>
+#include <stdexcept>
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 #include "Maths.hpp"
@@ -94,7 +95,12 @@ namespace acid
 	Colour Colour::Normalize() const
 	{
 		float l = Length();
-		assert(l != 0.0f && "Zero length vector!");
+
+		if (l == 0.0f)
+		{
+			throw std::runtime_error("Can't normalize a zero length vector");
+		}
+		
 		return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
 	}
 

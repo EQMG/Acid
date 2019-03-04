@@ -1,6 +1,5 @@
 #include "ModelObj.hpp"
 
-#include <cassert>
 #include <utility>
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
@@ -99,7 +98,6 @@ namespace acid
 					String::From<std::optional<uint32_t>>(vertex2[1]), String::From<uint32_t>(vertex2[2]), verticesList, indices);
 				VertexModelData *v2 = ProcessDataVertex(String::From<uint32_t>(vertex3[0]),
 					String::From<std::optional<uint32_t>>(vertex3[1]), String::From<uint32_t>(vertex3[2]), verticesList, indices);
-				CalculateTangents(v0, v1, v2, uvs);
 			}
 			else if (firstToken == "o")
 			{
@@ -118,13 +116,11 @@ namespace acid
 		// and converts the loaded data into a format that can be used by models.
 		for (auto &current : verticesList)
 		{
-			current->AverageTangents();
 			auto vertexPosition = current->GetPosition();
 		//	auto vertexPosition = current->GetPositionIndex() ? positions[*current->GetPositionIndex()] : Vector3::Zero;
 			auto vertexUvs = current->GetUvIndex() ? uvs[*current->GetUvIndex()] : Vector2::Zero;
 			auto vertexNormal = current->GetNormalIndex() ? normals[*current->GetNormalIndex()] : Vector3::Zero;
-			auto vertexTangent = current->GetAverageTangent();
-			vertices.emplace_back(VertexModel(vertexPosition, vertexUvs, vertexNormal, vertexTangent));
+			vertices.emplace_back(VertexModel(vertexPosition, vertexUvs, vertexNormal));
 		}
 
 #if defined(ACID_VERBOSE)
@@ -201,32 +197,5 @@ namespace acid
 		vertices.emplace_back(duplicateVertex);
 		indices.emplace_back(duplicateVertex->GetIndex());
 		return duplicateVertex;
-	}
-
-	void ModelObj::CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs)
-	{
-		if (!v0->GetUvIndex() || !v1->GetUvIndex() || !v2->GetUvIndex())
-		{
-			return;
-		}
-
-		auto uv0 = uvs[*v0->GetUvIndex()];
-		auto uv1 = uvs[*v1->GetUvIndex()];
-		auto uv2 = uvs[*v2->GetUvIndex()];
-
-		auto deltaUv1 = uv1 - uv0;
-		auto deltaUv2 = uv2 - uv0;
-		auto r = 1.0f / (deltaUv1.m_x * deltaUv2.m_y - deltaUv1.m_y * deltaUv2.m_x);
-
-		auto deltaPos1 = v1->GetPosition() - v0->GetPosition();
-		auto deltaPos2 = v2->GetPosition() - v0->GetPosition();
-		deltaPos1 *= deltaUv2.m_y;
-		deltaPos2 *= deltaUv1.m_y;
-
-		auto tangent = Vector3(r * (deltaPos1 - deltaPos2));
-
-		v0->AddTangent(tangent);
-		v1->AddTangent(tangent);
-		v2->AddTangent(tangent);
 	}
 }

@@ -1,6 +1,6 @@
 ﻿#include "PipelineGraphics.hpp"
 
-#include <cassert>
+#include <stdexcept>
 #include <algorithm>
 #include <utility>
 #include "Renderer/Renderer.hpp"
@@ -65,7 +65,7 @@ namespace acid
 			CreatePipelineMrt();
 			break;
 		default:
-			assert(false);
+			throw std::runtime_error("Unknown pipeline mode");
 			break;
 		}
 
@@ -139,7 +139,7 @@ namespace acid
 			if (!fileLoaded)
 			{
 				Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage.c_str());
-				assert(false && "Could not create pipeline, missing shader stage!");
+				throw std::runtime_error("Could not create pipeline, missing shader stage");
 				return;
 			}
 

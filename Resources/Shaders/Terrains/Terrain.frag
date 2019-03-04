@@ -10,10 +10,10 @@ layout(binding = 1) uniform UboObject
 layout(binding = 2) uniform sampler2D samplerR;
 layout(binding = 3) uniform sampler2D samplerG;
 
-layout(location = 0) in vec4 inPosition;
-layout(location = 1) in vec2 inUv;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
-layout(location = 3) in vec3 inTangent;
+layout(location = 3) in vec3 inTexture;
 
 layout(location = 0) out vec4 outPosition;
 layout(location = 1) out vec4 outDiffuse;
@@ -22,11 +22,12 @@ layout(location = 3) out vec4 outMaterial;
 
 void main()
 {
-	vec4 diffuse = vec4(0.0f, 0.0f, 0.0f, 1.0f);
-	diffuse.rgb += inTangent.r * texture(samplerR, inUv).rgb;
-	diffuse.rgb += inTangent.g * texture(samplerG, inUv).rgb;
+//	vec4 diffuse = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+//	diffuse.rgb += inTexture.r * texture(samplerR, inUV).rgb;
+//	diffuse.rgb += inTexture.g * texture(samplerG, inUV).rgb;
+	vec4 diffuse = texture(samplerR, inUV);
 	
-	outPosition = inPosition;
+	outPosition = vec4(inPosition, 1.0f);
 	outDiffuse = diffuse;
 	outNormal = vec4(normalize(inNormal), 1.0f);
 	outMaterial = vec4(0.0f, 1.0f, 0.0f, 1.0f);

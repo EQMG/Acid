@@ -12,29 +12,6 @@ namespace acid
 	{
 	}
 
-	void VertexModelData::AddTangent(const Vector3 &tangent)
-	{
-		m_tangents.emplace_back(tangent);
-	}
-
-	void VertexModelData::AverageTangents()
-	{
-		if (m_tangents.empty())
-		{
-			return;
-		}
-
-		for (auto it = m_tangents.begin(); it < m_tangents.end(); ++it)
-		{
-			m_averagedTangent += *it;
-		}
-
-		if (m_averagedTangent.Length() != 0.0f)
-		{
-			m_averagedTangent = m_averagedTangent.Normalize();
-		}
-	}
-
 	bool VertexModelData::IsSet() const
 	{
 		return m_uvIndex.has_value() && m_normalIndex.has_value();
