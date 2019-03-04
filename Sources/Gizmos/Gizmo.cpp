@@ -2,16 +2,16 @@
 
 namespace acid
 {
-	Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &diffuse) :
+	Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &colour) :
 		m_gizmoType(gizmoType),
 		m_transform(transform),
-		m_diffuse(diffuse ? *diffuse : gizmoType->GetDiffuse())
+		m_colour(colour ? *colour : gizmoType->GetColour())
 	{
 	}
 
 	bool Gizmo::operator==(const Gizmo &other) const
 	{
-		return m_gizmoType == other.m_gizmoType && m_transform == other.m_transform && m_diffuse == other.m_diffuse;
+		return m_gizmoType == other.m_gizmoType && m_transform == other.m_transform && m_colour == other.m_colour;
 	}
 
 	bool Gizmo::operator!=(const Gizmo &other) const

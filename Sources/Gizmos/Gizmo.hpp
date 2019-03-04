@@ -17,8 +17,8 @@ namespace acid
 		/// </summary>
 		/// <param name="gizmoType"> The gizmo template to build from. </param>
 		/// <param name="transform"> The gizmos initial transform. </param>
-		/// <param name="diffuse"> The diffuse colour for this gizmo, without a value it will be set to the types default. </param>
-		Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &diffuse = {});
+		/// <param name="colour"> The colour for this gizmo, without a value it will be set to the types default. </param>
+		Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &colour = {});
 
 		bool operator==(const Gizmo &other) const;
 
@@ -32,12 +32,12 @@ namespace acid
 
 		void SetTransform(const Transform &transform) { m_transform = transform; }
 
-		const Colour &GetDiffuse() const { return m_diffuse; }
+		const Colour &GetColour() const { return m_colour; }
 
-		void SetDiffuse(const Colour &diffuse) { m_diffuse = diffuse; }
+		void SetColour(const Colour &colour) { m_colour = colour; }
 	private:
 		std::shared_ptr<GizmoType> m_gizmoType;
 		Transform m_transform;
-		Colour m_diffuse;
+		Colour m_colour;
 	};
 }

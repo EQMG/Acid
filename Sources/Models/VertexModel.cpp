@@ -2,11 +2,10 @@
 
 namespace acid
 {
-	VertexModel::VertexModel(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent) :
+	VertexModel::VertexModel(const Vector3 &position, const Vector2 &uv, const Vector3 &normal) :
 		m_position(position),
 		m_uv(uv),
-		m_normal(normal),
-		m_tangent(tangent)
+		m_normal(normal)
 	{
 	}
 
@@ -19,7 +18,7 @@ namespace acid
 		bindingDescriptions[0].stride = sizeof(VertexModel);
 		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
 
 		// Position attribute.
 		attributeDescriptions[0].binding = binding;
@@ -38,12 +37,6 @@ namespace acid
 		attributeDescriptions[2].location = 2;
 		attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[2].offset = offsetof(VertexModel, m_normal);
-
-		// Tangent attribute.
-		attributeDescriptions[3].binding = binding;
-		attributeDescriptions[3].location = 3;
-		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[3].offset = offsetof(VertexModel, m_tangent);
 
 		return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
 	}

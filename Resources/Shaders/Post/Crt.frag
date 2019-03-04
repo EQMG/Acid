@@ -16,11 +16,11 @@ layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
 layout(binding = 1) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 void main() 
 {
-	vec2 tc = vec2(inUv.x, inUv.y);
+	vec2 tc = vec2(inUV.x, inUV.y);
 
 	// Distance from the center
 	float dx = abs(0.5f - tc.x);
@@ -51,5 +51,5 @@ void main()
 	float grey = dot(colour.rgb, vec3(0.299f, 0.587f, 0.114f));
 	colour = vec4(scene.screenColour.rgb * grey, 1.0f);
 
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

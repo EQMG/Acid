@@ -2,11 +2,10 @@
 
 namespace acid
 {
-	VertexAnimated::VertexAnimated(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &tangent, const Vector3 &jointId, const Vector3 &vertexWeight) :
+	VertexAnimated::VertexAnimated(const Vector3 &position, const Vector2 &uv, const Vector3 &normal, const Vector3 &jointId, const Vector3 &vertexWeight) :
 		m_position(position),
 		m_uv(uv),
 		m_normal(normal),
-		m_tangent(tangent),
 		m_jointId(jointId),
 		m_vertexWeight(vertexWeight)
 	{
@@ -21,7 +20,7 @@ namespace acid
 		bindingDescriptions[0].stride = sizeof(VertexAnimated);
 		bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(6);
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(5);
 
 		// Position attribute.
 		attributeDescriptions[0].binding = binding;
@@ -41,23 +40,17 @@ namespace acid
 		attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[2].offset = offsetof(VertexAnimated, m_normal);
 
-		// Tangent attribute.
-		attributeDescriptions[3].binding = binding;
-		attributeDescriptions[3].location = 3;
-		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[3].offset = offsetof(VertexAnimated, m_tangent);
-
 		// Joint Id attribute.
-		attributeDescriptions[4].binding = binding;
-		attributeDescriptions[4].location = 4;
-		attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SINT;
-		attributeDescriptions[4].offset = offsetof(VertexAnimated, m_jointId);
+		attributeDescriptions[3].binding = binding;
+		attributeDescriptions[3].location = 4;
+		attributeDescriptions[3].format = VK_FORMAT_R32G32B32_SINT;
+		attributeDescriptions[3].offset = offsetof(VertexAnimated, m_jointId);
 
 		// Vertex Weight attribute.
-		attributeDescriptions[5].binding = binding;
-		attributeDescriptions[5].location = 5;
-		attributeDescriptions[5].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[5].offset = offsetof(VertexAnimated, m_vertexWeight);
+		attributeDescriptions[4].binding = binding;
+		attributeDescriptions[4].location = 5;
+		attributeDescriptions[4].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[4].offset = offsetof(VertexAnimated, m_vertexWeight);
 
 		return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
 	}

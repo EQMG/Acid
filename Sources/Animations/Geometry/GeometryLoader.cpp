@@ -20,13 +20,12 @@ namespace acid
 			Vector3 position = current->GetPosition();
 			Vector2 textures = m_uvsList[*current->GetUvIndex()];
 			Vector3 normal = m_normalsList[*current->GetNormalIndex()];
-			Vector3 tangent = Vector3::Zero;
 
 			auto skinData = current->GetSkinData();
 			Vector3 jointIds = Vector3(skinData.GetJointIds()[0], skinData.GetJointIds()[1], skinData.GetJointIds()[2]);
 			Vector3 weights = Vector3(skinData.GetWeights()[0], skinData.GetWeights()[1], skinData.GetWeights()[2]);
 
-			m_vertices.emplace_back(VertexAnimated(position, textures, normal, tangent, jointIds, weights));
+			m_vertices.emplace_back(VertexAnimated(position, textures, normal, jointIds, weights));
 		}
 	}
 
@@ -83,14 +82,14 @@ namespace acid
 
 		for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 		{
-			auto positionIndex = String::From<int32_t>(indexRawData[i * indexCount]);
-			auto normalIndex = String::From<int32_t>(indexRawData[i * indexCount + 1]);
-			auto uvIndex = String::From<int32_t>(indexRawData[i * indexCount + 2]);
+			auto positionIndex = String::From<uint32_t>(indexRawData[i * indexCount]);
+			auto normalIndex = String::From<uint32_t>(indexRawData[i * indexCount + 1]);
+			auto uvIndex = String::From<uint32_t>(indexRawData[i * indexCount + 2]);
 			ProcessVertex(positionIndex, normalIndex, uvIndex);
 		}
 	}
 
-	VertexAnimatedData *GeometryLoader::ProcessVertex(const int32_t &positionIndex, const int32_t &normalIndex, const int32_t &uvIndex)
+	VertexAnimatedData *GeometryLoader::ProcessVertex(const uint32_t &positionIndex, const uint32_t &normalIndex, const uint32_t &uvIndex)
 	{
 		auto currentVertex = m_positionsList[positionIndex].get();
 
@@ -105,9 +104,9 @@ namespace acid
 		return DealWithAlreadyProcessedVertex(currentVertex, uvIndex, normalIndex);
 	}
 
-	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int32_t &newUvIndex, const int32_t &newNormalIndex)
+	VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const uint32_t &newUvIndex, const uint32_t &newNormalIndex)
 	{
-		if (previousVertex->HasSameTextureAndNormal(newUvIndex, newNormalIndex))
+		if (previousVertex->HasSameUvAndNormal(newUvIndex, newNormalIndex))
 		{
 			m_indices.emplace_back(previousVertex->GetIndex());
 			return previousVertex;

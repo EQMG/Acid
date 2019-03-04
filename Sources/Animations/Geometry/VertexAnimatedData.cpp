@@ -16,8 +16,8 @@ namespace acid
 		return m_uvIndex.has_value() && m_normalIndex.has_value();
 	}
 
-	bool VertexAnimatedData::HasSameTextureAndNormal(const int32_t &textureIndexOther, const int32_t &normalIndexOther) const
+	bool VertexAnimatedData::HasSameUvAndNormal(const std::optional<uint32_t> &uvIndexOther, const std::optional<uint32_t> &normalIndexOther) const
 	{
-		return textureIndexOther == m_uvIndex && normalIndexOther == m_normalIndex;
+		return uvIndexOther == m_uvIndex && normalIndexOther == m_normalIndex;
 	}
 }

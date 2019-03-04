@@ -6,7 +6,7 @@ layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
 layout(binding = 1) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 const float gamma = 2.0f;
 const float inverseGamma = 1.0f / gamma;
@@ -24,8 +24,8 @@ vec3 uncharted2(vec3 hdr)
 
 void main() 
 {
-	vec3 textureColour = texture(samplerColour, inUv).rgb;
+	vec3 textureColour = texture(samplerColour, inUV).rgb;
 	vec4 colour = vec4(pow(uncharted2(textureColour), vec3(inverseGamma)), 1.0f);
 	
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

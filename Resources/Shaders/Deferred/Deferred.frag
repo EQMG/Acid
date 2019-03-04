@@ -43,7 +43,7 @@ layout(binding = 7) uniform sampler2D samplerBrdf;
 layout(binding = 8) uniform samplerCube samplerIbl;
 #endif
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
@@ -75,12 +75,12 @@ layout(location = 0) out vec4 outColour;
 
 void main()
 {
-	vec3 worldPosition = texture(samplerPosition, inUv).rgb;
+	vec3 worldPosition = texture(samplerPosition, inUV).rgb;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
-	vec4 diffuse = texture(samplerDiffuse, inUv);
-	vec3 normal = texture(samplerNormal, inUv).rgb;
-	vec3 material = texture(samplerMaterial, inUv).rgb;
+	vec4 diffuse = texture(samplerDiffuse, inUV);
+	vec3 normal = texture(samplerNormal, inUV).rgb;
+	vec3 material = texture(samplerMaterial, inUV).rgb;
 
 	float metallic = material.r;
 	float roughness = material.g;
@@ -131,9 +131,4 @@ void main()
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);
 	}
-
-//	if (inUv.x < 0.4f && inUv.y < 0.4f)
-//	{
-//		outColour = texture(samplerShadows, inUv / 0.4f);
-//	}
 }

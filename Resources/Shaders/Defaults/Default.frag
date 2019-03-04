@@ -26,12 +26,9 @@ layout(binding = 3) uniform sampler2D samplerMaterial;
 layout(binding = 4) uniform sampler2D samplerNormal;
 #endif
 
-layout(location = 0) in vec4 inPosition;
-layout(location = 1) in vec2 inUv;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
-#if NORMAL_MAPPING
-layout(location = 3) in vec3 inTangent;
-#endif
 
 layout(location = 0) out vec4 outPosition;
 layout(location = 1) out vec4 outDiffuse;
@@ -46,11 +43,11 @@ void main()
 	float glowing = 0.0f;
 
 #if DIFFUSE_MAPPING
-	diffuse = texture(samplerDiffuse, inUv);
+	diffuse = texture(samplerDiffuse, inUV);
 #endif
 
 #if MATERIAL_MAPPING
-	vec4 textureMaterial = texture(samplerMaterial, inUv);
+	vec4 textureMaterial = texture(samplerMaterial, inUV);
 	material.x *= textureMaterial.r;
 	material.y *= textureMaterial.g;
 
@@ -60,18 +57,25 @@ void main()
 	}
 #endif
 
-#if NORMAL_MAPPING // TODO: Fix normal mapping.
-	/*vec3 N = normalize(inNormal);
-	N.y = -N.y;
-	vec3 T = normalize(inTangent);
-	vec3 B = cross(N, T);
+#if NORMAL_MAPPING
+	vec3 tangentNormal = texture(samplerNormal, inUV).rgb * 2.0f - 1.0f;
+	
+	vec3 q1 = dFdx(inPosition);
+	vec3 q2 = dFdy(inPosition);
+	vec2 st1 = dFdx(inUV);
+	vec2 st2 = dFdy(inUV);
+
+	vec3 N = normalize(inNormal);
+	vec3 T = normalize(q1 * st2.t - q2 * st1.t);
+	vec3 B = -normalize(cross(N, T));
 	mat3 TBN = mat3(T, B, N);
-	normal = TBN * normalize(texture(samplerNormal, inUv).rgb * 2.0f - vec3(1.0f));*/
+
+	normal = TBN * tangentNormal;
 #endif
 
 	material.z = (1.0f / 3.0f) * (object.ignoreFog + (2.0f * min(object.ignoreLighting + glowing, 1.0f)));
 
-	outPosition = inPosition;
+	outPosition = vec4(inPosition, 1.0f);
 	outDiffuse = diffuse;
 	outNormal = vec4(normalize(normal), 1.0f);
 	outMaterial = vec4(material, 1.0f);

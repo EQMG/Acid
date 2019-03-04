@@ -11,12 +11,12 @@ layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
 layout(binding = 1) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 void main() 
 {
-	vec3 colour = texture(samplerColour, inUv).rgb;
+	vec3 colour = texture(samplerColour, inUV).rgb;
 	colour.rgb *= scene.factor;
 	
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

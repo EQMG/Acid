@@ -24,22 +24,16 @@ layout(binding = 1) uniform UboObject
 } object;
 
 layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec2 inUv;
+layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
-#if NORMAL_MAPPING
-layout(location = 3) in vec3 inTangent;
-#endif
 #if ANIMATED
-layout(location = 4) in vec3 inJointIds;
-layout(location = 5) in vec3 inWeights;
+layout(location = 3) in vec3 inJointIds;
+layout(location = 4) in vec3 inWeights;
 #endif
 
-layout(location = 0) out vec4 outPosition;
-layout(location = 1) out vec2 outUv;
+layout(location = 0) out vec3 outPosition;
+layout(location = 1) out vec2 outUV;
 layout(location = 2) out vec3 outNormal;
-#if NORMAL_MAPPING
-layout(location = 3) out vec3 outTangent;
-#endif
 
 out gl_PerVertex
 {
@@ -71,10 +65,7 @@ void main()
 
 	gl_Position = scene.projection * scene.view * worldPosition;
 
-	outPosition = worldPosition;
-	outUv = inUv;
+	outPosition = worldPosition.xyz;
+	outUV = inUV;
 	outNormal = normalMatrix * normalize(normal.xyz);
-#if NORMAL_MAPPING
-	outTangent = normalMatrix * normalize(inTangent);
-#endif
 }
