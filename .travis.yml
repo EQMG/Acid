@@ -67,7 +67,7 @@ matrix:
     - GSL_CXX_STANDARD=17
     - BUILD_TYPE=Release
     before_install:
-    - brew update
+    - brew update && brew upgrade
     - brew install pkg-config
     - brew install cmake || brew upgrade cmake
     - brew install openal-soft

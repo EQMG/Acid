@@ -21,6 +21,8 @@ namespace acid
 		{
 		}
 
+		virtual ~RenderManager() = default;
+
 		/// <summary>
 		/// Run when starting the renderer manager.
 		/// </summary>

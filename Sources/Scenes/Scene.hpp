@@ -25,6 +25,8 @@ namespace acid
 		{
 		}
 
+		virtual ~Scene() = default;
+
 		virtual void Start() = 0;
 
 		/// <summary>
