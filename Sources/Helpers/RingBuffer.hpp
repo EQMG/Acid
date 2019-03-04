@@ -126,36 +126,36 @@ namespace acid
 			return m_data[i % m_data.capacity()];
 		}
 
-		T &back()
+		T & back()
 		{
 			size_t i = m_head + (m_data.capacity() - 1);
 			return m_data[i % m_data.capacity()];
 		}
 
-		T &operator[](const size_t &i)
+		T & operator[](const size_t & i)
 		{
 			return m_data[i];
 		}
 
-		const T &operator[](const size_t &i) const
+		const T &operator[](const size_t & i) const
 		{
 			return m_data[i];
 		}
 
-		const T &at(const size_t &i) const
+		const T &at(const size_t & i) const
 		{
 			size_t ind = m_tail + i;
 			return m_data[ind % m_data.capacity()];
 		}
 
-		T &at(const size_t &i)
+		T &at(const size_t & i)
 		{
 			size_t ind = m_tail + i;
 			return m_data[ind % m_data.capacity()];
 		}
 
 		template<typename... Args>
-		bool push(Args &&... values)
+		bool push(Args && ... values)
 		{
 			size_t numElements = NumArgs(values...);
 
@@ -188,23 +188,23 @@ namespace acid
 			m_tail %= m_data.capacity();
 		}
 	private:
-		template<typename T, typename Arg1, typename... Args>
-		void MoveAll(std::vector<T> &data, const size_t &i, Arg1 &&v1, Args &&... values)
+		template<typename K, typename Arg1, typename... Args>
+		void MoveAll(std::vector<K> & data, const size_t & i, Arg1 && v1, Args && ... values)
 		{
 			data[i % data.size()] = std::forward<Arg1>(v1);
 			MoveAll(data, i + 1, values...);
 		}
 
-		template<typename T, typename Arg1>
-		void MoveAll(std::vector<T> &data, const size_t &i, Arg1 &&v1)
+		template<typename K, typename Arg1>
+		void MoveAll(std::vector<K> & data, const size_t & i, Arg1 && v1)
 		{
 			data[i % data.size()] = std::forward<Arg1>(v1);
 		}
 
-		template<typename... T>
-		size_t NumArgs(T...)
+		template<typename... K>
+		size_t NumArgs(K...)
 		{
-			const int n = sizeof...(T);
+			const int n = sizeof...(K);
 			return n;
 		}
 
