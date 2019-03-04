@@ -81,7 +81,7 @@ script:
 - mkdir Build && cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo ln -s /usr/include/freetype2/ft2build.h /usr/include/
+      sudo ln -s /usr/include/freetype2/freetype /usr/include/freetype
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
     else
       cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
