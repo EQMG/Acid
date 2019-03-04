@@ -9,13 +9,13 @@
 namespace acid
 {
 	PipelineCompute::PipelineCompute(std::string shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize, 
-		const bool &pushDescriptors, std::vector<Shader::Define> defines) :
+		std::vector<Shader::Define> defines, const bool &pushDescriptors) :
 		m_shaderStage(std::move(shaderStage)),
 		m_width(width),
 		m_height(height),
 		m_workgroupSize(workgroupSize),
-		m_pushDescriptors(pushDescriptors),
 		m_defines(std::move(defines)),
+		m_pushDescriptors(pushDescriptors),
 		m_shader(std::make_unique<Shader>(m_shaderStage)),
 		m_shaderModule(VK_NULL_HANDLE),
 		m_shaderStageCreateInfo({}),

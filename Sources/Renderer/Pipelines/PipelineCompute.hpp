@@ -19,10 +19,10 @@ namespace acid
 		/// <param name="width"> The width used in local_size_x. </param>
 		/// <param name="height"> The height used in local_size_y. </param>
 		/// <param name="workgroupSize"> The amount of workgroups to use. </param>
-		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
+		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		explicit PipelineCompute(std::string shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize = 16, 
-			const bool &pushDescriptors = false, std::vector<Shader::Define> defines = {});
+			std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
 
 		~PipelineCompute();
 
@@ -34,9 +34,9 @@ namespace acid
 
 		const uint32_t &GetWorkgroupSize() const { return m_workgroupSize; }
 
-		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
-
 		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
+
+		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
 		bool CmdRender(const CommandBuffer &commandBuffer) const;
 
@@ -66,8 +66,8 @@ namespace acid
 		uint32_t m_width;
 		uint32_t m_height;
 		uint32_t m_workgroupSize;
-		bool m_pushDescriptors;
 		std::vector<Shader::Define> m_defines;
+		bool m_pushDescriptors;
 
 		std::unique_ptr<Shader> m_shader;
 

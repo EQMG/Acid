@@ -14,19 +14,20 @@ namespace acid
 		VK_DYNAMIC_STATE_LINE_WIDTH
 	};
 
-	PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, 
+	PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines, 
 		const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, 
-		const bool &pushDescriptors, std::vector<Shader::Define> defines) :
+		const VkFrontFace &frontFace, const bool &pushDescriptors) :
 		m_stage(std::move(stage)),
 		m_shaderStages(std::move(shaderStages)),
 		m_vertexInputs(std::move(vertexInputs)),
+		m_defines(std::move(defines)),
 		m_mode(mode),
 		m_depth(depth),
 		m_topology(topology),
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
+		m_frontFace(frontFace),
 		m_pushDescriptors(pushDescriptors),
-		m_defines(std::move(defines)),
 		m_shader(std::make_unique<Shader>(m_shaderStages.back())),
 		m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
 		m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -247,7 +248,7 @@ namespace acid
 		m_rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 		m_rasterizationState.polygonMode = m_polygonMode;
 		m_rasterizationState.cullMode = m_cullMode;
-		m_rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+		m_rasterizationState.frontFace = m_frontFace;
 		m_rasterizationState.depthBiasEnable = VK_FALSE;
 	//	m_rasterizationState.depthBiasConstantFactor = 0.0f;
 	//	m_rasterizationState.depthBiasClamp = 0.0f;

@@ -34,6 +34,6 @@ namespace acid
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-		m_model->CmdRender(commandBuffer);
+		vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
 	}
 }

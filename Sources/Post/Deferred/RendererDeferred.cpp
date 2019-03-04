@@ -17,10 +17,8 @@ namespace acid
 	RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type) :
 		RenderPipeline(pipelineStage),
 		m_type(type),
-		m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {VertexModel::GetVertexInput()},
-			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, false, GetDefines()),
-		m_model(ModelRectangle::Create(-1.0f, 1.0f)),
-		m_brdf(m_type == Type::Ibl ? ComputeBrdf(512) : nullptr),
+		m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, GetDefines()),
+		m_brdf(ComputeBrdf(512)),
 		m_skybox(nullptr),
 		m_ibl(nullptr),
 		m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
@@ -114,7 +112,7 @@ namespace acid
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-		m_model->CmdRender(commandBuffer);
+		vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
 	}
 
 	std::vector<Shader::Define> RendererDeferred::GetDefines()
@@ -131,7 +129,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		PipelineCompute compute = PipelineCompute("Shaders/Brdf.comp", size, size, 16);
+		PipelineCompute compute = PipelineCompute("Shaders/BRDF.comp", size, size, 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
@@ -149,7 +147,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the brdf texture.
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+		std::string filename = FileSystem::GetWorkingDirectory() + "/BRDF.png";
 		FileSystem::ClearFile(filename);
 		std::unique_ptr<uint8_t[]> pixels(result->GetPixels());
 		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
@@ -169,7 +167,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		PipelineCompute compute = PipelineCompute("Shaders/Ibl.comp", source->GetWidth(), source->GetHeight(), 16);
+		PipelineCompute compute = PipelineCompute("Shaders/IBL.comp", source->GetWidth(), source->GetHeight(), 16);
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);

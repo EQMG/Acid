@@ -47,7 +47,6 @@ namespace acid
 		Type m_type;
 
 		PipelineGraphics m_pipeline;
-		std::shared_ptr<Model> m_model;
 
 		std::shared_ptr<Texture> m_brdf;
 

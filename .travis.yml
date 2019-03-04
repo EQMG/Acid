@@ -86,7 +86,6 @@ script:
     else
       cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
     fi
-- tree -d
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make all

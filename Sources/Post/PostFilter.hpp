@@ -27,8 +27,6 @@ namespace acid
 
 		const PipelineGraphics &GetPipeline() const { return m_pipeline; }
 
-		const std::shared_ptr<Model> &GetModel() const { return m_model; }
-
 		const Descriptor *GetAttachment(const std::string &descriptorName, const Descriptor *descriptor) const;
 
 		const Descriptor *GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const;
@@ -51,7 +49,6 @@ namespace acid
 
 		DescriptorsHandler m_descriptorSet;
 		PipelineGraphics m_pipeline;
-		std::shared_ptr<Model> m_model;
 
 		std::map<std::string, const Descriptor *> m_attachments;
 	};

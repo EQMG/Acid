@@ -41,17 +41,18 @@ namespace acid
 		/// <param name="stage"> The graphics stage this pipeline will be run on. </param>
 		/// <param name="shaderStages"> The source files to load the pipeline shaders from. </param>
 		/// <param name="vertexInputs"> The vertex inputs that will be used as a shaders input. </param>
+		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		/// <param name="mode"> The mode this pipeline will run in. </param>
 		/// <param name="depthMode"> The depth read/write that will be used. </param>
 		/// <param name="topology"> The topology of the input assembly. </param>
 		/// <param name="polygonMode"> The polygon draw mode. </param>
 		/// <param name="cullMode"> The vertex cull mode. </param>
+		/// <param name="frontFace"> The direction to render faces. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
-		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs,
+		PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
 			const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, 
-			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
-			const bool &pushDescriptors = false, std::vector<Shader::Define> defines = {});
+			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE, 
+			const bool &pushDescriptors = false);
 
 		~PipelineGraphics();
 
@@ -104,6 +105,8 @@ namespace acid
 
 		const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 
+		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
+
 		const Mode &GetMode() const { return m_mode; }
 
 		const Depth &GetDepth() const { return m_depth; }
@@ -114,9 +117,9 @@ namespace acid
 
 		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
 
-		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
+		const VkFrontFace &GetFrontFace() const { return m_frontFace; }
 
-		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
+		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
 		const Shader *GetShaderProgram() const override { return m_shader.get(); }
 
@@ -149,13 +152,14 @@ namespace acid
 		Stage m_stage;
 		std::vector<std::string> m_shaderStages;
 		std::vector<Shader::VertexInput> m_vertexInputs;
+		std::vector<Shader::Define> m_defines;
 		Mode m_mode;
 		Depth m_depth;
 		VkPrimitiveTopology m_topology;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
+		VkFrontFace m_frontFace;
 		bool m_pushDescriptors;
-		std::vector<Shader::Define> m_defines;
 
 		std::unique_ptr<Shader> m_shader;
 
@@ -186,19 +190,21 @@ namespace acid
 	class ACID_EXPORT PipelineGraphicsCreate
 	{
 	public:
-		explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, 
+		explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {}, 
 			const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
 			const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
-			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const bool &pushDescriptors = false, std::vector<Shader::Define> defines = {}) :
+			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE, 
+			const bool &pushDescriptors = false) :
 			m_shaderStages(std::move(shaderStages)),
 			m_vertexInputs(std::move(vertexInputs)),
+			m_defines(std::move(defines)),
 			m_mode(mode),
 			m_depth(depth),
 			m_topology(topology),
 			m_polygonMode(polygonMode),
 			m_cullMode(cullMode),
-			m_pushDescriptors(pushDescriptors),
-			m_defines(std::move(defines))
+			m_frontFace(frontFace),
+			m_pushDescriptors(pushDescriptors)
 		{
 		}
 
@@ -208,37 +214,41 @@ namespace acid
 		/// <param name="pipelineStage"> The pipelines graphics stage. </param>
 		PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const
 		{
-			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_mode, m_depth, m_topology, 
-				m_polygonMode, m_cullMode, m_pushDescriptors, m_defines);
+			return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, 
+				m_polygonMode, m_cullMode, m_frontFace, m_pushDescriptors);
 		}
 
 		void Decode(const Metadata &metadata)
 		{
 			metadata.GetChild("Shader Stages", m_shaderStages);
 		//	metadata.GetChild("Vertex Inputs", m_vertexInputs);
+			metadata.GetChild("Defines", m_defines);
 			metadata.GetChild("Mode", m_mode);
 			metadata.GetChild("Depth", m_depth);
 			metadata.GetChild("Polygon Mode", m_polygonMode);
 			metadata.GetChild("Cull Mode", m_cullMode);
+			metadata.GetChild("Front Face", m_frontFace);
 			metadata.GetChild("Push Descriptors", m_pushDescriptors);
-			metadata.GetChild("Defines", m_defines);
 		}
 
 		void Encode(Metadata &metadata) const
 		{
 			metadata.SetChild("Shader Stages", m_shaderStages);
 		//	metadata.SetChild("Vertex Inputs", m_vertexInputs);
+			metadata.SetChild("Defines", m_defines);
 			metadata.SetChild("Mode", m_mode);
 			metadata.SetChild("Depth", m_depth);
 			metadata.SetChild("Polygon Mode", m_polygonMode);
 			metadata.SetChild("Cull Mode", m_cullMode);
+			metadata.SetChild("Front Face", m_frontFace);
 			metadata.SetChild("Push Descriptors", m_pushDescriptors);
-			metadata.SetChild("Defines", m_defines);
 		}
 
 		const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
 
 		const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
+
+		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
 
 		const PipelineGraphics::Mode &GetMode() const { return m_mode; }
 
@@ -250,20 +260,20 @@ namespace acid
 
 		const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
 
-		const bool &GetPushDescriptors() const { return m_pushDescriptors; }
+		const VkFrontFace &GetFrontFace() const { return m_frontFace; }
 
-		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
+		const bool &GetPushDescriptors() const { return m_pushDescriptors; }
 	private:
 		std::vector<std::string> m_shaderStages;
 		std::vector<Shader::VertexInput> m_vertexInputs;
+		std::vector<Shader::Define> m_defines;
 
 		PipelineGraphics::Mode m_mode;
 		PipelineGraphics::Depth m_depth;
 		VkPrimitiveTopology m_topology;
 		VkPolygonMode m_polygonMode;
 		VkCullModeFlags m_cullMode;
+		VkFrontFace m_frontFace;
 		bool m_pushDescriptors;
-
-		std::vector<Shader::Define> m_defines;
 	};
 }
