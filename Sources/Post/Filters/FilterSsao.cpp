@@ -33,16 +33,15 @@ namespace acid
 	{
 		// Updates uniforms.
 		auto camera = Scenes::Get()->GetCamera();
-		m_pushScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
-		m_pushScene.Push("projection", camera->GetProjectionMatrix());
-		m_pushScene.Push("view", camera->GetViewMatrix());
-		m_pushScene.Push("nearPlane", camera->GetNearPlane());
-		m_pushScene.Push("farPlane", camera->GetFarPlane());
+		m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
+		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+		m_uniformScene.Push("view", camera->GetViewMatrix());
+		m_uniformScene.Push("cameraPosition", camera->GetPosition());
 
 		// Updates descriptors.
-		m_descriptorSet.Push("PushScene", m_pushScene);
+		m_descriptorSet.Push("UboScene", m_uniformScene);
 		m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-		m_descriptorSet.Push("samplerDepth", GetAttachment("samplerDepth", "depth"));
+		m_descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
 		m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
 		m_descriptorSet.Push("samplerNoise", m_noise);
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
@@ -53,7 +52,6 @@ namespace acid
 		}
 
 		// Draws the object.
-		m_pushScene.BindPush(commandBuffer, m_pipeline);
 		m_pipeline.BindPipeline(commandBuffer);
 
 		m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
@@ -65,21 +63,23 @@ namespace acid
 		std::vector<Shader::Define> result = {};
 		result.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
 		result.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
+		result.emplace_back("RANGE_CHECK", "1");
 		return result;
 	}
 
 	std::shared_ptr<Texture> FilterSsao::ComputeNoise(const uint32_t &size)
 	{
-		/*std::vector<Colour> ssaoNoise(size * size);
+		std::vector<Colour> ssaoNoise(size * size);
 
 		for (uint32_t i = 0; i < size * size; i++)
 		{
-			Vector3 noise = Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f);; // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
+			Vector3 noise = Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
 			noise = noise.Normalize();
 			ssaoNoise[i] = Colour(noise, 1.0f);
 		}
 
-		auto result = std::make_shared<Texture>(size, size, ssaoNoise.data()); // , VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST
+		auto result = std::make_shared<Texture>(size, size, reinterpret_cast<uint8_t *>(ssaoNoise.data()), VK_FORMAT_R32G32B32A32_SFLOAT, 
+			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
 #if defined(ACID_VERBOSE)
 		// Saves the noise texture.
@@ -89,7 +89,6 @@ namespace acid
 		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
 #endif
 
-		return result;*/
-		return nullptr;
+		return result;
 	}
 }

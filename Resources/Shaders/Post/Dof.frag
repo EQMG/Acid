@@ -20,7 +20,7 @@ layout(binding = 1) uniform sampler2D samplerDepth;
 layout(binding = 2) uniform sampler2D samplerColour;
 layout(binding = 3) uniform sampler2D samplerBlured;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 float linearDepth(float depth)
 {
@@ -30,9 +30,9 @@ float linearDepth(float depth)
 
 void main() 
 {
-	float depth = linearDepth(texture(samplerDepth, inUv).r);
-	vec3 textureColour = texture(samplerColour, inUv).rgb;
-	vec3 textureBlured = texture(samplerBlured, inUv).rgb;
+	float depth = linearDepth(texture(samplerDepth, inUV).r);
+	vec3 textureColour = texture(samplerColour, inUV).rgb;
+	vec3 textureBlured = texture(samplerBlured, inUV).rgb;
 
 	float nearEnd = scene.nearField + scene.nearTransition;
 	float farStart = scene.farField - scene.farTransition;
@@ -42,5 +42,5 @@ void main()
 	vec4 colour = vec4(mix(textureBlured, textureColour, nearVisibility), 1.0f);
 	colour.rgb = mix(textureBlured, colour.rgb, farVisibility);
 
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

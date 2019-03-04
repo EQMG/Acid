@@ -20,8 +20,8 @@ layout(binding = 1) uniform UboObject
 
 layout(location = 0) in vec3 inPosition;
 
-layout(location = 0) out vec4 outPosition;
-layout(location = 1) out vec3 outUv;
+layout(location = 0) out vec3 outPosition;
+layout(location = 1) out vec3 outUVW;
 
 out gl_PerVertex 
 {
@@ -39,6 +39,6 @@ void main()
 	
 	gl_Position = scene.projection * viewStatic * worldPosition;
 
-	outPosition = worldPosition;
-	outUv = inPosition;
+	outPosition = worldPosition.xyz;
+	outUVW = inPosition;
 }

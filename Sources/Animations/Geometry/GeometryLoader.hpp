@@ -25,9 +25,9 @@ namespace acid
 
 		void AssembleVertices();
 
-		VertexAnimatedData *ProcessVertex(const int32_t &positionIndex, const int32_t &normalIndex, const int32_t &uvIndex);
+		VertexAnimatedData *ProcessVertex(const uint32_t &positionIndex, const uint32_t &normalIndex, const uint32_t &uvIndex);
 
-		VertexAnimatedData *DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const int32_t &newUvIndex, const int32_t &newNormalIndex);
+		VertexAnimatedData *DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const uint32_t &newUvIndex, const uint32_t &newNormalIndex);
 
 		void RemoveUnusedVertices();
 

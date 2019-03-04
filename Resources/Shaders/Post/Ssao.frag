@@ -2,50 +2,34 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
+layout(binding = 0) uniform UboScene
 {
 	vec3 kernel[SSAO_KERNEL_SIZE];
 
 	mat4 projection;
 	mat4 view;
-
-	float nearPlane;
-	float farPlane;
+	vec3 cameraPosition;
 } scene;
 
 layout(binding = 0, rgba8) uniform writeonly image2D writeColour;
 
-layout(binding = 1) uniform sampler2D samplerDepth;
+layout(binding = 1) uniform sampler2D samplerPosition;
 layout(binding = 2) uniform sampler2D samplerNormal;
 layout(binding = 3) uniform sampler2D samplerNoise;
 
-layout(location = 0) in vec2 inUv;
-
-vec3 depthToWorld(vec2 uv, float depth)
-{
-	vec3 ndc = vec3(uv * 2.0f - vec2(1.0f), depth);
-	vec4 p = inverse(scene.projection * scene.view) * vec4(ndc, 1.0f);
-	return p.xyz / p.w;
-}
-
-float linearDepth(float depth)
-{
-	float z = depth * 2.0f - 1.0f;
-	return (2.0f * scene.nearPlane * scene.farPlane) / (scene.farPlane + scene.nearPlane - z * (scene.farPlane - scene.nearPlane));
-}
+layout(location = 0) in vec2 inUV;
 
 void main() 
 {
 	// Get G-Buffer values.
-	float depth = texture(samplerDepth, inUv).r;
-	vec3 worldPosition = depthToWorld(inUv, depth).xyz;
+	vec3 worldPosition = texture(samplerPosition, inUV).rgb;
 
-	vec3 normal = texture(samplerNormal, inUv).rgb;
+	vec3 normal = texture(samplerNormal, inUV).rgb;
 
 	// Get a random vector using a noise lookup.
-	ivec2 texDim = textureSize(samplerDepth, 0);
+	ivec2 texDim = textureSize(samplerPosition, 0);
 	ivec2 noiseDim = textureSize(samplerNoise, 0);
-	vec2 noiseUv = vec2(float(texDim.x) / float(noiseDim.x), float(texDim.y) / (noiseDim.y)) * inUv;
+	vec2 noiseUv = vec2(float(texDim.x) / float(noiseDim.x), float(texDim.y) / (noiseDim.y)) * inUV;
 	vec3 randomVec = texture(samplerNoise, noiseUv).rgb * 2.0f - 1.0f;
 
 	// Create TBN matrix.
@@ -68,15 +52,17 @@ void main()
 		offset.xyz = offset.xyz * 0.5f + 0.5f;
 
 		// Sample depth.
-		float sampleDepth = -linearDepth(texture(samplerDepth, offset.xy).r);
-
+		float sampleDepth = -length(scene.cameraPosition - texture(samplerPosition, offset.xy).rgb);
+		
+#ifdef RANGE_CHECK
 		// Range check.
 		float rangeCheck = smoothstep(0.0f, 1.0f, SSAO_RADIUS / abs(worldPosition.z - sampleDepth));
 		occlusion += (sampleDepth >= samplePos.z ? 1.0f : 0.0f) * rangeCheck;
+#endif
 	}
 
 	occlusion = 1.0f - (occlusion / float(SSAO_KERNEL_SIZE));
-	vec4 colour = vec4(texture(samplerNoise, inUv).rgb, 1.0f); // occlusion, occlusion, occlusion
+	vec4 colour = vec4(texture(samplerNoise, inUV).rgb, 1.0f); // occlusion, occlusion, occlusion
 	
-	imageStore(writeColour, ivec2(inUv * imageSize(writeColour)), colour);
+	imageStore(writeColour, ivec2(inUV * imageSize(writeColour)), colour);
 }

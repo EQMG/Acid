@@ -19,7 +19,7 @@ layout(binding = 1) uniform UboObject
 
 layout(binding = 2) uniform sampler2D samplerColour;
 
-layout(location = 0) in vec2 inUv;
+layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
@@ -48,15 +48,15 @@ void main()
 	if (object.ninePatches != vec4(0.0f))
 	{
 		vec2 newUV = vec2(
-		    processAxis(inUv.x, object.ninePatches.x, object.ninePatches.x / (object.screenOffset.x / object.screenOffset.y) / object.aspectRatio),
-		    processAxis(inUv.y, object.ninePatches.y, object.ninePatches.y)
+		    processAxis(inUV.x, object.ninePatches.x, object.ninePatches.x / (object.screenOffset.x / object.screenOffset.y) / object.aspectRatio),
+		    processAxis(inUV.y, object.ninePatches.y, object.ninePatches.y)
 		);
 
 		outColour = texture(samplerColour, newUV);
 	}
 	else
 	{
-		outColour = texture(samplerColour, inUv);
+		outColour = texture(samplerColour, inUV);
 	}
 
 	outColour *= object.colourOffset;

@@ -151,7 +151,7 @@ namespace test
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f);
+		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f, nullptr, Texture::Create("Objects/Testing/Normal.png"));
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);

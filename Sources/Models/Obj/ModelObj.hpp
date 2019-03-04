@@ -46,8 +46,6 @@ namespace acid
 		static VertexModelData *DealWithAlreadyProcessedDataVertex(VertexModelData *previousVertex, const std::optional<uint32_t> &newUvIndex, const uint32_t &newNormalIndex,
 			std::vector<std::unique_ptr<VertexModelData>> &vertices, std::vector<uint32_t> &indices);
 
-		static void CalculateTangents(VertexModelData *v0, VertexModelData *v1, VertexModelData *v2, std::vector<Vector2> &uvs);
-
 		std::string m_filename;
 	};
 }

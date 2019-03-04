@@ -20,8 +20,8 @@ namespace test
 			static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount)
 		);
 		Vector3 normal = GetNormal(x, z);
-		Colour colour = GetColour(normal);
-		return VertexModel(position, uv, normal, colour);
+	//	Colour colour = GetColour(normal);
+		return VertexModel(position, uv, normal); // , colour
 	}
 
 	Vector3 MeshTerrain::GetPosition(const float &x, const float &z)
@@ -42,7 +42,7 @@ namespace test
 		Vector3 positionL = GetPosition(x - 1.0f, z);
 		Vector3 positionR = GetPosition(x + 1.0f, z);
 		Vector3 positionD = GetPosition(x, z - 1.0f);
-		//	Vector3 positionU = GetPosition(x, z + 1.0f);
+	//	Vector3 positionU = GetPosition(x, z + 1.0f);
 
 		Vector3 normal = (positionL - positionR).Cross(positionR - positionD);
 		return normal.Normalize();
