@@ -67,7 +67,7 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-find_package(Freetype)
+#find_package(Freetype)
 if(NOT FREETYPE_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	foreach(_freetype_option "CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz")
