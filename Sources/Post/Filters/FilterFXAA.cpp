@@ -1,14 +1,14 @@
-#include "FilterFxaa.hpp"
+#include "FilterFXAA.hpp"
 
 namespace acid
 {
-	FilterFxaa::FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax) :
-		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag"}, {}),
+	FilterFXAA::FilterFXAA(const Pipeline::Stage &pipelineStage, const float &spanMax) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/FXAA.frag"}, {}),
 		m_spanMax(spanMax)
 	{
 	}
 
-	void FilterFxaa::Render(const CommandBuffer &commandBuffer)
+	void FilterFXAA::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("spanMax", m_spanMax);

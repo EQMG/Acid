@@ -19,5 +19,7 @@ namespace acid
 			RenderPipeline(pipelineStage)
 		{
 		}
+
+		virtual ~PostPipeline() = default;
 	};
 }

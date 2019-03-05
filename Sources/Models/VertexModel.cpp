@@ -9,6 +9,16 @@ namespace acid
 	{
 	}
 
+	bool VertexModel::operator==(const VertexModel &other) const
+	{
+		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal;
+	}
+
+	bool VertexModel::operator!=(const VertexModel &other) const
+	{
+		return !(*this == other);
+	}
+
 	Shader::VertexInput VertexModel::GetVertexInput(const uint32_t &binding)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);

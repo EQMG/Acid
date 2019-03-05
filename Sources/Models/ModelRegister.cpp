@@ -1,7 +1,7 @@
 #include "ModelRegister.hpp"
 
 #include "Files/FileSystem.hpp"
-#include "Obj/ModelObj.hpp"
+#include "OBJ/ModelOBJ.hpp"
 #include "Shapes/ModelCube.hpp"
 #include "Shapes/ModelCylinder.hpp"
 #include "Shapes/ModelDisk.hpp"
@@ -12,8 +12,8 @@ namespace acid
 {
 	ModelRegister::ModelRegister()
 	{
-		AddMetadata<ModelObj>("ModelObj");
-		AddExtension<ModelObj>(".obj");
+		AddMetadata<ModelOBJ>("ModelOBJ");
+		AddExtension<ModelOBJ>(".obj");
 		AddMetadata<ModelCube>("ModelCube");
 		AddMetadata<ModelCylinder>("ModelCylinder");
 		AddMetadata<ModelDisk>("ModelDisk");

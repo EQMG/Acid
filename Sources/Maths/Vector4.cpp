@@ -5,7 +5,6 @@
 #include "Colour.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
-#include "Maths.hpp"
 
 namespace acid
 {
@@ -192,7 +191,7 @@ namespace acid
 
 	bool Vector4::operator==(const Vector4 &other) const
 	{
-		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z && m_w == other.m_w;
+		return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
 	}
 
 	bool Vector4::operator!=(const Vector4 &other) const

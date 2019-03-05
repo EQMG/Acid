@@ -1,13 +1,13 @@
-#include "FilterDof.hpp"
+#include "FilterDOF.hpp"
 
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
-	FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField, 
+	FilterDOF::FilterDOF(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint, const float &nearField, 
 		const float &nearTransition, const float &farField, const float &farTransition) :
-		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Dof.frag"}, {}),
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/DOF.frag"}, {}),
 		m_pipelineBlur(pipelineBlur),
 		m_focusPoint(focusPoint),
 		m_nearField(nearField),
@@ -17,7 +17,7 @@ namespace acid
 	{
 	}
 
-	void FilterDof::Render(const CommandBuffer &commandBuffer)
+	void FilterDOF::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		auto camera = Scenes::Get()->GetCamera();

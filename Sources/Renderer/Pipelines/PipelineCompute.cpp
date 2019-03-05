@@ -8,12 +8,8 @@
 
 namespace acid
 {
-	PipelineCompute::PipelineCompute(std::string shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize, 
-		std::vector<Shader::Define> defines, const bool &pushDescriptors) :
+	PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines, const bool &pushDescriptors) :
 		m_shaderStage(std::move(shaderStage)),
-		m_width(width),
-		m_height(height),
-		m_workgroupSize(workgroupSize),
 		m_defines(std::move(defines)),
 		m_pushDescriptors(pushDescriptors),
 		m_shader(std::make_unique<Shader>(m_shaderStage)),
@@ -28,10 +24,6 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
-
-		m_defines.emplace_back("WIDTH", String::To(m_width));
-		m_defines.emplace_back("HEIGHT", String::To(m_height));
-		m_defines.emplace_back("WORKGROUP_SIZE", String::To(m_workgroupSize));
 
 		CreateShaderProgram();
 		CreateDescriptorLayout();
@@ -58,10 +50,10 @@ namespace acid
 		vkDestroyPipelineLayout(logicalDevice->GetLogicalDevice(), m_pipelineLayout, nullptr);
 	}
 
-	bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer) const
+	bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const
 	{
-		auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(m_width) / static_cast<float>(m_workgroupSize)));
-		auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(m_height) / static_cast<float>(m_workgroupSize)));
+		auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(width) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
+		auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(height) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
 		vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
 		return true;
 	}

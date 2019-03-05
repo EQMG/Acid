@@ -4,6 +4,7 @@
 #include <string>
 #include "Engine/Exports.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Maths.hpp"
 
 namespace acid
 {
@@ -293,5 +294,20 @@ namespace acid
 				float m_x, m_y;
 			};
 		};
+	};
+}
+
+namespace std
+{
+	template<>
+	struct hash<acid::Vector2>
+	{
+		size_t operator()(acid::Vector2 const &vector) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, vector.m_x);
+			acid::Maths::HashCombine(seed, vector.m_y);
+			return seed;
+		}
 	};
 }

@@ -21,11 +21,11 @@ namespace acid
 
 	float Maths::RandomLog(const float &min, const float &max)
 	{
-		float logLower = std::log(min);
-		float logUpper = std::log(max);
-		float raw = Random(0.0f, 1.0f);
+		auto logLower = std::log(min);
+		auto logUpper = std::log(max);
+		auto raw = Random(0.0f, 1.0f);
 
-		float result = std::exp(raw * (logUpper - logLower) + logLower);
+		auto result = std::exp(raw * (logUpper - logLower) + logLower);
 
 		if (result < min)
 		{
@@ -51,7 +51,7 @@ namespace acid
 
 	float Maths::WrapDegrees(const float &degrees)
 	{
-		float x = std::fmod(degrees, 360.0f);
+		auto x = std::fmod(degrees, 360.0f);
 
 		if (x < 0.0f)
 		{
@@ -63,7 +63,7 @@ namespace acid
 
 	float Maths::WrapRadians(const float &radians)
 	{
-		float x = std::fmod(radians, 2.0f * Pi);
+		auto x = std::fmod(radians, 2.0f * Pi);
 
 		if (x < 0.0f)
 		{
@@ -75,7 +75,7 @@ namespace acid
 
 	float Maths::RoundToPlace(const float &value, const int32_t &place)
 	{
-		float placeMul = std::pow(10.0f, static_cast<float>(place));
+		auto placeMul = std::pow(10.0f, static_cast<float>(place));
 		return std::round(value * placeMul) / placeMul;
 	}
 
@@ -106,23 +106,23 @@ namespace acid
 
 	float Maths::CosLerp(const float &a, const float &b, const float &factor)
 	{
-		float ft = factor * Pi;
-		float f = 1.0f - std::cos(ft) * 0.5f;
+		auto ft = factor * Pi;
+		auto f = 1.0f - std::cos(ft) * 0.5f;
 		return (a * (1.0f - f)) + (b * f);
 	}
 
 	float Maths::SmoothlyStep(const float &edge0, const float &edge1, const float &x)
 	{
-		float s = std::clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
 		return s * s * (3.0f - 2.0f * s);
 	}
 
 	float Maths::CosFromSin(const float &sin, const float &angle)
 	{
 		// sin(x)^2 + cos(x)^2 = 1
-		float cos = std::sqrt(1.0f - sin * sin);
-		float a = angle + (Pi / 2.0f);
-		float b = a - (int)(a / (2.0f * Pi)) * (2.0f * Pi);
+		auto cos = std::sqrt(1.0f - sin * sin);
+		auto a = angle + (Pi / 2.0f);
+		auto b = a - static_cast<int32_t>(a / (2.0f * Pi)) * (2.0f * Pi);
 
 		if (b < 0.0f)
 		{

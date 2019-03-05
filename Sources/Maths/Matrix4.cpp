@@ -7,7 +7,6 @@
 #include "Matrix3.hpp"
 #include "Quaternion.hpp"
 #include "Vector2.hpp"
-#include "Maths.hpp"
 
 namespace acid
 {

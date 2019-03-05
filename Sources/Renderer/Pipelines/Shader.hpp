@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <sstream>
 #include <string>
 #include <map>
@@ -49,7 +50,6 @@ namespace acid
 			{
 				return m_binding < other.m_binding;
 			}
-
 		private:
 			uint32_t m_binding;
 			std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
@@ -100,7 +100,6 @@ namespace acid
 				result << "Uniform(binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
 				return result.str();
 			}
-
 		private:
 			friend class Shader;
 
@@ -194,7 +193,6 @@ namespace acid
 				result << "VertexAttribute(set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
 				return result.str();
 			}
-
 		private:
 			friend class Shader;
 
@@ -232,6 +230,8 @@ namespace acid
 
 		const std::map<std::string, std::unique_ptr<Attribute>> &GetAttributes() const { return m_attributes; };
 
+		const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return m_localSizes; }
+
 		const std::vector<VkDescriptorSetLayoutBinding> &GetDescriptorSetLayouts() const { return m_descriptorSetLayouts; }
 
 		const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
@@ -252,8 +252,6 @@ namespace acid
 	private:
 		static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
 
-		void LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag);
-
 		void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
 
 		void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
@@ -266,6 +264,8 @@ namespace acid
 		std::map<std::string, std::unique_ptr<Uniform>> m_uniforms;
 		std::map<std::string, std::unique_ptr<UniformBlock>> m_uniformBlocks;
 		std::map<std::string, std::unique_ptr<Attribute>> m_attributes;
+
+		std::array<std::optional<uint32_t>, 3> m_localSizes;
 
 		std::map<std::string, uint32_t> m_descriptorLocations;
 		std::map<std::string, uint32_t> m_descriptorSizes;

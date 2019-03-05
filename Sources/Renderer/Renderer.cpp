@@ -212,7 +212,7 @@ namespace acid
 
 		Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("Vulkan Error", failure);
-		throw std::runtime_error("Vulkan error");
+		throw std::runtime_error("Vulkan error: " + failure);
 	}
 
 	void Renderer::UpdateSurfaceCapabilities()

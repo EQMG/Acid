@@ -1,16 +1,15 @@
 #pragma once
 
-#include "Maths/Colour.hpp"
 #include "Post/PostFilter.hpp"
 #include "Post/Pipelines/PipelineBlur.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT FilterDof :
+	class ACID_EXPORT FilterDOF :
 		public PostFilter
 	{
 	public:
-		explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, 
+		explicit FilterDOF(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, 
 			const float &nearTransition = 0.125f, const float &farField = 8.0f, const float &farTransition = 3.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;

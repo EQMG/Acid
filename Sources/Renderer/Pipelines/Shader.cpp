@@ -478,7 +478,31 @@ namespace acid
 
 		program.buildReflection();
 	//	program.dumpReflection();
-		LoadProgram(program, stageFlag);
+
+		for (uint32_t dim = 0; dim < 3; ++dim)
+		{
+			auto localSize = program.getLocalSize(dim);
+
+			if (localSize > 1)
+			{
+				m_localSizes[dim] = localSize;
+			}
+		}
+
+		for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
+		{
+			LoadUniformBlock(program, stageFlag, i);
+		}
+
+		for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
+		{
+			LoadUniform(program, stageFlag, i);
+		}
+
+		for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
+		{
+			LoadVertexAttribute(program, stageFlag, i);
+		}
 
 		glslang::SpvOptions spvOptions;
 #if defined(ACID_VERBOSE)
@@ -544,6 +568,16 @@ namespace acid
 			}
 		}
 
+		for (uint32_t dim = 0; dim < m_localSizes.size(); dim++)
+		{
+			static const std::string AXES[] = { "X", "Y", "Z" };
+
+			if (m_localSizes[dim])
+			{
+				result << "Local size " << AXES[dim]  << ": " << *m_localSizes[dim] << " \n";
+			}
+		}
+
 		return result.str();
 	}
 
@@ -563,24 +597,6 @@ namespace acid
 		else
 		{
 			descriptorPoolCounts.emplace(type, 1);
-		}
-	}
-
-	void Shader::LoadProgram(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag)
-	{
-		for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
-		{
-			LoadUniformBlock(program, stageFlag, i);
-		}
-
-		for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
-		{
-			LoadUniform(program, stageFlag, i);
-		}
-
-		for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
-		{
-			LoadVertexAttribute(program, stageFlag, i);
 		}
 	}
 
@@ -647,6 +663,11 @@ namespace acid
 	void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		std::string name = program.getAttributeName(i);
+
+		if (name.empty())
+		{
+			return;
+		}
 
 		for (const auto &[attributeName, attribute] : m_attributes)
 		{

@@ -252,7 +252,7 @@ namespace acid
 		m_glyphInfos = std::vector<HostGlyphInfo>(glyphCount);
 		std::vector<Outline> outlines(glyphCount);
 
-		Log::Out("Glyph Count: %i\n", glyphCount);
+	//	Log::Out("Glyph Count: %i\n", glyphCount);
 
 		FT_UInt glyphIndex;
 		FT_ULong charcode = FT_Get_First_Char(face, &glyphIndex);

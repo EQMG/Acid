@@ -3,7 +3,6 @@
 #include <cassert>
 #include <stdexcept>
 #include <cstring>
-#include "Maths.hpp"
 #include "Matrix2.hpp"
 #include "Matrix4.hpp"
 

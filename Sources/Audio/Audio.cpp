@@ -90,7 +90,7 @@ namespace acid
 
 		Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("OpenAL Error", failure);
-		throw std::runtime_error("OpenAL Error");
+		throw std::runtime_error("OpenAL Error: " + result);
 	}
 
 	float Audio::GetTypeGain(const Type &type) const

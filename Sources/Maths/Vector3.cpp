@@ -6,7 +6,6 @@
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"
 #include "Vector2.hpp"
-#include "Maths.hpp"
 
 namespace acid
 {
@@ -335,7 +334,7 @@ namespace acid
 
 	bool Vector3::operator==(const Vector3 &other) const
 	{
-		return m_x == other.m_x && m_y == other.m_x && m_z == other.m_z;
+		return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z;
 	}
 
 	bool Vector3::operator!=(const Vector3 &other) const

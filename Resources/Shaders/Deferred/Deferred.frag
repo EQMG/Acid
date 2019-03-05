@@ -13,12 +13,6 @@ layout(binding = 0) uniform UboScene
 	vec4 fogColour;
 	float fogDensity;
 	float fogGradient;
-
-	float shadowDistance;
-	float shadowTransition;
-	float shadowBias;
-	float shadowDarkness;
-	int shadowPCF;
 } scene;
 
 struct Light
@@ -37,41 +31,31 @@ layout(binding = 2) uniform sampler2D samplerPosition;
 layout(binding = 3) uniform sampler2D samplerDiffuse;
 layout(binding = 4) uniform sampler2D samplerNormal;
 layout(binding = 5) uniform sampler2D samplerMaterial;
-layout(binding = 6) uniform sampler2D samplerShadows;
-#if USE_IBL
-layout(binding = 7) uniform sampler2D samplerBrdf;
-layout(binding = 8) uniform samplerCube samplerIbl;
-#endif
+layout(binding = 6) uniform sampler2D samplerBRDF;
+//layout(binding = 7) uniform samplerCube samplerIrradiance;
+//layout(binding = 8) uniform samplerCube samplerPrefiltered;
 
 layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
-#include "Shaders/Lighting.glsl"
+const float PI = 3.1415926535897932384626433832795;
 
-/*float shadow(vec4 shadowCoords)
+float sqr(float x)
 {
-	vec2 sizeShadows = 1.0f / textureSize(samplerShadows, 0);
-	float totalTextels = (scene.shadowPCF * 2.0f + 1.0f) * (scene.shadowPCF * 2.0f + 1.0f);
+	return x * x;
+}
 
-	float total = 0.0f;
-	
-	if (shadowCoords.x > 0.0f && shadowCoords.x < 1.0f && shadowCoords.y > 0.0f && shadowCoords.y < 1.0f && shadowCoords.z > 0.0f && shadowCoords.z < 1.0f)
+float attenuation(float distance, float radius)
+{
+	if (radius <= 0.0f)
 	{
-		float shadowValue = texture(samplerShadows, shadowCoords.xy * sizeShadows).r;
-
-		if (shadowCoords.z < shadowValue + scene.shadowBias)
-		{
-			total += scene.shadowDarkness * shadowCoords.w;
-		}
-	}
-	else
-	{
-		 total = 0.0f;
+		return 1.0f;
 	}
 
-	return 1.0f - total;
-}*/
+	float x = min(distance, radius);
+	return sqr(1.0f - sqr(sqr(x / radius))) / (sqr(x) + 1.0f);
+}
 
 void main()
 {
@@ -91,38 +75,29 @@ void main()
 
 	if (!ignoreLighting && normal != vec3(0.0f))
 	{
-		vec3 irradiance = 0.1f * diffuse.rgb; // vec3(0.0f)
-		vec3 viewDir = normalize(scene.cameraPosition - worldPosition);
+		vec3 V = normalize(scene.cameraPosition - worldPosition);
+		vec3 R = reflect(-V, normal); 
 
+		outColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
 			Light light = lights.lights[i];
-
-			vec3 lightDir = light.position - worldPosition;
-			float dist = length(lightDir);
-			lightDir /= dist;
-
+			vec3 L = normalize(light.position - worldPosition);
+			float dist = length(L);
+			L /= dist;
 			float atten = attenuation(dist, light.radius);
-			vec3 radiance = light.colour.rgb * atten;
-
-			irradiance += radiance * L0(normal, lightDir, viewDir, roughness, metallic, diffuse.rgb);
+			
+			vec3 N = normalize(normal);
+			float NdotL = max(0.0f, dot(N, L));
+			vec3 diff = light.colour.rgb * diffuse.rgb * NdotL * atten;
+			
+			vec3 R = reflect(-L, N);
+			float NdotR = max(0.0, dot(R, V));
+			vec3 spec = light.colour.rgb * diffuse.a * pow(NdotR, 16.0) * atten;
+			
+			outColour.rgb += diff + spec;	
 		}
-
-#if USE_IBL
-		irradiance += ibl_irradiance(samplerIbl, samplerBrdf, normal, viewDir, roughness, metallic, diffuse.rgb);
-#endif
-
-		outColour = vec4(irradiance, 1.0f);
-
-		/*if (scene.shadowDarkness >= 0.07f)
-		{
-			vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
-			float distanceAway = length(screenPosition.xyz);
-			distanceAway = distanceAway - ((scene.shadowDistance * 2.0f) - scene.shadowTransition);
-			distanceAway = distanceAway / scene.shadowTransition;
-			shadowCoords.w = clamp(1.0f - distanceAway, 0.0f, 1.0f);
-			outColour *= shadow(shadowCoords);
-		}*/
 	}
 
 	if (!ignoreFog && normal != vec3(0.0f))

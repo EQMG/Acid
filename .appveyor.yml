@@ -57,4 +57,4 @@ after_build:
 
 artifacts:
   - path: Artifacts\%CFG%_%ARCHITECTURE%\
-    name: Acid (%CFG% %ARCHITECTURE%) %version%
+    name: Acid (%CFG% %ARCHITECTURE%)

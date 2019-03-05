@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include "Vector3.hpp"
 #include "Vector4.hpp"
-#include "Maths.hpp"
 
 namespace acid
 {
@@ -157,7 +156,7 @@ namespace acid
 
 	bool Colour::operator==(const Colour &other) const
 	{
-		return m_r == other.m_r && m_g == other.m_r && m_b == other.m_b && m_a == other.m_a;
+		return m_r == other.m_r && m_g == other.m_g && m_b == other.m_b && m_a == other.m_a;
 	}
 
 	bool Colour::operator!=(const Colour &other) const

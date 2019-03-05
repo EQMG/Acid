@@ -369,7 +369,7 @@ namespace acid
 
 		Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
 		Log::Popup("GLFW Error", failure);
-		throw std::runtime_error("GLFW error");
+		throw std::runtime_error("GLFW error: " + result);
 	}
 
 	std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const

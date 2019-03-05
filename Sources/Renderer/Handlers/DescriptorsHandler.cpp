@@ -143,6 +143,11 @@ namespace acid
 					continue;
 				}
 
+				if (descriptor.descriptor == nullptr)
+				{
+					continue;
+				}
+
 				auto writeDescriptor = descriptor.descriptor->GetWriteDescriptor(descriptor.location,
 					*descriptorType, m_pushDescriptors ? VK_NULL_HANDLE : m_descriptorSet->GetDescriptorSet(), descriptor.offsetSize);
 				m_writeDescriptorSets.emplace_back(writeDescriptor.GetWriteDescriptorSet());

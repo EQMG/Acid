@@ -26,10 +26,30 @@ namespace acid
 
 		void SetNormal(const Vector3 &normal) { m_normal = normal; };
 
+		bool operator==(const VertexModel &other) const;
+
+		bool operator!=(const VertexModel &other) const;
+
 		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 	private:
 		Vector3 m_position;
 		Vector2 m_uv;
 		Vector3 m_normal;
+	};
+}
+
+namespace std
+{
+	template<>
+	struct hash<acid::VertexModel>
+	{
+		size_t operator()(acid::VertexModel const &vertex) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, vertex.GetPosition());
+			acid::Maths::HashCombine(seed, vertex.GetUv());
+			acid::Maths::HashCombine(seed, vertex.GetNormal());
+			return seed;
+		}
 	};
 }

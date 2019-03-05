@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
 		buffer.pop();
 
-		if (buffer.front() != 2)
+		if (buffer.front() != 11)
 		{
 			return false;
 		}

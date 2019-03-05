@@ -1,11 +1,11 @@
-#include "FilterCrt.hpp"
+#include "FilterCRT.hpp"
 
 #include "Renderer/Renderer.hpp"
 
 namespace acid
 {
-	FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
-		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Crt.frag"}, {}),
+	FilterCRT::FilterCRT(const Pipeline::Stage &pipelineStage, const Colour &screenColour, const float &curveAmountX, const float &curveAmountY, const float &scanLineSize, const float &scanIntensity) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/CRT.frag"}, {}),
 		m_screenColour(screenColour),
 		m_curveAmountX(curveAmountX),
 		m_curveAmountY(curveAmountY),
@@ -14,7 +14,7 @@ namespace acid
 	{
 	}
 
-	void FilterCrt::Render(const CommandBuffer &commandBuffer)
+	void FilterCRT::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		m_pushScene.Push("screenColour", m_screenColour);

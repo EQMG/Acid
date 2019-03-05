@@ -193,3 +193,18 @@ namespace acid
 		};
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<acid::Matrix2>
+	{
+		size_t operator()(acid::Matrix2 const &matrix) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, matrix[0]);
+			acid::Maths::HashCombine(seed, matrix[1]);
+			return seed;
+		}
+	};
+}

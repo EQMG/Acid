@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <stdexcept>
-#include "Maths.hpp"
 
 namespace acid
 {
@@ -192,7 +191,7 @@ namespace acid
 
 	bool Vector2::operator==(const Vector2 &other) const
 	{
-		return m_x == other.m_x && m_y == other.m_x;
+		return m_x == other.m_x && m_y == other.m_y;
 	}
 
 	bool Vector2::operator!=(const Vector2 &other) const

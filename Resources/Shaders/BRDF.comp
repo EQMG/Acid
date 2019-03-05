@@ -1,12 +1,12 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
 
-layout(local_size_x = WORKGROUP_SIZE, local_size_y = WORKGROUP_SIZE, local_size_z = 1) in;
+layout(local_size_x = 16, local_size_y = 16) in;
 
 layout(binding = 0, rgba8) uniform writeonly image2D outColour;
 
+const float PI = 3.1415926535897932384626433832795;
 const uint NUM_SAMPLES = 1024u;
-const float PI = 3.1415926536;
 
 // Based omn http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
 float random(vec2 co)
@@ -67,7 +67,7 @@ vec2 BRDF(float NoV, float roughness)
 
 	vec2 LUT = vec2(0.0f);
 
-	for(uint i = 0u; i < NUM_SAMPLES; i++)
+	for (uint i = 0u; i < NUM_SAMPLES; i++)
 	{
 		vec2 Xi = hammersley2d(i, NUM_SAMPLES);
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
@@ -92,6 +92,6 @@ vec2 BRDF(float NoV, float roughness)
 
 void main()
 {
-	vec2 uv = gl_GlobalInvocationID.xy / vec2(WIDTH, HEIGHT);
+	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
 	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(BRDF(uv.x, uv.y), 0.0f, 1.0f));
 }

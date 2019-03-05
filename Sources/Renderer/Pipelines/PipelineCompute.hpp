@@ -16,29 +16,19 @@ namespace acid
 		/// Creates a new compute pipeline.
 		/// </summary>
 		/// <param name="shaderStage"> The shader file that will be loaded. </param>
-		/// <param name="width"> The width used in local_size_x. </param>
-		/// <param name="height"> The height used in local_size_y. </param>
-		/// <param name="workgroupSize"> The amount of workgroups to use. </param>
 		/// <param name="defines"> A list of defines added to the top of each shader. </param>
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
-		explicit PipelineCompute(std::string shaderStage, const uint32_t &width, const uint32_t &height, const uint32_t &workgroupSize = 16, 
-			std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
+		explicit PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
 
 		~PipelineCompute();
 
 		const std::string &GetShaderStage() const { return m_shaderStage; }
 
-		const uint32_t &GetWidth() const { return m_width; }
-
-		const uint32_t &GetHeight() const { return m_height; }
-
-		const uint32_t &GetWorkgroupSize() const { return m_workgroupSize; }
-
 		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
 
 		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-		bool CmdRender(const CommandBuffer &commandBuffer) const;
+		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const;
 
 		const Shader *GetShaderProgram() const override { return m_shader.get(); }
 
@@ -63,9 +53,6 @@ namespace acid
 		void CreatePipelineCompute();
 
 		std::string m_shaderStage;
-		uint32_t m_width;
-		uint32_t m_height;
-		uint32_t m_workgroupSize;
 		std::vector<Shader::Define> m_defines;
 		bool m_pushDescriptors;
 

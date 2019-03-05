@@ -11,7 +11,7 @@ namespace test
 		public Material
 	{
 	public:
-		explicit MaterialTerrain(const std::shared_ptr<Texture> &textureR = nullptr, const std::shared_ptr<Texture> &textureG = nullptr);
+		explicit MaterialTerrain(std::shared_ptr<Texture> textureR = nullptr, std::shared_ptr<Texture> textureG = nullptr);
 
 		void Start() override;
 

@@ -4,11 +4,11 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterSsao :
+	class ACID_EXPORT FilterSSAO :
 		public PostFilter
 	{
 	public:
-		explicit FilterSsao(const Pipeline::Stage &pipelineStage);
+		explicit FilterSSAO(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 	private:

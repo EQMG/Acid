@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstdint>
 #include <algorithm>
+#include <functional>
+#include <type_traits>
 #include "Engine/Exports.hpp"
 
 namespace acid
@@ -138,5 +140,17 @@ namespace acid
 		/// <param name="angle"> The angle. </param>
 		/// <returns> The resulting cosign. </returns>
 		static float CosFromSin(const float &sin, const float &angle);
+
+		/// <summary>
+		/// Combines a seed into a hash and modifies the seed by the new hash.
+		/// </summary>
+		/// <param name="seed"> The seed. </param>
+		/// <param name="v"> The value to hash. </param>
+		template<typename T>
+		static void HashCombine(std::size_t &seed, const T &v)
+		{
+			std::hash<T> hasher;
+			seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+		}
 	};
 }

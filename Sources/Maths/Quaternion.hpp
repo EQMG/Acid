@@ -242,3 +242,20 @@ namespace acid
 		};
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<acid::Quaternion>
+	{
+		size_t operator()(acid::Quaternion const &quaternion) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, quaternion.m_x);
+			acid::Maths::HashCombine(seed, quaternion.m_y);
+			acid::Maths::HashCombine(seed, quaternion.m_z);
+			acid::Maths::HashCombine(seed, quaternion.m_w);
+			return seed;
+		}
+	};
+}

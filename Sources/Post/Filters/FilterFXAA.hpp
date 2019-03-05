@@ -4,11 +4,11 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterFxaa :
+	class ACID_EXPORT FilterFXAA :
 		public PostFilter
 	{
 	public:
-		explicit FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax = 8.0f);
+		explicit FilterFXAA(const Pipeline::Stage &pipelineStage, const float &spanMax = 8.0f);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 

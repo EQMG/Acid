@@ -355,7 +355,7 @@ namespace acid
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		auto end = path.find_last_of(Separator + "/");
+		auto end = path.find_last_of(std::string(1, Separator) + "/");
 #else
 		auto end = path.find_last_of(Separator);
 #endif
@@ -363,7 +363,7 @@ namespace acid
 		if (end == path.length() - 1)
 		{
 #if defined(ACID_BUILD_WINDOWS)
-			end = path.find_last_of(Separator + "/", end);
+			end = path.find_last_of(std::string(1, Separator) + "/", end);
 #else
 			end = path.find_last_of(Separator, end);
 #endif

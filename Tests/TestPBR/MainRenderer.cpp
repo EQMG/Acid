@@ -52,7 +52,7 @@ namespace test
 
 		rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
-		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1), RendererDeferred::Type::Ibl);
+		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
 		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
 		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);

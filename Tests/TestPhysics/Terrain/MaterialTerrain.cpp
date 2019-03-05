@@ -1,13 +1,14 @@
 #include "MaterialTerrain.hpp"
 
+#include <utility>
 #include <Scenes/Entity.hpp>
 #include <Models/VertexModel.hpp>
 
 namespace test
 {
-	MaterialTerrain::MaterialTerrain(const std::shared_ptr<Texture> &textureR, const std::shared_ptr<Texture> &textureG) :
-		m_textureR(textureR),
-		m_textureG(textureG)
+	MaterialTerrain::MaterialTerrain(std::shared_ptr<Texture> textureR, std::shared_ptr<Texture> textureG) :
+		m_textureR(std::move(textureR)),
+		m_textureG(std::move(textureG))
 	{
 	}
 
@@ -22,14 +23,14 @@ namespace test
 
 	void MaterialTerrain::Decode(const Metadata &metadata)
 	{
-		m_textureR = Texture::Create(metadata.GetChild<std::string>("Texture R"));
-		m_textureG = Texture::Create(metadata.GetChild<std::string>("Texture G"));
+		metadata.GetResource("Texture R", m_textureR);
+		metadata.GetResource("Texture G", m_textureG);
 	}
 
 	void MaterialTerrain::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::shared_ptr<Texture>>("Texture R", m_textureR);
-		metadata.SetChild<std::shared_ptr<Texture>>("Texture G", m_textureG);
+		metadata.SetResource("Texture R", m_textureR);
+		metadata.SetResource("Texture G", m_textureG);
 	}
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)

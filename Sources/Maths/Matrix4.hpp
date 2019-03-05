@@ -307,3 +307,20 @@ namespace acid
 		};
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<acid::Matrix4>
+	{
+		size_t operator()(acid::Matrix4 const &matrix) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, matrix[0]);
+			acid::Maths::HashCombine(seed, matrix[1]);
+			acid::Maths::HashCombine(seed, matrix[2]);
+			acid::Maths::HashCombine(seed, matrix[3]);
+			return seed;
+		}
+	};
+}

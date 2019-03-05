@@ -200,3 +200,19 @@ namespace acid
 		};
 	};
 }
+
+namespace std
+{
+	template<>
+	struct hash<acid::Matrix3>
+	{
+		size_t operator()(acid::Matrix3 const &matrix) const noexcept
+		{
+			size_t seed = 0;
+			acid::Maths::HashCombine(seed, matrix[0]);
+			acid::Maths::HashCombine(seed, matrix[1]);
+			acid::Maths::HashCombine(seed, matrix[2]);
+			return seed;
+		}
+	};
+}

@@ -23,6 +23,8 @@ namespace acid
 		/// <param name="defines"> A list of names that will be added as a #define. </param>
 		PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines = {});
 
+		virtual ~PostFilter() = default;
+
 		const DescriptorsHandler &GetDescriptorSet() const { return m_descriptorSet; }
 
 		const PipelineGraphics &GetPipeline() const { return m_pipeline; }

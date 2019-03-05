@@ -14,12 +14,7 @@ namespace acid
 		public RenderPipeline
 	{
 	public:
-		enum class Type
-		{
-			Ibl, Simple
-		};
-
-		explicit RendererDeferred(const Pipeline::Stage &pipelineStage, const Type &type);
+		explicit RendererDeferred(const Pipeline::Stage &pipelineStage);
 
 		void Render(const CommandBuffer &commandBuffer) override;
 
@@ -36,22 +31,23 @@ namespace acid
 
 		std::vector<Shader::Define> GetDefines();
 
-		static std::shared_ptr<Texture> ComputeBrdf(const uint32_t &size);
+		static std::unique_ptr<Texture> ComputeBRDF(const uint32_t &size);
 
-		static std::shared_ptr<Cubemap> ComputeIbl(const std::shared_ptr<Cubemap> &source);
+		static std::unique_ptr<Cubemap> ComputeIrradiance(const std::shared_ptr<Cubemap> &source);
+
+		static std::unique_ptr<Cubemap> ComputePrefiltered(const std::shared_ptr<Cubemap> &source);
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;
 		StorageHandler m_storageLights;
 
-		Type m_type;
-
 		PipelineGraphics m_pipeline;
 
-		std::shared_ptr<Texture> m_brdf;
+		std::unique_ptr<Texture> m_brdf;
 
 		std::shared_ptr<Cubemap> m_skybox;
-		std::shared_ptr<Cubemap> m_ibl;
+		std::unique_ptr<Cubemap> m_irradiance;
+		std::unique_ptr<Cubemap> m_prefiltered;
 
 		Fog m_fog;
 	};
