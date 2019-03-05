@@ -27,11 +27,11 @@ namespace acid
 
 		void Encode(Metadata &metadata) const override;
 
-		virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
+		const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
-		virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
+		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) { return VertexModel::GetVertexInput(binding); }
 
-		virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+		void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 	private:
 		std::shared_ptr<Model> m_model;
 	};

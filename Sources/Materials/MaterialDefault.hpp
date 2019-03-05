@@ -68,7 +68,6 @@ namespace acid
 	private:
 		std::vector<Shader::Define> GetDefines() const;
 
-		bool m_animated;
 		Colour m_baseDiffuse;
 		std::shared_ptr<Texture> m_diffuseTexture;
 

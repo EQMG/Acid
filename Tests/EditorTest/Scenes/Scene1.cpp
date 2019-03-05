@@ -1,7 +1,6 @@
 #include "Scene1.hpp"
 
 #include <thread>
-#include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
@@ -42,11 +41,8 @@ namespace test
 	Scene1::Scene1() :
 		Scene(new CameraFps()),
 		m_buttonSpawnSphere(MouseButton::Left),
-		m_buttonFullscreen(Key::F11),
 		m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::Escape, Key::M)),
-		m_buttonScreenshot(Key::F12),
 		m_buttonSave(Key::K),
-		m_buttonExit(Key::Delete),
 		m_soundScreenshot("Sounds/Screenshot.ogg"),
 		m_uiStartLogo(&Uis::Get()->GetContainer()),
 		m_overlayDebug(&Uis::Get()->GetContainer())
@@ -71,17 +67,6 @@ namespace test
 
 		// Skybox.
 		auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
-
-		// Animated model.
-#if !defined(ACID_BUILD_MSVC)
-		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
-		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-		animatedObject->AddComponent<Rigidbody>(0.0f);
-		animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
-		animatedObject->AddComponent<MeshRender>();
-		animatedObject->AddComponent<ShadowRender>();
-#endif
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
@@ -161,27 +146,9 @@ namespace test
 		//		Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 		}
 
-		if (m_buttonFullscreen.WasDown())
-		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-
 		if (m_buttonCaptureMouse->WasDown())
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
-		}
-
-		if (m_buttonScreenshot.WasDown())
-		{
-			m_soundScreenshot.Play();
-
-			// TODO: Threading.
-			std::thread t([]()
-			{
-				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
-				Renderer::Get()->CaptureScreenshot(filename);
-			});
-			t.detach();
 		}
 
 		if (m_buttonSave.WasDown())
@@ -220,11 +187,6 @@ namespace test
 				sceneFile.Write();
 			});
 			t.detach();
-		}
-
-		if (m_buttonExit.WasDown())
-		{
-			Engine::Get()->RequestClose(false);
 		}
 	}
 

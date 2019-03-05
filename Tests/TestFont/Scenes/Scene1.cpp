@@ -1,7 +1,5 @@
 #include "Scene1.hpp"
 
-#include <Animations/MeshAnimated.hpp>
-#include <Renderer/Renderer.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test

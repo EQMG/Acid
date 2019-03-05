@@ -1,5 +1,6 @@
 #include "MainGame.hpp"
 
+#include <thread>
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
@@ -50,7 +51,10 @@ int main(int argc, char **argv)
 
 namespace test
 {
-	MainGame::MainGame()
+	MainGame::MainGame() :
+		m_buttonFullscreen(Key::F11),
+		m_buttonScreenshot(Key::F12),
+		m_buttonExit(Key::Delete)
 	{
 		Log::Out("[Game] Constructor\n");
 
@@ -91,5 +95,25 @@ namespace test
 
 	void MainGame::Update()
 	{
+		if (m_buttonFullscreen.WasDown())
+		{
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+		}
+
+		if (m_buttonScreenshot.WasDown())
+		{
+			// TODO: Threading.
+			std::thread t([]()
+				{
+					std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
+					Renderer::Get()->CaptureScreenshot(filename);
+				});
+			t.detach();
+		}
+
+		if (m_buttonExit.WasDown())
+		{
+			Engine::Get()->RequestClose(false);
+		}
 	}
 }

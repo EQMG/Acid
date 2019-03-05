@@ -2,11 +2,10 @@
 
 #include <utility>
 #include <unordered_map>
-//#define TINYGLTF_IMPLEMENTATION
-//#define TINYGLTF_NO_INCLUDE_JSON
-//#define STB_IMAGE_IMPLEMENTATION
-//#define STBI_MSC_SECURE_CRT
-//#include "tiny_gltf.h"
+#define TINYGLTF_NO_STB_IMAGE
+#define TINYGLTF_NO_STB_IMAGE_WRITE
+#define TINYGLTF_IMPLEMENTATION
+#include "tiny_gltf.h"
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexModel.hpp"
@@ -67,7 +66,7 @@ namespace acid
 			return;
 		}
 
-		/*tinygltf::Model gltfModel;
+		tinygltf::Model gltfModel;
 		tinygltf::TinyGLTF gltfContext;
 		std::string warn, err;
 
@@ -84,7 +83,7 @@ namespace acid
 			{
 				throw std::runtime_error(warn + err);
 			}
-		}*/
+		}
 
 		std::vector<VertexModel> vertices = {};
 		std::vector<uint32_t> indices = {};

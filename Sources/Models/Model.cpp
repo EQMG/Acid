@@ -44,7 +44,7 @@ namespace acid
 		}
 		else
 		{
-			throw std::runtime_error("Model with no buffers cannot be rendered");
+		//	throw std::runtime_error("Model with no buffers cannot be rendered");
 			return false;
 		}
 

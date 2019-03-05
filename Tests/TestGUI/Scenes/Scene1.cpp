@@ -1,11 +1,9 @@
 #include "Scene1.hpp"
 
-#include <Animations/MeshAnimated.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/ButtonJoystick.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
-#include <Renderer/Renderer.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test

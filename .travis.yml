@@ -10,6 +10,7 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - pkg-config
+        - cmake
         - g++-7
         - xorg-dev
         - libglu1-mesa-dev
@@ -38,6 +39,7 @@ matrix:
           key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
         - pkg-config
+        - cmake
         - clang-6.0
         - g++-7
         - xorg-dev

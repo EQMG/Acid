@@ -1,7 +1,6 @@
 #include "Scene1.hpp"
 
 #include <thread>
-#include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
@@ -13,6 +12,7 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
+#include <Models/Gltf/ModelGltf.hpp>
 #include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
@@ -96,15 +96,11 @@ namespace test
 		auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3(), Vector3(), 2048.0f));
 
 		// Animated model.
-#if !defined(ACID_BUILD_MSVC)
-		auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
-		animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-		animatedObject->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-	//	animatedObject->AddComponent<Rigidbody>(0.0f);
-	//	animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
-		animatedObject->AddComponent<MeshRender>();
-		animatedObject->AddComponent<ShadowRender>();
-#endif
+	//	auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
+	//	animatedObject->AddComponent<Mesh>(ModelGltf::Create("Objects/Animated/Model.glb"));
+	//	animatedObject->AddComponent<MaterialDefault>();
+	//	animatedObject->AddComponent<MeshRender>();
+	//	animatedObject->AddComponent<ShadowRender>();
 
 		// Entities.
 		auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, -4000.0f), Vector3(), 18.0f));
@@ -150,10 +146,16 @@ namespace test
 		}
 
 		auto suzanne = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 10.0f), Vector3(), 1.0f));
-		suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/untitled.obj"));
+		suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/Suzanne.obj"));
 		suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
 		suzanne->AddComponent<MeshRender>();
 		suzanne->AddComponent<ShadowRender>();
+
+	//	auto suzanne1 = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 6.0f), Vector3(), 1.0f));
+	//	suzanne1->AddComponent<Mesh>(ModelGltf::Create("Objects/Suzanne/Suzanne.glb"));
+	//	suzanne1->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
+	//	suzanne1->AddComponent<MeshRender>();
+	//	suzanne1->AddComponent<ShadowRender>();
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));

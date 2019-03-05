@@ -24,14 +24,10 @@ namespace test
 		void Update() override;
 
 		bool IsPaused() const override;
-
 	private:
 		ButtonMouse m_buttonSpawnSphere;
-		ButtonKeyboard m_buttonFullscreen;
 		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
-		ButtonKeyboard m_buttonScreenshot;
 		ButtonKeyboard m_buttonSave;
-		ButtonKeyboard m_buttonExit;
 		Sound m_soundScreenshot;
 
 		UiStartLogo m_uiStartLogo;

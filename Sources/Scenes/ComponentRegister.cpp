@@ -1,12 +1,12 @@
 #include "ComponentRegister.hpp"
 
-#include "Animations/MeshAnimated.hpp"
 #include "Emitters/EmitterCircle.hpp"
 #include "Emitters/EmitterLine.hpp"
 #include "Emitters/EmitterPoint.hpp"
 #include "Emitters/EmitterSphere.hpp"
 #include "Lights/Light.hpp"
 #include "Materials/MaterialDefault.hpp"
+#include "Meshes/Mesh.hpp"
 #include "Meshes/MeshRender.hpp"
 #include "Particles/ParticleSystem.hpp"
 #include "Physics/Colliders/ColliderCapsule.hpp"
@@ -41,7 +41,6 @@ namespace acid
 		Add<MaterialDefault>("MaterialDefault");
 		Add<MaterialSkybox>("MaterialSkybox");
 		Add<Mesh>("Mesh");
-		Add<MeshAnimated>("MeshAnimated");
 		Add<MeshRender>("MeshRender");
 		Add<ParticleSystem>("ParticleSystem");
 		Add<Rigidbody>("Rigidbody");

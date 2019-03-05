@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Models/Model.hpp"
+#include "Textures/Texture.hpp"
 
 namespace acid
 {
