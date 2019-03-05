@@ -118,7 +118,7 @@ namespace acid
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-		PipelineCompute compute = PipelineCompute("Shaders/BRDF.comp");
+		PipelineCompute compute = PipelineCompute("Shaders/Brdf.comp");
 
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
@@ -136,7 +136,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the BRDF texture.
-		std::string filename = FileSystem::GetWorkingDirectory() + "/BRDF.png";
+		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
 		std::unique_ptr<uint8_t[]> pixels(result->GetPixels());
 		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());

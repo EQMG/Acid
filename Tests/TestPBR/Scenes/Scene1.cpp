@@ -10,7 +10,7 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Models/OBJ/ModelOBJ.hpp>
+#include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Particles/ParticleSystem.hpp>
@@ -67,7 +67,7 @@ namespace test
 				sphere->AddComponent<ShadowRender>();
 
 				auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
-				teapot->AddComponent<Mesh>(ModelOBJ::Create("Objects/Testing/Model_Tea.obj"));
+				teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 				teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 4.0f, i / 4.0f);
 				teapot->AddComponent<MeshRender>();
 				teapot->AddComponent<ShadowRender>();

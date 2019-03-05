@@ -13,7 +13,7 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Meshes/MeshRender.hpp>
-#include <Models/OBJ/ModelOBJ.hpp>
+#include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
@@ -150,13 +150,13 @@ namespace test
 		}
 
 		auto suzanne = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 10.0f), Vector3(), 1.0f));
-		suzanne->AddComponent<Mesh>(ModelOBJ::Create("Objects/Suzanne/untitled.obj"));
+		suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/untitled.obj"));
 		suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
 		suzanne->AddComponent<MeshRender>();
 		suzanne->AddComponent<ShadowRender>();
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot->AddComponent<Mesh>(ModelOBJ::Create("Objects/Testing/Model_Tea.obj"));
+		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f, nullptr, Texture::Create("Objects/Testing/Normal.png"));
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
@@ -173,7 +173,7 @@ namespace test
 		teapotCone->AddComponent<ShadowRender>();
 
 		auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot2->AddComponent<Mesh>(ModelOBJ::Create("Objects/Testing/Model_Tea.obj"));
+		teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.1f, 0.7f);
 	//	teapot2->AddComponent<Rigidbody>(1.0f);
 	//	teapot2->AddComponent<ColliderConvexHull>();
@@ -183,7 +183,7 @@ namespace test
 		teapot2->AddComponent<ShadowRender>();
 
 		auto teapot3 = GetStructure()->CreateEntity(Transform(Vector3(11.0f, 2.0f, 10.0f), Vector3(), 0.2f));
-		teapot3->AddComponent<Mesh>(ModelOBJ::Create("Objects/Testing/Model_Tea.obj"));
+		teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 		teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f);
 	//	teapot3->AddComponent<Rigidbody>(1.0f);
 	//	teapot3->AddComponent<ColliderConvexHull>();

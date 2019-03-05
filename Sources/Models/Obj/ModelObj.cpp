@@ -1,4 +1,4 @@
-#include "ModelOBJ.hpp"
+#include "ModelObj.hpp"
 
 #include <utility>
 #include <unordered_map>
@@ -6,14 +6,15 @@
 #include "tiny_obj_loader.h"
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
+#include "Models/VertexModel.hpp"
 
 namespace acid
 {
 	class MaterialStreamReader : public tinyobj::MaterialReader
 	{
 	public:
-		explicit MaterialStreamReader(const std::string &folder) : 
-			m_folder(folder)
+		explicit MaterialStreamReader(std::string folder) : 
+			m_folder(std::move(folder))
 		{
 		}
 
@@ -46,40 +47,40 @@ namespace acid
 		std::string m_folder;
 	};
 
-	std::shared_ptr<ModelOBJ> ModelOBJ::Create(const Metadata &metadata)
+	std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	{
 		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
-			return std::dynamic_pointer_cast<ModelOBJ>(resource);
+			return std::dynamic_pointer_cast<ModelObj>(resource);
 		}
 
-		auto result = std::make_shared<ModelOBJ>("");
+		auto result = std::make_shared<ModelObj>("");
 		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<ModelOBJ> ModelOBJ::Create(const std::string &filename)
+	std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 	{
-		auto temp = ModelOBJ(filename, false);
+		auto temp = ModelObj(filename, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	ModelOBJ::ModelOBJ(std::string filename, const bool &load) :
+	ModelObj::ModelObj(std::string filename, const bool &load) :
 		m_filename(std::move(filename))
 	{
 		if (load)
 		{
-			ModelOBJ::Load();
+			ModelObj::Load();
 		}
 	}
 
-	void ModelOBJ::Load()
+	void ModelObj::Load()
 	{
 		if (m_filename.empty())
 		{
@@ -150,14 +151,14 @@ namespace acid
 		Initialize(vertices, indices);
 	}
 
-	void ModelOBJ::Decode(const Metadata &metadata)
+	void ModelObj::Decode(const Metadata &metadata)
 	{
 		metadata.GetChild("Filename", m_filename);
 	}
 
-	void ModelOBJ::Encode(Metadata &metadata) const
+	void ModelObj::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<std::string>("Type", "ModelOBJ");
+		metadata.SetChild<std::string>("Type", "ModelObj");
 		metadata.SetChild("Filename", m_filename);
 	}
 }

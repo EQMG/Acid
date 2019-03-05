@@ -1,4 +1,4 @@
-#include "FilterSSAO.hpp"
+#include "FilterSsao.hpp"
 
 #include "Files/FileSystem.hpp"
 #include "Maths/Colour.hpp"
@@ -12,8 +12,8 @@ namespace acid
 	static const uint32_t SSAO_KERNEL_SIZE = 64;
 	static const float SSAO_RADIUS = 0.5f;
 
-	FilterSSAO::FilterSSAO(const Pipeline::Stage &pipelineStage) :
-		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/SSAO.frag"}, GetDefines()),
+	FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
+		PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()),
 		m_noise(ComputeNoise(SSAO_NOISE_DIM)),
 		m_kernel(SSAO_KERNEL_SIZE)
 	{
@@ -28,7 +28,7 @@ namespace acid
 		}
 	}
 
-	void FilterSSAO::Render(const CommandBuffer &commandBuffer)
+	void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	{
 		// Updates uniforms.
 		auto camera = Scenes::Get()->GetCamera();
@@ -57,7 +57,7 @@ namespace acid
 		vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
 	}
 
-	std::vector<Shader::Define> FilterSSAO::GetDefines()
+	std::vector<Shader::Define> FilterSsao::GetDefines()
 	{
 		std::vector<Shader::Define> result = {};
 		result.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
@@ -66,7 +66,7 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<Texture> FilterSSAO::ComputeNoise(const uint32_t &size)
+	std::shared_ptr<Texture> FilterSsao::ComputeNoise(const uint32_t &size)
 	{
 		std::vector<Colour> ssaoNoise(size * size);
 

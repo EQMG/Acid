@@ -108,7 +108,8 @@ set(_temp_acid_headers
 		Models/IVertex.hpp
 		Models/Model.hpp
 		Models/ModelRegister.hpp
-		Models/OBJ/ModelOBJ.hpp
+		Models/Gltf/ModelGltf.hpp
+		Models/Obj/ModelObj.hpp
 		Models/Shapes/MeshPattern.hpp
 		Models/Shapes/MeshSimple.hpp
 		Models/Shapes/ModelCube.hpp
@@ -154,19 +155,19 @@ set(_temp_acid_headers
 		Physics/Rigidbody.hpp
 		Post/Deferred/RendererDeferred.hpp
 		Post/Filters/FilterBlur.hpp
-		Post/Filters/FilterCRT.hpp
+		Post/Filters/FilterCrt.hpp
 		Post/Filters/FilterDarken.hpp
 		Post/Filters/FilterDefault.hpp
-		Post/Filters/FilterDOF.hpp
+		Post/Filters/FilterDof.hpp
 		Post/Filters/FilterEmboss.hpp
-		Post/Filters/FilterFXAA.hpp
+		Post/Filters/FilterFxaa.hpp
 		Post/Filters/FilterGrain.hpp
 		Post/Filters/FilterGrey.hpp
 		Post/Filters/FilterLensflare.hpp
 		Post/Filters/FilterNegative.hpp
 		Post/Filters/FilterPixel.hpp
 		Post/Filters/FilterSepia.hpp
-		Post/Filters/FilterSSAO.hpp
+		Post/Filters/FilterSsao.hpp
 		Post/Filters/FilterTiltshift.hpp
 		Post/Filters/FilterTone.hpp
 		Post/Filters/FilterVignette.hpp
@@ -324,7 +325,8 @@ set(_temp_acid_sources
 		Meshes/RendererMeshes.cpp
 		Models/Model.cpp
 		Models/ModelRegister.cpp
-		Models/OBJ/ModelOBJ.cpp
+		Models/Gltf/ModelGltf.cpp
+		Models/Obj/ModelObj.cpp
 		Models/Shapes/MeshPattern.cpp
 		Models/Shapes/MeshSimple.cpp
 		Models/Shapes/ModelCube.cpp
@@ -370,19 +372,19 @@ set(_temp_acid_sources
 		Physics/Rigidbody.cpp
 		Post/Deferred/RendererDeferred.cpp
 		Post/Filters/FilterBlur.cpp
-		Post/Filters/FilterCRT.cpp
+		Post/Filters/FilterCrt.cpp
 		Post/Filters/FilterDarken.cpp
 		Post/Filters/FilterDefault.cpp
-		Post/Filters/FilterDOF.cpp
+		Post/Filters/FilterDof.cpp
 		Post/Filters/FilterEmboss.cpp
-		Post/Filters/FilterFXAA.cpp
+		Post/Filters/FilterFxaa.cpp
 		Post/Filters/FilterGrain.cpp
 		Post/Filters/FilterGrey.cpp
 		Post/Filters/FilterLensflare.cpp
 		Post/Filters/FilterNegative.cpp
 		Post/Filters/FilterPixel.cpp
 		Post/Filters/FilterSepia.cpp
-		Post/Filters/FilterSSAO.cpp
+		Post/Filters/FilterSsao.cpp
 		Post/Filters/FilterTiltshift.cpp
 		Post/Filters/FilterTone.cpp
 		Post/Filters/FilterVignette.cpp
