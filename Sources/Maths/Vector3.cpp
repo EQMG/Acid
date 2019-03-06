@@ -86,7 +86,7 @@ namespace acid
 
 	float Vector3::Dot(const Vector3 &other) const
 	{
-		return m_x * other.m_x + m_y * other.m_y;
+		return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
 	}
 
 	Vector3 Vector3::Cross(const Vector3 &other) const
@@ -128,7 +128,7 @@ namespace acid
 			throw std::runtime_error("Can't normalize a zero length vector");
 		}
 
-		return Vector3(m_x / l, m_y / l, m_z / l);
+		return *this / l;
 	}
 
 	float Vector3::LengthSquared() const
@@ -342,36 +342,6 @@ namespace acid
 		return !(*this == other);
 	}
 
-	bool Vector3::operator<(const Vector3 &other) const
-	{
-		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z;
-	}
-
-	bool Vector3::operator<=(const Vector3 &other) const
-	{
-		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z;
-	}
-
-	bool Vector3::operator>(const Vector3 &other) const
-	{
-		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z;
-	}
-
-	bool Vector3::operator>=(const Vector3 &other) const
-	{
-		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z;
-	}
-
-	bool Vector3::operator==(const float &value) const
-	{
-		return m_x == value && m_y == value && m_z == value;
-	}
-
-	bool Vector3::operator!=(const float &value) const
-	{
-		return !(*this == value);
-	}
-
 	Vector3 Vector3::operator-() const
 	{
 		return Negate();
@@ -498,6 +468,7 @@ namespace acid
 	std::string Vector3::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
 		return result.str();
 	}

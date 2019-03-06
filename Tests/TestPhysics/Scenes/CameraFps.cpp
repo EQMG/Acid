@@ -3,7 +3,6 @@
 #include <Scenes/Scenes.hpp>
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
-#include <Maths/Quaternion.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Physics/CollisionObject.hpp>
 #include "PlayerFps.hpp"
@@ -28,11 +27,11 @@ namespace test
 	static const float MAX_HORIZONTAL_CHANGE = 30.0f;
 	static const float MAX_VERTICAL_CHANGE = 30.0f;
 
-	static const float MAX_ANGLE_OF_ELEVATION = 85.0f;
-	static const float MIN_ANGLE_OF_ELEVATION = -85.0f;
+	static const float MAX_ANGLE_OF_ELEVATION = 270.0f;
+	static const float MIN_ANGLE_OF_ELEVATION = 90.0f;
 
 	CameraFps::CameraFps() :
-		m_angleOfElevation(25.0f),
+		m_angleOfElevation(180.0f),
 		m_angleAroundPlayer(0.0f),
 		m_targetElevation(m_angleOfElevation),
 		m_targetRotationAngle(m_angleAroundPlayer),
@@ -72,25 +71,25 @@ namespace test
 		if (scenePlayer != nullptr)
 		{
 			auto playerPosition = scenePlayer->GetParent()->GetWorldTransform().GetPosition();
-			//	auto playerRotation = scenePlayer->GetParent()->GetWorldTransform().GetRotation();
+		//	auto playerRotation = scenePlayer->GetParent()->GetWorldTransform().GetRotation();
 
 			m_velocity = (playerPosition - m_targetPosition) / delta;
 			m_targetPosition = playerPosition + Vector3(0.0f, VIEW_HEIGHT, 0.0f);
-			//	m_targetRotation = playerRotation;
+		//	m_targetRotation = playerRotation;
 		}
 
 		UpdateHorizontalAngle(delta);
 		UpdatePitchAngle(delta);
 		UpdatePosition();
 
-		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
-		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+		m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation * Maths::DegToRad);
+		m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView() * Maths::DegToRad, Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 		m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
 		m_viewRay.Update(m_position, Vector2(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix); // Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()
 
-		//	auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
-		//	Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName().c_str() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
+	//	auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
+	//	Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName().c_str() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
 	}
 
 	void CameraFps::CalculateHorizontalAngle()
@@ -142,7 +141,7 @@ namespace test
 			}
 			else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton) != InputAction::Release)
 			{
-				angleChange = Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+				angleChange = -Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 			}
 		}
 
@@ -227,7 +226,7 @@ namespace test
 	{
 		m_position = m_targetPosition;
 		m_rotation.m_x = m_angleOfElevation - m_targetRotation.m_z;
-		m_rotation.m_y = m_angleAroundPlayer + m_targetRotation.m_y + 180.0f;
+		m_rotation.m_y = m_angleAroundPlayer + m_targetRotation.m_y;
 		m_rotation.m_z = 0.0f;
 	}
 }

@@ -51,7 +51,7 @@ namespace acid
 		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
 		PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
 			const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, 
-			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE, 
+			const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, 
 			const bool &pushDescriptors = false);
 
 		~PipelineGraphics();
@@ -193,7 +193,7 @@ namespace acid
 		explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {}, 
 			const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
 			const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
-			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE, 
+			const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
 			const bool &pushDescriptors = false) :
 			m_shaderStages(std::move(shaderStages)),
 			m_vertexInputs(std::move(vertexInputs)),

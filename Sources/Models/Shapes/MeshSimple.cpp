@@ -34,7 +34,7 @@ namespace acid
 				auto bottomLeft = ((row + 1) * m_vertexCount) + col;
 				auto bottomRight = bottomLeft + 1;
 
-				indices.emplace_back(topLeft);
+				indices.emplace_back(topLeft); // TODO: Reverse order.
 				indices.emplace_back(bottomLeft);
 				indices.emplace_back(topRight);
 				indices.emplace_back(topRight);

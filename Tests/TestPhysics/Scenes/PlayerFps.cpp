@@ -119,7 +119,7 @@ namespace test
 		float theta = cameraRotation.m_y * Maths::DegToRad;
 		Vector3 walkDirection = direction;
 		walkDirection.m_x = -(direction.m_z * std::sin(theta) + direction.m_x * std::cos(theta));
-		walkDirection.m_z = -(direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta));
+		walkDirection.m_z = direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta);
 
 	//	walkDirection = walkDirection.Normalize();
 		walkDirection *= m_inputSprint.IsDown() ? RUN_SPEED : m_inputCrouch.IsDown() ? CROUCH_SPEED : WALK_SPEED;

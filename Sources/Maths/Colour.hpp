@@ -151,18 +151,6 @@ namespace acid
 
 		bool operator!=(const Colour &other) const;
 
-		bool operator<(const Colour &other) const;
-
-		bool operator<=(const Colour &other) const;
-
-		bool operator>(const Colour &other) const;
-
-		bool operator>=(const Colour &other) const;
-
-		bool operator==(const float &value) const;
-
-		bool operator!=(const float &value) const;
-
 		const float &operator[](const uint32_t &index) const;
 
 		float &operator[](const uint32_t &index);

@@ -35,7 +35,7 @@ namespace acid
 				auto bottomRight = bottomLeft + 1;
 				bool mixed = col % 2 == 0;
 
-				if (row % 2 == 0)
+				if (row % 2 == 0) // TODO: Reverse order.
 				{
 					indices.emplace_back(topLeft);
 					indices.emplace_back(bottomLeft);

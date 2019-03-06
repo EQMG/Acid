@@ -98,7 +98,7 @@ namespace acid
 			throw std::runtime_error("Can't normalize a zero length vector");
 		}
 
-		return Vector2(m_x / l, m_y / l);
+		return *this / l;
 	}
 
 	float Vector2::LengthSquared() const
@@ -197,36 +197,6 @@ namespace acid
 	bool Vector2::operator!=(const Vector2 &other) const
 	{
 		return !(*this == other);
-	}
-
-	bool Vector2::operator<(const Vector2 &other) const
-	{
-		return m_x < other.m_x && m_y < other.m_y;
-	}
-
-	bool Vector2::operator<=(const Vector2 &other) const
-	{
-		return m_x <= other.m_x && m_y <= other.m_y;
-	}
-
-	bool Vector2::operator>(const Vector2 &other) const
-	{
-		return m_x > other.m_x && m_y > other.m_y;
-	}
-
-	bool Vector2::operator>=(const Vector2 &other) const
-	{
-		return m_x >= other.m_x && m_y >= other.m_y;
-	}
-
-	bool Vector2::operator==(const float &value) const
-	{
-		return m_x == value && m_y == value;
-	}
-
-	bool Vector2::operator!=(const float &value) const
-	{
-		return !(*this == value);
 	}
 
 	Vector2 Vector2::operator-() const
@@ -355,6 +325,7 @@ namespace acid
 	std::string Vector2::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Vector2(" << m_x << ", " << m_y << ")";
 		return result.str();
 	}

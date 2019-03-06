@@ -174,7 +174,7 @@ namespace acid
 		auto y = (m_minExtents.m_y + m_maxExtents.m_y) / 2.0f;
 		auto z = (m_minExtents.m_z + m_maxExtents.m_z) / 2.0f;
 		auto centre = Vector4(x, y, z, 1.0f);
-		auto invertedLight = m_lightViewMatrix.Invert();
+		auto invertedLight = m_lightViewMatrix.Inverse();
 
 		m_centre = invertedLight.Transform(centre);
 	}

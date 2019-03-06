@@ -182,18 +182,6 @@ namespace acid
 
 		bool operator!=(const Quaternion &other) const;
 
-		bool operator<(const Quaternion &other) const;
-
-		bool operator<=(const Quaternion &other) const;
-
-		bool operator>(const Quaternion &other) const;
-
-		bool operator>=(const Quaternion &other) const;
-
-		bool operator==(const float &value) const;
-
-		bool operator!=(const float &value) const;
-
 		Quaternion operator-() const;
 
 		const float &operator[](const uint32_t &index) const;

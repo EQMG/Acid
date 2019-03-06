@@ -164,36 +164,6 @@ namespace acid
 		return !(*this == other);
 	}
 
-	bool Colour::operator<(const Colour &other) const
-	{
-		return m_r < other.m_r && m_g < other.m_g && m_b < other.m_b && m_a < other.m_a;
-	}
-
-	bool Colour::operator<=(const Colour &other) const
-	{
-		return m_r <= other.m_r && m_g <= other.m_g && m_b <= other.m_b && m_a <= other.m_a;
-	}
-
-	bool Colour::operator>(const Colour &other) const
-	{
-		return m_r > other.m_r && m_g > other.m_g && m_b > other.m_b && m_a > other.m_a;
-	}
-
-	bool Colour::operator>=(const Colour &other) const
-	{
-		return m_r >= other.m_r && m_g >= other.m_g && m_b >= other.m_b && m_a >= other.m_a;
-	}
-
-	bool Colour::operator==(const float &value) const
-	{
-		return m_r == value && m_g == value && m_b == value && m_a == value;
-	}
-
-	bool Colour::operator!=(const float &value) const
-	{
-		return !(*this == value);
-	}
-
 	const float &Colour::operator[](const uint32_t &index) const
 	{
 		assert(index < 4);
@@ -315,6 +285,7 @@ namespace acid
 	std::string Colour::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
 		return result.str();
 	}

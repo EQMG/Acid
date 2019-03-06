@@ -53,14 +53,9 @@ namespace acid
 			VertexModel(Vector3(m_min, m_max, 0.0f), Vector2(0.0f, 1.0f)),
 		};
 		static std::vector<uint32_t> indices = {
-			0, 3, 2,
-			2, 1, 0
+			0, 1, 2,
+			2, 3, 0
 		};
-
-	//	for (auto &vertex : vertices)
-	//	{
-	//		vertex.SetPosition(vertex.GetPosition() * Vector3(m_min, m_max, 1.0f));
-	//	}
 
 		Initialize(vertices, indices);
 	}

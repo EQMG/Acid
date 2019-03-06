@@ -7,7 +7,6 @@
 #include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
-#include "Shadows/Shadows.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
 namespace acid
@@ -70,7 +69,6 @@ namespace acid
 
 		// Updates uniforms.
 		m_uniformScene.Push("view", camera->GetViewMatrix());
-		m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
 		m_uniformScene.Push("cameraPosition", camera->GetPosition());
 		m_uniformScene.Push("lightsCount", lightCount);
 		m_uniformScene.Push("fogColour", m_fog.GetColour());

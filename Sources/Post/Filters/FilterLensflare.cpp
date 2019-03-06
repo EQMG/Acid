@@ -41,6 +41,6 @@ namespace acid
 	void FilterLensflare::SetSunPosition(const Vector3 &sunPosition)
 	{
 		auto camera = Scenes::Get()->GetCamera();
-		m_sunPosition = Matrix4::WorldToScreenSpace(sunPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());
+		m_sunPosition = Matrix4::Project(sunPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());
 	}
 }

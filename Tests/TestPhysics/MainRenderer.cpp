@@ -22,7 +22,6 @@
 #include <Post/Pipelines/PipelineBlur.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Shadows/Shadows.hpp>
 
 namespace test
 {
@@ -69,7 +68,7 @@ namespace test
 		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
 		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
-		rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
 	//	auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
@@ -79,8 +78,8 @@ namespace test
 	//	rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-		rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
-		rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
+	//	rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
 	//	rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));
@@ -89,9 +88,9 @@ namespace test
 
 	void MainRenderer::Update()
 	{
-		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
+	//	auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
+	//	renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
+	//	renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
 
 	//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
 	//	renderpassCreate1.SetScale(0.75f);

@@ -83,7 +83,7 @@ namespace acid
 
 	float Vector4::Dot(const Vector4 &other) const
 	{
-		return m_x * other.m_x + m_y * other.m_y + m_w * other.m_w;
+		return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
 	}
 
 	Vector4 Vector4::Lerp(const Vector4 &other, const float &progression) const
@@ -112,7 +112,7 @@ namespace acid
 			throw std::runtime_error("Can't normalize a zero length vector");
 		}
 
-		return Vector4(m_x / l, m_y / l, m_z / l, m_w / l);
+		return *this / l;
 	}
 
 	float Vector4::LengthSquared() const
@@ -197,36 +197,6 @@ namespace acid
 	bool Vector4::operator!=(const Vector4 &other) const
 	{
 		return !(*this == other);
-	}
-
-	bool Vector4::operator<(const Vector4 &other) const
-	{
-		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z && m_w < other.m_w;
-	}
-
-	bool Vector4::operator<=(const Vector4 &other) const
-	{
-		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z && m_w <= other.m_w;
-	}
-
-	bool Vector4::operator>(const Vector4 &other) const
-	{
-		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z && m_w > other.m_w;
-	}
-
-	bool Vector4::operator>=(const Vector4 &other) const
-	{
-		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
-	}
-
-	bool Vector4::operator==(const float &value) const
-	{
-		return m_x == value && m_y == value && m_z == value && m_w == value;
-	}
-
-	bool Vector4::operator!=(const float &value) const
-	{
-		return !(*this == value);
 	}
 
 	Vector4 Vector4::operator-() const
@@ -355,6 +325,7 @@ namespace acid
 	std::string Vector4::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Vector4(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
 		return result.str();
 	}

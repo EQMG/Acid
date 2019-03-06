@@ -23,7 +23,6 @@
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Shadows/Shadows.hpp>
 #include "Filters/FilterBlit.hpp"
 
 namespace test
@@ -101,10 +100,6 @@ namespace test
 
 	void MainRenderer::Update()
 	{
-		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
-
 		auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
 
 		if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release)

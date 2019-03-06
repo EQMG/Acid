@@ -331,10 +331,10 @@ namespace acid
 		auto textureMaxY = character.m_maxTextureCoordY;
 
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
-		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
-		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
-		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
 		AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
+		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
 		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	}
 

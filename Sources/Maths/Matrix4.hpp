@@ -3,6 +3,7 @@
 #include <ostream>
 #include <string>
 #include "Serialized/Metadata.hpp"
+#include "Vector2.hpp"
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
@@ -10,8 +11,6 @@ namespace acid
 {
 	class Matrix2;
 	class Matrix3;
-	class Quaternion;
-	class Vector2;
 
 	/// <summary>
 	/// Holds a row major 4x4 matrix.
@@ -134,10 +133,10 @@ namespace acid
 		Matrix4 Negate() const;
 
 		/// <summary>
-		/// Negates this matrix.
+		/// Inverses this matrix.
 		/// </summary>
-		/// <returns> The negated matrix. </returns>
-		Matrix4 Invert() const;
+		/// <returns> The inversed matrix. </returns>
+		Matrix4 Inverse() const;
 
 		/// <summary>
 		/// Transposes this matrix.
@@ -167,15 +166,6 @@ namespace acid
 		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
 
 		/// <summary>
-		/// Creates a new transformation matrix for a object in 3d space.
-		/// </summary>
-		/// <param name="translation"> Translation amount the XYZ. </param>
-		/// <param name="rotation"> Rotation amount. </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale);
-
-		/// <summary>
 		/// Creates a new perspective matrix.
 		/// </summary>
 		/// <param name="fov"> The cameras FOV. </param>
@@ -186,51 +176,74 @@ namespace acid
 		static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar);
 
 		/// <summary>
+		/// Creates a new perspective matrix with a infinite view distance.
+		/// </summary>
+		/// <param name="fov"> The cameras FOV. </param>
+		/// <param name="aspectRatio"> The cameras aspect ratio. </param>
+		/// <param name="zNear"> The cameras near plane. </param>
+		/// <returns> The transformation matrix. </returns>
+		static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear);
+
+		/// <summary>
 		/// Creates a new orthographic matrix.
 		/// </summary>
 		/// <param name="left"> The left plane. </param>
 		/// <param name="right"> The right plane. </param>
 		/// <param name="bottom"> The bottom plane. </param>
 		/// <param name="top"> The top plane. </param>
-		/// <param name="near"> The near plane. </param>
-		/// <param name="far"> The far plane. </param>
-		/// <param name="destination"> The destination matrix or nullptr if a new matrix is to be created. </param>
-		/// <returns> The transformation matrix. </returns>
-		static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far);
+		/// <param name="zNear"> The near plane. </param>
+		/// <param name="zFar"> The far plane. </param>
+		/// <returns> The orthographic matrix. </returns>
+		static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
+
+		/// <summary>
+		/// Creates a new frustum matrix.
+		/// </summary>
+		/// <param name="left"> The left plane. </param>
+		/// <param name="right"> The right plane. </param>
+		/// <param name="bottom"> The bottom plane. </param>
+		/// <param name="top"> The top plane. </param>
+		/// <param name="zNear"> The near plane. </param>
+		/// <param name="zFar"> The far plane. </param>
+		/// <returns> The frustum matrix. </returns>
+		static Matrix4 FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
 
 		/// <summary>
 		/// Creates a new view matrix.
 		/// </summary>
 		/// <param name="position"> The cameras position. </param>
 		/// <param name="rotation"> The cameras rotation. </param>
-		/// <returns> The transformation matrix. </returns>
+		/// <returns> The view matrix. </returns>
 		static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
 
 		/// <summary>
-		/// Creates a new view matrix.
+		/// Projects a 3D world point into screen space.
 		/// </summary>
-		/// <param name="position"> The cameras position. </param>
-		/// <param name="rotation"> The cameras rotation. </param>
-		/// <returns> The transformation matrix. </returns>
-		static Matrix4 ViewMatrix(const Vector3 &position, const Quaternion &rotation);
-
-		/// <summary>
-		/// Transforms a 3D world point into screen space.
-		/// </summary>
-		/// <param name="worldSpace"> The point to get into screen space. </param>
+		/// <param name="worldSpace"> The point in world space. </param>
+		/// <param name="modelMatrix"> The points model matrix. </param>
 		/// <param name="viewMatrix"> The cameras view matrix. </param>
 		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
 		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
-		static Vector3 WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+		static Vector3 Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 		/// <summary>
-		/// Creates a new transformation matrix that has the camera looking at the target.
+		/// Unprojects a screen space point into a 3D world point.
 		/// </summary>
-		/// <param name="camera"> The source position. </param>
-		/// <param name="object"> The target position. </param>
+		/// <param name="screenSpace"> The point in screen space. </param>
+		/// <param name="modelMatrix"> The points model matrix. </param>
+		/// <param name="viewMatrix"> The cameras view matrix. </param>
+		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
+		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
+		static Vector3 Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+
+		/// <summary>
+		/// Creates a new matrix that has the camera looking at the target.
+		/// </summary>
+		/// <param name="eye"> The source position. </param>
+		/// <param name="centre"> The target position. </param>
 		/// <param name="up"> What view direction is up. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up = Vector3::Up);
+		/// <returns> Returns the matrix. </returns>
+		static Matrix4 LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up = Vector3::Up);
 
 		void Decode(const Metadata &metadata);
 

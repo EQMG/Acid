@@ -95,10 +95,10 @@ namespace acid
 		Matrix2 Negate() const;
 
 		/// <summary>
-		/// Negates this matrix.
+		/// Inverses this matrix.
 		/// </summary>
-		/// <returns> The negated matrix. </returns>
-		Matrix2 Invert() const;
+		/// <returns> The inversed matrix. </returns>
+		Matrix2 Inverse() const;
 
 		/// <summary>
 		/// Transposes this matrix.

@@ -211,18 +211,6 @@ namespace acid
 
 		bool operator!=(const Vector2 &other) const;
 
-		bool operator<(const Vector2 &other) const;
-
-		bool operator<=(const Vector2 &other) const;
-
-		bool operator>(const Vector2 &other) const;
-
-		bool operator>=(const Vector2 &other) const;
-
-		bool operator==(const float &value) const;
-
-		bool operator!=(const float &value) const;
-
 		Vector2 operator-() const;
 
 		const float &operator[](const uint32_t &index) const;

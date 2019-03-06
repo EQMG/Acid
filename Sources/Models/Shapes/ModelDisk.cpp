@@ -77,17 +77,15 @@ namespace acid
 				uint32_t first = i * (m_loops + 1) + j;
 				uint32_t second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
 
-				indices.emplace_back(first);
 				indices.emplace_back(second + 1);
-				indices.emplace_back(second);
-
-				indices.emplace_back(first);
 				indices.emplace_back(first + 1);
+				indices.emplace_back(first);
+				indices.emplace_back(second);
 				indices.emplace_back(second + 1);
+				indices.emplace_back(first);
 			}
 		}
 
-		std::reverse(indices.begin(), indices.end());
 		Initialize(vertices, indices);
 	}
 

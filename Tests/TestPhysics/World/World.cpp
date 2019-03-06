@@ -1,7 +1,6 @@
 #include "World.hpp"
 
 #include <Post/Deferred/RendererDeferred.hpp>
-#include <Shadows/Shadows.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -25,7 +24,7 @@ namespace test
 
 		m_skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
 
-		m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.154303f, 0.771517f, -0.617213f));
+		m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.154303f, 0.771517f, -0.617213f) * Maths::DegToRad);
 		m_lightDirection.Normalize();
 
 		Colour fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
@@ -41,15 +40,6 @@ namespace test
 		if (deferred != nullptr)
 		{
 			deferred->SetFog(m_fog);
-		}
-
-		if (Shadows::Get() != nullptr)
-		{
-			Shadows::Get()->SetLightDirection(m_lightDirection);
-			Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
-			Shadows::Get()->SetShadowBoxDistance(40.0f);
-			Shadows::Get()->SetShadowTransition(5.0f);
-			Shadows::Get()->SetShadowDarkness(0.6f * GetShadowFactor());
 		}
 	}
 

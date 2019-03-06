@@ -23,7 +23,6 @@
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Shadows/Shadows.hpp>
 
 namespace test
 {
@@ -90,13 +89,9 @@ namespace test
 
 	void MainRenderer::Update()
 	{
-		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize()); // * RendererShadows::NUM_CASCADES
+	//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
+	//	renderpassCreate1.SetScale(0.75f);
 
-		//	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
-		//	renderpassCreate1.SetScale(0.75f);
-
-		//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
+	//	Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	}
 }

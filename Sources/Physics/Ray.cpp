@@ -58,14 +58,14 @@ namespace acid
 
 	void Ray::UpdateEyeCoords()
 	{
-		m_invertedProjection = m_projectionMatrix.Invert();
+		m_invertedProjection = m_projectionMatrix.Inverse();
 		m_eyeCoords = m_invertedProjection.Transform(m_clipCoords);
 		m_eyeCoords = Vector4(m_eyeCoords.m_x, m_eyeCoords.m_y, -1.0f, 0.0f);
 	}
 
 	void Ray::UpdateWorldCoords()
 	{
-		m_invertedView = m_viewMatrix.Invert();
+		m_invertedView = m_viewMatrix.Inverse();
 		m_rayWorld = m_invertedView.Transform(m_eyeCoords);
 		m_currentRay = m_rayWorld;
 	}

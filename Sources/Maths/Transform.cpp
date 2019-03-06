@@ -18,7 +18,7 @@ namespace acid
 	Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
 		m_position(position),
 		m_rotation(rotation),
-		m_scaling(Vector3(scale, scale, scale)),
+		m_scaling(scale, scale, scale),
 		m_dirty(true)
 	{
 	}
@@ -63,7 +63,7 @@ namespace acid
 	{
 		if (m_dirty)
 		{
-			m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
+			m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation * Maths::DegToRad, m_scaling);
 			m_dirty = false;
 		}
 
@@ -100,7 +100,7 @@ namespace acid
 	void Transform::SetDirty(const bool &dirty) const
 	{
 		m_dirty = dirty;
-		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
+		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation * Maths::DegToRad, m_scaling);
 	}
 
 	bool Transform::operator==(const Transform &other) const

@@ -92,27 +92,21 @@ int main(int argc, char **argv)
 	/*auto engine = std::make_unique<Engine>(argv[0], true);
 	engine->GetModuleManager().Add<Files>(Module::Stage::Always);
 	Files::Get()->AddSearchPath("Resources/Engine");
-
 	{
 		auto dataYaml = File("Example0.yaml", new Yaml());
 		dataYaml.Read();
-
 		auto dataJson = File("Example0.json", new Json(dataYaml.GetMetadata()));
 		dataJson.Write();
 	}
 	{
 		auto dataJson = File("Example1.json", new Json());
 		dataJson.Read();
-
 		auto dataYaml = File("Example1.yaml", new Yaml(dataJson.GetMetadata()));
 		dataYaml.Write();
-
 		auto dataXml = File("Example1.xml", new Xml("EntityDefinition", dataJson.GetMetadata()));
 		dataXml.Write();
-
 		auto dataJson2 = File("Example1.json", new Json(dataJson.GetMetadata()));
 		dataJson2.Write();
-
 	}*/
 
 	{
@@ -139,7 +133,7 @@ int main(int argc, char **argv)
 		Log::Out("\n");
 	}
 	{
-		Vector3 original{90.0f, 0.0f, 0.0f};
+		Vector3 original{ 90.0f, 0.0f, 0.0f };
 		Quaternion quaternion = original.ToQuaternion();
 		Vector3 restored = quaternion.ToEuler();
 
@@ -150,8 +144,8 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector2:\n");
-		Vector2 a{3.0f, -7.2f};
-		Vector2 b{-1.74f, 15.4f};
+		Vector2 a{ 3.0f, -7.2f };
+		Vector2 b{ -1.74f, 15.4f };
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
 		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());
@@ -168,8 +162,8 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector3:\n");
-		Vector3 a{12.9f, -2.0f, 6.7f};
-		Vector3 b{-9.7f, 15.9f, -13.8f};
+		Vector3 a{ 12.9f, -2.0f, 6.7f };
+		Vector3 b{ -9.7f, 15.9f, -13.8f };
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
 		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());

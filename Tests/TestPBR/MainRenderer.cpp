@@ -9,7 +9,6 @@
 #include <Post/Filters/FilterDefault.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Shadows/RendererShadows.hpp>
-#include <Shadows/Shadows.hpp>
 
 namespace test
 {
@@ -62,8 +61,5 @@ namespace test
 
 	void MainRenderer::Update()
 	{
-		auto &renderpassCreate0 = Renderer::Get()->GetRenderStage(0)->GetRenderpassCreate();
-		renderpassCreate0.SetWidth(Shadows::Get()->GetShadowSize());
-		renderpassCreate0.SetHeight(Shadows::Get()->GetShadowSize());
 	}
 }

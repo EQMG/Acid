@@ -94,9 +94,9 @@ namespace acid
 	Quaternion Quaternion::Multiply(const Quaternion &other) const
 	{
 		return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y,
-		                  m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
-		                  m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
-		                  m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
+			m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
+			m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
+			m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
 	}
 
 	Vector3 Quaternion::Multiply(const Vector3 &other) const
@@ -281,36 +281,6 @@ namespace acid
 		return !(*this == other);
 	}
 
-	bool Quaternion::operator<(const Quaternion &other) const
-	{
-		return m_x < other.m_x && m_y < other.m_y && m_z < other.m_z && m_w < other.m_w;
-	}
-
-	bool Quaternion::operator<=(const Quaternion &other) const
-	{
-		return m_x <= other.m_x && m_y <= other.m_y && m_z <= other.m_z && m_w <= other.m_w;
-	}
-
-	bool Quaternion::operator>(const Quaternion &other) const
-	{
-		return m_x > other.m_x && m_y > other.m_y && m_z > other.m_z && m_w > other.m_w;
-	}
-
-	bool Quaternion::operator>=(const Quaternion &other) const
-	{
-		return m_x >= other.m_x && m_y >= other.m_y && m_z >= other.m_z && m_w >= other.m_w;
-	}
-
-	bool Quaternion::operator==(const float &value) const
-	{
-		return m_x == value && m_y == value && m_z == value && m_w == value;
-	}
-
-	bool Quaternion::operator!=(const float &value) const
-	{
-		return !(*this == value);
-	}
-
 	Quaternion Quaternion::operator-() const
 	{
 		return Negate();
@@ -382,6 +352,7 @@ namespace acid
 	std::string Quaternion::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
 		return result.str();
 	}

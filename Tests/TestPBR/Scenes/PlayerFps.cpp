@@ -118,7 +118,7 @@ namespace test
 		float theta = cameraRotation.m_y * Maths::DegToRad;
 		float dx = -(m_velocity.m_z * std::sin(theta) + m_velocity.m_x * std::cos(theta)) * delta;
 		float dy = m_velocity.m_y * delta;
-		float dz = -(m_velocity.m_z * std::cos(theta) - m_velocity.m_x * std::sin(theta)) * delta;
+		float dz = (m_velocity.m_z * std::cos(theta) - m_velocity.m_x * std::sin(theta)) * delta;
 
 		m_amountMove = Vector3(dx, dy, dz);
 		m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);

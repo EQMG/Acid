@@ -116,7 +116,7 @@ namespace acid
 		if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 		{
 			Vector2 distance = Mouse::Get()->GetPosition() - m_screenPosition;
-			return distance >= Vector2::Zero && distance <= m_screenDimensions;
+			return distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenDimensions.m_x && distance.m_y <= m_screenDimensions.m_y;
 		}
 
 		return false;

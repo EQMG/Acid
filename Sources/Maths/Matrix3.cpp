@@ -155,7 +155,7 @@ namespace acid
 		return result;
 	}
 
-	Matrix3 Matrix3::Invert() const
+	Matrix3 Matrix3::Inverse() const
 	{
 		Matrix3 result = Matrix3();
 
@@ -397,6 +397,7 @@ namespace acid
 	std::string Matrix3::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " <<
 			m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " <<
 			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";

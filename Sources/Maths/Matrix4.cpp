@@ -5,8 +5,6 @@
 #include <cstring>
 #include "Matrix2.hpp"
 #include "Matrix3.hpp"
-#include "Quaternion.hpp"
-#include "Vector2.hpp"
 
 namespace acid
 {
@@ -236,9 +234,9 @@ namespace acid
 		return result;
 	}
 
-	Matrix4 Matrix4::Invert() const
+	Matrix4 Matrix4::Inverse() const
 	{
-		Matrix4 result = Matrix4(*this);
+		Matrix4 result = Matrix4();
 
 		float det = Determinant();
 
@@ -331,121 +329,84 @@ namespace acid
 	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale)
 	{
 		Matrix4 result = Matrix4();
-
-		if (translation.LengthSquared() != 0.0f)
-		{
-			result = result.Translate(translation);
-		}
-
-		if (rotation.LengthSquared() != 0.0f)
-		{
-			result = result.Rotate(rotation.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
-			result = result.Rotate(rotation.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
-			result = result.Rotate(rotation.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
-		}
-
-		if (scale != Vector3::One)
-		{
-			result = result.Scale(scale);
-		}
-
-		return result;
-	}
-
-	Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Quaternion &rotation, const Vector3 &scale)
-	{
-		Matrix4 result = rotation.ToRotationMatrix();
-
-		result[3][0] = translation.m_x;
-		result[3][1] = translation.m_y;
-		result[3][2] = translation.m_z;
-		result[3][3] = 1.0f;
-
+		result = result.Translate(translation);
+		result = result.Rotate(rotation.m_x, Vector3::Right);
+		result = result.Rotate(rotation.m_y, Vector3::Up);
+		result = result.Rotate(rotation.m_z, Vector3::Front);
 		result = result.Scale(scale);
-
 		return result;
 	}
 
 	Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar)
 	{
-		Matrix4 result = Matrix4();
+		Matrix4 result = Matrix4(0.0f);
 
-		float yScale = 1.0f / std::tan((fov / 2.0f) * Maths::DegToRad);
-		float xScale = yScale / aspectRatio;
-		float length = zFar - zNear;
+		float f = std::tan(0.5f * fov);
 
-		result[0][0] = xScale;
-		result[1][1] = -yScale;
-		result[2][2] = -((zFar + zNear) / length);
+		result[0][0] = 1.0f / (aspectRatio * f);
+		result[1][1] = 1.0f / f;
+		result[2][2] = zFar / (zNear - zFar);
 		result[2][3] = -1.0f;
-		result[3][2] = -((2.0f * zNear * zFar) / length);
-		result[3][3] = 0.0f;
+		result[3][2] = -(zFar * zNear) / (zFar - zNear);
 		return result;
 	}
 
-	Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &near, const float &far)
+	Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear)
+	{
+		Matrix4 result = Matrix4(0.0f);
+
+		float range = std::tan(0.5f * fov) * zNear;
+		float left = -range * aspectRatio;
+		float right = range * aspectRatio;
+		float bottom = -range;
+		float top = range;
+
+		result[0][0] = (2.0f * zNear) / (right - left);
+		result[1][1] = (2.0f * zNear) / (top - bottom);
+		result[2][2] = -1.0f;
+		result[2][3] = -1.0f;
+		result[3][2] = -2.0f * zNear;
+		return result;
+	}
+
+	Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
 	{
 		Matrix4 result = Matrix4();
 
-		float ox = 2.0f / (right - left);
-		float oy = 2.0f / (top - bottom);
-		float oz = -2.0f / (far - near);
+		result[0][0] = 2.0f / (right - left);
+		result[1][1] = 2.0f / (top - bottom);
+		result[3][0] = -(right + left) / (right - left);
+		result[3][1] = -(top + bottom) / (top - bottom);
+		result[2][2] = -1.0f / (zFar - zNear);
+		result[2][3] = zNear / (zFar - zNear);
+		return result;
+	}
 
-		float tx = -(right + left) / (right - left);
-		float ty = -(top + bottom) / (top - bottom);
-		float tz = -(far + near) / (far - near);
+	Matrix4 Matrix4::FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
+	{
+		Matrix4 result = Matrix4(0.0f);
 
-		result[0][0] = ox;
-		result[1][1] = oy;
-		result[2][2] = oz;
-		result[0][3] = tx;
-		result[1][3] = ty;
-		result[2][3] = tz;
-		result[3][3] = 1.0f;
+		result[0][0] = (2.0f * zNear) / (right - left);
+		result[1][1] = (2.0f * zNear) / (top - bottom);
+		result[2][0] = (right + left) / (right - left);
+		result[2][1] = (top + bottom) / (top - bottom);
+		result[2][3] = -1.0f;
+		result[2][2] = zFar / (zNear - zFar);
+		result[3][2] = -(zFar * zNear) / (zFar - zNear);
 		return result;
 	}
 
 	Matrix4 Matrix4::ViewMatrix(const Vector3 &position, const Vector3 &rotation)
 	{
 		Matrix4 result = Matrix4();
-
-		if (rotation != 0.0f)
-		{
-			result = result.Rotate(rotation.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
-			result = result.Rotate(-rotation.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
-			result = result.Rotate(rotation.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
-		}
-
-		if (position != 0.0f)
-		{
-			result = result.Translate(position.Negate());
-		}
-
+		result = result.Rotate(rotation.m_x, Vector3::Right);
+		result = result.Rotate(rotation.m_y, Vector3::Up);
+		result = result.Rotate(rotation.m_z, Vector3::Front);
+		result = result.Translate(position.Negate());
 		return result;
 	}
 
-	Matrix4 Matrix4::ViewMatrix(const Vector3 &position, const Quaternion &rotation)
-	{
-		Matrix4 result = Matrix4();
-
-		if (rotation != 0.0f)
-		{
-			Vector3 euler = rotation.ToEuler(); // TODO: Use Quaternion!
-			// result *= rotation.ToRotationMatrix();
-			result = result.Rotate(euler.m_x * Maths::DegToRad, Vector3::Right); // Rotate the X component.
-			result = result.Rotate(-euler.m_y * Maths::DegToRad, Vector3::Up); // Rotate the Y component.
-			result = result.Rotate(euler.m_z * Maths::DegToRad, Vector3::Front); // Rotate the Z component.
-		}
-
-		if (position != 0.0f)
-		{
-			result = result.Translate(position.Negate());
-		}
-
-		return result;
-	}
-
-	Vector3 Matrix4::WorldToScreenSpace(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+	Vector3 Matrix4::Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
 		Vector4 point4 = Vector4(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
 		point4 = viewMatrix.Transform(point4);
@@ -457,25 +418,32 @@ namespace acid
 		return result;
 	}
 
-	Matrix4 Matrix4::LookAt(const Vector3 &camera, const Vector3 &object, const Vector3 &up)
+	Vector3 Matrix4::Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 	{
-		Vector3 f = (object - camera).Normalize();
-		Vector3 s = f.Cross(up.Normalize());
+		Vector3 result = Vector3();
+		// TODO
+		return result;
+	}
+
+	Matrix4 Matrix4::LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up)
+	{
+		Vector3 f = (centre - eye).Normalize();
+		Vector3 s = f.Cross(up).Normalize();
 		Vector3 u = s.Cross(f);
 
 		Matrix4 result = Matrix4();
 		result[0][0] = s.m_x;
-		result[0][1] = s.m_y;
-		result[0][2] = s.m_z;
-		result[1][0] = u.m_x;
+		result[1][0] = s.m_y;
+		result[2][0] = s.m_z;
+		result[0][1] = u.m_x;
 		result[1][1] = u.m_y;
-		result[1][2] = u.m_z;
-		result[2][0] = -f.m_x;
-		result[2][1] = -f.m_y;
+		result[2][1] = u.m_z;
+		result[0][2] = -f.m_x;
+		result[1][2] = -f.m_y;
 		result[2][2] = -f.m_z;
-
-		result *= Identity.Translate(Vector3(-camera.m_x, -camera.m_y, -camera.m_z));
-
+		result[3][0] = -s.Dot(eye);
+		result[3][1] = -u.Dot(eye);
+		result[3][2] = f.Dot(eye);
 		return result;
 	}
 
@@ -631,6 +599,7 @@ namespace acid
 	std::string Matrix4::ToString() const
 	{
 		std::stringstream result;
+		result.precision(10);
 		result << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" <<
 			m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" <<
 			m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" <<

@@ -12,7 +12,6 @@
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
-#include "Shadows/Shadows.hpp"
 #include "Uis/Uis.hpp"
 #include "Log.hpp"
 #include "Module.hpp"
@@ -25,10 +24,10 @@ namespace acid
 
 	ModuleManager::~ModuleManager()
 	{
-	//	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it)
-	//	{
-	//		it->second->~Module();
-	//	}
+		for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it)
+		{
+			it->second->~Module();
+		}
 	}
 
 	void ModuleManager::FillRegister()
@@ -46,7 +45,6 @@ namespace acid
 		Add<Events>(Module::Stage::Always);
 		Add<Uis>(Module::Stage::Pre);
 		Add<Particles>(Module::Stage::Normal);
-		Add<Shadows>(Module::Stage::Normal);
 	}
 
 	bool ModuleManager::Contains(Module *module)
