@@ -9,7 +9,7 @@ namespace acid
 
 	PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines) :
 		RenderPipeline(pipelineStage),
-		m_pipeline(pipelineStage, shaderStages, {}, defines)
+		m_pipeline(pipelineStage, shaderStages, {}, defines, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None)
 	{
 	}
 

@@ -11,10 +11,10 @@ layout(set = 0, binding = 0) uniform UboScene
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inUV;
 
-layout(location = 4) in mat4 inModelMatrix;
-layout(location = 8) in vec4 inColourOffset;
-layout(location = 9) in vec4 inOffsets;
-layout(location = 10) in vec3 inBlend;
+layout(location = 3) in mat4 inModelMatrix;
+layout(location = 7) in vec4 inColourOffset;
+layout(location = 8) in vec4 inOffsets;
+layout(location = 9) in vec3 inBlend;
 
 layout(location = 0) out vec2 outCoords1;
 layout(location = 1) out vec2 outCoords2;

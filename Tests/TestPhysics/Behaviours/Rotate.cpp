@@ -31,8 +31,8 @@ namespace test
 		}
 		else if (m_test == 2)
 		{
-			//	btTransform transform1 = Collider::Convert(transform);
-			//	transform = Collider::Convert(transform1, transform.GetScaling());
+		//	btTransform transform1 = Collider::Convert(transform);
+		//	transform = Collider::Convert(transform1, transform.GetScaling());
 		}
 	}
 

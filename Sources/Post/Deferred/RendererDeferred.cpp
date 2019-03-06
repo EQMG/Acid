@@ -15,7 +15,8 @@ namespace acid
 
 	RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 		RenderPipeline(pipelineStage),
-		m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, GetDefines()),
+		m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, GetDefines(), 
+			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 		m_brdf(ComputeBRDF(512)),
 		m_skybox(nullptr),
 		m_irradiance(nullptr),
