@@ -232,7 +232,7 @@ namespace acid
 		VkImage srcImage = m_swapchain->GetActiveImage();
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
-		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, width, height, true, 0, 1);
+		bool supportsBlit = Texture::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, width, height, true, 1, 0, 1);
 
 		// Get layout of the image (including row pitch).
 		VkImageSubresource imageSubresource = {};

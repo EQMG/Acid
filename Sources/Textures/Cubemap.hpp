@@ -12,6 +12,7 @@ namespace acid
 	/// Class that represents a loaded cubemap texture.
 	/// </summary>
 	class ACID_EXPORT Cubemap :
+		public NonCopyable,
 		public Descriptor,
 		public Resource
 	{
@@ -32,7 +33,7 @@ namespace acid
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		static std::shared_ptr<Cubemap> Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter = VK_FILTER_LINEAR, 
-			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true);
 
 		/// <summary>
 		/// A new cubemap object.
@@ -45,7 +46,7 @@ namespace acid
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 		/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
 		explicit Cubemap(std::string filename, std::string fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
-			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
+			const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 		/// <summary>
 		/// A new cubemap object from a array of pixels.
@@ -61,9 +62,9 @@ namespace acid
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		Cubemap(const uint32_t &width, const uint32_t &height, uint8_t *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, 
-			const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, 
-			const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		Cubemap(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+			const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+			const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
 		~Cubemap();
@@ -80,17 +81,23 @@ namespace acid
 		void Encode(Metadata &metadata) const override;
 
 		/// <summary>
-		/// Gets a copy of the face of a cubemaps pixels from memory, after usage is finished remember to delete the result.
+		/// Gets a copy of the face of a cubemaps pixels from memory.
 		/// </summary>
+		/// <param name="width"> The value sampled width is stored to. </param>
+		/// <param name="height"> The value sampled height is stored to. </param>
+		/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
 		/// <param name="arrayLayer"> The layer to copy from. </param>
 		/// <returns> A copy of the cubemaps pixels. </returns>
-		uint8_t *GetPixels(const uint32_t &arrayLayer) const;
+		std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel, const uint32_t &arrayLayer) const;
 
 		/// <summary>
-		/// Gets a copy of the cubemaps pixels from memory, after usage is finished remember to delete the result.
+		/// Gets a copy of the cubemaps pixels from memory.
 		/// </summary>
+		/// <param name="width"> The value sampled width is stored to. </param>
+		/// <param name="height"> The value sampled height is stored to (this will be 6 * <seealso cref="#GetWidth()"/>). </param>
+		/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
 		/// <returns> A copy of the cubemaps. </returns>
-		uint8_t *GetPixels() const;
+		std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 1) const;
 
 		/// <summary>
 		/// Copies the pixels into this cubemaps memory.
@@ -101,6 +108,8 @@ namespace acid
 		const std::string &GetFilename() const { return m_filename; };
 
 		const std::string &GetFileSuffix() { return m_fileSuffix; };
+
+		const std::vector<std::string> &GetFileSides() { return m_fileSides; };
 
 		const VkFilter &GetFilter() const { return m_filter; }
 
@@ -122,9 +131,11 @@ namespace acid
 
 		const uint32_t &GetHeight() const { return m_height; }
 
+		const uint32_t &GetMipLevels() const { return m_mipLevels; }
+
 		const VkImage &GetImage() const { return m_image; }
 
-		const VkDeviceMemory &GetDMemory() { return m_memory; }
+		const VkDeviceMemory &GetMemory() { return m_memory; }
 
 		const VkImageView &GetView() const { return m_view; }
 
@@ -144,7 +155,8 @@ namespace acid
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
-		uint8_t *m_pixels;
+		std::unique_ptr<uint8_t[]> m_loadPixels;
+		uint32_t m_mipLevels;
 
 		VkImage m_image;
 		VkDeviceMemory m_memory;

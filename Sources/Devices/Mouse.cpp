@@ -85,7 +85,8 @@ namespace acid
 		uint32_t width = 0;
 		uint32_t height = 0;
 		uint32_t components = 0;
-		uint8_t *data = Texture::LoadPixels(filename, &width, &height, &components);
+		VkFormat format = VK_FORMAT_UNDEFINED;
+		auto data = Texture::LoadPixels(filename, width, height, components, format);
 
 		if (data == nullptr)
 		{
@@ -95,7 +96,7 @@ namespace acid
 		GLFWimage image[1];
 		image[0].width = width;
 		image[0].height = height;
-		image[0].pixels = data;
+		image[0].pixels = data.get();
 
 		GLFWcursor *cursor = nullptr;
 
@@ -119,7 +120,6 @@ namespace acid
 		}
 
 		glfwSetCursor(Window::Get()->GetWindow(), cursor);
-		Texture::DeletePixels(data);
 	}
 
 	std::string Mouse::GetClipboard() const

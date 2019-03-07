@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <vulkan/vulkan.h>
 #include "Renderer/Descriptors/Descriptor.hpp"
 #include "Resources/Resource.hpp"
@@ -12,6 +13,7 @@ namespace acid
 	/// Class that represents a loaded texture.
 	/// </summary>
 	class ACID_EXPORT Texture :
+		public NonCopyable,
 		public Descriptor,
 		public Resource
 	{
@@ -59,7 +61,7 @@ namespace acid
 		/// <param name="samples"> The amount of MSAA samples to use. </param>
 		/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
 		/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-		Texture(const uint32_t &width, const uint32_t &height, uint8_t *pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, 
+		Texture(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 			const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, 
 			const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 			const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
@@ -78,10 +80,13 @@ namespace acid
 		void Encode(Metadata &metadata) const override;
 
 		/// <summary>
-		/// Gets a copy of the textures pixels from memory, after usage is finished remember to delete the result.
+		/// Gets a copy of the textures pixels from memory.
 		/// </summary>
+		/// <param name="width"> The value sampled width is stored to. </param>
+		/// <param name="height"> The value sampled height is stored to. </param>
+		/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
 		/// <returns> A copy of the textures pixels. </returns>
-		uint8_t *GetPixels() const;
+		std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 1) const;
 
 		/// <summary>
 		/// Copies the pixels into this textures memory.
@@ -111,21 +116,21 @@ namespace acid
 
 		const uint32_t &GetHeight() const { return m_height; }
 
+		const uint32_t &GetMipLevels() const { return m_mipLevels; }
+
 		const VkImage &GetImage() { return m_image; }
 
-		const VkDeviceMemory &GetDMemory() { return m_memory; }
+		const VkDeviceMemory &GetMemory() { return m_memory; }
 
 		const VkImageView &GetView() const { return m_view; }
 
 		const VkSampler &GetSampler() const { return m_sampler; }
 
-		static uint8_t *LoadPixels(const std::string &filename, uint32_t *width, uint32_t *height, uint32_t *components);
+		static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, uint32_t &width, uint32_t &height, uint32_t &components, VkFormat &format);
 
-		static uint8_t *LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t *width, uint32_t *height, uint32_t *components);
+		static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width, uint32_t &height, uint32_t &components, VkFormat &format);
 
-		static void WritePixels(const std::string &filename, const void *data, const int32_t &width, const int32_t &height, const int32_t &components = 4);
-
-		static void DeletePixels(uint8_t *pixels);
+		static void WritePixels(const std::string &filename, const uint8_t *pixels, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 
 		static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height);
 
@@ -161,7 +166,8 @@ namespace acid
 		static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, 
 			const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
-		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+		static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &format, const uint32_t &width, const uint32_t &height, const bool &srcSwapchain, 
+			const uint32_t &mipLevel, const uint32_t &baseArrayLayer, const uint32_t &layerCount);
 
 		static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdbuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, 
 			const VkAccessFlags &dstAccessMask, const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, 
@@ -179,7 +185,8 @@ namespace acid
 
 		uint32_t m_components;
 		uint32_t m_width, m_height;
-		uint8_t *m_pixels;
+		std::unique_ptr<uint8_t[]> m_loadPixels;
+		uint32_t m_mipLevels;
 
 		VkImage m_image;
 		VkDeviceMemory m_memory;

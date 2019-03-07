@@ -3,12 +3,12 @@
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
-layout(binding = 0, rgba8) uniform writeonly image2D outColour;
+layout(binding = 0, rgba8) uniform writeonly imageCube outColour;
 
 layout(binding = 1) uniform samplerCube samplerColour;
 
-const float PI = 3.1415926535897932384626433832795;
-const float roughness = 1.0f;
+const float PI = 3.1415926535897932384626433832795f;
+const float roughness = 0.2f;
 const uint samples = 32u;
 
 vec3 cubeDir(vec2 texCoord, uint side)
@@ -26,9 +26,9 @@ vec3 cubeDir(vec2 texCoord, uint side)
 // Based omn http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
 float random(vec2 co)
 {
-	float a = 12.9898;
-	float b = 78.233;
-	float c = 43758.5453;
+	float a = 12.9898f;
+	float b = 78.233f;
+	float c = 43758.5453f;
 	float dt= dot(co.xy ,vec2(a,b));
 	float sn= mod(dt,3.14);
 	return fract(sin(sn) * c);
@@ -42,8 +42,8 @@ vec2 hammersley2d(uint i, uint N)
 	bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
 	bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
 	bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
-	float rdi = float(bits) * 2.3283064365386963e-10;
-	return vec2(float(i) /float(N), rdi);
+	float rdi = float(bits) * 2.3283064365386963e-10f;
+	return vec2(float(i) / float(N), rdi);
 }
 
 // Based on http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf
@@ -51,13 +51,13 @@ vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal)
 {
 	// Maps a 2D point to a hemisphere with spread based on roughness
 	float alpha = roughness * roughness;
-	float phi = 2.0 * PI * Xi.x + random(normal.xz) * 0.1;
-	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (alpha*alpha - 1.0) * Xi.y));
-	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+	float phi = 2.0f * PI * Xi.x + random(normal.xz) * 0.1f;
+	float cosTheta = sqrt((1.0f - Xi.y) / (1.0f + (alpha*alpha - 1.0f) * Xi.y));
+	float sinTheta = sqrt(1.0f - cosTheta * cosTheta);
 	vec3 H = vec3(sinTheta * cos(phi), sinTheta * sin(phi), cosTheta);
 
 	// Tangent space
-	vec3 up = abs(normal.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+	vec3 up = abs(normal.z) < 0.999f ? vec3(0.0f, 0.0f, 1.0f) : vec3(1.0f, 0.0f, 0.0f);
 	vec3 tangentX = normalize(cross(up, normal));
 	vec3 tangentY = normalize(cross(normal, tangentX));
 
@@ -70,8 +70,8 @@ float D_GGX(float dotNH, float roughness)
 {
 	float alpha = roughness * roughness;
 	float alpha2 = alpha * alpha;
-	float denom = dotNH * dotNH * (alpha2 - 1.0) + 1.0;
-	return (alpha2)/(PI * denom*denom); 
+	float denom = dotNH * dotNH * (alpha2 - 1.0f) + 1.0f;
+	return alpha2 / (PI * denom * denom); 
 }
 
 vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
@@ -87,22 +87,22 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 		vec2 Xi = hammersley2d(i, samples);
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
 		vec3 L = 2.0 * dot(V, H) * H - V;
-		float dotNL = clamp(dot(N, L), 0.0, 1.0);
+		float dotNL = clamp(dot(N, L), 0.0f, 1.0f);
 		if(dotNL > 0.0)
 		{
 			// Filtering based on https://placeholderart.wordpress.com/2015/07/28/implementation-notes-runtime-environment-map-filtering-for-image-based-lighting/
 
-			float dotNH = clamp(dot(N, H), 0.0, 1.0);
-			float dotVH = clamp(dot(V, H), 0.0, 1.0);
+			float dotNH = clamp(dot(N, H), 0.0f, 1.0f);
+			float dotVH = clamp(dot(V, H), 0.0f, 1.0f);
 
 			// Probability Distribution Function
-			float pdf = D_GGX(dotNH, roughness) * dotNH / (4.0 * dotVH) + 0.0001;
+			float pdf = D_GGX(dotNH, roughness) * dotNH / (4.0f * dotVH) + 0.0001f;
 			// Slid angle of current smple
-			float omegaS = 1.0 / (float(samples) * pdf);
+			float omegaS = 1.0f / (float(samples) * pdf);
 			// Solid angle of 1 pixel across all cube faces
-			float omegaP = 4.0 * PI / (6.0 * envMapDim * envMapDim);
+			float omegaP = 4.0f * PI / (6.0f * envMapDim * envMapDim);
 			// Biased (+1.0) mip level for better result
-			float mipLevel = roughness == 0.0 ? 0.0 : max(0.5 * log2(omegaS / omegaP) + 1.0, 0.0f);
+			float mipLevel = roughness == 0.0f ? 0.0f : max(0.5f * log2(omegaS / omegaP) + 1.0f, 0.0f);
 			color += textureLod(envmap, L, mipLevel).rgb * dotNL;
 			totalWeight += dotNL;
 
@@ -117,7 +117,7 @@ void main()
 
 	for (uint i = 0; i != 6; ++i)
 	{
-		vec3 localDir = normalize(cubeDir(uv, i));
-		imageStore(outColour, ivec2(gl_GlobalInvocationID.xy) + ivec2(0, imageSize(outColour).y * i), vec4(prefilterEnvMap(samplerColour, localDir, roughness), 1.0f));
+		vec3 N = normalize(cubeDir(uv, i));
+		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, N, roughness), 1.0f));
 	}
 }

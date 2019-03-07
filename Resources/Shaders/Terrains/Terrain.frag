@@ -13,7 +13,7 @@ layout(binding = 3) uniform sampler2D samplerG;
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
-layout(location = 3) in vec3 inTexture;
+//layout(location = 3) in vec3 inTexture;
 
 layout(location = 0) out vec4 outPosition;
 layout(location = 1) out vec4 outDiffuse;

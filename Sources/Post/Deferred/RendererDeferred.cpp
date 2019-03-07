@@ -35,8 +35,8 @@ namespace acid
 		if (m_skybox != skybox)
 		{
 			m_skybox = skybox;
-		//	m_irradiance = ComputeIrradiance(m_skybox);
-		//	m_prefiltered = ComputePrefiltered(m_skybox);
+			m_irradiance = ComputeIrradiance(m_skybox, 64);
+			m_prefiltered = ComputePrefiltered(m_skybox);
 		}
 
 		// Updates uniforms.
@@ -137,21 +137,23 @@ namespace acid
 		// Saves the BRDF texture.
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
-		std::unique_ptr<uint8_t[]> pixels(result->GetPixels());
-		Texture::WritePixels(filename, pixels.get(), result->GetWidth(), result->GetHeight(), result->GetComponents());
+		uint32_t width = 0;
+		uint32_t height = 0;
+		auto pixels = result->GetPixels(width, height, 1);
+		Texture::WritePixels(filename, pixels.get(), width, height);
 #endif
 
 		return result;
 	}
 
-	std::unique_ptr<Cubemap> RendererDeferred::ComputeIrradiance(const std::shared_ptr<Cubemap> &source)
+	std::unique_ptr<Cubemap> RendererDeferred::ComputeIrradiance(const std::shared_ptr<Cubemap> &source, const uint32_t &size)
 	{
 		if (source == nullptr)
 		{
 			return nullptr;
 		}
 
-		Texture irradiance = Texture(source->GetWidth(), source->GetHeight() * 6);
+		auto result = std::make_unique<Cubemap>(size, size);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -162,13 +164,13 @@ namespace acid
 
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-		descriptorSet.Push("outColour", irradiance);
+		descriptorSet.Push("outColour", result.get());
 		descriptorSet.Push("samplerColour", source);
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
 		descriptorSet.BindDescriptor(commandBuffer, compute);
-		compute.CmdRender(commandBuffer, source->GetWidth(), source->GetHeight());
+		compute.CmdRender(commandBuffer, result->GetWidth(), result->GetHeight());
 		commandBuffer.End();
 		commandBuffer.SubmitIdle();
 
@@ -176,12 +178,13 @@ namespace acid
 		// Saves the irradiance texture.
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
-		std::unique_ptr<uint8_t[]> pixels(irradiance.GetPixels());
-		Texture::WritePixels(filename, pixels.get(), irradiance.GetWidth(), irradiance.GetHeight(), irradiance.GetComponents());
+		uint32_t width = 0;
+		uint32_t height = 0;
+		auto pixels = result->GetPixels(width, height, 1);
+		Texture::WritePixels(filename, pixels.get(), width, height);
 #endif
 
-		return std::make_unique<Cubemap>(source->GetWidth(), source->GetHeight(), irradiance.GetPixels(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT, VK_SAMPLE_COUNT_1_BIT, true, true);
+		return result;
 	}
 
 	std::unique_ptr<Cubemap> RendererDeferred::ComputePrefiltered(const std::shared_ptr<Cubemap> &source)
@@ -191,7 +194,8 @@ namespace acid
 			return nullptr;
 		}
 
-		Texture prefiltered = Texture(source->GetWidth(), source->GetHeight() * 6);
+		// TODO: Generate mipmaps, and per mip change roughness to 1.0 as mip increases.
+		auto result = std::make_unique<Cubemap>(source->GetWidth(), source->GetHeight());
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -202,13 +206,13 @@ namespace acid
 
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-		descriptorSet.Push("outColour", prefiltered);
+		descriptorSet.Push("outColour", result.get());
 		descriptorSet.Push("samplerColour", source);
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
 		descriptorSet.BindDescriptor(commandBuffer, compute);
-		compute.CmdRender(commandBuffer, source->GetWidth(), source->GetHeight());
+		compute.CmdRender(commandBuffer, result->GetWidth(), result->GetHeight());
 		commandBuffer.End();
 		commandBuffer.SubmitIdle();
 
@@ -216,11 +220,12 @@ namespace acid
 		// Saves the prefiltered texture.
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered.png";
 		FileSystem::ClearFile(filename);
-		std::unique_ptr<uint8_t[]> pixels(prefiltered.GetPixels());
-		Texture::WritePixels(filename, pixels.get(), prefiltered.GetWidth(), prefiltered.GetHeight(), prefiltered.GetComponents());
+		uint32_t width = 0;
+		uint32_t height = 0;
+		auto pixels = result->GetPixels(width, height, 1);
+		Texture::WritePixels(filename, pixels.get(), width, height);
 #endif
 
-		return std::make_unique<Cubemap>(source->GetWidth(), source->GetHeight(), prefiltered.GetPixels(), VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-			VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT, VK_SAMPLE_COUNT_1_BIT, true, true);
+		return result;
 	}
 }

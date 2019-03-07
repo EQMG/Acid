@@ -119,7 +119,7 @@ namespace test
 		prefabPlane.Write(*plane);
 		prefabPlane.Save();
 
-		auto terrain = GetStructure()->CreateEntity(Transform());
+		/*auto terrain = GetStructure()->CreateEntity(Transform());
 		terrain->AddComponent<Mesh>();
 		terrain->AddComponent<MaterialTerrain>(Texture::Create("Objects/Terrain/Grass.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT),
 			Texture::Create("Objects/Terrain/Rocks.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT));
@@ -127,7 +127,7 @@ namespace test
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<ColliderHeightfield>();
 		terrain->AddComponent<MeshRender>();
-		terrain->AddComponent<ShadowRender>();
+		terrain->AddComponent<ShadowRender>();*/
 
 		static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 

@@ -41,7 +41,7 @@ namespace test
 		m_configs(nullptr),
 		m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
 		m_buttonFullscreen(Key::F11),
-		m_buttonScreenshot(Key::F12),
+		m_buttonScreenshot(Key::F9),
 		m_buttonExit(Key::Delete)
 	{
 		// Registers file search paths.

@@ -219,7 +219,7 @@ namespace acid
 	void Window::SetDimensions(const Vector2 &size)
 	{
 		SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x),
-		              size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
+			size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
 	}
 
 	void Window::SetPosition(const uint32_t &x, const uint32_t &y)
@@ -230,7 +230,7 @@ namespace acid
 	void Window::SetPosition(const Vector2 &position)
 	{
 		SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-		            position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+			position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 	}
 
 	void Window::SetTitle(const std::string &title)
@@ -242,13 +242,15 @@ namespace acid
 	void Window::SetIcons(const std::vector<std::string> &filenames)
 	{
 		std::vector<GLFWimage> icons = {};
+		std::vector<std::unique_ptr<uint8_t[]>> pixels = {};
 
 		for (const auto &filename : filenames)
 		{
 			uint32_t width = 0;
 			uint32_t height = 0;
 			uint32_t components = 0;
-			uint8_t *data = Texture::LoadPixels(filename, &width, &height, &components);
+			VkFormat format = VK_FORMAT_UNDEFINED;
+			auto data = Texture::LoadPixels(filename, width, height, components, format);
 
 			if (data == nullptr)
 			{
@@ -258,16 +260,12 @@ namespace acid
 			GLFWimage icon = {};
 			icon.width = width;
 			icon.height = height;
-			icon.pixels = data;
+			icon.pixels = data.get();
 			icons.emplace_back(icon);
+			pixels.emplace_back(std::move(data));
 		}
 
 		glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());
-
-		for (const auto &icon : icons)
-		{
-			Texture::DeletePixels(icon.pixels);
-		}
 	}
 
 	void Window::SetBorderless(const bool &borderless)
