@@ -52,6 +52,7 @@
 #include "Helpers/NonCopyable.hpp"
 #include "Helpers/RingBuffer.hpp"
 #include "Helpers/String.hpp"
+#include "Helpers/TypeTraits.hpp"
 #include "Inputs/AxisButton.hpp"
 #include "Inputs/AxisCompound.hpp"
 #include "Inputs/AxisJoystick.hpp"

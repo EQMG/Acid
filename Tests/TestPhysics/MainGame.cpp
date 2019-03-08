@@ -39,7 +39,7 @@ namespace test
 {
 	MainGame::MainGame() :
 		m_configs(nullptr),
-		m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
+	//	m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
 		m_buttonFullscreen(Key::F11),
 		m_buttonScreenshot(Key::F9),
 		m_buttonExit(Key::Delete)
@@ -60,7 +60,7 @@ namespace test
 		m_configs = std::make_unique<ConfigManager>();
 
 		// Watches all files in the working directory.
-		m_fileWatcher.GetOnChange() += [](std::string path, FileWatcher::Status status)
+		/*m_fileWatcher.GetOnChange() += [](std::string path, FileWatcher::Status status)
 		{
 			switch (status)
 			{
@@ -74,12 +74,12 @@ namespace test
 				Log::Out("Erased '%s'\n", path.c_str());
 				break;
 			}
-		};
+		};*/
 
 		// Registers modules.
 		auto &moduleManager = Engine::Get()->GetModuleManager();
 		moduleManager.Add<World>(Module::Stage::Always);
-		//	moduleManager.Remove<Shadows>();
+	//	moduleManager.Remove<Shadows>();
 
 		// Registers components.
 		auto &componentRegister = Scenes::Get()->GetComponentRegister();

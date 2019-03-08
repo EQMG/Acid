@@ -8,7 +8,7 @@ layout(binding = 0, rgba8) uniform writeonly imageCube outColour;
 layout(binding = 1) uniform samplerCube samplerColour;
 
 const float PI = 3.1415926535897932384626433832795f;
-const float roughness = 0.2f;
+const float roughness = 0.5f;
 const uint samples = 32u;
 
 vec3 cubeDir(vec2 texCoord, uint side)
@@ -29,8 +29,8 @@ float random(vec2 co)
 	float a = 12.9898f;
 	float b = 78.233f;
 	float c = 43758.5453f;
-	float dt= dot(co.xy ,vec2(a,b));
-	float sn= mod(dt,3.14);
+	float dt = dot(co.xy, vec2(a, b));
+	float sn = mod(dt, 3.14f);
 	return fract(sin(sn) * c);
 }
 
@@ -52,7 +52,7 @@ vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal)
 	// Maps a 2D point to a hemisphere with spread based on roughness
 	float alpha = roughness * roughness;
 	float phi = 2.0f * PI * Xi.x + random(normal.xz) * 0.1f;
-	float cosTheta = sqrt((1.0f - Xi.y) / (1.0f + (alpha*alpha - 1.0f) * Xi.y));
+	float cosTheta = sqrt((1.0f - Xi.y) / (1.0f + (alpha * alpha - 1.0f) * Xi.y));
 	float sinTheta = sqrt(1.0f - cosTheta * cosTheta);
 	vec3 H = vec3(sinTheta * cos(phi), sinTheta * sin(phi), cosTheta);
 
@@ -86,7 +86,7 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 	{
 		vec2 Xi = hammersley2d(i, samples);
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
-		vec3 L = 2.0 * dot(V, H) * H - V;
+		vec3 L = 2.0f * dot(V, H) * H - V;
 		float dotNL = clamp(dot(N, L), 0.0f, 1.0f);
 		if(dotNL > 0.0)
 		{

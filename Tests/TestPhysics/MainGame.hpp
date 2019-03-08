@@ -23,7 +23,7 @@ namespace test
 
 	private:
 		std::unique_ptr<ConfigManager> m_configs;
-		FileWatcher m_fileWatcher;
+	//	FileWatcher m_fileWatcher;
 
 		ButtonKeyboard m_buttonFullscreen;
 		ButtonKeyboard m_buttonScreenshot;

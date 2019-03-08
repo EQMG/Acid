@@ -15,7 +15,7 @@ namespace acid
 	public:
 		explicit UniformHandler(const bool &multipipeline = false);
 
-		explicit UniformHandler(const Shader::UniformBlock *uniformBlock, const bool &multipipeline = false);
+		explicit UniformHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
 
 		template<typename T>
 		void Push(const T &object, const std::size_t &offset, const std::size_t &size)
@@ -30,19 +30,19 @@ namespace acid
 		template<typename T>
 		void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
 		{
-			if (m_uniformBlock == nullptr)
+			if (!m_uniformBlock)
 			{
 				return;
 			}
 
 			auto uniform = m_uniformBlock->GetUniform(uniformName);
 
-			if (uniform == nullptr)
+			if (!uniform)
 			{
 				return;
 			}
 
-			std::size_t realSize = size;
+			auto realSize = size;
 
 			if (realSize == 0)
 			{
@@ -52,12 +52,12 @@ namespace acid
 			Push(object, static_cast<std::size_t>(uniform->GetOffset()), realSize);
 		}
 
-		bool Update(const Shader::UniformBlock *uniformBlock);
+		bool Update(const std::optional<Shader::UniformBlock> &uniformBlock);
 
 		const UniformBuffer *GetUniformBuffer() const { return m_uniformBuffer.get(); }
 	private:
 		bool m_multipipeline;
-		const Shader::UniformBlock *m_uniformBlock;
+		std::optional<Shader::UniformBlock> m_uniformBlock;
 		uint32_t m_size;
 		std::unique_ptr<char[]> m_data;
 		std::unique_ptr<UniformBuffer> m_uniformBuffer;

@@ -35,7 +35,7 @@ namespace acid
 
 		static std::unique_ptr<Cubemap> ComputeIrradiance(const std::shared_ptr<Cubemap> &source, const uint32_t &size);
 
-		static std::unique_ptr<Cubemap> ComputePrefiltered(const std::shared_ptr<Cubemap> &source);
+		static std::unique_ptr<Cubemap> ComputePrefiltered(const std::shared_ptr<Cubemap> &source, const uint32_t &size);
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;

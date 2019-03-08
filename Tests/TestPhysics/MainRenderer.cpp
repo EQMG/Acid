@@ -68,7 +68,7 @@ namespace test
 		rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
 		rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
-	//	rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
 	//	auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
@@ -78,7 +78,7 @@ namespace test
 	//	rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//	rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
+		rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
 	//	rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
 		rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
 	//	rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));

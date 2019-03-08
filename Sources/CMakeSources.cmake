@@ -52,6 +52,7 @@ set(_temp_acid_headers
 		Helpers/NonCopyable.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
+		Helpers/TypeTraits.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp

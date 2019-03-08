@@ -213,15 +213,15 @@ namespace acid
 
 		for (const auto &[uniformBlockName, uniformBlock] : m_shader->GetUniformBlocks())
 		{
-			if (uniformBlock->GetType() != Shader::UniformBlock::Type::Push)
+			if (uniformBlock.GetType() != Shader::UniformBlock::Type::Push)
 			{
 				continue;
 			}
 
 			VkPushConstantRange pushConstantRange = {};
-			pushConstantRange.stageFlags = uniformBlock->GetStageFlags();
+			pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
 			pushConstantRange.offset = currentOffset;
-			pushConstantRange.size = static_cast<uint32_t>(uniformBlock->GetSize());
+			pushConstantRange.size = static_cast<uint32_t>(uniformBlock.GetSize());
 			pushConstantRanges.emplace_back(pushConstantRange);
 			currentOffset += pushConstantRange.size;
 		}

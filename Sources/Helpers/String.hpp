@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 #include "Engine/Exports.hpp"
+#include "TypeTraits.hpp"
 
 namespace acid
 {
@@ -128,7 +129,11 @@ namespace acid
 		template<typename T>
 		static std::string To(const T &val)
 		{
-			if constexpr (std::is_enum_v<T>)
+			if constexpr (std::is_same_v<std::string, T>)
+			{
+				return val;
+			}
+			else if constexpr (std::is_enum_v<T>)
 			{
 				typedef typename std::underlying_type<T>::type safe_type;
 				return std::to_string(static_cast<safe_type>(val));
@@ -143,16 +148,6 @@ namespace acid
 			}
 		}
 
-		template<typename T>
-		struct is_optional : public std::false_type
-		{
-		};
-
-		template<typename T>
-		struct is_optional<std::optional<T>> : public std::true_type
-		{
-		};
-
 		/// <summary>
 		/// Converts a string to a type.
 		/// </summary>
@@ -161,7 +156,11 @@ namespace acid
 		template<typename T>
 		static T From(const std::string &str)
 		{
-			if constexpr (std::is_enum_v<T>)
+			if constexpr (std::is_same_v<std::string, T>)
+			{
+				return str;
+			}
+			else if constexpr (std::is_enum_v<T>)
 			{
 				typedef typename std::underlying_type<T>::type safe_type;
 				return static_cast<T>(From<safe_type>(str));
@@ -174,7 +173,7 @@ namespace acid
 			{
 				std::istringstream iss(str);
 
-				if constexpr (is_optional<T>::value)
+				if constexpr (TypeTraits::is_optional<T>::value)
 				{
 					typedef typename T::value_type base_type;
 					base_type temp;

@@ -9,6 +9,7 @@
 #include <vector>
 #include <vulkan/vulkan.h>
 #include "Helpers/NonCopyable.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace glslang
 {
@@ -18,8 +19,7 @@ namespace glslang
 
 namespace acid
 {
-	class ACID_EXPORT Shader :
-		public NonCopyable
+	class ACID_EXPORT Shader
 	{
 	public:
 		/// <summary>
@@ -33,7 +33,7 @@ namespace acid
 		class VertexInput
 		{
 		public:
-			VertexInput(const uint32_t &binding, std::vector<VkVertexInputBindingDescription> bindingDescriptions, std::vector<VkVertexInputAttributeDescription> attributeDescriptions) :
+			explicit VertexInput(const uint32_t &binding = 0, std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
 				m_binding(binding),
 				m_bindingDescriptions(std::move(bindingDescriptions)),
 				m_attributeDescriptions(std::move(attributeDescriptions))
@@ -59,7 +59,8 @@ namespace acid
 		class Uniform
 		{
 		public:
-			Uniform(const int32_t &binding, const int32_t &offset, const int32_t &size, const int32_t &glType, const bool &readOnly, const bool &writeOnly, const VkShaderStageFlags &stageFlags) :
+			explicit Uniform(const int32_t &binding = -1, const int32_t &offset = -1, const int32_t &size = -1, const int32_t &glType = -1, const bool &readOnly = false, 
+				const bool &writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
 				m_binding(binding),
 				m_offset(offset),
 				m_size(size),
@@ -68,6 +69,28 @@ namespace acid
 				m_writeOnly(writeOnly),
 				m_stageFlags(stageFlags)
 			{
+			}
+
+			void Decode(const Metadata &metadata)
+			{
+				metadata.GetChild("Binding", m_binding);
+				metadata.GetChild("Offset", m_offset);
+				metadata.GetChild("Size", m_size);
+				metadata.GetChild("GL Type", m_glType);
+				metadata.GetChild("Read Only", m_readOnly);
+				metadata.GetChild("Write Only", m_writeOnly);
+				metadata.GetChild("Stage Flags", m_stageFlags);
+			}
+
+			void Encode(Metadata &metadata) const
+			{
+				metadata.SetChild("Binding", m_binding);
+				metadata.SetChild("Offset", m_offset);
+				metadata.SetChild("Size", m_size);
+				metadata.SetChild("GL Type", m_glType);
+				metadata.SetChild("Read Only", m_readOnly);
+				metadata.SetChild("Write Only", m_writeOnly);
+				metadata.SetChild("Stage Flags", m_stageFlags);
 			}
 
 			const int32_t &GetBinding() const { return m_binding; }
@@ -86,7 +109,8 @@ namespace acid
 
 			bool operator==(const Uniform &other) const
 			{
-				return m_binding == other.m_binding && m_offset == other.m_offset && m_glType == other.m_glType;
+				return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && 
+					m_readOnly == other.m_readOnly && m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
 			}
 
 			bool operator!=(const Uniform &other) const
@@ -112,8 +136,7 @@ namespace acid
 			VkShaderStageFlags m_stageFlags;
 		};
 
-		class UniformBlock :
-			public NonCopyable
+		class UniformBlock
 		{
 		public:
 			enum class Type
@@ -121,13 +144,30 @@ namespace acid
 				Uniform, Storage, Push
 			};
 
-			UniformBlock(const int32_t &binding, const int32_t &size, const VkShaderStageFlags &stageFlags, const Type &type) :
+			explicit UniformBlock(const int32_t &binding = -1, const int32_t &size = -1, const VkShaderStageFlags &stageFlags = 0, const Type &type = Type::Uniform) :
 				m_binding(binding),
 				m_size(size),
 				m_stageFlags(stageFlags),
-				m_type(type),
-				m_uniforms(std::map<std::string, std::unique_ptr<Uniform>>())
+				m_type(type)
 			{
+			}
+
+			void Decode(const Metadata &metadata)
+			{
+				metadata.GetChild("Binding", m_binding);
+				metadata.GetChild("Size", m_size);
+				metadata.GetChild("Stage Flags", m_stageFlags);
+				metadata.GetChild("Type", m_type);
+				metadata.GetChild("Uniforms", m_uniforms);
+			}
+
+			void Encode(Metadata &metadata) const
+			{
+				metadata.SetChild("Binding", m_binding);
+				metadata.SetChild("Size", m_size);
+				metadata.SetChild("Stage Flags", m_stageFlags);
+				metadata.SetChild("Type", m_type);
+				metadata.SetChild("Uniforms", m_uniforms);
 			}
 
 			const int32_t &GetBinding() const { return m_binding; }
@@ -138,18 +178,29 @@ namespace acid
 
 			const Type &GetType() const { return m_type; }
 
-			const std::map<std::string, std::unique_ptr<Uniform>> &GetUniforms() { return m_uniforms; }
+			const std::map<std::string, Uniform> &GetUniforms() const { return m_uniforms; }
 
-			const Uniform *GetUniform(const std::string &name) const
+			std::optional<Uniform> GetUniform(const std::string &name) const
 			{
 				auto it = m_uniforms.find(name);
 
 				if (it == m_uniforms.end())
 				{
-					return nullptr;
+					return {};
 				}
 
-				return it->second.get();
+				return it->second;
+			}
+
+			bool operator==(const UniformBlock &other) const
+			{
+				return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_type == other.m_type &&
+					m_uniforms == other.m_uniforms;
+			}
+
+			bool operator!=(const UniformBlock &other) const
+			{
+				return !(*this == other);
 			}
 
 			std::string ToString() const
@@ -165,18 +216,34 @@ namespace acid
 			int32_t m_size;
 			VkShaderStageFlags m_stageFlags;
 			Type m_type;
-			std::map<std::string, std::unique_ptr<Uniform>> m_uniforms;
+			std::map<std::string, Uniform> m_uniforms;
 		};
 
 		class Attribute
 		{
 		public:
-			Attribute(const int32_t &set, const int32_t &location, const int32_t &size, const int32_t &glType) :
+			explicit Attribute(const int32_t &set = -1, const int32_t &location = -1, const int32_t &size = -1, const int32_t &glType = -1) :
 				m_set(set),
 				m_location(location),
 				m_size(size),
 				m_glType(glType)
 			{
+			}
+
+			void Decode(const Metadata &metadata)
+			{
+				metadata.GetChild("Set", m_set);
+				metadata.GetChild("Location", m_location);
+				metadata.GetChild("Size", m_size);
+				metadata.GetChild("GL Type", m_glType);
+			}
+
+			void Encode(Metadata &metadata) const
+			{
+				metadata.SetChild("Set", m_set);
+				metadata.SetChild("Location", m_location);
+				metadata.SetChild("Size", m_size);
+				metadata.SetChild("GL Type", m_glType);
 			}
 
 			const int32_t &GetSet() const { return m_set; }
@@ -186,6 +253,16 @@ namespace acid
 			const int32_t &GetSize() const { return m_size; }
 
 			const int32_t &GetGlType() const { return m_glType; }
+
+			bool operator==(const Attribute &other) const
+			{
+				return m_set == other.m_set && m_location == other.m_location && m_size == other.m_size && m_glType == other.m_glType;
+			}
+
+			bool operator!=(const Attribute &other) const
+			{
+				return !(*this == other);
+			}
 
 			std::string ToString() const
 			{
@@ -210,25 +287,29 @@ namespace acid
 
 		void ProcessShader();
 
+		void Decode(const Metadata &metadata);
+
+		void Encode(Metadata &metadata) const;
+
 		static VkFormat GlTypeToVk(const int32_t &type);
 
 		std::optional<uint32_t> GetDescriptorLocation(const std::string &name) const;
 
 		std::optional<uint32_t> GetDescriptorSize(const std::string &name) const;
 
-		const Uniform *GetUniform(const std::string &name) const;
+		std::optional<Uniform> GetUniform(const std::string &name) const;
 
-		const UniformBlock *GetUniformBlock(const std::string &name) const;
+		std::optional<UniformBlock> GetUniformBlock(const std::string &name) const;
 
-		const Attribute *GetAttribute(const std::string &name) const;
+		std::optional<Attribute> GetAttribute(const std::string &name) const;
 
 		const uint32_t &GetLastDescriptorBinding() const { return m_lastDescriptorBinding;  }
 
-		const std::map<std::string, std::unique_ptr<Uniform>> &GetUniforms() const { return m_uniforms; };
+		const std::map<std::string, Uniform> &GetUniforms() const { return m_uniforms; };
 
-		const std::map<std::string, std::unique_ptr<UniformBlock>> &GetUniformBlocks() const { return m_uniformBlocks; };
+		const std::map<std::string, UniformBlock> &GetUniformBlocks() const { return m_uniformBlocks; };
 
-		const std::map<std::string, std::unique_ptr<Attribute>> &GetAttributes() const { return m_attributes; };
+		const std::map<std::string, Attribute> &GetAttributes() const { return m_attributes; };
 
 		const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return m_localSizes; }
 
@@ -261,9 +342,9 @@ namespace acid
 		static int32_t ComputeSize(const glslang::TType *ttype);
 
 		std::string m_name;
-		std::map<std::string, std::unique_ptr<Uniform>> m_uniforms;
-		std::map<std::string, std::unique_ptr<UniformBlock>> m_uniformBlocks;
-		std::map<std::string, std::unique_ptr<Attribute>> m_attributes;
+		std::map<std::string, Uniform> m_uniforms;
+		std::map<std::string, UniformBlock> m_uniformBlocks;
+		std::map<std::string, Attribute> m_attributes;
 
 		std::array<std::optional<uint32_t>, 3> m_localSizes;
 

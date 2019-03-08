@@ -6,6 +6,7 @@
 #include <vector>
 #include "Helpers/String.hpp"
 #include "Helpers/NonCopyable.hpp"
+#include "Helpers/TypeTraits.hpp"
 
 namespace acid
 {
@@ -49,16 +50,6 @@ namespace acid
 		Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
 		template<typename T>
-		struct is_vector : public std::false_type
-		{
-		};
-
-		template<typename T, typename A>
-		struct is_vector<std::vector<T, A>> : public std::true_type
-		{
-		};
-
-		template<typename T>
 		T GetChild(const std::string &name) const
 		{
 			auto child = FindChild(name);
@@ -81,7 +72,7 @@ namespace acid
 				return;
 			}
 
-			if constexpr (is_vector<T>::value)
+			if constexpr (TypeTraits::is_vector<T>::value)
 			{
 				dest = T();
 
@@ -89,14 +80,19 @@ namespace acid
 				{
 					typedef typename T::value_type base_type;
 
-					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
-					{
-						dest.emplace_back(child2->GetName(), child2->Get<std::string>());
-					}
-					else
-					{
-						dest.emplace_back(child2->Get<base_type>());
-					}
+					dest.emplace_back(child2->Get<base_type>());
+				}
+			}
+			else if constexpr (TypeTraits::is_map<T>::value)
+			{
+				dest = T();
+
+				for (const auto &child2 : child->GetChildren())
+				{
+					typedef typename T::key_type key_type;
+					typedef typename T::mapped_type mapped_type;
+
+					dest.emplace(String::From<key_type>(child2->GetName()), child2->Get<mapped_type>());
 				}
 			}
 			else
@@ -117,6 +113,95 @@ namespace acid
 			}
 
 			return child->Get<T>();
+		}
+
+		template<typename T>
+		void SetChild(const std::string &name, const T &value)
+		{
+			auto child = FindChild(name, false);
+
+			if (child == nullptr)
+			{
+				child = new Metadata(name);
+				m_children.emplace_back(child);
+			}
+
+			if constexpr (TypeTraits::is_vector<T>::value)
+			{
+				for (const auto &x : value)
+				{
+					auto subChild = new Metadata("");
+					subChild->Set(x);
+					child->AddChild(subChild);
+				}
+			}
+			else if constexpr (TypeTraits::is_map<T>::value)
+			{
+				for (const auto &x : value)
+				{
+					auto subChild = new Metadata(x.first);
+					subChild->Set(x.second);
+					child->AddChild(subChild);
+				}
+			}
+			else
+			{
+				child->Set<T>(value);
+			}
+		}
+
+		template<typename T>
+		T Get() const
+		{
+			if constexpr (std::is_same_v<std::string, T>)
+			{
+				return GetString();
+			}
+			else if constexpr (TypeTraits::is_pair<T>::value)
+			{
+				typedef typename T::first_type first_type;
+				typedef typename T::second_type second_type;
+
+				return T(String::From<first_type>(GetName()), Get<second_type>());
+			}
+			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
+			{
+				T result = T();
+				TypeTraits::AsPtr(result)->Decode(*this);
+				return result;
+			}
+			else
+			{
+				return String::From<T>(m_value);
+			}
+		}
+
+		template<typename T>
+		void Set(const T &value)
+		{
+			if constexpr (std::is_same_v<std::string, T>)
+			{
+				SetString(value);
+			}
+			else if constexpr (TypeTraits::is_pair<T>::value)
+			{
+				SetName(String::To(value.first));
+				SetString(String::To(value.second));
+			}
+			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
+			{
+				if (TypeTraits::AsPtr(value) == nullptr)
+				{
+					SetValue("null");
+					return;
+				}
+
+				TypeTraits::AsPtr(value)->Encode(*this);
+			}
+			else
+			{
+				SetValue(String::To<T>(value));
+			}
 		}
 
 		template<typename T>
@@ -147,39 +232,6 @@ namespace acid
 		}
 
 		template<typename T>
-		void SetChild(const std::string &name, const T &value)
-		{
-			auto child = FindChild(name, false);
-
-			if (child == nullptr)
-			{
-				child = new Metadata(name);
-				m_children.emplace_back(child);
-			}
-
-			if constexpr (is_vector<T>::value)
-			{
-				for (const auto &x : value)
-				{
-					typedef typename T::value_type base_type;
-
-					if constexpr (std::is_same_v<std::pair<std::string, std::string>, base_type>)
-					{
-						child->AddChild(new Metadata(x.first, x.second));
-					}
-					else
-					{
-						child->AddChild(new Metadata("", x));
-					}
-				}
-			}
-			else
-			{
-				child->Set<T>(value);
-			}
-		}
-
-		template<typename T>
 		void SetResource(const std::string &name, const std::shared_ptr<T> &value)
 		{
 			auto child = FindChild(name, false);
@@ -191,60 +243,6 @@ namespace acid
 			}
 
 			child->Set<std::shared_ptr<T>>(value);
-		}
-
-		template<typename T>
-		T Get() const
-		{
-			if constexpr (std::is_same_v<std::string, T>)
-			{
-				return GetString();
-			}
-			else if constexpr (std::is_class_v<T>)
-			{
-				T result = T();
-				result.Decode(*this);
-				return result;
-			}
-			else
-			{
-				return String::From<T>(m_value);
-			}
-		}
-
-		template<typename T>
-		T *Ptr(T &obj) { return &obj; }
-
-		template<typename T>
-		T *Ptr(T *obj) { return obj; }
-
-		template<typename T>
-		T *Ptr(std::shared_ptr<T> obj) { return obj.get(); }
-
-		template<typename T>
-		T *Ptr(std::unique_ptr<T> obj) { return obj.get(); }
-
-		template<typename T>
-		void Set(const T &value)
-		{
-			if constexpr (std::is_same_v<std::string, T>)
-			{
-				SetString(value);
-			}
-			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
-			{
-				if (Ptr(value) == nullptr)
-				{
-					SetValue("null");
-					return;
-				}
-
-				Ptr(value)->Encode(*this);
-			}
-			else
-			{
-				SetValue(String::To<T>(value));
-			}
 		}
 
 		const std::map<std::string, std::string> &GetAttributes() const { return m_attributes; }

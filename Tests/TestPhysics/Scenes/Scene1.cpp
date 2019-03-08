@@ -109,7 +109,7 @@ namespace test
 
 		auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<MaterialDefault>(Colour::Grey, Texture::Create("Undefined2.png"), 0.0f, 1.0f);
+		plane->AddComponent<MaterialDefault>(Colour::Grey, Texture::Create("Undefined2.png"));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<MeshRender>();

@@ -116,10 +116,10 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	# Used later to define as a pre-build dependencies
 	# Have to manually define because we manually searched for SPIRV
 	set(SPIRV_FOUND false)
-	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS" "ENABLE_OPT")
+	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS")
 		set(${_glslang_option} OFF CACHE INTERNAL "")
 	endforeach()
-	foreach(_glslang_option "SKIP_GLSLANG_INSTALL")
+	foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_OPT")
 		set(${_glslang_option} ON CACHE INTERNAL "")
 	endforeach()
 	

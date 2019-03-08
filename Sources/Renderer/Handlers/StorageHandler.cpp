@@ -4,7 +4,7 @@ namespace acid
 {
 	StorageHandler::StorageHandler(const bool &multipipeline) :
 		m_multipipeline(multipipeline),
-		m_uniformBlock(nullptr),
+		m_uniformBlock({}),
 		m_size(0),
 		m_data(nullptr),
 		m_storageBuffer(nullptr),
@@ -12,7 +12,7 @@ namespace acid
 	{
 	}
 
-	StorageHandler::StorageHandler(const Shader::UniformBlock *uniformBlock, const bool &multipipeline) :
+	StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline) :
 		m_multipipeline(multipipeline),
 		m_uniformBlock(uniformBlock),
 		m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
@@ -22,11 +22,11 @@ namespace acid
 	{
 	}
 
-	bool StorageHandler::Update(const Shader::UniformBlock *uniformBlock)
+	bool StorageHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock)
 	{
-		if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && m_uniformBlock == nullptr) || (!m_multipipeline && m_uniformBlock != uniformBlock))
+		if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && !m_uniformBlock) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 		{
-			if ((m_size == 0 && m_uniformBlock == nullptr) || (m_uniformBlock != nullptr && 
+			if ((m_size == 0 && !m_uniformBlock) || (m_uniformBlock && 
 				m_uniformBlock != uniformBlock && static_cast<uint32_t>(m_uniformBlock->GetSize()) == m_size))
 			{
 				m_size = static_cast<uint32_t>(uniformBlock->GetSize());

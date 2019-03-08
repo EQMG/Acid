@@ -43,17 +43,17 @@ namespace acid
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
-			switch (uniformBlock->GetType())
+			switch (uniformBlock.m_type)
 			{
 			case UniformBlock::Type::Uniform:
 				descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()), 
-					descriptorType, uniformBlock->GetStageFlags(), 1));
+				m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), 
+					descriptorType, uniformBlock.m_stageFlags, 1));
 				break;
 			case UniformBlock::Type::Storage:
 				descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-				m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock->GetBinding()), 
-					descriptorType, uniformBlock->GetStageFlags(), 1));
+				m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), 
+					descriptorType, uniformBlock.m_stageFlags, 1));
 				break;
 			case UniformBlock::Type::Push:
 				// Push constants are described in the pipeline.
@@ -63,37 +63,37 @@ namespace acid
 			}
 
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
-			m_descriptorLocations.emplace(uniformBlockName, uniformBlock->GetBinding());
-			m_descriptorSizes.emplace(uniformBlockName, uniformBlock->GetSize());
+			m_descriptorLocations.emplace(uniformBlockName, uniformBlock.m_binding);
+			m_descriptorSizes.emplace(uniformBlockName, uniformBlock.m_size);
 		}
 
 		for (const auto &[uniformName, uniform] : m_uniforms)
 		{
 			VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
-			switch (uniform->GetGlType())
+			switch (uniform.m_glType)
 			{
 			case 0x8B5E: // GL_SAMPLER_2D
 			case 0x904D: // GL_IMAGE_2D
 			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
-				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				m_descriptorSetLayouts.emplace_back(Texture::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()), 
-					descriptorType, uniform->GetStageFlags(), 1));
+				descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				m_descriptorSetLayouts.emplace_back(Texture::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
+					descriptorType, uniform.m_stageFlags, 1));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
-				descriptorType = uniform->IsWriteOnly() ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				m_descriptorSetLayouts.emplace_back(Cubemap::GetDescriptorSetLayout(static_cast<uint32_t>(uniform->GetBinding()), 
-					descriptorType, uniform->GetStageFlags(), 1));
+				descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				m_descriptorSetLayouts.emplace_back(Cubemap::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
+					descriptorType, uniform.m_stageFlags, 1));
 				break;
 			default:
 				break;
 			}
 
 			IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
-			m_descriptorLocations.emplace(uniformName, uniform->GetBinding());
-			m_descriptorSizes.emplace(uniformName, uniform->GetSize());
+			m_descriptorLocations.emplace(uniformName, uniform.m_binding);
+			m_descriptorSizes.emplace(uniformName, uniform.m_size);
 		}
 
 		for (const auto &[type, descriptorCount] : descriptorPoolCounts)
@@ -129,13 +129,31 @@ namespace acid
 		for (const auto &[attributeName, attribute] : m_attributes)
 		{
 			VkVertexInputAttributeDescription attributeDescription = {};
-			attributeDescription.location = static_cast<uint32_t>(attribute->GetLocation());
+			attributeDescription.location = static_cast<uint32_t>(attribute.m_location);
 			attributeDescription.binding = 0;
-			attributeDescription.format = GlTypeToVk(attribute->GetGlType());
+			attributeDescription.format = GlTypeToVk(attribute.m_glType);
 			attributeDescription.offset = currentOffset;
 			m_attributeDescriptions.emplace_back(attributeDescription);
-			currentOffset += attribute->GetSize();
+			currentOffset += attribute.m_size;
 		}
+	}
+
+	void Shader::Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("Name", m_name);
+		metadata.GetChild("Uniforms", m_uniforms);
+		metadata.GetChild("Uniform Blocks", m_uniformBlocks);
+		metadata.GetChild("Attributes", m_attributes);
+	//	metadata.GetChild("Local Sizes", m_localSizes);
+	}
+
+	void Shader::Encode(Metadata &metadata) const
+	{
+		metadata.SetChild("Name", m_name);
+		metadata.SetChild("Uniforms", m_uniforms);
+		metadata.SetChild("Uniform Blocks", m_uniformBlocks);
+		metadata.SetChild("Attributes", m_attributes);
+	//	metadata.SetChild("Local Sizes", m_localSizes);
 	}
 
 	VkFormat Shader::GlTypeToVk(const int32_t &type)
@@ -195,40 +213,40 @@ namespace acid
 		return it->second;
 	}
 
-	const Shader::Uniform *Shader::GetUniform(const std::string &name) const
+	std::optional<Shader::Uniform> Shader::GetUniform(const std::string &name) const
 	{
 		auto it = m_uniforms.find(name);
 
 		if (it == m_uniforms.end())
 		{
-			return nullptr;
+			return {};
 		}
 
-		return it->second.get();
+		return it->second;
 	}
 
-	const Shader::UniformBlock *Shader::GetUniformBlock(const std::string &name) const
+	std::optional<Shader::UniformBlock> Shader::GetUniformBlock(const std::string &name) const
 	{
 		auto it = m_uniformBlocks.find(name);
 
 		if (it == m_uniformBlocks.end())
 		{
-			return nullptr;
+			return {};
 		}
 
-		return it->second.get();
+		return it->second;
 	}
 
-	const Shader::Attribute *Shader::GetAttribute(const std::string &name) const
+	std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) const
 	{
 		auto it = m_attributes.find(name);
 
 		if (it == m_attributes.end())
 		{
-			return nullptr;
+			return {};
 		}
 
-		return it->second.get();
+		return it->second;
 	}
 
 	std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
@@ -539,7 +557,7 @@ namespace acid
 
 			for (const auto &[attributeName, attribute] : m_attributes)
 			{
-				result << "  - " << attributeName << ": " << attribute->ToString() << "\n";
+				result << "  - " << attributeName << ": " << attribute.ToString() << "\n";
 			}
 		}
 
@@ -549,7 +567,7 @@ namespace acid
 
 			for (const auto &[uniformName, uniform] : m_uniforms)
 			{
-				result << "  - " << uniformName << ": " << uniform->ToString() << "\n";
+				result << "  - " << uniformName << ": " << uniform.ToString() << "\n";
 			}
 		}
 
@@ -559,11 +577,11 @@ namespace acid
 
 			for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 			{
-				result << "  - " << uniformBlockName << ": " << uniformBlock->ToString() << " \n";
+				result << "  - " << uniformBlockName << ": " << uniformBlock.ToString() << " \n";
 
-				for (const auto &[uniformName, uniform] : uniformBlock->GetUniforms())
+				for (const auto &[uniformName, uniform] : uniformBlock.GetUniforms())
 				{
-					result << "	- " << uniformName << ": " << uniform->ToString() << " \n";
+					result << "	- " << uniformName << ": " << uniform.ToString() << " \n";
 				}
 			}
 		}
@@ -606,7 +624,7 @@ namespace acid
 		{
 			if (uniformBlockName == program.getUniformBlockName(i))
 			{
-				uniformBlock->m_stageFlags |= stageFlag;
+				uniformBlock.m_stageFlags |= stageFlag;
 				return;
 			}
 		}
@@ -623,22 +641,23 @@ namespace acid
 			type = UniformBlock::Type::Push;
 		}
 
-		m_uniformBlocks.emplace(program.getUniformBlockName(i), std::make_unique<UniformBlock>(program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
+		m_uniformBlocks.emplace(program.getUniformBlockName(i), UniformBlock(program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
 	}
 
 	void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 	{
 		if (program.getUniformBinding(i) == -1)
 		{
-			auto splitName = String::Split(program.getUniformName(i), ".");
+			auto uniformName = program.getUniformName(i);
+			auto splitName = String::Split(uniformName, ".");
 
-			if (splitName.size() == 2)
+			if (splitName.size() > 1)
 			{
 				for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 				{
 					if (uniformBlockName == splitName.at(0))
 					{
-						uniformBlock->m_uniforms.emplace(splitName.at(1), std::make_unique<Uniform>(program.getUniformBinding(i), 
+						uniformBlock.m_uniforms.emplace(String::ReplaceFirst(uniformName, splitName.at(0) + ".", ""), Uniform(program.getUniformBinding(i),
 							program.getUniformBufferOffset(i), ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
 						return;
 					}
@@ -650,13 +669,13 @@ namespace acid
 		{
 			if (uniformName == program.getUniformName(i))
 			{
-				uniform->m_stageFlags |= stageFlag;
+				uniform.m_stageFlags |= stageFlag;
 				return;
 			}
 		}
 
 		auto &qualifier = program.getUniformTType(i)->getQualifier();
-		m_uniforms.emplace(program.getUniformName(i), std::make_unique<Uniform>(program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, 
+		m_uniforms.emplace(program.getUniformName(i), Uniform(program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, 
 			program.getUniformType(i), qualifier.readonly, qualifier.writeonly, stageFlag));
 	}
 
@@ -678,7 +697,7 @@ namespace acid
 		}
 
 		auto &qualifier = program.getAttributeTType(i)->getQualifier();
-		m_attributes.emplace(name, std::make_unique<Attribute>(qualifier.layoutSet, qualifier.layoutLocation,
+		m_attributes.emplace(name, Attribute(qualifier.layoutSet, qualifier.layoutLocation,
 			ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
 	}
 

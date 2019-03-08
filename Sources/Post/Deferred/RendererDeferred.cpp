@@ -2,12 +2,13 @@
 
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
-#include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/VertexModel.hpp"
 #include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
+#include "Files/File.hpp"
+#include "Serialized/Json/Json.hpp"
 
 namespace acid
 {
@@ -23,6 +24,10 @@ namespace acid
 		m_prefiltered(nullptr),
 		m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 	{
+		auto metadata = Metadata();
+		m_pipeline.GetShaderProgram()->Encode(metadata);
+		File file = File("Shaders/Deferred.json", new Json(&metadata));
+		file.Write();
 	}
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer)
@@ -36,7 +41,7 @@ namespace acid
 		{
 			m_skybox = skybox;
 			m_irradiance = ComputeIrradiance(m_skybox, 64);
-			m_prefiltered = ComputePrefiltered(m_skybox);
+			m_prefiltered = ComputePrefiltered(m_skybox, 512);
 		}
 
 		// Updates uniforms.
@@ -87,8 +92,8 @@ namespace acid
 		m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
 		m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
 		m_descriptorSet.Push("samplerBRDF", m_brdf.get());
-	//	m_descriptorSet.Push("samplerIrradiance", m_irradiance.get());
-	//	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.get());
+		m_descriptorSet.Push("samplerIrradiance", m_irradiance.get());
+		m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.get());
 
 		bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
@@ -135,12 +140,12 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the BRDF texture.
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
 		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);
+		Texture::WritePixels(filename, pixels.get(), width, height);*/
 #endif
 
 		return result;
@@ -176,18 +181,18 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the irradiance texture.
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
+		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
 		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);
+		Texture::WritePixels(filename, pixels.get(), width, height);*/
 #endif
 
 		return result;
 	}
 
-	std::unique_ptr<Cubemap> RendererDeferred::ComputePrefiltered(const std::shared_ptr<Cubemap> &source)
+	std::unique_ptr<Cubemap> RendererDeferred::ComputePrefiltered(const std::shared_ptr<Cubemap> &source, const uint32_t &size)
 	{
 		if (source == nullptr)
 		{
@@ -195,7 +200,9 @@ namespace acid
 		}
 
 		// TODO: Generate mipmaps, and per mip change roughness to 1.0 as mip increases.
-		auto result = std::make_unique<Cubemap>(source->GetWidth(), source->GetHeight());
+		auto result = std::make_unique<Cubemap>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM,
+			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, 
+			VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -218,12 +225,22 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the prefiltered texture.
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered.png";
+		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
 		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);
+		Texture::WritePixels(filename, pixels.get(), width, height);*/
+
+		for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
+		{
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
+			FileSystem::ClearFile(filename);
+			uint32_t width = 0;
+			uint32_t height = 0;
+			auto pixels = result->GetPixels(width, height, i);
+			Texture::WritePixels(filename, pixels.get(), width, height);
+		}
 #endif
 
 		return result;
