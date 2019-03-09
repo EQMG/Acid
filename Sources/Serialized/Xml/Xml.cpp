@@ -92,12 +92,10 @@ namespace acid
 		}
 	}
 
-	void Xml::Write(std::ostream *inStream) const
+	void Xml::Write(std::ostream *outStream) const
 	{
-	//	std::stringstream data;
-	//	data << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-	//	AppendData(this, data, 0);
-	//	return data.str();
+		*outStream << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+		AppendData(this, outStream, 0);
 	}
 
 	void Xml::AddChildren(const Metadata *source, Metadata *destination)

@@ -89,8 +89,7 @@ vec3 F_SchlickR(float cosTheta, vec3 F0, float roughness)
 
 vec3 prefilteredReflection(vec3 R, float roughness)
 {
-	const float MAX_REFLECTION_LOD = 9.0f; // TODO: Param/const
-	float lod = roughness * MAX_REFLECTION_LOD;
+	float lod = roughness * float(textureQueryLevels(samplerPrefiltered));
 	float lodf = floor(lod);
 	float lodc = ceil(lod);
 	vec3 a = textureLod(samplerPrefiltered, R, lodf).rgb;
@@ -101,7 +100,7 @@ vec3 prefilteredReflection(vec3 R, float roughness)
 vec3 specularContribution(vec3 diffuse, vec3 L, vec3 V, vec3 N, vec3 F0, float metallic, float roughness)
 {
 	// Precalculate vectors and dot products	
-	vec3 H = normalize (V + L);
+	vec3 H = normalize(V + L);
 	float dotNH = clamp(dot(N, H), 0.0f, 1.0f);
 	float dotNV = clamp(dot(N, V), 0.0f, 1.0f);
 	float dotNL = clamp(dot(N, L), 0.0f, 1.0f);

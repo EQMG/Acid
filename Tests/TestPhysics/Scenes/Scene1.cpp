@@ -159,7 +159,7 @@ namespace test
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f, nullptr, Texture::Create("Objects/Testing/Normal.png"));
+		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.1f, nullptr, Texture::Create("Objects/Testing/Normal.png"));
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
@@ -176,7 +176,7 @@ namespace test
 
 		auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3(7.5f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.1f, 0.7f);
+		teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f);
 	//	teapot2->AddComponent<Rigidbody>(1.0f);
 	//	teapot2->AddComponent<ColliderConvexHull>();
 		teapot2->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 1);

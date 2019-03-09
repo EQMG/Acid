@@ -183,7 +183,7 @@ namespace acid
 
 		*outStream << indents.str();
 
-		if (source->GetName().empty())
+		if (source->GetName().empty() && source->GetValue().empty())
 		{
 			*outStream << openBrace << "\n";
 		}
@@ -193,7 +193,14 @@ namespace acid
 		}
 		else
 		{
-			*outStream << "\"" << source->GetName() << "\": " << source->GetValue();
+			if (source->GetName().empty())
+			{
+				*outStream << source->GetValue();
+			}
+			else
+			{
+				*outStream << "\"" << source->GetName() << "\": " << source->GetValue();
+			}
 
 			if (!(end && source->GetAttributes().empty()))
 			{

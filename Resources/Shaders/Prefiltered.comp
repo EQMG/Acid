@@ -1,5 +1,6 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
+//#extension GL_AMD_shader_image_load_store_lod: enable
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
@@ -8,7 +9,6 @@ layout(binding = 0, rgba8) uniform writeonly imageCube outColour;
 layout(binding = 1) uniform samplerCube samplerColour;
 
 const float PI = 3.1415926535897932384626433832795f;
-const float roughness = 0.5f;
 const uint samples = 32u;
 
 vec3 cubeDir(vec2 texCoord, uint side)
@@ -78,8 +78,8 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 {
 	vec3 N = R;
 	vec3 V = R;
-	vec3 color = vec3(0.0);
-	float totalWeight = 0.0;
+	vec3 colour = vec3(0.0f);
+	float totalWeight = 0.0f;
 	float envMapDim = float(textureSize(envmap, 0).s);
 
 	for (uint i = 0u; i < samples; i++)
@@ -103,12 +103,12 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 			float omegaP = 4.0f * PI / (6.0f * envMapDim * envMapDim);
 			// Biased (+1.0) mip level for better result
 			float mipLevel = roughness == 0.0f ? 0.0f : max(0.5f * log2(omegaS / omegaP) + 1.0f, 0.0f);
-			color += textureLod(envmap, L, mipLevel).rgb * dotNL;
+			colour += textureLod(envmap, L, mipLevel).rgb * dotNL;
 			totalWeight += dotNL;
 
 		}
 	}
-	return (color / totalWeight);
+	return (colour / totalWeight);
 }
 
 void main()
@@ -118,6 +118,12 @@ void main()
 	for (uint i = 0; i != 6; ++i)
 	{
 		vec3 N = normalize(cubeDir(uv, i));
-		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, N, roughness), 1.0f));
+		int lods = 10; //textureQueryLevels(outColour);
+
+		for (uint j = 0; j < lods; j++)
+		{
+			imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, N, j / lods), 1.0f));
+		//	imageStoreLodAMD(outColour, ivec3(gl_GlobalInvocationID.xy >> j, i), j, vec4(prefilterEnvMap(samplerColour, N, j / lods), 1.0f));
+		}
 	}
 }

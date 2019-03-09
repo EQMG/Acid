@@ -54,13 +54,13 @@ namespace test
 
 	void SkyboxCycle::Decode(const Metadata &metadata)
 	{
-		m_enableFog = metadata.GetChild<bool>("Enable Fog");
-		m_enableRotation = metadata.GetChild<bool>("Enable Rotation");
+		metadata.GetChild("Enable Fog", m_enableFog);
+		metadata.GetChild("Enable Rotation", m_enableRotation);
 	}
 
 	void SkyboxCycle::Encode(Metadata &metadata) const
 	{
-		metadata.SetChild<bool>("Enable Fog", m_enableFog);
-		metadata.SetChild<bool>("Enable Rotation", m_enableRotation);
+		metadata.SetChild("Enable Fog", m_enableFog);
+		metadata.SetChild("Enable Rotation", m_enableRotation);
 	}
 }

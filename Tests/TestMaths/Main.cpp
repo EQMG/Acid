@@ -14,18 +14,18 @@
 
 #include <Helpers/RingBuffer.hpp>
 
-/*#include <Engine/Engine.hpp>
+#include <Engine/Engine.hpp>
 #include <Files/File.hpp>
 #include <Serialized/Json/Json.hpp>
 #include <Serialized/Xml/Xml.hpp>
 #include <Files/Files.hpp>
-#include <Serialized/Yaml/Yaml.hpp>*/
+#include <Serialized/Yaml/Yaml.hpp>
 
 using namespace acid;
 
 int main(int argc, char **argv)
 {
-	{
+	/*{
 		RingBuffer<int32_t> buffer(4);
 
 		if (!buffer.push(1, 2, 3, 4))
@@ -87,29 +87,29 @@ int main(int argc, char **argv)
 		{
 			return false;
 		}
-	}
+	}*/
 
-	/*auto engine = std::make_unique<Engine>(argv[0], true);
+	auto engine = std::make_unique<Engine>(argv[0], true);
 	engine->GetModuleManager().Add<Files>(Module::Stage::Always);
 	Files::Get()->AddSearchPath("Resources/Engine");
 	{
-		auto dataYaml = File("Example0.yaml", new Yaml());
+		auto dataYaml = File("Files/Example0.yaml", new Yaml());
 		dataYaml.Read();
-		auto dataJson = File("Example0.json", new Json(dataYaml.GetMetadata()));
+		auto dataJson = File("Files/Example0.json", new Json(dataYaml.GetMetadata()));
 		dataJson.Write();
 	}
-	{
-		auto dataJson = File("Example1.json", new Json());
+	/*{
+		auto dataJson = File("Files/Example1.json", new Json());
 		dataJson.Read();
-		auto dataYaml = File("Example1.yaml", new Yaml(dataJson.GetMetadata()));
+	//	auto dataXml = File("Files/Example1.xml", new Xml("EntityDefinition", dataJson.GetMetadata()));
+	//	dataXml.Write();
+		auto dataYaml = File("Files/Example1.yaml", new Yaml(dataJson.GetMetadata()));
 		dataYaml.Write();
-		auto dataXml = File("Example1.xml", new Xml("EntityDefinition", dataJson.GetMetadata()));
-		dataXml.Write();
-		auto dataJson2 = File("Example1.json", new Json(dataJson.GetMetadata()));
+		auto dataJson2 = File("Files/Example1.2.json", new Json(dataJson.GetMetadata()));
 		dataJson2.Write();
 	}*/
 
-	{
+	/*{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
@@ -181,6 +181,6 @@ int main(int argc, char **argv)
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
-	std::cin.get();
+	std::cin.get();*/
 	return EXIT_SUCCESS;
 }

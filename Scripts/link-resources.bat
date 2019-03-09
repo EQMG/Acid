@@ -26,6 +26,11 @@ mkdir Build\x64-Release\Bin\Resources
 mklink /J Build\x64-Release\Bin\Resources\Engine Resources
 )
 
+IF EXIST Build\x64-ReleaseWithDebInfo\Bin (
+mkdir Build\x64-ReleaseWithDebInfo\Bin\Resources
+mklink /J Build\x64-ReleaseWithDebInfo\Bin\Resources\Engine Resources
+)
+
 IF EXIST Build\Debug\Bin32 (
 mkdir Build\Debug\Bin32\Resources
 mklink /J Build\Debug\Bin32\Resources\Engine Resources
