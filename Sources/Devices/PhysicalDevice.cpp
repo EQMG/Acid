@@ -9,7 +9,8 @@ namespace acid
 {
 	static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS =
 	{
-		VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT
+		VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, 
+		VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT
 	};
 
 	PhysicalDevice::PhysicalDevice(const Instance *instance) :
@@ -37,8 +38,8 @@ namespace acid
 		vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_memoryProperties);
 		m_msaaSamples = GetMaxUsableSampleCount();
 
-		Log::Out("Selected Physical Device: '%s', %i\n", m_properties.deviceName, m_properties.deviceID);
 #if defined(ACID_VERBOSE)
+		Log::Out("Selected Physical Device: '%s', %i\n", m_properties.deviceName, m_properties.deviceID);
 		Log::Out("Max MSAA Samples: %i\n", m_msaaSamples);
 #endif
 	}
@@ -103,7 +104,7 @@ namespace acid
 		vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
 
 #if defined(ACID_VERBOSE)
-		LogVulkanDevice(physicalDeviceProperties);
+		LogVulkanDevice(physicalDeviceProperties, extensionProperties);
 #endif
 
 		// Adds a large score boost for discrete GPUs (dedicated graphics cards).
@@ -136,27 +137,34 @@ namespace acid
 		return VK_SAMPLE_COUNT_1_BIT;
 	}
 
-	void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties)
+	void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
+		const std::vector<VkExtensionProperties>& extensionProperties)
 	{
-		Log::Out("-- Physical Device: '%s' --\n", physicalDeviceProperties.deviceName);
-		Log::Out("ID: %i\n", physicalDeviceProperties.deviceID);
+		Log::Out("-- Physical Device: %i '%s' --\n", physicalDeviceProperties.deviceID, physicalDeviceProperties.deviceName);
+
+		Log::Out("Extensions: ");
+
+		for (const auto& extension : extensionProperties)
+		{
+			Log::Out("%s, ", extension.extensionName);
+		}
 
 		switch (static_cast<int>(physicalDeviceProperties.deviceType))
 		{
 		case 1:
-			Log::Out("Type: Integrated\n");
+			Log::Out("\nType: Integrated\n");
 			break;
 		case 2:
-			Log::Out("Type: Discrete\n");
+			Log::Out("\nType: Discrete\n");
 			break;
 		case 3:
-			Log::Out("Type: Virtual\n");
+			Log::Out("\nType: Virtual\n");
 			break;
 		case 4:
-			Log::Out("Type: CPU\n");
+			Log::Out("\nType: CPU\n");
 			break;
 		default:
-			Log::Out("Type: Other (%x)\n", physicalDeviceProperties.deviceType);
+			Log::Out("\nType: Other (%x)\n", physicalDeviceProperties.deviceType);
 		}
 
 		switch (physicalDeviceProperties.vendorID)
@@ -181,6 +189,7 @@ namespace acid
 		};
 		Log::Out("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
 		Log::Out("Header Version: %i\n", VK_HEADER_VERSION);
+
 		Log::Out("-- Done --\n");
 	}
 }

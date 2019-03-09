@@ -21,7 +21,7 @@ namespace acid
 	};
 	const std::vector<const char *> Instance::DeviceExtensions =
 	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME // , VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME // , VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME // , VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 	};
 
 	VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,
@@ -107,7 +107,7 @@ namespace acid
 		vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 
 #if defined(ACID_VERBOSE)
-		LogVulkanLayers(instanceLayerProperties, "Instance", false);
+		LogVulkanLayers(instanceLayerProperties);
 #endif
 
 		// Sets up the layers.
@@ -194,20 +194,14 @@ namespace acid
 #endif
 	}
 
-	void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription)
+	void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties)
 	{
-		Log::Out("-- Available Layers For: '%s' --\n", type.c_str());
+		Log::Out("-- Instance --\n");
+		Log::Out("Layers: ");
 
 		for (const auto &layer : layerProperties)
 		{
-			if (showDescription)
-			{
-				Log::Out("\n	%s   | %s, ", layer.layerName, layer.description);
-			}
-			else
-			{
-				Log::Out("%s, ", layer.layerName);
-			}
+			Log::Out("%s, ", layer.layerName);
 		}
 
 		Log::Out("\n-- Done --\n");

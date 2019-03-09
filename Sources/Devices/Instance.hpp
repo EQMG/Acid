@@ -49,7 +49,7 @@ namespace acid
 
 		void CreateDebugCallback();
 
-		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties, const std::string &type, const bool &showDescription);
+		static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties);
 
 		std::vector<const char *> m_instanceLayers;
 		std::vector<const char *> m_instanceExtensions;

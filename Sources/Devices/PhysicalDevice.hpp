@@ -31,7 +31,8 @@ namespace acid
 
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
 
-		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties);
+		static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, 
+			const std::vector<VkExtensionProperties> &extensionProperties);
 
 		const Instance *m_instance;
 
