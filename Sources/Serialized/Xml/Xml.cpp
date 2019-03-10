@@ -239,7 +239,7 @@ namespace acid
 			return;
 		}
 
-		*outStream << "<" << nameAndAttribs << ">" << source->GetString();
+		*outStream << "<" << nameAndAttribs << ">" << String::FixReturnTokens(source->GetValue());
 
 		if (!source->GetChildren().empty())
 		{

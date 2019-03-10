@@ -43,7 +43,7 @@ namespace acid
 		/// <param name="aspect"> The aspect that will be used for bounding in the parent reference. </param>
 		/// <param name="dimensions"> The object dimensions. </param>
 		explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft,
-			const bitmask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+			const Bitmask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 		/// <summary>
 		/// Gets the bounds position in the current screen space.
@@ -65,9 +65,9 @@ namespace acid
 
 		void SetReference(const Vector2 &reference) { m_reference = reference; }
 
-		const bitmask<UiAspect> &GetAspect() const { return m_aspect; }
+		const Bitmask<UiAspect> &GetAspect() const { return m_aspect; }
 
-		void SetAspect(const bitmask<UiAspect> &aspect) { m_aspect = aspect; }
+		void SetAspect(const Bitmask<UiAspect> &aspect) { m_aspect = aspect; }
 
 		const Vector2 &GetDimensions() const { return m_dimensions; }
 
@@ -85,7 +85,7 @@ namespace acid
 
 		Vector2 m_position;
 		Vector2 m_reference;
-		bitmask<UiAspect> m_aspect;
+		Bitmask<UiAspect> m_aspect;
 		Vector2 m_dimensions;
 	};
 }

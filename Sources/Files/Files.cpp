@@ -10,12 +10,12 @@ namespace acid
 	using std::streambuf;
 	using std::ios_base;
 
-	class fbuf :
+	class FBuffer :
 		public NonCopyable,
 		public streambuf
 	{
 	public:
-		explicit fbuf(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :
+		explicit FBuffer(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :
 			m_bufferSize(bufferSize),
 			m_file(file)
 		{
@@ -25,13 +25,13 @@ namespace acid
 			setp(m_buffer, end);
 		}
 
-		~fbuf()
+		~FBuffer()
 		{
 			sync();
 			delete[] m_buffer;
 		}
 	private:
-		int_type underflow()
+		int_type underflow() override
 		{
 			if (PHYSFS_eof(m_file))
 			{
@@ -49,7 +49,7 @@ namespace acid
 			return static_cast<int_type>(*gptr());
 		}
 
-		pos_type seekoff(off_type pos, ios_base::seekdir dir, ios_base::openmode mode)
+		pos_type seekoff(off_type pos, ios_base::seekdir dir, ios_base::openmode mode) override
 		{
 			switch (dir)
 			{
@@ -78,7 +78,7 @@ namespace acid
 			return PHYSFS_tell(m_file);
 		}
 
-		pos_type seekpos(pos_type pos, std::ios_base::openmode mode)
+		pos_type seekpos(pos_type pos, std::ios_base::openmode mode) override
 		{
 			PHYSFS_seek(m_file, pos);
 
@@ -95,7 +95,7 @@ namespace acid
 			return PHYSFS_tell(m_file);
 		}
 
-		int_type overflow(int_type c = traits_type::eof())
+		int_type overflow(int_type c = traits_type::eof()) override
 		{
 			if (pptr() == pbase() && c == traits_type::eof())
 			{
@@ -118,7 +118,7 @@ namespace acid
 			return 0;
 		}
 
-		int sync()
+		int sync() override
 		{
 			return overflow();
 		}
@@ -129,7 +129,7 @@ namespace acid
 		PHYSFS_File *m_file;
 	};
 
-	base_fstream::base_fstream(PHYSFS_File *file) : 
+	BaseFStream::BaseFStream(PHYSFS_File *file) :
 		file(file) 
 	{
 		if (file == NULL)
@@ -138,12 +138,12 @@ namespace acid
 		}
 	}
 
-	base_fstream::~base_fstream()
+	BaseFStream::~BaseFStream()
 	{
 		PHYSFS_close(file);
 	}
 
-	size_t base_fstream::length()
+	size_t BaseFStream::length()
 	{
 		return PHYSFS_fileLength(file);
 	}
@@ -172,35 +172,35 @@ namespace acid
 		return file;
 	}
 
-	ifstream::ifstream(const std::string &filename) : 
-		base_fstream(OpenWithMode(filename.c_str(), FileMode::Read)),
-		std::istream(new fbuf(file))
+	IFStream::IFStream(const std::string &filename) :
+		BaseFStream(OpenWithMode(filename.c_str(), FileMode::Read)),
+		std::istream(new FBuffer(file))
 	{
 	}
 
-	ifstream::~ifstream()
-	{
-		delete rdbuf();
-	}
-
-	ofstream::ofstream(const std::string &filename, const FileMode &writeMode) :
-		base_fstream(OpenWithMode(filename.c_str(), writeMode)),
-		std::ostream(new fbuf(file))
-	{
-	}
-
-	ofstream::~ofstream()
+	IFStream::~IFStream()
 	{
 		delete rdbuf();
 	}
 
-	fstream::fstream(const std::string &filename, const FileMode &openMode) :
-		base_fstream(OpenWithMode(filename.c_str(), openMode)),
-		std::iostream(new fbuf(file))
+	OFStream::OFStream(const std::string &filename, const FileMode &writeMode) :
+		BaseFStream(OpenWithMode(filename.c_str(), writeMode)),
+		std::ostream(new FBuffer(file))
 	{
 	}
 
-	fstream::~fstream()
+	OFStream::~OFStream()
+	{
+		delete rdbuf();
+	}
+
+	FStream::FStream(const std::string &filename, const FileMode &openMode) :
+		BaseFStream(OpenWithMode(filename.c_str(), openMode)),
+		std::iostream(new FBuffer(file))
+	{
+	}
+
+	FStream::~FStream()
 	{
 		delete rdbuf();
 	}
@@ -263,6 +263,11 @@ namespace acid
 
 	bool Files::ExistsInPath(const std::string &path)
 	{
+		if (PHYSFS_isInit() == 0)
+		{
+			return false;
+		}
+
 		return PHYSFS_exists(path.c_str()) != 0;
 	}
 

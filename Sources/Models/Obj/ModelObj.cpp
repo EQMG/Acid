@@ -39,7 +39,7 @@ namespace acid
 				return false;
 			}
 
-			ifstream inStream(filepath);
+			IFStream inStream(filepath);
 			tinyobj::LoadMtl(matMap, materials, &inStream, warn, err);
 			return true;
 		}
@@ -92,7 +92,7 @@ namespace acid
 #endif
 
 		auto folder = FileSystem::ParentDirectory(m_filename);
-		ifstream inStream(m_filename);
+		IFStream inStream(m_filename);
 		MaterialStreamReader materialReader(folder);
 
 		tinyobj::attrib_t attrib;

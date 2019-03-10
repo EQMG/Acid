@@ -159,11 +159,11 @@ namespace acid
 
 		static std::string ToString(const Key &key);
 
-		Delegate<void(Key, InputAction, bitmask<InputMod>)> &GetOnKey() { return m_onKey; }
+		Delegate<void(Key, InputAction, Bitmask<InputMod>)> &GetOnKey() { return m_onKey; }
 
 		Delegate<void(char)> &GetOnChar() { return m_onChar; }
 	private:
-		Delegate<void(Key, InputAction, bitmask<InputMod>)> m_onKey;
+		Delegate<void(Key, InputAction, Bitmask<InputMod>)> m_onKey;
 		Delegate<void(char)> m_onChar;
 
 		friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);

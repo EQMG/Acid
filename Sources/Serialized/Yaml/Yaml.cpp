@@ -21,7 +21,7 @@ namespace acid
 		ClearChildren();
 		ClearAttributes();
 
-		auto topSection = std::make_unique<Section>(nullptr, "", 0);
+		auto topSection = std::make_unique<Section>(nullptr, "", 0, false);
 		Section *currentSection = topSection.get();
 		uint32_t lastIndentation = 0;
 
@@ -40,25 +40,24 @@ namespace acid
 			}
 
 			uint32_t indentation = 0;
+			uint32_t arrayLevels = 0;
 			bool comment = false;
-		//	bool array = false;
 
-			for (const auto &c : linebuf)
+			for (auto it = linebuf.begin(); it != linebuf.end(); ++it)
 			{
-				if (c == ' ')
+				if (*it == ' ')
 				{
 					indentation++;
 				}
-				else if (c == '-')
-				{
-					//	array = true;
-					indentation += 2;
-					break;
-				}
-				else if (c == '#')
+				else if (*it == '#')
 				{
 					comment = true;
 					break;
+				}
+				else if (*it == '-' && *(it + 1) == ' ')
+				{
+					arrayLevels++;
+					indentation++;
 				}
 				else
 				{
@@ -85,7 +84,7 @@ namespace acid
 			{
 				for (uint32_t i = 0; i < ((indentation - lastIndentation) / 2) - 1; i++)
 				{
-					auto section = new Section(currentSection, "", lastIndentation + (i * 2));
+					auto section = new Section(currentSection, "", lastIndentation + (i * 2), arrayLevels);
 					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
@@ -96,23 +95,9 @@ namespace acid
 				currentSection = currentSection->m_children.back().get();
 			}
 
-			/*if (array)
-			{
-				{
-					indentation += 2;
-					auto section = new Section(currentSection, "", indentation);
-					currentSection->m_children.emplace_back(section);
-					currentSection = section;
-				}
-				auto section = new Section(currentSection, String::Trim(line).erase(0, 1), indentation);
-				currentSection->m_children.emplace_back(section);
-			}
-			else
-			{*/
-			auto section = new Section(currentSection, String::Trim(linebuf), indentation);
+			auto content = String::Trim(linebuf).erase(0, 2 * arrayLevels);
+			auto section = new Section(currentSection, content, indentation, arrayLevels);
 			currentSection->m_children.emplace_back(section);
-			//}
-
 			lastIndentation = indentation;
 		}
 
@@ -144,6 +129,14 @@ namespace acid
 		auto name = String::Trim(source->m_content.substr(0, source->m_content.find(':')));
 		auto value = String::Trim(String::ReplaceFirst(source->m_content, name, ""));
 		value = String::Trim(value.erase(0, 1));
+		bool singleArray = false;
+
+		if (source->m_arrayLevels != 0 && value.empty())
+		{
+			value = name;
+			name = "";
+			singleArray = true;
+		}
 
 		auto thisValue = parent;
 
@@ -153,15 +146,24 @@ namespace acid
 			parent->AddAttribute(name, value);
 			return;
 		}
+
 		if (!isTopSection)
 		{
 			thisValue = new Metadata(name, value);
 			parent->AddChild(thisValue);
 		}
 
+		auto tmpValue = thisValue;
+
 		for (const auto &child : source->m_children)
 		{
-			Convert(child.get(), thisValue, false);
+			if (child->m_arrayLevels != 0) //  && !singleArray
+			{
+				tmpValue = new Metadata();
+				thisValue->AddChild(tmpValue);
+			}
+
+			Convert(child.get(), tmpValue, false);
 		}
 	}
 
@@ -174,14 +176,21 @@ namespace acid
 			indents << "  ";
 		}
 
+		bool wroteIntents = false;
+
 		if (parent != nullptr && !(parent->GetChildren()[0].get() == source && parent->GetName().empty() && parent->GetValue().empty()))
 		{
 			*outStream << indents.str();
+			wroteIntents = true;
 		}
 
 		if (parent != nullptr && parent->GetValue().empty() && parent->GetChildren()[0]->GetName().empty())
 		{
-			outStream->seekp(-2, std::stringstream::cur);
+			if (wroteIntents)
+			{
+				outStream->seekp(-2, std::stringstream::cur);
+			}
+			
 			*outStream << "- ";
 		}
 
@@ -193,12 +202,12 @@ namespace acid
 			}
 			else
 			{
-				*outStream << source->GetName() << ": " << source->GetValue() << "\n";
+				*outStream << source->GetName() << ": " << String::FixReturnTokens(source->GetValue()) << "\n";
 			}
 		}
 		else if (!source->GetValue().empty())
 		{
-			*outStream << source->GetValue() << "\n";
+			*outStream << String::FixReturnTokens(source->GetValue()) << "\n";
 		}
 
 		for (const auto &attribute : source->GetAttributes())

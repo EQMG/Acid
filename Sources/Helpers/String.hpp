@@ -108,7 +108,14 @@ namespace acid
 		static std::string ReplaceFirst(const std::string &str, const std::string &token, const std::string &to);
 
 		/// <summary>
-		/// Lowercases a string.
+		/// Fixes all tokens return line tokens from a string so it is file write-able.
+		/// </summary>
+		/// <param name="str"> The string. </param>
+		/// <returns> The string with return lines fixed. </returns>
+		static std::string FixReturnTokens(const std::string& str);
+
+		/// <summary>
+		/// Lower cases a string.
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> The lowercased string. </returns>

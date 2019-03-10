@@ -145,6 +145,12 @@ namespace acid
 		return result;
 	}
 
+	std::string String::FixReturnTokens(const std::string &str)
+	{
+		// TODO: Optimize.
+		return ReplaceAll(ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
+	}
+
 	std::string String::Lowercase(const std::string &str)
 	{
 		auto result = str;

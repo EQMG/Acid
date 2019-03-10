@@ -25,7 +25,7 @@ namespace acid
 		GetRectangle().SetDimensions(UiInputButton::Size);
 		m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 
-		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, bitmask<InputMod> mods)
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, Bitmask<InputMod> mods)
 		{
 			if (!m_selected)
 			{

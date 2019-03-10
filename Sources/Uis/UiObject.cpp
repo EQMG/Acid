@@ -50,7 +50,7 @@ namespace acid
 
 		if (IsSelected())
 		{
-			for (auto button : enum_iterator<MouseButton>())
+			for (auto button : EnumIterator<MouseButton>())
 			{
 				if (Uis::Get()->WasDown(button))
 				{

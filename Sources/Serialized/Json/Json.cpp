@@ -195,11 +195,11 @@ namespace acid
 		{
 			if (source->GetName().empty())
 			{
-				*outStream << source->GetValue();
+				*outStream << String::FixReturnTokens(source->GetValue());
 			}
 			else
 			{
-				*outStream << "\"" << source->GetName() << "\": " << source->GetValue();
+				*outStream << "\"" << source->GetName() << "\": " << String::FixReturnTokens(source->GetValue());
 			}
 
 			if (!(end && source->GetAttributes().empty()))

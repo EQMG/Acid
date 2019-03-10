@@ -13,46 +13,46 @@ namespace acid
 		Read, Write, Append
 	};
 
-	class base_fstream
+	class BaseFStream
 	{
 	protected:
 		PHYSFS_File *file;
 	public:
-		base_fstream(PHYSFS_File *file);
+		explicit BaseFStream(PHYSFS_File *file);
 
-		virtual ~base_fstream();
+		virtual ~BaseFStream();
 
 		size_t length();
 	};
 
-	class ifstream : 
-		public base_fstream,
+	class IFStream : 
+		public BaseFStream,
 		public std::istream
 	{
 	public:
-		ifstream(const std::string &filename);
+		explicit IFStream(const std::string &filename);
 
-		virtual ~ifstream();
+		virtual ~IFStream();
 	};
 
-	class ofstream : 
-		public base_fstream,
+	class OFStream : 
+		public BaseFStream,
 		public std::ostream
 	{
 	public:
-		ofstream(const std::string &filename, const FileMode &writeMode = FileMode::Write);
+		explicit OFStream(const std::string &filename, const FileMode &writeMode = FileMode::Write);
 
-		virtual ~ofstream();
+		virtual ~OFStream();
 	};
 
-	class fstream : 
-		public base_fstream,
+	class FStream : 
+		public BaseFStream,
 		public std::iostream
 	{
 	public:
-		fstream(const std::string &filename, const FileMode &openMode = FileMode::Read);
+		explicit FStream(const std::string &filename, const FileMode &openMode = FileMode::Read);
 
-		virtual ~fstream();
+		virtual ~FStream();
 	};
 
 	/// <summary>

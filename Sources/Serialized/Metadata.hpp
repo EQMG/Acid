@@ -130,7 +130,7 @@ namespace acid
 			{
 				for (const auto &x : value)
 				{
-					auto subChild = new Metadata("");
+					auto subChild = new Metadata();
 					subChild->Set(x);
 					child->AddChild(subChild);
 				}
@@ -139,7 +139,7 @@ namespace acid
 			{
 				for (const auto &x : value)
 				{
-					auto subChild = new Metadata(x.first);
+					auto subChild = new Metadata(String::To(x.first));
 					subChild->Set(x.second);
 					child->AddChild(subChild);
 				}

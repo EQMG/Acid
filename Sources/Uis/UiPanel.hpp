@@ -11,15 +11,15 @@ namespace acid
 	{
 	public:
 		UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions), 
-			const bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
+			const Bitmask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 		void UpdateObject() override;
 
 		UiObject &GetContent() { return m_content; }
 
-		const bitmask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
+		const Bitmask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
 
-		void SetScrollBars(const bitmask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
+		void SetScrollBars(const Bitmask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
 	private:
 		void SetScissor(UiObject *object, const bool &size = false);
 
@@ -28,7 +28,7 @@ namespace acid
 		UiScrollBar m_scrollX;
 		UiScrollBar m_scrollY;
 
-		bitmask<ScrollBar> m_scrollBars;
+		Bitmask<ScrollBar> m_scrollBars;
 		Vector2 m_min;
 		Vector2 m_max;
 	};

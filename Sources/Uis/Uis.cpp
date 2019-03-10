@@ -5,7 +5,7 @@ namespace acid
 	Uis::Uis() :
 		m_container(nullptr, UiBound::Screen)
 	{
-		for (auto button : enum_iterator<MouseButton>())
+		for (auto button : EnumIterator<MouseButton>())
 		{
 			m_selectors.emplace(button, SelectorMouse());
 		}

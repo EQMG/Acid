@@ -8,7 +8,7 @@ namespace acid
 {
 	void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods)
 	{
-		Mouse::Get()->m_onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), make_bitmask<InputMod>(mods));
+		Mouse::Get()->m_onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), MakeBitmask<InputMod>(mods));
 	}
 
 	void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)

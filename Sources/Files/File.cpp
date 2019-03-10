@@ -21,7 +21,7 @@ namespace acid
 
 		if (Files::ExistsInPath(m_filename))
 		{
-			ifstream inStream(m_filename);
+			IFStream inStream(m_filename);
 			m_metadata->Load(&inStream);
 		}
 		else if (FileSystem::Exists(m_filename))
@@ -45,7 +45,7 @@ namespace acid
 
 		if (Files::ExistsInPath(m_filename))
 		{
-			ofstream outStream(m_filename);
+			OFStream outStream(m_filename);
 			m_metadata->Write(&outStream);
 		}
 		else // if (FileSystem::Exists(m_filename))

@@ -17,7 +17,7 @@ namespace acid
 		m_paddingHeight(0),
 		m_maxSizeY(0.0f)
 	{
-		ifstream inStream(m_filename);
+		IFStream inStream(m_filename);
 
 		size_t lineNum = 0;
 		std::string linebuf;

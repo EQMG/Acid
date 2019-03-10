@@ -148,7 +148,7 @@ namespace acid
 		/// <param name="hidden"> If the system cursor should be hidden when not shown. </param>
 		void SetCursorHidden(const bool &hidden);
 
-		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> &GetOnButton() { return m_onButton; }
+		Delegate<void(MouseButton, InputAction, Bitmask<InputMod>)> &GetOnButton() { return m_onButton; }
 
 		Delegate<void(float, float)> &GetOnPosition() { return m_onPosition; }
 
@@ -168,7 +168,7 @@ namespace acid
 		bool m_windowSelected;
 		bool m_cursorHidden;
 
-		Delegate<void(MouseButton, InputAction, bitmask<InputMod>)> m_onButton;
+		Delegate<void(MouseButton, InputAction, Bitmask<InputMod>)> m_onButton;
 		Delegate<void(float, float)> m_onPosition;
 		Delegate<void(bool)> m_onEnter;
 		Delegate<void(float, float)> m_onScroll;
