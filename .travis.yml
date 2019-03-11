@@ -75,7 +75,8 @@ matrix:
     - brew install openal-soft
     - brew install freetype
     - brew tap caskroom/cask
-    - brew cask install apenngrace/vulkan/vulkan-sdk
+	# TODO: Sometimes this step fails, '?Human=true' added to the end of the URL appears to fix this..
+    - brew cask install apenngrace/vulkan/vulkan-sdk 
 
 script:
 - cd $TRAVIS_BUILD_DIR
@@ -85,13 +86,9 @@ script:
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       sudo ln -s /usr/include/freetype2/freetype /usr/include/freetype
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-    else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
-    fi
-- |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make all
     else
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
       xcodebuild -quiet -target Acid -configuration $BUILD_TYPE
     fi
 - cd ../

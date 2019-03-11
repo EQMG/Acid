@@ -5,14 +5,35 @@
 #include <Network/Http/Http.hpp>
 #include <Network/Udp/UdpSocket.hpp>
 #include <Network/Packet.hpp>
+#include <Files/FileSystem.hpp>
 
 using namespace acid;
 
 int main(int argc, char **argv)
 {
+	// TODO: Download a ZIP from Google Drive.
+	/*{
+		auto http = Http("http://drive.google.com/");
+
+		HttpRequest request;
+		request.SetMethod(HttpRequest::Method::Get);
+		request.SetUri("/uc?id=1LLymFp9BRrSje7jaGJdHBraW0BVpZ2-K&export=download");
+		request.SetHttpVersion(1, 1); // HTTP 1.1
+		request.SetField("From", "me");
+		request.SetField("Content-Type", "application/vnd.google-apps.file");
+
+		auto page = http.SendRequest(request);
+		uint32_t fileSize = page.GetBody().size();
+
+		const auto &fileContainer = page.GetBody();
+		std::ofstream file(FileSystem::GetWorkingDirectory() + "/Data-Sponza.zip", std::ios::out | std::ios::binary);
+		file.write(fileContainer.c_str(), fileSize);
+		file.close();
+	}*/
+
 	// https://www.sfml-dev.org/tutorials/2.5/network-http.php
 	{
-		Http http = Http("http://equilibrium.games/");
+		auto http = Http("http://equilibrium.games/");
 
 		HttpRequest request;
 		request.SetMethod(HttpRequest::Method::Post);
@@ -22,7 +43,7 @@ int main(int argc, char **argv)
 		request.SetField("Content-Type", "application/x-www-form-urlencoded");
 		request.SetBody("para1=value1&param2=value2");
 
-		HttpResponse response = http.SendRequest(request);
+		auto response = http.SendRequest(request);
 		Log::Out("Status: %i\n", response.GetStatus());
 		Log::Out("HTTP version: %i.%i\n", response.GetMajorHttpVersion(), response.GetMinorHttpVersion());
 		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type").c_str());
