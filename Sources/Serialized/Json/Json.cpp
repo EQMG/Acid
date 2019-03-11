@@ -185,11 +185,11 @@ namespace acid
 
 		if (source->GetName().empty() && source->GetValue().empty())
 		{
-			*outStream << openBrace << "\n";
+			*outStream << openBrace << '\n';
 		}
 		else if (source->GetValue().empty())
 		{
-			*outStream << "\"" << source->GetName() << "\": " << openBrace << "\n";
+			*outStream << "\"" << source->GetName() << "\": " << openBrace << '\n';
 		}
 		else
 		{
@@ -207,7 +207,7 @@ namespace acid
 				*outStream << ", ";
 			}
 
-			*outStream << "\n";
+			*outStream << '\n';
 		}
 
 		for (const auto &attribute : source->GetAttributes())
@@ -219,7 +219,7 @@ namespace acid
 				*outStream << ", ";
 			}
 
-			*outStream << "\n";
+			*outStream << '\n';
 		}
 
 		for (const auto &child : source->GetChildren())
@@ -233,7 +233,7 @@ namespace acid
 
 			if (end || indentation == 0)
 			{
-				*outStream << closeBrace << "\n";
+				*outStream << closeBrace << '\n';
 			}
 			else
 			{

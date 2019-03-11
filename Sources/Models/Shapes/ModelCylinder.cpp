@@ -68,7 +68,7 @@ namespace acid
 				Vector3 position = Vector3(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
 				Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivStacks);
 				Vector3 normal = Vector3(xDir, 0.0f, zDir);
-				vertices.emplace_back(VertexModel(position, uvs, normal));
+				vertices.emplace_back(position, uvs, normal);
 			}
 		}
 

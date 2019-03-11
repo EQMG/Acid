@@ -275,18 +275,18 @@ namespace acid
 			hgi->horiAdvance = face->glyph->metrics.horiAdvance / 64.0f;
 			hgi->vertAdvance = face->glyph->metrics.vertAdvance / 64.0f;
 
-			totalPoints += o->points.size();
-			totalCells += o->cells.size();
+			totalPoints += static_cast<uint32_t>(o->points.size());
+			totalCells += static_cast<uint32_t>(o->cells.size());
 
 			charcode = FT_Get_Next_Char(face, charcode, &glyphIndex);
 			i++;
 		}
 
-		m_glyphInfoSize = sizeof(DeviceGlyphInfo) * m_glyphInfos.size();
+		m_glyphInfoSize = sizeof(DeviceGlyphInfo) * static_cast<uint32_t>(m_glyphInfos.size());
 		m_glyphCellsSize = sizeof(uint32_t) * totalCells;
 		m_glyphPointsSize = sizeof(Vector2) * totalPoints;
 
-		uint32_t alignment = physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment;
+		uint32_t alignment = static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment);
 		m_glyphInfoOffset = 0;
 		m_glyphCellsOffset = AlignUint32(m_glyphInfoSize, alignment);
 		m_glyphPointsOffset = AlignUint32(m_glyphInfoSize + m_glyphCellsSize, alignment);
@@ -321,8 +321,8 @@ namespace acid
 
 		//	OutlineU16Points(o, &dgi->cbox, reinterpret_cast<PointU16 *>(reinterpret_cast<char *>(points) + pointOffset));
 
-			pointOffset += o->points.size();
-			cellOffset += o->cells.size();
+			pointOffset += static_cast<uint32_t>(o->points.size());
+			cellOffset += static_cast<uint32_t>(o->cells.size());
 		}
 
 		m_storageGlyphs->Unmap();

@@ -347,7 +347,7 @@ namespace acid
 		for (const auto &renderStage : renderStages)
 		{
 			renderStage->Rebuild(*m_swapchain);
-			m_renderStages.emplace_back(renderStage);
+			m_renderStages.emplace_back(std::move(renderStage));
 		}
 
 		RecreateAttachmentsMap();
@@ -403,7 +403,7 @@ namespace acid
 		}
 
 		renderStage.Rebuild(*m_swapchain);
-		RecreateAttachmentsMap(); // TODO: Maybe not recreate a single change.
+		RecreateAttachmentsMap(); // TODO: Maybe not recreate on a single change.
 	}
 
 	void Renderer::RecreateAttachmentsMap()

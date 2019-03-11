@@ -340,7 +340,7 @@ namespace acid
 
 	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
 	{
-		vertices.emplace_back(VertexModel(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty))));
+		vertices.emplace_back(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
 	}
 
 	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const

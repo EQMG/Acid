@@ -295,7 +295,7 @@ namespace acid
 
 	std::string Shader::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 	{
-		// TODO: Needs a rework.
+		// TODO: Needs to be replaced with specialization constants.
 		std::string result = shaderCode;
 		std::size_t foundIndex0 = result.find('\n', 0);
 		std::size_t foundIndex1 = result.find('\n', foundIndex0 + 1);

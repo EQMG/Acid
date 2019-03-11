@@ -112,7 +112,7 @@ namespace acid
 
 		for (const auto &child : children)
 		{
-			std::string attrib = child->FindAttribute(attribute);
+			auto attrib = child->FindAttribute(attribute);
 
 			if (attrib == value)
 			{

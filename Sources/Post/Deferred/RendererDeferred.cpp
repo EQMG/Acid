@@ -211,14 +211,18 @@ namespace acid
 		// Bind the pipeline.
 		compute.BindPipeline(commandBuffer);
 
+	//	PushHandler pushHandler = PushHandler(*compute.GetShaderProgram()->GetUniformBlock("PushObject"));
+
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+	//	descriptorSet.Push("PushObject", pushHandler);
 		descriptorSet.Push("outColour", result.get());
 		descriptorSet.Push("samplerColour", source);
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
 		descriptorSet.BindDescriptor(commandBuffer, compute);
+	//	pushHandler.BindPush(commandBuffer, compute);
 		compute.CmdRender(commandBuffer, result->GetWidth(), result->GetHeight());
 		commandBuffer.End();
 		commandBuffer.SubmitIdle();
@@ -232,7 +236,7 @@ namespace acid
 		auto pixels = result->GetPixels(width, height, 1);
 		Texture::WritePixels(filename, pixels.get(), width, height);*/
 
-		for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
+		/*for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
 			FileSystem::ClearFile(filename);
@@ -240,7 +244,7 @@ namespace acid
 			uint32_t height = 0;
 			auto pixels = result->GetPixels(width, height, i);
 			Texture::WritePixels(filename, pixels.get(), width, height);
-		}
+		}*/
 #endif
 
 		return result;

@@ -202,17 +202,17 @@ namespace acid
 			}
 			else
 			{
-				*outStream << source->GetName() << ": " << String::FixReturnTokens(source->GetValue()) << "\n";
+				*outStream << source->GetName() << ": " << String::FixReturnTokens(source->GetValue()) << '\n';
 			}
 		}
 		else if (!source->GetValue().empty())
 		{
-			*outStream << String::FixReturnTokens(source->GetValue()) << "\n";
+			*outStream << String::FixReturnTokens(source->GetValue()) << '\n';
 		}
 
 		for (const auto &attribute : source->GetAttributes())
 		{
-			*outStream << indents.str() << "  _" << attribute.first + ": " << attribute.second << "\n";
+			*outStream << indents.str() << "  _" << attribute.first + ": " << attribute.second << '\n';
 		}
 
 		for (const auto &child : source->GetChildren())

@@ -19,7 +19,7 @@ namespace acid
 		if (event == GLFW_CONNECTED)
 		{
 			Log::Error("Monitor connected: %s\n", glfwGetMonitorName(monitor));
-			Window::Get()->m_monitors.emplace_back(Monitor(monitor));
+			Window::Get()->m_monitors.emplace_back(monitor);
 			Window::Get()->m_onMonitorConnect(static_cast<uint32_t>(Window::Get()->m_monitors.size() - 1), true);
 		}
 		else if (event == GLFW_DISCONNECTED)
@@ -145,7 +145,7 @@ namespace acid
 
 		for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 		{
-			m_monitors.emplace_back(Monitor(monitors[i]));
+			m_monitors.emplace_back(monitors[i]);
 		}
 
 		auto videoMode = m_monitors[0].GetVideoMode();

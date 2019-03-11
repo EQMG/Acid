@@ -92,7 +92,7 @@ namespace acid
 					typedef typename T::key_type key_type;
 					typedef typename T::mapped_type mapped_type;
 
-					dest.emplace(String::From<key_type>(child2->GetName()), child2->Get<mapped_type>());
+					dest.emplace(child2->Get<std::pair<key_type, mapped_type>>());
 				}
 			}
 			else
@@ -126,7 +126,7 @@ namespace acid
 				m_children.emplace_back(child);
 			}
 
-			if constexpr (TypeTraits::is_vector<T>::value)
+			if constexpr (TypeTraits::is_vector<T>::value || TypeTraits::is_map<T>::value)
 			{
 				for (const auto &x : value)
 				{
@@ -135,18 +135,9 @@ namespace acid
 					child->AddChild(subChild);
 				}
 			}
-			else if constexpr (TypeTraits::is_map<T>::value)
-			{
-				for (const auto &x : value)
-				{
-					auto subChild = new Metadata(String::To(x.first));
-					subChild->Set(x.second);
-					child->AddChild(subChild);
-				}
-			}
 			else
 			{
-				child->Set<T>(value);
+				child->Set(value);
 			}
 		}
 
@@ -162,7 +153,7 @@ namespace acid
 				typedef typename T::first_type first_type;
 				typedef typename T::second_type second_type;
 
-				return T(String::From<first_type>(GetName()), Get<second_type>());
+				return T(String::From<first_type>(m_name), Get<second_type>());
 			}
 			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
 			{
@@ -185,8 +176,9 @@ namespace acid
 			}
 			else if constexpr (TypeTraits::is_pair<T>::value)
 			{
+				// Pairs and maps must have keys that can be converted to a string using String::To.
 				SetName(String::To(value.first));
-				SetString(String::To(value.second));
+				Set(value.second);
 			}
 			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
 			{
@@ -200,7 +192,7 @@ namespace acid
 			}
 			else
 			{
-				SetValue(String::To<T>(value));
+				SetValue(String::To(value));
 			}
 		}
 

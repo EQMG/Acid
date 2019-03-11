@@ -38,14 +38,14 @@ namespace acid
 				return traits_type::eof();
 			}
 
-			size_t bytesRead = PHYSFS_read(m_file, m_buffer, 1, m_bufferSize);
+			auto bytesRead = PHYSFS_read(m_file, m_buffer, 1, static_cast<PHYSFS_uint32>(m_bufferSize));
 
 			if (bytesRead < 1)
 			{
 				return traits_type::eof();
 			}
 
-			setg(m_buffer, m_buffer, m_buffer + bytesRead);
+			setg(m_buffer, m_buffer, m_buffer + static_cast<size_t>(bytesRead));
 			return static_cast<int_type>(*gptr());
 		}
 
@@ -102,7 +102,7 @@ namespace acid
 				return 0; // no-op
 			}
 
-			if (PHYSFS_write(m_file, pbase(), pptr() - pbase(), 1) < 1)
+			if (PHYSFS_write(m_file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase()), 1) < 1)
 			{
 				return traits_type::eof();
 			}
@@ -316,7 +316,7 @@ namespace acid
 			}
 			else
 			{*/
-			result.emplace_back(std::string(*i));
+			result.emplace_back(*i);
 			//}
 		}
 

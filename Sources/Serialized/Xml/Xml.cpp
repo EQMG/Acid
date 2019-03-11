@@ -243,7 +243,7 @@ namespace acid
 
 		if (!source->GetChildren().empty())
 		{
-			*outStream << "\n";
+			*outStream << '\n';
 
 			for (const auto &child : source->GetChildren())
 			{

@@ -1,6 +1,6 @@
 #include "GizmoType.hpp"
-#include <utility>
 
+#include <utility>
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Gizmo.hpp"
@@ -41,7 +41,7 @@ namespace acid
 		m_colour(colour),
 		m_maxInstances(0),
 		m_instances(0),
-		m_instanceBuffer(sizeof(GizmoTypeData) *MAX_INSTANCES)
+		m_instanceBuffer(sizeof(GizmoTypeData) * MAX_INSTANCES)
 	{
 	}
 

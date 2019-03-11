@@ -181,7 +181,7 @@ namespace acid
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 	//	auto &descriptorPools = m_shader->GetDescriptorPools();
-		std::vector<VkDescriptorPoolSize> descriptorPools(6); // TODO: Cleanup!
+		std::vector<VkDescriptorPoolSize> descriptorPools(6); // FIXME: This is a AMD workaround that works on Nvidia too...
 		descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		descriptorPools[0].descriptorCount = 4096;
 		descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

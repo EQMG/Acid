@@ -42,7 +42,6 @@ namespace acid
 				m_game->Update();
 			}
 
-			// TODO: Catch exceptions.
 			m_moduleUpdater.Update(m_moduleManager);
 		}
 
