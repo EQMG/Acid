@@ -1,5 +1,7 @@
 #include "AxisJoystick.hpp"
 
+#include "Devices/Joysticks.hpp"
+
 namespace acid
 {
 	AxisJoystick::AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted) :

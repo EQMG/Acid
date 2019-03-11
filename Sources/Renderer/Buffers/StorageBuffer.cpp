@@ -1,6 +1,5 @@
 ﻿#include "StorageBuffer.hpp"
 
-#include <cstring>
 #include "Renderer/Renderer.hpp"
 
 namespace acid

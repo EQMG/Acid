@@ -1,10 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <optional>
-#include <memory>
-#include <type_traits>
-#include "Engine/Exports.hpp"
+#include "Pch.hpp"
 
 namespace acid
 {
@@ -15,30 +11,30 @@ namespace acid
 	{
 	public:
 		template<typename T>
-		struct is_optional : std::false_type { };
+		struct is_optional : std::false_type {};
 
 		template<typename T>
-		struct is_optional<std::optional<T>> : std::true_type { };
+		struct is_optional<std::optional<T>> : std::true_type {};
 
 		template<typename T>
-		struct is_pair : std::false_type { };
+		struct is_pair : std::false_type {};
 
 		template<typename T, typename U>
-		struct is_pair<std::pair<T, U>> : std::true_type { };
+		struct is_pair<std::pair<T, U>> : std::true_type {};
 
 		template<typename T>
-		struct is_vector : std::false_type { };
+		struct is_vector : std::false_type {};
 
 		template<typename T, typename A>
-		struct is_vector<std::vector<T, A>> : std::true_type { };
+		struct is_vector<std::vector<T, A>> : std::true_type {};
 
 		template<typename T, typename U = void>
-		struct is_map : std::false_type { };
+		struct is_map : std::false_type {};
 
 		template<typename T>
 		struct is_map<T, std::void_t<typename T::key_type, typename T::mapped_type,
 			decltype(std::declval<T &>()[std::declval<const typename T::key_type &>()])>>
-			: std::true_type { };
+			: std::true_type {};
 
 		template<typename T>
 		static T *AsPtr(T &obj) { return &obj; }

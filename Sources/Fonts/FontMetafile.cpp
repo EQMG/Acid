@@ -1,6 +1,5 @@
 ﻿#include "FontMetafile.hpp"
 
-#include <utility>
 #include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"

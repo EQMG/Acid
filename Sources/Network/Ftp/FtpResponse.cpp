@@ -1,7 +1,5 @@
 #include "FtpResponse.hpp"
 
-#include <utility>
-
 namespace acid
 {
 	FtpResponse::FtpResponse(const Status &code, std::string message) :

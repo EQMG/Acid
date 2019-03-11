@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
+#include "Serialized/Metadata.hpp"
 
 namespace acid
 {

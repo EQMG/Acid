@@ -1,8 +1,7 @@
 ﻿#pragma once
 
-#include <string>
-#include <vector>
 #include <vulkan/vulkan.h>
+#include "Helpers/NonCopyable.hpp"
 #include "Renderer/Descriptors/Descriptor.hpp"
 #include "Resources/Resource.hpp"
 

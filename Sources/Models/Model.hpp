@@ -1,9 +1,5 @@
 #pragma once
 
-#include <algorithm>
-#include <cmath>
-#include <string>
-#include <vector>
 #include "Maths/Vector3.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"

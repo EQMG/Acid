@@ -1,6 +1,5 @@
 #include "KinematicCharacter.hpp"
 
-#include <cassert>
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>

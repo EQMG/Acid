@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <optional>
 #include "Engine/Engine.hpp"
 
 struct PHYSFS_File;

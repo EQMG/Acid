@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <vector>
 #include "Textures/Texture.hpp"
 #include "Swapchain.hpp"
 

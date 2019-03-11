@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Devices/Joysticks.hpp"
 #include "IAxis.hpp"
 
 namespace acid

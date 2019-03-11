@@ -1,7 +1,5 @@
 #include "Instance.hpp"
 
-#include <stdexcept>
-#include <cstring>
 #include "Renderer/Renderer.hpp"
 #include "Window.hpp"
 

@@ -1,6 +1,5 @@
 #include "MaterialDefault.hpp"
 
-#include <utility>
 #include "Meshes/Mesh.hpp"
 #include "Models/VertexModel.hpp"
 #include "Scenes/Entity.hpp"

@@ -1,6 +1,5 @@
 ﻿#include "UniformBuffer.hpp"
 
-#include <cstring>
 #include "Renderer/Renderer.hpp"
 
 namespace acid

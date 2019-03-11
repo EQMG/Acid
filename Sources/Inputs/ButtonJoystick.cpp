@@ -1,5 +1,7 @@
 #include "ButtonJoystick.hpp"
 
+#include "Devices/Joysticks.hpp"
+
 namespace acid
 {
 	ButtonJoystick::ButtonJoystick(const uint32_t &port, const uint32_t &button) :

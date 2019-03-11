@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths/Maths.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid

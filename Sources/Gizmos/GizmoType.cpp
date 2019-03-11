@@ -1,6 +1,5 @@
 #include "GizmoType.hpp"
 
-#include <utility>
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Gizmo.hpp"

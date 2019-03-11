@@ -1,10 +1,5 @@
 ﻿#pragma once
 
-#include <cstring>
-#include <optional>
-#include <string>
-#include <vector>
-#include "Engine/Exports.hpp"
 #include "Engine/Log.hpp"
 
 namespace acid

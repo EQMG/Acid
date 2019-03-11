@@ -1,8 +1,5 @@
 #include "Matrix3.hpp"
 
-#include <cassert>
-#include <stdexcept>
-#include <cstring>
 #include "Matrix2.hpp"
 #include "Matrix4.hpp"
 

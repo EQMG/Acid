@@ -15,14 +15,18 @@
 
 using namespace acid;
 
+enum class ExampleType
+{
+	A = 1, B = 2, C = 4, D = 8
+};
+// TODO: Allow bitmask macro to work in namespaces outside of acid.
+namespace acid
+{
+	ENABLE_BITMASK_OPERATORS(ExampleType)
+}
+
 namespace test
 {
-	enum class ExampleType
-	{
-		A = 1, B = 2, C = 4, D = 8
-	};
-	ENABLE_BITMASK_OPERATORS(ExampleType)
-
 	struct Example1
 	{
 		std::string paragraph{ "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" };
@@ -30,7 +34,7 @@ namespace test
 
 		struct XML
 		{
-			std::vector<std::string> data{ "clunky", "uses more words than necessary" };
+			std::vector<std::vector<std::string>> data{ { "clunky" }, { "uses more words than necessary" } };
 
 			void Decode(const Metadata& metadata)
 			{
@@ -46,11 +50,11 @@ namespace test
 		std::vector<std::string> json{ "rigid", "better for data interchange" };
 		std::vector<std::string> yaml{ "slim and flexible", "better for configuration", "supports comments" };
 		std::map<int32_t, std::string> map{ { 10, "Hello World" }, { -2, "Negaitive Keys" }, { 400, "Larger Key" } };
-		std::vector<std::pair<std::string, Bitmask<ExampleType>>> types{ { "AB", ExampleType::A | ExampleType::B }, { "C", ExampleType::C },
+		std::vector<std::pair<std::string, BitMask<ExampleType>>> types{ { "AB", ExampleType::A | ExampleType::B }, { "C", ExampleType::C },
 			{ "ABD", ExampleType::A | ExampleType::B | ExampleType::D } };
-		std::map<std::string, Matrix4> mapMap{ { "Identity", Matrix4(1.0f) }, { "Zero", Matrix4(0.0f) } };
-	//	std::array<double, 5> array{ -9.1, 10932.0, 1.111, 64634.324324234, -7436.0043 };
-	//	float cArray[3]{ 0.0f, 10.0f, -33.3f };
+	//	std::map<Vector2, Matrix4> vectorMatrixMap{ { Vector2(-0.91f, 5998.1f), Matrix4(1.0f) }, { Vector2(75.559f, 1.2433f), Matrix4(0.0f) } }; // Not allowed by Json.
+	//	std::array<double, 5> array{ -9.1, 10932.0, 1.111, 64634.324324234, -7436.0043 }; // TODO
+	//	float cArray[3]{ 0.0f, 10.0f, -33.3f }; // TODO: By converting into a vector for saving?
 
 		struct Objects
 		{
@@ -78,9 +82,9 @@ namespace test
 			metadata.GetChild("json", json);
 			metadata.GetChild("yaml", yaml);
 			metadata.GetChild("map", map);
-			//	metadata.GetChild("array", array);
-			//	metadata.GetChild("cArray", cArray);
-			metadata.GetChild("mapMap", mapMap);
+		//	metadata.GetChild("array", array);
+		//	metadata.GetChild("cArray", cArray);
+		//	metadata.GetChild("vectorMatrixMap", vectorMatrixMap);
 			metadata.GetChild("types", types);
 			metadata.GetChild("objects", objects);
 		}
@@ -93,9 +97,9 @@ namespace test
 			metadata.SetChild("json", json);
 			metadata.SetChild("yaml", yaml);
 			metadata.SetChild("map", map);
-			//	metadata.SetChild("array", array);
-			//	metadata.SetChild("cArray", cArray);
-			metadata.SetChild("mapMap", mapMap);
+		//	metadata.SetChild("array", array);
+		//	metadata.SetChild("cArray", cArray);
+		//	metadata.SetChild("vectorMatrixMap", vectorMatrixMap);
 			metadata.SetChild("types", types);
 			metadata.SetChild("objects", objects);
 		}

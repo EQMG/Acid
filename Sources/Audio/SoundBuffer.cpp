@@ -5,7 +5,6 @@
 #else
 #include <al.h>
 #endif
-#include <fstream>
 #include "Files/Files.hpp"
 #include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"

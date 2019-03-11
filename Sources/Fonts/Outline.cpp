@@ -1,9 +1,5 @@
 #include "Outline.hpp"
 
-#include <cassert>
-#include <stdexcept>
-#include <vector>
-#include <algorithm>
 #include <ft2build.h>
 #include FT_BBOX_H
 #include FT_OUTLINE_H

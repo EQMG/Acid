@@ -1,7 +1,5 @@
 #include "FileSystem.hpp"
 
-#include <cassert>
-#include <algorithm>
 #include <sys/stat.h>
 #if defined(ACID_BUILD_WINDOWS)
 #include <io.h>

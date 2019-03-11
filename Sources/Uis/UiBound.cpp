@@ -18,7 +18,7 @@ namespace acid
 	const UiBound UiBound::Centre = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre);
 	const UiBound UiBound::Right = UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight);
 
-	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const Bitmask<UiAspect> &aspect, const Vector2 &dimensions) :
+	UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const BitMask<UiAspect> &aspect, const Vector2 &dimensions) :
 		m_position(position),
 		m_reference(reference),
 		m_aspect(aspect),

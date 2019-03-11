@@ -1,7 +1,5 @@
 #include "PhysicalDevice.hpp"
 
-#include <stdexcept>
-#include <cstring>
 #include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 

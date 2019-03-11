@@ -1,14 +1,6 @@
 #pragma once
 
-#include <array>
-#include <sstream>
-#include <string>
-#include <map>
-#include <memory>
-#include <optional>
-#include <vector>
 #include <vulkan/vulkan.h>
-#include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace glslang

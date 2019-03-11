@@ -1,7 +1,5 @@
 #pragma once
 
-#include <functional>
-#include <memory>
 #include "Engine/Log.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Model.hpp"

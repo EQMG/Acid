@@ -1,6 +1,5 @@
 #include "LogicalDevice.hpp"
 
-#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"

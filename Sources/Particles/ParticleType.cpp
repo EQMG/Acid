@@ -1,5 +1,4 @@
 ﻿#include "ParticleType.hpp"
-#include <utility>
 
 #include "Resources/Resources.hpp"
 #include "Maths/Maths.hpp"

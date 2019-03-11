@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <map>
 #include "Engine/Engine.hpp"
 #include "Maths/Timer.hpp"
 #include "Serialized/Metadata.hpp"

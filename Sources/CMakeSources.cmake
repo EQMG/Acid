@@ -19,7 +19,6 @@ set(_temp_acid_headers
 		Emitters/EmitterPoint.hpp
 		Emitters/EmitterSphere.hpp
 		Engine/Engine.hpp
-		Engine/Exports.hpp
 		Engine/Game.hpp
 		Engine/Log.hpp
 		Engine/Module.hpp
@@ -421,6 +420,13 @@ set(_temp_acid_sources
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
+add_target_precompiled_header(Acid
+		Pch.hpp
+		Pch.cpp
+		"${CMAKE_CXX_FLAGS}"
+		_temp_acid_sources
+)
+
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

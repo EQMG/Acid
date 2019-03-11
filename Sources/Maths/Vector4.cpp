@@ -1,7 +1,5 @@
 #include "Vector4.hpp"
 
-#include <cassert>
-#include <stdexcept>
 #include "Colour.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"

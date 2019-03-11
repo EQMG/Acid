@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <vector>
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/Transform.hpp"
 #include "Component.hpp"

@@ -1,12 +1,8 @@
 #include "Texture.hpp"
 
-#include <cstring>
-#include <stdexcept>
-#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
-#include "Maths/Maths.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resources.hpp"
 #include "Serialized/Metadata.hpp"

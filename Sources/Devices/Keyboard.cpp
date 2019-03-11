@@ -6,7 +6,7 @@ namespace acid
 {
 	void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
 	{
-		Keyboard::Get()->m_onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitmask<InputMod>(mods));
+		Keyboard::Get()->m_onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
 	}
 
 	void CallbackChar(GLFWwindow *window, uint32_t codepoint)

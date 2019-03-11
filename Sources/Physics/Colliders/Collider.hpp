@@ -1,8 +1,5 @@
 #pragma once
 
-#include <memory>
-#include "Maths/Quaternion.hpp"
-#include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
 #include "Gizmos/Gizmos.hpp"
 #include "Scenes/Component.hpp"

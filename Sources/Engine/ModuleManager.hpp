@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-#include <memory>
 #include "Module.hpp"
 
 namespace acid

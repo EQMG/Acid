@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <string>
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/IDriver.hpp"

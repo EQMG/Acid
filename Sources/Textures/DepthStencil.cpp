@@ -1,6 +1,5 @@
 #include "DepthStencil.hpp"
 
-#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 #include "Texture.hpp"
 

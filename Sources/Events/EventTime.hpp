@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include "Maths/Time.hpp"
 #include "Maths/Timer.hpp"
 #include "IEvent.hpp"

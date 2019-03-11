@@ -1,8 +1,5 @@
 ﻿#include "PipelineGraphics.hpp"
 
-#include <stdexcept>
-#include <algorithm>
-#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 

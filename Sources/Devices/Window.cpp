@@ -1,7 +1,5 @@
 #include "Window.hpp"
 
-#include <stdexcept>
-#include <algorithm>
 #include <GLFW/glfw3.h>
 #include "Renderer/Renderer.hpp"
 #include "Textures/Texture.hpp"

@@ -1,8 +1,5 @@
 #include "Frustum.hpp"
 
-#include <array>
-#include <cmath>
-
 namespace acid
 {
 	const Frustum Frustum::Zero = Frustum();

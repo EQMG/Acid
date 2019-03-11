@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Models/Model.hpp"
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"

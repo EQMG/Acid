@@ -1,10 +1,5 @@
 ﻿#pragma once
 
-#include <map>
-#include <optional>
-#include <string>
-#include <vector>
-#include <cstdint>
 #include "Files/Files.hpp"
 
 namespace acid

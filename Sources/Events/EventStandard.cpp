@@ -1,7 +1,5 @@
 #include "EventStandard.hpp"
 
-#include <utility>
-
 namespace acid
 {
 	EventStandard::EventStandard(std::function<void()> onEvent, std::function<bool()> triggered, const bool &repeat) :

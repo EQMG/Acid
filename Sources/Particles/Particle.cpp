@@ -1,6 +1,5 @@
 ﻿#include "Particle.hpp"
 
-#include <utility>
 #include "Scenes/Scenes.hpp"
 
 namespace acid

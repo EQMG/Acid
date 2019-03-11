@@ -1,7 +1,5 @@
 #include "Events.hpp"
 
-#include <algorithm>
-
 namespace acid
 {
 	Events::Events()

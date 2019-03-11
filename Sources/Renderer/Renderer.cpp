@@ -1,6 +1,5 @@
 #include "Renderer.hpp"
 
-#include <stdexcept>
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/FileSystem.hpp"
 #include "RenderPipeline.hpp"

@@ -1,8 +1,5 @@
 #include "String.hpp"
 
-#include <algorithm>
-#include <cstring>
-
 namespace acid
 {
 	std::vector<std::string> String::Split(const std::string &str, const std::string &sep, const bool &trim)

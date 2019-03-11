@@ -1,8 +1,6 @@
 #pragma once
 
-#include <memory>
 #include "Helpers/Delegate.hpp"
-#include "Maths/Vector3.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Component.hpp"
 #include "Colliders/Collider.hpp"

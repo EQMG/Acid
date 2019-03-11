@@ -11,7 +11,6 @@
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <LinearMath/btAlignedObjectArray.h>
 #include "Engine/Engine.hpp"
-#include "Scenes/Entity.hpp"
 #include "Physics/Colliders/Collider.hpp"
 #include "Physics/CollisionObject.hpp"
 

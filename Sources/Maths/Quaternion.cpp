@@ -1,8 +1,5 @@
 #include "Quaternion.hpp"
 
-#include <cassert>
-#include "Matrix3.hpp"
-
 namespace acid
 {
 	const Quaternion Quaternion::Zero = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);

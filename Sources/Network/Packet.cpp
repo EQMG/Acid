@@ -5,7 +5,6 @@
 #else
 #include <netinet/in.h>
 #endif
-#include <cstring>
 #include <cwchar>
 #include "Socket.hpp"
 

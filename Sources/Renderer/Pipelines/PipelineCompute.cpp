@@ -1,8 +1,5 @@
 #include "PipelineCompute.hpp"
 
-#include <cmath>
-#include <stdexcept>
-#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 

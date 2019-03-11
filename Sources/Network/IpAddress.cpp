@@ -8,7 +8,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #endif
-#include <utility>
 #include "Http/Http.hpp"
 #include "Socket.hpp"
 

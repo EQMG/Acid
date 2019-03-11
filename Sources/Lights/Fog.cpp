@@ -1,7 +1,5 @@
 #include "Fog.hpp"
 
-#include "Serialized/Metadata.hpp"
-
 namespace acid
 {
 	Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :

@@ -1,7 +1,5 @@
 #include "Vector3.hpp"
 
-#include <cassert>
-#include <stdexcept>
 #include "Colour.hpp"
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"

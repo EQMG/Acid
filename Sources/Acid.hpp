@@ -1,9 +1,5 @@
 #pragma once
 
-//
-// Acid header file.
-//
-
 #include "Audio/Audio.hpp"
 #include "Audio/Sound.hpp"
 #include "Audio/SoundBuffer.hpp"
@@ -22,7 +18,6 @@
 #include "Emitters/EmitterPoint.hpp"
 #include "Emitters/EmitterSphere.hpp"
 #include "Engine/Engine.hpp"
-#include "Engine/Exports.hpp"
 #include "Engine/Game.hpp"
 #include "Engine/Log.hpp"
 #include "Engine/Module.hpp"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "Camera.hpp"
 #include "ScenePhysics.hpp"
 #include "SceneStructure.hpp"

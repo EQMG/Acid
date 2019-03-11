@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-#include <optional>
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
@@ -93,7 +91,7 @@ namespace acid
 		/// <param name="port"> The joystick to get the axis from. </param>
 		/// <param name="hat"> The hat id to get the value from. </param>
 		/// <returns> The value of the joystick's hat. </returns>
-		Bitmask<JoystickHat> GetHat(const uint32_t &port, const uint32_t &hat) const;
+		BitMask<JoystickHat> GetHat(const uint32_t &port, const uint32_t &hat) const;
 
 		Delegate<void(uint32_t, bool)> &GetOnConnect() { return m_onConnect; }
 
@@ -101,14 +99,14 @@ namespace acid
 
 		Delegate<void(uint32_t, uint32_t, float)> &GetOnAxis() { return m_onAxis; }
 
-		Delegate<void(uint32_t, uint32_t, Bitmask<JoystickHat>)> &GetOnHat() { return m_onHat; }
+		Delegate<void(uint32_t, uint32_t, BitMask<JoystickHat>)> &GetOnHat() { return m_onHat; }
 	private:
 		struct JoystickImpl
 		{
 			std::string m_name{};
 			std::vector<float> m_axes{};
 			std::vector<InputAction> m_buttons{};
-			std::vector<Bitmask<JoystickHat>> m_hats{};
+			std::vector<BitMask<JoystickHat>> m_hats{};
 		};
 
 		std::optional<JoystickImpl> GetJoystick(const uint32_t &port) const;
@@ -117,7 +115,7 @@ namespace acid
 		Delegate<void(uint32_t, bool)> m_onConnect;
 		Delegate<void(uint32_t, uint32_t, InputAction)> m_onButton;
 		Delegate<void(uint32_t, uint32_t, float)> m_onAxis;
-		Delegate<void(uint32_t, uint32_t, Bitmask<JoystickHat>)> m_onHat;
+		Delegate<void(uint32_t, uint32_t, BitMask<JoystickHat>)> m_onHat;
 
 		friend void CallbackJoystick(int32_t id, int32_t event);
 	};

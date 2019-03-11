@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-#include <map>
-#include <memory>
-#include <vector>
 #include "Helpers/String.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Helpers/TypeTraits.hpp"
@@ -63,45 +59,6 @@ namespace acid
 		}
 
 		template<typename T>
-		void GetChild(const std::string &name, T &dest) const
-		{
-			auto child = FindChild(name);
-
-			if (child == nullptr)
-			{
-				return;
-			}
-
-			if constexpr (TypeTraits::is_vector<T>::value)
-			{
-				dest = T();
-
-				for (const auto &child2 : child->GetChildren())
-				{
-					typedef typename T::value_type base_type;
-
-					dest.emplace_back(child2->Get<base_type>());
-				}
-			}
-			else if constexpr (TypeTraits::is_map<T>::value)
-			{
-				dest = T();
-
-				for (const auto &child2 : child->GetChildren())
-				{
-					typedef typename T::key_type key_type;
-					typedef typename T::mapped_type mapped_type;
-
-					dest.emplace(child2->Get<std::pair<key_type, mapped_type>>());
-				}
-			}
-			else
-			{
-				dest = child->Get<T>();
-			}
-		}
-
-		template<typename T>
 		T GetChildDefault(const std::string &name, const T &value)
 		{
 			auto child = FindChild(name, false);
@@ -116,6 +73,19 @@ namespace acid
 		}
 
 		template<typename T>
+		void GetChild(const std::string &name, T &dest) const
+		{
+			auto child = FindChild(name);
+
+			if (child == nullptr)
+			{
+				return;
+			}
+
+			dest = child->Get<T>();
+		}
+
+		template<typename T>
 		void SetChild(const std::string &name, const T &value)
 		{
 			auto child = FindChild(name, false);
@@ -126,19 +96,7 @@ namespace acid
 				m_children.emplace_back(child);
 			}
 
-			if constexpr (TypeTraits::is_vector<T>::value || TypeTraits::is_map<T>::value)
-			{
-				for (const auto &x : value)
-				{
-					auto subChild = new Metadata();
-					subChild->Set(x);
-					child->AddChild(subChild);
-				}
-			}
-			else
-			{
-				child->Set(value);
-			}
+			child->Set(value);
 		}
 
 		template<typename T>
@@ -155,9 +113,36 @@ namespace acid
 
 				return T(String::From<first_type>(m_name), Get<second_type>());
 			}
+			else if constexpr (TypeTraits::is_vector<T>::value)
+			{
+				auto result = T();
+
+				for (const auto &child : GetChildren())
+				{
+					typedef typename T::value_type base_type;
+
+					result.emplace_back(child->Get<base_type>());
+				}
+
+				return result;
+			}
+			else if constexpr (TypeTraits::is_map<T>::value)
+			{
+				auto result = T();
+
+				for (const auto &child : GetChildren())
+				{
+					typedef typename T::key_type key_type;
+					typedef typename T::mapped_type mapped_type;
+
+					result.emplace(child->Get<std::pair<key_type, mapped_type>>());
+				}
+
+				return result;
+			}
 			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
 			{
-				T result = T();
+				auto result = T();
 				TypeTraits::AsPtr(result)->Decode(*this);
 				return result;
 			}
@@ -179,6 +164,14 @@ namespace acid
 				// Pairs and maps must have keys that can be converted to a string using String::To.
 				SetName(String::To(value.first));
 				Set(value.second);
+			}
+			else if constexpr (TypeTraits::is_vector<T>::value || TypeTraits::is_map<T>::value)
+			{
+				for (const auto &x : value)
+				{
+					auto child = AddChild(new Metadata());
+					child->Set(x);
+				}
 			}
 			else if constexpr (std::is_class_v<T> || std::is_pointer_v<T>)
 			{

@@ -1,7 +1,5 @@
 ﻿#include "FontType.hpp"
 
-#include <stdexcept>
-#include <utility>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "Resources/Resources.hpp"

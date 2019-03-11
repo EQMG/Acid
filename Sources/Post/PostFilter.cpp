@@ -1,8 +1,5 @@
 #include "Post/PostFilter.hpp"
 
-#include "Models/Shapes/ModelRectangle.hpp"
-#include "Models/VertexModel.hpp"
-
 namespace acid
 {
 	uint32_t PostFilter::GlobalSwitching = 0;

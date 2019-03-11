@@ -1,5 +1,4 @@
 #include "MaterialSkybox.hpp"
-#include <utility>
 
 #include "Models/VertexModel.hpp"
 #include "Scenes/Scenes.hpp"

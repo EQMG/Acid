@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "Maths/Vector3.hpp"
 #include "Resources/Resource.hpp"
 #include "Audio.hpp"

@@ -1,5 +1,4 @@
 ﻿#include "Gui.hpp"
-#include <utility>
 
 #include "Renderer/Renderer.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"

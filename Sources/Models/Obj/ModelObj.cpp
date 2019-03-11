@@ -1,7 +1,5 @@
 #include "ModelObj.hpp"
 
-#include <utility>
-#include <unordered_map>
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 #include "Files/FileSystem.hpp"

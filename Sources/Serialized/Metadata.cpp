@@ -1,7 +1,5 @@
 #include "Metadata.hpp"
 
-#include <algorithm>
-#include <utility>
 #include "Engine/Log.hpp"
 
 namespace acid

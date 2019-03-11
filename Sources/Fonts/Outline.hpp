@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "Geometry.hpp"
 
 struct FT_Vector_;

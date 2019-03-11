@@ -9,7 +9,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #endif
-#include <cstring>
 #include "Engine/Log.hpp"
 
 namespace acid

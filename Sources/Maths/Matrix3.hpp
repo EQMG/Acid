@@ -1,8 +1,5 @@
 #pragma once
 
-#include <ostream>
-#include <string>
-#include "Serialized/Metadata.hpp"
 #include "Vector3.hpp"
 
 namespace acid

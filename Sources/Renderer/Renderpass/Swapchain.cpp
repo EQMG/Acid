@@ -1,7 +1,5 @@
 ﻿#include "Swapchain.hpp"
 
-#include <array>
-#include <stdexcept>
 #include "Renderer/Renderer.hpp"
 
 namespace acid

@@ -1,6 +1,5 @@
 #include "Model.hpp"
 
-#include <stdexcept>
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"
 

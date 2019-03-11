@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <vector>
 #include "Maths/Vector3.hpp"
 #include "Maths/Timer.hpp"
 #include "Scenes/Component.hpp"

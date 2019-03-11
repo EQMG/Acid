@@ -1,6 +1,5 @@
 #pragma once
 
-#include <utility>
 #include "Helpers/NonCopyable.hpp"
 #include "Serialized/Metadata.hpp"
 

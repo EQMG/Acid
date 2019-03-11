@@ -1,8 +1,5 @@
 #pragma once
 
-#include <map>
-#include <memory>
-#include <optional>
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 #include "Renderer/Pipelines/Shader.hpp"
 #include "UniformHandler.hpp"

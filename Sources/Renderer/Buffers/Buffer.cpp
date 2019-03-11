@@ -1,8 +1,5 @@
 ﻿#include "Buffer.hpp"
 
-#include <array>
-#include <stdexcept>
-#include <cstring>
 #include "Renderer/Renderer.hpp"
 
 namespace acid

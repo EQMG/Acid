@@ -1,8 +1,5 @@
 #include "Time.hpp"
 
-#include <limits>
-#include <cmath>
-
 namespace acid
 {
 	const Time Time::Zero = Time();

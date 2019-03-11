@@ -1,11 +1,5 @@
 ﻿#pragma once
 
-#include <set>
-#include <array>
-#include <string>
-#include <optional>
-#include <utility>
-#include <vector>
 #include "Maths/Vector2.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"

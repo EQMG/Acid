@@ -1,6 +1,5 @@
 #include "Audio.hpp"
 
-#include <stdexcept>
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>

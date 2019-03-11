@@ -7,6 +7,11 @@ option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 
+# Used for Acid cmake includes
+set(CMAKE_MODULE_PATH
+		${CMAKE_SOURCE_DIR}/CMake)
+include(PCHSupport)
+
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names

@@ -6,7 +6,7 @@ namespace acid
 {
 	static const Vector2 SCROLL_BAR = Vector2(0.01f, 0.2f);
 
-	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Bitmask<ScrollBar> &scrollBars) :
+	UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const BitMask<ScrollBar> &scrollBars) :
 		UiObject(parent, rectangle),
 		m_background(this, UiBound::Maximum, Texture::Create("Guis/White.png"), UiInputButton::BackgroundColour),
 		m_content(this, UiBound::Maximum),

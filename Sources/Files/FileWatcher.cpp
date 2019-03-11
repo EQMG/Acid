@@ -1,7 +1,6 @@
 #include "FileWatcher.hpp"
 
 #include <chrono>
-#include <utility>
 #include "FileSystem.hpp"
 
 namespace acid

@@ -104,7 +104,7 @@ namespace acid
 	{
 		UpdateText();
 
-		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, Bitmask<InputMod> mods)
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 		{
 			if (!m_selected)
 			{
@@ -124,7 +124,7 @@ namespace acid
 	{
 		UpdateText();
 
-		Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, Bitmask<InputMod> mods)
+		Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 		{
 			if (!m_selected)
 			{

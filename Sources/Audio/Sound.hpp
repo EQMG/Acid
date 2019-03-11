@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <string>
 #include "Maths/Vector3.hpp"
 #include "Maths/Transform.hpp"
 #include "Scenes/Component.hpp"

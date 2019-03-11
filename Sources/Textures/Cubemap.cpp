@@ -1,7 +1,5 @@
 ﻿#include "Cubemap.hpp"
 
-#include <cstring>
-#include <utility>
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"

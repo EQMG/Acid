@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cmath>
 #include "Maths/Delta.hpp"
 #include "Maths/Timer.hpp"
 #include "ModuleManager.hpp"

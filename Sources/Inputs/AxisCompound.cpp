@@ -1,7 +1,5 @@
 #include "AxisCompound.hpp"
 
-#include "Maths/Maths.hpp"
-
 namespace acid
 {
 	AxisCompound::AxisCompound(const std::vector<IAxis *> &axes)

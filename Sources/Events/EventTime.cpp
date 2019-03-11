@@ -1,7 +1,5 @@
 #include "EventTime.hpp"
 
-#include <utility>
-
 namespace acid
 {
 	EventTime::EventTime(std::function<void()> onEvent, const Time &interval, const bool &repeat) :

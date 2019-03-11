@@ -1,6 +1,5 @@
 ﻿#include "Text.hpp"
 
-#include <utility>
 #include "Maths/Visual/DriverConstant.hpp"
 
 namespace acid

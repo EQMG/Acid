@@ -1,8 +1,30 @@
 #pragma once
 
-//
-// Acid exports (prerequisites) file.
-//
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <fstream>
+#include <functional>
+#include <iterator>
+#include <limits>
+#include <map>
+#include <memory>
+#include <optional>
+#include <ostream>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <type_traits>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
+//#include <vulkan/vulkan.h>
 
 #if defined(ACID_BUILD_MSVC)
 #  pragma section(".state", read, write)

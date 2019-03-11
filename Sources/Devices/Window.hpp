@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <optional>
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"

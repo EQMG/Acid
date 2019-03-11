@@ -1,6 +1,5 @@
 ﻿#include "ShadowBox.hpp"
 
-#include <array>
 #include "Renderer/Renderer.hpp"
 #include "Maths/Maths.hpp"
 

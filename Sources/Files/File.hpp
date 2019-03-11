@@ -1,8 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <string>
-#include "Engine/Exports.hpp"
 #include "Serialized/Metadata.hpp"
 
 namespace acid

@@ -1,7 +1,5 @@
 #include "ModelGltf.hpp"
 
-#include <utility>
-#include <unordered_map>
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_STB_IMAGE_WRITE
 #define TINYGLTF_IMPLEMENTATION

@@ -75,9 +75,9 @@ namespace acid
 
 			for (uint32_t i = 0; i < static_cast<uint32_t>(hatCount); i++)
 			{
-				if (joystick.m_hats[i] != MakeBitmask<JoystickHat>(hats[i]))
+				if (joystick.m_hats[i] != MakeBitMask<JoystickHat>(hats[i]))
 				{
-					joystick.m_hats[i] = MakeBitmask<JoystickHat>(hats[i]);
+					joystick.m_hats[i] = MakeBitMask<JoystickHat>(hats[i]);
 					m_onHat(port, i, joystick.m_hats[i]);
 				}
 			}
@@ -137,7 +137,7 @@ namespace acid
 		return joystick->m_buttons[button];
 	}
 
-	Bitmask<JoystickHat> Joysticks::GetHat(const uint32_t &port, const uint32_t &hat) const
+	BitMask<JoystickHat> Joysticks::GetHat(const uint32_t &port, const uint32_t &hat) const
 	{
 		auto joystick = GetJoystick(port);
 

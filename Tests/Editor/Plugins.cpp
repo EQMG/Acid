@@ -28,7 +28,7 @@ namespace test
 			}
 		};
 
-		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, Bitmask<InputMod> mods)
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 		{
 			if (key == Key::R && action == InputAction::Press)
 			{

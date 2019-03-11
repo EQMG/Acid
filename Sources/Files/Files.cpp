@@ -1,6 +1,5 @@
 #include "Files.hpp"
 
-#include <algorithm>
 #include <physfs.h>
 #include "Engine/Engine.hpp"
 #include "FileSystem.hpp"

@@ -1,6 +1,5 @@
 #include "FtpDataChannel.hpp"
 
-#include <sstream>
 #include "Engine/Log.hpp"
 #include "Ftp.hpp"
 

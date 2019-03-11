@@ -1,6 +1,5 @@
 #pragma once
 
-#include <optional>
 #include "Maths/Transform.hpp"
 #include "GizmoType.hpp"
 

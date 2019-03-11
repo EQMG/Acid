@@ -1,7 +1,5 @@
 #pragma once
 
-#include <algorithm>
-#include <memory>
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid

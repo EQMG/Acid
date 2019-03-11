@@ -1,6 +1,5 @@
 ﻿#include "ParticleSystem.hpp"
 
-#include <utility>
 #include "Maths/Maths.hpp"
 #include "Scenes/Entity.hpp"
 #include "Particles.hpp"

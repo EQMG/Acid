@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Lights/Fog.hpp"
-#include "Models/Model.hpp"
+#include "Maths/Vector3.hpp"
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"

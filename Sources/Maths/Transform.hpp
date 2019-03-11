@@ -1,10 +1,9 @@
 ﻿#pragma once
 
-#include "Engine/Exports.hpp"
 #include "Scenes/Component.hpp"
-#include "Serialized/Metadata.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
+#include "Quaternion.hpp"
 
 namespace acid
 {
