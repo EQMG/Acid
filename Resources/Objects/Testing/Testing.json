@@ -9,11 +9,29 @@
   },
   "MaterialDefault": {
     "Diffuse Colour": "#C7BEBE",
-    "Diffuse Texture": "Entities/Testing/Diffuse.png",
+    "Diffuse Texture": {
+      "Filename": "Entities/Testing/Diffuse.png",
+      "Filter": 1,
+      "Address Mode": 2,
+      "Anisotropic": true,
+      "Mipmap": true
+    },
     "Metallic": 0.0,
     "Roughness": 0.0,
-    "Material Texture": "Entities/Testing/Material.png",
-    "Normal Texture": "Entities/Testing/Normal.png",
+    "Material Texture": {
+      "Filename": "Entities/Testing/Material.png",
+      "Filter": 1,
+      "Address Mode": 2,
+      "Anisotropic": true,
+      "Mipmap": true
+    },
+    "Normal Texture": {
+      "Filename": "Entities/Testing/Normal.png",
+      "Filter": 1,
+      "Address Mode": 2,
+      "Anisotropic": true,
+      "Mipmap": true
+    },
     "Casts Shadows": true,
     "Ignore Lighting": false,
     "Ignore Fog": false

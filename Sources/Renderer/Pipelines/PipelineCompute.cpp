@@ -31,7 +31,7 @@ namespace acid
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 	//	Log::Out("%s", m_shader->ToString().c_str());
-		Log::Out("PipelineCompute pipeline '%s' created in %ims\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("PipelineCompute pipeline '%s' created in %.3fms\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 

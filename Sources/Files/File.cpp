@@ -1,4 +1,4 @@
-#include "File.hpp"
+﻿#include "File.hpp"
 
 #include "Engine/Engine.hpp"
 #include "Files.hpp"
@@ -32,7 +32,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("File '%s' loaded in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("File '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 
@@ -57,7 +57,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("File '%s' saved in %ims\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("File '%s' saved in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 

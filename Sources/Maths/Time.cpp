@@ -3,42 +3,22 @@
 namespace acid
 {
 	const Time Time::Zero = Time();
-	const Time Time::PositiveInfinity = Time(+std::numeric_limits<int64_t>::infinity());
-	const Time Time::NegativeInfinity = Time(-std::numeric_limits<int64_t>::infinity());
+	const Time Time::Min = Time(std::numeric_limits<int64_t>::min());
+	const Time Time::Max = Time(std::numeric_limits<int64_t>::max());
 
 	Time::Time(const int64_t &microseconds) :
 		m_microseconds(microseconds)
 	{
 	}
 
-	Time Time::Seconds(const float &amount)
+	void Time::Decode(const Metadata &metadata)
 	{
-		return Time(static_cast<int64_t>(amount * 1000000));
+		m_microseconds = metadata.Get<int64_t>();
 	}
 
-	Time Time::Milliseconds(const int32_t &amount)
+	void Time::Encode(Metadata &metadata) const
 	{
-		return Time(static_cast<int64_t>(amount) * 1000);
-	}
-
-	Time Time::Microseconds(const int64_t &amount)
-	{
-		return Time(amount);
-	}
-
-	float Time::AsSeconds() const
-	{
-		return static_cast<float>(m_microseconds) / 1000000.0f;
-	}
-
-	int32_t Time::AsMilliseconds() const
-	{
-		return static_cast<int32_t>(m_microseconds / 1000);
-	}
-
-	int64_t Time::AsMicroseconds() const
-	{
-		return m_microseconds;
+		metadata.Set(m_microseconds);
 	}
 
 	bool Time::operator==(const Time &other) const

@@ -34,7 +34,7 @@ namespace acid
 			m_actualTime += delta;
 			m_currentTime += delta;
 			m_currentTime = m_currentTime % m_length;
-			float time = m_currentTime / m_length;
+			auto time = m_currentTime / m_length;
 			return Calculate(time);
 		}
 

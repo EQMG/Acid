@@ -17,7 +17,7 @@ namespace acid
 		/// </summary>
 		/// <param name="constant"> The constant value. </param>
 		explicit DriverConstant(const T &constant) :
-			IDriver<T>(Time::PositiveInfinity),
+			IDriver<T>(Time::Max),
 			m_constant(constant)
 		{
 		}

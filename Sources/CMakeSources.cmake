@@ -421,8 +421,8 @@ set(_temp_acid_sources
 		Uis/UiStartLogo.cpp
 		)
 add_target_precompiled_header(Acid
-		Pch.hpp
-		Pch.cpp
+		AcidPch.hpp
+		AcidPch.cpp
 		"${CMAKE_CXX_FLAGS}"
 		_temp_acid_sources
 )

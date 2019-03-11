@@ -286,7 +286,7 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
-		Log::Out("Screenshot '%s' saved in %ims\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds());
+		Log::Out("Screenshot '%s' saved in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 
