@@ -75,10 +75,11 @@ matrix:
     - brew install freetype
     - brew install glfw --HEAD
     - brew install physfs
-    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u="  -O "vulkan-sdk"
-    - tar -xf vulkan-sdk
-    - export VULKAN_SDK=$TRAVIS_BUILD_DIR/vulkansdk-macos-1.1.101.0/macOS
-
+    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u=" -O "vulkan-sdk.tar.gz"
+    - tar -xf vulkan-sdk.tar.gz
+    - rm vulkan-sdk.tar.gz
+    - export VULKAN_SDK="$(echo $(pwd)/vulkansdk* | sort -V | tail -1)"/macOS
+    - echo $VULKAN_SDK
 
 script:
 - git submodule update --init --recursive
