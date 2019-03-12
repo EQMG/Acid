@@ -71,15 +71,16 @@ matrix:
     before_install:
     - brew update
     - brew install pkg-config
-    - brew install cmake || brew upgrade cmake
     - brew install openal-soft
     - brew install freetype
-    - brew tap caskroom/cask
-	# TODO: Sometimes this step fails, '?Human=true' added to the end of the URL appears to fix this..
-    - brew cask install apenngrace/vulkan/vulkan-sdk 
+    - brew install glfw --HEAD
+    - brew install physfs
+    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u="  -O "vulkan-sdk"
+    - tar -xf vulkan-sdk
+    - export VULKAN_SDK=$TRAVIS_BUILD_DIR/vulkansdk-macos-1.1.101.0/macOS
+
 
 script:
-- cd $TRAVIS_BUILD_DIR
 - git submodule update --init --recursive
 - mkdir Build && cd Build
 - |
