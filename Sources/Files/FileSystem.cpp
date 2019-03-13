@@ -102,7 +102,7 @@ namespace acid
 
 		if (stat(path.c_str(), &st) == 0)
 		{
-			return st.st_mtime;
+			return static_cast<long>(st.st_mtime);
 		}
 
 		return 0;

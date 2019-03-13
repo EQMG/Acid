@@ -77,7 +77,7 @@ namespace acid
 		}
 		else
 		{
-			if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), fileLoaded->size(), folder))
+			if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder))
 			{
 				throw std::runtime_error(warn + err);
 			}

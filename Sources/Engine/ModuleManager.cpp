@@ -70,21 +70,22 @@ namespace acid
 			return nullptr;
 		}
 
-		float key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
+		auto key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
 		m_modules.emplace(key, module);
 		return module;
 	}
 
 	void ModuleManager::Remove(Module *module)
 	{
-		for (auto it = --m_modules.end(); it != m_modules.begin(); --it) // TODO: Clean remove.
+		for (auto it = m_modules.begin(); it != m_modules.end();) // TODO: Clean remove.
 		{
-			if ((*it).second.get() != module)
+			if ((*it).second.get() == module)
 			{
+				it = m_modules.erase(it);
 				continue;
 			}
 
-			m_modules.erase(it);
+			++it;
 		}
 	}
 

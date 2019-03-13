@@ -30,7 +30,7 @@ namespace acid
 
 		if (!o->contours.empty())
 		{
-			o->contours[o->contours.size() - 1].end = o->points.size() - 1;
+			o->contours[o->contours.size() - 1].end = static_cast<uint32_t>(o->points.size() - 1);
 			o->points.emplace_back(p);
 		}
 
@@ -46,7 +46,7 @@ namespace acid
 
 	int32_t LineToFunc(const FT_Vector *to, Outline *o)
 	{
-		uint32_t last = o->points.size() - 1;
+		auto last = static_cast<uint32_t>(o->points.size() - 1);
 
 		Vector2 toP;
 		ConvertPoint(to, toP);
@@ -110,7 +110,7 @@ namespace acid
 
 		if (!o->contours.empty())
 		{
-			o->contours[o->contours.size() - 1].end = o->points.size() - 1;
+			o->contours[o->contours.size() - 1].end = static_cast<uint32_t>(o->points.size() - 1);
 		}
 	}
 
@@ -430,7 +430,7 @@ namespace acid
 	{
 		OutlineAddOddPoint(o);
 
-		uint32_t i = o->points.size();
+		auto i = static_cast<uint32_t>(o->points.size());
 		float y = o->bbox.maxY + 1000.0f;
 		Vector2 f0 = Vector2(o->bbox.minX, y);
 		Vector2 f1 = Vector2(o->bbox.minX + 10.0f, y);
@@ -493,7 +493,7 @@ namespace acid
 				Vector2 &p1 = o->points[i + 1];
 			//	Vector2 &p2 = o->points[i + 2];
 
-				uint32_t j = u.points.size();
+				auto j = static_cast<uint32_t>(u.points.size());
 				u.points.emplace_back(p0);
 				u.points.emplace_back(p1);
 
@@ -643,7 +643,7 @@ namespace acid
 				u.points.emplace_back(newp[2]);
 			}
 
-			u.contours[contourIndex].end = u.points.size();
+			u.contours[contourIndex].end = static_cast<uint32_t>(u.points.size());
 			u.points.emplace_back(o->points[contour_end]);
 		}
 
@@ -692,7 +692,7 @@ namespace acid
 
 					if (o->cornerFixBegin == 0)
 					{
-						o->cornerFixBegin = o->points.size();
+						o->cornerFixBegin = static_cast<uint32_t>(o->points.size());
 					}
 
 					o->points.emplace_back(f0);
@@ -821,7 +821,7 @@ namespace acid
 				}
 			}
 
-			u.contours[contourIndex].end = u.points.size();
+			u.contours[contourIndex].end = static_cast<uint32_t>(u.points.size());
 			u.points.emplace_back(o->points[contourEnd]);
 		}
 

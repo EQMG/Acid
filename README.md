@@ -13,7 +13,9 @@ Acid is licensed under the MIT licence and is open to contributions, read [Compi
 ## Links
 Readme   [Read more](https://equilibrium-games.github.io/Acid/)
 
-Documentation   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
+GitBooks   [Git Books](https://acid.equilibrium.games/)
+
+Doxygen   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
 
 Website   [Learn more](https://equilibrium.games)
 

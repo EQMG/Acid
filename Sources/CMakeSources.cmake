@@ -227,6 +227,7 @@ set(_temp_acid_headers
 		Uis/UiStartLogo.hpp
 		)
 set(_temp_acid_sources
+		StdAfx.cpp
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
@@ -420,13 +421,12 @@ set(_temp_acid_sources
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
-add_target_precompiled_header(Acid
-		AcidPch.hpp
-		AcidPch.cpp
-		"${CMAKE_CXX_FLAGS}"
-		_temp_acid_sources
-)
-
+add_precompiled_header(Acid 
+		StdAfx.hpp
+		SOURCE_CXX
+		StdAfx.cpp
+		FORCEINCLUDE
+		)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

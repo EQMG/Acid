@@ -81,7 +81,7 @@ namespace acid
 			return;
 		}
 
-		m_shape = std::make_unique<btConvexHullShape>(pointCloud.data(), static_cast<int32_t>(pointCloud.size() / 3), sizeof(float));
+		m_shape = std::make_unique<btConvexHullShape>(pointCloud.data(), static_cast<int32_t>(pointCloud.size() / 3), static_cast<int32_t>(sizeof(float)));
 		m_shape->optimizeConvexHull();
 		m_shape->initializePolyhedralFeatures();
 		m_pointCount = static_cast<uint32_t>(pointCloud.size() / 3);

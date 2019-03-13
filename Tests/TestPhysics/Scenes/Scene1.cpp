@@ -135,9 +135,9 @@ namespace test
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				auto cube = GetStructure()->CreateEntity(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
+				auto cube = GetStructure()->CreateEntity(Transform(Vector3(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f), Vector3(), 1.0f));
 				cube->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))], nullptr, 0.1f, 0.3f);
+				cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.1f, 0.3f);
 				cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 				cube->AddComponent<ColliderCube>();
 				cube->AddComponent<MeshRender>();

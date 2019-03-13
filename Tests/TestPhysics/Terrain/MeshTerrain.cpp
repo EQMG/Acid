@@ -29,7 +29,7 @@ namespace test
 		int32_t row = static_cast<int32_t>(((x * 2.0f) + m_sideLength) / m_squareSize);
 		int32_t col = static_cast<int32_t>(((z * 2.0f) + m_sideLength) / m_squareSize);
 
-		if (row >= m_vertexCount || col >= m_vertexCount)
+		if (row >= static_cast<int32_t>(m_vertexCount) || col >= static_cast<int32_t>(m_vertexCount))
 		{
 			return Vector3(x, 0.0f, z);
 		}

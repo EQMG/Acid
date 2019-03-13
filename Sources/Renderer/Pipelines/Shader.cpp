@@ -725,7 +725,7 @@ namespace acid
 		{
 			int32_t arraySize = 1;
 
-			for (uint32_t d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
+			for (int32_t d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
 			{
 				auto dimSize = ttype->getArraySizes()->getDimSize(d);
 

@@ -263,7 +263,7 @@ namespace acid
 				throw std::runtime_error("Freetype failed to load a glyph");
 			}
 
-			m_charmap.emplace(charcode, i);
+			m_charmap.emplace(static_cast<wchar_t>(charcode), i);
 			HostGlyphInfo *hgi = &m_glyphInfos[i];
 			Outline *o = &outlines[i];
 

@@ -84,14 +84,15 @@ namespace acid
 		template<typename T>
 		void Remove()
 		{
-			for (auto it = --m_modules.end(); it != m_modules.begin(); --it)
+			for (auto it = m_modules.begin(); it != m_modules.end();)
 			{
-				auto casted = dynamic_cast<T *>((*it).second.get());
-
-				if (casted != nullptr)
+				if (dynamic_cast<T *>((*it).second.get()) != nullptr)
 				{
-					m_modules.erase(it);
+					it = m_modules.erase(it);
+					continue;
 				}
+
+				++it;
 			}
 		}
 	private:

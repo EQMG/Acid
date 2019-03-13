@@ -25,8 +25,6 @@
 #include <utility>
 #include <vector>
 
-//#include <vulkan/vulkan.h>
-
 #if defined(ACID_BUILD_MSVC)
 #  pragma section(".state", read, write)
 #  define ACID_STATE __declspec(allocate(".state"))
