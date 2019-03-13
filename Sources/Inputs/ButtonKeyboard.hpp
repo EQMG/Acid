@@ -5,28 +5,49 @@
 
 namespace acid
 {
+/// <summary>
+/// Keys
+/// from a
+/// keyboard.
+/// </summary>
+class ACID_EXPORT ButtonKeyboard : public IButton
+{
+  public:
 	/// <summary>
-	/// Keys from a keyboard.
+	/// Creates
+	/// a
+	/// new
+	/// button
+	/// keyboard.
 	/// </summary>
-	class ACID_EXPORT ButtonKeyboard :
-		public IButton
+	/// <param
+	/// name="keys">
+	/// The
+	/// key
+	/// on
+	/// the
+	/// keyboard
+	/// being
+	/// checked.
+	/// </param>
+	explicit ButtonKeyboard(const Key& key);
+
+	bool IsDown() const override;
+
+	bool WasDown() override;
+
+	const Key& GetKey() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new button keyboard.
-		/// </summary>
-		/// <param name="keys"> The key on the keyboard being checked. </param>
-		explicit ButtonKeyboard(const Key &key);
+		return m_key;
+	}
 
-		bool IsDown() const override;
+	void SetKey(const Key& key)
+	{
+		m_key = key;
+	}
 
-		bool WasDown() override;
-
-		const Key &GetKey() const { return m_key; }
-
-		void SetKey(const Key &key) { m_key = key; }
-	private:
-		Key m_key;
-		bool m_wasDown;
-	};
+  private:
+	Key m_key;
+	bool m_wasDown;
+};
 }

@@ -1,36 +1,56 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
+#include <vulkan/vulkan.h>
 
 namespace acid
 {
-	class Instance;
-	class PhysicalDevice;
+class Instance;
+class PhysicalDevice;
 
-	/// <summary>
-	/// A module used for the creation, updating and destruction of the display.
-	/// </summary>
-	class ACID_EXPORT Surface
+/// <summary>
+/// A
+/// module
+/// used
+/// for
+/// the
+/// creation,
+/// updating
+/// and
+/// destruction
+/// of the
+/// display.
+/// </summary>
+class ACID_EXPORT Surface
+{
+  public:
+	Surface(const Instance* instance, const PhysicalDevice* physicalDevice);
+
+	~Surface();
+
+	const VkSurfaceKHR& GetSurface() const
 	{
-	public:
-		Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
+		return m_surface;
+	}
 
-		~Surface();
+	const VkSurfaceCapabilitiesKHR& GetCapabilities() const
+	{
+		return m_capabilities;
+	}
 
-		const VkSurfaceKHR &GetSurface() const { return m_surface; }
+	const VkSurfaceFormatKHR& GetFormat() const
+	{
+		return m_format;
+	}
 
-		const VkSurfaceCapabilitiesKHR &GetCapabilities() const { return m_capabilities; }
+  private:
+	friend class Renderer;
 
-		const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
-	private:
-		friend class Renderer;
+	const Instance* m_instance;
+	const PhysicalDevice* m_physicalDevice;
 
-		const Instance *m_instance;
-		const PhysicalDevice *m_physicalDevice;
-
-		VkSurfaceKHR m_surface;
-		VkSurfaceCapabilitiesKHR m_capabilities;
-		VkSurfaceFormatKHR m_format;
-	};
+	VkSurfaceKHR m_surface;
+	VkSurfaceCapabilitiesKHR m_capabilities;
+	VkSurfaceFormatKHR m_format;
+};
 }

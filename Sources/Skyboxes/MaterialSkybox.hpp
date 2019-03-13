@@ -7,51 +7,87 @@
 
 namespace acid
 {
-	/// <summary>
-	/// Class that represents a skybox material shader.
-	/// </summary>
-	class ACID_EXPORT MaterialSkybox :
-		public Material
+/// <summary>
+/// Class
+/// that
+/// represents
+/// a
+/// skybox
+/// material
+/// shader.
+/// </summary>
+class ACID_EXPORT MaterialSkybox : public Material
+{
+  public:
+	explicit MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour& skyColour = Colour::White);
+
+	void Start() override;
+
+	void Update() override;
+
+	void Decode(const Metadata& metadata) override;
+
+	void Encode(Metadata& metadata) const override;
+
+	void PushUniforms(UniformHandler& uniformObject) override;
+
+	void PushDescriptors(DescriptorsHandler& descriptorSet) override;
+
+	const std::shared_ptr<Cubemap>& GetCubemap() const
 	{
-	public:
-		explicit MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour &skyColour = Colour::White);
+		return m_cubemap;
+	}
 
-		void Start() override;
+	void SetCubemap(const std::shared_ptr<Cubemap>& cubemap)
+	{
+		m_cubemap = cubemap;
+	}
 
-		void Update() override;
+	const Colour& GetSkyColour() const
+	{
+		return m_skyColour;
+	}
 
-		void Decode(const Metadata &metadata) override;
+	void SetSkyColour(const Colour& skyColour)
+	{
+		m_skyColour = skyColour;
+	}
 
-		void Encode(Metadata &metadata) const override;
+	const float& GetBlend() const
+	{
+		return m_blend;
+	}
 
-		void PushUniforms(UniformHandler &uniformObject) override;
+	void SetBlend(const float& blend)
+	{
+		m_blend = blend;
+	}
 
-		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
+	const Colour& GetFogColour() const
+	{
+		return m_fogColour;
+	}
 
-		const std::shared_ptr<Cubemap> &GetCubemap() const { return m_cubemap; }
+	void SetFogColour(const Colour& fogColour)
+	{
+		m_fogColour = fogColour;
+	}
 
-		void SetCubemap(const std::shared_ptr<Cubemap> &cubemap) { m_cubemap = cubemap; }
+	const Vector2& GetFogLimits() const
+	{
+		return m_fogLimits;
+	}
 
-		const Colour &GetSkyColour() const { return m_skyColour; }
+	void SetFogLimits(const Vector2& fogLimits)
+	{
+		m_fogLimits = fogLimits;
+	}
 
-		void SetSkyColour(const Colour &skyColour) { m_skyColour = skyColour; }
-
-		const float &GetBlend() const { return m_blend; }
-
-		void SetBlend(const float &blend) { m_blend = blend; }
-
-		const Colour &GetFogColour() const { return m_fogColour; }
-
-		void SetFogColour(const Colour &fogColour) { m_fogColour = fogColour; }
-
-		const Vector2 &GetFogLimits() const { return m_fogLimits; }
-
-		void SetFogLimits(const Vector2 &fogLimits) { m_fogLimits = fogLimits; }
-	private:
-		std::shared_ptr<Cubemap> m_cubemap;
-		Colour m_skyColour;
-		float m_blend;
-		Colour m_fogColour;
-		Vector2 m_fogLimits;
-	};
+  private:
+	std::shared_ptr<Cubemap> m_cubemap;
+	Colour m_skyColour;
+	float m_blend;
+	Colour m_fogColour;
+	Vector2 m_fogLimits;
+};
 }

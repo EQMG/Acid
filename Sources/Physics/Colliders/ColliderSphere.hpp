@@ -6,29 +6,32 @@ class btSphereShape;
 
 namespace acid
 {
-	class ACID_EXPORT ColliderSphere :
-		public Collider
+class ACID_EXPORT ColliderSphere : public Collider
+{
+  public:
+	explicit ColliderSphere(const float& radius = 0.5f, const Transform& localTransform = Transform::Identity);
+
+	~ColliderSphere();
+
+	void Start() override;
+
+	void Update() override;
+
+	void Decode(const Metadata& metadata) override;
+
+	void Encode(Metadata& metadata) const override;
+
+	btCollisionShape* GetCollisionShape() const override;
+
+	const float& GetRadius() const
 	{
-	public:
-		explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform::Identity);
+		return m_radius;
+	}
 
-		~ColliderSphere();
+	void SetRadius(const float& radius);
 
-		void Start() override;
-
-		void Update() override;
-
-		void Decode(const Metadata &metadata) override;
-
-		void Encode(Metadata &metadata) const override;
-
-		btCollisionShape *GetCollisionShape() const override;
-
-		const float &GetRadius() const { return m_radius; }
-
-		void SetRadius(const float &radius);
-	private:
-		std::unique_ptr<btSphereShape> m_shape;
-		float m_radius;
-	};
+  private:
+	std::unique_ptr<btSphereShape> m_shape;
+	float m_radius;
+};
 }

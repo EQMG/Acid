@@ -5,25 +5,29 @@
 
 namespace acid
 {
-	class Descriptor;
-	class WriteDescriptorSet;
+class Descriptor;
+class WriteDescriptorSet;
 
-	class ACID_EXPORT DescriptorSet
+class ACID_EXPORT DescriptorSet
+{
+  public:
+	explicit DescriptorSet(const Pipeline& pipeline);
+
+	~DescriptorSet();
+
+	void Update(const std::vector<VkWriteDescriptorSet>& descriptorWrites);
+
+	void BindDescriptor(const CommandBuffer& commandBuffer);
+
+	const VkDescriptorSet& GetDescriptorSet() const
 	{
-	public:
-		explicit DescriptorSet(const Pipeline &pipeline);
+		return m_descriptorSet;
+	}
 
-		~DescriptorSet();
-
-		void Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites);
-
-		void BindDescriptor(const CommandBuffer &commandBuffer);
-
-		const VkDescriptorSet &GetDescriptorSet() const { return m_descriptorSet; }
-	private:
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
-		VkDescriptorPool m_descriptorPool;
-		VkDescriptorSet m_descriptorSet;
-	};
+  private:
+	VkPipelineLayout m_pipelineLayout;
+	VkPipelineBindPoint m_pipelineBindPoint;
+	VkDescriptorPool m_descriptorPool;
+	VkDescriptorSet m_descriptorSet;
+};
 }

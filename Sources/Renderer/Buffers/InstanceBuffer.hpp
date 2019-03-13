@@ -4,12 +4,11 @@
 
 namespace acid
 {
-	class ACID_EXPORT InstanceBuffer :
-		public Buffer
-	{
-	public:
-		explicit InstanceBuffer(const VkDeviceSize &size);
+class ACID_EXPORT InstanceBuffer : public Buffer
+{
+  public:
+	explicit InstanceBuffer(const VkDeviceSize& size);
 
-		void Update(const CommandBuffer &commandBuffer, const void *newData);
-	};
+	void Update(const CommandBuffer& commandBuffer, const void* newData);
+};
 }

@@ -5,28 +5,49 @@
 
 namespace acid
 {
+/// <summary>
+/// Button
+/// from a
+/// mouse.
+/// </summary>
+class ACID_EXPORT ButtonMouse : public IButton
+{
+  public:
 	/// <summary>
-	/// Button from a mouse.
+	/// Creates
+	/// a
+	/// new
+	/// button
+	/// mouse.
 	/// </summary>
-	class ACID_EXPORT ButtonMouse :
-		public IButton
+	/// <param
+	/// name="buttons">
+	/// The
+	/// button
+	/// on
+	/// the
+	/// mouse
+	/// being
+	/// checked.
+	/// </param>
+	explicit ButtonMouse(const MouseButton& button);
+
+	bool IsDown() const override;
+
+	bool WasDown() override;
+
+	const MouseButton& GetButton() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new button mouse.
-		/// </summary>
-		/// <param name="buttons"> The button on the mouse being checked. </param>
-		explicit ButtonMouse(const MouseButton &button);
+		return m_button;
+	}
 
-		bool IsDown() const override;
+	void SetButton(const MouseButton& button)
+	{
+		m_button = button;
+	}
 
-		bool WasDown() override;
-
-		const MouseButton &GetButton() const { return m_button; }
-
-		void SetButton(const MouseButton &button) { m_button = button; }
-	private:
-		MouseButton m_button;
-		bool m_wasDown;
-	};
+  private:
+	MouseButton m_button;
+	bool m_wasDown;
+};
 }

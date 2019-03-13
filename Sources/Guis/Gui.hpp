@@ -11,78 +11,241 @@
 
 namespace acid
 {
+/// <summary>
+/// A
+/// object
+/// the
+/// represents
+/// a
+/// texture
+/// in a
+/// GUI.
+/// </summary>
+class ACID_EXPORT Gui : public UiObject
+{
+  public:
 	/// <summary>
-	/// A object the represents a texture in a GUI.
+	/// Creates
+	/// a
+	/// new
+	/// GUI
+	/// object.
 	/// </summary>
-	class ACID_EXPORT Gui :
-		public UiObject
+	/// <param
+	/// name="parent">
+	/// The
+	/// parent
+	/// screen
+	/// object.
+	/// </param>
+	/// <param
+	/// name="rectangle">
+	/// The
+	/// rectangle
+	/// that
+	/// will
+	/// represent
+	/// the
+	/// bounds
+	/// of
+	/// the
+	/// ui
+	/// object.
+	/// </param>
+	/// <param
+	/// name="texture">
+	/// The
+	/// objects
+	/// texture.
+	/// </param>
+	/// <param
+	/// name="colourOffset">
+	/// The
+	/// texture
+	/// colour
+	/// offset.
+	/// </param>
+	Gui(UiObject* parent, const UiBound& rectangle, std::shared_ptr<Texture> texture, const Colour& colourOffset = Colour::White);
+
+	void UpdateObject() override;
+
+	bool CmdRender(const CommandBuffer& commandBuffer, const PipelineGraphics& pipeline, UniformHandler& uniformScene);
+
+	const std::shared_ptr<Texture>& GetTexture() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new GUI object.
-		/// </summary>
-		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
-		/// <param name="texture"> The objects texture. </param>
-		/// <param name="colourOffset"> The texture colour offset. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const Colour &colourOffset = Colour::White);
+		return m_texture;
+	}
 
-		void UpdateObject() override;
+	void SetTexture(const std::shared_ptr<Texture>& texture)
+	{
+		m_texture = texture;
+	}
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+	const uint32_t& GetNumberOfRows() const
+	{
+		return m_numberOfRows;
+	}
 
-		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
+	void SetNumberOfRows(const uint32_t& numberOfRows)
+	{
+		m_numberOfRows = numberOfRows;
+	}
 
-		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
+	const uint32_t& GetSelectedRow() const
+	{
+		return m_selectedRow;
+	}
 
-		const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
+	void SetSelectedRow(const uint32_t& selectedRow)
+	{
+		m_selectedRow = selectedRow;
+	}
 
-		void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+	const Vector2& GetAtlasOffset() const
+	{
+		return m_atlasOffset;
+	}
 
-		const uint32_t &GetSelectedRow() const { return m_selectedRow; }
+	const Vector4& GetNinePatces() const
+	{
+		return m_ninePatches;
+	}
 
-		void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
+	/// <summary>
+	/// Sets
+	/// nine
+	/// the
+	/// patches
+	/// value
+	/// size,
+	/// if
+	/// zero
+	/// it
+	/// will
+	/// be
+	/// disabled.
+	/// 9-patch/9-slicing
+	/// allows
+	/// for
+	/// a
+	/// single
+	/// section
+	/// of
+	/// a
+	/// texture
+	/// to
+	/// be
+	/// scale
+	/// with
+	/// corners
+	/// and
+	/// edges
+	/// kept
+	/// in
+	/// the
+	/// screens
+	/// aspect
+	/// ratio.
+	/// </summary>
+	/// <param
+	/// name="ninePatches">
+	/// The
+	/// values,
+	/// x/y
+	/// being
+	/// to
+	/// top
+	/// left
+	/// corner
+	/// and
+	/// z/w
+	/// bottom
+	/// right
+	/// for
+	/// the
+	/// scalable
+	/// section.
+	/// </param>
+	void SetNinePatches(const Vector4& ninePatches)
+	{
+		m_ninePatches = ninePatches;
+	}
 
-		const Vector2 &GetAtlasOffset() const { return m_atlasOffset; }
+	IDriver<Colour>* GetColourDriver() const
+	{
+		return m_colourDriver.get();
+	}
 
-		const Vector4 &GetNinePatces() const { return m_ninePatches; }
+	/// <summary>
+	/// Sets
+	/// the
+	/// colour
+	/// offset
+	/// driver.
+	/// </summary>
+	/// <param
+	/// name="colourDriver">
+	/// The
+	/// new
+	/// colour
+	/// offset
+	/// driver.
+	/// </param>
+	void SetColourDriver(IDriver<Colour>* colourDriver)
+	{
+		m_colourDriver.reset(colourDriver);
+	}
 
-		/// <summary>
-		/// Sets nine the patches value size, if zero it will be disabled. 9-patch/9-slicing allows for a single section
-		/// of a texture to be scale with corners and edges kept in the screens aspect ratio.
-		/// </summary>
-		/// <param name="ninePatches"> The values, x/y being to top left corner and z/w bottom right for the scalable section. </param>
-		void SetNinePatches(const Vector4 &ninePatches) { m_ninePatches = ninePatches; }
+	/// <summary>
+	/// Sets
+	/// a
+	/// new
+	/// colour
+	/// offset
+	/// driver
+	/// from
+	/// a
+	/// type.
+	/// </summary>
+	/// <param
+	/// name="T">
+	/// The
+	/// type
+	/// of
+	/// driver
+	/// to
+	/// set.
+	/// </param>
+	/// <param
+	/// name="args">
+	/// The
+	/// type
+	/// driver
+	/// arguments.
+	/// </param>
+	template<typename T, typename... Args>
+	void SetColourDriver(Args&&... args)
+	{
+		SetColourDriver(new T(std::forward<Args>(args)...));
+	}
 
-		IDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
+	const Colour& GetColourOffset() const
+	{
+		return m_colourOffset;
+	}
 
-		/// <summary>
-		/// Sets the colour offset driver.
-		/// </summary>
-		/// <param name="colourDriver"> The new colour offset driver. </param>
-		void SetColourDriver(IDriver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
+  private:
+	DescriptorsHandler m_descriptorSet;
+	UniformHandler m_uniformObject;
 
-		/// <summary>
-		/// Sets a new colour offset driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetColourDriver(Args &&... args) { SetColourDriver(new T(std::forward<Args>(args)...)); }
+	std::shared_ptr<Model> m_model;
+	std::shared_ptr<Texture> m_texture;
+	uint32_t m_numberOfRows;
+	uint32_t m_selectedRow;
+	Vector2 m_atlasOffset;
+	Vector4 m_ninePatches; // TODO: Use UiBound
 
-		const Colour &GetColourOffset() const { return m_colourOffset; }
-	private:
-		DescriptorsHandler m_descriptorSet;
-		UniformHandler m_uniformObject;
-
-		std::shared_ptr<Model> m_model;
-		std::shared_ptr<Texture> m_texture;
-		uint32_t m_numberOfRows;
-		uint32_t m_selectedRow;
-		Vector2 m_atlasOffset;
-		Vector4 m_ninePatches; // TODO: Use UiBound
-
-		std::unique_ptr<IDriver<Colour>> m_colourDriver;
-		Colour m_colourOffset;
-	};
+	std::unique_ptr<IDriver<Colour>> m_colourDriver;
+	Colour m_colourOffset;
+};
 }

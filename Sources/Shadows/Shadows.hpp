@@ -6,72 +6,164 @@
 
 namespace acid
 {
+/// <summary>
+/// A
+/// module
+/// used
+/// for
+/// managing
+/// shadow
+/// maps.
+/// </summary>
+class ACID_EXPORT Shadows : public Module
+{
+  public:
 	/// <summary>
-	/// A module used for managing shadow maps.
+	/// Gets
+	/// this
+	/// engine
+	/// instance.
 	/// </summary>
-	class ACID_EXPORT Shadows :
-		public Module
+	/// <returns>
+	/// The
+	/// current
+	/// module
+	/// instance.
+	/// </returns>
+	static Shadows* Get()
 	{
-	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static Shadows *Get() { return Engine::Get()->GetModuleManager().Get<Shadows>(); }
+		return Engine::Get()->GetModuleManager().Get<Shadows>();
+	}
 
-		Shadows();
+	Shadows();
 
-		void Update() override;
+	void Update() override;
 
-		const Vector3 &GetLightDirection() const { return m_lightDirection; }
+	const Vector3& GetLightDirection() const
+	{
+		return m_lightDirection;
+	}
 
-		void SetLightDirection(const Vector3 &lightDirection) { m_lightDirection = lightDirection; }
+	void SetLightDirection(const Vector3& lightDirection)
+	{
+		m_lightDirection = lightDirection;
+	}
 
-		const uint32_t &GetShadowSize() const { return m_shadowSize; }
+	const uint32_t& GetShadowSize() const
+	{
+		return m_shadowSize;
+	}
 
-		void SetShadowSize(const uint32_t &shadowSize) { m_shadowSize = shadowSize; }
+	void SetShadowSize(const uint32_t& shadowSize)
+	{
+		m_shadowSize = shadowSize;
+	}
 
-		const int32_t &GetShadowPcf() const { return m_shadowPcf; }
+	const int32_t& GetShadowPcf() const
+	{
+		return m_shadowPcf;
+	}
 
-		void SetShadowPcf(const int32_t &shadowPcf) { m_shadowPcf = shadowPcf; }
+	void SetShadowPcf(const int32_t& shadowPcf)
+	{
+		m_shadowPcf = shadowPcf;
+	}
 
-		const float &GetShadowBias() const { return m_shadowBias; }
+	const float& GetShadowBias() const
+	{
+		return m_shadowBias;
+	}
 
-		void SetShadowBias(const float &shadowBias) { m_shadowBias = shadowBias; }
+	void SetShadowBias(const float& shadowBias)
+	{
+		m_shadowBias = shadowBias;
+	}
 
-		const float &GetShadowDarkness() const { return m_shadowDarkness; }
+	const float& GetShadowDarkness() const
+	{
+		return m_shadowDarkness;
+	}
 
-		void SetShadowDarkness(const float &shadowDarkness) { m_shadowDarkness = shadowDarkness; }
+	void SetShadowDarkness(const float& shadowDarkness)
+	{
+		m_shadowDarkness = shadowDarkness;
+	}
 
-		const float &GetShadowTransition() const { return m_shadowTransition; }
+	const float& GetShadowTransition() const
+	{
+		return m_shadowTransition;
+	}
 
-		void SetShadowTransition(const float &shadowTransition) { m_shadowTransition = shadowTransition; }
+	void SetShadowTransition(const float& shadowTransition)
+	{
+		m_shadowTransition = shadowTransition;
+	}
 
-		const float &GetShadowBoxOffset() const { return m_shadowBoxOffset; }
+	const float& GetShadowBoxOffset() const
+	{
+		return m_shadowBoxOffset;
+	}
 
-		void SetShadowBoxOffset(const float &shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
+	void SetShadowBoxOffset(const float& shadowBoxOffset)
+	{
+		m_shadowBoxOffset = shadowBoxOffset;
+	}
 
-		const float &GetShadowBoxDistance() const { return m_shadowBoxDistance; }
+	const float& GetShadowBoxDistance() const
+	{
+		return m_shadowBoxDistance;
+	}
 
-		void SetShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
+	void SetShadowBoxDistance(const float& shadowBoxDistance)
+	{
+		m_shadowBoxDistance = shadowBoxDistance;
+	}
 
-		/// <summary>
-		/// Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
-		/// </summary>
-		/// <returns> The shadow box. </returns>
-		const ShadowBox &GetShadowBox() const { return m_shadowBox; }
-	private:
-		Vector3 m_lightDirection;
+	/// <summary>
+	/// Get
+	/// the
+	/// shadow
+	/// box,
+	/// so
+	/// that
+	/// it
+	/// can
+	/// be
+	/// used
+	/// by
+	/// other
+	/// class
+	/// to
+	/// test
+	/// if
+	/// engine.entities
+	/// are
+	/// inside
+	/// the
+	/// box.
+	/// </summary>
+	/// <returns>
+	/// The
+	/// shadow
+	/// box.
+	/// </returns>
+	const ShadowBox& GetShadowBox() const
+	{
+		return m_shadowBox;
+	}
 
-		uint32_t m_shadowSize;
-		int32_t m_shadowPcf;
-		float m_shadowBias;
-		float m_shadowDarkness;
-		float m_shadowTransition;
+  private:
+	Vector3 m_lightDirection;
 
-		float m_shadowBoxOffset;
-		float m_shadowBoxDistance;
+	uint32_t m_shadowSize;
+	int32_t m_shadowPcf;
+	float m_shadowBias;
+	float m_shadowDarkness;
+	float m_shadowTransition;
 
-		ShadowBox m_shadowBox;
-	};
+	float m_shadowBoxOffset;
+	float m_shadowBoxDistance;
+
+	ShadowBox m_shadowBox;
+};
 }

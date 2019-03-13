@@ -4,20 +4,26 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterGrain :
-		public PostFilter
+class ACID_EXPORT FilterGrain : public PostFilter
+{
+  public:
+	explicit FilterGrain(const Pipeline::Stage& pipelineStage, const float& strength = 2.3f);
+
+	void Render(const CommandBuffer& commandBuffer) override;
+
+	const float& GetStrength() const
 	{
-	public:
-		explicit FilterGrain(const Pipeline::Stage &pipelineStage, const float &strength = 2.3f);
+		return m_strength;
+	}
 
-		void Render(const CommandBuffer &commandBuffer) override;
+	void SetStrength(const float& strength)
+	{
+		m_strength = strength;
+	}
 
-		const float &GetStrength() const { return m_strength; }
+  private:
+	PushHandler m_pushScene;
 
-		void SetStrength(const float &strength) { m_strength = strength; }
-	private:
-		PushHandler m_pushScene;
-
-		float m_strength;
-	};
+	float m_strength;
+};
 }

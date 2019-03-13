@@ -4,37 +4,84 @@
 
 namespace acid
 {
+/// <summary>
+/// Axis
+/// from a
+/// joystick.
+/// </summary>
+class ACID_EXPORT AxisJoystick : public IAxis
+{
+  public:
 	/// <summary>
-	/// Axis from a joystick.
+	/// Creates
+	/// a
+	/// new
+	/// axis
+	/// joystick.
 	/// </summary>
-	class ACID_EXPORT AxisJoystick :
-		public IAxis
+	/// <param
+	/// name="port">
+	/// The
+	/// joystick
+	/// port.
+	/// </param>
+	/// <param
+	/// name="axis">
+	/// The
+	/// axis
+	/// on
+	/// the
+	/// joystick
+	/// being
+	/// checked.
+	/// </param>
+	/// <param
+	/// name="inverse">
+	/// If
+	/// the
+	/// axis
+	/// direction
+	/// should
+	/// be
+	/// inverted.
+	/// </param>
+	AxisJoystick(const uint32_t& port, const uint32_t& axis, const bool& inverted = false);
+
+	float GetAmount() const override;
+
+	const uint32_t& GetPort() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new axis joystick.
-		/// </summary>
-		/// <param name="port"> The joystick port. </param>
-		/// <param name="axis"> The axis on the joystick being checked. </param>
-		/// <param name="inverse"> If the axis direction should be inverted. </param>
-		AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted = false);
+		return m_port;
+	}
 
-		float GetAmount() const override;
+	void SetPort(const uint32_t& port)
+	{
+		m_port = port;
+	}
 
-		const uint32_t &GetPort() const { return m_port; }
+	const uint32_t& GetAxis() const
+	{
+		return m_axis;
+	}
 
-		void SetPort(const uint32_t &port) { m_port = port; }
+	void SetAxis(const uint32_t& axis)
+	{
+		m_axis = axis;
+	}
 
-		const uint32_t &GetAxis() const { return m_axis; }
+	const bool& IsInverted() const
+	{
+		return m_inverted;
+	}
 
-		void SetAxis(const uint32_t &axis) { m_axis = axis; }
+	void SetInverted(const bool& inverted)
+	{
+		m_inverted = inverted;
+	}
 
-		const bool &IsInverted() const { return m_inverted; }
-
-		void SetInverted(const bool &inverted) { m_inverted = inverted; }
-	private:
-		uint32_t m_port;
-		uint32_t m_axis;
-		bool m_inverted;
-	};
+  private:
+	uint32_t m_port;
+	uint32_t m_axis;
+	bool m_inverted;
+};
 }

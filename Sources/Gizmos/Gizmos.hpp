@@ -5,38 +5,72 @@
 
 namespace acid
 {
+/// <summary>
+/// A
+/// module
+/// used
+/// for
+/// that
+/// manages
+/// debug
+/// gizmos.
+/// </summary>
+class ACID_EXPORT Gizmos : public Module
+{
+  public:
 	/// <summary>
-	/// A module used for that manages debug gizmos.
+	/// Gets
+	/// this
+	/// engine
+	/// instance.
 	/// </summary>
-	class ACID_EXPORT Gizmos :
-		public Module
+	/// <returns>
+	/// The
+	/// current
+	/// module
+	/// instance.
+	/// </returns>
+	static Gizmos* Get()
 	{
-	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static Gizmos *Get() { return Engine::Get()->GetModuleManager().Get<Gizmos>(); }
+		return Engine::Get()->GetModuleManager().Get<Gizmos>();
+	}
 
-		Gizmos();
+	Gizmos();
 
-		void Update() override;
+	void Update() override;
 
-		Gizmo *AddGizmo(Gizmo *gizmo);
+	Gizmo* AddGizmo(Gizmo* gizmo);
 
-		void RemoveGizmo(Gizmo *gizmo);
+	void RemoveGizmo(Gizmo* gizmo);
 
-		/// <summary>
-		/// Clears all gizmods from the scene.
-		/// </summary>
-		void Clear();
+	/// <summary>
+	/// Clears
+	/// all
+	/// gizmods
+	/// from
+	/// the
+	/// scene.
+	/// </summary>
+	void Clear();
 
-		/// <summary>
-		/// Gets a list of all gizmods.
-		/// </summary>
-		/// <returns> All gizmods. </returns>
-		const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
-	private:
-		std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
-	};
+	/// <summary>
+	/// Gets
+	/// a
+	/// list
+	/// of
+	/// all
+	/// gizmods.
+	/// </summary>
+	/// <returns>
+	/// All
+	/// gizmods.
+	/// </returns>
+	const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>& GetGizmos() const
+	{
+		return m_gizmos;
+	}
+
+  private:
+	std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
+};
 }

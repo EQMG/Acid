@@ -4,12 +4,11 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterGrey :
-		public PostFilter
-	{
-	public:
-		explicit FilterGrey(const Pipeline::Stage &pipelineStage);
+class ACID_EXPORT FilterGrey : public PostFilter
+{
+  public:
+	explicit FilterGrey(const Pipeline::Stage& pipelineStage);
 
-		void Render(const CommandBuffer &commandBuffer) override;
-	};
+	void Render(const CommandBuffer& commandBuffer) override;
+};
 }

@@ -4,12 +4,11 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterSepia :
-		public PostFilter
-	{
-	public:
-		explicit FilterSepia(const Pipeline::Stage &pipelineStage);
+class ACID_EXPORT FilterSepia : public PostFilter
+{
+  public:
+	explicit FilterSepia(const Pipeline::Stage& pipelineStage);
 
-		void Render(const CommandBuffer &commandBuffer) override;
-	};
+	void Render(const CommandBuffer& commandBuffer) override;
+};
 }

@@ -1,102 +1,196 @@
 ﻿#pragma once
 
-#include "Maths/Vector3.hpp"
-#include "Maths/Timer.hpp"
-#include "Scenes/Component.hpp"
 #include "Emitters/Emitter.hpp"
+#include "Maths/Timer.hpp"
+#include "Maths/Vector3.hpp"
 #include "Particle.hpp"
 #include "ParticleType.hpp"
+#include "Scenes/Component.hpp"
 
 namespace acid
 {
+/// <summary>
+/// A
+/// system
+/// of
+/// particles
+/// that
+/// are to
+/// be
+/// spawned.
+/// </summary>
+class ACID_EXPORT ParticleSystem : public Component
+{
+  public:
 	/// <summary>
-	/// A system of particles that are to be spawned.
+	/// Creates
+	/// a
+	/// new
+	/// particle
+	/// system.
 	/// </summary>
-	class ACID_EXPORT ParticleSystem :
-		public Component
+	/// <param
+	/// name="types">
+	/// The
+	/// types
+	/// of
+	/// particles
+	/// to
+	/// spawn.
+	/// </param>
+	/// <param
+	/// name="localTransform">
+	/// The
+	/// local
+	/// transform
+	/// from
+	/// the
+	/// parents
+	/// space.
+	/// </param>
+	/// <param
+	/// name="pps">
+	/// Particles
+	/// per
+	/// second.
+	/// </param>
+	/// <param
+	/// name="averageSpeed">
+	/// Particle
+	/// average
+	/// speed.
+	/// </param>
+	/// <param
+	/// name="gravityEffect">
+	/// How
+	/// much
+	/// gravity
+	/// will
+	/// effect
+	/// the
+	/// particles.
+	/// </param>
+	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, const float& pps = 5.0f, const float& averageSpeed = 0.2f, const float& gravityEffect = 1.0f);
+
+	void Start() override;
+
+	void Update() override;
+
+	void Decode(const Metadata& metadata) override;
+
+	void Encode(Metadata& metadata) const override;
+
+	void AddParticleType(const std::shared_ptr<ParticleType>& type);
+
+	bool RemoveParticleType(const std::shared_ptr<ParticleType>& type);
+
+	const float& GetPps() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new particle system.
-		/// </summary>
-		/// <param name="types"> The types of particles to spawn. </param>
-		/// <param name="localTransform"> The local transform from the parents space. </param>
-		/// <param name="pps"> Particles per second. </param>
-		/// <param name="averageSpeed"> Particle average speed. </param>
-		/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
-		explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, const float &pps = 5.0f, 
-			const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f);
+		return m_pps;
+	}
 
-		void Start() override;
+	void SetPps(const float& pps);
 
-		void Update() override;
+	const float& GetAverageSpeed() const
+	{
+		return m_averageSpeed;
+	}
 
-		void Decode(const Metadata &metadata) override;
+	void SetAverageSpeed(const float& averageSpeed)
+	{
+		m_averageSpeed = averageSpeed;
+	}
 
-		void Encode(Metadata &metadata) const override;
+	const float& GetGravityEffect() const
+	{
+		return m_gravityEffect;
+	}
 
-		void AddParticleType(const std::shared_ptr<ParticleType> &type);
+	void SetGravityEffect(const float& gravityEffect)
+	{
+		m_gravityEffect = gravityEffect;
+	}
 
-		bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
+	const bool& IsRandomRotation() const
+	{
+		return m_randomRotation;
+	}
 
-		const float &GetPps() const { return m_pps; }
+	void SetRandomRotation(const bool& randomRotation)
+	{
+		m_randomRotation = randomRotation;
+	}
 
-		void SetPps(const float &pps);
+	const Vector3& GetDirection() const
+	{
+		return m_direction;
+	}
 
-		const float &GetAverageSpeed() const { return m_averageSpeed; }
+	void SetDirection(const Vector3& direction, const float& deviation);
 
-		void SetAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
+	const float& GetSpeedDeviation() const
+	{
+		return m_speedDeviation;
+	}
 
-		const float &GetGravityEffect() const { return m_gravityEffect; }
+	void SetSpeedDeviation(const float& speedDeviation)
+	{
+		m_speedDeviation = speedDeviation;
+	}
 
-		void SetGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
+	const float& GetLifeDeviation() const
+	{
+		return m_lifeDeviation;
+	}
 
-		const bool &IsRandomRotation() const { return m_randomRotation; }
+	void SetLifeDeviation(const float& lifeDeviation)
+	{
+		m_lifeDeviation = lifeDeviation;
+	}
 
-		void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
+	const float& GetStageDeviation() const
+	{
+		return m_stageDeviation;
+	}
 
-		const Vector3 &GetDirection() const { return m_direction; }
+	void SetStageDeviation(const float& stageDeviation)
+	{
+		m_stageDeviation = stageDeviation;
+	}
 
-		void SetDirection(const Vector3 &direction, const float &deviation);
+	const float& GetScaleDeviation() const
+	{
+		return m_scaleDeviation;
+	}
 
-		const float &GetSpeedDeviation() const { return m_speedDeviation; }
+	void SetScaleDeviation(const float& scaleDeviation)
+	{
+		m_scaleDeviation = scaleDeviation;
+	}
 
-		void SetSpeedDeviation(const float &speedDeviation) { m_speedDeviation = speedDeviation; }
+  private:
+	Particle EmitParticle(const Emitter& emitter);
 
-		const float &GetLifeDeviation() const { return m_lifeDeviation; }
+	float GenerateValue(const float& average, const float& errorPercent) const;
 
-		void SetLifeDeviation(const float &lifeDeviation) { m_lifeDeviation = lifeDeviation; }
+	float GenerateRotation() const;
 
-		const float &GetStageDeviation() const { return m_stageDeviation; }
+	Vector3 GenerateRandomUnitVector() const;
 
-		void SetStageDeviation(const float &stageDeviation) { m_stageDeviation = stageDeviation; }
+	std::vector<std::shared_ptr<ParticleType>> m_types;
 
-		const float &GetScaleDeviation() const { return m_scaleDeviation; }
+	float m_pps;
+	float m_averageSpeed;
+	float m_gravityEffect;
+	bool m_randomRotation;
 
-		void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
-	private:
-		Particle EmitParticle(const Emitter &emitter);
+	Vector3 m_direction;
+	float m_directionDeviation;
+	float m_speedDeviation;
+	float m_lifeDeviation;
+	float m_stageDeviation;
+	float m_scaleDeviation;
 
-		float GenerateValue(const float &average, const float &errorPercent) const;
-
-		float GenerateRotation() const;
-
-		Vector3 GenerateRandomUnitVector() const;
-
-		std::vector<std::shared_ptr<ParticleType>> m_types;
-
-		float m_pps;
-		float m_averageSpeed;
-		float m_gravityEffect;
-		bool m_randomRotation;
-
-		Vector3 m_direction;
-		float m_directionDeviation;
-		float m_speedDeviation;
-		float m_lifeDeviation;
-		float m_stageDeviation;
-		float m_scaleDeviation;
-
-		Timer m_emitTimer;
-	};
+	Timer m_emitTimer;
+};
 }

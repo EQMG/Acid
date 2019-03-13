@@ -1,82 +1,144 @@
 #pragma once
 
+#include "IVertex.hpp"
 #include "Maths/Vector3.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"
-#include "IVertex.hpp"
 
 namespace acid
 {
+/// <summary>
+/// Class
+/// that
+/// represents
+/// a OBJ
+/// model.
+/// </summary>
+class ACID_EXPORT Model : public Resource
+{
+  public:
+	static std::shared_ptr<Model> Create(const Metadata& metadata);
+
+	static std::shared_ptr<Model> Create(const std::string& filename);
+
 	/// <summary>
-	/// Class that represents a OBJ model.
+	/// Creates
+	/// a
+	/// new
+	/// empty
+	/// model.
 	/// </summary>
-	class ACID_EXPORT Model :
-		public Resource
+	Model();
+
+	/// <summary>
+	/// Creates
+	/// a
+	/// new
+	/// model.
+	/// </summary>
+	/// <param
+	/// name="T">
+	/// The
+	/// vertex
+	/// class
+	/// that
+	/// implements
+	/// <seealso
+	/// cref="IVertex"/>.
+	/// </param>
+	/// <param
+	/// name="vertices">
+	/// The
+	/// model
+	/// vertices.
+	/// </param>
+	/// <param
+	/// name="indices">
+	/// The
+	/// model
+	/// indices.
+	/// </param>
+	template<typename T>
+	explicit Model(const std::vector<T>& vertices, const std::vector<uint32_t>& indices = {}) : Model()
 	{
-	public:
-		static std::shared_ptr<Model> Create(const Metadata &metadata);
+		Initialize(vertices, indices);
+	}
 
-		static std::shared_ptr<Model> Create(const std::string &filename);
+	bool CmdRender(const CommandBuffer& commandBuffer, const uint32_t& instances = 1) const;
 
-		/// <summary>
-		/// Creates a new empty model.
-		/// </summary>
-		Model();
+	void Load() override;
 
-		/// <summary>
-		/// Creates a new model.
-		/// </summary>
-		/// <param name="T"> The vertex class that implements <seealso cref="IVertex"/>. </param>
-		/// <param name="vertices"> The model vertices. </param>
-		/// <param name="indices"> The model indices. </param>
-		template<typename T>
-		explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
-			Model()
-		{
-			Initialize(vertices, indices);
-		}
+	void Decode(const Metadata& metadata) override;
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1) const;
+	void Encode(Metadata& metadata) const override;
 
-		void Load() override;
+	std::vector<float> GetPointCloud() const;
 
-		void Decode(const Metadata &metadata) override;
+	const Vector3& GetMinExtents() const
+	{
+		return m_minExtents;
+	}
 
-		void Encode(Metadata &metadata) const override;
+	const Vector3& GetMaxExtents() const
+	{
+		return m_maxExtents;
+	}
 
-		std::vector<float> GetPointCloud() const;
+	float GetWidth() const
+	{
+		return m_maxExtents.m_x - m_minExtents.m_x;
+	}
 
-		const Vector3 &GetMinExtents() const { return m_minExtents; }
+	float GetHeight() const
+	{
+		return m_maxExtents.m_y - m_minExtents.m_y;
+	}
 
-		const Vector3 &GetMaxExtents() const { return m_maxExtents; }
+	float GetDepth() const
+	{
+		return m_maxExtents.m_z - m_minExtents.m_z;
+	}
 
-		float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
+	float GetRadius() const
+	{
+		return m_radius;
+	}
 
-		float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
+	const Buffer* GetVertexBuffer() const
+	{
+		return m_vertexBuffer.get();
+	}
 
-		float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
+	const Buffer* GetIndexBuffer() const
+	{
+		return m_indexBuffer.get();
+	}
 
-		float GetRadius() const { return m_radius; }
+	const uint32_t& GetVertexCount() const
+	{
+		return m_vertexCount;
+	}
 
-		const Buffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
+	const uint32_t& GetIndexCount() const
+	{
+		return m_indexCount;
+	}
 
-		const Buffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
+	VkIndexType GetIndexType() const
+	{
+		return VK_INDEX_TYPE_UINT32;
+	}
 
-		const uint32_t &GetVertexCount() const { return m_vertexCount; }
+  protected:
+	template<typename T>
+	void Initialize(const std::vector<T>& vertices, const std::vector<uint32_t>& indices = {})
+	{
+		static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
 
-		const uint32_t &GetIndexCount() const { return m_indexCount; }
+		m_vertexBuffer = nullptr;
+		m_indexBuffer = nullptr;
 
-		VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
-	protected:
-		template<typename T>
-		void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
-		{
-			static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
-
-			m_vertexBuffer = nullptr;
-			m_indexBuffer = nullptr;
-
-			if (!vertices.empty())
+		if(!vertices.empty())
 			{
 				auto vertexStaging = Buffer(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, vertices.data());
 				m_vertexBuffer = std::make_unique<Buffer>(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
@@ -92,7 +154,7 @@ namespace acid
 				commandBuffer.SubmitIdle();
 			}
 
-			if (!indices.empty())
+		if(!indices.empty())
 			{
 				auto indexStaging = Buffer(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
 				m_indexBuffer = std::make_unique<Buffer>(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
@@ -108,31 +170,32 @@ namespace acid
 				commandBuffer.SubmitIdle();
 			}
 
-			m_minExtents = Vector3::PositiveInfinity;
-			m_maxExtents = Vector3::NegativeInfinity;
+		m_minExtents = Vector3::PositiveInfinity;
+		m_maxExtents = Vector3::NegativeInfinity;
 
-			for (const auto &vertex : vertices)
+		for(const auto& vertex : vertices)
 			{
 				Vector3 position = vertex.GetPosition();
 				m_minExtents = Vector3::MinVector(m_minExtents, position);
 				m_maxExtents = Vector3::MinVector(m_maxExtents, position);
 			}
 
-			// FIXME: Radius calculation might be wrong.
-			float min0 = std::abs(m_minExtents.MaxComponent());
-			float min1 = std::abs(m_minExtents.MinComponent());
-			float max0 = std::abs(m_maxExtents.MaxComponent());
-			float max1 = std::abs(m_maxExtents.MinComponent());
-			m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
-		}
-	private:
-		std::unique_ptr<Buffer> m_vertexBuffer;
-		std::unique_ptr<Buffer> m_indexBuffer;
-		uint32_t m_vertexCount;
-		uint32_t m_indexCount;
+		// FIXME: Radius calculation might be wrong.
+		float min0 = std::abs(m_minExtents.MaxComponent());
+		float min1 = std::abs(m_minExtents.MinComponent());
+		float max0 = std::abs(m_maxExtents.MaxComponent());
+		float max1 = std::abs(m_maxExtents.MinComponent());
+		m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
+	}
 
-		Vector3 m_minExtents;
-		Vector3 m_maxExtents;
-		float m_radius;
-	};
+  private:
+	std::unique_ptr<Buffer> m_vertexBuffer;
+	std::unique_ptr<Buffer> m_indexBuffer;
+	uint32_t m_vertexCount;
+	uint32_t m_indexCount;
+
+	Vector3 m_minExtents;
+	Vector3 m_maxExtents;
+	float m_radius;
+};
 }

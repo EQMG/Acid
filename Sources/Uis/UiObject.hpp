@@ -1,186 +1,524 @@
 ﻿#pragma once
 
-#include "Helpers/Delegate.hpp"
 #include "Devices/Mouse.hpp"
+#include "Helpers/Delegate.hpp"
+#include "Maths/Transform.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
-#include "Maths/Transform.hpp"
 #include "Maths/Visual/IDriver.hpp"
 #include "UiBound.hpp"
 
 namespace acid
 {
+/// <summary>
+/// A
+/// representation
+/// of a
+/// object
+/// this
+/// is
+/// rendered
+/// to a
+/// screen.
+/// This
+/// object
+/// is
+/// contained
+/// in a
+/// parent
+/// and
+/// has
+/// children.
+/// The
+/// screen
+/// object
+/// has a
+/// few
+/// values
+/// that
+/// allow
+/// for it
+/// to be
+/// positioned
+/// and
+/// scaled,
+/// along
+/// with
+/// other
+/// variables
+/// that
+/// are
+/// used
+/// when
+/// rendering.
+/// This
+/// class
+/// can be
+/// extended
+/// to
+/// create
+/// a
+/// representation
+/// for
+/// GUI
+/// textures,
+/// fonts,
+/// etc.
+/// </summary>
+class ACID_EXPORT UiObject
+{
+  public:
 	/// <summary>
-	/// A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
-	/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
-	/// This class can be extended to create a representation for GUI textures, fonts, etc.
+	/// Creates
+	/// a
+	/// new
+	/// screen
+	/// object.
 	/// </summary>
-	class ACID_EXPORT UiObject
+	/// <param
+	/// name="parent">
+	/// The
+	/// parent
+	/// screen
+	/// object.
+	/// </param>
+	/// <param
+	/// name="rectangle">
+	/// The
+	/// rectangle
+	/// that
+	/// will
+	/// represent
+	/// the
+	/// bounds
+	/// of
+	/// the
+	/// ui
+	/// object.
+	/// </param>
+	UiObject(UiObject* parent, const UiBound& rectangle);
+
+	virtual ~UiObject();
+
+	/// <summary>
+	/// Updates
+	/// this
+	/// screen
+	/// object
+	/// and
+	/// the
+	/// extended
+	/// object.
+	/// </summary>
+	/// <param
+	/// name="list">
+	/// The
+	/// list
+	/// to
+	/// add
+	/// to.
+	/// </param>
+	void Update(std::vector<UiObject*>& list);
+
+	/// <summary>
+	/// Updates
+	/// the
+	/// implementation.
+	/// </summary>
+	virtual void UpdateObject();
+
+	/// <summary>
+	/// Gets
+	/// if
+	/// the
+	/// object
+	/// provided
+	/// has
+	/// the
+	/// cursor
+	/// hovered
+	/// above
+	/// it.
+	/// </summary>
+	/// <param
+	/// name="object">
+	/// The
+	/// object
+	/// to
+	/// check
+	/// with.
+	/// </param>
+	/// <returns>
+	/// If
+	/// the
+	/// object
+	/// has
+	/// the
+	/// cursor
+	/// inside
+	/// of
+	/// its
+	/// box.
+	/// </returns>
+	bool IsSelected() const;
+
+	/// <summary>
+	/// Gets
+	/// the
+	/// parent
+	/// object.
+	/// </summary>
+	/// <returns>
+	/// The
+	/// parent
+	/// object.
+	/// </returns>
+	UiObject* GetParent() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new screen object.
-		/// </summary>
-		/// <param name="parent"> The parent screen object. </param>
-		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
-		UiObject(UiObject *parent, const UiBound &rectangle);
+		return m_parent;
+	}
 
-		virtual ~UiObject();
+	/// <summary>
+	/// Removes
+	/// this
+	/// object
+	/// from
+	/// the
+	/// previous
+	/// parent
+	/// and
+	/// attaches
+	/// it
+	/// to
+	/// another
+	/// parent.
+	/// </summary>
+	/// <param
+	/// name="parent">
+	/// The
+	/// new
+	/// parent
+	/// object.
+	/// </param>
+	void SetParent(UiObject* parent);
 
-		/// <summary>
-		/// Updates this screen object and the extended object.
-		/// </summary>
-		/// <param name="list"> The list to add to. </param>
-		void Update(std::vector<UiObject *> &list);
+	const std::vector<UiObject*>& GetChildren() const
+	{
+		return m_children;
+	}
 
-		/// <summary>
-		/// Updates the implementation.
-		/// </summary>
-		virtual void UpdateObject();
+	/// <summary>
+	/// Adds
+	/// a
+	/// child
+	/// to
+	/// this
+	/// objects
+	/// children.
+	/// </summary>
+	/// <param
+	/// name="child">
+	/// The
+	/// child
+	/// to
+	/// add.
+	/// </param>
+	void AddChild(UiObject* child);
 
-		/// <summary>
-		/// Gets if the object provided has the cursor hovered above it.
-		/// </summary>
-		/// <param name="object"> The object to check with.
-		/// </param>
-		/// <returns> If the object has the cursor inside of its box. </returns>
-		bool IsSelected() const;
+	/// <summary>
+	/// Disowns
+	/// a
+	/// child
+	/// from
+	/// this
+	/// objects
+	/// children.
+	/// </summary>
+	/// <param
+	/// name="child">
+	/// The
+	/// child
+	/// to
+	/// disown.
+	/// </param>
+	void RemoveChild(UiObject* child);
 
-		/// <summary>
-		/// Gets the parent object.
-		/// </summary>
-		/// <returns> The parent object. </returns>
-		UiObject *GetParent() const { return m_parent; }
+	void ClearChildren()
+	{
+		m_children.clear();
+	}
 
-		/// <summary>
-		/// Removes this object from the previous parent and attaches it to another parent.
-		/// </summary>
-		/// <param name="parent"> The new parent object. </param>
-		void SetParent(UiObject *parent);
+	bool IsEnabled() const;
 
-		const std::vector<UiObject *> &GetChildren() const { return m_children; }
+	void SetEnabled(const bool& enabled)
+	{
+		m_enabled = enabled;
+	}
 
-		/// <summary>
-		/// Adds a child to this objects children.
-		/// </summary>
-		/// <param name="child"> The child to add. </param>
-		void AddChild(UiObject *child);
+	UiBound& GetRectangle()
+	{
+		return m_rectangle;
+	}
 
-		/// <summary>
-		/// Disowns a child from this objects children.
-		/// </summary>
-		/// <param name="child"> The child to disown. </param>
-		void RemoveChild(UiObject *child);
+	void SetRectangle(const UiBound& rectangle)
+	{
+		m_rectangle = rectangle;
+	}
 
-		void ClearChildren() { m_children.clear(); }
+	const Vector4& GetScissor() const
+	{
+		return m_scissor;
+	}
 
-		bool IsEnabled() const;
+	void SetScissor(const Vector4& scissor)
+	{
+		m_scissor = scissor;
+	}
 
-		void SetEnabled(const bool &enabled) { m_enabled = enabled; }
+	const float& GetHeight() const
+	{
+		return m_height;
+	}
 
-		UiBound &GetRectangle() { return m_rectangle; }
+	void SetHeight(const float& height)
+	{
+		m_height = height;
+	}
 
-		void SetRectangle(const UiBound &rectangle) { m_rectangle = rectangle; }
+	const bool& IsLockRotation() const
+	{
+		return m_lockRotation;
+	}
 
-		const Vector4 &GetScissor() const { return m_scissor; }
+	void SetLockRotation(const bool& lockRotation)
+	{
+		m_lockRotation = lockRotation;
+	}
 
-		void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
+	/// <summary>
+	/// Gets
+	/// the
+	/// world
+	/// transform
+	/// applied
+	/// to
+	/// the
+	/// object,
+	/// if
+	/// has
+	/// value.
+	/// </summary>
+	/// <returns>
+	/// The
+	/// world
+	/// transform.
+	/// </returns>
+	const std::optional<Transform>& GetWorldTransform() const
+	{
+		return m_worldTransform;
+	}
 
-		const float &GetHeight() const { return m_height; }
+	/// <summary>
+	/// Sets
+	/// the
+	/// world
+	/// transform
+	/// applied
+	/// to
+	/// the
+	/// object.
+	/// </summary>
+	/// <param
+	/// name="transform">
+	/// The
+	/// new
+	/// world
+	/// space
+	/// transform.
+	/// </param>
+	void SetWorldTransform(const std::optional<Transform>& transform)
+	{
+		m_worldTransform = transform;
+	}
 
-		void SetHeight(const float &height) { m_height = height; }
+	Matrix4 GetModelMatrix() const;
 
-		const bool &IsLockRotation() const { return m_lockRotation; }
+	IDriver<float>* GetAlphaDriver() const
+	{
+		return m_alphaDriver.get();
+	}
 
-		void SetLockRotation(const bool &lockRotation) { m_lockRotation = lockRotation; }
+	/// <summary>
+	/// Sets
+	/// the
+	/// alpha
+	/// driver.
+	/// </summary>
+	/// <param
+	/// name="alphaDriver">
+	/// The
+	/// new
+	/// alpha
+	/// driver.
+	/// </param>
+	void SetAlphaDriver(IDriver<float>* alphaDriver)
+	{
+		m_alphaDriver.reset(alphaDriver);
+	}
 
-		/// <summary>
-		/// Gets the world transform applied to the object, if has value.
-		/// </summary>
-		/// <returns> The world transform. </returns>
-		const std::optional<Transform> &GetWorldTransform() const { return m_worldTransform; }
+	/// <summary>
+	/// Sets
+	/// a
+	/// new
+	/// alpha
+	/// driver
+	/// from
+	/// a
+	/// type.
+	/// </summary>
+	/// <param
+	/// name="T">
+	/// The
+	/// type
+	/// of
+	/// driver
+	/// to
+	/// set.
+	/// </param>
+	/// <param
+	/// name="args">
+	/// The
+	/// type
+	/// driver
+	/// arguments.
+	/// </param>
+	template<typename T, typename... Args>
+	void SetAlphaDriver(Args&&... args)
+	{
+		SetAlphaDriver(new T(std::forward<Args>(args)...));
+	}
 
-		/// <summary>
-		/// Sets the world transform applied to the object.
-		/// </summary>
-		/// <param name="transform"> The new world space transform. </param>
-		void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
+	const float& GetAlpha() const
+	{
+		return m_alpha;
+	}
 
-		Matrix4 GetModelMatrix() const;
+	IDriver<float>* GetScaleDriver() const
+	{
+		return m_scaleDriver.get();
+	}
 
-		IDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
+	/// <summary>
+	/// Sets
+	/// the
+	/// scale
+	/// driver.
+	/// </summary>
+	/// <param
+	/// name="scaleDriver">
+	/// The
+	/// new
+	/// scale
+	/// driver.
+	/// </param>
+	void SetScaleDriver(IDriver<float>* scaleDriver)
+	{
+		m_scaleDriver.reset(scaleDriver);
+	}
 
-		/// <summary>
-		/// Sets the alpha driver.
-		/// </summary>
-		/// <param name="alphaDriver"> The new alpha driver. </param>
-		void SetAlphaDriver(IDriver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
+	/// <summary>
+	/// Sets
+	/// a
+	/// new
+	/// scale
+	/// driver
+	/// from
+	/// a
+	/// type.
+	/// </summary>
+	/// <param
+	/// name="T">
+	/// The
+	/// type
+	/// of
+	/// driver
+	/// to
+	/// set.
+	/// </param>
+	/// <param
+	/// name="args">
+	/// The
+	/// type
+	/// driver
+	/// arguments.
+	/// </param>
+	template<typename T, typename... Args>
+	void SetScaleDriver(Args&&... args)
+	{
+		SetScaleDriver(new T(std::forward<Args>(args)...));
+	}
 
-		/// <summary>
-		/// Sets a new alpha driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetAlphaDriver(Args &&... args) { SetAlphaDriver(new T(std::forward<Args>(args)...)); }
+	const float& GetScale() const
+	{
+		return m_scale;
+	}
 
-		const float &GetAlpha() const { return m_alpha; }
+	const Vector2& GetScreenDimensions() const
+	{
+		return m_screenDimensions;
+	}
 
-		IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
+	const Vector2& GetScreenPosition() const
+	{
+		return m_screenPosition;
+	}
 
-		/// <summary>
-		/// Sets the scale driver.
-		/// </summary>
-		/// <param name="scaleDriver"> The new scale driver. </param>
-		void SetScaleDriver(IDriver<float> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+	const float& GetScreenDepth() const
+	{
+		return m_screenDepth;
+	}
 
-		/// <summary>
-		/// Sets a new scale driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetScaleDriver(Args &&... args) { SetScaleDriver(new T(std::forward<Args>(args)...)); }
+	const float& GetScreenAlpha() const
+	{
+		return m_screenAlpha;
+	}
 
-		const float &GetScale() const { return m_scale; }
+	const float& GetScreenScale() const
+	{
+		return m_screenScale;
+	}
 
-		const Vector2 &GetScreenDimensions() const { return m_screenDimensions; }
+	Delegate<void(UiObject*, MouseButton)>& GetOnClick()
+	{
+		return m_onClick;
+	}
 
-		const Vector2 &GetScreenPosition() const { return m_screenPosition; }
+	void CancelEvent(const MouseButton& button) const;
 
-		const float &GetScreenDepth() const { return m_screenDepth; }
+  private:
+	UiObject* m_parent;
+	std::vector<UiObject*> m_children;
 
-		const float &GetScreenAlpha() const { return m_screenAlpha; }
+	bool m_enabled;
+	UiBound m_rectangle;
+	Vector4 m_scissor; // TODO: Convert to UiBound.
+	float m_height;
 
-		const float &GetScreenScale() const { return m_screenScale; }
+	bool m_lockRotation;
+	std::optional<Transform> m_worldTransform;
 
-		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
+	std::unique_ptr<IDriver<float>> m_alphaDriver;
+	float m_alpha;
 
-		void CancelEvent(const MouseButton &button) const;
-	private:
-		UiObject *m_parent;
-		std::vector<UiObject *> m_children;
+	std::unique_ptr<IDriver<float>> m_scaleDriver;
+	float m_scale;
 
-		bool m_enabled;
-		UiBound m_rectangle;
-		Vector4 m_scissor; // TODO: Convert to UiBound.
-		float m_height;
+	Vector2 m_screenDimensions;
+	Vector2 m_screenPosition;
+	float m_screenDepth;
+	float m_screenAlpha;
+	float m_screenScale;
 
-		bool m_lockRotation;
-		std::optional<Transform> m_worldTransform;
-
-		std::unique_ptr<IDriver<float>> m_alphaDriver;
-		float m_alpha;
-
-		std::unique_ptr<IDriver<float>> m_scaleDriver;
-		float m_scale;
-
-		Vector2 m_screenDimensions;
-		Vector2 m_screenPosition;
-		float m_screenDepth;
-		float m_screenAlpha;
-		float m_screenScale;
-
-		Delegate<void(UiObject *, MouseButton)> m_onClick;
-	};
+	Delegate<void(UiObject*, MouseButton)> m_onClick;
+};
 }

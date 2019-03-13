@@ -4,20 +4,26 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterDarken :
-		public PostFilter
+class ACID_EXPORT FilterDarken : public PostFilter
+{
+  public:
+	explicit FilterDarken(const Pipeline::Stage& pipelineStage, const float& factor = 0.5f);
+
+	void Render(const CommandBuffer& commandBuffer) override;
+
+	const float& GetFactor() const
 	{
-	public:
-		explicit FilterDarken(const Pipeline::Stage &pipelineStage, const float &factor = 0.5f);
+		return m_factor;
+	}
 
-		void Render(const CommandBuffer &commandBuffer) override;
+	void SetFactor(const float& factor)
+	{
+		m_factor = factor;
+	}
 
-		const float &GetFactor() const { return m_factor; }
+  private:
+	PushHandler m_pushScene;
 
-		void SetFactor(const float &factor) { m_factor = factor; }
-	private:
-		PushHandler m_pushScene;
-
-		float m_factor;
-	};
+	float m_factor;
+};
 }

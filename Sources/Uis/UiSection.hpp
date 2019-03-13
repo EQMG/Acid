@@ -7,25 +7,31 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiSection :
-		public UiObject
+class ACID_EXPORT UiSection : public UiObject
+{
+  public:
+	UiSection(UiObject* parent, const std::string& string, const UiBound& rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+
+	void UpdateObject() override;
+
+	UiObject& GetContent()
 	{
-	public:
-		UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		return m_content;
+	}
 
-		void UpdateObject() override;
+	Delegate<void(UiSection*, bool)>& GetOnCollapsed()
+	{
+		return m_onCollapsed;
+	}
 
-		UiObject &GetContent() { return m_content; }
+  private:
+	Gui m_icon;
+	Text m_text;
+	UiObject m_content;
+	Sound m_soundClick;
 
-		Delegate<void(UiSection *, bool)> &GetOnCollapsed() { return m_onCollapsed; }
-	private:
-		Gui m_icon;
-		Text m_text;
-		UiObject m_content;
-		Sound m_soundClick;
+	bool m_collapsed;
 
-		bool m_collapsed;
-
-		Delegate<void(UiSection *, bool)> m_onCollapsed;
-	};
+	Delegate<void(UiSection*, bool)> m_onCollapsed;
+};
 }

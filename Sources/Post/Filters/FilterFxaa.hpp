@@ -4,20 +4,26 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterFxaa :
-		public PostFilter
+class ACID_EXPORT FilterFxaa : public PostFilter
+{
+  public:
+	explicit FilterFxaa(const Pipeline::Stage& pipelineStage, const float& spanMax = 8.0f);
+
+	void Render(const CommandBuffer& commandBuffer) override;
+
+	const float& GetSpanMax() const
 	{
-	public:
-		explicit FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax = 8.0f);
+		return m_spanMax;
+	}
 
-		void Render(const CommandBuffer &commandBuffer) override;
+	void SetSpanMax(const float& spanMax)
+	{
+		m_spanMax = spanMax;
+	}
 
-		const float &GetSpanMax() const { return m_spanMax; }
+  private:
+	PushHandler m_pushScene;
 
-		void SetSpanMax(const float &spanMax) { m_spanMax = spanMax; }
-	private:
-		PushHandler m_pushScene;
-
-		float m_spanMax;
-	};
+	float m_spanMax;
+};
 }

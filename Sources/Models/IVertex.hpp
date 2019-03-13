@@ -4,13 +4,13 @@
 
 namespace acid
 {
-	class ACID_EXPORT IVertex
-	{
-	public:
-		virtual ~IVertex() = default;
+class ACID_EXPORT IVertex
+{
+  public:
+	virtual ~IVertex() = default;
 
-		virtual const Vector3 &GetPosition() const = 0;
+	virtual const Vector3& GetPosition() const = 0;
 
-		virtual void SetPosition(const Vector3 &position) = 0;
-	};
+	virtual void SetPosition(const Vector3& position) = 0;
+};
 }

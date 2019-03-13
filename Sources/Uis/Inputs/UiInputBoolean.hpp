@@ -7,37 +7,45 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiInputBoolean :
-		public UiObject
+class ACID_EXPORT UiInputBoolean : public UiObject
+{
+  public:
+	UiInputBoolean(UiObject* parent, const std::string& title, const bool& value, const UiBound& rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+
+	void UpdateObject() override;
+
+	const std::string& GetTitle() const
 	{
-	public:
-		UiInputBoolean(UiObject *parent, const std::string &title, const bool &value,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		return m_title;
+	}
 
-		void UpdateObject() override;
+	void SetTitle(const std::string& title);
 
-		const std::string &GetTitle() const { return m_title; }
+	const bool& GetValue() const
+	{
+		return m_value;
+	}
 
-		void SetTitle(const std::string &title);
+	void SetValue(const bool& value);
 
-		const bool &GetValue() const { return m_value; }
+	Delegate<void(UiInputBoolean*, bool)>& GetOnChange()
+	{
+		return m_onChange;
+	}
 
-		void SetValue(const bool &value);
+  private:
+	void UpdateValueText();
 
-		Delegate<void(UiInputBoolean *, bool)> &GetOnChange() { return m_onChange; }
-	private:
-		void UpdateValueText();
+	Gui m_slider;
+	Gui m_background;
+	Text m_textTitle;
+	Text m_textValue;
+	Sound m_soundClick;
 
-		Gui m_slider;
-		Gui m_background;
-		Text m_textTitle;
-		Text m_textValue;
-		Sound m_soundClick;
+	std::string m_title;
+	bool m_value;
 
-		std::string m_title;
-		bool m_value;
-
-		bool m_mouseOver;
-		Delegate<void(UiInputBoolean *, bool)> m_onChange;
-	};
+	bool m_mouseOver;
+	Delegate<void(UiInputBoolean*, bool)> m_onChange;
+};
 }

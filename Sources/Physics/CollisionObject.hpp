@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Helpers/Delegate.hpp"
-#include "Scenes/Entity.hpp"
-#include "Scenes/Component.hpp"
 #include "Colliders/Collider.hpp"
 #include "Force.hpp"
+#include "Helpers/Delegate.hpp"
+#include "Scenes/Component.hpp"
+#include "Scenes/Entity.hpp"
 
 class btTransform;
 class btCollisionShape;
@@ -12,78 +12,149 @@ class btCollisionObject;
 
 namespace acid
 {
-	class Frustum;
+class Frustum;
+
+/// <summary>
+/// Represents
+/// a
+/// object
+/// in a
+/// scene
+/// effected
+/// by
+/// physics.
+/// </summary>
+class ACID_EXPORT CollisionObject : public Component
+{
+  public:
+	/// <summary>
+	/// Creates
+	/// a
+	/// new
+	/// collision
+	/// object.
+	/// </summary>
+	/// <param
+	/// name="friction">
+	/// The
+	/// amount
+	/// of
+	/// surface
+	/// friction.
+	/// </param>
+	/// <param
+	/// name="localTransform">
+	/// The
+	/// parent
+	/// offset
+	/// of
+	/// the
+	/// body.
+	/// </param>
+	explicit CollisionObject(const float& friction = 0.2f);
+
+	virtual ~CollisionObject();
 
 	/// <summary>
-	/// Represents a object in a scene effected by physics.
+	/// Gets
+	/// if
+	/// the
+	/// shape
+	/// is
+	/// partially
+	/// in
+	/// the
+	/// view
+	/// frustum.
 	/// </summary>
-	class ACID_EXPORT CollisionObject :
-		public Component
+	/// <param
+	/// name="frustum">
+	/// The
+	/// view
+	/// frustum.
+	/// </param>
+	/// <returns>
+	/// If
+	/// the
+	/// shape
+	/// is
+	/// partially
+	/// in
+	/// the
+	/// view
+	/// frustum.
+	/// </returns>
+	virtual bool InFrustum(const Frustum& frustum) = 0;
+
+	Force* AddForce(Force* force);
+
+	template<typename T, typename... Args>
+	Force* AddForce(Args&&... args)
 	{
-	public:
-		/// <summary>
-		/// Creates a new collision object.
-		/// </summary>
-		/// <param name="friction"> The amount of surface friction. </param>
-		/// <param name="localTransform"> The parent offset of the body. </param>
-		explicit CollisionObject(const float &friction = 0.2f);
+		return AddForce(new T(std::forward<Args>(args)...));
+	}
 
-		virtual ~CollisionObject();
+	virtual void ClearForces() = 0;
 
-		/// <summary>
-		/// Gets if the shape is partially in the view frustum.
-		/// </summary>
-		/// <param name="frustum"> The view frustum. </param>
-		/// <returns> If the shape is partially in the view frustum. </returns>
-		virtual bool InFrustum(const Frustum &frustum) = 0;
+	bool IsShapeCreated() const
+	{
+		return m_shape != nullptr;
+	}
 
-		Force *AddForce(Force *force);
+	void SetChildTransform(Collider* child, const Transform& transform);
 
-		template<typename T, typename... Args>
-		Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
+	void AddChild(Collider* child);
 
-		virtual void ClearForces() = 0;
+	void RemoveChild(Collider* child);
 
-		bool IsShapeCreated() const { return m_shape != nullptr; }
+	void SetIgnoreCollisionCheck(CollisionObject* other, const bool& ignore);
 
-		void SetChildTransform(Collider *child, const Transform &transform);
+	const float& GetFriction() const
+	{
+		return m_friction;
+	}
 
-		void AddChild(Collider *child);
+	void SetFriction(const float& friction);
 
-		void RemoveChild(Collider *child);
+	const float& GetFrictionRolling() const
+	{
+		return m_frictionRolling;
+	}
 
-		void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
+	void SetFrictionRolling(const float& frictionRolling);
 
-		const float &GetFriction() const { return m_friction; }
+	const float& GetFrictionSpinning() const
+	{
+		return m_frictionSpinning;
+	}
 
-		void SetFriction(const float &friction);
+	void SetFrictionSpinning(const float& frictionSpinning);
 
-		const float &GetFrictionRolling() const { return m_frictionRolling; }
+	Delegate<void(CollisionObject*)>& GetOnCollision()
+	{
+		return m_onCollision;
+	}
 
-		void SetFrictionRolling(const float &frictionRolling);
+	Delegate<void(CollisionObject*)>& GetOnSeparation()
+	{
+		return m_onSeparation;
+	}
 
-		const float &GetFrictionSpinning() const { return m_frictionSpinning; }
+  protected:
+	void CreateShape(const bool& forceSingle = false);
 
-		void SetFrictionSpinning(const float &frictionSpinning);
+	virtual void RecalculateMass() = 0;
 
-		Delegate<void(CollisionObject *)> &GetOnCollision() { return m_onCollision; }
+	float m_friction;
+	float m_frictionRolling;
+	float m_frictionSpinning;
 
-		Delegate<void(CollisionObject *)> &GetOnSeparation() { return m_onSeparation; }
-	protected:
-		void CreateShape(const bool &forceSingle = false);
+	std::unique_ptr<btCollisionShape> m_shape;
+	btCollisionObject* m_body;
 
-		virtual void RecalculateMass() = 0;
+	std::vector<std::unique_ptr<Force>> m_forces;
 
-		float m_friction;
-		float m_frictionRolling;
-		float m_frictionSpinning;
-
-		std::unique_ptr<btCollisionShape> m_shape;
-		btCollisionObject *m_body;
-
-		std::vector<std::unique_ptr<Force>> m_forces;
-
-		Delegate<void(CollisionObject *)> m_onCollision;
-		Delegate<void(CollisionObject *)> m_onSeparation;
-	};
+	Delegate<void(CollisionObject*)> m_onCollision;
+	Delegate<void(CollisionObject*)> m_onSeparation;
+};
 }

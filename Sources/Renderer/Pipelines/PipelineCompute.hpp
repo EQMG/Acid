@@ -1,71 +1,143 @@
 #pragma once
 
-#include "Renderer/Commands/CommandBuffer.hpp"
 #include "Pipeline.hpp"
+#include "Renderer/Commands/CommandBuffer.hpp"
 
 namespace acid
 {
+/// <summary>
+/// Class
+/// that
+/// represents
+/// a
+/// compute
+/// Vulkan
+/// compute
+/// pipeline.
+/// </summary>
+class ACID_EXPORT PipelineCompute : public Pipeline
+{
+  public:
 	/// <summary>
-	/// Class that represents a compute Vulkan compute pipeline.
+	/// Creates
+	/// a
+	/// new
+	/// compute
+	/// pipeline.
 	/// </summary>
-	class ACID_EXPORT PipelineCompute :
-		public Pipeline
+	/// <param
+	/// name="shaderStage">
+	/// The
+	/// shader
+	/// file
+	/// that
+	/// will
+	/// be
+	/// loaded.
+	/// </param>
+	/// <param
+	/// name="defines">
+	/// A
+	/// list
+	/// of
+	/// defines
+	/// added
+	/// to
+	/// the
+	/// top
+	/// of
+	/// each
+	/// shader.
+	/// </param>
+	/// <param
+	/// name="pushDescriptors">
+	/// If
+	/// no
+	/// actual
+	/// descriptor
+	/// sets
+	/// are
+	/// allocated
+	/// but
+	/// instead
+	/// pushed.
+	/// </param>
+	explicit PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines = {}, const bool& pushDescriptors = false);
+
+	~PipelineCompute();
+
+	const std::string& GetShaderStage() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new compute pipeline.
-		/// </summary>
-		/// <param name="shaderStage"> The shader file that will be loaded. </param>
-		/// <param name="defines"> A list of defines added to the top of each shader. </param>
-		/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
-		explicit PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
+		return m_shaderStage;
+	}
 
-		~PipelineCompute();
+	const std::vector<Shader::Define>& GetDefines() const
+	{
+		return m_defines;
+	}
 
-		const std::string &GetShaderStage() const { return m_shaderStage; }
+	const bool& IsPushDescriptors() const override
+	{
+		return m_pushDescriptors;
+	}
 
-		const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
+	bool CmdRender(const CommandBuffer& commandBuffer, const uint32_t& width, const uint32_t& height) const;
 
-		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
+	const Shader* GetShaderProgram() const override
+	{
+		return m_shader.get();
+	}
 
-		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const;
+	const VkDescriptorSetLayout& GetDescriptorSetLayout() const override
+	{
+		return m_descriptorSetLayout;
+	}
 
-		const Shader *GetShaderProgram() const override { return m_shader.get(); }
+	const VkDescriptorPool& GetDescriptorPool() const override
+	{
+		return m_descriptorPool;
+	}
 
-		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
+	const VkPipeline& GetPipeline() const override
+	{
+		return m_pipeline;
+	}
 
-		const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
+	const VkPipelineLayout& GetPipelineLayout() const override
+	{
+		return m_pipelineLayout;
+	}
 
-		const VkPipeline &GetPipeline() const override { return m_pipeline; }
+	const VkPipelineBindPoint& GetPipelineBindPoint() const override
+	{
+		return m_pipelineBindPoint;
+	}
 
-		const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
+  private:
+	void CreateShaderProgram();
 
-		const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
-	private:
-		void CreateShaderProgram();
+	void CreateDescriptorLayout();
 
-		void CreateDescriptorLayout();
+	void CreateDescriptorPool();
 
-		void CreateDescriptorPool();
+	void CreatePipelineLayout();
 
-		void CreatePipelineLayout();
+	void CreatePipelineCompute();
 
-		void CreatePipelineCompute();
+	std::string m_shaderStage;
+	std::vector<Shader::Define> m_defines;
+	bool m_pushDescriptors;
 
-		std::string m_shaderStage;
-		std::vector<Shader::Define> m_defines;
-		bool m_pushDescriptors;
+	std::unique_ptr<Shader> m_shader;
 
-		std::unique_ptr<Shader> m_shader;
+	VkShaderModule m_shaderModule;
+	VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;
 
-		VkShaderModule m_shaderModule;
-		VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo;
+	VkDescriptorSetLayout m_descriptorSetLayout;
+	VkDescriptorPool m_descriptorPool;
 
-		VkDescriptorSetLayout m_descriptorSetLayout;
-		VkDescriptorPool m_descriptorPool;
-
-		VkPipeline m_pipeline;
-		VkPipelineLayout m_pipelineLayout;
-		VkPipelineBindPoint m_pipelineBindPoint;
-	};
+	VkPipeline m_pipeline;
+	VkPipelineLayout m_pipelineLayout;
+	VkPipelineBindPoint m_pipelineBindPoint;
+};
 }

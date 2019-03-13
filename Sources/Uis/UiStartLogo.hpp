@@ -5,23 +5,29 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiStartLogo :
-		public UiObject
+class ACID_EXPORT UiStartLogo : public UiObject
+{
+  public:
+	explicit UiStartLogo(UiObject* parent);
+
+	void UpdateObject() override;
+
+	bool IsFinished() const
 	{
-	public:
-		explicit UiStartLogo(UiObject *parent);
+		return m_finished;
+	}
 
-		void UpdateObject() override;
+	Delegate<void(UiStartLogo*)>& GetOnFinished()
+	{
+		return m_onFinished;
+	}
 
-		bool IsFinished() const { return m_finished; }
+  private:
+	Gui m_guiBackground;
+	Gui m_guiLogoAcid;
+	Text m_textCopyright;
+	bool m_finished;
 
-		Delegate<void(UiStartLogo *)> &GetOnFinished() { return m_onFinished; }
-	private:
-		Gui m_guiBackground;
-		Gui m_guiLogoAcid;
-		Text m_textCopyright;
-		bool m_finished;
-
-		Delegate<void(UiStartLogo *)> m_onFinished;
-	};
+	Delegate<void(UiStartLogo*)> m_onFinished;
+};
 }

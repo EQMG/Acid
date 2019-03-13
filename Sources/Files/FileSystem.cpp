@@ -2,9 +2,9 @@
 
 #include <sys/stat.h>
 #if defined(ACID_BUILD_WINDOWS)
-#include <io.h>
-#include <direct.h>
 #include "dirent.h"
+#include <direct.h>
+#include <io.h>
 typedef struct _stat STAT;
 #define stat _stat
 #define S_IFREG _S_IFREG
@@ -24,193 +24,193 @@ typedef struct stat STAT;
 namespace acid
 {
 #if defined(ACID_BUILD_WINDOWS)
-	const char FileSystem::Separator = '\\';
-	const char FileSystem::AltSeparator = '/';
+const char FileSystem::Separator = '\\';
+const char FileSystem::AltSeparator = '/';
 #else
-	const char FileSystem::Separator = '/';
-	const char FileSystem::AltSeparator = '\\';
+const char FileSystem::Separator = '/';
+const char FileSystem::AltSeparator = '\\';
 #endif
 
-	std::string FileSystem::GetWorkingDirectory()
-	{
-		char buff[FILENAME_MAX];
-		GetCurrentDir(buff, FILENAME_MAX);
-		return buff;
-	}
+std::string FileSystem::GetWorkingDirectory()
+{
+	char buff[FILENAME_MAX];
+	GetCurrentDir(buff, FILENAME_MAX);
+	return buff;
+}
 
-	bool FileSystem::Exists(const std::string &path)
-	{
-		STAT st;
+bool FileSystem::Exists(const std::string& path)
+{
+	STAT st;
 
-		if (stat(path.c_str(), &st) == -1)
+	if(stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		return (st.st_mode & S_IFREG) == S_IFREG || (st.st_mode & S_IFDIR) == S_IFDIR;
+	return (st.st_mode & S_IFREG) == S_IFREG || (st.st_mode & S_IFDIR) == S_IFDIR;
 #else
-		return S_ISREG(st.st_mode) || S_ISDIR(st.st_mode);
+	return S_ISREG(st.st_mode) || S_ISDIR(st.st_mode);
 #endif
-	}
+}
 
-	bool FileSystem::IsFile(const std::string &path)
-	{
-		STAT st;
+bool FileSystem::IsFile(const std::string& path)
+{
+	STAT st;
 
-		if (stat(path.c_str(), &st) == -1)
+	if(stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		return (st.st_mode & S_IFREG) == S_IFREG;
+	return (st.st_mode & S_IFREG) == S_IFREG;
 #else
-		return S_ISREG(st.st_mode);
+	return S_ISREG(st.st_mode);
 #endif
-	}
+}
 
-	bool FileSystem::IsDirectory(const std::string &path)
-	{
-		STAT st;
+bool FileSystem::IsDirectory(const std::string& path)
+{
+	STAT st;
 
-		if (stat(path.c_str(), &st) == -1)
+	if(stat(path.c_str(), &st) == -1)
 		{
 			return false;
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		return (st.st_mode & S_IFDIR) == S_IFDIR;
+	return (st.st_mode & S_IFDIR) == S_IFDIR;
 #else
-		return S_ISDIR(st.st_mode);
+	return S_ISDIR(st.st_mode);
 #endif
-	}
+}
 
-	bool FileSystem::IsReadable(const std::string &path)
-	{
-		return access(path.c_str(), 0x4) == 0;
-	}
+bool FileSystem::IsReadable(const std::string& path)
+{
+	return access(path.c_str(), 0x4) == 0;
+}
 
-	bool FileSystem::IsWriteable(const std::string &path)
-	{
-		return access(path.c_str(), 0x2) == 0;
-	}
+bool FileSystem::IsWriteable(const std::string& path)
+{
+	return access(path.c_str(), 0x2) == 0;
+}
 
-	long FileSystem::LastModified(const std::string &path)
-	{
-		STAT st;
+long FileSystem::LastModified(const std::string& path)
+{
+	STAT st;
 
-		if (stat(path.c_str(), &st) == 0)
+	if(stat(path.c_str(), &st) == 0)
 		{
 			return st.st_mtime;
 		}
 
-		return 0;
-	}
+	return 0;
+}
 
-	void FileSystem::Touch(const std::string &path)
-	{
-		auto data = ReadBinaryFile(path);
+void FileSystem::Touch(const std::string& path)
+{
+	auto data = ReadBinaryFile(path);
 
-		if (data)
+	if(data)
 		{
 			WriteBinaryFile(path, *data);
 		}
-	}
+}
 
-	std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const bool &recursive)
-	{
-		std::vector<std::string> result = {};
+std::vector<std::string> FileSystem::FilesInPath(const std::string& path, const bool& recursive)
+{
+	std::vector<std::string> result = {};
 
-		struct dirent *de;
-		auto dr = opendir(path.c_str());
+	struct dirent* de;
+	auto dr = opendir(path.c_str());
 
-		if (dr == nullptr)
+	if(dr == nullptr)
 		{
 			Log::Error("Could not open current directory: '%s'!\n", path.c_str());
 			return result;
 		}
 
-		while ((de = readdir(dr)) != nullptr)
+	while((de = readdir(dr)) != nullptr)
 		{
-			if (String::RemoveAll(de->d_name, '.').empty())
-			{
-				continue;
-			}
+			if(String::RemoveAll(de->d_name, '.').empty())
+				{
+					continue;
+				}
 
 			auto relPath = path + Separator + de->d_name;
 
-			if (IsDirectory(relPath))
-			{
-				if (recursive)
+			if(IsDirectory(relPath))
 				{
-					auto filesInFound = FilesInPath(relPath, recursive);
-					result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+					if(recursive)
+						{
+							auto filesInFound = FilesInPath(relPath, recursive);
+							result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+						}
 				}
-			}
 			else
-			{
-				result.emplace_back(relPath);
-			}
+				{
+					result.emplace_back(relPath);
+				}
 		}
 
-		closedir(dr);
-		return result;
-	}
+	closedir(dr);
+	return result;
+}
 
-	bool FileSystem::Create(const std::string &path)
-	{
-		if (Exists(path))
+bool FileSystem::Create(const std::string& path)
+{
+	if(Exists(path))
 		{
 			return false;
 		}
 
-		auto lastFolderPos = path.find_last_of("\\/");
+	auto lastFolderPos = path.find_last_of("\\/");
 
-		if (lastFolderPos != std::string::npos)
+	if(lastFolderPos != std::string::npos)
 		{
 			auto folderPath = path.substr(0, lastFolderPos);
 			auto splitFolders = SplitPath(folderPath);
 			std::stringstream appended;
 
-			for (const auto &folder : splitFolders)
-			{
-				appended << folder << Separator;
-
-				if (!Exists(appended.str()) || !IsDirectory(appended.str()))
+			for(const auto& folder : splitFolders)
 				{
+					appended << folder << Separator;
+
+					if(!Exists(appended.str()) || !IsDirectory(appended.str()))
+						{
 #if defined(ACID_BUILD_WINDOWS)
-					mkdir(appended.str().c_str());
+							mkdir(appended.str().c_str());
 #else
-					mkdir(appended.str().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+							mkdir(appended.str().c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 #endif
+						}
 				}
-			}
 		}
 
-		if (FileSuffix(path).empty())
+	if(FileSuffix(path).empty())
 		{
 			return true;
 		}
 
-		auto file = fopen(path.c_str(), "rb+");
+	auto file = fopen(path.c_str(), "rb+");
 
-		if (file == nullptr)
+	if(file == nullptr)
 		{
 			file = fopen(path.c_str(), "wb");
 		}
 
-		fclose(file);
-		return true;
-	}
+	fclose(file);
+	return true;
+}
 
-	bool FileSystem::Delete(const std::string &path)
-	{
-		if (IsDirectory(path))
+bool FileSystem::Delete(const std::string& path)
+{
+	if(IsDirectory(path))
 		{
 			return rmdir(path.c_str()) == 0;
 		}
-		if (IsFile(path))
+	if(IsFile(path))
 		{
 #if defined(ACID_BUILD_WINDOWS)
 			return remove(path.c_str()) == 0;
@@ -219,146 +219,146 @@ namespace acid
 #endif
 		}
 
-		return false;
-	}
+	return false;
+}
 
-	std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
-	{
-		if (!Exists(filename))
+std::optional<std::string> FileSystem::ReadTextFile(const std::string& filename)
+{
+	if(!Exists(filename))
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};
 		}
 
-		auto file = fopen(filename.c_str(), "rb");
+	auto file = fopen(filename.c_str(), "rb");
 
-		if (file == nullptr)
+	if(file == nullptr)
 		{
 			Log::Error("Could not open file: '%s'\n", filename.c_str());
 			return {};
 		}
 
-		fseek(file, 0, SEEK_END);
-		int32_t length = ftell(file);
-		assert(length < 100 * 1024 * 1024);
-		std::string result(length, 0);
-		fseek(file, 0, SEEK_SET);
-		fread(&result[0], 1, length, file);
-		fclose(file);
+	fseek(file, 0, SEEK_END);
+	int32_t length = ftell(file);
+	assert(length < 100 * 1024 * 1024);
+	std::string result(length, 0);
+	fseek(file, 0, SEEK_SET);
+	fread(&result[0], 1, length, file);
+	fclose(file);
 
-		result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-		return result;
-	}
+	result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+	return result;
+}
 
-	bool FileSystem::WriteTextFile(const std::string &filename, const std::string &data)
-	{
-		auto file = fopen(filename.c_str(), "ab");
+bool FileSystem::WriteTextFile(const std::string& filename, const std::string& data)
+{
+	auto file = fopen(filename.c_str(), "ab");
 
-		if (file == nullptr)
+	if(file == nullptr)
 		{
 			return false;
 		}
 
-		fputs(data.c_str(), file);
-		fclose(file);
-		return true;
-	}
+	fputs(data.c_str(), file);
+	fclose(file);
+	return true;
+}
 
-	std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &filename, const std::string &mode)
-	{
-		std::vector<char> data = {};
+std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string& filename, const std::string& mode)
+{
+	std::vector<char> data = {};
 
-		const auto bufferSize = 1024;
-		const auto useFile = filename.c_str() && strcmp("-", filename.c_str()) != 0;
+	const auto bufferSize = 1024;
+	const auto useFile = filename.c_str() && strcmp("-", filename.c_str()) != 0;
 
-		if (auto fp = (useFile ? fopen(filename.c_str(), mode.c_str()) : stdin))
+	if(auto fp = (useFile ? fopen(filename.c_str(), mode.c_str()) : stdin))
 		{
 			char buf[bufferSize];
 
-			while (auto len = fread(buf, sizeof(char), bufferSize, fp))
-			{
-				data.insert(data.end(), buf, buf + len);
-			}
-
-			if (ftell(fp) == -1L)
-			{
-				if (ferror(fp))
+			while(auto len = fread(buf, sizeof(char), bufferSize, fp))
 				{
-					Log::Error("Error reading file: '%s'\n", filename.c_str());
-					return {};
+					data.insert(data.end(), buf, buf + len);
 				}
-			}
+
+			if(ftell(fp) == -1L)
+				{
+					if(ferror(fp))
+						{
+							Log::Error("Error reading file: '%s'\n", filename.c_str());
+							return {};
+						}
+				}
 			else
-			{
-				if (ftell(fp) % sizeof(char))
 				{
-					Log::Error("Corrupted word found in file: '%s'\n", filename.c_str());
-					return {};
+					if(ftell(fp) % sizeof(char))
+						{
+							Log::Error("Corrupted word found in file: '%s'\n", filename.c_str());
+							return {};
+						}
 				}
-			}
 
-			if (useFile)
-			{
-				fclose(fp);
-			}
+			if(useFile)
+				{
+					fclose(fp);
+				}
 		}
-		else
+	else
 		{
 			Log::Error("File does not exist: '%s'\n", filename.c_str());
 			return {};
 		}
 
-		return data;
-	}
+	return data;
+}
 
-	bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<char> &data, const std::string &mode)
-	{
-		const auto useStdout = !filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0');
+bool FileSystem::WriteBinaryFile(const std::string& filename, const std::vector<char>& data, const std::string& mode)
+{
+	const auto useStdout = !filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0');
 
-		if (auto fp = (useStdout ? stdout : fopen(filename.c_str(), mode.c_str())))
+	if(auto fp = (useStdout ? stdout : fopen(filename.c_str(), mode.c_str())))
 		{
 			auto written = fwrite(data.data(), sizeof(char), data.size(), fp);
 
-			if (data.size() != written)
-			{
-				Log::Error("Could not write to file: '%s'\n", filename.c_str());
-				return false;
-			}
+			if(data.size() != written)
+				{
+					Log::Error("Could not write to file: '%s'\n", filename.c_str());
+					return false;
+				}
 
-			if (!useStdout)
-			{
-				fclose(fp);
-			}
+			if(!useStdout)
+				{
+					fclose(fp);
+				}
 		}
-		else
+	else
 		{
 			Log::Error("File could not be opened: '%s'\n", filename.c_str());
 			return false;
 		}
 
-		return true;
-	}
+	return true;
+}
 
-	bool FileSystem::ClearFile(const std::string &filename)
-	{
-		Delete(filename);
-		return Create(filename);
-	}
+bool FileSystem::ClearFile(const std::string& filename)
+{
+	Delete(filename);
+	return Create(filename);
+}
 
-	std::string FileSystem::ParentDirectory(const std::string &path)
-	{
-		if (path.empty())
+std::string FileSystem::ParentDirectory(const std::string& path)
+{
+	if(path.empty())
 		{
 			return path;
 		}
 
 #if defined(ACID_BUILD_WINDOWS)
-		auto end = path.find_last_of(std::string(1, Separator) + "/");
+	auto end = path.find_last_of(std::string(1, Separator) + "/");
 #else
-		auto end = path.find_last_of(Separator);
+	auto end = path.find_last_of(Separator);
 #endif
 
-		if (end == path.length() - 1)
+	if(end == path.length() - 1)
 		{
 #if defined(ACID_BUILD_WINDOWS)
 			end = path.find_last_of(std::string(1, Separator) + "/", end);
@@ -367,123 +367,135 @@ namespace acid
 #endif
 		}
 
-		if (end == std::string::npos)
+	if(end == std::string::npos)
 		{
 			return "";
 		}
 
-		return path.substr(0, end);
-	}
+	return path.substr(0, end);
+}
 
-	std::string FileSystem::FileName(const std::string &path)
-	{
-		auto start = path.find_last_of(Separator);
+std::string FileSystem::FileName(const std::string& path)
+{
+	auto start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
-		// WIN32 also understands '/' as the separator.
-		if (start == std::string::npos)
+	// WIN32
+	// also
+	// understands
+	// '/'
+	// as
+	// the
+	// separator.
+	if(start == std::string::npos)
 		{
 			start = path.find_last_of('/');
 		}
 #endif
 
-		if (start == std::string::npos)
+	if(start == std::string::npos)
 		{
 			start = 0;
 		}
-		else
+	else
 		{
 			start++; // We do not want the separator.
 		}
 
-		return path.substr(start);
-	}
+	return path.substr(start);
+}
 
-	std::string FileSystem::FileSuffix(const std::string &path)
-	{
-		auto start = path.find_last_of(Separator);
+std::string FileSystem::FileSuffix(const std::string& path)
+{
+	auto start = path.find_last_of(Separator);
 
 #if defined(ACID_BUILD_WINDOWS)
-		// WIN32 also understands '/' as the separator.
-		if (start == std::string::npos)
+	// WIN32
+	// also
+	// understands
+	// '/'
+	// as
+	// the
+	// separator.
+	if(start == std::string::npos)
 		{
 			start = path.find_last_of('/');
 		}
 #endif
 
-		if (start == std::string::npos)
+	if(start == std::string::npos)
 		{
 			start = 0;
 		}
 
-		else
+	else
 		{
 			start++; // We do not want the separator.
 		}
 
-		auto end = path.find_last_of('.');
+	auto end = path.find_last_of('.');
 
-		if (end == std::string::npos || end < start)
+	if(end == std::string::npos || end < start)
 		{
 			return "";
 		}
 
-		return path.substr(end);
-	}
+	return path.substr(end);
+}
 
-	std::string FileSystem::JoinPath(const std::vector<std::string> &parts)
-	{
-		std::string joined;
-		std::size_t i = 0;
+std::string FileSystem::JoinPath(const std::vector<std::string>& parts)
+{
+	std::string joined;
+	std::size_t i = 0;
 
-		for (const auto &part : parts)
+	for(const auto& part : parts)
 		{
 			joined.append(part);
 
-			if (i++ != parts.size() - 1)
-			{
-				joined.append(1, '/');
-			}
+			if(i++ != parts.size() - 1)
+				{
+					joined.append(1, '/');
+				}
 		}
 
-		return joined;
-	}
+	return joined;
+}
 
-	std::vector<std::string> FileSystem::SplitPath(const std::string &path, const char &delim)
-	{
-		std::vector<std::string> split;
-		std::string::size_type previousIndex = 0;
-		auto separatorIndex = path.find(delim);
+std::vector<std::string> FileSystem::SplitPath(const std::string& path, const char& delim)
+{
+	std::vector<std::string> split;
+	std::string::size_type previousIndex = 0;
+	auto separatorIndex = path.find(delim);
 
-		while (separatorIndex != std::string::npos)
+	while(separatorIndex != std::string::npos)
 		{
 			auto part = path.substr(previousIndex, separatorIndex - previousIndex);
 
-			if (part != "..")
-			{
-				split.push_back(part);
-			}
+			if(part != "..")
+				{
+					split.push_back(part);
+				}
 			else
-			{
-				split.pop_back();
-			}
+				{
+					split.pop_back();
+				}
 
 			previousIndex = separatorIndex + 1;
 			separatorIndex = path.find(delim, previousIndex);
 		}
 
-		split.push_back(path.substr(previousIndex));
+	split.push_back(path.substr(previousIndex));
 
-		if (split.size() == 1 && delim == Separator)
+	if(split.size() == 1 && delim == Separator)
 		{
 			auto alternative = SplitPath(path, AltSeparator);
 
-			if (alternative.size() > 1)
-			{
-				return alternative;
-			}
+			if(alternative.size() > 1)
+				{
+					return alternative;
+				}
 		}
 
-		return split;
-	}
+	return split;
+}
 }

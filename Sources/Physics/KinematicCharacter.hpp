@@ -1,88 +1,126 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Colliders/Collider.hpp"
 #include "CollisionObject.hpp"
+#include "Maths/Vector3.hpp"
 
 class btPairCachingGhostObject;
 class btKinematicCharacterController;
 
 namespace acid
 {
+/// <summary>
+/// Represents
+/// a
+/// kinematic
+/// character
+/// controller.
+/// </summary>
+class ACID_EXPORT KinematicCharacter : public CollisionObject
+{
+  public:
 	/// <summary>
-	/// Represents a kinematic character controller.
+	/// Creates
+	/// a
+	/// new
+	/// kinematic
+	/// character
+	/// controller.
 	/// </summary>
-	class ACID_EXPORT KinematicCharacter :
-		public CollisionObject
+	/// <param
+	/// name="friction">
+	/// The
+	/// amount
+	/// of
+	/// surface
+	/// friction.
+	/// </param>
+	explicit KinematicCharacter(const float& friction = 0.2f);
+
+	~KinematicCharacter();
+
+	void Start() override;
+
+	void Update() override;
+
+	void Decode(const Metadata& metadata) override;
+
+	void Encode(Metadata& metadata) const override;
+
+	bool InFrustum(const Frustum& frustum) override;
+
+	void ClearForces() override;
+
+	const Vector3& GetGravity() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new kinematic character controller.
-		/// </summary>
-		/// <param name="friction"> The amount of surface friction. </param>
-		explicit KinematicCharacter(const float &friction = 0.2f);
+		return m_gravity;
+	}
 
-		~KinematicCharacter();
+	void SetGravity(const Vector3& gravity);
 
-		void Start() override;
+	const Vector3& GetUp() const
+	{
+		return m_up;
+	}
 
-		void Update() override;
+	void SetUp(const Vector3& up);
 
-		void Decode(const Metadata &metadata) override;
+	const float& GetStepHeight() const
+	{
+		return m_stepHeight;
+	}
 
-		void Encode(Metadata &metadata) const override;
+	void SetStepHeight(const float& stepHeight);
 
-		bool InFrustum(const Frustum &frustum) override;
+	const float& GetFallSpeed() const
+	{
+		return m_fallSpeed;
+	}
 
-		void ClearForces() override;
+	void SetFallSpeed(const float& fallSpeed);
 
-		const Vector3 &GetGravity() const { return m_gravity; }
+	const float& GetJumpSpeed() const
+	{
+		return m_jumpSpeed;
+	}
 
-		void SetGravity(const Vector3 &gravity);
+	void SetJumpSpeed(const float& jumpSpeed);
 
-		const Vector3 &GetUp() const { return m_up; }
+	const float& GetMaxJumpHeight() const
+	{
+		return m_maxHeight;
+	}
 
-		void SetUp(const Vector3 &up);
+	void SetMaxJumpHeight(const float& maxHeight);
 
-		const float &GetStepHeight() const { return m_stepHeight; }
+	const bool& IsInterpolate() const
+	{
+		return m_interpolate;
+	}
 
-		void SetStepHeight(const float &stepHeight);
+	void SetInterpolate(const bool& interpolate);
 
-		const float &GetFallSpeed() const { return m_fallSpeed; }
+	bool IsOnGround() const;
 
-		void SetFallSpeed(const float &fallSpeed);
+	void Jump(const Vector3& direction);
 
-		const float &GetJumpSpeed() const { return m_jumpSpeed; }
+	void SetWalkDirection(const Vector3& direction);
 
-		void SetJumpSpeed(const float &jumpSpeed);
+  protected:
+	void RecalculateMass() override;
 
-		const float &GetMaxJumpHeight() const { return m_maxHeight; }
+  private:
+	static btPairCachingGhostObject* CreateGhostObject(float mass, const btTransform& startTransform, btCollisionShape* shape);
 
-		void SetMaxJumpHeight(const float &maxHeight);
+	Vector3 m_gravity;
+	Vector3 m_up;
+	float m_stepHeight;
+	float m_fallSpeed;
+	float m_jumpSpeed;
+	float m_maxHeight;
+	bool m_interpolate;
 
-		const bool &IsInterpolate() const { return m_interpolate; }
-
-		void SetInterpolate(const bool &interpolate);
-
-		bool IsOnGround() const;
-
-		void Jump(const Vector3 &direction);
-
-		void SetWalkDirection(const Vector3 &direction);
-	protected:
-		void RecalculateMass() override;
-	private:
-		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape);
-
-		Vector3 m_gravity;
-		Vector3 m_up;
-		float m_stepHeight;
-		float m_fallSpeed;
-		float m_jumpSpeed;
-		float m_maxHeight;
-		bool m_interpolate;
-
-		btPairCachingGhostObject *m_ghostObject;
-		btKinematicCharacterController *m_controller;
-	};
+	btPairCachingGhostObject* m_ghostObject;
+	btKinematicCharacterController* m_controller;
+};
 }

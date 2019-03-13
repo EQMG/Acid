@@ -1,51 +1,86 @@
 #pragma once
 
-#include "Post/PostFilter.hpp"
 #include "Post/Pipelines/PipelineBlur.hpp"
+#include "Post/PostFilter.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT FilterDof :
-		public PostFilter
+class ACID_EXPORT FilterDof : public PostFilter
+{
+  public:
+	explicit FilterDof(const Pipeline::Stage& pipelineStage, PipelineBlur* pipelineBlur, const float& focusPoint = 8.24f, const float& nearField = 0.3f, const float& nearTransition = 0.125f, const float& farField = 8.0f, const float& farTransition = 3.0f);
+
+	void Render(const CommandBuffer& commandBuffer) override;
+
+	const PipelineBlur* GetPipelineBlur() const
 	{
-	public:
-		explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f, 
-			const float &nearTransition = 0.125f, const float &farField = 8.0f, const float &farTransition = 3.0f);
+		return m_pipelineBlur;
+	}
 
-		void Render(const CommandBuffer &commandBuffer) override;
+	void SetPipelineBlur(PipelineBlur* pipelineBlur)
+	{
+		m_pipelineBlur = pipelineBlur;
+	}
 
-		const PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
+	const float& GetFocusPoint() const
+	{
+		return m_focusPoint;
+	}
 
-		void SetPipelineBlur(PipelineBlur *pipelineBlur) { m_pipelineBlur = pipelineBlur; }
+	void SetFocusPoint(const float& focusPoint)
+	{
+		m_focusPoint = focusPoint;
+	}
 
-		const float &GetFocusPoint() const { return m_focusPoint; }
+	const float& GetNearField() const
+	{
+		return m_nearField;
+	}
 
-		void SetFocusPoint(const float &focusPoint) { m_focusPoint = focusPoint; }
+	void SetNearField(const float& nearField)
+	{
+		m_nearField = nearField;
+	}
 
-		const float &GetNearField() const { return m_nearField; }
+	const float& GetNearTransition() const
+	{
+		return m_nearTransition;
+	}
 
-		void SetNearField(const float &nearField) { m_nearField = nearField; }
+	void SetNearTransition(const float& nearTransition)
+	{
+		m_nearTransition = nearTransition;
+	}
 
-		const float &GetNearTransition() const { return m_nearTransition; }
+	const float& GetFarField() const
+	{
+		return m_farField;
+	}
 
-		void SetNearTransition(const float &nearTransition) { m_nearTransition = nearTransition; }
+	void SetFarField(const float& farField)
+	{
+		m_farField = farField;
+	}
 
-		const float &GetFarField() const { return m_farField; }
+	const float& GetFarTransition() const
+	{
+		return m_farTransition;
+	}
 
-		void SetFarField(const float &farField) { m_farField = farField; }
+	void SetFarTransition(const float& farTransition)
+	{
+		m_farTransition = farTransition;
+	}
 
-		const float &GetFarTransition() const { return m_farTransition; }
+  private:
+	PushHandler m_pushScene;
 
-		void SetFarTransition(const float &farTransition) { m_farTransition = farTransition; }
-	private:
-		PushHandler m_pushScene;
+	PipelineBlur* m_pipelineBlur;
 
-		PipelineBlur *m_pipelineBlur;
-
-		float m_focusPoint;
-		float m_nearField;
-		float m_nearTransition;
-		float m_farField;
-		float m_farTransition;
-	};
+	float m_focusPoint;
+	float m_nearField;
+	float m_nearTransition;
+	float m_farField;
+	float m_farTransition;
+};
 }

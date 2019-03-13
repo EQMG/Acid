@@ -4,18 +4,25 @@
 
 namespace acid
 {
-	/// <summary>
-	/// A class that makes derived classes non-copyable.
-	/// </summary>
-	class ACID_EXPORT NonCopyable
-	{
-	protected:
-		NonCopyable() = default;
+/// <summary>
+/// A
+/// class
+/// that
+/// makes
+/// derived
+/// classes
+/// non-copyable.
+/// </summary>
+class ACID_EXPORT NonCopyable
+{
+  protected:
+	NonCopyable() = default;
 
-		virtual ~NonCopyable() = default;
-	public:
-		NonCopyable(const NonCopyable &) = delete;
+	virtual ~NonCopyable() = default;
 
-		NonCopyable &operator=(const NonCopyable &) = delete;
-	};
+  public:
+	NonCopyable(const NonCopyable&) = delete;
+
+	NonCopyable& operator=(const NonCopyable&) = delete;
+};
 }

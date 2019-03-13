@@ -5,39 +5,59 @@
 
 namespace acid
 {
-	class ACID_EXPORT PipelineBlur :
-		public PostPipeline
+class ACID_EXPORT PipelineBlur : public PostPipeline
+{
+  public:
+	explicit PipelineBlur(const Pipeline::Stage& pipelineStage, const float& blur = 2.0f, const FilterBlur::Type& blurType = FilterBlur::Type::_9, const bool& toScreen = false, const float& inputScale = 0.5f, const float& outputScale = 1.0f);
+
+	void Render(const CommandBuffer& commandBuffer) override;
+
+	const float& GetInputScale() const
 	{
-	public:
-		explicit PipelineBlur(const Pipeline::Stage &pipelineStage, const float &blur = 2.0f, const FilterBlur::Type &blurType = FilterBlur::Type::_9, 
-			const bool &toScreen = false, const float &inputScale = 0.5f, const float &outputScale = 1.0f);
+		return m_inputScale;
+	}
 
-		void Render(const CommandBuffer &commandBuffer) override;
+	void SetInputScale(const float& inputScale)
+	{
+		m_inputScale = inputScale;
+	}
 
-		const float &GetInputScale() const { return m_inputScale; }
+	const float& GetOutputScale() const
+	{
+		return m_outputScale;
+	}
 
-		void SetInputScale(const float &inputScale) { m_inputScale = inputScale; }
+	void SetOutputScale(const float& outputScale)
+	{
+		m_outputScale = outputScale;
+	}
 
-		const float &GetOutputScale() const { return m_outputScale; }
+	const float& GetBlur() const
+	{
+		return m_blur;
+	}
 
-		void SetOutputScale(const float &outputScale) { m_outputScale = outputScale; }
+	void SetBlur(const float& blur)
+	{
+		m_blur = blur;
+	}
 
-		const float &GetBlur() const { return m_blur; }
+	const Texture* GetOutput() const
+	{
+		return m_output.get();
+	}
 
-		void SetBlur(const float &blur) { m_blur = blur; }
+  private:
+	FilterBlur m_filterBlurVertical;
+	FilterBlur m_filterBlurHorizontal;
 
-		const Texture *GetOutput() const { return m_output.get(); }
-	private:
-		FilterBlur m_filterBlurVertical;
-		FilterBlur m_filterBlurHorizontal;
+	bool m_toScreen;
+	float m_inputScale;
+	float m_outputScale;
+	float m_blur;
 
-		bool m_toScreen;
-		float m_inputScale;
-		float m_outputScale;
-		float m_blur;
-
-		std::unique_ptr<Texture> m_output;
-		uint32_t m_lastWidth;
-		uint32_t m_lastHeight;
-	};
+	std::unique_ptr<Texture> m_output;
+	uint32_t m_lastWidth;
+	uint32_t m_lastHeight;
+};
 }

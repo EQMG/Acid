@@ -1,60 +1,88 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
+#include <vulkan/vulkan.h>
 
 namespace acid
 {
-	class Instance;
-	class PhysicalDevice;
-	class Surface;
+class Instance;
+class PhysicalDevice;
+class Surface;
 
-	class ACID_EXPORT LogicalDevice
+class ACID_EXPORT LogicalDevice
+{
+  public:
+	LogicalDevice(const Instance* instance, const PhysicalDevice* physicalDevice, const Surface* surface);
+
+	~LogicalDevice();
+
+	const VkDevice& GetLogicalDevice() const
 	{
-	public:
-		LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
+		return m_logicalDevice;
+	}
 
-		~LogicalDevice();
+	const VkQueue& GetGraphicsQueue() const
+	{
+		return m_graphicsQueue;
+	}
 
-		const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
+	const VkQueue& GetPresentQueue() const
+	{
+		return m_presentQueue;
+	}
 
-		const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
+	const VkQueue& GetComputeQueue() const
+	{
+		return m_computeQueue;
+	}
 
-		const VkQueue &GetPresentQueue() const { return m_presentQueue; }
+	const VkQueue& GetTransferQueue() const
+	{
+		return m_transferQueue;
+	}
 
-		const VkQueue &GetComputeQueue() const { return m_computeQueue; }
+	const uint32_t& GetGraphicsFamily() const
+	{
+		return m_graphicsFamily;
+	}
 
-		const VkQueue &GetTransferQueue() const { return m_transferQueue; }
+	const uint32_t& GetPresentFamily() const
+	{
+		return m_presentFamily;
+	}
 
-		const uint32_t &GetGraphicsFamily() const { return m_graphicsFamily; }
+	const uint32_t& GetComputeFamily() const
+	{
+		return m_computeFamily;
+	}
 
-		const uint32_t &GetPresentFamily() const { return m_presentFamily; }
+	const uint32_t& GetTransferFamily() const
+	{
+		return m_transferFamily;
+	}
 
-		const uint32_t &GetComputeFamily() const { return m_computeFamily; }
+  private:
+	friend class Renderer;
 
-		const uint32_t &GetTransferFamily() const { return m_transferFamily; }
-	private:
-		friend class Renderer;
+	void CreateQueueIndices();
 
-		void CreateQueueIndices();
+	void CreateLogicalDevice();
 
-		void CreateLogicalDevice();
+	const Instance* m_instance;
+	const PhysicalDevice* m_physicalDevice;
+	const Surface* m_surface;
 
-		const Instance *m_instance;
-		const PhysicalDevice *m_physicalDevice;
-		const Surface *m_surface;
+	VkDevice m_logicalDevice;
 
-		VkDevice m_logicalDevice;
+	VkQueueFlags m_supportedQueues;
+	uint32_t m_graphicsFamily;
+	uint32_t m_presentFamily;
+	uint32_t m_computeFamily;
+	uint32_t m_transferFamily;
 
-		VkQueueFlags m_supportedQueues;
-		uint32_t m_graphicsFamily;
-		uint32_t m_presentFamily;
-		uint32_t m_computeFamily;
-		uint32_t m_transferFamily;
-
-		VkQueue m_graphicsQueue;
-		VkQueue m_presentQueue;
-		VkQueue m_computeQueue;
-		VkQueue m_transferQueue;
-	};
+	VkQueue m_graphicsQueue;
+	VkQueue m_presentQueue;
+	VkQueue m_computeQueue;
+	VkQueue m_transferQueue;
+};
 }

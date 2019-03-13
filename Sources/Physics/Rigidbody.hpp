@@ -1,82 +1,149 @@
 ﻿#pragma once
 
+#include "CollisionObject.hpp"
 #include "Maths/Vector3.hpp"
 #include "Scenes/Entity.hpp"
-#include "CollisionObject.hpp"
 
 struct btDefaultMotionState;
 class btRigidBody;
 
 namespace acid
 {
+/// <summary>
+/// Represents
+/// a
+/// object
+/// in a
+/// scene
+/// effected
+/// by
+/// physics.
+/// </summary>
+class ACID_EXPORT Rigidbody : public CollisionObject
+{
+  public:
 	/// <summary>
-	/// Represents a object in a scene effected by physics.
+	/// Creates
+	/// a
+	/// new
+	/// rigidbody.
 	/// </summary>
-	class ACID_EXPORT Rigidbody :
-		public CollisionObject
+	/// <param
+	/// name="mass">
+	/// The
+	/// mass
+	/// of
+	/// the
+	/// object.
+	/// </param>
+	/// <param
+	/// name="friction">
+	/// The
+	/// amount
+	/// of
+	/// surface
+	/// friction.
+	/// </param>
+	/// <param
+	/// name="linearFactor">
+	/// How
+	/// effected
+	/// each
+	/// axis
+	/// (XYZ)
+	/// will
+	/// be
+	/// to
+	/// linear
+	/// movement.
+	/// </param>
+	/// <param
+	/// name="angularFactor">
+	/// How
+	/// effected
+	/// each
+	/// axis
+	/// (XYZ)
+	/// will
+	/// be
+	/// to
+	/// angular
+	/// movement.
+	/// </param>
+	explicit Rigidbody(const float& mass = 1.0f, const float& friction = 0.2f, const Vector3& linearFactor = Vector3::One, const Vector3& angularFactor = Vector3::One);
+
+	~Rigidbody();
+
+	void Start() override;
+
+	void Update() override;
+
+	void Decode(const Metadata& metadata) override;
+
+	void Encode(Metadata& metadata) const override;
+
+	bool InFrustum(const Frustum& frustum) override;
+
+	void ClearForces() override;
+
+	const float& GetMass() const
 	{
-	public:
-		/// <summary>
-		/// Creates a new rigidbody.
-		/// </summary>
-		/// <param name="mass"> The mass of the object. </param>
-		/// <param name="friction"> The amount of surface friction. </param>
-		/// <param name="linearFactor"> How effected each axis (XYZ) will be to linear movement. </param>
-		/// <param name="angularFactor"> How effected each axis (XYZ) will be to angular movement. </param>
-		explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::One, const Vector3 &angularFactor = Vector3::One);
+		return m_mass;
+	}
 
-		~Rigidbody();
+	void SetMass(const float& mass);
 
-		void Start() override;
+	const Vector3& GetGravity() const
+	{
+		return m_gravity;
+	}
 
-		void Update() override;
+	void SetGravity(const Vector3& gravity);
 
-		void Decode(const Metadata &metadata) override;
+	const Vector3& GetLinearFactor() const
+	{
+		return m_linearFactor;
+	}
 
-		void Encode(Metadata &metadata) const override;
+	void SetLinearFactor(const Vector3& linearFactor);
 
-		bool InFrustum(const Frustum &frustum) override;
+	const Vector3& GetAngularFactor() const
+	{
+		return m_angularFactor;
+	}
 
-		void ClearForces() override;
+	void SetAngularFactor(const Vector3& angularFactor);
 
-		const float &GetMass() const { return m_mass; }
+	const Vector3& GetLinearVelocity() const
+	{
+		return m_linearVelocity;
+	}
 
-		void SetMass(const float &mass);
+	void SetLinearVelocity(const Vector3& linearVelocity);
 
-		const Vector3 &GetGravity() const { return m_gravity; }
+	const Vector3& GetAngularVelocity() const
+	{
+		return m_angularVelocity;
+	}
 
-		void SetGravity(const Vector3 &gravity);
+	void SetAngularVelocity(const Vector3& angularVelocity);
 
-		const Vector3 &GetLinearFactor() const { return m_linearFactor; }
+  protected:
+	void RecalculateMass() override;
 
-		void SetLinearFactor(const Vector3 &linearFactor);
+  private:
+	static btRigidBody* CreateRigidBody(float mass, btDefaultMotionState* motionState, btCollisionShape* shape);
 
-		const Vector3 &GetAngularFactor() const { return m_angularFactor; }
+	float m_mass;
+	Vector3 m_gravity;
 
-		void SetAngularFactor(const Vector3 &angularFactor);
+	Vector3 m_linearFactor;
+	Vector3 m_angularFactor;
 
-		const Vector3 &GetLinearVelocity() const { return m_linearVelocity; }
+	Vector3 m_linearVelocity;
+	Vector3 m_angularVelocity;
 
-		void SetLinearVelocity(const Vector3 &linearVelocity);
-
-		const Vector3 &GetAngularVelocity() const { return m_angularVelocity; }
-
-		void SetAngularVelocity(const Vector3 &angularVelocity);
-	protected:
-		void RecalculateMass() override;
-	private:
-		static btRigidBody *CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
-
-		float m_mass;
-		Vector3 m_gravity;
-
-		Vector3 m_linearFactor;
-		Vector3 m_angularFactor;
-
-		Vector3 m_linearVelocity;
-		Vector3 m_angularVelocity;
-
-		std::unique_ptr<btDefaultMotionState> m_motionState;
-		btRigidBody *m_rigidBody;
-	};
+	std::unique_ptr<btDefaultMotionState> m_motionState;
+	btRigidBody* m_rigidBody;
+};
 }

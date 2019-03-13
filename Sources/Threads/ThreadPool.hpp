@@ -5,24 +5,34 @@
 
 namespace acid
 {
+/// <summary>
+/// A pool
+/// of
+/// threads.
+/// </summary>
+class ACID_EXPORT ThreadPool : public NonCopyable
+{
+  public:
+	explicit ThreadPool(const uint32_t& threadCount = HardwareConcurrency);
+
 	/// <summary>
-	/// A pool of threads.
+	/// Waits
+	/// until
+	/// all
+	/// threads
+	/// are
+	/// finished.
 	/// </summary>
-	class ACID_EXPORT ThreadPool :
-		public NonCopyable
+	void Wait();
+
+	std::vector<std::unique_ptr<Thread>>& GetThreads()
 	{
-	public:
-		explicit ThreadPool(const uint32_t &threadCount = HardwareConcurrency);
+		return m_threads;
+	}
 
-		/// <summary>
-		/// Waits until all threads are finished.
-		/// </summary>
-		void Wait();
+	static const uint32_t HardwareConcurrency;
 
-		std::vector<std::unique_ptr<Thread>> &GetThreads() { return m_threads; }
-
-		static const uint32_t HardwareConcurrency;
-	private:
-		std::vector<std::unique_ptr<Thread>> m_threads;
-	};
+  private:
+	std::vector<std::unique_ptr<Thread>> m_threads;
+};
 }
