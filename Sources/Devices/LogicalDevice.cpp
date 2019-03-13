@@ -142,21 +142,62 @@ namespace acid
 			m_transferFamily = m_graphicsFamily;
 		}
 
-		VkPhysicalDeviceFeatures deviceFeatures = {};
-		deviceFeatures.sampleRateShading = VK_TRUE;
-		deviceFeatures.fillModeNonSolid = VK_TRUE;
-		deviceFeatures.wideLines = VK_TRUE;
-		deviceFeatures.samplerAnisotropy = VK_TRUE;
-		deviceFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
-		deviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
-		deviceFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
-		deviceFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
-		deviceFeatures.shaderClipDistance = VK_TRUE;
-		deviceFeatures.shaderCullDistance = VK_TRUE;
+		VkPhysicalDeviceFeatures enabledFeatures = {};
+
+		// Enable sample rate shading filtering if supported.
+		if (physicalDeviceFeatures.sampleRateShading)
+		{
+			enabledFeatures.sampleRateShading = VK_TRUE;
+		}
+
+		// Fill mode non solid is required for wireframe display.
+		if (physicalDeviceFeatures.fillModeNonSolid)
+		{
+			enabledFeatures.fillModeNonSolid = VK_TRUE;
+
+			// Wide lines must be present for line width > 1.0f.
+			if (physicalDeviceFeatures.wideLines)
+			{
+				enabledFeatures.wideLines = VK_TRUE;
+			}
+		}
+		else
+		{
+			Log::Error("Selected GPU does not support wireframe pipelines!");
+		}
+
+		if (physicalDeviceFeatures.samplerAnisotropy)
+		{
+			enabledFeatures.samplerAnisotropy = VK_TRUE;
+		}
+		else
+		{
+			Log::Error("Selected GPU does not support sampler anisotropy!");
+		}
+
+		if (physicalDeviceFeatures.textureCompressionBC)
+		{
+			enabledFeatures.textureCompressionBC = VK_TRUE;
+		}
+		else if (physicalDeviceFeatures.textureCompressionASTC_LDR)
+		{
+			enabledFeatures.textureCompressionASTC_LDR = VK_TRUE;
+		}
+		else if (physicalDeviceFeatures.textureCompressionETC2)
+		{
+			enabledFeatures.textureCompressionETC2 = VK_TRUE;
+		}
+
+	//	enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
+	//	enabledFeatures.fragmentStoresAndAtomics = VK_TRUE;
+	//	enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
+	//	enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
+	//	enabledFeatures.shaderClipDistance = VK_TRUE;
+	//	enabledFeatures.shaderCullDistance = VK_TRUE;
 
 		if (physicalDeviceFeatures.geometryShader)
 		{
-			deviceFeatures.geometryShader = VK_TRUE;
+			enabledFeatures.geometryShader = VK_TRUE;
 		}
 		else
 		{
@@ -165,7 +206,7 @@ namespace acid
 
 		if (physicalDeviceFeatures.tessellationShader)
 		{
-			deviceFeatures.tessellationShader = VK_TRUE;
+			enabledFeatures.tessellationShader = VK_TRUE;
 		}
 		else
 		{
@@ -174,24 +215,11 @@ namespace acid
 
 		if (physicalDeviceFeatures.multiViewport)
 		{
-			deviceFeatures.multiViewport = VK_TRUE;
+			enabledFeatures.multiViewport = VK_TRUE;
 		}
 		else
 		{
 			Log::Error("Selected GPU does not support multi viewports!");
-		}
-
-		if (physicalDeviceFeatures.textureCompressionBC)
-		{
-			deviceFeatures.textureCompressionBC = VK_TRUE;
-		}
-		else if (physicalDeviceFeatures.textureCompressionASTC_LDR)
-		{
-			deviceFeatures.textureCompressionASTC_LDR = VK_TRUE;
-		}
-		else if (physicalDeviceFeatures.textureCompressionETC2)
-		{
-			deviceFeatures.textureCompressionETC2 = VK_TRUE;
 		}
 
 		VkDeviceCreateInfo deviceCreateInfo = {};
@@ -202,7 +230,7 @@ namespace acid
 		deviceCreateInfo.ppEnabledLayerNames = m_instance->GetInstanceLayers().data();
 		deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instance->GetDeviceExtensions().size());
 		deviceCreateInfo.ppEnabledExtensionNames = m_instance->GetDeviceExtensions().data();
-		deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
+		deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
 		Renderer::CheckVk(vkCreateDevice(m_physicalDevice->GetPhysicalDevice(), &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 		vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);

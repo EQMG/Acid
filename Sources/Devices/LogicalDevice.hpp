@@ -15,8 +15,10 @@ namespace acid
 		LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
 
 		~LogicalDevice();
-
+		
 		const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
+
+		const VkPhysicalDeviceFeatures &GetEnabledFeatures() const { return m_enabledFeatures; }
 
 		const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
 
@@ -45,6 +47,7 @@ namespace acid
 		const Surface *m_surface;
 
 		VkDevice m_logicalDevice;
+		VkPhysicalDeviceFeatures m_enabledFeatures;
 
 		VkQueueFlags m_supportedQueues;
 		uint32_t m_graphicsFamily;

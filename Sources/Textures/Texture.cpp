@@ -576,7 +576,7 @@ namespace acid
 		samplerCreateInfo.addressModeW = addressMode;
 		samplerCreateInfo.mipLodBias = 0.0f;
 		samplerCreateInfo.anisotropyEnable = static_cast<VkBool32>(anisotropic);
-		samplerCreateInfo.maxAnisotropy = anisotropic ? std::min(ANISOTROPY, physicalDevice->GetProperties().limits.maxSamplerAnisotropy) : 1.0f;
+		samplerCreateInfo.maxAnisotropy = (anisotropic && logicalDevice->GetEnabledFeatures().samplerAnisotropy) ? std::min(ANISOTROPY, physicalDevice->GetProperties().limits.maxSamplerAnisotropy) : 1.0f;
 	//	samplerCreateInfo.compareEnable = VK_FALSE;
 	//	samplerCreateInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 		samplerCreateInfo.minLod = 0.0f;

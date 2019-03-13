@@ -235,6 +235,12 @@ namespace acid
 	void PipelineGraphics::CreateAttributes()
 	{
 		auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+
+		if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid)
+		{
+			throw std::runtime_error("Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills.");
+		}
 
 		m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		m_inputAssemblyState.topology = m_topology;
