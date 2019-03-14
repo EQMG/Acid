@@ -11,11 +11,9 @@ Vulkan is used as the only rendering API, as a result, Vulkan functions can be u
 Acid is licensed under the MIT licence and is open to contributions, read [Compiling](#Compiling) to get started with development.
 
 ## Links
-Readme   [Read more](https://equilibrium-games.github.io/Acid/)
+GitBooks   [Git Books](https://acid.equilibrium.games)
 
-GitBooks   [Git Books](https://acid.equilibrium.games/)
-
-Doxygen   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs/)
+Doxygen   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs)
 
 Website   [Learn more](https://equilibrium.games)
 
@@ -113,9 +111,7 @@ Events::Get()->AddEvent<EventTime>([](){
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot5.png" alt="Acid" width="600px">
 
 ## Compiling
-If you don't want to use system-wide libraries, then after cloning the repo, run `git submodule update --init --recursive` in the Acid directory to update the submodules.
-
-All platforms depend on [CMake](https://cmake.org/download) to generate IDE/make files.
+All platforms depend on [CMake](https://cmake.org/download), 3.11 or higher, to generate IDE/make files.
 
 Cmake options (default ON):
 * `BUILD_TESTS`

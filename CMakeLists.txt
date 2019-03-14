@@ -83,7 +83,8 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-#find_package(Freetype QUIET)
+find_package(Freetype) #  QUIET
+message(STATUS "FreeType Include: ${FREETYPE_INCLUDE_DIRS}")
 if(NOT FREETYPE_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
