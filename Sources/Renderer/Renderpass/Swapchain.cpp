@@ -42,6 +42,7 @@ namespace acid
 				m_presentMode = presentMode;
 				break;
 			}
+
 			if (m_presentMode != VK_PRESENT_MODE_MAILBOX_KHR && presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
 			{
 				m_presentMode = presentMode;

@@ -18,7 +18,7 @@ environment:
   #    GEN: "Visual Studio 15 2017"
   #    CFG: Release
   #    BUILD_OUT: "x86-Release"
-  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.101.0/windows/vulkan-sdk.exe
+  VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.101.0/windows/vulkan-sdk.exe?Human=true;u=
   VULKAN_SDK: "C:\\VulkanSDK\\1.1.101.0"
   OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.19.1-bin.zip
   OPENALDIR: "C:\\openal-soft"
@@ -28,11 +28,11 @@ environment:
 install:
   - git submodule update --init --recursive
   # Get Vulkan SDK
-  - appveyor DownloadFile %VULKAN_SDK_URL%
+  - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe
   - .\vulkan-sdk.exe /S
   # Get OpenAL SDK
-  - appveyor DownloadFile %OPENAL_SDK_URL%
-  - 7z x openal-soft-*.zip && del /f openal-soft-*.zip
+  - appveyor DownloadFile %OPENAL_SDK_URL% -FileName openal-soft.zip
+  - 7z x openal-soft.zip && del /f openal-soft.zip
   - move "openal-soft-*" %OPENALDIR%
   # Get Ninja
   - appveyor DownloadFile %NINJA_URL% -FileName ninja.zip
@@ -43,7 +43,7 @@ install:
 build_script:
   - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
   - mkdir Build\%BUILD_OUT% && cd Build\%BUILD_OUT%
-  - cmake -DCMAKE_BUILD_TYPE=%CFG% -GNinja ../../
+  - cmake -DCMAKE_BUILD_TYPE=%CFG% -DACID_LINK_RESOURCES=OFF -GNinja ../../
   - ninja
   - ninja install
   - cd ../../

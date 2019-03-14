@@ -1,14 +1,15 @@
-# 3.8.0 required for cxx_std_17
-cmake_minimum_required(VERSION 3.8.0 FATAL_ERROR)
-project(Acid VERSION 0.12.0 LANGUAGES C CXX)
+# 3.11.0 required for cxx_std_17 and FetchContent
+cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
+project(Acid VERSION 0.12.1 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
+option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 
-# Used for Acid cmake includes
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
+# Used to include Acid cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 include(PrecompiledHeader)
 
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
@@ -53,16 +54,27 @@ endif()
 # Prevents errors with EXPORT
 set(_ACID_ALL_SYSTEM_LIBS true)
 
+# Allows usage of configure time content
+include(FetchContent)
+
 # PhysFS is arranged before GLFW to prevent "uninstall" being defined twice
-find_package(PhysFS)
+find_package(PhysFS QUIET)
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
-		set(${_physfs_option} OFF CACHE INTERNAL "")
-	endforeach()
+	FetchContent_Declare(physfs
+			GIT_REPOSITORY https://github.com/Didstopia/physfs.git
+			GIT_TAG master
+			)
+	FetchContent_GetProperties(physfs)
+	if(NOT physfs_POPULATED)
+		foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
+			set(${_physfs_option} OFF CACHE INTERNAL "")
+		endforeach()
+		FetchContent_Populate(physfs)
+		add_subdirectory(${physfs_SOURCE_DIR} ${physfs_BINARY_DIR})
+	endif()
 
-	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/physfs)
-	target_include_directories(physfs PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/physfs/src")
+	set(PHYSFS_INCLUDE_DIR "${physfs_SOURCE_DIR}/src")
 	# Set here so we can use it in Sources/CMakeLists.txt
 	if(PHYSFS_BUILD_STATIC)
 		set(PHYSFS_LIBRARY "physfs-static")
@@ -71,33 +83,49 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-#find_package(Freetype)
+#find_package(Freetype QUIET)
 if(NOT FREETYPE_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	foreach(_freetype_option "CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz")
-		set(${_freetype_option} TRUE CACHE INTERNAL "")
-	endforeach()
-	foreach(_freetype_option "SKIP_INSTALL_HEADERS" "SKIP_INSTALL_LIBRARIES")
-		set(${_freetype_option} ON CACHE INTERNAL "")
-	endforeach()
+	FetchContent_Declare(freetype
+			GIT_REPOSITORY https://git.savannah.gnu.org/git/freetype/freetype2.git
+			GIT_TAG master
+			)
+	FetchContent_GetProperties(freetype)
+	if(NOT freetype_POPULATED)
+		foreach(_freetype_option "CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz")
+			set(${_freetype_option} TRUE CACHE INTERNAL "")
+		endforeach()
+		foreach(_freetype_option "SKIP_INSTALL_HEADERS" "SKIP_INSTALL_LIBRARIES")
+			set(${_freetype_option} ON CACHE INTERNAL "")
+		endforeach()
+		FetchContent_Populate(freetype)
+		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
+	endif()
 
-	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/freetype2)
-	set(FREETYPE_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Libraries/freetype2/include")
+	set(FREETYPE_INCLUDE_DIRS "${physfs_SOURCE_DIR}/include")
 	# Used in target_link_libraries()
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-find_package(glfw3)
+find_package(glfw3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
+	FetchContent_Declare(glfw3
+			GIT_REPOSITORY https://github.com/glfw/glfw.git
+			GIT_TAG master
+			)
+	FetchContent_GetProperties(glfw3)
+	if(NOT glfw3_POPULATED)
+		foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL" "GLFW_VULKAN_STATIC")
+			set(${_glfw3_option} OFF CACHE INTERNAL "")
+		endforeach()
+		FetchContent_Populate(glfw3)
+		add_subdirectory(${glfw3_SOURCE_DIR} ${glfw3_BINARY_DIR})
+	endif()
+
 	# Used later to define as a pre-build dependency
 	# The glfw3Config.cmake file doesn't define it automatically
 	set(glfw_FOUND false)
-	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL" "GLFW_VULKAN_STATIC")
-		set(${_glfw3_option} OFF CACHE INTERNAL "")
-	endforeach()
-
-	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glfw)
 else()
 	set(glfw_FOUND true)
 endif()
@@ -117,43 +145,57 @@ find_path(SPIRV_INCLUDE_DIR
 
 if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	set(_ACID_ALL_SYSTEM_LIBS false)
+	FetchContent_Declare(glslang
+			GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
+			GIT_TAG master
+			)
+	FetchContent_GetProperties(glslang)
+	if(NOT glslang_POPULATED)
+		foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS")
+			set(${_glslang_option} OFF CACHE INTERNAL "")
+		endforeach()
+		foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_OPT")
+			set(${_glslang_option} ON CACHE INTERNAL "")
+		endforeach()
+		FetchContent_Populate(glslang)
+		add_subdirectory(${glslang_SOURCE_DIR} ${glslang_BINARY_DIR})
+	endif()
+
 	# Used later to define as a pre-build dependencies
 	# Have to manually define because we manually searched for SPIRV
 	set(SPIRV_FOUND false)
-	foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS")
-		set(${_glslang_option} OFF CACHE INTERNAL "")
-	endforeach()
-	foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_OPT")
-		set(${_glslang_option} ON CACHE INTERNAL "")
-	endforeach()
-	
-	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/glslang)
 	# Used in target_link_libraries()
 	set(SPIRV_LIBRARY "SPIRV")
 else()
 	set(SPIRV_FOUND true)
 endif()
 
-find_package(Bullet)
+find_package(Bullet QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	foreach(_bullet_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
-		set(${_bullet_option} OFF CACHE INTERNAL "")
-	endforeach()
-
-	# On MSVC shared mode must be disabled with bullet currently
-	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
-
-	if(MSVC)
-		set(BUILD_SHARED_LIBS OFF)
+	FetchContent_Declare(bullet3
+			GIT_REPOSITORY https://github.com/bulletphysics/bullet3.git
+			GIT_TAG master
+			)
+	FetchContent_GetProperties(bullet3)
+	if(NOT bullet3_POPULATED)
+		# On MSVC shared mode must be disabled with bullet currently
+		set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+		foreach(_bullet3_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
+			set(${_bullet3_option} OFF CACHE INTERNAL "")
+		endforeach()
+		if(MSVC)
+			set(BUILD_SHARED_LIBS OFF)
+		endif()
+		FetchContent_Populate(bullet3)
+		add_subdirectory(${bullet3_SOURCE_DIR} ${bullet3_BINARY_DIR})
+		# Reset back to value before MSVC fix
+		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	endif()
-
-	add_subdirectory(${PROJECT_SOURCE_DIR}/Libraries/bullet3)
-	target_include_directories(BulletDynamics PUBLIC "${PROJECT_SOURCE_DIR}/Libraries/bullet3/src")
+	
+	set(BULLET_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/src")
 	# Used in target_link_libraries()
 	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
-	# Reset back to value before MSVC fix
-	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 endif()
 
 # Acid sources directory
