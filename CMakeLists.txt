@@ -6,6 +6,7 @@ option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
+option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 
 # Used to include Acid cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
