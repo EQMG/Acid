@@ -73,6 +73,8 @@ matrix:
     - brew install pkg-config
     - brew install openal-soft
     - brew install freetype
+  #  - brew tap caskroom/cask
+  #  - brew cask install apenngrace/vulkan/vulkan-sdk
     - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u=" -O "vulkan-sdk.tar.gz"
     - tar -xf vulkan-sdk.tar.gz
     - rm vulkan-sdk.tar.gz
@@ -85,9 +87,9 @@ script:
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      make all
+      make all -j$(nproc)
     else
       cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
-      xcodebuild -quiet -target Acid -configuration $BUILD_TYPE
+      xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE
     fi
 - cd ../

@@ -7,7 +7,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "/MP /p:BuildInParallel",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": []
