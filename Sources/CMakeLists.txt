@@ -99,22 +99,13 @@ target_link_libraries(Acid
 		# When built locally from submodules, these are merely the names..
 		# of the library targets that exist in-scope, else they're set..
 		# from find_package() calls
+		# $<PLATFORM_ID:Windows>
+		$<$<PLATFORM_ID:Windows>:${FREETYPE_LIBRARIES}>
+		$<$<NOT:$<PLATFORM_ID:Windows>>:Freetype::Freetype>
 		${PHYSFS_LIBRARY}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARY}
 		)
-
-if (WIN32)
-  target_link_libraries(Acid
-		PUBLIC
-		${FREETYPE_LIBRARIES}
-		)
-else()
-  target_link_libraries(Acid
-		PUBLIC
-		Freetype::Freetype
-		)
-endif()
 
 target_include_directories(Acid
 		PUBLIC
