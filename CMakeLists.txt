@@ -101,6 +101,7 @@ if(NOT FREETYPE_FOUND)
 		FetchContent_Populate(freetype)
 		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 	endif()
+	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
 find_package(glfw3)

@@ -81,21 +81,6 @@ target_compile_options(Acid
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		)
 
-target_include_directories(Acid
-		PUBLIC
-		# Helps the includes find what they need at build-time
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
-		PRIVATE
-		# Since building locally from the submodules won't always create these vars..
-		# We have to do a simple check if they exist or they will cause errors
-		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
-		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
-		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
-		$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
-		)
 target_link_libraries(Acid
 		PUBLIC
 		# All IMPORTED targets, which automatically handles includes
@@ -115,11 +100,38 @@ target_link_libraries(Acid
 		# of the library targets that exist in-scope, else they're set..
 		# from find_package() calls
 		${PHYSFS_LIBRARY}
-		Freetype::Freetype
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARY}
 		)
-	
+
+if (WIN32)
+  target_link_libraries(Acid
+		PUBLIC
+		${FREETYPE_LIBRARIES}
+		)
+else()
+  target_link_libraries(Acid
+		PUBLIC
+		Freetype::Freetype
+		)
+endif()
+
+target_include_directories(Acid
+		PUBLIC
+		# Helps the includes find what they need at build-time
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Helps the includes find what they need at runtime
+		# Although this also allows people to not prefix "Acid" before includes as well
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		PRIVATE
+		# Since building locally from the submodules won't always create these vars..
+		# We have to do a simple check if they exist or they will cause errors
+		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
+		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
+		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
+		$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
+		)
+
 # Creates a symbolic link from Resources to Resources/Engine in the binary folder
 if(ACID_LINK_RESOURCES)
 	get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
