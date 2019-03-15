@@ -84,7 +84,7 @@ if(NOT PHYSFS_FOUND)
 endif()
 
 find_package(Freetype)
-if(NOT FREETYPE_FOUND)
+if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
 			GIT_REPOSITORY https://git.savannah.gnu.org/git/freetype/freetype2.git
@@ -101,6 +101,8 @@ if(NOT FREETYPE_FOUND)
 		FetchContent_Populate(freetype)
 		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 	endif()
+	
+	# Used in target_link_libraries()
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
