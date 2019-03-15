@@ -58,7 +58,7 @@ set(_ACID_ALL_SYSTEM_LIBS true)
 include(FetchContent)
 
 # PhysFS is arranged before GLFW to prevent "uninstall" being defined twice
-find_package(PhysFS QUIET)
+find_package(PhysFS)
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
@@ -83,8 +83,7 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-find_package(Freetype) #  QUIET
-message(STATUS "FreeType Include: ${FREETYPE_INCLUDE_DIRS}")
+#find_package(Freetype)
 if(NOT FREETYPE_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
@@ -103,12 +102,11 @@ if(NOT FREETYPE_FOUND)
 		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 	endif()
 
-	set(FREETYPE_INCLUDE_DIRS "${physfs_SOURCE_DIR}/include")
 	# Used in target_link_libraries()
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-find_package(glfw3 QUIET)
+find_package(glfw3)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
@@ -171,7 +169,7 @@ else()
 	set(SPIRV_FOUND true)
 endif()
 
-find_package(Bullet QUIET)
+find_package(Bullet)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3

@@ -73,8 +73,6 @@ matrix:
     - brew install pkg-config
     - brew install openal-soft
     - brew install freetype
-    - brew install glfw --HEAD
-    - brew install physfs
     - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u=" -O "vulkan-sdk.tar.gz"
     - tar -xf vulkan-sdk.tar.gz
     - rm vulkan-sdk.tar.gz
@@ -86,7 +84,6 @@ script:
 - mkdir Build && cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo ln -s /usr/include/freetype2/freetype /usr/include/freetype
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       make all
     else
