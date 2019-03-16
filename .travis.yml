@@ -82,14 +82,5 @@ matrix:
     - echo $VULKAN_SDK
 
 script:
-- git submodule update --init --recursive
-- mkdir Build && cd Build
-- |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      make all -j$(nproc)
-    else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
-      xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE
-    fi
-- cd ../
+- cmake -H. -BBuild
+- cmake --build Build -j 10
