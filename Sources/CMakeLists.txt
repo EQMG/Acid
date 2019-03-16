@@ -130,6 +130,11 @@ if(ACID_LINK_RESOURCES)
 			)
 endif()
 
+if(APPLE)
+add_custom_target(TARGET Acid
+   xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE | tail -n -90 )
+endif()
+
 # Installs all headers, preserving their file structure
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
 		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"

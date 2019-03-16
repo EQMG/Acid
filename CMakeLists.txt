@@ -43,13 +43,15 @@ find_package(Vulkan REQUIRED)
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
 find_package(OpenAL REQUIRED)
+
 if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 	add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
-	set_target_properties(OpenAL::OpenAL PROPERTIES
+		set_target_properties(OpenAL::OpenAL PROPERTIES
 			IMPORTED_LOCATION "${OPENAL_LIBRARY}"
 			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
 endif()
-
+	message("OPENAL_LIBRARY: " ${OPENAL_LIBRARY})
+	message("OPENAL_INCLUDE_DIR: " ${OPENAL_LIBRARY})
 # Used to track if we're using ONLY system libs
 # Prevents errors with EXPORT
 set(_ACID_ALL_SYSTEM_LIBS true)
@@ -183,11 +185,9 @@ if(NOT BULLET_FOUND)
 		foreach(_bullet3_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" "BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT" "INSTALL_LIBS" "INSTALL_CMAKE_FILES")
 			set(${_bullet3_option} OFF CACHE INTERNAL "")
 		endforeach()
-
 		if(MSVC OR APPLE)
 			set(BUILD_SHARED_LIBS OFF)
 		endif()
-
 		FetchContent_Populate(bullet3)
 		add_subdirectory(${bullet3_SOURCE_DIR} ${bullet3_BINARY_DIR})
 		# Reset back to value before MSVC fix
@@ -225,4 +225,5 @@ if(BUILD_TESTS)
 	add_subdirectory(Tests/TestPhysics)
 	add_subdirectory(Tests/TestSerial)
 endif()
+
 

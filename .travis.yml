@@ -82,5 +82,12 @@ matrix:
     - echo $VULKAN_SDK
 
 script:
-- cmake -H. -BBuild
-- cmake --build Build -j 10
+    - mkdir build
+    - cd build
+    - cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
+    - xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE | tail -n -90
+
+# cmake -H. -BBuild -G "Xcode"
+# - cd Build
+# - xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE | tail -n -90
+# - cmake --build Build -target Acid -j 10 | tail -n -90
