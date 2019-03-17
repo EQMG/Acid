@@ -1,8 +1,9 @@
 #include "String.hpp"
+#include <string_view>
 
 namespace acid
 {
-	std::vector<std::string> String::Split(const std::string &str, const std::string &sep, const bool &trim)
+	std::vector<std::string> String::Split(const std::string &str, const std::string &sep, bool trim)
 	{
 		std::unique_ptr<char[]> copy(new char[strlen(str.c_str()) + 1]);
 		std::strcpy(copy.get(), str.c_str());
@@ -26,7 +27,7 @@ namespace acid
 		return result;
 	}
 
-	bool String::StartsWith(const std::string &str, const std::string &token)
+	bool String::StartsWith(std::string_view str, std::string_view token)
 	{
 		if (str.length() < token.length())
 		{
@@ -36,38 +37,23 @@ namespace acid
 		return str.compare(0, token.length(), token) == 0;
 	}
 
-	bool String::Contains(const std::string &str, const std::string &token)
+	bool String::Contains(std::string_view str, std::string_view token)
 	{
 		return str.find(token) != std::string::npos;
 	}
 
-	bool String::IsInteger(const std::string &str)
+	bool String::IsInteger(std::string_view str)
 	{
-		if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+')))
-		{
-			return false;
-		}
-
-		char *p;
-		std::strtol(str.c_str(), &p, 10);
-
-		return *p == 0;
+		return str.find_first_not_of( "0123456789" ) == std::string::npos;
 	}
 
-	int String::FindCharPos(const std::string &str, const char &c)
+	int String::FindCharPos(std::string_view str, char c)
 	{
-		for (uint32_t i = 0; i < str.length(); i++)
-		{
-			if (str.at(i) == c)
-			{
-				return i;
-			}
-		}
-
-		return -1;
+		auto res = str.find(c);
+		return res == std::string::npos ? -1 : res;
 	}
 
-	std::string String::Trim(const std::string &str, const std::string &whitespace)
+	std::string String::Trim(std::string str, std::string_view whitespace)
 	{
 		auto strBegin = str.find_first_not_of(whitespace);
 
@@ -84,81 +70,73 @@ namespace acid
 		return result;
 	}
 
-	std::string String::Substring(const std::string &str, const uint32_t &start, const uint32_t &end)
+	std::string String::Substring(std::string str, uint32_t start, uint32_t end)
 	{
-		auto result = str;
-		result = result.substr(start, end - start);
-		return result;
+		str = str.substr(start, end - start);
+		return str;
 	}
 
-	std::string String::RemoveAll(const std::string &str, const char &token)
+	std::string String::RemoveAll(std::string str, char token)
 	{
-		auto result = str;
-		result.erase(remove(result.begin(), result.end(), token), result.end());
-		return result;
+		str.erase(remove(str.begin(), str.end(), token), str.end());
+		return str;
 	}
 
-	std::string String::RemoveLast(const std::string &str, const char &token)
+	std::string String::RemoveLast(std::string str, char token)
 	{
-		auto result = str;
-
-		for (auto it = result.end(); it != result.begin(); --it)
+		for (auto it = str.end(); it != str.begin(); --it)
 		{
 			if (*it == token)
 			{
-				result.erase(it);
-				return result;
+				str.erase(it);
+				return str;
 			}
 		}
 
-		return result;
+		return str;
 	}
 
-	std::string String::ReplaceAll(const std::string &str, const std::string &token, const std::string &to)
+	std::string String::ReplaceAll(std::string str, std::string_view token, std::string_view to)
 	{
-		auto result = str;
-		auto pos = result.find(token);
+		auto pos = str.find(token);
 
 		while (pos != std::string::npos)
 		{
-			result.replace(pos, token.size(), to);
-			pos = result.find(token, pos + token.size());
+			str.replace(pos, token.size(), to);
+			pos = str.find(token, pos + token.size());
 		}
 
-		return result;
+		return str;
 	}
 
-	std::string String::ReplaceFirst(const std::string &str, const std::string &token, const std::string &to)
+	std::string String::ReplaceFirst(std::string str, std::string_view token, std::string_view to)
 	{
-		auto result = str;
-		const auto startPos = result.find(token);
+		const auto startPos = str.find(token);
 
 		if (startPos == std::string::npos)
 		{
-			return result;
+			return str;
 		}
 
-		result.replace(startPos, token.length(), to);
-		return result;
+		str.replace(startPos, token.length(), to);
+		return str;
 	}
 
-	std::string String::FixReturnTokens(const std::string &str)
+	std::string String::FixReturnTokens(const std::string& str)
 	{
 		// TODO: Optimize.
 		return ReplaceAll(ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
 	}
 
-	std::string String::Lowercase(const std::string &str)
+	std::string String::Lowercase(std::string str)
 	{
-		auto result = str;
-		std::transform(result.begin(), result.end(), result.begin(), tolower);
-		return result;
+		std::transform(str.begin(), str.end(), str.begin(), tolower);
+		return str;
 	}
 
-	std::string String::Uppercase(const std::string &str)
+	std::string String::Uppercase(std::string str)
 	{
-		auto result = str;
-		std::transform(result.begin(), result.end(), result.begin(), toupper);
-		return result;
+		std::transform(str.begin(), str.end(), str.begin(), toupper);
+		return str;
 	}
 }

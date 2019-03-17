@@ -18,7 +18,7 @@ namespace acid
 		/// <param name="sep"> The separator. </param>
 		/// <param name="trim"> If each object should be trimmed. </param>
 		/// <returns> The split string vector. </returns>
-		static std::vector<std::string> Split(const std::string &str, const std::string &sep, const bool &trim = false);
+		static std::vector<std::string> Split(const std::string &str, const std::string &sep, bool trim = false);
 
 		/// <summary>
 		/// Gets if a string starts with a token.
@@ -26,7 +26,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> If a string starts with the token. </returns>
-		static bool StartsWith(const std::string &str, const std::string &token);
+		static bool StartsWith(std::string_view str_vie, std::string_view token);
 
 		/// <summary>
 		/// Gets if a string contains a token.
@@ -34,14 +34,14 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> If a string contains the token. </returns>
-		static bool Contains(const std::string &str, const std::string &token);
+		static bool Contains(std::string_view str, std::string_view token);
 
 		/// <summary>
 		/// Gets if a string is a integer.
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> If a string is a integer. </returns>
-		static bool IsInteger(const std::string &str);
+		static bool IsInteger(std::string_view str);
 
 		/// <summary>
 		/// Gets the first char index in the string.
@@ -49,7 +49,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="c"> The char to look for. </param>
 		/// <returns> The char index. </returns>
-		static int32_t FindCharPos(const std::string &str, const char &c);
+		static int32_t FindCharPos(std::string_view str, char c);
 
 		/// <summary>
 		/// Trims the left and right side of a string of whitespace.
@@ -57,7 +57,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="whitespace"> The whitespace type. </param>
 		/// <returns> The trimmed string. </returns>
-		static std::string Trim(const std::string &str, const std::string &whitespace = " \t\n\r");
+		static std::string Trim(std::string str, std::string_view whitespace = " \t\n\r");
 
 		/// <summary>
 		/// Takes a substring of a string between two bounds.
@@ -66,7 +66,7 @@ namespace acid
 		/// <param name="start"> The left bound. </param>
 		/// <param name="end"> The right bound. </param>
 		/// <returns> The substring of the string. </returns>
-		static std::string Substring(const std::string &str, const uint32_t &start, const uint32_t &end);
+		static std::string Substring(std::string str, uint32_t start, uint32_t end);
 
 		/// <summary>
 		/// Removes all tokens from a string.
@@ -74,7 +74,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> The string with the tokens removed. </returns>
-		static std::string RemoveAll(const std::string &str, const char &token);
+		static std::string RemoveAll(std::string str, char token);
 
 		/// <summary>
 		/// Removes the last token from a string.
@@ -82,7 +82,7 @@ namespace acid
 		/// <param name="str"> The string. </param>
 		/// <param name="token"> The token. </param>
 		/// <returns> The string with the last token removed. </returns>
-		static std::string RemoveLast(const std::string &str, const char &token);
+		static std::string RemoveLast(std::string str, char token);
 
 		/// <summary>
 		/// Replaces all tokens from a string.
@@ -91,7 +91,7 @@ namespace acid
 		/// <param name="token"> The token. </param>
 		/// <param name="to"> The string to replace the tokens with. </param>
 		/// <returns> The string with the tokens replaced. </returns>
-		static std::string ReplaceAll(const std::string &str, const std::string &token, const std::string &to);
+		static std::string ReplaceAll(std::string str, std::string_view token, std::string_view to);
 
 		/// <summary>
 		/// Replaces the first token from a string.
@@ -100,7 +100,7 @@ namespace acid
 		/// <param name="token"> The token. </param>
 		/// <param name="to"> The string to replace the tokens with. </param>
 		/// <returns> The string with the tokens replaced. </returns>
-		static std::string ReplaceFirst(const std::string &str, const std::string &token, const std::string &to);
+		static std::string ReplaceFirst(std::string str, std::string_view token, std::string_view to);
 
 		/// <summary>
 		/// Fixes all tokens return line tokens from a string so it is file write-able.
@@ -114,14 +114,14 @@ namespace acid
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> The lowercased string. </returns>
-		static std::string Lowercase(const std::string &str);
+		static std::string Lowercase(std::string str);
 
 		/// <summary>
 		/// Uppercases a string.
 		/// </summary>
 		/// <param name="str"> The string. </param>
 		/// <returns> The uppercased string. </returns>
-		static std::string Uppercase(const std::string &str);
+		static std::string Uppercase(std::string str);
 
 		/// <summary>
 		/// Converts a type to a string.
