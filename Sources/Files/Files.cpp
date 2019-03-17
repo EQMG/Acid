@@ -101,7 +101,7 @@ namespace acid
 				return 0; // no-op
 			}
 
-			if (PHYSFS_write(m_file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase()), 1) < 1)
+			if (PHYSFS_writeBytes(m_file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase())) < 1)
 			{
 				return traits_type::eof();
 			}
