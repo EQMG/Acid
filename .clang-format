@@ -17,16 +17,16 @@ BreakBeforeBraces: Allman
 BreakInheritanceList: AfterColon
 BreakBeforeInheritanceComma: false
 BreakBeforeTernaryOperators: false
-BreakConstructorInitializers: AfterColon
+BreakConstructorInitializers: BeforeComma
 SpaceAfterTemplateKeyword: false
 # ColumnLimit: 140
 CommentPragmas: '^ IWYU pragma:'
 CommentPragmas:  '^/'
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+# ConstructorInitializerAllOnOneLineOrOnePerLine: false
 Cpp11BracedListStyle: true
 FixNamespaceComments: false
 IncludeBlocks: Regroup
-IncludeCategories: 
+IncludeCategories:
   - Regex: '^<.*\.hpp>'
     Priority: 2
   - Regex: '^<.*'
