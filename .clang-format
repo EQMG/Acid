@@ -19,8 +19,9 @@ BreakBeforeInheritanceComma: false
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializers: AfterColon
 SpaceAfterTemplateKeyword: false
-ColumnLimit: 140
+# ColumnLimit: 140
 CommentPragmas: '^ IWYU pragma:'
+CommentPragmas:  '^/'
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 Cpp11BracedListStyle: true
 FixNamespaceComments: false
