@@ -1,0 +1,45 @@
+---
+# http://clang.llvm.org/docs/ClangFormatStyleOptions.html
+AccessModifierOffset: -4
+AlignAfterOpenBracket: DontAlign
+AlignEscapedNewlines: Left
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
+AlignOperands: false
+AlignTrailingComments: false
+BreakAfterJavaFieldAnnotations: true
+BreakBeforeBraces: Allman
+BreakInheritanceList: AfterColon
+BreakBeforeInheritanceComma: false
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializers: AfterColon
+SpaceAfterTemplateKeyword: false
+ColumnLimit: 140
+CommentPragmas: '^ IWYU pragma:'
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+Cpp11BracedListStyle: true
+FixNamespaceComments: false
+IncludeBlocks: Regroup
+IncludeCategories: 
+  - Regex: '^<.*\.hpp>'
+    Priority: 2
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '.*'
+    Priority: 3
+IndentWidth: 4
+Language: Cpp
+MaxEmptyLinesToKeep: 2
+NamespaceIndentation: All
+PointerAlignment: Right
+SpaceBeforeParens: ControlStatements
+Standard: Cpp11
+TabWidth: 4
+UseTab: Always
+
+...
