@@ -29,10 +29,12 @@ if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(Editor PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
 elseif(UNIX AND APPLE)
 	set_target_properties(Editor PROPERTIES
+#			RESOURCE Icon.icns
 			MACOSX_BUNDLE_BUNDLE_NAME "Editor"
 			MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
 			MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
-			MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/Scripts/MacOSXBundleInfo.plist.in"
+#			MACOSX_BUNDLE_ICON_FILE Icon.icns
+			MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/CMake/MacOSXBundleInfo.plist.in"
 			)
 endif()
 
