@@ -19,8 +19,9 @@ namespace acid
 		/// <summary>
 		/// Creates a new kinematic character controller.
 		/// </summary>
+		/// <param name="mass"> The mass of the object. </param>
 		/// <param name="friction"> The amount of surface friction. </param>
-		explicit KinematicCharacter(const float &friction = 0.2f);
+		explicit KinematicCharacter(const float &mass = 1.0f, const float &friction = 0.2f);
 
 		~KinematicCharacter();
 
@@ -35,6 +36,10 @@ namespace acid
 		bool InFrustum(const Frustum &frustum) override;
 
 		void ClearForces() override;
+
+		const float &GetMass() const { return m_mass; }
+
+		void SetMass(const float &mass);
 
 		const Vector3 &GetGravity() const { return m_gravity; }
 
@@ -72,8 +77,7 @@ namespace acid
 	protected:
 		void RecalculateMass() override;
 	private:
-		static btPairCachingGhostObject *CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape);
-
+		float m_mass;
 		Vector3 m_gravity;
 		Vector3 m_up;
 		float m_stepHeight;
@@ -82,7 +86,7 @@ namespace acid
 		float m_maxHeight;
 		bool m_interpolate;
 
-		btPairCachingGhostObject *m_ghostObject;
-		btKinematicCharacterController *m_controller;
+		std::unique_ptr<btPairCachingGhostObject> m_ghostObject;
+		std::unique_ptr<btKinematicCharacterController> m_controller;
 	};
 }

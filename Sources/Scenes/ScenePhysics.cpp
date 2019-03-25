@@ -50,6 +50,7 @@ namespace acid
 			if (body && body->getMotionState())
 			{
 				delete body->getMotionState();
+				body->setMotionState(nullptr);
 			}
 
 			m_dynamicsWorld->removeCollisionObject(obj);

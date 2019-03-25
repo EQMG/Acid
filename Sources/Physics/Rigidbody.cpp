@@ -24,7 +24,7 @@ namespace acid
 	{
 		btRigidBody *body = btRigidBody::upcast(m_body);
 
-		if (body && body->getMotionState())
+		if (body != nullptr && body->getMotionState() != nullptr)
 		{
 			delete body->getMotionState();
 		}
@@ -33,20 +33,36 @@ namespace acid
 
 		if (physics != nullptr)
 		{
-			// FIXME: Are these being deleted?
-			physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody);
+			physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 		}
 	}
 
 	void Rigidbody::Start()
 	{
+		if (m_rigidBody != nullptr)
+		{
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
+		}
+
 		CreateShape();
+		assert((m_shape == nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
+		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+		btVector3 localInertia = btVector3();
+
+		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+		if (m_mass != 0.0f)
+		{
+			m_shape->calculateLocalInertia(m_mass, localInertia);
+		}
+
 		auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
-		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
+		auto motionState = new btDefaultMotionState(worldTransform);
+		btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, motionState, m_shape.get(), localInertia);
 
-		m_motionState = std::make_unique<btDefaultMotionState>(worldTransform);
-		m_rigidBody = CreateRigidBody(m_mass, m_motionState.get(), m_shape.get());
+		m_rigidBody.reset(new btRigidBody(cInfo));
+	//	m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 		m_rigidBody->setWorldTransform(worldTransform);
 	//	m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
 		m_rigidBody->setFriction(m_friction);
@@ -56,8 +72,8 @@ namespace acid
 		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 		m_rigidBody->setUserPointer(this);
-		m_body = m_rigidBody;
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody);
+		m_body = m_rigidBody.get();
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
 		m_rigidBody->activate(true);
 		RecalculateMass();
 	}
@@ -187,24 +203,5 @@ namespace acid
 		}
 
 		m_rigidBody->setMassProps(m_mass, localInertia);
-	}
-
-	btRigidBody *Rigidbody::CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape)
-	{
-		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
-
-		btVector3 localInertia = btVector3();
-
-		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-		if (mass != 0.0f)
-		{
-			shape->calculateLocalInertia(mass, localInertia);
-		}
-
-		// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-		btRigidBody::btRigidBodyConstructionInfo cInfo(mass, motionState, shape, localInertia);
-		auto body = new btRigidBody(cInfo);
-	//	body->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-		return body;
 	}
 }

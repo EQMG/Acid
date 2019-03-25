@@ -8,8 +8,9 @@
 
 namespace acid
 {
-	KinematicCharacter::KinematicCharacter(const float &friction) :
+	KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
 		CollisionObject(friction),
+		m_mass(mass),
 		m_up(Vector3::Up),
 		m_stepHeight(0.0f),
 		m_fallSpeed(55.0f),
@@ -28,27 +29,49 @@ namespace acid
 		if (physics != nullptr)
 		{
 			// FIXME: Are these being deleted?
-			physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject);
-			physics->GetDynamicsWorld()->removeAction(m_controller);
+			physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
+			physics->GetDynamicsWorld()->removeAction(m_controller.get());
 		}
 	}
 
 	void KinematicCharacter::Start()
 	{
+		if (m_ghostObject != nullptr)
+		{
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
+		}
+
+		if (m_controller != nullptr)
+		{
+			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
+		}
+
 		CreateShape(true);
+		assert((m_shape != nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
+		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+		btVector3 localInertia = btVector3();
+
+		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+		if (m_mass != 0.0f)
+		{
+			m_shape->calculateLocalInertia(m_mass, localInertia);
+		}
+
 		auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
-		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
-
-		m_ghostObject = CreateGhostObject(1.0f, worldTransform, m_shape.get());
+		m_ghostObject.reset(new btPairCachingGhostObject());
+		m_ghostObject->setWorldTransform(worldTransform);
+		Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+		m_ghostObject->setCollisionShape(m_shape.get());
+		m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 		m_ghostObject->setFriction(m_friction);
 		m_ghostObject->setRollingFriction(m_frictionRolling);
 		m_ghostObject->setSpinningFriction(m_frictionSpinning);
 		m_ghostObject->setUserPointer(this);
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject, btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
-		m_body = m_ghostObject;
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
+		m_body = m_ghostObject.get();
 
-		m_controller = new btKinematicCharacterController(m_ghostObject, static_cast<btConvexShape *>(m_shape.get()), 0.03f);
+		m_controller.reset(new btKinematicCharacterController(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f));
 		m_controller->setGravity(Collider::Convert(m_gravity));
 		m_controller->setUp(Collider::Convert(m_up));
 		m_controller->setStepHeight(m_stepHeight);
@@ -56,7 +79,7 @@ namespace acid
 		m_controller->setJumpSpeed(m_jumpSpeed);
 		m_controller->setMaxJumpHeight(m_maxHeight);
 		m_controller->setUpInterpolate(m_interpolate);
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller);
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
 	}
 
 	void KinematicCharacter::Update()
@@ -113,6 +136,12 @@ namespace acid
 	void KinematicCharacter::ClearForces()
 	{
 	//	m_controller->clearForces();
+	}
+
+	void KinematicCharacter::SetMass(const float &mass)
+	{
+		m_mass = mass;
+		RecalculateMass();
 	}
 
 	void KinematicCharacter::SetGravity(const Vector3 &gravity)
@@ -174,25 +203,6 @@ namespace acid
 
 	void KinematicCharacter::RecalculateMass()
 	{
-	}
-
-	btPairCachingGhostObject *KinematicCharacter::CreateGhostObject(float mass, const btTransform &startTransform, btCollisionShape *shape)
-	{
-		assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
-
-		btVector3 localInertia = btVector3();
-
-		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-		if (mass != 0.0f)
-		{
-			shape->calculateLocalInertia(mass, localInertia);
-		}
-
-		auto ghostObject = new btPairCachingGhostObject();
-		ghostObject->setWorldTransform(startTransform);
-		Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-		ghostObject->setCollisionShape(shape);
-		ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
-		return ghostObject;
+		// TODO
 	}
 }

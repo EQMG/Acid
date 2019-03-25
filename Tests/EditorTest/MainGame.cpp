@@ -82,9 +82,13 @@ namespace test
 	MainGame::~MainGame()
 	{
 		Log::Out("[Game] Destructor\n");
-		//	Files::Get()->ClearSearchPath();
+	//	Files::Get()->ClearSearchPath();
 
-		//	Renderer::Get()->SetManager(nullptr);
+		// Deregisters components.
+		auto &componentRegister = Scenes::Get()->GetComponentRegister();
+		componentRegister.Remove("PlayerFps");
+
+	//	Renderer::Get()->SetManager(nullptr);
 		Scenes::Get()->SetScene(nullptr);
 		Uis::Get()->GetContainer().ClearChildren();
 	}

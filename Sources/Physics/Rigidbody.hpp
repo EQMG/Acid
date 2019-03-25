@@ -65,8 +65,6 @@ namespace acid
 	protected:
 		void RecalculateMass() override;
 	private:
-		static btRigidBody *CreateRigidBody(float mass, btDefaultMotionState *motionState, btCollisionShape *shape);
-
 		float m_mass;
 		Vector3 m_gravity;
 
@@ -76,7 +74,6 @@ namespace acid
 		Vector3 m_linearVelocity;
 		Vector3 m_angularVelocity;
 
-		std::unique_ptr<btDefaultMotionState> m_motionState;
-		btRigidBody *m_rigidBody;
+		std::unique_ptr<btRigidBody> m_rigidBody;
 	};
 }

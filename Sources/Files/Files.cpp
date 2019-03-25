@@ -289,7 +289,7 @@ namespace acid
 		std::vector<uint8_t> data(size);
 		PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
-		if (PHYSFS_close(fsFile) != 0)
+		if (PHYSFS_close(fsFile) == 0)
 		{
 			Log::Error("Error while closing file %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		}
