@@ -51,6 +51,7 @@ set(_temp_acid_headers
 		Helpers/NonCopyable.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
+		Helpers/ThreadPool.hpp
 		Helpers/TypeTraits.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
@@ -209,8 +210,6 @@ set(_temp_acid_headers
 		Textures/Cubemap.hpp
 		Textures/DepthStencil.hpp
 		Textures/Texture.hpp
-		Threads/Thread.hpp
-		Threads/ThreadPool.hpp
 		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
@@ -269,6 +268,7 @@ set(_temp_acid_sources
 		Guis/Gui.cpp
 		Guis/RendererGuis.cpp
 		Helpers/String.cpp
+		Helpers/ThreadPool.cpp
 		Inputs/AxisButton.cpp
 		Inputs/AxisCompound.cpp
 		Inputs/AxisJoystick.cpp
@@ -404,8 +404,6 @@ set(_temp_acid_sources
 		Textures/Cubemap.cpp
 		Textures/DepthStencil.cpp
 		Textures/Texture.cpp
-		Threads/Thread.cpp
-		Threads/ThreadPool.cpp
 		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp

@@ -8,12 +8,21 @@ namespace acid
 	FileWatcher::FileWatcher(std::string path, const Time &delay) :
 		m_path(std::move(path)),
 		m_delay(delay),
-		m_thread(std::thread(&FileWatcher::QueueLoop, this)),
+		m_thread(&FileWatcher::QueueLoop, this),
 		m_running(true)
 	{
 		for (auto &file : FileSystem::FilesInPath(m_path))
 		{
 			m_paths[file] = FileSystem::LastModified(file);
+		}
+	}
+
+	FileWatcher::~FileWatcher()
+	{
+		if (m_thread.joinable())
+		{
+			m_running = false;
+			m_thread.join();
 		}
 	}
 
@@ -25,13 +34,16 @@ namespace acid
 			std::this_thread::sleep_for(std::chrono::microseconds(m_delay.AsMicroseconds()));
 
 			// Check if one of the old files was erased
-			for (auto &el : m_paths)
+			for (auto it = m_paths.begin(); it != m_paths.end();)
 			{
-				if (!FileSystem::Exists(el.first))
+				if (!FileSystem::Exists(it->first))
 				{
-					m_onChange(el.first, Status::Erased);
-					m_paths.erase(el.first);
+					m_onChange(it->first, Status::Erased);
+					it = m_paths.erase(it);
+					continue;
 				}
+
+				it++;
 			}
 
 			// Check if a file was created or modified

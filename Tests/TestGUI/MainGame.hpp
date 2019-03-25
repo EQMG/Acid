@@ -1,9 +1,8 @@
 #pragma once
 
 #include <Engine/Game.hpp>
+#include <Files/FileWatcher.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/ButtonCompound.hpp>
-#include <Inputs/ButtonJoystick.hpp>
 
 using namespace acid;
 
@@ -22,6 +21,8 @@ namespace test
 		void Update() override;
 
 	private:
+		FileWatcher m_fileWatcher;
+
 		ButtonKeyboard m_buttonFullscreen;
 		ButtonKeyboard m_buttonScreenshot;
 		ButtonKeyboard m_buttonExit;

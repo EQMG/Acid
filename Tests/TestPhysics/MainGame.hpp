@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Game.hpp>
-#include <Files/FileWatcher.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include "Configs/ConfigManager.hpp"
 
@@ -23,7 +22,6 @@ namespace test
 
 	private:
 		std::unique_ptr<ConfigManager> m_configs;
-	//	FileWatcher m_fileWatcher;
 
 		ButtonKeyboard m_buttonFullscreen;
 		ButtonKeyboard m_buttonScreenshot;

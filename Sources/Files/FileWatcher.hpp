@@ -24,6 +24,8 @@ namespace acid
 		/// <param name="delay"> How frequently to check for changes. </param>
 		explicit FileWatcher(std::string path, const Time &delay = Time::Seconds(5.0f));
 
+		~FileWatcher();
+
 		const std::string &GetPath() const { return m_path; }
 
 		void SetPath(const std::string &path) { m_path = path; }
