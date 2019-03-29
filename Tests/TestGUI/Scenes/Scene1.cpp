@@ -20,6 +20,14 @@ Scene1::Scene1() :
 	m_overlayDebug(&Uis::Get()->GetContainer()),
 	m_uiNavigation(&Uis::Get()->GetContainer())
 {
+	m_buttonPause.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
+		{
+			TogglePause();
+		}
+	};
+	
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 	m_uiNavigation.SetAlphaDriver(new DriverConstant<float>(0.0f));
@@ -38,10 +46,6 @@ void Scene1::Start()
 
 void Scene1::Update()
 {
-	if (m_buttonPause.WasDown())
-	{
-		TogglePause();
-	}
 }
 
 bool Scene1::IsPaused() const

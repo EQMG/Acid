@@ -23,11 +23,17 @@ public:
 	/// Gets if the key is down and was not down before. Key press recognized as one click.
 	/// </summary>
 	/// <returns> Is the key down and was not down before? </returns>
-	virtual bool WasDown() = 0;
+	bool WasDown()
+	{
+		bool stillDown = m_wasDown && IsDown();
+		m_wasDown = IsDown();
+		return m_wasDown == !stillDown;
+	}
 
-	Delegate<void(InputAction, BitMask < InputMod > )> &GetOnButton() { return m_onButton; }
+	Delegate<void(InputAction, BitMask<InputMod>)> &GetOnButton() { return m_onButton; }
 
 protected:
-	Delegate<void(InputAction, BitMask < InputMod > )> m_onButton;
+	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
+	bool m_wasDown;
 };
 }

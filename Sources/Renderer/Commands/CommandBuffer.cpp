@@ -10,7 +10,7 @@ CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType
 	m_running(false)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-	auto commandPool = Renderer::Get()->GetCommandPool();
+	auto commandPool = Renderer::Get()->GetCommandPool(); // TODO: Use std::this_thread::get_id() and have a command pool per thread map.
 
 	VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 	commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;

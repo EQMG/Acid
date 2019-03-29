@@ -3,8 +3,7 @@
 namespace acid
 {
 ButtonKeyboard::ButtonKeyboard(const Key &key) :
-	m_key(key),
-	m_wasDown(false)
+	m_key(key)
 {
 	Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
@@ -18,12 +17,5 @@ ButtonKeyboard::ButtonKeyboard(const Key &key) :
 bool ButtonKeyboard::IsDown() const
 {
 	return Keyboard::Get()->GetKey(m_key) != InputAction::Release;
-}
-
-bool ButtonKeyboard::WasDown()
-{
-	bool stillDown = m_wasDown && IsDown();
-	m_wasDown = IsDown();
-	return m_wasDown == !stillDown;
 }
 }

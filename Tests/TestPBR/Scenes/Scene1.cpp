@@ -34,6 +34,13 @@ Scene1::Scene1() :
 	m_paused(false),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
+	m_buttonPause.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
+		{
+			m_paused = !m_paused;
+		}
+	};
 }
 
 void Scene1::Start()
@@ -82,10 +89,6 @@ void Scene1::Start()
 
 void Scene1::Update()
 {
-	if (m_buttonPause.WasDown())
-	{
-		m_paused = !m_paused;
-	}
 }
 
 bool Scene1::IsPaused() const

@@ -59,10 +59,7 @@ MainGame::MainGame() :
 	{
 		if (action == InputAction::Press)
 		{
-			if (m_buttonExit.WasDown())
-			{
-				Engine::Get()->RequestClose(false);
-			}
+			Engine::Get()->RequestClose(false);
 		}
 	};
 

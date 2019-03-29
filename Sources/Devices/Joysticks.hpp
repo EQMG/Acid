@@ -6,7 +6,7 @@
 
 namespace acid
 {
-enum JoystickHat :
+enum class JoystickHat :
 	int32_t
 {
 	Centered = 0,

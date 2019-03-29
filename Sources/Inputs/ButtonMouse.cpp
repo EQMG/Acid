@@ -3,8 +3,7 @@
 namespace acid
 {
 ButtonMouse::ButtonMouse(const MouseButton &button) :
-	m_button(button),
-	m_wasDown(false)
+	m_button(button)
 {
 	Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
@@ -18,12 +17,5 @@ ButtonMouse::ButtonMouse(const MouseButton &button) :
 bool ButtonMouse::IsDown() const
 {
 	return Mouse::Get()->GetButton(m_button) != InputAction::Release;
-}
-
-bool ButtonMouse::WasDown()
-{
-	bool stillDown = m_wasDown && IsDown();
-	m_wasDown = IsDown();
-	return m_wasDown == !stillDown;
 }
 }

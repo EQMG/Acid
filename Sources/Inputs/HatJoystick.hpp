@@ -20,13 +20,11 @@ public:
 	/// <param name="port"> The joystick port. </param>
 	/// <param name="hat"> The hat that will be checked. </param>
 	/// <param name="hatFlag"> If this bit is found the hat will trigger <seealso cref="#IsDown()"/>. </param>
-	HatJoystick(const uint32_t &port, const uint32_t &hat, const JoystickHat &hatFlag = JoystickHat::Centered);
+	HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMask<JoystickHat> &hatFlags = JoystickHat::Centered);
 
 	float GetAmount() const override;
 
 	bool IsDown() const override;
-
-	bool WasDown() override;
 
 	const uint32_t &GetPort() const { return m_port; }
 
@@ -36,14 +34,13 @@ public:
 
 	void SetHat(const uint32_t &hat) { m_hat = hat; }
 
-	const JoystickHat &GetHatFlag() const { return m_hatFlag; }
+	const BitMask<JoystickHat> &GetHatFlags() const { return m_hatFlags; }
 
-	void SetHatFlag(const JoystickHat &hatFlag) { m_hatFlag = hatFlag; }
+	void SetHatFlags(const JoystickHat &hatFlags) { m_hatFlags = hatFlags; }
 
 private:
 	uint32_t m_port;
 	uint32_t m_hat;
-	JoystickHat m_hatFlag;
-	bool m_wasDown;
+	BitMask<JoystickHat> m_hatFlags;
 };
 }

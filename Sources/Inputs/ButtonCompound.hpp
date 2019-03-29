@@ -16,11 +16,12 @@ public:
 	/// <summary>
 	/// A template used to create a compound button of a single type.
 	/// </summary>
+	/// <param name="useAnd"> If <seealso cref="#IsDown()"/> will check if all buttons are down instead of just one. </param>
 	/// <param name="args"> The arguments to pass to T. </param>
 	/// <param name="T"> The type of buttons to create. </param>
 	/// <param name="Args"> The values passed to each button. </param>
 	template<class T, typename... Args>
-	static ButtonCompound *Create(Args &&... args)
+	static ButtonCompound *Create(const bool &useAnd, Args &&... args)
 	{
 		std::vector<IButton *> buttons;
 
@@ -29,7 +30,7 @@ public:
 			buttons.emplace_back(new T(x));
 		}
 
-		return new ButtonCompound(buttons);
+		return new ButtonCompound(buttons, useAnd);
 	}
 
 	/// <summary>
@@ -41,11 +42,8 @@ public:
 
 	bool IsDown() const override;
 
-	bool WasDown() override;
-
 private:
 	std::vector<std::unique_ptr<IButton>> m_buttons;
 	bool m_useAnd;
-	bool m_wasDown;
 };
 }

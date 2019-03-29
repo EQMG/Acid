@@ -189,7 +189,16 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 
 	//enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
-	//enabledFeatures.fragmentStoresAndAtomics = VK_TRUE;
+
+	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
+	{
+		enabledFeatures.fragmentStoresAndAtomics = VK_TRUE;
+	}
+	else
+	{
+		Log::Error("Selected GPU does not support fragment stores and atomics!");
+	}
+
 	//enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
 	//enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
 	//enabledFeatures.shaderClipDistance = VK_TRUE;

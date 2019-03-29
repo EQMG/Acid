@@ -19,8 +19,7 @@ public:
 	~ThreadPool();
 
 	template<class F, class... Args>
-	auto Enqueue(F &&f, Args &&... args) ->
-	std::future<typename std::result_of<F(Args...)>::type>;
+	decltype(auto) Enqueue(F &&f, Args &&... args);
 
 	static const uint32_t HardwareConcurrency;
 private:
@@ -33,8 +32,7 @@ private:
 };
 
 template<class F, class ... Args>
-auto ThreadPool::Enqueue(F &&f, Args &&... args) ->
-std::future<typename std::result_of<F(Args...)>::type>
+decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 {
 	using return_type = typename std::result_of<F(Args...)>::type;
 

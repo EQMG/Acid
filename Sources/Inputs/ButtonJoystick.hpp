@@ -20,8 +20,6 @@ public:
 
 	bool IsDown() const override;
 
-	bool WasDown() override;
-
 	const uint32_t &GetPort() const { return m_port; }
 
 	void SetPort(const uint32_t &port) { m_port = port; }
@@ -33,6 +31,5 @@ public:
 private:
 	uint32_t m_port;
 	uint32_t m_button;
-	bool m_wasDown;
 };
 }

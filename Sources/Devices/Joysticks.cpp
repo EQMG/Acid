@@ -143,7 +143,7 @@ BitMask<JoystickHat> Joysticks::GetHat(const uint32_t &port, const uint32_t &hat
 
 	if (!joystick || hat > joystick->m_hats.size())
 	{
-		return Centered;
+		return JoystickHat::Centered;
 	}
 
 	return joystick->m_hats[hat];

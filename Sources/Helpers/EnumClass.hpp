@@ -68,7 +68,7 @@ struct BitMask
 	}
 
 	constexpr BitMask(const Enumerator<T> &enumerator) :
-		m_value(static_cast<underlying_type>(enumerator.value))
+		m_value(static_cast<underlying_type>(enumerator.m_value))
 	{
 	}
 
@@ -82,7 +82,7 @@ struct BitMask
 		metadata.Set(m_value);
 	}
 
-	constexpr explicit operator bool() const
+	constexpr operator bool() const
 	{
 		return m_value != 0;
 	}
@@ -140,7 +140,7 @@ constexpr
 typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type
 operator&(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
-	return BitMask<T>{static_cast<T>(lhs.value & rhs.value)};
+	return BitMask<T>{static_cast<T>(lhs.m_value & rhs.m_value)};
 }
 
 /**
@@ -749,7 +749,7 @@ constexpr
 typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type
 operator!=(const T &lhs, const Enumerator<T> &rhs)
 {
-	return lhs != rhs.value;
+	return lhs != rhs.m_value;
 }
 
 /**

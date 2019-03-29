@@ -20,14 +20,11 @@ public:
 
 	bool IsDown() const override;
 
-	bool WasDown() override;
-
 	const MouseButton &GetButton() const { return m_button; }
 
 	void SetButton(const MouseButton &button) { m_button = button; }
 
 private:
 	MouseButton m_button;
-	bool m_wasDown;
 };
 }

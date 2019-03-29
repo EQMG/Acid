@@ -48,11 +48,45 @@ static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 Scene1::Scene1() :
 	Scene(new CameraFps()),
 	m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
-	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(Key::Escape, Key::M)),
-	m_buttonSave(Key::K),
+	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
+	m_buttonSpawnSphere.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
+		{
+			Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+
+			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
+			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
+			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
+			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
+			sphere->AddComponent<ColliderSphere>();
+			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
+			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
+			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
+			sphere->AddComponent<MeshRender>();
+			sphere->AddComponent<ShadowRender>();
+
+			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
+			//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
+
+			//auto collisionObject = sphere->GetComponent<CollisionObject>();
+			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
+			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+		}
+	};
+
+	m_buttonCaptureMouse->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
+		{
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
+		}
+	};
+
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
@@ -221,76 +255,6 @@ void Scene1::Start()
 
 void Scene1::Update()
 {
-	if (m_buttonSpawnSphere.WasDown())
-	{
-		Vector3 cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-		Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-
-		auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
-		sphere->AddComponent<HeightDespawn>();
-		sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
-		auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-		rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
-		sphere->AddComponent<ColliderSphere>();
-		//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
-		sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.12f, 0.8f);
-		sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
-		//sphere->AddComponent<NameTag>("Sphere", 0.6f);
-		sphere->AddComponent<MeshRender>();
-		sphere->AddComponent<ShadowRender>();
-
-		//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
-		//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
-
-		//auto collisionObject = sphere->GetComponent<CollisionObject>();
-		//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
-		//	Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
-		//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
-		//	Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
-	}
-
-	if (m_buttonCaptureMouse->WasDown())
-	{
-		Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
-	}
-
-	if (m_buttonSave.WasDown())
-	{
-		// TODO: Threading.
-		std::thread t([this]()
-		{
-			auto sceneFile = File("Scene1.yaml", new Yaml());
-			auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
-
-			for (auto &entity : GetStructure()->QueryAll())
-			{
-				auto entityNode = sceneNode->AddChild(new Metadata());
-				entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
-				auto transformNode = entityNode->AddChild(new Metadata("Transform"));
-				auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-				entity->GetLocalTransform().Encode(*transformNode);
-
-				for (auto &component : entity->GetComponents())
-				{
-					//if (component->IsFromPrefab())
-					//{
-					//	continue;
-					//}
-
-					auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
-
-					if (componentName)
-					{
-						auto child = componentsNode->AddChild(new Metadata(*componentName));
-						component->Encode(*child);
-					}
-				}
-			}
-
-			sceneFile.Write();
-		});
-		t.detach();
-	}
 }
 
 bool Scene1::IsPaused() const

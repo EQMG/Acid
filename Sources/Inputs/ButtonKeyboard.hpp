@@ -20,14 +20,11 @@ public:
 
 	bool IsDown() const override;
 
-	bool WasDown() override;
-
 	const Key &GetKey() const { return m_key; }
 
 	void SetKey(const Key &key) { m_key = key; }
 
 private:
 	Key m_key;
-	bool m_wasDown;
 };
 }

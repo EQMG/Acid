@@ -51,7 +51,7 @@ struct Invoker<void, TArgs...>
 };
 
 template<typename TReturnType, typename... TArgs>
-class Delegate<TReturnType(TArgs ...)> final
+class Delegate<TReturnType(TArgs ...)>
 {
 public:
 	using Invoker = acid::Invoker<TReturnType, TArgs...>;
