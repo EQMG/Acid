@@ -7,15 +7,16 @@ using namespace acid;
 
 namespace test
 {
-	class Panels :
-		public UiObject
-	{
-	public:
-		explicit Panels(UiObject *parent);
+class Panels :
+	public UiObject
+{
+public:
+	explicit Panels(UiObject *parent);
 
-		void UpdateObject() override;
-	private:
-		Hierarchy m_hierarchy;
-		Inspector m_inspector;
-	};
+	void UpdateObject() override;
+
+private:
+	Hierarchy m_hierarchy;
+	Inspector m_inspector;
+};
 }

@@ -9,33 +9,33 @@ using namespace acid;
 
 namespace test
 {
-	class PlayerFps :
-		public Component
-	{
-	public:
-		PlayerFps();
+class PlayerFps :
+	public Component
+{
+public:
+	PlayerFps();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+	void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+	void Encode(Metadata &metadata) const override;
 
-	private:
-		Vector3 m_velocity;
-		bool m_jumping;
-		bool m_noclipEnabled;
+private:
+	Vector3 m_velocity;
+	bool m_jumping;
+	bool m_noclipEnabled;
 
-		AxisCompound m_inputForward;
-		AxisCompound m_inputStrafe;
-		ButtonCompound m_inputSprint;
-		ButtonCompound m_inputJump;
-		ButtonCompound m_inputCrouch;
-		ButtonCompound m_toggleNoclip;
+	AxisCompound m_inputForward;
+	AxisCompound m_inputStrafe;
+	ButtonCompound m_inputSprint;
+	ButtonCompound m_inputJump;
+	ButtonCompound m_inputCrouch;
+	ButtonCompound m_toggleNoclip;
 
-		Vector3 m_amountMove;
-		Vector3 m_amountRotate;
-	};
+	Vector3 m_amountMove;
+	Vector3 m_amountRotate;
+};
 }

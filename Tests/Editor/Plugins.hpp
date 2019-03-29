@@ -10,31 +10,31 @@ struct cr_plugin;
 
 namespace test
 {
+/// <summary>
+/// A module used for managing the world.
+/// </summary>
+class Plugins :
+	public Module
+{
+public:
 	/// <summary>
-	/// A module used for managing the world.
+	/// Gets this engine instance.
 	/// </summary>
-	class Plugins :
-		public Module
-	{
-	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static Plugins *Get() { return Engine::Get()->GetModuleManager().Get<Plugins>(); }
+	/// <returns> The current module instance. </returns>
+	static Plugins *Get() { return Engine::Get()->GetModuleManager().Get<Plugins>(); }
 
-		Plugins();
+	Plugins();
 
-		~Plugins();
+	~Plugins();
 
-		void Update() override;
+	void Update() override;
 
-	private:
-		std::string m_loadedPath;
-		FileWatcher m_watcher;
-		std::unique_ptr<cr_plugin> m_plugin;
-		bool m_update;
+private:
+	std::string m_loadedPath;
+	FileWatcher m_watcher;
+	std::unique_ptr<cr_plugin> m_plugin;
+	bool m_update;
 
-		Panels m_panels;
-	};
+	Panels m_panels;
+};
 }

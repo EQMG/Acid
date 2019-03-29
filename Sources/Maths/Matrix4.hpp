@@ -6,331 +6,331 @@
 
 namespace acid
 {
-	class Matrix2;
-	class Matrix3;
+class Matrix2;
+class Matrix3;
+
+/// <summary>
+/// Holds a row major 4x4 matrix.
+/// </summary>
+class ACID_EXPORT Matrix4
+{
+public:
+	/// <summary>
+	/// Constructor for Matrix4. The matrix is initialised to the identity.
+	/// </summary>
+	/// <param name="diagonal"> The value set to the diagonals. </param>
+	Matrix4(const float &diagonal = 1.0f);
 
 	/// <summary>
-	/// Holds a row major 4x4 matrix.
+	/// Constructor for Matrix4.
 	/// </summary>
-	class ACID_EXPORT Matrix4
+	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	Matrix4(const Matrix2 &source);
+
+	/// <summary>
+	/// Constructor for Matrix4.
+	/// </summary>
+	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	Matrix4(const Matrix3 &source);
+
+	/// <summary>
+	/// Constructor for Matrix4.
+	/// </summary>
+	/// <param name="source"> Creates this matrix out of a 16 element array. </param>
+	explicit Matrix4(const float source[16]);
+
+	/// <summary>
+	/// Constructor for Matrix4.
+	/// </summary>
+	/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
+	explicit Matrix4(const Vector4 source[4]);
+
+	/// <summary>
+	/// Adds this matrix to another matrix.
+	/// </summary>
+	/// <param name="other"> The other matrix. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Add(const Matrix4 &other) const;
+
+	/// <summary>
+	/// Subtracts this matrix to another matrix.
+	/// </summary>
+	/// <param name="other"> The other matrix. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Subtract(const Matrix4 &other) const;
+
+	/// <summary>
+	/// Multiplies this matrix by another matrix.
+	/// </summary>
+	/// <param name="other"> The other matrix. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Multiply(const Matrix4 &other) const;
+
+	/// <summary>
+	/// Multiplies this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The other vector. </param>
+	/// <returns> The resultant vector. </returns>
+	Vector4 Multiply(const Vector4 &other) const;
+
+	/// <summary>
+	/// Divides this matrix by another matrix.
+	/// </summary>
+	/// <param name="other"> The other matrix. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Divide(const Matrix4 &other) const;
+
+	/// <summary>
+	/// Transforms this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The other vector. </param>
+	/// <returns> The resultant vector. </returns>
+	Vector4 Transform(const Vector4 &other) const;
+
+	/// <summary>
+	/// Translates this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The vector. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Translate(const Vector2 &other) const;
+
+	/// <summary>
+	/// Translates this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The vector. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Translate(const Vector3 &other) const;
+
+	/// <summary>
+	/// Scales this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The other vector. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Scale(const Vector3 &other) const;
+
+	/// <summary>
+	/// Scales this matrix by a vector.
+	/// </summary>
+	/// <param name="other"> The other vector. </param>
+	/// <returns> The resultant matrix. </returns>
+	Matrix4 Scale(const Vector4 &other) const;
+
+	/// <summary>
+	/// Rotates this matrix around the given axis the specified angle.
+	/// </summary>
+	/// <param name="angle"> The angle, in radians. </param>
+	/// <param name="axis"> The vector representing the rotation axis. </param>
+	/// <returns> The rotated matrix. </returns>
+	Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
+
+	/// <summary>
+	/// Inverts this matrix.
+	/// </summary>
+	/// <returns> The inverted matrix. </returns>
+	Matrix4 Negate() const;
+
+	/// <summary>
+	/// Inverses this matrix.
+	/// </summary>
+	/// <returns> The inversed matrix. </returns>
+	Matrix4 Inverse() const;
+
+	/// <summary>
+	/// Transposes this matrix.
+	/// </summary>
+	/// <returns> The transposed matrix. </returns>
+	Matrix4 Transpose() const;
+
+	/// <summary>
+	/// Takes the determinant of this matrix.
+	/// </summary>
+	/// <returns> The determinant. </returns>
+	float Determinant() const;
+
+	/// <summary>
+	/// Gets the submatrix of this matrix.
+	/// </summary>
+	/// <returns> The submatrix. </returns>
+	Matrix3 GetSubmatrix(const int32_t &row, const int32_t &col) const;
+
+	/// <summary>
+	/// Creates a new transformation matrix for a object in 3d space.
+	/// </summary>
+	/// <param name="translation"> Translation amount the XYZ. </param>
+	/// <param name="rotation"> Rotation amount (Pitch, Yaw, Roll). </param>
+	/// <param name="scale"> How much to scale the matrix. </param>
+	/// <returns> Returns the transformation matrix. </returns>
+	static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
+
+	/// <summary>
+	/// Creates a new perspective matrix.
+	/// </summary>
+	/// <param name="fov"> The cameras FOV. </param>
+	/// <param name="aspectRatio"> The cameras aspect ratio. </param>
+	/// <param name="zNear"> The cameras near plane. </param>
+	/// <param name="zFar"> The cameras far plane. </param>
+	/// <returns> The transformation matrix. </returns>
+	static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar);
+
+	/// <summary>
+	/// Creates a new perspective matrix with a infinite view distance.
+	/// </summary>
+	/// <param name="fov"> The cameras FOV. </param>
+	/// <param name="aspectRatio"> The cameras aspect ratio. </param>
+	/// <param name="zNear"> The cameras near plane. </param>
+	/// <returns> The transformation matrix. </returns>
+	static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear);
+
+	/// <summary>
+	/// Creates a new orthographic matrix.
+	/// </summary>
+	/// <param name="left"> The left plane. </param>
+	/// <param name="right"> The right plane. </param>
+	/// <param name="bottom"> The bottom plane. </param>
+	/// <param name="top"> The top plane. </param>
+	/// <param name="zNear"> The near plane. </param>
+	/// <param name="zFar"> The far plane. </param>
+	/// <returns> The orthographic matrix. </returns>
+	static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
+
+	/// <summary>
+	/// Creates a new frustum matrix.
+	/// </summary>
+	/// <param name="left"> The left plane. </param>
+	/// <param name="right"> The right plane. </param>
+	/// <param name="bottom"> The bottom plane. </param>
+	/// <param name="top"> The top plane. </param>
+	/// <param name="zNear"> The near plane. </param>
+	/// <param name="zFar"> The far plane. </param>
+	/// <returns> The frustum matrix. </returns>
+	static Matrix4 FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
+
+	/// <summary>
+	/// Creates a new view matrix.
+	/// </summary>
+	/// <param name="position"> The cameras position. </param>
+	/// <param name="rotation"> The cameras rotation. </param>
+	/// <returns> The view matrix. </returns>
+	static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
+
+	/// <summary>
+	/// Projects a 3D world point into screen space.
+	/// </summary>
+	/// <param name="worldSpace"> The point in world space. </param>
+	/// <param name="modelMatrix"> The points model matrix. </param>
+	/// <param name="viewMatrix"> The cameras view matrix. </param>
+	/// <param name="projectionMatrix"> The cameras projection matrix. </param>
+	/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
+	static Vector3 Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+
+	/// <summary>
+	/// Unprojects a screen space point into a 3D world point.
+	/// </summary>
+	/// <param name="screenSpace"> The point in screen space. </param>
+	/// <param name="modelMatrix"> The points model matrix. </param>
+	/// <param name="viewMatrix"> The cameras view matrix. </param>
+	/// <param name="projectionMatrix"> The cameras projection matrix. </param>
+	/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
+	static Vector3 Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+
+	/// <summary>
+	/// Creates a new matrix that has the camera looking at the target.
+	/// </summary>
+	/// <param name="eye"> The source position. </param>
+	/// <param name="centre"> The target position. </param>
+	/// <param name="up"> What view direction is up. </param>
+	/// <returns> Returns the matrix. </returns>
+	static Matrix4 LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up = Vector3::Up);
+
+	void Decode(const Metadata &metadata);
+
+	void Encode(Metadata &metadata) const;
+
+	bool operator==(const Matrix4 &other) const;
+
+	bool operator!=(const Matrix4 &other) const;
+
+	Matrix4 operator-() const;
+
+	const Vector4 &operator[](const uint32_t &index) const;
+
+	Vector4 &operator[](const uint32_t &index);
+
+	ACID_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
+
+	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
+
+	ACID_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
+
+	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
+
+	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
+
+	Matrix4 &operator+=(const Matrix4 &other);
+
+	Matrix4 &operator-=(const Matrix4 &other);
+
+	Matrix4 &operator*=(const Matrix4 &other);
+
+	Matrix4 &operator/=(const Matrix4 &other);
+
+	Matrix4 &operator*=(const Vector4 &other);
+
+	Matrix4 &operator/=(const Vector4 &other);
+
+	Matrix4 &operator*=(const float &other);
+
+	Matrix4 &operator/=(const float &other);
+
+	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
+
+	std::string ToString() const;
+
+	static const Matrix4 Identity;
+	static const Matrix4 Zero;
+
+	union
 	{
-	public:
-		/// <summary>
-		/// Constructor for Matrix4. The matrix is initialised to the identity.
-		/// </summary>
-		/// <param name="diagonal"> The value set to the diagonals. </param>
-		Matrix4(const float &diagonal = 1.0f);
-
-		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a existing one. </param>
-		Matrix4(const Matrix2 &source);
-
-		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a existing one. </param>
-		Matrix4(const Matrix3 &source);
-
-		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a 16 element array. </param>
-		explicit Matrix4(const float source[16]);
-
-		/// <summary>
-		/// Constructor for Matrix4.
-		/// </summary>
-		/// <param name="source"> Creates this matrix out of a 4 vector array. </param>
-		explicit Matrix4(const Vector4 source[4]);
-
-		/// <summary>
-		/// Adds this matrix to another matrix.
-		/// </summary>
-		/// <param name="other"> The other matrix. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Add(const Matrix4 &other) const;
-
-		/// <summary>
-		/// Subtracts this matrix to another matrix.
-		/// </summary>
-		/// <param name="other"> The other matrix. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Subtract(const Matrix4 &other) const;
-
-		/// <summary>
-		/// Multiplies this matrix by another matrix.
-		/// </summary>
-		/// <param name="other"> The other matrix. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Multiply(const Matrix4 &other) const;
-
-		/// <summary>
-		/// Multiplies this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
-		Vector4 Multiply(const Vector4 &other) const;
-
-		/// <summary>
-		/// Divides this matrix by another matrix.
-		/// </summary>
-		/// <param name="other"> The other matrix. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Divide(const Matrix4 &other) const;
-
-		/// <summary>
-		/// Transforms this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant vector. </returns>
-		Vector4 Transform(const Vector4 &other) const;
-
-		/// <summary>
-		/// Translates this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The vector. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Translate(const Vector2 &other) const;
-
-		/// <summary>
-		/// Translates this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The vector. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Translate(const Vector3 &other) const;
-
-		/// <summary>
-		/// Scales this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Scale(const Vector3 &other) const;
-
-		/// <summary>
-		/// Scales this matrix by a vector.
-		/// </summary>
-		/// <param name="other"> The other vector. </param>
-		/// <returns> The resultant matrix. </returns>
-		Matrix4 Scale(const Vector4 &other) const;
-
-		/// <summary>
-		/// Rotates this matrix around the given axis the specified angle.
-		/// </summary>
-		/// <param name="angle"> The angle, in radians. </param>
-		/// <param name="axis"> The vector representing the rotation axis. </param>
-		/// <returns> The rotated matrix. </returns>
-		Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
-
-		/// <summary>
-		/// Inverts this matrix.
-		/// </summary>
-		/// <returns> The inverted matrix. </returns>
-		Matrix4 Negate() const;
-
-		/// <summary>
-		/// Inverses this matrix.
-		/// </summary>
-		/// <returns> The inversed matrix. </returns>
-		Matrix4 Inverse() const;
-
-		/// <summary>
-		/// Transposes this matrix.
-		/// </summary>
-		/// <returns> The transposed matrix. </returns>
-		Matrix4 Transpose() const;
-
-		/// <summary>
-		/// Takes the determinant of this matrix.
-		/// </summary>
-		/// <returns> The determinant. </returns>
-		float Determinant() const;
-
-		/// <summary>
-		/// Gets the submatrix of this matrix.
-		/// </summary>
-		/// <returns> The submatrix. </returns>
-		Matrix3 GetSubmatrix(const int32_t &row, const int32_t &col) const;
-
-		/// <summary>
-		/// Creates a new transformation matrix for a object in 3d space.
-		/// </summary>
-		/// <param name="translation"> Translation amount the XYZ. </param>
-		/// <param name="rotation"> Rotation amount (Pitch, Yaw, Roll). </param>
-		/// <param name="scale"> How much to scale the matrix. </param>
-		/// <returns> Returns the transformation matrix. </returns>
-		static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
-
-		/// <summary>
-		/// Creates a new perspective matrix.
-		/// </summary>
-		/// <param name="fov"> The cameras FOV. </param>
-		/// <param name="aspectRatio"> The cameras aspect ratio. </param>
-		/// <param name="zNear"> The cameras near plane. </param>
-		/// <param name="zFar"> The cameras far plane. </param>
-		/// <returns> The transformation matrix. </returns>
-		static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar);
-
-		/// <summary>
-		/// Creates a new perspective matrix with a infinite view distance.
-		/// </summary>
-		/// <param name="fov"> The cameras FOV. </param>
-		/// <param name="aspectRatio"> The cameras aspect ratio. </param>
-		/// <param name="zNear"> The cameras near plane. </param>
-		/// <returns> The transformation matrix. </returns>
-		static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear);
-
-		/// <summary>
-		/// Creates a new orthographic matrix.
-		/// </summary>
-		/// <param name="left"> The left plane. </param>
-		/// <param name="right"> The right plane. </param>
-		/// <param name="bottom"> The bottom plane. </param>
-		/// <param name="top"> The top plane. </param>
-		/// <param name="zNear"> The near plane. </param>
-		/// <param name="zFar"> The far plane. </param>
-		/// <returns> The orthographic matrix. </returns>
-		static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
-
-		/// <summary>
-		/// Creates a new frustum matrix.
-		/// </summary>
-		/// <param name="left"> The left plane. </param>
-		/// <param name="right"> The right plane. </param>
-		/// <param name="bottom"> The bottom plane. </param>
-		/// <param name="top"> The top plane. </param>
-		/// <param name="zNear"> The near plane. </param>
-		/// <param name="zFar"> The far plane. </param>
-		/// <returns> The frustum matrix. </returns>
-		static Matrix4 FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
-
-		/// <summary>
-		/// Creates a new view matrix.
-		/// </summary>
-		/// <param name="position"> The cameras position. </param>
-		/// <param name="rotation"> The cameras rotation. </param>
-		/// <returns> The view matrix. </returns>
-		static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
-
-		/// <summary>
-		/// Projects a 3D world point into screen space.
-		/// </summary>
-		/// <param name="worldSpace"> The point in world space. </param>
-		/// <param name="modelMatrix"> The points model matrix. </param>
-		/// <param name="viewMatrix"> The cameras view matrix. </param>
-		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
-		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
-		static Vector3 Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
-
-		/// <summary>
-		/// Unprojects a screen space point into a 3D world point.
-		/// </summary>
-		/// <param name="screenSpace"> The point in screen space. </param>
-		/// <param name="modelMatrix"> The points model matrix. </param>
-		/// <param name="viewMatrix"> The cameras view matrix. </param>
-		/// <param name="projectionMatrix"> The cameras projection matrix. </param>
-		/// <returns> A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). </returns>
-		static Vector3 Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
-
-		/// <summary>
-		/// Creates a new matrix that has the camera looking at the target.
-		/// </summary>
-		/// <param name="eye"> The source position. </param>
-		/// <param name="centre"> The target position. </param>
-		/// <param name="up"> What view direction is up. </param>
-		/// <returns> Returns the matrix. </returns>
-		static Matrix4 LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up = Vector3::Up);
-
-		void Decode(const Metadata &metadata);
-
-		void Encode(Metadata &metadata) const;
-
-		bool operator==(const Matrix4 &other) const;
-
-		bool operator!=(const Matrix4 &other) const;
-
-		Matrix4 operator-() const;
-
-		const Vector4 &operator[](const uint32_t &index) const;
-
-		Vector4 &operator[](const uint32_t &index);
-
-		ACID_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
-
-		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
-
-		ACID_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
-
-		ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
-
-		ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
-
-		Matrix4 &operator+=(const Matrix4 &other);
-
-		Matrix4 &operator-=(const Matrix4 &other);
-
-		Matrix4 &operator*=(const Matrix4 &other);
-
-		Matrix4 &operator/=(const Matrix4 &other);
-
-		Matrix4 &operator*=(const Vector4 &other);
-
-		Matrix4 &operator/=(const Vector4 &other);
-
-		Matrix4 &operator*=(const float &other);
-
-		Matrix4 &operator/=(const float &other);
-
-		ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
-
-		std::string ToString() const;
-
-		static const Matrix4 Identity;
-		static const Matrix4 Zero;
-
-		union
+		struct
 		{
-			struct
-			{
-				Vector4 m_rows[4];
-			};
+			Vector4 m_rows[4];
+		};
 
-			struct
-			{
-				float m_linear[16];
-			};
+		struct
+		{
+			float m_linear[16];
 		};
 	};
+};
 }
 
 namespace std
 {
-	template<>
-	struct hash<acid::Matrix4>
+template<>
+struct hash<acid::Matrix4>
+{
+	size_t operator()(acid::Matrix4 const &matrix) const noexcept
 	{
-		size_t operator()(acid::Matrix4 const &matrix) const noexcept
-		{
-			size_t seed = 0;
-			acid::Maths::HashCombine(seed, matrix[0]);
-			acid::Maths::HashCombine(seed, matrix[1]);
-			acid::Maths::HashCombine(seed, matrix[2]);
-			acid::Maths::HashCombine(seed, matrix[3]);
-			return seed;
-		}
-	};
+		size_t seed = 0;
+		acid::Maths::HashCombine(seed, matrix[0]);
+		acid::Maths::HashCombine(seed, matrix[1]);
+		acid::Maths::HashCombine(seed, matrix[2]);
+		acid::Maths::HashCombine(seed, matrix[3]);
+		return seed;
+	}
+};
 }

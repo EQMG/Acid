@@ -7,23 +7,23 @@ using namespace acid;
 
 namespace test
 {
-	class Rotate :
-		public Component
-	{
-	public:
-		explicit Rotate(const Vector3 &direction = Vector3::Zero, const int &test = 0);
+class Rotate :
+	public Component
+{
+public:
+	explicit Rotate(const Vector3 &direction = Vector3::Zero, const int &test = 0);
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+	void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+	void Encode(Metadata &metadata) const override;
 
-	private:
-		Vector3 m_direction;
-		int m_test;
-		Vector3 m_rotation;
-	};
+private:
+	Vector3 m_direction;
+	int m_test;
+	Vector3 m_rotation;
+};
 }

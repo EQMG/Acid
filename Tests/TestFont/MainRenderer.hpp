@@ -6,14 +6,14 @@ using namespace acid;
 
 namespace test
 {
-	class MainRenderer :
-		public RenderManager
-	{
-	public:
-		MainRenderer();
+class MainRenderer :
+	public RenderManager
+{
+public:
+	MainRenderer();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
-	};
+	void Update() override;
+};
 }

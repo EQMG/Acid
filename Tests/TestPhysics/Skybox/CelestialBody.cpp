@@ -7,76 +7,76 @@
 
 namespace test
 {
-	static const Colour SUN_COLOUR_SUNRISE = Colour("#ee9a90");
-	static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
-	static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
+static const Colour SUN_COLOUR_SUNRISE = Colour("#ee9a90");
+static const Colour SUN_COLOUR_NIGHT = Colour("#0D0D1A");
+static const Colour SUN_COLOUR_DAY = Colour("#ffffff");
 
-	static const Colour MOON_COLOUR_NIGHT = Colour("#666699");
-	static const Colour MOON_COLOUR_DAY = Colour("#000000");
+static const Colour MOON_COLOUR_NIGHT = Colour("#666699");
+static const Colour MOON_COLOUR_DAY = Colour("#000000");
 
-	CelestialBody::CelestialBody(const Type &type) :
-		m_type(type)
+CelestialBody::CelestialBody(const Type &type) :
+	m_type(type)
+{
+}
+
+void CelestialBody::Start()
+{
+}
+
+void CelestialBody::Update()
+{
+	auto &transform = GetParent()->GetLocalTransform();
+	auto componentLight = GetParent()->GetComponent<Light>();
+
+	switch (m_type)
 	{
-	}
-
-	void CelestialBody::Start()
+	case Type::Sun:
 	{
-	}
+		Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
+		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
+		transform.SetPosition(sunPosition);
 
-	void CelestialBody::Update()
-	{
-		auto &transform = GetParent()->GetLocalTransform();
-		auto componentLight = GetParent()->GetComponent<Light>();
-
-		switch (m_type)
+		if (componentLight != nullptr)
 		{
-		case Type::Sun:
-			{
-				Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
-				//	sunPosition += Scenes::Get()->GetCamera()->GetPosition();
-				transform.SetPosition(sunPosition);
+			Colour sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
+			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
+			componentLight->SetColour(sunColour);
+		}
 
-				if (componentLight != nullptr)
-				{
-					Colour sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
-					sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
-					componentLight->SetColour(sunColour);
-				}
+		auto filterLensflare = Renderer::Get()->GetManager()->GetRendererContainer().Get<FilterLensflare>();
 
-				auto filterLensflare = Renderer::Get()->GetManager()->GetRendererContainer().Get<FilterLensflare>();
-
-				if (filterLensflare != nullptr)
-				{
-					filterLensflare->SetSunPosition(transform.GetPosition());
-					filterLensflare->SetSunHeight(transform.GetPosition().m_y);
-				}
-			}
-			break;
-		case Type::Moon:
-			{
-				Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
-				//	moonPosition += Scenes::Get()->GetCamera()->GetPosition();
-				transform.SetPosition(moonPosition);
-
-				if (componentLight != nullptr)
-				{
-					Colour moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
-					componentLight->SetColour(moonColour);
-				}
-			}
-			break;
-		default:
-			break;
+		if (filterLensflare != nullptr)
+		{
+			filterLensflare->SetSunPosition(transform.GetPosition());
+			filterLensflare->SetSunHeight(transform.GetPosition().m_y);
 		}
 	}
-
-	void CelestialBody::Decode(const Metadata &metadata)
+		break;
+	case Type::Moon:
 	{
-		metadata.GetChild("Type", m_type);
-	}
+		Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
+		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
+		transform.SetPosition(moonPosition);
 
-	void CelestialBody::Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("Type", m_type);
+		if (componentLight != nullptr)
+		{
+			Colour moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
+			componentLight->SetColour(moonColour);
+		}
 	}
+		break;
+	default:
+		break;
+	}
+}
+
+void CelestialBody::Decode(const Metadata &metadata)
+{
+	metadata.GetChild("Type", m_type);
+}
+
+void CelestialBody::Encode(Metadata &metadata) const
+{
+	metadata.SetChild("Type", m_type);
+}
 }

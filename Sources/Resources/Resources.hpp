@@ -8,39 +8,39 @@
 
 namespace acid
 {
+/// <summary>
+/// A module used for managing resources.
+/// </summary>
+class ACID_EXPORT Resources :
+	public Module
+{
+public:
 	/// <summary>
-	/// A module used for managing resources.
+	/// Gets this engine instance.
 	/// </summary>
-	class ACID_EXPORT Resources :
-		public Module
-	{
-	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static Resources *Get() { return Engine::Get()->GetModuleManager().Get<Resources>(); }
+	/// <returns> The current module instance. </returns>
+	static Resources *Get() { return Engine::Get()->GetModuleManager().Get<Resources>(); }
 
-		Resources();
+	Resources();
 
-		void Update() override;
+	void Update() override;
 
-		std::shared_ptr<Resource> Find(const Metadata &metadata) const;
+	std::shared_ptr<Resource> Find(const Metadata &metadata) const;
 
-		void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
+	void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
 
-		void Remove(const std::shared_ptr<Resource> &resource);
+	void Remove(const std::shared_ptr<Resource> &resource);
 
-		/// <summary>
-		/// Gets the resoure loader thread pool.
-		/// </summary>
-		/// <returns> The resoure loader thread pool. </returns>
-		ThreadPool &GetThreadPool() { return m_threadPool; }
+	/// <summary>
+	/// Gets the resoure loader thread pool.
+	/// </summary>
+	/// <returns> The resoure loader thread pool. </returns>
+	ThreadPool &GetThreadPool() { return m_threadPool; }
 
-	private:
-		std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
-		Timer m_timerPurge;
+private:
+	std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
+	Timer m_timerPurge;
 
-		ThreadPool m_threadPool;
-	};
+	ThreadPool m_threadPool;
+};
 }

@@ -4,114 +4,115 @@
 
 namespace acid
 {
+/// <summary>
+/// Define a HTTP request.
+/// </summary>
+class ACID_EXPORT HttpRequest
+{
+public:
 	/// <summary>
-	/// Define a HTTP request.
+	/// Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
 	/// </summary>
-	class ACID_EXPORT HttpRequest
+	enum class Method
 	{
-	public:
-		/// <summary>
-		/// Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
-		/// </summary>
-		enum class Method
-		{
-			/// Request in get mode, standard method to retrieve a page.
+		/// Request in get mode, standard method to retrieve a page.
 			Get,
-			/// Request in post mode, usually to send data to a page.
+		/// Request in post mode, usually to send data to a page.
 			Post,
-			/// Request a page's header only.
+		/// Request a page's header only.
 			Head,
-			/// Request in put mode, useful for a REST API.
+		/// Request in put mode, useful for a REST API.
 			Put,
-			/// Request in delete mode, useful for a REST API.
+		/// Request in delete mode, useful for a REST API.
 			Delete,
-			/// Request in options mode, describes the communication options for the page.
+		/// Request in options mode, describes the communication options for the page.
 			Options,
-			/// Request applies partial modifications to a page.
+		/// Request applies partial modifications to a page.
 			Patch,
-			/// Request performs a message loop-back test along the path to the target resource.
+		/// Request performs a message loop-back test along the path to the target resource.
 			Trace,
-			/// Request establishes a tunnel to the server page.
+		/// Request establishes a tunnel to the server page.
 			Connect
-		};
-
-		/// <summary>
-		/// Default constructor, this constructor creates a GET request, with the root URI ("/") and an empty body.
-		/// </summary>
-		/// <param name="uri"> Target URI. </param>
-		/// <param name="method"> Method to use for the request. </param>
-		/// <param name="body"> Content of the request's body. </param>
-		explicit HttpRequest(const std::string &uri = "/", const Method &method = Method::Get, const std::string &body = "");
-
-		/// <summary>
-		/// Set the value of a field.
-		/// The field is created if it doesn't exist. The name of the field is case-insensitive.
-		/// By default, a request doesn't contain any field (but the mandatory fields are added
-		/// later by the HTTP client when sending the request).
-		/// </summary>
-		/// <param name="field"> Name of the field to set. </param>
-		/// <param name="value"> Value of the field. </param>
-		void SetField(const std::string &field, const std::string &value);
-
-		/// <summary>
-		/// Set the request method.
-		/// See the Method enumeration for a complete list of all the available methods.
-		/// The method is HTTP_REQUEST_METHOD_GET by default.
-		/// </summary>
-		/// <param name="method"> Method to use for the request. </param>
-		void SetMethod(const Method &method) { m_method = method; }
-
-		/// <summary>
-		/// Set the requested URI.
-		/// The URI is the resource (usually a web page or a file) that you want to get or post.
-		/// The URI is "/" (the root page) by default.
-		/// </summary>
-		/// <param name="uri"> URI to request, relative to the host. </param>
-		void SetUri(const std::string &uri);
-
-		/// <summary>
-		/// Set the HTTP version for the request. The HTTP version is 1.0 by default.
-		/// </summary>
-		/// <param name="major"> Major HTTP version number. </param>
-		/// <param name="minor"> Minor HTTP version number. </param>
-		void SetHttpVersion(const uint32_t &major, const uint32_t &minor);
-
-		/// <summary>
-		/// Set the body of the request.
-		/// The body of a request is optional and only makes sense for POST requests.
-		/// It is ignored for all other methods. The body is empty by default.
-		/// </summary>
-		/// <param name="body"> Content of the body. </param>
-		void SetBody(const std::string &body) { m_body = body; }
-	private:
-		friend class Http;
-		using FieldTable = std::map<std::string, std::string>;
-
-		/// <summary>
-		/// Prepare the final request to send to the server.
-		/// This is used internally by Http before sending the request to the web server.
-		/// </summary>
-		/// <returns> String containing the request, ready to be sent. </returns>
-		std::string Prepare() const;
-
-		/// <summary>
-		/// Check if the request defines a field. This function uses case-insensitive comparisons.
-		/// </summary>
-		/// <param name="field"> Name of the field to test. </param>
-		/// <returns> True if the field exists, false otherwise. </returns>
-		bool HasField(const std::string &field) const;
-
-		/// Fields of the header associated to their value.
-		FieldTable m_fields;
-		/// Method to use for the request.
-		Method m_method;
-		/// Target URI of the request.
-		std::string m_uri;
-		/// Major HTTP version.
-		uint32_t m_majorVersion;
-		/// Minor HTTP version.
-		uint32_t m_minorVersion;
-		/// Body of the request.
-		std::string m_body;
 	};
+
+	/// <summary>
+	/// Default constructor, this constructor creates a GET request, with the root URI ("/") and an empty body.
+	/// </summary>
+	/// <param name="uri"> Target URI. </param>
+	/// <param name="method"> Method to use for the request. </param>
+	/// <param name="body"> Content of the request's body. </param>
+	explicit HttpRequest(const std::string &uri = "/", const Method &method = Method::Get, const std::string &body = "");
+
+	/// <summary>
+	/// Set the value of a field.
+	/// The field is created if it doesn't exist. The name of the field is case-insensitive.
+	/// By default, a request doesn't contain any field (but the mandatory fields are added
+	/// later by the HTTP client when sending the request).
+	/// </summary>
+	/// <param name="field"> Name of the field to set. </param>
+	/// <param name="value"> Value of the field. </param>
+	void SetField(const std::string &field, const std::string &value);
+
+	/// <summary>
+	/// Set the request method.
+	/// See the Method enumeration for a complete list of all the available methods.
+	/// The method is HTTP_REQUEST_METHOD_GET by default.
+	/// </summary>
+	/// <param name="method"> Method to use for the request. </param>
+	void SetMethod(const Method &method) { m_method = method; }
+
+	/// <summary>
+	/// Set the requested URI.
+	/// The URI is the resource (usually a web page or a file) that you want to get or post.
+	/// The URI is "/" (the root page) by default.
+	/// </summary>
+	/// <param name="uri"> URI to request, relative to the host. </param>
+	void SetUri(const std::string &uri);
+
+	/// <summary>
+	/// Set the HTTP version for the request. The HTTP version is 1.0 by default.
+	/// </summary>
+	/// <param name="major"> Major HTTP version number. </param>
+	/// <param name="minor"> Minor HTTP version number. </param>
+	void SetHttpVersion(const uint32_t &major, const uint32_t &minor);
+
+	/// <summary>
+	/// Set the body of the request.
+	/// The body of a request is optional and only makes sense for POST requests.
+	/// It is ignored for all other methods. The body is empty by default.
+	/// </summary>
+	/// <param name="body"> Content of the body. </param>
+	void SetBody(const std::string &body) { m_body = body; }
+
+private:
+	friend class Http;
+	using FieldTable = std::map<std::string, std::string>;
+
+	/// <summary>
+	/// Prepare the final request to send to the server.
+	/// This is used internally by Http before sending the request to the web server.
+	/// </summary>
+	/// <returns> String containing the request, ready to be sent. </returns>
+	std::string Prepare() const;
+
+	/// <summary>
+	/// Check if the request defines a field. This function uses case-insensitive comparisons.
+	/// </summary>
+	/// <param name="field"> Name of the field to test. </param>
+	/// <returns> True if the field exists, false otherwise. </returns>
+	bool HasField(const std::string &field) const;
+
+	/// Fields of the header associated to their value.
+	FieldTable m_fields;
+	/// Method to use for the request.
+	Method m_method;
+	/// Target URI of the request.
+	std::string m_uri;
+	/// Major HTTP version.
+	uint32_t m_majorVersion;
+	/// Minor HTTP version.
+	uint32_t m_minorVersion;
+	/// Body of the request.
+	std::string m_body;
+};
 }

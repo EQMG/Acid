@@ -14,23 +14,23 @@ using namespace acid;
 
 namespace test
 {
-	class Hierarchy :
-		public UiPanel
-	{
-	public:
-		explicit Hierarchy(UiObject *parent);
+class Hierarchy :
+	public UiPanel
+{
+public:
+	explicit Hierarchy(UiObject *parent);
 
-		void UpdateObject() override;
+	void UpdateObject() override;
 
-	private:
-		UiSection m_section1;
-		UiInputButton m_button1;
+private:
+	UiSection m_section1;
+	UiInputButton m_button1;
 
-		UiInputSlider m_sliderR;
-		UiInputSlider m_sliderG;
-		UiInputSlider m_sliderB;
-		UiInputText m_textHex;
-		Gui m_rgbColour;
-		UiColourWheel m_colourWheel;
-	};
+	UiInputSlider m_sliderR;
+	UiInputSlider m_sliderG;
+	UiInputSlider m_sliderB;
+	UiInputText m_textHex;
+	Gui m_rgbColour;
+	UiColourWheel m_colourWheel;
+};
 }

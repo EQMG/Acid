@@ -8,55 +8,56 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiInputSlider :
-		public UiObject
-	{
-	public:
-		UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+class ACID_EXPORT UiInputSlider :
+	public UiObject
+{
+public:
+	UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
+		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
-		void UpdateObject() override;
+	void UpdateObject() override;
 
-		const std::string &GetTitle() const { return m_title; }
+	const std::string &GetTitle() const { return m_title; }
 
-		void SetTitle(const std::string &title);
+	void SetTitle(const std::string &title);
 
-		const float &GetValueMin() const { return m_valueMin; }
+	const float &GetValueMin() const { return m_valueMin; }
 
-		void SetValueMin(const float &valueMin) { m_valueMin = valueMin; }
+	void SetValueMin(const float &valueMin) { m_valueMin = valueMin; }
 
-		const float &GetValueMax() const { return m_valueMax; }
+	const float &GetValueMax() const { return m_valueMax; }
 
-		void SeValueMax(const float &valueMax) { m_valueMax = valueMax; }
+	void SeValueMax(const float &valueMax) { m_valueMax = valueMax; }
 
-		const float &GetValue() const { return m_value; }
+	const float &GetValue() const { return m_value; }
 
-		void SetValue(const float &value);
+	void SetValue(const float &value);
 
-		const float &GetProgress() const { return m_progress; }
+	const float &GetProgress() const { return m_progress; }
 
-		Delegate<void(float)> &GetOnValue() { return m_onValue; }
-	private:
-		void UpdateProgress();
+	Delegate<void(float)> &GetOnValue() { return m_onValue; }
 
-		Gui m_slider;
-		Gui m_background;
-		Text m_textTitle;
-		Text m_textValue;
-		Sound m_soundClick;
+private:
+	void UpdateProgress();
 
-		std::string m_title;
-		bool m_updating;
-		float m_value;
-		float m_valueMin;
-		float m_valueMax;
-		float m_progress;
-		int32_t m_roundTo;
+	Gui m_slider;
+	Gui m_background;
+	Text m_textTitle;
+	Text m_textValue;
+	Sound m_soundClick;
 
-		bool m_mouseOver;
+	std::string m_title;
+	bool m_updating;
+	float m_value;
+	float m_valueMin;
+	float m_valueMax;
+	float m_progress;
+	int32_t m_roundTo;
 
-		bool m_hasChange;
-		Timer m_timerChange;
-		Delegate<void(float)> m_onValue;
-	};
+	bool m_mouseOver;
+
+	bool m_hasChange;
+	Timer m_timerChange;
+	Delegate<void(float)> m_onValue;
+};
 }

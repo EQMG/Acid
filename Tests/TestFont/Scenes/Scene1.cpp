@@ -4,22 +4,22 @@
 
 namespace test
 {
-	Scene1::Scene1() :
-		Scene(new Camera()),
-		m_pannable(&Uis::Get()->GetContainer())
-	{
-	}
+Scene1::Scene1() :
+	Scene(new Camera()),
+	m_pannable(&Uis::Get()->GetContainer())
+{
+}
 
-	void Scene1::Start()
-	{
-	}
+void Scene1::Start()
+{
+}
 
-	void Scene1::Update()
-	{
-	}
+void Scene1::Update()
+{
+}
 
-	bool Scene1::IsPaused() const
-	{
-		return true;
-	}
+bool Scene1::IsPaused() const
+{
+	return true;
+}
 }

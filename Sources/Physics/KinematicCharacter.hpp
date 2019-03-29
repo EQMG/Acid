@@ -9,84 +9,86 @@ class btKinematicCharacterController;
 
 namespace acid
 {
+/// <summary>
+/// Represents a kinematic character controller.
+/// </summary>
+class ACID_EXPORT KinematicCharacter :
+	public CollisionObject
+{
+public:
 	/// <summary>
-	/// Represents a kinematic character controller.
+	/// Creates a new kinematic character controller.
 	/// </summary>
-	class ACID_EXPORT KinematicCharacter :
-		public CollisionObject
-	{
-	public:
-		/// <summary>
-		/// Creates a new kinematic character controller.
-		/// </summary>
-		/// <param name="mass"> The mass of the object. </param>
-		/// <param name="friction"> The amount of surface friction. </param>
-		explicit KinematicCharacter(const float &mass = 1.0f, const float &friction = 0.2f);
+	/// <param name="mass"> The mass of the object. </param>
+	/// <param name="friction"> The amount of surface friction. </param>
+	explicit KinematicCharacter(const float &mass = 1.0f, const float &friction = 0.2f);
 
-		~KinematicCharacter();
+	~KinematicCharacter();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+	void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+	void Encode(Metadata &metadata) const override;
 
-		bool InFrustum(const Frustum &frustum) override;
+	bool InFrustum(const Frustum &frustum) override;
 
-		void ClearForces() override;
+	void ClearForces() override;
 
-		const float &GetMass() const { return m_mass; }
+	const float &GetMass() const { return m_mass; }
 
-		void SetMass(const float &mass);
+	void SetMass(const float &mass);
 
-		const Vector3 &GetGravity() const { return m_gravity; }
+	const Vector3 &GetGravity() const { return m_gravity; }
 
-		void SetGravity(const Vector3 &gravity);
+	void SetGravity(const Vector3 &gravity);
 
-		const Vector3 &GetUp() const { return m_up; }
+	const Vector3 &GetUp() const { return m_up; }
 
-		void SetUp(const Vector3 &up);
+	void SetUp(const Vector3 &up);
 
-		const float &GetStepHeight() const { return m_stepHeight; }
+	const float &GetStepHeight() const { return m_stepHeight; }
 
-		void SetStepHeight(const float &stepHeight);
+	void SetStepHeight(const float &stepHeight);
 
-		const float &GetFallSpeed() const { return m_fallSpeed; }
+	const float &GetFallSpeed() const { return m_fallSpeed; }
 
-		void SetFallSpeed(const float &fallSpeed);
+	void SetFallSpeed(const float &fallSpeed);
 
-		const float &GetJumpSpeed() const { return m_jumpSpeed; }
+	const float &GetJumpSpeed() const { return m_jumpSpeed; }
 
-		void SetJumpSpeed(const float &jumpSpeed);
+	void SetJumpSpeed(const float &jumpSpeed);
 
-		const float &GetMaxJumpHeight() const { return m_maxHeight; }
+	const float &GetMaxJumpHeight() const { return m_maxHeight; }
 
-		void SetMaxJumpHeight(const float &maxHeight);
+	void SetMaxJumpHeight(const float &maxHeight);
 
-		const bool &IsInterpolate() const { return m_interpolate; }
+	const bool &IsInterpolate() const { return m_interpolate; }
 
-		void SetInterpolate(const bool &interpolate);
+	void SetInterpolate(const bool &interpolate);
 
-		bool IsOnGround() const;
+	bool IsOnGround() const;
 
-		void Jump(const Vector3 &direction);
+	void Jump(const Vector3 &direction);
 
-		void SetWalkDirection(const Vector3 &direction);
-	protected:
-		void RecalculateMass() override;
-	private:
-		float m_mass;
-		Vector3 m_gravity;
-		Vector3 m_up;
-		float m_stepHeight;
-		float m_fallSpeed;
-		float m_jumpSpeed;
-		float m_maxHeight;
-		bool m_interpolate;
+	void SetWalkDirection(const Vector3 &direction);
 
-		std::unique_ptr<btPairCachingGhostObject> m_ghostObject;
-		std::unique_ptr<btKinematicCharacterController> m_controller;
-	};
+protected:
+	void RecalculateMass() override;
+
+private:
+	float m_mass;
+	Vector3 m_gravity;
+	Vector3 m_up;
+	float m_stepHeight;
+	float m_fallSpeed;
+	float m_jumpSpeed;
+	float m_maxHeight;
+	bool m_interpolate;
+
+	std::unique_ptr<btPairCachingGhostObject> m_ghostObject;
+	std::unique_ptr<btKinematicCharacterController> m_controller;
+};
 }

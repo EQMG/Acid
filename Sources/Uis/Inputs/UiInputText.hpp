@@ -8,42 +8,43 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiInputText :
-		public UiObject
-	{
-	public:
-		UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, 
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+class ACID_EXPORT UiInputText :
+	public UiObject
+{
+public:
+	UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
+		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
-		void UpdateObject() override;
+	void UpdateObject() override;
 
-		void SetSelected(const bool &selected);
+	void SetSelected(const bool &selected);
 
-		const std::string &GetTitle() const { return m_title; }
+	const std::string &GetTitle() const { return m_title; }
 
-		void SetTitle(const std::string &title);
+	void SetTitle(const std::string &title);
 
-		const std::string &GetValue() const { return m_value; }
+	const std::string &GetValue() const { return m_value; }
 
-		void SetValue(const std::string &value);
+	void SetValue(const std::string &value);
 
-		Delegate<void(std::string)> &GetOnValue() { return m_onValue; }
-	private:
-		Gui m_background;
-		Text m_textTitle;
-		Text m_textValue;
-		Sound m_soundClick;
+	Delegate<void(std::string)> &GetOnValue() { return m_onValue; }
 
-		std::string m_title;
-		std::string m_value;
-		int32_t m_maxLength;
+private:
+	Gui m_background;
+	Text m_textTitle;
+	Text m_textValue;
+	Sound m_soundClick;
 
-		InputDelay m_inputDelay;
-		int32_t m_lastKey;
+	std::string m_title;
+	std::string m_value;
+	int32_t m_maxLength;
 
-		bool m_selected;
-		bool m_mouseOver;
+	InputDelay m_inputDelay;
+	int32_t m_lastKey;
 
-		Delegate<void(std::string)> m_onValue;
-	};
+	bool m_selected;
+	bool m_mouseOver;
+
+	Delegate<void(std::string)> m_onValue;
+};
 }

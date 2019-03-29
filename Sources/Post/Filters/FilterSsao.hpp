@@ -4,21 +4,22 @@
 
 namespace acid
 {
-	class ACID_EXPORT FilterSsao :
-		public PostFilter
-	{
-	public:
-		explicit FilterSsao(const Pipeline::Stage &pipelineStage);
+class ACID_EXPORT FilterSsao :
+	public PostFilter
+{
+public:
+	explicit FilterSsao(const Pipeline::Stage &pipelineStage);
 
-		void Render(const CommandBuffer &commandBuffer) override;
-	private:
-		std::vector<Shader::Define> GetDefines();
+	void Render(const CommandBuffer &commandBuffer) override;
 
-		static std::shared_ptr<Image2d> ComputeNoise(const uint32_t &size);
+private:
+	std::vector<Shader::Define> GetDefines();
 
-		UniformHandler m_uniformScene;
+	static std::shared_ptr<Image2d> ComputeNoise(const uint32_t &size);
 
-		std::shared_ptr<Image2d> m_noise;
-		std::vector<Vector3> m_kernel;
-	};
+	UniformHandler m_uniformScene;
+
+	std::shared_ptr<Image2d> m_noise;
+	std::vector<Vector3> m_kernel;
+};
 }

@@ -471,7 +471,7 @@ struct cr_plugin {
 #       include <stdio.h>
 #       define CR_LOG(...)     fprintf(stdout, __VA_ARGS__)
 #   else
-#       define CR_LOG(...)     
+#       define CR_LOG(...)
 #   endif
 #endif
 
@@ -489,7 +489,7 @@ struct cr_plugin {
 #       include <stdio.h>
 #       define CR_TRACE        fprintf(stdout, "CR_TRACE: %s\n", __FUNCTION__);
 #   else
-#       define CR_TRACE     
+#       define CR_TRACE
 #   endif
 #endif
 
@@ -585,7 +585,7 @@ static std::string cr_version_path(const std::string &basepath,
     // length exceeds pdb folder path length. This is not relevant on other platforms.
     if (ver.size() > folder.size()) {
         fname = fname.substr(0, fname.size() - (ver.size() - folder.size()));
-    }    
+    }
 #endif
     if (!temppath.empty()) {
         folder = temppath;
@@ -713,7 +713,7 @@ static bool cr_copy(const std::string &from, const std::string &to) {
     return CopyFile(_from.c_str(), _to.c_str(), FALSE) ? true : false;
 }
 
-static void cr_del(const std::string& path) {   
+static void cr_del(const std::string& path) {
     CR_WINDOWS_ConvertPath(_path, path);
     DeleteFile(_path.c_str());
 }
@@ -958,6 +958,7 @@ static bool cr_pdb_replace(const std::string &filename, const std::string &pdbna
                 if (len >= strlen(pdbname.c_str())) {
                     orig_pdb = pdb;
                     memcpy_s(pdb, len, pdbname.c_str(), pdbname.length());
+                    pdb[pdbname.length()] = 0;
                     result = true;
                 }
             }

@@ -10,107 +10,114 @@
 
 namespace acid
 {
-	class ACID_EXPORT UiInputGrabber :
-		public UiObject
+class ACID_EXPORT UiInputGrabber :
+	public UiObject
+{
+public:
+	UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle);
+
+	virtual ~UiInputGrabber() = default;
+
+	void UpdateObject() override;
+
+	void SetSelected(const bool &selected);
+
+	const std::string &GetTitle() const { return m_title; }
+
+	void SetTitle(const std::string &title);
+
+protected:
+	void UpdateValue();
+
+	virtual std::string GetTextString() const = 0;
+
+	Gui m_background;
+	Text m_textTitle;
+	Text m_textValue;
+	Sound m_soundClick;
+
+	std::string m_title;
+
+	int32_t m_lastKey;
+
+	bool m_selected;
+	bool m_mouseOver;
+};
+
+class ACID_EXPORT UiGrabberJoystick :
+	public UiInputGrabber
+{
+public:
+	UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
+		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+
+	const uint32_t &GetPort() const { return m_port; }
+
+	void SetPort(const uint32_t &port) { m_port = port; }
+
+	const uint32_t &GetValue() const { return m_value; }
+
+	void SetValue(const uint32_t &value);
+
+	Delegate<void(uint32_t, uint32_t)> &GetOnValue() { return m_onValue; }
+
+protected:
+	std::string GetTextString() const override
 	{
-	public:
-		UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle);
+		return String::To(m_value);
+	}
 
-		virtual ~UiInputGrabber() = default;
+private:
+	uint32_t m_port;
+	uint32_t m_value;
+	Delegate<void(uint32_t, uint32_t)> m_onValue;
+};
 
-		void UpdateObject() override;
+class ACID_EXPORT UiGrabberKeyboard :
+	public UiInputGrabber
+{
+public:
+	UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
+		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
-		void SetSelected(const bool &selected);
+	const Key &GetValue() const { return m_value; }
 
-		const std::string &GetTitle() const { return m_title; }
+	void SetValue(const Key &value);
 
-		void SetTitle(const std::string &title);
-	protected:
-		void UpdateValue();
+	Delegate<void(Key)> &GetOnValue() { return m_onValue; }
 
-		virtual std::string GetTextString() const = 0;
-
-		Gui m_background;
-		Text m_textTitle;
-		Text m_textValue;
-		Sound m_soundClick;
-
-		std::string m_title;
-
-		int32_t m_lastKey;
-
-		bool m_selected;
-		bool m_mouseOver;
-	};
-
-	class ACID_EXPORT UiGrabberJoystick :
-		public UiInputGrabber
+protected:
+	std::string GetTextString() const override
 	{
-	public:
-		UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		return Keyboard::ToString(m_value);
+	}
 
-		const uint32_t &GetPort() const { return m_port; }
+private:
+	Key m_value;
+	Delegate<void(Key)> m_onValue;
+};
 
-		void SetPort(const uint32_t &port) { m_port = port; }
+class ACID_EXPORT UiGrabberMouse :
+	public UiInputGrabber
+{
+public:
+	UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
+		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
-		const uint32_t &GetValue() const { return m_value; }
+	const MouseButton &GetValue() const { return m_value; }
 
-		void SetValue(const uint32_t &value);
+	void SetValue(const MouseButton &value);
 
-		Delegate<void(uint32_t, uint32_t)> &GetOnValue() { return m_onValue; }
-	protected:
-		std::string GetTextString() const override
-		{
-			return String::To(m_value);
-		}
-	private:
-		uint32_t m_port;
-		uint32_t m_value;
-		Delegate<void(uint32_t, uint32_t)> m_onValue;
-	};
+	Delegate<void(MouseButton)> &GetOnValue() { return m_onValue; }
 
-	class ACID_EXPORT UiGrabberKeyboard :
-		public UiInputGrabber
+protected:
+	std::string GetTextString() const override
 	{
-	public:
-		UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, 
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		return String::To(static_cast<int32_t>(m_value));
+	}
 
-		const Key &GetValue() const { return m_value; }
-
-		void SetValue(const Key &value);
-
-		Delegate<void(Key)> &GetOnValue() { return m_onValue; }
-	protected:
-		std::string GetTextString() const override
-		{
-			return Keyboard::ToString(m_value);
-		}
-	private:
-		Key m_value;
-		Delegate<void(Key)> m_onValue;
-	};
-
-	class ACID_EXPORT UiGrabberMouse :
-		public UiInputGrabber
-	{
-	public:
-		UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, 
-			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
-
-		const MouseButton &GetValue() const { return m_value; }
-
-		void SetValue(const MouseButton &value);
-
-		Delegate<void(MouseButton)> &GetOnValue() { return m_onValue; }
-	protected:
-		std::string GetTextString() const override
-		{
-			return String::To(static_cast<int32_t>(m_value));
-		}
-	private:
-		MouseButton m_value;
-		Delegate<void(MouseButton)> m_onValue;
-	};
+private:
+	MouseButton m_value;
+	Delegate<void(MouseButton)> m_onValue;
+};
 }

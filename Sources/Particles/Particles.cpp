@@ -4,72 +4,72 @@
 
 namespace acid
 {
-	Particles::Particles()
+Particles::Particles()
+{
+}
+
+void Particles::Update()
+{
+	if (Scenes::Get()->IsPaused())
 	{
+		return;
 	}
 
-	void Particles::Update()
+	for (auto it = m_particles.begin(); it != m_particles.end();)
 	{
-		if (Scenes::Get()->IsPaused())
+		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
 		{
-			return;
-		}
+			(*it1).Update();
 
-		for (auto it = m_particles.begin(); it != m_particles.end();)
-		{
-			for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
+			if (!(*it1).IsAlive())
 			{
-				(*it1).Update();
-
-				if (!(*it1).IsAlive())
-				{
-					it1 = (*it).second.erase(it1);
-					continue;
-				}
-
-				++it1;
-			}
-
-			if (it->second.empty())
-			{
-				it = m_particles.erase(it);
+				it1 = (*it).second.erase(it1);
 				continue;
 			}
 
-			std::sort((*it).second.begin(), (*it).second.end());
-			(*it).first->Update((*it).second);
-			++it;
+			++it1;
 		}
-	}
 
-	void Particles::AddParticle(const Particle &particle)
-	{
-		auto it = m_particles.find(particle.GetParticleType());
-
-		if (it == m_particles.end())
+		if (it->second.empty())
 		{
-			m_particles.emplace(particle.GetParticleType(), std::vector<Particle>());
-			it = m_particles.find(particle.GetParticleType());
+			it = m_particles.erase(it);
+			continue;
 		}
 
-		(*it).second.emplace_back(particle);
+		std::sort((*it).second.begin(), (*it).second.end());
+		(*it).first->Update((*it).second);
+		++it;
+	}
+}
+
+void Particles::AddParticle(const Particle &particle)
+{
+	auto it = m_particles.find(particle.GetParticleType());
+
+	if (it == m_particles.end())
+	{
+		m_particles.emplace(particle.GetParticleType(), std::vector<Particle>());
+		it = m_particles.find(particle.GetParticleType());
 	}
 
-	/*void Particles::RemoveParticle(const Particle &particle)
-	{
-		auto it = m_particles.find(particle.GetParticleType());
+	(*it).second.emplace_back(particle);
+}
 
-		if (it != m_particles.end())
-		{
-			it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](Particle &p)
-				{
-					return p == particle;
-				}), it->second.end());
-		}
-	}*/
+/*void Particles::RemoveParticle(const Particle &particle)
+{
+	auto it = m_particles.find(particle.GetParticleType());
 
-	void Particles::Clear()
+	if (it != m_particles.end())
 	{
-		m_particles.clear();
+		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](Particle &p)
+			{
+				return p == particle;
+			}), it->second.end());
 	}
+}*/
+
+void Particles::Clear()
+{
+	m_particles.clear();
+}
 }

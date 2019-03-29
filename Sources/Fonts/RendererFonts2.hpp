@@ -5,14 +5,15 @@
 
 namespace acid
 {
-	class ACID_EXPORT RendererFonts2 :
-		public RenderPipeline
-	{
-	public:
-		explicit RendererFonts2(const Pipeline::Stage &pipelineStage);
+class ACID_EXPORT RendererFonts2 :
+	public RenderPipeline
+{
+public:
+	explicit RendererFonts2(const Pipeline::Stage &pipelineStage);
 
-		void Render(const CommandBuffer &commandBuffer) override;
-	private:
-		PipelineGraphics m_pipeline;
-	};
+	void Render(const CommandBuffer &commandBuffer) override;
+
+private:
+	PipelineGraphics m_pipeline;
+};
 }

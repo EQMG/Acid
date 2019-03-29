@@ -6,17 +6,17 @@ using namespace acid;
 
 namespace test
 {
-	class ConfigManager
-	{
-	public:
-		ConfigManager();
+class ConfigManager
+{
+public:
+	ConfigManager();
 
-		void Load();
+	void Load();
 
-		void Save();
+	void Save();
 
-	private:
-		File m_audio;
-		File m_graphics;
-	};
+private:
+	File m_audio;
+	File m_graphics;
+};
 }

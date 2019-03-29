@@ -30,74 +30,74 @@ int main(int argc, char **argv)
 
 namespace test
 {
-	MainGame::MainGame() :
-		m_buttonFullscreen(Key::F11),
-		m_buttonScreenshot(Key::F9),
-		m_buttonExit(Key::Delete)
-	{
-		// Registers file search paths.
-		Files::Get()->AddSearchPath("Resources/Engine");
-		Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+MainGame::MainGame() :
+	m_buttonFullscreen(Key::F11),
+	m_buttonScreenshot(Key::F9),
+	m_buttonExit(Key::Delete)
+{
+	// Registers file search paths.
+	Files::Get()->AddSearchPath("Resources/Engine");
+	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
-		m_buttonFullscreen.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
 		{
-			if (action == InputAction::Press)
-			{
-				Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-			}
-		};
-		m_buttonScreenshot.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+		}
+	};
+	m_buttonScreenshot.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
 		{
-			if (action == InputAction::Press)
+			Resources::Get()->GetThreadPool().Enqueue([]()
 			{
-				Resources::Get()->GetThreadPool().Enqueue([]()
-				{
-					Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
-				});
-			}
-		};
-		m_buttonExit.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+				Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
+			});
+		}
+	};
+	m_buttonExit.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
 		{
-			if (action == InputAction::Press)
+			if (m_buttonExit.WasDown())
 			{
-				if (m_buttonExit.WasDown())
-				{
-					Engine::Get()->RequestClose(false);
-				}
+				Engine::Get()->RequestClose(false);
 			}
-		};
+		}
+	};
 
-		// Registers modules.
-		auto &moduleManager = Engine::Get()->GetModuleManager();
+	// Registers modules.
+	auto &moduleManager = Engine::Get()->GetModuleManager();
 
-		// Registers components.
-		auto &componentRegister = Scenes::Get()->GetComponentRegister();
-		componentRegister.Add<PlayerFps>("PlayerFps");
+	// Registers components.
+	auto &componentRegister = Scenes::Get()->GetComponentRegister();
+	componentRegister.Add<PlayerFps>("PlayerFps");
 
-		// Sets values to modules.
-		Window::Get()->SetTitle("Test PBR");
-		Window::Get()->SetIcons({
-			"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
-			"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
-		});
-		//	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-		Renderer::Get()->SetManager(new MainRenderer());
-		Scenes::Get()->SetScene(new Scene1());
-	}
+	// Sets values to modules.
+	Window::Get()->SetTitle("Test PBR");
+	Window::Get()->SetIcons({
+		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png",
+		"Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
+	});
+	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
+	Renderer::Get()->SetManager(new MainRenderer());
+	Scenes::Get()->SetScene(new Scene1());
+}
 
-	MainGame::~MainGame()
-	{
-		Files::Get()->ClearSearchPath();
+MainGame::~MainGame()
+{
+	Files::Get()->ClearSearchPath();
 
-		Renderer::Get()->SetManager(nullptr);
-		Scenes::Get()->SetScene(nullptr);
-	}
+	Renderer::Get()->SetManager(nullptr);
+	Scenes::Get()->SetScene(nullptr);
+}
 
-	void MainGame::Start()
-	{
-	}
+void MainGame::Start()
+{
+}
 
-	void MainGame::Update()
-	{
-	}
+void MainGame::Update()
+{
+}
 }

@@ -7,18 +7,19 @@ using namespace acid;
 
 namespace test
 {
-	class Scene1 :
-		public Scene
-	{
-	public:
-		Scene1();
+class Scene1 :
+	public Scene
+{
+public:
+	Scene1();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		bool IsPaused() const override;
-	private:
-		Pannable m_pannable;
-	};
+	bool IsPaused() const override;
+
+private:
+	Pannable m_pannable;
+};
 }

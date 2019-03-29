@@ -8,22 +8,22 @@ using namespace acid;
 
 namespace test
 {
-	class Scene1 :
-		public Scene
-	{
-	public:
-		Scene1();
+class Scene1 :
+	public Scene
+{
+public:
+	Scene1();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		bool IsPaused() const override;
+	bool IsPaused() const override;
 
-	private:
-		ButtonCompound m_buttonPause;
-		bool m_paused;
+private:
+	ButtonCompound m_buttonPause;
+	bool m_paused;
 
-		OverlayDebug m_overlayDebug;
-	};
+	OverlayDebug m_overlayDebug;
+};
 }

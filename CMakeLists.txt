@@ -101,7 +101,7 @@ if(NOT Freetype_FOUND)
 		FetchContent_Populate(freetype)
 		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 	endif()
-	
+
 	# Used in target_link_libraries()
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
@@ -191,7 +191,7 @@ if(NOT BULLET_FOUND)
 		# Reset back to value before MSVC fix
 		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	endif()
-	
+
 	set(BULLET_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/src")
 	# Used in target_link_libraries()
 	set(BULLET_LIBRARIES "BulletSoftBody" "BulletDynamics" "BulletCollision" "LinearMath")
@@ -214,7 +214,7 @@ include(CTest)
 if(BUILD_TESTS)
 	add_subdirectory(Tests/Editor)
 	add_subdirectory(Tests/EditorTest)
-	
+
 	add_subdirectory(Tests/TestFont)
 	add_subdirectory(Tests/TestGUI)
 	add_subdirectory(Tests/TestMaths)

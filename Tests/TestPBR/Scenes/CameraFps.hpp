@@ -9,42 +9,42 @@ using namespace acid;
 
 namespace test
 {
-	class CameraFps :
-		public Camera
-	{
-	public:
-		CameraFps();
+class CameraFps :
+	public Camera
+{
+public:
+	CameraFps();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void ReflectView(const float &height);
+	void ReflectView(const float &height);
 
-	private:
-		void CalculateHorizontalAngle();
+private:
+	void CalculateHorizontalAngle();
 
-		void CalculateVerticalAngle();
+	void CalculateVerticalAngle();
 
-		void UpdateHorizontalAngle(const float &delta);
+	void UpdateHorizontalAngle(const float &delta);
 
-		void UpdatePitchAngle(const float &delta);
+	void UpdatePitchAngle(const float &delta);
 
-		void UpdatePosition();
+	void UpdatePosition();
 
-		float m_angleOfElevation;
-		float m_angleAroundPlayer;
+	float m_angleOfElevation;
+	float m_angleAroundPlayer;
 
-		Vector3 m_targetPosition;
-		Vector3 m_targetRotation;
-		float m_targetElevation;
-		float m_targetRotationAngle;
+	Vector3 m_targetPosition;
+	Vector3 m_targetRotation;
+	float m_targetElevation;
+	float m_targetRotationAngle;
 
-		float m_sensitivity;
-		MouseButton m_reangleButton;
-		AxisJoystick m_joystickVertical;
-		AxisJoystick m_joystickHorizontal;
+	float m_sensitivity;
+	MouseButton m_reangleButton;
+	AxisJoystick m_joystickVertical;
+	AxisJoystick m_joystickHorizontal;
 
-		bool m_paused;
-	};
+	bool m_paused;
+};
 }

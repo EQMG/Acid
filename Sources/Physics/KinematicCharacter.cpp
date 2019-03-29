@@ -8,201 +8,201 @@
 
 namespace acid
 {
-	KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
-		CollisionObject(friction),
-		m_mass(mass),
-		m_up(Vector3::Up),
-		m_stepHeight(0.0f),
-		m_fallSpeed(55.0f),
-		m_jumpSpeed(10.0f),
-		m_maxHeight(1.5f),
-		m_interpolate(true),
-		m_ghostObject(nullptr),
-		m_controller(nullptr)
+KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
+	CollisionObject(friction),
+	m_mass(mass),
+	m_up(Vector3::Up),
+	m_stepHeight(0.0f),
+	m_fallSpeed(55.0f),
+	m_jumpSpeed(10.0f),
+	m_maxHeight(1.5f),
+	m_interpolate(true),
+	m_ghostObject(nullptr),
+	m_controller(nullptr)
+{
+}
+
+KinematicCharacter::~KinematicCharacter()
+{
+	auto physics = Scenes::Get()->GetPhysics();
+
+	if (physics != nullptr)
 	{
+		// FIXME: Are these being deleted?
+		physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
+		physics->GetDynamicsWorld()->removeAction(m_controller.get());
+	}
+}
+
+void KinematicCharacter::Start()
+{
+	if (m_ghostObject != nullptr)
+	{
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 	}
 
-	KinematicCharacter::~KinematicCharacter()
+	if (m_controller != nullptr)
 	{
-		auto physics = Scenes::Get()->GetPhysics();
-
-		if (physics != nullptr)
-		{
-			// FIXME: Are these being deleted?
-			physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
-			physics->GetDynamicsWorld()->removeAction(m_controller.get());
-		}
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
 	}
 
-	void KinematicCharacter::Start()
+	CreateShape(true);
+	assert((m_shape != nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
+	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	btVector3 localInertia = btVector3();
+
+	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+	if (m_mass != 0.0f)
 	{
-		if (m_ghostObject != nullptr)
-		{
-			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
-		}
-
-		if (m_controller != nullptr)
-		{
-			Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
-		}
-
-		CreateShape(true);
-		assert((m_shape != nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
-		m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
-		btVector3 localInertia = btVector3();
-
-		// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-		if (m_mass != 0.0f)
-		{
-			m_shape->calculateLocalInertia(m_mass, localInertia);
-		}
-
-		auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
-
-		m_ghostObject.reset(new btPairCachingGhostObject());
-		m_ghostObject->setWorldTransform(worldTransform);
-		Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-		m_ghostObject->setCollisionShape(m_shape.get());
-		m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
-		m_ghostObject->setFriction(m_friction);
-		m_ghostObject->setRollingFriction(m_frictionRolling);
-		m_ghostObject->setSpinningFriction(m_frictionSpinning);
-		m_ghostObject->setUserPointer(this);
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
-		m_body = m_ghostObject.get();
-
-		m_controller.reset(new btKinematicCharacterController(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f));
-		m_controller->setGravity(Collider::Convert(m_gravity));
-		m_controller->setUp(Collider::Convert(m_up));
-		m_controller->setStepHeight(m_stepHeight);
-		m_controller->setFallSpeed(m_fallSpeed);
-		m_controller->setJumpSpeed(m_jumpSpeed);
-		m_controller->setMaxJumpHeight(m_maxHeight);
-		m_controller->setUpInterpolate(m_interpolate);
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
+		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	void KinematicCharacter::Update()
-	{
-		if (m_shape.get() != m_body->getCollisionShape())
-		{
-			m_body->setCollisionShape(m_shape.get());
-		}
+	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
-		auto &transform = GetParent()->GetLocalTransform();
-		btTransform worldTransform = m_ghostObject->getWorldTransform();
-		transform = Collider::Convert(worldTransform, transform.GetScaling());
+	m_ghostObject.reset(new btPairCachingGhostObject());
+	m_ghostObject->setWorldTransform(worldTransform);
+	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	m_ghostObject->setCollisionShape(m_shape.get());
+	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
+	m_ghostObject->setFriction(m_friction);
+	m_ghostObject->setRollingFriction(m_frictionRolling);
+	m_ghostObject->setSpinningFriction(m_frictionSpinning);
+	m_ghostObject->setUserPointer(this);
+	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
+	m_body = m_ghostObject.get();
+
+	m_controller.reset(new btKinematicCharacterController(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f));
+	m_controller->setGravity(Collider::Convert(m_gravity));
+	m_controller->setUp(Collider::Convert(m_up));
+	m_controller->setStepHeight(m_stepHeight);
+	m_controller->setFallSpeed(m_fallSpeed);
+	m_controller->setJumpSpeed(m_jumpSpeed);
+	m_controller->setMaxJumpHeight(m_maxHeight);
+	m_controller->setUpInterpolate(m_interpolate);
+	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
+}
+
+void KinematicCharacter::Update()
+{
+	if (m_shape.get() != m_body->getCollisionShape())
+	{
+		m_body->setCollisionShape(m_shape.get());
 	}
 
-	void KinematicCharacter::Decode(const Metadata &metadata)
+	auto &transform = GetParent()->GetLocalTransform();
+	btTransform worldTransform = m_ghostObject->getWorldTransform();
+	transform = Collider::Convert(worldTransform, transform.GetScaling());
+}
+
+void KinematicCharacter::Decode(const Metadata &metadata)
+{
+	metadata.GetChild("Friction", m_friction);
+	metadata.GetChild("Friction Rolling", m_frictionRolling);
+	metadata.GetChild("Friction Spinning", m_frictionSpinning);
+	metadata.GetChild("Up", m_up);
+	metadata.GetChild("Step Height", m_stepHeight);
+	metadata.GetChild("Fall Speed", m_fallSpeed);
+	metadata.GetChild("Jump Speed", m_jumpSpeed);
+	metadata.GetChild("Max Height", m_maxHeight);
+	metadata.GetChild("Interpolate", m_interpolate);
+}
+
+void KinematicCharacter::Encode(Metadata &metadata) const
+{
+	metadata.SetChild("Friction", m_friction);
+	metadata.SetChild("Friction Rolling", m_frictionRolling);
+	metadata.SetChild("Friction Spinning", m_frictionSpinning);
+	metadata.SetChild("Up", m_up);
+	metadata.SetChild("Step Height", m_stepHeight);
+	metadata.SetChild("Fall Speed", m_fallSpeed);
+	metadata.SetChild("Jump Speed", m_jumpSpeed);
+	metadata.SetChild("Max Height", m_maxHeight);
+	metadata.SetChild("Interpolate", m_interpolate);
+}
+
+bool KinematicCharacter::InFrustum(const Frustum &frustum)
+{
+	btVector3 min = btVector3();
+	btVector3 max = btVector3();
+
+	if (m_body != nullptr && m_shape != nullptr)
 	{
-		metadata.GetChild("Friction", m_friction);
-		metadata.GetChild("Friction Rolling", m_frictionRolling);
-		metadata.GetChild("Friction Spinning", m_frictionSpinning);
-		metadata.GetChild("Up", m_up);
-		metadata.GetChild("Step Height", m_stepHeight);
-		metadata.GetChild("Fall Speed", m_fallSpeed);
-		metadata.GetChild("Jump Speed", m_jumpSpeed);
-		metadata.GetChild("Max Height", m_maxHeight);
-		metadata.GetChild("Interpolate", m_interpolate);
+		m_shape->getAabb(Collider::Convert(GetParent()->GetWorldTransform()), min, max);
 	}
 
-	void KinematicCharacter::Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("Friction", m_friction);
-		metadata.SetChild("Friction Rolling", m_frictionRolling);
-		metadata.SetChild("Friction Spinning", m_frictionSpinning);
-		metadata.SetChild("Up", m_up);
-		metadata.SetChild("Step Height", m_stepHeight);
-		metadata.SetChild("Fall Speed", m_fallSpeed);
-		metadata.SetChild("Jump Speed", m_jumpSpeed);
-		metadata.SetChild("Max Height", m_maxHeight);
-		metadata.SetChild("Interpolate", m_interpolate);
-	}
+	return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
+}
 
-	bool KinematicCharacter::InFrustum(const Frustum &frustum)
-	{
-		btVector3 min = btVector3();
-		btVector3 max = btVector3();
+void KinematicCharacter::ClearForces()
+{
+	//m_controller->clearForces();
+}
 
-		if (m_body != nullptr && m_shape != nullptr)
-		{
-			m_shape->getAabb(Collider::Convert(GetParent()->GetWorldTransform()), min, max);
-		}
+void KinematicCharacter::SetMass(const float &mass)
+{
+	m_mass = mass;
+	RecalculateMass();
+}
 
-		return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
-	}
+void KinematicCharacter::SetGravity(const Vector3 &gravity)
+{
+	m_gravity = gravity;
+	m_controller->setGravity(Collider::Convert(gravity));
+}
 
-	void KinematicCharacter::ClearForces()
-	{
-	//	m_controller->clearForces();
-	}
+void KinematicCharacter::SetUp(const Vector3 &up)
+{
+	m_up = up;
+	m_controller->setUp(Collider::Convert(up));
+}
 
-	void KinematicCharacter::SetMass(const float &mass)
-	{
-		m_mass = mass;
-		RecalculateMass();
-	}
+void KinematicCharacter::SetStepHeight(const float &stepHeight)
+{
+	m_stepHeight = stepHeight;
+	m_controller->setStepHeight(stepHeight);
+}
 
-	void KinematicCharacter::SetGravity(const Vector3 &gravity)
-	{
-		m_gravity = gravity;
-		m_controller->setGravity(Collider::Convert(gravity));
-	}
+void KinematicCharacter::SetFallSpeed(const float &fallSpeed)
+{
+	m_fallSpeed = fallSpeed;
+	m_controller->setFallSpeed(fallSpeed);
+}
 
-	void KinematicCharacter::SetUp(const Vector3 &up)
-	{
-		m_up = up;
-		m_controller->setUp(Collider::Convert(up));
-	}
+void KinematicCharacter::SetJumpSpeed(const float &jumpSpeed)
+{
+	m_jumpSpeed = jumpSpeed;
+	m_controller->setJumpSpeed(jumpSpeed);
+}
 
-	void KinematicCharacter::SetStepHeight(const float &stepHeight)
-	{
-		m_stepHeight = stepHeight;
-		m_controller->setStepHeight(stepHeight);
-	}
+void KinematicCharacter::SetMaxJumpHeight(const float &maxHeight)
+{
+	m_maxHeight = maxHeight;
+	m_controller->setMaxJumpHeight(maxHeight);
+}
 
-	void KinematicCharacter::SetFallSpeed(const float &fallSpeed)
-	{
-		m_fallSpeed = fallSpeed;
-		m_controller->setFallSpeed(fallSpeed);
-	}
+void KinematicCharacter::SetInterpolate(const bool &interpolate)
+{
+	m_interpolate = interpolate;
+	m_controller->setUpInterpolate(interpolate);
+}
 
-	void KinematicCharacter::SetJumpSpeed(const float &jumpSpeed)
-	{
-		m_jumpSpeed = jumpSpeed;
-		m_controller->setJumpSpeed(jumpSpeed);
-	}
+bool KinematicCharacter::IsOnGround() const
+{
+	return m_controller->onGround();
+}
 
-	void KinematicCharacter::SetMaxJumpHeight(const float &maxHeight)
-	{
-		m_maxHeight = maxHeight;
-		m_controller->setMaxJumpHeight(maxHeight);
-	}
+void KinematicCharacter::Jump(const Vector3 &direction)
+{
+	m_controller->jump(Collider::Convert(direction));
+}
 
-	void KinematicCharacter::SetInterpolate(const bool &interpolate)
-	{
-		m_interpolate = interpolate;
-		m_controller->setUpInterpolate(interpolate);
-	}
+void KinematicCharacter::SetWalkDirection(const Vector3 &direction)
+{
+	m_controller->setWalkDirection(Collider::Convert(direction));
+}
 
-	bool KinematicCharacter::IsOnGround() const
-	{
-		return m_controller->onGround();
-	}
-
-	void KinematicCharacter::Jump(const Vector3 &direction)
-	{
-		m_controller->jump(Collider::Convert(direction));
-	}
-
-	void KinematicCharacter::SetWalkDirection(const Vector3 &direction)
-	{
-		m_controller->setWalkDirection(Collider::Convert(direction));
-	}
-
-	void KinematicCharacter::RecalculateMass()
-	{
-		// TODO
-	}
+void KinematicCharacter::RecalculateMass()
+{
+	// TODO
+}
 }

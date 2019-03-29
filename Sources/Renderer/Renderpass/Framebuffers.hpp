@@ -5,25 +5,26 @@
 
 namespace acid
 {
-	class Renderpass;
-	class ImageDepth;
+class Renderpass;
+class ImageDepth;
 
-	class ACID_EXPORT Framebuffers :
-		public NonCopyable
-	{
-	public:
-		Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, 
-			const Swapchain &swapchain, const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+class ACID_EXPORT Framebuffers :
+	public NonCopyable
+{
+public:
+	Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass,
+		const Swapchain &swapchain, const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
-		~Framebuffers();
+	~Framebuffers();
 
-		const std::vector<std::unique_ptr<Image2d>> &GetImageAttachments() const { return m_imageAttachments; }
+	const std::vector<std::unique_ptr<Image2d>> &GetImageAttachments() const { return m_imageAttachments; }
 
-		Image2d *GetAttachment(const uint32_t &index) const { return m_imageAttachments[index].get(); }
+	Image2d *GetAttachment(const uint32_t &index) const { return m_imageAttachments[index].get(); }
 
-		const std::vector<VkFramebuffer> &GetFramebuffers() const { return m_framebuffers; }
-	private:
-		std::vector<std::unique_ptr<Image2d>> m_imageAttachments;
-		std::vector<VkFramebuffer> m_framebuffers;
-	};
+	const std::vector<VkFramebuffer> &GetFramebuffers() const { return m_framebuffers; }
+
+private:
+	std::vector<std::unique_ptr<Image2d>> m_imageAttachments;
+	std::vector<VkFramebuffer> m_framebuffers;
+};
 }

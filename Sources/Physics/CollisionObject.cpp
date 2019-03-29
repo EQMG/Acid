@@ -8,128 +8,128 @@
 
 namespace acid
 {
-	CollisionObject::CollisionObject(const float &friction) :
-		m_friction(friction),
-		m_frictionRolling(0.1f),
-		m_frictionSpinning(0.2f),
-		m_shape(nullptr),
-		m_body(nullptr)
+CollisionObject::CollisionObject(const float &friction) :
+	m_friction(friction),
+	m_frictionRolling(0.1f),
+	m_frictionSpinning(0.2f),
+	m_shape(nullptr),
+	m_body(nullptr)
+{
+}
+
+CollisionObject::~CollisionObject()
+{
+}
+
+Force *CollisionObject::AddForce(Force *force)
+{
+	m_forces.emplace_back(force);
+	return force;
+}
+
+void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)
+{
+	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+
+	if (compoundShape == nullptr)
 	{
+		return;
 	}
 
-	CollisionObject::~CollisionObject()
+	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 	{
-	}
-
-	Force *CollisionObject::AddForce(Force *force)
-	{
-		m_forces.emplace_back(force);
-		return force;
-	}
-
-	void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)
-	{
-		auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
-
-		if (compoundShape == nullptr)
+		if (compoundShape->getChildShape(i) == child->GetCollisionShape())
 		{
-			return;
+			compoundShape->updateChildTransform(i, Collider::Convert(transform));
+			break;
 		}
-
-		for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
-		{
-			if (compoundShape->getChildShape(i) == child->GetCollisionShape())
-			{
-				compoundShape->updateChildTransform(i, Collider::Convert(transform));
-				break;
-			}
-		}
-
-		RecalculateMass();
 	}
 
-	void CollisionObject::AddChild(Collider *child)
+	RecalculateMass();
+}
+
+void CollisionObject::AddChild(Collider *child)
+{
+	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+
+	if (compoundShape == nullptr)
 	{
-		auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
-
-		if (compoundShape == nullptr)
-		{
-			return;
-		}
-
-		compoundShape->addChildShape(Collider::Convert(child->GetLocalTransform()), child->GetCollisionShape());
-		RecalculateMass();
+		return;
 	}
 
-	void CollisionObject::RemoveChild(Collider *child)
+	compoundShape->addChildShape(Collider::Convert(child->GetLocalTransform()), child->GetCollisionShape());
+	RecalculateMass();
+}
+
+void CollisionObject::RemoveChild(Collider *child)
+{
+	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+
+	if (compoundShape == nullptr)
 	{
-		auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
-
-		if (compoundShape == nullptr)
-		{
-			return;
-		}
-
-		compoundShape->removeChildShape(child->GetCollisionShape());
-		RecalculateMass();
+		return;
 	}
 
-	void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore)
+	compoundShape->removeChildShape(child->GetCollisionShape());
+	RecalculateMass();
+}
+
+void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore)
+{
+	m_body->setIgnoreCollisionCheck(other->m_body, ignore);
+}
+
+void CollisionObject::SetFriction(const float &friction)
+{
+	m_friction = friction;
+	m_body->setFriction(m_friction);
+}
+
+void CollisionObject::SetFrictionRolling(const float &frictionRolling)
+{
+	m_frictionRolling = frictionRolling;
+	m_body->setRollingFriction(m_frictionRolling);
+}
+
+void CollisionObject::SetFrictionSpinning(const float &frictionSpinning)
+{
+	m_frictionSpinning = frictionSpinning;
+	m_body->setSpinningFriction(m_frictionSpinning);
+}
+
+void CollisionObject::CreateShape(const bool &forceSingle)
+{
+	auto colliders = GetParent()->GetComponents<Collider>();
+
+	if (forceSingle) // && colliders.size() == 1
 	{
-		m_body->setIgnoreCollisionCheck(other->m_body, ignore);
+		m_shape.reset(colliders[0]->GetCollisionShape());
+		return;
 	}
-
-	void CollisionObject::SetFriction(const float &friction)
+	if (colliders.empty())
 	{
-		m_friction = friction;
-		m_body->setFriction(m_friction);
+		m_shape = nullptr;
+		return;
 	}
 
-	void CollisionObject::SetFrictionRolling(const float &frictionRolling)
+	if (dynamic_cast<btCompoundShape *>(m_shape.get()) == nullptr)
 	{
-		m_frictionRolling = frictionRolling;
-		m_body->setRollingFriction(m_frictionRolling);
+		m_shape.release();
 	}
 
-	void CollisionObject::SetFrictionSpinning(const float &frictionSpinning)
+	auto compoundShape = new btCompoundShape();
+
+	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 	{
-		m_frictionSpinning = frictionSpinning;
-		m_body->setSpinningFriction(m_frictionSpinning);
+		compoundShape->removeChildShapeByIndex(i);
 	}
 
-	void CollisionObject::CreateShape(const bool &forceSingle)
+	for (const auto &collider : colliders)
 	{
-		auto colliders = GetParent()->GetComponents<Collider>();
-
-		if (forceSingle) // && colliders.size() == 1
-		{
-			m_shape.reset(colliders[0]->GetCollisionShape());
-			return;
-		}
-		if (colliders.empty())
-		{
-			m_shape = nullptr;
-			return;
-		}
-
-		if (dynamic_cast<btCompoundShape *>(m_shape.get()) == nullptr)
-		{
-			m_shape.release();
-		}
-
-		auto compoundShape = new btCompoundShape();
-
-		for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
-		{
-			compoundShape->removeChildShapeByIndex(i);
-		}
-
-		for (const auto &collider : colliders)
-		{
-			compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
-		}
-
-		m_shape.reset(compoundShape);
-		RecalculateMass();
+		compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
 	}
+
+	m_shape.reset(compoundShape);
+	RecalculateMass();
+}
 }

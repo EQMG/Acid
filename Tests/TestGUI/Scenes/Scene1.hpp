@@ -10,24 +10,25 @@ using namespace acid;
 
 namespace test
 {
-	class Scene1 :
-		public Scene
-	{
-	public:
-		Scene1();
+class Scene1 :
+	public Scene
+{
+public:
+	Scene1();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		bool IsPaused() const override;
+	bool IsPaused() const override;
 
-		void TogglePause();
-	private:
-		ButtonCompound m_buttonPause;
+	void TogglePause();
 
-		UiStartLogo m_uiStartLogo;
-		OverlayDebug m_overlayDebug;
-		UiNavigation m_uiNavigation;
-	};
+private:
+	ButtonCompound m_buttonPause;
+
+	UiStartLogo m_uiStartLogo;
+	OverlayDebug m_overlayDebug;
+	UiNavigation m_uiNavigation;
+};
 }

@@ -4,22 +4,22 @@
 
 namespace acid
 {
-	AxisJoystick::AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted) :
-		m_port(port),
-		m_axis(axis),
-		m_inverted(inverted)
+AxisJoystick::AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted) :
+	m_port(port),
+	m_axis(axis),
+	m_inverted(inverted)
+{
+	Joysticks::Get()->GetOnAxis() += [this](uint32_t axis, uint32_t port, float value)
 	{
-		Joysticks::Get()->GetOnAxis() += [this](uint32_t axis, uint32_t port, float value)
+		if (port == m_port && axis == m_axis)
 		{
-			if (port == m_port && axis == m_axis)
-			{
-				m_onAxis(value);
-			}
-		};
-	}
+			m_onAxis(value);
+		}
+	};
+}
 
-	float AxisJoystick::GetAmount() const
-	{
-		return Joysticks::Get()->GetAxis(m_port, m_axis) * (m_inverted ? -1.0f : 1.0f);
-	}
+float AxisJoystick::GetAmount() const
+{
+	return Joysticks::Get()->GetAxis(m_port, m_axis) * (m_inverted ? -1.0f : 1.0f);
+}
 }

@@ -8,23 +8,23 @@ using namespace acid;
 
 namespace test
 {
-	class MainGame :
-		public Game
-	{
-	public:
-		MainGame();
+class MainGame :
+	public Game
+{
+public:
+	MainGame();
 
-		~MainGame();
+	~MainGame();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-	private:
-		FileWatcher m_fileWatcher;
+private:
+	FileWatcher m_fileWatcher;
 
-		ButtonKeyboard m_buttonFullscreen;
-		ButtonKeyboard m_buttonScreenshot;
-		ButtonKeyboard m_buttonExit;
-	};
+	ButtonKeyboard m_buttonFullscreen;
+	ButtonKeyboard m_buttonScreenshot;
+	ButtonKeyboard m_buttonExit;
+};
 }

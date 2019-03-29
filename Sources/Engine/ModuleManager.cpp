@@ -19,84 +19,84 @@
 
 namespace acid
 {
-	ModuleManager::ModuleManager()
-	{
-	}
+ModuleManager::ModuleManager()
+{
+}
 
-	ModuleManager::~ModuleManager()
+ModuleManager::~ModuleManager()
+{
+	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it)
 	{
-		for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it)
+		it->second->~Module();
+	}
+}
+
+void ModuleManager::FillRegister()
+{
+	Add<Window>(Module::Stage::Always);
+	Add<Renderer>(Module::Stage::Render);
+	Add<Audio>(Module::Stage::Pre);
+	Add<Joysticks>(Module::Stage::Pre);
+	Add<Keyboard>(Module::Stage::Pre);
+	Add<Mouse>(Module::Stage::Pre);
+	Add<Files>(Module::Stage::Pre);
+	Add<Scenes>(Module::Stage::Normal);
+	Add<Gizmos>(Module::Stage::Normal);
+	Add<Resources>(Module::Stage::Pre);
+	Add<Events>(Module::Stage::Always);
+	Add<Uis>(Module::Stage::Pre);
+	Add<Particles>(Module::Stage::Normal);
+	Add<Shadows>(Module::Stage::Normal);
+}
+
+bool ModuleManager::Contains(Module *module)
+{
+	for (const auto &m : m_modules)
+	{
+		if (m.second.get() == module)
 		{
-			it->second->~Module();
+			return true;
 		}
 	}
 
-	void ModuleManager::FillRegister()
+	return false;
+}
+
+Module *ModuleManager::Add(Module *module, const Module::Stage &update)
+{
+	if (Contains(module))
 	{
-		Add<Window>(Module::Stage::Always);
-		Add<Renderer>(Module::Stage::Render);
-		Add<Audio>(Module::Stage::Pre);
-		Add<Joysticks>(Module::Stage::Pre);
-		Add<Keyboard>(Module::Stage::Pre);
-		Add<Mouse>(Module::Stage::Pre);
-		Add<Files>(Module::Stage::Pre);
-		Add<Scenes>(Module::Stage::Normal);
-		Add<Gizmos>(Module::Stage::Normal);
-		Add<Resources>(Module::Stage::Pre);
-		Add<Events>(Module::Stage::Always);
-		Add<Uis>(Module::Stage::Pre);
-		Add<Particles>(Module::Stage::Normal);
-		Add<Shadows>(Module::Stage::Normal);
+		Log::Error("Module '%i' is already registered!\n", update);
+		return nullptr;
 	}
 
-	bool ModuleManager::Contains(Module *module)
+	auto key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
+	m_modules.emplace(key, module);
+	return module;
+}
+
+void ModuleManager::Remove(Module *module)
+{
+	for (auto it = m_modules.begin(); it != m_modules.end();) // TODO: Clean remove.
 	{
-		for (const auto &m : m_modules)
+		if ((*it).second.get() == module)
 		{
-			if (m.second.get() == module)
-			{
-				return true;
-			}
+			it = m_modules.erase(it);
+			continue;
 		}
 
-		return false;
+		++it;
 	}
+}
 
-	Module *ModuleManager::Add(Module *module, const Module::Stage &update)
+void ModuleManager::RunUpdate(const Module::Stage &update)
+{
+	for (auto &[key, module] : m_modules)
 	{
-		if (Contains(module))
+		if (static_cast<uint32_t>(std::floor(key)) == static_cast<uint32_t>(update))
 		{
-			Log::Error("Module '%i' is already registered!\n", update);
-			return nullptr;
-		}
-
-		auto key = static_cast<float>(update) + (0.01f * static_cast<float>(m_modules.size()));
-		m_modules.emplace(key, module);
-		return module;
-	}
-
-	void ModuleManager::Remove(Module *module)
-	{
-		for (auto it = m_modules.begin(); it != m_modules.end();) // TODO: Clean remove.
-		{
-			if ((*it).second.get() == module)
-			{
-				it = m_modules.erase(it);
-				continue;
-			}
-
-			++it;
+			module->Update();
 		}
 	}
-
-	void ModuleManager::RunUpdate(const Module::Stage &update)
-	{
-		for (auto &[key, module] : m_modules)
-		{
-			if (static_cast<uint32_t>(std::floor(key)) == static_cast<uint32_t>(update))
-			{
-				module->Update();
-			}
-		}
-	}
+}
 }

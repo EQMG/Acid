@@ -12,27 +12,28 @@ using namespace acid;
 
 namespace test
 {
-	class Pannable :
-		public UiObject
-	{
-	public:
-		explicit Pannable(UiObject *parent);
+class Pannable :
+	public UiObject
+{
+public:
+	explicit Pannable(UiObject *parent);
 
-		void UpdateObject() override;
-	private:
-		ButtonKeyboard m_buttonReset;
+	void UpdateObject() override;
 
-		UiPanel m_settings;
-		UiInputSlider m_masterVolume;
-		UiInputBoolean m_antialiasing;
+private:
+	ButtonKeyboard m_buttonReset;
 
-		float m_zoom;
+	UiPanel m_settings;
+	UiInputSlider m_masterVolume;
+	UiInputBoolean m_antialiasing;
 
-		Text m_title;
-		Text m_body;
+	float m_zoom;
 
-		Text m_textFrameTime;
-		Text m_textFps;
-		Text m_textUps;
-	};
+	Text m_title;
+	Text m_body;
+
+	Text m_textFrameTime;
+	Text m_textFps;
+	Text m_textUps;
+};
 }

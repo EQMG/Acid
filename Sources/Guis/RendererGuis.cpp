@@ -7,33 +7,33 @@
 
 namespace acid
 {
-	RendererGuis::RendererGuis(const Pipeline::Stage &pipelineStage) :
-		RenderPipeline(pipelineStage),
-		m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()})
+RendererGuis::RendererGuis(const Pipeline::Stage &pipelineStage) :
+	RenderPipeline(pipelineStage),
+	m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexModel::GetVertexInput()})
+{
+}
+
+void RendererGuis::Render(const CommandBuffer &commandBuffer)
+{
+	auto camera = Scenes::Get()->GetCamera();
+	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
+	m_uniformScene.Push("view", camera->GetViewMatrix());
+
+	m_pipeline.BindPipeline(commandBuffer);
+
+	for (const auto &screenObject : Uis::Get()->GetObjects())
 	{
-	}
-
-	void RendererGuis::Render(const CommandBuffer &commandBuffer)
-	{
-		auto camera = Scenes::Get()->GetCamera();
-		m_uniformScene.Push("projection", camera->GetProjectionMatrix());
-		m_uniformScene.Push("view", camera->GetViewMatrix());
-
-		m_pipeline.BindPipeline(commandBuffer);
-
-		for (const auto &screenObject : Uis::Get()->GetObjects())
+		if (!screenObject->IsEnabled())
 		{
-			if (!screenObject->IsEnabled())
-			{
-				continue;
-			}
+			continue;
+		}
 
-			auto object = dynamic_cast<Gui *>(screenObject);
+		auto object = dynamic_cast<Gui *>(screenObject);
 
-			if (object != nullptr)
-			{
-				object->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
-			}
+		if (object != nullptr)
+		{
+			object->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
 		}
 	}
+}
 }

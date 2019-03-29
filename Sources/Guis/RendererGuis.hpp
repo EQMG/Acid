@@ -6,15 +6,16 @@
 
 namespace acid
 {
-	class ACID_EXPORT RendererGuis :
-		public RenderPipeline
-	{
-	public:
-		explicit RendererGuis(const Pipeline::Stage &pipelineStage);
+class ACID_EXPORT RendererGuis :
+	public RenderPipeline
+{
+public:
+	explicit RendererGuis(const Pipeline::Stage &pipelineStage);
 
-		void Render(const CommandBuffer &commandBuffer) override;
-	private:
-		PipelineGraphics m_pipeline;
-		UniformHandler m_uniformScene;
-	};
+	void Render(const CommandBuffer &commandBuffer) override;
+
+private:
+	PipelineGraphics m_pipeline;
+	UniformHandler m_uniformScene;
+};
 }

@@ -4,22 +4,22 @@
 
 namespace acid
 {
+/// <summary>
+/// Represents a system of post effects.
+/// </summary>
+class ACID_EXPORT PostPipeline :
+	public RenderPipeline
+{
+public:
 	/// <summary>
-	/// Represents a system of post effects.
+	/// Creates a new post pipeline.
 	/// </summary>
-	class ACID_EXPORT PostPipeline :
-		public RenderPipeline
+	/// <param name="pipelineStage"> The pipelines graphics stage. </param>
+	explicit PostPipeline(const Pipeline::Stage &pipelineStage) :
+		RenderPipeline(pipelineStage)
 	{
-	public:
-		/// <summary>
-		/// Creates a new post pipeline.
-		/// </summary>
-		/// <param name="pipelineStage"> The pipelines graphics stage. </param>
-		explicit PostPipeline(const Pipeline::Stage &pipelineStage) :
-			RenderPipeline(pipelineStage)
-		{
-		}
+	}
 
-		virtual ~PostPipeline() = default;
-	};
+	virtual ~PostPipeline() = default;
+};
 }

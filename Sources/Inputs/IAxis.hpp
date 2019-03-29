@@ -5,22 +5,23 @@
 
 namespace acid
 {
+/// <summary>
+/// Interface for an axis based input device.
+/// </summary>
+class ACID_EXPORT IAxis
+{
+public:
+	virtual ~IAxis() = default;
+
 	/// <summary>
-	/// Interface for an axis based input device.
+	/// Gets the current value along the axis. -1 is smallest input, 1 is largest input.
 	/// </summary>
-	class ACID_EXPORT IAxis
-	{
-	public:
-		virtual ~IAxis() = default;
+	/// <returns> The current value of the axis in the range (-1, 1). </returns>
+	virtual float GetAmount() const = 0;
 
-		/// <summary>
-		/// Gets the current value along the axis. -1 is smallest input, 1 is largest input.
-		/// </summary>
-		/// <returns> The current value of the axis in the range (-1, 1). </returns>
-		virtual float GetAmount() const = 0;
+	Delegate<void(float)> &GetOnAxis() { return m_onAxis; }
 
-		Delegate<void(float)> &GetOnAxis() { return m_onAxis; }
-	protected:
-		Delegate<void(float)> m_onAxis;
-	};
+protected:
+	Delegate<void(float)> m_onAxis;
+};
 }

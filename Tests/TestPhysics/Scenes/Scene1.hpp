@@ -11,24 +11,24 @@ using namespace acid;
 
 namespace test
 {
-	class Scene1 :
-		public Scene
-	{
-	public:
-		Scene1();
+class Scene1 :
+	public Scene
+{
+public:
+	Scene1();
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		bool IsPaused() const override;
+	bool IsPaused() const override;
 
-	private:
-		ButtonMouse m_buttonSpawnSphere;
-		std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
-		ButtonKeyboard m_buttonSave;
+private:
+	ButtonMouse m_buttonSpawnSphere;
+	std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
+	ButtonKeyboard m_buttonSave;
 
-		UiStartLogo m_uiStartLogo;
-		OverlayDebug m_overlayDebug;
-	};
+	UiStartLogo m_uiStartLogo;
+	OverlayDebug m_overlayDebug;
+};
 }

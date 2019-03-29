@@ -12,78 +12,79 @@ class btCollisionObject;
 
 namespace acid
 {
-	class Frustum;
+class Frustum;
+
+/// <summary>
+/// Represents a object in a scene effected by physics.
+/// </summary>
+class ACID_EXPORT CollisionObject :
+	public Component
+{
+public:
+	/// <summary>
+	/// Creates a new collision object.
+	/// </summary>
+	/// <param name="friction"> The amount of surface friction. </param>
+	/// <param name="localTransform"> The parent offset of the body. </param>
+	explicit CollisionObject(const float &friction = 0.2f);
+
+	virtual ~CollisionObject();
 
 	/// <summary>
-	/// Represents a object in a scene effected by physics.
+	/// Gets if the shape is partially in the view frustum.
 	/// </summary>
-	class ACID_EXPORT CollisionObject :
-		public Component
-	{
-	public:
-		/// <summary>
-		/// Creates a new collision object.
-		/// </summary>
-		/// <param name="friction"> The amount of surface friction. </param>
-		/// <param name="localTransform"> The parent offset of the body. </param>
-		explicit CollisionObject(const float &friction = 0.2f);
+	/// <param name="frustum"> The view frustum. </param>
+	/// <returns> If the shape is partially in the view frustum. </returns>
+	virtual bool InFrustum(const Frustum &frustum) = 0;
 
-		virtual ~CollisionObject();
+	Force *AddForce(Force *force);
 
-		/// <summary>
-		/// Gets if the shape is partially in the view frustum.
-		/// </summary>
-		/// <param name="frustum"> The view frustum. </param>
-		/// <returns> If the shape is partially in the view frustum. </returns>
-		virtual bool InFrustum(const Frustum &frustum) = 0;
+	template<typename T, typename... Args>
+	Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
 
-		Force *AddForce(Force *force);
+	virtual void ClearForces() = 0;
 
-		template<typename T, typename... Args>
-		Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
+	bool IsShapeCreated() const { return m_shape != nullptr; }
 
-		virtual void ClearForces() = 0;
+	void SetChildTransform(Collider *child, const Transform &transform);
 
-		bool IsShapeCreated() const { return m_shape != nullptr; }
+	void AddChild(Collider *child);
 
-		void SetChildTransform(Collider *child, const Transform &transform);
+	void RemoveChild(Collider *child);
 
-		void AddChild(Collider *child);
+	void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
 
-		void RemoveChild(Collider *child);
+	const float &GetFriction() const { return m_friction; }
 
-		void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
+	void SetFriction(const float &friction);
 
-		const float &GetFriction() const { return m_friction; }
+	const float &GetFrictionRolling() const { return m_frictionRolling; }
 
-		void SetFriction(const float &friction);
+	void SetFrictionRolling(const float &frictionRolling);
 
-		const float &GetFrictionRolling() const { return m_frictionRolling; }
+	const float &GetFrictionSpinning() const { return m_frictionSpinning; }
 
-		void SetFrictionRolling(const float &frictionRolling);
+	void SetFrictionSpinning(const float &frictionSpinning);
 
-		const float &GetFrictionSpinning() const { return m_frictionSpinning; }
+	Delegate<void(CollisionObject *)> &GetOnCollision() { return m_onCollision; }
 
-		void SetFrictionSpinning(const float &frictionSpinning);
+	Delegate<void(CollisionObject *)> &GetOnSeparation() { return m_onSeparation; }
 
-		Delegate<void(CollisionObject *)> &GetOnCollision() { return m_onCollision; }
+protected:
+	void CreateShape(const bool &forceSingle = false);
 
-		Delegate<void(CollisionObject *)> &GetOnSeparation() { return m_onSeparation; }
-	protected:
-		void CreateShape(const bool &forceSingle = false);
+	virtual void RecalculateMass() = 0;
 
-		virtual void RecalculateMass() = 0;
+	float m_friction;
+	float m_frictionRolling;
+	float m_frictionSpinning;
 
-		float m_friction;
-		float m_frictionRolling;
-		float m_frictionSpinning;
+	std::unique_ptr<btCollisionShape> m_shape;
+	btCollisionObject *m_body;
 
-		std::unique_ptr<btCollisionShape> m_shape;
-		btCollisionObject *m_body;
+	std::vector<std::unique_ptr<Force>> m_forces;
 
-		std::vector<std::unique_ptr<Force>> m_forces;
-
-		Delegate<void(CollisionObject *)> m_onCollision;
-		Delegate<void(CollisionObject *)> m_onSeparation;
-	};
+	Delegate<void(CollisionObject *)> m_onCollision;
+	Delegate<void(CollisionObject *)> m_onSeparation;
+};
 }

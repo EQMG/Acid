@@ -10,43 +10,44 @@ using namespace acid;
 
 namespace test
 {
+/// <summary>
+/// A module used for managing the world.
+/// </summary>
+class World :
+	public Module
+{
+public:
 	/// <summary>
-	/// A module used for managing the world.
+	/// Gets this engine instance.
 	/// </summary>
-	class World :
-		public Module
-	{
-	public:
-		/// <summary>
-		/// Gets this engine instance.
-		/// </summary>
-		/// <returns> The current module instance. </returns>
-		static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }
+	/// <returns> The current module instance. </returns>
+	static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }
 
-		World();
+	World();
 
-		void Update() override;
+	void Update() override;
 
-		float GetDayFactor() const;
+	float GetDayFactor() const;
 
-		float GetSunriseFactor() const;
+	float GetSunriseFactor() const;
 
-		float GetShadowFactor() const;
+	float GetShadowFactor() const;
 
-		float GetStarIntensity() const;
+	float GetStarIntensity() const;
 
-		Fog GetFog() const { return m_fog; }
+	Fog GetFog() const { return m_fog; }
 
-		Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
+	Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
 
-		Vector3 GetLightDirection() const { return m_lightDirection; }
-	private:
-		DriverLinear<float> m_driverDay;
-		float m_factorDay;
+	Vector3 GetLightDirection() const { return m_lightDirection; }
 
-		Fog m_fog;
+private:
+	DriverLinear<float> m_driverDay;
+	float m_factorDay;
 
-		Vector3 m_skyboxRotation;
-		Vector3 m_lightDirection;
-	};
+	Fog m_fog;
+
+	Vector3 m_skyboxRotation;
+	Vector3 m_lightDirection;
+};
 }

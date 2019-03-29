@@ -2,14 +2,14 @@
 
 namespace test
 {
-	Panels::Panels(UiObject *parent) :
-		UiObject(parent, UiBound::Screen),
-		m_hierarchy(Hierarchy(this)),
-		m_inspector(Inspector(this))
-	{
-	}
+Panels::Panels(UiObject *parent) :
+	UiObject(parent, UiBound::Screen),
+	m_hierarchy(Hierarchy(this)),
+	m_inspector(Inspector(this))
+{
+}
 
-	void Panels::UpdateObject()
-	{
-	}
+void Panels::UpdateObject()
+{
+}
 }

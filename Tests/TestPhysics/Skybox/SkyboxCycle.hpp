@@ -7,22 +7,22 @@ using namespace acid;
 
 namespace test
 {
-	class SkyboxCycle :
-		public Component
-	{
-	public:
-		explicit SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
+class SkyboxCycle :
+	public Component
+{
+public:
+	explicit SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+	void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+	void Encode(Metadata &metadata) const override;
 
-	private:
-		bool m_enableFog;
-		bool m_enableRotation;
-	};
+private:
+	bool m_enableFog;
+	bool m_enableRotation;
+};
 }

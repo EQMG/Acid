@@ -1,5 +1,4 @@
 ---
-# http://clang.llvm.org/docs/ClangFormatStyleOptions.html
 AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
 AlignEscapedNewlines: Left
@@ -19,10 +18,8 @@ BreakBeforeInheritanceComma: false
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializers: BeforeComma
 SpaceAfterTemplateKeyword: false
-# ColumnLimit: 140
-CommentPragmas: '^ IWYU pragma:'
+ColumnLimit: 200
 CommentPragmas:  '^/'
-# ConstructorInitializerAllOnOneLineOrOnePerLine: false
 Cpp11BracedListStyle: true
 FixNamespaceComments: false
 IncludeBlocks: Regroup

@@ -4,386 +4,386 @@
 
 namespace acid
 {
-	Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType,
-		const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
-		UiObject(parent, rectangle),
-		m_model(nullptr),
-		m_numberLines(0),
-		m_string(std::move(text)),
-		m_newString({}),
-		m_justify(justify),
-		m_fontType(std::move(fontType)),
-		m_maxWidth(maxWidth),
-		m_kerning(kerning),
-		m_leading(leading),
-		m_textColour(textColour),
-		m_borderColour(Colour::White),
-		m_solidBorder(false),
-		m_glowBorder(false),
-		m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-		m_glowSize(0.0f),
-		m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-		m_borderSize(0.0f)
+Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType,
+	const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
+	UiObject(parent, rectangle),
+	m_model(nullptr),
+	m_numberLines(0),
+	m_string(std::move(text)),
+	m_newString({}),
+	m_justify(justify),
+	m_fontType(std::move(fontType)),
+	m_maxWidth(maxWidth),
+	m_kerning(kerning),
+	m_leading(leading),
+	m_textColour(textColour),
+	m_borderColour(Colour::White),
+	m_solidBorder(false),
+	m_glowBorder(false),
+	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
+	m_glowSize(0.0f),
+	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
+	m_borderSize(0.0f)
+{
+	SetScaleDriver(new DriverConstant<float>(fontSize));
+	LoadText();
+}
+
+void Text::UpdateObject()
+{
+	if (m_newString.has_value())
 	{
-		SetScaleDriver(new DriverConstant<float>(fontSize));
+		m_string = *m_newString;
 		LoadText();
+		m_newString = {};
 	}
 
-	void Text::UpdateObject()
+	m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
+	m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
+
+	// Updates uniforms.
+	m_uniformObject.Push("modelMatrix", GetModelMatrix());
+	m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
+	m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
+	m_uniformObject.Push("depth", GetScreenDepth());
+	m_uniformObject.Push("alpha", GetScreenAlpha());
+
+	m_uniformObject.Push("colour", m_textColour);
+	m_uniformObject.Push("borderColour", m_borderColour);
+	m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
+	m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+}
+
+bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+{
+	// Gets if this should be rendered.
+	if (m_model == nullptr || m_fontType == nullptr || !IsEnabled())
 	{
-		if (m_newString.has_value())
+		return false;
+	}
+
+	// Updates descriptors.
+	m_descriptorSet.Push("UboScene", uniformScene);
+	m_descriptorSet.Push("UboObject", m_uniformObject);
+	m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
+	bool updateSuccess = m_descriptorSet.Update(pipeline);
+
+	if (!updateSuccess)
+	{
+		return false;
+	}
+
+	VkRect2D scissorRect = {};
+	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetWidth() * GetScissor().m_x);
+	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetHeight() * GetScissor().m_y);
+	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
+	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
+	vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
+
+	// Draws the object.
+	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	return m_model->CmdRender(commandBuffer);
+}
+
+void Text::SetString(const std::string &newString)
+{
+	if (m_string != newString)
+	{
+		m_newString = newString;
+	}
+}
+
+void Text::SetBorderDriver(IDriver<float> *borderDriver)
+{
+	m_borderDriver.reset(borderDriver);
+	m_solidBorder = true;
+	m_glowBorder = false;
+}
+
+void Text::SetGlowDriver(IDriver<float> *glowDriver)
+{
+	m_glowDriver.reset(glowDriver);
+	m_solidBorder = false;
+	m_glowBorder = true;
+}
+
+void Text::RemoveBorder()
+{
+	m_solidBorder = false;
+	m_glowBorder = false;
+}
+
+float Text::GetTotalBorderSize() const
+{
+	if (m_solidBorder)
+	{
+		if (m_borderSize == 0.0f)
 		{
-			m_string = *m_newString;
-			LoadText();
-			m_newString = {};
+			return 0.0f;
 		}
 
-		m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
-		m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
-
-		// Updates uniforms.
-		m_uniformObject.Push("modelMatrix", GetModelMatrix());
-		m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
-		m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
-		m_uniformObject.Push("depth", GetScreenDepth());
-		m_uniformObject.Push("alpha", GetScreenAlpha());
-
-		m_uniformObject.Push("colour", m_textColour);
-		m_uniformObject.Push("borderColour", m_borderColour);
-		m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
-		m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+		return CalculateEdgeStart() + m_borderSize;
 	}
 
-	bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+	if (m_glowBorder)
 	{
-		// Gets if this should be rendered.
-		if (m_model == nullptr || m_fontType == nullptr || !IsEnabled())
+		return CalculateEdgeStart();
+	}
+
+	return 0.0f;
+}
+
+float Text::GetGlowSize() const
+{
+	if (m_solidBorder)
+	{
+		return CalculateAntialiasSize();
+	}
+
+	if (m_glowBorder)
+	{
+		return m_glowSize;
+	}
+
+	return 0.0f;
+}
+
+float Text::CalculateEdgeStart() const
+{
+	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+	auto size = 0.5f * scale;
+	return 1.0f / 300.0f * size + 137.0f / 300.0f;
+}
+
+float Text::CalculateAntialiasSize() const
+{
+	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+	auto size = 0.5f * scale;
+	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
+	return 0.1f / size;
+}
+
+bool Text::IsLoaded() const
+{
+	return !m_string.empty() && m_model != nullptr;
+}
+
+void Text::LoadText()
+{
+	if (m_string.empty())
+	{
+		m_model = nullptr;
+		return;
+	}
+
+	// Creates mesh data.
+	auto lines = CreateStructure();
+	auto vertices = CreateQuad(lines);
+
+	// Calculates the bounds and normalizes the vertices.
+	Vector2 bounding;
+	NormalizeQuad(bounding, vertices);
+
+	// Loads the mesh data.
+	m_model = std::make_unique<Model>(vertices);
+	GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
+}
+
+std::vector<Text::Line> Text::CreateStructure() const
+{
+	std::vector<Line> lines = {};
+	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+	auto currentWord = Word();
+
+	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
+	auto textLines = String::Split(formattedText, "\n", true);
+
+	for (uint32_t i = 0; i < textLines.size(); i++)
+	{
+		if (textLines.at(i).empty())
 		{
-			return false;
+			continue;
 		}
 
-		// Updates descriptors.
-		m_descriptorSet.Push("UboScene", uniformScene);
-		m_descriptorSet.Push("UboObject", m_uniformObject);
-		m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
-		bool updateSuccess = m_descriptorSet.Update(pipeline);
-
-		if (!updateSuccess)
+		for (const auto &c : textLines.at(i))
 		{
-			return false;
-		}
+			auto ascii = static_cast<int32_t>(c);
 
-		VkRect2D scissorRect = {};
-		scissorRect.offset.x = static_cast<int32_t>(pipeline.GetWidth() * GetScissor().m_x);
-		scissorRect.offset.y = static_cast<int32_t>(pipeline.GetHeight() * GetScissor().m_y);
-		scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
-		scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
-		vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
-
-		// Draws the object.
-		m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-		return m_model->CmdRender(commandBuffer);
-	}
-
-	void Text::SetString(const std::string &newString)
-	{
-		if (m_string != newString)
-		{
-			m_newString = newString;
-		}
-	}
-
-	void Text::SetBorderDriver(IDriver<float> *borderDriver)
-	{
-		m_borderDriver.reset(borderDriver);
-		m_solidBorder = true;
-		m_glowBorder = false;
-	}
-
-	void Text::SetGlowDriver(IDriver<float> *glowDriver)
-	{
-		m_glowDriver.reset(glowDriver);
-		m_solidBorder = false;
-		m_glowBorder = true;
-	}
-
-	void Text::RemoveBorder()
-	{
-		m_solidBorder = false;
-		m_glowBorder = false;
-	}
-
-	float Text::GetTotalBorderSize() const
-	{
-		if (m_solidBorder)
-		{
-			if (m_borderSize == 0.0f)
+			if (ascii == FontMetafile::SpaceAscii)
 			{
-				return 0.0f;
-			}
+				bool added = currentLine.AddWord(currentWord);
 
-			return CalculateEdgeStart() + m_borderSize;
-		}
-
-		if (m_glowBorder)
-		{
-			return CalculateEdgeStart();
-		}
-
-		return 0.0f;
-	}
-
-	float Text::GetGlowSize() const
-	{
-		if (m_solidBorder)
-		{
-			return CalculateAntialiasSize();
-		}
-
-		if (m_glowBorder)
-		{
-			return m_glowSize;
-		}
-
-		return 0.0f;
-	}
-
-	float Text::CalculateEdgeStart() const
-	{
-		auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-		auto size = 0.5f * scale;
-		return 1.0f / 300.0f * size + 137.0f / 300.0f;
-	}
-
-	float Text::CalculateAntialiasSize() const
-	{
-		auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-		auto size = 0.5f * scale;
-		size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
-		return 0.1f / size;
-	}
-
-	bool Text::IsLoaded() const
-	{
-		return !m_string.empty() && m_model != nullptr;
-	}
-
-	void Text::LoadText()
-	{
-		if (m_string.empty())
-		{
-			m_model = nullptr;
-			return;
-		}
-
-		// Creates mesh data.
-		auto lines = CreateStructure();
-		auto vertices = CreateQuad(lines);
-
-		// Calculates the bounds and normalizes the vertices.
-		Vector2 bounding;
-		NormalizeQuad(bounding, vertices);
-
-		// Loads the mesh data.
-		m_model = std::make_unique<Model>(vertices);
-		GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
-	}
-
-	std::vector<Text::Line> Text::CreateStructure() const
-	{
-		std::vector<Line> lines = {};
-		auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-		auto currentWord = Word();
-
-		auto formattedText = String::ReplaceAll(m_string, "\t", "	");
-		auto textLines = String::Split(formattedText, "\n", true);
-
-		for (uint32_t i = 0; i < textLines.size(); i++)
-		{
-			if (textLines.at(i).empty())
-			{
-				continue;
-			}
-
-			for (const auto &c : textLines.at(i))
-			{
-				auto ascii = static_cast<int32_t>(c);
-
-				if (ascii == FontMetafile::SpaceAscii)
+				if (!added)
 				{
-					bool added = currentLine.AddWord(currentWord);
-
-					if (!added)
-					{
-						lines.emplace_back(currentLine);
-						currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-						currentLine.AddWord(currentWord);
-					}
-
-					currentWord = Word();
-					continue;
-				}
-
-				auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
-
-				if (character)
-				{
-					currentWord.AddCharacter(*character, m_kerning);
-				}
-			}
-
-			if (i != textLines.size() - 1)
-			{
-				bool wordAdded = currentLine.AddWord(currentWord);
-				lines.emplace_back(currentLine);
-				currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-
-				if (!wordAdded)
-				{
+					lines.emplace_back(currentLine);
+					currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 					currentLine.AddWord(currentWord);
 				}
 
 				currentWord = Word();
+				continue;
+			}
+
+			auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
+
+			if (character)
+			{
+				currentWord.AddCharacter(*character, m_kerning);
 			}
 		}
 
-		CompleteStructure(lines, currentLine, currentWord);
-		return lines;
-	}
-
-	void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const
-	{
-		auto added = currentLine.AddWord(currentWord);
-
-		if (!added)
+		if (i != textLines.size() - 1)
 		{
+			bool wordAdded = currentLine.AddWord(currentWord);
 			lines.emplace_back(currentLine);
 			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
-			currentLine.AddWord(currentWord);
-		}
 
+			if (!wordAdded)
+			{
+				currentLine.AddWord(currentWord);
+			}
+
+			currentWord = Word();
+		}
+	}
+
+	CompleteStructure(lines, currentLine, currentWord);
+	return lines;
+}
+
+void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const
+{
+	auto added = currentLine.AddWord(currentWord);
+
+	if (!added)
+	{
 		lines.emplace_back(currentLine);
+		currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		currentLine.AddWord(currentWord);
 	}
 
-	std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
+	lines.emplace_back(currentLine);
+}
+
+std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
+{
+	std::vector<VertexModel> vertices = {};
+	m_numberLines = static_cast<uint32_t>(lines.size());
+
+	auto cursorX = 0.0f;
+	auto cursorY = 0.0f;
+	auto lineOrder = static_cast<int32_t>(lines.size());
+
+	for (const auto &line : lines)
 	{
-		std::vector<VertexModel> vertices = {};
-		m_numberLines = static_cast<uint32_t>(lines.size());
-
-		auto cursorX = 0.0f;
-		auto cursorY = 0.0f;
-		auto lineOrder = static_cast<int32_t>(lines.size());
-
-		for (const auto &line : lines)
+		switch (m_justify)
 		{
-			switch (m_justify)
-			{
-			case Justify::Left:
-				cursorX = 0.0f;
-				break;
-			case Justify::Centre:
-				cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
-				break;
-			case Justify::Right:
-				cursorX = line.m_maxLength - line.m_currentLineLength;
-				break;
-			case Justify::Fully:
-				cursorX = 0.0f;
-				break;
-			}
-
-			for (const auto &word : line.m_words)
-			{
-				for (const auto &letter : word.m_characters)
-				{
-					AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-					cursorX += m_kerning + letter.m_advanceX;
-				}
-
-				if (m_justify == Justify::Fully && lineOrder > 1)
-				{
-					cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
-				}
-				else
-				{
-					cursorX += m_fontType->GetMetadata()->GetSpaceWidth();
-				}
-			}
-
-			cursorY += m_leading + FontMetafile::LineHeight;
-			lineOrder--;
+		case Justify::Left:
+			cursorX = 0.0f;
+			break;
+		case Justify::Centre:
+			cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
+			break;
+		case Justify::Right:
+			cursorX = line.m_maxLength - line.m_currentLineLength;
+			break;
+		case Justify::Fully:
+			cursorX = 0.0f;
+			break;
 		}
 
-		return vertices;
-	}
-
-	void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices)
-	{
-		auto vertexX = cursorX + character.m_offsetX;
-		auto vertexY = cursorY + character.m_offsetY;
-		auto vertexMaxX = vertexX + character.m_sizeX;
-		auto vertexMaxY = vertexY + character.m_sizeY;
-		
-		auto textureX = character.m_textureCoordX;
-		auto textureY = character.m_textureCoordY;
-		auto textureMaxX = character.m_maxTextureCoordX;
-		auto textureMaxY = character.m_maxTextureCoordY;
-
-		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
-		AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
-		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
-		AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
-		AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
-		AddVertex(vertexX, vertexY, textureX, textureY, vertices);
-	}
-
-	void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
-	{
-		vertices.emplace_back(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
-	}
-
-	void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const
-	{
-		auto minX = +std::numeric_limits<float>::infinity();
-		auto minY = +std::numeric_limits<float>::infinity();
-		auto maxX = -std::numeric_limits<float>::infinity();
-		auto maxY = -std::numeric_limits<float>::infinity();
-
-		for (const auto &vertex : vertices)
+		for (const auto &word : line.m_words)
 		{
-			auto position = vertex.GetPosition();
-
-			if (position.m_x < minX)
+			for (const auto &letter : word.m_characters)
 			{
-				minX = position.m_x;
-			}
-			else if (position.m_x > maxX)
-			{
-				maxX = position.m_x;
+				AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
+				cursorX += m_kerning + letter.m_advanceX;
 			}
 
-			if (position.m_y < minY)
+			if (m_justify == Justify::Fully && lineOrder > 1)
 			{
-				minY = position.m_y;
+				cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
 			}
-			else if (position.m_y > maxY)
+			else
 			{
-				maxY = position.m_y;
+				cursorX += m_fontType->GetMetadata()->GetSpaceWidth();
 			}
 		}
 
-		if (m_justify == Justify::Centre)
+		cursorY += m_leading + FontMetafile::LineHeight;
+		lineOrder--;
+	}
+
+	return vertices;
+}
+
+void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices)
+{
+	auto vertexX = cursorX + character.m_offsetX;
+	auto vertexY = cursorY + character.m_offsetY;
+	auto vertexMaxX = vertexX + character.m_sizeX;
+	auto vertexMaxY = vertexY + character.m_sizeY;
+
+	auto textureX = character.m_textureCoordX;
+	auto textureY = character.m_textureCoordY;
+	auto textureMaxX = character.m_maxTextureCoordX;
+	auto textureMaxY = character.m_maxTextureCoordY;
+
+	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
+	AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
+	AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+	AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
+	AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
+	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
+}
+
+void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
+{
+	vertices.emplace_back(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
+}
+
+void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const
+{
+	auto minX = +std::numeric_limits<float>::infinity();
+	auto minY = +std::numeric_limits<float>::infinity();
+	auto maxX = -std::numeric_limits<float>::infinity();
+	auto maxY = -std::numeric_limits<float>::infinity();
+
+	for (const auto &vertex : vertices)
+	{
+		auto position = vertex.GetPosition();
+
+		if (position.m_x < minX)
 		{
-			minX = 0.0f;
-			maxX = m_maxWidth;
+			minX = position.m_x;
+		}
+		else if (position.m_x > maxX)
+		{
+			maxX = position.m_x;
 		}
 
-	//	maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
-		bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
-
-		for (auto &vertex : vertices)
+		if (position.m_y < minY)
 		{
-			vertex.SetPosition(Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
+			minY = position.m_y;
+		}
+		else if (position.m_y > maxY)
+		{
+			maxY = position.m_y;
 		}
 	}
+
+	if (m_justify == Justify::Centre)
+	{
+		minX = 0.0f;
+		maxX = m_maxWidth;
+	}
+
+	//maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+	bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+
+	for (auto &vertex : vertices)
+	{
+		vertex.SetPosition(Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
+	}
+}
 }

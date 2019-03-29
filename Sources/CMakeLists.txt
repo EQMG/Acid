@@ -165,14 +165,14 @@ if(_ACID_ALL_SYSTEM_LIBS)
 	write_basic_package_version_file(
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			COMPATIBILITY SameMajorVersion
-			)
+	)
 	# Install the auto-generated version file and AcidConfig
 	install(
 			FILES
 			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-			)
+	)
 else()
 	# Install without an export since we're using 1 (or more) non-system libs
 	install(TARGETS Acid

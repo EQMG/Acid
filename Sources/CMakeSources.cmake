@@ -421,7 +421,7 @@ set(_temp_acid_sources
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
-add_precompiled_header(Acid 
+add_precompiled_header(Acid
 		StdAfx.hpp
 		SOURCE_CXX
 		StdAfx.cpp

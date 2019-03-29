@@ -6,21 +6,21 @@ using namespace acid;
 
 namespace test
 {
-	class HeightDespawn :
-		public Component
-	{
-	public:
-		explicit HeightDespawn(const float &removeHeight = -100.0f);
+class HeightDespawn :
+	public Component
+{
+public:
+	explicit HeightDespawn(const float &removeHeight = -100.0f);
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void Decode(const Metadata &metadata) override;
+	void Decode(const Metadata &metadata) override;
 
-		void Encode(Metadata &metadata) const override;
+	void Encode(Metadata &metadata) const override;
 
-	private:
-		float m_removeHeight;
-	};
+private:
+	float m_removeHeight;
+};
 }
