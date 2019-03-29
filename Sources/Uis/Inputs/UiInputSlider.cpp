@@ -103,12 +103,9 @@ void UiInputSlider::SetTitle(const std::string &title)
 
 void UiInputSlider::SetValue(const float &value)
 {
-	if (m_value != value)
-	{
-		m_value = value;
-		UpdateProgress();
-		m_onValue(m_value);
-	}
+	m_value = value;
+	UpdateProgress();
+	//m_onValue(m_value);
 }
 
 void UiInputSlider::UpdateProgress()

@@ -109,12 +109,8 @@ void Audio::SetGain(const Type &type, const float &volume)
 
 	if (it != m_gains.end())
 	{
-		if (it->second != volume)
-		{
-			it->second = volume;
-			m_onGain(type, volume);
-		}
-
+		it->second = volume;
+		m_onGain(type, volume);
 		return;
 	}
 

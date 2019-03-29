@@ -128,11 +128,8 @@ void UiInputText::SetTitle(const std::string &title)
 
 void UiInputText::SetValue(const std::string &value)
 {
-	if (m_value != value)
-	{
-		m_value = value;
-		m_textValue.SetString(value);
-		m_onValue(m_value);
-	}
+	m_value = value;
+	m_textValue.SetString(value);
+	//m_onValue(m_value);
 }
 }

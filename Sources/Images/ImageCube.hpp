@@ -103,6 +103,9 @@ public:
 	/// <param name="pixels"> The pixels to copy to the image. </param>
 	void SetPixels(const uint8_t *pixels);
 
+	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width, uint32_t &height,
+		uint32_t &components, VkFormat &format);
+
 	const std::string &GetFilename() const { return m_filename; };
 
 	const std::string &GetFileSuffix() { return m_fileSuffix; };

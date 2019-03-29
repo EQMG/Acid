@@ -188,7 +188,14 @@ void LogicalDevice::CreateLogicalDevice()
 		enabledFeatures.textureCompressionETC2 = VK_TRUE;
 	}
 
-	//enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
+	if (physicalDeviceFeatures.vertexPipelineStoresAndAtomics)
+	{
+		enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
+	}
+	else
+	{
+		Log::Error("Selected GPU does not support vertex pipeline stores and atomics!");
+	}
 
 	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
 	{

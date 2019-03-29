@@ -3,22 +3,31 @@
 namespace acid
 {
 ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons, const bool &useAnd) :
-	m_useAnd(useAnd)
+	m_useAnd(useAnd),
+	m_lastDown(false)
 {
 	for (const auto &button : buttons)
 	{
 		button->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
 		{
-			// TODO: Repeat
-			if (IsDown() == !(m_wasDown && IsDown()))
+			bool isDown = IsDown();
+
+			if (!m_lastDown && isDown)
 			{
+				m_lastDown = true;
 				m_onButton(InputAction::Press, 0);
 			}
-			else if (!IsDown())
+			else if (m_lastDown && !isDown)
 			{
+				m_lastDown = false;
 				m_onButton(InputAction::Release, 0);
 			}
+			else if (m_lastDown && isDown) // TODO: This will be sent for every button, only count one per cycle.
+			{
+				m_onButton(InputAction::Repeat, 0);
+			}
 		};
+
 		m_buttons.emplace_back(button);
 	}
 }

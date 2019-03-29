@@ -49,10 +49,7 @@ void UiColourWheel::UpdateObject()
 
 void UiColourWheel::SetValue(const Colour &value)
 {
-	if (m_value != value)
-	{
-		m_value = value;
-		m_onValue(m_value);
-	}
+	m_value = value;
+	//m_onValue(m_value);
 }
 }

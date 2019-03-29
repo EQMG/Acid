@@ -45,5 +45,6 @@ public:
 private:
 	std::vector<std::unique_ptr<IButton>> m_buttons;
 	bool m_useAnd;
+	bool m_lastDown;
 };
 }

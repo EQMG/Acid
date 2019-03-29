@@ -24,8 +24,8 @@ public:
 
 private:
 	ButtonKeyboard m_buttonReset;
-	//std::unique_ptr<ButtonCompound> m_testCompound;
-	//HatJoystick m_testHat;
+	std::unique_ptr<ButtonCompound> m_testCompound;
+	HatJoystick m_testHat;
 
 	UiPanel m_settings;
 	UiInputSlider m_masterVolume;

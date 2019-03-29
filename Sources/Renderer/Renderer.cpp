@@ -231,7 +231,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	VkImage srcImage = m_swapchain->GetActiveImage();
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, width, height, true, 1, 0, 1);
+	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, {width, height, 1}, 1, 0, 1, true);
 
 	// Get layout of the image (including row pitch).
 	VkImageSubresource imageSubresource = {};

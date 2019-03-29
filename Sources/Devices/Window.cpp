@@ -237,12 +237,9 @@ void Window::SetPosition(const Vector2 &position)
 
 void Window::SetTitle(const std::string &title)
 {
-	if (m_title != title)
-	{
-		m_title = title;
-		glfwSetWindowTitle(m_window, m_title.c_str());
-		m_onTitle(m_title);
-	}
+	m_title = title;
+	glfwSetWindowTitle(m_window, m_title.c_str());
+	m_onTitle(m_title);
 }
 
 void Window::SetIcons(const std::vector<std::string> &filenames)
@@ -276,78 +273,63 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 
 void Window::SetBorderless(const bool &borderless)
 {
-	if (m_borderless != borderless)
-	{
-		m_borderless = borderless;
-		glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
-		m_onBorderless(m_borderless);
-	}
+	m_borderless = borderless;
+	glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
+	m_onBorderless(m_borderless);
 }
 
 void Window::SetResizable(const bool &resizable)
 {
-	if (m_resizable != resizable)
-	{
-		m_resizable = resizable;
-		glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
-		m_onResizable(m_resizable);
-	}
+	m_resizable = resizable;
+	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
+	m_onResizable(m_resizable);
 }
 
 void Window::SetFloating(const bool &floating)
 {
-	if (m_floating != floating)
-	{
-		m_floating = floating;
-		glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
-		m_onFloating(m_floating);
-	}
+	m_floating = floating;
+	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
+	m_onFloating(m_floating);
 }
 
 void Window::SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor)
 {
-	if (m_fullscreen != fullscreen)
+	m_fullscreen = fullscreen;
+
+	auto selected = monitor ? *monitor : m_monitors[0];
+	auto videoMode = selected.GetVideoMode();
+
+	if (fullscreen)
 	{
-		m_fullscreen = fullscreen;
-
-		auto selected = monitor ? *monitor : m_monitors[0];
-		auto videoMode = selected.GetVideoMode();
-
-		if (fullscreen)
-		{
 #if defined(ACID_VERBOSE)
-			printf("Window is going fullscreen\n");
+		printf("Window is going fullscreen\n");
 #endif
-			m_fullscreenWidth = static_cast<uint32_t>(videoMode.m_width);
-			m_fullscreenHeight = static_cast<uint32_t>(videoMode.m_height);
-			glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
-		}
-		else
-		{
-#if defined(ACID_VERBOSE)
-			printf("Window is going windowed\n");
-#endif
-			m_positionX = (videoMode.m_width - m_windowWidth) / 2;
-			m_positionY = (videoMode.m_height - m_windowHeight) / 2;
-			glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
-		}
-
-		m_onFullscreen(m_fullscreen);
+		m_fullscreenWidth = static_cast<uint32_t>(videoMode.m_width);
+		m_fullscreenHeight = static_cast<uint32_t>(videoMode.m_height);
+		glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
 	}
+	else
+	{
+#if defined(ACID_VERBOSE)
+		printf("Window is going windowed\n");
+#endif
+		m_positionX = (videoMode.m_width - m_windowWidth) / 2;
+		m_positionY = (videoMode.m_height - m_windowHeight) / 2;
+		glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
+	}
+
+	m_onFullscreen(m_fullscreen);
 }
 
 void Window::SetIconified(const bool &iconify)
 {
-	if (m_iconified != iconify)
+	if (!m_iconified && iconify)
 	{
-		if (!m_iconified && iconify)
-		{
-			glfwIconifyWindow(m_window);
-		}
-		else if (m_iconified && !iconify)
-		{
-			glfwRestoreWindow(m_window);
-		}
+		glfwIconifyWindow(m_window);
+	}
+	else if (m_iconified && !iconify)
+	{
+		glfwRestoreWindow(m_window);
 	}
 }
 

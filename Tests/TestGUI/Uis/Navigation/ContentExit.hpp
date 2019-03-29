@@ -22,6 +22,7 @@ private:
 	UiInputSlider m_generalVolume;
 	UiInputSlider m_effectVolume;
 	UiInputSlider m_musicVolume;
+	UiInputButton m_iconify;
 	UiInputBoolean m_antialiasing;
 	UiInputBoolean m_borderless;
 	UiInputBoolean m_resizable;

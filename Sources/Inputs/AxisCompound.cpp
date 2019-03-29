@@ -10,6 +10,7 @@ AxisCompound::AxisCompound(const std::vector<IAxis *> &axes)
 		{
 			m_onAxis(GetAmount());
 		};
+
 		m_axes.emplace_back(axis);
 	}
 }

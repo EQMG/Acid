@@ -57,12 +57,9 @@ void UiInputRadio::UpdateObject()
 
 void UiInputRadio::SetValue(const bool &value)
 {
-	if (m_value != value)
-	{
-		m_value = value;
-		UpdateFill();
-		m_onValue(m_value);
-	}
+	m_value = value;
+	UpdateFill();
+	//m_onValue(m_value);
 }
 
 void UiInputRadio::SetType(const Type &type)

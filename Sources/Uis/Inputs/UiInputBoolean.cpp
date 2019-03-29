@@ -64,12 +64,9 @@ void UiInputBoolean::SetTitle(const std::string &title)
 
 void UiInputBoolean::SetValue(const bool &value)
 {
-	if (m_value != value)
-	{
-		m_value = value;
-		UpdateValue();
-		m_onValue(m_value);
-	}
+	m_value = value;
+	UpdateValue();
+	//m_onValue(m_value);
 }
 
 void UiInputBoolean::UpdateValue()

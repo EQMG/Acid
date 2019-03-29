@@ -124,6 +124,6 @@ void main()
 	for (uint i = 0; i != 6; ++i)
 	{
 		vec3 R = normalize(cubeDir(uv, i));
-		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, R, 0.1f), 1.0f)); // object.roughness
+		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, R, 0.04f), 1.0f)); // object.roughness
 	}
 }

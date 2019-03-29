@@ -9,8 +9,8 @@ namespace test
 Pannable::Pannable(UiObject *parent) :
 	UiObject(parent, UiBound::Maximum),
 	m_buttonReset(ButtonKeyboard({Key::Enter})),
-//	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
-//	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
+	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
+	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
 	m_settings(parent, UiBound(Vector2(0.02f, 0.02f), UiReference::TopLeft, UiAspect::Dimensions, Vector2(0.25f, 0.2f)), ScrollBar::None),
 	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2(0.5f, 0.06f), UiReference::TopCentre)),
 	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiBound(Vector2(0.5f, 0.30f), UiReference::TopCentre)),
@@ -32,14 +32,14 @@ Pannable::Pannable(UiObject *parent) :
 		}
 		Log::Out("Button Reset: %i\n", action);
 	};
-	/*m_testCompound->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_testCompound->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Compound: %i\n", action);
 	};
 	m_testHat.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Hat: %i\n", action);
-	};*/
+	};
 
 	m_settings.SetHeight(4.0f);
 	m_masterVolume.GetOnValue() += [this](float value)

@@ -42,5 +42,6 @@ private:
 	uint32_t m_port;
 	uint32_t m_hat;
 	BitMask<JoystickHat> m_hatFlags;
+	bool m_lastDown;
 };
 }
