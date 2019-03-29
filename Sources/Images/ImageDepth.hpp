@@ -7,8 +7,7 @@
 namespace acid
 {
 class ACID_EXPORT ImageDepth :
-	public Descriptor,
-	public Buffer
+	public Descriptor, public Buffer
 {
 public:
 	ImageDepth(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
@@ -17,8 +16,8 @@ public:
 
 	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 
-	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const override;
+	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
+		const std::optional<OffsetSize> &offsetSize) const override;
 
 	const uint32_t &GetWidth() const { return m_width; }
 

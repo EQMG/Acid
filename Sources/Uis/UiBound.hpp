@@ -22,10 +22,7 @@ public:
 enum class UiAspect :
 	uint32_t
 {
-	None = 0,
-	Position = 1,
-	Dimensions = 2,
-	Scale = 4
+	None = 0, Position = 1, Dimensions = 2, Scale = 4
 };
 
 ENABLE_BITMASK_OPERATORS(UiAspect)
@@ -43,8 +40,8 @@ public:
 	/// <param name="reference"> The reference vertex of the parent bounds, where position is. </param>
 	/// <param name="aspect"> The aspect that will be used for bounding in the parent reference. </param>
 	/// <param name="dimensions"> The object dimensions. </param>
-	explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft,
-		const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f));
+	explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft, const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions,
+		const Vector2 &dimensions = Vector2(1.0f, 1.0f));
 
 	/// <summary>
 	/// Gets the bounds position in the current screen space.

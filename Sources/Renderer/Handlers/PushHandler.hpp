@@ -14,14 +14,12 @@ public:
 
 	explicit PushHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
 
-	template<typename T>
-	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
+	template<typename T> void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 	{
 		memcpy(m_data.get() + offset, &object, size);
 	}
 
-	template<typename T>
-	void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
+	template<typename T> void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
 	{
 		if (!m_uniformBlock)
 		{

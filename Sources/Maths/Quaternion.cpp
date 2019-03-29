@@ -92,10 +92,8 @@ Quaternion Quaternion::Subtract(const Quaternion &other) const
 
 Quaternion Quaternion::Multiply(const Quaternion &other) const
 {
-	return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y,
-		m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
-		m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x,
-		m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
+	return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y, m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
+		m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x, m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
 }
 
 Vector3 Quaternion::Multiply(const Vector3 &other) const
@@ -110,11 +108,8 @@ Quaternion Quaternion::MultiplyInverse(const Quaternion &other) const
 {
 	float n = other.LengthSquared();
 	n = (n == 0.0f ? n : 1.0f / n);
-	return Quaternion(
-		(m_x * other.m_w - m_w * other.m_x - m_y * other.m_z + m_z * other.m_y) * n,
-		(m_y * other.m_w - m_w * other.m_y - m_z * other.m_x + m_x * other.m_z) * n,
-		(m_z * other.m_w - m_w * other.m_z - m_x * other.m_y + m_y * other.m_x) * n,
-		(m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z) * n);
+	return Quaternion((m_x * other.m_w - m_w * other.m_x - m_y * other.m_z + m_z * other.m_y) * n, (m_y * other.m_w - m_w * other.m_y - m_z * other.m_x + m_x * other.m_z) * n,
+		(m_z * other.m_w - m_w * other.m_z - m_x * other.m_y + m_y * other.m_x) * n, (m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z) * n);
 }
 
 float Quaternion::Dot(const Quaternion &other) const

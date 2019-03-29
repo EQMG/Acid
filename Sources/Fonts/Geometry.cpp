@@ -78,8 +78,7 @@ bool IsPointInsideBbox(const Rect &bbox, const Vector2 &p)
 
 bool IsPointInsideBboxExclusive(const Rect &bbox, const Vector2 &p)
 {
-	return IsBetweenExclusive(p.m_x, bbox.minX, bbox.maxX) &&
-		IsBetweenExclusive(p.m_y, bbox.minY, bbox.maxY);
+	return IsBetweenExclusive(p.m_x, bbox.minX, bbox.maxX) && IsBetweenExclusive(p.m_y, bbox.minY, bbox.maxY);
 }
 
 bool IsIntersectionInLineSegment(const Vector2 &p1, const Vector2 &p2, const Vector2 &i)
@@ -113,26 +112,22 @@ bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2 &p1, const Ve
 	Vector2 left = Vector2(bbox.minX, yLeft);
 	Vector2 right = Vector2(bbox.maxX, yRight);
 
-	if (IsBetween(xTop, bbox.minX, bbox.maxX) &&
-		IsIntersectionInLineSegment(p1, p2, top))
+	if (IsBetween(xTop, bbox.minX, bbox.maxX) && IsIntersectionInLineSegment(p1, p2, top))
 	{
 		return true;
 	}
 
-	if (IsBetween(xBottom, bbox.minX, bbox.maxX) &&
-		IsIntersectionInLineSegment(p1, p2, bottom))
+	if (IsBetween(xBottom, bbox.minX, bbox.maxX) && IsIntersectionInLineSegment(p1, p2, bottom))
 	{
 		return true;
 	}
 
-	if (IsBetween(yLeft, bbox.minY, bbox.maxY) &&
-		IsIntersectionInLineSegment(p1, p2, left))
+	if (IsBetween(yLeft, bbox.minY, bbox.maxY) && IsIntersectionInLineSegment(p1, p2, left))
 	{
 		return true;
 	}
 
-	if (IsBetween(yRight, bbox.minY, bbox.maxY) &&
-		IsIntersectionInLineSegment(p1, p2, right))
+	if (IsBetween(yRight, bbox.minY, bbox.maxY) && IsIntersectionInLineSegment(p1, p2, right))
 	{
 		return true;
 	}
@@ -157,10 +152,7 @@ bool BboxBezier2Intersect(const Rect &bbox, const Vector2 bezier[3])
 	Vector2 tl = Vector2(bbox.minX, bbox.maxY);
 	Vector2 tr = Vector2(bbox.maxX, bbox.maxY);
 
-	return Bezier2LineIsIntersecting(bezier, bl, br) ||
-		Bezier2LineIsIntersecting(bezier, br, tr) ||
-		Bezier2LineIsIntersecting(bezier, tr, tl) ||
-		Bezier2LineIsIntersecting(bezier, tl, bl);
+	return Bezier2LineIsIntersecting(bezier, bl, br) || Bezier2LineIsIntersecting(bezier, br, tr) || Bezier2LineIsIntersecting(bezier, tr, tl) || Bezier2LineIsIntersecting(bezier, tl, bl);
 }
 
 float LineSignedDistance(const Vector2 &a, const Vector2 &b, const Vector2 &p)
@@ -360,8 +352,7 @@ bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 &line0, co
 	case QuadraticSolution::Two:
 		xt0 = Bezier2Component(x0, x1, x2, t0);
 		xt1 = Bezier2Component(x0, x1, x2, t1);
-		return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) ||
-			(IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
+		return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) || (IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
 	default:
 		assert(false);
 		return false;

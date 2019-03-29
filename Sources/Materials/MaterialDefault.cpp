@@ -6,9 +6,8 @@
 
 namespace acid
 {
-MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> diffuseTexture,
-	const float &metallic, const float &roughness, std::shared_ptr<Image2d> materialTexture, std::shared_ptr<Image2d> normalTexture,
-	const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
+MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> diffuseTexture, const float &metallic, const float &roughness, std::shared_ptr<Image2d> materialTexture,
+	std::shared_ptr<Image2d> normalTexture, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 	m_baseDiffuse(baseDiffuse),
 	m_diffuseTexture(std::move(diffuseTexture)),
 	m_metallic(metallic),
@@ -31,8 +30,8 @@ void MaterialDefault::Start()
 		return;
 	}
 
-	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, PipelineGraphicsCreate({"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"}, {mesh->GetVertexInput()},
-		GetDefines(), PipelineGraphics::Mode::Mrt));
+	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
+		PipelineGraphicsCreate({ "Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag" }, { mesh->GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Mrt));
 }
 
 void MaterialDefault::Update()

@@ -12,7 +12,7 @@ DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
+	VkDescriptorSetLayout layouts[1] = { pipeline.GetDescriptorSetLayout() };
 
 	VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
 	descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -33,13 +33,11 @@ void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWr
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(),
-		0, nullptr);
+	vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 }
 
 void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 {
-	vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1,
-		&m_descriptorSet, 0, nullptr);
+	vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
 }
 }

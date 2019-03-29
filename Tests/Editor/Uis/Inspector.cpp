@@ -17,7 +17,7 @@ Inspector::Inspector(UiObject *parent) :
 	m_radio1(&m_section1.GetContent(), "First Value", UiInputRadio::Type::X, false, UiBound(Vector2(0.0f, 0.36f), UiReference::TopLeft)),
 	m_radio2(&m_section1.GetContent(), "Second Value", UiInputRadio::Type::X, true, UiBound(Vector2(0.0f, 0.405f), UiReference::TopLeft)),
 	m_radio3(&m_section1.GetContent(), "Third Value", UiInputRadio::Type::X, false, UiBound(Vector2(0.0f, 0.45f), UiReference::TopLeft)),
-	m_radioManager1(UiInputRadio::Type::Filled, false, {&m_radio1, &m_radio2, &m_radio3})
+	m_radioManager1(UiInputRadio::Type::Filled, false, { &m_radio1, &m_radio2, &m_radio3 })
 {
 	m_slider1.GetOnValue() += [this](float value)
 	{

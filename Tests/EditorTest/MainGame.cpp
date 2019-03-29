@@ -12,7 +12,6 @@
 #include "Resources/Resources.hpp"
 
 #if defined(ACID_RELOAD)
-
 #include <Engine/cr.h>
 
 CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)

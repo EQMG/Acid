@@ -231,7 +231,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	VkImage srcImage = m_swapchain->GetActiveImage();
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, {width, height, 1}, 1, 0, 1, true);
+	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 }, 1, 0, 1, true);
 
 	// Get layout of the image (including row pitch).
 	VkImageSubresource imageSubresource = {};
@@ -254,7 +254,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	// Check if source is BGR.
 	if (!supportsBlit)
 	{
-		std::vector<VkFormat> formatsBGR = {VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM};
+		std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
 		colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), m_surface->GetFormat().format) != formatsBGR.end();
 	}
 
@@ -302,10 +302,7 @@ RenderStage *Renderer::GetRenderStage(const uint32_t &index) const
 
 void Renderer::SetRenderStages(const std::vector<RenderStage *> &renderStages)
 {
-	VkExtent2D displayExtent = {
-		Window::Get()->GetWidth(),
-		Window::Get()->GetHeight()
-	};
+	VkExtent2D displayExtent = { Window::Get()->GetWidth(), Window::Get()->GetHeight() };
 
 	m_renderStages.clear();
 	m_swapchain = std::make_unique<Swapchain>(displayExtent);
@@ -386,10 +383,7 @@ void Renderer::RecreatePass(RenderStage &renderStage)
 {
 	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = {
-		Window::Get()->GetWidth(),
-		Window::Get()->GetHeight()
-	};
+	VkExtent2D displayExtent = { Window::Get()->GetWidth(), Window::Get()->GetHeight() };
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -430,11 +424,8 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	}
 
 	VkRect2D renderArea = {};
-	renderArea.offset = {0, 0};
-	renderArea.extent = {
-		renderStage.GetWidth(),
-		renderStage.GetHeight()
-	};
+	renderArea.offset = { 0, 0 };
+	renderArea.extent = { renderStage.GetWidth(), renderStage.GetHeight() };
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
@@ -446,7 +437,7 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	vkCmdSetViewport(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &viewport);
 
 	VkRect2D scissor = {};
-	scissor.offset = {0, 0};
+	scissor.offset = { 0, 0 };
 	scissor.extent = renderArea.extent;
 	vkCmdSetScissor(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &scissor);
 

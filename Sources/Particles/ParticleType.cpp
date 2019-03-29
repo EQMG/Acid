@@ -28,8 +28,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset,
-	const float &lifeLength, const float &stageCycles, const float &scale)
+std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
+	const float &scale)
 {
 	auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Metadata metadata = Metadata();
@@ -37,8 +37,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 	return Create(metadata);
 }
 
-ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset,
-	const float &lifeLength, const float &stageCycles, const float &scale) :
+ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
 	m_texture(std::move(texture)),
 	m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 	m_numberOfRows(numberOfRows),
@@ -98,8 +97,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 
 		instance->colourOffset = particle.GetParticleType()->m_colourOffset;
 		instance->offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
-		instance->blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(),
-			static_cast<float>(particle.GetParticleType()->m_numberOfRows));
+		instance->blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
 		m_instances++;
 	}
 
@@ -126,8 +124,8 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	// Draws the instanced objects.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkBuffer vertexBuffers[] = {m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer()};
-	VkDeviceSize offsets[] = {0, 0};
+	VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer() };
+	VkDeviceSize offsets[] = { 0, 0 };
 	vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 2, vertexBuffers, offsets);
 	vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexType());
 	vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_model->GetIndexCount(), m_instances, 0, 0, 0);

@@ -176,8 +176,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	int32_t channels;
 	int32_t samplesPerSec;
 	int16_t *data;
-	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()),
-		&channels, &samplesPerSec, &data);
+	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data);
 
 	if (size == -1)
 	{

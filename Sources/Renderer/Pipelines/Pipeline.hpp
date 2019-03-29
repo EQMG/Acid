@@ -8,7 +8,7 @@
 namespace acid
 {
 /// <summary>
-/// Class that represents is used to represent a Vulkan pipeline.
+/// Class that is used to represent a Vulkan pipeline.
 /// </summary>
 class ACID_EXPORT Pipeline
 {

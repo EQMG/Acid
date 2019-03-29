@@ -36,7 +36,7 @@ int32_t MoveToFunc(const FT_Vector *to, Outline *o)
 
 	assert(o->points.size() % 2 == 0);
 
-	ContourRange range = {static_cast<uint32_t>(o->points.size()), std::numeric_limits<uint32_t>::max()};
+	ContourRange range = { static_cast<uint32_t>(o->points.size()), std::numeric_limits<uint32_t>::max() };
 	o->contours.emplace_back(range);
 
 	ConvertPoint(to, p);
@@ -165,10 +165,7 @@ uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to)
 bool IsCellFilled(const Outline *o, const Rect &bbox)
 {
 	// TODO: Optimize
-	Vector2 p = Vector2(
-		(bbox.maxX + bbox.minX) / 2.0f,
-		(bbox.maxY + bbox.minY) / 2.0f
-	);
+	Vector2 p = Vector2((bbox.maxX + bbox.minX) / 2.0f, (bbox.maxY + bbox.minY) / 2.0f);
 
 	float mindist = std::numeric_limits<float>::max();
 	float v = std::numeric_limits<float>::max();
@@ -197,9 +194,7 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 
 				if (udist >= mindist && i > contourBegin)
 				{
-					float lastD = i == contourEnd - 2 && j == contourBegin
-					              ? LineSignedDistance(p0, p2, o->points[contourBegin + 2])
-					              : LineSignedDistance(p0, p2, o->points[i - 2]);
+					float lastD = i == contourEnd - 2 && j == contourBegin ? LineSignedDistance(p0, p2, o->points[contourBegin + 2]) : LineSignedDistance(p0, p2, o->points[i - 2]);
 
 					if (lastD < 0.0f)
 					{
@@ -369,8 +364,7 @@ bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t 
 	return ret;
 }
 
-bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells,
-	uint32_t &maxStartLength)
+bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells, uint32_t &maxStartLength)
 {
 	bool ret = true;
 
@@ -409,12 +403,8 @@ void InitWipcells(const Outline *o, WIPCell *cells)
 	{
 		for (uint32_t x = 0; x < o->cellCountX; x++)
 		{
-			Rect bbox = {
-				o->bbox.minX + (static_cast<float>(x) / o->cellCountX) * w,
-				o->bbox.minY + (static_cast<float>(y) / o->cellCountY) * h,
-				o->bbox.minX + (static_cast<float>(x + 1) / o->cellCountX) * w,
-				o->bbox.minY + (static_cast<float>(y + 1) / o->cellCountY) * h,
-			};
+			Rect bbox = { o->bbox.minX + (static_cast<float>(x) / o->cellCountX) * w, o->bbox.minY + (static_cast<float>(y) / o->cellCountY) * h,
+				o->bbox.minX + (static_cast<float>(x + 1) / o->cellCountX) * w, o->bbox.minY + (static_cast<float>(y + 1) / o->cellCountY) * h, };
 
 			uint32_t i = y * o->cellCountX + x;
 			cells[i].bbox = bbox;
@@ -484,7 +474,7 @@ bool TryToFitInCellCount(Outline *o)
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = {static_cast<uint32_t>(u.points.size()), static_cast<uint32_t>(u.points.size()) + contourEnd - contourBegin};
+		ContourRange urange = { static_cast<uint32_t>(u.points.size()), static_cast<uint32_t>(u.points.size()) + contourEnd - contourBegin };
 		u.contours.emplace_back(urange);
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
@@ -625,7 +615,7 @@ void OutlineSubdivide(Outline *o)
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = {static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max()};
+		ContourRange urange = { static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max() };
 		u.contours.emplace_back(urange);
 
 		for (uint32_t i = contourBegin; i < contour_end; i += 2)
@@ -715,7 +705,7 @@ void OutlineFixThinLines(Outline *o)
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = {static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max()};
+		ContourRange urange = { static_cast<uint32_t>(u.points.size()), std::numeric_limits<uint32_t>::max() };
 		u.contours.emplace_back(urange);
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
@@ -727,11 +717,7 @@ void OutlineFixThinLines(Outline *o)
 			Vector2 mid = p0.Lerp(p2, 0.5f);
 			Vector2 midp1 = p1 - mid;
 
-			Vector2 bezier[] = {
-				{p0.m_x, p0.m_y},
-				{p1.m_x, p1.m_y},
-				{p2.m_x, p2.m_y}
-			};
+			Vector2 bezier[] = {{ p0.m_x, p0.m_y }, { p1.m_x, p1.m_y }, { p2.m_x, p2.m_y }};
 
 			bezier[1] += midp1;
 			/*bool subdivide = false;

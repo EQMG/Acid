@@ -17,58 +17,40 @@ public:
 	{
 		// 2xx: success.
 		/// Most common code returned when operation was successful.
-			Ok = 200,
-		/// The resource has successfully been created.
-			Created = 201,
-		/// The request has been accepted, but will be processed later by the server.
-			Accepted = 202,
-		/// The server didn't send any data in return.
-			NoContent = 204,
-		/// The server informs the client that it should clear the view (form) that caused the request to be sent.
-			ResetContent = 205,
-		/// The server has sent a part of the resource, as a response to a partial GET request.
+			Ok = 200, /// The resource has successfully been created.
+			Created = 201, /// The request has been accepted, but will be processed later by the server.
+			Accepted = 202, /// The server didn't send any data in return.
+			NoContent = 204, /// The server informs the client that it should clear the view (form) that caused the request to be sent.
+			ResetContent = 205, /// The server has sent a part of the resource, as a response to a partial GET request.
 			PartialContent = 206,
 
 		// 3xx: redirection.
 		/// The requested page can be accessed from several locations.
-			MultipleChoices = 300,
-		/// The requested page has permanently moved to a new location.
-			MovedPermanently = 301,
-		/// The requested page has temporarily moved to a new location.
-			MovedTemporarily = 302,
-		/// For conditional requests, means the requested page hasn't changed and doesn't need to be refreshed.
+			MultipleChoices = 300, /// The requested page has permanently moved to a new location.
+			MovedPermanently = 301, /// The requested page has temporarily moved to a new location.
+			MovedTemporarily = 302, /// For conditional requests, means the requested page hasn't changed and doesn't need to be refreshed.
 			NotModified = 304,
 
 		// 4xx: client error.
 		/// The server couldn't understand the request (syntax error).
-			BadRequest = 400,
-		/// The requested page needs an authentication to be accessed.
-			Unauthorized = 401,
-		/// The requested page cannot be accessed at all, even with authentication.
-			Forbidden = 403,
-		/// The requested page doesn't exist.
-			NotFound = 404,
-		/// The server can't satisfy the partial GET request (with a "Range" header field).
+			BadRequest = 400, /// The requested page needs an authentication to be accessed.
+			Unauthorized = 401, /// The requested page cannot be accessed at all, even with authentication.
+			Forbidden = 403, /// The requested page doesn't exist.
+			NotFound = 404, /// The server can't satisfy the partial GET request (with a "Range" header field).
 			RangeNotSatisfiable = 407,
 
 		// 5xx: server error.
 		/// The server encountered an unexpected error.
-			InternalServerError = 500,
-		/// The server doesn't implement a requested feature.
-			NotImplemented = 501,
-		/// The gateway server has received an error from the source server.
-			BadGateway = 502,
-		/// The server is temporarily unavailable (overloaded, in maintenance, ...).
-			ServiceNotAvailable = 503,
-		/// The gateway server couldn't receive a response from the source server.
-			GatewayTimeout = 504,
-		/// The server doesn't support the requested HTTP version.
+			InternalServerError = 500, /// The server doesn't implement a requested feature.
+			NotImplemented = 501, /// The gateway server has received an error from the source server.
+			BadGateway = 502, /// The server is temporarily unavailable (overloaded, in maintenance, ...).
+			ServiceNotAvailable = 503, /// The gateway server couldn't receive a response from the source server.
+			GatewayTimeout = 504, /// The server doesn't support the requested HTTP version.
 			VersionNotSupported = 505,
 
 		// 10xx: custom codes.
 		/// Response is not a valid HTTP one.
-			InvalidResponse = 1000,
-		/// Connection with server failed.
+			InvalidResponse = 1000, /// Connection with server failed.
 			ConnectionFailed = 1001
 	};
 

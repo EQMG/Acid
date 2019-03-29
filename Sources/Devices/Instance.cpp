@@ -9,28 +9,20 @@
 
 namespace acid
 {
-const std::vector<const char *> Instance::ValidationLayers =
-	{
-		"VK_LAYER_LUNARG_standard_validation" //, "VK_LAYER_RENDERDOC_Capture"
-	};
-const std::vector<const char *> Instance::InstanceExtensions =
-	{
-		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
-	};
-const std::vector<const char *> Instance::DeviceExtensions =
-	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME // , VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME // , VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME // , VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
-	};
+const std::vector<const char *> Instance::ValidationLayers = { "VK_LAYER_LUNARG_standard_validation" }; // "VK_LAYER_RENDERDOC_Capture"
+const std::vector<const char *> Instance::InstanceExtensions = { VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME };
+const std::vector<const char *> Instance::DeviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME }; // VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME,
+// VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME, VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 
-VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType,
-	uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData)
+VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix,
+	const char *pMessage, void *pUserData)
 {
 	Log::Error("%s\n", pMessage);
 	return static_cast<VkBool32>(false);
 }
 
-VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo,
-	const VkAllocationCallbacks *pAllocator, VkDebugReportCallbackEXT *pCallback)
+VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator,
+	VkDebugReportCallbackEXT *pCallback)
 {
 	auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
 
@@ -52,8 +44,8 @@ void Instance::FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugRepo
 	}
 }
 
-void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout,
-	uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites)
+void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount,
+	const VkWriteDescriptorSet *pDescriptorWrites)
 {
 	auto func = reinterpret_cast<PFN_vkCmdPushDescriptorSetKHR>(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSetKHR"));
 
@@ -63,8 +55,7 @@ void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer comma
 	}
 }
 
-uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties,
-	const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
+uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements, const VkMemoryPropertyFlags &requiredProperties)
 {
 	for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
 	{

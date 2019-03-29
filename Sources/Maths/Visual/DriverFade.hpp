@@ -7,8 +7,7 @@ namespace acid
 /// <summary>
 /// A driver that fades from start to end.
 /// </summary>
-template<typename T>
-class DriverFade :
+template<typename T> class DriverFade :
 	public IDriver<T>
 {
 public:

@@ -26,8 +26,7 @@ bool UniformHandler::Update(const std::optional<Shader::UniformBlock> &uniformBl
 {
 	if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && !m_uniformBlock) || (!m_multipipeline && m_uniformBlock != uniformBlock))
 	{
-		if ((m_size == 0 && !m_uniformBlock) || (m_uniformBlock &&
-			m_uniformBlock != uniformBlock && static_cast<uint32_t>(m_uniformBlock->GetSize()) == m_size))
+		if ((m_size == 0 && !m_uniformBlock) || (m_uniformBlock && m_uniformBlock != uniformBlock && static_cast<uint32_t>(m_uniformBlock->GetSize()) == m_size))
 		{
 			m_size = static_cast<uint32_t>(uniformBlock->GetSize());
 		}

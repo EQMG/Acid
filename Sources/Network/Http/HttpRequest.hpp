@@ -16,22 +16,14 @@ public:
 	enum class Method
 	{
 		/// Request in get mode, standard method to retrieve a page.
-			Get,
-		/// Request in post mode, usually to send data to a page.
-			Post,
-		/// Request a page's header only.
-			Head,
-		/// Request in put mode, useful for a REST API.
-			Put,
-		/// Request in delete mode, useful for a REST API.
-			Delete,
-		/// Request in options mode, describes the communication options for the page.
-			Options,
-		/// Request applies partial modifications to a page.
-			Patch,
-		/// Request performs a message loop-back test along the path to the target resource.
-			Trace,
-		/// Request establishes a tunnel to the server page.
+			Get, /// Request in post mode, usually to send data to a page.
+			Post, /// Request a page's header only.
+			Head, /// Request in put mode, useful for a REST API.
+			Put, /// Request in delete mode, useful for a REST API.
+			Delete, /// Request in options mode, describes the communication options for the page.
+			Options, /// Request applies partial modifications to a page.
+			Patch, /// Request performs a message loop-back test along the path to the target resource.
+			Trace, /// Request establishes a tunnel to the server page.
 			Connect
 	};
 

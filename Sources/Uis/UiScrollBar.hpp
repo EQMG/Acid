@@ -7,9 +7,7 @@ namespace acid
 {
 enum class ScrollBar
 {
-	None = 0,
-	Vertical = 1,
-	Horizontal = 2
+	None = 0, Vertical = 1, Horizontal = 2
 };
 
 ENABLE_BITMASK_OPERATORS(ScrollBar)

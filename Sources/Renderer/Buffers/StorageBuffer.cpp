@@ -20,8 +20,7 @@ void StorageBuffer::Update(const void *newData)
 	vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
 }
 
-VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType,
-	const VkShaderStageFlags &stage, const uint32_t &count)
+VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
@@ -32,8 +31,8 @@ VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType,
-	const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
+	const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;

@@ -26,8 +26,8 @@ public:
 	/// <param name="type"> The attachment type this represents. </param>
 	/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
 	/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
-	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false,
-		const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM, const Colour &clearColour = Colour::Black) :
+	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+		const Colour &clearColour = Colour::Black) :
 		m_binding(binding),
 		m_name(std::move(name)),
 		m_type(type),
@@ -79,8 +79,7 @@ private:
 class ACID_EXPORT RenderpassCreate
 {
 public:
-	RenderpassCreate(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {},
-		const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
+	RenderpassCreate(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, const std::optional<uint32_t> &width = {}, const std::optional<uint32_t> &height = {}) :
 		m_images(std::move(images)),
 		m_subpasses(std::move(subpasses)),
 		m_width(width),

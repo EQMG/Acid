@@ -4,12 +4,8 @@
 
 namespace acid
 {
-static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = {
-	VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-	VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
-	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR,
-	VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
-};
+static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = { VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR, VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
+	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR, };
 
 Swapchain::Swapchain(const VkExtent2D &extent) :
 	m_extent(extent),
@@ -109,7 +105,7 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 
 	if (graphicsFamily != presentFamily)
 	{
-		std::array<uint32_t, 2> queueFamily = {graphicsFamily, presentFamily};
+		std::array<uint32_t, 2> queueFamily = { graphicsFamily, presentFamily };
 		swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 		swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 		swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();

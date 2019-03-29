@@ -14,9 +14,9 @@ class ACID_EXPORT MaterialDefault :
 	public Material
 {
 public:
-	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> diffuseTexture = nullptr,
-		const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Image2d> materialTexture = nullptr, std::shared_ptr<Image2d> normalTexture = nullptr,
-		const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
+	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> diffuseTexture = nullptr, const float &metallic = 0.0f, const float &roughness = 0.0f,
+		std::shared_ptr<Image2d> materialTexture = nullptr, std::shared_ptr<Image2d> normalTexture = nullptr, const bool &castsShadows = true, const bool &ignoreLighting = false,
+		const bool &ignoreFog = false);
 
 	void Start() override;
 

@@ -50,7 +50,7 @@ void Audio::Update()
 
 	// Listener orientation.
 	Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
-	ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
+	ALfloat orientation[6] = { currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f };
 	alListenerfv(AL_ORIENTATION, orientation);
 
 	//CheckAl(alGetError());

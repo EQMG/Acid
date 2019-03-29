@@ -69,8 +69,7 @@ static bool WipcellFinishContour(const Outline *o, const Outline *u, const uint3
 
 static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell *cells);
 
-static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells,
-	uint32_t &maxStartLength);
+static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells, uint32_t &maxStartLength);
 
 static void CopyWipcellValues(Outline *u, const WIPCell *cells);
 

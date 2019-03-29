@@ -24,7 +24,7 @@ RenderStage::RenderStage(RenderpassCreate renderpassCreate) :
 		switch (image.GetType())
 		{
 		case Attachment::Type::Image:
-			clearValue.color = {{image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a}};
+			clearValue.color = {{ image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a }};
 
 			for (const auto &subpass : m_renderpassCreate.GetSubpasses())
 			{
@@ -43,11 +43,11 @@ RenderStage::RenderStage(RenderpassCreate renderpassCreate) :
 
 			break;
 		case Attachment::Type::Depth:
-			clearValue.depthStencil = {1.0f, 0};
+			clearValue.depthStencil = { 1.0f, 0 };
 			m_depthAttachment = image;
 			break;
 		case Attachment::Type::Swapchain:
-			clearValue.color = {{image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a}};
+			clearValue.color = {{ image.GetClearColour().m_r, image.GetClearColour().m_g, image.GetClearColour().m_b, image.GetClearColour().m_a }};
 			m_swapchainAttachment = image;
 			break;
 		}

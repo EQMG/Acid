@@ -48,8 +48,7 @@ public:
 	/// <param name="T"> The component type to find. </param>
 	/// <param name="allowDisabled"> If disabled components will be returned. </param>
 	/// <returns> The found component. </returns>
-	template<typename T>
-	T *GetComponent(const bool &allowDisabled = false) const
+	template<typename T> T *GetComponent(const bool &allowDisabled = false) const
 	{
 		T *alternative = nullptr;
 
@@ -78,8 +77,7 @@ public:
 	/// <param name="T"> The component type to find. </param>
 	/// <param name="allowDisabled"> If disabled components will be returned. </param>
 	/// <returns> The components. </returns>
-	template<typename T>
-	std::vector<T *> GetComponents(const bool &allowDisabled = false) const
+	template<typename T> std::vector<T *> GetComponents(const bool &allowDisabled = false) const
 	{
 		std::vector<T *> result = {};
 
@@ -115,8 +113,7 @@ public:
 	/// <param name="T"> The type of component to add. </param>
 	/// <param name="args"> The type constructor arguments. </param>
 	/// <returns> The added component. </returns>
-	template<typename T, typename... Args>
-	T *AddComponent(Args &&... args)
+	template<typename T, typename... Args> T *AddComponent(Args &&... args)
 	{
 		auto created = new T(std::forward<Args>(args)...);
 		AddComponent(created);
@@ -142,8 +139,7 @@ public:
 	/// </summary>
 	/// <param name="T"> The type of component to remove. </param>
 	/// <returns> If the component was removed. </returns>
-	template<typename T>
-	void RemoveComponent()
+	template<typename T> void RemoveComponent()
 	{
 		for (auto it = m_components.begin(); it != m_components.end(); ++it)
 		{

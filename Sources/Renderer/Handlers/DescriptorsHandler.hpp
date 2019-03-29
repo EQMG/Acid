@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/TypeTraits.hpp"
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 #include "Renderer/Pipelines/Shader.hpp"
 #include "UniformHandler.hpp"
@@ -18,11 +19,73 @@ public:
 
 	explicit DescriptorsHandler(const Pipeline &pipeline);
 
-	void Push(const std::string &descriptorName, const Descriptor *descriptor, const std::optional<OffsetSize> &offsetSize = {});
+	template<typename T> void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = {})
+	{
+		if (m_shader == nullptr)
+		{
+			return;
+		}
 
-	void Push(const std::string &descriptorName, const Descriptor &descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		// Finds the local value given to the descriptor name.
+		auto it = m_descriptors.find(descriptorName);
 
-	void Push(const std::string &descriptorName, const std::shared_ptr<Descriptor> &descriptor, const std::optional<OffsetSize> &offsetSize = {});
+		if (it != m_descriptors.end())
+		{
+			// If the descriptor and size have not changed then the write is not modified.
+			if (it->second.m_descriptor == TypeTraits::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize)
+			{
+				return;
+			}
+
+			m_descriptors.erase(it);
+		}
+
+		// Only non-null descriptors can be mapped.
+		if (TypeTraits::AsPtr(descriptor) == nullptr)
+		{
+			return;
+		}
+
+		// When adding the descriptor find the location in the shader.
+		auto location = m_shader->GetDescriptorLocation(descriptorName);
+
+		if (!location)
+		{
+#if defined(ACID_VERBOSE)
+			if (m_shader->ReportedNotFound(descriptorName, true))
+			{
+				Log::Error("Could not find descriptor in shader '%s' of name '%s'\n", m_shader->GetName().c_str(), descriptorName.c_str());
+			}
+#endif
+
+			return;
+		}
+
+		auto descriptorType = m_shader->GetDescriptorType(*location);
+
+		if (!descriptorType)
+		{
+#if defined(ACID_VERBOSE)
+			if (m_shader->ReportedNotFound(descriptorName, true))
+			{
+				Log::Error("Could not find descriptor in shader '%s' of name '%s' at location '%i'\n", m_shader->GetName().c_str(), descriptorName.c_str(), *location);
+			}
+#endif
+			return;
+		}
+
+		// Adds the new descriptor value.
+		VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+
+		if (!m_pushDescriptors)
+		{
+			descriptorSet = m_descriptorSet->GetDescriptorSet();
+		}
+
+		auto writeDescriptor = TypeTraits::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, descriptorSet, offsetSize);
+		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
+		m_changed = true;
+	}
 
 	void Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize = {});
 
@@ -39,17 +102,18 @@ public:
 private:
 	struct DescriptorValue
 	{
-		const Descriptor *descriptor;
-		std::optional<OffsetSize> offsetSize;
-		uint32_t location;
+		const Descriptor *m_descriptor;
+		WriteDescriptorSet m_writeDescriptor;
+		std::optional<OffsetSize> m_offsetSize;
+		uint32_t m_location;
 	};
 
 	const Shader *m_shader;
 	bool m_pushDescriptors;
-	std::map<std::string, DescriptorValue> m_descriptors;
-	std::vector<WriteDescriptorSet> m_writeDescriptors;
-	std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
 	std::unique_ptr<DescriptorSet> m_descriptorSet;
+
+	std::map<std::string, DescriptorValue> m_descriptors;
+	std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
 	bool m_changed;
 };
 }

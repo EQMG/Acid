@@ -10,9 +10,7 @@ namespace acid
 /// Class that represents a loaded cubemap texture.
 /// </summary>
 class ACID_EXPORT ImageCube :
-	public NonCopyable,
-	public Descriptor,
-	public Resource
+	public NonCopyable, public Descriptor, public Resource
 {
 public:
 	/// <summary>
@@ -62,8 +60,8 @@ public:
 	/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 	ImageCube(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
+		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT,
+		const bool &anisotropic = false, const bool &mipmap = false);
 
 	~ImageCube();
 

@@ -231,8 +231,7 @@ public:
 
 namespace std
 {
-template<>
-struct hash<acid::Colour>
+template<> struct hash<acid::Colour>
 {
 	size_t operator()(acid::Colour const &colour) const noexcept
 	{

@@ -10,8 +10,7 @@ using std::streambuf;
 using std::ios_base;
 
 class FBuffer :
-	public NonCopyable,
-	public streambuf
+	public NonCopyable, public streambuf
 {
 public:
 	explicit FBuffer(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :
@@ -349,7 +348,9 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t)
 				return is;
 			case '\r':
 				if (sb->sgetc() == '\n')
-				{ sb->sbumpc(); }
+				{
+					sb->sbumpc();
+				}
 				return is;
 			case EOF:
 				// Also handle the case when the last line has no line ending

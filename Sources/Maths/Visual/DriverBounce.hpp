@@ -8,8 +8,7 @@ namespace acid
 /// <summary>
 /// A bounce driver that uses a sine wave.
 /// </summary>
-template<typename T>
-class DriverBounce :
+template<typename T> class DriverBounce :
 	public IDriver<T>
 {
 public:

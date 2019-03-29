@@ -30,10 +30,10 @@ public:
 		return m_wasDown == !stillDown;
 	}
 
-	Delegate<void(InputAction, BitMask<InputMod>)> &GetOnButton() { return m_onButton; }
+	Delegate<void(InputAction, BitMask < InputMod > )> &GetOnButton() { return m_onButton; }
 
 protected:
-	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
+	Delegate<void(InputAction, BitMask < InputMod > )> m_onButton;
 
 private:
 	bool m_wasDown;

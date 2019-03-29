@@ -10,8 +10,7 @@ namespace acid
 /// Button from a joystick.
 /// </summary>
 class ACID_EXPORT HatJoystick :
-	public IAxis,
-	public IButton
+	public IAxis, public IButton
 {
 public:
 	/// <summary>

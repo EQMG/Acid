@@ -15,7 +15,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	auto presentFamily = logicalDevice->GetPresentFamily();
 	auto computeFamily = logicalDevice->GetComputeFamily();
 
-	std::array<uint32_t, 3> queueFamily = {graphicsFamily, presentFamily, computeFamily};
+	std::array<uint32_t, 3> queueFamily = { graphicsFamily, presentFamily, computeFamily };
 
 	// Create the buffer handle.
 	VkBufferCreateInfo bufferCreateInfo = {};

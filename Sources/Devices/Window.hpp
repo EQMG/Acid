@@ -14,19 +14,13 @@ namespace acid
 enum class InputAction :
 	int32_t
 {
-	Release = 0,
-	Press = 1,
-	Repeat = 2
+	Release = 0, Press = 1, Repeat = 2
 };
 
 enum class InputMod :
 	int32_t
 {
-	None = 0,
-	Shift = 1,
-	Control = 2,
-	Alt = 4,
-	Super = 8
+	None = 0, Shift = 1, Control = 2, Alt = 4, Super = 8
 };
 
 ENABLE_BITMASK_OPERATORS(InputMod)

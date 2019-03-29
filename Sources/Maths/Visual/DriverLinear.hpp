@@ -7,8 +7,7 @@ namespace acid
 /// <summary>
 /// A driver that linearly increases its value.
 /// </summary>
-template<typename T>
-class DriverLinear :
+template<typename T> class DriverLinear :
 	public IDriver<T>
 {
 public:

@@ -8,8 +8,7 @@ namespace acid
 {
 UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
-	m_scroll(this, UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale),
-		Image2d::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour),
+	m_scroll(this, UiBound(Vector2(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour),
 	m_index(type == ScrollBar::Horizontal ? 0 : 1),
 	m_updating(false),
 	m_mouseOver(false)

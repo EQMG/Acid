@@ -9,28 +9,12 @@ namespace acid
 enum class MouseButton :
 	int32_t
 {
-	_1 = 0,
-	_2 = 1,
-	_3 = 2,
-	_4 = 3,
-	_5 = 4,
-	_6 = 5,
-	_7 = 6,
-	_8 = 7,
-	Left = _1,
-	Right = _2,
-	Middle = _3,
-	First = _1,
-	Last = _8
+	_1 = 0, _2 = 1, _3 = 2, _4 = 3, _5 = 4, _6 = 5, _7 = 6, _8 = 7, Left = _1, Right = _2, Middle = _3, First = _1, Last = _8
 };
 
 enum class CursorHotspot
 {
-	UpperLeft,
-	UpperRight,
-	BottomLeft,
-	BottomRight,
-	Centered
+	UpperLeft, UpperRight, BottomLeft, BottomRight, Centered
 };
 
 /// <summary>

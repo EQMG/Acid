@@ -23,8 +23,8 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	const bool &anisotropic, const bool &mipmap)
+std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic,
+	const bool &mipmap)
 {
 	auto temp = ImageCube(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Metadata metadata = Metadata();
@@ -32,11 +32,10 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const 
 	return Create(metadata);
 }
 
-ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	const bool &anisotropic, const bool &mipmap, const bool &load) :
+ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
 	m_filename(std::move(filename)),
 	m_fileSuffix(std::move(fileSuffix)),
-	m_fileSides(std::vector<std::string>{"Right", "Left", "Top", "Bottom", "Back", "Front"}),
+	m_fileSides(std::vector<std::string>{ "Right", "Left", "Top", "Bottom", "Back", "Front" }),
 	m_filter(filter),
 	m_addressMode(addressMode),
 	m_anisotropic(anisotropic),
@@ -148,8 +147,7 @@ void ImageCube::Load()
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	m_mipLevels = m_mipmap ? Image::GetMipLevels(m_width, m_height) : 1;
 
-	Image::CreateImage(m_image, m_memory, {m_width, m_height, 1}, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL,
-		m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 6, VK_IMAGE_TYPE_2D);
+	Image::CreateImage(m_image, m_memory, { m_width, m_height, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 6, VK_IMAGE_TYPE_2D);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 
@@ -160,20 +158,19 @@ void ImageCube::Load()
 
 	if (m_loadPixels != nullptr)
 	{
-		auto bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data));
 		memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
-		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_width, m_height, 1}, 6, 0);
+		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, 6, 0);
 	}
 
 	if (m_mipmap)
 	{
-		Image::CreateMipmaps(m_image, {m_width, m_height, 1}, m_layout, m_mipLevels, 0, 6);
+		Image::CreateMipmaps(m_image, { m_width, m_height, 1 }, m_layout, m_mipLevels, 0, 6);
 	}
 	else if (m_loadPixels != nullptr)
 	{
@@ -218,7 +215,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {width, height, 1}, mipLevel, arrayLayer, 1, false);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, arrayLayer, 1, false);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

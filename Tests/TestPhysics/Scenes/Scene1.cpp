@@ -163,7 +163,7 @@ void Scene1::Start()
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
 
-	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
+	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
 
 	for (int i = 0; i < 5; i++)
 	{

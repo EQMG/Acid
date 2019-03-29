@@ -13,8 +13,7 @@ class CelestialBody :
 public:
 	enum class Type
 	{
-		Sun = 0,
-		Moon = 1
+		Sun = 0, Moon = 1
 	};
 
 	explicit CelestialBody(const Type &type = Type::Sun);

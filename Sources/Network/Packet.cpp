@@ -138,14 +138,8 @@ Packet &Packet::operator>>(int64_t &data)
 	{
 		// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
 		auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
-		data = (static_cast<int64_t>(bytes[0]) << 56) |
-			(static_cast<int64_t>(bytes[1]) << 48) |
-			(static_cast<int64_t>(bytes[2]) << 40) |
-			(static_cast<int64_t>(bytes[3]) << 32) |
-			(static_cast<int64_t>(bytes[4]) << 24) |
-			(static_cast<int64_t>(bytes[5]) << 16) |
-			(static_cast<int64_t>(bytes[6]) << 8) |
-			(static_cast<int64_t>(bytes[7]));
+		data = (static_cast<int64_t>(bytes[0]) << 56) | (static_cast<int64_t>(bytes[1]) << 48) | (static_cast<int64_t>(bytes[2]) << 40) | (static_cast<int64_t>(bytes[3]) << 32)
+			| (static_cast<int64_t>(bytes[4]) << 24) | (static_cast<int64_t>(bytes[5]) << 16) | (static_cast<int64_t>(bytes[6]) << 8) | (static_cast<int64_t>(bytes[7]));
 		m_readPos += sizeof(data);
 	}
 
@@ -158,14 +152,8 @@ Packet &Packet::operator>>(uint64_t &data)
 	{
 		// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
 		auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
-		data = (static_cast<uint64_t>(bytes[0]) << 56) |
-			(static_cast<uint64_t>(bytes[1]) << 48) |
-			(static_cast<uint64_t>(bytes[2]) << 40) |
-			(static_cast<uint64_t>(bytes[3]) << 32) |
-			(static_cast<uint64_t>(bytes[4]) << 24) |
-			(static_cast<uint64_t>(bytes[5]) << 16) |
-			(static_cast<uint64_t>(bytes[6]) << 8) |
-			(static_cast<uint64_t>(bytes[7]));
+		data = (static_cast<uint64_t>(bytes[0]) << 56) | (static_cast<uint64_t>(bytes[1]) << 48) | (static_cast<uint64_t>(bytes[2]) << 40) | (static_cast<uint64_t>(bytes[3]) << 32)
+			| (static_cast<uint64_t>(bytes[4]) << 24) | (static_cast<uint64_t>(bytes[5]) << 16) | (static_cast<uint64_t>(bytes[6]) << 8) | (static_cast<uint64_t>(bytes[7]));
 		m_readPos += sizeof(data);
 	}
 
@@ -326,16 +314,8 @@ Packet &Packet::operator<<(const uint32_t &data)
 Packet &Packet::operator<<(const int64_t &data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
-	uint8_t toWrite[] = {
-		static_cast<uint8_t>((data >> 56) & 0xFF),
-		static_cast<uint8_t>((data >> 48) & 0xFF),
-		static_cast<uint8_t>((data >> 40) & 0xFF),
-		static_cast<uint8_t>((data >> 32) & 0xFF),
-		static_cast<uint8_t>((data >> 24) & 0xFF),
-		static_cast<uint8_t>((data >> 16) & 0xFF),
-		static_cast<uint8_t>((data >> 8) & 0xFF),
-		static_cast<uint8_t>((data) & 0xFF)
-	};
+	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF), static_cast<uint8_t>((data >> 32) & 0xFF),
+		static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF), static_cast<uint8_t>((data) & 0xFF) };
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
@@ -343,16 +323,8 @@ Packet &Packet::operator<<(const int64_t &data)
 Packet &Packet::operator<<(const uint64_t &data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
-	uint8_t toWrite[] = {
-		static_cast<uint8_t>((data >> 56) & 0xFF),
-		static_cast<uint8_t>((data >> 48) & 0xFF),
-		static_cast<uint8_t>((data >> 40) & 0xFF),
-		static_cast<uint8_t>((data >> 32) & 0xFF),
-		static_cast<uint8_t>((data >> 24) & 0xFF),
-		static_cast<uint8_t>((data >> 16) & 0xFF),
-		static_cast<uint8_t>((data >> 8) & 0xFF),
-		static_cast<uint8_t>((data) & 0xFF)
-	};
+	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF), static_cast<uint8_t>((data >> 32) & 0xFF),
+		static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF), static_cast<uint8_t>((data) & 0xFF) };
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }

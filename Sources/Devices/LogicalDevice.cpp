@@ -98,7 +98,7 @@ void LogicalDevice::CreateLogicalDevice()
 	auto physicalDeviceFeatures = m_physicalDevice->GetFeatures();
 
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos = {};
-	float queuePriorities[] = {0.0f};
+	float queuePriorities[] = { 0.0f };
 
 	if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
 	{

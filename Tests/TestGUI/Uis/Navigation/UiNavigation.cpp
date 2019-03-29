@@ -8,14 +8,8 @@
 
 namespace test
 {
-const std::vector<std::pair<std::string, Colour>> TABS =
-	{
-		{"Play", Colour("#B8312F")},
-		{"News", Colour("#2969af")},
-		{"Achievements", Colour("#41A85F")},
-		{"Settings", Colour("#475577")},
-		{"Exit", Colour("#75706B")}
-	};
+const std::vector<std::pair<std::string, Colour>> TABS = {{ "Play", Colour("#B8312F") }, { "News", Colour("#2969af") }, { "Achievements", Colour("#41A85F") }, { "Settings", Colour("#475577") },
+	{ "Exit", Colour("#75706B") }};
 const Colour UiNavigation::ColourPanel = Colour("#161618", 0.9f);
 const Colour UiNavigation::ColourButton = Colour("#3e4148", 0.92f);
 
@@ -24,10 +18,11 @@ UiNavigation::UiNavigation(UiObject *parent) :
 	m_background(std::make_unique<Gui>(this, UiBound::Screen, Image2d::Create("Guis/White.png"))),
 	m_navigation(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.4f, 1.0f)), Image2d::Create("Guis/Gradient_A.png"),
 		ColourPanel)),
-	m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING",
-		FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, Colour::White, 0.0018f)),
-	m_createdBy(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
-		FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f)),
+	m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING", FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f,
+		Colour::White, 0.0018f)),
+	m_createdBy(
+		std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games", FontType::Create("Fonts/ProximaNova", "Light"),
+			Text::Justify::Left, 1.0f, Colour::White, 0.001f)),
 	m_tabs(std::vector<std::unique_ptr<UiTab>>()),
 	m_driverTarget(nullptr),
 	m_currentTab(nullptr),

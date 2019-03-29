@@ -22,8 +22,7 @@ public:
 	/// </summary>
 	/// <param name="name"> The models type name. </param>
 	/// <param name="T"> The models type. </param>
-	template<typename T>
-	void AddMetadata(const std::string &name)
+	template<typename T> void AddMetadata(const std::string &name)
 	{
 		if (m_modelMetadatas.find(name) != m_modelMetadatas.end())
 		{
@@ -43,8 +42,7 @@ public:
 	/// </summary>
 	/// <param name="extension"> The file extension this can be loaded from. </param>
 	/// <param name="T"> The models type. </param>
-	template<typename T>
-	void AddExtension(const std::string &extension)
+	template<typename T> void AddExtension(const std::string &extension)
 	{
 		if (m_modelMetadatas.find(extension) != m_modelMetadatas.end())
 		{

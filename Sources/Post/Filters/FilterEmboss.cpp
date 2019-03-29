@@ -3,7 +3,7 @@
 namespace acid
 {
 FilterEmboss::FilterEmboss(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Emboss.frag"}, {})
+	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Emboss.frag" }, {})
 {
 }
 

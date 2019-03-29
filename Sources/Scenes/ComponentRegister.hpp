@@ -21,8 +21,7 @@ public:
 	/// </summary>
 	/// <param name="name"> The components name. </param>
 	/// <param name="T"> The components type. </param>
-	template<typename T>
-	void Add(const std::string &name)
+	template<typename T> void Add(const std::string &name)
 	{
 		if (m_components.find(name) != m_components.end())
 		{

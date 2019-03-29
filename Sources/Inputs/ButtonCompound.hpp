@@ -9,8 +9,7 @@ namespace acid
 /// Handles multiple buttons at once.
 /// </summary>
 class ACID_EXPORT ButtonCompound :
-	public IButton,
-	public NonCopyable
+	public IButton, public NonCopyable
 {
 public:
 	/// <summary>
@@ -20,12 +19,11 @@ public:
 	/// <param name="args"> The arguments to pass to T. </param>
 	/// <param name="T"> The type of buttons to create. </param>
 	/// <param name="Args"> The values passed to each button. </param>
-	template<class T, typename... Args>
-	static ButtonCompound *Create(const bool &useAnd, Args &&... args)
+	template<class T, typename... Args> static ButtonCompound *Create(const bool &useAnd, Args &&... args)
 	{
 		std::vector<IButton *> buttons;
 
-		for (const auto &x : {args...})
+		for (const auto &x : { args... })
 		{
 			buttons.emplace_back(new T(x));
 		}

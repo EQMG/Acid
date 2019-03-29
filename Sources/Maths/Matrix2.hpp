@@ -193,8 +193,7 @@ public:
 
 namespace std
 {
-template<>
-struct hash<acid::Matrix2>
+template<> struct hash<acid::Matrix2>
 {
 	size_t operator()(acid::Matrix2 const &matrix) const noexcept
 	{

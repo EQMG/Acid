@@ -100,8 +100,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 			//inst->rect.maxX = ((x + local.m_x) + gi->bbox.maxX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.maxY = ((y + local.m_y) - gi->bbox.maxY * localScale) / (extent.m_y / 2.0f) - 1.0f;
 
-			if (inst->rect.minX <= 1.0f && inst->rect.maxX >= -1.0f &&
-				inst->rect.maxY <= 1.0f && inst->rect.minY >= -1.0f)
+			if (inst->rect.minX <= 1.0f && inst->rect.maxX >= -1.0f && inst->rect.maxY <= 1.0f && inst->rect.minY >= -1.0f)
 			{
 				inst->glyphIndex = glyphIndex;
 				inst->sharpness = scale;
@@ -138,7 +137,7 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkDeviceSize offsets[] = {0};
+	VkDeviceSize offsets[] = { 0 };
 	vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
 	vkCmdDraw(commandBuffer.GetCommandBuffer(), 4, m_instances, 0, 0);
 	return true;

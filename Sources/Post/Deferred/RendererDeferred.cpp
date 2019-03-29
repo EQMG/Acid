@@ -17,8 +17,7 @@ static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, GetDefines(),
-		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
+	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 	m_brdfFuture(Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeBRDF, 512)),
 	m_skybox(nullptr),
 	m_irradiance(nullptr),
@@ -104,9 +103,9 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
 	m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
-	m_descriptorSet.Push("samplerBRDF", m_brdf.get());
-	m_descriptorSet.Push("samplerIrradiance", m_irradiance.get());
-	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.get());
+	m_descriptorSet.Push("samplerBRDF", m_brdf);
+	m_descriptorSet.Push("samplerIrradiance", m_irradiance);
+	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered);
 
 	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
@@ -220,8 +219,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	auto result = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM,
-		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+	auto result = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 	// Creates the pipeline.

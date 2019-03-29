@@ -7,11 +7,9 @@
 
 namespace acid
 {
-template<typename>
-class Delegate;
+template<typename> class Delegate;
 
-template<typename TReturnType, typename... TArgs>
-struct Invoker
+template<typename TReturnType, typename... TArgs> struct Invoker
 {
 	using ReturnType = std::vector<TReturnType>;
 
@@ -29,8 +27,7 @@ struct Invoker
 	}
 };
 
-template<typename... TArgs>
-struct Invoker<void, TArgs...>
+template<typename... TArgs> struct Invoker<void, TArgs...>
 {
 	using ReturnType = void;
 
@@ -50,8 +47,7 @@ struct Invoker<void, TArgs...>
 	}
 };
 
-template<typename TReturnType, typename... TArgs>
-class Delegate<TReturnType(TArgs ...)>
+template<typename TReturnType, typename... TArgs> class Delegate<TReturnType(TArgs ...)>
 {
 public:
 	using Invoker = acid::Invoker<TReturnType, TArgs...>;

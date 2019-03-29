@@ -9,11 +9,7 @@ namespace acid
 enum class JoystickHat :
 	int32_t
 {
-	Centered = 0,
-	Up = 1,
-	Right = 2,
-	Down = 4,
-	Left = 8
+	Centered = 0, Up = 1, Right = 2, Down = 4, Left = 8
 };
 
 ENABLE_BITMASK_OPERATORS(JoystickHat)

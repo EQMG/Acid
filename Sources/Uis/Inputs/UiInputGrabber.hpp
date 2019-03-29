@@ -77,8 +77,7 @@ class ACID_EXPORT UiGrabberKeyboard :
 	public UiInputGrabber
 {
 public:
-	UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
-		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+	UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 	const Key &GetValue() const { return m_value; }
 

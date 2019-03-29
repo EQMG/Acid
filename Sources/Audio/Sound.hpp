@@ -15,8 +15,8 @@ class ACID_EXPORT Sound :
 	public Component
 {
 public:
-	explicit Sound(const std::string &filename, const Transform &localTransform = Transform::Identity, const Audio::Type &type = Audio::Type::General,
-		const bool &begin = false, const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
+	explicit Sound(const std::string &filename, const Transform &localTransform = Transform::Identity, const Audio::Type &type = Audio::Type::General, const bool &begin = false,
+		const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 	~Sound();
 

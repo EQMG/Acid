@@ -5,11 +5,8 @@
 
 namespace acid
 {
-static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS =
-	{
-		VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT,
-		VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT
-	};
+static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS = { VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT,
+	VK_SAMPLE_COUNT_2_BIT };
 
 PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_instance(instance),
@@ -135,8 +132,7 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount()
 	return VK_SAMPLE_COUNT_1_BIT;
 }
 
-void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties,
-	const std::vector<VkExtensionProperties> &extensionProperties)
+void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties)
 {
 	Log::Out("-- Physical Device: %i '%s' --\n", physicalDeviceProperties.deviceID, physicalDeviceProperties.deviceName);
 
@@ -180,11 +176,8 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 		Log::Out("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
 	}
 
-	uint32_t supportedVersion[] = {
-		VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion),
-		VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
-		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
-	};
+	uint32_t supportedVersion[] = { VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion) };
 	Log::Out("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
 	Log::Out("Header Version: %i\n", VK_HEADER_VERSION);
 

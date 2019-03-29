@@ -19,10 +19,8 @@ public:
 	enum class Mode
 	{
 		/// Binary mode (file is transfered as a sequence of bytes).
-			Binary,
-		/// Text mode using ASCII encoding.
-			Ascii,
-		/// Text mode using EBCDIC encoding.
+			Binary, /// Text mode using ASCII encoding.
+			Ascii, /// Text mode using EBCDIC encoding.
 			Ebcdic
 	};
 

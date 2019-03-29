@@ -147,8 +147,7 @@ void Mouse::SetPosition(const float &cursorX, const float &cursorY)
 
 void Mouse::SetPosition(const Vector2 &position)
 {
-	SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x),
-		position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+	SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x), position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
 }
 
 void Mouse::SetCursorHidden(const bool &hidden)

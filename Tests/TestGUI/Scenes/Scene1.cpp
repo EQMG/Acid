@@ -12,10 +12,7 @@ const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 
 Scene1::Scene1() :
 	Scene(new Camera()),
-	m_buttonPause(ButtonCompound({
-		new ButtonKeyboard(Key::Escape),
-		new ButtonJoystick(0, 7)
-	})),
+	m_buttonPause(ButtonCompound({ new ButtonKeyboard(Key::Escape), new ButtonJoystick(0, 7) })),
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer()),
 	m_uiNavigation(&Uis::Get()->GetContainer())
@@ -27,7 +24,7 @@ Scene1::Scene1() :
 			TogglePause();
 		}
 	};
-	
+
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 	m_uiNavigation.SetAlphaDriver(new DriverConstant<float>(0.0f));

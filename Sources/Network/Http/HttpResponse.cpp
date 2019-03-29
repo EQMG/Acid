@@ -33,9 +33,7 @@ void HttpResponse::Parse(const std::string &data)
 
 	if (in >> version)
 	{
-		if ((version.size() >= 8) && (version[6] == '.') &&
-			(String::Lowercase(version.substr(0, 5)) == "http/") &&
-			isdigit(version[5]) && isdigit(version[7]))
+		if ((version.size() >= 8) && (version[6] == '.') && (String::Lowercase(version.substr(0, 5)) == "http/") && isdigit(version[5]) && isdigit(version[7]))
 		{
 			m_majorVersion = version[5] - '0';
 			m_minorVersion = version[7] - '0';

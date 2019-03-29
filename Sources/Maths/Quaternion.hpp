@@ -228,8 +228,7 @@ public:
 
 namespace std
 {
-template<>
-struct hash<acid::Quaternion>
+template<> struct hash<acid::Quaternion>
 {
 	size_t operator()(acid::Quaternion const &quaternion) const noexcept
 	{

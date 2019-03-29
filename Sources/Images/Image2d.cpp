@@ -102,8 +102,7 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(const uint32_t &bin
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
-	const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -143,8 +142,7 @@ void Image2d::Load()
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	m_mipLevels = m_mipmap ? Image::GetMipLevels(m_width, m_height) : 1;
 
-	Image::CreateImage(m_image, m_memory, {m_width, m_height, 1}, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 1,
-		VK_IMAGE_TYPE_2D);
+	Image::CreateImage(m_image, m_memory, { m_width, m_height, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 1, VK_IMAGE_TYPE_2D);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 
@@ -157,21 +155,20 @@ void Image2d::Load()
 	if (m_loadPixels != nullptr)
 	{
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		auto bufferStaging = Buffer(m_width * m_height * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_width * m_height * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		vkMapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory(), 0, bufferStaging.GetSize(), 0, &data);
 		memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
 		vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
-		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_width, m_height, 1}, 1, 0);
+		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, 1, 0);
 	}
 
 	if (m_mipmap)
 	{
 		//m_image.CreateMipmaps();
-		Image::CreateMipmaps(m_image, {m_width, m_height, 1}, m_layout, m_mipLevels, 0, 1);
+		Image::CreateMipmaps(m_image, { m_width, m_height, 1 }, m_layout, m_mipLevels, 0, 1);
 	}
 	else if (m_loadPixels != nullptr)
 	{
@@ -214,7 +211,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height,
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {width, height, 1}, mipLevel, 0, 1, false);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, 0, 1, false);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

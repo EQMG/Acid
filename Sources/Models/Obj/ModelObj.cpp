@@ -18,8 +18,7 @@ public:
 	{
 	}
 
-	bool operator()(const std::string &matId, std::vector<tinyobj::material_t> *materials,
-		std::map<std::string, int> *matMap, std::string *warn, std::string *err) override
+	bool operator()(const std::string &matId, std::vector<tinyobj::material_t> *materials, std::map<std::string, int> *matMap, std::string *warn, std::string *err) override
 	{
 		(void) err;
 		(void) matId;
@@ -115,22 +114,11 @@ void ModelObj::Load()
 	{
 		for (const auto &index : shape.mesh.indices)
 		{
-			Vector3 position = Vector3(
-				attrib.vertices[3 * index.vertex_index],
-				attrib.vertices[3 * index.vertex_index + 1],
-				attrib.vertices[3 * index.vertex_index + 2]
-			);
+			Vector3 position = Vector3(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
 
-			Vector2 uv = Vector2(
-				attrib.texcoords[2 * index.texcoord_index],
-				1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
-			);
+			Vector2 uv = Vector2(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
 
-			Vector3 normal = Vector3(
-				attrib.normals[3 * index.normal_index],
-				attrib.normals[3 * index.normal_index + 1],
-				attrib.normals[3 * index.normal_index + 2]
-			);
+			Vector3 normal = Vector3(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
 
 			VertexModel vertex = VertexModel(position, uv, normal);
 

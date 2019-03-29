@@ -28,16 +28,16 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 {
 	if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 	{
-		VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
-		VkDeviceSize offsets[] = {0};
+		VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
+		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer.GetCommandBuffer(), m_indexBuffer->GetBuffer(), 0, GetIndexType());
 		vkCmdDrawIndexed(commandBuffer.GetCommandBuffer(), m_indexCount, instances, 0, 0, 0);
 	}
 	else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
 	{
-		VkBuffer vertexBuffers[] = {m_vertexBuffer->GetBuffer()};
-		VkDeviceSize offsets[] = {0};
+		VkBuffer vertexBuffers[] = { m_vertexBuffer->GetBuffer() };
+		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer.GetCommandBuffer(), 0, 1, vertexBuffers, offsets);
 		vkCmdDraw(commandBuffer.GetCommandBuffer(), m_vertexCount, instances, 0, 0);
 	}

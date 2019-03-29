@@ -7,8 +7,7 @@ namespace acid
 /// <summary>
 /// A constant-sized non-overwriting circular queue.
 /// </summary>
-template<typename T>
-class RingBuffer :
+template<typename T> class RingBuffer :
 	public NonCopyable
 {
 public:
@@ -151,8 +150,7 @@ public:
 		return m_data[ind % m_data.capacity()];
 	}
 
-	template<typename... Args>
-	bool push(Args &&... values)
+	template<typename... Args> bool push(Args &&... values)
 	{
 		size_t numElements = NumArgs(values...);
 
@@ -186,21 +184,18 @@ public:
 	}
 
 private:
-	template<typename K, typename Arg1, typename... Args>
-	void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1, Args &&... values)
+	template<typename K, typename Arg1, typename... Args> void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1, Args &&... values)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 		MoveAll(data, i + 1, values...);
 	}
 
-	template<typename K, typename Arg1>
-	void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1)
+	template<typename K, typename Arg1> void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 	}
 
-	template<typename... K>
-	size_t NumArgs(K...)
+	template<typename... K> size_t NumArgs(K...)
 	{
 		const int n = sizeof...(K);
 		return n;

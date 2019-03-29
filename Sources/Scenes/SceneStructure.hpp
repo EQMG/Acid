@@ -97,8 +97,7 @@ public:
 	/// </summary>
 	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 	/// <returns> The list specified by of all components that match the type. </returns>
-	template<typename T>
-	std::vector<T *> QueryComponents(const bool &allowDisabled = false)
+	template<typename T> std::vector<T *> QueryComponents(const bool &allowDisabled = false)
 	{
 		std::vector<T *> result = {};
 
@@ -123,8 +122,7 @@ public:
 	/// </summary>
 	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 	/// <returns> The first component of the type found. </returns>
-	template<typename T>
-	T *GetComponent(const bool &allowDisabled = false)
+	template<typename T> T *GetComponent(const bool &allowDisabled = false)
 	{
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{

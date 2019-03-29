@@ -9,8 +9,8 @@ class ACID_EXPORT FilterCrt :
 	public PostFilter
 {
 public:
-	explicit FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour = Colour(0.5f, 1.0f, 0.5f),
-		const float &curveAmountX = 0.1f, const float &curveAmountY = 0.1f, const float &scanLineSize = 1000.0f, const float &scanIntensity = 0.1f);
+	explicit FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour = Colour(0.5f, 1.0f, 0.5f), const float &curveAmountX = 0.1f, const float &curveAmountY = 0.1f,
+		const float &scanLineSize = 1000.0f, const float &scanIntensity = 0.1f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 

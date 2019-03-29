@@ -320,8 +320,7 @@ public:
 
 namespace std
 {
-template<>
-struct hash<acid::Matrix4>
+template<> struct hash<acid::Matrix4>
 {
 	size_t operator()(acid::Matrix4 const &matrix) const noexcept
 	{

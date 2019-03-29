@@ -30,7 +30,6 @@ bool PushHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock
 
 void PushHandler::BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline)
 {
-	vkCmdPushConstants(commandBuffer.GetCommandBuffer(), pipeline.GetPipelineLayout(), m_uniformBlock->GetStageFlags(),
-		0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data.get());
+	vkCmdPushConstants(commandBuffer.GetCommandBuffer(), pipeline.GetPipelineLayout(), m_uniformBlock->GetStageFlags(), 0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data.get());
 }
 }

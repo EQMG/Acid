@@ -4,8 +4,8 @@
 
 namespace acid
 {
-Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType,
-	const Justify &justify, const float &maxWidth, const Colour &textColour, const float &kerning, const float &leading) :
+Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify, const float &maxWidth,
+	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
 	m_model(nullptr),
 	m_numberLines(0),

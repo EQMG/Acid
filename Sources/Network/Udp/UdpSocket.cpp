@@ -88,8 +88,7 @@ Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const 
 	sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 	// Send the data (unlike TCP, all the data is always sent in one call).
-	int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0,
-		reinterpret_cast<sockaddr *>(&address), sizeof(address));
+	int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 	// Check for errors.
 	if (sent < 0)
@@ -119,8 +118,7 @@ Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size
 
 	// Receive a chunk of bytes.
 	SocketAddrLength addressSize = sizeof(address);
-	int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0,
-		reinterpret_cast<sockaddr *>(&address), &addressSize);
+	int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.
 	if (sizeReceived < 0)

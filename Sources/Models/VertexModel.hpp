@@ -41,8 +41,7 @@ private:
 
 namespace std
 {
-template<>
-struct hash<acid::VertexModel>
+template<> struct hash<acid::VertexModel>
 {
 	size_t operator()(acid::VertexModel const &vertex) const noexcept
 	{

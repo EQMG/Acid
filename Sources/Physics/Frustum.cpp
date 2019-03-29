@@ -85,8 +85,7 @@ bool Frustum::PointInFrustum(const Vector3 &position) const
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{
-		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z +
-			m_frustum[i][3] <= 0.0f)
+		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= 0.0f)
 		{
 			return false;
 		}
@@ -99,8 +98,7 @@ bool Frustum::SphereInFrustum(const Vector3 &position, const float &radius) cons
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{
-		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z +
-			m_frustum[i][3] <= -radius)
+		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= -radius)
 		{
 			return false;
 		}
@@ -113,14 +111,14 @@ bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{
-		if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f &&
-			m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
+		if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * min.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f
+			&& m_frustum[i][0] * max.m_x + m_frustum[i][1] * max.m_y + m_frustum[i][2] * max.m_z + m_frustum[i][3] <= 0.0f)
 		{
 			return false;
 		}
@@ -131,9 +129,7 @@ bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
 
 void Frustum::NormalizePlane(const int32_t &side)
 {
-	float magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] +
-		m_frustum[side][1] * m_frustum[side][1] +
-		m_frustum[side][2] * m_frustum[side][2]);
+	float magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2]);
 	m_frustum[side][0] /= magnitude;
 	m_frustum[side][1] /= magnitude;
 	m_frustum[side][2] /= magnitude;

@@ -48,14 +48,10 @@ public:
 	enum class Status
 	{
 		/// The socket has sent / received the data.
-			Done,
-		/// The socket is not ready to send / receive data yet.
-			NotReady,
-		/// The socket sent a part of the data.
-			Partial,
-		/// The TCP socket has been disconnected.
-			Disconnected,
-		/// An unexpected error happened.
+			Done, /// The socket is not ready to send / receive data yet.
+			NotReady, /// The socket sent a part of the data.
+			Partial, /// The TCP socket has been disconnected.
+			Disconnected, /// An unexpected error happened.
 			Error
 	};
 
@@ -120,8 +116,7 @@ protected:
 	enum class Type
 	{
 		/// TCP protocol.
-			Tcp,
-		/// UDP protocol.
+			Tcp, /// UDP protocol.
 			Udp
 	};
 

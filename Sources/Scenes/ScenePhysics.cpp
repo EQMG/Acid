@@ -136,8 +136,7 @@ void ScenePhysics::CheckForCollisionEvents()
 
 	// This handy function gets the difference between two sets. It takes the difference between collision pairs from the last update,
 	// and this update and pushes them into the removed pairs list.
-	std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(),
-		std::inserter(removedPairs, removedPairs.begin()));
+	std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(), std::inserter(removedPairs, removedPairs.begin()));
 
 	// Iterate through all of the removed pairs sending separation events for them.
 	for (const auto &removedPair : removedPairs)

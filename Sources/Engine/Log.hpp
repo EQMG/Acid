@@ -22,8 +22,7 @@ public:
 	/// </summary>
 	/// <param name="format"> The format to output into. </param>
 	/// <param name="args"> The args to be added into the format. </param>
-	template<typename... Args>
-	static void Out(const std::string &format, Args &&... args)
+	template<typename... Args> static void Out(const std::string &format, Args &&... args)
 	{
 		Out(StringFormat(format, std::forward<Args>(args)...));
 	}
@@ -39,8 +38,7 @@ public:
 	/// </summary>
 	/// <param name="format"> The format to output into. </param>
 	/// <param name="args"> The args to be added into the format. </param>
-	template<typename... Args>
-	static void Error(const std::string &format, Args &&... args)
+	template<typename... Args> static void Error(const std::string &format, Args &&... args)
 	{
 		Error(StringFormat(format, std::forward<Args>(args)...));
 	}
@@ -62,8 +60,7 @@ private:
 	static ACID_STATE std::mutex MUTEX;
 	static ACID_STATE std::ofstream STREAM;
 
-	template<typename... Args>
-	static std::string StringFormat(const std::string &format, Args &&... args)
+	template<typename... Args> static std::string StringFormat(const std::string &format, Args &&... args)
 	{
 		size_t size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
 		std::unique_ptr<char[]> buf(new char[size]);

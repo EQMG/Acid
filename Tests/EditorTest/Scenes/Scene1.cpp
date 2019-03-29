@@ -155,7 +155,7 @@ void Scene1::Start()
 	plane->AddComponent<MeshRender>();
 	plane->AddComponent<ShadowRender>();
 
-	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
+	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
 
 	for (int i = 0; i < 5; i++)
 	{

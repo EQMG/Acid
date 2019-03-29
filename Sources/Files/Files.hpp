@@ -24,8 +24,7 @@ public:
 };
 
 class IFStream :
-	public BaseFStream,
-	public std::istream
+	public BaseFStream, public std::istream
 {
 public:
 	explicit IFStream(const std::string &filename);
@@ -34,8 +33,7 @@ public:
 };
 
 class OFStream :
-	public BaseFStream,
-	public std::ostream
+	public BaseFStream, public std::ostream
 {
 public:
 	explicit OFStream(const std::string &filename, const FileMode &writeMode = FileMode::Write);
@@ -44,8 +42,7 @@ public:
 };
 
 class FStream :
-	public BaseFStream,
-	public std::iostream
+	public BaseFStream, public std::iostream
 {
 public:
 	explicit FStream(const std::string &filename, const FileMode &openMode = FileMode::Read);

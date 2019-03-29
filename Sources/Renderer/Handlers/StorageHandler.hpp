@@ -35,8 +35,7 @@ public:
 		}
 	}
 
-	template<typename T>
-	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
+	template<typename T> void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 	{
 		if (!m_uniformBlock)
 		{
@@ -50,8 +49,7 @@ public:
 		}
 	}
 
-	template<typename T>
-	void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
+	template<typename T> void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
 	{
 		if (!m_uniformBlock)
 		{

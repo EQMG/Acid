@@ -14,8 +14,8 @@ const float RendererShadows::BiasSlope = 1.75f;
 
 RendererShadows::RendererShadows(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag"}, {VertexModel::GetVertexInput()}, GetDefines(),
-		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT)
+	m_pipeline(pipelineStage, { "Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag" }, { VertexModel::GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Polygon,
+		PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT)
 {
 }
 

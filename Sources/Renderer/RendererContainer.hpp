@@ -24,8 +24,7 @@ public:
 	/// <param name="T"> The renderer type to find. </param>
 	/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
 	/// <returns> The found renderer. </returns>
-	template<typename T>
-	T *Get(const bool &allowDisabled = false) const
+	template<typename T> T *Get(const bool &allowDisabled = false) const
 	{
 		T *alternative = nullptr;
 
@@ -64,8 +63,7 @@ public:
 	/// <param name="T"> The type of renderer to add. </param>
 	/// <param name="args"> The type constructor arguments. </param>
 	/// <returns> The added renderer. </returns>
-	template<typename T, typename... Args>
-	T *Add(Args &&... args)
+	template<typename T, typename... Args> T *Add(Args &&... args)
 	{
 		auto created = new T(std::forward<Args>(args)...);
 		Add(created);
@@ -84,8 +82,7 @@ public:
 	/// </summary>
 	/// <param name="T"> The type of renderer to remove. </param>
 	/// <returns> If the renderer was removed. </returns>
-	template<typename T>
-	void Remove()
+	template<typename T> void Remove()
 	{
 		for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 		{

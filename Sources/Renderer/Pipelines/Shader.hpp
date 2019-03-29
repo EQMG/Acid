@@ -33,6 +33,20 @@ public:
 		{
 		}
 
+		void Decode(const Metadata &metadata)
+		{
+			metadata.GetChild("Binding", m_binding);
+			//	metadata.GetChild("Binding Descriptions", m_bindingDescriptions);
+			//	metadata.GetChild("Attribute Descriptions", m_attributeDescriptions);
+		}
+
+		void Encode(Metadata &metadata) const
+		{
+			metadata.SetChild("Binding", m_binding);
+			//	metadata.SetChild("Binding Descriptions", m_bindingDescriptions);
+			//	metadata.SetChild("Attribute Descriptions", m_attributeDescriptions);
+		}
+
 		const uint32_t &GetBinding() const { return m_binding; }
 
 		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
@@ -53,8 +67,8 @@ public:
 	class Uniform
 	{
 	public:
-		explicit Uniform(const int32_t &binding = -1, const int32_t &offset = -1, const int32_t &size = -1, const int32_t &glType = -1, const bool &readOnly = false,
-			const bool &writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
+		explicit Uniform(const int32_t &binding = -1, const int32_t &offset = -1, const int32_t &size = -1, const int32_t &glType = -1, const bool &readOnly = false, const bool &writeOnly = false,
+			const VkShaderStageFlags &stageFlags = 0) :
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
@@ -103,8 +117,8 @@ public:
 
 		bool operator==(const Uniform &other) const
 		{
-			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType &&
-				m_readOnly == other.m_readOnly && m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
+			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && m_readOnly == other.m_readOnly
+				&& m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
 		}
 
 		bool operator!=(const Uniform &other) const
@@ -189,8 +203,7 @@ public:
 
 		bool operator==(const UniformBlock &other) const
 		{
-			return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_type == other.m_type &&
-				m_uniforms == other.m_uniforms;
+			return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_type == other.m_type && m_uniforms == other.m_uniforms;
 		}
 
 		bool operator!=(const UniformBlock &other) const

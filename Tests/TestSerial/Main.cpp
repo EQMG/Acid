@@ -29,12 +29,12 @@ namespace test
 {
 struct Example1
 {
-	std::string paragraph{"Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"};
-	std::string content{"Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."};
+	std::string paragraph{ "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" };
+	std::string content{ "Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." };
 
 	struct XML
 	{
-		std::vector<std::vector<std::string>> data{{"clunky"}, {"uses more words than necessary"}};
+		std::vector<std::vector<std::string>> data{{ "clunky" }, { "uses more words than necessary" }};
 
 		void Decode(const Metadata &metadata)
 		{
@@ -47,12 +47,11 @@ struct Example1
 		}
 	} xml;
 
-	std::vector<std::string> json{"rigid", "better for data interchange"};
-	std::vector<std::string> yaml{"slim and flexible", "better for configuration", "supports comments"};
-	std::map<int32_t, std::string> map{{10, "Hello World"}, {-2, "Negaitive Keys"}, {400, "Larger Key"}};
-	std::map<int32_t, std::vector<std::string>> vectorMap{{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
-	std::vector<std::pair<std::string, BitMask<ExampleType>>> types{{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
-	                                                                {"ABD", ExampleType::A | ExampleType::B | ExampleType::D}};
+	std::vector<std::string> json{ "rigid", "better for data interchange" };
+	std::vector<std::string> yaml{ "slim and flexible", "better for configuration", "supports comments" };
+	std::map<int32_t, std::string> map{{ 10, "Hello World" }, { -2, "Negaitive Keys" }, { 400, "Larger Key" }};
+	std::map<int32_t, std::vector<std::string>> vectorMap{{ -1, { "A", "B", "C" }}, { 8, { "1", "2.00", "3.00" }}, { 700, { "%", "$", "#", "&", "#" }}};
+	std::vector<std::pair<std::string, BitMask<ExampleType>>> types{{ "AB", ExampleType::A | ExampleType::B }, { "C", ExampleType::C }, { "ABD", ExampleType::A | ExampleType::B | ExampleType::D }};
 	//std::vector<std::unique_ptr<float>> uniqueVector{ std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f) }; // TODO
 	//std::map<Vector2, Matrix4> vectorMatrixMap{ { Vector2(-0.91f, 5998.1f), Matrix4(1.0f) }, { Vector2(75.559f, 1.2433f), Matrix4(0.0f) } }; // Not allowed by Json.
 	//std::array<double, 5> array{ -9.1, 10932.0, 1.111, 64634.324324234, -7436.0043 }; // TODO
@@ -60,8 +59,8 @@ struct Example1
 
 	struct Objects
 	{
-		std::string key{"value"};
-		std::vector<float> values{190.0f, 11.0f, -0.001f};
+		std::string key{ "value" };
+		std::vector<float> values{ 190.0f, 11.0f, -0.001f };
 
 		void Decode(const Metadata &metadata)
 		{
