@@ -59,10 +59,6 @@ namespace acid
 			return;
 		}
 
-#if defined(ACID_VERBOSE)
-		auto debugStart = Engine::GetTime();
-#endif
-
 		std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 		if (fileExt == ".wav")
@@ -73,11 +69,6 @@ namespace acid
 		{
 			m_buffer = LoadBufferOgg(m_filename);
 		}
-
-#if defined(ACID_VERBOSE)
-		auto debugEnd = Engine::GetTime();
-		Log::Out("Sound Buffer '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
-#endif
 	}
 
 	void SoundBuffer::Decode(const Metadata &metadata)
@@ -92,6 +83,10 @@ namespace acid
 
 	uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	{
+#if defined(ACID_VERBOSE)
+		auto debugStart = Engine::GetTime();
+#endif
+
 		auto fileLoaded = Files::Read(filename);
 
 		if (!fileLoaded)
@@ -156,11 +151,20 @@ namespace acid
 		alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data.get(), size, samplesPerSec);
 
 		Audio::CheckAl(alGetError());
+
+#if defined(ACID_VERBOSE)
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Sound WAV '%s' loaded in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+#endif
 		return buffer;
 	}
 
 	uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	{
+#if defined(ACID_VERBOSE)
+		auto debugStart = Engine::GetTime();
+#endif
+
 		auto fileLoaded = Files::Read(filename);
 
 		if (!fileLoaded)
@@ -186,6 +190,11 @@ namespace acid
 
 		delete[] data;
 		Audio::CheckAl(alGetError());
+
+#if defined(ACID_VERBOSE)
+		auto debugEnd = Engine::GetTime();
+		Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+#endif
 		return buffer;
 	}
 }

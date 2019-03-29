@@ -54,7 +54,7 @@ namespace acid
 			{
 				if (Uis::Get()->WasDown(button))
 				{
-					m_onClick(this, button);
+					m_onClick(button);
 				}
 			}
 		}

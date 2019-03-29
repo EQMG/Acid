@@ -6,7 +6,7 @@
 
 namespace test
 {
-	MaterialTerrain::MaterialTerrain(std::shared_ptr<Texture> textureR, std::shared_ptr<Texture> textureG) :
+	MaterialTerrain::MaterialTerrain(std::shared_ptr<Image2d> textureR, std::shared_ptr<Image2d> textureG) :
 		m_textureR(std::move(textureR)),
 		m_textureG(std::move(textureG))
 	{
@@ -23,14 +23,14 @@ namespace test
 
 	void MaterialTerrain::Decode(const Metadata &metadata)
 	{
-		metadata.GetResource("Texture R", m_textureR);
-		metadata.GetResource("Texture G", m_textureG);
+		metadata.GetResource("Image2d R", m_textureR);
+		metadata.GetResource("Image2d G", m_textureG);
 	}
 
 	void MaterialTerrain::Encode(Metadata &metadata) const
 	{
-		metadata.SetResource("Texture R", m_textureR);
-		metadata.SetResource("Texture G", m_textureG);
+		metadata.SetResource("Image2d R", m_textureR);
+		metadata.SetResource("Image2d G", m_textureG);
 	}
 
 	void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)

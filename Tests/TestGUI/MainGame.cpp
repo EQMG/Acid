@@ -1,11 +1,11 @@
 #include "MainGame.hpp"
 
 #include <iostream>
-#include <thread>
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Resources/Resources.hpp>
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
@@ -32,7 +32,7 @@ namespace test
 	MainGame::MainGame() :
 		m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
 		m_buttonFullscreen(Key::F11),
-		m_buttonScreenshot(Key::F12),
+		m_buttonScreenshot(Key::F9),
 		m_buttonExit(Key::Delete)
 	{
 		// Registers file search paths.
@@ -53,6 +53,34 @@ namespace test
 			case FileWatcher::Status::Erased:
 				Log::Out("Erased '%s'\n", path.c_str());
 				break;
+			}
+		};
+
+		m_buttonFullscreen.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		{
+			if (action == InputAction::Press)
+			{
+				Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			}
+		};
+		m_buttonScreenshot.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		{
+			if (action == InputAction::Press)
+			{
+				Resources::Get()->GetThreadPool().Enqueue([]()
+				{
+					Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
+				});
+			}
+		};
+		m_buttonExit.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		{
+			if (action == InputAction::Press)
+			{
+				if (m_buttonExit.WasDown())
+				{
+					Engine::Get()->RequestClose(false);
+				}
 			}
 		};
 
@@ -87,25 +115,5 @@ namespace test
 
 	void MainGame::Update()
 	{
-		if (m_buttonFullscreen.WasDown())
-		{
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-
-		if (m_buttonScreenshot.WasDown())
-		{
-			// TODO: Threading.
-			std::thread t([]()
-			{
-				std::string filename = "Screenshots/" + Engine::GetDateTime() + ".png";
-				Renderer::Get()->CaptureScreenshot(filename);
-			});
-			t.detach();
-		}
-
-		if (m_buttonExit.WasDown())
-		{
-			Engine::Get()->RequestClose(false);
-		}
 	}
 }

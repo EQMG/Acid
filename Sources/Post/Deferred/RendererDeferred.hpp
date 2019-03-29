@@ -2,11 +2,11 @@
 
 #include "Lights/Fog.hpp"
 #include "Maths/Vector3.hpp"
+#include "Images/ImageCube.hpp"
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Textures/Cubemap.hpp"
 
 namespace acid
 {
@@ -31,11 +31,11 @@ namespace acid
 
 		std::vector<Shader::Define> GetDefines();
 
-		static std::unique_ptr<Texture> ComputeBRDF(const uint32_t &size);
+		static std::unique_ptr<Image2d> ComputeBRDF(const uint32_t &size);
 
-		static std::unique_ptr<Cubemap> ComputeIrradiance(const std::shared_ptr<Cubemap> &source, const uint32_t &size);
+		static std::unique_ptr<ImageCube> ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size);
 
-		static std::unique_ptr<Cubemap> ComputePrefiltered(const std::shared_ptr<Cubemap> &source, const uint32_t &size);
+		static std::unique_ptr<ImageCube> ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size);
 
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformScene;
@@ -43,11 +43,14 @@ namespace acid
 
 		PipelineGraphics m_pipeline;
 
-		std::unique_ptr<Texture> m_brdf;
+		std::future<std::unique_ptr<Image2d>> m_brdfFuture;
+		std::unique_ptr<Image2d> m_brdf;
 
-		std::shared_ptr<Cubemap> m_skybox;
-		std::unique_ptr<Cubemap> m_irradiance;
-		std::unique_ptr<Cubemap> m_prefiltered;
+		std::shared_ptr<ImageCube> m_skybox;
+		std::future<std::unique_ptr<ImageCube>> m_irradianceFuture;
+		std::unique_ptr<ImageCube> m_irradiance;
+		std::future<std::unique_ptr<ImageCube>> m_prefilteredFuture;
+		std::unique_ptr<ImageCube> m_prefiltered;
 
 		Fog m_fog;
 	};

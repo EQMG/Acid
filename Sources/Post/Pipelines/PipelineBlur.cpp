@@ -30,7 +30,7 @@ namespace acid
 			{
 				auto newWidth = static_cast<uint32_t>(m_outputScale * static_cast<float>(width));
 				auto newHeight = static_cast<uint32_t>(m_outputScale * static_cast<float>(height));
-				m_output = std::make_unique<Texture>(newWidth, newHeight, nullptr, VK_FORMAT_R8G8B8A8_UNORM);
+				m_output = std::make_unique<Image2d>(newWidth, newHeight, nullptr, VK_FORMAT_R8G8B8A8_UNORM);
 
 				m_filterBlurVertical.SetAttachment("writeColour", m_output.get());
 				m_filterBlurHorizontal.SetAttachment("writeColour", m_output.get());
@@ -41,7 +41,7 @@ namespace acid
 		}
 
 		// Input might be scaled for faster blur.
-	//	Texture::CopyImage(dynamic_cast<Texture *>(Renderer::Get()->GetAttachment("resolved"))->GetImage(), m_halfRes->GetImage(), m_halfRes->GetDeviceMemory(), width / 2, height / 2, false, 0, 1);
+	//	Image2d::CopyImage(dynamic_cast<Image2d *>(Renderer::Get()->GetAttachment("resolved"))->GetImage(), m_halfRes->GetImage(), m_halfRes->GetDeviceMemory(), width / 2, height / 2, false, 0, 1);
 
 		m_filterBlurVertical.SetDirection(Vector2(0.0f, m_blur));
 		m_filterBlurHorizontal.SetDirection(Vector2(m_blur, 0.0f));

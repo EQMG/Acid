@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
-#include "Helpers/ThreadPool.hpp"
 #include "Maths/Time.hpp"
 #include "ModuleManager.hpp"
 #include "ModuleUpdater.hpp"
@@ -38,12 +37,6 @@ namespace acid
 		/// </summary>
 		/// <returns> EXIT_SUCCESS or EXIT_FAILURE. </returns>
 		int32_t Run();
-
-		/// <summary>
-		/// Gets the main thread pool.
-		/// </summary>
-		/// <returns> The engines thread pool. </returns>
-		ThreadPool &GetThreadPool() { return m_threadPool;  }
 
 		/// <summary>
 		/// Gets the module manager used by the engine instance. The manager can be used to register/deregister modules.
@@ -142,8 +135,6 @@ namespace acid
 		void RequestClose(const bool &error);
 	private:
 		static ACID_STATE Engine *INSTANCE;
-
-		ThreadPool m_threadPool;
 
 		ModuleManager m_moduleManager;
 		ModuleUpdater m_moduleUpdater;

@@ -8,7 +8,7 @@ namespace acid
 {
 	UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+		m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 		m_textTitle(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_textValue(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
@@ -43,12 +43,12 @@ namespace acid
 		{
 			if (m_background.IsSelected() && !m_mouseOver)
 			{
-				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 				m_mouseOver = true;
 			}
 			else if (!m_background.IsSelected() && m_mouseOver)
 			{
-				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 				m_mouseOver = false;
 			}
 		}
@@ -72,7 +72,7 @@ namespace acid
 		m_textTitle.SetString(m_title);
 	}
 
-	void UiInputGrabber::UpdateText()
+	void UiInputGrabber::UpdateValue()
 	{
 		m_textValue.SetString(GetTextString());
 	}
@@ -82,7 +82,7 @@ namespace acid
 		m_port(port),
 		m_value(value)
 	{
-		UpdateText();
+		UpdateValue();
 
 		Joysticks::Get()->GetOnButton() += [this](uint32_t port, uint32_t button, InputAction action)
 		{
@@ -92,17 +92,27 @@ namespace acid
 			}
 
 			m_value = button;
-			m_onGrabbed(this, m_port, m_value);
+			m_onValue(m_port, m_value);
 			SetSelected(false);
-			UpdateText();
+			UpdateValue();
 		};
+	}
+
+	void UiGrabberJoystick::SetValue(const uint32_t &value)
+	{
+		if (m_value != value)
+		{
+			m_value = value;
+			UpdateValue();
+			m_onValue(m_port, m_value);
+		}
 	}
 
 	UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_value(value)
 	{
-		UpdateText();
+		UpdateValue();
 
 		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 		{
@@ -112,17 +122,27 @@ namespace acid
 			}
 
 			m_value = key;
-			m_onGrabbed(this, m_value);
+			m_onValue(m_value);
 			SetSelected(false);
-			UpdateText();
+			UpdateValue();
 		};
+	}
+
+	void UiGrabberKeyboard::SetValue(const Key &value)
+	{
+		if (m_value != value)
+		{
+			m_value = value;
+			UpdateValue();
+			m_onValue(m_value);
+		}
 	}
 
 	UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiBound &rectangle) :
 		UiInputGrabber(parent, title, rectangle),
 		m_value(value)
 	{
-		UpdateText();
+		UpdateValue();
 
 		Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 		{
@@ -142,9 +162,19 @@ namespace acid
 			}
 
 			m_value = button;
-			m_onGrabbed(this, m_value);
+			m_onValue(m_value);
 			SetSelected(false);
-			UpdateText();
+			UpdateValue();
 		};
+	}
+
+	void UiGrabberMouse::SetValue(const MouseButton &value)
+	{
+		if (m_value != value)
+		{
+			m_value = value;
+			UpdateValue();
+			m_onValue(m_value);
+		}
 	}
 }

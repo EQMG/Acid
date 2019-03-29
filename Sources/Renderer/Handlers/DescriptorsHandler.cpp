@@ -13,7 +13,7 @@ namespace acid
 	}
 
 	DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
-		m_shader(pipeline.GetShaderProgram()),
+		m_shader(pipeline.GetShader()),
 		m_pushDescriptors(pipeline.IsPushDescriptors()),
 		m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
 		m_changed(true)
@@ -107,9 +107,9 @@ namespace acid
 
 	bool DescriptorsHandler::Update(const Pipeline &pipeline)
 	{
-		if (m_shader != pipeline.GetShaderProgram())
+		if (m_shader != pipeline.GetShader())
 		{
-			m_shader = pipeline.GetShaderProgram();
+			m_shader = pipeline.GetShader();
 			m_pushDescriptors = pipeline.IsPushDescriptors();
 			m_descriptors.clear();
 

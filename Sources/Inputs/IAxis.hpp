@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/Delegate.hpp"
 #include "StdAfx.hpp"
 
 namespace acid
@@ -17,5 +18,9 @@ namespace acid
 		/// </summary>
 		/// <returns> The current value of the axis in the range (-1, 1). </returns>
 		virtual float GetAmount() const = 0;
+
+		Delegate<void(float)> &GetOnAxis() { return m_onAxis; }
+	protected:
+		Delegate<void(float)> m_onAxis;
 	};
 }

@@ -26,7 +26,7 @@ namespace acid
 
 		void SetTitle(const std::string &title);
 	protected:
-		void UpdateText();
+		void UpdateValue();
 
 		virtual std::string GetTextString() const = 0;
 
@@ -56,13 +56,9 @@ namespace acid
 
 		const uint32_t &GetValue() const { return m_value; }
 
-		void SetValue(const uint32_t &value)
-		{
-			m_value = value;
-			UpdateText();
-		}
+		void SetValue(const uint32_t &value);
 
-		Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)> &GetOnGrabbed() { return m_onGrabbed; }
+		Delegate<void(uint32_t, uint32_t)> &GetOnValue() { return m_onValue; }
 	protected:
 		std::string GetTextString() const override
 		{
@@ -71,7 +67,7 @@ namespace acid
 	private:
 		uint32_t m_port;
 		uint32_t m_value;
-		Delegate<void(UiGrabberJoystick *, uint32_t, uint32_t)> m_onGrabbed;
+		Delegate<void(uint32_t, uint32_t)> m_onValue;
 	};
 
 	class ACID_EXPORT UiGrabberKeyboard :
@@ -83,13 +79,9 @@ namespace acid
 
 		const Key &GetValue() const { return m_value; }
 
-		void SetValue(const Key &value)
-		{
-			m_value = value;
-			UpdateText();
-		}
+		void SetValue(const Key &value);
 
-		Delegate<void(UiGrabberKeyboard *, Key)> &GetOnGrabbed() { return m_onGrabbed; }
+		Delegate<void(Key)> &GetOnValue() { return m_onValue; }
 	protected:
 		std::string GetTextString() const override
 		{
@@ -97,7 +89,7 @@ namespace acid
 		}
 	private:
 		Key m_value;
-		Delegate<void(UiGrabberKeyboard *, Key)> m_onGrabbed;
+		Delegate<void(Key)> m_onValue;
 	};
 
 	class ACID_EXPORT UiGrabberMouse :
@@ -109,13 +101,9 @@ namespace acid
 
 		const MouseButton &GetValue() const { return m_value; }
 
-		void SetValue(const MouseButton &value)
-		{
-			m_value = value;
-			UpdateText();
-		}
+		void SetValue(const MouseButton &value);
 
-		Delegate<void(UiGrabberMouse *, MouseButton)> &GetOnGrabbed() { return m_onGrabbed; }
+		Delegate<void(MouseButton)> &GetOnValue() { return m_onValue; }
 	protected:
 		std::string GetTextString() const override
 		{
@@ -123,6 +111,6 @@ namespace acid
 		}
 	private:
 		MouseButton m_value;
-		Delegate<void(UiGrabberMouse *, MouseButton)> m_onGrabbed;
+		Delegate<void(MouseButton)> m_onValue;
 	};
 }

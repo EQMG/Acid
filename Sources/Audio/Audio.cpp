@@ -14,8 +14,7 @@ namespace acid
 {
 	Audio::Audio() :
 		m_alDevice(nullptr),
-		m_alContext(nullptr),
-		m_masterGain(1.0f)
+		m_alContext(nullptr)
 	{
 		m_alDevice = alcOpenDevice(nullptr);
 		m_alContext = alcCreateContext(m_alDevice, nullptr);
@@ -39,7 +38,7 @@ namespace acid
 		}
 
 		// Listener gain.
-		alListenerf(AL_GAIN, m_masterGain);
+		alListenerf(AL_GAIN, GetGain(Type::Master));
 
 		// Listener position.
 		Vector3 currentPosition = camera->GetPosition();
@@ -92,7 +91,7 @@ namespace acid
 		throw std::runtime_error("OpenAL Error: " + result);
 	}
 
-	float Audio::GetTypeGain(const Type &type) const
+	float Audio::GetGain(const Type &type) const
 	{
 		auto it = m_gains.find(type);
 
@@ -104,16 +103,22 @@ namespace acid
 		return it->second;
 	}
 
-	void Audio::SetTypeGain(const Type &type, const float &volume)
+	void Audio::SetGain(const Type &type, const float &volume)
 	{
 		auto it = m_gains.find(type);
 
 		if (it != m_gains.end())
 		{
-			it->second = volume;
+			if (it->second != volume)
+			{
+				it->second = volume;
+				m_onGain(type, volume);
+			}
+
 			return;
 		}
 
 		m_gains.emplace(type, volume);
+		m_onGain(type, volume);
 	}
 }

@@ -8,6 +8,21 @@ namespace acid
 	{
 		for (const auto &button : buttons)
 		{
+			button->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+			{
+				if (IsDown() == !(m_wasDown && IsDown()))
+				{
+					m_onButton(InputAction::Press, 0);
+				}
+				else if (!IsDown())
+				{
+					m_onButton(InputAction::Release, 0);
+				}
+				else
+				{
+					m_onButton(InputAction::Repeat, 0);
+				}
+			};
 			m_buttons.emplace_back(button);
 		}
 	}

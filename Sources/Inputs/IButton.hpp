@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Devices/Window.hpp"
 #include "StdAfx.hpp"
 
 namespace acid
@@ -23,5 +24,9 @@ namespace acid
 		/// </summary>
 		/// <returns> Is the key down and was not down before? </returns>
 		virtual bool WasDown() = 0;
+
+		Delegate<void(InputAction, BitMask<InputMod>)> &GetOnButton() { return m_onButton; }
+	protected:
+		Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
 	};
 }

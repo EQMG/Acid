@@ -3,6 +3,7 @@
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
 #include "Models/VertexModel.hpp"
+#include "Resources/Resources.hpp"
 #include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
@@ -18,16 +19,15 @@ namespace acid
 		RenderPipeline(pipelineStage),
 		m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, GetDefines(), 
 			PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
-		m_brdf(ComputeBRDF(512)),
+		m_brdfFuture(Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeBRDF, 512)),
 		m_skybox(nullptr),
 		m_irradiance(nullptr),
 		m_prefiltered(nullptr),
 		m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 	{
-		auto metadata = Metadata();
-		m_pipeline.GetShaderProgram()->Encode(metadata);
-		File file = File("Shaders/Deferred.json", new Json(&metadata));
-		file.Write();
+	//	auto metadata = Metadata();
+	//	m_pipeline.GetShader()->Encode(metadata);
+	//	File("Shaders/Deferred.json", new Json(&metadata)).Write();
 	}
 
 	void RendererDeferred::Render(const CommandBuffer &commandBuffer)
@@ -40,8 +40,8 @@ namespace acid
 		if (m_skybox != skybox)
 		{
 			m_skybox = skybox;
-			m_irradiance = ComputeIrradiance(m_skybox, 64);
-			m_prefiltered = ComputePrefiltered(m_skybox, 512);
+			m_irradianceFuture = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeIrradiance, m_skybox, 64);
+			m_prefilteredFuture = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputePrefiltered, m_skybox, 512);
 		}
 
 		// Updates uniforms.
@@ -84,6 +84,19 @@ namespace acid
 		// Updates storage buffers.
 		m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 
+		if (m_brdfFuture.valid())
+		{
+			m_brdf = m_brdfFuture.get();
+		}
+		if (m_irradianceFuture.valid())
+		{
+			m_irradiance = m_irradianceFuture.get();
+		}
+		if (m_prefilteredFuture.valid())
+		{
+			m_prefiltered = m_prefilteredFuture.get();
+		}
+
 		// Updates descriptors.
 		m_descriptorSet.Push("UboScene", m_uniformScene);
 		m_descriptorSet.Push("Lights", m_storageLights);
@@ -116,9 +129,9 @@ namespace acid
 		return result;
 	}
 
-	std::unique_ptr<Texture> RendererDeferred::ComputeBRDF(const uint32_t &size)
+	std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	{
-		auto result = std::make_unique<Texture>(size, size);
+		auto result = std::make_unique<Image2d>(size, size);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -140,25 +153,28 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the BRDF texture.
-		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
-		FileSystem::ClearFile(filename);
-		uint32_t width = 0;
-		uint32_t height = 0;
-		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);*/
+		Resources::Get()->GetThreadPool().Enqueue([](Image2d *result)
+		{
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
+			FileSystem::ClearFile(filename);
+			uint32_t width = 0;
+			uint32_t height = 0;
+			auto pixels = result->GetPixels(width, height, 1);
+			Image::WritePixels(filename, pixels.get(), width, height);
+		}, result.get());
 #endif
 
 		return result;
 	}
 
-	std::unique_ptr<Cubemap> RendererDeferred::ComputeIrradiance(const std::shared_ptr<Cubemap> &source, const uint32_t &size)
+	std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 	{
 		if (source == nullptr)
 		{
 			return nullptr;
 		}
 
-		auto result = std::make_unique<Cubemap>(size, size);
+		auto result = std::make_unique<ImageCube>(size, size);
 
 		// Creates the pipeline.
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -181,26 +197,30 @@ namespace acid
 
 #if defined(ACID_VERBOSE)
 		// Saves the irradiance texture.
-		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
-		FileSystem::ClearFile(filename);
-		uint32_t width = 0;
-		uint32_t height = 0;
-		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);*/
+		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *result)
+		{
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
+			FileSystem::ClearFile(filename);
+			uint32_t width = 0;
+			uint32_t height = 0;
+			auto pixels = result->GetPixels(width, height, 1);
+			Image::WritePixels(filename, pixels.get(), width, height);
+		}, result.get());
 #endif
 
 		return result;
 	}
 
-	std::unique_ptr<Cubemap> RendererDeferred::ComputePrefiltered(const std::shared_ptr<Cubemap> &source, const uint32_t &size)
+	std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 	{
 		if (source == nullptr)
 		{
 			return nullptr;
 		}
 
-		// TODO: Generate mipmaps, and per mip change roughness to 1.0 as mip increases.
-		auto result = std::make_unique<Cubemap>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM,
+		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+
+		auto result = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM,
 			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, 
 			VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
@@ -208,10 +228,17 @@ namespace acid
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
 		PipelineCompute compute = PipelineCompute("Shaders/Prefiltered.comp");
 
-		// Bind the pipeline.
-		compute.BindPipeline(commandBuffer);
+		for (uint32_t i = 0; i < result->GetMipLevels(); i++)
+		{
+			VkImageView levelView = VK_NULL_HANDLE;
+			Image::CreateImageView(result->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_2D, result->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 1, 0);
+			// static_cast<float>(i) / static_cast<float>(result->GetMipLevels())
+			vkDestroyImageView(logicalDevice->GetLogicalDevice(), levelView, nullptr);
+		}
 
-	//	PushHandler pushHandler = PushHandler(*compute.GetShaderProgram()->GetUniformBlock("PushObject"));
+
+	//	PushHandler pushHandler = PushHandler(*compute.GetShader()->GetUniformBlock("PushObject"));
+	//	pushHandler.Push("roughness", 0.6f);
 
 		// Updates descriptors.
 		DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
@@ -221,30 +248,36 @@ namespace acid
 		descriptorSet.Update(compute);
 
 		// Runs the compute pipeline.
-		descriptorSet.BindDescriptor(commandBuffer, compute);
 	//	pushHandler.BindPush(commandBuffer, compute);
+		compute.BindPipeline(commandBuffer);
+
+		descriptorSet.BindDescriptor(commandBuffer, compute);
 		compute.CmdRender(commandBuffer, result->GetWidth(), result->GetHeight());
+
 		commandBuffer.End();
 		commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
 		// Saves the prefiltered texture.
-		/*std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered.png";
-		FileSystem::ClearFile(filename);
-		uint32_t width = 0;
-		uint32_t height = 0;
-		auto pixels = result->GetPixels(width, height, 1);
-		Texture::WritePixels(filename, pixels.get(), width, height);*/
-
-		/*for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
+		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *result)
 		{
-			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
+			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered.png";
 			FileSystem::ClearFile(filename);
 			uint32_t width = 0;
 			uint32_t height = 0;
-			auto pixels = result->GetPixels(width, height, i);
-			Texture::WritePixels(filename, pixels.get(), width, height);
-		}*/
+			auto pixels = result->GetPixels(width, height, 1);
+			Image::WritePixels(filename, pixels.get(), width, height);
+
+			/*for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
+			{
+				std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
+				FileSystem::ClearFile(filename);
+				uint32_t width = 0;
+				uint32_t height = 0;
+				auto pixels = result->GetPixels(width, height, i);
+				Image::WritePixels(filename, pixels.get(), width, height);
+			}*/
+		}, result.get());
 #endif
 
 		return result;

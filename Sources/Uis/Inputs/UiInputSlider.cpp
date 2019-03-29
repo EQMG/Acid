@@ -13,8 +13,8 @@ namespace acid
 		const int32_t &roundTo, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
 		m_slider(this, UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale),
-			Texture::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour),
-		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+			Image2d::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour),
+		m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 		m_textTitle(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_textValue(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
@@ -34,7 +34,7 @@ namespace acid
 		GetRectangle().SetDimensions(UiInputButton::Size);
 		m_slider.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 		m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
-		SetValue(value);
+		UpdateProgress();
 	}
 
 	void UiInputSlider::UpdateObject()
@@ -68,7 +68,7 @@ namespace acid
 			m_progress = cursorX / width;
 			m_progress = std::clamp(m_progress, 0.0f, 1.0f);
 			m_value = (m_progress * (m_valueMax - m_valueMin)) + m_valueMin;
-			m_onSlide(this, m_value);
+			m_onValue(m_value);
 
 			m_hasChange = true;
 			CancelEvent(MouseButton::Left);
@@ -78,17 +78,17 @@ namespace acid
 		{
 			m_timerChange.ResetStartTime();
 			m_hasChange = false;
-			UpdateValueText();
+			UpdateProgress();
 		}
 
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_background.IsSelected() && m_mouseOver && !m_updating)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 
@@ -103,12 +103,17 @@ namespace acid
 
 	void UiInputSlider::SetValue(const float &value)
 	{
-		m_progress = (value - m_valueMin) / (m_valueMax - m_valueMin);
-		UpdateValueText();
+		if (m_value != value)
+		{
+			m_value = value;
+			UpdateProgress();
+			m_onValue(m_value);
+		}
 	}
 
-	void UiInputSlider::UpdateValueText()
+	void UiInputSlider::UpdateProgress()
 	{
+		m_progress = (m_value - m_valueMin) / (m_valueMax - m_valueMin);
 		std::stringstream rounded;
 		rounded << std::fixed << std::setprecision(m_roundTo) << m_value;
 		m_textValue.SetString(rounded.str());

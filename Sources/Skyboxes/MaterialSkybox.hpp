@@ -3,7 +3,7 @@
 #include "Materials/Material.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
-#include "Textures/Cubemap.hpp"
+#include "Images/ImageCube.hpp"
 
 namespace acid
 {
@@ -14,7 +14,7 @@ namespace acid
 		public Material
 	{
 	public:
-		explicit MaterialSkybox(std::shared_ptr<Cubemap> cubemap = nullptr, const Colour &skyColour = Colour::White);
+		explicit MaterialSkybox(std::shared_ptr<ImageCube> cubemap = nullptr, const Colour &skyColour = Colour::White);
 
 		void Start() override;
 
@@ -28,9 +28,9 @@ namespace acid
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-		const std::shared_ptr<Cubemap> &GetCubemap() const { return m_cubemap; }
+		const std::shared_ptr<ImageCube> &GetCubemap() const { return m_cubemap; }
 
-		void SetCubemap(const std::shared_ptr<Cubemap> &cubemap) { m_cubemap = cubemap; }
+		void SetCubemap(const std::shared_ptr<ImageCube> &cubemap) { m_cubemap = cubemap; }
 
 		const Colour &GetSkyColour() const { return m_skyColour; }
 
@@ -48,7 +48,7 @@ namespace acid
 
 		void SetFogLimits(const Vector2 &fogLimits) { m_fogLimits = fogLimits; }
 	private:
-		std::shared_ptr<Cubemap> m_cubemap;
+		std::shared_ptr<ImageCube> m_cubemap;
 		Colour m_skyColour;
 		float m_blend;
 		Colour m_fogColour;

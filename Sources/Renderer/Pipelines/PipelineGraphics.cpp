@@ -89,12 +89,12 @@ namespace acid
 		vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
 	}
 
-	const DepthStencil *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const
+	const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetDepthStencil();
 	}
 
-	const Texture *PipelineGraphics::GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage) const
+	const Image2d *PipelineGraphics::GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage) const
 	{
 		return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 	}

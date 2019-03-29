@@ -9,7 +9,7 @@ namespace acid
 {
 	UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+		m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 		m_textTitle(this, UiBound(Vector2(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
 			UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_textValue(this, UiBound(Vector2(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions),
@@ -40,7 +40,7 @@ namespace acid
 				{
 					m_value = m_value.substr(0, m_value.length() - 1);
 					m_textValue.SetString(m_value);
-					m_onType(this, m_value);
+					m_onValue(m_value);
 					m_lastKey = 8;
 				}
 			}
@@ -65,7 +65,7 @@ namespace acid
 				{
 					m_value += c;
 					m_textValue.SetString(m_value);
-					m_onType(this, m_value);
+					m_onValue(m_value);
 					m_lastKey = c;
 				}
 			}
@@ -97,12 +97,12 @@ namespace acid
 		{
 			if (m_background.IsSelected() && !m_mouseOver)
 			{
-				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 				m_mouseOver = true;
 			}
 			else if (!m_background.IsSelected() && m_mouseOver)
 			{
-				m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+				m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 				m_mouseOver = false;
 			}
 		}
@@ -128,7 +128,11 @@ namespace acid
 
 	void UiInputText::SetValue(const std::string &value)
 	{
-		m_value = value;
-		m_textValue.SetString(value);
+		if (m_value != value)
+		{
+			m_value = value;
+			m_textValue.SetString(value);
+			m_onValue(m_value);
+		}
 	}
 }

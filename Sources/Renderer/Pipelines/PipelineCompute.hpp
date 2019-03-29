@@ -30,7 +30,7 @@ namespace acid
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const;
 
-		const Shader *GetShaderProgram() const override { return m_shader.get(); }
+		const Shader *GetShader() const override { return m_shader.get(); }
 
 		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

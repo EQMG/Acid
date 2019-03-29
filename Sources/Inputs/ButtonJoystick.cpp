@@ -9,6 +9,13 @@ namespace acid
 		m_button(button),
 		m_wasDown(false)
 	{
+		Joysticks::Get()->GetOnButton() += [this](uint32_t button, uint32_t port, InputAction action)
+		{
+			if (port == m_port && button == m_button)
+			{
+				m_onButton(action, 0);
+			}
+		};
 	}
 
 	bool ButtonJoystick::IsDown() const

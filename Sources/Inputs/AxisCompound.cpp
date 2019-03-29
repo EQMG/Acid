@@ -6,6 +6,10 @@ namespace acid
 	{
 		for (const auto &axis : axes)
 		{
+			axis->GetOnAxis() += [this](float value)
+			{
+				m_onAxis(GetAmount());
+			};
 			m_axes.emplace_back(axis);
 		}
 	}

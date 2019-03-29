@@ -17,7 +17,7 @@ namespace acid
 
 	UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(this, UiBound::Maximum, Texture::Create("Guis/Button_Filled.png"), AccentColour),
+		m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button_Filled.png"), AccentColour),
 		m_text(this, UiBound::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 		m_mouseOver(false)
@@ -41,12 +41,12 @@ namespace acid
 
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), SelectedColour, SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), SelectedColour, SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_background.IsSelected() && m_mouseOver)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), AccentColour, SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), AccentColour, SlideTime));
 			m_mouseOver = false;
 		}
 	}

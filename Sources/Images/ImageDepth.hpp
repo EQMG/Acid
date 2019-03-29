@@ -2,17 +2,18 @@
 
 #include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
+#include "Image.hpp"
 
 namespace acid
 {
-	class ACID_EXPORT DepthStencil :
+	class ACID_EXPORT ImageDepth :
 		public Descriptor,
 		public Buffer
 	{
 	public:
-		DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+		ImageDepth(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
-		~DepthStencil();
+		~ImageDepth();
 
 		static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
 

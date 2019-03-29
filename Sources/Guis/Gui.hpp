@@ -3,10 +3,10 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
+#include "Images/Image2d.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Handlers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Textures/Texture.hpp"
 #include "Uis/UiObject.hpp"
 
 namespace acid
@@ -25,15 +25,15 @@ namespace acid
 		/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
 		/// <param name="texture"> The objects texture. </param>
 		/// <param name="colourOffset"> The texture colour offset. </param>
-		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const Colour &colourOffset = Colour::White);
+		Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> texture, const Colour &colourOffset = Colour::White);
 
 		void UpdateObject() override;
 
 		bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
+		const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
 
-		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
+		void SetTexture(const std::shared_ptr<Image2d> &texture) { m_texture = texture; }
 
 		const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
@@ -62,21 +62,13 @@ namespace acid
 		/// <param name="colourDriver"> The new colour offset driver. </param>
 		void SetColourDriver(IDriver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
 
-		/// <summary>
-		/// Sets a new colour offset driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetColourDriver(Args &&... args) { SetColourDriver(new T(std::forward<Args>(args)...)); }
-
 		const Colour &GetColourOffset() const { return m_colourOffset; }
 	private:
 		DescriptorsHandler m_descriptorSet;
 		UniformHandler m_uniformObject;
 
 		std::shared_ptr<Model> m_model;
-		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<Image2d> m_texture;
 		uint32_t m_numberOfRows;
 		uint32_t m_selectedRow;
 		Vector2 m_atlasOffset;

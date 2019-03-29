@@ -22,11 +22,11 @@ namespace test
 		m_textUps(parent, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 	{
 		m_settings.SetHeight(4.0f);
-		m_masterVolume.GetOnSlide() += [this](UiInputSlider * object, float value)
+		m_masterVolume.GetOnValue() += [this](float value)
 		{
-			Audio::Get()->SetMasterGain(value / 100.0f);
+			Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 		};
-		m_antialiasing.GetOnChange() += [this](UiInputBoolean * object, bool value)
+		m_antialiasing.GetOnValue() += [this](bool value)
 		{
 		};
 

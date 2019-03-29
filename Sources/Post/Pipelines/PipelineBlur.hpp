@@ -26,7 +26,7 @@ namespace acid
 
 		void SetBlur(const float &blur) { m_blur = blur; }
 
-		const Texture *GetOutput() const { return m_output.get(); }
+		const Image2d *GetOutput() const { return m_output.get(); }
 	private:
 		FilterBlur m_filterBlurVertical;
 		FilterBlur m_filterBlurHorizontal;
@@ -36,7 +36,7 @@ namespace acid
 		float m_outputScale;
 		float m_blur;
 
-		std::unique_ptr<Texture> m_output;
+		std::unique_ptr<Image2d> m_output;
 		uint32_t m_lastWidth;
 		uint32_t m_lastHeight;
 	};

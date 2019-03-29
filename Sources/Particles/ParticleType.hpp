@@ -5,11 +5,11 @@
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
+#include "Images/Image2d.hpp"
 #include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
-#include "Textures/Texture.hpp"
 
 namespace acid
 {
@@ -37,7 +37,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+		static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 			const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		/// <summary>
@@ -49,7 +49,7 @@ namespace acid
 		/// <param name="lifeLength"> The averaged life length for the particle. </param>
 		/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 		/// <param name="scale"> The averaged scale for the particle. </param>
-		explicit ParticleType(std::shared_ptr<Texture> texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+		explicit ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 			const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 		void Update(const std::vector<Particle> &particles);
@@ -62,9 +62,9 @@ namespace acid
 
 		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 
-		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
+		const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
 
-		void SetTexture(const std::shared_ptr<Texture> &texture) { m_texture = texture; }
+		void SetTexture(const std::shared_ptr<Image2d> &texture) { m_texture = texture; }
 
 		const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
@@ -94,7 +94,7 @@ namespace acid
 			Vector3 blend;
 		};
 
-		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<Image2d> m_texture;
 		std::shared_ptr<Model> m_model;
 		uint32_t m_numberOfRows;
 		Colour m_colourOffset;

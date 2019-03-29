@@ -25,7 +25,7 @@ namespace acid
 		m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 		m_borderSize(0.0f)
 	{
-		SetScaleDriver<DriverConstant<float>>(fontSize);
+		SetScaleDriver(new DriverConstant<float>(fontSize));
 		LoadText();
 	}
 

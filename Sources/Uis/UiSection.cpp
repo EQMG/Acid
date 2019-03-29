@@ -11,7 +11,7 @@ namespace acid
 
 	UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_icon(this, UiBound::Left, Texture::Create("Guis/Triangle_Down.png")),
+		m_icon(this, UiBound::Left, Image2d::Create("Guis/Triangle_Down.png")),
 		m_text(this, UiBound::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
 		m_content(this, UiBound(Vector2(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions)),
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
@@ -37,11 +37,11 @@ namespace acid
 
 			if (m_collapsed)
 			{
-				m_icon.SetTexture(Texture::Create("Guis/Triangle_Right.png"));
+				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Right.png"));
 			}
 			else
 			{
-				m_icon.SetTexture(Texture::Create("Guis/Triangle_Down.png"));
+				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Down.png"));
 			}
 
 			m_onCollapsed(this, m_collapsed);

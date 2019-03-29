@@ -151,7 +151,7 @@ namespace acid
 			return;
 		}
 
-		m_texture = Texture::Create(m_filename + "/" + m_style + ".png");
+		m_texture = Image2d::Create(m_filename + "/" + m_style + ".png");
 		m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
 		LoadFont(m_filename + "/" + m_style + ".ttf");
 	}

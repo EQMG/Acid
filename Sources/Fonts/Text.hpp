@@ -152,14 +152,6 @@ namespace acid
 		/// <param name="glowDriver"> The new glow driver. </param>
 		void SetGlowDriver(IDriver<float> *glowDriver);
 
-		/// <summary>
-		/// Sets a new glow driver from a type, will disable solid borders.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetGlowDriver(Args &&... args) { SetGlowDriver(new T(std::forward<Args>(args)...)); }
-
 		IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
 		/// <summary>
@@ -167,14 +159,6 @@ namespace acid
 		/// </summary>
 		/// <param name="borderDriver"> The new border driver. </param>
 		void SetBorderDriver(IDriver<float> *borderDriver);
-
-		/// <summary>
-		/// Sets a new border driver from a type, will disable glowing.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetBorderDriver(Args &&... args) { SetBorderDriver(new T(std::forward<Args>(args)...)); }
 
 		/// <summary>
 		/// Disables both solid borders and glow borders.

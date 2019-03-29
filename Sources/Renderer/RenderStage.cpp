@@ -101,7 +101,7 @@ namespace acid
 
 		if (m_depthAttachment)
 		{
-			m_depthStencil = std::make_unique<DepthStencil>(m_width, m_height, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
+			m_depthStencil = std::make_unique<ImageDepth>(m_width, m_height, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 		}
 
 		if (m_renderpass == nullptr)

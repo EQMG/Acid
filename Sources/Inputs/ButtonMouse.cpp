@@ -6,6 +6,13 @@ namespace acid
 		m_button(button),
 		m_wasDown(false)
 	{
+		Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
+		{
+			if (button == m_button)
+			{
+				m_onButton(action, mods);
+			}
+		};
 	}
 
 	bool ButtonMouse::IsDown() const

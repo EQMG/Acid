@@ -10,22 +10,22 @@ namespace acid
 		public UiObject
 	{
 	public:
-		UiColourWheel(UiObject *parent, const Colour &colour = Colour::Red, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		UiColourWheel(UiObject *parent, const Colour &value = Colour::White, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
 
-		const Colour &GetColour() const { return m_colour; }
+		const Colour &GetValue() const { return m_value; }
 
-		void SetColour(const Colour &colour);
+		void SetValue(const Colour &value);
 
-		Delegate<void(UiColourWheel *, Colour)> &GetOnPressed() { return m_onPressed; }
+		Delegate<void(Colour)> &GetOnValue() { return m_onValue; }
 	private:
 		Gui m_background;
 		Sound m_soundClick;
 
-		Colour m_colour;
+		Colour m_value;
 		bool m_mouseOver;
 
-		Delegate<void(UiColourWheel *, Colour)> m_onPressed;
+		Delegate<void(Colour)> m_onValue;
 	};
 }

@@ -8,14 +8,14 @@ namespace acid
 {
 	static const Vector2 SIZE = Vector2(0.22f, 0.0315f);
 
-	UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType, const bool &checked, const UiBound &rectangle) :
+	UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, const bool &value, const UiBound &rectangle) :
 		UiObject(parent, rectangle),
-		m_background(this, UiBound::Left, Texture::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
+		m_background(this, UiBound::Left, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
 		m_fill(&m_background, UiBound::Maximum, nullptr, Colour::White),
 		m_text(this, UiBound::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 		m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
-		m_checked(checked),
-		m_markType(markType),
+		m_value(value),
+		m_type(type),
 		m_mouseOver(false)
 	{
 		GetRectangle().SetDimensions(SIZE);
@@ -37,57 +37,61 @@ namespace acid
 				m_soundClick.Play();
 			}
 
-			m_checked = !m_checked;
-			m_onChecked(this, m_checked);
-			m_fill.SetAlphaDriver<DriverSlide<float>>(m_fill.GetAlpha(), m_checked ? 1.0f : 0.0f, UiInputButton::SlideTime);
+			m_value = !m_value;
+			m_onValue(m_value);
+			m_fill.SetAlphaDriver(new DriverSlide<float>(m_fill.GetAlpha(), m_value ? 1.0f : 0.0f, UiInputButton::SlideTime));
 			CancelEvent(MouseButton::Left);
 		}
 
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_background.IsSelected() && m_mouseOver)
 		{
-			m_background.SetColourDriver<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}
 
-	void UiInputRadio::SetChecked(const bool &checked)
+	void UiInputRadio::SetValue(const bool &value)
 	{
-		m_checked = checked;
-		UpdateFill();
+		if (m_value != value)
+		{
+			m_value = value;
+			UpdateFill();
+			m_onValue(m_value);
+		}
 	}
 
-	void UiInputRadio::SetMarkType(const Mark &markType)
+	void UiInputRadio::SetType(const Type &type)
 	{
-		m_markType = markType;
+		m_type = type;
 		UpdateFill();
 	}
 
 	void UiInputRadio::UpdateFill()
 	{
-		switch (m_markType)
+		switch (m_type)
 		{
-		case Mark::Filled:
-			m_fill.SetTexture(Texture::Create("Guis/Radio_Filled.png"));
+		case Type::Filled:
+			m_fill.SetTexture(Image2d::Create("Guis/Radio_Filled.png"));
 			break;
-		case Mark::X:
-			m_fill.SetTexture(Texture::Create("Guis/Radio_X.png"));
+		case Type::X:
+			m_fill.SetTexture(Image2d::Create("Guis/Radio_X.png"));
 			break;
-		case Mark::Check:
-			m_fill.SetTexture(Texture::Create("Guis/Radio_Check.png"));
+		case Type::Check:
+			m_fill.SetTexture(Image2d::Create("Guis/Radio_Check.png"));
 			break;
-		case Mark::Dot:
-			m_fill.SetTexture(Texture::Create("Guis/Radio_Dot.png"));
+		case Type::Dot:
+			m_fill.SetTexture(Image2d::Create("Guis/Radio_Dot.png"));
 			break;
 		default:
 			m_fill.SetTexture(nullptr);
 			break;
 		}
 
-		m_fill.SetAlphaDriver<DriverSlide<float>>(m_fill.GetAlpha(), m_checked ? 1.0f : 0.0f, UiInputButton::SlideTime);
+		m_fill.SetAlphaDriver(new DriverSlide<float>(m_fill.GetAlpha(), m_value ? 1.0f : 0.0f, UiInputButton::SlideTime));
 	}
 }

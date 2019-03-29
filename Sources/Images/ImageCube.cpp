@@ -1,38 +1,38 @@
-﻿#include "Cubemap.hpp"
+﻿#include "ImageCube.hpp"
 
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
-#include "Texture.hpp"
+#include "Image.hpp"
 
 namespace acid
 {
-	std::shared_ptr<Cubemap> Cubemap::Create(const Metadata &metadata)
+	std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 	{
 		auto resource = Resources::Get()->Find(metadata);
 
 		if (resource != nullptr)
 		{
-			return std::dynamic_pointer_cast<Cubemap>(resource);
+			return std::dynamic_pointer_cast<ImageCube>(resource);
 		}
 
-		auto result = std::make_shared<Cubemap>("");
+		auto result = std::make_shared<ImageCube>("");
 		Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 		result->Decode(metadata);
 		result->Load();
 		return result;
 	}
 
-	std::shared_ptr<Cubemap> Cubemap::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
+	std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
 		const bool &anisotropic, const bool &mipmap)
 	{
-		auto temp = Cubemap(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
+		auto temp = ImageCube(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 		Metadata metadata = Metadata();
 		temp.Encode(metadata);
 		return Create(metadata);
 	}
 
-	Cubemap::Cubemap(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
+	ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, 
 		const bool &anisotropic, const bool &mipmap, const bool &load) :
 		m_filename(std::move(filename)),
 		m_fileSuffix(std::move(fileSuffix)),
@@ -57,11 +57,11 @@ namespace acid
 	{
 		if (load)
 		{
-			Cubemap::Load();
+			ImageCube::Load();
 		}
 	}
 
-	Cubemap::Cubemap(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
+	ImageCube::ImageCube(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
 		const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 		m_filename(""),
 		m_fileSuffix(""),
@@ -83,10 +83,10 @@ namespace acid
 		m_sampler(VK_NULL_HANDLE),
 		m_format(format)
 	{
-		Cubemap::Load();
+		ImageCube::Load();
 	}
 
-	Cubemap::~Cubemap()
+	ImageCube::~ImageCube()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -96,7 +96,7 @@ namespace acid
 		vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 	}
 
-	VkDescriptorSetLayoutBinding Cubemap::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
+	VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
@@ -107,7 +107,7 @@ namespace acid
 		return descriptorSetLayoutBinding;
 	}
 
-	WriteDescriptorSet Cubemap::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, 
+	WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, 
 		const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};
@@ -126,17 +126,17 @@ namespace acid
 		return WriteDescriptorSet(descriptorWrite, imageInfo);
 	}
 
-	void Cubemap::Load()
+	void ImageCube::Load()
 	{
 		if (!m_filename.empty() && m_loadPixels == nullptr)
 		{
 #if defined(ACID_VERBOSE)
 			auto debugStart = Engine::GetTime();
 #endif
-			m_loadPixels = Texture::LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_width, m_height, m_components, m_format);
+			m_loadPixels = Image::LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_width, m_height, m_components, m_format);
 #if defined(ACID_VERBOSE)
 			auto debugEnd = Engine::GetTime();
-			Log::Out("Cubemap '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+			Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 		}
 
@@ -146,19 +146,21 @@ namespace acid
 		}
 
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		m_mipLevels = m_mipmap ? Texture::GetMipLevels(m_width, m_height) : 1;
+		m_mipLevels = m_mipmap ? Image::GetMipLevels(m_width, m_height) : 1;
 
-		Texture::CreateImage(m_image, m_memory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
+		Image::CreateImage(m_image, m_memory, m_width, m_height, VK_IMAGE_TYPE_2D, m_samples, m_mipLevels, m_format, VK_IMAGE_TILING_OPTIMAL,
 			m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 6);
+		Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
+		Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 
 		if (m_loadPixels != nullptr || m_mipmap)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
+			Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 		}
 
 		if (m_loadPixels != nullptr)
 		{
-			Buffer bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			auto bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 			void *data;
@@ -166,28 +168,26 @@ namespace acid
 			memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
 			vkUnmapMemory(logicalDevice->GetLogicalDevice(), bufferStaging.GetBufferMemory());
 
-			Texture::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 6);
+			Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_width, m_height, 0, 6);
 		}
 
 		if (m_mipmap)
 		{
-			Texture::CreateMipmaps(m_image, m_width, m_height, m_layout, m_mipLevels, 0, 6);
+			Image::CreateMipmaps(m_image, m_width, m_height, m_layout, m_mipLevels, 0, 6);
 		}
 		else if (m_loadPixels != nullptr)
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
+			Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 		}
 		else
 		{
-			Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
+			Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 		}
 
-		Texture::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-		Texture::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6);
 		m_loadPixels = nullptr;
 	}
 
-	void Cubemap::Decode(const Metadata &metadata)
+	void ImageCube::Decode(const Metadata &metadata)
 	{
 		metadata.GetChild("Filename", m_filename);
 		metadata.GetChild("Suffix", m_fileSuffix);
@@ -198,7 +198,7 @@ namespace acid
 		metadata.GetChild("Mipmap", m_mipmap);
 	}
 
-	void Cubemap::Encode(Metadata &metadata) const
+	void ImageCube::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild("Filename", m_filename);
 		metadata.SetChild("Suffix", m_fileSuffix);
@@ -209,7 +209,7 @@ namespace acid
 		metadata.SetChild("Mipmap", m_mipmap);
 	}
 
-	std::unique_ptr<uint8_t[]> Cubemap::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
+	std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -218,7 +218,7 @@ namespace acid
 
 		VkImage dstImage;
 		VkDeviceMemory dstImageMemory;
-		Texture::CopyImage(m_image, dstImage, dstImageMemory, m_format, width, height, false, mipLevel, arrayLayer, 1);
+		Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, width, height, false, mipLevel, arrayLayer, 1);
 
 		VkImageSubresource dstImageSubresource = {};
 		dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -241,7 +241,7 @@ namespace acid
 		return result;
 	}
 
-	std::unique_ptr<uint8_t[]> Cubemap::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel) const
+	std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel) const
 	{
 		std::unique_ptr<uint8_t[]> result = nullptr;
 		uint8_t *offset = nullptr;
@@ -265,7 +265,7 @@ namespace acid
 		return result;
 	}
 
-	void Cubemap::SetPixels(const uint8_t *pixels)
+	void ImageCube::SetPixels(const uint8_t *pixels)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 

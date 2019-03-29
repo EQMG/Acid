@@ -14,11 +14,11 @@ namespace acid
 	private:
 		std::vector<Shader::Define> GetDefines();
 
-		static std::shared_ptr<Texture> ComputeNoise(const uint32_t &size);
+		static std::shared_ptr<Image2d> ComputeNoise(const uint32_t &size);
 
 		UniformHandler m_uniformScene;
 
-		std::shared_ptr<Texture> m_noise;
+		std::shared_ptr<Image2d> m_noise;
 		std::vector<Vector3> m_kernel;
 	};
 }

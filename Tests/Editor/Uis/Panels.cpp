@@ -1,7 +1,5 @@
 #include "Panels.hpp"
 
-#include <Maths/Visual/DriverConstant.hpp>
-
 namespace test
 {
 	Panels::Panels(UiObject *parent) :

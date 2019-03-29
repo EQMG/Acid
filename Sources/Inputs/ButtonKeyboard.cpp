@@ -6,6 +6,13 @@ namespace acid
 		m_key(key),
 		m_wasDown(false)
 	{
+		Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+		{
+			if (key == m_key)
+			{
+				m_onButton(action, mods);
+			}
+		};
 	}
 
 	bool ButtonKeyboard::IsDown() const

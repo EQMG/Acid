@@ -2,7 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Models/Model.hpp"
-#include "Textures/Texture.hpp"
+#include "Images/Image2d.hpp"
 #include "Material.hpp"
 
 namespace acid
@@ -14,8 +14,8 @@ namespace acid
 		public Material
 	{
 	public:
-		explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Texture> diffuseTexture = nullptr,
-			const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Texture> materialTexture = nullptr, std::shared_ptr<Texture> normalTexture = nullptr, 
+		explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> diffuseTexture = nullptr,
+			const float &metallic = 0.0f, const float &roughness = 0.0f, std::shared_ptr<Image2d> materialTexture = nullptr, std::shared_ptr<Image2d> normalTexture = nullptr, 
 			const bool &castsShadows = true, const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
 		void Start() override;
@@ -34,9 +34,9 @@ namespace acid
 
 		void SetBaseDiffuse(const Colour &baseDiffuse) { m_baseDiffuse = baseDiffuse; }
 
-		const std::shared_ptr<Texture> &GetDiffuseTexture() const { return m_diffuseTexture; }
+		const std::shared_ptr<Image2d> &GetDiffuseTexture() const { return m_diffuseTexture; }
 
-		void SetDiffuseTexture(const std::shared_ptr<Texture> &diffuseTexture) { m_diffuseTexture = diffuseTexture; }
+		void SetDiffuseTexture(const std::shared_ptr<Image2d> &diffuseTexture) { m_diffuseTexture = diffuseTexture; }
 
 		const float &GetMetallic() const { return m_metallic; }
 
@@ -46,13 +46,13 @@ namespace acid
 
 		void SetRoughness(const float &roughness) { m_roughness = roughness; }
 
-		const std::shared_ptr<Texture> &GetMaterialTexture() const { return m_materialTexture; }
+		const std::shared_ptr<Image2d> &GetMaterialTexture() const { return m_materialTexture; }
 
-		void SetMaterialTexture(const std::shared_ptr<Texture> &materialTexture) { m_materialTexture = materialTexture; }
+		void SetMaterialTexture(const std::shared_ptr<Image2d> &materialTexture) { m_materialTexture = materialTexture; }
 
-		const std::shared_ptr<Texture> &GetNormalTexture() const { return m_normalTexture; }
+		const std::shared_ptr<Image2d> &GetNormalTexture() const { return m_normalTexture; }
 
-		void SetNormalTexture(const std::shared_ptr<Texture> &normalTexture) { m_normalTexture = normalTexture; }
+		void SetNormalTexture(const std::shared_ptr<Image2d> &normalTexture) { m_normalTexture = normalTexture; }
 
 		const bool &IsCastsShadows() const { return m_castsShadows; }
 
@@ -69,12 +69,12 @@ namespace acid
 		std::vector<Shader::Define> GetDefines() const;
 
 		Colour m_baseDiffuse;
-		std::shared_ptr<Texture> m_diffuseTexture;
+		std::shared_ptr<Image2d> m_diffuseTexture;
 
 		float m_metallic;
 		float m_roughness;
-		std::shared_ptr<Texture> m_materialTexture;
-		std::shared_ptr<Texture> m_normalTexture;
+		std::shared_ptr<Image2d> m_materialTexture;
+		std::shared_ptr<Image2d> m_normalTexture;
 
 		bool m_castsShadows;
 		bool m_ignoreLighting;

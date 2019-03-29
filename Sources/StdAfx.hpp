@@ -9,6 +9,7 @@
 #include <cstring>
 #include <fstream>
 #include <functional>
+#include <future>
 #include <iterator>
 #include <limits>
 #include <map>

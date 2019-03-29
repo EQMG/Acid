@@ -17,42 +17,82 @@ namespace test
 		m_fullscreen(&GetContent(), "Fullscreen", false, UiBound(Vector2(0.05f, 0.54f), UiReference::TopLeft)),
 		m_fpsLimit(&GetContent(), "Fps Limit", 1000.0f, 0.0f, 1000.0f, 0, UiBound(Vector2(0.05f, 0.60f), UiReference::TopLeft))
 	{
-		m_masterVolume.GetOnSlide() += [this](UiInputSlider *object, float value)
+		m_masterVolume.GetOnValue() += [this](float value)
 		{
-			Audio::Get()->SetMasterGain(value / 100.0f);
+			Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 		};
-		m_generalVolume.GetOnSlide() += [this](UiInputSlider *object, float value)
+		m_generalVolume.GetOnValue() += [this](float value)
 		{
-			Audio::Get()->SetTypeGain(Audio::Type::General, value / 100.0f);
+			Audio::Get()->SetGain(Audio::Type::General, value / 100.0f);
 		};
-		m_effectVolume.GetOnSlide() += [this](UiInputSlider *object, float value)
+		m_effectVolume.GetOnValue() += [this](float value)
 		{
-			Audio::Get()->SetTypeGain(Audio::Type::Effect, value / 100.0f);
+			Audio::Get()->SetGain(Audio::Type::Effect, value / 100.0f);
 		};
-		m_musicVolume.GetOnSlide() += [this](UiInputSlider *object, float value)
+		m_musicVolume.GetOnValue() += [this](float value)
 		{
-			Audio::Get()->SetTypeGain(Audio::Type::Music, value / 100.0f);
+			Audio::Get()->SetGain(Audio::Type::Music, value / 100.0f);
 		};
-		m_antialiasing.GetOnChange() += [this](UiInputBoolean * object, bool value)
+		Audio::Get()->GetOnGain() += [this](Audio::Type type, float volume)
+		{
+			switch (type)
+			{
+			case Audio::Type::Master:
+				m_masterVolume.SetValue(volume);
+				break;
+			case Audio::Type::General:
+				m_generalVolume.SetValue(volume);
+				break;
+			case Audio::Type::Effect:
+				m_effectVolume.SetValue(volume);
+				break;
+			case Audio::Type::Music:
+				m_musicVolume.SetValue(volume);
+				break;
+			}
+		};
+
+		m_antialiasing.GetOnValue() += [this](bool value)
 		{
 		};
-		m_borderless.GetOnChange() += [this](UiInputBoolean * object, bool value)
+
+		m_borderless.GetOnValue() += [this](bool value)
 		{
 			Window::Get()->SetBorderless(value);
 		};
-		m_resizable.GetOnChange() += [this](UiInputBoolean * object, bool value)
+		Window::Get()->GetOnBorderless() += [this](bool borderless)
+		{
+			m_borderless.SetValue(borderless);
+		};
+
+		m_resizable.GetOnValue() += [this](bool value)
 		{
 			Window::Get()->SetResizable(value);
 		};
-		m_floating.GetOnChange() += [this](UiInputBoolean * object, bool value)
+		Window::Get()->GetOnResizable() += [this](bool resizable)
+		{
+			m_resizable.SetValue(resizable);
+		};
+
+		m_floating.GetOnValue() += [this](bool value)
 		{
 			Window::Get()->SetFloating(value);
 		};
-		m_fullscreen.GetOnChange() += [this](UiInputBoolean * object, bool value)
+		Window::Get()->GetOnFloating() += [this](bool floating)
+		{
+			m_floating.SetValue(floating);
+		};
+
+		m_fullscreen.GetOnValue() += [this](bool value)
 		{
 			Window::Get()->SetFullscreen(value);
 		};
-		m_fpsLimit.GetOnSlide() += [this](UiInputSlider * object, float value)
+		Window::Get()->GetOnFullscreen() += [this](bool fullscreen)
+		{
+			m_fullscreen.SetValue(fullscreen);
+		};
+
+		m_fpsLimit.GetOnValue() += [this](float value)
 		{
 			Engine::Get()->SetFpsLimit(value);
 		};

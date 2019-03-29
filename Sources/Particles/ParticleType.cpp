@@ -28,7 +28,7 @@ namespace acid
 		return result;
 	}
 
-	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Texture> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, 
+	std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, 
 		const float &lifeLength, const float &stageCycles, const float &scale)
 	{
 		auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
@@ -37,7 +37,7 @@ namespace acid
 		return Create(metadata);
 	}
 
-	ParticleType::ParticleType(std::shared_ptr<Texture> texture, const uint32_t &numberOfRows, const Colour &colourOffset,
+	ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset,
 		const float &lifeLength, const float &stageCycles, const float &scale) :
 		m_texture(std::move(texture)),
 		m_model(ModelRectangle::Create(-0.5f, 0.5f)),

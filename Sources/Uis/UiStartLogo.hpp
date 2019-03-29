@@ -15,13 +15,13 @@ namespace acid
 
 		bool IsFinished() const { return m_finished; }
 
-		Delegate<void(UiStartLogo *)> &GetOnFinished() { return m_onFinished; }
+		Delegate<void()> &GetOnFinished() { return m_onFinished; }
 	private:
 		Gui m_guiBackground;
 		Gui m_guiLogoAcid;
 		Text m_textCopyright;
 		bool m_finished;
 
-		Delegate<void(UiStartLogo *)> m_onFinished;
+		Delegate<void()> m_onFinished;
 	};
 }

@@ -6,7 +6,7 @@
 
 namespace acid
 {
-	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Texture> texture, const Colour &colourOffset) :
+	Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> texture, const Colour &colourOffset) :
 		UiObject(parent, rectangle),
 		m_model(ModelRectangle::Create(0.0f, 1.0f)),
 		m_texture(std::move(texture)),

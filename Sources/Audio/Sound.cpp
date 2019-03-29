@@ -29,6 +29,14 @@ namespace acid
 		{
 			Play(loop);
 		}
+
+		Audio::Get()->GetOnGain() += [this](Audio::Type type, float volume)
+		{
+			if (type == m_type)
+			{
+				SetGain(m_gain);
+			}
+		};
 	}
 
 	Sound::~Sound()
@@ -142,7 +150,7 @@ namespace acid
 	void Sound::SetGain(const float &gain)
 	{
 		m_gain = gain;
-		alSourcef(m_source, AL_GAIN, m_gain * Audio::Get()->GetTypeGain(m_type));
+		alSourcef(m_source, AL_GAIN, m_gain * Audio::Get()->GetGain(m_type));
 		Audio::CheckAl(alGetError());
 	}
 

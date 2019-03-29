@@ -1,7 +1,6 @@
-#include "DepthStencil.hpp"
+#include "ImageDepth.hpp"
 
 #include "Renderer/Renderer.hpp"
-#include "Texture.hpp"
 
 namespace acid
 {
@@ -14,7 +13,7 @@ namespace acid
 		VK_FORMAT_D16_UNORM
 	};
 
-	DepthStencil::DepthStencil(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples) :
+	ImageDepth::ImageDepth(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples) :
 		Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 		m_width(width),
 		m_height(height),
@@ -44,20 +43,20 @@ namespace acid
 
 		VkImageAspectFlags aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
 
-		if (Texture::HasStencil(m_format))
+		if (Image::HasStencil(m_format))
 		{
 			aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
 		}
 
-		Texture::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL, 
+		Image::CreateImage(m_image, m_bufferMemory, m_width, m_height, VK_IMAGE_TYPE_2D, samples, 1, m_format, VK_IMAGE_TILING_OPTIMAL,
 			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1);
-		Texture::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, 
+		Image::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1, 0);
+		Image::CreateImageSampler(m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
 			aspectMask, 1, 0, 1);
-		Texture::CreateImageSampler(m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
-		Texture::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1);
 	}
 
-	DepthStencil::~DepthStencil()
+	ImageDepth::~ImageDepth()
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -66,7 +65,7 @@ namespace acid
 		vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 	}
 
-	VkDescriptorSetLayoutBinding DepthStencil::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
+	VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
 	{
 		VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 		descriptorSetLayoutBinding.binding = binding;
@@ -77,7 +76,7 @@ namespace acid
 		return descriptorSetLayoutBinding;
 	}
 
-	WriteDescriptorSet DepthStencil::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, 
+	WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, 
 		const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
 	{
 		VkDescriptorImageInfo imageInfo = {};

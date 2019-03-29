@@ -235,9 +235,25 @@ namespace acid
 
 		const std::vector<Monitor> &GetMonitors() const { return m_monitors; };
 
+		Delegate<void(uint32_t, uint32_t)> &GetOnDimensions() { return m_onDimensions; }
+
+		Delegate<void(uint32_t, uint32_t)> &GetOnPosition() { return m_onPosition; }
+
 		Delegate<void(uint32_t, bool)> &GetOnMonitorConnect() { return m_onMonitorConnect; }
 
+		Delegate<void(std::string)> &GetOnTitle() { return m_onTitle; }
+
+		Delegate<void(bool)> &GetOnBorderless() { return m_onBorderless; }
+
+		Delegate<void(bool)> &GetOnResizable() { return m_onResizable; }
+
+		Delegate<void(bool)> &GetOnFloating() { return m_onFloating; }
+
+		Delegate<void(bool)> &GetOnFullscreen() { return m_onFullscreen; }
+
 		Delegate<void()> &GetOnClose() { return m_onClose; }
+
+		Delegate<void(bool)> &GetOnFocus() { return m_onFocus; }
 
 		Delegate<void(bool)> &GetOnIconify() { return m_onIconify; }
 
@@ -271,8 +287,16 @@ namespace acid
 		GLFWwindow *m_window;
 		std::vector<Monitor> m_monitors;
 
+		Delegate<void(uint32_t, uint32_t)> m_onDimensions;
+		Delegate<void(uint32_t, uint32_t)> m_onPosition;
 		Delegate<void(uint32_t, bool)> m_onMonitorConnect;
+		Delegate<void(std::string)> m_onTitle;
+		Delegate<void(bool)> m_onBorderless;
+		Delegate<void(bool)> m_onResizable;
+		Delegate<void(bool)> m_onFloating;
+		Delegate<void(bool)> m_onFullscreen;
 		Delegate<void()> m_onClose;
+		Delegate<void(bool)> m_onFocus;
 		Delegate<void(bool)> m_onIconify;
 
 		friend void CallbackError(int32_t error, const char *description);

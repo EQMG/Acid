@@ -20,14 +20,14 @@ namespace test
 		m_overlayDebug(&Uis::Get()->GetContainer()),
 		m_uiNavigation(&Uis::Get()->GetContainer())
 	{
-		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
-		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);
-		m_uiNavigation.SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
+		m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
+		m_uiNavigation.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-		m_uiStartLogo.GetOnFinished() += [&](UiStartLogo *object)
+		m_uiStartLogo.GetOnFinished() += [this]()
 		{
-			m_overlayDebug.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
-		//  m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, SLIDE_TIME);
+			m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
+		//  m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 			TogglePause();
 		};
 	}
@@ -58,11 +58,11 @@ namespace test
 
 		if (IsPaused())
 		{
-			m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(m_uiNavigation.GetAlpha(), 0.0f, UI_SLIDE_TIME);
+			m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(m_uiNavigation.GetAlpha(), 0.0f, UI_SLIDE_TIME));
 		}
 		else
 		{
-			m_uiNavigation.SetAlphaDriver<DriverSlide<float>>(m_uiNavigation.GetAlpha(), 1.0f, UI_SLIDE_TIME);
+			m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(m_uiNavigation.GetAlpha(), 1.0f, UI_SLIDE_TIME));
 		}
 	}
 }

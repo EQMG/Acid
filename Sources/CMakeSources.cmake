@@ -53,6 +53,10 @@ set(_temp_acid_headers
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeTraits.hpp
+		Images/Image.hpp
+		Images/Image2d.hpp
+		Images/ImageCube.hpp
+		Images/ImageDepth.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp
@@ -93,10 +97,10 @@ set(_temp_acid_headers
 		Meshes/Mesh.hpp
 		Meshes/MeshRender.hpp
 		Meshes/RendererMeshes.hpp
+		Models/Gltf/ModelGltf.hpp
 		Models/IVertex.hpp
 		Models/Model.hpp
 		Models/ModelRegister.hpp
-		Models/Gltf/ModelGltf.hpp
 		Models/Obj/ModelObj.hpp
 		Models/Shapes/MeshPattern.hpp
 		Models/Shapes/MeshSimple.hpp
@@ -207,9 +211,6 @@ set(_temp_acid_headers
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
 		Skyboxes/MaterialSkybox.hpp
-		Textures/Cubemap.hpp
-		Textures/DepthStencil.hpp
-		Textures/Texture.hpp
 		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
@@ -269,6 +270,10 @@ set(_temp_acid_sources
 		Guis/RendererGuis.cpp
 		Helpers/String.cpp
 		Helpers/ThreadPool.cpp
+		Images/Image.cpp
+		Images/Image2d.cpp
+		Images/ImageCube.cpp
+		Images/ImageDepth.cpp
 		Inputs/AxisButton.cpp
 		Inputs/AxisCompound.cpp
 		Inputs/AxisJoystick.cpp
@@ -298,9 +303,9 @@ set(_temp_acid_sources
 		Meshes/Mesh.cpp
 		Meshes/MeshRender.cpp
 		Meshes/RendererMeshes.cpp
+		Models/Gltf/ModelGltf.cpp
 		Models/Model.cpp
 		Models/ModelRegister.cpp
-		Models/Gltf/ModelGltf.cpp
 		Models/Obj/ModelObj.cpp
 		Models/Shapes/MeshPattern.cpp
 		Models/Shapes/MeshSimple.cpp
@@ -401,9 +406,6 @@ set(_temp_acid_sources
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp
 		Skyboxes/MaterialSkybox.cpp
-		Textures/Cubemap.cpp
-		Textures/DepthStencil.cpp
-		Textures/Texture.cpp
 		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp

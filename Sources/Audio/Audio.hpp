@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
+#include "Helpers/Delegate.hpp"
 
 typedef struct ALCdevice_struct ALCdevice;
 typedef struct ALCcontext_struct ALCcontext;
@@ -16,7 +17,7 @@ namespace acid
 	public:
 		enum class Type
 		{
-			General, Effect, Music
+			Master, General, Effect, Music
 		};
 
 		/// <summary>
@@ -39,18 +40,17 @@ namespace acid
 
 		ACID_HIDDEN ALCcontext *GetContext() const { return m_alContext; }
 
-		const float &GetMasterGain() const { return m_masterGain; }
+		float GetGain(const Type &type) const;
 
-		void SetMasterGain(const float &masterGain) { m_masterGain = masterGain; }
+		void SetGain(const Type &type, const float &volume);
 
-		float GetTypeGain(const Type &type) const;
-
-		void SetTypeGain(const Type &type, const float &volume);
+		Delegate<void(Type, float)> &GetOnGain() { return m_onGain; }
 	private:
 		ALCdevice *m_alDevice;
 		ALCcontext *m_alContext;
 
-		float m_masterGain;
 		std::map<Type, float> m_gains;
+
+		Delegate<void(Type, float)> m_onGain;
 	};
 }

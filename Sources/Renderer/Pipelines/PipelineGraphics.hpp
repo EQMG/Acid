@@ -6,8 +6,8 @@
 
 namespace acid
 {
-	class DepthStencil;
-	class Texture;
+	class ImageDepth;
+	class Image2d;
 
 	/// <summary>
 	/// Class that represents a Vulkan graphics pipeline.
@@ -55,7 +55,7 @@ namespace acid
 		/// </summary>
 		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
 		/// <returns> The depth stencil that is found. </returns>
-		const DepthStencil *GetDepthStencil(const std::optional<uint32_t> &stage = {}) const;
+		const ImageDepth *GetDepthStencil(const std::optional<uint32_t> &stage = {}) const;
 
 		/// <summary>
 		/// Gets a texture used in a stage by the index given to it in the renderpass.
@@ -63,7 +63,7 @@ namespace acid
 		/// <param name="index"> The renderpass texture index. </param>
 		/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
 		/// <returns> The texture that is found. </returns>
-		const Texture *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
+		const Image2d *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
 		/// <summary>
 		/// Gets the height of the render stage in pixels.
@@ -115,7 +115,7 @@ namespace acid
 
 		const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-		const Shader *GetShaderProgram() const override { return m_shader.get(); }
+		const Shader *GetShader() const override { return m_shader.get(); }
 
 		const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
 

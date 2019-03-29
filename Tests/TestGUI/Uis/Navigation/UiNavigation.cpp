@@ -21,8 +21,8 @@ namespace test
 
 	UiNavigation::UiNavigation(UiObject *parent) :
 		UiObject(parent, UiBound::Screen),
-		m_background(std::make_unique<Gui>(this, UiBound::Screen, Texture::Create("Guis/White.png"))),
-		m_navigation(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.4f, 1.0f)), Texture::Create("Guis/Gradient_A.png"), ColourPanel)),
+		m_background(std::make_unique<Gui>(this, UiBound::Screen, Image2d::Create("Guis/White.png"))),
+		m_navigation(std::make_unique<Gui>(this, UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(0.4f, 1.0f)), Image2d::Create("Guis/Gradient_A.png"), ColourPanel)),
 		m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING",
 			FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Left, 1.0f, Colour::White, 0.0018f)),
 		m_createdBy(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
@@ -52,7 +52,7 @@ namespace test
 				    object->CancelEvent(button);
 			    }
 			};*/
-			tabContent->SetAlphaDriver<DriverConstant<float>>(0.0f);
+			tabContent->SetAlphaDriver(new DriverConstant<float>(0.0f));
 		}
 
 		SwitchTab(m_tabs[0].get());
@@ -99,12 +99,12 @@ namespace test
 
 		if (m_currentTab != nullptr)
 		{
-			m_currentTab->GetContent()->SetAlphaDriver<DriverSlide<float>>(1.0f, 0.0f, Time::Seconds(0.1f));
+			m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide<float>(1.0f, 0.0f, Time::Seconds(0.1f)));
 		}
 
 	//	Events::Get()->AddEvent<EventTime>([&]()
 	//	{
-			m_targetTab->GetContent()->SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, Time::Seconds(0.1f));
+			m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, Time::Seconds(0.1f)));
 	//	}, Time::Seconds(0.32f));
 	}
 }

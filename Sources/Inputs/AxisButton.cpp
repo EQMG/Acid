@@ -6,6 +6,14 @@ namespace acid
 		m_negative(negative),
 		m_positive(positive)
 	{
+		m_negative->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		{
+			m_onAxis(GetAmount());
+		};
+		m_positive->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		{
+			m_onAxis(GetAmount());
+		};
 	}
 
 	float AxisButton::GetAmount() const

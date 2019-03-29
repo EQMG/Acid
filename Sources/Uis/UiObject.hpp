@@ -116,14 +116,6 @@ namespace acid
 		/// <param name="alphaDriver"> The new alpha driver. </param>
 		void SetAlphaDriver(IDriver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
-		/// <summary>
-		/// Sets a new alpha driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetAlphaDriver(Args &&... args) { SetAlphaDriver(new T(std::forward<Args>(args)...)); }
-
 		const float &GetAlpha() const { return m_alpha; }
 
 		IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
@@ -133,14 +125,6 @@ namespace acid
 		/// </summary>
 		/// <param name="scaleDriver"> The new scale driver. </param>
 		void SetScaleDriver(IDriver<float> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
-
-		/// <summary>
-		/// Sets a new scale driver from a type.
-		/// </summary>
-		/// <param name="T"> The type of driver to set. </param>
-		/// <param name="args"> The type driver arguments. </param>
-		template<typename T, typename... Args>
-		void SetScaleDriver(Args &&... args) { SetScaleDriver(new T(std::forward<Args>(args)...)); }
 
 		const float &GetScale() const { return m_scale; }
 
@@ -154,7 +138,7 @@ namespace acid
 
 		const float &GetScreenScale() const { return m_screenScale; }
 
-		Delegate<void(UiObject *, MouseButton)> &GetOnClick() { return m_onClick; }
+		Delegate<void(MouseButton)> &GetOnClick() { return m_onClick; }
 
 		void CancelEvent(const MouseButton &button) const;
 	private:
@@ -181,6 +165,6 @@ namespace acid
 		float m_screenAlpha;
 		float m_screenScale;
 
-		Delegate<void(UiObject *, MouseButton)> m_onClick;
+		Delegate<void(MouseButton)> m_onClick;
 	};
 }

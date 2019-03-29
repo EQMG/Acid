@@ -24,9 +24,9 @@ namespace acid
 
 		void SetValue(const bool &value);
 
-		Delegate<void(UiInputBoolean *, bool)> &GetOnChange() { return m_onChange; }
+		Delegate<void(bool)> &GetOnValue() { return m_onValue; }
 	private:
-		void UpdateValueText();
+		void UpdateValue();
 
 		Gui m_slider;
 		Gui m_background;
@@ -38,6 +38,6 @@ namespace acid
 		bool m_value;
 
 		bool m_mouseOver;
-		Delegate<void(UiInputBoolean *, bool)> m_onChange;
+		Delegate<void(bool)> m_onValue;
 	};
 }

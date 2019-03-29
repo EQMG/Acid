@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "Resources/Resource.hpp"
-#include "Textures/Texture.hpp"
 #include "Maths/Colour.hpp"
+#include "Images/Image2d.hpp"
 #include "Renderer/Buffers/StorageBuffer.hpp"
 #include "Renderer/Buffers/InstanceBuffer.hpp"
 #include "Renderer/Handlers/DescriptorsHandler.hpp"
@@ -54,7 +54,7 @@ namespace acid
 
 		static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 
-		const std::shared_ptr<Texture> &GetTexture() const { return m_texture; }
+		const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
 
 		const FontMetafile *GetMetadata() const { return m_metadata.get(); }
 	private:
@@ -106,7 +106,7 @@ namespace acid
 		uint32_t m_glyphCellsOffset{};
 		uint32_t m_glyphPointsOffset{};
 
-		std::shared_ptr<Texture> m_texture;
+		std::shared_ptr<Image2d> m_texture;
 		std::unique_ptr<FontMetafile> m_metadata;
 
 		DescriptorsHandler m_descriptorSet;

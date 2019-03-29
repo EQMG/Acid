@@ -5,10 +5,10 @@
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
+#include "Images/Image2d.hpp"
+#include "Images/ImageCube.hpp"
 #include "Renderer/Buffers/StorageBuffer.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
-#include "Textures/Cubemap.hpp"
-#include "Textures/Texture.hpp"
 
 namespace acid
 {
@@ -77,13 +77,13 @@ namespace acid
 			case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 			case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
 				descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				m_descriptorSetLayouts.emplace_back(Texture::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
+				m_descriptorSetLayouts.emplace_back(Image2d::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
 					descriptorType, uniform.m_stageFlags, 1));
 				break;
 			case 0x8B60: // GL_SAMPLER_CUBE
 			case 0x9050: // GL_IMAGE_CUBE
 				descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				m_descriptorSetLayouts.emplace_back(Cubemap::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
+				m_descriptorSetLayouts.emplace_back(ImageCube::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), 
 					descriptorType, uniform.m_stageFlags, 1));
 				break;
 			default:

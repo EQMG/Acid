@@ -19,7 +19,7 @@ namespace test
 	{
 		m_text.SetTextColour(Colour("#ffffff"));
 		m_text.SetBorderColour(Colour("#262626"));
-		m_text.SetBorderDriver<DriverConstant<float>>(0.1f);
+		m_text.SetBorderDriver(new DriverConstant<float>(0.1f));
 	}
 
 	void NameTag::Start()

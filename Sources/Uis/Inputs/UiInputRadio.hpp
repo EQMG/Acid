@@ -11,12 +11,12 @@ namespace acid
 		public UiObject
 	{
 	public:
-		enum class Mark
+		enum class Type
 		{
 			Filled, X, Dot, Check
 		};
 
-		UiInputRadio(UiObject *parent, const std::string &string, const Mark &markType = Mark::Filled, const bool &checked = false, 
+		UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, const bool &value = false,
 			const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 		void UpdateObject() override;
@@ -25,15 +25,15 @@ namespace acid
 
 		void SetString(const std::string &string) { m_text.SetString(string); }
 
-		const bool &IsChecked() const { return m_checked; }
+		const bool &GetValue() const { return m_value; }
 
-		void SetChecked(const bool &checked);
+		void SetValue(const bool &value);
 
-		const Mark &GetMarkType() const { return m_markType; }
+		const Type &GetType() const { return m_type; }
 
-		void SetMarkType(const Mark &markType);
+		void SetType(const Type &type);
 
-		Delegate<void(UiInputRadio *, bool)> &GetOnChecked() { return m_onChecked; }
+		Delegate<void(bool)> &GetOnValue() { return m_onValue; }
 	private:
 		void UpdateFill();
 
@@ -42,34 +42,34 @@ namespace acid
 		Text m_text;
 		Sound m_soundClick;
 
-		bool m_checked;
-		Mark m_markType;
+		bool m_value;
+		Type m_type;
 		bool m_mouseOver;
 
-		Delegate<void(UiInputRadio *, bool)> m_onChecked;
+		Delegate<void(bool)> m_onValue;
 	};
 
 	class ACID_EXPORT UiRadioManager :
 		public NonCopyable
 	{
 	public:
-		explicit UiRadioManager(const UiInputRadio::Mark &markType = UiInputRadio::Mark::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
-			m_markType(markType),
+		explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
+			m_type(type),
 			m_multiple(multiple),
 			m_inputs(inputs)
 		{
 			for (auto &input : inputs)
 			{
-				input->SetMarkType(markType);
-				input->GetOnChecked() += [this](UiInputRadio *object, bool value)
+				input->SetType(type);
+				input->GetOnValue() += [this, input](bool value)
 				{
 					if (!m_multiple)
 					{
 						for (auto &input2 : m_inputs)
 						{
-							if (input2 != object)
+							if (input2 != input)
 							{
-								input2->SetChecked(false);
+								input2->SetValue(false);
 							}
 						}
 					}
@@ -77,15 +77,15 @@ namespace acid
 			}
 		}
 
-		const UiInputRadio::Mark &GetMarkType() const { return m_markType; }
+		const UiInputRadio::Type &GetMarkType() const { return m_type; }
 
-		void SetMarkType(const UiInputRadio::Mark &markType)
+		void SetMarkType(const UiInputRadio::Type &type)
 		{
-			m_markType = markType;
+			m_type = type;
 
 			for (auto &input : m_inputs)
 			{
-				input->SetMarkType(m_markType);
+				input->SetType(m_type);
 			}
 		}
 
@@ -103,7 +103,7 @@ namespace acid
 
 		void ClearInputs() { m_inputs.clear(); }
 	private:
-		UiInputRadio::Mark m_markType;
+		UiInputRadio::Type m_type;
 		bool m_multiple;
 		std::vector<UiInputRadio *> m_inputs;
 	};

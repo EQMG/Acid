@@ -7,11 +7,13 @@ namespace acid
 	ThreadPool::ThreadPool(const uint32_t &threadCount) :
 		m_stop(false)
 	{
+		m_workers.reserve(threadCount);
+
 		for (size_t i = 0; i < threadCount; ++i)
 		{
 			m_workers.emplace_back([this]
 			{
-				for (;;)
+				while (true)
 				{
 					std::function<void()> task;
 

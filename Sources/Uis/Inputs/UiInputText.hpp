@@ -27,7 +27,7 @@ namespace acid
 
 		void SetValue(const std::string &value);
 
-		Delegate<void(UiInputText *, std::string)> &GetOnType() { return m_onType; }
+		Delegate<void(std::string)> &GetOnValue() { return m_onValue; }
 	private:
 		Gui m_background;
 		Text m_textTitle;
@@ -44,6 +44,6 @@ namespace acid
 		bool m_selected;
 		bool m_mouseOver;
 
-		Delegate<void(UiInputText *, std::string)> m_onType;
+		Delegate<void(std::string)> m_onValue;
 	};
 }

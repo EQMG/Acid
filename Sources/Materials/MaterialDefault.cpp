@@ -6,8 +6,8 @@
 
 namespace acid
 {
-	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Texture> diffuseTexture, 
-		const float &metallic, const float &roughness, std::shared_ptr<Texture> materialTexture, std::shared_ptr<Texture> normalTexture, 
+	MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> diffuseTexture, 
+		const float &metallic, const float &roughness, std::shared_ptr<Image2d> materialTexture, std::shared_ptr<Image2d> normalTexture, 
 		const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 		m_baseDiffuse(baseDiffuse),
 		m_diffuseTexture(std::move(diffuseTexture)),
@@ -57,12 +57,12 @@ namespace acid
 	void MaterialDefault::Encode(Metadata &metadata) const
 	{
 		metadata.SetChild("Base Diffuse", m_baseDiffuse);
-		metadata.SetResource<Texture>("Diffuse Texture", m_diffuseTexture);
+		metadata.SetResource<Image2d>("Diffuse Texture", m_diffuseTexture);
 
 		metadata.SetChild("Metallic", m_metallic);
 		metadata.SetChild("Roughness", m_roughness);
-		metadata.SetResource<Texture>("Material Texture", m_materialTexture);
-		metadata.SetResource<Texture>("Normal Texture", m_normalTexture);
+		metadata.SetResource<Image2d>("Material Texture", m_materialTexture);
+		metadata.SetResource<Image2d>("Normal Texture", m_normalTexture);
 
 		metadata.SetChild("Casts Shadows", m_castsShadows);
 		metadata.SetChild("Ignore Lighting", m_ignoreLighting);

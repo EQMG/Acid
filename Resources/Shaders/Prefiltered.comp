@@ -1,8 +1,12 @@
 #version 450
 #extension GL_ARB_separate_shader_objects : enable
-//#extension GL_AMD_shader_image_load_store_lod: enable
 
 layout(local_size_x = 16, local_size_y = 16) in;
+
+//layout(push_constant) uniform PushObject
+//{
+//	float roughness;
+//} object;
 
 layout(binding = 0, rgba8) uniform writeonly imageCube outColour;
 
@@ -88,7 +92,8 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
 		vec3 L = 2.0f * dot(V, H) * H - V;
 		float dotNL = clamp(dot(N, L), 0.0f, 1.0f);
-		if(dotNL > 0.0)
+
+		if(dotNL > 0.0f)
 		{
 			// Filtering based on https://placeholderart.wordpress.com/2015/07/28/implementation-notes-runtime-environment-map-filtering-for-image-based-lighting/
 
@@ -108,6 +113,7 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 
 		}
 	}
+
 	return (colour / totalWeight);
 }
 
@@ -117,13 +123,7 @@ void main()
 
 	for (uint i = 0; i != 6; ++i)
 	{
-		vec3 N = normalize(cubeDir(uv, i));
-		int lods = 10; //textureQueryLevels(outColour);
-
-		for (uint j = 0; j < lods; j++)
-		{
-			imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, N, j / lods), 1.0f));
-		//	imageStoreLodAMD(outColour, ivec3(gl_GlobalInvocationID.xy >> j, i), j, vec4(prefilterEnvMap(samplerColour, N, j / lods), 1.0f));
-		}
+		vec3 R = normalize(cubeDir(uv, i));
+		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, R, 0.5f), 1.0f)); // object.roughness
 	}
 }

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include "Images/ImageDepth.hpp"
 #include "Renderpass/Framebuffers.hpp"
 #include "Renderpass/Renderpass.hpp"
 #include "Renderpass/Swapchain.hpp"
-#include "Textures/DepthStencil.hpp"
 
 namespace acid
 {
@@ -47,7 +47,7 @@ namespace acid
 
 		const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
 
-		const DepthStencil *GetDepthStencil() const { return m_depthStencil.get(); };
+		const ImageDepth *GetDepthStencil() const { return m_depthStencil.get(); };
 
 		const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
@@ -70,7 +70,7 @@ namespace acid
 		RenderpassCreate m_renderpassCreate;
 
 		std::unique_ptr<Renderpass> m_renderpass;
-		std::unique_ptr<DepthStencil> m_depthStencil;
+		std::unique_ptr<ImageDepth> m_depthStencil;
 		std::unique_ptr<Framebuffers> m_framebuffers;
 
 		std::map<std::string, const Descriptor *> m_attachments;

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-	class DepthStencil;
+	class ImageDepth;
 
 	class ACID_EXPORT Renderpass
 	{

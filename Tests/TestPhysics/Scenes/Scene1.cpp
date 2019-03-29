@@ -53,12 +53,12 @@ namespace test
 		m_uiStartLogo(&Uis::Get()->GetContainer()),
 		m_overlayDebug(&Uis::Get()->GetContainer())
 	{
-		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
-		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
+		m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-		m_uiStartLogo.GetOnFinished() += [&](UiStartLogo *object)
+		m_uiStartLogo.GetOnFinished() += [this]()
 		{
-			m_overlayDebug.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
+			m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 			Mouse::Get()->SetCursorHidden(true);
 		};
 
@@ -109,7 +109,7 @@ namespace test
 
 		auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Undefined2.png", VK_FILTER_NEAREST));
+		plane->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<MeshRender>();
@@ -121,8 +121,8 @@ namespace test
 
 		/*auto terrain = GetStructure()->CreateEntity(Transform());
 		terrain->AddComponent<Mesh>();
-		terrain->AddComponent<MaterialTerrain>(Texture::Create("Objects/Terrain/Grass.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT),
-			Texture::Create("Objects/Terrain/Rocks.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT));
+		terrain->AddComponent<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT),
+			Image2d::Create("Objects/Terrain/Rocks.png", VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_REPEAT));
 		terrain->AddComponent<Terrain>(150.0f, 2.0f);
 		terrain->AddComponent<Rigidbody>(0.0f, 0.7f);
 		terrain->AddComponent<ColliderHeightfield>();
@@ -159,7 +159,7 @@ namespace test
 
 		auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 		teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.1f, nullptr, Texture::Create("Objects/Testing/Normal.png"));
+		teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.1f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
 	//	teapot->AddComponent<Rigidbody>(1.0f);
 	//	teapot->AddComponent<ColliderConvexHull>();
 		teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);

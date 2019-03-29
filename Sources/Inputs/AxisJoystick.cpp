@@ -9,6 +9,13 @@ namespace acid
 		m_axis(axis),
 		m_inverted(inverted)
 	{
+		Joysticks::Get()->GetOnAxis() += [this](uint32_t axis, uint32_t port, float value)
+		{
+			if (port == m_port && axis == m_axis)
+			{
+				m_onAxis(value);
+			}
+		};
 	}
 
 	float AxisJoystick::GetAmount() const

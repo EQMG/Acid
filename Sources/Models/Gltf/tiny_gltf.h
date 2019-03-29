@@ -3977,7 +3977,7 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
     }
   }
 
-  // 12. Parse Texture
+  // 12. Parse Image2d
   {
     json::const_iterator rootIt = v.find("textures");
     if ((rootIt != v.end()) && rootIt.value().is_array()) {

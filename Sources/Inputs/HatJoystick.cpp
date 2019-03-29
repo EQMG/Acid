@@ -8,6 +8,26 @@ namespace acid
 		m_hatFlag(hatFlag),
 		m_wasDown(false)
 	{
+		Joysticks::Get()->GetOnHat() += [this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value)
+		{
+			if (port == m_port && hat == m_hat)
+			{
+				m_onAxis(GetAmount());
+
+				if (!m_wasDown && value & m_hatFlag)
+				{
+					m_onButton(InputAction::Press, 0);
+				}
+				else if (m_wasDown && !(value & m_hatFlag))
+				{
+					m_onButton(InputAction::Release, 0);
+				}
+				else
+				{
+					m_onButton(InputAction::Repeat, 0);
+				}
+			}
+		};
 	}
 
 	float HatJoystick::GetAmount() const

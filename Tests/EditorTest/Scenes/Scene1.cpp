@@ -47,12 +47,12 @@ namespace test
 		m_uiStartLogo(&Uis::Get()->GetContainer()),
 		m_overlayDebug(&Uis::Get()->GetContainer())
 	{
-		m_uiStartLogo.SetAlphaDriver<DriverConstant<float>>(1.0f);
-		m_overlayDebug.SetAlphaDriver<DriverConstant<float>>(0.0f);
+		m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
+		m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-		m_uiStartLogo.GetOnFinished() += [&](UiStartLogo *object)
+		m_uiStartLogo.GetOnFinished() += [this]()
 		{
-			m_overlayDebug.SetAlphaDriver<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME);
+			m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 			Mouse::Get()->SetCursorHidden(true);
 		};
 	}
@@ -75,7 +75,7 @@ namespace test
 
 		auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
 		plane->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-		plane->AddComponent<MaterialDefault>(Colour::Grey, Texture::Create("Undefined2.png", VK_FILTER_NEAREST), 0.0f, 1.0f);
+		plane->AddComponent<MaterialDefault>(Colour::Grey, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST), 0.0f, 1.0f);
 		plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 		plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
 		plane->AddComponent<MeshRender>();

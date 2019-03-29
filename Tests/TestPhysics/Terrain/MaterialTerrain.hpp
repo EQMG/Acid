@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Materials/Material.hpp>
-#include <Textures/Texture.hpp>
+#include <Images/Image2d.hpp>
 
 using namespace acid;
 
@@ -11,7 +11,7 @@ namespace test
 		public Material
 	{
 	public:
-		explicit MaterialTerrain(std::shared_ptr<Texture> textureR = nullptr, std::shared_ptr<Texture> textureG = nullptr);
+		explicit MaterialTerrain(std::shared_ptr<Image2d> textureR = nullptr, std::shared_ptr<Image2d> textureG = nullptr);
 
 		void Start() override;
 
@@ -25,15 +25,15 @@ namespace test
 
 		void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-		const std::shared_ptr<Texture> &GetTextureR() const { return m_textureR; }
+		const std::shared_ptr<Image2d> &GetTextureR() const { return m_textureR; }
 
-		void SetTextureR(const std::shared_ptr<Texture> &textureR) { m_textureR = textureR; }
+		void SetTextureR(const std::shared_ptr<Image2d> &textureR) { m_textureR = textureR; }
 
-		const std::shared_ptr<Texture> &GetTextureG() const { return m_textureG; }
+		const std::shared_ptr<Image2d> &GetTextureG() const { return m_textureG; }
 
-		void SetTextureG(const std::shared_ptr<Texture> &textureG) { m_textureG = textureG; }
+		void SetTextureG(const std::shared_ptr<Image2d> &textureG) { m_textureG = textureG; }
 	private:
-		std::shared_ptr<Texture> m_textureR;
-		std::shared_ptr<Texture> m_textureG;
+		std::shared_ptr<Image2d> m_textureR;
+		std::shared_ptr<Image2d> m_textureG;
 	};
 }

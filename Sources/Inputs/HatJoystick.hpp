@@ -20,7 +20,7 @@ namespace acid
 		/// <param name="port"> The joystick port. </param>
 		/// <param name="hat"> The hat that will be checked. </param>
 		/// <param name="hatFlag"> If this bit is found the hat will trigger <seealso cref="#IsDown()"/>. </param>
-		HatJoystick(const uint32_t &port, const uint32_t &hat, const JoystickHat &hatFlag);
+		HatJoystick(const uint32_t &port, const uint32_t &hat, const JoystickHat &hatFlag = JoystickHat::Centered);
 
 		float GetAmount() const override;
 

@@ -35,9 +35,9 @@ namespace acid
 
 		const float &GetProgress() const { return m_progress; }
 
-		Delegate<void(UiInputSlider *, float)> &GetOnSlide() { return m_onSlide; }
+		Delegate<void(float)> &GetOnValue() { return m_onValue; }
 	private:
-		void UpdateValueText();
+		void UpdateProgress();
 
 		Gui m_slider;
 		Gui m_background;
@@ -57,6 +57,6 @@ namespace acid
 
 		bool m_hasChange;
 		Timer m_timerChange;
-		Delegate<void(UiInputSlider *, float)> m_onSlide;
+		Delegate<void(float)> m_onValue;
 	};
 }

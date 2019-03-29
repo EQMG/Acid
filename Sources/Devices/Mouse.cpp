@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include "Maths/Maths.hpp"
-#include "Textures/Texture.hpp"
+#include "Images/Image.hpp"
 
 namespace acid
 {
@@ -86,7 +86,7 @@ namespace acid
 		uint32_t height = 0;
 		uint32_t components = 0;
 		VkFormat format = VK_FORMAT_UNDEFINED;
-		auto data = Texture::LoadPixels(filename, width, height, components, format);
+		auto data = Image::LoadPixels(filename, width, height, components, format);
 
 		if (data == nullptr)
 		{
