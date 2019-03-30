@@ -102,7 +102,7 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(const uint32_t &bin
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -111,7 +111,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const Vk
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	descriptorWrite.dstSet = descriptorSet;
+	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
 	descriptorWrite.dstArrayElement = 0;
 	descriptorWrite.descriptorCount = 1;
@@ -221,17 +221,17 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height,
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(result.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
 
 	vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
 	vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
-	return result;
+	return pixels;
 }
 
 void Image2d::SetPixels(const uint8_t *pixels)

@@ -12,8 +12,9 @@ MeshPattern::MeshPattern(const float &sideLength, const float &squareSize, const
 
 void MeshPattern::GenerateMesh()
 {
-	std::vector<VertexModel> vertices = {};
-	std::vector<uint32_t> indices = {};
+	std::vector<VertexModel> vertices;
+	std::vector<uint32_t> indices;
+	// TODO: Reserve.
 
 	// Creates and stores vertices.
 	for (uint32_t col = 0; col < m_vertexCount; col++)

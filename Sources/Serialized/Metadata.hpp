@@ -45,7 +45,8 @@ public:
 
 	Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
 
-	template<typename T> T GetChild(const std::string &name) const
+	template<typename T>
+	T GetChild(const std::string &name) const
 	{
 		auto child = FindChild(name);
 
@@ -57,7 +58,8 @@ public:
 		return child->Get<T>();
 	}
 
-	template<typename T> T GetChildDefault(const std::string &name, const T &value)
+	template<typename T>
+	T GetChildDefault(const std::string &name, const T &value)
 	{
 		auto child = FindChild(name, false);
 
@@ -70,7 +72,8 @@ public:
 		return child->Get<T>();
 	}
 
-	template<typename T> void GetChild(const std::string &name, T &dest) const
+	template<typename T>
+	void GetChild(const std::string &name, T &dest) const
 	{
 		auto child = FindChild(name);
 
@@ -82,7 +85,8 @@ public:
 		dest = child->Get<T>();
 	}
 
-	template<typename T> void SetChild(const std::string &name, const T &value)
+	template<typename T>
+	void SetChild(const std::string &name, const T &value)
 	{
 		auto child = FindChild(name, false);
 
@@ -95,7 +99,8 @@ public:
 		child->Set(value);
 	}
 
-	template<typename T> T Get() const
+	template<typename T>
+	T Get() const
 	{
 		if constexpr (std::is_same_v<std::string, T>)
 		{
@@ -147,7 +152,8 @@ public:
 		}
 	}
 
-	template<typename T> void Set(const T &value)
+	template<typename T>
+	void Set(const T &value)
 	{
 		if constexpr (std::is_same_v<std::string, T>)
 		{
@@ -183,7 +189,8 @@ public:
 		}
 	}
 
-	template<typename T> std::shared_ptr<T> GetResource(const std::string &name) const
+	template<typename T>
+	std::shared_ptr<T> GetResource(const std::string &name) const
 	{
 		auto child = FindChild(name);
 
@@ -195,7 +202,8 @@ public:
 		return T::Create(*child);
 	}
 
-	template<typename T> void GetResource(const std::string &name, std::shared_ptr<T> &dest) const
+	template<typename T>
+	void GetResource(const std::string &name, std::shared_ptr<T> &dest) const
 	{
 		auto child = FindChild(name);
 
@@ -208,7 +216,8 @@ public:
 		dest = T::Create(*child);
 	}
 
-	template<typename T> void SetResource(const std::string &name, const std::shared_ptr<T> &value)
+	template<typename T>
+	void SetResource(const std::string &name, const std::shared_ptr<T> &value)
 	{
 		auto child = FindChild(name, false);
 

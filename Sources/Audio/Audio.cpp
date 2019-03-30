@@ -4,9 +4,12 @@
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
+
 #include <al.h>
 #include <alc.h>
+
 #endif
+
 #include "Files/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 

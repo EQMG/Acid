@@ -15,7 +15,7 @@ RendererFonts2::RendererFonts2(const Pipeline::Stage &pipelineStage) :
 
 void RendererFonts2::Render(const CommandBuffer &commandBuffer)
 {
-	std::map<std::shared_ptr<FontType>, std::vector<Text *>> sorted = {};
+	std::map<std::shared_ptr<FontType>, std::vector<Text *>> sorted;
 
 	for (const auto &screenObject : Uis::Get()->GetObjects())
 	{

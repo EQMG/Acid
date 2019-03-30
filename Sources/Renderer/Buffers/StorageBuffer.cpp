@@ -31,8 +31,7 @@ VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
-	const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
@@ -47,7 +46,7 @@ WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, co
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	descriptorWrite.dstSet = descriptorSet;
+	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
 	descriptorWrite.dstArrayElement = 0;
 	descriptorWrite.descriptorCount = 1;

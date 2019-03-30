@@ -19,7 +19,8 @@ public:
 
 	explicit DescriptorsHandler(const Pipeline &pipeline);
 
-	template<typename T> void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = {})
+	template<typename T>
+	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = {})
 	{
 		if (m_shader == nullptr)
 		{
@@ -75,15 +76,30 @@ public:
 		}
 
 		// Adds the new descriptor value.
-		VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+		auto writeDescriptor = TypeTraits::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
+		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
+		m_changed = true;
+	}
 
-		if (!m_pushDescriptors)
+	template<typename T>
+	void Push(const std::string &descriptorName, const T &descriptor, WriteDescriptorSet writeDescriptorSet)
+	{
+		if (m_shader == nullptr)
 		{
-			descriptorSet = m_descriptorSet->GetDescriptorSet();
+			return;
 		}
 
-		auto writeDescriptor = TypeTraits::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, descriptorSet, offsetSize);
-		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
+		auto it = m_descriptors.find(descriptorName);
+
+		if (it != m_descriptors.end())
+		{
+			m_descriptors.erase(it);
+		}
+
+		auto location = m_shader->GetDescriptorLocation(descriptorName);
+		auto descriptorType = m_shader->GetDescriptorType(*location);
+
+		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptorSet), {}, *location });
 		m_changed = true;
 	}
 

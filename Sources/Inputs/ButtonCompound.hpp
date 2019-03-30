@@ -19,7 +19,8 @@ public:
 	/// <param name="args"> The arguments to pass to T. </param>
 	/// <param name="T"> The type of buttons to create. </param>
 	/// <param name="Args"> The values passed to each button. </param>
-	template<class T, typename... Args> static ButtonCompound *Create(const bool &useAnd, Args &&... args)
+	template<class T, typename... Args>
+	static ButtonCompound *Create(const bool &useAnd, Args &&... args)
 	{
 		std::vector<IButton *> buttons;
 

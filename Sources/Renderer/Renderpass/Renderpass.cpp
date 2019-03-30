@@ -11,7 +11,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 	// Creates the renderpasses attachment descriptions,
-	std::vector<VkAttachmentDescription> attachmentDescriptions = {};
+	std::vector<VkAttachmentDescription> attachmentDescriptions;
 
 	for (const auto &attachment : renderStage.GetAttachments())
 	{
@@ -44,15 +44,15 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	}
 
 	// Creates each subpass and its dependencies.
-	std::vector<std::unique_ptr<SubpassDescription>> subpasses = {};
-	std::vector<VkSubpassDependency> dependencies = {};
+	std::vector<std::unique_ptr<SubpassDescription>> subpasses;
+	std::vector<VkSubpassDependency> dependencies;
 
 	for (const auto &subpassType : renderStage.GetSubpasses())
 	{
 		// Attachments.
-		std::vector<VkAttachmentReference> subpassColourAttachments = {};
+		std::vector<VkAttachmentReference> subpassColourAttachments;
 
-		std::optional<uint32_t> depthAttachment = {};
+		std::optional<uint32_t> depthAttachment;
 
 		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 		{
@@ -115,7 +115,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 		dependencies.emplace_back(subpassDependency);
 	}
 
-	std::vector<VkSubpassDescription> subpassDescriptions = {};
+	std::vector<VkSubpassDescription> subpassDescriptions;
 	subpassDescriptions.reserve(subpasses.size());
 
 	for (const auto &subpass : subpasses)

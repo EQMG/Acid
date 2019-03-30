@@ -7,7 +7,8 @@ namespace acid
 /// <summary>
 /// A driver that slides to its destination using cosine interpolation.
 /// </summary>
-template<typename T> class DriverSlide :
+template<typename T>
+class DriverSlide :
 	public IDriver<T>
 {
 public:

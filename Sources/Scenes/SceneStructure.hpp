@@ -97,24 +97,23 @@ public:
 	/// </summary>
 	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 	/// <returns> The list specified by of all components that match the type. </returns>
-	template<typename T> std::vector<T *> QueryComponents(const bool &allowDisabled = false)
+	template<typename T>
+	std::vector<T *> QueryComponents(const bool &allowDisabled = false)
 	{
-		std::vector<T *> result = {};
+		std::vector<T *> components;
 
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
-			auto components = (*it)->GetComponents<T>();
-
-			for (const auto &component : components)
+			for (const auto &component : (*it)->GetComponents<T>())
 			{
 				if (component != nullptr && (component->IsEnabled() || allowDisabled))
 				{
-					result.emplace_back(component);
+					components.emplace_back(component);
 				}
 			}
 		}
 
-		return result;
+		return components;
 	}
 
 	/// <summary>
@@ -122,7 +121,8 @@ public:
 	/// </summary>
 	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
 	/// <returns> The first component of the type found. </returns>
-	template<typename T> T *GetComponent(const bool &allowDisabled = false)
+	template<typename T>
+	T *GetComponent(const bool &allowDisabled = false)
 	{
 		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{

@@ -7,8 +7,8 @@
 
 namespace acid
 {
-Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain,
-	const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples)
+Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
+	const VkSampleCountFlagBits &samples)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -36,7 +36,7 @@ Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const 
 
 	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
 	{
-		std::vector<VkImageView> attachments = {};
+		std::vector<VkImageView> attachments;
 
 		for (const auto &attachment : renderStage.GetAttachments())
 		{

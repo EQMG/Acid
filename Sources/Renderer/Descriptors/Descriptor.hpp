@@ -63,8 +63,7 @@ private:
 class ACID_EXPORT Descriptor
 {
 public:
-	virtual WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
-		const std::optional<OffsetSize> &offsetSize) const = 0;
+	virtual WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const = 0;
 
 	Descriptor() = default;
 

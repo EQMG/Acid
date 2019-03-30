@@ -68,8 +68,7 @@ VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(const uint32_t &
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
-	const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -78,7 +77,7 @@ WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	descriptorWrite.dstSet = descriptorSet;
+	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
 	descriptorWrite.dstArrayElement = 0;
 	descriptorWrite.descriptorCount = 1;

@@ -130,8 +130,8 @@ std::ostream &operator<<(std::ostream &stream, const Transform &transform)
 
 std::string Transform::ToString() const
 {
-	std::stringstream result;
-	result << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
-	return result.str();
+	std::stringstream stream;
+	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
+	return stream.str();
 }
 }

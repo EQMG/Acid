@@ -242,8 +242,8 @@ void Window::SetTitle(const std::string &title)
 
 void Window::SetIcons(const std::vector<std::string> &filenames)
 {
-	std::vector<GLFWimage> icons = {};
-	std::vector<std::unique_ptr<uint8_t[]>> pixels = {};
+	std::vector<GLFWimage> icons;
+	std::vector<std::unique_ptr<uint8_t[]>> pixels;
 
 	for (const auto &filename : filenames)
 	{

@@ -7,7 +7,8 @@ namespace acid
 /// <summary>
 /// Represents a driver that changes over time.
 /// </summary>
-template<typename T> class IDriver
+template<typename T>
+class IDriver
 {
 public:
 	/// <summary>

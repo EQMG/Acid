@@ -49,8 +49,9 @@ void ModelDisk::Load()
 		return;
 	}
 
-	std::vector<VertexModel> vertices = {};
-	std::vector<uint32_t> indices = {};
+	std::vector<VertexModel> vertices;
+	std::vector<uint32_t> indices;
+	// TODO: Reserve.
 
 	for (uint32_t i = 0; i < m_slices; i++)
 	{

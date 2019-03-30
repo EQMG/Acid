@@ -8,7 +8,8 @@ namespace acid
 /// <summary>
 /// A driver that uses a sine wave.
 /// </summary>
-template<typename T> class DriverSinwave :
+template<typename T>
+class DriverSinwave :
 	public IDriver<T>
 {
 public:

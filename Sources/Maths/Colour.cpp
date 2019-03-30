@@ -283,9 +283,9 @@ std::ostream &operator<<(std::ostream &stream, const Colour &colour)
 
 std::string Colour::ToString() const
 {
-	std::stringstream result;
-	result.precision(10);
-	result << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
-	return result.str();
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
+	return stream.str();
 }
 }

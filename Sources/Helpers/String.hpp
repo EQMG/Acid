@@ -128,7 +128,8 @@ public:
 	/// </summary>
 	/// <param name="val"> The value to convert. </param>
 	/// <returns> The value as a string. </returns>
-	template<typename T> static std::string To(const T &val)
+	template<typename T>
+	static std::string To(const T &val)
 	{
 		if constexpr (std::is_enum_v<T>)
 		{
@@ -154,7 +155,8 @@ public:
 	/// </summary>
 	/// <param name="str"> The string to convert. </param>
 	/// <returns> The string as a value. </returns>
-	template<typename T> static T From(const std::string &str)
+	template<typename T>
+	static T From(const std::string &str)
 	{
 		if constexpr (std::is_enum_v<T>)
 		{

@@ -36,15 +36,15 @@ public:
 		void Decode(const Metadata &metadata)
 		{
 			metadata.GetChild("Binding", m_binding);
-			//	metadata.GetChild("Binding Descriptions", m_bindingDescriptions);
-			//	metadata.GetChild("Attribute Descriptions", m_attributeDescriptions);
+			//metadata.GetChild("Binding Descriptions", m_bindingDescriptions);
+			//metadata.GetChild("Attribute Descriptions", m_attributeDescriptions);
 		}
 
 		void Encode(Metadata &metadata) const
 		{
 			metadata.SetChild("Binding", m_binding);
-			//	metadata.SetChild("Binding Descriptions", m_bindingDescriptions);
-			//	metadata.SetChild("Attribute Descriptions", m_attributeDescriptions);
+			//metadata.SetChild("Binding Descriptions", m_bindingDescriptions);
+			//metadata.SetChild("Attribute Descriptions", m_attributeDescriptions);
 		}
 
 		const uint32_t &GetBinding() const { return m_binding; }
@@ -128,9 +128,9 @@ public:
 
 		std::string ToString() const
 		{
-			std::stringstream result;
-			result << "Uniform(binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
-			return result.str();
+			std::stringstream stream;
+			stream << "Uniform(binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
+			return stream.str();
 		}
 
 	private:
@@ -213,9 +213,9 @@ public:
 
 		std::string ToString() const
 		{
-			std::stringstream result;
-			result << "UniformBlock(binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
-			return result.str();
+			std::stringstream stream;
+			stream << "UniformBlock(binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
+			return stream.str();
 		}
 
 	private:
@@ -275,9 +275,9 @@ public:
 
 		std::string ToString() const
 		{
-			std::stringstream result;
-			result << "VertexAttribute(set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
-			return result.str();
+			std::stringstream stream;
+			stream << "VertexAttribute(set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
+			return stream.str();
 		}
 
 	private:
@@ -312,6 +312,8 @@ public:
 	std::optional<UniformBlock> GetUniformBlock(const std::string &name) const;
 
 	std::optional<Attribute> GetAttribute(const std::string &name) const;
+
+	std::vector<VkPushConstantRange> GetPushConstantRanges() const;
 
 	const uint32_t &GetLastDescriptorBinding() const { return m_lastDescriptorBinding; }
 

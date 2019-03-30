@@ -87,10 +87,10 @@ void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 
 std::vector<Shader::Define> MaterialDefault::GetDefines() const
 {
-	std::vector<Shader::Define> result = {};
-	result.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));
-	result.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
-	result.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));
-	return result;
+	std::vector<Shader::Define> defines;
+	defines.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));
+	defines.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
+	defines.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));
+	return defines;
 }
 }

@@ -21,7 +21,8 @@ public:
 	/// </summary>
 	/// <param name="amount"> Number of seconds. </param>
 	/// <returns> Time value constructed from the amount of seconds. </returns>
-	template<typename T = float> static Time Seconds(const T &amount)
+	template<typename T = float>
+	static Time Seconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000000)));
 	}
@@ -31,7 +32,8 @@ public:
 	/// </summary>
 	/// <param name="amount"> Number of milliseconds. </param>
 	/// <returns> Time value constructed from the amount of milliseconds. </returns>
-	template<typename T = int32_t> static Time Milliseconds(const T &amount)
+	template<typename T = int32_t>
+	static Time Milliseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000)));
 	}
@@ -41,7 +43,8 @@ public:
 	/// </summary>
 	/// <param name="amount"> Number of microseconds. </param>
 	/// <returns> Time value constructed from the amount of microseconds. </returns>
-	template<typename T = int64_t> static Time Microseconds(const T &amount)
+	template<typename T = int64_t>
+	static Time Microseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount));
 	}
@@ -50,7 +53,8 @@ public:
 	/// Return the time value as a number of seconds.
 	/// </summary>
 	/// <returns> Time in seconds. </returns>
-	template<typename T = float> auto AsSeconds() const
+	template<typename T = float>
+	auto AsSeconds() const
 	{
 		return static_cast<T>(m_microseconds) / static_cast<T>(1000000);
 	}
@@ -59,7 +63,8 @@ public:
 	/// Return the time value as a number of milliseconds.
 	/// </summary>
 	/// <returns> Time in milliseconds. </returns>
-	template<typename T = int32_t> auto AsMilliseconds() const
+	template<typename T = int32_t>
+	auto AsMilliseconds() const
 	{
 		return static_cast<T>(m_microseconds) / static_cast<T>(1000);
 	}
@@ -68,7 +73,8 @@ public:
 	/// Return the time value as a number of microseconds.
 	/// </summary>
 	/// <returns> Time in microseconds. </returns>
-	template<typename T = int64_t> auto AsMicroseconds() const
+	template<typename T = int64_t>
+	auto AsMicroseconds() const
 	{
 		return static_cast<T>(m_microseconds);
 	}

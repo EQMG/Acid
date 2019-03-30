@@ -299,7 +299,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 
 std::vector<std::string> Files::FilesInPath(const std::string &path, const bool &recursive)
 {
-	std::vector<std::string> result = {};
+	std::vector<std::string> files;
 	auto rc = PHYSFS_enumerateFiles(path.c_str());
 	char **i;
 
@@ -310,17 +310,17 @@ std::vector<std::string> Files::FilesInPath(const std::string &path, const bool 
 			if (recursive)
 			{
 				auto filesInFound = FilesInPath(*i, recursive);
-				result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+				files.insert(result.end(), filesInFound.begin(), filesInFound.end());
 			}
 		}
 		else
 		{*/
-		result.emplace_back(*i);
+		files.emplace_back(*i);
 		//}
 	}
 
 	PHYSFS_freeList(rc);
-	return result;
+	return files;
 }
 
 std::istream &Files::SafeGetLine(std::istream &is, std::string &t)

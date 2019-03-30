@@ -35,7 +35,7 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 
 void Shader::ProcessShader()
 {
-	std::map<VkDescriptorType, uint32_t> descriptorPoolCounts = {};
+	std::map<VkDescriptorType, uint32_t> descriptorPoolCounts;
 
 	// Process to descriptors.
 	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
@@ -98,6 +98,21 @@ void Shader::ProcessShader()
 		descriptorPoolSize.descriptorCount = descriptorCount;
 		m_descriptorPools.emplace_back(descriptorPoolSize);
 	}
+
+	// FIXME: This is a AMD workaround that works on Nvidia too...
+	m_descriptorPools = std::vector<VkDescriptorPoolSize>(6);
+	m_descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	m_descriptorPools[0].descriptorCount = 4096;
+	m_descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+	m_descriptorPools[1].descriptorCount = 2048;
+	m_descriptorPools[2].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+	m_descriptorPools[2].descriptorCount = 2048;
+	m_descriptorPools[3].type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
+	m_descriptorPools[3].descriptorCount = 2048;
+	m_descriptorPools[4].type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
+	m_descriptorPools[4].descriptorCount = 2048;
+	m_descriptorPools[5].type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+	m_descriptorPools[5].descriptorCount = 2048;
 
 	// Sort descriptors by binding.
 	std::sort(m_descriptorSetLayouts.begin(), m_descriptorSetLayouts.end(), [](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
@@ -243,6 +258,29 @@ std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) c
 	return it->second;
 }
 
+std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
+{
+	std::vector<VkPushConstantRange> pushConstantRanges;
+	uint32_t currentOffset = 0;
+
+	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
+	{
+		if (uniformBlock.GetType() != Shader::UniformBlock::Type::Push)
+		{
+			continue;
+		}
+
+		VkPushConstantRange pushConstantRange = {};
+		pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
+		pushConstantRange.offset = currentOffset;
+		pushConstantRange.size = static_cast<uint32_t>(uniformBlock.GetSize());
+		pushConstantRanges.emplace_back(pushConstantRange);
+		currentOffset += pushConstantRange.size;
+	}
+
+	return pushConstantRanges;
+}
+
 std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
 {
 	auto it = m_descriptorTypes.find(location);
@@ -290,19 +328,19 @@ VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)
 std::string Shader::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
 {
 	// TODO: Needs to be replaced with specialization constants.
-	std::string result = shaderCode;
-	std::size_t foundIndex0 = result.find('\n', 0);
-	std::size_t foundIndex1 = result.find('\n', foundIndex0 + 1);
-	std::size_t foundIndex2 = result.find('\n', foundIndex1 + 1);
-	result.insert(foundIndex2, blockCode);
-	return result;
+	std::string updatedCode = shaderCode;
+	std::size_t foundIndex0 = updatedCode.find('\n', 0);
+	std::size_t foundIndex1 = updatedCode.find('\n', foundIndex0 + 1);
+	std::size_t foundIndex2 = updatedCode.find('\n', foundIndex1 + 1);
+	updatedCode.insert(foundIndex2, blockCode);
+	return updatedCode;
 }
 
 std::string Shader::ProcessIncludes(const std::string &shaderCode)
 {
 	auto lines = String::Split(shaderCode, "\n", true);
 
-	std::stringstream result;
+	std::stringstream stream;
 
 	for (const auto &line : lines)
 	{
@@ -320,14 +358,14 @@ std::string Shader::ProcessIncludes(const std::string &shaderCode)
 				continue;
 			}
 
-			result << "\n" << *fileLoaded << "\n";
+			stream << "\n" << *fileLoaded << "\n";
 			continue;
 		}
 
-		result << line << "\n";
+		stream << line << "\n";
 	}
 
-	return result.str();
+	return stream.str();
 }
 
 EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
@@ -543,39 +581,39 @@ VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShad
 
 std::string Shader::ToString() const
 {
-	std::stringstream result;
+	std::stringstream stream;
 
 	if (!m_attributes.empty())
 	{
-		result << "Vertex Attributes: \n";
+		stream << "Vertex Attributes: \n";
 
 		for (const auto &[attributeName, attribute] : m_attributes)
 		{
-			result << "  - " << attributeName << ": " << attribute.ToString() << "\n";
+			stream << "  - " << attributeName << ": " << attribute.ToString() << "\n";
 		}
 	}
 
 	if (!m_uniforms.empty())
 	{
-		result << "Uniforms: \n";
+		stream << "Uniforms: \n";
 
 		for (const auto &[uniformName, uniform] : m_uniforms)
 		{
-			result << "  - " << uniformName << ": " << uniform.ToString() << "\n";
+			stream << "  - " << uniformName << ": " << uniform.ToString() << "\n";
 		}
 	}
 
 	if (!m_uniformBlocks.empty())
 	{
-		result << "Uniform Blocks: \n";
+		stream << "Uniform Blocks: \n";
 
 		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 		{
-			result << "  - " << uniformBlockName << ": " << uniformBlock.ToString() << " \n";
+			stream << "  - " << uniformBlockName << ": " << uniformBlock.ToString() << " \n";
 
 			for (const auto &[uniformName, uniform] : uniformBlock.GetUniforms())
 			{
-				result << "	- " << uniformName << ": " << uniform.ToString() << " \n";
+				stream << "	- " << uniformName << ": " << uniform.ToString() << " \n";
 			}
 		}
 	}
@@ -586,11 +624,11 @@ std::string Shader::ToString() const
 
 		if (m_localSizes[dim])
 		{
-			result << "Local size " << AXES[dim] << ": " << *m_localSizes[dim] << " \n";
+			stream << "Local size " << AXES[dim] << ": " << *m_localSizes[dim] << " \n";
 		}
 	}
 
-	return result.str();
+	return stream.str();
 }
 
 void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)

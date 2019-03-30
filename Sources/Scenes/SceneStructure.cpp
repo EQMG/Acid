@@ -76,7 +76,7 @@ void SceneStructure::Update()
 
 std::vector<Entity *> SceneStructure::QueryAll()
 {
-	std::vector<Entity *> result = {};
+	std::vector<Entity *> entities;
 
 	for (const auto &object : m_objects)
 	{
@@ -85,15 +85,15 @@ std::vector<Entity *> SceneStructure::QueryAll()
 			continue;
 		}
 
-		result.emplace_back(object.get());
+		entities.emplace_back(object.get());
 	}
 
-	return result;
+	return entities;
 }
 
 std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 {
-	std::vector<Entity *> result = {};
+	std::vector<Entity *> entities;
 
 	for (const auto &object : m_objects)
 	{
@@ -106,11 +106,11 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 
 		if (rigidbody == nullptr || rigidbody->InFrustum(range))
 		{
-			result.emplace_back(object.get());
+			entities.emplace_back(object.get());
 		}
 	}
 
-	return result;
+	return entities;
 }
 
 /*std::vector<Entity *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)

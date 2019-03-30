@@ -60,7 +60,7 @@ VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(const uint32_t &bindi
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet Image::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet Image::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -69,7 +69,7 @@ WriteDescriptorSet Image::GetWriteDescriptor(const uint32_t &binding, const VkDe
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	descriptorWrite.dstSet = descriptorSet;
+	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
 	descriptorWrite.dstArrayElement = 0;
 	descriptorWrite.descriptorCount = 1;
@@ -97,17 +97,17 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(result.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
 
 	vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
 	vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
-	return result;
+	return pixels;
 }
 
 void Image::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
@@ -134,7 +134,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, uint32
 		return nullptr;
 	}
 
-	std::unique_ptr<uint8_t[]> data(
+	std::unique_ptr<uint8_t[]> pixels(
 		stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), reinterpret_cast<int32_t *>(&width), reinterpret_cast<int32_t *>(&height),
 			reinterpret_cast<int32_t *>(&components), STBI_rgb_alpha));
 
@@ -142,12 +142,12 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, uint32
 	components = 4;
 	format = VK_FORMAT_R8G8B8A8_UNORM;
 
-	if (data == nullptr)
+	if (pixels == nullptr)
 	{
 		Log::Error("Unable to load Image: '%s'\n", filename.c_str());
 	}
 
-	return data;
+	return pixels;
 }
 
 void Image::WritePixels(const std::string &filename, const uint8_t *pixels, const int32_t &width, const int32_t &height, const int32_t &components)

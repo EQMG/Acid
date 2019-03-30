@@ -18,9 +18,11 @@ public:
 
 	~ThreadPool();
 
-	template<class F, class... Args> decltype(auto) Enqueue(F &&f, Args &&... args);
+	template<class F, class... Args>
+	decltype(auto) Enqueue(F &&f, Args &&... args);
 
 	const std::vector<std::thread> &GetWorkers() const { return m_workers; }
+
 private:
 	std::vector<std::thread> m_workers;
 	std::queue<std::function<void()>> m_tasks;
@@ -30,7 +32,8 @@ private:
 	bool m_stop;
 };
 
-template<class F, class ... Args> decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
+template<class F, class ... Args>
+decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 {
 	using return_type = typename std::result_of<F(Args...)>::type;
 
@@ -46,7 +49,8 @@ template<class F, class ... Args> decltype(auto) ThreadPool::Enqueue(F &&f, Args
 			throw std::runtime_error("Enqueue called on a stopped ThreadPool");
 		}
 
-		m_tasks.emplace([task]() { (*task)(); });
+		m_tasks.emplace([task]()
+		{ (*task)(); });
 	}
 
 	m_condition.notify_one();

@@ -33,7 +33,7 @@ MainRenderer::MainRenderer()
 
 void MainRenderer::Start()
 {
-	std::vector<std::unique_ptr<RenderStage>> renderStages = {};
+	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
 	std::vector<Attachment> renderpassAttachments0 = { 
 		Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) 

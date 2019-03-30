@@ -59,11 +59,11 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 
 std::vector<Shader::Define> FilterSsao::GetDefines()
 {
-	std::vector<Shader::Define> result = {};
-	result.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
-	result.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
-	result.emplace_back("RANGE_CHECK", "1");
-	return result;
+	std::vector<Shader::Define> defines;
+	defines.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
+	defines.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
+	defines.emplace_back("RANGE_CHECK", "1");
+	return defines;
 }
 
 std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
@@ -77,7 +77,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 		ssaoNoise[i] = Colour(noise, 1.0f);
 	}
 
-	auto result = std::make_shared<Image2d>(size, size, std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32A32_SFLOAT,
+	auto noiseImage = std::make_shared<Image2d>(size, size, std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32A32_SFLOAT,
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
 #if defined(ACID_VERBOSE)
@@ -86,10 +86,10 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 	FileSystem::ClearFile(filename);
 	uint32_t width = 0;
 	uint32_t height = 0;
-	auto pixels = result->GetPixels(width, height, 1);
-	Image2d::WritePixels(filename, pixels.get(), width, height);*/
+	auto pixels = noiseImage->GetPixels(width, height, 1);
+	Image::WritePixels(filename, pixels.get(), width, height);*/
 #endif
 
-	return result;
+	return noiseImage;
 }
 }

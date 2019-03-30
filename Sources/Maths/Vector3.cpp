@@ -465,9 +465,9 @@ std::ostream &operator<<(std::ostream &stream, const Vector3 &vector)
 
 std::string Vector3::ToString() const
 {
-	std::stringstream result;
-	result.precision(10);
-	result << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
-	return result.str();
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
+	return stream.str();
 }
 }

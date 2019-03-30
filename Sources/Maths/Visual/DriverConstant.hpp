@@ -7,7 +7,8 @@ namespace acid
 /// <summary>
 /// A driver that has a constant value.
 /// </summary>
-template<typename T> class DriverConstant :
+template<typename T>
+class DriverConstant :
 	public IDriver<T>
 {
 public:

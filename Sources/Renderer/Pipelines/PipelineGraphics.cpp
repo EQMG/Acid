@@ -172,20 +172,7 @@ void PipelineGraphics::CreateDescriptorPool()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	//auto &descriptorPools = m_shader->GetDescriptorPools();
-	std::vector<VkDescriptorPoolSize> descriptorPools(6); // FIXME: This is a AMD workaround that works on Nvidia too...
-	descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-	descriptorPools[0].descriptorCount = 4096;
-	descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-	descriptorPools[1].descriptorCount = 2048;
-	descriptorPools[2].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
-	descriptorPools[2].descriptorCount = 2048;
-	descriptorPools[3].type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
-	descriptorPools[3].descriptorCount = 2048;
-	descriptorPools[4].type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
-	descriptorPools[4].descriptorCount = 2048;
-	descriptorPools[5].type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-	descriptorPools[5].descriptorCount = 2048;
+	auto descriptorPools = m_shader->GetDescriptorPools();
 
 	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
@@ -200,23 +187,7 @@ void PipelineGraphics::CreatePipelineLayout()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	std::vector<VkPushConstantRange> pushConstantRanges = {};
-	uint32_t currentOffset = 0;
-
-	for (const auto &[uniformBlockName, uniformBlock] : m_shader->GetUniformBlocks())
-	{
-		if (uniformBlock.GetType() != Shader::UniformBlock::Type::Push)
-		{
-			continue;
-		}
-
-		VkPushConstantRange pushConstantRange = {};
-		pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
-		pushConstantRange.offset = currentOffset;
-		pushConstantRange.size = static_cast<uint32_t>(uniformBlock.GetSize());
-		pushConstantRanges.emplace_back(pushConstantRange);
-		currentOffset += pushConstantRange.size;
-	}
+	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
 	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -322,8 +293,8 @@ void PipelineGraphics::CreatePipeline()
 	auto pipelineCache = Renderer::Get()->GetPipelineCache();
 	auto renderStage = Renderer::Get()->GetRenderStage(m_stage.first);
 
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {};
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {};
+	std::vector<VkVertexInputBindingDescription> bindingDescriptions;
+	std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
 	uint32_t lastAttribute = 0;
 
 	for (const auto &vertexInput : m_vertexInputs)
@@ -397,10 +368,11 @@ void PipelineGraphics::CreatePipelinePolygon()
 
 void PipelineGraphics::CreatePipelineMrt()
 {
-	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates = {};
-
 	auto renderStage = Renderer::Get()->GetRenderStage(m_stage.first);
 	uint32_t attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
+
+	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates;
+	blendAttachmentStates.reserve(attachmentCount);
 
 	for (uint32_t i = 0; i < attachmentCount; i++)
 	{

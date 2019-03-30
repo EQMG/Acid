@@ -60,7 +60,7 @@ void Renderer::Update()
 
 	auto &stages = m_renderManager->GetRendererContainer().GetStages();
 
-	std::optional<uint32_t> renderpass = {};
+	std::optional<uint32_t> renderpass;
 	uint32_t subpass = 0;
 
 	VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);

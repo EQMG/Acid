@@ -34,7 +34,8 @@ public:
 	/// </summary>
 	/// <param name="T"> The type of event to add. </param>
 	/// <param name="args"> The type event arguments. </param>
-	template<typename T, typename... Args> void AddEvent(Args &&... args) { AddEvent(new T(std::forward<Args>(args)...)); }
+	template<typename T, typename... Args>
+	void AddEvent(Args &&... args) { AddEvent(new T(std::forward<Args>(args)...)); }
 
 	/// <summary>
 	/// Removes a event to the listening list.

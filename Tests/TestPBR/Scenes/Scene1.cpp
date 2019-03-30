@@ -58,20 +58,20 @@ void Scene1::Start()
 	auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, 4000.0f), Vector3(), 18.0f));
 	sun->AddComponent<Light>(Colour::White);
 
-	for (float i = 0.0f; i < 5.0f; i++)
+	for (float i = 0.0f; i < 6.0f; i++)
 	{
-		for (float j = 0.0f; j < 5.0f; j++)
+		for (float j = 0.0f; j < 6.0f; j++)
 		{
 			auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
-			sphere->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Diffuse.png"), j / 4.0f, i / 4.0f, Image2d::Create("Objects/Testing/Material.png"),
+			sphere->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f, nullptr, // Image2d::Create("Objects/Testing/Material.png")
 				Image2d::Create("Objects/Testing/Normal.png"));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
 			auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
 			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 4.0f, i / 4.0f);
+			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
 			teapot->AddComponent<MeshRender>();
 			teapot->AddComponent<ShadowRender>();
 		}

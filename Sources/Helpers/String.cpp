@@ -8,7 +8,7 @@ std::vector<std::string> String::Split(const std::string &str, const std::string
 	std::unique_ptr<char[]> copy(new char[strlen(str.c_str()) + 1]);
 	std::strcpy(copy.get(), str.c_str());
 
-	std::vector<std::string> result = {};
+	std::vector<std::string> splitVector;
 	auto current = std::strtok(copy.get(), sep.c_str());
 
 	while (current != nullptr)
@@ -20,11 +20,11 @@ std::vector<std::string> String::Split(const std::string &str, const std::string
 			currentS = Trim(currentS);
 		}
 
-		result.emplace_back(currentS);
+		splitVector.emplace_back(currentS);
 		current = std::strtok(nullptr, sep.c_str());
 	}
 
-	return result;
+	return splitVector;
 }
 
 bool String::StartsWith(std::string_view str, std::string_view token)
@@ -65,9 +65,9 @@ std::string String::Trim(std::string str, std::string_view whitespace)
 	auto strEnd = str.find_last_not_of(whitespace);
 	auto strRange = strEnd - strBegin + 1;
 
-	auto result = str;
-	result = result.substr(strBegin, strRange);
-	return result;
+	auto trimmed = str;
+	trimmed = trimmed.substr(strBegin, strRange);
+	return trimmed;
 }
 
 std::string String::Substring(std::string str, uint32_t start, uint32_t end)

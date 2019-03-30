@@ -41,8 +41,8 @@ void RendererShadows::Render(const CommandBuffer &commandBuffer)
 
 std::vector<Shader::Define> RendererShadows::GetDefines()
 {
-	std::vector<Shader::Define> result = {};
-	result.emplace_back("NUM_CASCADES", String::To(Cascades));
-	return result;
+	std::vector<Shader::Define> defines;
+	defines.emplace_back("NUM_CASCADES", String::To(Cascades));
+	return defines;
 }
 }

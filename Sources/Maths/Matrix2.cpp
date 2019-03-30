@@ -374,9 +374,9 @@ std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)
 
 std::string Matrix2::ToString() const
 {
-	std::stringstream result;
-	result.precision(10);
-	result << "Matrix2(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ")";
-	return result.str();
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Matrix2(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ")";
+	return stream.str();
 }
 }

@@ -29,7 +29,8 @@ public:
 	/// <param name="T"> The vertex class that implements <seealso cref="IVertex"/>. </param>
 	/// <param name="vertices"> The model vertices. </param>
 	/// <param name="indices"> The model indices. </param>
-	template<typename T> explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
+	template<typename T>
+	explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
 		Model()
 	{
 		Initialize(vertices, indices);
@@ -68,7 +69,8 @@ public:
 	VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
 
 protected:
-	template<typename T> void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
+	template<typename T>
+	void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
 	{
 		static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
 

@@ -126,7 +126,7 @@ void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 
 	attributes = String::Trim(attributes);
 
-	std::map<std::string, std::string> parseAttributes = {};
+	std::map<std::string, std::string> parseAttributes;
 
 	if (!attributes.empty())
 	{

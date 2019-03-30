@@ -128,15 +128,16 @@ int32_t FontMetafile::GetValueOfVariable(const std::string &variable)
 
 std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 {
-	std::vector<int32_t> result = {};
 	auto numbers = String::Split(m_values.at(variable), ",");
-	result.reserve(numbers.size());
+	
+	std::vector<int32_t> values;
+	values.reserve(numbers.size());
 
 	for (const auto &number : numbers)
 	{
-		result.emplace_back(String::From<int32_t>(number));
+		values.emplace_back(String::From<int32_t>(number));
 	}
 
-	return result;
+	return values;
 }
 }

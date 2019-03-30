@@ -18,18 +18,18 @@ AxisButton::AxisButton(IButton *negative, IButton *positive) :
 
 float AxisButton::GetAmount() const
 {
-	auto result = 0.0f;
+	auto amount = 0.0f;
 
 	if (m_positive->IsDown())
 	{
-		result += 1.0f;
+		amount += 1.0f;
 	}
 
 	if (m_negative->IsDown())
 	{
-		result -= 1.0f;
+		amount -= 1.0f;
 	}
 
-	return result;
+	return amount;
 }
 }

@@ -345,9 +345,9 @@ std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion)
 
 std::string Quaternion::ToString() const
 {
-	std::stringstream result;
-	result.precision(10);
-	result << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
-	return result.str();
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
+	return stream.str();
 }
 }

@@ -191,7 +191,7 @@ void Text::LoadText()
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
-	std::vector<Line> lines = {};
+	std::vector<Line> lines;
 	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
 	auto currentWord = Word();
 
@@ -267,7 +267,7 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 
 std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
 {
-	std::vector<VertexModel> vertices = {};
+	std::vector<VertexModel> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
 	auto cursorX = 0.0f;

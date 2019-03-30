@@ -106,8 +106,7 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &b
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkDescriptorSet &descriptorSet,
-	const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -116,7 +115,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const 
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-	descriptorWrite.dstSet = descriptorSet;
+	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
 	descriptorWrite.dstArrayElement = 0;
 	descriptorWrite.descriptorCount = 1;
@@ -240,7 +239,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel) const
 {
-	std::unique_ptr<uint8_t[]> result = nullptr;
+	std::unique_ptr<uint8_t[]> pixels = nullptr;
 	uint8_t *offset = nullptr;
 
 	for (uint32_t i = 0; i < 6; i++)
@@ -248,10 +247,10 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 		auto resultSide = GetPixels(width, height, mipLevel, i);
 		int32_t sizeSide = width * height * m_components;
 
-		if (result == nullptr)
+		if (pixels == nullptr)
 		{
-			result = std::make_unique<uint8_t[]>(sizeSide * 6);
-			offset = result.get();
+			pixels = std::make_unique<uint8_t[]>(sizeSide * 6);
+			offset = pixels.get();
 		}
 
 		memcpy(offset, resultSide.get(), sizeSide);
@@ -259,7 +258,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 	}
 
 	height *= 6;
-	return result;
+	return pixels;
 }
 
 void ImageCube::SetPixels(const uint8_t *pixels)

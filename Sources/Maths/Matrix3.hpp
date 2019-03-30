@@ -200,7 +200,8 @@ public:
 
 namespace std
 {
-template<> struct hash<acid::Matrix3>
+template<>
+struct hash<acid::Matrix3>
 {
 	size_t operator()(acid::Matrix3 const &matrix) const noexcept
 	{

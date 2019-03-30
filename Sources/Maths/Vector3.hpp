@@ -349,7 +349,8 @@ public:
 
 namespace std
 {
-template<> struct hash<acid::Vector3>
+template<>
+struct hash<acid::Vector3>
 {
 	size_t operator()(acid::Vector3 const &vector) const noexcept
 	{

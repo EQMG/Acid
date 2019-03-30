@@ -321,9 +321,9 @@ std::ostream &operator<<(std::ostream &stream, const Vector2 &vector)
 
 std::string Vector2::ToString() const
 {
-	std::stringstream result;
-	result.precision(10);
-	result << "Vector2(" << m_x << ", " << m_y << ")";
-	return result.str();
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Vector2(" << m_x << ", " << m_y << ")";
+	return stream.str();
 }
 }

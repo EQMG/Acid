@@ -73,9 +73,6 @@ Vector2 Particle::CalculateTextureOffset(const int32_t &index) const
 {
 	int32_t column = index % m_particleType->GetNumberOfRows();
 	int32_t row = index / m_particleType->GetNumberOfRows();
-	Vector2 result = Vector2();
-	result.m_x = static_cast<float>(column) / m_particleType->GetNumberOfRows();
-	result.m_y = static_cast<float>(row) / m_particleType->GetNumberOfRows();
-	return result;
+	return Vector2(static_cast<float>(column), static_cast<float>(row)) / m_particleType->GetNumberOfRows();
 }
 }

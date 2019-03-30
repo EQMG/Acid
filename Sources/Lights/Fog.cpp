@@ -37,8 +37,8 @@ std::ostream &operator<<(std::ostream &stream, const Fog &colour)
 
 std::string Fog::ToString() const
 {
-	std::stringstream result;
-	result << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
-	return result.str();
+	std::stringstream stream;
+	stream << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
+	return stream.str();
 }
 }

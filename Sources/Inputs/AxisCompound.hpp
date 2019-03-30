@@ -20,7 +20,8 @@ public:
 	/// <param name="args"> The arguments to pass to T. </param>
 	/// <param name="T"> The type of axis to create. </param>
 	/// <param name="Args"> The values passed to each axis. </param>
-	template<class T, typename... Args> static AxisCompound *Create(Args &&... args)
+	template<class T, typename... Args>
+	static AxisCompound *Create(Args &&... args)
 	{
 		std::vector<IAxis *> axes;
 

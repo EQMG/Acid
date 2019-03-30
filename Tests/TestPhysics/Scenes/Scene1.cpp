@@ -182,7 +182,7 @@ void Scene1::Start()
 
 	auto suzanne = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 10.0f), Vector3(), 1.0f));
 	suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/Suzanne.obj"));
-	suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
+	suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.2f, 0.8f);
 	suzanne->AddComponent<MeshRender>();
 	suzanne->AddComponent<ShadowRender>();
 
@@ -194,7 +194,7 @@ void Scene1::Start()
 
 	auto teapot = GetStructure()->CreateEntity(Transform(Vector3(4.0f, 2.0f, 10.0f), Vector3(), 0.2f));
 	teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.1f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
+	teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
 	//teapot->AddComponent<Rigidbody>(1.0f);
 	//teapot->AddComponent<ColliderConvexHull>();
 	teapot->AddComponent<Rotate>(Vector3(50.0f, 30.0f, 40.0f), 0);
@@ -204,7 +204,7 @@ void Scene1::Start()
 	auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3(0.0f, 10.0f, 0.0f), Vector3(), 3.0f));
 	teapotCone->SetParent(teapot);
 	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
-	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.2f);
+	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3(0.0f, 0.5f, 0.0f)));
 	teapotCone->AddComponent<MeshRender>();
 	teapotCone->AddComponent<ShadowRender>();

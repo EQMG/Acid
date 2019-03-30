@@ -284,7 +284,8 @@ public:
 
 namespace std
 {
-template<> struct hash<acid::Vector2>
+template<>
+struct hash<acid::Vector2>
 {
 	size_t operator()(acid::Vector2 const &vector) const noexcept
 	{

@@ -105,10 +105,9 @@ void ModelObj::Load()
 		throw std::runtime_error(warn + err);
 	}
 
-	std::vector<VertexModel> vertices = {};
-	std::vector<uint32_t> indices = {};
-
-	std::unordered_map<VertexModel, size_t> uniqueVertices = {};
+	std::vector<VertexModel> vertices;
+	std::vector<uint32_t> indices;
+	std::unordered_map<VertexModel, size_t> uniqueVertices;
 
 	for (const auto &shape : shapes)
 	{

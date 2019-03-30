@@ -54,17 +54,17 @@ void Metadata::RemoveChild(Metadata *child)
 
 std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
 {
-	std::vector<Metadata *> result = {};
+	std::vector<Metadata *> children;
 
 	for (const auto &child : m_children)
 	{
 		if (child->m_name == name)
 		{
-			result.emplace_back(child.get());
+			children.emplace_back(child.get());
 		}
 	}
 
-	return result;
+	return children;
 }
 
 Metadata *Metadata::FindChild(const std::string &name, const bool &reportError) const
@@ -89,11 +89,11 @@ Metadata *Metadata::FindChild(const std::string &name, const bool &reportError) 
 
 Metadata *Metadata::FindChildWithBackup(const std::string &name, const std::string &backupName, const bool &reportError) const
 {
-	auto result = FindChild(name, reportError);
+	auto child = FindChild(name, reportError);
 
-	if (result != nullptr)
+	if (child != nullptr)
 	{
-		return result;
+		return child;
 	}
 
 	return FindChild(backupName, reportError);
@@ -163,14 +163,14 @@ std::string Metadata::FindAttribute(const std::string &attribute) const
 
 Metadata *Metadata::Clone() const
 {
-	auto result = new Metadata(m_name, m_value, m_attributes);
+	auto clone = new Metadata(m_name, m_value, m_attributes);
 
 	for (const auto &child : m_children)
 	{
-		result->m_children.emplace_back(child->Clone());
+		clone->m_children.emplace_back(child->Clone());
 	}
 
-	return result;
+	return clone;
 }
 
 bool Metadata::operator==(const Metadata &other) const

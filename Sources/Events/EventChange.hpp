@@ -8,7 +8,8 @@ namespace acid
 /// A class that acts as a basic change listener for a value.
 /// </summary>
 /// <param="T"> The type of value to find change with. </param>
-template<typename T> class EventChange :
+template<typename T>
+class EventChange :
 	public IEvent
 {
 public:

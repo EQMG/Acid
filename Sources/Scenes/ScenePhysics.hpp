@@ -9,7 +9,8 @@ class btCollisionDispatcher;
 class btConstraintSolver;
 class btDiscreteDynamicsWorld;
 class btCollisionShape;
-template<typename T> class btAlignedObjectArray;
+template<typename T>
+class btAlignedObjectArray;
 
 namespace acid
 {

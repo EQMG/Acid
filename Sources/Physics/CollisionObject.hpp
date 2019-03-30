@@ -39,7 +39,8 @@ public:
 
 	Force *AddForce(Force *force);
 
-	template<typename T, typename... Args> Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
+	template<typename T, typename... Args>
+	Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
 
 	virtual void ClearForces() = 0;
 

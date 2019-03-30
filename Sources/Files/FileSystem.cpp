@@ -1,10 +1,13 @@
 #include "FileSystem.hpp"
 
 #include <sys/stat.h>
+
 #if defined(ACID_BUILD_WINDOWS)
+
 #include <io.h>
 #include <direct.h>
 #include "dirent.h"
+
 typedef struct _stat STAT;
 #define stat _stat
 #define S_IFREG _S_IFREG
@@ -19,6 +22,7 @@ typedef struct stat STAT;
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
+
 #include "Helpers/String.hpp"
 
 namespace acid
@@ -120,7 +124,7 @@ void FileSystem::Touch(const std::string &path)
 
 std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const bool &recursive)
 {
-	std::vector<std::string> result = {};
+	std::vector<std::string> files;
 
 	struct dirent *de;
 	auto dr = opendir(path.c_str());
@@ -128,7 +132,7 @@ std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const 
 	if (dr == nullptr)
 	{
 		Log::Error("Could not open current directory: '%s'!\n", path.c_str());
-		return result;
+		return files;
 	}
 
 	while ((de = readdir(dr)) != nullptr)
@@ -145,17 +149,17 @@ std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const 
 			if (recursive)
 			{
 				auto filesInFound = FilesInPath(relPath, recursive);
-				result.insert(result.end(), filesInFound.begin(), filesInFound.end());
+				files.insert(files.end(), filesInFound.begin(), filesInFound.end());
 			}
 		}
 		else
 		{
-			result.emplace_back(relPath);
+			files.emplace_back(relPath);
 		}
 	}
 
 	closedir(dr);
-	return result;
+	return files;
 }
 
 bool FileSystem::Create(const std::string &path)
@@ -266,7 +270,7 @@ bool FileSystem::WriteTextFile(const std::string &filename, const std::string &d
 
 std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &filename, const std::string &mode)
 {
-	std::vector<char> data = {};
+	std::vector<char> data;
 
 	const auto bufferSize = 1024;
 	const auto useFile = filename.c_str() && strcmp("-", filename.c_str()) != 0;
