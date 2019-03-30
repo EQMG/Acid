@@ -351,7 +351,8 @@ private:
 
 	float GradCoord3d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const float &xd, const float &yd, const float &zd) const;
 
-	float GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd, const float &wd) const;
+	float GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd,
+		const float &wd) const;
 
 	// 2D
 	float SingleValueFractalFbm(float x, float y) const;

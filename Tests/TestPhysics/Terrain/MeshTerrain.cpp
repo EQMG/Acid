@@ -15,7 +15,8 @@ VertexModel MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
 	float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
 	Vector3 position = GetPosition(x, z);
-	Vector2 uv = Vector2(static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount));
+	Vector2 uv = Vector2(static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount),
+		static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount));
 	Vector3 normal = GetNormal(x, z);
 	//Colour colour = GetColour(normal);
 	return VertexModel(position, uv, normal); // , colour

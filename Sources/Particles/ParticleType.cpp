@@ -28,8 +28,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
-	const float &scale)
+std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength,
+	const float &stageCycles, const float &scale)
 {
 	auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Metadata metadata = Metadata();
@@ -37,7 +37,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 	return Create(metadata);
 }
 
-ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles, const float &scale) :
+ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
+	const float &scale) :
 	m_texture(std::move(texture)),
 	m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 	m_numberOfRows(numberOfRows),
@@ -65,7 +66,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 	}
 
 	ParticleTypeData *particleInstances;
-	m_instanceBuffer.Map(reinterpret_cast<void **>(&particleInstances));
+	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&particleInstances));
 
 	for (const auto &particle : particles)
 	{
@@ -101,7 +102,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		m_instances++;
 	}
 
-	m_instanceBuffer.Unmap();
+	m_instanceBuffer.UnmapMemory();
 }
 
 bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)

@@ -25,7 +25,8 @@ public:
 	/// <param name="height"> The distance between the base and the top. </param>
 	/// <param name="slices"> The amount of vertices that will be used to create the circular footprint. </param>
 	/// <param name="stacks"> The amount of stacks between the base and the top. </param>
-	static std::shared_ptr<ModelCylinder> Create(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2);
+	static std::shared_ptr<ModelCylinder> Create(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20,
+		const uint32_t &stacks = 2);
 
 	/// <summary>
 	/// Creates a new cylinder model.
@@ -36,7 +37,8 @@ public:
 	/// <param name="slices"> The amount of vertices that will be used to create the circular footprint. </param>
 	/// <param name="stacks"> The amount of stacks between the base and the top. </param>
 	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-	explicit ModelCylinder(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2, const bool &load = true);
+	explicit ModelCylinder(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2,
+		const bool &load = true);
 
 	void Load() override;
 

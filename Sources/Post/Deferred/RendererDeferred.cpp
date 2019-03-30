@@ -17,7 +17,8 @@ static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
+	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon,
+		PipelineGraphics::Depth::None),
 	m_brdfFuture(Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeBRDF, 512)),
 	m_skybox(nullptr),
 	m_irradiance(nullptr),
@@ -130,7 +131,7 @@ std::vector<Shader::Define> RendererDeferred::GetDefines()
 
 std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 {
-	auto brdfImage = std::make_unique<Image2d>(size, size);
+	auto brdfImage = std::make_unique<Image2d>(size, size, nullptr, VK_FORMAT_R16G16_SFLOAT);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -152,15 +153,15 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 
 #if defined(ACID_VERBOSE)
 	// Saves the BRDF texture.
-	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *result)
+	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
-		auto pixels = brdfImage->GetPixels(width, height, 1);
-		Image::WritePixels(filename, pixels.get(), width, height);
-	}, result.get());*/
+		auto pixels = image->GetPixels(width, height, 1);
+		Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R16G16 image.
+	}, brdfImage.get());*/
 #endif
 
 	return brdfImage;
@@ -173,7 +174,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 		return nullptr;
 	}
 
-	auto irradianceCubemap = std::make_unique<ImageCube>(size, size);
+	auto irradianceCubemap = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R32G32B32A32_SFLOAT);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -196,15 +197,15 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 
 #if defined(ACID_VERBOSE)
 	// Saves the irradiance texture.
-	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *result)
+	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
-		auto pixels = irradianceCubemap->GetPixels(width, height, 1);
-		Image::WritePixels(filename, pixels.get(), width, height);
-	}, result.get());*/
+		auto pixels = image->GetPixels(width, height, 1);
+		Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R32G32B32A32 image.
+	}, irradianceCubemap.get());*/
 #endif
 
 	return irradianceCubemap;
@@ -219,8 +220,8 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	auto prefilteredCubemap = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-		VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
+	auto prefilteredCubemap = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 	// Creates the pipeline.
 	PipelineCompute compute = PipelineCompute("Shaders/Prefiltered.comp");
@@ -232,7 +233,14 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		VkImageView levelView = VK_NULL_HANDLE;
-		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 6, 0);
+		
+		VkImageSubresourceRange viewSubresourceRange = {};
+		viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		viewSubresourceRange.baseMipLevel = i;
+		viewSubresourceRange.levelCount = 1;
+		viewSubresourceRange.baseArrayLayer = 0;
+		viewSubresourceRange.layerCount = 6;
+		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), viewSubresourceRange);
 
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
 		compute.BindPipeline(commandBuffer);
@@ -252,7 +260,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		//descriptorWrite.pImageInfo = &imageInfo;
 		auto writeDescriptorSet = WriteDescriptorSet(descriptorWrite, imageInfo);
 
-		pushHandler.Push("roughness", static_cast<float>(i) / static_cast<float>(prefilteredCubemap->GetMipLevels()));
+		pushHandler.Push("roughness", static_cast<float>(i) / static_cast<float>(prefilteredCubemap->GetMipLevels() - 1));
 
 		descriptorSet.Push("PushObject", pushHandler);
 		descriptorSet.Push("outColour", prefilteredCubemap.get(), std::move(writeDescriptorSet));
@@ -261,7 +269,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 
 		pushHandler.BindPush(commandBuffer, compute);
 		descriptorSet.BindDescriptor(commandBuffer, compute);
-		compute.CmdRender(commandBuffer, prefilteredCubemap->GetWidth(), prefilteredCubemap->GetHeight()); // result->GetWidth() >> (i - 1), result->GetHeight() >> (i - 1)
+		compute.CmdRender(commandBuffer, prefilteredCubemap->GetWidth() >> i, prefilteredCubemap->GetHeight() >> i);
 
 		commandBuffer.End();
 		commandBuffer.SubmitIdle();
@@ -270,18 +278,18 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 	}
 
 #if defined(ACID_VERBOSE)
-	/*for (uint32_t i = 1; i < result->GetMipLevels() + 1; i++)
+	/*for (uint32_t i = 1; i < prefilteredCubemap->GetMipLevels() + 1; i++)
 	{
 		// Saves the prefiltered texture.
-		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *result, uint32_t i)
+		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
 			FileSystem::ClearFile(filename);
 			uint32_t width = 0;
 			uint32_t height = 0;
-			auto pixels = prefilteredCubemap->GetPixels(width, height, i);
-			Image::WritePixels(filename, pixels.get(), width, height);
-		}, result.get(), i);
+			auto pixels = image->GetPixels(width, height, i);
+			Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R16G16B16A16 image.
+		}, prefilteredCubemap.get(), i);
 	}*/
 #endif
 

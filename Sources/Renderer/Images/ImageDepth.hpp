@@ -24,7 +24,9 @@ public:
 
 	const VkImage &GetImage() const { return m_image; }
 
-	const VkImageView &GetImageView() const { return m_imageView; }
+	const VkSampler &GetSampler() const { return m_sampler; }
+
+	const VkImageView &GetView() const { return m_view; }
 
 	const VkFormat &GetFormat() const { return m_format; }
 
@@ -32,8 +34,8 @@ private:
 	uint32_t m_width, m_height;
 
 	VkImage m_image;
-	VkImageView m_imageView;
 	VkSampler m_sampler;
+	VkImageView m_view;
 	VkFormat m_format;
 };
 }

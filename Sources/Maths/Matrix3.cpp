@@ -8,9 +8,9 @@ namespace acid
 const Matrix3 Matrix3::Identity = Matrix3(1.0f);
 const Matrix3 Matrix3::Zero = Matrix3(0.0f);
 
-Matrix3::Matrix3(const float &diagonal) noexcept
+Matrix3::Matrix3(const float &diagonal)
 {
-	memset(m_rows, 0, 3 * 3 * sizeof(float));
+	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
 	m_rows[0][0] = diagonal;
 	m_rows[1][1] = diagonal;
 	m_rows[2][2] = diagonal;
@@ -18,24 +18,24 @@ Matrix3::Matrix3(const float &diagonal) noexcept
 
 Matrix3::Matrix3(const Matrix2 &source)
 {
-	memset(m_rows, 0, 3 * 3 * sizeof(float));
-	memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
 	m_rows[2][2] = 1.0f;
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 }
 
 Matrix3::Matrix3(const Matrix4 &source)
 {
-	memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
+	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
 }
 
 Matrix3::Matrix3(const float *source)
 {
-	memcpy(m_rows, source, 3 * 3 * sizeof(float));
+	std::memcpy(m_rows, source, 3 * 3 * sizeof(float));
 }
 
 Matrix3::Matrix3(const Vector3 *source)
 {
-	memcpy(m_rows, source, 3 * sizeof(Vector3));
+	std::memcpy(m_rows, source, 3 * sizeof(Vector3));
 }
 
 Matrix3 Matrix3::Add(const Matrix3 &other) const
@@ -395,8 +395,8 @@ std::string Matrix3::ToString() const
 {
 	std::stringstream stream;
 	stream.precision(10);
-	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", " << m_rows[2][0] << ", "
-	       << m_rows[2][1] << ", " << m_rows[2][2] << ")";
+	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
+	       << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
 	return stream.str();
 }
 }

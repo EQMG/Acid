@@ -4,15 +4,16 @@
 
 namespace acid
 {
-static const std::vector<VkFormat> TRY_FORMATS = { VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT, VK_FORMAT_D16_UNORM };
+static const std::vector<VkFormat> TRY_FORMATS = { VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT,
+	VK_FORMAT_D16_UNORM };
 
 ImageDepth::ImageDepth(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples) :
 	Buffer(width * height * 4, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT),
 	m_width(width),
 	m_height(height),
 	m_image(VK_NULL_HANDLE),
-	m_imageView(VK_NULL_HANDLE),
 	m_sampler(VK_NULL_HANDLE),
+	m_view(VK_NULL_HANDLE),
 	m_format(VK_FORMAT_UNDEFINED)
 {
 	auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
@@ -41,19 +42,34 @@ ImageDepth::ImageDepth(const uint32_t &width, const uint32_t &height, const VkSa
 		aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
 	}
 
-	Image::CreateImage(m_image, m_bufferMemory, { m_width, m_height, 1 }, m_format, samples, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
-		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1, 1, VK_IMAGE_TYPE_2D);
-	Image::CreateImageView(m_image, m_imageView, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_DEPTH_BIT, 1, 0, 1, 0);
+	Image::CreateImage(m_image, m_bufferMemory, { m_width, m_height, 1 }, m_format, samples, VK_IMAGE_TILING_OPTIMAL,
+		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 1, 1, VK_IMAGE_TYPE_2D);
+
 	Image::CreateImageSampler(m_sampler, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, false, 1);
-	Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, aspectMask, 1, 0, 1, 0);
+
+	VkImageSubresourceRange viewSubresourceRange = {};
+	viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+	viewSubresourceRange.baseMipLevel = 0;
+	viewSubresourceRange.levelCount = 1;
+	viewSubresourceRange.baseArrayLayer = 0;
+	viewSubresourceRange.layerCount = 1;
+	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, viewSubresourceRange);
+
+	VkImageSubresourceRange subresourceRange = {};
+	subresourceRange.aspectMask = aspectMask;
+	subresourceRange.baseMipLevel = 0;
+	subresourceRange.levelCount = 1;
+	subresourceRange.baseArrayLayer = 0;
+	subresourceRange.layerCount = 1;
+	Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, subresourceRange);
 }
 
 ImageDepth::~ImageDepth()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
+	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_view, nullptr);
 	vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
-	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_imageView, nullptr);
 	vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
 }
 
@@ -72,7 +88,7 @@ WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const
 {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
-	imageInfo.imageView = m_imageView;
+	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
 	VkWriteDescriptorSet descriptorWrite = {};

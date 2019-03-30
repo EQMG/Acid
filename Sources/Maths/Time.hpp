@@ -14,7 +14,7 @@ public:
 	/// Constructor for time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
 	/// </summary>
 	/// <param name="microseconds"> Number of microseconds. </param>
-	explicit Time(const int64_t &microseconds = 0) noexcept;
+	explicit Time(const int64_t &microseconds = 0);
 
 	/// <summary>
 	/// Constructs a time value from a number of seconds.

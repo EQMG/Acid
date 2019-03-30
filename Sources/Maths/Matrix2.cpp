@@ -8,31 +8,31 @@ namespace acid
 const Matrix2 Matrix2::Identity = Matrix2(1.0f);
 const Matrix2 Matrix2::Zero = Matrix2(0.0f);
 
-Matrix2::Matrix2(const float &diagonal) noexcept
+Matrix2::Matrix2(const float &diagonal)
 {
-	memset(m_rows, 0, 2 * 2 * sizeof(float));
+	std::memset(m_rows, 0, 2 * 2 * sizeof(float));
 	m_rows[0][0] = diagonal;
 	m_rows[1][1] = diagonal;
 }
 
 Matrix2::Matrix2(const Matrix3 &source)
 {
-	memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 }
 
 Matrix2::Matrix2(const Matrix4 &source)
 {
-	memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 }
 
 Matrix2::Matrix2(const float *source)
 {
-	memcpy(m_rows, source, 2 * 2 * sizeof(float));
+	std::memcpy(m_rows, source, 2 * 2 * sizeof(float));
 }
 
 Matrix2::Matrix2(const Vector2 *source)
 {
-	memcpy(m_rows, source, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source, 2 * sizeof(Vector2));
 }
 
 Matrix2 Matrix2::Add(const Matrix2 &other) const

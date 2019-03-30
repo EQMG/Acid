@@ -18,7 +18,7 @@ public:
 	/// <param name="y"> Start y. </param>
 	/// <param name="z"> Start z. </param>
 	/// <param name="w"> Start w. </param>
-	Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f) noexcept;
+	Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
 
 	/// <summary>
 	/// Constructor for Quaternion.
@@ -231,7 +231,7 @@ namespace std
 template<>
 struct hash<acid::Quaternion>
 {
-	size_t operator()(acid::Quaternion const &quaternion) const noexcept
+	size_t operator()(acid::Quaternion const &quaternion) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, quaternion.m_x);

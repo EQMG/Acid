@@ -690,7 +690,8 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 				if (uniformBlockName == splitName.at(0))
 				{
 					uniformBlock.m_uniforms.emplace(String::ReplaceFirst(uniformName, splitName.at(0) + ".", ""),
-						Uniform(program.getUniformBinding(i), program.getUniformBufferOffset(i), ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false, stageFlag));
+						Uniform(program.getUniformBinding(i), program.getUniformBufferOffset(i), ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false,
+							stageFlag));
 					return;
 				}
 			}

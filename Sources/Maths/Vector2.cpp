@@ -11,7 +11,7 @@ const Vector2 Vector2::Down = Vector2(0.0f, -1.0f);
 const Vector2 Vector2::PositiveInfinity = Vector2(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 const Vector2 Vector2::NegativeInfinity = Vector2(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-Vector2::Vector2(const float &x, const float &y) noexcept :
+Vector2::Vector2(const float &x, const float &y) :
 	m_x(x),
 	m_y(y)
 {

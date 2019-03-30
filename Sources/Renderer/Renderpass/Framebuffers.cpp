@@ -7,8 +7,8 @@
 
 namespace acid
 {
-Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
-	const VkSampleCountFlagBits &samples)
+Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain,
+	const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
@@ -19,9 +19,8 @@ Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const 
 		switch (attachment.GetType())
 		{
 		case Attachment::Type::Image:
-			m_imageAttachments.emplace_back(
-				std::make_unique<Image2d>(width, height, nullptr, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-					VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, attachmentSamples));
+			m_imageAttachments.emplace_back(std::make_unique<Image2d>(width, height, nullptr, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+				VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, attachmentSamples));
 			break;
 		case Attachment::Type::Depth:
 			m_imageAttachments.emplace_back(nullptr);
@@ -46,7 +45,7 @@ Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const 
 				attachments.emplace_back(GetAttachment(attachment.GetBinding())->GetView());
 				break;
 			case Attachment::Type::Depth:
-				attachments.emplace_back(depthStencil.GetImageView());
+				attachments.emplace_back(depthStencil.GetView());
 				break;
 			case Attachment::Type::Swapchain:
 				attachments.emplace_back(swapchain.GetImageViews().at(i));

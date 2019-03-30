@@ -129,7 +129,7 @@ int32_t FontMetafile::GetValueOfVariable(const std::string &variable)
 std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 {
 	auto numbers = String::Split(m_values.at(variable), ",");
-	
+
 	std::vector<int32_t> values;
 	values.reserve(numbers.size());
 

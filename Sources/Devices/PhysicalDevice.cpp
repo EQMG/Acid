@@ -5,8 +5,8 @@
 
 namespace acid
 {
-static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS = { VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT, VK_SAMPLE_COUNT_4_BIT,
-	VK_SAMPLE_COUNT_2_BIT };
+static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS = { VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT,
+	VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT };
 
 PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_instance(instance),

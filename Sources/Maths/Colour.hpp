@@ -21,7 +21,7 @@ public:
 	/// <param name="g"> The new G value. </param>
 	/// <param name="b"> The new B value. </param>
 	/// <param name="a"> The new A value. </param>
-	Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f) noexcept;
+	Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f);
 
 	/// <summary>
 	/// Constructor for colour.
@@ -234,7 +234,7 @@ namespace std
 template<>
 struct hash<acid::Colour>
 {
-	size_t operator()(acid::Colour const &colour) const noexcept
+	size_t operator()(acid::Colour const &colour) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, colour.m_r);

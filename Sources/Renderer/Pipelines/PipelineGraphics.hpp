@@ -40,9 +40,10 @@ public:
 	/// <param name="cullMode"> The vertex cull mode. </param>
 	/// <param name="frontFace"> The direction to render faces. </param>
 	/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
-	PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {}, const Mode &mode = Mode::Polygon,
-		const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
-		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false);
+	PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
+		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
+		const bool &pushDescriptors = false);
 
 	~PipelineGraphics();
 
@@ -183,8 +184,8 @@ class ACID_EXPORT PipelineGraphicsCreate
 public:
 	explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
 		const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
-		const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT,
-		const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false) :
+		const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
+		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false) :
 		m_shaderStages(std::move(shaderStages)),
 		m_vertexInputs(std::move(vertexInputs)),
 		m_defines(std::move(defines)),
@@ -204,7 +205,8 @@ public:
 	/// <param name="pipelineStage"> The pipelines graphics stage. </param>
 	PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const
 	{
-		return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, m_polygonMode, m_cullMode, m_frontFace, m_pushDescriptors);
+		return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, m_polygonMode, m_cullMode, m_frontFace,
+			m_pushDescriptors);
 	}
 
 	void Decode(const Metadata &metadata)

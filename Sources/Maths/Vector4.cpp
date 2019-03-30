@@ -13,7 +13,7 @@ const Vector4 Vector4::PositiveInfinity = Vector4(+std::numeric_limits<float>::i
 const Vector4 Vector4::NegativeInfinity = Vector4(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
 	-std::numeric_limits<float>::infinity());
 
-Vector4::Vector4(const float &x, const float &y, const float &z, const float &w) noexcept :
+Vector4::Vector4(const float &x, const float &y, const float &z, const float &w) :
 	m_x(x),
 	m_y(y),
 	m_z(z),

@@ -58,7 +58,7 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 	}
 
 	GizmoTypeData *gizmoInstances;
-	m_instanceBuffer.Map(reinterpret_cast<void **>(&gizmoInstances));
+	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&gizmoInstances));
 
 	for (const auto &gizmo : gizmos)
 	{
@@ -78,7 +78,7 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 		m_instances++;
 	}
 
-	m_instanceBuffer.Unmap();
+	m_instanceBuffer.UnmapMemory();
 }
 
 bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)

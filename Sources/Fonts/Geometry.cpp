@@ -152,7 +152,8 @@ bool BboxBezier2Intersect(const Rect &bbox, const Vector2 bezier[3])
 	Vector2 tl = Vector2(bbox.minX, bbox.maxY);
 	Vector2 tr = Vector2(bbox.maxX, bbox.maxY);
 
-	return Bezier2LineIsIntersecting(bezier, bl, br) || Bezier2LineIsIntersecting(bezier, br, tr) || Bezier2LineIsIntersecting(bezier, tr, tl) || Bezier2LineIsIntersecting(bezier, tl, bl);
+	return Bezier2LineIsIntersecting(bezier, bl, br) || Bezier2LineIsIntersecting(bezier, br, tr) || Bezier2LineIsIntersecting(bezier, tr, tl)
+		|| Bezier2LineIsIntersecting(bezier, tl, bl);
 }
 
 float LineSignedDistance(const Vector2 &a, const Vector2 &b, const Vector2 &p)

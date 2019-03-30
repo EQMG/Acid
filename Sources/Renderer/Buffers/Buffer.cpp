@@ -41,8 +41,8 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	if (data != nullptr)
 	{
 		void *mapped;
-		Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, size, 0, &mapped));
-		memcpy(mapped, data, size);
+		MapMemory(&mapped);
+		std::memcpy(mapped, data, size);
 
 		// If host coherency hasn't been requested, do a manual flush to make writes visible.
 		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
@@ -55,7 +55,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 			vkFlushMappedMemoryRanges(logicalDevice->GetLogicalDevice(), 1, &mappedMemoryRange);
 		}
 
-		vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
+		UnmapMemory();
 	}
 
 	// Attach the memory to the buffer object.
@@ -70,13 +70,13 @@ Buffer::~Buffer()
 	vkFreeMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, nullptr);
 }
 
-void Buffer::Map(void **data)
+void Buffer::MapMemory(void **data)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, data));
 }
 
-void Buffer::Unmap()
+void Buffer::UnmapMemory()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
@@ -102,13 +102,5 @@ uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryProper
 	}
 
 	throw std::runtime_error("Failed to find a valid memory type for buffer");
-	return 0;
-}
-
-void Buffer::CopyBuffer(const CommandBuffer &commandBuffer, const VkBuffer srcBuffer, const VkBuffer dstBuffer, const VkDeviceSize &size)
-{
-	VkBufferCopy copyRegion = {};
-	copyRegion.size = size;
-	vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
 }
 }

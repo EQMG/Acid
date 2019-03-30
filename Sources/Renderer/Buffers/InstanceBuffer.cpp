@@ -11,12 +11,9 @@ InstanceBuffer::InstanceBuffer(const VkDeviceSize &size) :
 
 void InstanceBuffer::Update(const CommandBuffer &commandBuffer, const void *newData)
 {
-	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-
-	// Copies the data to the buffer.
 	void *data;
-	Renderer::CheckVk(vkMapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory(), 0, m_size, 0, &data));
-	memcpy(data, newData, static_cast<std::size_t>(m_size));
-	vkUnmapMemory(logicalDevice->GetLogicalDevice(), GetBufferMemory());
+	Buffer::MapMemory(&data);
+	std::memcpy(data, newData, static_cast<std::size_t>(m_size));
+	Buffer::UnmapMemory();
 }
 }

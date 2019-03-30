@@ -37,8 +37,8 @@ public:
 	/// <param name="lifeLength"> The averaged life length for the particle. </param>
 	/// <param name="stageCycles"> The amount of times stages will be shown. </param>
 	/// <param name="scale"> The averaged scale for the particle. </param>
-	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f,
-		const float &stageCycles = 1.0f, const float &scale = 1.0f);
+	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+		const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 	/// <summary>
 	/// Creates a new particle type.

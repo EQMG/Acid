@@ -60,7 +60,7 @@ Scene1::Scene1() :
 			Vector3 cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3(), 1.0f));
-			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
+			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-(cameraRotation.ToQuaternion() * Vector3::Front).Normalize() * 3.0f, Time::Seconds(2.0f));
 			sphere->AddComponent<ColliderSphere>();
@@ -172,7 +172,7 @@ void Scene1::Start()
 		{
 			auto cube = GetStructure()->CreateEntity(Transform(Vector3(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f), Vector3(), 1.0f));
 			cube->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
-			cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.1f, 0.3f);
+			cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f);
 			cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 			cube->AddComponent<ColliderCube>();
 			cube->AddComponent<MeshRender>();

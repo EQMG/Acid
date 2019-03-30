@@ -14,7 +14,8 @@ public:
 	/// <param name="begin"> If recording will start right away, if true <seealso cref="#Begin()"/> is called. </param>
 	/// <param name="queueType"> The queue to run this command buffer on. </param>
 	/// <param name="bufferLevel"> The buffer level. </param>
-	explicit CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT, const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+	explicit CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT,
+		const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 	~CommandBuffer();
 

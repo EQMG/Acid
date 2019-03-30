@@ -11,16 +11,14 @@ StorageBuffer::StorageBuffer(const VkDeviceSize &size, const void *data) :
 
 void StorageBuffer::Update(const void *newData)
 {
-	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-
-	// Copies the data to the buffer.
 	void *data;
-	vkMapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory, 0, m_size, 0, &data);
-	memcpy(data, newData, static_cast<std::size_t>(m_size));
-	vkUnmapMemory(logicalDevice->GetLogicalDevice(), m_bufferMemory);
+	Buffer::MapMemory(&data);
+	std::memcpy(data, newData, static_cast<std::size_t>(m_size));
+	Buffer::UnmapMemory();
 }
 
-VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
+VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	const uint32_t &count)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;

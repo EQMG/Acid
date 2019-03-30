@@ -67,8 +67,8 @@ public:
 	class Uniform
 	{
 	public:
-		explicit Uniform(const int32_t &binding = -1, const int32_t &offset = -1, const int32_t &size = -1, const int32_t &glType = -1, const bool &readOnly = false, const bool &writeOnly = false,
-			const VkShaderStageFlags &stageFlags = 0) :
+		explicit Uniform(const int32_t &binding = -1, const int32_t &offset = -1, const int32_t &size = -1, const int32_t &glType = -1, const bool &readOnly = false,
+			const bool &writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),

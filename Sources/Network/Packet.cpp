@@ -1,13 +1,10 @@
 #include "Packet.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #endif
-
 #include <cwchar>
 #include "Socket.hpp"
 
@@ -317,8 +314,9 @@ Packet &Packet::operator<<(const uint32_t &data)
 Packet &Packet::operator<<(const int64_t &data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
-	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF), static_cast<uint8_t>((data >> 32) & 0xFF),
-		static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF), static_cast<uint8_t>((data) & 0xFF) };
+	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF),
+		static_cast<uint8_t>((data >> 32) & 0xFF), static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF),
+		static_cast<uint8_t>((data) & 0xFF) };
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
@@ -326,8 +324,9 @@ Packet &Packet::operator<<(const int64_t &data)
 Packet &Packet::operator<<(const uint64_t &data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
-	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF), static_cast<uint8_t>((data >> 32) & 0xFF),
-		static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF), static_cast<uint8_t>((data) & 0xFF) };
+	uint8_t toWrite[] = { static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF),
+		static_cast<uint8_t>((data >> 32) & 0xFF), static_cast<uint8_t>((data >> 24) & 0xFF), static_cast<uint8_t>((data >> 16) & 0xFF), static_cast<uint8_t>((data >> 8) & 0xFF),
+		static_cast<uint8_t>((data) & 0xFF) };
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }

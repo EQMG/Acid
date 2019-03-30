@@ -22,7 +22,7 @@ public:
 	/// <param name="y"> Start y. </param>
 	/// <param name="z"> Start z. </param>
 	/// <param name="w"> Start w. </param>
-	Vector4(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f) noexcept;
+	Vector4(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
 
 	/// <summary>
 	/// Constructor for Vector4.
@@ -281,7 +281,7 @@ namespace std
 template<>
 struct hash<acid::Vector4>
 {
-	size_t operator()(acid::Vector4 const &vector) const noexcept
+	size_t operator()(acid::Vector4 const &vector) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.m_x);

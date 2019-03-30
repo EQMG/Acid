@@ -60,7 +60,8 @@ bool PostFilter::RemoveAttachment(const std::string &name)
 	return false;
 }
 
-void PostFilter::PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2)
+void PostFilter::PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1,
+	const std::string &rendererAttachment2)
 {
 	auto it1 = m_attachments.find(descriptorName1);
 	auto it2 = m_attachments.find(descriptorName1);

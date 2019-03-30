@@ -16,7 +16,7 @@ public:
 	/// </summary>
 	/// <param name="x"> Start x. </param>
 	/// <param name="y"> Start y. </param>
-	Vector2(const float &x = 0.0f, const float &y = 0.0f) noexcept;
+	Vector2(const float &x = 0.0f, const float &y = 0.0f);
 
 	/// <summary>
 	/// Adds this vector to another vector.
@@ -287,7 +287,7 @@ namespace std
 template<>
 struct hash<acid::Vector2>
 {
-	size_t operator()(acid::Vector2 const &vector) const noexcept
+	size_t operator()(acid::Vector2 const &vector) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.m_x);

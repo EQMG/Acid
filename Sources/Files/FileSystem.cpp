@@ -1,13 +1,10 @@
 #include "FileSystem.hpp"
 
 #include <sys/stat.h>
-
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <io.h>
 #include <direct.h>
 #include "dirent.h"
-
 typedef struct _stat STAT;
 #define stat _stat
 #define S_IFREG _S_IFREG
@@ -22,7 +19,6 @@ typedef struct stat STAT;
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
-
 #include "Helpers/String.hpp"
 
 namespace acid

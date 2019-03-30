@@ -23,7 +23,7 @@ struct EnableBitMaskOperators :
 template<typename T>
 struct Enumerator
 {
-	constexpr Enumerator(const T &value) noexcept :
+	constexpr Enumerator(const T &value) :
 		m_value(value)
 	{
 	}
@@ -52,22 +52,22 @@ struct BitMask
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 
-	constexpr BitMask() noexcept :
+	constexpr BitMask() :
 		m_value(static_cast<underlying_type>(0))
 	{
 	}
 
-	constexpr BitMask(const T &value) noexcept :
+	constexpr BitMask(const T &value) :
 		m_value(static_cast<underlying_type>(value))
 	{
 	}
 
-	constexpr BitMask(const underlying_type &value) noexcept :
+	constexpr BitMask(const underlying_type &value) :
 		m_value(value)
 	{
 	}
 
-	constexpr BitMask(const Enumerator<T> &enumerator) noexcept :
+	constexpr BitMask(const Enumerator<T> &enumerator) :
 		m_value(static_cast<underlying_type>(enumerator.m_value))
 	{
 	}
@@ -91,13 +91,13 @@ struct BitMask
 };
 
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type MakeBitMask(const T &t) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type MakeBitMask(const T &t)
 {
 	return BitMask<T>{ t };
 }
 
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type MakeBitMask(const typename std::underlying_type<T>::type &t) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type MakeBitMask(const typename std::underlying_type<T>::type &t)
 {
 	return BitMask<T>{ t };
 }
@@ -106,7 +106,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(T, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	assert((static_cast<underlying_type>(lhs) & (static_cast<underlying_type>(lhs) - 1)) == 0);
@@ -117,7 +117,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(Enumerator<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) & static_cast<underlying_type>(rhs.m_value)) };
@@ -127,7 +127,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator&(const BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator&(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	return BitMask<T>{ static_cast<T>(lhs.m_value & rhs.m_value) };
 }
@@ -136,7 +136,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(lhs.m_value & static_cast<underlying_type>(rhs)) };
@@ -146,7 +146,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(T, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs) & rhs.m_value) };
@@ -156,7 +156,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(lhs.m_value & static_cast<underlying_type>(rhs.m_value)) };
@@ -166,7 +166,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::Ealue, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::Ealue, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) & rhs.m_value) };
@@ -176,7 +176,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(T, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const T &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs) & static_cast<underlying_type>(rhs.m_value)) };
@@ -186,7 +186,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(Enumerator<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) & static_cast<underlying_type>(rhs)) };
@@ -196,7 +196,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(T, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) | static_cast<underlying_type>(rhs)) };
@@ -206,7 +206,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(Enumerator<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) | static_cast<underlying_type>(rhs.m_value)) };
@@ -216,7 +216,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	return BitMask<T>{ static_cast<T>(lhs.m_value | rhs.m_value) };
 }
@@ -225,7 +225,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(lhs.m_value | static_cast<underlying_type>(rhs)) };
@@ -235,7 +235,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(T, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) | rhs.m_value) };
@@ -245,7 +245,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(lhs.m_value | static_cast<underlying_type>(rhs.m_value)) };
@@ -255,7 +255,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) | rhs.m_value) };
@@ -265,7 +265,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(Enumerator<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const Enumerator<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) | static_cast<underlying_type>(rhs)) };
@@ -275,7 +275,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|(T, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator|(const T &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) | static_cast<underlying_type>(rhs.m_value)) };
@@ -285,7 +285,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(T, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) ^ static_cast<underlying_type>(rhs)) };
@@ -295,7 +295,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(Enumerator<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) ^ static_cast<underlying_type>(rhs.m_value)) };
@@ -305,7 +305,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	return BitMask<T>{ static_cast<T>(lhs.m_value ^ rhs.m_value) };
 }
@@ -314,7 +314,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(lhs.m_value ^ static_cast<underlying_type>(rhs)) };
@@ -324,7 +324,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(T, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) ^ rhs.m_value) };
@@ -334,7 +334,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(lhs.m_value ^ static_cast<underlying_type>(rhs.m_value)) };
@@ -344,7 +344,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) ^ rhs.m_value) };
@@ -354,7 +354,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(Enumerator<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const Enumerator<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) ^ static_cast<underlying_type>(rhs)) };
@@ -364,7 +364,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^(T, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator^(const T &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(static_cast<underlying_type>(lhs) ^ static_cast<underlying_type>(rhs.m_value)) };
@@ -374,7 +374,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator~(T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const T &value) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const T &value)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(~static_cast<underlying_type>(value)) };
@@ -384,7 +384,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator~(Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const Enumerator<T> &lhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const Enumerator<T> &lhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return BitMask<T>{ static_cast<T>(~static_cast<underlying_type>(lhs.m_value)) };
@@ -394,7 +394,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator~(BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const BitMask<T> &lhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T>>::type operator~(const BitMask<T> &lhs)
 {
 	return BitMask<T>{ static_cast<T>(~lhs.m_value) };
 }
@@ -403,7 +403,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&=(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value &= static_cast<underlying_type>(rhs);
@@ -414,7 +414,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&=(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value &= static_cast<underlying_type>(rhs.m_value);
@@ -425,7 +425,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&=(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator&=(BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	lhs.m_value &= rhs.m_value;
 	return lhs;
@@ -435,7 +435,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|=(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value |= static_cast<underlying_type>(rhs);
@@ -446,7 +446,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|=(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value |= static_cast<underlying_type>(rhs.m_value);
@@ -457,7 +457,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator|=(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator|=(BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	lhs.m_value |= rhs.m_value;
 	return lhs;
@@ -467,7 +467,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^=(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const T &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value ^= static_cast<underlying_type>(rhs);
@@ -478,7 +478,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^=(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	lhs.m_value ^= static_cast<underlying_type>(rhs.m_value);
@@ -489,7 +489,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator^=(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, BitMask<T> &>::type operator^=(BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	lhs.m_value ^= rhs.m_value;
 	return lhs;
@@ -499,7 +499,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(T, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const T &rhs)
 {
 	return lhs == rhs;
 }
@@ -508,7 +508,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(Enumerator<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const Enumerator<T> &rhs)
 {
 	return lhs.m_value == rhs.m_value;
 }
@@ -517,7 +517,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	return lhs.m_value == rhs.m_value;
 }
@@ -526,7 +526,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(Enumerator<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const T &rhs)
 {
 	return lhs.m_value == rhs;
 }
@@ -535,7 +535,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(T, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const Enumerator<T> &rhs)
 {
 	return lhs == rhs.m_value;
 }
@@ -544,7 +544,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const T &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -554,7 +554,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(T, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const T &lhs, const BitMask<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -564,7 +564,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -574,7 +574,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator==(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator==(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -584,7 +584,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(T, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const T &rhs)
 {
 	return lhs != rhs;
 }
@@ -593,7 +593,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(Enumerator<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const Enumerator<T> &rhs)
 {
 	return lhs.m_value != rhs.m_value;
 }
@@ -602,7 +602,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(BitMask<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const BitMask<T> &rhs)
 {
 	return lhs.m_value != rhs.m_value;
 }
@@ -611,7 +611,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(Enumerator<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const T &rhs)
 {
 	return lhs.m_value != rhs;
 }
@@ -620,7 +620,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(T, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const Enumerator<T> &rhs)
 {
 	return lhs != rhs.m_value;
 }
@@ -629,7 +629,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(BitMask<T>, T)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const T &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const T &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -639,7 +639,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(T, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const T &lhs, const BitMask<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -649,7 +649,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(BitMask<T>, Enumerator<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const Enumerator<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const BitMask<T> &lhs, const Enumerator<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -659,7 +659,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator!=(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const BitMask<T> &rhs) noexcept
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, bool>::type operator!=(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	static_assert(!std::is_same<typename BitMask<T>::underlying_type, typename std::underlying_type<T>::type>::value, "A bitmask can't be compared to an enumerator. Use & first.");
 	return false;
@@ -672,7 +672,7 @@ struct EnumIterator
 	{
 		using underlying_type = typename std::underlying_type<T>::type;
 
-		Iterator(const underlying_type &value) noexcept :
+		Iterator(const underlying_type &value) :
 			m_value(value)
 		{
 		}
@@ -697,14 +697,14 @@ struct EnumIterator
 };
 
 template<typename T>
-typename EnumIterator<T>::Iterator begin(EnumIterator<T>) noexcept
+typename EnumIterator<T>::Iterator begin(EnumIterator<T>)
 {
 	using underlying_type = typename EnumIterator<T>::Iterator::underlying_type;
 	return typename EnumIterator<T>::Iterator(static_cast<underlying_type>(T::First));
 }
 
 template<typename T>
-typename EnumIterator<T>::Iterator end(EnumIterator<T>) noexcept
+typename EnumIterator<T>::Iterator end(EnumIterator<T>)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return typename EnumIterator<T>::Iterator(static_cast<underlying_type>(T::Last) + 1);

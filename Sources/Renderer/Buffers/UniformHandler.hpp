@@ -17,9 +17,9 @@ public:
 	template<typename T>
 	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 	{
-		if (memcmp(m_data.get() + offset, &object, size) != 0)
+		if (std::memcmp(m_data.get() + offset, &object, size) != 0)
 		{
-			memcpy(m_data.get() + offset, &object, size);
+			std::memcpy(m_data.get() + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}

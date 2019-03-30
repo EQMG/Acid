@@ -94,5 +94,5 @@ vec2 BRDF(float NoV, float roughness)
 void main()
 {
 	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
-	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(BRDF(uv.x, uv.y), 0.0f, 1.0f));
+	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(BRDF(uv.x, 1.0f - uv.y), 0.0f, 1.0f));
 }

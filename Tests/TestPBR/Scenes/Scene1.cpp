@@ -64,14 +64,15 @@ void Scene1::Start()
 		{
 			auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
-			sphere->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f, nullptr, // Image2d::Create("Objects/Testing/Material.png")
+			sphere->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
+				nullptr, // Image2d::Create("Objects/Testing/Material.png")
 				Image2d::Create("Objects/Testing/Normal.png"));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
 			auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
 			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
+			teapot->AddComponent<MaterialDefault>(Colour::Yellow, nullptr, j / 5.0f, i / 5.0f);
 			teapot->AddComponent<MeshRender>();
 			teapot->AddComponent<ShadowRender>();
 		}

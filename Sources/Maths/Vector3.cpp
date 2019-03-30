@@ -18,7 +18,7 @@ const Vector3 Vector3::Back = Vector3(0.0f, 0.0f, -1.0f);
 const Vector3 Vector3::PositiveInfinity = Vector3(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 const Vector3 Vector3::NegativeInfinity = Vector3(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
-Vector3::Vector3(const float &x, const float &y, const float &z) noexcept :
+Vector3::Vector3(const float &x, const float &y, const float &z) :
 	m_x(x),
 	m_y(y),
 	m_z(z)

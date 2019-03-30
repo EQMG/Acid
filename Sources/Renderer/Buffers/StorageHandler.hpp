@@ -28,9 +28,9 @@ public:
 			return;
 		}
 
-		if (memcmp(m_data.get(), data, size) != 0)
+		if (std::memcmp(m_data.get(), data, size) != 0)
 		{
-			memcpy(m_data.get(), data, size);
+			std::memcpy(m_data.get(), data, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
@@ -43,9 +43,9 @@ public:
 			return;
 		}
 
-		if (memcmp(m_data.get() + offset, &object, size) != 0)
+		if (std::memcmp(m_data.get() + offset, &object, size) != 0)
 		{
-			memcpy(m_data.get() + offset, &object, size);
+			std::memcpy(m_data.get() + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}

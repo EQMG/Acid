@@ -81,7 +81,8 @@ void UiObject::Update(std::vector<UiObject *> &list)
 			m_screenScale *= m_parent->m_screenScale;
 		}
 
-		m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + m_parent->m_screenPosition;
+		m_screenPosition =
+			(m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + m_parent->m_screenPosition;
 		m_screenAlpha *= m_parent->m_screenAlpha;
 	}
 	else

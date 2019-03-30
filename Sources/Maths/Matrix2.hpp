@@ -17,7 +17,7 @@ public:
 	/// Constructor for Matrix2. The matrix is initialised to the identity.
 	/// </summary>
 	/// <param name="diagonal"> The value set to the diagonals. </param>
-	Matrix2(const float &diagonal = 1.0f) noexcept;
+	Matrix2(const float &diagonal = 1.0f);
 
 	/// <summary>
 	/// Constructor for Matrix2.
@@ -196,7 +196,7 @@ namespace std
 template<>
 struct hash<acid::Matrix2>
 {
-	size_t operator()(acid::Matrix2 const &matrix) const noexcept
+	size_t operator()(acid::Matrix2 const &matrix) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);

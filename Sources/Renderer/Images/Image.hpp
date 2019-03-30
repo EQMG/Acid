@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include "Renderer/Commands/CommandBuffer.hpp"
 #include "Renderer/Descriptors/Descriptor.hpp"
 
 namespace acid
@@ -24,15 +25,16 @@ public:
 	/// <param name="properties"> The images memory properties. </param>
 	/// <param name="mipLevels"> The number of levels of detail available for minified sampling of the image. </param>
 	/// <param name="arrayLayers"> The number of layers in the image. </param>
-	Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling, const VkImageUsageFlags &usage,
-		const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers);
+	Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
+		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers);
 
 	/*const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic,
 	const VkImageViewType &viewType, const VkImageAspectFlags &imageAspect, const uint32_t &baseMipLevel, const uint32_t &baseArrayLayer*/
 
 	~Image();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+		const uint32_t &count);
 
 	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
@@ -77,15 +79,15 @@ public:
 
 	const VkDeviceMemory &GetMemory() { return m_memory; }
 
-	const VkImageView &GetView() const { return m_view; }
-
 	const VkSampler &GetSampler() const { return m_sampler; }
+
+	const VkImageView &GetView() const { return m_view; }
 
 	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, uint32_t &width, uint32_t &height, uint32_t &components, VkFormat &format);
 
 	static void WritePixels(const std::string &filename, const uint8_t *pixels, const int32_t &width, const int32_t &height, const int32_t &components = 4);
 
-	static uint32_t GetMipLevels(const uint32_t &width, const uint32_t &height);
+	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
 	/// <summary>
 	/// Gets if this depth image has a depth component.
@@ -99,28 +101,29 @@ public:
 	/// <returns> If this has a stencil component. </returns>
 	static bool HasStencil(const VkFormat &format);
 
-	static void CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D &extent, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
-		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers, const VkImageType &type);
-
-	static void CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels, const uint32_t &baseArrayLayer,
-		const uint32_t &layerCount);
+	static void CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D &extent, const VkFormat &format, const VkSampleCountFlagBits &samples,
+		const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers,
+		const VkImageType &type);
 
 	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels);
 
-	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels,
-		const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format,
+		const VkImageSubresourceRange &subresourceRange);
 
-	static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout, const VkImageAspectFlags &aspectMask,
-		const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+	static void CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels,
+		const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+
+	static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout,
+		const VkImageSubresourceRange &subresourceRange);
+
+	static void InsertImageMemoryBarrier(const CommandBuffer &commandBuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
+		const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask,
+		const VkImageSubresourceRange &subresourceRange);
 
 	static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const VkExtent3D &extent, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
 	static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &format, const VkExtent3D &extent, const uint32_t &mipLevel,
 		const uint32_t &baseArrayLayer, const uint32_t &layerCount, const bool &srcSwapchain);
-
-	static void InsertImageMemoryBarrier(const VkCommandBuffer &cmdBuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
-		const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask,
-		const VkImageSubresourceRange &subresourceRange);
 
 private:
 	VkExtent3D m_extent;
@@ -138,7 +141,7 @@ private:
 
 	VkImage m_image;
 	VkDeviceMemory m_memory;
-	VkImageView m_view;
 	VkSampler m_sampler;
+	VkImageView m_view;
 };
 }

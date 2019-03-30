@@ -8,9 +8,9 @@ namespace acid
 const Matrix4 Matrix4::Identity = Matrix4(1.0f);
 const Matrix4 Matrix4::Zero = Matrix4(0.0f);
 
-Matrix4::Matrix4(const float &diagonal) noexcept
+Matrix4::Matrix4(const float &diagonal)
 {
-	memset(m_rows, 0, 4 * sizeof(Vector4));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4));
 	m_rows[0][0] = diagonal;
 	m_rows[1][1] = diagonal;
 	m_rows[2][2] = diagonal;
@@ -19,27 +19,27 @@ Matrix4::Matrix4(const float &diagonal) noexcept
 
 Matrix4::Matrix4(const Matrix2 &source)
 {
-	memset(m_rows, 0, 4 * sizeof(Vector4));
-	memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4));
 	m_rows[2][2] = 1.0f;
 	m_rows[3][3] = 1.0f;
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
 }
 
 Matrix4::Matrix4(const Matrix3 &source)
 {
-	memset(m_rows, 0, 4 * sizeof(Vector4));
-	memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4));
 	m_rows[3][3] = 1.0f;
+	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
 }
 
 Matrix4::Matrix4(const float *source)
 {
-	memcpy(m_rows, source, 4 * 4 * sizeof(float));
+	std::memcpy(m_rows, source, 4 * 4 * sizeof(float));
 }
 
 Matrix4::Matrix4(const Vector4 *source)
 {
-	memcpy(m_rows, source, 4 * sizeof(Vector4));
+	std::memcpy(m_rows, source, 4 * sizeof(Vector4));
 }
 
 Matrix4 Matrix4::Add(const Matrix4 &other) const
@@ -597,9 +597,9 @@ std::string Matrix4::ToString() const
 {
 	std::stringstream stream;
 	stream.precision(10);
-	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
-	       << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0] << ", " << m_rows[3][1] << ", " << m_rows[3][2]
-	       << ", " << m_rows[3][3] << ")";
+	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", "
+	       << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
+	       << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
 	return stream.str();
 }
 }

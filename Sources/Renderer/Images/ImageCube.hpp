@@ -60,12 +60,13 @@ public:
 	/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
 	ImageCube(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT,
-		const bool &anisotropic = false, const bool &mipmap = false);
+		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
 
 	~ImageCube();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count);
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+		const uint32_t &count);
 
 	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
@@ -100,8 +101,8 @@ public:
 	/// <param name="pixels"> The pixels to copy to the image. </param>
 	void SetPixels(const uint8_t *pixels);
 
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width, uint32_t &height,
-		uint32_t &components, VkFormat &format);
+	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width,
+		uint32_t &height, uint32_t &components, VkFormat &format);
 
 	const std::string &GetFilename() const { return m_filename; };
 
@@ -135,9 +136,9 @@ public:
 
 	const VkDeviceMemory &GetMemory() { return m_memory; }
 
-	const VkImageView &GetView() const { return m_view; }
-
 	const VkSampler &GetSampler() const { return m_sampler; }
+
+	const VkImageView &GetView() const { return m_view; }
 
 	const VkFormat &GetFormat() const { return m_format; }
 
@@ -161,8 +162,8 @@ private:
 
 	VkImage m_image;
 	VkDeviceMemory m_memory;
-	VkImageView m_view;
 	VkSampler m_sampler;
+	VkImageView m_view;
 	VkFormat m_format;
 };
 }

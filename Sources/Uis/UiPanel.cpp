@@ -10,7 +10,8 @@ UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const BitMask<Scrol
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), UiInputButton::BackgroundColour),
 	m_content(this, UiBound::Maximum),
-	m_scrollX(this, ScrollBar::Horizontal, UiBound(Vector2(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x))),
+	m_scrollX(this, ScrollBar::Horizontal,
+		UiBound(Vector2(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_y, SCROLL_BAR.m_x))),
 	m_scrollY(this, ScrollBar::Vertical, UiBound(Vector2(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Dimensions, Vector2(SCROLL_BAR.m_x, SCROLL_BAR.m_y))),
 	m_scrollBars(scrollBars)
 {

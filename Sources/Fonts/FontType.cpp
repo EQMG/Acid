@@ -61,7 +61,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 		return;
 	}
 
-	m_instanceBuffer->Map(reinterpret_cast<void **>(&m_glyphInstances));
+	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&m_glyphInstances));
 
 	for (const auto &text : texts)
 	{
@@ -113,7 +113,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 		}
 	}
 
-	m_instanceBuffer->Unmap();
+	m_instanceBuffer->UnmapMemory();
 }
 
 bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
@@ -293,7 +293,7 @@ void FontType::LoadFont(const std::string &filename)
 	m_instanceBuffer = std::make_unique<InstanceBuffer>(MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance));
 
 	char *glyphData;
-	m_storageGlyphs->Map(reinterpret_cast<void **>(&glyphData));
+	m_storageGlyphs->MapMemory(reinterpret_cast<void **>(&glyphData));
 
 	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo *>(glyphData + m_glyphInfoOffset);
 	auto cells = reinterpret_cast<uint32_t *>(glyphData + m_glyphCellsOffset);
@@ -313,8 +313,8 @@ void FontType::LoadFont(const std::string &filename)
 		dgi->cellInfo.cellOffset = cellOffset;
 		dgi->bbox = o->bbox;
 
-		memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
-		memcpy(points + pointOffset, o->points.data(), sizeof(Vector2) * o->points.size());
+		std::memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
+		std::memcpy(points + pointOffset, o->points.data(), sizeof(Vector2) * o->points.size());
 
 		//OutlineU16Points(o, &dgi->cbox, reinterpret_cast<PointU16 *>(reinterpret_cast<char *>(points) + pointOffset));
 
@@ -322,7 +322,7 @@ void FontType::LoadFont(const std::string &filename)
 		cellOffset += static_cast<uint32_t>(o->cells.size());
 	}
 
-	m_storageGlyphs->Unmap();
+	m_storageGlyphs->UnmapMemory();
 
 	assert(pointOffset == totalPoints);
 	assert(cellOffset == totalCells);

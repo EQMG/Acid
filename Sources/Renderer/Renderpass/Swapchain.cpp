@@ -120,7 +120,13 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 
 	for (uint32_t i = 0; i < m_imageCount; i++)
 	{
-		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
+		VkImageSubresourceRange viewSubresourceRange = {};
+		viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		viewSubresourceRange.baseMipLevel = 0;
+		viewSubresourceRange.levelCount = 1;
+		viewSubresourceRange.baseArrayLayer = 0;
+		viewSubresourceRange.layerCount = 1;
+		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, viewSubresourceRange);
 	}
 
 	VkFenceCreateInfo fenceCreateInfo = {};
@@ -146,7 +152,8 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE, &m_activeImageIndex);
+	VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
+		&m_activeImageIndex);
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
 	{

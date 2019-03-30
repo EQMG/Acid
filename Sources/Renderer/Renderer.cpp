@@ -273,7 +273,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	}
 	else
 	{
-		memcpy(pixels.get(), reinterpret_cast<uint8_t *>(data), subresourceLayout.size);
+		std::memcpy(pixels.get(), reinterpret_cast<uint8_t *>(data), subresourceLayout.size);
 	}
 
 	// Writes the image.
