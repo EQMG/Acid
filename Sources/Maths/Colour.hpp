@@ -21,7 +21,7 @@ public:
 	/// <param name="g"> The new G value. </param>
 	/// <param name="b"> The new B value. </param>
 	/// <param name="a"> The new A value. </param>
-	Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f);
+	Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f) noexcept;
 
 	/// <summary>
 	/// Constructor for colour.

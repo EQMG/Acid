@@ -5,10 +5,10 @@
 #include "Renderer/Renderer.hpp"
 #include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
-#include "Images/Image2d.hpp"
-#include "Images/ImageCube.hpp"
 #include "Renderer/Buffers/StorageBuffer.hpp"
 #include "Renderer/Buffers/UniformBuffer.hpp"
+#include "Renderer/Images/Image2d.hpp"
+#include "Renderer/Images/ImageCube.hpp"
 
 namespace acid
 {

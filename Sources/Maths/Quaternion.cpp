@@ -10,7 +10,7 @@ const Quaternion Quaternion::PositiveInfinity = Quaternion(+std::numeric_limits<
 const Quaternion Quaternion::NegativeInfinity = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
 	-std::numeric_limits<float>::infinity());
 
-Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) :
+Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) noexcept :
 	m_x(x),
 	m_y(y),
 	m_z(z),

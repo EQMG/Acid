@@ -1,11 +1,12 @@
 ﻿#pragma once
 
+#include <vulkan/vulkan.h>
 #include "Helpers/NonCopyable.hpp"
-#include "RenderpassCreate.hpp"
 
 namespace acid
 {
 class ImageDepth;
+class RenderStage;
 
 class ACID_EXPORT Renderpass
 {
@@ -39,7 +40,7 @@ public:
 		VkAttachmentReference m_depthStencilAttachment;
 	};
 
-	Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+	Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 	~Renderpass();
 

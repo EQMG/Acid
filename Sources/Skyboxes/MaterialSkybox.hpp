@@ -3,7 +3,7 @@
 #include "Materials/Material.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
-#include "Images/ImageCube.hpp"
+#include "Renderer/Images/ImageCube.hpp"
 
 namespace acid
 {

@@ -8,7 +8,7 @@ namespace acid
 const Matrix3 Matrix3::Identity = Matrix3(1.0f);
 const Matrix3 Matrix3::Zero = Matrix3(0.0f);
 
-Matrix3::Matrix3(const float &diagonal)
+Matrix3::Matrix3(const float &diagonal) noexcept
 {
 	memset(m_rows, 0, 3 * 3 * sizeof(float));
 	m_rows[0][0] = diagonal;

@@ -1,26 +1,27 @@
 ﻿#include "Framebuffers.hpp"
 
-#include "Images/ImageDepth.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Renderer/Images/ImageDepth.hpp"
 #include "Renderer/Renderpass/Renderpass.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Renderer/RenderStage.hpp"
 
 namespace acid
 {
-Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain,
+Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain,
 	const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	for (const auto &image : renderpassCreate.GetImages())
+	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
+		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 
-		switch (image.GetType())
+		switch (attachment.GetType())
 		{
 		case Attachment::Type::Image:
 			m_imageAttachments.emplace_back(
-				std::make_unique<Image2d>(width, height, nullptr, image.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-					VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, imageSamples));
+				std::make_unique<Image2d>(width, height, nullptr, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+					VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, attachmentSamples));
 			break;
 		case Attachment::Type::Depth:
 			m_imageAttachments.emplace_back(nullptr);
@@ -37,12 +38,12 @@ Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const 
 	{
 		std::vector<VkImageView> attachments = {};
 
-		for (const auto &image : renderpassCreate.GetImages())
+		for (const auto &attachment : renderStage.GetAttachments())
 		{
-			switch (image.GetType())
+			switch (attachment.GetType())
 			{
 			case Attachment::Type::Image:
-				attachments.emplace_back(GetAttachment(image.GetBinding())->GetView());
+				attachments.emplace_back(GetAttachment(attachment.GetBinding())->GetView());
 				break;
 			case Attachment::Type::Depth:
 				attachments.emplace_back(depthStencil.GetImageView());

@@ -2,7 +2,7 @@
 
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Renderer.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid

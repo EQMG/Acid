@@ -3,9 +3,9 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
-#include "Images/Image2d.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
+#include "Renderer/Images/Image2d.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
 

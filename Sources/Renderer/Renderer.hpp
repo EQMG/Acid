@@ -55,7 +55,7 @@ public:
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;
 
-	void SetRenderStages(const std::vector<RenderStage *> &renderStages);
+	void SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages);
 
 	const Descriptor *GetAttachment(const std::string &name) const;
 

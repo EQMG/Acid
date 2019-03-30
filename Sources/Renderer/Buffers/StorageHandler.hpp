@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffers/StorageBuffer.hpp"
+#include "StorageBuffer.hpp"
 
 namespace acid
 {

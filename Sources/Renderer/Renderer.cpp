@@ -106,7 +106,7 @@ void Renderer::Update()
 		{
 			uint32_t difference = key.second - subpass;
 
-			if (subpass == renderStage->SubpassCount() - 1)
+			if (subpass == static_cast<uint32_t>(renderStage->GetSubpasses().size() - 1))
 			{
 				difference -= 1;
 			}
@@ -300,11 +300,11 @@ RenderStage *Renderer::GetRenderStage(const uint32_t &index) const
 	return m_renderStages.at(index).get();
 }
 
-void Renderer::SetRenderStages(const std::vector<RenderStage *> &renderStages)
+void Renderer::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages)
 {
 	VkExtent2D displayExtent = { Window::Get()->GetWidth(), Window::Get()->GetHeight() };
 
-	m_renderStages.clear();
+	m_renderStages = std::move(renderStages);
 	m_swapchain = std::make_unique<Swapchain>(displayExtent);
 
 	if (m_flightFences.size() != m_swapchain->GetImageCount())
@@ -340,10 +340,9 @@ void Renderer::SetRenderStages(const std::vector<RenderStage *> &renderStages)
 		}
 	}
 
-	for (const auto &renderStage : renderStages)
+	for (const auto &renderStage : m_renderStages)
 	{
 		renderStage->Rebuild(*m_swapchain);
-		m_renderStages.emplace_back(std::move(renderStage));
 	}
 
 	RecreateAttachmentsMap();
@@ -405,7 +404,7 @@ void Renderer::RecreateAttachmentsMap()
 
 	for (const auto &renderStage : m_renderStages)
 	{
-		m_attachments.insert(renderStage->m_attachments.begin(), renderStage->m_attachments.end());
+		m_attachments.insert(renderStage->m_descriptors.begin(), renderStage->m_descriptors.end());
 	}
 }
 

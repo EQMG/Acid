@@ -16,7 +16,7 @@ public:
 	/// </summary>
 	/// <param name="x"> Start x. </param>
 	/// <param name="y"> Start y. </param>
-	Vector2(const float &x = 0.0f, const float &y = 0.0f);
+	Vector2(const float &x = 0.0f, const float &y = 0.0f) noexcept;
 
 	/// <summary>
 	/// Adds this vector to another vector.

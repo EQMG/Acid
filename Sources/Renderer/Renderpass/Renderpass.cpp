@@ -1,52 +1,53 @@
 ﻿#include "Renderpass.hpp"
 
 #include "Renderer/Renderer.hpp"
+#include "Renderer/RenderStage.hpp"
 
 namespace acid
 {
-Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
+Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
 	m_renderpass(VK_NULL_HANDLE)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
 	// Creates the renderpasses attachment descriptions,
-	std::vector<VkAttachmentDescription> attachments = {};
+	std::vector<VkAttachmentDescription> attachmentDescriptions = {};
 
-	for (const auto &image : renderpassCreate.GetImages())
+	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto imageSamples = image.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
-		VkAttachmentDescription attachment = {};
-		attachment.samples = imageSamples;
-		attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; // Clear at beginning of the render pass.
-		attachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE; // // The image can be read from so it's important to store the attachment results
-		attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-		attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-		attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; // We don't care about initial layout of the attachment.
+		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
+		VkAttachmentDescription attachmentDescription = {};
+		attachmentDescription.samples = attachmentSamples;
+		attachmentDescription.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; // Clear at beginning of the render pass.
+		attachmentDescription.storeOp = VK_ATTACHMENT_STORE_OP_STORE; // // The image can be read from so it's important to store the attachment results
+		attachmentDescription.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		attachmentDescription.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		attachmentDescription.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; // We don't care about initial layout of the attachment.
 
-		switch (image.GetType())
+		switch (attachment.GetType())
 		{
 		case Attachment::Type::Image:
-			attachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-			attachment.format = image.GetFormat();
+			attachmentDescription.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			attachmentDescription.format = attachment.GetFormat();
 			break;
 		case Attachment::Type::Depth:
-			attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-			attachment.format = depthFormat;
+			attachmentDescription.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			attachmentDescription.format = depthFormat;
 			break;
 		case Attachment::Type::Swapchain:
-			attachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-			attachment.format = surfaceFormat;
+			attachmentDescription.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachmentDescription.format = surfaceFormat;
 			break;
 		}
 
-		attachments.emplace_back(attachment);
+		attachmentDescriptions.emplace_back(attachmentDescription);
 	}
 
 	// Creates each subpass and its dependencies.
 	std::vector<std::unique_ptr<SubpassDescription>> subpasses = {};
 	std::vector<VkSubpassDependency> dependencies = {};
 
-	for (const auto &subpassType : renderpassCreate.GetSubpasses())
+	for (const auto &subpassType : renderStage.GetSubpasses())
 	{
 		// Attachments.
 		std::vector<VkAttachmentReference> subpassColourAttachments = {};
@@ -55,7 +56,7 @@ Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat 
 
 		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 		{
-			auto attachment = renderpassCreate.GetAttachment(attachmentBinding);
+			auto attachment = renderStage.GetAttachment(attachmentBinding);
 
 			if (!attachment)
 			{
@@ -86,7 +87,7 @@ Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat 
 		subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		subpassDependency.dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-		if (subpassType.GetBinding() == renderpassCreate.GetSubpasses().size())
+		if (subpassType.GetBinding() == renderStage.GetSubpasses().size())
 		{
 			subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
 			subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
@@ -125,8 +126,8 @@ Renderpass::Renderpass(const RenderpassCreate &renderpassCreate, const VkFormat 
 	// Creates the render pass.
 	VkRenderPassCreateInfo renderPassCreateInfo = {};
 	renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-	renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-	renderPassCreateInfo.pAttachments = attachments.data();
+	renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(attachmentDescriptions.size());
+	renderPassCreateInfo.pAttachments = attachmentDescriptions.data();
 	renderPassCreateInfo.subpassCount = static_cast<uint32_t>(subpassDescriptions.size());
 	renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
 	renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());

@@ -8,7 +8,7 @@ namespace acid
 const Matrix4 Matrix4::Identity = Matrix4(1.0f);
 const Matrix4 Matrix4::Zero = Matrix4(0.0f);
 
-Matrix4::Matrix4(const float &diagonal)
+Matrix4::Matrix4(const float &diagonal) noexcept
 {
 	memset(m_rows, 0, 4 * sizeof(Vector4));
 	m_rows[0][0] = diagonal;

@@ -2,10 +2,10 @@
 
 #include "Helpers/TypeTraits.hpp"
 #include "Renderer/Descriptors/DescriptorSet.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
+#include "Renderer/Buffers/StorageHandler.hpp"
+#include "Renderer/Buffers/PushHandler.hpp"
 #include "Renderer/Pipelines/Shader.hpp"
-#include "UniformHandler.hpp"
-#include "StorageHandler.hpp"
-#include "PushHandler.hpp"
 
 namespace acid
 {

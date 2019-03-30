@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Scenes/Component.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid

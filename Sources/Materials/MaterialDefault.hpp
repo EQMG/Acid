@@ -2,7 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Models/Model.hpp"
-#include "Images/Image2d.hpp"
+#include "Renderer/Images/Image2d.hpp"
 #include "Material.hpp"
 
 namespace acid

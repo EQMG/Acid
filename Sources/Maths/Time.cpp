@@ -6,7 +6,7 @@ const Time Time::Zero = Time();
 const Time Time::Min = Time(std::numeric_limits<int64_t>::min());
 const Time Time::Max = Time(std::numeric_limits<int64_t>::max());
 
-Time::Time(const int64_t &microseconds) :
+Time::Time(const int64_t &microseconds) noexcept :
 	m_microseconds(microseconds)
 {
 }

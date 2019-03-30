@@ -14,13 +14,13 @@ namespace acid
 class ACID_EXPORT ThreadPool
 {
 public:
-	explicit ThreadPool(const uint32_t &threadCount = HardwareConcurrency);
+	explicit ThreadPool(const uint32_t &threadCount = std::thread::hardware_concurrency());
 
 	~ThreadPool();
 
 	template<class F, class... Args> decltype(auto) Enqueue(F &&f, Args &&... args);
 
-	static const uint32_t HardwareConcurrency;
+	const std::vector<std::thread> &GetWorkers() const { return m_workers; }
 private:
 	std::vector<std::thread> m_workers;
 	std::queue<std::function<void()>> m_tasks;

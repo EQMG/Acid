@@ -1,3 +1,7 @@
+#include <utility>
+
+#include <utility>
+
 #include "PipelineMaterial.hpp"
 
 #include "Resources/Resources.hpp"
@@ -25,9 +29,9 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	return result;
 }
 
-PipelineMaterial::PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate) :
-	m_pipelineStage(pipelineStage),
-	m_pipelineCreate(pipelineCreate),
+PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
+	m_pipelineStage(std::move(pipelineStage)),
+	m_pipelineCreate(std::move(pipelineCreate)),
 	m_renderStage(nullptr),
 	m_pipeline(nullptr)
 {

@@ -22,7 +22,7 @@ public:
 	/// <param name="x"> Start x. </param>
 	/// <param name="y"> Start y. </param>
 	/// <param name="z"> Start z. </param>
-	Vector3(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f);
+	Vector3(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f) noexcept;
 
 	/// <summary>
 	/// Constructor for Vector3.

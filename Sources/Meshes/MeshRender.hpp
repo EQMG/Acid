@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
 #include "Mesh.hpp"
 
 namespace acid

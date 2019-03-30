@@ -69,6 +69,7 @@ Scene1::Scene1() :
 			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3(0.0f, 0.7f, 0.0f)));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
+			sphere->AddComponent<HeightDespawn>(-75.0f);
 
 			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
 			//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));

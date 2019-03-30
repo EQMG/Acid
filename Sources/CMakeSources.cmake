@@ -53,10 +53,6 @@ set(_temp_acid_headers
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeTraits.hpp
-		Images/Image.hpp
-		Images/Image2d.hpp
-		Images/ImageCube.hpp
-		Images/ImageDepth.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp
@@ -80,6 +76,7 @@ set(_temp_acid_headers
 		Maths/Matrix2.hpp
 		Maths/Matrix3.hpp
 		Maths/Matrix4.hpp
+		Maths/Noise/Noise.hpp
 		Maths/Quaternion.hpp
 		Maths/Time.hpp
 		Maths/Timer.hpp
@@ -125,7 +122,6 @@ set(_temp_acid_headers
 		Network/Tcp/TcpListener.hpp
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
-		Noise/Noise.hpp
 		Particles/Particle.hpp
 		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
@@ -169,15 +165,19 @@ set(_temp_acid_headers
 		Post/PostPipeline.hpp
 		Renderer/Buffers/Buffer.hpp
 		Renderer/Buffers/InstanceBuffer.hpp
+		Renderer/Buffers/PushHandler.hpp
 		Renderer/Buffers/StorageBuffer.hpp
+		Renderer/Buffers/StorageHandler.hpp
 		Renderer/Buffers/UniformBuffer.hpp
+		Renderer/Buffers/UniformHandler.hpp
 		Renderer/Commands/CommandBuffer.hpp
 		Renderer/Descriptors/Descriptor.hpp
 		Renderer/Descriptors/DescriptorSet.hpp
-		Renderer/Handlers/DescriptorsHandler.hpp
-		Renderer/Handlers/PushHandler.hpp
-		Renderer/Handlers/StorageHandler.hpp
-		Renderer/Handlers/UniformHandler.hpp
+		Renderer/Descriptors/DescriptorsHandler.hpp
+		Renderer/Images/Image.hpp
+		Renderer/Images/Image2d.hpp
+		Renderer/Images/ImageCube.hpp
+		Renderer/Images/ImageDepth.hpp
 		Renderer/Pipelines/Pipeline.hpp
 		Renderer/Pipelines/PipelineCompute.hpp
 		Renderer/Pipelines/PipelineGraphics.hpp
@@ -187,7 +187,6 @@ set(_temp_acid_headers
 		Renderer/RenderManager.hpp
 		Renderer/Renderpass/Framebuffers.hpp
 		Renderer/Renderpass/Renderpass.hpp
-		Renderer/Renderpass/RenderpassCreate.hpp
 		Renderer/Renderpass/Swapchain.hpp
 		Renderer/RenderPipeline.hpp
 		Renderer/RenderStage.hpp
@@ -270,10 +269,6 @@ set(_temp_acid_sources
 		Guis/RendererGuis.cpp
 		Helpers/String.cpp
 		Helpers/ThreadPool.cpp
-		Images/Image.cpp
-		Images/Image2d.cpp
-		Images/ImageCube.cpp
-		Images/ImageDepth.cpp
 		Inputs/AxisButton.cpp
 		Inputs/AxisCompound.cpp
 		Inputs/AxisJoystick.cpp
@@ -293,6 +288,7 @@ set(_temp_acid_sources
 		Maths/Matrix2.cpp
 		Maths/Matrix3.cpp
 		Maths/Matrix4.cpp
+		Maths/Noise/Noise.cpp
 		Maths/Quaternion.cpp
 		Maths/Time.cpp
 		Maths/Timer.cpp
@@ -330,7 +326,6 @@ set(_temp_acid_sources
 		Network/Tcp/TcpListener.cpp
 		Network/Tcp/TcpSocket.cpp
 		Network/Udp/UdpSocket.cpp
-		Noise/Noise.cpp
 		Particles/Particle.cpp
 		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp
@@ -373,14 +368,18 @@ set(_temp_acid_sources
 		Post/PostFilter.cpp
 		Renderer/Buffers/Buffer.cpp
 		Renderer/Buffers/InstanceBuffer.cpp
+		Renderer/Buffers/PushHandler.cpp
 		Renderer/Buffers/StorageBuffer.cpp
+		Renderer/Buffers/StorageHandler.cpp
 		Renderer/Buffers/UniformBuffer.cpp
+		Renderer/Buffers/UniformHandler.cpp
 		Renderer/Commands/CommandBuffer.cpp
 		Renderer/Descriptors/DescriptorSet.cpp
-		Renderer/Handlers/DescriptorsHandler.cpp
-		Renderer/Handlers/PushHandler.cpp
-		Renderer/Handlers/StorageHandler.cpp
-		Renderer/Handlers/UniformHandler.cpp
+		Renderer/Descriptors/DescriptorsHandler.cpp
+		Renderer/Images/Image.cpp
+		Renderer/Images/Image2d.cpp
+		Renderer/Images/ImageCube.cpp
+		Renderer/Images/ImageDepth.cpp
 		Renderer/Pipelines/PipelineCompute.cpp
 		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/Shader.cpp

@@ -1,23 +1,144 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include "Maths/Colour.hpp"
+#include "Maths/Vector2.hpp"
 #include "Images/ImageDepth.hpp"
 #include "Renderpass/Framebuffers.hpp"
 #include "Renderpass/Renderpass.hpp"
 #include "Renderpass/Swapchain.hpp"
 
 namespace acid
+{/// <summary>
+/// A object that represents an attachment in a renderpass.
+/// </summary>
+class ACID_EXPORT Attachment
 {
+public:
+	enum class Type
+	{
+		Image, Depth, Swapchain
+	};
+
+	/// <summary>
+	/// Creates a new attachment that represents a object in the render pipeline.
+	/// </summary>
+	/// <param name="binding"> The index the attachment is bound to in the renderpass. </param>
+	/// <param name="name"> The unique name given to the object for all renderpasses. </param>
+	/// <param name="multisampled"> If this attachment is multisampled. </param>
+	/// <param name="type"> The attachment type this represents. </param>
+	/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
+	/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
+	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+		const Colour &clearColour = Colour::Black) :
+		m_binding(binding),
+		m_name(std::move(name)),
+		m_type(type),
+		m_multisampled(multisampled),
+		m_format(format),
+		m_clearColour(clearColour)
+	{
+	}
+
+	const uint32_t &GetBinding() const { return m_binding; }
+
+	const std::string &GetName() const { return m_name; }
+
+	const Type &GetType() const { return m_type; }
+
+	const bool &IsMultisampled() const { return m_multisampled; }
+
+	const VkFormat &GetFormat() const { return m_format; }
+
+	const Colour &GetClearColour() const { return m_clearColour; }
+
+private:
+	uint32_t m_binding;
+	std::string m_name;
+	Type m_type;
+	bool m_multisampled;
+	VkFormat m_format;
+	Colour m_clearColour;
+};
+
+class ACID_EXPORT SubpassType
+{
+public:
+	SubpassType(const uint32_t &binding, std::vector<uint32_t> attachmentBindings) :
+		m_binding(binding),
+		m_attachmentBindings(std::move(attachmentBindings))
+	{
+	}
+
+	const uint32_t &GetBinding() const { return m_binding; }
+
+	const std::vector<uint32_t> &GetAttachmentBindings() const { return m_attachmentBindings; }
+
+private:
+	uint32_t m_binding;
+	std::vector<uint32_t> m_attachmentBindings;
+};
+
+class ACID_EXPORT Viewport
+{
+public:
+	explicit Viewport(const Vector2 &scale = Vector2::One) :
+		m_scale(scale),
+		m_offset(0.0f, 0.0f)
+	{
+	}
+
+	Viewport(const std::optional<uint32_t> &width, const std::optional<uint32_t> &height) :
+		m_width(width),
+		m_height(height),
+		m_scale(1.0f, 1.0f),
+		m_offset(0.0f, 0.0f)
+	{
+	}
+
+	const std::optional<uint32_t> &GetWidth() const { return m_width; }
+
+	void SetWidth(const std::optional<uint32_t> &width) { m_width = width; }
+
+	const std::optional<uint32_t> &GetHeight() const { return m_height; }
+
+	void SetHeight(const std::optional<uint32_t> &height) { m_height = height; }
+
+	const Vector2 &GetScale() const { return m_scale; }
+
+	void SetScale(const Vector2 &scale) { m_scale = scale; }
+
+	const Vector2 &GetOffset() const { return m_offset; }
+
+	void SetOffset(const Vector2 &offset) { m_offset = offset; }
+
+private:
+	std::optional<uint32_t> m_width;
+	std::optional<uint32_t> m_height;
+	Vector2 m_scale;
+	Vector2 m_offset;
+};
+
 class ACID_EXPORT RenderStage
 {
 public:
-	RenderStage(RenderpassCreate renderpassCreate);
+	explicit RenderStage(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, const Viewport &viewport = Viewport());
 
 	void Update();
 
 	void Rebuild(const Swapchain &swapchain);
 
-	uint32_t SubpassCount() const { return static_cast<uint32_t>(m_renderpassCreate.GetSubpasses().size()); };
+	std::optional<Attachment> GetAttachment(const std::string &name) const;
+
+	std::optional<Attachment> GetAttachment(const uint32_t &binding) const;
+
+	const std::vector<Attachment> &GetAttachments() const { return m_attachments; }
+
+	const std::vector<SubpassType> &GetSubpasses() const { return m_subpasses; }
+
+	Viewport &GetViewport() { return m_viewport; }
+
+	void SetViewport(const Viewport &viewport) { m_viewport = viewport; }
 
 	/// <summary>
 	/// Gets the height of the render stage in pixels.
@@ -43,15 +164,13 @@ public:
 	/// <returns> If the width or height has changed. </returns>
 	const bool &IsOutOfDate() const { return m_outOfDate; }
 
-	RenderpassCreate &GetRenderpassCreate() { return m_renderpassCreate; }
-
 	const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
 
 	const ImageDepth *GetDepthStencil() const { return m_depthStencil.get(); };
 
 	const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
 
-	const Descriptor *GetAttachment(const std::string &name) const;
+	const Descriptor *GetDescriptor(const std::string &name) const;
 
 	const VkFramebuffer &GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
 
@@ -68,13 +187,16 @@ public:
 private:
 	friend class Renderer;
 
-	RenderpassCreate m_renderpassCreate;
+	std::vector<Attachment> m_attachments;
+	std::vector<SubpassType> m_subpasses;
+
+	Viewport m_viewport;
 
 	std::unique_ptr<Renderpass> m_renderpass;
 	std::unique_ptr<ImageDepth> m_depthStencil;
 	std::unique_ptr<Framebuffers> m_framebuffers;
 
-	std::map<std::string, const Descriptor *> m_attachments;
+	std::map<std::string, const Descriptor *> m_descriptors;
 
 	std::vector<VkClearValue> m_clearValues;
 	std::vector<uint32_t> m_subpassAttachmentCount;

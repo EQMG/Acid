@@ -2,10 +2,10 @@
 
 #include "Lights/Fog.hpp"
 #include "Maths/Vector3.hpp"
-#include "Images/ImageCube.hpp"
 #include "Renderer/RenderPipeline.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
+#include "Renderer/Images/ImageCube.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid

@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
 	/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
-	PipelineMaterial(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
+	PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate);
 
 	/// <summary>
 	/// Binds this pipeline to the current renderpass.

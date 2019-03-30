@@ -16,8 +16,6 @@ class ACID_EXPORT UiInputGrabber :
 public:
 	UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle);
 
-	virtual ~UiInputGrabber() = default;
-
 	void UpdateObject() override;
 
 	void SetSelected(const bool &selected);

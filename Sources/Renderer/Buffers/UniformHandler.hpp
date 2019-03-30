@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffers/UniformBuffer.hpp"
+#include "UniformBuffer.hpp"
 
 namespace acid
 {

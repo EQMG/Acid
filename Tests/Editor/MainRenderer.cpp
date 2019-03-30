@@ -33,24 +33,40 @@ MainRenderer::MainRenderer()
 
 void MainRenderer::Start()
 {
-	std::vector<RenderStage *> renderStages = {};
+	std::vector<std::unique_ptr<RenderStage>> renderStages = {};
 
-	std::vector<Attachment> renderpassImages0 = { Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) };
-	std::vector<SubpassType> renderpassSubpasses0 = { SubpassType(0, { 0 }) };
-	renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages0, renderpassSubpasses0, 4096, 4096)));
+	std::vector<Attachment> renderpassAttachments0 = { 
+		Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) 
+	};
+	std::vector<SubpassType> renderpassSubpasses0 = { 
+		SubpassType(0, { 0 }) 
+	};
+	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(4096, 4096)));
 
-	std::vector<Attachment> renderpassImages1 = { Attachment(0, "depth", Attachment::Type::Depth, false),
+	std::vector<Attachment> renderpassAttachments1 = { 
+		Attachment(0, "depth", Attachment::Type::Depth, false),
 		Attachment(1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), // Attachment::Type::Swapchain
-		Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT), Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-		Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT), Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
-		Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) };
-	std::vector<SubpassType> renderpassSubpasses1 = { SubpassType(0, { 0, 2, 3, 4, 5 }), SubpassType(1, { 0, 6 }), SubpassType(2, { 0, 1 }) };
-	renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages1, renderpassSubpasses1)));
+		Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT), 
+		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+		Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT), 
+		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM),
+		Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) 
+	};
+	std::vector<SubpassType> renderpassSubpasses1 = { 
+		SubpassType(0, { 0, 2, 3, 4, 5 }), 
+		SubpassType(1, { 0, 6 }), 
+		SubpassType(2, { 0, 1 }) 
+	};
+	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 
-	std::vector<Attachment> renderpassImages2 = { Attachment(0, "swapchainReal", Attachment::Type::Swapchain) };
-	std::vector<SubpassType> renderpassSubpasses2 = { SubpassType(0, { 0 }) };
-	renderStages.emplace_back(new RenderStage(RenderpassCreate(renderpassImages2, renderpassSubpasses2)));
-	Renderer::Get()->SetRenderStages(renderStages);
+	std::vector<Attachment> renderpassAttachments2 = {
+		Attachment(0, "swapchainReal", Attachment::Type::Swapchain) 
+	};
+	std::vector<SubpassType> renderpassSubpasses2 = {
+		SubpassType(0, { 0 }) 
+	};
+	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments2, renderpassSubpasses2));
+	Renderer::Get()->SetRenderStages(std::move(renderStages));
 
 	auto &rendererContainer = GetRendererContainer();
 	rendererContainer.Clear();
@@ -84,17 +100,17 @@ void MainRenderer::Start()
 
 void MainRenderer::Update()
 {
-	auto &renderpassCreate1 = Renderer::Get()->GetRenderStage(1)->GetRenderpassCreate();
+	auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
+	//renderpassCreate1->GetViewport().SetOffset(Vector2(0.1f, 0.0f));
 
 	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release)
 	{
-		renderpassCreate1.SetScale(Vector2(1.0f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale(Vector2(1.0f, 1.0f));
 	}
 	else
 	{
-		renderpassCreate1.SetScale(Vector2(0.5f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale(Vector2(0.5f, 1.0f));
 	}
-	//renderpassCreate1.SetOffset(Vector2(0.1f, 0.0f));
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 }

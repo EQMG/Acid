@@ -4,7 +4,7 @@
 #include "Maths/Matrix4.hpp"
 #include "Models/Model.hpp"
 #include "Renderer/Buffers/InstanceBuffer.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
 #include "Serialized/Metadata.hpp"

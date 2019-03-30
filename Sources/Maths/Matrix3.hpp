@@ -17,7 +17,7 @@ public:
 	/// Constructor for Matrix3. The matrix is initialised to the identity.
 	/// </summary>
 	/// <param name="diagonal"> The value set to the diagonals. </param>
-	Matrix3(const float &diagonal = 1.0f);
+	Matrix3(const float &diagonal = 1.0f) noexcept;
 
 	/// <summary>
 	/// Constructor for Matrix3.

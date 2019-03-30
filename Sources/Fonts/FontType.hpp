@@ -2,10 +2,10 @@
 
 #include "Resources/Resource.hpp"
 #include "Maths/Colour.hpp"
-#include "Images/Image2d.hpp"
 #include "Renderer/Buffers/StorageBuffer.hpp"
 #include "Renderer/Buffers/InstanceBuffer.hpp"
-#include "Renderer/Handlers/DescriptorsHandler.hpp"
+#include "Renderer/Descriptors/DescriptorsHandler.hpp"
+#include "Renderer/Images/Image2d.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 #include "FontMetafile.hpp"
 #include "Outline.hpp"

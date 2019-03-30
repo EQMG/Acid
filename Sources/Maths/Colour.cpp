@@ -23,7 +23,7 @@ const Colour Colour::Blue = Colour("#0000FF");
 const Colour Colour::Purple = Colour("#800080");
 const Colour Colour::Fuchsia = Colour("#FF00FF");
 
-Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
+Colour::Colour(const float &r, const float &g, const float &b, const float &a) noexcept :
 	m_r(r),
 	m_g(g),
 	m_b(b),

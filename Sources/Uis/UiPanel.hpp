@@ -10,7 +10,7 @@ class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:
-	UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
+	explicit UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
 		const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;

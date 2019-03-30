@@ -1,18 +1,19 @@
 ﻿#pragma once
 
-#include "Images/Image2d.hpp"
+#include "Renderer/Images/Image2d.hpp"
 #include "Swapchain.hpp"
 
 namespace acid
 {
-class Renderpass;
 class ImageDepth;
+class Renderpass;
+class RenderStage;
 
 class ACID_EXPORT Framebuffers :
 	public NonCopyable
 {
 public:
-	Framebuffers(const uint32_t &width, const uint32_t &height, const RenderpassCreate &renderpassCreate, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
+	Framebuffers(const uint32_t &width, const uint32_t &height, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
 		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 	~Framebuffers();

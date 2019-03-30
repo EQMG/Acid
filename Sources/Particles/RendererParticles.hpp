@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/RenderPipeline.hpp"
-#include "Renderer/Handlers/UniformHandler.hpp"
+#include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid

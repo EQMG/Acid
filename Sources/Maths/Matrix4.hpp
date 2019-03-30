@@ -19,7 +19,7 @@ public:
 	/// Constructor for Matrix4. The matrix is initialised to the identity.
 	/// </summary>
 	/// <param name="diagonal"> The value set to the diagonals. </param>
-	Matrix4(const float &diagonal = 1.0f);
+	Matrix4(const float &diagonal = 1.0f) noexcept;
 
 	/// <summary>
 	/// Constructor for Matrix4.

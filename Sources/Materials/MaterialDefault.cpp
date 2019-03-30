@@ -31,7 +31,7 @@ void MaterialDefault::Start()
 	}
 
 	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
-		PipelineGraphicsCreate({ "Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag" }, { mesh->GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Mrt));
+		PipelineGraphicsCreate({ "Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag" }, { Mesh::GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Mrt));
 }
 
 void MaterialDefault::Update()
@@ -56,12 +56,12 @@ void MaterialDefault::Decode(const Metadata &metadata)
 void MaterialDefault::Encode(Metadata &metadata) const
 {
 	metadata.SetChild("Base Diffuse", m_baseDiffuse);
-	metadata.SetResource<Image2d>("Diffuse Texture", m_diffuseTexture);
+	metadata.SetResource("Diffuse Texture", m_diffuseTexture);
 
 	metadata.SetChild("Metallic", m_metallic);
 	metadata.SetChild("Roughness", m_roughness);
-	metadata.SetResource<Image2d>("Material Texture", m_materialTexture);
-	metadata.SetResource<Image2d>("Normal Texture", m_normalTexture);
+	metadata.SetResource("Material Texture", m_materialTexture);
+	metadata.SetResource("Normal Texture", m_normalTexture);
 
 	metadata.SetChild("Casts Shadows", m_castsShadows);
 	metadata.SetChild("Ignore Lighting", m_ignoreLighting);
