@@ -11,7 +11,8 @@ namespace acid
 /// Axis composed of multiple other axes.
 /// </summary>
 class ACID_EXPORT AxisCompound :
-	public IAxis, public NonCopyable
+	public IAxis,
+	public NonCopyable
 {
 public:
 	/// <summary>

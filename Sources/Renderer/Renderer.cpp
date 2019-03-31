@@ -231,11 +231,13 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	VkImage srcImage = m_swapchain->GetActiveImage();
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 }, 1, 0, 1, true);
+	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 }, 0, 0, true);
 
 	// Get layout of the image (including row pitch).
 	VkImageSubresource imageSubresource = {};
 	imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	imageSubresource.mipLevel = 0;
+	imageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout subresourceLayout;
 	vkGetImageSubresourceLayout(m_logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
@@ -254,11 +256,11 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	// Check if source is BGR.
 	if (!supportsBlit)
 	{
-		std::vector<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-		colourSwizzle = std::find(formatsBGR.begin(), formatsBGR.end(), m_surface->GetFormat().format) != formatsBGR.end();
+		static const std::vector<VkFormat> FORMATS_BGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
+		colourSwizzle = std::find(FORMATS_BGR.begin(), FORMATS_BGR.end(), m_surface->GetFormat().format) != FORMATS_BGR.end();
 	}
 
-	std::unique_ptr<uint8_t[]> pixels(static_cast<uint8_t *>(malloc(subresourceLayout.size)));
+	std::unique_ptr<uint8_t[]> pixels(new uint8_t[subresourceLayout.size]);
 
 	if (colourSwizzle)
 	{
@@ -277,7 +279,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	}
 
 	// Writes the image.
-	Image::WritePixels(filename, pixels.get(), width, height, 4);
+	Image::WritePixels(filename, pixels.get(), width, height);
 
 	// Clean up resources.
 	vkUnmapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory);

@@ -166,7 +166,7 @@ constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperato
  * operator&(Enumerator<T>, BitMask<T>)
  */
 template<typename T>
-constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::Ealue, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const BitMask<T> &rhs)
+constexpr typename std::enable_if<std::is_enum<T>::value && EnableBitMaskOperators<T>::value, Enumerator<T>>::type operator&(const Enumerator<T> &lhs, const BitMask<T> &rhs)
 {
 	using underlying_type = typename std::underlying_type<T>::type;
 	return Enumerator<T>{ static_cast<T>(static_cast<underlying_type>(lhs.m_value) & rhs.m_value) };

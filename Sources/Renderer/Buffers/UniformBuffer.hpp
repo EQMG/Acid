@@ -7,7 +7,8 @@
 namespace acid
 {
 class ACID_EXPORT UniformBuffer :
-	public Descriptor, public Buffer
+	public Descriptor,
+	public Buffer
 {
 public:
 	explicit UniformBuffer(const VkDeviceSize &size, const void *data = nullptr);

@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Renderer/Descriptors/Descriptor.hpp"
-#include "Renderer/Buffers/Buffer.hpp"
 #include "Image.hpp"
 
 namespace acid
 {
 class ACID_EXPORT ImageDepth :
-	public Descriptor, public Buffer
+	public Descriptor
 {
 public:
 	ImageDepth(const uint32_t &width, const uint32_t &height, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
@@ -23,6 +22,8 @@ public:
 	const uint32_t &GetHeight() const { return m_height; }
 
 	const VkImage &GetImage() const { return m_image; }
+	
+	const VkDeviceMemory &GetMemory() { return m_memory; }
 
 	const VkSampler &GetSampler() const { return m_sampler; }
 
@@ -34,6 +35,7 @@ private:
 	uint32_t m_width, m_height;
 
 	VkImage m_image;
+	VkDeviceMemory m_memory;
 	VkSampler m_sampler;
 	VkImageView m_view;
 	VkFormat m_format;

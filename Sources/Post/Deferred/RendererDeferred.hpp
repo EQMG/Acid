@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/Future.hpp"
 #include "Lights/Fog.hpp"
 #include "Maths/Vector3.hpp"
 #include "Renderer/RenderPipeline.hpp"
@@ -44,14 +45,12 @@ private:
 
 	PipelineGraphics m_pipeline;
 
-	std::future<std::unique_ptr<Image2d>> m_brdfFuture;
-	std::unique_ptr<Image2d> m_brdf;
+	Future<std::unique_ptr<Image2d>> m_brdf;
 
 	std::shared_ptr<ImageCube> m_skybox;
-	std::future<std::unique_ptr<ImageCube>> m_irradianceFuture;
-	std::unique_ptr<ImageCube> m_irradiance;
-	std::future<std::unique_ptr<ImageCube>> m_prefilteredFuture;
-	std::unique_ptr<ImageCube> m_prefiltered;
+
+	Future<std::unique_ptr<ImageCube>> m_irradiance;
+	Future<std::unique_ptr<ImageCube>> m_prefiltered;
 
 	Fog m_fog;
 };

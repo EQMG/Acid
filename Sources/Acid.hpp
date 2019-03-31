@@ -47,6 +47,7 @@
 #include "Guis/RendererGuis.hpp"
 #include "Helpers/Delegate.hpp"
 #include "Helpers/EnumClass.hpp"
+#include "Helpers/Future.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Helpers/RingBuffer.hpp"
 #include "Helpers/String.hpp"

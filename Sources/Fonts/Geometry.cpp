@@ -354,9 +354,6 @@ bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 &line0, co
 		xt0 = Bezier2Component(x0, x1, x2, t0);
 		xt1 = Bezier2Component(x0, x1, x2, t1);
 		return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) || (IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
-	default:
-		assert(false);
-		return false;
 	}
 }
 }

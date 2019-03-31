@@ -10,7 +10,9 @@ namespace acid
 /// Class that represents a loaded cubemap texture.
 /// </summary>
 class ACID_EXPORT ImageCube :
-	public NonCopyable, public Descriptor, public Resource
+	public NonCopyable,
+	public Descriptor,
+	public Resource
 {
 public:
 	/// <summary>
@@ -93,7 +95,7 @@ public:
 	/// <param name="height"> The value sampled height is stored to (this will be 6 * <seealso cref="#GetWidth()"/>). </param>
 	/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
 	/// <returns> A copy of the cubemaps. </returns>
-	std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 1) const;
+	std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 0) const;
 
 	/// <summary>
 	/// Copies the pixels into this cubemaps memory.

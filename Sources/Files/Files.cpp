@@ -10,7 +10,8 @@ using std::streambuf;
 using std::ios_base;
 
 class FBuffer :
-	public NonCopyable, public streambuf
+	public NonCopyable,
+	public streambuf
 {
 public:
 	explicit FBuffer(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :

@@ -1,7 +1,9 @@
 #include "Socket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
+
 #include <WinSock2.h>
+
 #else
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -9,6 +11,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #endif
+
 #include "Engine/Log.hpp"
 
 namespace acid

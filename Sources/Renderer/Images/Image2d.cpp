@@ -1,5 +1,6 @@
 #include "Image2d.hpp"
 
+#include "Renderer/Buffers/Buffer.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Resources/Resources.hpp"
 #include "Serialized/Metadata.hpp"
@@ -145,28 +146,13 @@ void Image2d::Load()
 
 	Image::CreateImage(m_image, m_memory, { m_width, m_height, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 1,
 		VK_IMAGE_TYPE_2D);
-
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-
-	VkImageSubresourceRange viewSubresourceRange = {};
-	viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-	viewSubresourceRange.baseMipLevel = 0;
-	viewSubresourceRange.levelCount = m_mipLevels;
-	viewSubresourceRange.baseArrayLayer = 0;
-	viewSubresourceRange.layerCount = 1;
-	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, viewSubresourceRange);
+	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
 	if (m_loadPixels != nullptr || m_mipmap)
 	{
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-		VkImageSubresourceRange subresourceRange = {};
-		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		subresourceRange.baseMipLevel = 0;
-		subresourceRange.levelCount = m_mipLevels;
-		subresourceRange.baseArrayLayer = 0;
-		subresourceRange.layerCount = 1;
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-			subresourceRange);
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
 	if (m_loadPixels != nullptr)
@@ -191,24 +177,12 @@ void Image2d::Load()
 	else if (m_loadPixels != nullptr)
 	{
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout);
-		VkImageSubresourceRange subresourceRange = {};
-		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		subresourceRange.baseMipLevel = 0;
-		subresourceRange.levelCount = m_mipLevels;
-		subresourceRange.baseArrayLayer = 0;
-		subresourceRange.layerCount = 1;
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, subresourceRange);
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 	else
 	{
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, m_layout);
-		VkImageSubresourceRange subresourceRange = {};
-		subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		subresourceRange.baseMipLevel = 0;
-		subresourceRange.levelCount = m_mipLevels;
-		subresourceRange.baseArrayLayer = 0;
-		subresourceRange.layerCount = 1;
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, subresourceRange);
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
 	m_loadPixels = nullptr;
@@ -236,12 +210,12 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height,
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	width = int32_t(m_width >> (mipLevel - 1));
-	height = int32_t(m_height >> (mipLevel - 1));
+	width = int32_t(m_width >> mipLevel);
+	height = int32_t(m_height >> mipLevel);
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, 0, 1, false);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, 0, false);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

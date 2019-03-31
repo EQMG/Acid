@@ -19,10 +19,8 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None),
-	m_brdfFuture(Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeBRDF, 512)),
+	m_brdf(Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeBRDF, 512)),
 	m_skybox(nullptr),
-	m_irradiance(nullptr),
-	m_prefiltered(nullptr),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
 	//auto metadata = Metadata();
@@ -40,8 +38,8 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	if (m_skybox != skybox)
 	{
 		m_skybox = skybox;
-		m_irradianceFuture = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeIrradiance, m_skybox, 64);
-		m_prefilteredFuture = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputePrefiltered, m_skybox, 512);
+		m_irradiance = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputeIrradiance, m_skybox, 64);
+		m_prefiltered = Resources::Get()->GetThreadPool().Enqueue(RendererDeferred::ComputePrefiltered, m_skybox, 512);
 	}
 
 	// Updates uniforms.
@@ -84,19 +82,6 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	// Updates storage buffers.
 	m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 
-	if (m_brdfFuture.valid())
-	{
-		m_brdf = m_brdfFuture.get();
-	}
-	if (m_irradianceFuture.valid())
-	{
-		m_irradiance = m_irradianceFuture.get();
-	}
-	if (m_prefilteredFuture.valid())
-	{
-		m_prefiltered = m_prefilteredFuture.get();
-	}
-
 	// Updates descriptors.
 	m_descriptorSet.Push("UboScene", m_uniformScene);
 	m_descriptorSet.Push("Lights", m_storageLights);
@@ -104,9 +89,9 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
 	m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
-	m_descriptorSet.Push("samplerBRDF", m_brdf);
-	m_descriptorSet.Push("samplerIrradiance", m_irradiance);
-	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered);
+	m_descriptorSet.Push("samplerBRDF", m_brdf.Get());
+	m_descriptorSet.Push("samplerIrradiance", m_irradiance.Get());
+	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.Get());
 
 	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
@@ -153,15 +138,15 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 
 #if defined(ACID_VERBOSE)
 	// Saves the BRDF texture.
-	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
+	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
-		auto pixels = image->GetPixels(width, height, 1);
-		Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R16G16 image.
-	}, brdfImage.get());*/
+		auto pixels = image->GetPixels(width, height);
+		Image::WritePixels(filename, pixels.get(), width, height);
+	}, brdfImage.get());
 #endif
 
 	return brdfImage;
@@ -203,8 +188,8 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 		FileSystem::ClearFile(filename);
 		uint32_t width = 0;
 		uint32_t height = 0;
-		auto pixels = image->GetPixels(width, height, 1);
-		Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R32G32B32A32 image.
+		auto pixels = image->GetPixels(width, height);
+		Image::WritePixels(filename, pixels.get(), width, height);
 	}, irradianceCubemap.get());*/
 #endif
 
@@ -233,14 +218,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		VkImageView levelView = VK_NULL_HANDLE;
-		
-		VkImageSubresourceRange viewSubresourceRange = {};
-		viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		viewSubresourceRange.baseMipLevel = i;
-		viewSubresourceRange.levelCount = 1;
-		viewSubresourceRange.baseArrayLayer = 0;
-		viewSubresourceRange.layerCount = 6;
-		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), viewSubresourceRange);
+		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 6, 0);
 
 		CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
 		compute.BindPipeline(commandBuffer);
@@ -278,7 +256,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 	}
 
 #if defined(ACID_VERBOSE)
-	/*for (uint32_t i = 1; i < prefilteredCubemap->GetMipLevels() + 1; i++)
+	/*for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		// Saves the prefiltered texture.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
@@ -288,7 +266,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 			uint32_t width = 0;
 			uint32_t height = 0;
 			auto pixels = image->GetPixels(width, height, i);
-			Image::WritePixels(filename, pixels.get(), width, height); // TODO: Write R16G16B16A16 image.
+			Image::WritePixels(filename, pixels.get(), width, height);
 		}, prefilteredCubemap.get(), i);
 	}*/
 #endif

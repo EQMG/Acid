@@ -7,7 +7,8 @@
 namespace acid
 {
 class ACID_EXPORT StorageBuffer :
-	public Descriptor, public Buffer
+	public Descriptor,
+	public Buffer
 {
 public:
 	explicit StorageBuffer(const VkDeviceSize &size, const void *data = nullptr);

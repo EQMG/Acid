@@ -11,7 +11,7 @@ namespace test
 {
 static const float NEAR_PLANE = 0.1f;
 static const float FAR_PLANE = 4098.0f;
-static const float FIELD_OF_VIEW = 60.0f;
+static const float FIELD_OF_VIEW = 70.0f;
 
 static const float ROTATE_AGILITY = 32.0f;
 static const float PITCH_AGILITY = 32.0f;

@@ -120,13 +120,7 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 
 	for (uint32_t i = 0; i < m_imageCount; i++)
 	{
-		VkImageSubresourceRange viewSubresourceRange = {};
-		viewSubresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-		viewSubresourceRange.baseMipLevel = 0;
-		viewSubresourceRange.levelCount = 1;
-		viewSubresourceRange.baseArrayLayer = 0;
-		viewSubresourceRange.layerCount = 1;
-		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, viewSubresourceRange);
+		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 	}
 
 	VkFenceCreateInfo fenceCreateInfo = {};

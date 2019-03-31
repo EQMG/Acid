@@ -9,7 +9,8 @@ namespace acid
 /// Handles multiple buttons at once.
 /// </summary>
 class ACID_EXPORT ButtonCompound :
-	public IButton, public NonCopyable
+	public IButton,
+	public NonCopyable
 {
 public:
 	/// <summary>

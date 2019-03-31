@@ -48,6 +48,7 @@ set(_temp_acid_headers
 		Guis/RendererGuis.hpp
 		Helpers/Delegate.hpp
 		Helpers/EnumClass.hpp
+		Helpers/Future.hpp
 		Helpers/NonCopyable.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp

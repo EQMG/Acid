@@ -10,7 +10,9 @@ namespace acid
 /// Class that represents a loaded texture.
 /// </summary>
 class ACID_EXPORT Image2d :
-	public NonCopyable, public Descriptor, public Resource
+	public NonCopyable,
+	public Descriptor,
+	public Resource
 {
 public:
 	/// <summary>
@@ -81,7 +83,7 @@ public:
 	/// <param name="height"> The value sampled height is stored to. </param>
 	/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
 	/// <returns> A copy of the textures pixels. </returns>
-	std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 1) const;
+	std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 0) const;
 
 	/// <summary>
 	/// Copies the pixels into this textures memory.

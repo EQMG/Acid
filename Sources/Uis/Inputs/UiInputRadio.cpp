@@ -84,9 +84,6 @@ void UiInputRadio::UpdateFill()
 	case Type::Dot:
 		m_fill.SetTexture(Image2d::Create("Guis/Radio_Dot.png"));
 		break;
-	default:
-		m_fill.SetTexture(nullptr);
-		break;
 	}
 
 	m_fill.SetAlphaDriver(new DriverSlide<float>(m_fill.GetAlpha(), m_value ? 1.0f : 0.0f, UiInputButton::SlideTime));
