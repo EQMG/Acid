@@ -218,7 +218,8 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, arrayLayer, false);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 },
+		m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

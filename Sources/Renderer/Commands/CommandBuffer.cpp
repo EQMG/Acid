@@ -56,6 +56,11 @@ void CommandBuffer::SubmitIdle()
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	auto queueSelected = GetQueue();
 
+	if (m_running)
+	{
+		End();
+	}
+
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
@@ -83,6 +88,11 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 	auto queueSelected = GetQueue();
 
+	if (m_running)
+	{
+		End();
+	}
+
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
@@ -103,6 +113,10 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = &signalSemaphore;
 	}
+
+	// Before submitting to a queue wait for previous task to complete.
+	// TODO: Use a global queue fence instead?
+	Renderer::CheckVk(vkQueueWaitIdle(queueSelected));
 
 	if (fence != VK_NULL_HANDLE)
 	{

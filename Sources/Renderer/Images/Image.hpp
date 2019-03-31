@@ -123,7 +123,7 @@ public:
 	static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const VkExtent3D &extent, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
 	static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &srcFormat, const VkExtent3D &extent,
-		const uint32_t &mipLevel, const uint32_t &arrayLayer, const bool &srcSwapchain);
+		const VkImageLayout &srcImageLayout, const uint32_t &mipLevel, const uint32_t &arrayLayer);
 
 private:
 	VkExtent3D m_extent;

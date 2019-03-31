@@ -215,7 +215,8 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height,
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, mipLevel, 0, false);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, 
+		m_layout, mipLevel, 0);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

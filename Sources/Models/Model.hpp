@@ -91,7 +91,6 @@ protected:
 			copyRegion.size = sizeof(T) * vertices.size();
 			vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
 
-			commandBuffer.End();
 			commandBuffer.SubmitIdle();
 		}
 
@@ -109,7 +108,6 @@ protected:
 			copyRegion.size = sizeof(uint32_t) * indices.size();
 			vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
 
-			commandBuffer.End();
 			commandBuffer.SubmitIdle();
 		}
 

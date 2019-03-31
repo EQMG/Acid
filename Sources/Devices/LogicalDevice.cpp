@@ -206,8 +206,24 @@ void LogicalDevice::CreateLogicalDevice()
 		Log::Error("Selected GPU does not support fragment stores and atomics!");
 	}
 
-	//enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
-	//enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
+	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats)
+	{
+		enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
+	}
+	else
+	{
+		Log::Error("Selected GPU does not support shader storage extended formats!");
+	}
+
+	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat)
+	{
+		enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
+	}
+	else
+	{
+		Log::Error("Selected GPU does not support shader storage write without format!");
+	}
+
 	//enabledFeatures.shaderClipDistance = VK_TRUE;
 	//enabledFeatures.shaderCullDistance = VK_TRUE;
 

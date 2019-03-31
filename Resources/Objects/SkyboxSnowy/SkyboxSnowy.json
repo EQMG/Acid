@@ -10,7 +10,14 @@
   "MaterialSkybox": {
     "Cubemap": {
       "Filename": "Objects/SkyboxSnowy",
-      "Suffix": ".png"
+      "Suffix": ".png",
+      "Sides": [
+        "Right", "Left", "Top", "Bottom", "Back", "Front"
+      ],
+      "Filter": 1,
+      "Address Mode": 2,
+      "Anisotropic": true,
+      "Mipmap": true
     },
     "Sky Colour": "#FFFFFF"
   },

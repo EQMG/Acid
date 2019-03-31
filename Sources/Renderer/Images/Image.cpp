@@ -83,7 +83,7 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	CopyImage(m_image, dstImage, dstImageMemory, m_format, m_extent, mipLevel, arrayLayer, false);
+	CopyImage(m_image, dstImage, dstImageMemory, m_format, m_extent, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -329,7 +329,6 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 	barrier.subresourceRange.layerCount = layerCount;
 	vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 
-	commandBuffer.End();
 	commandBuffer.SubmitIdle();
 }
 
@@ -376,7 +375,8 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		throw std::runtime_error("Unsupported image layout transition source");
+		//throw std::runtime_error("Unsupported image layout transition source");
+		break;
 	}
 
 	// Destination access mask controls the dependency for the new image layout.
@@ -403,7 +403,8 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		throw std::runtime_error("Unsupported image layout transition destination");
+		//throw std::runtime_error("Unsupported image layout transition destination");
+		break;
 	}
 
 	VkPipelineStageFlags srcStageMask = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
@@ -411,7 +412,6 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 
 	vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
-	commandBuffer.End();
 	commandBuffer.SubmitIdle();
 }
 
@@ -452,12 +452,11 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 	region.imageExtent = extent;
 	vkCmdCopyBufferToImage(commandBuffer.GetCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
-	commandBuffer.End();
 	commandBuffer.SubmitIdle();
 }
 
 bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &srcFormat, const VkExtent3D &extent,
-	const uint32_t &mipLevel, const uint32_t &arrayLayer, const bool &srcSwapchain)
+	const VkImageLayout &srcImageLayout, const uint32_t &mipLevel, const uint32_t &arrayLayer)
 {
 	auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 	auto surface = Renderer::Get()->GetSurface();
@@ -495,13 +494,10 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 		VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 
 		VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 
-	// Transition swapchain image from present to transfer source layout
-	if (srcSwapchain)
-	{
-		InsertImageMemoryBarrier(commandBuffer, srcImage, VK_ACCESS_MEMORY_READ_BIT, VK_ACCESS_TRANSFER_READ_BIT, VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
-			VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 
-			VK_IMAGE_ASPECT_COLOR_BIT, 1, mipLevel, 1, arrayLayer);
-	}
+	// Transition image from previous usage to transfer source layout
+	InsertImageMemoryBarrier(commandBuffer, srcImage, VK_ACCESS_MEMORY_READ_BIT, VK_ACCESS_TRANSFER_READ_BIT, srcImageLayout,
+		VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 
+		VK_IMAGE_ASPECT_COLOR_BIT, 1, mipLevel, 1, arrayLayer);
 
 	// If source and destination support blit we'll blit as this also does automatic format conversion (e.g. from BGR to RGB).
 	if (supportsBlit)
@@ -543,15 +539,11 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 		VK_IMAGE_LAYOUT_GENERAL, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT,
 		VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 
-	// Transition back the swap chain image after the blit is done.
-	if (srcSwapchain)
-	{
-		InsertImageMemoryBarrier(commandBuffer, srcImage, VK_ACCESS_TRANSFER_READ_BIT, VK_ACCESS_MEMORY_READ_BIT, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-			VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 
-			VK_IMAGE_ASPECT_COLOR_BIT, 1, mipLevel, 1, arrayLayer);
-	}
+	// Transition back the image after the blit is done.
+	InsertImageMemoryBarrier(commandBuffer, srcImage, VK_ACCESS_TRANSFER_READ_BIT, VK_ACCESS_MEMORY_READ_BIT, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+		srcImageLayout, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT,
+		VK_IMAGE_ASPECT_COLOR_BIT, 1, mipLevel, 1, arrayLayer);
 
-	commandBuffer.End();
 	commandBuffer.SubmitIdle();
 
 	return supportsBlit;
