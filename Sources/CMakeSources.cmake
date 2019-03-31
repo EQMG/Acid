@@ -172,6 +172,7 @@ set(_temp_acid_headers
 		Renderer/Buffers/UniformBuffer.hpp
 		Renderer/Buffers/UniformHandler.hpp
 		Renderer/Commands/CommandBuffer.hpp
+		Renderer/Commands/CommandPool.hpp
 		Renderer/Descriptors/Descriptor.hpp
 		Renderer/Descriptors/DescriptorSet.hpp
 		Renderer/Descriptors/DescriptorsHandler.hpp
@@ -375,6 +376,7 @@ set(_temp_acid_sources
 		Renderer/Buffers/UniformBuffer.cpp
 		Renderer/Buffers/UniformHandler.cpp
 		Renderer/Commands/CommandBuffer.cpp
+		Renderer/Commands/CommandPool.cpp
 		Renderer/Descriptors/DescriptorSet.cpp
 		Renderer/Descriptors/DescriptorsHandler.cpp
 		Renderer/Images/Image.cpp

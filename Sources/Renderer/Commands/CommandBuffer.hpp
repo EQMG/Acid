@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
-#include "StdAfx.hpp"
+#include "CommandPool.hpp"
 
 namespace acid
 {
@@ -49,6 +48,8 @@ public:
 
 private:
 	VkQueue GetQueue() const;
+
+	std::shared_ptr<CommandPool> m_commandPool;
 
 	VkQueueFlagBits m_queueType;
 	VkCommandBuffer m_commandBuffer;

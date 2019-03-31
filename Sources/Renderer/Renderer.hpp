@@ -2,7 +2,9 @@
 
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
+#include "Maths/Timer.hpp"
 #include "Commands/CommandBuffer.hpp"
+#include "Commands/CommandPool.hpp"
 #include "Devices/Instance.hpp"
 #include "Devices/LogicalDevice.hpp"
 #include "Devices/PhysicalDevice.hpp"
@@ -61,7 +63,7 @@ public:
 
 	const Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 
-	const VkCommandPool &GetCommandPool() const { return m_commandPool; }
+	const std::shared_ptr<CommandPool> &GetCommandPool(const std::thread::id &threadId = std::this_thread::get_id());
 
 	const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
 
@@ -72,8 +74,6 @@ public:
 	const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
 
 private:
-	void CreateCommandPool();
-
 	void CreatePipelineCache();
 
 	void RecreatePass(RenderStage &renderStage);
@@ -89,8 +89,10 @@ private:
 	std::map<std::string, const Descriptor *> m_attachments;
 	std::unique_ptr<Swapchain> m_swapchain;
 
+	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
+	Timer m_timerPurge;
+
 	VkPipelineCache m_pipelineCache;
-	VkCommandPool m_commandPool;
 	std::vector<VkSemaphore> m_presentCompletes;
 	std::vector<VkSemaphore> m_renderCompletes;
 	std::vector<VkFence> m_flightFences;

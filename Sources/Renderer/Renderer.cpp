@@ -9,8 +9,8 @@ namespace acid
 Renderer::Renderer() :
 	m_renderManager(nullptr),
 	m_swapchain(nullptr),
+	m_timerPurge(Time::Seconds(4.0f)),
 	m_pipelineCache(VK_NULL_HANDLE),
-	m_commandPool(VK_NULL_HANDLE),
 	m_currentFrame(0),
 	m_instance(std::make_unique<Instance>()),
 	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
@@ -19,7 +19,6 @@ Renderer::Renderer() :
 {
 	glslang::InitializeProcess();
 
-	CreateCommandPool();
 	CreatePipelineCache();
 }
 
@@ -39,8 +38,6 @@ Renderer::~Renderer()
 		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_renderCompletes[i], nullptr);
 		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentCompletes[i], nullptr);
 	}
-
-	vkDestroyCommandPool(m_logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
 }
 
 void Renderer::Update()
@@ -139,6 +136,23 @@ void Renderer::Update()
 		if (renderStage != nullptr)
 		{
 			EndRenderpass(*renderStage);
+		}
+	}
+
+	// Purges unused command pools.
+	if (m_timerPurge.IsPassedTime())
+	{
+		m_timerPurge.ResetStartTime();
+
+		for (auto it = m_commandPools.begin(); it != m_commandPools.end();)
+		{
+			if ((*it).second.use_count() <= 1)
+			{
+				it = m_commandPools.erase(it);
+				continue;
+			}
+
+			++it;
 		}
 	}
 }
@@ -362,15 +376,17 @@ const Descriptor *Renderer::GetAttachment(const std::string &name) const
 	return it->second;
 }
 
-void Renderer::CreateCommandPool()
+const std::shared_ptr<CommandPool> &Renderer::GetCommandPool(const std::thread::id &threadId)
 {
-	auto graphicsFamily = m_logicalDevice->GetGraphicsFamily();
+	auto it = m_commandPools.find(threadId);
 
-	VkCommandPoolCreateInfo commandPoolCreateInfo = {};
-	commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-	commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
-	commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
-	CheckVk(vkCreateCommandPool(m_logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
+	if (it != m_commandPools.end())
+	{
+		return it->second;
+	}
+
+	m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId));
+	return m_commandPools.find(threadId)->second; // TODO: Cleanup.
 }
 
 void Renderer::CreatePipelineCache()

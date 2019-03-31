@@ -5,16 +5,18 @@
 namespace acid
 {
 CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
+	m_commandPool(nullptr),
 	m_queueType(queueType),
 	m_commandBuffer(nullptr),
 	m_running(false)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-	auto commandPool = Renderer::Get()->GetCommandPool(); // TODO: Use std::this_thread::get_id() and have a command pool per thread map.
+
+	m_commandPool = Renderer::Get()->GetCommandPool();
 
 	VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 	commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	commandBufferAllocateInfo.commandPool = commandPool;
+	commandBufferAllocateInfo.commandPool = m_commandPool->GetCommandPool();
 	commandBufferAllocateInfo.level = bufferLevel;
 	commandBufferAllocateInfo.commandBufferCount = 1;
 	Renderer::CheckVk(vkAllocateCommandBuffers(logicalDevice->GetLogicalDevice(), &commandBufferAllocateInfo, &m_commandBuffer));
@@ -28,9 +30,8 @@ CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType
 CommandBuffer::~CommandBuffer()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-	auto commandPool = Renderer::Get()->GetCommandPool();
 
-	vkFreeCommandBuffers(logicalDevice->GetLogicalDevice(), commandPool, 1, &m_commandBuffer);
+	vkFreeCommandBuffers(logicalDevice->GetLogicalDevice(), m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
 }
 
 void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)

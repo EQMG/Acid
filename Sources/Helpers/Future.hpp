@@ -11,15 +11,10 @@ template<typename T>
 class Future
 {
 public:
-	Future() :
-		m_future({}),
-		m_current({})
-	{
-	}
+	Future() = default;
 
 	Future(std::future<T> future) :
-		m_future(std::move(future)),
-		m_current({})
+		m_future(std::move(future))
 	{
 	}
 

@@ -171,6 +171,7 @@
 #include "Renderer/Buffers/UniformBuffer.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Commands/CommandBuffer.hpp"
+#include "Renderer/Commands/CommandPool.hpp"
 #include "Renderer/Descriptors/Descriptor.hpp"
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
