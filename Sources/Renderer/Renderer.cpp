@@ -242,10 +242,9 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	auto width = Window::Get()->GetWidth();
 	auto height = Window::Get()->GetHeight();
 
-	VkImage srcImage = m_swapchain->GetActiveImage();
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(srcImage, dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 }, 
+	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 },
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
@@ -254,52 +253,24 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	imageSubresource.mipLevel = 0;
 	imageSubresource.arrayLayer = 0;
 
-	VkSubresourceLayout subresourceLayout;
-	vkGetImageSubresourceLayout(m_logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &subresourceLayout);
+	VkSubresourceLayout dstSubresourceLayout;
+	vkGetImageSubresourceLayout(m_logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &dstSubresourceLayout);
+	
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
-	// Creates the screenshot image file.
-	FileSystem::Create(filename);
-
-	// Map image memory so we can start copying from it.
-	char *data;
-	vkMapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void **) &data);
-	data += subresourceLayout.offset;
-
-	// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'll have to manually swizzle color components
-	bool colourSwizzle = false;
-
-	// Check if source is BGR.
-	if (!supportsBlit)
-	{
-		static const std::vector<VkFormat> FORMATS_BGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-		colourSwizzle = std::find(FORMATS_BGR.begin(), FORMATS_BGR.end(), m_surface->GetFormat().format) != FORMATS_BGR.end();
-	}
-
-	std::unique_ptr<uint8_t[]> pixels(new uint8_t[subresourceLayout.size]);
-
-	if (colourSwizzle)
-	{
-		for (uint32_t i = 0; i < width * height; i++)
-		{
-			auto pixelOffset = reinterpret_cast<uint8_t *>(data) + (i * 4);
-			pixels.get()[i * 4] = pixelOffset[2];
-			pixels.get()[i * 4 + 1] = pixelOffset[1];
-			pixels.get()[i * 4 + 2] = pixelOffset[0];
-			pixels.get()[i * 4 + 3] = pixelOffset[3];
-		}
-	}
-	else
-	{
-		std::memcpy(pixels.get(), reinterpret_cast<uint8_t *>(data), subresourceLayout.size);
-	}
-
-	// Writes the image.
-	Image::WritePixels(filename, pixels.get(), width, height);
-
-	// Clean up resources.
+	void *data;
+	vkMapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory);
+
+	// Frees temp image and memory.
 	vkFreeMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
 	vkDestroyImage(m_logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+
+	// Creates the screenshot image file and writes to it.
+	FileSystem::Create(filename);
+	FileSystem::ClearFile(filename);
+	Image::WritePixels(filename, pixels.get(), width, height);
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Engine::GetTime();

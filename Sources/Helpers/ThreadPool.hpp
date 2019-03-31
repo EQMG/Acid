@@ -19,6 +19,8 @@ public:
 
 	template<class F, class... Args>
 	decltype(auto) Enqueue(F &&f, Args &&... args);
+	
+	void Wait();
 
 	const std::vector<std::thread> &GetWorkers() const { return m_workers; }
 
@@ -49,7 +51,9 @@ decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 		}
 
 		m_tasks.emplace([task]()
-		{ (*task)(); });
+		{
+			(*task)();
+		});
 	}
 
 	m_condition.notify_one();

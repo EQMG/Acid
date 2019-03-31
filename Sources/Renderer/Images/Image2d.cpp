@@ -76,8 +76,8 @@ Image2d::Image2d(const uint32_t &width, const uint32_t &height, std::unique_ptr<
 	m_mipLevels(0),
 	m_image(VK_NULL_HANDLE),
 	m_memory(VK_NULL_HANDLE),
-	m_view(VK_NULL_HANDLE),
 	m_sampler(VK_NULL_HANDLE),
+	m_view(VK_NULL_HANDLE),
 	m_format(format)
 {
 	Image2d::Load();
@@ -158,8 +158,7 @@ void Image2d::Load()
 	if (m_loadPixels != nullptr)
 	{
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		auto bufferStaging = Buffer(m_width * m_height * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_width * m_height * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);

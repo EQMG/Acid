@@ -36,18 +36,26 @@ CommandBuffer::~CommandBuffer()
 
 void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
 {
+	if (m_running)
+	{
+		return;
+	}
+
 	VkCommandBufferBeginInfo beginInfo = {};
 	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 	beginInfo.flags = usage;
 	Renderer::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
-
 	m_running = true;
 }
 
 void CommandBuffer::End()
 {
-	Renderer::CheckVk(vkEndCommandBuffer(m_commandBuffer));
+	if (!m_running)
+	{
+		return;
+	}
 
+	Renderer::CheckVk(vkEndCommandBuffer(m_commandBuffer));
 	m_running = false;
 }
 
@@ -60,6 +68,10 @@ void CommandBuffer::SubmitIdle()
 	{
 		End();
 	}
+
+	// Before submitting to a queue wait for previous task to complete.
+	// TODO: Use a global queue fence instead?
+	Renderer::CheckVk(vkQueueWaitIdle(queueSelected));
 
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -75,8 +87,6 @@ void CommandBuffer::SubmitIdle()
 	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
 
 	Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
-
-	//Renderer::CheckVk(vkQueueWaitIdle(queueSelected)); // Can be used instead of waiting for a fence.
 
 	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
@@ -113,10 +123,6 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = &signalSemaphore;
 	}
-
-	// Before submitting to a queue wait for previous task to complete.
-	// TODO: Use a global queue fence instead?
-	Renderer::CheckVk(vkQueueWaitIdle(queueSelected));
 
 	if (fence != VK_NULL_HANDLE)
 	{
