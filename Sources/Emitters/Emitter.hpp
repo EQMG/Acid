@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Component interface that defines a emitter volume.
+ * @brief Component interface that defines a emitter volume.
  */
 class ACID_EXPORT Emitter :
 	public Component

@@ -15,7 +15,7 @@ namespace acid
 class Text;
 
 /**
- * A resource that is used when creating a font mesh.
+ * @brief Resource that is used when creating a font mesh.
  */
 class ACID_EXPORT FontType :
 	public Resource

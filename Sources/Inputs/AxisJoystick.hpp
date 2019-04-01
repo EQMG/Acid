@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Axis input from a joystick input device.
+ * @brief Axis input from a joystick input device.
  */
 class ACID_EXPORT AxisJoystick :
 	public IAxis

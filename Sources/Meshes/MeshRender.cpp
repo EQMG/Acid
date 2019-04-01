@@ -49,7 +49,7 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	auto meshModel = mesh->GetModel();
 	auto materialPipeline = material->GetPipelineMaterial();
 
-	if (meshModel == nullptr || materialPipeline->GetStage() != pipelineStage)
+	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)
 	{
 		return false;
 	}

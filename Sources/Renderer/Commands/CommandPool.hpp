@@ -5,6 +5,9 @@
 
 namespace acid
 {
+/**
+ * @brief Class that represents a command pool.
+ */
 class ACID_EXPORT CommandPool
 {
 public:

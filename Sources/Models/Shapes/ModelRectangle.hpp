@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A resource that represents a rectangle model.
+ * @brief Resource that represents a rectangle model.
  */
 class ACID_EXPORT ModelRectangle :
 	public Model

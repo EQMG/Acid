@@ -9,7 +9,7 @@ typedef struct ALCcontext_struct ALCcontext;
 namespace acid
 {
 /**
- * Module used for loading, managing and playing a variety of different sound types.
+ * M@brief odule used for loading, managing and playing a variety of different sound types.
  */
 class ACID_EXPORT Audio :
 	public Module

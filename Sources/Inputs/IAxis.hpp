@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Interface for an axis based input device.
+ * @brief Interface for an axis based input device.
  */
 class ACID_EXPORT IAxis
 {

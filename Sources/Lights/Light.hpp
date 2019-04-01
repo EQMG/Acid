@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Class that represents a point light.
+ * @brief Class that represents a point light.
  */
 class ACID_EXPORT Light :
 	public Component

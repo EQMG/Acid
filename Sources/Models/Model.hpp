@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * A resource that represents a model vertex and index buffer.
+ * @brief Resource that represents a model vertex and index buffer.
  */
 class ACID_EXPORT Model :
 	public Resource

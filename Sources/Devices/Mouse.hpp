@@ -30,7 +30,7 @@ enum class CursorHotspot
 };
 
 /**
- * Module used for managing a virtual mouse.
+ * @brief Module used for managing a virtual mouse.
  */
 class ACID_EXPORT Mouse :
 	public Module

@@ -7,112 +7,112 @@ namespace acid
 class Matrix3;
 class Matrix4;
 
-/// <summary>
-/// Holds a row major 2x2 matrix.
-/// </summary>
+/**
+ * @brief Holds a row major 2x2 matrix.
+ **/
 class ACID_EXPORT Matrix2
 {
 public:
-	/// <summary>
-	/// Constructor for Matrix2. The matrix is initialised to the identity.
-	/// </summary>
-	/// <param name="diagonal"> The value set to the diagonals. </param>
-	Matrix2(const float &diagonal = 1.0f);
+	/**
+	 * Constructor for Matrix2. The matrix is initialised to the identity.
+	 * @param diagonal The value set to the diagonals. 
+	 **/
+	explicit Matrix2(const float &diagonal = 1.0f);
 
-	/// <summary>
-	/// Constructor for Matrix2.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	/**
+	 * Constructor for Matrix2.
+	 * @param source Creates this matrix out of a existing one. 
+	 **/
 	Matrix2(const Matrix3 &source);
 
-	/// <summary>
-	/// Constructor for Matrix2.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	/**
+	 * Constructor for Matrix2.
+	 * @param source Creates this matrix out of a existing one. 
+	 **/
 	Matrix2(const Matrix4 &source);
 
-	/// <summary>
-	/// Constructor for Matrix2.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a 4 element array. </param>
+	/**
+	 * Constructor for Matrix2.
+	 * @param source Creates this matrix out of a 4 element array. 
+	 **/
 	explicit Matrix2(const float source[4]);
 
-	/// <summary>
-	/// Constructor for Matrix2.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a 2 vector array. </param>
+	/**
+	 * Constructor for Matrix2.
+	 * @param source Creates this matrix out of a 2 vector array. 
+	 **/
 	explicit Matrix2(const Vector2 source[2]);
 
-	/// <summary>
-	/// Adds this matrix to another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Adds this matrix to another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix2 Add(const Matrix2 &other) const;
 
-	/// <summary>
-	/// Subtracts this matrix to another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Subtracts this matrix to another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix2 Subtract(const Matrix2 &other) const;
 
-	/// <summary>
-	/// Multiplies this matrix by another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Multiplies this matrix by another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix2 Multiply(const Matrix2 &other) const;
 
-	/// <summary>
-	/// Divides this matrix by another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Divides this matrix by another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix2 Divide(const Matrix2 &other) const;
 
-	/// <summary>
-	/// Transforms this matrix by a vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Transforms this matrix by a vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector2 Transform(const Vector2 &other) const;
 
-	/// <summary>
-	/// Scales this matrix by a vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Scales this matrix by a vector.
+	 * @param other The other vector. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix2 Scale(const Vector2 &other) const;
 
-	/// <summary>
-	/// Inverts this matrix.
-	/// </summary>
-	/// <returns> The inverted matrix. </returns>
+	/**
+	 * Inverts this matrix.
+	 * @return The inverted matrix. 
+	 **/
 	Matrix2 Negate() const;
 
-	/// <summary>
-	/// Inverses this matrix.
-	/// </summary>
-	/// <returns> The inversed matrix. </returns>
+	/**
+	 * Inverses this matrix.
+	 * @return The inversed matrix. 
+	 **/
 	Matrix2 Inverse() const;
 
-	/// <summary>
-	/// Transposes this matrix.
-	/// </summary>
-	/// <returns> The transposed matrix. </returns>
+	/**
+	 * Transposes this matrix.
+	 * @return The transposed matrix. 
+	 **/
 	Matrix2 Transpose() const;
 
-	/// <summary>
-	/// Takes the determinant of this matrix.
-	/// </summary>
-	/// <returns> The determinant. </returns>
+	/**
+	 * Takes the determinant of this matrix.
+	 * @return The determinant. 
+	 **/
 	float Determinant() const;
 
-	/// <summary>
-	/// Gets the submatrix of this matrix.
-	/// </summary>
-	/// <returns> The submatrix. </returns>
+	/**
+	 * Gets the submatrix of this matrix.
+	 * @return The submatrix. 
+	 **/
 	float GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
 	void Decode(const Metadata &metadata);

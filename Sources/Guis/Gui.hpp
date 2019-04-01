@@ -12,7 +12,7 @@
 namespace acid
 {
 /**
- * Class that represents a image UI.
+ * @brief Class that represents a image UI.
  */
 class ACID_EXPORT Gui :
 	public UiObject

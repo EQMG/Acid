@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A resource that represents a sphere model.
+ * @brief Resource that represents a sphere model.
  */
 class ACID_EXPORT ModelSphere :
 	public Model

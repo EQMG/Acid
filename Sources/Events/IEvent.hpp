@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A simple event listener and runner.
+ * @brief A simple event listener and runner.
  */
 class ACID_EXPORT IEvent
 {

@@ -268,7 +268,6 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	vkDestroyImage(m_logicalDevice->GetLogicalDevice(), dstImage, nullptr);
 
 	// Creates the screenshot image file and writes to it.
-	FileSystem::Create(filename);
 	FileSystem::ClearFile(filename);
 	Image::WritePixels(filename, pixels.get(), width, height);
 

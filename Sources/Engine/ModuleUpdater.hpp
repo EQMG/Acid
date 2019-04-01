@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Class used to define how the engine will run updates and timings on modules.
+ * @brief Class used to define how the engine will run updates and timings on modules.
  */
 class ACID_EXPORT ModuleUpdater
 {

@@ -10,7 +10,7 @@ class btRigidBody;
 namespace acid
 {
 /**
- * Represents a object in a scene effected by physics.
+ * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT Rigidbody :
 	public CollisionObject

@@ -145,7 +145,7 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 
 	Vector3 velocity;
 
-	if (m_direction != 0.0f)
+	if (m_direction != Vector3::Zero)
 	{
 		velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 	}

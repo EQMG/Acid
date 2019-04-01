@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that acts as a basic change listener for a value.
+ * @brief Class that acts as a basic change listener for a value.
  * @tparam T The type of value to find change with.
  */
 template<typename T>

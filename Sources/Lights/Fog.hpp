@@ -8,7 +8,7 @@ namespace acid
 class Metadata;
 
 /**
- * Represents a hazy fog in the world.
+ * @brief Represents a hazy fog in the world.
  */
 class ACID_EXPORT Fog
 {

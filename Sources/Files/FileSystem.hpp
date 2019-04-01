@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A group of functions used for creation, loading, writing, and more.
+ * @brief A group of functions used for creation, loading, writing, and more.
  */
 class ACID_EXPORT FileSystem
 {

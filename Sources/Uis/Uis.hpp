@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Module used for that manages gui textures in a container.
+ * @brief Module used for that manages gui textures in a container.
  */
 class ACID_EXPORT Uis :
 	public Module

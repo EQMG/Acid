@@ -18,7 +18,7 @@ struct EnableBitMaskOperators :
     struct EnableBitMaskOperators<T> : std::true_type {};
 
 /**
- * Wrapper for an enumerator that provides implicit bool conversion
+ * @brief Wrapper for an enumerator that provides implicit bool conversion
  */
 template<typename T>
 struct Enumerator
@@ -43,7 +43,7 @@ struct Enumerator
 };
 
 /**
- * Wrapper that differentiates combined enumerators from a single enumerator
+ * @brief Wrapper that differentiates combined enumerators from a single enumerator
  * to prevent accidental comparisons between a bitmask and a single enumerator
  * using operator== or operator!=
  */

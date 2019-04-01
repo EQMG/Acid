@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Represents a post effect pipeline.
+ * @brief Represents a post effect pipeline.
  */
 class ACID_EXPORT PostFilter :
 	public RenderPipeline

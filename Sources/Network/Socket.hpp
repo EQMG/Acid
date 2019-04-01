@@ -19,143 +19,149 @@ using SocketHandle = int32_t;
 using SocketAddrLength = unsigned int;
 #endif
 
-/// <summary>
-/// This class mainly defines internal stuff to be used by derived classes.
-///
-/// The only public features that it defines, and which is therefore common
-/// to all the socket classes, is the blocking state.
-/// All sockets can be set as blocking or non-blocking.
-///
-/// In blocking mode, socket functions will hang until the operation completes,
-/// which means that the entire program (well, in fact the current thread if you use multiple ones)
-/// will be stuck waiting for your socket operation to complete.
-///
-/// In non-blocking mode, all the socket functions will return immediately.
-/// If the socket is not ready to complete the requested operation,
-/// the function simply returns the proper status code (Socket::NotReady).
-///
-/// The default mode, which is blocking, is the one that is generally used,
-/// in combination with threads or selectors. The non-blocking mode is rather used in real-time
-/// applications that run an endless loop that can poll the socket often enough,
-/// and cannot afford blocking this loop.
-/// </summary>
+/**
+ * @brief This class mainly defines internal stuff to be used by derived classes.
+ * 
+ * The only public features that it defines, and which is therefore common
+ * to all the socket classes, is the blocking state.
+ * All sockets can be set as blocking or non-blocking.
+ * 
+ * In blocking mode, socket functions will hang until the operation completes,
+ * which means that the entire program (well, in fact the current thread if you use multiple ones)
+ * will be stuck waiting for your socket operation to complete.
+ * 
+ * In non-blocking mode, all the socket functions will return immediately.
+ * If the socket is not ready to complete the requested operation,
+ * the function simply returns the proper status code (Socket::NotReady).
+ * 
+ * The default mode, which is blocking, is the one that is generally used,
+ * in combination with threads or selectors. The non-blocking mode is rather used in real-time
+ * applications that run an endless loop that can poll the socket often enough,
+ * and cannot afford blocking this loop.
+ **/
 class ACID_EXPORT Socket
 {
 public:
-	/// <summary>
-	/// Status codes that may be returned by socket functions.
-	/// </summary>
+	/**
+	 * @brief Status codes that may be returned by socket functions.
+	 **/
 	enum class Status
 	{
 		/// The socket has sent / received the data.
-			Done, /// The socket is not ready to send / receive data yet.
-		NotReady, /// The socket sent a part of the data.
-		Partial, /// The TCP socket has been disconnected.
-		Disconnected, /// An unexpected error happened.
+		Done,
+		/// The socket is not ready to send / receive data yet.
+		NotReady,
+		/// The socket sent a part of the data.
+		Partial,
+		/// The TCP socket has been disconnected.
+		Disconnected,
+		/// An unexpected error happened.
 		Error
 	};
 
-	/// <summary>
-	/// Destructor that closes the socket.
-	/// </summary>
+	/**
+	 * Destructor that closes the socket.
+	 **/
 	virtual ~Socket();
 
-	/// <summary>
-	/// Create an internal sockaddr_in address.
-	/// </summary>
-	/// <param name="address"> Target address. </param>
-	/// <param name="port"> Target port. </param>
-	/// <returns> sockaddr_in ready to be used by socket functions. </returns>
+	/**
+	 * Create an internal sockaddr_in address.
+	 * @param address Target address. 
+	 * @param port Target port. 
+	 * @return sockaddr_in ready to be used by socket functions. 
+	 **/
 	static sockaddr_in CreateAddress(uint32_t address, uint16_t port);
 
-	/// <summary>
-	/// Return the value of the invalid socket.
-	/// </summary>
-	/// <returns> Special value of the invalid socket. </returns>
+	/**
+	 * Return the value of the invalid socket.
+	 * @return Special value of the invalid socket. 
+	 **/
 	static SocketHandle InvalidSocketHandle();
 
-	/// <summary>
-	/// Close and destroy a socket.
-	/// </summary>
-	/// <param name="sock"> Handle of the socket to close. </param>
+	/**
+	 * Close and destroy a socket.
+	 * @param sock Handle of the socket to close. 
+	 **/
 	static void CloseSocketHandle(SocketHandle sock);
 
-	/// <summary>
-	/// Set a socket as blocking or non-blocking.
-	/// </summary>
-	/// <param name="sock"> Handle of the socket. </param>
-	/// <param name="block"> New blocking state of the socket. </param>
+	/**
+	 * Set a socket as blocking or non-blocking.
+	 * @param sock Handle of the socket. 
+	 * @param block New blocking state of the socket. 
+	 **/
 	static void SetHandleBlocking(SocketHandle sock, bool block);
 
-	/// <summary>
-	/// Get the last socket error status.
-	/// </summary>
-	/// <returns> Status corresponding to the last socket error. </returns>
+	/**
+	 * Get the last socket error status.
+	 * @return Status corresponding to the last socket error. 
+	 **/
 	static Status GetErrorStatus();
 
-	/// <summary>
-	/// Tell whether the socket is in blocking or non-blocking mode.
-	/// </summary>
-	/// <returns> True if the socket is blocking, false otherwise. </returns>
+	/**
+	 * Tell whether the socket is in blocking or non-blocking mode.
+	 * @return True if the socket is blocking, false otherwise. 
+	 **/
 	const bool &IsBlocking() const { return m_isBlocking; }
 
-	/// <summary>
-	/// Set the blocking state of the socket.
-	/// In blocking mode, calls will not return until they have completed their task.
-	/// For example, a call to Receive in blocking mode won't return until some data was actually received.
-	/// In non-blocking mode, calls will always return immediately, using the return code to signal
-	/// whether there was data available or not. By default, all sockets are blocking.
-	/// </summary>
-	/// <param name="blocking"> True to set the socket as blocking, false for non-blocking. </param>
+	/**
+	 * Set the blocking state of the socket.
+	 * In blocking mode, calls will not return until they have completed their task.
+	 * For example, a call to Receive in blocking mode won't return until some data was actually received.
+	 * In non-blocking mode, calls will always return immediately, using the return code to signal
+	 * whether there was data available or not. By default, all sockets are blocking.
+	 * @param blocking True to set the socket as blocking, false for non-blocking. 
+	 **/
 	void SetBlocking(bool blocking);
 
 protected:
-	/// <summary>
-	/// Types of protocols that the socket can use.
-	/// </summary>
+	/**
+	 * Types of protocols that the socket can use.
+	 **/
 	enum class Type
 	{
 		/// TCP protocol.
-			Tcp, /// UDP protocol.
+		Tcp,
+		/// UDP protocol.
 		Udp
 	};
 
-	/// <summary>
-	/// Default constructor.
-	/// This constructor can only be accessed by derived classes.
-	/// </summary>
-	/// <param name="type"> Type of the socket (TCP or UDP). </param>
+	/**
+	 * Default constructor.
+	 * This constructor can only be accessed by derived classes.
+	 * @param type Type of the socket (TCP or UDP). 
+	 **/
 	Socket(Type type);
 
-	/// <summary>
-	/// Return the internal handle of the socket.
-	/// The returned handle may be invalid if the socket was not created yet (or already destroyed).
-	/// This function can only be accessed by derived classes.
-	/// </summary>
-	/// <returns> The internal (OS-specific) handle of the socket. </returns>
+	/**
+	 * Return the internal handle of the socket.
+	 * The returned handle may be invalid if the socket was not created yet (or already destroyed).
+	 * This function can only be accessed by derived classes.
+	 * @return The internal (OS-specific) handle of the socket. 
+	 **/
 	const SocketHandle &GetHandle() const { return m_socket; }
 
-	/// <summary>
-	/// Create the internal representation of the socket.
-	/// This function can only be accessed by derived classes.
-	/// </summary>
+	/**
+	 * Create the internal representation of the socket.
+	 * This function can only be accessed by derived classes.
+	 **/
 	void Create();
 
-	/// <summary>
-	/// Create the internal representation of the socket from a socket handle.
-	/// This function can only be accessed by derived classes.
-	/// </summary>
-	/// <param name="handle"> OS-specific handle of the socket to wrap. </param>
+	/**
+	 * Create the internal representation of the socket from a socket handle.
+	 * This function can only be accessed by derived classes.
+	 * @param handle OS-specific handle of the socket to wrap. 
+	 **/
 	void Create(SocketHandle handle);
 
-	/// <summary>
-	/// Close the socket gracefully.
-	/// This function can only be accessed by derived classes.
-	/// </summary>
+	/**
+	 * Close the socket gracefully.
+	 * This function can only be accessed by derived classes.
+	 **/
 	void Close();
 
 private:
 	friend class SocketSelector;
+
 	/// Type of the socket (TCP or UDP).
 	Type m_type;
 	/// Socket descriptor.

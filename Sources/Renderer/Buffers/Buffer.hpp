@@ -5,6 +5,9 @@
 
 namespace acid
 {
+/**
+ * @brief Interface that represents a buffer.
+ */
 class ACID_EXPORT Buffer
 {
 public:

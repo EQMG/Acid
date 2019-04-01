@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Class that runs a event after a time has passed.
+ * @brief Class that runs a event after a time has passed.
  */
 class ACID_EXPORT EventTime :
 	public IEvent

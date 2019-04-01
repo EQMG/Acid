@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A resource that represents a OBL model.
+ * @brief Resource that represents a OBL model.
  */
 class ACID_EXPORT ModelObj :
 	public Model

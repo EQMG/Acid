@@ -15,6 +15,9 @@
 
 namespace acid
 {
+/**
+ * @brief Module that represents a renderpass structure.
+ */
 class ACID_EXPORT Renderer :
 	public Module
 {

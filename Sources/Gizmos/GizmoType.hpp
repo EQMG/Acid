@@ -14,7 +14,7 @@ namespace acid
 class Gizmo;
 
 /**
- * A resource that represents a gizmo type.
+ * @brief Resource that represents a gizmo type.
  */
 class ACID_EXPORT GizmoType :
 	public Resource

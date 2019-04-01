@@ -37,7 +37,7 @@ public:
 };
 
 /**
- * Class used to represent a monitor.
+ * @brief Class used to represent a monitor.
  */
 class ACID_EXPORT Monitor
 {

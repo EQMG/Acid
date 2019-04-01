@@ -14,14 +14,14 @@
 namespace acid
 {
 /**
- * Class that represents a text in a GUI.
+ * @brief Class that represents a text in a GUI.
  */
 class ACID_EXPORT Text :
 	public UiObject
 {
 public:
 	/**
-	 * A enum that represents how the text will be justified.
+	 * @brief A enum that represents how the text will be justified.
 	 */
 	enum class Justify
 	{
@@ -35,7 +35,7 @@ public:
 	 * @param fontSize The font size to be used in this text.
 	 * @param text The string text the object will be created with.
 	 * @param fontType The font type to be used in this text.
-	 * @param justifyHow the text will justify.
+	 * @param justify How the text will justify.
 	 * @param maxWidth The maximum length of a line of this text.
 	 * @param textColour The colour of this text.
 	 * @param kerning The kerning (type character spacing multiplier) of this text.
@@ -68,7 +68,7 @@ public:
 
 	/**
 	 * Changed the current string in this text.
-	 * @param newString The new text,
+	 * @param string The new text,
 	 */
 	void SetString(const std::string &string);
 

@@ -10,17 +10,17 @@ using namespace acid;
 
 namespace test
 {
-/// <summary>
-/// A module used for managing the world.
-/// </summary>
+/**
+ * Module used for managing the world.
+ */
 class World :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets the engines instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }
 
 	World();

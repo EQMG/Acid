@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).
+ * @brief Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).
  * It can be updated each frame to optimize the area, making it as small as possible (to allow for optimal shadow map resolution) while not being too small to avoid objects not having shadows when they should.
  * This class also provides functionality to test whether an object is inside this shadow box. Everything inside the box will be rendered to the shadow map in the shadow render pass.
  */
@@ -77,7 +77,7 @@ private:
 	 * @param forwardVector The direction that the camera is aiming, and thus the direction of the frustum.
 	 * @param centreNear The centre point of the frustum's near plane.
 	 * @param centreFar The centre point of the frustum's far plane.
-	 * @returnThe vertices of the frustum in light space.
+	 * @return The vertices of the frustum in light space.
 	 */
 	std::array<Vector4, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar);
 

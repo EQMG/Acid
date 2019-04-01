@@ -10,17 +10,17 @@ struct cr_plugin;
 
 namespace test
 {
-/// <summary>
-/// A module used for managing the world.
-/// </summary>
+/**
+ * Module used for managing the world.
+ */
 class Plugins :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets the engines instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Plugins *Get() { return Engine::Get()->GetModuleManager().Get<Plugins>(); }
 
 	Plugins();

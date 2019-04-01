@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Class that is used to represent a tree of values, used in file-object serialization.
+ * @brief Class that is used to represent a tree of values, used in file-object serialization.
  */
 class ACID_EXPORT Metadata :
 	public NonCopyable

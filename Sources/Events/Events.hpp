@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Module used for managing events on engine updates.
+ * @brief Module used for managing events on engine updates.
  */
 class ACID_EXPORT Events :
 	public Module

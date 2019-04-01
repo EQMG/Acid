@@ -4,21 +4,22 @@
 
 namespace acid
 {
-/// <summary>
-/// A driver that fades from start to end.
-/// </summary>
+/**
+ * @brief A driver that fades from start to end.
+ * @tparam T The type to be driven.
+ **/
 template<typename T>
 class DriverFade :
 	public IDriver<T>
 {
 public:
-	/// <summary>
-	/// Creates a new fade driver.
-	/// </summary>
-	/// <param name="start"> The fade start interval (0.0-1.0). </param>
-	/// <param name="end"> The fade end interval (0.0-1.0). </param>
-	/// <param name="peak"> The peak value. </param>
-	/// <param name="length"> The time taken to get to the end. </param>
+	/**
+	 * Creates a new fade driver.
+	 * @param start The fade start interval (0.0-1.0). 
+	 * @param end The fade end interval (0.0-1.0). 
+	 * @param peak The peak value. 
+	 * @param length The time taken to get to the end. 
+	 **/
 	DriverFade(const T &start, const T &end, const T &peak, const Time &length) :
 		IDriver<T>(length),
 		m_start(start),
@@ -27,40 +28,40 @@ public:
 	{
 	}
 
-	/// <summary>
-	/// Gets the start interval.
-	/// </summary>
-	/// <returns> The start interval. </returns>
+	/**
+	 * Gets the start interval.
+	 * @return The start interval. 
+	 **/
 	const T &GetStart() const { return m_start; }
 
-	/// <summary>
-	/// Sets the start interval (0.0-1.0).
-	/// </summary>
-	/// <param name="start"> The new start interval. </param>
+	/**
+	 * Sets the start interval (0.0-1.0).
+	 * @param start The new start interval. 
+	 **/
 	void SetStart(const T &start) { m_start = start; }
 
-	/// <summary>
-	/// Gets the end interval.
-	/// </summary>
-	/// <returns> The end interval. </returns>
+	/**
+	 * Gets the end interval.
+	 * @return The end interval. 
+	 **/
 	const T &GetEnd() const { return m_end; }
 
-	/// <summary>
-	/// Sets the end interval (0.0-1.0).
-	/// </summary>
-	/// <param name="end"> The new end interval. </param>
+	/**
+	 * Sets the end interval (0.0-1.0).
+	 * @param end The new end interval. 
+	 **/
 	void SetEnd(const T &end) { m_end = end; }
 
-	/// <summary>
-	/// Gets the peak value.
-	/// </summary>
-	/// <returns> The peak value. </returns>
+	/**
+	 * Gets the peak value.
+	 * @return The peak value. 
+	 **/
 	const T &GetPeak() const { return m_peak; }
 
-	/// <summary>
-	/// Sets the peak value.
-	/// </summary>
-	/// <param name="peak"> The new peak value. </param>
+	/**
+	 * Sets the peak value.
+	 * @param peak The new peak value. 
+	 **/
 	void SetPeak(const T &peak) { m_peak = peak; }
 
 protected:

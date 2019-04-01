@@ -5,13 +5,13 @@
 namespace acid
 {
 /**
- * Provides functionality for getting the values from a font file.
+ * @brief Provides functionality for getting the values from a font file.
  */
 class ACID_EXPORT FontMetafile
 {
 public:
 	/**
-	 * Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
+	 * @brief Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
 	 */
 	class Character
 	{

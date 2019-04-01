@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that contains and manages modules registered to a engine.
+ * @brief Class that contains and manages modules registered to a engine.
  */
 class ACID_EXPORT ModuleManager :
 	public NonCopyable

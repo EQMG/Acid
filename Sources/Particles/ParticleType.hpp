@@ -16,7 +16,7 @@ namespace acid
 class Particle;
 
 /**
- * A resource that represents a particle type.
+ * @brief Resource that represents a particle type.
  */
 class ACID_EXPORT ParticleType :
 	public Resource

@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Button input from a joystick input device.
+ * @brief Button input from a joystick input device.
  */
 class ACID_EXPORT ButtonJoystick :
 	public IButton

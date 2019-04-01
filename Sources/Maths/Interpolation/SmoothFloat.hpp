@@ -4,18 +4,19 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that smoothly increases its value.
-/// </summary>
+/**
+ * @brief Class that smoothly increases its value.
+ * @tparam T The type to be driven.
+ **/
 template<typename T>
 class SmoothFloat
 {
 public:
-	/// <summary>
-	/// Creates a new smooth float.
-	/// </summary>
-	/// <param name="initialValue"> The initial value. </param>
-	/// <param name="agility"> The agility for increasing actual. </param>
+	/**
+	 * Creates a new smooth float.
+	 * @param initialValue The initial value. 
+	 * @param agility The agility for increasing actual. 
+	 **/
 	SmoothFloat(const T &initialValue, const float &agility) :
 		m_agility(agility),
 		m_target(initialValue),
@@ -23,10 +24,10 @@ public:
 	{
 	}
 
-	/// <summary>
-	/// Updates the driver with the passed time.
-	/// </summary>
-	/// <param name="delta"> The time between the last update. </param>
+	/**
+	 * Updates the driver with the passed time.
+	 * @param delta The time between the last update. 
+	 **/
 	void Update(const Time &delta)
 	{
 		float offset = m_target - m_actual;
@@ -34,28 +35,28 @@ public:
 		m_actual += change;
 	}
 
-	/// <summary>
-	/// Gets the smooth floats current target.
-	/// </summary>
-	/// <returns> The target. </returns>
+	/**
+	 * Gets the smooth floats current target.
+	 * @return The target. 
+	 **/
 	const T &GetTarget() const { return m_target; }
 
-	/// <summary>
-	/// Sets the target for the smooth float.
-	/// </summary>
-	/// <param name="target"> The new target. </param>
+	/**
+	 * Sets the target for the smooth float.
+	 * @param target The new target. 
+	 **/
 	void SetTarget(const T &target) { m_target = target; }
 
-	/// <summary>
-	/// Increases the smooth floats target.
-	/// </summary>
-	/// <param name="increase"> How much to increase the target by. </param>
+	/**
+	 * Increases the smooth floats target.
+	 * @param increase How much to increase the target by. 
+	 **/
 	void IncreaseTarget(const T &increase) { m_target += increase; }
 
-	/// <summary>
-	/// Gets the currently calculated value.
-	/// </summary>
-	/// <returns> The calculated value. </returns>
+	/**
+	 * Gets the currently calculated value.
+	 * @return The calculated value. 
+	 **/
 	const float &Get() const { return m_actual; }
 
 private:

@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Holds position, rotation, and scale components.
+ * @brief Holds position, rotation, and scale components.
  */
 class ACID_EXPORT Transform :
 	public Component
@@ -18,7 +18,7 @@ public:
 	 * Creates a new transform.
 	 * @param position The position.
 	 * @param rotation The rotation.
-	 * @param scale The scale.
+	 * @param scaling The scale.
 	 */
 	explicit Transform(const Vector3 &position = Vector3::Zero, const Vector3 &rotation = Vector3::Zero, const Vector3 &scaling = Vector3::One);
 

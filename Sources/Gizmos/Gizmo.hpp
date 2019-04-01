@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * A instance of a gizmo type.
+ * @brief A instance of a gizmo type.
  */
 class ACID_EXPORT Gizmo
 {

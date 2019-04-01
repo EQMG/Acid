@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Class that can listen to file changes on a path recursively.
+ * @brief Class that can listen to file changes on a path recursively.
  */
 class ACID_EXPORT FileWatcher
 {

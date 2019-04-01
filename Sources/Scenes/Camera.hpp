@@ -9,7 +9,7 @@
 namespace acid
 {
 /**
- * Component that represents a scene camera, this object should be overridden with new behaviour.
+ * @brief Component that represents a scene camera, this object should be overridden with new behaviour.
  */
 class ACID_EXPORT Camera :
 	public Component

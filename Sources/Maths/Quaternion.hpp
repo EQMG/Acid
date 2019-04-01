@@ -5,152 +5,152 @@
 
 namespace acid
 {
-/// <summary>
-/// A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
-/// </summary>
+/**
+ * @brief A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
+ **/
 class ACID_EXPORT Quaternion
 {
 public:
-	/// <summary>
-	/// Constructor for Quaternion.
-	/// </summary>
-	/// <param name="x"> Start x. </param>
-	/// <param name="y"> Start y. </param>
-	/// <param name="z"> Start z. </param>
-	/// <param name="w"> Start w. </param>
-	Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
+	/**
+	 * Constructor for Quaternion.
+	 * @param x Start x. 
+	 * @param y Start y. 
+	 * @param z Start z. 
+	 * @param w Start w. 
+	 **/
+	explicit Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
 
-	/// <summary>
-	/// Constructor for Quaternion.
-	/// </summary>
-	/// <param name="source"> Creates this quaternion out of a existing vector (pitch, yaw roll). </param>>
-	/// <param name="w"> Start w. </param>
+	/**
+	 * Constructor for Quaternion.
+	 * @param source Creates this quaternion out of a existing vector (pitch, yaw roll). >
+	 * @param w Start w. 
+	 **/
 	Quaternion(const Vector3 &source, const float &w = 1.0f);
 
-	/// <summary>
-	/// Constructor for Quaternion.
-	/// </summary>
-	/// <param name="source"> Creates this vector out of a existing matrix. </param>
+	/**
+	 * Constructor for Quaternion.
+	 * @param source Creates this vector out of a existing matrix. 
+	 **/
 	Quaternion(const Matrix4 &source);
 
-	/// <summary>
-	/// Constructor for Quaternion.
-	/// </summary>
-	/// <param name="axisX"> The X axis. </param>
-	/// <param name="axisY"> The Y axis. </param>
-	/// <param name="axisZ"> The Z axis. </param>
+	/**
+	 * Constructor for Quaternion.
+	 * @param axisX The X axis. 
+	 * @param axisY The Y axis. 
+	 * @param axisZ The Z axis. 
+	 **/
 	Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ);
 
-	/// <summary>
-	/// Adds this quaternion to another quaternion.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <returns> The resultant quaternion. </returns>
+	/**
+	 * Adds this quaternion to another quaternion.
+	 * @param other The other quaternion. 
+	 * @return The resultant quaternion. 
+	 **/
 	Quaternion Add(const Quaternion &other) const;
 
-	/// <summary>
-	/// Subtracts this quaternion to another quaternion.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <returns> The resultant quaternion. </returns>
+	/**
+	 * Subtracts this quaternion to another quaternion.
+	 * @param other The other quaternion. 
+	 * @return The resultant quaternion. 
+	 **/
 	Quaternion Subtract(const Quaternion &other) const;
 
-	/// <summary>
-	/// Multiplies this quaternion with another quaternion.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <returns> The resultant quaternion. </returns>
+	/**
+	 * Multiplies this quaternion with another quaternion.
+	 * @param other The other quaternion. 
+	 * @return The resultant quaternion. 
+	 **/
 	Quaternion Multiply(const Quaternion &other) const;
 
-	/// <summary>
-	/// Multiplies this quaternion with another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Multiplies this quaternion with another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Multiply(const Vector3 &other) const;
 
-	/// <summary>
-	/// Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <returns> The resultant quaternion. </returns>
+	/**
+	 * Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
+	 * @param other The other quaternion. 
+	 * @return The resultant quaternion. 
+	 **/
 	Quaternion MultiplyInverse(const Quaternion &other) const;
 
-	/// <summary>
-	/// Calculates the dot product of the this quaternion and another quaternion.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <returns> The dot product. </returns>
+	/**
+	 * Calculates the dot product of the this quaternion and another quaternion.
+	 * @param other The other quaternion. 
+	 * @return The dot product. 
+	 **/
 	float Dot(const Quaternion &other) const;
 
-	/// <summary>
-	/// Calculates the slerp between this quaternion and another quaternion, they must be normalized!
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <param name="progression"> The progression. </param>
-	/// <returns> Left slerp right. </returns>
+	/**
+	 * Calculates the slerp between this quaternion and another quaternion, they must be normalized!
+	 * @param other The other quaternion. 
+	 * @param progression The progression. 
+	 * @return Left slerp right. 
+	 **/
 	Quaternion Slerp(const Quaternion &other, const float &progression) const;
 
-	/// <summary>
-	/// Scales this quaternion by a scalar.
-	/// </summary>
-	/// <param name="scalar"> The scalar value. </param>
-	/// <returns> The scaled quaternion. </returns>
+	/**
+	 * Scales this quaternion by a scalar.
+	 * @param scalar The scalar value. 
+	 * @return The scaled quaternion. 
+	 **/
 	Quaternion Scale(const float &scalar) const;
 
-	/// <summary>
-	/// Negates this quaternion.
-	/// </summary>
-	/// <returns> The negated quaternion. </returns>
+	/**
+	 * Negates this quaternion.
+	 * @return The negated quaternion. 
+	 **/
 	Quaternion Negate() const;
 
-	/// <summary>
-	/// Normalizes this quaternion.
-	/// </summary>
-	/// <returns> The normalized quaternion. </returns>
+	/**
+	 * Normalizes this quaternion.
+	 * @return The normalized quaternion. 
+	 **/
 	Quaternion Normalize() const;
 
-	/// <summary>
-	/// Gets the length squared of this quaternion.
-	/// </summary>
-	/// <returns> The length squared. </returns>
+	/**
+	 * Gets the length squared of this quaternion.
+	 * @return The length squared. 
+	 **/
 	float LengthSquared() const;
 
-	/// <summary>
-	/// Gets the length of this quaternion.
-	/// </summary>
-	/// <returns> The length. </returns>
+	/**
+	 * Gets the length of this quaternion.
+	 * @return The length. 
+	 **/
 	float Length() const;
 
-	/// <summary>
-	/// Gets the maximum value in this quaternion.
-	/// </summary>
-	/// <returns> The largest components. </returns>
+	/**
+	 * Gets the maximum value in this quaternion.
+	 * @return The largest components. 
+	 **/
 	float MaxComponent() const;
 
-	/// <summary>
-	/// Gets the lowest value in this quaternion.
-	/// </summary>
-	/// <returns> The smallest components. </returns>
+	/**
+	 * Gets the lowest value in this quaternion.
+	 * @return The smallest components. 
+	 **/
 	float MinComponent() const;
 
-	/// <summary>
-	/// Converts this quaternion to a 4x4 matrix.
-	/// </summary>
-	/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
+	/**
+	 * Converts this quaternion to a 4x4 matrix.
+	 * @return The rotation matrix which represents the exact same rotation as this quaternion. 
+	 **/
 	Matrix4 ToMatrix() const;
 
-	/// <summary>
-	/// Converts this quaternion to a 3x3 matrix representing the exact same
-	/// rotation as this quaternion.
-	/// </summary>
-	/// <returns> The rotation matrix which represents the exact same rotation as this quaternion. </returns>
+	/**
+	 * Converts this quaternion to a 3x3 matrix representing the exact same
+	 * rotation as this quaternion.
+	 * @return The rotation matrix which represents the exact same rotation as this quaternion. 
+	 **/
 	Matrix4 ToRotationMatrix() const;
 
-	/// <summary>
-	/// Converts this quaternion to euler angles.
-	/// </summary>
-	/// <returns> The euler angle representation of this quaternion. </returns>
+	/**
+	 * Converts this quaternion to euler angles.
+	 * @return The euler angle representation of this quaternion. 
+	 **/
 	Vector3 ToEuler() const;
 
 	const float &GetX() const { return m_x; }

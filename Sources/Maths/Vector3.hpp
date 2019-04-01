@@ -10,245 +10,245 @@ class Quaternion;
 class Vector2;
 class Vector4;
 
-/// <summary>
-/// Holds a 3-tuple vector.
-/// </summary>
+/**
+ * @brief Holds a 3-tuple vector.
+ **/
 class ACID_EXPORT Vector3
 {
 public:
-	/// <summary>
-	/// Constructor for Vector3.
-	/// </summary>
-	/// <param name="x"> Start x. </param>
-	/// <param name="y"> Start y. </param>
-	/// <param name="z"> Start z. </param>
-	Vector3(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f);
+	/**
+	 * Constructor for Vector3.
+	 * @param x Start x. 
+	 * @param y Start y. 
+	 * @param z Start z. 
+	 **/
+	explicit Vector3(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f);
 
-	/// <summary>
-	/// Constructor for Vector3.
-	/// </summary>
-	/// <param name="source"> Creates this vector out of a existing one. </param>
-	/// <param name="z"> Start z. </param>
+	/**
+	 * Constructor for Vector3.
+	 * @param source Creates this vector out of a existing one. 
+	 * @param z Start z. 
+	 **/
 	Vector3(const Vector2 &source, const float &z = 0.0f);
 
-	/// <summary>
-	/// Constructor for Vector3.
-	/// </summary>
-	/// <param name="source"> Creates this vector out of a existing one. </param>
+	/**
+	 * Constructor for Vector3.
+	 * @param source Creates this vector out of a existing one. 
+	 **/
 	Vector3(const Vector4 &source);
 
-	/// <summary>
-	/// Constructor for Vector3.
-	/// </summary>
-	/// <param name="source"> Creates this vector out of a existing colour. </param>
+	/**
+	 * Constructor for Vector3.
+	 * @param source Creates this vector out of a existing colour. 
+	 **/
 	Vector3(const Colour &source);
 
-	/// <summary>
-	/// Adds this vector to another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Adds this vector to another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Add(const Vector3 &other) const;
 
-	/// <summary>
-	/// Subtracts this vector to another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Subtracts this vector to another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Subtract(const Vector3 &other) const;
 
-	/// <summary>
-	/// Multiplies this vector with another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Multiplies this vector with another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Multiply(const Vector3 &other) const;
 
-	/// <summary>
-	/// Divides this vector by another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Divides this vector by another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Divide(const Vector3 &other) const;
 
-	/// <summary>
-	/// Calculates the angle between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The angle, in radians. </returns>
+	/**
+	 * Calculates the angle between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The angle, in radians. 
+	 **/
 	float Angle(const Vector3 &other) const;
 
-	/// <summary>
-	/// Calculates the dot product of the this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The dot product. </returns>
+	/**
+	 * Calculates the dot product of the this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The dot product. 
+	 **/
 	float Dot(const Vector3 &other) const;
 
-	/// <summary>
-	/// Calculates the cross product of the this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The cross product. </returns>
+	/**
+	 * Calculates the cross product of the this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The cross product. 
+	 **/
 	Vector3 Cross(const Vector3 &other) const;
 
-	/// <summary>
-	/// Calculates the linear interpolation between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <param name="progression"> The progression. </param>
-	/// <returns> Left lerp right. </returns>
+	/**
+	 * Calculates the linear interpolation between this vector and another vector.
+	 * @param other The other quaternion. 
+	 * @param progression The progression. 
+	 * @return Left lerp right. 
+	 **/
 	Vector3 Lerp(const Vector3 &other, const float &progression) const;
 
-	/// <summary>
-	/// Scales this vector by a scalar.
-	/// </summary>
-	/// <param name="scalar"> The scalar value. </param>
-	/// <returns> The scaled vector. </returns>
+	/**
+	 * Scales this vector by a scalar.
+	 * @param scalar The scalar value. 
+	 * @return The scaled vector. 
+	 **/
 	Vector3 Scale(const float &scalar) const;
 
-	/// <summary>
-	/// Rotates this vector by a angle around the origin.
-	/// </summary>
-	/// <param name="rotation"> The rotation amount. </param>
-	/// <returns> The rotated vector. </returns>
+	/**
+	 * Rotates this vector by a angle around the origin.
+	 * @param rotation The rotation amount. 
+	 * @return The rotated vector. 
+	 **/
 	Vector3 Rotate(const Vector3 &rotation) const;
 
-	/// <summary>
-	/// Negates this vector.
-	/// </summary>
-	/// <returns> The negated vector. </returns>
+	/**
+	 * Negates this vector.
+	 * @return The negated vector. 
+	 **/
 	Vector3 Negate() const;
 
-	/// <summary>
-	/// Normalizes this vector.
-	/// </summary>
-	/// <returns> The normalized vector. </returns>
+	/**
+	 * Normalizes this vector.
+	 * @return The normalized vector. 
+	 **/
 	Vector3 Normalize() const;
 
-	/// <summary>
-	/// Gets the length squared of this vector.
-	/// </summary>
-	/// <returns> The length squared. </returns>
+	/**
+	 * Gets the length squared of this vector.
+	 * @return The length squared. 
+	 **/
 	float LengthSquared() const;
 
-	/// <summary>
-	/// Gets the length of this vector.
-	/// </summary>
-	/// <returns> The length. </returns>
+	/**
+	 * Gets the length of this vector.
+	 * @return The length. 
+	 **/
 	float Length() const;
 
-	/// <summary>
-	/// Gets the maximum value in this vector.
-	/// </summary>
-	/// <returns> The largest components. </returns>
+	/**
+	 * Gets the maximum value in this vector.
+	 * @return The largest components. 
+	 **/
 	float MaxComponent() const;
 
-	/// <summary>
-	/// Gets the lowest value in this vector.
-	/// </summary>
-	/// <returns> The smallest components. </returns>
+	/**
+	 * Gets the lowest value in this vector.
+	 * @return The smallest components. 
+	 **/
 	float MinComponent() const;
 
-	/// <summary>
-	/// Converts these euler angles to a quaternion.
-	/// </summary>
-	/// <returns> The quaternion representation of this vector. </returns>
+	/**
+	 * Converts these euler angles to a quaternion.
+	 * @return The quaternion representation of this vector. 
+	 **/
 	Quaternion ToQuaternion() const;
 
-	/// <summary>
-	/// Gets the distance between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The squared distance. </returns>
+	/**
+	 * Gets the distance between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The squared distance. 
+	 **/
 	float DistanceSquared(const Vector3 &other) const;
 
-	/// <summary>
-	/// Gets the between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The distance. </returns>
+	/**
+	 * Gets the between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The distance. 
+	 **/
 	float Distance(const Vector3 &other) const;
 
-	/// <summary>
-	/// Gets the vector distance between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The vector distance. </returns>
+	/**
+	 * Gets the vector distance between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The vector distance. 
+	 **/
 	Vector3 DistanceVector(const Vector3 &other) const;
 
-	/// <summary>
-	/// Gradually changes this vector to a target.
-	/// </summary>
-	/// <param name="target"> The target vector. </param>
-	/// <param name="rate"> The rate to go from current to the target. </param>
-	/// <returns> The changed vector. </returns>
+	/**
+	 * Gradually changes this vector to a target.
+	 * @param target The target vector. 
+	 * @param rate The rate to go from current to the target. 
+	 * @return The changed vector. 
+	 **/
 	Vector3 SmoothDamp(const Vector3 &target, const Vector3 &rate) const;
 
-	/// <summary>
-	/// Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y, z).
-	/// </summary>
-	/// <returns> The polar coordinates (radius, theta, phi). </returns>
+	/**
+	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y, z).
+	 * @return The polar coordinates (radius, theta, phi). 
+	 **/
 	Vector3 CartesianToPolar() const;
 
-	/// <summary>
-	/// Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta, phi).
-	/// </summary>
-	/// <returns> The cartesian coordinates (x, y, z). </returns>
+	/**
+	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta, phi).
+	 * @return The cartesian coordinates (x, y, z). 
+	 **/
 	Vector3 PolarToCartesian() const;
 
-	/// <summary>
-	/// Projects this cube coordinate onto a sphere.
-	/// </summary>
-	/// <param name="radius"> The sphere radius. </param>
-	/// <returns> The projected cartesian coordinates. </returns>
+	/**
+	 * Projects this cube coordinate onto a sphere.
+	 * @param radius The sphere radius. 
+	 * @return The projected cartesian coordinates. 
+	 **/
 	Vector3 ProjectCubeToSphere(const float &radius) const;
 
-	/// <summary>
-	/// Gets the height of this vector on a point off of a 3d triangle.
-	/// </summary>
-	/// <param name="p1"> Point 1 on the triangle. </param>
-	/// <param name="p2"> Point 2 on the triangle. </param>
-	/// <param name="p3"> Point 3 on the triangle. </param>
-	/// <returns> Height of the triangle. </returns>
+	/**
+	 * Gets the height of this vector on a point off of a 3d triangle.
+	 * @param p1 Point 1 on the triangle. 
+	 * @param p2 Point 2 on the triangle. 
+	 * @param p3 Point 3 on the triangle. 
+	 * @return Height of the triangle. 
+	 **/
 	float BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3);
 
-	/// <summary>
-	/// Gets the lowest vector size.
-	/// </summary>
-	/// <param name="a"> The first vector to get values from. </param>
-	/// <param name="b"> The second vector to get values from. </param>
-	/// <returns> The lowest vector. </returns>
+	/**
+	 * Gets the lowest vector size.
+	 * @param a The first vector to get values from. 
+	 * @param b The second vector to get values from. 
+	 * @return The lowest vector. 
+	 **/
 	static Vector3 MinVector(const Vector3 &a, const Vector3 &b);
 
-	/// <summary>
-	/// Gets the maximum vector size.
-	/// </summary>
-	/// <param name="a"> The first vector to get values from. </param>
-	/// <param name="b"> The second vector to get values from. </param>
-	/// <returns> The maximum vector. </returns>
+	/**
+	 * Gets the maximum vector size.
+	 * @param a The first vector to get values from. 
+	 * @param b The second vector to get values from. 
+	 * @return The maximum vector. 
+	 **/
 	static Vector3 MaxVector(const Vector3 &a, const Vector3 &b);
 
-	/// <summary>
-	/// Generates a random unit vector.
-	/// </summary>
-	/// <returns> The random unit vector. </returns>
+	/**
+	 * Generates a random unit vector.
+	 * @return The random unit vector. 
+	 **/
 	static Vector3 RandomUnitVector();
 
-	/// <summary>
-	/// Gets a random point from on a circle.
-	/// </summary>
-	/// <param name="normal"> The circles normal. </param>
-	/// <param name="radius"> The circles radius. </param>
-	/// <returns> The random point in a circle. </returns>
+	/**
+	 * Gets a random point from on a circle.
+	 * @param normal The circles normal. 
+	 * @param radius The circles radius. 
+	 * @return The random point in a circle. 
+	 **/
 	static Vector3 RandomPointOnCircle(const Vector3 &normal, const float &radius);
 
-	/// <summary>
-	/// Generates a random unit vector from within a cone.
-	/// </summary>
-	/// <param name="coneDirection"> The cones direction. </param>
-	/// <param name="angle"> The cones major angle. </param>
-	/// <returns> The random unitt vector in a code. </returns>
+	/**
+	 * Generates a random unit vector from within a cone.
+	 * @param coneDirection The cones direction. 
+	 * @param angle The cones major angle. 
+	 * @return The random unitt vector in a code. 
+	 **/
 	static Vector3 RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle);
 
 	float GetX() const { return m_x; }

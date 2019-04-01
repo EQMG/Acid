@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A timer implementation for events.
+ * @brief A timer implementation for events.
  */
 class ACID_EXPORT Timer
 {

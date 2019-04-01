@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Combines multiple axes inputs into a single axis.
+ * @brief Combines multiple axes inputs into a single axis.
  */
 class ACID_EXPORT AxisCompound :
 	public IAxis,

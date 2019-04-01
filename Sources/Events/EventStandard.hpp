@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that is a basic implementation of the event interface.
+ * @brief Class that is a basic implementation of the event interface.
  */
 class ACID_EXPORT EventStandard :
 	public IEvent

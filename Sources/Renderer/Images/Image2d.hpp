@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * A resource that represents a loaded 2D image.
+ * @brief Resource that represents a 2D image.
  */
 class ACID_EXPORT Image2d :
 	public NonCopyable,

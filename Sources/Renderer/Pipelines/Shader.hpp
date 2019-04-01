@@ -11,6 +11,9 @@ class TType;
 
 namespace acid
 {
+/**
+ * @brief Class that loads and processes a shader, and provides a reflection.
+ */
 class ACID_EXPORT Shader
 {
 public:

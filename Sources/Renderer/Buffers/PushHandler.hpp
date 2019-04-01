@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that handles a pipeline push constant.
+ * @brief Class that handles a pipeline push constant.
  */
 class ACID_EXPORT PushHandler
 {

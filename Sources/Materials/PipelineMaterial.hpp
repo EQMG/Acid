@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * A resource that represents a material pipeline.
+ * @brief Resource that represents a material pipeline.
  */
 class ACID_EXPORT PipelineMaterial :
 	public Resource
@@ -17,7 +17,7 @@ public:
 	 * @param metadata The metadata to decode values from.
 	 * @return The material pipeline with the requested values.
 	 */
-	//static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
+	static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
 
 	/**
 	 * Creates a new material pipeline, or finds one with the same values.

@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Combines multiple button inputs into a single button.
+ * @brief Combines multiple button inputs into a single button.
  */
 class ACID_EXPORT ButtonCompound :
 	public IButton,

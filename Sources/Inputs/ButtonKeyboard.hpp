@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Button input from the keyboard input device.
+ * @brief Button input from the keyboard input device.
  */
 class ACID_EXPORT ButtonKeyboard :
 	public IButton

@@ -5,191 +5,191 @@
 
 namespace acid
 {
-/// <summary>
-/// Holds a 2-tuple vector.
-/// </summary>
+/**
+ * @brief Holds a 2-tuple vector.
+ **/
 class ACID_EXPORT Vector2
 {
 public:
-	/// <summary>
-	/// Constructor for Vector2.
-	/// </summary>
-	/// <param name="x"> Start x. </param>
-	/// <param name="y"> Start y. </param>
-	Vector2(const float &x = 0.0f, const float &y = 0.0f);
+	/**
+	 * Constructor for Vector2.
+	 * @param x Start x. 
+	 * @param y Start y. 
+	 **/
+	explicit Vector2(const float &x = 0.0f, const float &y = 0.0f);
 
-	/// <summary>
-	/// Adds this vector to another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Adds this vector to another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector2 Add(const Vector2 &other) const;
 
-	/// <summary>
-	/// Subtracts this vector to another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Subtracts this vector to another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector2 Subtract(const Vector2 &other) const;
 
-	/// <summary>
-	/// Multiplies this vector with another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Multiplies this vector with another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector2 Multiply(const Vector2 &other) const;
 
-	/// <summary>
-	/// Divides this vector by another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Divides this vector by another vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector2 Divide(const Vector2 &other) const;
 
-	/// <summary>
-	/// Calculates the angle between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The angle, in radians. </returns>
+	/**
+	 * Calculates the angle between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The angle, in radians. 
+	 **/
 	float Angle(const Vector2 &other) const;
 
-	/// <summary>
-	/// Calculates the dot product of the this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The dot product. </returns>
+	/**
+	 * Calculates the dot product of the this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The dot product. 
+	 **/
 	float Dot(const Vector2 &other) const;
 
-	/// <summary>
-	/// Calculates the linear interpolation between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other quaternion. </param>
-	/// <param name="progression"> The progression. </param>
-	/// <returns> Left lerp right. </returns>
+	/**
+	 * Calculates the linear interpolation between this vector and another vector.
+	 * @param other The other quaternion. 
+	 * @param progression The progression. 
+	 * @return Left lerp right. 
+	 **/
 	Vector2 Lerp(const Vector2 &other, const float &progression) const;
 
-	/// <summary>
-	/// Scales this vector by a scalar.
-	/// </summary>
-	/// <param name="scalar"> The scalar value. </param>
-	/// <returns> The scaled vector. </returns>
+	/**
+	 * Scales this vector by a scalar.
+	 * @param scalar The scalar value. 
+	 * @return The scaled vector. 
+	 **/
 	Vector2 Scale(const float &scalar) const;
 
-	/// <summary>
-	/// Rotates this vector by a angle around the origin.
-	/// </summary>
-	/// <param name="angle"> The angle to rotate by, in radians. </param>
-	/// <returns> The rotated vector. </returns>
+	/**
+	 * Rotates this vector by a angle around the origin.
+	 * @param angle The angle to rotate by, in radians. 
+	 * @return The rotated vector. 
+	 **/
 	Vector2 Rotate(const float &angle) const;
 
-	/// <summary>
-	/// Rotates this vector by a angle around a rotation axis.
-	/// </summary>
-	/// <param name="angle"> The angle to rotate by, in radians. </param>
-	/// <param name="rotationAxis"> The point to rotate the vector around. </param>
-	/// <returns> The rotated vector. </returns>
+	/**
+	 * Rotates this vector by a angle around a rotation axis.
+	 * @param angle The angle to rotate by, in radians. 
+	 * @param rotationAxis The point to rotate the vector around. 
+	 * @return The rotated vector. 
+	 **/
 	Vector2 Rotate(const float &angle, const Vector2 &rotationAxis) const;
 
-	/// <summary>
-	/// Negates this vector.
-	/// </summary>
-	/// <returns> The negated vector. </returns>
+	/**
+	 * Negates this vector.
+	 * @return The negated vector. 
+	 **/
 	Vector2 Negate() const;
 
-	/// <summary>
-	/// Normalizes this vector.
-	/// </summary>
-	/// <returns> The normalized vector. </returns>
+	/**
+	 * Normalizes this vector.
+	 * @return The normalized vector. 
+	 **/
 	Vector2 Normalize() const;
 
-	/// <summary>
-	/// Gets the length squared of this vector.
-	/// </summary>
-	/// <returns> The length squared. </returns>
+	/**
+	 * Gets the length squared of this vector.
+	 * @return The length squared. 
+	 **/
 	float LengthSquared() const;
 
-	/// <summary>
-	/// Gets the length of this vector.
-	/// </summary>
-	/// <returns> The length. </returns>
+	/**
+	 * Gets the length of this vector.
+	 * @return The length. 
+	 **/
 	float Length() const;
 
-	/// <summary>
-	/// Gets the maximum value in this vector.
-	/// </summary>
-	/// <returns> The largest components. </returns>
+	/**
+	 * Gets the maximum value in this vector.
+	 * @return The largest components. 
+	 **/
 	float MaxComponent() const;
 
-	/// <summary>
-	/// Gets the lowest value in this vector.
-	/// </summary>
-	/// <returns> The smallest components. </returns>
+	/**
+	 * Gets the lowest value in this vector.
+	 * @return The smallest components. 
+	 **/
 	float MinComponent() const;
 
-	/// <summary>
-	/// Gets the distance between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The squared distance. </returns>
+	/**
+	 * Gets the distance between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The squared distance. 
+	 **/
 	float DistanceSquared(const Vector2 &other) const;
 
-	/// <summary>
-	/// Gets the between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The distance. </returns>
+	/**
+	 * Gets the between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The distance. 
+	 **/
 	float Distance(const Vector2 &other) const;
 
-	/// <summary>
-	/// Gets the vector distance between this vector and another vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The vector distance. </returns>
+	/**
+	 * Gets the vector distance between this vector and another vector.
+	 * @param other The other vector. 
+	 * @return The vector distance. 
+	 **/
 	Vector2 DistanceVector(const Vector2 &other) const;
 
-	/// <summary>
-	/// Gets if this vector is in a triangle.
-	/// </summary>
-	/// <param name="v1"> The first triangle vertex. </param>
-	/// <param name="v2"> The second triangle vertex. </param>
-	/// <param name="v3"> The third triangle vertex. </param>
-	/// <returns> If this vector is in a triangle. </returns>
+	/**
+	 * Gets if this vector is in a triangle.
+	 * @param v1 The first triangle vertex. 
+	 * @param v2 The second triangle vertex. 
+	 * @param v3 The third triangle vertex. 
+	 * @return If this vector is in a triangle. 
+	 **/
 	bool InTriangle(const Vector2 &v1, const Vector2 &v2, const Vector2 &v3) const;
 
-	/// <summary>
-	/// Gradually changes this vector to a target.
-	/// </summary>
-	/// <param name="target"> The target vector. </param>
-	/// <param name="rate"> The rate to go from current to the target. </param>
-	/// <returns> The changed vector. </returns>
+	/**
+	 * Gradually changes this vector to a target.
+	 * @param target The target vector. 
+	 * @param rate The rate to go from current to the target. 
+	 * @return The changed vector. 
+	 **/
 	Vector2 SmoothDamp(const Vector2 &target, const Vector2 &rate) const;
 
-	/// <summary>
-	/// Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
-	/// </summary>
-	/// <returns> The polar coordinates (radius, theta). </returns>
+	/**
+	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
+	 * @return The polar coordinates (radius, theta). 
+	 **/
 	Vector2 CartesianToPolar() const;
 
-	/// <summary>
-	/// Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
-	/// </summary>
-	/// <returns> The cartesian coordinates (x, y). </returns>
+	/**
+	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
+	 * @return The cartesian coordinates (x, y). 
+	 **/
 	Vector2 PolarToCartesian() const;
 
-	/// <summary>
-	/// Gets the lowest vector size.
-	/// </summary>
-	/// <param name="a"> The first vector to get values from. </param>
-	/// <param name="b"> The second vector to get values from. </param>
-	/// <returns> The lowest vector. </returns>
+	/**
+	 * Gets the lowest vector size.
+	 * @param a The first vector to get values from. 
+	 * @param b The second vector to get values from. 
+	 * @return The lowest vector. 
+	 **/
 	static Vector2 MinVector(const Vector2 &a, const Vector2 &b);
 
-	/// <summary>
-	/// Gets the maximum vector size.
-	/// </summary>
-	/// <param name="a"> The first vector to get values from. </param>
-	/// <param name="b"> The second vector to get values from. </param>
-	/// <returns> The maximum vector. </returns>
+	/**
+	 * Gets the maximum vector size.
+	 * @param a The first vector to get values from. 
+	 * @param b The second vector to get values from. 
+	 * @return The maximum vector. 
+	 **/
 	static Vector2 MaxVector(const Vector2 &a, const Vector2 &b);
 
 	float GetX() const { return m_x; }

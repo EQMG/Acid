@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Axis composed of two buttons.
+ * @brief Axis composed of two buttons.
  */
 class ACID_EXPORT AxisButton :
 	public IAxis

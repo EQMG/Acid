@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Represents a render pipeline that is used to render a type of pipeline.
+ * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
 class ACID_EXPORT RenderPipeline
 {

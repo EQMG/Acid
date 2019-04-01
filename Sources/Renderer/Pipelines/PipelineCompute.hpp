@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Class that represents a compute compute pipeline.
+ * @brief Class that represents a compute compute pipeline.
  */
 class ACID_EXPORT PipelineCompute :
 	public Pipeline

@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Class that represents a 3 dimensional ray.
+ * @brief Class that represents a 3 dimensional ray.
  */
 class ACID_EXPORT Ray
 {

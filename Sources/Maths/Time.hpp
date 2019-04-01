@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Represents a time value stored in microseconds.
+ * @brief Represents a time value stored in microseconds.
  */
 class ACID_EXPORT Time
 {
@@ -31,7 +31,7 @@ public:
 	/**
 	 * Creates a time value from a number of milliseconds
 	 * @tparam T The type of value to be casted to.
-	 * @param amountNumber of milliseconds.
+	 * @param amount Number of milliseconds.
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename T = int32_t>

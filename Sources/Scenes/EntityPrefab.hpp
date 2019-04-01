@@ -8,7 +8,7 @@ namespace acid
 class Entity;
 
 /**
- * A resource that represents a entity prefab.
+ * @brief Resource that represents a entity prefab.
  */
 class ACID_EXPORT EntityPrefab :
 	public Resource

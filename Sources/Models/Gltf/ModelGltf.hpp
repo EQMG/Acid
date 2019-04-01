@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * A resource that represents a GLTF model.
+ * @brief Resource that represents a GLTF model.
  */
 class ACID_EXPORT ModelGltf :
 	public Model

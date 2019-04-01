@@ -28,7 +28,7 @@ enum class UiAspect :
 ENABLE_BITMASK_OPERATORS(UiAspect)
 
 /**
- * Class that represents a rectangle made of a position and dimension.
+ * @brief Class that represents a rectangle made of a position and dimension.
  */
 class ACID_EXPORT UiBound
 {

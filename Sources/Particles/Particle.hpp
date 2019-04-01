@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * A instance of a particle type.
+ * @brief A instance of a particle type.
  */
 class ACID_EXPORT Particle
 {

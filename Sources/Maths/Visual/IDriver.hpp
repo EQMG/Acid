@@ -4,17 +4,18 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a driver that changes over time.
-/// </summary>
+/**
+ * @brief Represents a driver that changes over time.
+ * @tparam T The type to be driven.
+ **/
 template<typename T>
 class IDriver
 {
 public:
-	/// <summary>
-	/// Creates a new driver with a length.
-	/// </summary>
-	/// <param name="length"> The drivers length. </param>
+	/**
+	 * Creates a new driver with a length.
+	 * @param length The drivers length. 
+	 **/
 	explicit IDriver(const Time &length) :
 		m_length(length),
 		m_actualTime(Time::Zero),
@@ -24,11 +25,11 @@ public:
 
 	virtual ~IDriver() = default;
 
-	/// <summary>
-	/// Updates the driver with the passed time.
-	/// </summary>
-	/// <param name="delta"> The time between the last update. </param>
-	/// <returns> The calculated value. </returns>
+	/**
+	 * Updates the driver with the passed time.
+	 * @param delta The time between the last update. 
+	 * @return The calculated value. 
+	 **/
 	T Update(const Time &delta)
 	{
 		m_actualTime += delta;
@@ -38,25 +39,25 @@ public:
 		return Calculate(time);
 	}
 
-	/// <summary>
-	/// Gets the length.
-	/// </summary>
-	/// <returns> The length. </returns>
+	/**
+	 * Gets the length.
+	 * @return The length. 
+	 **/
 	const Time &GetLength() const { return m_length; }
 
-	/// <summary>
-	/// Sets the length.
-	/// </summary>
-	/// <param name="length"> The new length. </param>
+	/**
+	 * Sets the length.
+	 * @param length The new length. 
+	 **/
 	void SetLength(const Time &length) { m_length = length; }
 
 protected:
-	/// <summary>
-	/// Calculates the new value.
-	/// </summary>
-	/// <param name="time"> The time into the drivers life.
-	/// </param>
-	/// <returns> The calculated value. </returns>
+	/**
+	 * Calculates the new value.
+	 * @param time The time into the drivers life.
+	 * </param>
+	 * @return The calculated value. 
+	 **/
 	virtual T Calculate(const float &factor) = 0;
 
 	Time m_length;

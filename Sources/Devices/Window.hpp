@@ -26,7 +26,7 @@ enum class InputMod :
 ENABLE_BITMASK_OPERATORS(InputMod)
 
 /**
- * Module used for managing a window.
+ * @brief Module used for managing a window.
  */
 class ACID_EXPORT Window :
 	public Module

@@ -5,20 +5,21 @@
 
 namespace acid
 {
-/// <summary>
-/// A driver that uses a sine wave.
-/// </summary>
+/**
+ * @brief A driver that uses a sine wave.
+ * @tparam T The type to be driven.
+ **/
 template<typename T>
 class DriverSinwave :
 	public IDriver<T>
 {
 public:
-	/// <summary>
-	/// Creates a new sine wave driver.
-	/// </summary>
-	/// <param name="min"> The min value. </param>
-	/// <param name="max"> The max value. </param>
-	/// <param name="length"> The length between two waves. </param>
+	/**
+	 * Creates a new sine wave driver.
+	 * @param min The min value. 
+	 * @param max The max value. 
+	 * @param length The length between two waves. 
+	 **/
 	DriverSinwave(const T &min, const T &max, const Time &length) :
 		IDriver<T>(length),
 		m_min(min),
@@ -26,28 +27,28 @@ public:
 	{
 	}
 
-	/// <summary>
-	/// Gets the min value.
-	/// </summary>
-	/// <returns> The min value. </returns>
+	/**
+	 * Gets the min value.
+	 * @return The min value. 
+	 **/
 	const T &GetMin() const { return m_min; }
 
-	/// <summary>
-	/// Sets the min value.
-	/// </summary>
-	/// <param name="min"> The new min value. </param>
+	/**
+	 * Sets the min value.
+	 * @param min The new min value. 
+	 **/
 	void SetMin(const T &min) { m_min = min; }
 
-	/// <summary>
-	/// Gets the max value.
-	/// </summary>
-	/// <returns> The max value. </returns>
+	/**
+	 * Gets the max value.
+	 * @return The max value. 
+	 **/
 	const T &GetMax() const { return m_max; }
 
-	/// <summary>
-	/// Sets the max value.
-	/// </summary>
-	/// <param name="max"> The new max value. </param>
+	/**
+	 * Sets the max value.
+	 * @param max The new max value. 
+	 **/
 	void SetMax(const T &max) { m_max = max; }
 
 protected:

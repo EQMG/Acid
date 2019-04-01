@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Class that represents a objects that acts as a component container.
+ * @brief Class that represents a objects that acts as a component container.
  */
 class ACID_EXPORT Entity :
 	public NonCopyable

@@ -7,13 +7,10 @@
 #include "Log.hpp"
 #include "Game.hpp"
 
-/**
- * The base Acid namespace.
- */
 namespace acid
 {
 /**
- * Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
+ * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
 class ACID_EXPORT Engine :
 	public NonCopyable

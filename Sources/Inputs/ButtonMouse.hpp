@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Button input from the mouse input device.
+ * @brief Button input from the mouse input device.
  */
 class ACID_EXPORT ButtonMouse :
 	public IButton

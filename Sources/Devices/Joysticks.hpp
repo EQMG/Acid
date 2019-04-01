@@ -15,7 +15,7 @@ enum class JoystickHat :
 ENABLE_BITMASK_OPERATORS(JoystickHat)
 
 /**
- * Module used for the creation, updating and destruction of the joysticks.
+ * @brief Module used for the creation, updating and destruction of the joysticks.
  */
 class ACID_EXPORT Joysticks :
 	public Module

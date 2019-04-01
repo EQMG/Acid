@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Represents the region of space in the modeled world that may appear on the screen.
+ * @brief Represents the region of space in the modeled world that may appear on the screen.
  */
 class ACID_EXPORT Frustum
 {

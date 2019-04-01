@@ -10,7 +10,7 @@ class ImageDepth;
 class Image2d;
 
 /**
- * Class that represents a graphics pipeline.
+ * @brief Class that represents a graphics pipeline.
  */
 class ACID_EXPORT PipelineGraphics :
 	public Pipeline

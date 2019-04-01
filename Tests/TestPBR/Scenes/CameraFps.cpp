@@ -85,7 +85,7 @@ void CameraFps::Update()
 	m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView() * Maths::DegToRad, Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 	m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
-	m_viewRay.Update(m_position, Vector2(Mouse::Get()->GetPositionX(), Mouse::Get()->GetPositionY()), m_viewMatrix, m_projectionMatrix);
+	m_viewRay.Update(m_position, Mouse::Get()->GetPosition(), m_viewMatrix, m_projectionMatrix);
 }
 
 void CameraFps::ReflectView(const float &height)
@@ -107,7 +107,7 @@ void CameraFps::CalculateHorizontalAngle()
 		}
 		else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton) != InputAction::Release)
 		{
-			angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
+			angleChange = -Mouse::Get()->GetDelta().m_x * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 		}
 	}
 
@@ -144,7 +144,7 @@ void CameraFps::CalculateVerticalAngle()
 		}
 		else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton) != InputAction::Release)
 		{
-			angleChange = -Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+			angleChange = -Mouse::Get()->GetDelta().m_y * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 		}
 	}
 

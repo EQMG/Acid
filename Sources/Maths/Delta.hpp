@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class for handing and calculating deltas.
+ * @brief Class for handing and calculating deltas.
  */
 class ACID_EXPORT Delta
 {

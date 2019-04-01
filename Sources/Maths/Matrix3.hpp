@@ -7,119 +7,119 @@ namespace acid
 class Matrix2;
 class Matrix4;
 
-/// <summary>
-/// Holds a row major 3x3 matrix.
-/// </summary>
+/**
+ * @brief Holds a row major 3x3 matrix.
+ **/
 class ACID_EXPORT Matrix3
 {
 public:
-	/// <summary>
-	/// Constructor for Matrix3. The matrix is initialised to the identity.
-	/// </summary>
-	/// <param name="diagonal"> The value set to the diagonals. </param>
-	Matrix3(const float &diagonal = 1.0f);
+	/**
+	 * Constructor for Matrix3. The matrix is initialised to the identity.
+	 * @param diagonal The value set to the diagonals. 
+	 **/
+	explicit Matrix3(const float &diagonal = 1.0f);
 
-	/// <summary>
-	/// Constructor for Matrix3.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	/**
+	 * Constructor for Matrix3.
+	 * @param source Creates this matrix out of a existing one. 
+	 **/
 	Matrix3(const Matrix2 &source);
 
-	/// <summary>
-	/// Constructor for Matrix3.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a existing one. </param>
+	/**
+	 * Constructor for Matrix3.
+	 * @param source Creates this matrix out of a existing one. 
+	 **/
 	Matrix3(const Matrix4 &source);
 
-	/// <summary>
-	/// Constructor for Matrix3.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a 9 element array. </param>
+	/**
+	 * Constructor for Matrix3.
+	 * @param source Creates this matrix out of a 9 element array. 
+	 **/
 	explicit Matrix3(const float source[9]);
 
-	/// <summary>
-	/// Constructor for Matrix3.
-	/// </summary>
-	/// <param name="source"> Creates this matrix out of a 3 vector array. </param>
+	/**
+	 * Constructor for Matrix3.
+	 * @param source Creates this matrix out of a 3 vector array. 
+	 **/
 	explicit Matrix3(const Vector3 source[3]);
 
-	/// <summary>
-	/// Adds this matrix to another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Adds this matrix to another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix3 Add(const Matrix3 &other) const;
 
-	/// <summary>
-	/// Subtracts this matrix to another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Subtracts this matrix to another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix3 Subtract(const Matrix3 &other) const;
 
-	/// <summary>
-	/// Multiplies this matrix by another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Multiplies this matrix by another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix3 Multiply(const Matrix3 &other) const;
 
-	/// <summary>
-	/// Multiplies this matrix by a vector.
-	/// </summary>
-	/// <param name="other"> The vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Multiplies this matrix by a vector.
+	 * @param other The vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Multiply(const Vector3 &other) const;
 
-	/// <summary>
-	/// Divides this matrix by another matrix.
-	/// </summary>
-	/// <param name="other"> The other matrix. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Divides this matrix by another matrix.
+	 * @param other The other matrix. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix3 Divide(const Matrix3 &other) const;
 
-	/// <summary>
-	/// Transforms this matrix by a vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant vector. </returns>
+	/**
+	 * Transforms this matrix by a vector.
+	 * @param other The other vector. 
+	 * @return The resultant vector. 
+	 **/
 	Vector3 Transform(const Vector3 &other) const;
 
-	/// <summary>
-	/// Scales this matrix by a vector.
-	/// </summary>
-	/// <param name="other"> The other vector. </param>
-	/// <returns> The resultant matrix. </returns>
+	/**
+	 * Scales this matrix by a vector.
+	 * @param other The other vector. 
+	 * @return The resultant matrix. 
+	 **/
 	Matrix3 Scale(const Vector3 &other) const;
 
-	/// <summary>
-	/// Inverts this matrix.
-	/// </summary>
-	/// <returns> The inverted matrix. </returns>
+	/**
+	 * Inverts this matrix.
+	 * @return The inverted matrix. 
+	 **/
 	Matrix3 Negate() const;
 
-	/// <summary>
-	/// Inverses this matrix.
-	/// </summary>
-	/// <returns> The inversed matrix. </returns>
+	/**
+	 * Inverses this matrix.
+	 * @return The inversed matrix. 
+	 **/
 	Matrix3 Inverse() const;
 
-	/// <summary>
-	/// Transposes this matrix.
-	/// </summary>
-	/// <returns> The transposed matrix. </returns>
+	/**
+	 * Transposes this matrix.
+	 * @return The transposed matrix. 
+	 **/
 	Matrix3 Transpose() const;
 
-	/// <summary>
-	/// Takes the determinant of this matrix.
-	/// </summary>
-	/// <returns> The determinant. </returns>
+	/**
+	 * Takes the determinant of this matrix.
+	 * @return The determinant. 
+	 **/
 	float Determinant() const;
 
-	/// <summary>
-	/// Gets the submatrix of this matrix.
-	/// </summary>
-	/// <returns> The submatrix. </returns>
+	/**
+	 * Gets the submatrix of this matrix.
+	 * @return The submatrix. 
+	 **/
 	Matrix2 GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
 	void Decode(const Metadata &metadata);

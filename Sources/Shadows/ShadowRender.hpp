@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * This component is used to render a entity as a shadow.
+ * @brief Component that is used to render a entity as a shadow.
  */
 class ACID_EXPORT ShadowRender :
 	public Component

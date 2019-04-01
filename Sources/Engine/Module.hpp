@@ -6,14 +6,14 @@
 namespace acid
 {
 /**
- * A interface used for defining engine modules.
+ * @brief A interface used for defining engine modules.
  */
 class ACID_EXPORT Module :
 	public NonCopyable
 {
 public:
 	/**
-	 * Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
+	 * @brief Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
 	 */
 	enum class Stage
 	{

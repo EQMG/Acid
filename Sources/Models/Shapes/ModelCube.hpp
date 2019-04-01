@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A resource that represents a cube model.
+ * @brief Resource that represents a cube model.
  */
 class ACID_EXPORT ModelCube :
 	public Model

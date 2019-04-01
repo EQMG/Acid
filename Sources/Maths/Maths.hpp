@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that holds many various math functions.
-/// </summary>
+/**
+ * @brief Class that holds many various math functions.
+ **/
 class ACID_EXPORT Maths
 {
 public:
@@ -14,133 +14,133 @@ public:
 	static constexpr float DegToRad = Pi / 180.0f;
 	static constexpr float RadToDeg = 180.0f / Pi;
 
-	/// <summary>
-	/// Generates a random value from between a range.
-	/// </summary>
-	/// <param name="min"> The min value. </param>
-	/// <param name="max"> The max value. </param>
-	/// <returns> The randomly selected value within the range. </returns>
+	/**
+	 * Generates a random value from between a range.
+	 * @param min The min value. 
+	 * @param max The max value. 
+	 * @return The randomly selected value within the range. 
+	 **/
 	static float Random(const float &min = 0.0f, const float &max = 1.0f);
 
-	/// <summary>
-	/// Generates a single value from a normal distribution, using Box-Muller.
-	/// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
-	/// </summary>
-	/// <param name="standardDeviation"> The standards deviation of the distribution. </param>
-	/// <param name="mean"> The mean of the distribution. </param>
-	/// <returns> A normally distributed value. </returns>
+	/**
+	 * Generates a single value from a normal distribution, using Box-Muller.
+	 * https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+	 * @param standardDeviation The standards deviation of the distribution. 
+	 * @param mean The mean of the distribution. 
+	 * @return A normally distributed value. 
+	 **/
 	static float RandomNormal(const float &standardDeviation, const float &mean);
 
-	/// <summary>
-	/// Creates a number between two numbers, logarithmic.
-	/// </summary>
-	/// <param name="min"> The min value. </param>
-	/// <param name="max"> The max value. </param>
-	/// <returns> The final random number. </returns>
+	/**
+	 * Creates a number between two numbers, logarithmic.
+	 * @param min The min value. 
+	 * @param max The max value. 
+	 * @return The final random number. 
+	 **/
 	static float RandomLog(const float &min, const float &max);
 
-	/// <summary>
-	/// Converts degrees to radians.
-	/// </summary>
-	/// <param name="degrees"> The degrees value. </param>
-	/// <returns> The radians value. </returns>
+	/**
+	 * Converts degrees to radians.
+	 * @param degrees The degrees value. 
+	 * @return The radians value. 
+	 **/
 	static float Radians(const float &degrees);
 
-	/// <summary>
-	/// Converts radians to degrees.
-	/// </summary>
-	/// <param name="radians"> The radians value. </param>
-	/// <returns> The degrees value. </returns>
+	/**
+	 * Converts radians to degrees.
+	 * @param radians The radians value. 
+	 * @return The degrees value. 
+	 **/
 	static float Degrees(const float &radians);
 
-	/// <summary>
-	/// Normalizes a angle into the range of 0-360.
-	/// </summary>
-	/// <param name="degrees"> The source angle. </param>
-	/// <returns> The normalized angle. </returns>
+	/**
+	 * Normalizes a angle into the range of 0-360.
+	 * @param degrees The source angle. 
+	 * @return The normalized angle. 
+	 **/
 	static float WrapDegrees(const float &degrees);
 
-	/// <summary>
-	/// Normalizes a angle into the range of 0-2PI.
-	/// </summary>
-	/// <param name="radians"> The source angle. </param>
-	/// <returns> The normalized angle. </returns>
+	/**
+	 * Normalizes a angle into the range of 0-2PI.
+	 * @param radians The source angle. 
+	 * @return The normalized angle. 
+	 **/
 	static float WrapRadians(const float &radians);
 
-	/// <summary>
-	/// Rounds a value to a amount of places after the decimal point.
-	/// </summary>
-	/// <param name="value"> The value to round. </param>
-	/// <param name="place"> How many places after the decimal to round to. </param>
-	/// <returns> The rounded value. </returns>
+	/**
+	 * Rounds a value to a amount of places after the decimal point.
+	 * @param value The value to round. 
+	 * @param place How many places after the decimal to round to. 
+	 * @return The rounded value. 
+	 **/
 	static float RoundToPlace(const float &value, const int32_t &place);
 
-	/// <summary>
-	/// Used to floor the value if less than the min.
-	/// </summary>
-	/// <param name="min"> The minimum value. </param>
-	/// <param name="value"> The value. </param>
-	/// <returns> Returns a value with deadband applied. </returns>
+	/**
+	 * Used to floor the value if less than the min.
+	 * @param min The minimum value. 
+	 * @param value The value. 
+	 * @return Returns a value with deadband applied. 
+	 **/
 	static float Deadband(const float &min, const float &value);
 
-	/// <summary>
-	/// Checks if two values are almost equal.
-	/// </summary>
-	/// <param name="a"> The first value. </param>
-	/// <param name="b"> The second value. </param>
-	/// <param name="eps"> EPS is the measure of equality. </param>
-	/// <returns> If both are almost equal. </returns>
+	/**
+	 * Checks if two values are almost equal.
+	 * @param a The first value. 
+	 * @param b The second value. 
+	 * @param eps EPS is the measure of equality. 
+	 * @return If both are almost equal. 
+	 **/
 	static bool AlmostEqual(const float &a, const float &b, const float &eps);
 
-	/// <summary>
-	/// Gradually changes a value to a target.
-	/// </summary>
-	/// <param name="current"> The current value. </param>
-	/// <param name="target"> The target value. </param>
-	/// <param name="rate"> The rate to go from current to the target. </param>
-	/// <returns> The changed value. </returns>
+	/**
+	 * Gradually changes a value to a target.
+	 * @param current The current value. 
+	 * @param target The target value. 
+	 * @param rate The rate to go from current to the target. 
+	 * @return The changed value. 
+	 **/
 	static float SmoothDamp(const float &current, const float &target, const float &rate);
 
-	/// <summary>
-	/// Interpolates two values by a factor using linear interpolation.
-	/// </summary>
-	/// <param name="a"> The first value. </param>
-	/// <param name="b"> The second value. </param>
-	/// <param name="factor"> The factor value. </param>
-	/// <returns> Returns a interpolation value. </returns>
+	/**
+	 * Interpolates two values by a factor using linear interpolation.
+	 * @param a The first value. 
+	 * @param b The second value. 
+	 * @param factor The factor value. 
+	 * @return Returns a interpolation value. 
+	 **/
 	static float Lerp(const float &a, const float &b, const float &factor);
 
-	/// <summary>
-	/// Interpolates two values by a factor using cosine interpolation.
-	/// </summary>
-	/// <param name="a"> The first value. </param>
-	/// <param name="b"> The second value. </param>
-	/// <param name="factor"> The blend value. </param>
-	/// <returns> Returns a interpolated value. </returns>
+	/**
+	 * Interpolates two values by a factor using cosine interpolation.
+	 * @param a The first value. 
+	 * @param b The second value. 
+	 * @param factor The blend value. 
+	 * @return Returns a interpolated value. 
+	 **/
 	static float CosLerp(const float &a, const float &b, const float &factor);
 
-	/// <summary>
-	/// A calculation that steps smoothly between two edges.
-	/// </summary>
-	/// <param name="edge0"> The inner edge. </param>
-	/// <param name="edge1"> The outer edge. </param>
-	/// <param name="x"> The sample. </param>
-	/// <returns> The resulting stepped value. </returns>
+	/**
+	 * A calculation that steps smoothly between two edges.
+	 * @param edge0 The inner edge. 
+	 * @param edge1 The outer edge. 
+	 * @param x The sample. 
+	 * @return The resulting stepped value. 
+	 **/
 	static float SmoothlyStep(const float &edge0, const float &edge1, const float &x);
 
-	/// <summary>
-	/// Takes the cosign of a number by using the sign and a additional angle.
-	/// </summary>
-	/// <param name="sin"> The sin. </param>
-	/// <param name="angle"> The angle. </param>
-	/// <returns> The resulting cosign. </returns>
+	/**
+	 * Takes the cosign of a number by using the sign and a additional angle.
+	 * @param sin The sin. 
+	 * @param angle The angle. 
+	 * @return The resulting cosign. 
+	 **/
 	static float CosFromSin(const float &sin, const float &angle);
 
-	/// <summary>
-	/// Combines a seed into a hash and modifies the seed by the new hash.
-	/// </summary>
-	/// <param name="seed"> The seed. </param>
-	/// <param name="v"> The value to hash. </param>
+	/**
+	 * Combines a seed into a hash and modifies the seed by the new hash.
+	 * @param seed The seed. 
+	 * @param v The value to hash. 
+	 **/
 	template<typename T>
 	static void HashCombine(std::size_t &seed, const T &v)
 	{

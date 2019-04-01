@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that handles a storage buffer.
+ * @brief Class that handles a storage buffer.
  */
 class ACID_EXPORT StorageHandler
 {

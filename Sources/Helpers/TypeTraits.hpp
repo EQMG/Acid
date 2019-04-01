@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A helper for checking types.
+ * @brief Helper class for checking types.
  */
 class ACID_EXPORT TypeTraits
 {

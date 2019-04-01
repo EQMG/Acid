@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * Button from a joystick.
+ * @brief Button from a joystick.
  */
 class ACID_EXPORT HatJoystick :
 	public IAxis,

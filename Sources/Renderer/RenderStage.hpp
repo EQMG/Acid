@@ -11,7 +11,7 @@
 namespace acid
 {
 /**
- * Class that represents an attachment in a renderpass.
+ * @brief Class that represents an attachment in a renderpass.
  */
 class ACID_EXPORT Attachment
 {

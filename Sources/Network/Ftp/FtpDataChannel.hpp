@@ -7,20 +7,22 @@ namespace acid
 class Ftp;
 class FtpResponse;
 
-/// <summary>
-/// Utility class for exchanging datas with the server on the data channel.
-/// </summary>
+/**
+ * @brief Utility class for exchanging datas with the server on the data channel.
+ **/
 class ACID_EXPORT FtpDataChannel
 {
 public:
-	/// <summary>
-	/// Enumeration of transfer modes.
-	/// </summary>
+	/**
+	 * @brief Enumeration of transfer modes.
+	 **/
 	enum class Mode
 	{
 		/// Binary mode (file is transfered as a sequence of bytes).
-			Binary, /// Text mode using ASCII encoding.
-		Ascii, /// Text mode using EBCDIC encoding.
+		Binary,
+		/// Text mode using ASCII encoding.
+		Ascii,
+		/// Text mode using EBCDIC encoding.
 		Ebcdic
 	};
 

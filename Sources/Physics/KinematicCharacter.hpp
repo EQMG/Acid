@@ -10,7 +10,7 @@ class btKinematicCharacterController;
 namespace acid
 {
 /**
- * Represents a kinematic character controller.
+ * @brief Represents a kinematic character controller.
  */
 class ACID_EXPORT KinematicCharacter :
 	public CollisionObject

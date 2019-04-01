@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * Class that represents a skybox material shader.
+ * @brief Class that represents a skybox material shader.
  */
 class ACID_EXPORT MaterialSkybox :
 	public Material

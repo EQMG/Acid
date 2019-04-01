@@ -8,7 +8,7 @@
 namespace acid
 {
 /**
- * A manager that manages particles.
+ * @brief A manager that manages particles.
  */
 class ACID_EXPORT Particles :
 	public Module

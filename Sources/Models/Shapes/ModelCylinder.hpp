@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A resource that represents a cylinder model.
+ * @brief Resource that represents a cylinder model.
  */
 class ACID_EXPORT ModelCylinder :
 	public Model

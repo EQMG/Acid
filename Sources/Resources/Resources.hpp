@@ -9,7 +9,7 @@
 namespace acid
 {
 /**
- * Module used for managing resources.
+ * @brief Module used for managing resources.
  */
 class ACID_EXPORT Resources :
 	public Module

@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * Class that represents a game.
+ * @brief Class that represents a game.
  */
 class ACID_EXPORT Game
 {

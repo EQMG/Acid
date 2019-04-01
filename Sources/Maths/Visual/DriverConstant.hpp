@@ -4,34 +4,35 @@
 
 namespace acid
 {
-/// <summary>
-/// A driver that has a constant value.
-/// </summary>
+/**
+ * @brief A driver that has a constant value.
+ * @tparam T The type to be driven.
+ **/
 template<typename T>
 class DriverConstant :
 	public IDriver<T>
 {
 public:
-	/// <summary>
-	/// Creates a new constant driver.
-	/// </summary>
-	/// <param name="constant"> The constant value. </param>
+	/**
+	 * Creates a new constant driver.
+	 * @param constant The constant value. 
+	 **/
 	explicit DriverConstant(const T &constant) :
 		IDriver<T>(Time::Max),
 		m_constant(constant)
 	{
 	}
 
-	/// <summary>
-	/// Gets the constant.
-	/// </summary>
-	/// <returns> The constant. </returns>
+	/**
+	 * Gets the constant.
+	 * @return The constant. 
+	 **/
 	const T &GetConstant() const { return m_constant; }
 
-	/// <summary>
-	/// Sets the constant.
-	/// </summary>
-	/// <param name="constant"> The new constant. </param>
+	/**
+	 * Sets the constant.
+	 * @param constant The new constant. 
+	 **/
 	void SetConstant(const T &constant) { m_constant = constant; };
 protected:
 	T Calculate(const float &factor) override

@@ -9,7 +9,7 @@
 namespace acid
 {
 /**
- * Module used for managing game scenes.
+ * @brief Module used for managing game scenes.
  */
 class ACID_EXPORT Scenes :
 	public Module

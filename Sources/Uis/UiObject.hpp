@@ -11,7 +11,7 @@
 namespace acid
 {
 /**
- * A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
+ * @brief A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI textures, fonts, etc.
  */

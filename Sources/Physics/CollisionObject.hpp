@@ -15,7 +15,7 @@ namespace acid
 class Frustum;
 
 /**
- * Represents a object in a scene effected by physics.
+ * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT CollisionObject :
 	public Component

@@ -10,7 +10,7 @@
 namespace acid
 {
 /**
- * A system of particles.
+ * @brief A system of particles.
  */
 class ACID_EXPORT ParticleSystem :
 	public Component

@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Class that contains and manages renderers registered to a render manager.
+ * @brief Class that contains and manages renderers registered to a render manager.
  */
 class ACID_EXPORT RendererContainer :
 	public NonCopyable

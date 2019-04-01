@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * A constant-sized non-overwriting circular queue.
+ * @brief A constant-sized non-overwriting circular queue.
  * @tparam T The type to hold.
  */
 template<typename T>

@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * A helper for C++ strings.
+ * @brief Helper class for C++ strings.
  */
 class ACID_EXPORT String
 {

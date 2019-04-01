@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * A resource that represents a sound buffer.
+ * @brief Resource that represents a sound buffer.
  */
 class ACID_EXPORT SoundBuffer :
 	public Resource

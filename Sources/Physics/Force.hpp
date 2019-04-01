@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * Represents a force that is attached to a {@link Rigidbody}.
+ * @brief Represents a force that is attached to a {@link Rigidbody}.
  */
 class ACID_EXPORT Force
 {
