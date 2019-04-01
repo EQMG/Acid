@@ -139,10 +139,9 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
-		uint32_t width = 0;
-		uint32_t height = 0;
-		auto pixels = image->GetPixels(width, height);
-		Image::WritePixels(filename, pixels.get(), width, height);
+		VkExtent3D extent = {};
+		auto pixels = image->GetPixels(extent);
+		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
 	}, brdfImage.get());*/
 #endif
 
@@ -182,10 +181,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
-		uint32_t width = 0;
-		uint32_t height = 0;
-		auto pixels = image->GetPixels(width, height);
-		Image::WritePixels(filename, pixels.get(), width, height);
+		VkExtent3D extent = {};
+		auto pixels = image->GetPixels(extent);
+		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
 	}, irradianceCubemap.get());*/
 #endif
 
@@ -258,10 +256,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
 			FileSystem::ClearFile(filename);
-			uint32_t width = 0;
-			uint32_t height = 0;
-			auto pixels = image->GetPixels(width, height, i);
-			Image::WritePixels(filename, pixels.get(), width, height);
+			VkExtent3D extent = {};
+			auto pixels = image->GetPixels(extent, i);
+			Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
 		}, prefilteredCubemap.get(), i);
 	}*/
 #endif

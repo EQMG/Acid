@@ -6,41 +6,42 @@
 
 namespace acid
 {
-/// <summary>
-/// A class used to define how the engine will run updates and timings on modules.
-/// </summary>
+/**
+ * Class used to define how the engine will run updates and timings on modules.
+ */
 class ACID_EXPORT ModuleUpdater
 {
 public:
 	ModuleUpdater();
 
-	/// <summary>
-	/// Updates all modules in order.
-	/// </summary>
+	/**
+	 * Updates all modules in order.
+	 * @param moduleManager The module manager to update.
+	 */
 	void Update(ModuleManager &moduleManager);
 
-	/// <summary>
-	/// Gets the delta (seconds) between updates.
-	/// </summary>
-	/// <returns> The delta between updates. </returns>
+	/**
+	 * Gets the delta (seconds) between updates.
+	 * @return The delta between updates.
+	 */
 	const Time &GetDelta() const { return m_deltaUpdate.GetChange(); }
 
-	/// <summary>
-	/// Gets the delta (seconds) between renders.
-	/// </summary>
-	/// <returns> The delta between renders. </returns>
+	/**
+	 * Gets the delta (seconds) between renders.
+	 * @return The delta between renders.
+	 */
 	const Time &GetDeltaRender() const { return m_deltaRender.GetChange(); }
 
-	/// <summary>
-	/// Gets the average UPS over a short interval.
-	/// </summary>
-	/// <returns> The UPS. </returns>
+	/**
+	 * Gets the average UPS over a short interval.
+	 * @return The UPS.
+	 */
 	const uint32_t &GetUps() const { return m_ups.m_value; }
 
-	/// <summary>
-	/// Gets the average FPS over a short interval.
-	/// </summary>
-	/// <returns> The FPS. </returns>
+	/**
+	 * Gets the average FPS over a short interval.
+	 * @return The FPS.
+	 */
 	const uint32_t &GetFps() const { return m_fps.m_value; }
 
 private:

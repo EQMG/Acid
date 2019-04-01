@@ -57,7 +57,11 @@ public:
 
 	void SetValue(const uint32_t &value);
 
-	Delegate<void(uint32_t, uint32_t)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(uint32_t, uint32_t)> &OnValue() { return m_onValue; }
 
 protected:
 	std::string GetTextString() const override
@@ -82,7 +86,11 @@ public:
 
 	void SetValue(const Key &value);
 
-	Delegate<void(Key)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(Key)> &OnValue() { return m_onValue; }
 
 protected:
 	std::string GetTextString() const override
@@ -106,7 +114,11 @@ public:
 
 	void SetValue(const MouseButton &value);
 
-	Delegate<void(MouseButton)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(MouseButton)> &OnValue() { return m_onValue; }
 
 protected:
 	std::string GetTextString() const override

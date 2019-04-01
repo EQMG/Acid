@@ -9,9 +9,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that handles a descriptor set.
-/// </summary>
+/**
+ * Class that handles a descriptor set.
+ */
 class ACID_EXPORT DescriptorsHandler
 {
 public:

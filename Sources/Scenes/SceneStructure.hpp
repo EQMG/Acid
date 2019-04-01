@@ -5,98 +5,94 @@
 
 namespace acid
 {
-/// <summary>
-/// A structure of spatial objects for a scene.
-/// </summary>
+/**
+ * Class that represents a  structure of spatial objects.
+ */
 class ACID_EXPORT SceneStructure :
 	public NonCopyable
 {
 public:
-	/// <summary>
-	/// Creates a new scene structure.
-	/// </summary>
 	SceneStructure();
 
-	/// <summary>
-	/// Creates a new entity that starts in this structure.
-	/// </summary>
-	/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
-	/// <returns> The newly created entity. </returns>
+	/**
+	 * Creates a new entity that starts in this structure.
+	 * @param transform The objects initial world position, rotation, and scale.
+	 * @return The newly created entity.
+	 */
 	Entity *CreateEntity(const Transform &transform);
 
-	/// <summary>
-	/// Creates a new entity from a prefab that starts in this structure.
-	/// </summary>
-	/// <param name="filename"> The file to load the component data from. </param>
-	/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
-	/// <returns> The newly created entity. </returns>
+	/**
+	 * Creates a new entity from a prefab that starts in this structure.
+	 * @param filename The file to load the component data from.
+	 * @param transform The objects initial world position, rotation, and scale.
+	 * @return The newly created entity.
+	 */
 	Entity *CreateEntity(const std::string &filename, const Transform &transform);
 
-	/// <summary>
-	/// Adds a new object to the spatial structure.
-	/// </summary>
-	/// <param name="object"> The object to add. </param>
+	/**
+	 * Adds a new object to the spatial structure.
+	 * @param object The object to add.
+	 */
 	void Add(Entity *object);
 
-	/// <summary>
-	/// Adds a new object to the spatial structure.
-	/// </summary>
-	/// <param name="object"> The object to add. </param>
+	/**
+	 * Adds a new object to the spatial structure.
+	 * @param object The object to add.
+	 */
 	void Add(std::unique_ptr<Entity> object);
 
-	/// <summary>
-	/// Removes an object from the spatial structure.
-	/// </summary>
-	/// <param name="object"> The object to remove. </param>
+	/**
+	 * Removes an object from the spatial structure.
+	 * @param object The object to remove.
+	 */
 	void Remove(Entity *object);
 
-	/// <summary>
-	/// Moves an object to another spatial structure.
-	/// </summary>
-	/// <param name="object"> The object to remove. </param>
-	/// <param name="structure"> The structure to move to. </param>
+	/**
+	 * Moves an object to another spatial structure.
+	 * @param object The object to move.
+	 * @param structure The structure to move to.
+	 */
 	void Move(Entity *object, SceneStructure &structure);
 
-	/// <summary>
-	/// Removes all objects from the spatial structure..
-	/// </summary>
+	/**
+	 * Removes all objects from the spatial structure.
+	 */
 	void Clear();
 
-	/// <summary>
-	/// Updates all of the entity.
-	/// </summary>
+	/**
+	 * Updates all of the entity.
+	 */
 	void Update();
 
-	/// <summary>
-	/// Gets the size of this structure.
-	/// </summary>
-	/// <returns> The structures size. </returns>
+	/**
+	 * Gets the size of this structure.
+	 * @return The structures size.
+	 */
 	uint32_t GetSize() const { return static_cast<uint32_t>(m_objects.size()); }
 
-	/// <summary>
-	/// Returns a set of all objects in the spatial structure.
-	/// </summary>
-	/// </param>
-	/// <returns> The list specified by of all objects. </returns>
+	/**
+	 * Gets a set of all objects in the spatial structure.
+	 * @return The list specified by of all objects.
+	 */
 	std::vector<Entity *> QueryAll();
 
-	/// <summary>
-	/// Returns a set of all objects in a spatial objects contained in a frustum.
-	/// </summary>
-	/// <param name="range"> The frustum range of space being queried. </param>
-	/// </param>
-	/// <returns> The list of all object in range. </returns>
+	/**
+	 * Gets a set of all objects in a spatial objects contained in a frustum.
+	 * @param range The frustum range of space being queried.
+	 * @return The list of all object in range.
+	 */
 	std::vector<Entity *> QueryFrustum(const Frustum &range);
 
 	//std::vector<Entity *> QuerySphere(const Vector3 &centre, const Vector3 &radius);
 
 	//std::vector<Entity *> QueryCube(const Vector3 &min, const Vector3 &max);
 
-	/// <summary>
-	/// Returns a set of all components of a type in the spatial structure.
-	/// </summary>
-	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
-	/// <returns> The list specified by of all components that match the type. </returns>
+	/**
+	 * Returns a set of all components of a type in the spatial structure.
+	 * @tparam T The components type to get.
+	 * @param allowDisabled If disabled components will be included in this query.
+	 * @return The list specified by of all components that match the type.
+	 */
 	template<typename T>
 	std::vector<T *> QueryComponents(const bool &allowDisabled = false)
 	{
@@ -116,11 +112,12 @@ public:
 		return components;
 	}
 
-	/// <summary>
-	/// Returns the first component of a type found in the spatial structure.
-	/// </summary>
-	/// <param name="allowDisabled"> If disabled components will be included in this query. </param>
-	/// <returns> The first component of the type found. </returns>
+	/**
+	 * Gets the first component of a type found in the spatial structure.
+	 * @tparam T The component type to get.
+	 * @param allowDisabled If disabled components will be included in this query.
+	 * @return The first component of the type found.
+	 */
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false)
 	{
@@ -137,12 +134,11 @@ public:
 		return nullptr;
 	}
 
-	/// <summary>
-	/// If the structure contains the object.
-	/// </summary>
-	/// <param name="object"> The object to check for.
-	/// </param>
-	/// <returns> If the structure contains the object. </returns>
+	/**
+	 * If the structure contains the object.
+	 * @param object The object to check for.
+	 * @return If the structure contains the object.
+	 */
 	bool Contains(Entity *object);
 
 private:

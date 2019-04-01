@@ -13,30 +13,35 @@ namespace acid
 {
 class Gizmo;
 
+/**
+ * A resource that represents a gizmo type.
+ */
 class ACID_EXPORT GizmoType :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing gizmo type with the same values, or create a new gizmo type.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new gizmo type, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The gizmo type with the requested values.
+	 */
 	static std::shared_ptr<GizmoType> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing gizmo type with the same values, or create a new gizmo type.
-	/// </summary>
-	/// <param name="model"> The model that the gizmo will render. </param>
-	/// <param name="lineThickness"> The thickness that the model will be rendered at. </param>
-	/// <param name="colour"> The default colour for gizmos. </param>
+	/**
+	 * Creates a new gizmo type, or finds one with the same values.
+	 * @param model The model that the gizmo will render.
+	 * @param lineThickness The thickness that the model will be rendered at.
+	 * @param colour The default colour for gizmos.
+	 * @return The gizmo type with the requested values.
+	 */
 	static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, const float &lineThickness = 1.0f, const Colour &colour = Colour::White);
 
-	/// <summary>
-	/// Creates a new gizmo type.
-	/// </summary>
-	/// <param name="model"> The model that the gizmo will render. </param>
-	/// <param name="lineThickness"> The thickness that the model will be rendered at. </param>
-	/// <param name="colour"> The default colour for gizmos. </param>
+	/**
+	 * Creates a new gizmo type.
+	 * @param model The model that the gizmo will render.
+	 * @param lineThickness The thickness that the model will be rendered at.
+	 * @param colour The default colour for gizmos.
+	 */
 	explicit GizmoType(std::shared_ptr<Model> model, const float &lineThickness = 1.0f, const Colour &colour = Colour::White);
 
 	void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);

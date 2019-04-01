@@ -5,25 +5,25 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a force that is attached to a <seealso cref="Rigidbody"/>.
-/// </summary>
+/**
+ * Represents a force that is attached to a {@link Rigidbody}.
+ */
 class ACID_EXPORT Force
 {
 public:
-	/// <summary>
-	/// Creates a new force that never times-out.
-	/// </summary>
-	/// <param name="force"> The vector of the force is applied. </param>
-	/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
+	/**
+	 * Creates a new force that never times-out.
+	 * @param force The vector of the force is applied.
+	 * @param position The position offset from the centre of the shape to apply the force.
+	 */
 	Force(const Vector3 &force, const Vector3 &position = Vector3::Zero);
 
-	/// <summary>
-	/// Creates a new force that times-out.
-	/// </summary>
-	/// <param name="force"> The vector of the force is applied. </param>
-	/// <param name="time"> How long the force will be applied for. </param>
-	/// <param name="position"> The position offset from the centre of the shape to apply the force. </param>
+	/**
+	 * Creates a new force that times-out.
+	 * @param force The vector of the force is applied.
+	 * @param time How long the force will be applied for.
+	 * @param position The position offset from the centre of the shape to apply the force.
+	 */
 	Force(const Vector3 &force, const Time &time, const Vector3 &position = Vector3::Zero);
 
 	void Update();

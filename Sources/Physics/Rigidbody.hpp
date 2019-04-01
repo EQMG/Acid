@@ -9,20 +9,20 @@ class btRigidBody;
 
 namespace acid
 {
-/// <summary>
-/// Represents a object in a scene effected by physics.
-/// </summary>
+/**
+ * Represents a object in a scene effected by physics.
+ */
 class ACID_EXPORT Rigidbody :
 	public CollisionObject
 {
 public:
-	/// <summary>
-	/// Creates a new rigidbody.
-	/// </summary>
-	/// <param name="mass"> The mass of the object. </param>
-	/// <param name="friction"> The amount of surface friction. </param>
-	/// <param name="linearFactor"> How effected each axis (XYZ) will be to linear movement. </param>
-	/// <param name="angularFactor"> How effected each axis (XYZ) will be to angular movement. </param>
+	/**
+	 * Creates a new rigidbody.
+	 * @param mass The mass of the object.
+	 * @param friction The amount of surface friction.
+	 * @param linearFactor How effected each axis will be to linear movement.
+	 * @param angularFactor How effected each axis will be to angular movement.
+	 */
 	explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3 &linearFactor = Vector3::One, const Vector3 &angularFactor = Vector3::One);
 
 	~Rigidbody();

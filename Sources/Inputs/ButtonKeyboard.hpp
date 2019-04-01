@@ -5,17 +5,17 @@
 
 namespace acid
 {
-/// <summary>
-/// Keys from a keyboard.
-/// </summary>
+/**
+ * Button input from the keyboard input device.
+ */
 class ACID_EXPORT ButtonKeyboard :
 	public IButton
 {
 public:
-	/// <summary>
-	/// Creates a new button keyboard.
-	/// </summary>
-	/// <param name="keys"> The key on the keyboard being checked. </param>
+	/**
+	 * Creates a new button keyboard.
+	 * @param key The key on the keyboard being checked.
+	 */
 	explicit ButtonKeyboard(const Key &key);
 
 	bool IsDown() const override;

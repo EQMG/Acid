@@ -24,7 +24,7 @@ Pannable::Pannable(UiObject *parent) :
 	m_textFps(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
 	m_textUps(parent, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 {
-	m_buttonReset.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonReset.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -33,21 +33,21 @@ Pannable::Pannable(UiObject *parent) :
 		}
 		Log::Out("Button Reset: %i\n", action);
 	};
-	m_testCompound->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_testCompound->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Compound: %i\n", action);
 	};
-	m_testHat.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_testHat.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Hat: %i\n", action);
 	};
 
 	m_settings.SetHeight(4.0f);
-	m_masterVolume.GetOnValue() += [this](float value)
+	m_masterVolume.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 	};
-	m_antialiasing.GetOnValue() += [this](bool value)
+	m_antialiasing.OnValue() += [this](bool value)
 	{
 	};
 

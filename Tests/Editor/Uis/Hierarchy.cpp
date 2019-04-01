@@ -17,7 +17,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 	m_colourWheel(&m_section1.GetContent(), Colour::Yellow, UiBound(Vector2(0.0f, 0.24f), UiReference::TopLeft))
 {
 	m_rgbColour.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
-	m_button1.GetOnClick() += [this](MouseButton button)
+	m_button1.OnClick() += [this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -35,11 +35,11 @@ Hierarchy::Hierarchy(UiObject *parent) :
 		m_colourWheel.SetValue(colour);
 		m_textHex.SetValue(colour.GetHex());
 	};
-	m_sliderR.GetOnValue() += onSlide;
-	m_sliderG.GetOnValue() += onSlide;
-	m_sliderB.GetOnValue() += onSlide;
+	m_sliderR.OnValue() += onSlide;
+	m_sliderG.OnValue() += onSlide;
+	m_sliderB.OnValue() += onSlide;
 
-	/*m_colourWheel.GetOnValue() += [this](Colour value) {
+	/*m_colourWheel.OnValue() += [this](Colour value) {
 		m_sliderR.SetValue(255.0f * value.m_r);
 		m_sliderG.SetValue(255.0f * value.m_g);
 		m_sliderB.SetValue(255.0f * value.m_b);

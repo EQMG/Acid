@@ -5,18 +5,18 @@
 
 namespace acid
 {
-/// <summary>
-/// A instance of a gizmo type.
-/// </summary>
+/**
+ * A instance of a gizmo type.
+ */
 class ACID_EXPORT Gizmo
 {
 public:
-	/// <summary>
-	/// Creates a new gizmo object.
-	/// </summary>
-	/// <param name="gizmoType"> The gizmo template to build from. </param>
-	/// <param name="transform"> The gizmos initial transform. </param>
-	/// <param name="colour"> The colour for this gizmo, without a value it will be set to the types default. </param>
+	/**
+	 * Creates a new gizmo object.
+	 * @param gizmoType The gizmo template to build from.
+	 * @param transform The gizmos initial transform.
+	 * @param colour The colour for this gizmo, without a value it will be set to the types default.
+	 */
 	Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &colour = {});
 
 	bool operator==(const Gizmo &other) const;

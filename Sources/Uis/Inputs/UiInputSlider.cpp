@@ -64,7 +64,7 @@ void UiInputSlider::UpdateObject()
 	{
 		float width = m_background.GetScreenDimensions().m_x;
 		float positionX = m_background.GetScreenPosition().m_x;
-		float cursorX = Mouse::Get()->GetPositionX() - positionX;
+		float cursorX = Mouse::Get()->GetPosition().m_x - positionX;
 		m_progress = cursorX / width;
 		m_progress = std::clamp(m_progress, 0.0f, 1.0f);
 		m_value = (m_progress * (m_valueMax - m_valueMin)) + m_valueMin;

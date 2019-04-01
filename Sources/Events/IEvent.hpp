@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A simple event listener and runner.
-/// </summary>
+/**
+ * A simple event listener and runner.
+ */
 class ACID_EXPORT IEvent
 {
 public:
@@ -14,21 +14,21 @@ public:
 
 	virtual ~IEvent() = default;
 
-	/// <summary>
-	/// Gets if the event has occurred.
-	/// </summary>
-	/// <returns> The event has occurred. </returns>
+	/**
+	 * Gets if the event has occurred.
+	 * @return The event has occurred.
+	 */
 	virtual bool EventTriggered() = 0;
 
-	/// <summary>
-	/// Run when a event has occurred.
-	/// </summary>
+	/**
+	 * Run when a event has occurred.
+	 */
 	virtual void OnEvent() = 0;
 
-	/// <summary>
-	/// Gets if the event is removed after it has run once.
-	/// </summary>
-	/// <returns> If the even will run. </returns>
+	/**
+	 * Gets if the event is removed after it has run once.
+	 * @return If the even will run.
+	 */
 	virtual bool RemoveAfterEvent() = 0;
 };
 }

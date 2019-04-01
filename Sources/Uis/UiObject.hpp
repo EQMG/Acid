@@ -10,66 +10,60 @@
 
 namespace acid
 {
-/// <summary>
-/// A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
-/// The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
-/// This class can be extended to create a representation for GUI textures, fonts, etc.
-/// </summary>
+/**
+ * A representation of a object this is rendered to a screen. This object is contained in a parent and has children.
+ * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
+ * This class can be extended to create a representation for GUI textures, fonts, etc.
+ */
 class ACID_EXPORT UiObject
 {
 public:
-	/// <summary>
-	/// Creates a new screen object.
-	/// </summary>
-	/// <param name="parent"> The parent screen object. </param>
-	/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
+	/**
+	 * Creates a new ui object.
+	 * @param parent The parent screen object.
+	 * @param rectangle The rectangle that will represent the bounds of the ui object.
+	 */
 	UiObject(UiObject *parent, const UiBound &rectangle);
 
 	virtual ~UiObject();
 
-	/// <summary>
-	/// Updates this screen object and the extended object.
-	/// </summary>
-	/// <param name="list"> The list to add to. </param>
+	/**
+	 * Updates this screen object and the extended object.
+	 * @param list The list to add to.
+	 */
 	void Update(std::vector<UiObject *> &list);
 
-	/// <summary>
-	/// Updates the implementation.
-	/// </summary>
+	/**
+	 * Updates the ui object.
+	 */
 	virtual void UpdateObject();
 
-	/// <summary>
-	/// Gets if the object provided has the cursor hovered above it.
-	/// </summary>
-	/// <param name="object"> The object to check with.
-	/// </param>
-	/// <returns> If the object has the cursor inside of its box. </returns>
+	/**
+	 * Gets if the object provided has the cursor hovered above it.
+	 * @return If the object has the cursor inside of its bounds.
+	 */
 	bool IsSelected() const;
 
-	/// <summary>
-	/// Gets the parent object.
-	/// </summary>
-	/// <returns> The parent object. </returns>
 	UiObject *GetParent() const { return m_parent; }
 
-	/// <summary>
-	/// Removes this object from the previous parent and attaches it to another parent.
-	/// </summary>
-	/// <param name="parent"> The new parent object. </param>
+	/**
+	 * Removes this object from the previous parent and attaches it to another parent.
+	 * @param parent The new parent object.
+	 */
 	void SetParent(UiObject *parent);
 
 	const std::vector<UiObject *> &GetChildren() const { return m_children; }
 
-	/// <summary>
-	/// Adds a child to this objects children.
-	/// </summary>
-	/// <param name="child"> The child to add. </param>
+	/**
+	 * Adds a child from this object.
+	 * @param child The child to add.
+	 */
 	void AddChild(UiObject *child);
 
-	/// <summary>
-	/// Disowns a child from this objects children.
-	/// </summary>
-	/// <param name="child"> The child to disown. </param>
+	/**
+	 * Removes a child from this object.
+	 * @param child The child to remove.
+	 */
 	void RemoveChild(UiObject *child);
 
 	void ClearChildren() { m_children.clear(); }
@@ -94,36 +88,28 @@ public:
 
 	void SetLockRotation(const bool &lockRotation) { m_lockRotation = lockRotation; }
 
-	/// <summary>
-	/// Gets the world transform applied to the object, if has value.
-	/// </summary>
-	/// <returns> The world transform. </returns>
+	/**
+	 * Gets the world transform applied to the object, if has value.
+	 * @return The world transform.
+	 */
 	const std::optional<Transform> &GetWorldTransform() const { return m_worldTransform; }
 
-	/// <summary>
-	/// Sets the world transform applied to the object.
-	/// </summary>
-	/// <param name="transform"> The new world space transform. </param>
+	/**
+	 * Sets the world transform applied to the object.
+	 * @param transform The new world space transform.
+	 */
 	void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
 
 	Matrix4 GetModelMatrix() const;
 
 	IDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
-	/// <summary>
-	/// Sets the alpha driver.
-	/// </summary>
-	/// <param name="alphaDriver"> The new alpha driver. </param>
 	void SetAlphaDriver(IDriver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
 	const float &GetAlpha() const { return m_alpha; }
 
 	IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
-	/// <summary>
-	/// Sets the scale driver.
-	/// </summary>
-	/// <param name="scaleDriver"> The new scale driver. </param>
 	void SetScaleDriver(IDriver<float> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
 	const float &GetScale() const { return m_scale; }
@@ -138,7 +124,11 @@ public:
 
 	const float &GetScreenScale() const { return m_screenScale; }
 
-	Delegate<void(MouseButton)> &GetOnClick() { return m_onClick; }
+	/**
+	 * Called when this object has been clicked on.
+	 * @return The delegate.
+	 */
+	Delegate<void(MouseButton)> &OnClick() { return m_onClick; }
 
 	void CancelEvent(const MouseButton &button) const;
 

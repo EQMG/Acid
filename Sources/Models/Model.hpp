@@ -7,28 +7,38 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a OBJ model.
-/// </summary>
+/**
+ * A resource that represents a model vertex and index buffer.
+ */
 class ACID_EXPORT Model :
 	public Resource
 {
 public:
+	/**
+	 * Creates a new model, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The model with the requested values.
+	 */
 	static std::shared_ptr<Model> Create(const Metadata &metadata);
 
+	/**
+	 * Creates a new model, or finds one with the same values.
+	 * @param filename The file to load the model from.
+	 * @return The model with the requested values.
+	 */
 	static std::shared_ptr<Model> Create(const std::string &filename);
 
-	/// <summary>
-	/// Creates a new empty model.
-	/// </summary>
+	/**
+	 * Creates a new empty model.
+	 */
 	Model();
 
-	/// <summary>
-	/// Creates a new model.
-	/// </summary>
-	/// <param name="T"> The vertex class that implements <seealso cref="IVertex"/>. </param>
-	/// <param name="vertices"> The model vertices. </param>
-	/// <param name="indices"> The model indices. </param>
+	/**
+	 * Creates a new model.
+	 * @tparam T The vertex class that implements {@link IVertex}.
+	 * @param vertices The model vertices.
+	 * @param indices The model indices.
+	 */
 	template<typename T>
 	explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
 		Model()

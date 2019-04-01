@@ -7,19 +7,19 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a point light, contains a colour, position and attenuation.
-/// </summary>
+/**
+ * Class that represents a point light.
+ */
 class ACID_EXPORT Light :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new point light.
-	/// </summary>
-	/// <param name="colour"> The colour of the light. </param>
-	/// <param name="radius"> How far the light will have influence (-1 sets this to a directional light). </param>
-	/// <param name="localTransform"> The local transform from the parents space. </param>
+	/**
+	 * Creates a new point light.
+	 * @param colour The colour of the light.
+	 * @param radius How far the light will have influence (-1 sets this to a directional light).
+	 * @param localTransform The local transform from the parents space.
+	 */
 	explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f, const Transform &localTransform = Transform::Identity);
 
 	void Start() override;

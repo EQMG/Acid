@@ -53,17 +53,17 @@ public:
 	virtual ~FStream();
 };
 
-/// <summary>
-/// A module used for managing files on engine updates.
-/// </summary>
+/**
+ * Module used for managing files on engine updates.
+ */
 class ACID_EXPORT Files :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Files *Get() { return Engine::Get()->GetModuleManager().Get<Files>(); }
 
 	Files();
@@ -72,46 +72,51 @@ public:
 
 	void Update() override;
 
-	/// <summary>
-	/// Adds an file search path, ensure <seealso cref="#SetBaseDirectory()"/> is called once before.
-	/// </summary>
-	/// <param name="path"> The path to add. </param>
+	/**
+	 * Adds an file search path.
+	 * @param path The path to add.
+	 */
 	void AddSearchPath(const std::string &path);
 
-	/// <summary>
-	/// Removes a file search path.
-	/// </summary>
-	/// <param name="path"> The path to remove. </param>
+	/**
+	 * Removes a file search path.
+	 * @param path The path to remove.
+	 */
 	void RemoveSearchPath(const std::string &path);
 
-	/// <summary>
-	/// Clears all file search paths.
-	/// </summary>
+	/**
+	 * Clears all file search paths.
+	 */
 	void ClearSearchPath();
 
-	/// <summary>
-	/// Gets if the path is found in one of the search paths.
-	/// </summary>
-	/// <param name="path"> The path to look for. </param>
-	/// <returns> If the path is found in one of the searches. </returns>
+	/**
+	 * Gets if the path is found in one of the search paths.
+	 * @param path The path to look for.
+	 * @return If the path is found in one of the searches.
+	 */
 	static bool ExistsInPath(const std::string &path);
 
-	/// <summary>
-	/// Reads a file found by real or partial path.
-	/// </summary>
-	/// <param name="path"> The path to read. </param>
-	/// <returns> The data read from the file. </returns>
+	/**
+	 * Reads a file found by real or partial path.
+	 * @param path The path to read.
+	 * @return The data read from the file.
+	 */
 	static std::optional<std::string> Read(const std::string &path);
 
-	/// <summary>
-	/// Finds all the files in a path.
-	/// </summary>
-	/// <param name="path"> The path to search. </param>
-	/// <param name="recursive"> If paths will be recursively searched. </param>
-	/// <returns> The files found. </returns>
+	/**
+	 * Finds all the files in a path.
+	 * @param path The path to search.
+	 * @param recursive If paths will be recursively searched.
+	 * @return The files found.
+	 */
 	static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
 
-	// http://stackoverflow.com/questions/6089231/getting-std-ifstream-to-handle-lf-cr-and-crlf
+	/**
+	 * Gets the next line from a stream. {@link http://stackoverflow.com/questions/6089231/getting-std-ifstream-to-handle-lf-cr-and-crlf}
+	 * @param is The input stream.
+	 * @param t The next string.
+	 * @return The input stream.
+	 */
 	static std::istream &SafeGetLine(std::istream &is, std::string &t);
 
 private:

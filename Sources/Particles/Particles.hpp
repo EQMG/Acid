@@ -7,17 +7,17 @@
 
 namespace acid
 {
-/// <summary>
-/// A manager that manages particles.
-/// </summary>
+/**
+ * A manager that manages particles.
+ */
 class ACID_EXPORT Particles :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Particles *Get() { return Engine::Get()->GetModuleManager().Get<Particles>(); }
 
 	Particles();
@@ -28,15 +28,15 @@ public:
 
 	//void RemoveParticle(const Particle &particle);
 
-	/// <summary>
-	/// Clears all particles from the scene.
-	/// </summary>
+	/**
+	 * Clears all particles from the scene.
+	 */
 	void Clear();
 
-	/// <summary>
-	/// Gets a list of all particles.
-	/// </summary>
-	/// <returns> All particles. </returns>
+	/**
+	 * Gets a list of all particles.
+	 * @return All particles.
+	 */
 	const std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> &GetParticles() const { return m_particles; }
 
 private:

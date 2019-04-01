@@ -24,7 +24,11 @@ public:
 
 	void SetValue(const bool &value);
 
-	Delegate<void(bool)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(bool)> &OnValue() { return m_onValue; }
 
 private:
 	void UpdateValue();

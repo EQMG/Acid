@@ -4,45 +4,45 @@
 
 namespace acid
 {
-/// <summary>
-/// A timer implementation for events.
-/// </summary>
+/**
+ * A timer implementation for events.
+ */
 class ACID_EXPORT Timer
 {
 public:
-	/// <summary>
-	/// Creates a new timer.
-	/// </summary>
-	/// <param name="interval"> The time between events. </param>
+	/**
+	 * Creates a new timer.
+	 * @param interval The time between events.
+	 */
 	explicit Timer(const Time &interval);
 
-	/// <summary>
-	/// Gets if the amount of time between the current time and the start time.
-	/// </summary>
-	/// <returns> The time passed between current time and start time. </returns>
+	/**
+	 * Gets if the amount of time between the current time and the start time.
+	 * @return The time passed between current time and start time.
+	 */
 	Time GetDifference() const;
 
-	/// <summary>
-	/// Gets if the interval has been passes for the timer.
-	/// </summary>
-	/// <returns> If the interval was exceeded. </returns>
+	/**
+	 * Gets if the interval has been passes for the timer.
+	 * @return If the interval was exceeded.
+	 */
 	bool IsPassedTime() const;
 
-	/// <summary>
-	/// Adds the intervals value to the start time.
-	/// </summary>
+	/**
+	 * Adds the intervals value to the start time.
+	 */
 	void ResetStartTime();
 
-	/// <summary>
-	/// Gets what the interval is.
-	/// </summary>
-	/// <returns> The timers current interval. </returns>
+	/**
+	 * Gets what the interval is.
+	 * @return The timers current interval.
+	 */
 	const Time &GetInterval() const { return m_interval; }
 
-	/// <summary>
-	/// Gets the timers interval (resets timer).
-	/// </summary>
-	/// <param name="interval"> The new timer interval. </param>
+	/**
+	 * Gets the timers interval (resets timer).
+	 * @param interval The new timer interval.
+	 */
 	void SetInterval(const Time &interval);
 
 private:

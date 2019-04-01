@@ -5,7 +5,7 @@ namespace acid
 ButtonMouse::ButtonMouse(const MouseButton &button) :
 	m_button(button)
 {
-	Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
+	Mouse::Get()->OnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
 		if (button == m_button)
 		{

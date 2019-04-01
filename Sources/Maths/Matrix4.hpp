@@ -159,7 +159,7 @@ public:
 	/// <param name="translation"> Translation amount the XYZ. </param>
 	/// <param name="rotation"> Rotation amount (Pitch, Yaw, Roll). </param>
 	/// <param name="scale"> How much to scale the matrix. </param>
-	/// <returns> Returns the transformation matrix. </returns>
+	/// <returns> The transformation matrix. </returns>
 	static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
 
 	/// <summary>
@@ -239,7 +239,7 @@ public:
 	/// <param name="eye"> The source position. </param>
 	/// <param name="centre"> The target position. </param>
 	/// <param name="up"> What view direction is up. </param>
-	/// <returns> Returns the matrix. </returns>
+	/// <returns> The matrix. </returns>
 	static Matrix4 LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up = Vector3::Up);
 
 	void Decode(const Metadata &metadata);

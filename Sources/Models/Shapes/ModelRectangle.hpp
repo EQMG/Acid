@@ -4,32 +4,34 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a rectangle model.
-/// </summary>
+/**
+ * A resource that represents a rectangle model.
+ */
 class ACID_EXPORT ModelRectangle :
 	public Model
 {
 public:
-	/// <summary>
-	/// Will find an existing rectangle model with the same values, or create a new rectangle model.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new rectangle model, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The rectangle model with the requested values.
+	 */
 	static std::shared_ptr<ModelRectangle> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing rectangle model with the same values, or create a new rectangle model.
-	/// <param name="min"> The minimum value. </param>
-	/// <param name="max"> The maximum value. </param>
-	/// </summary>
+	/**
+	 * Creates a new rectangle model, or finds one with the same values.
+	 * @param min The minimum extents.
+	 * @param max The maximum extents.
+	 * @return The rectangle model with the requested values.
+	 */
 	static std::shared_ptr<ModelRectangle> Create(const float &min = 0.0f, const float &max = 1.0f);
 
-	/// <summary>
-	/// Creates a new rectangle model.
-	/// </summary>
-	/// <param name="min"> The minimum value. </param>
-	/// <param name="max"> The maximum value. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new rectangle model.
+	 * @param min The minimum extents.
+	 * @param max The maximum extents.
+	 * @param load If this resource will be loaded immediately, otherwise {@link ModelRectangle#Load} can be called later.
+	 */
 	explicit ModelRectangle(const float &min = 0.0f, const float &max = 1.0f, const bool &load = true);
 
 	void Load() override;

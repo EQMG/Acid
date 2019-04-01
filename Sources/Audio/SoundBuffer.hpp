@@ -6,30 +6,32 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a sound buffer.
-/// </summary>
+/**
+ * A resource that represents a sound buffer.
+ */
 class ACID_EXPORT SoundBuffer :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing sound buffer with the same values, or create a new sound buffer.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new sound buffer, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The sound buffer with the requested values.
+	 */
 	static std::shared_ptr<SoundBuffer> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing sound buffer with the same values, or create a new sound buffer.
-	/// </summary>
-	/// <param name="filename"> The file to load the sound buffer from. </param>
+	/**
+	 * Creates a new sound buffer, or finds one with the same values.
+	 * @param filename The file to load the sound buffer from.
+	 * @return The sound buffer with the requested values.
+	 */
 	static std::shared_ptr<SoundBuffer> Create(const std::string &filename);
 
-	/// <summary>
-	/// Creates a new sound buffer.
-	/// </summary>
-	/// <param name="filename"> The file to load the sound buffer from. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new sound buffer.
+	 * @param filename The file to load the sound buffer from.
+	 * @param load If this resource will be loaded immediately, otherwise {@link SoundBuffer#Load} can be called later.
+	 */
 	explicit SoundBuffer(std::string filename, const bool &load = true);
 
 	~SoundBuffer();

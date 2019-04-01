@@ -7,20 +7,21 @@
 
 namespace acid
 {
-/// <summary>
-/// Axis composed of multiple other axes.
-/// </summary>
+/**
+ * Combines multiple axes inputs into a single axis.
+ */
 class ACID_EXPORT AxisCompound :
 	public IAxis,
 	public NonCopyable
 {
 public:
-	/// <summary>
-	/// A template used to create a compound axis of a single type.
-	/// </summary>
-	/// <param name="args"> The arguments to pass to T. </param>
-	/// <param name="T"> The type of axis to create. </param>
-	/// <param name="Args"> The values passed to each axis. </param>
+	/**
+	 * A template used to create a axis of a single type.
+	 * @tparam T The type of buttons to create.
+	 * @tparam Args The values passed to each axis.
+	 * @param args The arguments to pass to T.
+	 * @return The created compound axis.
+	 */
 	template<class T, typename... Args>
 	static AxisCompound *Create(Args &&... args)
 	{
@@ -34,10 +35,10 @@ public:
 		return new AxisCompound(axes);
 	}
 
-	/// <summary>
-	/// Creates a new compound axis.
-	/// </summary>
-	/// <param name="axes"> The axes on the being added. </param>
+	/**
+	 * Creates a new compound axis.
+	 * @param axes The axes on the being added.
+	 */
 	explicit AxisCompound(const std::vector<IAxis *> &axes);
 
 	float GetAmount() const override;

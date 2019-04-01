@@ -15,40 +15,42 @@ namespace acid
 {
 class Particle;
 
-/// <summary>
-/// A definition for what a particle should act and look like.
-/// </summary>
+/**
+ * A resource that represents a particle type.
+ */
 class ACID_EXPORT ParticleType :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing particle type with the same values, or create a new particle type.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new particle type, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The particle type with the requested values.
+	 */
 	static std::shared_ptr<ParticleType> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing particle type with the same values, or create a new particle type.
-	/// </summary>
-	/// <param name="texture"> The particles texture. </param>
-	/// <param name="numberOfRows"> The number of texture rows. </param>
-	/// <param name="colourOffset"> The particles texture colour offset. </param>
-	/// <param name="lifeLength"> The averaged life length for the particle. </param>
-	/// <param name="stageCycles"> The amount of times stages will be shown. </param>
-	/// <param name="scale"> The averaged scale for the particle. </param>
+	/**
+	 * Creates a new particle type, or finds one with the same values.
+	 * @param texture The particles texture.
+	 * @param numberOfRows The number of texture rows.
+	 * @param colourOffset The particles texture colour offset.
+	 * @param lifeLength The averaged life length for the particle.
+	 * @param stageCycles The amount of times stages will be shown.
+	 * @param scale The averaged scale for the particle.
+	 * @return The particle type with the requested values.
+	 */
 	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 		const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
-	/// <summary>
-	/// Creates a new particle type.
-	/// </summary>
-	/// <param name="texture"> The particles texture. </param>
-	/// <param name="numberOfRows"> The number of texture rows. </param>
-	/// <param name="colourOffset"> The particles texture colour offset. </param>
-	/// <param name="lifeLength"> The averaged life length for the particle. </param>
-	/// <param name="stageCycles"> The amount of times stages will be shown. </param>
-	/// <param name="scale"> The averaged scale for the particle. </param>
+	/**
+	 * Creates a new particle type.
+	 * @param texture The particles texture.
+	 * @param numberOfRows The number of texture rows.
+	 * @param colourOffset The particles texture colour offset.
+	 * @param lifeLength The averaged life length for the particle.
+	 * @param stageCycles The amount of times stages will be shown.
+	 * @param scale The averaged scale for the particle.
+	 */
 	explicit ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f,
 		const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
@@ -89,10 +91,10 @@ public:
 private:
 	struct ParticleTypeData
 	{
-		Matrix4 modelMatrix;
-		Colour colourOffset;
-		Vector4 offsets;
-		Vector3 blend;
+		Matrix4 m_modelMatrix;
+		Colour m_colourOffset;
+		Vector4 m_offsets;
+		Vector3 m_blend;
 	};
 
 	std::shared_ptr<Image2d> m_texture;

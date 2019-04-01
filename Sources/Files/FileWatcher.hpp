@@ -6,9 +6,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that can listen to file changes on a path recursively.
-/// </summary>
+/**
+ * Class that can listen to file changes on a path recursively.
+ */
 class ACID_EXPORT FileWatcher
 {
 public:
@@ -17,11 +17,11 @@ public:
 		Created, Modified, Erased
 	};
 
-	/// <summary>
-	/// Creates a new file watcher.
-	/// </summary>
-	/// <param name="path"> The path to watch recursively. </param>
-	/// <param name="delay"> How frequently to check for changes. </param>
+	/**
+	 * Creates a new file watcher.
+	 * @param path The path to watch recursively.
+	 * @param delay How frequently to check for changes.
+	 */
 	explicit FileWatcher(std::string path, const Time &delay = Time::Seconds(5.0f));
 
 	~FileWatcher();
@@ -34,7 +34,11 @@ public:
 
 	void SetDelay(const Time &delay) { m_delay = delay; }
 
-	Delegate<void(std::string, Status)> &GetOnChange() { return m_onChange; }
+	/**
+	 * Called when a file or directory has changed.
+	 * @return The delegate.
+	 */
+	Delegate<void(std::string, Status)> &OnChange() { return m_onChange; }
 
 private:
 	void QueueLoop();

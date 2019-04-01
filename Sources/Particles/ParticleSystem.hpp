@@ -9,21 +9,20 @@
 
 namespace acid
 {
-/// <summary>
-/// A system of particles that are to be spawned.
-/// </summary>
+/**
+ * A system of particles.
+ */
 class ACID_EXPORT ParticleSystem :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new particle system.
-	/// </summary>
-	/// <param name="types"> The types of particles to spawn. </param>
-	/// <param name="localTransform"> The local transform from the parents space. </param>
-	/// <param name="pps"> Particles per second. </param>
-	/// <param name="averageSpeed"> Particle average speed. </param>
-	/// <param name="gravityEffect"> How much gravity will effect the particles. </param>
+	/**
+	 * Creates a new particle system.
+	 * @param types The types of particles to spawn.
+	 * @param pps Particles per second.
+	 * @param averageSpeed Particle average speed.
+	 * @param gravityEffect How much gravity will effect the particles.
+	 */
 	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f);
 
 	void Start() override;

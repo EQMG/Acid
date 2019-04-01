@@ -133,35 +133,43 @@ enum class Key :
 	Last = Menu
 };
 
-/// <summary>
-/// A module used for the creation, updating and destruction of the keyboard keys.
-/// </summary>
+/**
+ * Module used for managing a virtual keyboard.
+ */
 class ACID_EXPORT Keyboard :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Keyboard *Get() { return Engine::Get()->GetModuleManager().Get<Keyboard>(); }
 
 	Keyboard();
 
 	void Update() override;
 
-	/// <summary>
-	/// Gets whether or not a particular key is currently pressed.
-	/// </summary>
-	/// <param name="key"> The key to test. </param>
-	/// <returns> If the key is currently pressed. </returns>
+	/**
+	 * Gets the current state of a key.
+	 * @param key The key to get the state of.
+	 * @return The keys state.
+	 */
 	InputAction GetKey(const Key &key) const;
 
 	static std::string ToString(const Key &key);
 
-	Delegate<void(Key, InputAction, BitMask<InputMod>)> &GetOnKey() { return m_onKey; }
+	/**
+	 * Called when a key changes state.
+	 * @return The delegate.
+	 */
+	Delegate<void(Key, InputAction, BitMask<InputMod>)> &OnKey() { return m_onKey; }
 
-	Delegate<void(char)> &GetOnChar() { return m_onChar; }
+	/**
+	 * Called when a character has been typed.
+	 * @return The delegate.
+	 */
+	Delegate<void(char)> &OnChar() { return m_onChar; }
 
 private:
 	Delegate<void(Key, InputAction, BitMask<InputMod>)> m_onKey;

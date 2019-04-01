@@ -7,34 +7,28 @@
 
 namespace acid
 {
-/// <summary>
-/// Holds position, rotation, and scale components.
-/// </summary>
+/**
+ * Holds position, rotation, and scale components.
+ */
 class ACID_EXPORT Transform :
 	public Component
 {
 public:
-	/// <summary>
-	/// Constructor for Transform.
-	/// </summary>
-	/// <param name="position"> The position. </param>
-	/// <param name="rotation"> The rotation. </param>
-	/// <param name="scaling"> The scaling. </param>
+	/**
+	 * Creates a new transform.
+	 * @param position The position.
+	 * @param rotation The rotation.
+	 * @param scale The scale.
+	 */
 	explicit Transform(const Vector3 &position = Vector3::Zero, const Vector3 &rotation = Vector3::Zero, const Vector3 &scaling = Vector3::One);
 
-	/// <summary>
-	/// Constructor for Transform.
-	/// </summary>
-	/// <param name="position"> The position. </param>
-	/// <param name="rotation"> The rotation. </param>
-	/// <param name="scale"> The scale. </param>
+	/**
+	 * Creates a new transform.
+	 * @param position The position.
+	 * @param rotation The rotation.
+	 * @param scale The scale.
+	 */
 	Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
-
-	/// <summary>
-	/// Constructor for Transform.
-	/// </summary>
-	/// <param name="source"> Creates this vector out of a transform. </param>
-	Transform(const Transform &source);
 
 	void Start() override;
 
@@ -44,11 +38,11 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	/// <summary>
-	/// Multiplies this transform with another transform.
-	/// </summary>
-	/// <param name="other"> The other transform. </param>
-	/// <returns> The resultant transform. </returns>
+	/**
+	 * Multiplies this transform with another transform.
+	 * @param other The other transform.
+	 * @return The resultant transform.
+	 */
 	Transform Multiply(const Transform &other) const;
 
 	Matrix4 GetWorldMatrix() const;

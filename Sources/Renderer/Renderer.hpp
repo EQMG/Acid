@@ -19,10 +19,10 @@ class ACID_EXPORT Renderer :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Renderer *Get() { return Engine::Get()->GetModuleManager().Get<Renderer>(); }
 
 	Renderer();
@@ -37,22 +37,22 @@ public:
 
 	void UpdateSurfaceCapabilities();
 
-	/// <summary>
-	/// Takes a screenshot of the current image of the display and saves it into a image file.
-	/// </summary>
-	///	<param name="filename"> The file to save the screenshot to. </param>
+	/**
+	 * Takes a screenshot of the current image of the display and saves it into a image file.
+	 * @param filename The file to save the screenshot to.
+	 */
 	void CaptureScreenshot(const std::string &filename);
 
-	/// <summary>
-	/// Gets the current renderer manager.
-	/// </summary>
-	/// <returns> The renderer manager. </returns>
+	/**
+	 * Gets the current renderer manager.
+	 * @return The renderer manager.
+	 */
 	RenderManager *GetManager() const { return m_renderManager.get(); }
 
-	/// <summary>
-	/// Sets the current renderer manager to a new renderer manager.
-	/// </summary>
-	/// <param name="rendererMaster"> The new renderer manager. </param>
+	/**
+	 * Sets the current renderer manager to a new renderer manager.
+	 * @param managerRender The new renderer manager.
+	 */
 	void SetManager(RenderManager *managerRender) { m_renderManager.reset(managerRender); }
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;

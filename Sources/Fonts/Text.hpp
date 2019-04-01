@@ -13,34 +13,34 @@
 
 namespace acid
 {
-/// <summary>
-/// A object the represents a text in a GUI.
-/// </summary>
+/**
+ * Class that represents a text in a GUI.
+ */
 class ACID_EXPORT Text :
 	public UiObject
 {
 public:
-	/// <summary>
-	/// A enum that represents how the text will be justified.
-	/// </summary>
+	/**
+	 * A enum that represents how the text will be justified.
+	 */
 	enum class Justify
 	{
 		Left, Centre, Right, Fully
 	};
 
-	/// <summary>
-	/// Creates a new text object.
-	/// </summary>
-	/// <param name="parent"> The parent screen object. </param>
-	/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
-	/// <param name="fontSize"> The font size to be used in this text. </param>
-	/// <param name="text"> The string text the object will be created with. </param>
-	/// <param name="fontType"> The font type to be used in this text. </param>
-	/// <param name="justify"> How the text will justify. </param>
-	/// <param name="maxWidth"> The maximum length of a line of this text. </param>
-	/// <param name="textColour"> The colour of this text. </param>
-	/// <param name="kerning"> The kerning (type character spacing multiplier) of this text. </param>
-	/// <param name="leading"> The leading (vertical line spacing multiplier) of this text. </param>
+	/**
+	 * Creates a new text object.
+	 * @param parent The parent screen object.
+	 * @param rectangle The rectangle that will represent the bounds of the ui object.
+	 * @param fontSize The font size to be used in this text.
+	 * @param text The string text the object will be created with.
+	 * @param fontType The font type to be used in this text.
+	 * @param justifyHow the text will justify.
+	 * @param maxWidth The maximum length of a line of this text.
+	 * @param textColour The colour of this text.
+	 * @param kerning The kerning (type character spacing multiplier) of this text.
+	 * @param leading The leading (vertical line spacing multiplier) of this text.
+	 */
 	Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
 		const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
@@ -48,173 +48,173 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-	/// <summary>
-	/// Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
-	/// </summary>
-	/// <returns> The model of the text. </returns>
+	/**
+	 * Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
+	 * @return The model of the text.
+	 */
 	const Model *GetModel() const { return m_model.get(); }
 
-	/// <summary>
-	/// Gets the number of lines in this text.
-	/// </summary>
-	/// <returns> The number of lines. </returns>
+	/**
+	 * Gets the number of lines in this text.
+	 * @return The number of lines.
+	 */
 	const uint32_t &GetNumberLines() const { return m_numberLines; }
 
-	/// <summary>
-	/// Gets the string of text represented.
-	/// </summary>
-	/// <returns> The string of text. </returns>
+	/**
+	 * Gets the string of text represented.
+	 * @return The string of text.
+	 */
 	const std::string &GetString() const { return m_string; }
 
-	/// <summary>
-	/// Changed the current string in this text.
-	/// </summary>
-	/// <param name="newString"> The new text, </param>
-	void SetString(const std::string &newString);
+	/**
+	 * Changed the current string in this text.
+	 * @param newString The new text,
+	 */
+	void SetString(const std::string &string);
 
-	/// <summary>
-	/// Gets how the text should justify.
-	/// </summary>
-	/// <returns> How the text should justify. </returns>
+	/**
+	 * Gets how the text should justify.
+	 * @return How the text should justify.
+	 */
 	const Justify &GetJustify() const { return m_justify; }
 
-	/// <summary>
-	/// Gets the maximum length of a line of this text.
-	/// </summary>
-	/// <returns> The maximum length of a line. </returns>
+	/**
+	 * Gets the maximum length of a line of this text.
+	 * @return The maximum length of a line.
+	 */
 	const float &GetMaxWidth() const { return m_maxWidth; }
 
-	/// <summary>
-	/// Sets the maximum length of a line of this text.
-	/// </summary>
-	/// <param name="maxWidth"> The new maximum length. </param>
+	/**
+	 * Sets the maximum length of a line of this text.
+	 * @param maxWidth The new maximum length.
+	 */
 	void SetMaxWidth(const float &maxWidth) { m_maxWidth = maxWidth; }
 
-	/// <summary>
-	/// Gets the kerning (type character spacing multiplier) of this text.
-	/// </summary>
-	/// <returns> The type kerning. </returns>
+	/**
+	 * Gets the kerning (type character spacing multiplier) of this text.
+	 * @return The type kerning.
+	 */
 	const float &GetKerning() const { return m_kerning; }
 
-	/// <summary>
-	/// Sets the kerning (type character spacing multiplier) of this text.
-	/// </summary>
-	/// <param name="kerning"> The new kerning. </param>
+	/**
+	 * Sets the kerning (type character spacing multiplier) of this text.
+	 * @param kerning The new kerning.
+	 */
 	void SetKerning(const float &kerning) { m_kerning = kerning; }
 
-	/// <summary>
-	/// Gets the leading (vertical line spacing multiplier) of this text.
-	/// </summary>
-	/// <returns> The line leading. </returns>
+	/**
+	 * Gets the leading (vertical line spacing multiplier) of this text.
+	 * @return The line leading.
+	 */
 	const float &GetLeading() const { return m_leading; }
 
-	/// <summary>
-	/// Sets the leading (vertical line spacing multiplier) of this text.
-	/// </summary>
-	/// <param name="leading"> The new leading. </param>
+	/**
+	 * Sets the leading (vertical line spacing multiplier) of this text.
+	 * @param leading The new leading.
+	 */
 	void SetLeading(const float &leading) { m_leading = leading; }
 
-	/// <summary>
-	/// Gets the font used by this text.
-	/// </summary>
-	/// <returns> The font used by this text. </returns>
+	/**
+	 * Gets the font used by this text.
+	 * @return The font used by this text.
+	 */
 	const std::shared_ptr<FontType> &GetFontType() const { return m_fontType; }
 
-	/// <summary>
-	/// Gets the colour of the text.
-	/// </summary>
-	/// <returns> The colour of the text. </returns>
+	/**
+	 * Gets the colour of the text.
+	 * @return The colour of the text.
+	 */
 	const Colour &GetTextColour() const { return m_textColour; }
 
-	/// <summary>
-	/// Sets the colour of the text.
-	/// </summary>
-	/// <param name="textColour"> The new colour of the text. </param>
+	/**
+	 * Sets the colour of the text.
+	 * @param textColour The new colour of the text.
+	 */
 	void SetTextColour(const Colour &textColour) { m_textColour = textColour; }
 
-	/// <summary>
-	/// Gets the border colour of the text. This is used with border and glow drivers.
-	/// </summary>
-	/// <returns> The border colour of the text. </returns>
+	/**
+	 * Gets the border colour of the text. This is used with border and glow drivers.
+	 * @return The border colour of the text.
+	 */
 	const Colour &GetBorderColour() const { return m_borderColour; }
 
-	/// <summary>
-	/// Sets the border colour of the text. This is used with border and glow drivers.
-	/// </summary>
-	/// <param name="borderColour"> The new border colour of the text. </param>
+	/**
+	 * Sets the border colour of the text. This is used with border and glow drivers.
+	 * @param borderColour The new border colour of the text.
+	 */
 	void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
 	IDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
 
-	/// <summary>
-	/// Sets the glow driver, will disable solid borders.
-	/// </summary>
-	/// <param name="glowDriver"> The new glow driver. </param>
+	/**
+	 * Sets the glow driver, will disable solid borders.
+	 * @param glowDriver The new glow driver.
+	 */
 	void SetGlowDriver(IDriver<float> *glowDriver);
 
 	IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
-	/// <summary>
-	/// Sets the border driver, will disable glowing.
-	/// </summary>
-	/// <param name="borderDriver"> The new border driver. </param>
+	/**
+	 * Sets the border driver, will disable glowing.
+	 * @param borderDriver The new border driver.
+	 */
 	void SetBorderDriver(IDriver<float> *borderDriver);
 
-	/// <summary>
-	/// Disables both solid borders and glow borders.
-	/// </summary>
+	/**
+	 * Disables both solid borders and glow borders.
+	 */
 	void RemoveBorder();
 
-	/// <summary>
-	/// Gets the calculated border size.
-	/// </summary>
-	/// <returns> The border size. </returns>
+	/**
+	 * Gets the calculated border size.
+	 * @return The border size.
+	 */
 	float GetTotalBorderSize() const;
 
-	/// <summary>
-	/// Gets the size of the glow.
-	/// </summary>
-	/// <returns> The glow size. </returns>
+	/**
+	 * Gets the size of the glow.
+	 * @return The glow size.
+	 */
 	float GetGlowSize() const;
 
-	/// <summary>
-	/// Gets the distance field edge before antialias.
-	/// </summary>
-	/// <returns> The distance field edge. </returns>
+	/**
+	 * Gets the distance field edge before antialias.
+	 * @return The distance field edge.
+	 */
 	float CalculateEdgeStart() const;
 
-	/// <summary>
-	/// Gets the distance field antialias distance.
-	/// </summary>
-	/// <returns> The distance field antialias distance. </returns>
+	/**
+	 * Gets the distance field antialias distance.
+	 * @return The distance field antialias distance.
+	 */
 	float CalculateAntialiasSize() const;
 
-	/// <summary>
-	/// Gets if the text has been loaded to a model.
-	/// </summary>
-	/// <returns> If the text has been loaded to a model. </returns>
+	/**
+	 * Gets if the text has been loaded to a model.
+	 * @return If the text has been loaded to a model.
+	 */
 	bool IsLoaded() const;
 
 private:
-	/// <summary>
-	/// During the loading of a text this represents one word in the text.
-	/// </summary>
+	/**
+	 * During the loading of a text this represents one word in the text.
+	 */
 	class Word
 	{
 	public:
-		/// <summary>
-		/// Creates a new text word.
-		/// </summary>
+		/**
+		 * Creates a new text word.
+		 */
 		Word() :
 			m_width(0.0f)
 		{
 		}
 
-		/// <summary>
-		/// Adds a character to the end of the current word and increases the screen-space width of the word.
-		/// </summary>
-		/// <param name="character"> The character to be added. </param>
-		/// <param name="kerning"> The character kerning. </param>
+		/**
+		 * Adds a character to the end of the current word and increases the screen-space width of the word.
+		 * @param character The character to be added.
+		 * @param kerning The character kerning.
+		 */
 		void AddCharacter(const FontMetafile::Character &character, const float &kerning)
 		{
 			m_characters.emplace_back(character);
@@ -225,17 +225,17 @@ private:
 		float m_width;
 	};
 
-	/// <summary>
-	/// Represents a line of text during the loading of a text.
-	/// </summary>
+	/**
+	 * Represents a line of text during the loading of a text.
+	 */
 	class Line
 	{
 	public:
-		/// <summary>
-		/// Creates a new text line.
-		/// </summary>
-		/// <param name="spaceWidth"> The screen-space width of a space character. </param>
-		/// <param name="maxLength"> The screen-space maximum length of a line. </param>
+		/**
+		 * Creates a new text line.
+		 * @param spaceWidth The screen-space width of a space character.
+		 * @param maxLength The screen-space maximum length of a line.
+		 */
 		Line(const float &spaceWidth, const float &maxLength) :
 			m_maxLength(maxLength),
 			m_spaceSize(spaceWidth),
@@ -244,11 +244,11 @@ private:
 		{
 		}
 
-		/// <summary>
-		/// Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
-		/// </summary>
-		/// <param name="word"> The word to try to add. </param>
-		/// <returns> {@code true} if the word has successfully been added to the line. </returns>
+		/**
+		 * Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
+		 * @param word The word to try to add.
+		 * @return {@code true} if the word has successfully been added to the line.
+		 */
 		bool AddWord(const Word &word)
 		{
 			float additionalLength = word.m_width;
@@ -273,11 +273,11 @@ private:
 		float m_currentLineLength;
 	};
 
-	/// <summary>
-	/// Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
-	/// The vertex positions and texture coords and calculated based on the information from the font file.
-	/// Then takes the information about the vertices of all the quads and stores it in a model.
-	/// </summary>
+	/**
+	 * Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
+	 * The vertex positions and texture coords and calculated based on the information from the font file.
+	 * Then takes the information about the vertices of all the quads and stores it in a model.
+	 */
 	void LoadText();
 
 	std::vector<Line> CreateStructure() const;

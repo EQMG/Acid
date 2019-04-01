@@ -5,16 +5,16 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a render pipeline that is used to render a type of pipeline.
-/// </summary>
+/**
+ * Represents a render pipeline that is used to render a type of pipeline.
+ */
 class ACID_EXPORT RenderPipeline
 {
 public:
-	/// <summary>
-	/// Creates a new render pipeline.
-	/// </summary>
-	/// <param name="stage"> The stage this renderer will be used in. </param>
+	/**
+	 * Creates a new render pipeline.
+	 * @param stage The stage this renderer will be used in.
+	 */
 	explicit RenderPipeline(Pipeline::Stage stage) :
 		m_stage(std::move(stage)),
 		m_enabled(true)
@@ -23,10 +23,10 @@ public:
 
 	virtual ~RenderPipeline() = default;
 
-	/// <summary>
-	/// Runs the render pipeline in the current renderpass.
-	/// </summary>
-	/// <param name="commandBuffer"> The command buffer to record render command into. </param>
+	/**
+	 * Runs the render pipeline in the current renderpass.
+	 * @param commandBuffer The command buffer to record render command into.
+	 */
 	virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 	const Pipeline::Stage &GetStage() const { return m_stage; }

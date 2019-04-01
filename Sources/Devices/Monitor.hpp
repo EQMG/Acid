@@ -36,9 +36,9 @@ public:
 	uint32_t m_size;
 };
 
-/// <summary>
-/// A class used to represent a monitor.
-/// </summary>
+/**
+ * Class used to represent a monitor.
+ */
 class ACID_EXPORT Monitor
 {
 public:
@@ -50,46 +50,46 @@ public:
 
 	void SetPrimary(const bool &primary) { m_primary = primary; }
 
-	/// <summary>
-	/// Gets the position of the monitor's viewport on the virtual screen.
-	/// </summary>
-	/// <returns> The position of the monitor's viewport. </returns>
+	/**
+	 * Gets the position of the monitor's viewport on the virtual screen.
+	 * @return The position of the monitor's viewport.
+	 */
 	Vector2 GetPosition() const;
 
-	/// <summary>
-	/// Gets the physical size of the monitor.
-	/// </summary>
-	/// <returns> The size, in millimetres, of the display area. </returns>
+	/**
+	 * Gets the physical size of the monitor.
+	 * @return The size, in millimetres, of the display area.
+	 */
 	Vector2 GetDimensions() const;
 
-	/// <summary>
-	/// Gets the name of this monitor.
-	/// </summary>
-	/// <returns> The human-readable name, encoded as UTF-8. </returns>
+	/**
+	 * Gets the name of this monitor.
+	 * @return The name of the monitor.
+	 */
 	std::string GetName() const;
 
-	/// <summary>
-	/// Gets the available video modes for this monitor.
-	/// </summary>
-	/// <returns> The video modes supported by this monitor. </returns>
+	/**
+	 * Gets the available video modes for this monitor.
+	 * @return The video modes supported by this monitor.
+	 */
 	std::vector<VideoMode> GetVideoModes() const;
 
-	/// <summary>
-	/// Gets the current mode of this monitor.
-	/// </summary>
-	/// <returns> The current video mode of this monitor. </returns>
+	/**
+	 * Gets the current mode of this monitor.
+	 * @return The current video mode of this monitor.
+	 */
 	VideoMode GetVideoMode() const;
 
-	/// <summary>
-	/// Gets the current gamma ramp for this monitor.
-	/// </summary>
-	/// <returns> The current gamma ramp. </returns>
+	/**
+	 * Gets the current gamma ramp for this monitor.
+	 * @return The current gamma ramp.
+	 */
 	GammaRamp GetGammaRamp() const;
 
-	/// <summary>
-	/// Sets the current gamma ramp for this monitor.
-	/// </summary>
-	/// <param name="gammaRamp"> The gamma ramp to use. </param>
+	/**
+	 * Sets the current gamma ramp for this monitor.
+	 * @param gammaRamp The gamma ramp to use.
+	 */
 	void SetGammaRamp(const GammaRamp &gammaRamp) const;
 
 private:

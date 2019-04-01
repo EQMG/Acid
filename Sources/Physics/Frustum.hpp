@@ -4,48 +4,48 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents the region of space in the modeled world that may appear on the screen.
-/// </summary>
+/**
+ * Represents the region of space in the modeled world that may appear on the screen.
+ */
 class ACID_EXPORT Frustum
 {
 public:
-	static const Frustum Zero;
-
-	/// <summary>
-	/// Creates a new frustum.
-	/// </summary>
+	/**
+	 * Creates a new frustum.
+	 */
 	explicit Frustum();
 
-	/// <summary>
-	/// Updates a frustum from the view and projection matrix.
-	/// </summary>
-	/// <param name="view"> The view matrix. </param>
-	/// <param name="projection"> The projection matrix. </param>
+	/**
+	 * Updates a frustum from the view and projection matrix.
+	 * @param view The view matrix.
+	 * @param projection The projection matrix.
+	 */
 	void Update(const Matrix4 &view, const Matrix4 &projection);
 
-	/// <summary>
-	/// Is the point contained in the frustum?
-	/// </summary>
-	/// <param name="position"> The points position. </param>
-	/// <returns> True if contained, false if outside. </returns>
+	/**
+	 * Gets if a point contained in the frustum.
+	 * @param position The point.
+	 * @return If the point is contained.
+	 */
 	bool PointInFrustum(const Vector3 &position) const;
 
-	/// <summary>
-	/// Is the sphere contained in the frustum?
-	/// </summary>
-	/// <param name="position"> The points position. </param>
-	/// <param name="radius"> The spheres radius. </param>
-	/// <returns> True if contained, false if outside. </returns>
+	/**
+	 * Gets if a sphere contained in the frustum.
+	 * @param position The spheres position.
+	 * @param radius The spheres radius.
+	 * @return If the sphere is contained.
+	 */
 	bool SphereInFrustum(const Vector3 &position, const float &radius) const;
 
-	/// <summary>
-	/// Is the cube contained partially in the frustum?
-	/// </summary>
-	/// <param name="min"> The point 1st position. </param>
-	/// <param name="max"> The point 2nd position. </param>
-	/// <returns> True if partially contained, false if outside. </returns>
+	/**
+	 * Gets if a cube contained in the frustum.
+	 * @param min The cube min point.
+	 * @param max The cube max point.
+	 * @return If cube sphere is contained.
+	 */
 	bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
+
+	static const Frustum Zero;
 
 private:
 	void NormalizePlane(const int32_t &side);

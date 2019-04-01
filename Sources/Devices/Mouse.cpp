@@ -13,9 +13,9 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePositionX = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetWidth());
-	Mouse::Get()->m_mousePositionY = (static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetHeight()));
-	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePositionX, Mouse::Get()->m_mousePositionY);
+	Mouse::Get()->m_mousePosition.m_x = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetWidth());
+	Mouse::Get()->m_mousePosition.m_y = (static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetHeight()));
+	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
 }
 
 void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
@@ -26,8 +26,9 @@ void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-	Mouse::Get()->m_mouseDeltaWheel = static_cast<float>(yoffset);
-	Mouse::Get()->m_onScroll(static_cast<float>(xoffset), static_cast<float>(yoffset));
+	Mouse::Get()->m_mouseWheelDelta.m_x = static_cast<float>(yoffset);
+	Mouse::Get()->m_mouseWheelDelta.m_y = static_cast<float>(yoffset);
+	Mouse::Get()->m_onScroll(Mouse::Get()->m_mouseWheelDelta);
 }
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
@@ -43,13 +44,6 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 }
 
 Mouse::Mouse() :
-	m_lastMousePositionX(0.0f),
-	m_lastMousePositionY(0.0f),
-	m_mousePositionX(0.0f),
-	m_mousePositionY(0.0f),
-	m_mouseDeltaX(0.0f),
-	m_mouseDeltaY(0.0f),
-	m_mouseDeltaWheel(0.0f),
 	m_windowSelected(true),
 	m_cursorHidden(false)
 {
@@ -65,19 +59,14 @@ void Mouse::Update()
 	float delta = Engine::Get()->GetDelta().AsSeconds();
 
 	// Updates the mouses delta.
-	m_mouseDeltaX = delta * (m_lastMousePositionX - m_mousePositionX);
-	m_mouseDeltaY = delta * (m_lastMousePositionY - m_mousePositionY);
+	m_mouseDelta = delta * (m_lastMousePosition - m_mousePosition);
 
 	// Sets the last position of the current.
-	m_lastMousePositionX = m_mousePositionX;
-	m_lastMousePositionY = m_mousePositionY;
+	m_lastMousePosition = m_mousePosition;
 
-	// Updates the mouse wheel using a smooth scroll technique.
-	if (m_mouseDeltaWheel != 0.0f)
-	{
-		m_mouseDeltaWheel -= delta * ((m_mouseDeltaWheel < 0.0f) ? -3.0f : 3.0f);
-		m_mouseDeltaWheel = Maths::Deadband(0.08f, m_mouseDeltaWheel);
-	}
+	// Updates the mouse wheel using a smooth scroll technique, this is needed because scroll wheel callbacks are not called when scroll is stopped.
+	m_mouseWheelDelta.m_x = SmoothScrollWheel(m_mouseWheelDelta.m_x, delta);
+	m_mouseWheelDelta.m_y = SmoothScrollWheel(m_mouseWheelDelta.m_y, delta);
 }
 
 void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
@@ -138,16 +127,10 @@ InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 	return static_cast<InputAction>(state);
 }
 
-void Mouse::SetPosition(const float &cursorX, const float &cursorY)
-{
-	m_mousePositionX = cursorX;
-	m_mousePositionY = cursorY;
-	glfwSetCursorPos(Window::Get()->GetWindow(), cursorX * Window::Get()->GetWidth(), cursorY * Window::Get()->GetHeight());
-}
-
 void Mouse::SetPosition(const Vector2 &position)
 {
-	SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x), position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+	m_mousePosition = position;
+	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetWidth(), m_mousePosition.m_y * Window::Get()->GetHeight());
 }
 
 void Mouse::SetCursorHidden(const bool &hidden)
@@ -158,10 +141,22 @@ void Mouse::SetCursorHidden(const bool &hidden)
 
 		if (!hidden && m_cursorHidden)
 		{
-			glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePositionX * Window::Get()->GetWidth(), m_mousePositionY * Window::Get()->GetHeight());
+			glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetWidth(), m_mousePosition.m_x * Window::Get()->GetHeight());
 		}
 	}
 
 	m_cursorHidden = hidden;
+}
+
+float Mouse::SmoothScrollWheel(float value, const float &delta)
+{
+	if (value != 0.0f)
+	{
+		value -= delta * ((value < 0.0f) ? -3.0f : 3.0f);
+		value = Maths::Deadband(0.08f, value);
+		return value;
+	}
+
+	return 0.0f;
 }
 }

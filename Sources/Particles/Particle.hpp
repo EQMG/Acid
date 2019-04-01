@@ -6,29 +6,29 @@
 
 namespace acid
 {
-/// <summary>
-/// A instance of a particle type.
-/// </summary>
+/**
+ * A instance of a particle type.
+ */
 class ACID_EXPORT Particle
 {
 public:
-	/// <summary>
-	/// Creates a new particle object.
-	/// </summary>
-	/// <param name="particleType"> The particle template to build from. </param>
-	/// <param name="position"> The particles initial position. </param>
-	/// <param name="velocity"> The particles initial velocity. </param>
-	/// <param name="lifeLength"> The particles life length. </param>
-	/// <param name="stageCycles"> The amount of times stages will be shown. </param>
-	/// <param name="rotation"> The particles rotation. </param>
-	/// <param name="scale"> The particles scale. </param>
-	/// <param name="gravityEffect"> The particles gravity effect. </param>
+	/**
+	 * Creates a new particle object.
+	 * @param particleType The particle type to create from.
+	 * @param position The particles initial position.
+	 * @param velocity The particles initial velocity.
+	 * @param lifeLength The particles life length.
+	 * @param stageCycles The amount of times stages will be shown.
+	 * @param rotation The particles rotation.
+	 * @param scale The particles scale.
+	 * @param gravityEffect The particles gravity effect.
+	 */
 	Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles, const float &rotation,
 		const float &scale, const float &gravityEffect);
 
-	/// <summary>
-	/// Updates the particle.
-	/// </summary>
+	/**
+	 * Updates the particle.
+	 */
 	void Update();
 
 	bool IsAlive() const { return m_transparency > 0.0f; }

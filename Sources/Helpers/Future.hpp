@@ -4,9 +4,10 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that holds a future and it's value that will update as future gets new valid values.
-/// </summary>
+/**
+ * Class that holds a future and it's value that will update as future gets new valid values.
+ * @tparam T The type to hold.
+ */
 template<typename T>
 class Future
 {

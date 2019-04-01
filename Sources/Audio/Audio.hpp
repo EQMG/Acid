@@ -8,9 +8,9 @@ typedef struct ALCcontext_struct ALCcontext;
 
 namespace acid
 {
-/// <summary>
-/// A module used for loading, managing and playing a variety of different sound types.
-/// </summary>
+/**
+ * Module used for loading, managing and playing a variety of different sound types.
+ */
 class ACID_EXPORT Audio :
 	public Module
 {
@@ -20,10 +20,10 @@ public:
 		Master, General, Effect, Music
 	};
 
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Audio *Get() { return Engine::Get()->GetModuleManager().Get<Audio>(); }
 
 	Audio();
@@ -44,7 +44,11 @@ public:
 
 	void SetGain(const Type &type, const float &volume);
 
-	Delegate<void(Type, float)> &GetOnGain() { return m_onGain; }
+	/**
+	 * Called when a gain value has been modified.
+	 * @return The delegate.
+	 */
+	Delegate<void(Type, float)> &OnGain() { return m_onGain; }
 
 private:
 	ALCdevice *m_alDevice;

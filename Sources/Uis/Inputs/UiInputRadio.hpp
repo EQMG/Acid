@@ -33,7 +33,11 @@ public:
 
 	void SetType(const Type &type);
 
-	Delegate<void(bool)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(bool)> &OnValue() { return m_onValue; }
 
 private:
 	void UpdateFill();
@@ -62,7 +66,7 @@ public:
 		for (auto &input : inputs)
 		{
 			input->SetType(type);
-			input->GetOnValue() += [this, input](bool value)
+			input->OnValue() += [this, input](bool value)
 			{
 				if (!m_multiple)
 				{

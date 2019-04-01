@@ -7,42 +7,42 @@
 
 namespace acid
 {
-/// <summary>
-/// Holds a 3 dimensional ray.
-/// </summary>
+/**
+ * Class that represents a 3 dimensional ray.
+ */
 class ACID_EXPORT Ray
 {
 public:
 	static const Ray Zero;
 
-	/// <summary>
-	/// Creates a new 3D ray.
-	/// </summary>
-	/// <param name="useMouse"> If the ray will use the mouse coords or to start from screenStart. </param>
-	/// <param name="screenStart"> If useMouse is false then this will be used as the rays start. </param>
+	/**
+	 * Creates a new ray.
+	 * @param useMouse If the ray will use the mouse coords or to start from screenStart.
+	 * @param screenStart If useMouse is false then this will be used as the rays start.
+	 */
 	Ray(const bool &useMouse, const Vector2 &screenStart);
 
-	/// <summary>
-	/// Updates the ray to a new position.
-	/// </summary>
-	/// <param name="currentPosition"> The new position. </param>
-	/// <param name="currentPosition"> The mouses xy screen space position. </param>
-	/// <param name="viewMatrix"> The cameras view matrix. </param>
-	/// <param name="projectionMatrix"> The projection view matrix. </param>
+	/**
+	 * Updates the ray to a new position.
+	 * @param currentPosition The origin of the ray.
+	 * @param mousePosition The mouses screen space position.
+	 * @param viewMatrix The cameras view matrix.
+	 * @param projectionMatrix The projection view matrix.
+	 */
 	void Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
-	/// <summary>
-	/// Gets a point on the ray.
-	/// </summary>
-	/// <param name="distance"> Distance down the ray to sample. </param>
-	/// <returns> Returns the destination vector. </returns>
+	/**
+	 * Gets a point on the ray.
+	 * @param distance Distance down the ray to sample.
+	 * @return The destination vector.
+	 */
 	Vector3 GetPointOnRay(const float &distance) const;
 
-	/// <summary>
-	/// Converts a position from world space to screen space.
-	/// </summary>
-	/// <param name="position"> The position to convert. </param>
-	/// <returns> Returns the destination vector X and Y being screen space coords and Z being the distance to the camera. </returns>
+	/**
+	 * Converts a position from world space to screen space.
+	 * @param position The position to convert.
+	 * @return The destination vector X and Y being screen space coords and Z being the distance to the camera.
+	 */
 	Vector3 ConvertToScreenSpace(const Vector3 &position) const;
 
 	const bool &IsUseMouse() const { return m_useMouse; }

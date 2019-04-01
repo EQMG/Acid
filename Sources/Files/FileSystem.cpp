@@ -110,6 +110,7 @@ long FileSystem::LastModified(const std::string &path)
 
 void FileSystem::Touch(const std::string &path)
 {
+	// TODO: Rewrite.
 	auto data = ReadBinaryFile(path);
 
 	if (data)

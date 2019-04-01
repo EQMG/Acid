@@ -85,11 +85,11 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	return m_model->CmdRender(commandBuffer);
 }
 
-void Text::SetString(const std::string &newString)
+void Text::SetString(const std::string &string)
 {
-	if (m_string != newString)
+	if (m_string != string)
 	{
-		m_newString = newString;
+		m_newString = string;
 	}
 }
 

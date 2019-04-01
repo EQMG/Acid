@@ -14,32 +14,34 @@ namespace acid
 {
 class Text;
 
-/// <summary>
-/// A loader capable of loading font data into a instance of a text mesh.
-/// </summary>
+/**
+ * A resource that is used when creating a font mesh.
+ */
 class ACID_EXPORT FontType :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing font type with the same values, or create a new font type.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new font type, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The font type with the requested values.
+	 */
 	static std::shared_ptr<FontType> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing font type with the same values, or create a new font type.
-	/// </summary>
-	/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
-	/// <param name="style"> The style selected to load as this type. </param>
+	/**
+	 * Creates a new font type, or finds one with the same values.
+	 * @param filename The family file path that the texture atlases and character infos are contained in.
+	 * @param style The style postfix to load as this type.
+	 * @return The font type with the requested values.
+	 */
 	static std::shared_ptr<FontType> Create(const std::string &filename, const std::string &style = "Regular");
 
-	/// <summary>
-	/// Creates a new font type.
-	/// </summary>
-	/// <param name="filename"> The family file path that the texture atlases and character infos are contained in. </param>
-	/// <param name="style"> The style selected to load as this type. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new font type.
+	 * @param filename The family file path that the texture atlases and character infos are contained in.
+	 * @param style The style postfix to load as this type.
+	 * @param load If this resource will be loaded immediately, otherwise {@link FontType#Load} can be called later.
+	 */
 	FontType(std::string filename, std::string style, const bool &load = true);
 
 	void Update(const std::vector<Text *> &texts);

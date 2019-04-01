@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that handles a uniform buffer.
-/// </summary>
+/**
+ * Class that handles a uniform buffer.
+ */
 class ACID_EXPORT UniformHandler
 {
 public:

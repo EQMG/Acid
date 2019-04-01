@@ -11,20 +11,20 @@
 
 namespace acid
 {
-/// <summary>
-/// A object the represents a texture in a GUI.
-/// </summary>
+/**
+ * Class that represents a image UI.
+ */
 class ACID_EXPORT Gui :
 	public UiObject
 {
 public:
-	/// <summary>
-	/// Creates a new GUI object.
-	/// </summary>
-	/// <param name="parent"> The parent screen object. </param>
-	/// <param name="rectangle"> The rectangle that will represent the bounds of the ui object. </param>
-	/// <param name="texture"> The objects texture. </param>
-	/// <param name="colourOffset"> The texture colour offset. </param>
+	/**
+	 * Creates a new GUI object.
+	 * @param parent The parent screen object.
+	 * @param rectangle The rectangle that will represent the bounds of the ui object.
+	 * @param texture The objects texture.
+	 * @param colourOffset The texture colour offset.
+	 */
 	Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> texture, const Colour &colourOffset = Colour::White);
 
 	void UpdateObject() override;
@@ -47,19 +47,19 @@ public:
 
 	const Vector4 &GetNinePatces() const { return m_ninePatches; }
 
-	/// <summary>
-	/// Sets nine the patches value size, if zero it will be disabled. 9-patch/9-slicing allows for a single section
-	/// of a texture to be scale with corners and edges kept in the screens aspect ratio.
-	/// </summary>
-	/// <param name="ninePatches"> The values, x/y being to top left corner and z/w bottom right for the scalable section. </param>
+	/**
+	 * Sets nine the patches value size, if zero it will be disabled. 9-patch/9-slicing allows for a single section
+	 * of a texture to be scale with corners and edges kept in the screens aspect ratio.
+	 * @param ninePatches The values, x/y being to top left corner and z/w bottom right for the scalable section.
+	 */
 	void SetNinePatches(const Vector4 &ninePatches) { m_ninePatches = ninePatches; }
 
 	IDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
 
-	/// <summary>
-	/// Sets the colour offset driver.
-	/// </summary>
-	/// <param name="colourDriver"> The new colour offset driver. </param>
+	/**
+	 * Sets the colour offset driver.
+	 * @param colourDriver The new colour offset driver.
+	 */
 	void SetColourDriver(IDriver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
 
 	const Colour &GetColourOffset() const { return m_colourOffset; }

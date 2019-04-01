@@ -7,9 +7,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents the default material shader.
-/// </summary>
+/**
+ * Class that represents the default material shader.
+ */
 class ACID_EXPORT MaterialDefault :
 	public Material
 {

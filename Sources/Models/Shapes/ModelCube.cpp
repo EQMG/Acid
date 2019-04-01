@@ -14,25 +14,23 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
-	auto result = std::make_shared<ModelCube>(0.0f, 0.0f, 0.0f);
+	auto result = std::make_shared<ModelCube>(Vector3::Zero);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	result->Decode(metadata);
 	result->Load();
 	return result;
 }
 
-std::shared_ptr<ModelCube> ModelCube::Create(const float &width, const float &height, const float &depth)
+std::shared_ptr<ModelCube> ModelCube::Create(const Vector3 &extents)
 {
-	auto temp = ModelCube(width, height, depth, false);
+	auto temp = ModelCube(extents, false);
 	Metadata metadata = Metadata();
 	temp.Encode(metadata);
 	return Create(metadata);
 }
 
-ModelCube::ModelCube(const float &width, const float &height, const float &depth, const bool &load) :
-	m_width(width),
-	m_height(height),
-	m_depth(depth)
+ModelCube::ModelCube(const Vector3 &extents, const bool &load) :
+	m_extents(extents)
 {
 	if (load)
 	{
@@ -42,7 +40,7 @@ ModelCube::ModelCube(const float &width, const float &height, const float &depth
 
 void ModelCube::Load()
 {
-	if (m_width == 0.0f && m_height == 0.0f && m_depth == 0.0f)
+	if (m_extents == Vector3::Zero)
 	{
 		return;
 	}
@@ -81,7 +79,7 @@ void ModelCube::Load()
 
 	for (auto &vertex : vertices)
 	{
-		vertex.SetPosition(vertex.GetPosition() * Vector3(m_width, m_height, m_depth));
+		vertex.SetPosition(vertex.GetPosition() * m_extents);
 	}
 
 	Initialize(vertices, indices);
@@ -89,16 +87,12 @@ void ModelCube::Load()
 
 void ModelCube::Decode(const Metadata &metadata)
 {
-	metadata.GetChild("Width", m_width);
-	metadata.GetChild("Height", m_height);
-	metadata.GetChild("Depth", m_depth);
+	metadata.GetChild("Extents", m_extents);
 }
 
 void ModelCube::Encode(Metadata &metadata) const
 {
 	metadata.SetChild<std::string>("Type", "ModelCube");
-	metadata.SetChild("Width", m_width);
-	metadata.SetChild("Height", m_height);
-	metadata.SetChild("Depth", m_depth);
+	metadata.SetChild("Extents", m_extents);
 }
 }

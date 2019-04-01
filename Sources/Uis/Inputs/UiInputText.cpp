@@ -25,7 +25,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 	GetRectangle().SetDimensions(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
 
-	Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_selected)
 		{
@@ -50,7 +50,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			SetSelected(false);
 		}
 	};
-	Keyboard::Get()->GetOnChar() += [this](char c)
+	Keyboard::Get()->OnChar() += [this](char c)
 	{
 		if (!m_selected)
 		{

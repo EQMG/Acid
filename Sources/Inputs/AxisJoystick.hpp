@@ -4,19 +4,19 @@
 
 namespace acid
 {
-/// <summary>
-/// Axis from a joystick.
-/// </summary>
+/**
+ * Axis input from a joystick input device.
+ */
 class ACID_EXPORT AxisJoystick :
 	public IAxis
 {
 public:
-	/// <summary>
-	/// Creates a new axis joystick.
-	/// </summary>
-	/// <param name="port"> The joystick port. </param>
-	/// <param name="axis"> The axis on the joystick being checked. </param>
-	/// <param name="inverse"> If the axis direction should be inverted. </param>
+	/**
+	 * Creates a new axis joystick.
+	 * @param port The joystick port.
+	 * @param axis The axis on the joystick being checked.
+	 * @param inverted If the axis direction should be inverted.
+	 */
 	AxisJoystick(const uint32_t &port, const uint32_t &axis, const bool &inverted = false);
 
 	float GetAmount() const override;

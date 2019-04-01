@@ -9,7 +9,7 @@ AxisJoystick::AxisJoystick(const uint32_t &port, const uint32_t &axis, const boo
 	m_axis(axis),
 	m_inverted(inverted)
 {
-	Joysticks::Get()->GetOnAxis() += [this](uint32_t axis, uint32_t port, float value)
+	Joysticks::Get()->OnAxis() += [this](uint32_t axis, uint32_t port, float value)
 	{
 		if (port == m_port && axis == m_axis)
 		{

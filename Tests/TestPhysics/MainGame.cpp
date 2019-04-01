@@ -59,14 +59,14 @@ MainGame::MainGame() :
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();
 
-	m_buttonFullscreen.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	};
-	m_buttonScreenshot.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonScreenshot.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -76,7 +76,7 @@ MainGame::MainGame() :
 			});
 		}
 	};
-	m_buttonExit.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonExit.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{

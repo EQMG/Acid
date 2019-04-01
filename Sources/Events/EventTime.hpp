@@ -6,19 +6,19 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that runs a event after a time has passed.
-/// </summary>
+/**
+ * Class that runs a event after a time has passed.
+ */
 class ACID_EXPORT EventTime :
 	public IEvent
 {
 public:
-	/// <summary>
-	/// Creates a new time event.
-	/// </summary>
-	/// <param name="onEvent"> A function called when the event is triggered. </param>
-	/// <param name="interval"> The amount of time in the future to run the event. </param>
-	/// <param name="repeat"> If the event will repeat after the first run. </param>
+	/**
+	 * Creates a new time event.
+	 * @param onEvent A function called when the event is triggered.
+	 * @param interval The amount of time in the future to run the event.
+	 * @param repeat If the event will repeat after the first run.
+	 */
 	EventTime(std::function<void()> onEvent, const Time &interval, const bool &repeat = false);
 
 	bool EventTriggered() override;

@@ -7,131 +7,131 @@
 #include "Log.hpp"
 #include "Game.hpp"
 
-/// <summary>
-/// The base Acid namespace.
-/// </summary>
+/**
+ * The base Acid namespace.
+ */
 namespace acid
 {
-/// <summary>
-/// Main class for Acid, manages modules and updates. After creating your Engine object call <seealso cref="#Run()"/> to start.
-/// </summary>
+/**
+ * Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
+ */
 class ACID_EXPORT Engine :
 	public NonCopyable
 {
 public:
-	/// <summary>
-	/// Gets the engines instance.
-	/// </summary>
-	/// <returns> The current engine instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current engine instance.
+	 */
 	static Engine *Get() { return INSTANCE; }
 
-	/// <summary>
-	/// Carries out the setup for basic engine components and the engine. Call <seealso cref="#Run()"/> after creating a instance.
-	/// </summary>
-	/// <param name="argv0"> The first argument passed to main. </param>
-	/// <param name="emptyRegister"> If the module register will start empty. </param>
+	/**
+	 * Carries out the setup for basic engine components and the engine. Call {@link Engine#Run} after creating a instance.
+	 * @param argv0 The first argument passed to main.
+	 * @param emptyRegister If the module register will start empty.
+	 */
 	explicit Engine(std::string argv0, const bool &emptyRegister = false);
 
-	/// <summary>
-	/// The update function for the updater.
-	/// </summary>
-	/// <returns> EXIT_SUCCESS or EXIT_FAILURE. </returns>
+	/**
+	 * The update function for the updater.
+	 * @return {@code EXIT_SUCCESS} or {@code EXIT_FAILURE}
+	 */
 	int32_t Run();
 
-	/// <summary>
-	/// Gets the module manager used by the engine instance. The manager can be used to register/deregister modules.
-	/// </summary>
-	/// <returns> The engines module manager. </returns>
+	/**
+	 * Gets the module manager used by the engine instance. The manager can be used to register/deregister modules.
+	 * @return The engines module manager.
+	 */
 	ModuleManager &GetModuleManager() { return m_moduleManager; }
 
-	/// <summary>
-	/// Gets the current game.
-	/// </summary>
-	/// <returns> The renderer manager. </returns>
+	/**
+	 * Gets the current game.
+	 * @return The renderer manager.
+	 */
 	Game *GetGame() const { return m_game.get(); }
 
-	/// <summary>
-	/// Sets the current game to a new game.
-	/// </summary>
-	/// <param name="game"> The new game. </param>
+	/**
+	 * Sets the current game to a new game.
+	 * @param game The new game.
+	 */
 	void SetGame(Game *game) { m_game.reset(game); }
 
-	/// <summary>
-	/// Gets the current time of the engine instance.
-	/// </summary>
-	/// <returns> The current engine time. </returns>
+	/**
+	 * Gets the current time of the engine instance.
+	 * @return The current engine time.
+	 */
 	static Time GetTime();
 
-	/// <summary>
-	/// Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
-	/// </summary>
-	/// <returns> The date time as a string. </returns>
+	/**
+	 * Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
+	 * @return The date time as a string.
+	 */
 	static std::string GetDateTime();
 
-	/// <summary>
-	/// Gets the first argument passed to main.
-	/// </summary>
-	/// <returns> The first argument passed to main. </returns>
+	/**
+	 * Gets the first argument passed to main.
+	 * @return The first argument passed to main.
+	 */
 	const std::string &GetArgv0() const { return m_argv0; };
 
-	/// <summary>
-	/// Gets the added/removed time for the engine.
-	/// </summary>
-	/// <returns> The time offset. </returns>
+	/**
+	 * Gets the added/removed time for the engine.
+	 * @return The time offset.
+	 */
 	const Time &GetTimeOffset() const { return m_timeOffset; }
 
-	/// <summary>
-	/// Sets the time offset for the engine.
-	/// </summary>
-	/// <param name="timeOffset"> The new time offset. </param>
+	/**
+	 * Sets the time offset for the engine.
+	 * @param timeOffset The new time offset.
+	 */
 	void SetTimeOffset(const Time &timeOffset) { m_timeOffset = timeOffset; }
 
-	/// <summary>
-	/// Gets the fps limit.
-	/// </summary>
-	/// <returns> The fps limit. </returns>
+	/**
+	 * Gets the fps limit.
+	 * @return The frame per second limit.
+	 */
 	const float &GetFpsLimit() const { return m_fpsLimit; }
 
-	/// <summary>
-	/// Sets the fps limit. -1 disables limits.
-	/// </summary>
-	/// <param name="fpsLimit"> The new fps limit. </param>
+	/**
+	 * Sets the fps limit. -1 disables limits.
+	 * @param fpsLimit The new frame per second limit.
+	 */
 	void SetFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
 
-	/// <summary>
-	/// Gets if the engine is running.
-	/// </summary>
-	/// <returns> If the engine is running. </returns>
+	/**
+	 * Gets if the engine is running.
+	 * @return If the engine is running.
+	 */
 	const bool &IsRunning() const { return m_running; }
 
-	/// <summary>
-	/// Gets the delta (seconds) between updates.
-	/// </summary>
-	/// <returns> The delta between updates. </returns>
+	/**
+	 * Gets the delta (seconds) between updates.
+	 * @return The delta between updates.
+	 */
 	const Time &GetDelta() const { return m_moduleUpdater.GetDelta(); }
 
-	/// <summary>
-	/// Gets the delta (seconds) between renders.
-	/// </summary>
-	/// <returns> The delta between renders. </returns>
+	/**
+	 * Gets the delta (seconds) between renders.
+	 * @return The delta between renders.
+	 */
 	const Time &GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
 
-	/// <summary>
-	/// Gets the average UPS over a short interval.
-	/// </summary>
-	/// <returns> The UPS. </returns>
+	/**
+	 * Gets the average UPS over a short interval.
+	 * @return The updates per second.
+	 */
 	const uint32_t &GetUps() const { return m_moduleUpdater.GetUps(); }
 
-	/// <summary>
-	/// Gets the average FPS over a short interval.
-	/// </summary>
-	/// <returns> The FPS. </returns>
+	/**
+	 * Gets the average FPS over a short interval.
+	 * @return The frames per second.
+	 */
 	const uint32_t &GetFps() const { return m_moduleUpdater.GetFps(); }
 
-	/// <summary>
-	/// Requests the engine to delete and stop the game-loop.
-	/// </summary>
-	/// <param name="error"> If a bad error occurred. </param>
+	/**
+	 * Requests the engine to delete and stop the game-loop.
+	 * @param error If a bad error occurred.
+	 */
 	void RequestClose(const bool &error);
 
 private:

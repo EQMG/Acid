@@ -6,11 +6,11 @@ AxisButton::AxisButton(IButton *negative, IButton *positive) :
 	m_negative(negative),
 	m_positive(positive)
 {
-	m_negative->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_negative->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
 	};
-	m_positive->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_positive->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
 	};

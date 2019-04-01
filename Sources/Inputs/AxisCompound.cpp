@@ -6,7 +6,7 @@ AxisCompound::AxisCompound(const std::vector<IAxis *> &axes)
 {
 	for (const auto &axis : axes)
 	{
-		axis->GetOnAxis() += [this](float value)
+		axis->OnAxis() += [this](float value)
 		{
 			m_onAxis(GetAmount());
 		};

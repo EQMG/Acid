@@ -9,9 +9,10 @@
 #include "Renderpass/Swapchain.hpp"
 
 namespace acid
-{/// <summary>
-/// A object that represents an attachment in a renderpass.
-/// </summary>
+{
+/**
+ * Class that represents an attachment in a renderpass.
+ */
 class ACID_EXPORT Attachment
 {
 public:
@@ -20,15 +21,15 @@ public:
 		Image, Depth, Swapchain
 	};
 
-	/// <summary>
-	/// Creates a new attachment that represents a object in the render pipeline.
-	/// </summary>
-	/// <param name="binding"> The index the attachment is bound to in the renderpass. </param>
-	/// <param name="name"> The unique name given to the object for all renderpasses. </param>
-	/// <param name="multisampled"> If this attachment is multisampled. </param>
-	/// <param name="type"> The attachment type this represents. </param>
-	/// <param name="format"> The format that will be created (only applies to type ATTACHMENT_IMAGE). </param>
-	/// <param name="clearColour"> The colour to clear to before rendering to it. </param>
+	/**
+	 * Creates a new attachment that represents a object in the render pipeline.
+	 * @param binding The index the attachment is bound to in the renderpass.
+	 * @param name The unique name given to the object for all renderpasses.
+	 * @param type The attachment type this represents.
+	 * @param multisampled If this attachment is multisampled.
+	 * @param format The format that will be created (only applies to type ATTACHMENT_IMAGE).
+	 * @param clearColour The colour to clear to before rendering to it.
+	 */
 	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const Colour &clearColour = Colour::Black) :
 		m_binding(binding),
@@ -140,28 +141,28 @@ public:
 
 	void SetViewport(const Viewport &viewport) { m_viewport = viewport; }
 
-	/// <summary>
-	/// Gets the height of the render stage in pixels.
-	/// </summary>
-	/// <returns> The height of the render stage. </returns>
+	/**
+	 * Gets the height of the render stage in pixels.
+	 * @return The height of the render stage.
+	 */
 	const uint32_t &GetWidth() const { return m_width; }
 
-	/// <summary>
-	/// Gets the height of the render stage in pixels.
-	/// </summary>
-	/// <returns> The height of the render stage. </returns>
+	/**
+	 * Gets the height of the render stage in pixels.
+	 * @return The height of the render stage.
+	 */
 	const uint32_t &GetHeight() const { return m_height; }
 
-	/// <summary>
-	/// Gets the aspect ratio between the render stages width and height.
-	/// </summary>
-	/// <returns> The aspect ratio. </returns>
+	/**
+	 * Gets the aspect ratio between the render stages width and height.
+	 * @return The aspect ratio.
+	 */
 	const float &GetAspectRatio() const { return m_aspectRatio; }
 
-	/// <summary>
-	/// Gets if the width or height has changed between the last update and now.
-	/// </summary>
-	/// <returns> If the width or height has changed. </returns>
+	/**
+	 * Gets if the width or height has changed between the last update and now.
+	 * @return If the width or height has changed.
+	 */
 	const bool &IsOutOfDate() const { return m_outOfDate; }
 
 	const Renderpass *GetRenderpass() const { return m_renderpass.get(); };

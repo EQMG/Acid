@@ -82,23 +82,23 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 
 		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
 		ParticleTypeData *instance = &particleInstances[m_instances];
-		instance->modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
+		instance->m_modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
 
 		for (int32_t row = 0; row < 3; row++)
 		{
 			for (int32_t col = 0; col < 3; col++)
 			{
-				instance->modelMatrix[row][col] = viewMatrix[col][row];
+				instance->m_modelMatrix[row][col] = viewMatrix[col][row];
 			}
 		}
 
-		instance->modelMatrix = instance->modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3::Front);
-		instance->modelMatrix = instance->modelMatrix.Scale(particle.GetScale() * Vector3::One);
+		instance->m_modelMatrix = instance->m_modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3::Front);
+		instance->m_modelMatrix = instance->m_modelMatrix.Scale(particle.GetScale() * Vector3::One);
 		// TODO: Multiply MVP by View and Projection (And run update every frame?)
 
-		instance->colourOffset = particle.GetParticleType()->m_colourOffset;
-		instance->offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
-		instance->blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
+		instance->m_colourOffset = particle.GetParticleType()->m_colourOffset;
+		instance->m_offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
+		instance->m_blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
 		m_instances++;
 	}
 
@@ -168,43 +168,43 @@ Shader::VertexInput ParticleType::GetVertexInput(const uint32_t &binding)
 	attributeDescriptions[0].binding = binding;
 	attributeDescriptions[0].location = 0;
 	attributeDescriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[0].offset = offsetof(ParticleTypeData, modelMatrix) + offsetof(Matrix4, m_rows[0]);
+	attributeDescriptions[0].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[0]);
 
 	// Model matrix row 1 attribute.
 	attributeDescriptions[1].binding = binding;
 	attributeDescriptions[1].location = 1;
 	attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[1].offset = offsetof(ParticleTypeData, modelMatrix) + offsetof(Matrix4, m_rows[1]);
+	attributeDescriptions[1].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[1]);
 
 	// Model matrix row 2 attribute.
 	attributeDescriptions[2].binding = binding;
 	attributeDescriptions[2].location = 2;
 	attributeDescriptions[2].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[2].offset = offsetof(ParticleTypeData, modelMatrix) + offsetof(Matrix4, m_rows[2]);
+	attributeDescriptions[2].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[2]);
 
 	// Model matrix row 3 attribute.
 	attributeDescriptions[3].binding = binding;
 	attributeDescriptions[3].location = 3;
 	attributeDescriptions[3].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[3].offset = offsetof(ParticleTypeData, modelMatrix) + offsetof(Matrix4, m_rows[3]);
+	attributeDescriptions[3].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[3]);
 
 	// Colour offset attribute.
 	attributeDescriptions[4].binding = binding;
 	attributeDescriptions[4].location = 4;
 	attributeDescriptions[4].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[4].offset = offsetof(ParticleTypeData, colourOffset);
+	attributeDescriptions[4].offset = offsetof(ParticleTypeData, m_colourOffset);
 
 	// Offsets attribute.
 	attributeDescriptions[5].binding = binding;
 	attributeDescriptions[5].location = 5;
 	attributeDescriptions[5].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[5].offset = offsetof(ParticleTypeData, offsets);
+	attributeDescriptions[5].offset = offsetof(ParticleTypeData, m_offsets);
 
 	// Blend attribute.
 	attributeDescriptions[6].binding = binding;
 	attributeDescriptions[6].location = 6;
 	attributeDescriptions[6].format = VK_FORMAT_R32G32B32_SFLOAT;
-	attributeDescriptions[6].offset = offsetof(ParticleTypeData, blend);
+	attributeDescriptions[6].offset = offsetof(ParticleTypeData, m_blend);
 
 	return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
 }

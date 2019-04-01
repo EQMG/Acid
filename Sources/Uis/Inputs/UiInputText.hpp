@@ -27,7 +27,11 @@ public:
 
 	void SetValue(const std::string &value);
 
-	Delegate<void(std::string)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(std::string)> &OnValue() { return m_onValue; }
 
 private:
 	Gui m_background;

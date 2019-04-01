@@ -4,75 +4,81 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a time value stored in microseconds.
-/// </summary>
+/**
+ * Represents a time value stored in microseconds.
+ */
 class ACID_EXPORT Time
 {
 public:
-	/// <summary>
-	/// Constructor for time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
-	/// </summary>
-	/// <param name="microseconds"> Number of microseconds. </param>
+	/**
+	 * Creates a new time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
+	 * @param microseconds Number of microseconds.
+	 */
 	explicit Time(const int64_t &microseconds = 0);
 
-	/// <summary>
-	/// Constructs a time value from a number of seconds.
-	/// </summary>
-	/// <param name="amount"> Number of seconds. </param>
-	/// <returns> Time value constructed from the amount of seconds. </returns>
+	/**
+	 * Creates a time value from a number of seconds.
+	 * @tparam T The type of value to be casted to.
+	 * @param amount Number of seconds.
+	 * @return Time value constructed from the amount of seconds.
+	 */
 	template<typename T = float>
 	static Time Seconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000000)));
 	}
 
-	/// <summary>
-	/// Constructs a time value from a number of milliseconds.
-	/// </summary>
-	/// <param name="amount"> Number of milliseconds. </param>
-	/// <returns> Time value constructed from the amount of milliseconds. </returns>
+	/**
+	 * Creates a time value from a number of milliseconds
+	 * @tparam T The type of value to be casted to.
+	 * @param amountNumber of milliseconds.
+	 * @return Time value constructed from the amount of milliseconds.
+	 */
 	template<typename T = int32_t>
 	static Time Milliseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000)));
 	}
 
-	/// <summary>
-	/// Constructs a time value from a number of microseconds.
-	/// </summary>
-	/// <param name="amount"> Number of microseconds. </param>
-	/// <returns> Time value constructed from the amount of microseconds. </returns>
+	/**
+	 * Creates a time value from a number of microseconds.
+	 * @tparam T The type of value to be casted to.
+	 * @param amount Number of microseconds.
+	 * @return Time value constructed from the amount of microseconds.
+	 */
 	template<typename T = int64_t>
 	static Time Microseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount));
 	}
 
-	/// <summary>
-	/// Return the time value as a number of seconds.
-	/// </summary>
-	/// <returns> Time in seconds. </returns>
+	/**
+	 * Gets the time value as a number of seconds.
+	 * @tparam T The type of value to be casted to.
+	 * @return Time in seconds.
+	 */
 	template<typename T = float>
 	auto AsSeconds() const
 	{
 		return static_cast<T>(m_microseconds) / static_cast<T>(1000000);
 	}
 
-	/// <summary>
-	/// Return the time value as a number of milliseconds.
-	/// </summary>
-	/// <returns> Time in milliseconds. </returns>
+	/**
+	 * Gets the time value as a number of milliseconds.
+	 * @tparam T The type of value to be casted to.
+	 * @return Time in milliseconds.
+	 */
 	template<typename T = int32_t>
 	auto AsMilliseconds() const
 	{
 		return static_cast<T>(m_microseconds) / static_cast<T>(1000);
 	}
 
-	/// <summary>
-	/// Return the time value as a number of microseconds.
-	/// </summary>
-	/// <returns> Time in microseconds. </returns>
+	/**
+	 * Gets the time value as a number of microseconds.
+	 * @tparam T The type of value to be casted to.
+	 * @return Time in microseconds.
+	 */
 	template<typename T = int64_t>
 	auto AsMicroseconds() const
 	{

@@ -7,9 +7,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A pool of threads.
-/// </summary>
+/**
+ * A fixed size pool of threads.
+ */
 class ACID_EXPORT ThreadPool
 {
 public:

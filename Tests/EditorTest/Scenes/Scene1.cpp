@@ -47,7 +47,7 @@ Scene1::Scene1() :
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
-	m_buttonSpawnSphere.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonSpawnSphere.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -74,7 +74,7 @@ Scene1::Scene1() :
 		}
 	};
 
-	m_buttonCaptureMouse->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -82,7 +82,7 @@ Scene1::Scene1() :
 		}
 	};
 
-	m_buttonSave.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonSave.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -124,7 +124,7 @@ Scene1::Scene1() :
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-	m_uiStartLogo.GetOnFinished() += [this]()
+	m_uiStartLogo.OnFinished() += [this]()
 	{
 		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		Mouse::Get()->SetCursorHidden(true);
@@ -148,7 +148,7 @@ void Scene1::Start()
 	sun->AddComponent<Light>(Colour::White);
 
 	auto plane = GetStructure()->CreateEntity(Transform(Vector3(0.0f, -0.5f, 0.0f), Vector3(), Vector3(50.0f, 1.0f, 50.0f)));
-	plane->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
+	plane->AddComponent<Mesh>(ModelCube::Create(Vector3(1.0f, 1.0f, 1.0f)));
 	plane->AddComponent<MaterialDefault>(Colour::Grey, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST), 0.0f, 1.0f);
 	plane->AddComponent<Rigidbody>(0.0f, 0.5f);
 	plane->AddComponent<ColliderCube>(Vector3(1.0f, 1.0f, 1.0f));
@@ -162,7 +162,7 @@ void Scene1::Start()
 		for (int j = 0; j < 5; j++)
 		{
 			auto cube = GetStructure()->CreateEntity(Transform(Vector3(i, j + 0.5f, -10.0f), Vector3(), 1.0f));
-			cube->AddComponent<Mesh>(ModelCube::Create(1.0f, 1.0f, 1.0f));
+			cube->AddComponent<Mesh>(ModelCube::Create(Vector3(1.0f, 1.0f, 1.0f)));
 			cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0, cubeColours.size()))]);
 			cube->AddComponent<Rigidbody>(0.5f, 0.3f);
 			cube->AddComponent<ColliderCube>();

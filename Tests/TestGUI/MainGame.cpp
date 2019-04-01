@@ -40,7 +40,7 @@ MainGame::MainGame() :
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Watches all files in the working directory.
-	m_fileWatcher.GetOnChange() += [](std::string path, FileWatcher::Status status)
+	m_fileWatcher.OnChange() += [](std::string path, FileWatcher::Status status)
 	{
 		switch (status)
 		{
@@ -56,14 +56,14 @@ MainGame::MainGame() :
 		}
 	};
 
-	m_buttonFullscreen.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	};
-	m_buttonScreenshot.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonScreenshot.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -73,7 +73,7 @@ MainGame::MainGame() :
 			});
 		}
 	};
-	m_buttonExit.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonExit.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{

@@ -5,17 +5,17 @@
 
 namespace acid
 {
-/// <summary>
-/// A module used for that manages debug gizmos.
-/// </summary>
+/**
+ * Module used for that manages debug gizmos.
+ */
 class ACID_EXPORT Gizmos :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Gizmos *Get() { return Engine::Get()->GetModuleManager().Get<Gizmos>(); }
 
 	Gizmos();
@@ -26,15 +26,15 @@ public:
 
 	void RemoveGizmo(Gizmo *gizmo);
 
-	/// <summary>
-	/// Clears all gizmods from the scene.
-	/// </summary>
+	/**
+	 * Clears all gizmos from the scene.
+	 */
 	void Clear();
 
-	/// <summary>
-	/// Gets a list of all gizmods.
-	/// </summary>
-	/// <returns> All gizmods. </returns>
+	/**
+	 * Gets a list of all gizmos.
+	 * @return All gizmods.
+	 */
 	const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
 
 private:

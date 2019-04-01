@@ -5,17 +5,17 @@
 
 namespace acid
 {
-/// <summary>
-/// Button from a mouse.
-/// </summary>
+/**
+ * Button input from the mouse input device.
+ */
 class ACID_EXPORT ButtonMouse :
 	public IButton
 {
 public:
-	/// <summary>
-	/// Creates a new button mouse.
-	/// </summary>
-	/// <param name="buttons"> The button on the mouse being checked. </param>
+	/**
+	 * Creates a new button mouse.
+	 * @param button The button on the mouse being checked.
+	 */
 	explicit ButtonMouse(const MouseButton &button);
 
 	bool IsDown() const override;

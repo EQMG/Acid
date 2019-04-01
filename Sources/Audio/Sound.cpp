@@ -30,7 +30,7 @@ Sound::Sound(const std::string &filename, const Transform &localTransform, const
 		Play(loop);
 	}
 
-	Audio::Get()->GetOnGain() += [this](Audio::Type type, float volume)
+	Audio::Get()->OnGain() += [this](Audio::Type type, float volume)
 	{
 		if (type == m_type)
 		{

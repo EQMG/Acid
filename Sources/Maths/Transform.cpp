@@ -22,14 +22,6 @@ Transform::Transform(const Vector3 &position, const Vector3 &rotation, const flo
 {
 }
 
-Transform::Transform(const Transform &source) :
-	m_position(source.m_position),
-	m_rotation(source.m_rotation),
-	m_scaling(source.m_scaling),
-	m_dirty(true)
-{
-}
-
 void Transform::Start()
 {
 }

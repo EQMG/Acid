@@ -5,7 +5,7 @@ namespace acid
 ButtonKeyboard::ButtonKeyboard(const Key &key) :
 	m_key(key)
 {
-	Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (key == m_key)
 		{

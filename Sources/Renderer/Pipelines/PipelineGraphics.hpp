@@ -9,9 +9,9 @@ namespace acid
 class ImageDepth;
 class Image2d;
 
-/// <summary>
-/// Class that represents a Vulkan graphics pipeline.
-/// </summary>
+/**
+ * Class that represents a graphics pipeline.
+ */
 class ACID_EXPORT PipelineGraphics :
 	public Pipeline
 {
@@ -26,20 +26,20 @@ public:
 		None = 0, Read = 1, Write = 2, ReadWrite = Read | Write
 	};
 
-	/// <summary>
-	/// Creates a new pipeline.
-	/// </summary>
-	/// <param name="stage"> The graphics stage this pipeline will be run on. </param>
-	/// <param name="shaderStages"> The source files to load the pipeline shaders from. </param>
-	/// <param name="vertexInputs"> The vertex inputs that will be used as a shaders input. </param>
-	/// <param name="defines"> A list of defines added to the top of each shader. </param>
-	/// <param name="mode"> The mode this pipeline will run in. </param>
-	/// <param name="depthMode"> The depth read/write that will be used. </param>
-	/// <param name="topology"> The topology of the input assembly. </param>
-	/// <param name="polygonMode"> The polygon draw mode. </param>
-	/// <param name="cullMode"> The vertex cull mode. </param>
-	/// <param name="frontFace"> The direction to render faces. </param>
-	/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
+	/**
+	 * Creates a new pipeline.
+	 * @param stage The graphics stage this pipeline will be run on.
+	 * @param shaderStages The source files to load the pipeline shaders from.
+	 * @param vertexInputs The vertex inputs that will be used as a shaders input.
+	 * @param defines A list of defines added to the top of each shader.
+	 * @param mode The mode this pipeline will run in.
+	 * @param depthMode The depth read/write that will be used.
+	 * @param topology The topology of the input assembly.
+	 * @param polygonMode The polygon draw mode.
+	 * @param cullMode The vertex cull mode.
+	 * @param frontFace The direction to render faces.
+	 * @param pushDescriptors If no actual descriptor sets are allocated but instead pushed.
+	 */
 	PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
 		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
 		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
@@ -47,47 +47,47 @@ public:
 
 	~PipelineGraphics();
 
-	/// <summary>
-	/// Gets the depth stencil used in a stage.
-	/// </summary>
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
-	/// <returns> The depth stencil that is found. </returns>
+	/**
+	 * Gets the depth stencil used in a stage.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The depth stencil that is found.
+	 */
 	const ImageDepth *GetDepthStencil(const std::optional<uint32_t> &stage = {}) const;
 
-	/// <summary>
-	/// Gets a texture used in a stage by the index given to it in the renderpass.
-	/// </summary>
-	/// <param name="index"> The renderpass texture index. </param>
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
-	/// <returns> The texture that is found. </returns>
+	/**
+	 * Gets a image used in a stage by the index given to it in the renderpass.
+	 * @param index The renderpass texture index.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The image that is found.
+	 */
 	const Image2d *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
-	/// <summary>
-	/// Gets the height of the render stage in pixels.
-	/// </summary>
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
-	/// <returns> The height of the render stage. </returns>
+	/**
+	 * Gets the height of the render stage in pixels.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The height of the render stage.
+	 */
 	uint32_t GetWidth(const std::optional<uint32_t> &stage = {}) const;
 
-	/// <summary>
-	/// Gets the height of the render stage in pixels.
-	/// </summary>
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
-	/// <returns> The height of the render stage. </returns>
+	/**
+	 * Gets the height of the render stage in pixels.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The height of the render stage.
+	 */
 	uint32_t GetHeight(const std::optional<uint32_t> &stage = {}) const;
 
-	/// <summary>
-	/// Gets the dimensions of the render stage in pixels.
-	/// </summary>
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>
-	/// <returns> The dimensions of the render stage. </returns>
+	/**
+	 * Gets the dimensions of the render stage in pixels.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The dimensions of the render stage.
+	 */
 	Vector2 GetDimensions(const std::optional<uint32_t> &stage = {}) const;
 
-	/// <summary>
-	/// Gets the aspect ratio between the render stages wid
-	/// <param name="stage"> The stage to get values from, if not provided the pipelines stage will be used. </param>th and height.
-	/// </summary>
-	/// <returns> The aspect ratio. </returns>
+	/**
+	 * Gets the aspect ratio between the render stages width and height.
+	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
+	 * @return The aspect ratio.
+	 */
 	float GetAspectRatio(const std::optional<uint32_t> &stage = {}) const;
 
 	const Stage &GetStage() const { return m_stage; }
@@ -199,10 +199,11 @@ public:
 	{
 	}
 
-	/// <summary>
-	/// Creates a new pipeline.
-	/// </summary>
-	/// <param name="pipelineStage"> The pipelines graphics stage. </param>
+	/**
+	 * Creates a new pipeline.
+	 * @param pipelineStage The pipelines graphics stage.
+	 * @return The created graphics pipeline.
+	 */
 	PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const
 	{
 		return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, m_polygonMode, m_cullMode, m_frontFace,

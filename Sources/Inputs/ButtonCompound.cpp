@@ -8,7 +8,7 @@ ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons, const bool
 {
 	for (const auto &button : buttons)
 	{
-		button->GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		button->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 		{
 			bool isDown = IsDown();
 

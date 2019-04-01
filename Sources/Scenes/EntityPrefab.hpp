@@ -7,30 +7,32 @@ namespace acid
 {
 class Entity;
 
-/// <summary>
-/// Class that represents a entity prefab.
-/// </summary>
+/**
+ * A resource that represents a entity prefab.
+ */
 class ACID_EXPORT EntityPrefab :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing entity prefab with the same values, or create a new entity prefab.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new entity prefab, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The entity prefab with the requested values.
+	 */
 	static std::shared_ptr<EntityPrefab> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing entity prefab with the same values, or create a new entity prefab.
-	/// </summary>
-	/// <param name="filename"> The file name. </param>
+	/**
+	 * Creates a new entity prefab, or finds one with the same values.
+	 * @param filename The entity prefab to load the entity prefab from.
+	 * @return The entity prefab with the requested values.
+	 */
 	static std::shared_ptr<EntityPrefab> Create(const std::string &filename);
 
-	/// <summary>
-	/// Creates a new entity prefab.
-	/// </summary>
-	/// <param name="filename"> The file name. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new entity prefab.
+	 * @param filename The file to load the entity prefab from.
+	 * @param load If this resource will be loaded immediately, otherwise {@link EntityPrefab#Load} can be called later.
+	 */
 	explicit EntityPrefab(std::string filename, const bool &load = true);
 
 	void Load() override;

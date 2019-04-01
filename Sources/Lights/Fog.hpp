@@ -7,20 +7,20 @@ namespace acid
 {
 class Metadata;
 
-/// <summary>
-/// Represents a hazy fog in the world.
-/// </summary>
+/**
+ * Represents a hazy fog in the world.
+ */
 class ACID_EXPORT Fog
 {
 public:
-	/// <summary>
-	/// Constructor for Fog.
-	/// </summary>
-	/// <param name="colour"> The colour of the Fog. </param>
-	/// <param name="density"> How dense the Fog will be. </param>
-	/// <param name="gradient"> The gradient of the Fog. </param>
-	/// <param name="lowerLimit"> At what height will the skybox Fog begin to appear. </param>
-	/// <param name="upperLimit"> At what height will there be skybox no Fog. </param>
+	/**
+	 * Creates a new hazy fog.
+	 * @param colour The colour of the fog.
+	 * @param density How dense the fog will be.
+	 * @param gradient The gradient of the fog.
+	 * @param lowerLimit At what height will the skybox fog begin to appear.
+	 * @param upperLimit At what height will there be skybox no fog.
+	 */
 	explicit Fog(const Colour &colour = Colour::White, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
 
 	const Colour &GetColour() const { return m_colour; }

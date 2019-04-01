@@ -6,22 +6,22 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that holds registered model types.
-/// </summary>
+/**
+ * Class that holds registered model types.
+ */
 class ACID_EXPORT ModelRegister
 {
 public:
-	/// <summary>
-	/// Creates a new model types register.
-	/// </summary>
+	/**
+	 * Creates a new model types register.
+	 */
 	ModelRegister();
 
-	/// <summary>
-	/// Adds a model type to this register, model created by Metadata object.
-	/// </summary>
-	/// <param name="name"> The models type name. </param>
-	/// <param name="T"> The models type. </param>
+	/**
+	 * Adds a model type to this register, model created by Metadata object.
+	 * @tparam T The models type.
+	 * @param name The models type name.
+	 */
 	template<typename T>
 	void AddMetadata(const std::string &name)
 	{
@@ -38,11 +38,11 @@ public:
 		m_modelMetadatas.emplace(name, modelCreate);
 	}
 
-	/// <summary>
-	/// Adds a model type to this register, model created by filename.
-	/// </summary>
-	/// <param name="extension"> The file extension this can be loaded from. </param>
-	/// <param name="T"> The models type. </param>
+	/**
+	 * Adds a model type to this register, model created by filename.
+	 * @tparam T The models type.
+	 * @param extension The file extension this can be loaded from.
+	 */
 	template<typename T>
 	void AddExtension(const std::string &extension)
 	{
@@ -59,24 +59,24 @@ public:
 		m_modelExtensions.emplace(extension, modelCreate);
 	}
 
-	/// <summary>
-	/// Removes a model type from the metadata or extensions register.
-	/// </summary>
-	/// <param name="name"> The model types name. </param>
+	/**
+	 * Removes a model type from the metadata or extensions register.
+	 * @param name The model types name.
+	 */
 	void Remove(const std::string &name);
 
-	/// <summary>
-	/// Creates a new model from the register.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
-	/// <returns> The new model. </returns>
+	/**
+	 * Creates a new model from the register.
+	 * @param metadata The metadata to decode values from.
+	 * @return The new model.
+	 */
 	std::shared_ptr<Model> Create(const Metadata &metadata) const;
 
-	/// <summary>
-	/// Creates a new model from the register.
-	/// </summary>
-	/// <param name="filename"> The models filename to load from. </param>
-	/// <returns> The new model. </returns>
+	/**
+	 * Creates a new model from the register.
+	 * @param filename The models filename to load from.
+	 * @return The new model.
+	 */
 	std::shared_ptr<Model> Create(const std::string &filename) const;
 
 private:

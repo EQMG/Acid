@@ -127,7 +127,7 @@ void ScenePhysics::CheckForCollisionEvents()
 			auto collisionObjectA = static_cast<CollisionObject *>(sortedBodyA->getUserPointer());
 			auto collisionObjectB = static_cast<CollisionObject *>(sortedBodyB->getUserPointer());
 
-			collisionObjectA->GetOnCollision()(collisionObjectB);
+			collisionObjectA->OnCollision()(collisionObjectB);
 		}
 	}
 
@@ -145,7 +145,7 @@ void ScenePhysics::CheckForCollisionEvents()
 		auto collisionObjectA = static_cast<CollisionObject *>(removedPair.first->getUserPointer());
 		auto collisionObjectB = static_cast<CollisionObject *>(removedPair.second->getUserPointer());
 
-		collisionObjectA->GetOnSeparation()(collisionObjectB);
+		collisionObjectA->OnSeparation()(collisionObjectB);
 	}
 
 	// In the next iteration we'll want to compare against the pairs we found in this iteration.

@@ -8,9 +8,6 @@ namespace acid
 class Instance;
 class PhysicalDevice;
 
-/// <summary>
-/// A module used for the creation, updating and destruction of the display.
-/// </summary>
 class ACID_EXPORT Surface
 {
 public:

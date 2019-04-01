@@ -6,58 +6,60 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a loaded texture.
-/// </summary>
+/**
+ * A resource that represents a loaded 2D image.
+ */
 class ACID_EXPORT Image2d :
 	public NonCopyable,
 	public Descriptor,
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing texture with the same values, or create a new texture.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new 2D image, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The 2D image with the requested values.
+	 */
 	static std::shared_ptr<Image2d> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing texture with the same values, or create a new texture.
-	/// </summary>
-	/// <param name="filename"> The file to load the texture from. </param>
-	/// <param name="filter"> The type of filtering will be use on the texture. </param>
-	/// <param name="addressMode"> The sampler address mode to use. </param>
-	/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
-	/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+	/**
+	 * Creates a new 2D image, or finds one with the same values.
+	 * @param filename The file to load the image from.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
+	 * @param anisotropic If anisotropic filtering is enabled.
+	 * @param mipmap If mapmaps will be generated.
+	 * @return The 2D image with the requested values.
+	 */
 	static std::shared_ptr<Image2d> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR,
 		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true);
 
-	/// <summary>
-	/// A new texture object.
-	/// </summary>
-	/// <param name="filename"> The file to load the texture from. </param>
-	/// <param name="filter"> The type of filtering will be use on the texture. </param>
-	/// <param name="addressMode"> The sampler address mode to use. </param>
-	/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
-	/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new 2D image.
+	 * @param filename The file to load the image from.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
+	 * @param anisotropic If anisotropic filtering is enabled.
+	 * @param mipmap If mapmaps will be generated.
+	 * @param load If this resource will be loaded immediately, otherwise {@link Image2d#Load} can be called later.
+	 */
 	explicit Image2d(std::string filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
-	/// <summary>
-	/// A new texture object from a array of pixels.
-	/// </summary>
-	/// <param name="width"> The textures width. </param>
-	/// <param name="height"> The textures height. </param>
-	/// <param name="pixels"> The initial pixels to use in the texture. <seealso cref="#GetPixels()"/> to get a copy of the pixels, and <seealso cref="#SetPixels()"/> to set the pixels. </param>
-	/// <param name="format"> The textures format. </param>
-	/// <param name="layout"> The textures image layout </param>
-	/// <param name="usage"> The textures image usage </param>
-	/// <param name="filter"> The type of filtering will be use on the texture. </param>
-	/// <param name="addressMode"> The sampler address mode to use. </param>
-	/// <param name="samples"> The amount of MSAA samples to use. </param>
-	/// <param name="anisotropic"> If anisotropic filtering will be use on the texture. </param>
-	/// <param name="mipmap"> If mipmaps will be generated for the texture. </param>
+	/**
+	 * Creates a new 2D image.
+	 * @param width The images width.
+	 * @param height The images height.
+	 * @param pixels The initial pixels to use in the texture. {@link Image2d#GetPixels} to get a copy of the pixels, and {@link Image2d#SetPixels} to set the pixels.
+	 * @param format The format and type of the texel blocks that will be contained in the image.
+	 * @param layout The layout that the image subresources accessible from.
+	 * @param usage The intended usage of the image.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
+	 * @param samples The number of samples per texel.
+	 * @param anisotropic If anisotropic filtering is enabled.
+	 * @param mipmap If mapmaps will be generated.
+	 */
 	Image2d(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
@@ -76,20 +78,21 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	/// <summary>
-	/// Gets a copy of the textures pixels from memory.
-	/// </summary>
-	/// <param name="width"> The value sampled width is stored to. </param>
-	/// <param name="height"> The value sampled height is stored to. </param>
-	/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
-	/// <returns> A copy of the textures pixels. </returns>
-	std::unique_ptr<uint8_t[]> GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel = 0) const;
+	/**
+	 * Copies the images pixels from memory.
+	 * @param extent The sampled images extent.
+	 * @param mipLevel The mipmap level index to sample.
+	 * @return A copy of the images pixels.
+	 */
+	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0) const;
 
-	/// <summary>
-	/// Copies the pixels into this textures memory.
-	/// </summary>
-	/// <param name="pixels"> The pixels to copy to the image. </param>
-	void SetPixels(const uint8_t *pixels);
+	/**
+	 * Sets the pixels of this image.
+	 * @param pixels The pixels to copy from.
+	 * @param layerCount The amount of layers contained in the pixels.
+	 * @param baseArrayLayer The first layer to copy into.
+	 */
+	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
 	const std::string &GetFilename() const { return m_filename; };
 

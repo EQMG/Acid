@@ -4,35 +4,33 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a cube model.
-/// </summary>
+/**
+ * A resource that represents a cube model.
+ */
 class ACID_EXPORT ModelCube :
 	public Model
 {
 public:
-	/// <summary>
-	/// Will find an existing cube model with the same values, or create a new cube model.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new cube model, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The cube model with the requested values.
+	 */
 	static std::shared_ptr<ModelCube> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing cube model with the same values, or create a new cube model.
-	/// </summary>
-	/// <param name="width"> The width. </param>
-	/// <param name="height"> The height. </param>
-	/// <param name="depth"> The depth. </param>
-	static std::shared_ptr<ModelCube> Create(const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
+	/**
+	 * Creates a new cube model, or finds one with the same values.
+	 * @param extents The size (width, height, depth) to load from.
+	 * @return The cube model with the requested values.
+	 */
+	static std::shared_ptr<ModelCube> Create(const Vector3 &extents = Vector3::One);
 
-	/// <summary>
-	/// Creates a new cube model.
-	/// </summary>
-	/// <param name="width"> The width. </param>
-	/// <param name="height"> The height. </param>
-	/// <param name="depth"> The depth. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
-	explicit ModelCube(const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const bool &load = true);
+	/**
+	 * Creates a new cube model.
+	 * @param extents The size (width, height, depth) to load from.
+	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCube#Load} can be called later.
+	 */
+	explicit ModelCube(const Vector3 &extents = Vector3::One, const bool &load = true);
 
 	void Load() override;
 
@@ -41,8 +39,6 @@ public:
 	void Encode(Metadata &metadata) const override;
 
 private:
-	float m_width;
-	float m_height;
-	float m_depth;
+	Vector3 m_extents;
 };
 }

@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that makes derived classes non-copyable.
-/// </summary>
+/**
+ * Class that makes derived classes non-copyable.
+ */
 class ACID_EXPORT NonCopyable
 {
 protected:

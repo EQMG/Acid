@@ -5,7 +5,7 @@
 namespace acid
 {
 /// <summary>
-/// A class that smoothly increases its value.
+/// Class that smoothly increases its value.
 /// </summary>
 template<typename T>
 class SmoothFloat

@@ -5,7 +5,7 @@
 namespace acid
 {
 /// <summary>
-/// A class that holds many various math functions.
+/// Class that holds many various math functions.
 /// </summary>
 class ACID_EXPORT Maths
 {

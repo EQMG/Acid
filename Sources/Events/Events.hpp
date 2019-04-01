@@ -5,43 +5,43 @@
 
 namespace acid
 {
-/// <summary>
-/// A module used for managing events on engine updates.
-/// </summary>
+/**
+ * Module used for managing events on engine updates.
+ */
 class ACID_EXPORT Events :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Events *Get() { return Engine::Get()->GetModuleManager().Get<Events>(); }
 
 	Events();
 
 	void Update() override;
 
-	/// <summary>
-	/// Adds an event to the listening list.
-	/// </summary>
-	/// <param name="event"> The event to add. </param>
-	/// <returns> The added event. </returns>
+	/**
+	 * Adds an event to the listening list.
+	 * @param event The event to add.
+	 * @return The added event.
+	 */
 	IEvent *AddEvent(IEvent *event);
 
-	/// <summary>
-	/// Adds an event to the listening list.
-	/// </summary>
-	/// <param name="T"> The type of event to add. </param>
-	/// <param name="args"> The type event arguments. </param>
+	/**
+	 * Adds an event to the listening list.
+	 * @tparam T The type of event to add.
+	 * @tparam Args The args types.
+	 * @param args The type event arguments.
+	 */
 	template<typename T, typename... Args>
 	void AddEvent(Args &&... args) { AddEvent(new T(std::forward<Args>(args)...)); }
 
-	/// <summary>
-	/// Removes a event to the listening list.
-	/// </summary>
-	/// <param name="event"> The event to remove. </param>
-	/// <returns> If the event was removed. </returns>
+	/**
+	 * Removes a event to the listening list.
+	 * @param event The event to remove.
+	 */
 	void RemoveEvent(IEvent *event);
 
 private:

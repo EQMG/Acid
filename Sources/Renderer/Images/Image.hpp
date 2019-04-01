@@ -6,25 +6,25 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a Vulkan image, sampler, and view.
-/// </summary>
+/**
+ * A representation of a Vulkan image, sampler, and view.
+ */
 class ACID_EXPORT Image :
 	public Descriptor
 {
 public:
-	/// <summary>
-	/// Creates a new image object.
-	/// </summary>
-	/// <param name="extent"> The number of data elements in each dimension of the base level. </param>
-	/// <param name="imageType"> The dimensionality of the image. </param>
-	/// <param name="format"> The format and type of the texel blocks that will be contained in the image. </param>
-	/// <param name="samples"> The number of samples per texel. </param>
-	/// <param name="tiling"> The tiling arrangement of the texel blocks in memory. </param>
-	/// <param name="usage"> The intended usage of the image. </param>
-	/// <param name="properties"> The images memory properties. </param>
-	/// <param name="mipLevels"> The number of levels of detail available for minified sampling of the image. </param>
-	/// <param name="arrayLayers"> The number of layers in the image. </param>
+	/**
+	 * Creates a new image object.
+	 * @param extent The number of data elements in each dimension of the base level.
+	 * @param imageType The dimensionality of the image.
+	 * @param format The format and type of the texel blocks that will be contained in the image.
+	 * @param samples The number of samples per texel.
+	 * @param tiling The tiling arrangement of the texel blocks in memory.
+	 * @param usage The intended usage of the image.
+	 * @param properties The images memory properties.
+	 * @param mipLevels The number of levels of detail available for minified sampling of the image.
+	 * @param arrayLayers The number of layers in the image.
+	 */
 	Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
 		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers);
 
@@ -38,21 +38,20 @@ public:
 
 	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
-	/// <summary>
-	/// Gets a copy of the textures pixels from memory.
-	/// </summary>
-	/// <param name="extent"> The sampled images extents. </param>
-	/// <param name="mipLevel"> The mipmap level index to get the pixels from. </param>
-	/// <param name="arrayLayer"> The array layer to copy from. </param>
-	/// <returns> A copy of the textures pixels. </returns>
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 1, const uint32_t &arrayLayer = 0) const;
+	/**
+	 * Copies the images pixels from memory.
+	 * @param extent The sampled images extent.
+	 * @param mipLevel The mipmap level index to sample.
+	 * @return A copy of the images pixels.
+	 */
+	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0, const uint32_t &arrayLayer = 0) const;
 
-	/// <summary>
-	/// Copies the pixels into this textures memory.
-	/// </summary>
-	/// <param name="pixels"> The pixels to copy to the image. </param>
-	/// <param name="layerCount"> The amount of array layers the pixels represent. </param>
-	/// <param name="baseArrayLayer"> The base array layer to copy into. </param>
+	/**
+	 * Sets the pixels of this image.
+	 * @param pixels The pixels to copy from.
+	 * @param layerCount The amount of layers contained in the pixels.
+	 * @param baseArrayLayer The first layer to copy into.
+	 */
 	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
 	const VkExtent3D &GetExtent() const { return m_extent; }
@@ -89,16 +88,18 @@ public:
 
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
-	/// <summary>
-	/// Gets if this depth image has a depth component.
-	/// </summary>
-	/// <returns> If this has a depth component. </returns>
+	/**
+	 * Gets if a format has a depth component.
+	 * @param format The format to check.
+	 * @return If the format has a depth component.
+	 */
 	static bool HasDepth(const VkFormat &format);
 
-	/// <summary>
-	/// Gets if this depth image has a stencil component.
-	/// </summary>
-	/// <returns> If this has a stencil component. </returns>
+	/**
+	 * Gets if a format has a depth component.
+	 * @param format The format to check.
+	 * @return If the format has a depth component.
+	 */
 	static bool HasStencil(const VkFormat &format);
 
 	static void CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D &extent, const VkFormat &format, const VkSampleCountFlagBits &samples,

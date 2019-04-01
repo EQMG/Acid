@@ -6,20 +6,20 @@
 
 namespace acid
 {
-/// <summary>
-/// Button from a joystick.
-/// </summary>
+/**
+ * Button from a joystick.
+ */
 class ACID_EXPORT HatJoystick :
 	public IAxis,
 	public IButton
 {
 public:
-	/// <summary>
-	/// Creates a new joystick button.
-	/// </summary>
-	/// <param name="port"> The joystick port. </param>
-	/// <param name="hat"> The hat that will be checked. </param>
-	/// <param name="hatFlag"> If this bit is found the hat will trigger <seealso cref="#IsDown()"/>. </param>
+	/**
+	 * Creates a new joystick button.
+	 * @param port The joystick port.
+	 * @param hat The hat that will be checked.
+	 * @param hatFlags If this bit is found the hat will trigger {@link HatJoystick#IsDown}.
+	 */
 	HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMask<JoystickHat> &hatFlags = JoystickHat::Centered);
 
 	float GetAmount() const override;

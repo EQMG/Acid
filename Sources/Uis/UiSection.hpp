@@ -17,7 +17,11 @@ public:
 
 	UiObject &GetContent() { return m_content; }
 
-	Delegate<void(UiSection *, bool)> &GetOnCollapsed() { return m_onCollapsed; }
+	/**
+	 * Called when this section has been collapsed or uncollapsed.
+	 * @return The delegate.
+	 */
+	Delegate<void(UiSection *, bool)> &OnCollapsed() { return m_onCollapsed; }
 
 private:
 	Gui m_icon;

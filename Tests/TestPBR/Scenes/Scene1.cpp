@@ -31,7 +31,7 @@ Scene1::Scene1() :
 	m_paused(false),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
-	m_buttonPause.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonPause.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{

@@ -8,17 +8,17 @@
 
 namespace acid
 {
-/// <summary>
-/// A module used for managing resources.
-/// </summary>
+/**
+ * Module used for managing resources.
+ */
 class ACID_EXPORT Resources :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Resources *Get() { return Engine::Get()->GetModuleManager().Get<Resources>(); }
 
 	Resources();
@@ -31,10 +31,10 @@ public:
 
 	void Remove(const std::shared_ptr<Resource> &resource);
 
-	/// <summary>
-	/// Gets the resoure loader thread pool.
-	/// </summary>
-	/// <returns> The resoure loader thread pool. </returns>
+	/**
+	 * Gets the resource loader thread pool.
+	 * @return The resource loader thread pool.
+	 */
 	ThreadPool &GetThreadPool() { return m_threadPool; }
 
 private:

@@ -104,7 +104,7 @@ void CameraFps::CalculateHorizontalAngle()
 		}
 		else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton) != InputAction::Release)
 		{
-			angleChange = -Mouse::Get()->GetDeltaX() * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
+			angleChange = -Mouse::Get()->GetDelta().m_x * INFLUENCE_OF_MOUSE_DX * m_sensitivity;
 		}
 	}
 
@@ -141,7 +141,7 @@ void CameraFps::CalculateVerticalAngle()
 		}
 		else if (Mouse::Get()->IsCursorHidden() || Mouse::Get()->GetButton(m_reangleButton) != InputAction::Release)
 		{
-			angleChange = -Mouse::Get()->GetDeltaY() * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
+			angleChange = -Mouse::Get()->GetDelta().m_y * INFLUENCE_OF_MOUSE_DY * m_sensitivity;
 		}
 	}
 

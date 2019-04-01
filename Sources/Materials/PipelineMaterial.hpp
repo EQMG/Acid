@@ -5,31 +5,40 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a material pipeline.
-/// </summary>
+/**
+ * A resource that represents a material pipeline.
+ */
 class ACID_EXPORT PipelineMaterial :
 	public Resource
 {
 public:
-	/// <summary>
-	/// Will find an existing material pipeline with the same values, or create a new material pipeline.
-	/// </summary>
-	/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
-	/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
+	/**
+	 * Creates a new material pipeline, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The material pipeline with the requested values.
+	 */
+	//static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
+
+	/**
+	 * Creates a new material pipeline, or finds one with the same values.
+	 * @param pipelineStage Stage the pipeline will be executed on.
+	 * @param pipelineCreate Information used to define pipeline properties.
+	 * @return The material pipeline with the requested values.
+	 */
 	static std::shared_ptr<PipelineMaterial> Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate);
 
-	/// <summary>
-	/// Creates a new material pipeline.
-	/// </summary>
-	/// <param name="pipelineStage"> Stage the pipeline will be executed on. </param>
-	/// <param name="pipelineCreate"> Information used to define pipeline properties. </param>
+	/**
+	 * Creates a new material pipeline.
+	 * @param pipelineStage Stage the pipeline will be executed on.
+	 * @param pipelineCreate Information used to define pipeline properties.
+	 */
 	PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate);
 
-	/// <summary>
-	/// Binds this pipeline to the current renderpass.
-	/// </summary>
-	/// <param name="commandBuffer"> The command buffer to write to. </param>
+	/**
+	 * Binds this pipeline to the current renderpass.
+	 * @param commandBuffer The command buffer to write to.
+	 * @return If the pipeline has been bound successfully.
+	 */
 	bool BindPipeline(const CommandBuffer &commandBuffer);
 
 	void Decode(const Metadata &metadata) override;

@@ -35,7 +35,11 @@ public:
 
 	const float &GetProgress() const { return m_progress; }
 
-	Delegate<void(float)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(float)> &OnValue() { return m_onValue; }
 
 private:
 	void UpdateProgress();

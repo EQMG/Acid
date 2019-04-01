@@ -5,22 +5,19 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that holds registered components.
-/// </summary>
+/**
+ * Class that holds registered component types.
+ */
 class ACID_EXPORT ComponentRegister
 {
 public:
-	/// <summary>
-	/// Creates a new component register.
-	/// </summary>
 	ComponentRegister();
 
-	/// <summary>
-	/// Adds a component to this register.
-	/// </summary>
-	/// <param name="name"> The components name. </param>
-	/// <param name="T"> The components type. </param>
+	/**
+	 * Adds a component to this register.
+	 * @tparam T The components type.
+	 * @param name The components name.
+	 */
 	template<typename T>
 	void Add(const std::string &name)
 	{
@@ -43,24 +40,24 @@ public:
 		m_components.emplace(name, componentCreate);
 	}
 
-	/// <summary>
-	/// Removes a component type from the register.
-	/// </summary>
-	/// <param name="name"> The components name. </param>
+	/**
+	 * Removes a component type from the register.
+	 * @param name The components name.
+	 */
 	void Remove(const std::string &name);
 
-	/// <summary>
-	/// Creates a new component from the register.
-	/// </summary>
-	/// <param name="name"> The component name to create. </param>
-	/// <returns> The new component. </returns>
+	/**
+	 * Creates a new component from the register.
+	 * @param name The component name to create.
+	 * @return The new component.
+	 */
 	Component *Create(const std::string &name) const;
 
-	/// <summary>
-	/// Finds the registered name to a component.
-	/// </summary>
-	/// <param name="compare"> The components to get the registered name of. </param>
-	/// <returns> The name registered to the component. </returns>
+	/**
+	 * Finds the registered name to a component.
+	 * @param compare The components to get the registered name of.
+	 * @return The name registered to the component.
+	 */
 	std::optional<std::string> FindName(Component *compare) const;
 
 private:

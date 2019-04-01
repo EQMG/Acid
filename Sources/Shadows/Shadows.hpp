@@ -6,17 +6,17 @@
 
 namespace acid
 {
-/// <summary>
-/// A module used for managing shadow maps.
-/// </summary>
+/**
+ * Module used for managing a shadow map.
+ */
 class ACID_EXPORT Shadows :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Shadows *Get() { return Engine::Get()->GetModuleManager().Get<Shadows>(); }
 
 	Shadows();
@@ -55,10 +55,10 @@ public:
 
 	void SetShadowBoxDistance(const float &shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
-	/// <summary>
-	/// Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
-	/// </summary>
-	/// <returns> The shadow box. </returns>
+	/**
+	 * Get the shadow box, so that it can be used by other class to test if engine.entities are inside the box.
+	 * @return The shadow box.
+	 */
 	const ShadowBox &GetShadowBox() const { return m_shadowBox; }
 
 private:

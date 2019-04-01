@@ -15,7 +15,7 @@ public:
 
 	bool IsFinished() const { return m_finished; }
 
-	Delegate<void()> &GetOnFinished() { return m_onFinished; }
+	Delegate<void()> &OnFinished() { return m_onFinished; }
 
 private:
 	Gui m_guiBackground;

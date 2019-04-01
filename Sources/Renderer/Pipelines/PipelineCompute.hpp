@@ -5,19 +5,19 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a compute Vulkan compute pipeline.
-/// </summary>
+/**
+ * Class that represents a compute compute pipeline.
+ */
 class ACID_EXPORT PipelineCompute :
 	public Pipeline
 {
 public:
-	/// <summary>
-	/// Creates a new compute pipeline.
-	/// </summary>
-	/// <param name="shaderStage"> The shader file that will be loaded. </param>
-	/// <param name="defines"> A list of defines added to the top of each shader. </param>
-	/// <param name="pushDescriptors"> If no actual descriptor sets are allocated but instead pushed. </param>
+	/**
+	 * Creates a new compute pipeline.
+	 * @param shaderStage The shader file that will be loaded.
+	 * @param defines A list of defines added to the top of each shader.
+	 * @param pushDescriptors If no actual descriptor sets are allocated but instead pushed.
+	 */
 	explicit PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
 
 	~PipelineCompute();

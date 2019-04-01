@@ -6,17 +6,17 @@
 
 namespace acid
 {
-/// <summary>
-/// A component that represents a model/mesh.
-/// </summary>
+/**
+ * Component that represents a model/mesh.
+ */
 class ACID_EXPORT Mesh :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new mesh component with a model.
-	/// </summary>
-	/// <param name="model"> The initial model to use in this mesh. </param>
+	/**
+	 * Creates a new mesh component with a model.
+	 * @param model The initial model to use in this mesh.
+	 */
 	explicit Mesh(const std::shared_ptr<Model> &model = nullptr);
 
 	void Start() override;

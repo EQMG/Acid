@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that is used to represent a game.
-/// </summary>
+/**
+ * Class that represents a game.
+ */
 class ACID_EXPORT Game
 {
 public:
@@ -17,14 +17,14 @@ public:
 
 	virtual ~Game() = default;
 
-	/// <summary>
-	/// Run when starting the game if <seealso cref="#m_started"/> is false.
-	/// </summary>
+	/**
+	 * Run when starting the game if {@link Game#m_started} is false.
+	 */
 	virtual void Start() = 0;
 
-	/// <summary>
-	/// Run before the module update pass.
-	/// </summary>
+	/**
+	 * Run before the module update pass.
+	 */
 	virtual void Update() = 0;
 
 private:

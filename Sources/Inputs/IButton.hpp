@@ -5,24 +5,24 @@
 
 namespace acid
 {
-/// <summary>
-/// Interface for a binary input device.
-/// </summary>
+/**
+ * Interface for a binary input device.
+ */
 class ACID_EXPORT IButton
 {
 public:
 	virtual ~IButton() = default;
 
-	/// <summary>
-	/// Returns whether this button is currently pressed.
-	/// </summary>
-	/// <returns> True if the button is pressed, false otherwise. </returns>
+	/**
+	 * Returns whether this button is currently pressed.
+	 * @return True if the button is pressed, false otherwise.
+	 */
 	virtual bool IsDown() const = 0;
 
-	/// <summary>
-	/// Gets if the key is down and was not down before. Key press recognized as one click.
-	/// </summary>
-	/// <returns> Is the key down and was not down before? </returns>
+	/**
+	 * Gets if the key is down and was not down before. Key press recognized as one click.
+	 * @return Is the key down and was not down before?
+	 */
 	bool WasDown()
 	{
 		bool stillDown = m_wasDown && IsDown();
@@ -30,7 +30,11 @@ public:
 		return m_wasDown == !stillDown;
 	}
 
-	Delegate<void(InputAction, BitMask<InputMod>)> &GetOnButton() { return m_onButton; }
+	/**
+	 * Called when the button changes state.
+	 * @return The delegate.
+	 */
+	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
 
 protected:
 	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;

@@ -7,15 +7,15 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that is used to represent a Vulkan pipeline.
-/// </summary>
+/**
+ * Class that is used to represent a pipeline.
+ */
 class ACID_EXPORT Pipeline
 {
 public:
-	/// <summary>
-	/// Represents position in the render structure, first value being the renderpass and second for subpass.
-	/// </summary>
+	/**
+	 * Represents position in the render structure, first value being the renderpass and second for subpass.
+	 */
 	using Stage = std::pair<uint32_t, uint32_t>;
 
 	Pipeline() = default;

@@ -6,48 +6,48 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that represents a objects that acts as a component container.
-/// </summary>
+/**
+ * Class that represents a objects that acts as a component container.
+ */
 class ACID_EXPORT Entity :
 	public NonCopyable
 {
 public:
-	/// <summary>
-	/// Creates a new entity and stores it into a structure.
-	/// </summary>
-	/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
+	/**
+	 * Creates a new entity and stores it into a structure.
+	 * @param transform The objects initial world position, rotation, and scale.
+	 */
 	explicit Entity(const Transform &transform);
 
-	/// <summary>
-	/// Creates a new entity and stores it into a structure.
-	/// </summary>
-	/// <param name="filename"> The file to load the component data from. </param>
-	/// <param name="transform"> The objects initial world position, rotation, and scale. </param>
+	/**
+	 * Creates a new entity and stores it into a structure.
+	 * @param filename The file to load the component data from.
+	 * @param transform The objects initial world position, rotation, and scale.
+	 */
 	explicit Entity(const std::string &filename, const Transform &transform = Transform::Identity);
 
 	~Entity();
 
 	void Update();
 
-	/// <summary>
-	/// Gets all components attached to this entity.
-	/// </summary>
-	/// <returns> The list of components. </returns>
+	/**
+	 * Gets all components attached to this entity.
+	 * @return The list of components.
+	 */
 	const std::vector<std::unique_ptr<Component>> &GetComponents() const { return m_components; }
 
-	/// <summary>
-	/// Gets the count of components attached to this entity.
-	/// </summary>
-	/// <returns> The count of components. </returns>
+	/**
+	 * Gets the count of components attached to this entity.
+	 * @return The count of components.
+	 */
 	uint32_t GetComponentCount() const { return static_cast<uint32_t>(m_components.size()); }
 
-	/// <summary>
-	/// Gets a component by type.
-	/// </summary>
-	/// <param name="T"> The component type to find. </param>
-	/// <param name="allowDisabled"> If disabled components will be returned. </param>
-	/// <returns> The found component. </returns>
+	/**
+	 * Gets a component by type.
+	 * @tparam T The component type to find.
+	 * @param allowDisabled If disabled components will be returned.
+	 * @return The found component.
+	 */
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false) const
 	{
@@ -72,12 +72,12 @@ public:
 		return alternative;
 	}
 
-	/// <summary>
-	/// Gets components by type.
-	/// </summary>
-	/// <param name="T"> The component type to find. </param>
-	/// <param name="allowDisabled"> If disabled components will be returned. </param>
-	/// <returns> The components. </returns>
+	/**
+	 * Gets components by type.
+	 * @tparam T The component type to find.
+	 * @param allowDisabled If disabled components will be returned.
+	 * @return The components.
+	 */
 	template<typename T>
 	std::vector<T *> GetComponents(const bool &allowDisabled = false) const
 	{
@@ -102,19 +102,20 @@ public:
 		return components;
 	}
 
-	/// <summary>
-	/// Adds a component to this entity.
-	/// </summary>
-	/// <param name="component"> The component to add. </param>
-	/// <returns> The added component. </returns>
+	/**
+	 * Adds a component to this entity.
+	 * @param component The component to add.
+	 * @return The added component.
+	 */
 	Component *AddComponent(Component *component);
 
-	/// <summary>
-	/// Creates a component by type to be added this entity.
-	/// </summary>
-	/// <param name="T"> The type of component to add. </param>
-	/// <param name="args"> The type constructor arguments. </param>
-	/// <returns> The added component. </returns>
+	/**
+	 * Creates a component by type to be added this entity.
+	 * @tparam T The type of component to add.
+	 * @tparam Args The argument types/
+	 * @param args The type constructor arguments.
+	 * @return The added component.
+	 */
 	template<typename T, typename... Args>
 	T *AddComponent(Args &&... args)
 	{
@@ -123,25 +124,22 @@ public:
 		return created;
 	}
 
-	/// <summary>
-	/// Removes a component from this entity.
-	/// </summary>
-	/// <param name="component"> The component to remove. </param>
-	/// <returns> If the component was removed. </returns>
+	/**
+	 * Removes a component from this entity.
+	 * @param component The component to remove.
+	 */
 	void RemoveComponent(Component *component);
 
-	/// <summary>
-	/// Removes a component from this entity.
-	/// </summary>
-	/// <param name="name"> The name of the component to remove. </param>
-	/// <returns> If the component was removed. </returns>
+	/**
+	 * Removes a component from this entity.
+	 * @param name The name of the component to remove.
+	 */
 	void RemoveComponent(const std::string &name);
 
-	/// <summary>
-	/// Removes a component by type from this entity.
-	/// </summary>
-	/// <param name="T"> The type of component to remove. </param>
-	/// <returns> If the component was removed. </returns>
+	/**
+	 * Removes a component by type from this entity.
+	 * @tparam T The type of component to remove.
+	 */
 	template<typename T>
 	void RemoveComponent()
 	{

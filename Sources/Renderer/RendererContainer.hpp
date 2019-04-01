@@ -5,9 +5,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that contains and manages renderers registered to a render manager.
-/// </summary>
+/**
+ * Class that contains and manages renderers registered to a render manager.
+ */
 class ACID_EXPORT RendererContainer :
 	public NonCopyable
 {
@@ -18,12 +18,12 @@ public:
 
 	void Clear() { m_stages.clear(); }
 
-	/// <summary>
-	/// Gets a renderer instance by type from this register.
-	/// </summary>
-	/// <param name="T"> The renderer type to find. </param>
-	/// <param name="allowDisabled"> If disabled renderers will be returned. </param>
-	/// <returns> The found renderer. </returns>
+	/**
+	 * Gets a renderer instance by type from this register.
+	 * @tparam T The renderer type to find.
+	 * @param allowDisabled If disabled renderers will be returned.
+	 * @return The found renderer.
+	 */
 	template<typename T>
 	T *Get(const bool &allowDisabled = false) const
 	{
@@ -51,19 +51,20 @@ public:
 		return alternative;
 	}
 
-	/// <summary>
-	/// Adds a renderer to this register.
-	/// </summary>
-	/// <param name="renderer"> The renderer to add. </param>
-	/// <returns> The added renderer. </returns>
+	/**
+	 * Adds a renderer to this register.
+	 * @param renderer The renderer to add.
+	 * @return The added renderer.
+	 */
 	RenderPipeline *Add(RenderPipeline *renderer);
 
-	/// <summary>
-	/// Creates a renderer by type to be added this register.
-	/// </summary>
-	/// <param name="T"> The type of renderer to add. </param>
-	/// <param name="args"> The type constructor arguments. </param>
-	/// <returns> The added renderer. </returns>
+	/**
+	 * Creates a renderer by type to be added this register.
+	 * @tparam T The type of renderer to add.
+	 * @tparam Args The argument types.
+	 * @param args The type constructor arguments.
+	 * @return The added renderer.
+	 */
 	template<typename T, typename... Args>
 	T *Add(Args &&... args)
 	{
@@ -72,18 +73,16 @@ public:
 		return created;
 	}
 
-	/// <summary>
-	/// Removes a renderer from this register.
-	/// </summary>
-	/// <param name="renderer"> The renderer to remove. </param>
-	/// <returns> If the renderer was removed. </returns>
+	/**
+	 * Removes a renderer from this register.
+	 * @param renderer The renderer to remove.
+	 */
 	void Remove(RenderPipeline *renderer);
 
-	/// <summary>
-	/// Removes a renderer by type from this register.
-	/// </summary>
-	/// <param name="T"> The type of renderer to remove. </param>
-	/// <returns> If the renderer was removed. </returns>
+	/**
+	 * Removes a renderer by type from this register.
+	 * @tparam T The type of renderer to remove.
+	 */
 	template<typename T>
 	void Remove()
 	{

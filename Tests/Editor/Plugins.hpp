@@ -18,7 +18,7 @@ class Plugins :
 {
 public:
 	/// <summary>
-	/// Gets this engine instance.
+	/// Gets the engines instance.
 	/// </summary>
 	/// <returns> The current module instance. </returns>
 	static Plugins *Get() { return Engine::Get()->GetModuleManager().Get<Plugins>(); }

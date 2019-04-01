@@ -15,12 +15,12 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 {
 	m_scroll.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
 
-	Mouse::Get()->GetOnScroll() += [this](float xOffset, float yOffset)
+	Mouse::Get()->OnScroll() += [this](Vector2 wheelDelta)
 	{
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled())
 		{
 			Vector2 position = Vector2();
-			position[m_index] = ScrollByDelta(-0.06f * (m_index == 0 ? xOffset : yOffset));
+			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
 			m_scroll.GetRectangle().SetPosition(position);
 		}
 	};

@@ -19,7 +19,11 @@ public:
 
 	void SetValue(const Colour &value);
 
-	Delegate<void(Colour)> &GetOnValue() { return m_onValue; }
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(Colour)> &OnValue() { return m_onValue; }
 
 private:
 	Gui m_background;

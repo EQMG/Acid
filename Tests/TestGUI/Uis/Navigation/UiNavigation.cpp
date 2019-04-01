@@ -39,7 +39,7 @@ UiNavigation::UiNavigation(UiObject *parent) :
 		m_tabs.emplace_back(uiTab);
 		tabYOffset += 0.075f;
 
-		/*tabButton->GetOnClick() += [&](UiObject *object, MouseButton button) -> void
+		/*tabButton->OnClick() += [&](UiObject *object, MouseButton button) -> void
 		{
 			if (button == MouseButton::Left)
 			{

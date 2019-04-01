@@ -8,69 +8,69 @@
 
 namespace acid
 {
-/// <summary>
-/// A module used for managing game scenes on engine updates.
-/// </summary>
+/**
+ * Module used for managing game scenes.
+ */
 class ACID_EXPORT Scenes :
 	public Module
 {
 public:
-	/// <summary>
-	/// Gets this engine instance.
-	/// </summary>
-	/// <returns> The current module instance. </returns>
+	/**
+	 * Gets the engines instance.
+	 * @return The current module instance.
+	 */
 	static Scenes *Get() { return Engine::Get()->GetModuleManager().Get<Scenes>(); }
 
 	Scenes();
 
 	void Update() override;
 
-	/// <summary>
-	/// Gets the current scene.
-	/// </summary>
-	/// <returns> The current scene. </returns>
+	/**
+	 * Gets the current scene.
+	 * @return The current scene.
+	 */
 	Scene *GetScene() const { return m_scene.get(); }
 
-	/// <summary>
-	/// Sets the current scene to a new scene.
-	/// </summary>
-	/// <param name="scene"> The new scene. </param>
+	/**
+	 * Sets the current scene to a new scene.
+	 * @param scene The new scene.
+	 */
 	void SetScene(Scene *scene) { m_scene.reset(scene); }
 
-	/// <summary>
-	/// Gets the component register used by the engine. The register can be used to register/deregister component types.
-	/// </summary>
-	/// <returns> The component register. </returns>
+	/**
+	 * Gets the component register used by the engine. The register can be used to register/deregister component types.
+	 * @return The component register.
+	 */
 	ComponentRegister &GetComponentRegister() { return m_componentRegister; }
 
-	/// <summary>
-	/// Gets the model register used by the engine. The register can be used to register/deregister model types.
-	/// </summary>
-	/// <returns> The model register. </returns>
+	/**
+	 * Gets the model register used by the engine. The register can be used to register/deregister model types.
+	 * @return The model register.
+	 */
 	ModelRegister &GetModelRegister() { return m_modelRegister; }
 
-	/// <summary>
-	/// Gets the current camera object.
-	/// </summary>
-	/// <returns> The current camera. </returns>
+	/**
+	 * Gets the current camera object.
+	 * @return The current camera.
+	 */
 	Camera *GetCamera() const { return m_scene != nullptr ? m_scene->GetCamera() : nullptr; }
 
-	/// <summary>
-	/// Gets the scene physics system.
-	/// </summary>
-	/// <returns> The scenes physics system. </returns>
+	/**
+	 * Gets the scene physics system.
+	 * @return The scenes physics system.
+	 */
 	ScenePhysics *GetPhysics() const { return m_scene != nullptr ? m_scene->GetPhysics() : nullptr; }
 
-	/// <summary>
-	/// Gets the scene object structure.
-	/// </summary>
-	/// <returns> The scene object structure. </returns>
+	/**
+	 * Gets the scene object structure.
+	 * @return The scene object structure.
+	 */
 	SceneStructure *GetStructure() const { return m_scene != nullptr ? m_scene->GetStructure() : nullptr; }
 
-	/// <summary>
-	/// Gets if the scene is paused.
-	/// </summary>
-	/// <returns> If the scene is paused. </returns>
+	/**
+	 * Gets if the scene is paused.
+	 * @return If the scene is paused.
+	 */
 	bool IsPaused() const { return m_scene != nullptr ? m_scene->IsPaused() : false; }
 
 private:

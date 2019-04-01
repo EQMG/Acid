@@ -69,10 +69,6 @@ void CommandBuffer::SubmitIdle()
 		End();
 	}
 
-	// Before submitting to a queue wait for previous task to complete.
-	// TODO: Use a global queue fence instead?
-	Renderer::CheckVk(vkQueueWaitIdle(queueSelected));
-
 	VkSubmitInfo submitInfo = {};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;

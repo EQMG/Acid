@@ -208,17 +208,17 @@ void ImageCube::Encode(Metadata &metadata) const
 	metadata.SetChild("Mipmap", m_mipmap);
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	width = int32_t(m_width >> mipLevel);
-	height = int32_t(m_height >> mipLevel);
+	extent.width = int32_t(m_width >> mipLevel);
+	extent.height = int32_t(m_height >> mipLevel);
+	extent.depth = 1;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 },
-		m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, extent, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -241,15 +241,15 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel) const
 {
 	std::unique_ptr<uint8_t[]> pixels = nullptr;
 	uint8_t *offset = nullptr;
 
 	for (uint32_t i = 0; i < 6; i++)
 	{
-		auto resultSide = GetPixels(width, height, mipLevel, i);
-		int32_t sizeSide = width * height * m_components;
+		auto resultSide = GetPixels(extent, mipLevel, i);
+		int32_t sizeSide = extent.width * extent.height * m_components;
 
 		if (pixels == nullptr)
 		{
@@ -261,11 +261,11 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(uint32_t &width, uint32_t &heigh
 		offset += sizeSide;
 	}
 
-	height *= 6;
+	extent.height *= 6;
 	return pixels;
 }
 
-void ImageCube::SetPixels(const uint8_t *pixels)
+void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
 	Buffer bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -274,6 +274,8 @@ void ImageCube::SetPixels(const uint8_t *pixels)
 	bufferStaging.MapMemory(&data);
 	memcpy(data, pixels, bufferStaging.GetSize());
 	bufferStaging.UnmapMemory();
+
+	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, layerCount, baseArrayLayer);
 }
 
 std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width,

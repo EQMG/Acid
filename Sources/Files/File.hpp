@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that represents a readable and writable file format using <seealso cref="Metadata"/> as storage.
-/// </summary>
+/**
+ * Class that represents a readable and writable file format using {@link Metadata} as storage.
+ */
 class ACID_EXPORT File
 {
 public:

@@ -6,9 +6,9 @@ namespace acid
 {
 class Entity;
 
-/// <summary>
-/// A class that represents a functional component attached to entity.
-/// </summary>
+/**
+ * Class that represents a functional component attached to entity.
+ */
 class ACID_EXPORT Component
 {
 public:
@@ -22,32 +22,32 @@ public:
 
 	virtual ~Component() = default;
 
-	/// <summary>
-	/// Run when starting the component if <seealso cref="#m_started"/> is false.
-	/// </summary>
+	/**
+	 * Run when starting the component if {@link Component#m_started} is false.
+	 */
 	virtual void Start()
 	{
 	}
 
-	/// <summary>
-	/// Run when updating the entity this is attached to.
-	/// </summary>
+	/**
+	 * Run when updating the entity this is attached to.
+	 */
 	virtual void Update()
 	{
 	}
 
-	/// <summary>
-	/// Used to decode this component from a loaded data format.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode from. </param>
+	/**
+	 * Used to decode this component from a loaded data format.
+	 * @param metadata The metadata to decode from.
+	 */
 	virtual void Decode(const Metadata &metadata)
 	{
 	}
 
-	/// <summary>
-	/// Used to encode this component into a data format.
-	/// </summary>
-	/// <param name="metadata"> The metadata to encode into. </param>
+	/**
+	 * Used to encode this component into a data format.
+	 * @param metadata The metadata to encode into.
+	 */
 	virtual void Encode(Metadata &metadata) const
 	{
 	}
@@ -60,16 +60,16 @@ public:
 
 	void SetRemoved(const bool &removed) { m_removed = removed; }
 
-	/// <summary>
-	/// Gets the entity this component is attached to.
-	/// </summary>
-	/// <returns> The entity this component is attached to. </returns>
+	/**
+	 * Gets the entity this component is attached to.
+	 * @return The entity this component is attached to.
+	 */
 	Entity *GetParent() const { return m_parent; }
 
-	/// <summary>
-	/// Sets the parent entity that this component is attached to.
-	/// </summary>
-	/// <param name="parent"> The new parent this is attached to. </param>
+	/**
+	 * Sets the parent entity that this component is attached to.
+	 * @param parent The new parent this is attached to.
+	 */
 	void SetParent(Entity *parent) { m_parent = parent; }
 
 private:

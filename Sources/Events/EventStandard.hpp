@@ -4,19 +4,19 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that is the most basic implementation of the event interface.
-/// </summary>
+/**
+ * Class that is a basic implementation of the event interface.
+ */
 class ACID_EXPORT EventStandard :
 	public IEvent
 {
 public:
-	/// <summary>
-	/// Creates a new standard event.
-	/// </summary>
-	/// <param name="onEvent"> A function called when the event is triggered. </param>
-	/// <param name="triggered"> A function called to check if the event was triggered. </param>
-	/// <param name="repeat"> If the event will repeat after the first run. </param>
+	/**
+	 * Creates a new standard event.
+	 * @param onEvent A function called when the event is triggered.
+	 * @param triggered A function called to check if the event was triggered.
+	 * @param repeat If the event will repeat after the first run.
+	 */
 	EventStandard(std::function<void()> onEvent, std::function<bool()> triggered, const bool &repeat = false);
 
 	bool EventTriggered() override;

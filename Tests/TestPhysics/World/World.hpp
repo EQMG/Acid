@@ -18,7 +18,7 @@ class World :
 {
 public:
 	/// <summary>
-	/// Gets this engine instance.
+	/// Gets the engines instance.
 	/// </summary>
 	/// <returns> The current module instance. </returns>
 	static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }

@@ -4,18 +4,18 @@
 
 namespace acid
 {
-/// <summary>
-/// Button from a joystick.
-/// </summary>
+/**
+ * Button input from a joystick input device.
+ */
 class ACID_EXPORT ButtonJoystick :
 	public IButton
 {
 public:
-	/// <summary>
-	/// Creates a new joystick button.
-	/// </summary>
-	/// <param name="port"> The joystick port. </param>
-	/// <param name="button"> The button on the joystick being checked. </param>
+	/**
+	 * Creates a new joystick button.
+	 * @param port The joystick port.
+	 * @param button The button on the joystick being checked.
+	 */
 	ButtonJoystick(const uint32_t &port, const uint32_t &button);
 
 	bool IsDown() const override;

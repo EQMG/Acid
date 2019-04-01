@@ -4,15 +4,15 @@
 
 namespace acid
 {
-/// <summary>
-/// A class for handing and calculating deltas.
-/// </summary>
+/**
+ * Class for handing and calculating deltas.
+ */
 class ACID_EXPORT Delta
 {
 public:
-	/// <summary>
-	/// Updates change and times.
-	/// </summary>
+	/**
+	 * Updates change and times.
+	 */
 	void Update();
 
 	const Time &GetChange() const { return m_change; }

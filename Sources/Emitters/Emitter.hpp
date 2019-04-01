@@ -6,26 +6,26 @@
 
 namespace acid
 {
-/// <summary>
-/// A component interface that defines a emitter volume.
-/// </summary>
+/**
+ * Component interface that defines a emitter volume.
+ */
 class ACID_EXPORT Emitter :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new emitter.
-	/// </summary>
-	/// <param name="localTransform"> The local transform from the parents space. </param>
+	/**
+	 * Creates a new emitter.
+	 * @param localTransform The local transform from the parents space.
+	 */
 	explicit Emitter(const Transform &localTransform = Transform::Identity) :
 		m_localTransform(localTransform)
 	{
 	}
 
-	/// <summary>
-	/// Creates a new objects position.
-	/// </summary>
-	/// <returns> The new objects position. </returns>
+	/**
+	 * Creates a new objects position.
+	 * @return The new objects position.
+	 */
 	virtual Vector3 GeneratePosition() const = 0;
 
 	const Transform &GetLocalTransform() const { return m_localTransform; }

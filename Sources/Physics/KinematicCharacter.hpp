@@ -9,18 +9,18 @@ class btKinematicCharacterController;
 
 namespace acid
 {
-/// <summary>
-/// Represents a kinematic character controller.
-/// </summary>
+/**
+ * Represents a kinematic character controller.
+ */
 class ACID_EXPORT KinematicCharacter :
 	public CollisionObject
 {
 public:
-	/// <summary>
-	/// Creates a new kinematic character controller.
-	/// </summary>
-	/// <param name="mass"> The mass of the object. </param>
-	/// <param name="friction"> The amount of surface friction. </param>
+	/**
+	 * Creates a new kinematic character controller.
+	 * @param mass The mass of the object.
+	 * @param friction The amount of surface friction.
+	 */
 	explicit KinematicCharacter(const float &mass = 1.0f, const float &friction = 0.2f);
 
 	~KinematicCharacter();

@@ -5,57 +5,59 @@
 
 namespace acid
 {
-/// <summary>
-/// A logging class used in Acid, will write output to a file one the application has closed.
-/// </summary>
+/**
+ * A logging class used in Acid, will write output to a file one the application has closed.
+ */
 class ACID_EXPORT Log
 {
 public:
-	/// <summary>
-	/// Outputs a message into the console.
-	/// </summary>
-	/// <param name="string"> The string to output. </param>
+	/**
+	 * Outputs a message into the console.
+	 * @param string The string to output.
+	 */
 	static void Out(const std::string &string);
 
-	/// <summary>
-	/// Outputs a message into the console.
-	/// </summary>
-	/// <param name="format"> The format to output into. </param>
-	/// <param name="args"> The args to be added into the format. </param>
+	/**
+	 * Outputs a message into the console.
+	 * @tparam Args The args types.
+	 * @param format The format to output into.
+	 * @param args The args to be added into the format.
+	 */
 	template<typename... Args>
 	static void Out(const std::string &format, Args &&... args)
 	{
 		Out(StringFormat(format, std::forward<Args>(args)...));
 	}
 
-	/// <summary>
-	/// Outputs a error into the console.
-	/// </summary>
-	/// <param name="string"> The string to output. </param>
+	/**
+	 * Outputs a error into the console.
+	 * @param string The string to output.
+	 */
 	static void Error(const std::string &string);
 
-	/// <summary>
-	/// Outputs a error into the console.
-	/// </summary>
-	/// <param name="format"> The format to output into. </param>
-	/// <param name="args"> The args to be added into the format. </param>
+	/**
+	 * Outputs a error into the console.
+	 * @tparam Args The args types.
+	 * @param format The format to output into.
+	 * @param args The args to be added into the format.
+	 */
 	template<typename... Args>
 	static void Error(const std::string &format, Args &&... args)
 	{
 		Error(StringFormat(format, std::forward<Args>(args)...));
 	}
 
-	/// <summary>
-	/// Displays a popup menu.
-	/// </summary>
-	/// <param name="title"> The title. </param>
-	/// <param name="message"> The message. </param>
+	/**
+	 * Displays a popup menu.
+	 * @param title The title.
+	 * @param message The message.
+	 */
 	static void Popup(const std::string &title, const std::string &message);
 
-	/// <summary>
-	/// Sets a file to output all log messages into.
-	/// </summary>
-	/// <param name="filename"> The filename to output into. </param>
+	/**
+	 * Sets a file to output all log messages into.
+	 * @param filename The filename to output into.
+	 */
 	static void OpenLog(const std::string &filename);
 
 private:

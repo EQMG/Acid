@@ -17,7 +17,7 @@ Scene1::Scene1() :
 	m_overlayDebug(&Uis::Get()->GetContainer()),
 	m_uiNavigation(&Uis::Get()->GetContainer())
 {
-	m_buttonPause.GetOnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonPause.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -29,7 +29,7 @@ Scene1::Scene1() :
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 	m_uiNavigation.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-	m_uiStartLogo.GetOnFinished() += [this]()
+	m_uiStartLogo.OnFinished() += [this]()
 	{
 		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		//  m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));

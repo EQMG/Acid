@@ -14,27 +14,26 @@ namespace acid
 {
 class Frustum;
 
-/// <summary>
-/// Represents a object in a scene effected by physics.
-/// </summary>
+/**
+ * Represents a object in a scene effected by physics.
+ */
 class ACID_EXPORT CollisionObject :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new collision object.
-	/// </summary>
-	/// <param name="friction"> The amount of surface friction. </param>
-	/// <param name="localTransform"> The parent offset of the body. </param>
+	/**
+	 * Creates a new collision object.
+	 * @param friction The amount of surface friction.
+	 */
 	explicit CollisionObject(const float &friction = 0.2f);
 
 	virtual ~CollisionObject();
 
-	/// <summary>
-	/// Gets if the shape is partially in the view frustum.
-	/// </summary>
-	/// <param name="frustum"> The view frustum. </param>
-	/// <returns> If the shape is partially in the view frustum. </returns>
+	/**
+	 * Gets if the shape is partially in the view frustum.
+	 * @param frustum The view frustum.
+	 * @return If the shape is partially in the view frustum.
+	 */
 	virtual bool InFrustum(const Frustum &frustum) = 0;
 
 	Force *AddForce(Force *force);
@@ -66,9 +65,17 @@ public:
 
 	void SetFrictionSpinning(const float &frictionSpinning);
 
-	Delegate<void(CollisionObject *)> &GetOnCollision() { return m_onCollision; }
+	/**
+	 * Called when this object collides from a object.
+	 * @return The delegate.
+	 */
+	Delegate<void(CollisionObject *)> &OnCollision() { return m_onCollision; }
 
-	Delegate<void(CollisionObject *)> &GetOnSeparation() { return m_onSeparation; }
+	/**
+	 * Called when this object separates from a object.
+	 * @return The delegate.
+	 */
+	Delegate<void(CollisionObject *)> &OnSeparation() { return m_onSeparation; }
 
 protected:
 	void CreateShape(const bool &forceSingle = false);

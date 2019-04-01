@@ -11,35 +11,35 @@ class btTransform;
 
 namespace acid
 {
-/// <summary>
-/// A simple class that represents a physics shape.
-/// </summary>
+/**
+ * Class that represents a physics shape.
+ */
 class ACID_EXPORT Collider :
 	public Component
 {
 public:
-	/// <summary>
-	/// Creates a new collider shape.
-	/// </summary>
-	/// <param name="localTransform"> The parent offset of the body. </param>
-	/// <param name="gizmoType"> The gizmo type to use for this collider type. </param>
-	Collider(const Transform &localTransform = Transform::Identity, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
+	/**
+	 * Creates a new collider.
+	 * @param localTransform The parent offset of the body.
+	 * @param gizmoType The gizmo type to use for this collider type.
+	 */
+	explicit Collider(const Transform &localTransform = Transform::Identity, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
 
 	virtual ~Collider();
 
 	void Update() override;
 
-	/// <summary>
-	/// Gets the collision shape defined in this collider.
-	/// </summary>
-	/// <returns> The collision shape. </returns>
+	/**
+	 * Gets the collision shape defined in this collider.
+	 * @return The collision shape.
+	 */
 	virtual btCollisionShape *GetCollisionShape() const = 0;
 
-	/// <summary>
-	/// Tests whether a ray is intersecting this shape.
-	/// </summary>
-	/// <param name="ray"> The ray being tested for intersection. </param>
-	/// <returns> If the ray intersects, relative intersect location. </returns>
+	/**
+	 * Tests whether a ray is intersecting this shape.
+	 * @param ray The ray being tested for intersection.
+	 * @return If the ray intersects, relative intersect location.
+	 */
 	//virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
 
 	const Transform &GetLocalTransform() const { return m_localTransform; }

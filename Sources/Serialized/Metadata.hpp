@@ -6,9 +6,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that is used to represent a tree of values, used in file-object serialization.
-/// </summary>
+/**
+ * Class that is used to represent a tree of values, used in file-object serialization.
+ */
 class ACID_EXPORT Metadata :
 	public NonCopyable
 {

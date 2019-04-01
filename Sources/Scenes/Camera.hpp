@@ -8,9 +8,9 @@
 
 namespace acid
 {
-/// <summary>
-/// This component represents a scene camera, this object should be overridden with new behaviour.
-/// </summary>
+/**
+ * Component that represents a scene camera, this object should be overridden with new behaviour.
+ */
 class ACID_EXPORT Camera :
 	public Component
 {
@@ -25,70 +25,58 @@ public:
 
 	virtual ~Camera() = default;
 
-	/// <summary>
-	/// Gets the distance of the near pane of the view frustum.
-	/// </summary>
-	/// <returns> The distance of the near pane of the view frustum. </returns>
+	/**
+	 * Gets the distance of the near pane of the view frustum.
+	 * @return The distance of the near pane of the view frustum.
+	 */
 	const float &GetNearPlane() const { return m_nearPlane; }
 
 	void SetNearPlane(const float &nearPlane) { m_nearPlane = nearPlane; }
 
-	/// <summary>
-	/// Gets the distance of the view frustum's far plane.
-	/// </summary>
-	/// <returns> The distance of the view frustum's far plane. </returns>
+	/**
+	 * Gets the distance of the view frustum's far plane.
+	 * @return The distance of the view frustum's far plane.
+	 */
 	const float &GetFarPlane() const { return m_farPlane; }
 
 	void SetFarPlane(const float &farPlane) { m_farPlane = farPlane; }
 
-	/// <summary>
-	/// Gets the field of view angle for the view frustum.
-	/// </summary>
-	/// <returns> The field of view angle for the view frustum. </returns>
+	/**
+	 * Gets the field of view angle for the view frustum.
+	 * @return The field of view angle for the view frustum.
+	 */
 	const float &GetFieldOfView() const { return m_fieldOfView; }
 
 	void SetFieldOfView(const float &fieldOfView) { m_fieldOfView = fieldOfView; }
 
-	/// <summary>
-	/// Gets the cameras 3D position in the world.
-	/// </summary>
-	/// <returns> The cameras 3D position in the world. </returns>
 	const Vector3 &GetPosition() const { return m_position; }
 
-	/// <summary>
-	/// Gets the cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll.
-	/// </summary>
-	/// <returns> The cameras 3D rotation in the world, where x=pitch, y=yaw, z=roll. </returns>
 	const Vector3 &GetRotation() const { return m_rotation; }
 
-	/// <summary>
-	/// Gets the cameras 3D velocity in the world.
-	/// </summary>
-	/// <returns> The cameras 3D velocity in the world. </returns>
 	const Vector3 &GetVelocity() const { return m_velocity; }
 
-	/// <summary>
-	/// Gets the view matrix created by the current camera position and rotation.
-	/// </summary>
-	/// <returns> The view matrix created by the current camera position and rotation. </returns>
+	/**
+	 * Gets the view matrix created by the current camera position and rotation.
+	 * @return The view matrix created by the current camera position and rotation.
+	 */
 	const Matrix4 &GetViewMatrix() const { return m_viewMatrix; }
 
-	/// <summary>
-	/// Gets the projection matrix used in the current scene render.
-	/// </summary>
-	/// <returns> The projection matrix used in the current scene render. </returns>
+	/**
+	 * Gets the projection matrix used in the current scene render.
+	 * @return The projection matrix used in the current scene render.
+	 */
 	const Matrix4 &GetProjectionMatrix() const { return m_projectionMatrix; }
 
-	/// <summary>
-	/// Gets the view frustum created by the current camera position and rotation.
-	/// </summary>
-	/// <returns> The view frustum created by the current camera position and rotation. </returns>
+	/**
+	 * Gets the view frustum created by the current camera position and rotation.
+	 * @return The view frustum created by the current camera position and rotation.
+	 */
 	const Frustum &GetViewFrustum() const { return m_viewFrustum; }
 
-	/// <summary>
-	/// Gets the ray that extends from the cameras position though the screen.
-	/// </summary>
-	/// <returns> The cameras view ray. </returns>
+	/**
+	 * Gets the ray that extends from the cameras position though the screen.
+	 * @return The cameras view ray.
+	 */
 	const Ray &GetViewRay() const { return m_viewRay; }
 
 protected:

@@ -205,17 +205,17 @@ void Image2d::Encode(Metadata &metadata) const
 	metadata.SetChild("Mipmap", m_mipmap);
 }
 
-std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> Image2d::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	width = int32_t(m_width >> mipLevel);
-	height = int32_t(m_height >> mipLevel);
+	extent.width = int32_t(m_width >> mipLevel);
+	extent.height = int32_t(m_height >> mipLevel);
+	extent.depth = 1;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { width, height, 1 }, 
-		m_layout, mipLevel, 0);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, extent, m_layout, mipLevel, 0);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -238,7 +238,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(uint32_t &width, uint32_t &height,
 	return pixels;
 }
 
-void Image2d::SetPixels(const uint8_t *pixels)
+void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
 	Buffer bufferStaging = Buffer(m_width * m_height * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -246,5 +246,7 @@ void Image2d::SetPixels(const uint8_t *pixels)
 	bufferStaging.MapMemory(&data);
 	std::memcpy(data, pixels, bufferStaging.GetSize());
 	bufferStaging.UnmapMemory();
+
+	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, layerCount, baseArrayLayer);
 }
 }

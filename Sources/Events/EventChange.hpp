@@ -4,21 +4,21 @@
 
 namespace acid
 {
-/// <summary>
-/// A class that acts as a basic change listener for a value.
-/// </summary>
-/// <param="T"> The type of value to find change with. </param>
+/**
+ * Class that acts as a basic change listener for a value.
+ * @tparam T The type of value to find change with.
+ */
 template<typename T>
 class EventChange :
 	public IEvent
 {
 public:
-	/// <summary>
-	/// Creates a new change event.
-	/// </summary>
-	/// <param name="onEvent"> A function called when the event is triggered. </param>
-	/// <param name="reference"> The reference function to get the value from. </param>
-	/// <param name="repeat"> If the event will repeat after the first run. </param>
+	/**
+	 * Creates a new change event.
+	 * @param onEvent A function called when the event is triggered.
+	 * @param reference The reference function to get the value from.
+	 * @param repeat If the event will repeat after the first run.
+	 */
 	EventChange(const std::function<void(T)> &onEvent, const std::function<T()> &reference, const bool &repeat = true) :
 		m_onEvent(onEvent),
 		m_reference(reference),
@@ -27,12 +27,12 @@ public:
 	{
 	}
 
-	/// <summary>
-	/// Creates a new change event.
-	/// </summary>
-	/// <param name="onEvent"> A function called when the event is triggered. </param>
-	/// <param name="reference"> The reference to listen to. </param>
-	/// <param name="repeat"> If the event will repeat after the first run. </param>
+	/**
+	 * Creates a new change event.
+	 * @param onEvent A function called when the event is triggered.
+	 * @param reference The reference to listen to.
+	 * @param repeat If the event will repeat after the first run.
+	 */
 	EventChange(const std::function<void(T)> &onEvent, T *reference, const bool &repeat = true) :
 		m_onEvent(onEvent),
 		m_reference([reference]() -> T

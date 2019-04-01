@@ -18,23 +18,23 @@ ContentExit::ContentExit(UiObject *parent) :
 	m_fullscreen(&GetContent(), "Fullscreen", false, UiBound(Vector2(0.05f, 0.60f), UiReference::TopLeft)),
 	m_fpsLimit(&GetContent(), "Fps Limit", 1000.0f, 0.0f, 1000.0f, 0, UiBound(Vector2(0.05f, 0.66f), UiReference::TopLeft))
 {
-	m_masterVolume.GetOnValue() += [this](float value)
+	m_masterVolume.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 	};
-	m_generalVolume.GetOnValue() += [this](float value)
+	m_generalVolume.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::General, value / 100.0f);
 	};
-	m_effectVolume.GetOnValue() += [this](float value)
+	m_effectVolume.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Effect, value / 100.0f);
 	};
-	m_musicVolume.GetOnValue() += [this](float value)
+	m_musicVolume.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Music, value / 100.0f);
 	};
-	Audio::Get()->GetOnGain() += [this](Audio::Type type, float volume)
+	Audio::Get()->OnGain() += [this](Audio::Type type, float volume)
 	{
 		switch (type)
 		{
@@ -53,7 +53,7 @@ ContentExit::ContentExit(UiObject *parent) :
 		}
 	};
 
-	m_iconify.GetOnClick() += [this](MouseButton button)
+	m_iconify.OnClick() += [this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -61,47 +61,47 @@ ContentExit::ContentExit(UiObject *parent) :
 		}
 	};
 
-	m_antialiasing.GetOnValue() += [this](bool value)
+	m_antialiasing.OnValue() += [this](bool value)
 	{
 	};
 
-	m_borderless.GetOnValue() += [this](bool value)
+	m_borderless.OnValue() += [this](bool value)
 	{
 		Window::Get()->SetBorderless(value);
 	};
-	Window::Get()->GetOnBorderless() += [this](bool borderless)
+	Window::Get()->OnBorderless() += [this](bool borderless)
 	{
 		m_borderless.SetValue(borderless);
 	};
 
-	m_resizable.GetOnValue() += [this](bool value)
+	m_resizable.OnValue() += [this](bool value)
 	{
 		Window::Get()->SetResizable(value);
 	};
-	Window::Get()->GetOnResizable() += [this](bool resizable)
+	Window::Get()->OnResizable() += [this](bool resizable)
 	{
 		m_resizable.SetValue(resizable);
 	};
 
-	m_floating.GetOnValue() += [this](bool value)
+	m_floating.OnValue() += [this](bool value)
 	{
 		Window::Get()->SetFloating(value);
 	};
-	Window::Get()->GetOnFloating() += [this](bool floating)
+	Window::Get()->OnFloating() += [this](bool floating)
 	{
 		m_floating.SetValue(floating);
 	};
 
-	m_fullscreen.GetOnValue() += [this](bool value)
+	m_fullscreen.OnValue() += [this](bool value)
 	{
 		Window::Get()->SetFullscreen(value);
 	};
-	Window::Get()->GetOnFullscreen() += [this](bool fullscreen)
+	Window::Get()->OnFullscreen() += [this](bool fullscreen)
 	{
 		m_fullscreen.SetValue(fullscreen);
 	};
 
-	m_fpsLimit.GetOnValue() += [this](float value)
+	m_fpsLimit.OnValue() += [this](float value)
 	{
 		Engine::Get()->SetFpsLimit(value);
 	};

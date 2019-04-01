@@ -21,7 +21,7 @@ Plugins::Plugins() :
 	cr_plugin_load(*m_plugin, m_loadedPath.c_str());
 
 	// Watches the DLL path.
-	m_watcher.GetOnChange() += [this](std::string path, FileWatcher::Status status)
+	m_watcher.OnChange() += [this](std::string path, FileWatcher::Status status)
 	{
 		if (path == m_loadedPath)
 		{
@@ -29,7 +29,7 @@ Plugins::Plugins() :
 		}
 	};
 
-	Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (key == Key::R && action == InputAction::Press)
 		{

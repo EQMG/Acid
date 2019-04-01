@@ -27,32 +27,34 @@ enum class UiAspect :
 
 ENABLE_BITMASK_OPERATORS(UiAspect)
 
-/// <summary>
-/// A rectangle made of a position and dimension.
-/// </summary>
+/**
+ * Class that represents a rectangle made of a position and dimension.
+ */
 class ACID_EXPORT UiBound
 {
 public:
-	/// <summary>
-	/// Constructor for rectangle.
-	/// </summary>
-	/// <param name="position"> The object screen position. </param>
-	/// <param name="reference"> The reference vertex of the parent bounds, where position is. </param>
-	/// <param name="aspect"> The aspect that will be used for bounding in the parent reference. </param>
-	/// <param name="dimensions"> The object dimensions. </param>
+	/**
+	 * Creates a new ui bound.
+	 * @param position The object screen position.
+	 * @param reference The reference vertex of the parent bounds, where position is.
+	 * @param aspect The aspect that will be used for bounding in the parent reference.
+	 * @param dimensions The object dimensions.
+	 */
 	explicit UiBound(const Vector2 &position = Vector2(0.0f, 0.0f), const Vector2 &reference = UiReference::TopLeft,
 		const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Dimensions, const Vector2 &dimensions = Vector2(1.0f, 1.0f)) noexcept;
 
-	/// <summary>
-	/// Gets the bounds position in the current screen space.
-	/// </summary>
-	/// <returns> The position in screen space. </returns>
+	/**
+	 * Gets the bounds position in the current screen space.
+	 * @param aspectRatio The screens acpect ratio.
+	 * @return The position in screen space.
+	 */
 	Vector2 GetScreenPosition(const float &aspectRatio) const;
 
-	/// <summary>
-	/// Gets the bounds dimensions in the current screen space.
-	/// </summary>
-	/// <returns> The dimensions in screen space. </returns>
+	/**
+	 * Gets the bounds dimensions in the current screen space.
+	 * @param aspectRatio The screens acpect ratio.
+	 * @return The dimensions in screen space.
+	 */
 	Vector2 GetScreenDimensions(const float &aspectRatio) const;
 
 	const Vector2 &GetPosition() const { return m_position; }

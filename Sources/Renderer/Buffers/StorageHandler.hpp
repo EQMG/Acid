@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that handles a storage buffer.
-/// </summary>
+/**
+ * Class that handles a storage buffer.
+ */
 class ACID_EXPORT StorageHandler
 {
 public:

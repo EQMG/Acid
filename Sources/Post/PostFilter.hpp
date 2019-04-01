@@ -7,19 +7,19 @@
 
 namespace acid
 {
-/// <summary>
-/// Represents a post effect shader and on application saves the result into a FBO.
-/// </summary>
+/**
+ * Represents a post effect pipeline.
+ */
 class ACID_EXPORT PostFilter :
 	public RenderPipeline
 {
 public:
-	/// <summary>
-	/// Creates a new post effect filter.
-	/// </summary>
-	/// <param name="pipelineStage"> The pipelines graphics stage. </param>
-	/// <param name="shaderStages"> The pipelines shader stages. </param>
-	/// <param name="defines"> A list of names that will be added as a #define. </param>
+	/**
+	 * Creates a new post filter.
+	 * @param pipelineStage The pipelines graphics stage.
+	 * @param shaderStages The pipelines shader stages.
+	 * @param defines A list of names that will be added as a define.
+	 */
 	PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines = {});
 
 	virtual ~PostFilter() = default;
@@ -39,14 +39,14 @@ public:
 protected:
 	static uint32_t GlobalSwitching;
 
-	/// <summary>
-	/// Used instead of `m_descriptorSet.Push()` in instances where a writeColour is the same as samplerColour in a shader.
-	/// By switching between what will be the input and output of each filter previous changes are available to the shader.
-	/// </summary>
-	/// <param name="descriptorName1"> The first descriptor in the shader. </param>
-	/// <param name="descriptorName2"> The second descriptor in the shader. </param>
-	/// <param name="rendererAttachment1"> The name of the renderers attachment that will be first option. </param>
-	/// <param name="rendererAttachment2"> The name of the renderers attachment that will be second option. </param>
+	/**
+	 * Used instead of {@link DescriptorsHandler#Push} in instances where a writeColour is the same as samplerColour in a shader.
+	 * By switching between what will be the input and output of each filter previous changes are available to the shader.
+	 * @param descriptorName1 The first descriptor in the shader.
+	 * @param descriptorName2 The second descriptor in the shader.
+	 * @param rendererAttachment1 The name of the renderers attachment that will be first option.
+	 * @param rendererAttachment2 The name of the renderers attachment that will be second option.
+	 */
 	void PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2);
 
 	DescriptorsHandler m_descriptorSet;

@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// A helper for checking types.
-/// </summary>
+/**
+ * A helper for checking types.
+ */
 class ACID_EXPORT TypeTraits
 {
 public:

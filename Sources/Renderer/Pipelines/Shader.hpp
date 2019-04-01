@@ -14,14 +14,14 @@ namespace acid
 class ACID_EXPORT Shader
 {
 public:
-	/// <summary>
-	/// A define added to the start of a shader, first value is the define name and second is the value to be set.
-	/// </summary>
+	/**
+	 * A define added to the start of a shader, first value is the define name and second is the value to be set.
+	 */
 	using Define = std::pair<std::string, std::string>;
 
-	/// <summary>
-	/// A class used to define sets of vertex inputs used in a shader.
-	/// </summary>
+	/**
+	 * Class used to define sets of vertex inputs used in a shader.
+	 */
 	class VertexInput
 	{
 	public:

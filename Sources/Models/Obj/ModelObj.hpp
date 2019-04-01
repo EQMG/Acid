@@ -4,30 +4,32 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that represents a loaded OBJ model.
-/// </summary>
+/**
+ * A resource that represents a OBL model.
+ */
 class ACID_EXPORT ModelObj :
 	public Model
 {
 public:
-	/// <summary>
-	/// Will find an existing OBJ model with the same values, or create a new OBJ model.
-	/// </summary>
-	/// <param name="metadata"> The metadata to decode values from. </param>
+	/**
+	 * Creates a new OBJ model, or finds one with the same values.
+	 * @param metadata The metadata to decode values from.
+	 * @return The OBJ model with the requested values.
+	 */
 	static std::shared_ptr<ModelObj> Create(const Metadata &metadata);
 
-	/// <summary>
-	/// Will find an existing OBJ model with the same values, or create a new OBJ model.
-	/// </summary>
-	/// <param name="filename"> The file to load the OBJ model from. </param>
+	/**
+	 * Creates a new OBJ model, or finds one with the same values.
+	 * @param filename The file to load the OBJ model from.
+	 * @return The OBJ model with the requested values.
+	 */
 	static std::shared_ptr<ModelObj> Create(const std::string &filename);
 
-	/// <summary>
-	/// Creates a new OBJ model.
-	/// </summary>
-	/// <param name="filename"> The file to load the model from. </param>
-	/// <param name="load"> If this resource will load immediately, otherwise <seealso cref="#Load()"/> can be called. </param>
+	/**
+	 * Creates a new OBJ model.
+	 * @param filename The file to load the OBJ model from.
+	 * @param load If this resource will be loaded immediately, otherwise {@link ModelObj#Load} can be called later.
+	 */
 	explicit ModelObj(std::string filename, const bool &load = true);
 
 	void Load() override;

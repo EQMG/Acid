@@ -80,6 +80,7 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &
 
 	extent.width = int32_t(m_extent.width >> mipLevel);
 	extent.height = int32_t(m_extent.height >> mipLevel);
+	extent.depth = 1;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;

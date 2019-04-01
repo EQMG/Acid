@@ -5,16 +5,16 @@
 
 namespace acid
 {
-/// <summary>
-/// A interface used for defining engine modules.
-/// </summary>
+/**
+ * A interface used for defining engine modules.
+ */
 class ACID_EXPORT Module :
 	public NonCopyable
 {
 public:
-	/// <summary>
-	/// Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
-	/// </summary>
+	/**
+	 * Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
+	 */
 	enum class Stage
 	{
 		Always, Pre, Normal, Post, Render
@@ -24,9 +24,9 @@ public:
 
 	virtual ~Module() = default;
 
-	/// <summary>
-	/// The update function for the module.
-	/// </summary>
+	/**
+	 * The update function for the module.
+	 */
 	virtual void Update() = 0;
 };
 }

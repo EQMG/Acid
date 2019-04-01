@@ -12,19 +12,19 @@ public:
 
 	~Swapchain();
 
-	/// <summary>
-	/// Acquires the next image in the swapchain into the internal acquired image. The function will always wait until the next image has been acquired by setting timeout to UINT64_MAX.
-	/// </summary>
-	/// <param name="presentCompleteSemaphore"> A optional semaphore that is signaled when the image is ready for use. </param>
-	/// <returns> Result of the image acquisition. </returns>
+	/**
+	 * Acquires the next image in the swapchain into the internal acquired image. The function will always wait until the next image has been acquired by setting timeout to UINT64_MAX.
+	 * @param presentCompleteSemaphore A optional semaphore that is signaled when the image is ready for use.
+	 * @return Result of the image acquisition.
+	 */
 	VkResult AcquireNextImage(const VkSemaphore &presentCompleteSemaphore = VK_NULL_HANDLE);
 
-	/// <summary>
-	/// Queue an image for presentation using the internal acquired image for queue presentation.
-	/// </summary>
-	/// <param name="presentQueue"> Presentation queue for presenting the image. </param>
-	/// <param name="waitSemaphore"> A optional semaphore that is waited on before the image is presented. </param>
-	/// <returns> Result of the queue presentation. </returns>
+	/**
+	 * Queue an image for presentation using the internal acquired image for queue presentation.
+	 * @param presentQueue Presentation queue for presenting the image.
+	 * @param waitSemaphore A optional semaphore that is waited on before the image is presented.
+	 * @return Result of the queue presentation.
+	 */
 	VkResult QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore = VK_NULL_HANDLE);
 
 	const VkExtent2D &GetExtent() const { return m_extent; }

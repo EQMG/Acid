@@ -4,9 +4,10 @@
 
 namespace acid
 {
-/// <summary>
-/// A constant-sized non-overwriting circular queue.
-/// </summary>
+/**
+ * A constant-sized non-overwriting circular queue.
+ * @tparam T The type to hold.
+ */
 template<typename T>
 class RingBuffer :
 	public NonCopyable

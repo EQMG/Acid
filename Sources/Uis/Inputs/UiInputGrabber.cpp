@@ -84,7 +84,7 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 {
 	UpdateValue();
 
-	Joysticks::Get()->GetOnButton() += [this](uint32_t port, uint32_t button, InputAction action)
+	Joysticks::Get()->OnButton() += [this](uint32_t port, uint32_t button, InputAction action)
 	{
 		if (!m_selected || port != m_port)
 		{
@@ -111,7 +111,7 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 {
 	UpdateValue();
 
-	Keyboard::Get()->GetOnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_selected)
 		{
@@ -138,7 +138,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 {
 	UpdateValue();
 
-	Mouse::Get()->GetOnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
+	Mouse::Get()->OnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_selected)
 		{

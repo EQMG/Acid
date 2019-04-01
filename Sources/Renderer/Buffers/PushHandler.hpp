@@ -4,9 +4,9 @@
 
 namespace acid
 {
-/// <summary>
-/// Class that handles a push constant.
-/// </summary>
+/**
+ * Class that handles a pipeline push constant.
+ */
 class ACID_EXPORT PushHandler
 {
 public:

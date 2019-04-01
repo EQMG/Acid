@@ -19,11 +19,11 @@ Inspector::Inspector(UiObject *parent) :
 	m_radio3(&m_section1.GetContent(), "Third Value", UiInputRadio::Type::X, false, UiBound(Vector2(0.0f, 0.45f), UiReference::TopLeft)),
 	m_radioManager1(UiInputRadio::Type::Filled, false, { &m_radio1, &m_radio2, &m_radio3 })
 {
-	m_slider1.GetOnValue() += [this](float value)
+	m_slider1.OnValue() += [this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Effect, value);
 	};
-	m_text1.GetOnValue() += [this](std::string text)
+	m_text1.OnValue() += [this](std::string text)
 	{
 		Window::Get()->SetTitle(text);
 	};
