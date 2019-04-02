@@ -35,7 +35,6 @@ public:
 
 	const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 
-	static const Matrix4 Correction;
 	static const uint32_t MaxJoints;
 	static const uint32_t MaxWeights;
 

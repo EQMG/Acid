@@ -4,9 +4,10 @@
 
 namespace acid
 {
-GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights) :
+GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
 	m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
-	m_vertexWeights(std::move(vertexWeights))
+	m_vertexWeights(std::move(vertexWeights)),
+	m_correction(correction)
 {
 	auto positions = GetPositions();
 	auto uvs = GetUvs();
@@ -50,10 +51,8 @@ std::vector<Vector3> GeometryLoader::GetPositions()
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++)
 	{
-		Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]),
-			1.0f);
-		position = MeshAnimated::Correction.Transform(position);
-		positions.emplace_back(position);
+		Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]));
+		positions.emplace_back(m_correction.Transform(position));
 	}
 
 	return positions;
@@ -88,9 +87,8 @@ std::vector<Vector3> GeometryLoader::GetNormals()
 
 	for (uint32_t i = 0; i < normalsCount / 3; i++)
 	{
-		Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]), 0.0f);
-		normal = MeshAnimated::Correction.Transform(normal);
-		normals.emplace_back(normal);
+		Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]));
+		normals.emplace_back(m_correction.Transform(normal));
 	}
 
 	return normals;

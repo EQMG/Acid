@@ -4,9 +4,10 @@
 
 namespace acid
 {
-SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder) :
+SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
 	m_armatureData(nullptr),
 	m_boneOrder(std::move(boneOrder)),
+	m_correction(correction),
 	m_jointCount(0),
 	m_headJoint(nullptr)
 {
@@ -44,8 +45,7 @@ JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const
 
 	if (isRoot)
 	{
-		// Because in Blender z is up, but the engine is y up.
-		transform = MeshAnimated::Correction * transform;
+		transform = m_correction * transform;
 	}
 
 	m_jointCount++;

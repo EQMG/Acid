@@ -4,9 +4,10 @@
 
 namespace acid
 {
-AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes) :
+AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes, const Matrix4 &correction) :
 	m_libraryAnimations(libraryAnimations),
-	m_libraryVisualScenes(libraryVisualScenes)
+	m_libraryVisualScenes(libraryVisualScenes),
+	m_correction(correction)
 {
 	auto animationNodes = m_libraryAnimations->FindChildren("animation");
 
@@ -91,8 +92,7 @@ void AnimationLoader::ProcessTransforms(const std::string &jointName, const std:
 
 		if (root)
 		{
-			// Because in Blender z is up, but the engine is y up.
-			transform = MeshAnimated::Correction * transform;
+			transform = m_correction * transform;
 		}
 
 		m_keyframes[i].AddJointTransform(jointName, transform);

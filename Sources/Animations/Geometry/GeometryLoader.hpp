@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Maths/Matrix4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Animations/Skin/VertexWeights.hpp"
@@ -11,7 +12,7 @@ class ACID_EXPORT GeometryLoader :
 	public NonCopyable
 {
 public:
-	GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights);
+	GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);
 
 	const std::vector<VertexAnimated> &GetVertices() const { return m_vertices; }
 
@@ -27,6 +28,7 @@ private:
 	const Metadata *m_meshData;
 
 	std::vector<VertexWeights> m_vertexWeights;
+	Matrix4 m_correction;
 
 	std::vector<VertexAnimated> m_vertices;
 	std::vector<uint32_t> m_indices;

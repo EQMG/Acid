@@ -3,12 +3,10 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Serialized/Xml/Xml.hpp"
-#include "Files/FileSystem.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 
 namespace acid
 {
-const Matrix4 MeshAnimated::Correction = Matrix4(Matrix4::Identity.Rotate(-90.0f * Maths::DegToRad, Vector3::Right));
 const uint32_t MeshAnimated::MaxJoints = 50;
 const uint32_t MeshAnimated::MaxWeights = 3;
 
@@ -34,7 +32,7 @@ void MeshAnimated::Update()
 		m_jointMatrices.clear();
 		m_jointMatrices.resize(MaxJoints);
 		AddJointsToArray(*m_headJoint, m_jointMatrices);
-		//	m_jointMatrices.shrink_to_fit();
+		//m_jointMatrices.shrink_to_fit();
 	}
 }
 
@@ -48,18 +46,20 @@ void MeshAnimated::Load()
 	File file = File(m_filename, new Xml("COLLADA"));
 	file.Read();
 
-	auto skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
-	auto skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder());
-	auto geometryLoader = GeometryLoader(file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights());
+	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
+	auto correction = Matrix4::Identity.Rotate(-90.0f * Maths::DegToRad, Vector3::Right);
 
-	auto vertices = geometryLoader.GetVertices();
-	auto indices = geometryLoader.GetIndices();
-	m_model = std::make_shared<Model>(vertices, indices);
+	auto skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
+	auto skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), correction);
+	auto geometryLoader = GeometryLoader(file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), correction);
+
+	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
 	m_headJoint->CalculateInverseBindTransform(Matrix4::Identity);
 	m_animator = std::make_unique<Animator>(m_headJoint.get());
 
-	AnimationLoader animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"));
+	auto animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), correction);
+
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator->DoAnimation(m_animation.get());
 }

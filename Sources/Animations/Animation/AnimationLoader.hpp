@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Maths/Matrix4.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Animation.hpp"
 
@@ -8,7 +9,7 @@ namespace acid
 class ACID_EXPORT AnimationLoader
 {
 public:
-	AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes);
+	AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes, const Matrix4 &correction);
 
 	const Time &GetLengthSeconds() const { return m_lengthSeconds; }
 
@@ -31,6 +32,7 @@ private:
 
 	const Metadata *m_libraryAnimations;
 	const Metadata *m_libraryVisualScenes;
+	Matrix4 m_correction;
 
 	Time m_lengthSeconds;
 	std::vector<Keyframe> m_keyframes;
