@@ -13,8 +13,8 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePosition.m_x = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetWidth());
-	Mouse::Get()->m_mousePosition.m_y = (static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetHeight()));
+	Mouse::Get()->m_mousePosition.m_x = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetSize().m_x);
+	Mouse::Get()->m_mousePosition.m_y = static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetSize().m_y);
 	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
 }
 
@@ -127,10 +127,10 @@ InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 	return static_cast<InputAction>(state);
 }
 
-void Mouse::SetPosition(const Vector2 &position)
+void Mouse::SetPosition(const Vector2f &position)
 {
 	m_mousePosition = position;
-	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetWidth(), m_mousePosition.m_y * Window::Get()->GetHeight());
+	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetSize().m_x, m_mousePosition.m_y * Window::Get()->GetSize().m_y);
 }
 
 void Mouse::SetCursorHidden(const bool &hidden)
@@ -141,7 +141,7 @@ void Mouse::SetCursorHidden(const bool &hidden)
 
 		if (!hidden && m_cursorHidden)
 		{
-			glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetWidth(), m_mousePosition.m_x * Window::Get()->GetHeight());
+			glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetSize().m_x, m_mousePosition.m_x * Window::Get()->GetSize().m_y);
 		}
 	}
 

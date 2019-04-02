@@ -46,7 +46,7 @@ Vector3 EmitterSphere::GeneratePosition() const
 
 	float randX = b * std::cos(2.0f * Maths::Pi * (a / b));
 	float randY = b * std::sin(2.0f * Maths::Pi * (a / b));
-	float distance = Vector2(randX, randY).Length();
+	float distance = Vector2f(randX, randY).Length();
 	return m_radius * distance * Vector3::RandomUnitVector();
 }
 }

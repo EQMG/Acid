@@ -20,7 +20,7 @@ public:
 	 * @param useMouse If the ray will use the mouse coords or to start from screenStart.
 	 * @param screenStart If useMouse is false then this will be used as the rays start.
 	 */
-	Ray(const bool &useMouse, const Vector2 &screenStart);
+	Ray(const bool &useMouse, const Vector2f &screenStart);
 
 	/**
 	 * Updates the ray to a new position.
@@ -29,7 +29,7 @@ public:
 	 * @param viewMatrix The cameras view matrix.
 	 * @param projectionMatrix The projection view matrix.
 	 */
-	void Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+	void Update(const Vector3 &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 	/**
 	 * Gets a point on the ray.
@@ -49,9 +49,9 @@ public:
 
 	void SetUseMouse(const bool &useMouse) { m_useMouse = useMouse; }
 
-	const Vector2 &GetScreenStart() const { return m_screenStart; }
+	const Vector2f &GetScreenStart() const { return m_screenStart; }
 
-	void SetScreenStart(const Vector2 &screenStart) { m_screenStart = screenStart; }
+	void SetScreenStart(const Vector2f &screenStart) { m_screenStart = screenStart; }
 
 	const Vector3 &GetOrigin() const { return m_origin; }
 
@@ -65,12 +65,12 @@ private:
 	void UpdateWorldCoords();
 
 	bool m_useMouse;
-	Vector2 m_screenStart;
+	Vector2f m_screenStart;
 
 	Matrix4 m_viewMatrix;
 	Matrix4 m_projectionMatrix;
 
-	Vector2 m_normalizedCoords;
+	Vector2f m_normalizedCoords;
 	Vector4 m_clipCoords;
 	Vector4 m_eyeCoords;
 

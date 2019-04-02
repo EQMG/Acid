@@ -27,7 +27,7 @@ struct Outline
 {
 	Rect bbox;
 
-	std::vector<Vector2> points;
+	std::vector<Vector2f> points;
 
 	std::vector<ContourRange> contours;
 
@@ -45,7 +45,7 @@ struct PointU16
 
 static void OutlineAddOddPoint(Outline *o);
 
-static void ConvertPoint(const FT_Vector *v, Vector2 &out);
+static void ConvertPoint(const FT_Vector *v, Vector2f &out);
 
 static int32_t MoveToFunc(const FT_Vector *to, Outline *o);
 

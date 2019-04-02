@@ -83,41 +83,35 @@ private:
 class ACID_EXPORT Viewport
 {
 public:
-	explicit Viewport(const Vector2 &scale = Vector2::One) :
-		m_scale(scale),
-		m_offset(0.0f, 0.0f)
-	{
-	}
-
-	Viewport(const std::optional<uint32_t> &width, const std::optional<uint32_t> &height) :
-		m_width(width),
-		m_height(height),
+	Viewport() :
 		m_scale(1.0f, 1.0f),
-		m_offset(0.0f, 0.0f)
+		m_offset(0, 0)
 	{
 	}
 
-	const std::optional<uint32_t> &GetWidth() const { return m_width; }
+	explicit Viewport(const std::optional<Vector2ui> &size) :
+		m_scale(1.0f, 1.0f),
+		m_size(size),
+		m_offset(0, 0)
+	{
+	}
 
-	void SetWidth(const std::optional<uint32_t> &width) { m_width = width; }
+	const Vector2f &GetScale() const { return m_scale; }
 
-	const std::optional<uint32_t> &GetHeight() const { return m_height; }
+	void SetScale(const Vector2f &scale) { m_scale = scale; }
 
-	void SetHeight(const std::optional<uint32_t> &height) { m_height = height; }
+	const std::optional<Vector2ui> &GetSize() const { return m_size; }
 
-	const Vector2 &GetScale() const { return m_scale; }
+	void SetSize(const std::optional<Vector2ui> &size) { m_size = size; }
 
-	void SetScale(const Vector2 &scale) { m_scale = scale; }
+	const Vector2i &GetOffset() const { return m_offset; }
 
-	const Vector2 &GetOffset() const { return m_offset; }
-
-	void SetOffset(const Vector2 &offset) { m_offset = offset; }
+	void SetOffset(const Vector2i &offset) { m_offset = offset; }
 
 private:
-	std::optional<uint32_t> m_width;
-	std::optional<uint32_t> m_height;
-	Vector2 m_scale;
-	Vector2 m_offset;
+	Vector2f m_scale;
+	std::optional<Vector2ui> m_size;
+	Vector2i m_offset;
 };
 
 class ACID_EXPORT RenderStage
@@ -142,16 +136,10 @@ public:
 	void SetViewport(const Viewport &viewport) { m_viewport = viewport; }
 
 	/**
-	 * Gets the height of the render stage in pixels.
-	 * @return The height of the render stage.
+	 * Gets the size of the render stage in pixels.
+	 * @return The size of the render stage.
 	 */
-	const uint32_t &GetWidth() const { return m_width; }
-
-	/**
-	 * Gets the height of the render stage in pixels.
-	 * @return The height of the render stage.
-	 */
-	const uint32_t &GetHeight() const { return m_height; }
+	const Vector2ui &GetSize() const { return m_size; }
 
 	/**
 	 * Gets the aspect ratio between the render stages width and height.
@@ -205,8 +193,7 @@ private:
 	std::optional<Attachment> m_swapchainAttachment;
 	std::vector<bool> m_subpassMultisampled;
 
-	uint32_t m_width;
-	uint32_t m_height;
+	Vector2ui m_size;
 	float m_aspectRatio;
 	bool m_outOfDate;
 };

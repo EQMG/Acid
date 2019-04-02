@@ -21,7 +21,7 @@ void Gui::UpdateObject()
 	int32_t numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
 	int32_t column = m_selectedRow % numberOfRows;
 	int32_t row = m_selectedRow / numberOfRows;
-	m_atlasOffset = Vector2(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
+	m_atlasOffset = Vector2f(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
 
 	m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 
@@ -59,10 +59,10 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	}
 
 	VkRect2D scissorRect = {};
-	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetWidth() * GetScissor().m_x);
-	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetHeight() * GetScissor().m_y);
-	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
-	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
+	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetSize().m_x * GetScissor().m_x);
+	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetSize().m_y * GetScissor().m_y);
+	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetSize().m_x * GetScissor().m_z);
+	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetSize().m_y * GetScissor().m_w);
 	vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 	// Draws the object.

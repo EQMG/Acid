@@ -65,9 +65,9 @@ void ModelDisk::Load()
 			float radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
 			Vector3 position = Vector3(radius * xDir, 0.0f, radius * yDir);
-			Vector2 uvs = Vector2(1.0f - iDivSlices, 1.0f - jDivLoops);
+			Vector2f uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivLoops);
 			Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
-			vertices.emplace_back(position, uvs, normal);
+			vertices.emplace_back(VertexModel(position, uvs, normal));
 		}
 	}
 

@@ -37,7 +37,7 @@ void MainRenderer::Start()
 
 	std::vector<Attachment> renderpassAttachments0 = { Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) };
 	std::vector<SubpassType> renderpassSubpasses0 = { SubpassType(0, { 0 }) };
-	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(4096, 4096)));
+	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(Vector2ui(4096, 4096))));
 
 	std::vector<Attachment> renderpassAttachments1 = { Attachment(0, "depth", Attachment::Type::Depth, false),
 		Attachment(1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), // Attachment::Type::Swapchain
@@ -85,15 +85,15 @@ void MainRenderer::Start()
 void MainRenderer::Update()
 {
 	auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
-	//renderpassCreate1->GetViewport().SetOffset(Vector2(0.1f, 0.0f));
+	//renderpassCreate1->GetViewport().SetOffset(Vector2f(0.1f, 0.0f));
 
 	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release)
 	{
-		renderpassCreate1->GetViewport().SetScale(Vector2(1.0f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale(Vector2f(1.0f, 1.0f));
 	}
 	else
 	{
-		renderpassCreate1->GetViewport().SetScale(Vector2(0.5f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale(Vector2f(0.5f, 1.0f));
 	}
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));

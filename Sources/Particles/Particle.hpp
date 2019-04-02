@@ -41,9 +41,9 @@ public:
 
 	const Vector3 &GetChange() const { return m_change; }
 
-	const Vector2 &GetTextureOffset1() const { return m_textureOffset1; }
+	const Vector2f &GetTextureOffset1() const { return m_textureOffset1; }
 
-	const Vector2 &GetTextureOffset2() const { return m_textureOffset2; }
+	const Vector2f &GetTextureOffset2() const { return m_textureOffset2; }
 
 	const float &GetLifeLength() const { return m_lifeLength; }
 
@@ -64,7 +64,7 @@ public:
 	bool operator<(const Particle &other) const;
 
 private:
-	Vector2 CalculateTextureOffset(const int32_t &index) const;
+	Vector2f CalculateTextureOffset(const int32_t &index) const;
 
 	std::shared_ptr<ParticleType> m_particleType;
 
@@ -72,8 +72,8 @@ private:
 	Vector3 m_velocity;
 	Vector3 m_change;
 
-	Vector2 m_textureOffset1;
-	Vector2 m_textureOffset2;
+	Vector2f m_textureOffset1;
+	Vector2f m_textureOffset2;
 
 	float m_lifeLength;
 	float m_stageCycles;

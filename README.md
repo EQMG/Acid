@@ -84,9 +84,9 @@ sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Te
 sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material attached.
 
 // Vector maths.
-Vector2 a(3.0f, -7.2f);
-Vector2 b(-1.74f, 15.4f);
-Vector2 c = a * b;
+Vector2f a(3.0f, -7.2f);
+Vector2f b(-1.74f, 15.4f);
+Vector2f c = a * b;
 float dist = a.Distance(b);
 
 // Split a string by spaces.

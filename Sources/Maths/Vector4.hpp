@@ -2,12 +2,12 @@
 
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
 
 namespace acid
 {
 class Colour;
-class Vector2;
-class Vector3;
 
 /**
  * @brief Holds a 4-tuple vector.
@@ -29,7 +29,7 @@ public:
 	 * @param a The XY value. 
 	 * @param b The ZW value. 
 	 **/
-	Vector4(const Vector2 &a, const Vector2 &b);
+	Vector4(const Vector2f &a, const Vector2f &b);
 
 	/**
 	 * Constructor for Vector4.

@@ -11,13 +11,13 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Transform.hpp>
 
-#include <Helpers/RingBuffer.hpp>
+//#include <Helpers/RingBuffer.hpp>
 
 using namespace acid;
 
 int main(int argc, char **argv)
 {
-	{
+	/*{
 		RingBuffer<int32_t> buffer(4);
 
 		if (!buffer.push(1, 2, 3, 4))
@@ -79,15 +79,15 @@ int main(int argc, char **argv)
 		{
 			return false;
 		}
-	}
-	{
+	}*/
+	/*{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
 		Log::Out("Matrix3 Size: %i\n", static_cast<int>(sizeof(Matrix3)));
 		Log::Out("Matrix4 Size: %i\n", static_cast<int>(sizeof(Matrix4)));
 		Log::Out("Quaternion Size: %i\n", static_cast<int>(sizeof(Quaternion)));
-		Log::Out("Vector2 Size: %i\n", static_cast<int>(sizeof(Vector2)));
+		Log::Out("Vector2f Size: %i\n", static_cast<int>(sizeof(Vector2f)));
 		Log::Out("Vector3 Size: %i\n", static_cast<int>(sizeof(Vector3)));
 		Log::Out("Vector4 Size: %i\n", static_cast<int>(sizeof(Vector4)));
 		Log::Out("Transform Size: %i\n", static_cast<int>(sizeof(Transform)));
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 		Log::Out("Milliseconds: %i\n", c.AsMilliseconds());
 		Log::Out("Microseconds: %i\n", c.AsMicroseconds());
 		Log::Out("\n");
-	}
+	}*/
 	{
 		Vector3 original{ 90.0f, 0.0f, 0.0f };
 		Quaternion quaternion = original.ToQuaternion();
@@ -114,9 +114,13 @@ int main(int argc, char **argv)
 		Log::Out("\n");
 	}
 	{
-		Log::Out("Vector2:\n");
-		Vector2 a{ 3.0f, -7.2f };
-		Vector2 b{ -1.74f, 15.4f };
+		Log::Out("Vector2f:\n");
+		Vector2f a{ 3.0f, -7.2f };
+		Vector2f b{ -1.74f, 15.4f };
+		Vector2i c{ -8, 2 };
+
+		Log::Out("  %s + %f = %s\n", a.ToString().c_str(), 20.0f, (a + 20.0f).ToString().c_str());
+		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString().c_str(), (-1.11f * a).ToString().c_str());
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
 		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());

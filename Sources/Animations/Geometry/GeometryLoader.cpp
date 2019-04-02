@@ -58,18 +58,18 @@ std::vector<Vector3> GeometryLoader::GetPositions()
 	return positions;
 }
 
-std::vector<Vector2> GeometryLoader::GetUvs()
+std::vector<Vector2f> GeometryLoader::GetUvs()
 {
 	std::string uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
 	auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
 	auto uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
 	auto uvsRawData = String::Split(uvsData->GetValue(), " ");
 
-	std::vector<Vector2> uvs;
+	std::vector<Vector2f> uvs;
 
 	for (uint32_t i = 0; i < uvsCount / 2; i++)
 	{
-		Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
+		Vector2f uv = Vector2f(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
 		uvs.emplace_back(uv);
 	}
 

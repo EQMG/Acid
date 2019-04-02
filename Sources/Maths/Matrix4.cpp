@@ -22,7 +22,7 @@ Matrix4::Matrix4(const Matrix2 &source)
 	std::memset(m_rows, 0, 4 * sizeof(Vector4));
 	m_rows[2][2] = 1.0f;
 	m_rows[3][3] = 1.0f;
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 }
 
 Matrix4::Matrix4(const Matrix3 &source)
@@ -126,7 +126,7 @@ Vector4 Matrix4::Transform(const Vector4 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Translate(const Vector2 &other) const
+Matrix4 Matrix4::Translate(const Vector2f &other) const
 {
 	Matrix4 result = Matrix4(*this);
 

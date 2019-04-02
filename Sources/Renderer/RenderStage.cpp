@@ -15,8 +15,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 	m_depthAttachment({}),
 	m_swapchainAttachment({}),
 	m_subpassMultisampled(m_subpasses.size()),
-	m_width(0),
-	m_height(0),
+	m_size(0, 0),
 	m_aspectRatio(1.0f),
 	m_outOfDate(false)
 {
@@ -61,33 +60,22 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 void RenderStage::Update()
 {
-	uint32_t lastWidth = m_width;
-	uint32_t lastHeight = m_height;
+	Vector2i lastSize = m_size;
 
-	if (m_viewport.GetWidth())
+	if (m_viewport.GetSize())
 	{
-		m_width = *m_viewport.GetWidth();
+		m_size = *m_viewport.GetSize();
 	}
 	else
 	{
-		m_width = Window::Get()->GetWidth();
-	}
-
-	if (m_viewport.GetHeight())
-	{
-		m_height = *m_viewport.GetHeight();
-	}
-	else
-	{
-		m_height = Window::Get()->GetHeight();
+		m_size = Window::Get()->GetSize();
 	}
 
 	// TODO: Use viewport offset, fix scale.
-	m_width = static_cast<uint32_t>(m_viewport.GetScale().m_x * static_cast<float>(m_width));
-	m_height = static_cast<uint32_t>(m_viewport.GetScale().m_y * static_cast<float>(m_height));
-	m_aspectRatio = static_cast<float>(m_width) / static_cast<float>(m_height);
+	m_size = m_viewport.GetScale() * m_size;
+	m_aspectRatio = static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y);
 
-	m_outOfDate = m_width != lastWidth || m_height != lastHeight;
+	m_outOfDate = m_size != lastSize;
 }
 
 void RenderStage::Rebuild(const Swapchain &swapchain)
@@ -105,7 +93,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 
 	if (m_depthAttachment)
 	{
-		m_depthStencil = std::make_unique<ImageDepth>(m_width, m_height, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
+		m_depthStencil = std::make_unique<ImageDepth>(m_size.m_x, m_size.m_y, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 	}
 
 	if (m_renderpass == nullptr)
@@ -113,7 +101,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 		m_renderpass = std::make_unique<Renderpass>(*this, m_depthStencil->GetFormat(), surface->GetFormat().format, msaaSamples);
 	}
 
-	m_framebuffers = std::make_unique<Framebuffers>(m_width, m_height, *this, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
+	m_framebuffers = std::make_unique<Framebuffers>(m_size.m_x, m_size.m_y, *this, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
 	m_outOfDate = false;
 
 	m_descriptors.clear();

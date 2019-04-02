@@ -11,25 +11,25 @@ Pannable::Pannable(UiObject *parent) :
 	m_buttonReset(ButtonKeyboard({ Key::Enter })),
 	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
 	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
-	m_settings(parent, UiBound(Vector2(0.02f, 0.02f), UiReference::TopLeft, UiAspect::Dimensions, Vector2(0.25f, 0.2f)), ScrollBar::None),
-	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2(0.5f, 0.06f), UiReference::TopCentre)),
-	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiBound(Vector2(0.5f, 0.30f), UiReference::TopCentre)),
+	m_settings(parent, UiBound(Vector2f(0.02f, 0.02f), UiReference::TopLeft, UiAspect::Dimensions, Vector2f(0.25f, 0.2f)), ScrollBar::None),
+	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.5f, 0.06f), UiReference::TopCentre)),
+	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiBound(Vector2f(0.5f, 0.30f), UiReference::TopCentre)),
 	m_zoom(1.0f),
-	m_title(this, UiBound(Vector2(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
+	m_title(this, UiBound(Vector2f(0.5f, -0.7f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 6.0f, "Acid Font",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f),
-	m_body(this, UiBound(Vector2(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, "",
+	m_body(this, UiBound(Vector2f(0.5f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions | UiAspect::Scale), 1.8f, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.002f, 0.015),
-	m_textFrameTime(parent, UiBound(Vector2(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
+	m_textFrameTime(parent, UiBound(Vector2f(0.002f, 0.998f), UiReference::BottomLeft), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
 		Text::Justify::Left),
-	m_textFps(parent, UiBound(Vector2(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
-	m_textUps(parent, UiBound(Vector2(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
+	m_textFps(parent, UiBound(Vector2f(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
+	m_textUps(parent, UiBound(Vector2f(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 {
 	m_buttonReset.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			m_zoom = 1.0f;
-			GetRectangle().SetPosition(Vector2(0.5f, 0.5f));
+			GetRectangle().SetPosition(Vector2f(0.5f, 0.5f));
 		}
 		Log::Out("Button Reset: %i\n", action);
 	};
@@ -90,7 +90,7 @@ void Pannable::UpdateObject()
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	Vector2 offset = GetRectangle().GetPosition();
+	Vector2f offset = GetRectangle().GetPosition();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
 	dynamic_cast<DriverConstant<float> *>(GetScaleDriver())->SetConstant(m_zoom);

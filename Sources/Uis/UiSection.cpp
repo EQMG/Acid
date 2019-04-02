@@ -6,20 +6,20 @@
 namespace acid
 {
 static const Time SLIDE_TIME = Time::Seconds(0.1f);
-static const Vector2 SIZE = Vector2(0.3f, 0.03375f);
+static const Vector2f SIZE = Vector2f(0.3f, 0.03375f);
 static const float FONT_SIZE = 1.4f;
 
 UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
 	m_icon(this, UiBound::Left, Image2d::Create("Guis/Triangle_Down.png")),
 	m_text(this, UiBound::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
-	m_content(this, UiBound(Vector2(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions)),
+	m_content(this, UiBound(Vector2f(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions)),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 	m_collapsed(false)
 {
 	GetRectangle().SetDimensions(SIZE);
-	m_icon.GetRectangle().SetDimensions(Vector2(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
-	m_text.GetRectangle().SetPosition(Vector2(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
+	m_icon.GetRectangle().SetDimensions(Vector2f(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
+	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
 }
 
 void UiSection::UpdateObject()

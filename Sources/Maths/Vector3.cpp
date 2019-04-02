@@ -3,7 +3,6 @@
 #include "Colour.hpp"
 #include "Matrix4.hpp"
 #include "Quaternion.hpp"
-#include "Vector2.hpp"
 
 namespace acid
 {
@@ -25,7 +24,7 @@ Vector3::Vector3(const float &x, const float &y, const float &z) :
 {
 }
 
-Vector3::Vector3(const Vector2 &source, const float &z) :
+Vector3::Vector3(const Vector2f &source, const float &z) :
 	m_x(source.m_x),
 	m_y(source.m_y),
 	m_z(z)

@@ -12,8 +12,8 @@ class ACID_EXPORT UiInputButton :
 	public UiObject
 {
 public:
-	static const Vector2 Size;
-	static const Vector2 Padding;
+	static const Vector2f Size;
+	static const Vector2f Padding;
 	static const float FontSize;
 	static const Time SlideTime;
 
@@ -22,7 +22,7 @@ public:
 	static const Colour AccentColour;
 	static const Colour SelectedColour;
 
-	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 	void UpdateObject() override;
 

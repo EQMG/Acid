@@ -2,12 +2,12 @@
 
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
+#include "Vector2.hpp"
 
 namespace acid
 {
 class Colour;
 class Quaternion;
-class Vector2;
 class Vector4;
 
 /**
@@ -29,7 +29,7 @@ public:
 	 * @param source Creates this vector out of a existing one. 
 	 * @param z Start z. 
 	 **/
-	Vector3(const Vector2 &source, const float &z = 0.0f);
+	Vector3(const Vector2f &source, const float &z = 0.0f);
 
 	/**
 	 * Constructor for Vector3.

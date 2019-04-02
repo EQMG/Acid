@@ -60,13 +60,13 @@ public:
 	 * Gets the position of the monitor's viewport on the virtual screen.
 	 * @return The position of the monitor's viewport.
 	 */
-	Vector2 GetPosition() const;
+	Vector2f GetPosition() const;
 
 	/**
 	 * Gets the physical size of the monitor.
 	 * @return The size, in millimetres, of the display area.
 	 */
-	Vector2 GetDimensions() const;
+	Vector2f GetDimensions() const;
 
 	/**
 	 * Gets the name of this monitor.

@@ -92,7 +92,7 @@ public:
 	 * @param other The vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix4 Translate(const Vector2 &other) const;
+	Matrix4 Translate(const Vector2f &other) const;
 
 	/**
 	 * Translates this matrix by a vector.

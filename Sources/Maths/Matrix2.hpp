@@ -41,7 +41,7 @@ public:
 	 * Constructor for Matrix2.
 	 * @param source Creates this matrix out of a 2 vector array. 
 	 **/
-	explicit Matrix2(const Vector2 source[2]);
+	explicit Matrix2(const Vector2f source[2]);
 
 	/**
 	 * Adds this matrix to another matrix.
@@ -76,14 +76,14 @@ public:
 	 * @param other The other vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector2 Transform(const Vector2 &other) const;
+	Vector2f Transform(const Vector2f &other) const;
 
 	/**
 	 * Scales this matrix by a vector.
 	 * @param other The other vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix2 Scale(const Vector2 &other) const;
+	Matrix2 Scale(const Vector2f &other) const;
 
 	/**
 	 * Inverts this matrix.
@@ -125,9 +125,9 @@ public:
 
 	Matrix2 operator-() const;
 
-	const Vector2 &operator[](const uint32_t &index) const;
+	const Vector2f &operator[](const uint32_t &index) const;
 
-	Vector2 &operator[](const uint32_t &index);
+	Vector2f &operator[](const uint32_t &index);
 
 	ACID_EXPORT friend Matrix2 operator+(const Matrix2 &left, const Matrix2 &right);
 
@@ -137,13 +137,13 @@ public:
 
 	ACID_EXPORT friend Matrix2 operator/(const Matrix2 &left, const Matrix2 &right);
 
-	ACID_EXPORT friend Matrix2 operator*(const Vector2 &left, const Matrix2 &right);
+	ACID_EXPORT friend Matrix2 operator*(const Vector2f &left, const Matrix2 &right);
 
-	ACID_EXPORT friend Matrix2 operator/(const Vector2 &left, const Matrix2 &right);
+	ACID_EXPORT friend Matrix2 operator/(const Vector2f &left, const Matrix2 &right);
 
-	ACID_EXPORT friend Matrix2 operator*(const Matrix2 &left, const Vector2 &right);
+	ACID_EXPORT friend Matrix2 operator*(const Matrix2 &left, const Vector2f &right);
 
-	ACID_EXPORT friend Matrix2 operator/(const Matrix2 &left, const Vector2 &right);
+	ACID_EXPORT friend Matrix2 operator/(const Matrix2 &left, const Vector2f &right);
 
 	ACID_EXPORT friend Matrix2 operator*(const float &left, const Matrix2 &right);
 
@@ -161,9 +161,9 @@ public:
 
 	Matrix2 &operator/=(const Matrix2 &other);
 
-	Matrix2 &operator*=(const Vector2 &other);
+	Matrix2 &operator*=(const Vector2f &other);
 
-	Matrix2 &operator/=(const Vector2 &other);
+	Matrix2 &operator/=(const Vector2f &other);
 
 	Matrix2 &operator*=(const float &other);
 
@@ -180,7 +180,7 @@ public:
 	{
 		struct
 		{
-			Vector2 m_rows[2];
+			Vector2f m_rows[2];
 		};
 
 		struct

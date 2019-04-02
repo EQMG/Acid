@@ -14,18 +14,18 @@ public:
 		_5 = 5, _9 = 9, _13 = 13
 	};
 
-	explicit FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2 &direction, const Type &type = Type::_9);
+	explicit FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type = Type::_9);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Vector2 &GetDirection() const { return m_direction; }
+	const Vector2f &GetDirection() const { return m_direction; }
 
-	void SetDirection(const Vector2 &direction) { m_direction = direction; }
+	void SetDirection(const Vector2f &direction) { m_direction = direction; }
 
 private:
 	PushHandler m_pushScene;
 
 	Type m_type;
-	Vector2 m_direction;
+	Vector2f m_direction;
 };
 }

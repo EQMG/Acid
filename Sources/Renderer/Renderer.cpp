@@ -239,12 +239,11 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	auto debugStart = Engine::GetTime();
 #endif
 
-	auto width = Window::Get()->GetWidth();
-	auto height = Window::Get()->GetHeight();
+	auto size = Window::Get()->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { width, height, 1 },
+	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { size.m_x, size.m_y, 1 },
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
@@ -269,7 +268,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 
 	// Creates the screenshot image file and writes to it.
 	FileSystem::ClearFile(filename);
-	Image::WritePixels(filename, pixels.get(), width, height);
+	Image::WritePixels(filename, pixels.get(), size.m_x, size.m_y);
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Engine::GetTime();
@@ -289,7 +288,7 @@ RenderStage *Renderer::GetRenderStage(const uint32_t &index) const
 
 void Renderer::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages)
 {
-	VkExtent2D displayExtent = { Window::Get()->GetWidth(), Window::Get()->GetHeight() };
+	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 
 	m_renderStages = std::move(renderStages);
 	m_swapchain = std::make_unique<Swapchain>(displayExtent);
@@ -371,7 +370,7 @@ void Renderer::RecreatePass(RenderStage &renderStage)
 {
 	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = { Window::Get()->GetWidth(), Window::Get()->GetHeight() };
+	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -413,7 +412,7 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 
 	VkRect2D renderArea = {};
 	renderArea.offset = { 0, 0 };
-	renderArea.extent = { renderStage.GetWidth(), renderStage.GetHeight() };
+	renderArea.extent = { renderStage.GetSize().m_x, renderStage.GetSize().m_y };
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;

@@ -76,25 +76,25 @@ public:
 	 * Gets the mouses screen position.
 	 * @return The mouses position.
 	 */
-	Vector2 GetPosition() { return m_mousePosition; }
+	Vector2f GetPosition() { return m_mousePosition; }
 
 	/**
 	 * Sets the mouse position.
 	 * @param position The new position in screen space.
 	 */
-	void SetPosition(const Vector2 &position);
+	void SetPosition(const Vector2f &position);
 
 	/**
 	 * Gets the mouse delta.
 	 * @return The mouse delta.
 	 */
-	Vector2 GetDelta() const { return m_mouseDelta; }
+	Vector2f GetDelta() const { return m_mouseDelta; }
 
 	/**
 	 * Gets the mouse wheel delta.
 	 * @return The mouse wheel delta.
 	 */
-	const Vector2 &GetWheelDelta() const { return m_mouseWheelDelta; }
+	const Vector2f &GetWheelDelta() const { return m_mouseWheelDelta; }
 
 	/**
 	 * Gets if the display is selected.
@@ -124,7 +124,7 @@ public:
 	 * Called when the mouse moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2)> &OnPosition() { return m_onPosition; }
+	Delegate<void(Vector2f)> &OnPosition() { return m_onPosition; }
 
 	/**
 	 * Called when the mouse enters the window.
@@ -136,7 +136,7 @@ public:
 	 * Called when the scroll wheel changes velocity.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2)> &OnScroll() { return m_onScroll; }
+	Delegate<void(Vector2f)> &OnScroll() { return m_onScroll; }
 
 	/**
 	 * Called when a group of files/folders is dropped onto the window.
@@ -157,17 +157,17 @@ private:
 
 	friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 
-	Vector2 m_lastMousePosition;
-	Vector2 m_mousePosition;
-	Vector2 m_mouseDelta;
-	Vector2 m_mouseWheelDelta;
+	Vector2f m_lastMousePosition;
+	Vector2f m_mousePosition;
+	Vector2f m_mouseDelta;
+	Vector2f m_mouseWheelDelta;
 	bool m_windowSelected;
 	bool m_cursorHidden;
 
 	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> m_onButton;
-	Delegate<void(Vector2)> m_onPosition;
+	Delegate<void(Vector2f)> m_onPosition;
 	Delegate<void(bool)> m_onEnter;
-	Delegate<void(Vector2)> m_onScroll;
+	Delegate<void(Vector2f)> m_onScroll;
 	Delegate<void(std::vector<std::string>)> m_onDrop;
 };
 }

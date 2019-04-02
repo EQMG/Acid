@@ -20,7 +20,7 @@ Matrix3::Matrix3(const Matrix2 &source)
 {
 	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
 	m_rows[2][2] = 1.0f;
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 }
 
 Matrix3::Matrix3(const Matrix4 &source)

@@ -2,23 +2,23 @@
 
 namespace acid
 {
-const Vector2 UiReference::TopLeft = Vector2(0.0f, 0.0f);
-const Vector2 UiReference::TopCentre = Vector2(0.5f, 0.0f);
-const Vector2 UiReference::TopRight = Vector2(1.0f, 0.0f);
-const Vector2 UiReference::CentreLeft = Vector2(0.0f, 0.5f);
-const Vector2 UiReference::Centre = Vector2(0.5f, 0.5f);
-const Vector2 UiReference::CentreRight = Vector2(1.0f, 0.5f);
-const Vector2 UiReference::BottomLeft = Vector2(0.0f, 1.0f);
-const Vector2 UiReference::BottomCentre = Vector2(0.5f, 1.0f);
-const Vector2 UiReference::BottomRight = Vector2(1.0f, 1.0f);
+const Vector2f UiReference::TopLeft = Vector2f(0.0f, 0.0f);
+const Vector2f UiReference::TopCentre = Vector2f(0.5f, 0.0f);
+const Vector2f UiReference::TopRight = Vector2f(1.0f, 0.0f);
+const Vector2f UiReference::CentreLeft = Vector2f(0.0f, 0.5f);
+const Vector2f UiReference::Centre = Vector2f(0.5f, 0.5f);
+const Vector2f UiReference::CentreRight = Vector2f(1.0f, 0.5f);
+const Vector2f UiReference::BottomLeft = Vector2f(0.0f, 1.0f);
+const Vector2f UiReference::BottomCentre = Vector2f(0.5f, 1.0f);
+const Vector2f UiReference::BottomRight = Vector2f(1.0f, 1.0f);
 
-const UiBound UiBound::Screen = UiBound(Vector2(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position);
-const UiBound UiBound::Maximum = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale);
-const UiBound UiBound::Left = UiBound(Vector2(0.0f, 0.5f), UiReference::CentreLeft);
-const UiBound UiBound::Centre = UiBound(Vector2(0.5f, 0.5f), UiReference::Centre);
-const UiBound UiBound::Right = UiBound(Vector2(1.0f, 0.5f), UiReference::CentreRight);
+const UiBound UiBound::Screen = UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position);
+const UiBound UiBound::Maximum = UiBound(Vector2f(0.5f, 0.5f), UiReference::Centre, UiAspect::Position | UiAspect::Scale);
+const UiBound UiBound::Left = UiBound(Vector2f(0.0f, 0.5f), UiReference::CentreLeft);
+const UiBound UiBound::Centre = UiBound(Vector2f(0.5f, 0.5f), UiReference::Centre);
+const UiBound UiBound::Right = UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight);
 
-UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const BitMask<UiAspect> &aspect, const Vector2 &dimensions) noexcept :
+UiBound::UiBound(const Vector2f &position, const Vector2f &reference, const BitMask<UiAspect> &aspect, const Vector2f &dimensions) noexcept :
 	m_position(position),
 	m_reference(reference),
 	m_aspect(aspect),
@@ -26,9 +26,9 @@ UiBound::UiBound(const Vector2 &position, const Vector2 &reference, const BitMas
 {
 }
 
-Vector2 UiBound::GetScreenPosition(const float &aspectRatio) const
+Vector2f UiBound::GetScreenPosition(const float &aspectRatio) const
 {
-	Vector2 screenPosition = m_position;
+	Vector2f screenPosition = m_position;
 
 	if (!(m_aspect & UiAspect::Position))
 	{
@@ -38,9 +38,9 @@ Vector2 UiBound::GetScreenPosition(const float &aspectRatio) const
 	return screenPosition;
 }
 
-Vector2 UiBound::GetScreenDimensions(const float &aspectRatio) const
+Vector2f UiBound::GetScreenDimensions(const float &aspectRatio) const
 {
-	Vector2 screenDimensions = m_dimensions;
+	Vector2f screenDimensions = m_dimensions;
 
 	if (m_aspect & UiAspect::Dimensions)
 	{

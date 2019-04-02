@@ -63,25 +63,11 @@ public:
 	const Image2d *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
 	/**
-	 * Gets the height of the render stage in pixels.
+	 * Gets the size of the render stage in pixels.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The height of the render stage.
+	 * @return The size of the render stage.
 	 */
-	uint32_t GetWidth(const std::optional<uint32_t> &stage = {}) const;
-
-	/**
-	 * Gets the height of the render stage in pixels.
-	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The height of the render stage.
-	 */
-	uint32_t GetHeight(const std::optional<uint32_t> &stage = {}) const;
-
-	/**
-	 * Gets the dimensions of the render stage in pixels.
-	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The dimensions of the render stage.
-	 */
-	Vector2 GetDimensions(const std::optional<uint32_t> &stage = {}) const;
+	Vector2ui GetSize(const std::optional<uint32_t> &stage = {}) const;
 
 	/**
 	 * Gets the aspect ratio between the render stages width and height.

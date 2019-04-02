@@ -65,12 +65,12 @@ void FontType::Update(const std::vector<Text *> &texts)
 
 	for (const auto &text : texts)
 	{
-		Vector2 extent = Window::Get()->GetDimensions();
+		Vector2f extent = Window::Get()->GetSize();
 		float scale = text->GetScreenScale() / 64.0f;
 		//auto dimensions = 2.0f * text->GetScreenDimensions();
 		auto position = extent * text->GetScreenPosition(); // 2.0f *text->GetScreenPosition() - 1.0f;
 
-		Vector2 localOffset = Vector2();
+		Vector2f localOffset = Vector2f();
 
 		for (const auto &c : text->GetString())
 		{
@@ -281,7 +281,7 @@ void FontType::LoadFont(const std::string &filename)
 
 	m_glyphInfoSize = sizeof(DeviceGlyphInfo) * static_cast<uint32_t>(m_glyphInfos.size());
 	m_glyphCellsSize = sizeof(uint32_t) * totalCells;
-	m_glyphPointsSize = sizeof(Vector2) * totalPoints;
+	m_glyphPointsSize = sizeof(Vector2f) * totalPoints;
 
 	uint32_t alignment = static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment);
 	m_glyphInfoOffset = 0;
@@ -297,7 +297,7 @@ void FontType::LoadFont(const std::string &filename)
 
 	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo *>(glyphData + m_glyphInfoOffset);
 	auto cells = reinterpret_cast<uint32_t *>(glyphData + m_glyphCellsOffset);
-	auto points = reinterpret_cast<Vector2 *>(glyphData + m_glyphPointsOffset);
+	auto points = reinterpret_cast<Vector2f *>(glyphData + m_glyphPointsOffset);
 
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
@@ -314,7 +314,7 @@ void FontType::LoadFont(const std::string &filename)
 		dgi->bbox = o->bbox;
 
 		std::memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
-		std::memcpy(points + pointOffset, o->points.data(), sizeof(Vector2) * o->points.size());
+		std::memcpy(points + pointOffset, o->points.data(), sizeof(Vector2f) * o->points.size());
 
 		//OutlineU16Points(o, &dgi->cbox, reinterpret_cast<PointU16 *>(reinterpret_cast<char *>(points) + pointOffset));
 

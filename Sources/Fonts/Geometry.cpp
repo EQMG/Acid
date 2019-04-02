@@ -49,13 +49,13 @@ QuadraticSolution SolveQuadratic(const float &a, const float &b, const float &c,
 	return QuadraticSolution::None;
 }
 
-float LineVerticalIntersect(const float &x, const Vector2 &p1, const Vector2 &p2)
+float LineVerticalIntersect(const float &x, const Vector2f &p1, const Vector2f &p2)
 {
 	float m = (p2.m_y - p1.m_y) / (p2.m_x - p1.m_x);
 	return p1.m_y - m * (p1.m_x - x);
 }
 
-float LineHorizontalIntersect(const float &y, const Vector2 &p1, const Vector2 &p2)
+float LineHorizontalIntersect(const float &y, const Vector2f &p1, const Vector2f &p2)
 {
 	float n = (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
 	return p1.m_x - n * (p1.m_y - y);
@@ -71,17 +71,17 @@ bool IsBetweenExclusive(const float &value, const float &min, const float &max)
 	return value > min && value < max;
 }
 
-bool IsPointInsideBbox(const Rect &bbox, const Vector2 &p)
+bool IsPointInsideBbox(const Rect &bbox, const Vector2f &p)
 {
 	return IsBetween(p.m_x, bbox.minX, bbox.maxX) && IsBetween(p.m_y, bbox.minY, bbox.maxY);
 }
 
-bool IsPointInsideBboxExclusive(const Rect &bbox, const Vector2 &p)
+bool IsPointInsideBboxExclusive(const Rect &bbox, const Vector2f &p)
 {
 	return IsBetweenExclusive(p.m_x, bbox.minX, bbox.maxX) && IsBetweenExclusive(p.m_y, bbox.minY, bbox.maxY);
 }
 
-bool IsIntersectionInLineSegment(const Vector2 &p1, const Vector2 &p2, const Vector2 &i)
+bool IsIntersectionInLineSegment(const Vector2f &p1, const Vector2f &p2, const Vector2f &i)
 {
 	float pxMin = std::min(p1.m_x, p2.m_x);
 	float pxMax = std::max(p1.m_x, p2.m_x);
@@ -90,7 +90,7 @@ bool IsIntersectionInLineSegment(const Vector2 &p1, const Vector2 &p2, const Vec
 	return IsBetween(i[0], pxMin, pxMax) && IsBetween(i[1], pyMin, pyMax);
 }
 
-bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2 &p1, const Vector2 &p2)
+bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2f &p1, const Vector2f &p2)
 {
 	if (IsPointInsideBboxExclusive(bbox, p1))
 	{
@@ -107,10 +107,10 @@ bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2 &p1, const Ve
 	float yLeft = LineVerticalIntersect(bbox.minX, p1, p2);
 	float yRight = LineVerticalIntersect(bbox.maxX, p1, p2);
 
-	Vector2 top = Vector2(xTop, bbox.maxY);
-	Vector2 bottom = Vector2(xBottom, bbox.minY);
-	Vector2 left = Vector2(bbox.minX, yLeft);
-	Vector2 right = Vector2(bbox.maxX, yRight);
+	Vector2f top = Vector2f(xTop, bbox.maxY);
+	Vector2f bottom = Vector2f(xBottom, bbox.minY);
+	Vector2f left = Vector2f(bbox.minX, yLeft);
+	Vector2f right = Vector2f(bbox.maxX, yRight);
 
 	if (IsBetween(xTop, bbox.minX, bbox.maxX) && IsIntersectionInLineSegment(p1, p2, top))
 	{
@@ -135,7 +135,7 @@ bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2 &p1, const Ve
 	return false;
 }
 
-bool BboxBezier2Intersect(const Rect &bbox, const Vector2 bezier[3])
+bool BboxBezier2Intersect(const Rect &bbox, const Vector2f bezier[3])
 {
 	if (IsPointInsideBboxExclusive(bbox, bezier[0]))
 	{
@@ -147,53 +147,53 @@ bool BboxBezier2Intersect(const Rect &bbox, const Vector2 bezier[3])
 		return true;
 	}
 
-	Vector2 bl = Vector2(bbox.minX, bbox.minY);
-	Vector2 br = Vector2(bbox.maxX, bbox.minY);
-	Vector2 tl = Vector2(bbox.minX, bbox.maxY);
-	Vector2 tr = Vector2(bbox.maxX, bbox.maxY);
+	Vector2f bl = Vector2f(bbox.minX, bbox.minY);
+	Vector2f br = Vector2f(bbox.maxX, bbox.minY);
+	Vector2f tl = Vector2f(bbox.minX, bbox.maxY);
+	Vector2f tr = Vector2f(bbox.maxX, bbox.maxY);
 
 	return Bezier2LineIsIntersecting(bezier, bl, br) || Bezier2LineIsIntersecting(bezier, br, tr) || Bezier2LineIsIntersecting(bezier, tr, tl)
 		|| Bezier2LineIsIntersecting(bezier, tl, bl);
 }
 
-float LineSignedDistance(const Vector2 &a, const Vector2 &b, const Vector2 &p)
+float LineSignedDistance(const Vector2f &a, const Vector2f &b, const Vector2f &p)
 {
-	Vector2 lineDir = b - a;
+	Vector2f lineDir = b - a;
 	assert(lineDir.Length() > 0.0f);
 
-	Vector2 perpDir = Vector2(-lineDir.m_y, lineDir.m_x);
+	Vector2f perpDir = Vector2f(-lineDir.m_y, lineDir.m_x);
 	perpDir = perpDir.Normalize();
 
-	Vector2 dirToA = a - p;
+	Vector2f dirToA = a - p;
 
 	return perpDir.Dot(dirToA);
 }
 
-float LineCalculateT(const Vector2 &a, const Vector2 &b, const Vector2 &p)
+float LineCalculateT(const Vector2f &a, const Vector2f &b, const Vector2f &p)
 {
-	Vector2 ab = b - a;
-	Vector2 ap = p - a;
+	Vector2f ab = b - a;
+	Vector2f ap = p - a;
 
 	float t = ap.Dot(ab) / ab.Dot(ab);
 	return std::clamp(t, 0.0f, 1.0f);
 }
 
-void Bezier2Points(Vector2 &q0, Vector2 &q1, Vector2 &r, const Vector2 bezier[3], const float &t)
+void Bezier2Points(Vector2f &q0, Vector2f &q1, Vector2f &r, const Vector2f bezier[3], const float &t)
 {
 	q0 = bezier[0].Lerp(bezier[1], t);
 	q1 = bezier[1].Lerp(bezier[2], t);
 	r = q0.Lerp(q1, t);
 }
 
-void Bezier2Point(Vector2 &r, const Vector2 bezier[3], const float &t)
+void Bezier2Point(Vector2f &r, const Vector2f bezier[3], const float &t)
 {
-	Vector2 q0, q1;
+	Vector2f q0, q1;
 	Bezier2Points(q0, q1, r, bezier, t);
 }
 
-void Bezier2SplitLr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], const float &t)
+void Bezier2SplitLr(Vector2f left[3], Vector2f right[3], const Vector2f bezier[3], const float &t)
 {
-	Vector2 q0, q1, r;
+	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
 
 	left[0] = bezier[0];
@@ -205,9 +205,9 @@ void Bezier2SplitLr(Vector2 left[3], Vector2 right[3], const Vector2 bezier[3], 
 	right[2] = bezier[2];
 }
 
-void Bezier2Split_5P(Vector2 ret[5], const Vector2 bezier[3], const float &t)
+void Bezier2Split_5P(Vector2f ret[5], const Vector2f bezier[3], const float &t)
 {
-	Vector2 q0, q1, r;
+	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
 
 	ret[0] = bezier[0];
@@ -217,9 +217,9 @@ void Bezier2Split_5P(Vector2 ret[5], const Vector2 bezier[3], const float &t)
 	ret[4] = bezier[2];
 }
 
-void Bezier2Split_3P(Vector2 ret[3], const Vector2 bezier[3], const float &t)
+void Bezier2Split_3P(Vector2f ret[3], const Vector2f bezier[3], const float &t)
 {
-	Vector2 q0, q1, r;
+	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
 
 	ret[0] = q0;
@@ -227,7 +227,7 @@ void Bezier2Split_3P(Vector2 ret[3], const Vector2 bezier[3], const float &t)
 	ret[2] = q1;
 }
 
-void Bezier2Derivative(const Vector2 bezier[3], Vector2 derivative[2])
+void Bezier2Derivative(const Vector2f bezier[3], Vector2f derivative[2])
 {
 	derivative[0] = bezier[1] - bezier[0];
 	derivative[0] *= 2.0f;
@@ -241,9 +241,9 @@ float Bezier2Component(const float &p0, const float &p1, const float &p2, const 
 	return Maths::Lerp(Maths::Lerp(p0, p1, t), Maths::Lerp(p1, p2, t), t);
 }
 
-void Bezier2Bbox(const Vector2 bezier[3], Rect &bbox)
+void Bezier2Bbox(const Vector2f bezier[3], Rect &bbox)
 {
-	Vector2 deriv[2];
+	Vector2f deriv[2];
 	Bezier2Derivative(bezier, deriv);
 
 	float tx = deriv[0].m_x / (deriv[0].m_x - deriv[1].m_x);
@@ -283,34 +283,34 @@ void Bezier2Bbox(const Vector2 bezier[3], Rect &bbox)
 	}
 }
 
-void AlignPoint(Vector2 &r, const Vector2 &p, const Vector2 &t, const float &s, const float &c)
+void AlignPoint(Vector2f &r, const Vector2f &p, const Vector2f &t, const float &s, const float &c)
 {
-	Vector2 tmp = p - t;
+	Vector2f tmp = p - t;
 
 	r.m_x = tmp.m_x * c - tmp.m_y * s;
 	r.m_y = tmp.m_x * s + tmp.m_y * c;
 }
 
-void AlignLsc(const Vector2 &p0, const Vector2 &p1, float &l, float &s, float &c)
+void AlignLsc(const Vector2f &p0, const Vector2f &p1, float &l, float &s, float &c)
 {
-	Vector2 v = p1 - p0;
+	Vector2f v = p1 - p0;
 
 	l = v.Length();
 	s = -v.m_y / l;
 	c = v.m_x / l;
 }
 
-void Bezier2AlignToSelf(Vector2 r[3], const Vector2 bezier[3])
+void Bezier2AlignToSelf(Vector2f r[3], const Vector2f bezier[3])
 {
 	float l, s, c;
 	AlignLsc(bezier[0], bezier[2], l, s, c);
 
-	r[0] = Vector2(0.0f, 0.0f);
+	r[0] = Vector2f(0.0f, 0.0f);
 	AlignPoint(r[1], bezier[1], bezier[0], s, c);
-	r[2] = Vector2(l, 0.0f);
+	r[2] = Vector2f(l, 0.0f);
 }
 
-void Bezier2AlignToLine(Vector2 r[3], const Vector2 bezier[3], const Vector2 &line0, const Vector2 &line1)
+void Bezier2AlignToLine(Vector2f r[3], const Vector2f bezier[3], const Vector2f &line0, const Vector2f &line1)
 {
 	float l, s, c;
 	AlignLsc(line0, line1, l, s, c);
@@ -320,12 +320,12 @@ void Bezier2AlignToLine(Vector2 r[3], const Vector2 bezier[3], const Vector2 &li
 	AlignPoint(r[2], bezier[2], line0, s, c);
 }
 
-bool Bezier2LineIsIntersecting(const Vector2 bezier[3], const Vector2 &line0, const Vector2 &line1)
+bool Bezier2LineIsIntersecting(const Vector2f bezier[3], const Vector2f &line0, const Vector2f &line1)
 {
 	float l, si, co;
 	AlignLsc(line0, line1, l, si, co);
 
-	Vector2 bez[3];
+	Vector2f bez[3];
 	AlignPoint(bez[0], bezier[0], line0, si, co);
 	AlignPoint(bez[1], bezier[1], line0, si, co);
 	AlignPoint(bez[2], bezier[2], line0, si, co);

@@ -42,8 +42,8 @@ void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 {
 	if (!Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_positionX = static_cast<uint32_t>(xpos);
-		Window::Get()->m_positionY = static_cast<uint32_t>(ypos);
+		Window::Get()->m_position.m_x = static_cast<uint32_t>(xpos);
+		Window::Get()->m_position.m_y = static_cast<uint32_t>(ypos);
 	}
 
 	Window::Get()->m_onPosition(static_cast<uint32_t>(xpos), static_cast<uint32_t>(ypos));
@@ -58,13 +58,13 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 
 	if (Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_fullscreenWidth = static_cast<uint32_t>(width);
-		Window::Get()->m_fullscreenHeight = static_cast<uint32_t>(height);
+		Window::Get()->m_fullscreenSize.m_x = static_cast<uint32_t>(width);
+		Window::Get()->m_fullscreenSize.m_y = static_cast<uint32_t>(height);
 	}
 	else
 	{
-		Window::Get()->m_windowWidth = static_cast<uint32_t>(width);
-		Window::Get()->m_windowHeight = static_cast<uint32_t>(height);
+		Window::Get()->m_size.m_x = static_cast<uint32_t>(width);
+		Window::Get()->m_size.m_y = static_cast<uint32_t>(height);
 	}
 
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
@@ -97,13 +97,10 @@ void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 }
 
 Window::Window() :
-	m_windowWidth(1080),
-	m_windowHeight(720),
-	m_fullscreenWidth(0),
-	m_fullscreenHeight(0),
+	m_size(1080, 720),
+	m_fullscreenSize(0, 0),
 	m_aspectRatio(1.5f),
-	m_positionX(0),
-	m_positionY(0),
+	m_position(0, 0),
 	m_title("Acid Loading..."),
 	m_borderless(false),
 	m_resizable(true),
@@ -153,7 +150,7 @@ Window::Window() :
 	auto videoMode = m_monitors[0].GetVideoMode();
 
 	// Create a windowed mode window and its context.
-	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenWidth : m_windowWidth, m_fullscreen ? m_fullscreenHeight : m_windowHeight, m_title.c_str(), nullptr, nullptr);
+	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
 
 	// Gets any window errors.
 	if (m_window == nullptr)
@@ -171,9 +168,9 @@ Window::Window() :
 	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
 
 	// Centre the window position.
-	m_positionX = (videoMode.m_width - m_windowWidth) / 2;
-	m_positionY = (videoMode.m_height - m_windowHeight) / 2;
-	glfwSetWindowPos(m_window, m_positionX, m_positionY);
+	m_position.m_x = (videoMode.m_width - m_size.m_x) / 2;
+	m_position.m_y = (videoMode.m_height - m_size.m_y) / 2;
+	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
 
 	// Sets fullscreen if enabled.
 	if (m_fullscreen)
@@ -210,27 +207,19 @@ void Window::Update()
 	glfwPollEvents();
 }
 
-void Window::SetDimensions(const uint32_t &width, const uint32_t &height)
+void Window::SetSize(const Vector2i &size)
 {
-	m_windowWidth = width;
-	m_windowHeight = height;
-	m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-	glfwSetWindowSize(m_window, width, height);
+	m_size.m_x = size.m_x == -1 ? m_size.m_x : size.m_x;
+	m_size.m_y = size.m_y == -1 ? m_size.m_y : size.m_y;
+	m_aspectRatio = static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y);
+	glfwSetWindowSize(m_window, m_size.m_x, m_size.m_y);
 }
 
-void Window::SetDimensions(const Vector2 &size)
+void Window::SetPosition(const Vector2i &position)
 {
-	SetDimensions(size.m_x == -1.0f ? GetWidth() : static_cast<uint32_t>(size.m_x), size.m_y == -1.0f ? GetHeight() : static_cast<uint32_t>(size.m_y));
-}
-
-void Window::SetPosition(const uint32_t &x, const uint32_t &y)
-{
-	glfwSetWindowPos(m_window, x, y);
-}
-
-void Window::SetPosition(const Vector2 &position)
-{
-	SetPosition(position.m_x == -1.0f ? GetPositionX() : static_cast<uint32_t>(position.m_x), position.m_y == -1.0f ? GetPositionY() : static_cast<uint32_t>(position.m_y));
+	m_position.m_x = position.m_x == -1 ? m_position.m_x : position.m_x;
+	m_position.m_y = position.m_y == -1 ? m_position.m_y : position.m_y;
+	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
 }
 
 void Window::SetTitle(const std::string &title)
@@ -302,18 +291,18 @@ void Window::SetFullscreen(const bool &fullscreen, const std::optional<Monitor> 
 #if defined(ACID_VERBOSE)
 		printf("Window is going fullscreen\n");
 #endif
-		m_fullscreenWidth = static_cast<uint32_t>(videoMode.m_width);
-		m_fullscreenHeight = static_cast<uint32_t>(videoMode.m_height);
-		glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenWidth, m_fullscreenHeight, GLFW_DONT_CARE);
+		m_fullscreenSize.m_x = static_cast<uint32_t>(videoMode.m_width);
+		m_fullscreenSize.m_y = static_cast<uint32_t>(videoMode.m_height);
+		glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	}
 	else
 	{
 #if defined(ACID_VERBOSE)
 		printf("Window is going windowed\n");
 #endif
-		m_positionX = (videoMode.m_width - m_windowWidth) / 2;
-		m_positionY = (videoMode.m_height - m_windowHeight) / 2;
-		glfwSetWindowMonitor(m_window, nullptr, m_positionX, m_positionY, m_windowWidth, m_windowHeight, GLFW_DONT_CARE);
+		m_position.m_x = (videoMode.m_width - m_size.m_x) / 2;
+		m_position.m_y = (videoMode.m_height - m_size.m_y) / 2;
+		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
 	}
 
 	m_onFullscreen(m_fullscreen);

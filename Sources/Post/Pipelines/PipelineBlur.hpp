@@ -38,7 +38,6 @@ private:
 	float m_blur;
 
 	std::unique_ptr<Image2d> m_output;
-	uint32_t m_lastWidth;
-	uint32_t m_lastHeight;
+	Vector2i m_lastSize;
 };
 }

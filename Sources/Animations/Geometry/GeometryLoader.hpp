@@ -21,7 +21,7 @@ public:
 private:
 	std::vector<Vector3> GetPositions();
 
-	std::vector<Vector2> GetUvs();
+	std::vector<Vector2f> GetUvs();
 
 	std::vector<Vector3> GetNormals();
 

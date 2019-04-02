@@ -5,8 +5,8 @@
 
 namespace acid
 {
-const Vector2 UiInputButton::Size = Vector2(0.22f, 0.042f);
-const Vector2 UiInputButton::Padding = Vector2(0.01f, 0.07f);
+const Vector2f UiInputButton::Size = Vector2f(0.22f, 0.042f);
+const Vector2f UiInputButton::Padding = Vector2f(0.01f, 0.07f);
 const float UiInputButton::FontSize = 1.3f;
 const Time UiInputButton::SlideTime = Time::Seconds(0.12f);
 

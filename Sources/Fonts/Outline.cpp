@@ -13,12 +13,12 @@ void OutlineAddOddPoint(Outline *o)
 {
 	if (o->points.size() % 2 != 0)
 	{
-		Vector2 p = Vector2(o->bbox.minX, o->bbox.minY);
+		Vector2f p = Vector2f(o->bbox.minX, o->bbox.minY);
 		o->points.emplace_back(p);
 	}
 }
 
-void ConvertPoint(const FT_Vector *v, Vector2 &out)
+void ConvertPoint(const FT_Vector *v, Vector2f &out)
 {
 	out.m_x = static_cast<float>(v->x) / 64.0f;
 	out.m_y = static_cast<float>(v->y) / 64.0f;
@@ -26,7 +26,7 @@ void ConvertPoint(const FT_Vector *v, Vector2 &out)
 
 int32_t MoveToFunc(const FT_Vector *to, Outline *o)
 {
-	Vector2 p = Vector2();
+	Vector2f p = Vector2f();
 
 	if (!o->contours.empty())
 	{
@@ -48,9 +48,9 @@ int32_t LineToFunc(const FT_Vector *to, Outline *o)
 {
 	auto last = static_cast<uint32_t>(o->points.size() - 1);
 
-	Vector2 toP;
+	Vector2f toP;
 	ConvertPoint(to, toP);
-	Vector2 p = o->points[last].Lerp(toP, 0.5f);
+	Vector2f p = o->points[last].Lerp(toP, 0.5f);
 	o->points.emplace_back(p);
 	o->points.emplace_back(toP);
 	return 0;
@@ -58,7 +58,7 @@ int32_t LineToFunc(const FT_Vector *to, Outline *o)
 
 int32_t ConicToFunc(const FT_Vector *control, const FT_Vector *to, Outline *o)
 {
-	Vector2 p;
+	Vector2f p;
 	ConvertPoint(control, p);
 	o->points.emplace_back(p);
 
@@ -165,7 +165,7 @@ uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to)
 bool IsCellFilled(const Outline *o, const Rect &bbox)
 {
 	// TODO: Optimize
-	Vector2 p = Vector2((bbox.maxX + bbox.minX) / 2.0f, (bbox.maxY + bbox.minY) / 2.0f);
+	Vector2f p = Vector2f((bbox.maxX + bbox.minX) / 2.0f, (bbox.maxY + bbox.minY) / 2.0f);
 
 	float mindist = std::numeric_limits<float>::max();
 	float v = std::numeric_limits<float>::max();
@@ -178,13 +178,13 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 		{
-			Vector2 p0 = o->points[i];
-			Vector2 p1 = o->points[i + 1];
-			Vector2 p2 = o->points[i + 2];
+			Vector2f p0 = o->points[i];
+			Vector2f p1 = o->points[i + 1];
+			Vector2f p2 = o->points[i + 2];
 
 			float t = LineCalculateT(p0, p2, p);
 
-			Vector2 p02 = p0.Lerp(p2, t);
+			Vector2f p02 = p0.Lerp(p2, t);
 
 			float udist = p02.Distance(p);
 
@@ -422,9 +422,9 @@ uint32_t OutlineAddFilledLine(Outline *o)
 
 	auto i = static_cast<uint32_t>(o->points.size());
 	float y = o->bbox.maxY + 1000.0f;
-	Vector2 f0 = Vector2(o->bbox.minX, y);
-	Vector2 f1 = Vector2(o->bbox.minX + 10.0f, y);
-	Vector2 f2 = Vector2(o->bbox.minX + 20.0f, y);
+	Vector2f f0 = Vector2f(o->bbox.minX, y);
+	Vector2f f1 = Vector2f(o->bbox.minX + 10.0f, y);
+	Vector2f f2 = Vector2f(o->bbox.minX + 20.0f, y);
 	o->points.emplace_back(f0);
 	o->points.emplace_back(f1);
 	o->points.emplace_back(f2);
@@ -479,9 +479,9 @@ bool TryToFitInCellCount(Outline *o)
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 		{
-			Vector2 &p0 = o->points[i];
-			Vector2 &p1 = o->points[i + 1];
-			//Vector2 &p2 = o->points[i + 2];
+			Vector2f &p0 = o->points[i];
+			Vector2f &p1 = o->points[i + 1];
+			//Vector2f &p2 = o->points[i + 2];
 
 			auto j = static_cast<uint32_t>(u.points.size());
 			u.points.emplace_back(p0);
@@ -501,7 +501,7 @@ bool TryToFitInCellCount(Outline *o)
 			u.points.emplace_back(o->points[i + 1]);
 		}
 
-		Vector2 &plast = o->points[continuationEnd];
+		Vector2f &plast = o->points[continuationEnd];
 		u.points.emplace_back(plast);
 	}
 
@@ -620,11 +620,11 @@ void OutlineSubdivide(Outline *o)
 
 		for (uint32_t i = contourBegin; i < contour_end; i += 2)
 		{
-			Vector2 &p0 = o->points[i];
-			//Vector2 &p1 = o->points[i + 1];
-			//Vector2 &p2 = o->points[i + 2];
+			Vector2f &p0 = o->points[i];
+			//Vector2f &p1 = o->points[i + 1];
+			//Vector2f &p2 = o->points[i + 2];
 
-			Vector2 newp[3];
+			Vector2f newp[3];
 			Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
 			u.points.emplace_back(p0);
@@ -658,12 +658,12 @@ void OutlineFixCorners(Outline *o)
 				prev = contourEnd - 1;
 			}
 
-			Vector2 &r = o->points[prev];
-			Vector2 &p0 = o->points[i];
-			Vector2 &p1 = o->points[i + 1];
+			Vector2f &r = o->points[prev];
+			Vector2f &p0 = o->points[i];
+			Vector2f &p1 = o->points[i + 1];
 
-			Vector2 v0 = r - p0;
-			Vector2 v1 = p1 - p0;
+			Vector2f v0 = r - p0;
+			Vector2f v1 = p1 - p0;
 
 			v0 = v0.Normalize();
 			v1 = v1.Normalize();
@@ -675,8 +675,8 @@ void OutlineFixCorners(Outline *o)
 				v0 *= fixDist;
 				v1 *= fixDist;
 
-				Vector2 f1 = p0 - v0;
-				Vector2 f0 = p0 - v1;
+				Vector2f f1 = p0 - v0;
+				Vector2f f0 = p0 - v1;
 
 				OutlineAddOddPoint(o);
 
@@ -710,14 +710,14 @@ void OutlineFixThinLines(Outline *o)
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 		{
-			Vector2 &p0 = o->points[i];
-			Vector2 &p1 = o->points[i + 1];
-			Vector2 &p2 = o->points[i + 2];
+			Vector2f &p0 = o->points[i];
+			Vector2f &p1 = o->points[i + 1];
+			Vector2f &p2 = o->points[i + 2];
 
-			Vector2 mid = p0.Lerp(p2, 0.5f);
-			Vector2 midp1 = p1 - mid;
+			Vector2f mid = p0.Lerp(p2, 0.5f);
+			Vector2f midp1 = p1 - mid;
 
-			Vector2 bezier[] = {p0, p0, p2};
+			Vector2f bezier[] = {p0, p0, p2};
 
 			bezier[1] += midp1;
 			/*bool subdivide = false;
@@ -733,8 +733,8 @@ void OutlineFixThinLines(Outline *o)
 
 				for (uint32_t j = jbegin; j < i - 2; j += 2)
 				{
-					Vector2 &q0 = o->points[j];
-					Vector2 &q2 = o->points[j + 2];
+					Vector2f &q0 = o->points[j];
+					Vector2f &q2 = o->points[j + 2];
 
 					if (Bezier2LineIsIntersecting(bezier, q0, q2))
 					{
@@ -752,8 +752,8 @@ void OutlineFixThinLines(Outline *o)
 
 			for (uint32_t j = i + 2; j < jend; j += 2)
 			{
-				Vector2 &q0 = o->points[j];
-				Vector2 &q2 = o->points[j + 2];
+				Vector2f &q0 = o->points[j];
+				Vector2f &q2 = o->points[j + 2];
 
 				if (Bezier2LineIsIntersecting(bezier, q0, q2))
 				{
@@ -780,9 +780,9 @@ void OutlineFixThinLines(Outline *o)
 					continue;
 				}
 
-				Vector2 &q0 = o->points[j];
-				//Vector2 &q1 = o->points[j + 1];
-				Vector2 &q2 = o->points[j + 2];
+				Vector2f &q0 = o->points[j];
+				//Vector2f &q1 = o->points[j + 1];
+				Vector2f &q2 = o->points[j + 2];
 
 				if (Bezier2LineIsIntersecting(bezier, q0, q2))
 				{
@@ -792,7 +792,7 @@ void OutlineFixThinLines(Outline *o)
 
 			if (subdivide)
 			{
-				Vector2 newp[3];
+				Vector2f newp[3];
 				Bezier2Split_3P(newp, &o->points[i], 0.5f);
 
 				u.points.emplace_back(p0);

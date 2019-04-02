@@ -69,10 +69,10 @@ bool Particle::operator<(const Particle &other) const
 	return m_distanceToCamera > other.m_distanceToCamera;
 }
 
-Vector2 Particle::CalculateTextureOffset(const int32_t &index) const
+Vector2f Particle::CalculateTextureOffset(const int32_t &index) const
 {
 	int32_t column = index % m_particleType->GetNumberOfRows();
 	int32_t row = index / m_particleType->GetNumberOfRows();
-	return Vector2(static_cast<float>(column), static_cast<float>(row)) / m_particleType->GetNumberOfRows();
+	return Vector2f(static_cast<float>(column), static_cast<float>(row)) / m_particleType->GetNumberOfRows();
 }
 }

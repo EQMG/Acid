@@ -64,8 +64,8 @@ void ModelSphere::Load()
 
 			Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
 			Vector3 position = m_radius * normal;
-			Vector2 uvs = Vector2(1.0f - jDivLat, 1.0f - iDivLong);
-			vertices.emplace_back(position, uvs, normal);
+			Vector2f uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
+			vertices.emplace_back(VertexModel(position, uvs, normal));
 		}
 	}
 

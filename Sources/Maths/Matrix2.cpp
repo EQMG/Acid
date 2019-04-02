@@ -17,12 +17,12 @@ Matrix2::Matrix2(const float &diagonal)
 
 Matrix2::Matrix2(const Matrix3 &source)
 {
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 }
 
 Matrix2::Matrix2(const Matrix4 &source)
 {
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 }
 
 Matrix2::Matrix2(const float *source)
@@ -30,9 +30,9 @@ Matrix2::Matrix2(const float *source)
 	std::memcpy(m_rows, source, 2 * 2 * sizeof(float));
 }
 
-Matrix2::Matrix2(const Vector2 *source)
+Matrix2::Matrix2(const Vector2f *source)
 {
-	std::memcpy(m_rows, source, 2 * sizeof(Vector2));
+	std::memcpy(m_rows, source, 2 * sizeof(Vector2f));
 }
 
 Matrix2 Matrix2::Add(const Matrix2 &other) const
@@ -95,9 +95,9 @@ Matrix2 Matrix2::Divide(const Matrix2 &other) const
 	return result;
 }
 
-Vector2 Matrix2::Transform(const Vector2 &other) const
+Vector2f Matrix2::Transform(const Vector2f &other) const
 {
-	Vector2 result = Vector2();
+	Vector2f result = Vector2f();
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -107,7 +107,7 @@ Vector2 Matrix2::Transform(const Vector2 &other) const
 	return result;
 }
 
-Matrix2 Matrix2::Scale(const Vector2 &other) const
+Matrix2 Matrix2::Scale(const Vector2f &other) const
 {
 	Matrix2 result = Matrix2(*this);
 
@@ -254,13 +254,13 @@ Matrix2 Matrix2::operator-() const
 	return Negate();
 }
 
-const Vector2 &Matrix2::operator[](const uint32_t &index) const
+const Vector2f &Matrix2::operator[](const uint32_t &index) const
 {
 	assert(index < 2);
 	return m_rows[index];
 }
 
-Vector2 &Matrix2::operator[](const uint32_t &index)
+Vector2f &Matrix2::operator[](const uint32_t &index)
 {
 	assert(index < 2);
 	return m_rows[index];
@@ -286,44 +286,44 @@ Matrix2 operator/(const Matrix2 &left, const Matrix2 &right)
 	return left.Divide(right);
 }
 
-Matrix2 operator*(const Vector2 &left, const Matrix2 &right)
+Matrix2 operator*(const Vector2f &left, const Matrix2 &right)
 {
 	return right.Scale(left);
 }
 
-Matrix2 operator/(const Vector2 &left, const Matrix2 &right)
+Matrix2 operator/(const Vector2f &left, const Matrix2 &right)
 {
 	return right.Scale(1.0f / left);
 }
 
-Matrix2 operator*(const Matrix2 &left, const Vector2 &right)
+Matrix2 operator*(const Matrix2 &left, const Vector2f &right)
 {
 	return left.Scale(right);
 }
 
-Matrix2 operator/(const Matrix2 &left, const Vector2 &right)
+Matrix2 operator/(const Matrix2 &left, const Vector2f &right)
 {
 	return left.Scale(1.0f / right);
 }
 
 Matrix2 operator*(const float &left, const Matrix2 &right)
 {
-	return right.Scale(Vector2(left, left));
+	return right.Scale(Vector2f(left, left));
 }
 
 Matrix2 operator/(const float &left, const Matrix2 &right)
 {
-	return right.Scale(1.0f / Vector2(left, left));
+	return right.Scale(1.0f / Vector2f(left, left));
 }
 
 Matrix2 operator*(const Matrix2 &left, const float &right)
 {
-	return left.Scale(Vector2(right, right));
+	return left.Scale(Vector2f(right, right));
 }
 
 Matrix2 operator/(const Matrix2 &left, const float &right)
 {
-	return left.Scale(1.0f / Vector2(right, right));
+	return left.Scale(1.0f / Vector2f(right, right));
 }
 
 Matrix2 &Matrix2::operator+=(const Matrix2 &other)
@@ -346,24 +346,24 @@ Matrix2 &Matrix2::operator/=(const Matrix2 &other)
 	return *this = Divide(other);
 }
 
-Matrix2 &Matrix2::operator*=(const Vector2 &other)
+Matrix2 &Matrix2::operator*=(const Vector2f &other)
 {
 	return *this = Scale(other);
 }
 
-Matrix2 &Matrix2::operator/=(const Vector2 &other)
+Matrix2 &Matrix2::operator/=(const Vector2f &other)
 {
 	return *this = Scale(1.0f / other);
 }
 
 Matrix2 &Matrix2::operator*=(const float &other)
 {
-	return *this = Scale(Vector2(other, other));
+	return *this = Scale(Vector2f(other, other));
 }
 
 Matrix2 &Matrix2::operator/=(const float &other)
 {
-	return *this = Scale(1.0f / Vector2(other, other));
+	return *this = Scale(1.0f / Vector2f(other, other));
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)

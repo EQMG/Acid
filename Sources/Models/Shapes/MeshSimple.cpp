@@ -53,7 +53,7 @@ VertexModel MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
 	auto position = Vector3(x, 0.0f, z);
-	auto uv = Vector2(static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount));
+	auto uv = Vector2f(static_cast<float>(col) * m_textureScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_textureScale / static_cast<float>(m_vertexCount));
 	auto normal = Vector3::Up;
 	//auto colour = Colour::White;
 	return VertexModel(position, uv, normal); // , colour

@@ -181,7 +181,7 @@ void ShadowBox::UpdateCenter()
 void ShadowBox::UpdateLightViewMatrix()
 {
 	m_lightViewMatrix = Matrix4::Identity;
-	auto pitch = std::acos(Vector2(m_lightDirection.m_x, m_lightDirection.m_z).Length());
+	auto pitch = std::acos(Vector2f(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3::Right);
 	auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
 

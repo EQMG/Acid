@@ -4,7 +4,7 @@
 
 namespace acid
 {
-FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2 &direction, const Type &type) :
+FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type) :
 	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Blur.frag" }, { Shader::Define("BLUR_TYPE", String::To(static_cast<uint32_t>(type))) }),
 	m_type(type),
 	m_direction(direction)

@@ -16,7 +16,7 @@ class ACID_EXPORT UiScrollBar :
 	public UiObject
 {
 public:
-	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 	void UpdateObject() override;
 

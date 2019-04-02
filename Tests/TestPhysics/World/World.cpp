@@ -1,6 +1,7 @@
 #include "World.hpp"
 
 #include <Post/Deferred/RendererDeferred.hpp>
+#include <Post/Filters/FilterLensflare.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -34,6 +35,14 @@ void World::Update()
 	m_fog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
 	m_fog.SetLowerLimit(0.0f);
 	m_fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
+
+	auto lensflare = Renderer::Get()->GetManager()->GetRendererContainer().Get<FilterLensflare>();
+
+	if (lensflare != nullptr)
+	{
+		lensflare->SetSunPosition(Vector3(1000.0f, 5000.0f, -4000.0f));
+		lensflare->SetSunHeight(1000.0f);
+	}
 
 	auto deferred = Renderer::Get()->GetManager()->GetRendererContainer().Get<RendererDeferred>();
 

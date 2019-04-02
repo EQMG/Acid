@@ -12,7 +12,7 @@ class ACID_EXPORT UiInputBoolean :
 {
 public:
 	UiInputBoolean(UiObject *parent, const std::string &title, const bool &value,
-		const UiBound &rectangle = UiBound(Vector2::Zero, UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
 
 	void UpdateObject() override;
 

@@ -1,8 +1,6 @@
 #include "Vector4.hpp"
 
 #include "Colour.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
 
 namespace acid
 {
@@ -21,7 +19,7 @@ Vector4::Vector4(const float &x, const float &y, const float &z, const float &w)
 {
 }
 
-Vector4::Vector4(const Vector2 &a, const Vector2 &b) :
+Vector4::Vector4(const Vector2f &a, const Vector2f &b) :
 	m_x(a.m_x),
 	m_y(a.m_y),
 	m_z(b.m_x),

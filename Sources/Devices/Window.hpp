@@ -45,40 +45,11 @@ public:
 	void Update() override;
 
 	/**
-	 * Gets the width of the window in pixels.
-	 * @return The width of the window.
+	 * Gets the size of the window in pixels.
+	 * @param checkFullscreen If in fullscreen and true size will be the screens size.
+	 * @return The size of the window.
 	 */
-	const uint32_t &GetWidth() const { return m_fullscreen ? m_fullscreenWidth : m_windowWidth; }
-
-	/**
-	 * Gets the non-fullscreen width of the window in pixels.
-	 * @return The width of the window.
-	 */
-	const uint32_t &GetWindowWidth() const { return m_windowWidth; }
-
-	/**
-	 * Sets the width of the window in pixels.
-	 * @param width The new width in pixels.
-	 */
-	void SetWidth(const uint32_t &width) { SetDimensions(width, GetHeight()); }
-
-	/**
-	 * Gets the height of the window in pixels.
-	 * @return The height of the window.
-	 */
-	const uint32_t &GetHeight() const { return m_fullscreen ? m_fullscreenHeight : m_windowHeight; }
-
-	/**
-	 * Gets the non-fullscreen height of the window in pixels.
-	 * @return The height of the window.
-	 */
-	const uint32_t &GetWindowHeight() const { return m_windowHeight; }
-
-	/**
-	 * Sets the height of the window in pixels.
-	 * @param height The new height in pixels.
-	 */
-	void SetHeight(const uint32_t &height) { SetDimensions(GetWidth(), height); }
+	const Vector2ui &GetSize(const bool &checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
 
 	/**
 	 * Gets the aspect ratio between the windows width and height.
@@ -87,54 +58,22 @@ public:
 	const float &GetAspectRatio() const { return m_aspectRatio; }
 
 	/**
-	 * Gets the dimensions of the window in pixels.
-	 * @return The dimensions of the window.
+	 * Sets the window size.
+	 * @param size The new size in pixels.
 	 */
-	Vector2 GetDimensions() const { return Vector2(static_cast<float>(GetWidth()), static_cast<float>(GetHeight())); }
-
-	/**
-	 * Sets the window size to a new size.
-	 * @param width The new width in pixels.
-	 * @param height The new height in pixels.
-	 */
-	void SetDimensions(const uint32_t &width, const uint32_t &height);
-
-	/**
-	 * Sets the window size to a new size.
-	 * @param size The new width in pixels.
-	 */
-	void SetDimensions(const Vector2 &size);
-
-	/**
-	 * Gets the windows x position in pixels.
-	 * @return The windows x position.
-	 */
-	const uint32_t &GetPositionX() const { return m_positionX; }
-
-	/**
-	 * Gets the windows y position in pixels.
-	 * @return The windows y position.
-	 */
-	const uint32_t &GetPositionY() const { return m_positionY; }
+	void SetSize(const Vector2i &size);
 
 	/**
 	 * Gets the windows position in pixels.
-	 * @return The dimension of the window.
+	 * @return The windows position.
 	 */
-	Vector2 GetPosition() const { return Vector2(static_cast<float>(m_positionX), static_cast<float>(m_positionY)); }
-
-	/**
-	 * Sets the window position to a new position in pixels.
-	 * @param x The new x position in pixels.
-	 * @param y The new y position in pixels.
-	 */
-	void SetPosition(const uint32_t &x, const uint32_t &y);
+	const Vector2ui &GetPosition() const { return m_position; }
 
 	/**
 	 * Sets the window position to a new position in pixels.
 	 * @param position The new position in pixels.
 	 */
-	void SetPosition(const Vector2 &position);
+	void SetPosition(const Vector2i &position);
 
 	/**
 	 * Gets the window's title.
@@ -322,14 +261,11 @@ private:
 
 	friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 
-	uint32_t m_windowWidth;
-	uint32_t m_windowHeight;
-	uint32_t m_fullscreenWidth;
-	uint32_t m_fullscreenHeight;
+	Vector2ui m_size;
+	Vector2ui m_fullscreenSize;
 	float m_aspectRatio;
 
-	uint32_t m_positionX;
-	uint32_t m_positionY;
+	Vector2ui m_position;
 
 	std::string m_title;
 	bool m_borderless;

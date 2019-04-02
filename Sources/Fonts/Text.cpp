@@ -50,8 +50,8 @@ void Text::UpdateObject()
 
 	m_uniformObject.Push("colour", m_textColour);
 	m_uniformObject.Push("borderColour", m_borderColour);
-	m_uniformObject.Push("borderSizes", Vector2(GetTotalBorderSize(), GetGlowSize()));
-	m_uniformObject.Push("edgeData", Vector2(CalculateEdgeStart(), CalculateAntialiasSize()));
+	m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
+	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
@@ -74,10 +74,10 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	}
 
 	VkRect2D scissorRect = {};
-	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetWidth() * GetScissor().m_x);
-	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetHeight() * GetScissor().m_y);
-	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetWidth() * GetScissor().m_z);
-	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetHeight() * GetScissor().m_w);
+	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetSize().m_x * GetScissor().m_x);
+	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetSize().m_y * GetScissor().m_y);
+	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetSize().m_x * GetScissor().m_z);
+	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetSize().m_y * GetScissor().m_w);
 	vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
 
 	// Draws the object.
@@ -181,12 +181,12 @@ void Text::LoadText()
 	auto vertices = CreateQuad(lines);
 
 	// Calculates the bounds and normalizes the vertices.
-	Vector2 bounding;
+	Vector2f bounding;
 	NormalizeQuad(bounding, vertices);
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	GetRectangle().SetDimensions(Vector2(bounding.m_x, bounding.m_y));
+	GetRectangle().SetDimensions(Vector2f(bounding.m_x, bounding.m_y));
 }
 
 std::vector<Text::Line> Text::CreateStructure() const
@@ -339,10 +339,10 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
 {
-	vertices.emplace_back(Vector3(static_cast<float>(vx), static_cast<float>(vy), 0.0f), Vector2(static_cast<float>(tx), static_cast<float>(ty)));
+	vertices.emplace_back(VertexModel(Vector3(vx, vy, 0.0f), Vector2f(tx, ty), Vector3::Zero));
 }
 
-void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) const
+void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices) const
 {
 	auto minX = +std::numeric_limits<float>::infinity();
 	auto minY = +std::numeric_limits<float>::infinity();
@@ -379,7 +379,7 @@ void Text::NormalizeQuad(Vector2 &bounding, std::vector<VertexModel> &vertices) 
 	}
 
 	//maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
-	bounding = Vector2((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+	bounding = Vector2f((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
 
 	for (auto &vertex : vertices)
 	{

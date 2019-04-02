@@ -5,7 +5,7 @@
 layout(push_constant) uniform PushScene
 {
 	vec3 sunPosition;
-	vec2 displaySize;
+	ivec2 displaySize;
 	float worldHeight;
 } scene;
 

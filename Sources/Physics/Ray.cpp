@@ -2,15 +2,15 @@
 
 namespace acid
 {
-const Ray Ray::Zero = Ray(false, Vector2::Zero);
+const Ray Ray::Zero = Ray(false, Vector2f(0.0f, 0.0f));
 
-Ray::Ray(const bool &useMouse, const Vector2 &screenStart) :
+Ray::Ray(const bool &useMouse, const Vector2f &screenStart) :
 	m_useMouse(useMouse),
 	m_screenStart(screenStart)
 {
 }
 
-void Ray::Update(const Vector3 &currentPosition, const Vector2 &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+void Ray::Update(const Vector3 &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
 	m_origin = currentPosition;
 

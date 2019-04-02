@@ -12,15 +12,15 @@ class ACID_EXPORT VertexModel :
 	public IVertex
 {
 public:
-	explicit VertexModel(const Vector3 &position = Vector3::Zero, const Vector2 &uv = Vector2::Zero, const Vector3 &normal = Vector3::Zero);
+	VertexModel(const Vector3 &position, const Vector2f &uv, const Vector3 &normal);
 
 	const Vector3 &GetPosition() const override { return m_position; };
 
 	void SetPosition(const Vector3 &position) override { m_position = position; };
 
-	const Vector2 &GetUv() const { return m_uv; };
+	const Vector2f &GetUv() const { return m_uv; };
 
-	void SetUv(const Vector2 &uv) { m_uv = uv; };
+	void SetUv(const Vector2f &uv) { m_uv = uv; };
 
 	const Vector3 &GetNormal() const { return m_normal; };
 
@@ -34,7 +34,7 @@ public:
 
 private:
 	Vector3 m_position;
-	Vector2 m_uv;
+	Vector2f m_uv;
 	Vector3 m_normal;
 };
 }
