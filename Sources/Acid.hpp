@@ -5,7 +5,6 @@
 #include "Animations/Animator.hpp"
 #include "Animations/Geometry/GeometryLoader.hpp"
 #include "Animations/Geometry/VertexAnimated.hpp"
-#include "Animations/Geometry/VertexAnimatedData.hpp"
 #include "Animations/Joint/Joint.hpp"
 #include "Animations/Joint/JointTransform.hpp"
 #include "Animations/Keyframe/Keyframe.hpp"

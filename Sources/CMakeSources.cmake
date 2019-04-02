@@ -6,7 +6,6 @@ set(_temp_acid_headers
 		Animations/Animator.hpp
 		Animations/Geometry/GeometryLoader.hpp
 		Animations/Geometry/VertexAnimated.hpp
-		Animations/Geometry/VertexAnimatedData.hpp
 		Animations/Joint/Joint.hpp
 		Animations/Joint/JointTransform.hpp
 		Animations/Keyframe/Keyframe.hpp
@@ -247,7 +246,6 @@ set(_temp_acid_sources
 		Animations/Animator.cpp
 		Animations/Geometry/GeometryLoader.cpp
 		Animations/Geometry/VertexAnimated.cpp
-		Animations/Geometry/VertexAnimatedData.cpp
 		Animations/Joint/Joint.cpp
 		Animations/Joint/JointTransform.cpp
 		Animations/Keyframe/Keyframe.cpp

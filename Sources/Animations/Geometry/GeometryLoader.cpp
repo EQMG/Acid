@@ -8,146 +8,91 @@ GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<Ve
 	m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
 	m_vertexWeights(std::move(vertexWeights))
 {
-	LoadVertices();
-	LoadUvs();
-	LoadNormals();
-	AssembleVertices();
-	RemoveUnusedVertices();
+	auto positions = GetPositions();
+	auto uvs = GetUvs();
+	auto normals = GetNormals();
 
-	// TODO: Use a unordered unique map instead.
-	for (const auto &current : m_positionsList)
-	{
-		Vector3 position = current->GetPosition();
-		Vector2 textures = m_uvsList[*current->GetUvIndex()];
-		Vector3 normal = m_normalsList[*current->GetNormalIndex()];
-
-		auto skinData = current->GetSkinData();
-		Vector3 jointIds = Vector3(skinData.GetJointIds()[0], skinData.GetJointIds()[1], skinData.GetJointIds()[2]);
-		Vector3 weights = Vector3(skinData.GetWeights()[0], skinData.GetWeights()[1], skinData.GetWeights()[2]);
-
-		m_vertices.emplace_back(VertexAnimated(position, textures, normal, jointIds, weights));
-	}
-}
-
-void GeometryLoader::LoadVertices()
-{
-	std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
-	auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
-	auto positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
-	auto positionsRawData = String::Split(positionsData->GetValue(), " ");
-
-	for (uint32_t i = 0; i < positionsCount / 3; i++)
-	{
-		Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]),
-			1.0f);
-		position = MeshAnimated::Correction.Transform(position);
-		VertexAnimatedData *newVertex = new VertexAnimatedData(static_cast<int32_t>(m_positionsList.size()), position);
-		newVertex->SetSkinData(m_vertexWeights[m_positionsList.size()]);
-		m_positionsList.emplace_back(newVertex);
-	}
-}
-
-void GeometryLoader::LoadUvs()
-{
-	std::string uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
-	auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
-	auto uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
-	auto uvsRawData = String::Split(uvsData->GetValue(), " ");
-
-	for (uint32_t i = 0; i < uvsCount / 2; i++)
-	{
-		Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
-		m_uvsList.emplace_back(uv);
-	}
-}
-
-void GeometryLoader::LoadNormals()
-{
-	std::string normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
-	auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
-	auto normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
-	auto normalsRawData = String::Split(normalsData->GetValue(), " ");
-
-	for (uint32_t i = 0; i < normalsCount / 3; i++)
-	{
-		Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]), 0.0f);
-		normal = MeshAnimated::Correction.Transform(normal);
-		m_normalsList.emplace_back(normal);
-	}
-}
-
-void GeometryLoader::AssembleVertices()
-{
 	auto indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
 	auto indexRawData = String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), " ");
+
+	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
 
 	for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
 	{
 		auto positionIndex = String::From<uint32_t>(indexRawData[i * indexCount]);
 		auto normalIndex = String::From<uint32_t>(indexRawData[i * indexCount + 1]);
 		auto uvIndex = String::From<uint32_t>(indexRawData[i * indexCount + 2]);
-		ProcessVertex(positionIndex, normalIndex, uvIndex);
-	}
-}
 
-VertexAnimatedData *GeometryLoader::ProcessVertex(const uint32_t &positionIndex, const uint32_t &normalIndex, const uint32_t &uvIndex)
-{
-	auto currentVertex = m_positionsList[positionIndex].get();
+		auto vertexWeight = m_vertexWeights[positionIndex];
+		Vector3 jointIds = Vector3(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
+		Vector3 weights = Vector3(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
 
-	if (!currentVertex->IsSet())
-	{
-		currentVertex->SetUvIndex(uvIndex);
-		currentVertex->SetNormalIndex(normalIndex);
-		m_indices.emplace_back(positionIndex);
-		return currentVertex;
-	}
+		VertexAnimated vertex = VertexAnimated(positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights);
 
-	return DealWithAlreadyProcessedVertex(currentVertex, uvIndex, normalIndex);
-}
-
-VertexAnimatedData *GeometryLoader::DealWithAlreadyProcessedVertex(VertexAnimatedData *previousVertex, const uint32_t &newUvIndex, const uint32_t &newNormalIndex)
-{
-	if (previousVertex->HasSameUvAndNormal(newUvIndex, newNormalIndex))
-	{
-		m_indices.emplace_back(previousVertex->GetIndex());
-		return previousVertex;
-	}
-
-	VertexAnimatedData *anotherVertex = nullptr;
-
-	for (const auto &position : m_positionsList)
-	{
-		if (position.get() == previousVertex->GetDuplicateVertex())
+		if (uniqueVertices.count(vertex) == 0)
 		{
-			anotherVertex = position.get();
-			break;
+			uniqueVertices[vertex] = m_vertices.size();
+			m_vertices.emplace_back(vertex);
 		}
-	}
 
-	if (anotherVertex != nullptr)
-	{
-		return DealWithAlreadyProcessedVertex(anotherVertex, newUvIndex, newNormalIndex);
+		m_indices.emplace_back(static_cast<uint32_t>(uniqueVertices[vertex]));
 	}
-
-	auto duplicateVertex = new VertexAnimatedData(static_cast<uint32_t>(m_positionsList.size()), previousVertex->GetPosition());
-	duplicateVertex->SetUvIndex(newUvIndex);
-	duplicateVertex->SetNormalIndex(newNormalIndex);
-	duplicateVertex->SetSkinData(previousVertex->GetSkinData());
-	previousVertex->SetDuplicateVertex(duplicateVertex);
-	m_positionsList.emplace_back(duplicateVertex);
-	m_indices.emplace_back(duplicateVertex->GetIndex());
-	return duplicateVertex;
 }
 
-void GeometryLoader::RemoveUnusedVertices()
+std::vector<Vector3> GeometryLoader::GetPositions()
 {
-	for (auto &vertex : m_positionsList)
+	std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
+	auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
+	auto positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
+	auto positionsRawData = String::Split(positionsData->GetValue(), " ");
+
+	std::vector<Vector3> positions;
+
+	for (uint32_t i = 0; i < positionsCount / 3; i++)
 	{
-		if (!vertex->IsSet())
-		{
-			vertex->SetUvIndex(0);
-			vertex->SetNormalIndex(0);
-		}
+		Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]),
+			1.0f);
+		position = MeshAnimated::Correction.Transform(position);
+		positions.emplace_back(position);
 	}
+
+	return positions;
+}
+
+std::vector<Vector2> GeometryLoader::GetUvs()
+{
+	std::string uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source").substr(1);
+	auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
+	auto uvsCount = String::From<uint32_t>(uvsData->FindAttribute("count"));
+	auto uvsRawData = String::Split(uvsData->GetValue(), " ");
+
+	std::vector<Vector2> uvs;
+
+	for (uint32_t i = 0; i < uvsCount / 2; i++)
+	{
+		Vector2 uv = Vector2(String::From<float>(uvsRawData[i * 2]), 1.0f - String::From<float>(uvsRawData[i * 2 + 1]));
+		uvs.emplace_back(uv);
+	}
+
+	return uvs;
+}
+
+std::vector<Vector3> GeometryLoader::GetNormals()
+{
+	std::string normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
+	auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
+	auto normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
+	auto normalsRawData = String::Split(normalsData->GetValue(), " ");
+
+	std::vector<Vector3> normals;
+
+	for (uint32_t i = 0; i < normalsCount / 3; i++)
+	{
+		Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]), 0.0f);
+		normal = MeshAnimated::Correction.Transform(normal);
+		normals.emplace_back(normal);
+	}
+
+	return normals;
 }
 }
