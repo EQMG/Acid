@@ -112,7 +112,7 @@ public:
 	static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
 
 	/**
-	 * Gets the next line from a stream. {@link http://stackoverflow.com/questions/6089231/getting-std-ifstream-to-handle-lf-cr-and-crlf}
+	 * Gets the next line from a stream.
 	 * @param is The input stream.
 	 * @param t The next string.
 	 * @return The input stream.

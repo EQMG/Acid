@@ -1,5 +1,6 @@
 #include "MaterialDefault.hpp"
 
+#include "Animations/MeshAnimated.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Models/VertexModel.hpp"
 #include "Scenes/Entity.hpp"
@@ -8,6 +9,7 @@ namespace acid
 {
 MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> diffuseTexture, const float &metallic, const float &roughness,
 	std::shared_ptr<Image2d> materialTexture, std::shared_ptr<Image2d> normalTexture, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
+	m_animated(false),
 	m_baseDiffuse(baseDiffuse),
 	m_diffuseTexture(std::move(diffuseTexture)),
 	m_metallic(metallic),
@@ -30,8 +32,9 @@ void MaterialDefault::Start()
 		return;
 	}
 
+	m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
 	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
-		PipelineGraphicsCreate({ "Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag" }, { Mesh::GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Mrt));
+		PipelineGraphicsCreate({ "Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag" }, { mesh->GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Mrt));
 }
 
 void MaterialDefault::Update()
@@ -70,6 +73,13 @@ void MaterialDefault::Encode(Metadata &metadata) const
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
+	if (m_animated)
+	{
+		auto meshAnimated = GetParent()->GetComponent<MeshAnimated>();
+		auto joints = meshAnimated->GetJointTransforms(); // TODO: Move into storage buffer and update every frame.
+		uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
+	}
+
 	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 	uniformObject.Push("baseDiffuse", m_baseDiffuse);
 	uniformObject.Push("metallic", m_metallic);
@@ -91,6 +101,9 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 	defines.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_diffuseTexture != nullptr));
 	defines.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_materialTexture != nullptr));
 	defines.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_normalTexture != nullptr));
+	defines.emplace_back("ANIMATED", String::To<int32_t>(m_animated));
+	defines.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MaxJoints));
+	defines.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights));
 	return defines;
 }
 }

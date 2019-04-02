@@ -42,6 +42,7 @@ public:
 	 * Copies the images pixels from memory.
 	 * @param extent The sampled images extent.
 	 * @param mipLevel The mipmap level index to sample.
+	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.
 	 */
 	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0, const uint32_t &arrayLayer = 0) const;

@@ -27,11 +27,11 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	const std::shared_ptr<Model> &GetModel() const { return m_model; }
+	virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) { return VertexModel::GetVertexInput(binding); }
+	virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
 
-	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+	virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
 private:
 	std::shared_ptr<Model> m_model;

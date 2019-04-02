@@ -1,5 +1,18 @@
 #pragma once
 
+#include "Animations/Animation/Animation.hpp"
+#include "Animations/Animation/AnimationLoader.hpp"
+#include "Animations/Animator.hpp"
+#include "Animations/Geometry/GeometryLoader.hpp"
+#include "Animations/Geometry/VertexAnimated.hpp"
+#include "Animations/Geometry/VertexAnimatedData.hpp"
+#include "Animations/Joint/Joint.hpp"
+#include "Animations/Joint/JointTransform.hpp"
+#include "Animations/Keyframe/Keyframe.hpp"
+#include "Animations/MeshAnimated.hpp"
+#include "Animations/Skeleton/SkeletonLoader.hpp"
+#include "Animations/Skin/SkinLoader.hpp"
+#include "Animations/Skin/VertexWeights.hpp"
 #include "Audio/Audio.hpp"
 #include "Audio/Sound.hpp"
 #include "Audio/SoundBuffer.hpp"

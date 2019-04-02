@@ -35,13 +35,6 @@ public:
 	 */
 	virtual btCollisionShape *GetCollisionShape() const = 0;
 
-	/**
-	 * Tests whether a ray is intersecting this shape.
-	 * @param ray The ray being tested for intersection.
-	 * @return If the ray intersects, relative intersect location.
-	 */
-	//virtual std::optional<Vector3> Raycast(const Ray &ray) = 0;
-
 	const Transform &GetLocalTransform() const { return m_localTransform; }
 
 	void SetLocalTransform(const Transform &localTransform);

@@ -1,5 +1,6 @@
 #include "ComponentRegister.hpp"
 
+#include "Animations/MeshAnimated.hpp"
 #include "Emitters/EmitterCircle.hpp"
 #include "Emitters/EmitterLine.hpp"
 #include "Emitters/EmitterPoint.hpp"
@@ -41,6 +42,7 @@ ComponentRegister::ComponentRegister()
 	Add<MaterialDefault>("MaterialDefault");
 	Add<MaterialSkybox>("MaterialSkybox");
 	Add<Mesh>("Mesh");
+	Add<MeshAnimated>("MeshAnimated");
 	Add<MeshRender>("MeshRender");
 	Add<ParticleSystem>("ParticleSystem");
 	Add<Rigidbody>("Rigidbody");

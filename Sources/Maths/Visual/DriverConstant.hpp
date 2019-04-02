@@ -8,6 +8,7 @@ namespace acid
  * @brief A driver that has a constant value.
  * @tparam T The type to be driven.
  **/
+
 template<typename T>
 class DriverConstant :
 	public IDriver<T>

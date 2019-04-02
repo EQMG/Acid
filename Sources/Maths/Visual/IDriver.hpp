@@ -30,6 +30,7 @@ public:
 	 * @param delta The time between the last update. 
 	 * @return The calculated value. 
 	 **/
+
 	T Update(const Time &delta)
 	{
 		m_actualTime += delta;
@@ -54,8 +55,7 @@ public:
 protected:
 	/**
 	 * Calculates the new value.
-	 * @param time The time into the drivers life.
-	 * </param>
+	 * @param factor The time into the drivers life.
 	 * @return The calculated value. 
 	 **/
 	virtual T Calculate(const float &factor) = 0;

@@ -1,6 +1,19 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
 		Acid.hpp
+		Animations/Animation/Animation.hpp
+		Animations/Animation/AnimationLoader.hpp
+		Animations/Animator.hpp
+		Animations/Geometry/GeometryLoader.hpp
+		Animations/Geometry/VertexAnimated.hpp
+		Animations/Geometry/VertexAnimatedData.hpp
+		Animations/Joint/Joint.hpp
+		Animations/Joint/JointTransform.hpp
+		Animations/Keyframe/Keyframe.hpp
+		Animations/MeshAnimated.hpp
+		Animations/Skeleton/SkeletonLoader.hpp
+		Animations/Skin/SkinLoader.hpp
+		Animations/Skin/VertexWeights.hpp
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
@@ -229,6 +242,19 @@ set(_temp_acid_headers
 		)
 set(_temp_acid_sources
 		StdAfx.cpp
+		Animations/Animation/Animation.cpp
+		Animations/Animation/AnimationLoader.cpp
+		Animations/Animator.cpp
+		Animations/Geometry/GeometryLoader.cpp
+		Animations/Geometry/VertexAnimated.cpp
+		Animations/Geometry/VertexAnimatedData.cpp
+		Animations/Joint/Joint.cpp
+		Animations/Joint/JointTransform.cpp
+		Animations/Keyframe/Keyframe.cpp
+		Animations/MeshAnimated.cpp
+		Animations/Skeleton/SkeletonLoader.cpp
+		Animations/Skin/SkinLoader.cpp
+		Animations/Skin/VertexWeights.cpp
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp

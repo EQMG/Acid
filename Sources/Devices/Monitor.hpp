@@ -6,6 +6,9 @@ struct GLFWmonitor;
 
 namespace acid
 {
+/**
+ * @brief Class used to describe the video mode for a monitor.
+ */
 class ACID_EXPORT VideoMode
 {
 public:
@@ -23,6 +26,9 @@ public:
 	int32_t m_refreshRate;
 };
 
+/**
+ * @brief Class used to describe the gamma ramp for a monitor.
+ */
 class ACID_EXPORT GammaRamp
 {
 public:

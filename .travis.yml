@@ -75,7 +75,7 @@ matrix:
     - brew install freetype
   #  - brew tap caskroom/cask
   #  - brew cask install apenngrace/vulkan/vulkan-sdk
-    - wget "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u=" -O "vulkan-sdk.tar.gz"
+    - wget --no-check-certificate "https://sdk.lunarg.com/sdk/download/latest/mac/vulkan-sdk.tar.gz?Human=true;u=" -O "vulkan-sdk.tar.gz"
     - tar -xf vulkan-sdk.tar.gz
     - rm vulkan-sdk.tar.gz
     - export VULKAN_SDK="$(echo $(pwd)/vulkansdk* | sort -V | tail -1)"/macOS

@@ -69,6 +69,7 @@ public:
 private:
 	std::vector<Shader::Define> GetDefines() const;
 
+	bool m_animated;
 	Colour m_baseDiffuse;
 	std::shared_ptr<Image2d> m_diffuseTexture;
 
