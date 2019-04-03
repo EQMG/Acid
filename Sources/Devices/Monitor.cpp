@@ -11,20 +11,20 @@ Monitor::Monitor(GLFWmonitor *monitor) :
 {
 }
 
-Vector2f Monitor::GetPosition() const
-{
-	int32_t xpos;
-	int32_t ypos;
-	glfwGetMonitorPos(m_monitor, &xpos, &ypos);
-	return Vector2f(static_cast<float>(xpos), static_cast<float>(ypos));
-}
-
-Vector2f Monitor::GetDimensions() const
+Vector2ui Monitor::GetSize() const
 {
 	int32_t widthMM;
 	int32_t heightMM;
 	glfwGetMonitorPhysicalSize(m_monitor, &widthMM, &heightMM);
-	return Vector2f(static_cast<float>(widthMM), static_cast<float>(heightMM));
+	return Vector2ui(widthMM, heightMM);
+}
+
+Vector2ui Monitor::GetPosition() const
+{
+	int32_t xpos;
+	int32_t ypos;
+	glfwGetMonitorPos(m_monitor, &xpos, &ypos);
+	return Vector2ui(xpos, ypos);
 }
 
 std::string Monitor::GetName() const

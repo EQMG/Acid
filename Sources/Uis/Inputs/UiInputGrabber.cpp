@@ -21,6 +21,11 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 {
 	GetRectangle().SetDimensions(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiInputGrabber::UpdateObject()

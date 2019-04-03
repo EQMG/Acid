@@ -14,6 +14,11 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBoun
 	m_mouseOver(false)
 {
 	GetRectangle().SetDimensions(SIZE);
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiColourWheel::UpdateObject()

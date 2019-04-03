@@ -20,7 +20,8 @@ UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 	m_scale(1.0f),
 	m_screenDepth(0.0f),
 	m_screenAlpha(1.0f),
-	m_screenScale(1.0f)
+	m_screenScale(1.0f),
+	m_selected(false)
 {
 	if (m_parent != nullptr)
 	{
@@ -43,12 +44,26 @@ UiObject::~UiObject()
 
 void UiObject::Update(std::vector<UiObject *> &list)
 {
+	bool selected = IsEnabled();
+
+	if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
+	{
+		auto distance = Mouse::Get()->GetPosition() - m_screenPosition;
+		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenDimensions.m_x && distance.m_y <= m_screenDimensions.m_y;
+	}
+
+	if (selected != m_selected)
+	{
+		m_selected = selected;
+		m_onSelected(m_selected);
+	}
+
 	if (!m_enabled)
 	{
 		return;
 	}
 
-	if (IsSelected())
+	if (m_selected)
 	{
 		for (auto button : EnumIterator<MouseButton>())
 		{
@@ -105,22 +120,6 @@ void UiObject::Update(std::vector<UiObject *> &list)
 
 void UiObject::UpdateObject()
 {
-}
-
-bool UiObject::IsSelected() const
-{
-	if (!m_enabled)
-	{
-		return false;
-	}
-
-	if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
-	{
-		Vector2f distance = Mouse::Get()->GetPosition() - m_screenPosition;
-		return distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenDimensions.m_x && distance.m_y <= m_screenDimensions.m_y;
-	}
-
-	return false;
 }
 
 void UiObject::SetParent(UiObject *parent)

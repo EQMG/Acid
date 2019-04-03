@@ -14,27 +14,29 @@ void CallbackError(int32_t error, const char *description)
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 {
+	auto &monitors = Window::Get()->m_monitors;
+
 	if (event == GLFW_CONNECTED)
 	{
-		Log::Error("Monitor connected: %s\n", glfwGetMonitorName(monitor));
-		Window::Get()->m_monitors.emplace_back(monitor);
-		Window::Get()->m_onMonitorConnect(static_cast<uint32_t>(Window::Get()->m_monitors.size() - 1), true);
+		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
+		Window::Get()->m_onMonitorConnect(it.get(), true);
 	}
 	else if (event == GLFW_DISCONNECTED)
 	{
-		Log::Error("Monitor disconnected: %s\n", glfwGetMonitorName(monitor));
-		auto &monitors = Window::Get()->m_monitors;
-		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](Monitor &m)
-		{
-			return monitor == m.GetMonitor();
-		}), monitors.end());
-
 		for (auto &m : monitors)
 		{
-			m.SetPrimary(m.GetMonitor() == glfwGetPrimaryMonitor());
+			m->SetPrimary(m->GetMonitor() == glfwGetPrimaryMonitor());
+		
+			if (m->GetMonitor() == monitor)
+			{
+				Window::Get()->m_onMonitorConnect(m.get(), false);
+			}
 		}
 
-		Window::Get()->m_onMonitorConnect(0, false);
+		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](std::unique_ptr<Monitor> &m)
+		{
+			return monitor == m->GetMonitor();
+		}));
 	}
 }
 
@@ -46,7 +48,7 @@ void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 		Window::Get()->m_position.m_y = static_cast<uint32_t>(ypos);
 	}
 
-	Window::Get()->m_onPosition(static_cast<uint32_t>(xpos), static_cast<uint32_t>(ypos));
+	Window::Get()->m_onPosition(Window::Get()->m_position);
 }
 
 void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
@@ -69,7 +71,7 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 	Renderer::Get()->UpdateSurfaceCapabilities();
-	Window::Get()->m_onDimensions(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
+	Window::Get()->m_onSize(Window::Get()->m_size);
 }
 
 void CallbackClose(GLFWwindow *window)
@@ -144,10 +146,10 @@ Window::Window() :
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 	{
-		m_monitors.emplace_back(monitors[i]);
+		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
 
-	auto videoMode = m_monitors[0].GetVideoMode();
+	auto videoMode = m_monitors[0]->GetVideoMode();
 
 	// Create a windowed mode window and its context.
 	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
@@ -279,12 +281,12 @@ void Window::SetFloating(const bool &floating)
 	m_onFloating(m_floating);
 }
 
-void Window::SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor)
+void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 {
 	m_fullscreen = fullscreen;
 
-	auto selected = monitor ? *monitor : m_monitors[0];
-	auto videoMode = selected.GetVideoMode();
+	auto selected = monitor != nullptr ? monitor : m_monitors[0].get();
+	auto videoMode = selected->GetVideoMode();
 
 	if (fullscreen)
 	{
@@ -293,7 +295,7 @@ void Window::SetFullscreen(const bool &fullscreen, const std::optional<Monitor> 
 #endif
 		m_fullscreenSize.m_x = static_cast<uint32_t>(videoMode.m_width);
 		m_fullscreenSize.m_y = static_cast<uint32_t>(videoMode.m_height);
-		glfwSetWindowMonitor(m_window, selected.GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
+		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	}
 	else
 	{

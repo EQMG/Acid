@@ -140,7 +140,7 @@ public:
 	 * @param fullscreen If the window will be fullscreen.
 	 * @param monitor The monitor to display in.
 	 */
-	void SetFullscreen(const bool &fullscreen, const std::optional<Monitor> &monitor = {});
+	void SetFullscreen(const bool &fullscreen, Monitor *monitor = nullptr);
 
 	/**
 	 * Gets if the window is closed.
@@ -168,25 +168,25 @@ public:
 
 	ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
 
-	const std::vector<Monitor> &GetMonitors() const { return m_monitors; };
+	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
 
 	/**
 	 * Called when the window is resized.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t)> &OnDimensions() { return m_onDimensions; }
+	Delegate<void(Vector2ui)> &OnSize() { return m_onSize; }
 
 	/**
 	 * Called when the window is moved.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t)> &OnPosition() { return m_onPosition; }
+	Delegate<void(Vector2ui)> &OnPosition() { return m_onPosition; }
 
 	/**
 	 * Called when a monitor has been connected or disconnected.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, bool)> &OnMonitorConnect() { return m_onMonitorConnect; }
+	Delegate<void(Monitor *, bool)> &OnMonitorConnect() { return m_onMonitorConnect; }
 
 	/**
 	 * Called when the windows title changed.
@@ -278,11 +278,11 @@ private:
 	bool m_iconified;
 
 	GLFWwindow *m_window;
-	std::vector<Monitor> m_monitors;
+	std::vector<std::unique_ptr<Monitor>> m_monitors;
 
-	Delegate<void(uint32_t, uint32_t)> m_onDimensions;
-	Delegate<void(uint32_t, uint32_t)> m_onPosition;
-	Delegate<void(uint32_t, bool)> m_onMonitorConnect;
+	Delegate<void(Vector2ui)> m_onSize;
+	Delegate<void(Vector2ui)> m_onPosition;
+	Delegate<void(Monitor *, bool)> m_onMonitorConnect;
 	Delegate<void(std::string)> m_onTitle;
 	Delegate<void(bool)> m_onBorderless;
 	Delegate<void(bool)> m_onResizable;

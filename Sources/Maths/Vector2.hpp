@@ -210,7 +210,7 @@ public:
 	{
 		auto l = Length();
 
-		if (l == 0.0f)
+		if (l == 0)
 		{
 			throw std::runtime_error("Can't normalize a zero length vector");
 		}
@@ -242,7 +242,7 @@ public:
 	 **/
 	auto MaxComponent() const
 	{
-		return std::max(m_x, m_y);
+		return std::max({ m_x, m_y });
 	}
 
 	/**
@@ -251,25 +251,7 @@ public:
 	 **/
 	auto MinComponent() const
 	{
-		return std::min(m_x, m_y);
-	}
-
-	/**
-	 * Gets the absolute maximum value in this vector.
-	 * @return The absolute largest components.
-	 **/
-	auto AbsMaxComponent() const
-	{
-		return std::max(std::abs(m_x), std::abs(m_y));
-	}
-
-	/**
-	 * Gets the absolute minimum value in this vector.
-	 * @return The absolute smallest components.
-	 **/
-	auto AbsMinComponent() const
-	{
-		return std::min(std::abs(m_x), std::abs(m_y));
+		return std::min({ m_x, m_y });
 	}
 
 	/**

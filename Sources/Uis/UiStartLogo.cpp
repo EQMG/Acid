@@ -1,7 +1,5 @@
 ﻿#include "UiStartLogo.hpp"
 
-#include "Events/EventTime.hpp"
-#include "Events/Events.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 
 namespace acid
@@ -19,16 +17,25 @@ UiStartLogo::UiStartLogo(UiObject *parent) :
 	m_textCopyright(this, UiBound(Vector2f(0.5f, 0.8f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions), 1.8f,
 		"Copyright (C) 2019, Equilibrium Games - All Rights Reserved.", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 0.8f, Colour::White, 0.0012f,
 		0.024f),
+#if defined(ACID_VERBOSE)
+	m_delayTimer(Time::Seconds(1.0f)),
+#else
+	m_delayTimer(Time::Seconds(3.0f)),
+#endif
+	m_fadeout(false),
 	m_finished(false)
 {
-	Events::Get()->AddEvent<EventTime>([this]()
-	{
-		SetAlphaDriver(new DriverSlide<float>(1.0f, 0.0f, Time::Seconds(1.4f)));
-	}, START_DELAY);
 }
 
 void UiStartLogo::UpdateObject()
 {
+	if (!m_fadeout && m_delayTimer.IsPassedTime())
+	{
+		m_delayTimer.ResetStartTime();
+		m_fadeout = true;
+		SetAlphaDriver(new DriverSlide<float>(1.0f, 0.0f, Time::Seconds(1.4f)));
+	}
+
 	if (GetScreenAlpha() <= 0.0f && !m_finished)
 	{
 		m_finished = true;

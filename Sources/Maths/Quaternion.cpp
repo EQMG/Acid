@@ -174,12 +174,12 @@ float Quaternion::Length() const
 
 float Quaternion::MaxComponent() const
 {
-	return std::max(m_x, std::max(m_y, std::max(m_z, m_w)));
+	return std::max({ m_x, m_y, m_z, m_w });
 }
 
 float Quaternion::MinComponent() const
 {
-	return std::min(m_x, std::min(m_y, std::min(m_z, m_w)));
+	return std::min({ m_x, m_y, m_z, m_w });
 }
 
 Matrix4 Quaternion::ToMatrix() const

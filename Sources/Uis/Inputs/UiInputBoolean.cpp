@@ -24,6 +24,11 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	UpdateValue();
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiInputBoolean::UpdateObject()

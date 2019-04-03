@@ -5,7 +5,6 @@
 #include "Devices/Keyboard.hpp"
 #include "Devices/Mouse.hpp"
 #include "Devices/Window.hpp"
-#include "Events/Events.hpp"
 #include "Files/Files.hpp"
 #include "Gizmos/Gizmos.hpp"
 #include "Particles/Particles.hpp"
@@ -43,7 +42,6 @@ void ModuleManager::FillRegister()
 	Add<Scenes>(Module::Stage::Normal);
 	Add<Gizmos>(Module::Stage::Normal);
 	Add<Resources>(Module::Stage::Pre);
-	Add<Events>(Module::Stage::Always);
 	Add<Uis>(Module::Stage::Pre);
 	Add<Particles>(Module::Stage::Normal);
 	Add<Shadows>(Module::Stage::Normal);

@@ -3,8 +3,6 @@
 #include <Files/FileSystem.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Events/Events.hpp>
-#include <Events/EventTime.hpp>
 #include <Audio/Audio.hpp>
 
 namespace test
@@ -14,11 +12,7 @@ ConfigManager::ConfigManager() :
 	m_graphics("Configs/Graphics.yaml", new Yaml())
 {
 	Load();
-
-	Events::Get()->AddEvent<EventTime>([&]() -> void
-	{
-		Save();
-	}, Time::Seconds(2.5f));
+	// TODO: Autosave every x minutes, and soon after load.
 }
 
 void ConfigManager::Load()

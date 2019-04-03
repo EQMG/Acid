@@ -36,11 +36,6 @@ set(_temp_acid_headers
 		Engine/Module.hpp
 		Engine/ModuleManager.hpp
 		Engine/ModuleUpdater.hpp
-		Events/EventChange.hpp
-		Events/Events.hpp
-		Events/EventStandard.hpp
-		Events/EventTime.hpp
-		Events/IEvent.hpp
 		Files/File.hpp
 		Files/Files.hpp
 		Files/FileSystem.hpp
@@ -273,9 +268,6 @@ set(_temp_acid_sources
 		Engine/Log.cpp
 		Engine/ModuleManager.cpp
 		Engine/ModuleUpdater.cpp
-		Events/Events.cpp
-		Events/EventStandard.cpp
-		Events/EventTime.cpp
 		Files/File.cpp
 		Files/Files.cpp
 		Files/FileSystem.cpp

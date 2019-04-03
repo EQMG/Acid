@@ -25,6 +25,11 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));
 
 	UpdateFill();
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiInputRadio::UpdateObject()

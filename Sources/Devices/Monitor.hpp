@@ -48,7 +48,7 @@ public:
 class ACID_EXPORT Monitor
 {
 public:
-	explicit Monitor(GLFWmonitor *monitor);
+	explicit Monitor(GLFWmonitor *monitor = nullptr);
 
 	ACID_HIDDEN GLFWmonitor *GetMonitor() const { return m_monitor; }
 
@@ -57,16 +57,16 @@ public:
 	void SetPrimary(const bool &primary) { m_primary = primary; }
 
 	/**
-	 * Gets the position of the monitor's viewport on the virtual screen.
-	 * @return The position of the monitor's viewport.
-	 */
-	Vector2f GetPosition() const;
-
-	/**
 	 * Gets the physical size of the monitor.
 	 * @return The size, in millimetres, of the display area.
 	 */
-	Vector2f GetDimensions() const;
+	Vector2ui GetSize() const;
+
+	/**
+	 * Gets the position of the monitor's viewport on the virtual screen.
+	 * @return The position of the monitor's viewport.
+	 */
+	Vector2ui GetPosition() const;
 
 	/**
 	 * Gets the name of this monitor.

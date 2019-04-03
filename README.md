@@ -69,13 +69,13 @@ auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
 auto sphere = ModelSphere::Create(20, 20, 1.0f);
 
 // Plays a 3D sound (sound buffer resource internally managed), at (10, 0, 0), at half volume.
-auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3::Right), Audio::Type::Effect, false, true, 0.5f);
+auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3f::Right), Audio::Type::Effect, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
 auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::Identity);
 
 // Creates a entity.
-auto sphere = GetStructure()->CreateEntity(Transform(Vector3(6.7f, 6.7f, -8.0f), Vector3::ZERO, 3.0f));
+auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(6.7f, 6.7f, -8.0f), Vector3f::Zero, 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
 sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
 sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
@@ -93,10 +93,10 @@ float dist = a.Distance(b);
 std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, " ");
 
-// Will run a lambda after 5 seconds.
-Events::Get()->AddEvent<EventTime>([](){
-	Log::Out("Hello world: %f\n", Maths::Random(-1.0f, 1.0f));
-}, Time::Seconds(5.0f));
+// Will run a lambda on window resize.
+Window::Get()->OnSize() += [](Vector2ui size){
+	Log::Out("Hello world: %s\n", size.ToString().c_str());
+};
 ```
 
 ## Screenshots

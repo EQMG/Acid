@@ -35,6 +35,11 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	UpdateProgress();
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiInputSlider::UpdateObject()

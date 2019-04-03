@@ -1,8 +1,6 @@
 #include "UiNavigation.hpp"
 
 #include <Maths/Visual/DriverSlide.hpp>
-#include <Events/Events.hpp>
-#include <Events/EventTime.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include "ContentExit.hpp"
 
@@ -22,7 +20,6 @@ UiNavigation::UiNavigation(UiObject *parent) :
 		Text::Justify::Left, 1.0f, Colour::White, 0.0018f)),
 	m_createdBy(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2f(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
 		FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f)),
-	m_tabs(std::vector<std::unique_ptr<UiTab>>()),
 	m_driverTarget(nullptr),
 	m_currentTab(nullptr),
 	m_targetTab(nullptr)

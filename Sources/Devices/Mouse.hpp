@@ -4,6 +4,8 @@
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
 
+struct GLFWcursor;
+
 namespace acid
 {
 enum class MouseButton :
@@ -29,6 +31,16 @@ enum class CursorHotspot
 	UpperLeft, UpperRight, BottomLeft, BottomRight, Centered
 };
 
+enum class CursorStandard
+{
+	Arrow = 0x00036001,
+	IBeam = 0x00036002,
+	Crosshair = 0x00036003,
+	Hand = 0x00036004,
+	ResizeX = 0x00036005,
+	ResizeY = 0x00036006
+};
+
 /**
  * @brief Module used for managing a virtual mouse.
  */
@@ -44,6 +56,8 @@ public:
 
 	Mouse();
 
+	~Mouse();
+
 	void Update() override;
 
 	/**
@@ -54,11 +68,17 @@ public:
 	InputAction GetButton(const MouseButton &mouseButton) const;
 
 	/**
-	 * Sets the custom mouse file.
+	 * Sets the cursor to a image file.
 	 * @param filename The new custom mouse file.
 	 * @param hotspot The hotspot to display the cursor image at.
 	 */
 	void SetCursor(const std::string &filename, const CursorHotspot &hotspot);
+
+	/**
+	 * Sets the cursor to a system style.
+	 * @param standard The standard shape.
+	 */
+	void SetCursor(const CursorStandard &standard);
 
 	/**
 	 * Gets the contents of the clipboard as a string.
@@ -76,7 +96,7 @@ public:
 	 * Gets the mouses screen position.
 	 * @return The mouses position.
 	 */
-	Vector2f GetPosition() { return m_mousePosition; }
+	const Vector2f &GetPosition() const { return m_mousePosition; }
 
 	/**
 	 * Sets the mouse position.
@@ -88,7 +108,7 @@ public:
 	 * Gets the mouse delta.
 	 * @return The mouse delta.
 	 */
-	Vector2f GetDelta() const { return m_mouseDelta; }
+	const Vector2f &GetDelta() const { return m_mouseDelta; }
 
 	/**
 	 * Gets the mouse wheel delta.
@@ -156,6 +176,10 @@ private:
 	friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
 
 	friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
+
+	std::optional<std::pair<std::string, CursorHotspot>> m_currentCursor;
+	std::optional<CursorStandard> m_currentStandard;
+	GLFWcursor *m_cursor;
 
 	Vector2f m_lastMousePosition;
 	Vector2f m_mousePosition;

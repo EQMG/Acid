@@ -154,11 +154,6 @@ public:
 	template<typename T = float, typename K = float>
 	static auto SmoothDamp(const T &current, const T &target, const K &rate)
 	{
-		/*if (rate < 0)
-		{
-			return target;
-		}*/
-
 		return current + ((target - current) * rate);
 	}
 
@@ -212,20 +207,23 @@ public:
 
 	/**
 	 * Takes the cosign of a number by using the sign and a additional angle.
+	 * @tparam T The sin type.
+	 * @tparam K The angle type.
 	 * @param sin The sin. 
 	 * @param angle The angle. 
 	 * @return The resulting cosign. 
 	 **/
-	static float CosFromSin(const float &sin, const float &angle)
+	template<typename T = float, typename K = float>
+	static auto CosFromSin(const T &sin, const K &angle)
 	{
 		// sin(x)^2 + cos(x)^2 = 1
-		auto cos = std::sqrt(1.0f - sin * sin);
-		auto a = angle + (Pi / 2.0f);
-		auto b = a - static_cast<int32_t>(a / (2.0f * Pi)) * (2.0f * Pi);
+		auto cos = std::sqrt(1 - sin * sin);
+		auto a = angle + (Pi / 2);
+		auto b = a - static_cast<int32_t>(a / (2 * Pi)) * (2 * Pi);
 
-		if (b < 0.0f)
+		if (b < 0)
 		{
-			b = (2.0f * Pi) + b;
+			b = (2 * Pi) + b;
 		}
 
 		if (b >= Pi)

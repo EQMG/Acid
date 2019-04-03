@@ -38,12 +38,6 @@ public:
 	 */
 	virtual void UpdateObject();
 
-	/**
-	 * Gets if the object provided has the cursor hovered above it.
-	 * @return If the object has the cursor inside of its bounds.
-	 */
-	bool IsSelected() const;
-
 	UiObject *GetParent() const { return m_parent; }
 
 	/**
@@ -123,12 +117,24 @@ public:
 	const float &GetScreenAlpha() const { return m_screenAlpha; }
 
 	const float &GetScreenScale() const { return m_screenScale; }
+	
+	/**
+	 * Gets if the object provided has the cursor hovered above it.
+	 * @return If the object has the cursor inside of its bounds.
+	 */
+	bool IsSelected() const { return m_selected; }
 
 	/**
 	 * Called when this object has been clicked on.
 	 * @return The delegate.
 	 */
 	Delegate<void(MouseButton)> &OnClick() { return m_onClick; }
+
+	/**
+	 * Called when this object has has the cursor hovered over, or removed.
+	 * @return The delegate.
+	 */
+	Delegate<void(bool)> &OnSelected() { return m_onSelected; }
 
 	void CancelEvent(const MouseButton &button) const;
 
@@ -155,7 +161,9 @@ private:
 	float m_screenDepth;
 	float m_screenAlpha;
 	float m_screenScale;
+	bool m_selected;
 
 	Delegate<void(MouseButton)> m_onClick;
+	Delegate<void(bool)> m_onSelected;
 };
 }

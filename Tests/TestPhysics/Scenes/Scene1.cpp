@@ -104,10 +104,9 @@ Scene1::Scene1() :
 			Log::Out("File dropped: '%s'\n", path.c_str());
 		}
 	};
-	Window::Get()->OnMonitorConnect() += [](uint32_t index, bool connected)
+	Window::Get()->OnMonitorConnect() += [](Monitor *monitor, bool connected)
 	{
-		auto monitor = Window::Get()->GetMonitors()[index];
-		Log::Out("Monitor '%s' action: %i\n", monitor.GetName().c_str(), connected);
+		Log::Out("Monitor '%s' action: %i\n", monitor->GetName().c_str(), connected);
 	};
 	Window::Get()->OnClose() += []()
 	{

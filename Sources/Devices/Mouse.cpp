@@ -44,6 +44,7 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 }
 
 Mouse::Mouse() :
+	m_cursor(nullptr),
 	m_windowSelected(true),
 	m_cursorHidden(false)
 {
@@ -52,6 +53,11 @@ Mouse::Mouse() :
 	glfwSetCursorEnterCallback(Window::Get()->GetWindow(), CallbackCursorEnter);
 	glfwSetScrollCallback(Window::Get()->GetWindow(), CallbackScroll);
 	glfwSetDropCallback(Window::Get()->GetWindow(), CallbackDrop);
+}
+
+Mouse::~Mouse()
+{
+	glfwDestroyCursor(m_cursor);
 }
 
 void Mouse::Update()
@@ -71,6 +77,11 @@ void Mouse::Update()
 
 void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 {
+	if (m_currentCursor && m_currentCursor->first == filename && m_currentCursor->second == hotspot)
+	{
+		return;
+	}
+
 	uint32_t width = 0;
 	uint32_t height = 0;
 	uint32_t components = 0;
@@ -87,28 +98,46 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	image[0].height = height;
 	image[0].pixels = data.get();
 
-	GLFWcursor *cursor = nullptr;
+	glfwDestroyCursor(m_cursor);
 
 	switch (hotspot)
 	{
 	case CursorHotspot::UpperLeft:
-		cursor = glfwCreateCursor(image, 0, 0);
+		m_cursor = glfwCreateCursor(image, 0, 0);
 		break;
 	case CursorHotspot::UpperRight:
-		cursor = glfwCreateCursor(image, image->width - 1, 0);
+		m_cursor = glfwCreateCursor(image, image->width - 1, 0);
 		break;
 	case CursorHotspot::BottomLeft:
-		cursor = glfwCreateCursor(image, 0, image->height - 1);
+		m_cursor = glfwCreateCursor(image, 0, image->height - 1);
 		break;
 	case CursorHotspot::BottomRight:
-		cursor = glfwCreateCursor(image, image->width - 1, image->height - 1);
+		m_cursor = glfwCreateCursor(image, image->width - 1, image->height - 1);
 		break;
 	case CursorHotspot::Centered:
-		cursor = glfwCreateCursor(image, image->width / 2, image->height / 2);
+		m_cursor = glfwCreateCursor(image, image->width / 2, image->height / 2);
 		break;
 	}
 
-	glfwSetCursor(Window::Get()->GetWindow(), cursor);
+	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
+	m_currentCursor = std::pair<std::string, CursorHotspot>(filename, hotspot);
+	m_currentStandard = {};
+}
+
+void Mouse::SetCursor(const CursorStandard &standard)
+{
+	if (m_currentStandard == standard)
+	{
+		return;
+	}
+
+	glfwDestroyCursor(m_cursor);
+
+	m_cursor = glfwCreateStandardCursor(static_cast<int32_t>(standard));
+
+	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
+	m_currentCursor = {};
+	m_currentStandard = standard;
 }
 
 std::string Mouse::GetClipboard() const

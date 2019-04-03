@@ -227,7 +227,7 @@ public:
 	/*template<typename K = float>
 	auto Rotate(const Vector3<K> &rotation) const
 	{
-		Matrix4 matrix = ;
+		Matrix4 matrix = Matrix4::TransformationMatrix(Zero, rotation, One);
 		return matrix.Transform(*this);
 	}*/
 
@@ -248,7 +248,7 @@ public:
 	{
 		auto l = Length();
 
-		if (l == 0.0f)
+		if (l == 0)
 		{
 			throw std::runtime_error("Can't normalize a zero length vector");
 		}
@@ -280,7 +280,7 @@ public:
 	 **/
 	auto MaxComponent() const
 	{
-		return std::max(m_x, std::max(m_y, m_z));
+		return std::max({ m_x, m_y, m_z });
 	}
 
 	/**
@@ -289,25 +289,7 @@ public:
 	 **/
 	auto MinComponent() const
 	{
-		return std::min(m_x, std::min(m_y, m_z));
-	}
-
-	/**
-	 * Gets the absolute maximum value in this vector.
-	 * @return The absolute largest components.
-	 **/
-	auto AbsMaxComponent() const
-	{
-		return std::max(std::abs(m_x), std::max(std::abs(m_y), std::abs(m_z)));
-	}
-
-	/**
-	 * Gets the absolute minimum value in this vector.
-	 * @return The absolute smallest components.
-	 **/
-	auto AbsMinComponent() const
-	{
-		return std::min(std::abs(m_x), std::min(std::abs(m_y), std::abs(m_z)));
+		return std::min({ m_x, m_y, m_z });
 	}
 
 	/**

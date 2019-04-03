@@ -75,6 +75,11 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			m_lastKey = 0;
 		}
 	};
+
+	OnSelected() += [this](bool selected)
+	{
+		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
 }
 
 void UiInputText::UpdateObject()
