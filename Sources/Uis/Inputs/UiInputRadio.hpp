@@ -17,7 +17,7 @@ public:
 	};
 
 	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, const bool &value = false,
-		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 
@@ -40,7 +40,7 @@ public:
 	Delegate<void(bool)> &OnValue() { return m_onValue; }
 
 private:
-	void UpdateFill();
+	void UpdateValue();
 
 	Gui m_background;
 	Gui m_fill;
@@ -49,7 +49,6 @@ private:
 
 	bool m_value;
 	Type m_type;
-	bool m_mouseOver;
 
 	Delegate<void(bool)> m_onValue;
 };

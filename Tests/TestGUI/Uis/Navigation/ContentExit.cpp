@@ -5,18 +5,29 @@
 namespace test
 {
 ContentExit::ContentExit(UiObject *parent) :
-	UiPanel(parent, UiBound(Vector2f(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Dimensions, Vector2f(0.8f, 0.8f)), ScrollBar::None),
+	UiPanel(parent, UiBound(Vector2f(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Size, Vector2f(0.8f, 0.8f)), ScrollBar::None),
 	m_masterVolume(&GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.06f), UiReference::TopLeft)),
-	m_generalVolume(&GetContent(), "General Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.12f), UiReference::TopLeft)),
-	m_effectVolume(&GetContent(), "Effect Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.18f), UiReference::TopLeft)),
-	m_musicVolume(&GetContent(), "Music Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.24f), UiReference::TopLeft)),
-	m_iconify(&GetContent(), "Iconify", UiBound(Vector2f(0.05f, 0.30f), UiReference::TopLeft)),
-	m_antialiasing(&GetContent(), "Antialiasing", true, UiBound(Vector2f(0.05f, 0.36f), UiReference::TopLeft)),
-	m_borderless(&GetContent(), "Borderless", false, UiBound(Vector2f(0.05f, 0.42f), UiReference::TopLeft)),
-	m_resizable(&GetContent(), "Resizable", true, UiBound(Vector2f(0.05f, 0.48f), UiReference::TopLeft)),
-	m_floating(&GetContent(), "Floating", false, UiBound(Vector2f(0.05f, 0.54f), UiReference::TopLeft)),
-	m_fullscreen(&GetContent(), "Fullscreen", false, UiBound(Vector2f(0.05f, 0.60f), UiReference::TopLeft)),
-	m_fpsLimit(&GetContent(), "Fps Limit", 1000.0f, 0.0f, 1000.0f, 0, UiBound(Vector2f(0.05f, 0.66f), UiReference::TopLeft))
+	m_dropdown(&GetContent(), "Dropdown", 0, { "A", "B", "C" }, UiBound(Vector2f(0.05f, 0.12f), UiReference::TopLeft)),
+	m_generalVolume(&GetContent(), "General Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.18f), UiReference::TopLeft)),
+	m_effectVolume(&GetContent(), "Effect Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.24f), UiReference::TopLeft)),
+	m_musicVolume(&GetContent(), "Music Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.30f), UiReference::TopLeft)),
+	m_iconify(&GetContent(), "Iconify", UiBound(Vector2f(0.05f, 0.36f), UiReference::TopLeft)),
+	m_antialiasing(&GetContent(), "Antialiasing", true, UiBound(Vector2f(0.05f, 0.42f), UiReference::TopLeft)),
+	m_borderless(&GetContent(), "Borderless", false, UiBound(Vector2f(0.05f, 0.48f), UiReference::TopLeft)),
+	m_resizable(&GetContent(), "Resizable", true, UiBound(Vector2f(0.05f, 0.54f), UiReference::TopLeft)),
+	m_floating(&GetContent(), "Floating", false, UiBound(Vector2f(0.05f, 0.60f), UiReference::TopLeft)),
+	m_fullscreen(&GetContent(), "Fullscreen", false, UiBound(Vector2f(0.05f, 0.66f), UiReference::TopLeft)),
+
+	m_fpsLimit(&GetContent(), "Fps Limit", 1000.0f, 0.0f, 1000.0f, 0, UiBound(Vector2f(0.5f, 0.06f), UiReference::TopCentre)),
+	m_textTitle(&GetContent(), "Title", Window::Get()->GetTitle(), 14, UiBound(Vector2f(0.5f, 0.12f), UiReference::TopCentre)),
+	
+	m_input1(&GetContent(), "Mouse Grabber", MouseButton::Left, UiBound(Vector2f(0.95f, 0.06f), UiReference::TopRight)),
+	m_input2(&GetContent(), "Keyboard Grabber", Key::W, UiBound(Vector2f(0.95f, 0.12f), UiReference::TopRight)),
+	m_input3(&GetContent(), "Joystick Grabber", 0, 3, UiBound(Vector2f(0.95f, 0.18f), UiReference::TopRight)),
+	m_radio1(&GetContent(), "First Value", UiInputRadio::Type::X, false, UiBound(Vector2f(0.95f, 0.24f), UiReference::TopRight)),
+	m_radio2(&GetContent(), "Second Value", UiInputRadio::Type::X, true, UiBound(Vector2f(0.95f, 0.285f), UiReference::TopRight)),
+	m_radio3(&GetContent(), "Third Value", UiInputRadio::Type::X, false, UiBound(Vector2f(0.95f, 0.33f), UiReference::TopRight)),
+	m_radioManager1(UiInputRadio::Type::Check, false, { &m_radio1, &m_radio2, &m_radio3 })
 {
 	m_masterVolume.OnValue() += [this](float value)
 	{
@@ -105,10 +116,15 @@ ContentExit::ContentExit(UiObject *parent) :
 	{
 		Engine::Get()->SetFpsLimit(value);
 	};
+	m_textTitle.OnValue() += [this](std::string text)
+	{
+		Window::Get()->SetTitle(text);
+	};
 }
 
 void ContentExit::UpdateObject()
 {
 	UiPanel::UpdateObject();
+//	GetRectangle().SetDimensions(Vector2f(0.8f, std::abs(std::cos(0.2f * Engine::Get()->GetTime().AsSeconds()))));
 }
 }

@@ -13,13 +13,9 @@ class ACID_EXPORT UiInputSlider :
 {
 public:
 	UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
-		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
-
-	const std::string &GetTitle() const { return m_title; }
-
-	void SetTitle(const std::string &title);
 
 	const float &GetValueMin() const { return m_valueMin; }
 
@@ -30,6 +26,10 @@ public:
 	void SeValueMax(const float &valueMax) { m_valueMax = valueMax; }
 
 	const float &GetValue() const { return m_value; }
+	
+	const std::string &GetTitle() const { return m_textTitle.GetString(); }
+
+	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	void SetValue(const float &value);
 
@@ -50,14 +50,13 @@ private:
 	Text m_textValue;
 	Sound m_soundClick;
 
-	std::string m_title;
-	bool m_updating;
 	float m_value;
 	float m_valueMin;
 	float m_valueMax;
 	float m_progress;
 	int32_t m_roundTo;
 
+	bool m_updating;
 	bool m_mouseOver;
 
 	bool m_hasChange;

@@ -13,15 +13,13 @@ class ACID_EXPORT UiInputText :
 {
 public:
 	UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
-		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 
-	void SetSelected(const bool &selected);
+	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
-	const std::string &GetTitle() const { return m_title; }
-
-	void SetTitle(const std::string &title);
+	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	const std::string &GetValue() const { return m_value; }
 
@@ -34,19 +32,20 @@ public:
 	Delegate<void(std::string)> &OnValue() { return m_onValue; }
 
 private:
+	void SetUpdating(const bool &updating);
+	
 	Gui m_background;
 	Text m_textTitle;
 	Text m_textValue;
 	Sound m_soundClick;
 
-	std::string m_title;
 	std::string m_value;
 	int32_t m_maxLength;
 
 	InputDelay m_inputDelay;
 	int32_t m_lastKey;
 
-	bool m_selected;
+	bool m_updating;
 	bool m_mouseOver;
 
 	Delegate<void(std::string)> m_onValue;

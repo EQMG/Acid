@@ -108,9 +108,9 @@ public:
 
 	const float &GetScale() const { return m_scale; }
 
-	const Vector2f &GetScreenDimensions() const { return m_screenDimensions; }
-
 	const Vector2f &GetScreenPosition() const { return m_screenPosition; }
+
+	const Vector2f &GetScreenSize() const { return m_screenSize; }
 
 	const float &GetScreenDepth() const { return m_screenDepth; }
 
@@ -156,8 +156,8 @@ private:
 	std::unique_ptr<IDriver<float>> m_scaleDriver;
 	float m_scale;
 
-	Vector2f m_screenDimensions;
 	Vector2f m_screenPosition;
+	Vector2f m_screenSize;
 	float m_screenDepth;
 	float m_screenAlpha;
 	float m_screenScale;

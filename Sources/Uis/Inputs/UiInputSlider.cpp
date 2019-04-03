@@ -15,23 +15,22 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_slider(this, UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
 		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions), UiInputButton::FontSize, "",
+	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 	m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
-	m_title(title),
-	m_updating(false),
 	m_value(value),
 	m_valueMin(valueMin),
 	m_valueMax(valueMax),
 	m_progress(0.0f),
 	m_roundTo(roundTo),
+	m_updating(false),
 	m_mouseOver(false),
 	m_hasChange(false),
 	m_timerChange(CHANGE_TIME)
 {
-	GetRectangle().SetDimensions(UiInputButton::Size);
+	GetRectangle().SetSize(UiInputButton::Size);
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	UpdateProgress();
@@ -67,7 +66,7 @@ void UiInputSlider::UpdateObject()
 	}
 	else if (m_updating)
 	{
-		float width = m_background.GetScreenDimensions().m_x;
+		float width = m_background.GetScreenSize().m_x;
 		float positionX = m_background.GetScreenPosition().m_x;
 		float cursorX = Mouse::Get()->GetPosition().m_x - positionX;
 		m_progress = cursorX / width;
@@ -97,13 +96,7 @@ void UiInputSlider::UpdateObject()
 		m_mouseOver = false;
 	}
 
-	m_slider.GetRectangle().SetDimensions(Vector2f(1.0f - m_progress, 1.0f));
-}
-
-void UiInputSlider::SetTitle(const std::string &title)
-{
-	m_title = title;
-	m_textTitle.SetString(m_title);
+	m_slider.GetRectangle().SetSize(Vector2f(1.0f - m_progress, 1.0f));
 }
 
 void UiInputSlider::SetValue(const float &value)

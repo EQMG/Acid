@@ -10,24 +10,23 @@ namespace acid
 UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
 		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions), UiInputButton::FontSize, value,
+	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, value,
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
-	m_title(title),
 	m_value(value),
 	m_maxLength(maxLength),
 	m_lastKey(0),
-	m_selected(false),
+	m_updating(false),
 	m_mouseOver(false)
 {
-	GetRectangle().SetDimensions(UiInputButton::Size);
+	GetRectangle().SetSize(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 
 	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
-		if (!m_selected)
+		if (!m_updating)
 		{
 			return;
 		}
@@ -47,12 +46,12 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 		else if (key == Key::Enter && action != InputAction::Release && m_lastKey != 13)
 		{
 			m_inputDelay.Update(true);
-			SetSelected(false);
+			SetUpdating(false);
 		}
 	};
 	Keyboard::Get()->OnChar() += [this](char c)
 	{
-		if (!m_selected)
+		if (!m_updating)
 		{
 			return;
 		}
@@ -88,17 +87,17 @@ void UiInputText::UpdateObject()
 	{
 		if (m_background.IsSelected())
 		{
-			SetSelected(true);
+			SetUpdating(true);
 			CancelEvent(MouseButton::Left);
 		}
-		else if (m_selected)
+		else if (m_updating)
 		{
-			SetSelected(false);
+			SetUpdating(false);
 			CancelEvent(MouseButton::Left);
 		}
 	}
 
-	if (!m_selected)
+	if (!m_updating)
 	{
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
@@ -113,7 +112,7 @@ void UiInputText::UpdateObject()
 	}
 }
 
-void UiInputText::SetSelected(const bool &selected)
+void UiInputText::SetUpdating(const bool &updating)
 {
 	if (!m_soundClick.IsPlaying())
 	{
@@ -121,14 +120,8 @@ void UiInputText::SetSelected(const bool &selected)
 		m_soundClick.Play();
 	}
 
-	m_selected = selected;
+	m_updating = updating;
 	m_mouseOver = true;
-}
-
-void UiInputText::SetTitle(const std::string &title)
-{
-	m_title = title;
-	m_textTitle.SetString(m_title);
 }
 
 void UiInputText::SetValue(const std::string &value)

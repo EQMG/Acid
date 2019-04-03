@@ -19,40 +19,33 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button_Filled.png"), AccentColour),
 	m_text(this, UiBound::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
-	m_mouseOver(false)
+	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)
 {
-	GetRectangle().SetDimensions(Size);
+	GetRectangle().SetSize(Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 
 	OnSelected() += [this](bool selected)
 	{
+		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : AccentColour, 
+			SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
+	OnClick() += [this](MouseButton button)
+	{
+		if (button == MouseButton::Left)
+		{
+			if (!m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+
+			CancelEvent(MouseButton::Left);
+		}
 	};
 }
 
 void UiInputButton::UpdateObject()
 {
-	if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (!m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-		}
-
-		CancelEvent(MouseButton::Left);
-	}
-
-	if (m_background.IsSelected() && !m_mouseOver)
-	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), SelectedColour, SlideTime));
-		m_mouseOver = true;
-	}
-	else if (!m_background.IsSelected() && m_mouseOver)
-	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), AccentColour, SlideTime));
-		m_mouseOver = false;
-	}
 }
 }

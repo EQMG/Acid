@@ -44,12 +44,12 @@ UiObject::~UiObject()
 
 void UiObject::Update(std::vector<UiObject *> &list)
 {
-	bool selected = IsEnabled();
+	bool selected = IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused();
 
-	if (Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
+	if (selected)
 	{
 		auto distance = Mouse::Get()->GetPosition() - m_screenPosition;
-		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenDimensions.m_x && distance.m_y <= m_screenDimensions.m_y;
+		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenSize.m_x && distance.m_y <= m_screenSize.m_y;
 	}
 
 	if (selected != m_selected)
@@ -83,7 +83,7 @@ void UiObject::Update(std::vector<UiObject *> &list)
 	// Transform updates.
 	float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
 
-	m_screenDimensions = m_rectangle.GetScreenDimensions(aspectRatio) * m_scale;
+	m_screenSize = m_rectangle.GetScreenSize(aspectRatio) * m_scale;
 	m_screenDepth = 0.01f * m_height;
 	m_screenScale = m_scale;
 	m_screenAlpha = m_alpha;
@@ -92,17 +92,17 @@ void UiObject::Update(std::vector<UiObject *> &list)
 	{
 		if (m_rectangle.GetAspect() & UiAspect::Scale)
 		{
-			m_screenDimensions *= m_parent->m_screenDimensions;
+			m_screenSize *= m_parent->m_screenSize;
 			m_screenScale *= m_parent->m_screenScale;
 		}
 
 		m_screenPosition =
-			(m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenDimensions) - (m_screenDimensions * m_rectangle.GetReference()) + m_parent->m_screenPosition;
+			(m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenSize) - (m_screenSize * m_rectangle.GetReference()) + m_parent->m_screenPosition;
 		m_screenAlpha *= m_parent->m_screenAlpha;
 	}
 	else
 	{
-		m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenDimensions * m_rectangle.GetReference());
+		m_screenPosition = m_rectangle.GetScreenPosition(aspectRatio) - (m_screenSize * m_rectangle.GetReference());
 	}
 
 	// Adds this object to the list if it is visible.

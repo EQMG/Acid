@@ -28,7 +28,7 @@ void Gui::UpdateObject()
 	// Updates uniforms.
 	m_uniformObject.Push("aspectRatio", Window::Get()->GetAspectRatio());
 	m_uniformObject.Push("modelMatrix", GetModelMatrix());
-	m_uniformObject.Push("screenOffset", Vector4f(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
+	m_uniformObject.Push("screenOffset", Vector4f(2.0f * GetScreenSize(), 2.0f * GetScreenPosition() - 1.0f));
 	m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 	m_uniformObject.Push("depth", GetScreenDepth());
 	m_uniformObject.Push("alpha", GetScreenAlpha());

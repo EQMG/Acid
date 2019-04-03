@@ -15,65 +15,56 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_text(this, UiBound::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 	m_value(value),
-	m_type(type),
-	m_mouseOver(false)
+	m_type(type)
 {
-	GetRectangle().SetDimensions(SIZE);
+	GetRectangle().SetSize(SIZE);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
-
-	m_background.GetRectangle().SetDimensions(Vector2f(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
-	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));
-
-	UpdateFill();
+	m_background.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
+	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetSize().m_y, 0.5f));
+	UpdateValue();
 
 	OnSelected() += [this](bool selected)
 	{
+		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
+			UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
+	OnClick() += [this](MouseButton button)
+	{
+		if (button == MouseButton::Left)
+		{
+			if (!m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+
+			CancelEvent(MouseButton::Left);
+			m_value = !m_value;
+			UpdateValue();
+			m_onValue(m_value);
+		}
 	};
 }
 
 void UiInputRadio::UpdateObject()
 {
-	if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (!m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-		}
-
-		m_value = !m_value;
-		m_onValue(m_value);
-		m_fill.SetAlphaDriver(new DriverSlide<float>(m_fill.GetAlpha(), m_value ? 1.0f : 0.0f, UiInputButton::SlideTime));
-		CancelEvent(MouseButton::Left);
-	}
-
-	if (m_background.IsSelected() && !m_mouseOver)
-	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
-		m_mouseOver = true;
-	}
-	else if (!m_background.IsSelected() && m_mouseOver)
-	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
-		m_mouseOver = false;
-	}
 }
 
 void UiInputRadio::SetValue(const bool &value)
 {
 	m_value = value;
-	UpdateFill();
+	UpdateValue();
 	//m_onValue(m_value);
 }
 
 void UiInputRadio::SetType(const Type &type)
 {
 	m_type = type;
-	UpdateFill();
+	UpdateValue();
 }
 
-void UiInputRadio::UpdateFill()
+void UiInputRadio::UpdateValue()
 {
 	switch (m_type)
 	{

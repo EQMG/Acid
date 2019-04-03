@@ -13,13 +13,13 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound 
 	UiObject(parent, rectangle),
 	m_icon(this, UiBound::Left, Image2d::Create("Guis/Triangle_Down.png")),
 	m_text(this, UiBound::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
-	m_content(this, UiBound(Vector2f(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions)),
+	m_content(this, UiBound(Vector2f(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Size)),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 	m_collapsed(false)
 {
-	GetRectangle().SetDimensions(SIZE);
-	m_icon.GetRectangle().SetDimensions(Vector2f(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
-	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetDimensions().m_y, 0.5f));
+	GetRectangle().SetSize(SIZE);
+	m_icon.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
+	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetSize().m_y, 0.5f));
 }
 
 void UiSection::UpdateObject()

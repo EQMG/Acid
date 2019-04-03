@@ -22,7 +22,7 @@ public:
 	static const Colour AccentColour;
 	static const Colour SelectedColour;
 
-	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
+	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 
@@ -34,7 +34,5 @@ private:
 	Gui m_background;
 	Text m_text;
 	Sound m_soundClick;
-
-	bool m_mouseOver;
 };
 }

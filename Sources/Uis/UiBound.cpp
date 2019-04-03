@@ -18,11 +18,11 @@ const UiBound UiBound::Left = UiBound(Vector2f(0.0f, 0.5f), UiReference::CentreL
 const UiBound UiBound::Centre = UiBound(Vector2f(0.5f, 0.5f), UiReference::Centre);
 const UiBound UiBound::Right = UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight);
 
-UiBound::UiBound(const Vector2f &position, const Vector2f &reference, const BitMask<UiAspect> &aspect, const Vector2f &dimensions) noexcept :
+UiBound::UiBound(const Vector2f &position, const Vector2f &reference, const BitMask<UiAspect> &aspect, const Vector2f &size) noexcept :
 	m_position(position),
 	m_reference(reference),
 	m_aspect(aspect),
-	m_dimensions(dimensions)
+	m_size(size)
 {
 }
 
@@ -38,21 +38,21 @@ Vector2f UiBound::GetScreenPosition(const float &aspectRatio) const
 	return screenPosition;
 }
 
-Vector2f UiBound::GetScreenDimensions(const float &aspectRatio) const
+Vector2f UiBound::GetScreenSize(const float &aspectRatio) const
 {
-	Vector2f screenDimensions = m_dimensions;
+	Vector2f screenSize = m_size;
 
-	if (m_aspect & UiAspect::Dimensions)
+	if (m_aspect & UiAspect::Size)
 	{
-		screenDimensions.m_x /= aspectRatio;
+		screenSize.m_x /= aspectRatio;
 	}
 
-	return screenDimensions;
+	return screenSize;
 }
 
 bool UiBound::operator==(const UiBound &other) const
 {
-	return m_position == other.m_position && m_reference == other.m_reference && m_aspect == other.m_aspect && m_dimensions == other.m_dimensions;
+	return m_position == other.m_position && m_reference == other.m_reference && m_aspect == other.m_aspect && m_size == other.m_size;
 }
 
 bool UiBound::operator!=(const UiBound &other) const

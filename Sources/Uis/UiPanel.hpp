@@ -10,7 +10,7 @@ class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:
-	explicit UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions),
+	explicit UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size),
 		const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;
@@ -22,7 +22,7 @@ public:
 	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
 
 private:
-	void SetScissor(UiObject *object, const bool &size = false);
+	void SetScissor(UiObject *object, const bool &checkSize = false);
 
 	Gui m_background;
 	UiObject m_content;

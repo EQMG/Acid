@@ -9,17 +9,16 @@ namespace acid
 UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Dimensions),
+	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
 		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Dimensions), UiInputButton::FontSize, "",
+	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
-	m_title(title),
 	m_lastKey(0),
-	m_selected(false),
+	m_updating(false),
 	m_mouseOver(false)
 {
-	GetRectangle().SetDimensions(UiInputButton::Size);
+	GetRectangle().SetSize(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 
 	OnSelected() += [this](bool selected)
@@ -34,17 +33,17 @@ void UiInputGrabber::UpdateObject()
 	{
 		if (m_background.IsSelected())
 		{
-			SetSelected(true);
+			SetUpdating(true);
 			CancelEvent(MouseButton::Left);
 		}
-		else if (m_selected)
+		else if (m_updating)
 		{
-			SetSelected(false);
+			SetUpdating(false);
 			CancelEvent(MouseButton::Left);
 		}
 	}
 
-	if (!m_selected)
+	if (!m_updating)
 	{
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
@@ -59,7 +58,7 @@ void UiInputGrabber::UpdateObject()
 	}
 }
 
-void UiInputGrabber::SetSelected(const bool &selected)
+void UiInputGrabber::SetUpdating(const bool &updating)
 {
 	if (!m_soundClick.IsPlaying())
 	{
@@ -67,14 +66,8 @@ void UiInputGrabber::SetSelected(const bool &selected)
 		m_soundClick.Play();
 	}
 
-	m_selected = selected;
+	m_updating = updating;
 	m_mouseOver = true;
-}
-
-void UiInputGrabber::SetTitle(const std::string &title)
-{
-	m_title = title;
-	m_textTitle.SetString(m_title);
 }
 
 void UiInputGrabber::UpdateValue()
@@ -91,14 +84,14 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 
 	Joysticks::Get()->OnButton() += [this](uint32_t port, uint32_t button, InputAction action)
 	{
-		if (!m_selected || port != m_port)
+		if (!m_updating || port != m_port)
 		{
 			return;
 		}
 
 		m_value = button;
 		m_onValue(m_port, m_value);
-		SetSelected(false);
+		SetUpdating(false);
 		UpdateValue();
 	};
 }
@@ -118,14 +111,14 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 
 	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
-		if (!m_selected)
+		if (!m_updating)
 		{
 			return;
 		}
 
 		m_value = key;
 		m_onValue(m_value);
-		SetSelected(false);
+		SetUpdating(false);
 		UpdateValue();
 	};
 }
@@ -145,7 +138,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 
 	Mouse::Get()->OnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
-		if (!m_selected)
+		if (!m_updating)
 		{
 			return;
 		}
@@ -162,7 +155,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 
 		m_value = button;
 		m_onValue(m_value);
-		SetSelected(false);
+		SetUpdating(false);
 		UpdateValue();
 	};
 }

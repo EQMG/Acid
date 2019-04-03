@@ -1,5 +1,6 @@
 #include "UiColourWheel.hpp"
 
+#include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
@@ -10,46 +11,39 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBoun
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/ColourWheel.png")),
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
-	m_value(value),
-	m_mouseOver(false)
+	m_value(value)
 {
-	GetRectangle().SetDimensions(SIZE);
+	GetRectangle().SetSize(SIZE);
 
 	OnSelected() += [this](bool selected)
 	{
+		//m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::AccentColour,
+		//	UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
+	};
+	OnClick() += [this](MouseButton button)
+	{
+		if (button == MouseButton::Left)
+		{
+			if (!m_soundClick.IsPlaying())
+			{
+				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
+				m_soundClick.Play();
+			}
+
+			CancelEvent(MouseButton::Left);
+
+			Vector2f distance = Mouse::Get()->GetPosition() - (m_background.GetScreenPosition() + (m_background.GetScreenSize() / 2.0f));
+			distance /= 0.5f * m_background.GetScreenSize();
+
+			//m_value = Colour(); // TODO: Pick colour.
+			m_onValue(m_value);
+		}
 	};
 }
 
 void UiColourWheel::UpdateObject()
 {
-	if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (!m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-		}
-
-		Vector2f distance = Mouse::Get()->GetPosition() - (m_background.GetScreenPosition() + (m_background.GetScreenDimensions() / 2.0f));
-		distance /= 0.5f * m_background.GetScreenDimensions();
-
-		//m_value = Colour(); // TODO: Pick colour.
-
-		m_onValue(m_value);
-	}
-
-	// Mouse over updates.
-	if (m_background.IsSelected() && !m_mouseOver)
-	{
-		//m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), 0.9f * m_primaryColour, SLIDE_TIME));
-		m_mouseOver = true;
-	}
-	else if (!m_background.IsSelected() && m_mouseOver)
-	{
-		//m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), m_primaryColour, SLIDE_TIME);)
-		m_mouseOver = false;
-	}
 }
 
 void UiColourWheel::SetValue(const Colour &value)

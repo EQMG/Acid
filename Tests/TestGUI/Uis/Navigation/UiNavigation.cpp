@@ -14,7 +14,7 @@ const Colour UiNavigation::ColourButton = Colour("#3e4148", 0.92f);
 UiNavigation::UiNavigation(UiObject *parent) :
 	UiObject(parent, UiBound::Screen),
 	m_background(std::make_unique<Gui>(this, UiBound::Screen, Image2d::Create("Guis/White.png"))),
-	m_navigation(std::make_unique<Gui>(this, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Dimensions, Vector2f(0.4f, 1.0f)),
+	m_navigation(std::make_unique<Gui>(this, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Size, Vector2f(0.4f, 1.0f)),
 		Image2d::Create("Guis/Gradient_A.png"), ColourPanel)),
 	m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2f(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING", FontType::Create("Fonts/ProximaNova", "Bold"),
 		Text::Justify::Left, 1.0f, Colour::White, 0.0018f)),
@@ -28,8 +28,8 @@ UiNavigation::UiNavigation(UiObject *parent) :
 
 	for (auto &tab : TABS)
 	{
-		auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2f(0.5f, tabYOffset), UiReference::Centre, UiAspect::Position | UiAspect::Dimensions));
-		tabButton->GetRectangle().SetDimensions(Vector2f(0.3f, 0.05f));
+		auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2f(0.5f, tabYOffset), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+		tabButton->GetRectangle().SetSize(Vector2f(0.3f, 0.05f));
 
 		auto tabContent = new ContentExit(this);
 		auto uiTab = new UiTab(tab.first, tab.second, tabButton, tabContent);
