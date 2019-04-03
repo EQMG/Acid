@@ -8,7 +8,7 @@
 
 namespace test
 {
-Rotate::Rotate(const Vector3 &direction, const int &test) :
+Rotate::Rotate(const Vector3f &direction, const int &test) :
 	m_direction(direction),
 	m_test(test)
 {
@@ -38,11 +38,11 @@ void Rotate::Update()
 
 void Rotate::Decode(const Metadata &metadata)
 {
-	m_direction = metadata.GetChild<Vector3>("Direction");
+	m_direction = metadata.GetChild<Vector3f>("Direction");
 }
 
 void Rotate::Encode(Metadata &metadata) const
 {
-	metadata.SetChild<Vector3>("Direction", m_direction);
+	metadata.SetChild<Vector3f>("Direction", m_direction);
 }
 }

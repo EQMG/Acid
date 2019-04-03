@@ -18,13 +18,13 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	Vector3 GeneratePosition() const override;
+	Vector3f GeneratePosition() const override;
 
-	const Vector3 &GetPoint() const { return m_point; }
+	const Vector3f &GetPoint() const { return m_point; }
 
-	void SetPoint(const Vector3 &point) { m_point = point; }
+	void SetPoint(const Vector3f &point) { m_point = point; }
 
 private:
-	Vector3 m_point;
+	Vector3f m_point;
 };
 }

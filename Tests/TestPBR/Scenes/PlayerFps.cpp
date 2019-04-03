@@ -16,8 +16,8 @@ const float JUMP_SPEED = 6.5f;
 const float CROUCH_JUMP_SPEED = 3.0f;
 const float NOCLIP_SPEED = 4.0f;
 const float GRAVITY = -9.81f;
-const Vector3 DAMP_NOCLIP = Vector3(10.0f, 10.0f, 10.0f);
-const Vector3 DAMP_NORMAL = Vector3(20.0f, 1.0f, 20.0f);
+const Vector3f DAMP_NOCLIP = Vector3f(10.0f, 10.0f, 10.0f);
+const Vector3f DAMP_NORMAL = Vector3f(20.0f, 1.0f, 20.0f);
 
 PlayerFps::PlayerFps() :
 	m_jumping(false),
@@ -44,7 +44,7 @@ void PlayerFps::Update()
 	// Gets the delta and limits the lowest UPS to 20 (any less and the game is unplayable).
 	float delta = std::min(1.0f / 20.0f, Engine::Get()->GetDelta().AsSeconds());
 
-	Vector3 targetVelocity = Vector3(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
+	Vector3f targetVelocity = Vector3f(0.0f, m_noclipEnabled ? 0.0f : GRAVITY, 0.0f);
 
 	if (!Scenes::Get()->IsPaused())
 	{
@@ -89,8 +89,8 @@ void PlayerFps::Update()
 	m_velocity = m_velocity.SmoothDamp(targetVelocity, delta * (m_noclipEnabled ? DAMP_NOCLIP : DAMP_NORMAL));
 
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-	Vector3 newPosition = GetParent()->GetLocalTransform().GetPosition();
-	Vector3 newRotation = GetParent()->GetLocalTransform().GetRotation();
+	Vector3f newPosition = GetParent()->GetLocalTransform().GetPosition();
+	Vector3f newRotation = GetParent()->GetLocalTransform().GetRotation();
 
 	float groundHeight = 0.0f;
 
@@ -100,8 +100,8 @@ void PlayerFps::Update()
 	float dy = m_velocity.m_y * delta;
 	float dz = (m_velocity.m_z * std::cos(theta) - m_velocity.m_x * std::sin(theta)) * delta;
 
-	m_amountMove = Vector3(dx, dy, dz);
-	m_amountRotate = Vector3(0.0f, 0.0f, 0.0f);
+	m_amountMove = Vector3f(dx, dy, dz);
+	m_amountRotate = Vector3f(0.0f, 0.0f, 0.0f);
 
 	newPosition += m_amountMove;
 	newRotation += m_amountRotate;

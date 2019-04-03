@@ -30,11 +30,11 @@ void NameTag::Start()
 void NameTag::Update()
 {
 	// Calculates the tag position, this component should be added after a rigidbody body.
-	Vector3 worldPosition = GetParent()->GetWorldTransform().GetPosition();
+	Vector3f worldPosition = GetParent()->GetWorldTransform().GetPosition();
 	worldPosition.m_y += m_heightOffset;
 
 	m_transform.SetPosition(worldPosition);
-	m_transform.SetRotation(Vector3::Zero);
+	m_transform.SetRotation(Vector3f::Zero);
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
 	float toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);

@@ -46,7 +46,7 @@ public:
 
 private:
 	Colour m_colour;
-	Vector3 m_position;
+	Vector3f m_position;
 	float m_radius;
 	Transform m_localTransform;
 	mutable Transform m_worldTransform;

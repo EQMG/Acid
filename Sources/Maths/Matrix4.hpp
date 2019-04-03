@@ -43,7 +43,7 @@ public:
 	 * Constructor for Matrix4.
 	 * @param source Creates this matrix out of a 4 vector array. 
 	 **/
-	explicit Matrix4(const Vector4 source[4]);
+	explicit Matrix4(const Vector4f source[4]);
 
 	/**
 	 * Adds this matrix to another matrix.
@@ -71,7 +71,7 @@ public:
 	 * @param other The other vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector4 Multiply(const Vector4 &other) const;
+	Vector4f Multiply(const Vector4f &other) const;
 
 	/**
 	 * Divides this matrix by another matrix.
@@ -85,7 +85,7 @@ public:
 	 * @param other The other vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector4 Transform(const Vector4 &other) const;
+	Vector4f Transform(const Vector4f &other) const;
 
 	/**
 	 * Translates this matrix by a vector.
@@ -99,21 +99,21 @@ public:
 	 * @param other The vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix4 Translate(const Vector3 &other) const;
+	Matrix4 Translate(const Vector3f &other) const;
 
 	/**
 	 * Scales this matrix by a vector.
 	 * @param other The other vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix4 Scale(const Vector3 &other) const;
+	Matrix4 Scale(const Vector3f &other) const;
 
 	/**
 	 * Scales this matrix by a vector.
 	 * @param other The other vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix4 Scale(const Vector4 &other) const;
+	Matrix4 Scale(const Vector4f &other) const;
 
 	/**
 	 * Rotates this matrix around the given axis the specified angle.
@@ -121,7 +121,7 @@ public:
 	 * @param axis The vector representing the rotation axis. 
 	 * @return The rotated matrix. 
 	 **/
-	Matrix4 Rotate(const float &angle, const Vector3 &axis) const;
+	Matrix4 Rotate(const float &angle, const Vector3f &axis) const;
 
 	/**
 	 * Inverts this matrix.
@@ -160,7 +160,7 @@ public:
 	 * @param scale How much to scale the matrix. 
 	 * @return The transformation matrix. 
 	 **/
-	static Matrix4 TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale);
+	static Matrix4 TransformationMatrix(const Vector3f &translation, const Vector3f &rotation, const Vector3f &scale);
 
 	/**
 	 * Creates a new perspective matrix.
@@ -211,7 +211,7 @@ public:
 	 * @param rotation The cameras rotation. 
 	 * @return The view matrix. 
 	 **/
-	static Matrix4 ViewMatrix(const Vector3 &position, const Vector3 &rotation);
+	static Matrix4 ViewMatrix(const Vector3f &position, const Vector3f &rotation);
 
 	/**
 	 * Projects a 3D world point into screen space.
@@ -220,7 +220,7 @@ public:
 	 * @param projectionMatrix The cameras projection matrix. 
 	 * @return A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). 
 	 **/
-	static Vector3 Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+	static Vector3f Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 	/**
 	 * Unprojects a screen space point into a 3D world point.
@@ -229,7 +229,7 @@ public:
 	 * @param projectionMatrix The cameras projection matrix. 
 	 * @return A 2D point stored in XY, and the distance (Z, if negative the point is behind the screen). 
 	 **/
-	static Vector3 Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+	static Vector3f Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 	/**
 	 * Creates a new matrix that has the camera looking at the target.
@@ -238,7 +238,7 @@ public:
 	 * @param up What view direction is up. 
 	 * @return The matrix. 
 	 **/
-	static Matrix4 LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up = Vector3::Up);
+	static Matrix4 LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up = Vector3f::Up);
 
 	void Decode(const Metadata &metadata);
 
@@ -250,9 +250,9 @@ public:
 
 	Matrix4 operator-() const;
 
-	const Vector4 &operator[](const uint32_t &index) const;
+	const Vector4f &operator[](const uint32_t &index) const;
 
-	Vector4 &operator[](const uint32_t &index);
+	Vector4f &operator[](const uint32_t &index);
 
 	ACID_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 
@@ -262,13 +262,13 @@ public:
 
 	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Vector4 &left, const Matrix4 &right);
+	ACID_EXPORT friend Matrix4 operator*(const Vector4f &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Vector4 &left, const Matrix4 &right);
+	ACID_EXPORT friend Matrix4 operator/(const Vector4f &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4 &right);
+	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4f &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4 &right);
+	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4f &right);
 
 	ACID_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
 
@@ -286,9 +286,9 @@ public:
 
 	Matrix4 &operator/=(const Matrix4 &other);
 
-	Matrix4 &operator*=(const Vector4 &other);
+	Matrix4 &operator*=(const Vector4f &other);
 
-	Matrix4 &operator/=(const Vector4 &other);
+	Matrix4 &operator/=(const Vector4f &other);
 
 	Matrix4 &operator*=(const float &other);
 
@@ -305,7 +305,7 @@ public:
 	{
 		struct
 		{
-			Vector4 m_rows[4];
+			Vector4f m_rows[4];
 		};
 
 		struct

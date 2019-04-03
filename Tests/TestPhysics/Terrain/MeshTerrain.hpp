@@ -16,11 +16,11 @@ public:
 	VertexModel GetVertex(const uint32_t &col, const uint32_t &row) override;
 
 private:
-	Vector3 GetPosition(const float &x, const float &z);
+	Vector3f GetPosition(const float &x, const float &z);
 
-	Vector3 GetNormal(const float &x, const float &z);
+	Vector3f GetNormal(const float &x, const float &z);
 
-	Colour GetColour(const Vector3 &normal);
+	Colour GetColour(const Vector3f &normal);
 
 	std::vector<float> m_heightmap;
 };

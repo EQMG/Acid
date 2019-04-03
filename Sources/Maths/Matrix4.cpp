@@ -10,7 +10,7 @@ const Matrix4 Matrix4::Zero = Matrix4(0.0f);
 
 Matrix4::Matrix4(const float &diagonal)
 {
-	std::memset(m_rows, 0, 4 * sizeof(Vector4));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[0][0] = diagonal;
 	m_rows[1][1] = diagonal;
 	m_rows[2][2] = diagonal;
@@ -19,7 +19,7 @@ Matrix4::Matrix4(const float &diagonal)
 
 Matrix4::Matrix4(const Matrix2 &source)
 {
-	std::memset(m_rows, 0, 4 * sizeof(Vector4));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[2][2] = 1.0f;
 	m_rows[3][3] = 1.0f;
 	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
@@ -27,9 +27,9 @@ Matrix4::Matrix4(const Matrix2 &source)
 
 Matrix4::Matrix4(const Matrix3 &source)
 {
-	std::memset(m_rows, 0, 4 * sizeof(Vector4));
+	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[3][3] = 1.0f;
-	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
+	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3f));
 }
 
 Matrix4::Matrix4(const float *source)
@@ -37,9 +37,9 @@ Matrix4::Matrix4(const float *source)
 	std::memcpy(m_rows, source, 4 * 4 * sizeof(float));
 }
 
-Matrix4::Matrix4(const Vector4 *source)
+Matrix4::Matrix4(const Vector4f *source)
 {
-	std::memcpy(m_rows, source, 4 * sizeof(Vector4));
+	std::memcpy(m_rows, source, 4 * sizeof(Vector4f));
 }
 
 Matrix4 Matrix4::Add(const Matrix4 &other) const
@@ -87,9 +87,9 @@ Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 	return result;
 }
 
-Vector4 Matrix4::Multiply(const Vector4 &other) const
+Vector4f Matrix4::Multiply(const Vector4f &other) const
 {
-	Vector4 result = Vector4();
+	Vector4f result = Vector4f();
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -114,9 +114,9 @@ Matrix4 Matrix4::Divide(const Matrix4 &other) const
 	return result;
 }
 
-Vector4 Matrix4::Transform(const Vector4 &other) const
+Vector4f Matrix4::Transform(const Vector4f &other) const
 {
-	Vector4 result = Vector4();
+	Vector4f result = Vector4f();
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -138,7 +138,7 @@ Matrix4 Matrix4::Translate(const Vector2f &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Translate(const Vector3 &other) const
+Matrix4 Matrix4::Translate(const Vector3f &other) const
 {
 	Matrix4 result = Matrix4(*this);
 
@@ -150,7 +150,7 @@ Matrix4 Matrix4::Translate(const Vector3 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Scale(const Vector3 &other) const
+Matrix4 Matrix4::Scale(const Vector3f &other) const
 {
 	Matrix4 result = Matrix4(*this);
 
@@ -165,7 +165,7 @@ Matrix4 Matrix4::Scale(const Vector3 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Scale(const Vector4 &other) const
+Matrix4 Matrix4::Scale(const Vector4f &other) const
 {
 	Matrix4 result = Matrix4(*this);
 
@@ -180,7 +180,7 @@ Matrix4 Matrix4::Scale(const Vector4 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Rotate(const float &angle, const Vector3 &axis) const
+Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 {
 	Matrix4 result = Matrix4(*this);
 
@@ -323,13 +323,13 @@ Matrix3 Matrix4::GetSubmatrix(const int32_t &row, const int32_t &col) const
 	return result;
 }
 
-Matrix4 Matrix4::TransformationMatrix(const Vector3 &translation, const Vector3 &rotation, const Vector3 &scale)
+Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3f &rotation, const Vector3f &scale)
 {
 	Matrix4 result = Matrix4();
 	result = result.Translate(translation);
-	result = result.Rotate(rotation.m_x, Vector3::Right);
-	result = result.Rotate(rotation.m_y, Vector3::Up);
-	result = result.Rotate(rotation.m_z, Vector3::Front);
+	result = result.Rotate(rotation.m_x, Vector3f::Right);
+	result = result.Rotate(rotation.m_y, Vector3f::Up);
+	result = result.Rotate(rotation.m_z, Vector3f::Front);
 	result = result.Scale(scale);
 	return result;
 }
@@ -393,40 +393,40 @@ Matrix4 Matrix4::FrustumMatrix(const float &left, const float &right, const floa
 	return result;
 }
 
-Matrix4 Matrix4::ViewMatrix(const Vector3 &position, const Vector3 &rotation)
+Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 {
 	Matrix4 result = Matrix4();
-	result = result.Rotate(rotation.m_x, Vector3::Right);
-	result = result.Rotate(rotation.m_y, Vector3::Up);
-	result = result.Rotate(rotation.m_z, Vector3::Front);
+	result = result.Rotate(rotation.m_x, Vector3f::Right);
+	result = result.Rotate(rotation.m_y, Vector3f::Up);
+	result = result.Rotate(rotation.m_z, Vector3f::Front);
 	result = result.Translate(position.Negate());
 	return result;
 }
 
-Vector3 Matrix4::Project(const Vector3 &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
-	Vector4 point4 = Vector4(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
+	Vector4f point4 = Vector4f(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
 	point4 = viewMatrix.Transform(point4);
 	point4 = projectionMatrix.Transform(point4);
 
-	Vector3 result = Vector3(point4);
+	Vector3f result = Vector3f(point4);
 	result.m_x /= result.m_z;
 	result.m_y /= result.m_z;
 	return result;
 }
 
-Vector3 Matrix4::Unproject(const Vector3 &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
+Vector3f Matrix4::Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
-	Vector3 result = Vector3();
+	Vector3f result = Vector3f();
 	// TODO: Create
 	return result;
 }
 
-Matrix4 Matrix4::LookAt(const Vector3 &eye, const Vector3 &centre, const Vector3 &up)
+Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up)
 {
-	Vector3 f = (centre - eye).Normalize();
-	Vector3 s = f.Cross(up).Normalize();
-	Vector3 u = s.Cross(f);
+	Vector3f f = (centre - eye).Normalize();
+	Vector3f s = f.Cross(up).Normalize();
+	Vector3f u = s.Cross(f);
 
 	Matrix4 result = Matrix4();
 	result[0][0] = s.m_x;
@@ -475,13 +475,13 @@ Matrix4 Matrix4::operator-() const
 	return Negate();
 }
 
-const Vector4 &Matrix4::operator[](const uint32_t &index) const
+const Vector4f &Matrix4::operator[](const uint32_t &index) const
 {
 	assert(index < 4);
 	return m_rows[index];
 }
 
-Vector4 &Matrix4::operator[](const uint32_t &index)
+Vector4f &Matrix4::operator[](const uint32_t &index)
 {
 	assert(index < 4);
 	return m_rows[index];
@@ -507,44 +507,44 @@ Matrix4 operator/(const Matrix4 &left, const Matrix4 &right)
 	return left.Divide(right);
 }
 
-Matrix4 operator*(const Vector4 &left, const Matrix4 &right)
+Matrix4 operator*(const Vector4f &left, const Matrix4 &right)
 {
 	return right.Scale(left);
 }
 
-Matrix4 operator/(const Vector4 &left, const Matrix4 &right)
+Matrix4 operator/(const Vector4f &left, const Matrix4 &right)
 {
 	return right.Scale(1.0f / left);
 }
 
-Matrix4 operator*(const Matrix4 &left, const Vector4 &right)
+Matrix4 operator*(const Matrix4 &left, const Vector4f &right)
 {
 	return left.Scale(right);
 }
 
-Matrix4 operator/(const Matrix4 &left, const Vector4 &right)
+Matrix4 operator/(const Matrix4 &left, const Vector4f &right)
 {
 	return left.Scale(1.0f / right);
 }
 
 Matrix4 operator*(const float &left, const Matrix4 &right)
 {
-	return right.Scale(Vector4(left, left, left, left));
+	return right.Scale(Vector4f(left, left, left, left));
 }
 
 Matrix4 operator/(const float &left, const Matrix4 &right)
 {
-	return right.Scale(1.0f / Vector4(left, left, left, left));
+	return right.Scale(1.0f / Vector4f(left, left, left, left));
 }
 
 Matrix4 operator*(const Matrix4 &left, const float &right)
 {
-	return left.Scale(Vector4(right, right, right, right));
+	return left.Scale(Vector4f(right, right, right, right));
 }
 
 Matrix4 operator/(const Matrix4 &left, const float &right)
 {
-	return left.Scale(1.0f / Vector4(right, right, right, right));
+	return left.Scale(1.0f / Vector4f(right, right, right, right));
 }
 
 Matrix4 &Matrix4::operator+=(const Matrix4 &other)
@@ -567,24 +567,24 @@ Matrix4 &Matrix4::operator/=(const Matrix4 &other)
 	return *this = Divide(other);
 }
 
-Matrix4 &Matrix4::operator*=(const Vector4 &other)
+Matrix4 &Matrix4::operator*=(const Vector4f &other)
 {
 	return *this = Scale(other);
 }
 
-Matrix4 &Matrix4::operator/=(const Vector4 &other)
+Matrix4 &Matrix4::operator/=(const Vector4f &other)
 {
 	return *this = Scale(1.0f / other);
 }
 
 Matrix4 &Matrix4::operator*=(const float &other)
 {
-	return *this = Scale(Vector4(other, other, other, other));
+	return *this = Scale(Vector4f(other, other, other, other));
 }
 
 Matrix4 &Matrix4::operator/=(const float &other)
 {
-	return *this = Scale(1.0f / Vector4(other, other, other, other));
+	return *this = Scale(1.0f / Vector4f(other, other, other, other));
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)

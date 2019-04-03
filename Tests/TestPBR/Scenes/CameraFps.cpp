@@ -73,7 +73,7 @@ void CameraFps::Update()
 		auto playerPosition = scenePlayer->GetParent()->GetWorldTransform().GetPosition();
 
 		m_velocity = (playerPosition - m_targetPosition) / delta;
-		m_targetPosition = playerPosition + Vector3(0.0f, VIEW_HEIGHT, 0.0f);
+		m_targetPosition = playerPosition + Vector3f(0.0f, VIEW_HEIGHT, 0.0f);
 		m_targetRotation = playerRotation;
 	}
 

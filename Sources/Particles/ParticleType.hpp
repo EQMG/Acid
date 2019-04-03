@@ -93,8 +93,8 @@ private:
 	{
 		Matrix4 m_modelMatrix;
 		Colour m_colourOffset;
-		Vector4 m_offsets;
-		Vector3 m_blend;
+		Vector4f m_offsets;
+		Vector3f m_blend;
 	};
 
 	std::shared_ptr<Image2d> m_texture;

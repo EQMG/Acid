@@ -18,7 +18,7 @@ public:
 	 * @param position The position of the joint relative to the parent joint (local-space) at a certain keyframe.
 	 * @param rotation The rotation of the joint relative to te parent joint (local-space) at a certain keyframe.
 	 **/
-	JointTransform(const Vector3 &position, const Quaternion &rotation);
+	JointTransform(const Vector3f &position, const Quaternion &rotation);
 
 	/**
 	 * Creates a new joint transformation.
@@ -55,18 +55,18 @@ public:
 	 * @param progression A value between 0 and 1 indicating how far to interpolate between the two translations.
 	 * @return The interpolated progressed vector.
 	 **/
-	static Vector3 Interpolate(const Vector3 &start, const Vector3 &end, const float &progression);
+	static Vector3f Interpolate(const Vector3f &start, const Vector3f &end, const float &progression);
 
-	const Vector3 &GetPosition() const { return m_position; }
+	const Vector3f &GetPosition() const { return m_position; }
 
-	void SetPosition(const Vector3 &position) { m_position = position; }
+	void SetPosition(const Vector3f &position) { m_position = position; }
 
 	const Quaternion &GetRotation() const { return m_rotation; }
 
 	void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
 
 private:
-	Vector3 m_position;
+	Vector3f m_position;
 	Quaternion m_rotation;
 };
 }

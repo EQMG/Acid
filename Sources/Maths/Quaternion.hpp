@@ -25,7 +25,7 @@ public:
 	 * @param source Creates this quaternion out of a existing vector (pitch, yaw roll). >
 	 * @param w Start w. 
 	 **/
-	Quaternion(const Vector3 &source, const float &w = 1.0f);
+	Quaternion(const Vector3f &source, const float &w = 1.0f);
 
 	/**
 	 * Constructor for Quaternion.
@@ -39,7 +39,7 @@ public:
 	 * @param axisY The Y axis. 
 	 * @param axisZ The Z axis. 
 	 **/
-	Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ);
+	Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ);
 
 	/**
 	 * Adds this quaternion to another quaternion.
@@ -67,7 +67,7 @@ public:
 	 * @param other The other vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector3 Multiply(const Vector3 &other) const;
+	Vector3f Multiply(const Vector3f &other) const;
 
 	/**
 	 * Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
@@ -151,7 +151,7 @@ public:
 	 * Converts this quaternion to euler angles.
 	 * @return The euler angle representation of this quaternion. 
 	 **/
-	Vector3 ToEuler() const;
+	Vector3f ToEuler() const;
 
 	const float &GetX() const { return m_x; }
 
@@ -189,9 +189,9 @@ public:
 
 	ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 
-	ACID_EXPORT friend Vector3 operator*(const Vector3 &right, const Quaternion &left);
+	ACID_EXPORT friend Vector3f operator*(const Vector3f &right, const Quaternion &left);
 
-	ACID_EXPORT friend Vector3 operator*(const Quaternion &left, const Vector3 &right);
+	ACID_EXPORT friend Vector3f operator*(const Quaternion &left, const Vector3f &right);
 
 	ACID_EXPORT friend Quaternion operator*(const float &left, const Quaternion &right);
 
@@ -211,18 +211,7 @@ public:
 	static const Quaternion PositiveInfinity;
 	static const Quaternion NegativeInfinity;
 
-	union
-	{
-		struct
-		{
-			float m_x, m_y, m_z, m_w;
-		};
-
-		struct
-		{
-			float m_elements[4];
-		};
-	};
+	float m_x, m_y, m_z, m_w;
 };
 }
 

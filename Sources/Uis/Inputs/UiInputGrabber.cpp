@@ -20,7 +20,7 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	m_mouseOver(false)
 {
 	GetRectangle().SetDimensions(UiInputButton::Size);
-	m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 }
 
 void UiInputGrabber::UpdateObject()

@@ -24,7 +24,7 @@ public:
 	void Encode(Metadata &metadata) const override;
 
 private:
-	Vector3 m_velocity;
+	Vector3f m_velocity;
 	bool m_jumping;
 	bool m_noclipEnabled;
 
@@ -35,7 +35,7 @@ private:
 	ButtonCompound m_inputCrouch;
 	ButtonCompound m_toggleNoclip;
 
-	Vector3 m_amountMove;
-	Vector3 m_amountRotate;
+	Vector3f m_amountMove;
+	Vector3f m_amountRotate;
 };
 }

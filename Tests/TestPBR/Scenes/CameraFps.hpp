@@ -35,8 +35,8 @@ private:
 	float m_angleOfElevation;
 	float m_angleAroundPlayer;
 
-	Vector3 m_targetPosition;
-	Vector3 m_targetRotation;
+	Vector3f m_targetPosition;
+	Vector3f m_targetRotation;
 	float m_targetElevation;
 	float m_targetRotationAngle;
 

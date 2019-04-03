@@ -62,8 +62,8 @@ void ModelSphere::Load()
 			float jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
 			float phi = jDivLat * 2.0f * Maths::Pi;
 
-			Vector3 normal = Vector3(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
-			Vector3 position = m_radius * normal;
+			Vector3f normal = Vector3f(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
+			Vector3f position = m_radius * normal;
 			Vector2f uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
 			vertices.emplace_back(VertexModel(position, uvs, normal));
 		}

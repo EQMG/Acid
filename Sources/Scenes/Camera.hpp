@@ -49,11 +49,11 @@ public:
 
 	void SetFieldOfView(const float &fieldOfView) { m_fieldOfView = fieldOfView; }
 
-	const Vector3 &GetPosition() const { return m_position; }
+	const Vector3f &GetPosition() const { return m_position; }
 
-	const Vector3 &GetRotation() const { return m_rotation; }
+	const Vector3f &GetRotation() const { return m_rotation; }
 
-	const Vector3 &GetVelocity() const { return m_velocity; }
+	const Vector3f &GetVelocity() const { return m_velocity; }
 
 	/**
 	 * Gets the view matrix created by the current camera position and rotation.
@@ -84,9 +84,9 @@ protected:
 	float m_farPlane;
 	float m_fieldOfView;
 
-	Vector3 m_position;
-	Vector3 m_rotation;
-	Vector3 m_velocity;
+	Vector3f m_position;
+	Vector3f m_rotation;
+	Vector3f m_velocity;
 
 	Matrix4 m_viewMatrix;
 	Matrix4 m_projectionMatrix;

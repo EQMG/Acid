@@ -19,12 +19,12 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 {
 	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
 	{
-		Vector3 sample = Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f));
+		Vector3f sample = Vector3f(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f));
 		sample = sample.Normalize();
 		sample *= Maths::Random(0.0f, 1.0f);
 		float scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
 		scale = Maths::Lerp(0.1f, 1.0f, scale * scale);
-		m_kernel[i] = Vector4(sample * scale, 0.0f);
+		m_kernel[i] = sample * scale;
 	}
 }
 
@@ -32,7 +32,7 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	auto camera = Scenes::Get()->GetCamera();
-	m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3) * SSAO_KERNEL_SIZE);
+	m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 	m_uniformScene.Push("view", camera->GetViewMatrix());
 	m_uniformScene.Push("cameraPosition", camera->GetPosition());
@@ -68,16 +68,16 @@ std::vector<Shader::Define> FilterSsao::GetDefines()
 
 std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 {
-	std::vector<Colour> ssaoNoise(size * size);
+	std::vector<Vector3f> ssaoNoise(size * size);
 
 	for (uint32_t i = 0; i < size * size; i++)
 	{
-		Vector3 noise = Vector3(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
+		Vector3f noise = Vector3f(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
 		noise = noise.Normalize();
-		ssaoNoise[i] = Colour(noise, 1.0f);
+		ssaoNoise[i] = noise;
 	}
 
-	auto noiseImage = std::make_shared<Image2d>(size, size, std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32A32_SFLOAT,
+	auto noiseImage = std::make_shared<Image2d>(size, size, std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32_SFLOAT,
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
 #if defined(ACID_VERBOSE)

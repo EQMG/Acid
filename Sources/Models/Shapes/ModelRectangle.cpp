@@ -47,10 +47,10 @@ void ModelRectangle::Load()
 	}
 
 	std::vector<VertexModel> vertices = {
-		VertexModel(Vector3(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3::Zero),
-		VertexModel(Vector3(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3::Zero),
-		VertexModel(Vector3(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3::Zero),
-		VertexModel(Vector3(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3::Zero),
+		VertexModel(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f::Zero),
+		VertexModel(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f::Zero),
+		VertexModel(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f::Zero),
+		VertexModel(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f::Zero),
 	};
 	static std::vector<uint32_t> indices = {
 		0, 1, 2,

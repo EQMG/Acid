@@ -23,7 +23,7 @@ using CollisionPairs = std::set<CollisionPair>;
 class ACID_EXPORT Raycast
 {
 public:
-	Raycast(bool m_hasHit, const Vector3 &m_pointWorld, CollisionObject *collisionObject) :
+	Raycast(bool m_hasHit, const Vector3f &m_pointWorld, CollisionObject *collisionObject) :
 		m_hasHit(m_hasHit),
 		m_pointWorld(m_pointWorld),
 		m_collisionObject(collisionObject)
@@ -32,13 +32,13 @@ public:
 
 	bool HasHit() const { return m_hasHit; }
 
-	const Vector3 &GetPointWorld() const { return m_pointWorld; }
+	const Vector3f &GetPointWorld() const { return m_pointWorld; }
 
 	CollisionObject *GetCollisionObject() const { return m_collisionObject; }
 
 private:
 	bool m_hasHit;
-	Vector3 m_pointWorld;
+	Vector3f m_pointWorld;
 	CollisionObject *m_collisionObject;
 };
 
@@ -51,11 +51,11 @@ public:
 
 	void Update();
 
-	Raycast Raytest(const Vector3 &start, const Vector3 &end);
+	Raycast Raytest(const Vector3f &start, const Vector3f &end);
 
-	const Vector3 &GetGravity() const { return m_gravity; }
+	const Vector3f &GetGravity() const { return m_gravity; }
 
-	void SetGravity(const Vector3 &gravity);
+	void SetGravity(const Vector3f &gravity);
 
 	const float &GetAirDensity() const { return m_airDensity; }
 
@@ -78,7 +78,7 @@ private:
 	std::unique_ptr<btAlignedObjectArray<btCollisionShape *>> m_collisionShapes;
 	CollisionPairs m_pairsLastUpdate;
 
-	Vector3 m_gravity;
+	Vector3f m_gravity;
 	float m_airDensity;
 };
 }

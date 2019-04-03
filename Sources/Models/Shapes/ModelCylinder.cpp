@@ -66,9 +66,9 @@ void ModelCylinder::Load()
 			float jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
 			float radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
 
-			Vector3 position = Vector3(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
+			Vector3f position = Vector3f(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
 			Vector2f uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivStacks);
-			Vector3 normal = Vector3(xDir, 0.0f, zDir);
+			Vector3f normal = Vector3f(xDir, 0.0f, zDir);
 			vertices.emplace_back(VertexModel(position, uvs, normal));
 		}
 	}

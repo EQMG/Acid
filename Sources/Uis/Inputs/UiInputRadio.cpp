@@ -19,7 +19,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_mouseOver(false)
 {
 	GetRectangle().SetDimensions(SIZE);
-	m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 
 	m_background.GetRectangle().SetDimensions(Vector2f(GetRectangle().GetDimensions().m_y, GetRectangle().GetDimensions().m_y));
 	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetDimensions().m_y, 0.5f));

@@ -39,7 +39,7 @@ void UiPanel::SetScissor(UiObject *object, const bool &size)
 {
 	auto position = m_background.GetScreenPosition();
 	auto dimension = m_background.GetScreenDimensions();
-	object->SetScissor(Vector4(position.m_x, position.m_y, dimension.m_x, dimension.m_y));
+	object->SetScissor(Vector4f(position.m_x, position.m_y, dimension.m_x, dimension.m_y));
 
 	if (object->IsEnabled() && size)
 	{

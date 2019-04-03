@@ -18,7 +18,7 @@ Quaternion::Quaternion(const float &x, const float &y, const float &z, const flo
 {
 }
 
-Quaternion::Quaternion(const Vector3 &source, const float &w) :
+Quaternion::Quaternion(const Vector3f &source, const float &w) :
 	m_x(source.m_x),
 	m_y(source.m_y),
 	m_z(source.m_z),
@@ -64,7 +64,7 @@ Quaternion::Quaternion(const Matrix4 &source)
 	}
 }
 
-Quaternion::Quaternion(const Vector3 &axisX, const Vector3 &axisY, const Vector3 &axisZ)
+Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ)
 {
 	Matrix4 rotation = Matrix4();
 	rotation[0][0] = axisX.m_x;
@@ -96,11 +96,11 @@ Quaternion Quaternion::Multiply(const Quaternion &other) const
 		m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x, m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
 }
 
-Vector3 Quaternion::Multiply(const Vector3 &other) const
+Vector3f Quaternion::Multiply(const Vector3f &other) const
 {
-	Vector3 q = Vector3(m_x, m_y, m_z);
-	Vector3 cross1 = q.Cross(other);
-	Vector3 cross2 = q.Cross(cross1);
+	Vector3f q = Vector3f(m_x, m_y, m_z);
+	Vector3f cross1 = q.Cross(other);
+	Vector3f cross2 = q.Cross(cross1);
 	return other + 2.0f * (cross1 * m_w + cross2);
 }
 
@@ -240,9 +240,9 @@ Matrix4 Quaternion::ToRotationMatrix() const
 	return result;
 }
 
-Vector3 Quaternion::ToEuler() const
+Vector3f Quaternion::ToEuler() const
 {
-	Vector3 result = Vector3();
+	Vector3f result = Vector3f();
 	result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
 	result.m_y = std::asin(2.0f * (m_x * m_z + m_y * m_w));
 	result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));
@@ -282,14 +282,36 @@ Quaternion Quaternion::operator-() const
 
 const float &Quaternion::operator[](const uint32_t &index) const
 {
-	assert(index < 4);
-	return m_elements[index];
+	switch (index)
+	{
+	case 0:
+		return m_x;
+	case 1:
+		return m_y;
+	case 2:
+		return m_z;
+	case 3:
+		return m_w;
+	default:
+		throw std::runtime_error("Quaternion index out of bounds!");
+	}
 }
 
 float &Quaternion::operator[](const uint32_t &index)
 {
-	assert(index < 4);
-	return m_elements[index];
+	switch (index)
+	{
+	case 0:
+		return m_x;
+	case 1:
+		return m_y;
+	case 2:
+		return m_z;
+	case 3:
+		return m_w;
+	default:
+		throw std::runtime_error("Quaternion index out of bounds!");
+	}
 }
 
 Quaternion operator+(const Quaternion &left, const Quaternion &right)
@@ -307,12 +329,12 @@ Quaternion operator*(const Quaternion &left, const Quaternion &right)
 	return left.Multiply(right);
 }
 
-Vector3 operator*(const Vector3 &left, const Quaternion &right)
+Vector3f operator*(const Vector3f &left, const Quaternion &right)
 {
 	return right.Multiply(left);
 }
 
-Vector3 operator*(const Quaternion &left, const Vector3 &right)
+Vector3f operator*(const Quaternion &left, const Vector3f &right)
 {
 	return left.Multiply(right);
 }

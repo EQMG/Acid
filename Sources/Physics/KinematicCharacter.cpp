@@ -11,7 +11,7 @@ namespace acid
 KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
 	CollisionObject(friction),
 	m_mass(mass),
-	m_up(Vector3::Up),
+	m_up(Vector3f::Up),
 	m_stepHeight(0.0f),
 	m_fallSpeed(55.0f),
 	m_jumpSpeed(10.0f),
@@ -144,13 +144,13 @@ void KinematicCharacter::SetMass(const float &mass)
 	RecalculateMass();
 }
 
-void KinematicCharacter::SetGravity(const Vector3 &gravity)
+void KinematicCharacter::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
 	m_controller->setGravity(Collider::Convert(gravity));
 }
 
-void KinematicCharacter::SetUp(const Vector3 &up)
+void KinematicCharacter::SetUp(const Vector3f &up)
 {
 	m_up = up;
 	m_controller->setUp(Collider::Convert(up));
@@ -191,12 +191,12 @@ bool KinematicCharacter::IsOnGround() const
 	return m_controller->onGround();
 }
 
-void KinematicCharacter::Jump(const Vector3 &direction)
+void KinematicCharacter::Jump(const Vector3f &direction)
 {
 	m_controller->jump(Collider::Convert(direction));
 }
 
-void KinematicCharacter::SetWalkDirection(const Vector3 &direction)
+void KinematicCharacter::SetWalkDirection(const Vector3f &direction)
 {
 	m_controller->setWalkDirection(Collider::Convert(direction));
 }

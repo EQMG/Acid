@@ -25,8 +25,8 @@ GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<Ve
 		auto uvIndex = String::From<uint32_t>(indexRawData[i * indexCount + 2]);
 
 		auto vertexWeight = m_vertexWeights[positionIndex];
-		Vector3 jointIds = Vector3(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
-		Vector3 weights = Vector3(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
+		Vector3f jointIds = Vector3f(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
+		Vector3f weights = Vector3f(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
 
 		VertexAnimated vertex = VertexAnimated(positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights);
 
@@ -40,18 +40,18 @@ GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<Ve
 	}
 }
 
-std::vector<Vector3> GeometryLoader::GetPositions()
+std::vector<Vector3f> GeometryLoader::GetPositions()
 {
 	std::string positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source").substr(1);
 	auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
 	auto positionsCount = String::From<uint32_t>(positionsData->FindAttribute("count"));
 	auto positionsRawData = String::Split(positionsData->GetValue(), " ");
 
-	std::vector<Vector3> positions;
+	std::vector<Vector3f> positions;
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++)
 	{
-		Vector4 position = Vector4(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]));
+		Vector4f position = Vector4f(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]));
 		positions.emplace_back(m_correction.Transform(position));
 	}
 
@@ -76,18 +76,18 @@ std::vector<Vector2f> GeometryLoader::GetUvs()
 	return uvs;
 }
 
-std::vector<Vector3> GeometryLoader::GetNormals()
+std::vector<Vector3f> GeometryLoader::GetNormals()
 {
 	std::string normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source").substr(1);
 	auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
 	auto normalsCount = String::From<uint32_t>(normalsData->FindAttribute("count"));
 	auto normalsRawData = String::Split(normalsData->GetValue(), " ");
 
-	std::vector<Vector3> normals;
+	std::vector<Vector3f> normals;
 
 	for (uint32_t i = 0; i < normalsCount / 3; i++)
 	{
-		Vector4 normal = Vector4(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]));
+		Vector4f normal = Vector4f(String::From<float>(normalsRawData[i * 3]), String::From<float>(normalsRawData[i * 3 + 1]), String::From<float>(normalsRawData[i * 3 + 2]));
 		normals.emplace_back(m_correction.Transform(normal));
 	}
 

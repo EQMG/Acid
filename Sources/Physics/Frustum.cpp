@@ -81,7 +81,7 @@ void Frustum::Update(const Matrix4 &view, const Matrix4 &projection)
 	NormalizePlane(5);
 }
 
-bool Frustum::PointInFrustum(const Vector3 &position) const
+bool Frustum::PointInFrustum(const Vector3f &position) const
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{
@@ -94,7 +94,7 @@ bool Frustum::PointInFrustum(const Vector3 &position) const
 	return true;
 }
 
-bool Frustum::SphereInFrustum(const Vector3 &position, const float &radius) const
+bool Frustum::SphereInFrustum(const Vector3f &position, const float &radius) const
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{
@@ -107,7 +107,7 @@ bool Frustum::SphereInFrustum(const Vector3 &position, const float &radius) cons
 	return true;
 }
 
-bool Frustum::CubeInFrustum(const Vector3 &min, const Vector3 &max) const
+bool Frustum::CubeInFrustum(const Vector3f &min, const Vector3f &max) const
 {
 	for (uint32_t i = 0; i < 6; i++)
 	{

@@ -23,10 +23,10 @@ void World::Update()
 {
 	m_factorDay = m_driverDay.Update(Engine::Get()->GetDelta());
 
-	m_skyboxRotation = Vector3(360.0f * m_factorDay, 0.0f, 0.0f);
+	m_skyboxRotation = Vector3f(360.0f * m_factorDay, 0.0f, 0.0f);
 
-	m_lightDirection = m_skyboxRotation.Rotate(Vector3(0.154303f, 0.771517f, -0.617213f) * Maths::DegToRad);
-	m_lightDirection.Normalize();
+	//m_lightDirection = m_skyboxRotation.Rotate(Vector3f(0.154303f, 0.771517f, -0.617213f) * Maths::DegToRad); // TODO
+	//m_lightDirection = m_lightDirection.Normalize();
 
 	Colour fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
 	fogColour = fogColour.Lerp(FOG_COLOUR_DAY, GetShadowFactor());
@@ -40,7 +40,7 @@ void World::Update()
 
 	if (lensflare != nullptr)
 	{
-		lensflare->SetSunPosition(Vector3(1000.0f, 5000.0f, -4000.0f));
+		lensflare->SetSunPosition(Vector3f(1000.0f, 5000.0f, -4000.0f));
 		lensflare->SetSunHeight(1000.0f);
 	}
 

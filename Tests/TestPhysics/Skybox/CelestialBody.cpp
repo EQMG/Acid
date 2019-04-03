@@ -32,7 +32,7 @@ void CelestialBody::Update()
 	{
 	case Type::Sun:
 	{
-		Vector3 sunPosition = World::Get()->GetLightDirection() * Vector3(-6048.0f, -6048.0f, -6048.0f);
+		Vector3f sunPosition = World::Get()->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform.SetPosition(sunPosition);
 
@@ -54,7 +54,7 @@ void CelestialBody::Update()
 		break;
 	case Type::Moon:
 	{
-		Vector3 moonPosition = World::Get()->GetLightDirection() * Vector3(6048.0f, 6048.0f, 6048.0f);
+		Vector3f moonPosition = World::Get()->GetLightDirection() * Vector3f(6048.0f, 6048.0f, 6048.0f);
 		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform.SetPosition(moonPosition);
 

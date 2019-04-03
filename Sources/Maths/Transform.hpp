@@ -20,7 +20,7 @@ public:
 	 * @param rotation The rotation.
 	 * @param scaling The scale.
 	 */
-	explicit Transform(const Vector3 &position = Vector3::Zero, const Vector3 &rotation = Vector3::Zero, const Vector3 &scaling = Vector3::One);
+	explicit Transform(const Vector3f &position = Vector3f::Zero, const Vector3f &rotation = Vector3f::Zero, const Vector3f &scaling = Vector3f::One);
 
 	/**
 	 * Creates a new transform.
@@ -28,7 +28,7 @@ public:
 	 * @param rotation The rotation.
 	 * @param scale The scale.
 	 */
-	Transform(const Vector3 &position, const Vector3 &rotation, const float &scale);
+	Transform(const Vector3f &position, const Vector3f &rotation, const float &scale);
 
 	void Start() override;
 
@@ -47,17 +47,17 @@ public:
 
 	Matrix4 GetWorldMatrix() const;
 
-	const Vector3 &GetPosition() const { return m_position; }
+	const Vector3f &GetPosition() const { return m_position; }
 
-	void SetPosition(const Vector3 &position);
+	void SetPosition(const Vector3f &position);
 
-	const Vector3 &GetRotation() const { return m_rotation; }
+	const Vector3f &GetRotation() const { return m_rotation; }
 
-	void SetRotation(const Vector3 &rotation);
+	void SetRotation(const Vector3f &rotation);
 
-	const Vector3 &GetScaling() const { return m_scaling; }
+	const Vector3f &GetScaling() const { return m_scaling; }
 
-	void SetScaling(const Vector3 &scaling);
+	void SetScaling(const Vector3f &scaling);
 
 	const bool &IsDirty() const { return m_dirty; }
 
@@ -77,9 +77,9 @@ public:
 
 	static const Transform Identity;
 private:
-	Vector3 m_position;
-	Vector3 m_rotation;
-	Vector3 m_scaling;
+	Vector3f m_position;
+	Vector3f m_rotation;
+	Vector3f m_scaling;
 	mutable Matrix4 m_worldMatrix;
 	mutable bool m_dirty;
 };

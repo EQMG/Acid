@@ -37,6 +37,8 @@ public:
 
 	bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
 
+	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle);
+
 	const float &GetPps() const { return m_pps; }
 
 	void SetPps(const float &pps);
@@ -53,9 +55,9 @@ public:
 
 	void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
 
-	const Vector3 &GetDirection() const { return m_direction; }
+	const Vector3f &GetDirection() const { return m_direction; }
 
-	void SetDirection(const Vector3 &direction, const float &deviation);
+	void SetDirection(const Vector3f &direction, const float &deviation);
 
 	const float &GetSpeedDeviation() const { return m_speedDeviation; }
 
@@ -80,7 +82,7 @@ private:
 
 	float GenerateRotation() const;
 
-	Vector3 GenerateRandomUnitVector() const;
+	Vector3f GenerateRandomUnitVector() const;
 
 	std::vector<std::shared_ptr<ParticleType>> m_types;
 
@@ -89,7 +91,7 @@ private:
 	float m_gravityEffect;
 	bool m_randomRotation;
 
-	Vector3 m_direction;
+	Vector3f m_direction;
 	float m_directionDeviation;
 	float m_speedDeviation;
 	float m_lifeDeviation;

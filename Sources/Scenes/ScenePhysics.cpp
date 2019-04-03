@@ -63,7 +63,7 @@ void ScenePhysics::Update()
 	CheckForCollisionEvents();
 }
 
-Raycast ScenePhysics::Raytest(const Vector3 &start, const Vector3 &end)
+Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end)
 {
 	auto startBt = Collider::Convert(start);
 	auto endBt = Collider::Convert(end);
@@ -74,7 +74,7 @@ Raycast ScenePhysics::Raytest(const Vector3 &start, const Vector3 &end)
 		result.m_collisionObject != nullptr ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 }
 
-void ScenePhysics::SetGravity(const Vector3 &gravity)
+void ScenePhysics::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));

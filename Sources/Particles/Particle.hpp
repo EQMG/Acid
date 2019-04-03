@@ -23,7 +23,7 @@ public:
 	 * @param scale The particles scale.
 	 * @param gravityEffect The particles gravity effect.
 	 */
-	Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles, const float &rotation,
+	Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles, const float &rotation,
 		const float &scale, const float &gravityEffect);
 
 	/**
@@ -35,11 +35,11 @@ public:
 
 	const std::shared_ptr<ParticleType> &GetParticleType() const { return m_particleType; }
 
-	const Vector3 &GetPosition() const { return m_position; }
+	const Vector3f &GetPosition() const { return m_position; }
 
-	const Vector3 &GetVelocity() const { return m_velocity; }
+	const Vector3f &GetVelocity() const { return m_velocity; }
 
-	const Vector3 &GetChange() const { return m_change; }
+	const Vector3f &GetChange() const { return m_change; }
 
 	const Vector2f &GetTextureOffset1() const { return m_textureOffset1; }
 
@@ -68,9 +68,9 @@ private:
 
 	std::shared_ptr<ParticleType> m_particleType;
 
-	Vector3 m_position;
-	Vector3 m_velocity;
-	Vector3 m_change;
+	Vector3f m_position;
+	Vector3f m_velocity;
+	Vector3f m_change;
 
 	Vector2f m_textureOffset1;
 	Vector2f m_textureOffset2;

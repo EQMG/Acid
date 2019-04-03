@@ -38,7 +38,7 @@ void FilterLensflare::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
 }
 
-void FilterLensflare::SetSunPosition(const Vector3 &sunPosition)
+void FilterLensflare::SetSunPosition(const Vector3f &sunPosition)
 {
 	auto camera = Scenes::Get()->GetCamera();
 	m_sunPosition = Matrix4::Project(sunPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());

@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCube :
 	public Collider
 {
 public:
-	explicit ColliderCube(const Vector3 &extents = Vector3::One, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Identity);
 
 	~ColliderCube();
 
@@ -24,12 +24,12 @@ public:
 
 	btCollisionShape *GetCollisionShape() const override;
 
-	const Vector3 &GetExtents() const { return m_extents; }
+	const Vector3f &GetExtents() const { return m_extents; }
 
-	void SetExtents(const Vector3 &extents);
+	void SetExtents(const Vector3f &extents);
 
 private:
 	std::unique_ptr<btBoxShape> m_shape;
-	Vector3 m_extents;
+	Vector3f m_extents;
 };
 }

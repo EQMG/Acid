@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Post/PostFilter.hpp"
+#include "Maths/Vector3.hpp"
 
 namespace acid
 {
@@ -20,6 +21,6 @@ private:
 	UniformHandler m_uniformScene;
 
 	std::shared_ptr<Image2d> m_noise;
-	std::vector<Vector3> m_kernel;
+	std::vector<Vector3f> m_kernel;
 };
 }

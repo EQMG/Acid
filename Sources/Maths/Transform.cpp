@@ -4,9 +4,9 @@
 
 namespace acid
 {
-const Transform Transform::Identity = Transform(Vector3::Zero, Vector3::Zero, Vector3::One);
+const Transform Transform::Identity = Transform(Vector3f::Zero, Vector3f::Zero, Vector3f::One);
 
-Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vector3 &scaling) :
+Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scaling) :
 	m_position(position),
 	m_rotation(rotation),
 	m_scaling(scaling),
@@ -14,7 +14,7 @@ Transform::Transform(const Vector3 &position, const Vector3 &rotation, const Vec
 {
 }
 
-Transform::Transform(const Vector3 &position, const Vector3 &rotation, const float &scale) :
+Transform::Transform(const Vector3f &position, const Vector3f &rotation, const float &scale) :
 	m_position(position),
 	m_rotation(rotation),
 	m_scaling(scale, scale, scale),
@@ -47,7 +47,7 @@ void Transform::Encode(Metadata &metadata) const
 
 Transform Transform::Multiply(const Transform &other) const
 {
-	return Transform(GetWorldMatrix().Transform(other.m_position), m_rotation + other.m_rotation, m_scaling * other.m_scaling);
+	return Transform(Vector3f(GetWorldMatrix().Transform(Vector4f(other.m_position))), m_rotation + other.m_rotation, m_scaling * other.m_scaling);
 }
 
 Matrix4 Transform::GetWorldMatrix() const
@@ -61,7 +61,7 @@ Matrix4 Transform::GetWorldMatrix() const
 	return m_worldMatrix;
 }
 
-void Transform::SetPosition(const Vector3 &position)
+void Transform::SetPosition(const Vector3f &position)
 {
 	if (m_position != position)
 	{
@@ -70,7 +70,7 @@ void Transform::SetPosition(const Vector3 &position)
 	}
 }
 
-void Transform::SetRotation(const Vector3 &rotation)
+void Transform::SetRotation(const Vector3f &rotation)
 {
 	if (m_rotation != rotation)
 	{
@@ -79,7 +79,7 @@ void Transform::SetRotation(const Vector3 &rotation)
 	}
 }
 
-void Transform::SetScaling(const Vector3 &scaling)
+void Transform::SetScaling(const Vector3f &scaling)
 {
 	if (m_scaling != scaling)
 	{

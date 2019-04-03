@@ -41,7 +41,7 @@ public:
 	 * Constructor for Matrix3.
 	 * @param source Creates this matrix out of a 3 vector array. 
 	 **/
-	explicit Matrix3(const Vector3 source[3]);
+	explicit Matrix3(const Vector3f source[3]);
 
 	/**
 	 * Adds this matrix to another matrix.
@@ -69,7 +69,7 @@ public:
 	 * @param other The vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector3 Multiply(const Vector3 &other) const;
+	Vector3f Multiply(const Vector3f &other) const;
 
 	/**
 	 * Divides this matrix by another matrix.
@@ -83,14 +83,14 @@ public:
 	 * @param other The other vector. 
 	 * @return The resultant vector. 
 	 **/
-	Vector3 Transform(const Vector3 &other) const;
+	Vector3f Transform(const Vector3f &other) const;
 
 	/**
 	 * Scales this matrix by a vector.
 	 * @param other The other vector. 
 	 * @return The resultant matrix. 
 	 **/
-	Matrix3 Scale(const Vector3 &other) const;
+	Matrix3 Scale(const Vector3f &other) const;
 
 	/**
 	 * Inverts this matrix.
@@ -132,9 +132,9 @@ public:
 
 	Matrix3 operator-() const;
 
-	const Vector3 &operator[](const uint32_t &index) const;
+	const Vector3f &operator[](const uint32_t &index) const;
 
-	Vector3 &operator[](const uint32_t &index);
+	Vector3f &operator[](const uint32_t &index);
 
 	ACID_EXPORT friend Matrix3 operator+(const Matrix3 &left, const Matrix3 &right);
 
@@ -144,13 +144,13 @@ public:
 
 	ACID_EXPORT friend Matrix3 operator/(const Matrix3 &left, const Matrix3 &right);
 
-	ACID_EXPORT friend Matrix3 operator*(const Vector3 &left, const Matrix3 &right);
+	ACID_EXPORT friend Matrix3 operator*(const Vector3f &left, const Matrix3 &right);
 
-	ACID_EXPORT friend Matrix3 operator/(const Vector3 &left, const Matrix3 &right);
+	ACID_EXPORT friend Matrix3 operator/(const Vector3f &left, const Matrix3 &right);
 
-	ACID_EXPORT friend Matrix3 operator*(const Matrix3 &left, const Vector3 &right);
+	ACID_EXPORT friend Matrix3 operator*(const Matrix3 &left, const Vector3f &right);
 
-	ACID_EXPORT friend Matrix3 operator/(const Matrix3 &left, const Vector3 &right);
+	ACID_EXPORT friend Matrix3 operator/(const Matrix3 &left, const Vector3f &right);
 
 	ACID_EXPORT friend Matrix3 operator*(const float &left, const Matrix3 &right);
 
@@ -168,9 +168,9 @@ public:
 
 	Matrix3 &operator/=(const Matrix3 &other);
 
-	Matrix3 &operator*=(const Vector3 &other);
+	Matrix3 &operator*=(const Vector3f &other);
 
-	Matrix3 &operator/=(const Vector3 &other);
+	Matrix3 &operator/=(const Vector3f &other);
 
 	Matrix3 &operator*=(const float &other);
 
@@ -187,7 +187,7 @@ public:
 	{
 		struct
 		{
-			Vector3 m_rows[3];
+			Vector3f m_rows[3];
 		};
 
 		struct

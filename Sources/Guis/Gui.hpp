@@ -45,14 +45,14 @@ public:
 
 	const Vector2f &GetAtlasOffset() const { return m_atlasOffset; }
 
-	const Vector4 &GetNinePatces() const { return m_ninePatches; }
+	const Vector4f &GetNinePatces() const { return m_ninePatches; }
 
 	/**
 	 * Sets nine the patches value size, if zero it will be disabled. 9-patch/9-slicing allows for a single section
 	 * of a texture to be scale with corners and edges kept in the screens aspect ratio.
 	 * @param ninePatches The values, x/y being to top left corner and z/w bottom right for the scalable section.
 	 */
-	void SetNinePatches(const Vector4 &ninePatches) { m_ninePatches = ninePatches; }
+	void SetNinePatches(const Vector4f &ninePatches) { m_ninePatches = ninePatches; }
 
 	IDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
 
@@ -73,7 +73,7 @@ private:
 	uint32_t m_numberOfRows;
 	uint32_t m_selectedRow;
 	Vector2f m_atlasOffset;
-	Vector4 m_ninePatches; // TODO: Use UiBound
+	Vector4f m_ninePatches; // TODO: Use UiBound
 
 	std::unique_ptr<IDriver<Colour>> m_colourDriver;
 	Colour m_colourOffset;

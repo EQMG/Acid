@@ -126,13 +126,41 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	return false;
 }
 
+Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle)
+{
+	auto cosAngle = std::cos(angle);
+	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
+	auto z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
+	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+	auto x = rootOneMinusZSquared * std::cos(theta);
+	auto y = rootOneMinusZSquared * std::sin(theta);
+
+	auto direction = Vector4f(x, y, z, 1.0f);
+
+	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
+	{
+		auto rotateAxis = coneDirection.Cross(Vector3f::Front);
+		rotateAxis.Normalize();
+		auto rotateAngle = std::acos(coneDirection.Dot(Vector3f::Front));
+		auto rotationMatrix = Matrix4();
+		rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
+		direction = rotationMatrix.Transform(direction);
+	}
+	else if (coneDirection.m_z == -1.0f)
+	{
+		direction.m_z *= -1.0f;
+	}
+
+	return Vector3f(direction);
+}
+
 void ParticleSystem::SetPps(const float &pps)
 {
 	m_pps = pps;
 	m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
 }
 
-void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviation)
+void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviation)
 {
 	m_direction = direction;
 	m_directionDeviation = deviation * Maths::Pi;
@@ -141,13 +169,13 @@ void ParticleSystem::SetDirection(const Vector3 &direction, const float &deviati
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
 	auto worldTransform = GetParent()->GetWorldTransform() * emitter.GetLocalTransform();
-	Vector3 spawnPos = emitter.GeneratePosition() + worldTransform.GetPosition();
+	Vector3f spawnPos = emitter.GeneratePosition() + worldTransform.GetPosition();
 
-	Vector3 velocity;
+	Vector3f velocity;
 
-	if (m_direction != Vector3::Zero)
+	if (m_direction != Vector3f::Zero)
 	{
-		velocity = Vector3::RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
+		velocity = RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 	}
 	else
 	{
@@ -180,13 +208,13 @@ float ParticleSystem::GenerateRotation() const
 	return 0.0f;
 }
 
-Vector3 ParticleSystem::GenerateRandomUnitVector() const
+Vector3f ParticleSystem::GenerateRandomUnitVector() const
 {
 	float theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
 	float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 	float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 	float x = rootOneMinusZSquared * std::cos(theta);
 	float y = rootOneMinusZSquared * std::sin(theta);
-	return Vector3(x, y, z);
+	return Vector3f(x, y, z);
 }
 }

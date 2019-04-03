@@ -13,7 +13,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 	m_updating(false),
 	m_mouseOver(false)
 {
-	m_scroll.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
+	m_scroll.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
 
 	Mouse::Get()->OnScroll() += [this](Vector2f wheelDelta)
 	{

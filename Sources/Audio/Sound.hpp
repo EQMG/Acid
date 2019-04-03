@@ -44,11 +44,11 @@ public:
 
 	Transform GetWorldTransform() const;
 
-	void SetPosition(const Vector3 &position);
+	void SetPosition(const Vector3f &position);
 
-	void SetDirection(const Vector3 &direction);
+	void SetDirection(const Vector3f &direction);
 
-	void SetVelocity(const Vector3 &velocity);
+	void SetVelocity(const Vector3f &velocity);
 
 	const Audio::Type &GetType() const { return m_type; }
 
@@ -68,9 +68,9 @@ private:
 
 	Transform m_localTransform;
 	mutable Transform m_worldTransform;
-	Vector3 m_position;
-	Vector3 m_direction;
-	Vector3 m_velocity;
+	Vector3f m_position;
+	Vector3f m_direction;
+	Vector3f m_velocity;
 
 	Audio::Type m_type;
 	float m_gain;

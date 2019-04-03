@@ -23,14 +23,14 @@ public:
 	 * @param extents The size (width, height, depth) to load from.
 	 * @return The cube model with the requested values.
 	 */
-	static std::shared_ptr<ModelCube> Create(const Vector3 &extents = Vector3::One);
+	static std::shared_ptr<ModelCube> Create(const Vector3f &extents = Vector3f::One);
 
 	/**
 	 * Creates a new cube model.
 	 * @param extents The size (width, height, depth) to load from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCube#Load} can be called later.
 	 */
-	explicit ModelCube(const Vector3 &extents = Vector3::One, const bool &load = true);
+	explicit ModelCube(const Vector3f &extents = Vector3f::One, const bool &load = true);
 
 	void Load() override;
 
@@ -39,6 +39,6 @@ public:
 	void Encode(Metadata &metadata) const override;
 
 private:
-	Vector3 m_extents;
+	Vector3f m_extents;
 };
 }

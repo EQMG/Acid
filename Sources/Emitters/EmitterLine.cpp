@@ -5,7 +5,7 @@
 
 namespace acid
 {
-EmitterLine::EmitterLine(const float &length, const Vector3 &axis, const Transform &localTransform) :
+EmitterLine::EmitterLine(const float &length, const Vector3f &axis, const Transform &localTransform) :
 	Emitter(localTransform),
 	m_length(length),
 	m_axis(axis.Normalize())
@@ -34,7 +34,7 @@ void EmitterLine::Encode(Metadata &metadata) const
 	metadata.SetChild("Local Transform", m_localTransform);
 }
 
-Vector3 EmitterLine::GeneratePosition() const
+Vector3f EmitterLine::GeneratePosition() const
 {
 	return m_axis * m_length * Maths::Random(-0.5f, 0.5f);
 }

@@ -41,15 +41,15 @@ void Audio::Update()
 	alListenerf(AL_GAIN, GetGain(Type::Master));
 
 	// Listener position.
-	Vector3 currentPosition = camera->GetPosition();
-	alListener3f(AL_POSITION, currentPosition.m_x, currentPosition.m_y, currentPosition.m_z);
+	auto position = camera->GetPosition();
+	alListener3f(AL_POSITION, position.m_x, position.m_y, position.m_z);
 
 	// Listener velocity.
-	Vector3 currentVelocity = camera->GetVelocity();
-	alListener3f(AL_VELOCITY, currentVelocity.m_x, currentVelocity.m_y, currentVelocity.m_z);
+	auto velocity = camera->GetPosition();
+	alListener3f(AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
 
 	// Listener orientation.
-	Vector3 currentRay = camera->GetViewRay().GetCurrentRay();
+	Vector3f currentRay = camera->GetViewRay().GetCurrentRay();
 	ALfloat orientation[6] = { currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f };
 	alListenerfv(AL_ORIENTATION, orientation);
 

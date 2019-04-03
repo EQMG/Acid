@@ -28,7 +28,7 @@ public:
 	 * @param shadowOffset The shadows offset.
 	 * @param shadowDistance The shadows distance.
 	 */
-	void Update(const Camera &camera, const Vector3 &lightPosition, const float &shadowOffset, const float &shadowDistance);
+	void Update(const Camera &camera, const Vector3f &lightPosition, const float &shadowOffset, const float &shadowDistance);
 
 	/**
 	 * Tests if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
@@ -36,7 +36,7 @@ public:
 	 * @param radius The radius of the bounding sphere.
 	 * @return {@code true} if the sphere intersects the box.
 	 */
-	bool IsInBox(const Vector3 &position, const float &radius) const;
+	bool IsInBox(const Vector3f &position, const float &radius) const;
 
 	const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
@@ -52,9 +52,9 @@ public:
 	 */
 	const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
 
-	const Vector3 &GetMinExtents() const { return m_minExtents; }
+	const Vector3f &GetMinExtents() const { return m_minExtents; }
 
-	const Vector3 &GetMaxExtents() const { return m_maxExtents; }
+	const Vector3f &GetMaxExtents() const { return m_maxExtents; }
 
 	float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
 
@@ -79,7 +79,7 @@ private:
 	 * @param centreFar The centre point of the frustum's far plane.
 	 * @return The vertices of the frustum in light space.
 	 */
-	std::array<Vector4, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3 &forwardVector, const Vector3 &centreNear, const Vector3 &centreFar);
+	std::array<Vector4f, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar);
 
 	/**
 	 * Calculates one of the corner vertices of the view frustum in world space and converts it to light space.
@@ -88,7 +88,7 @@ private:
 	 * @param width The distance of the corner from the start point.
 	 * @return The relevant corner vertex of the view frustum in light space.
 	 */
-	Vector4 CalculateLightSpaceFrustumCorner(const Vector3 &startPoint, const Vector3 &direction, const float &width) const;
+	Vector4f CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, const float &width) const;
 
 	void UpdateOrthoProjectionMatrix();
 
@@ -101,7 +101,7 @@ private:
 
 	void UpdateViewShadowMatrix();
 
-	Vector3 m_lightDirection;
+	Vector3f m_lightDirection;
 	float m_shadowOffset;
 	float m_shadowDistance;
 
@@ -110,12 +110,12 @@ private:
 	Matrix4 m_projectionViewMatrix;
 	Matrix4 m_shadowMapSpaceMatrix;
 	Matrix4 m_offset;
-	Vector3 m_centre;
+	Vector3f m_centre;
 
 	float m_farHeight, m_farWidth;
 	float m_nearHeight, m_nearWidth;
 
-	Vector3 m_minExtents;
-	Vector3 m_maxExtents;
+	Vector3f m_minExtents;
+	Vector3f m_maxExtents;
 };
 }

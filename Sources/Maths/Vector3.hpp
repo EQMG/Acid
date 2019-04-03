@@ -2,357 +2,668 @@
 
 #include "Serialized/Metadata.hpp"
 #include "Maths.hpp"
-#include "Vector2.hpp"
 
 namespace acid
 {
-class Colour;
-class Quaternion;
+template<typename T>
+class Vector2;
+
+template<typename T>
 class Vector4;
+
+//template<typename T>
+//class Quaternion;
 
 /**
  * @brief Holds a 3-tuple vector.
- **/
-class ACID_EXPORT Vector3
+ * @tparam T The value type.
+ */
+template<typename T>
+class Vector3
 {
 public:
 	/**
 	 * Constructor for Vector3.
-	 * @param x Start x. 
-	 * @param y Start y. 
-	 * @param z Start z. 
 	 **/
-	explicit Vector3(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f);
+	explicit Vector3() :
+		m_x(0),
+		m_y(0),
+		m_z(0)
+	{
+	}
 
 	/**
 	 * Constructor for Vector3.
-	 * @param source Creates this vector out of a existing one. 
-	 * @param z Start z. 
+	 * @param a The value to set all components to.
 	 **/
-	Vector3(const Vector2f &source, const float &z = 0.0f);
+	explicit Vector3(const T &a) :
+		m_x(a),
+		m_y(a),
+		m_z(a)
+	{
+	}
 
 	/**
 	 * Constructor for Vector3.
-	 * @param source Creates this vector out of a existing one. 
+	 * @param x Start x.
+	 * @param y Start y.
+	 * @param z Start z.
 	 **/
-	Vector3(const Vector4 &source);
+	Vector3(const T &x, const T &y, const T &z) :
+		m_x(x),
+		m_y(y),
+		m_z(z)
+	{
+	}
 
 	/**
 	 * Constructor for Vector3.
-	 * @param source Creates this vector out of a existing colour. 
+	 * @tparam K The sources type.
+	 * @param source Creates this vector out of a existing vector.
 	 **/
-	Vector3(const Colour &source);
+	template<typename K>
+	Vector3(const Vector2<K> &source) :
+		m_x(static_cast<T>(source.m_x)),
+		m_y(static_cast<T>(source.m_y)),
+		m_z(0)
+	{
+	}
+
+	/**
+	 * Constructor for Vector3.
+	 * @tparam K The sources type.
+	 * @param source Creates this vector out of a existing vector.
+	 **/
+	template<typename K>
+	Vector3(const Vector3<K> &source) :
+		m_x(static_cast<T>(source.m_x)),
+		m_y(static_cast<T>(source.m_y)),
+		m_z(static_cast<T>(source.m_z))
+	{
+	}
+
+	/**
+	 * Constructor for Vector3.
+	 * @tparam K The sources type.
+	 * @param source Creates this vector out of a existing vector.
+	 **/
+	template<typename K>
+	Vector3(const Vector4<K> &source) :
+		m_x(static_cast<T>(source.m_x)),
+		m_y(static_cast<T>(source.m_y)),
+		m_z(static_cast<T>(source.m_z))
+	{
+	}
 
 	/**
 	 * Adds this vector to another vector.
-	 * @param other The other vector. 
-	 * @return The resultant vector. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The resultant vector.
 	 **/
-	Vector3 Add(const Vector3 &other) const;
+	template<typename K>
+	auto Add(const Vector3<K> &other) const
+	{
+		return Vector3<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z);
+	}
 
 	/**
 	 * Subtracts this vector to another vector.
-	 * @param other The other vector. 
-	 * @return The resultant vector. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The resultant vector.
 	 **/
-	Vector3 Subtract(const Vector3 &other) const;
+	template<typename K>
+	auto Subtract(const Vector3<K> &other) const
+	{
+		return Vector3<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z);
+	}
 
 	/**
 	 * Multiplies this vector with another vector.
-	 * @param other The other vector. 
-	 * @return The resultant vector. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The resultant vector.
 	 **/
-	Vector3 Multiply(const Vector3 &other) const;
+	template<typename K>
+	auto Multiply(const Vector3<K> &other) const
+	{
+		return Vector3<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z);
+	}
 
 	/**
 	 * Divides this vector by another vector.
-	 * @param other The other vector. 
-	 * @return The resultant vector. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The resultant vector.
 	 **/
-	Vector3 Divide(const Vector3 &other) const;
+	template<typename K>
+	auto Divide(const Vector3<K> &other) const
+	{
+		return Vector3<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z);
+	}
 
 	/**
 	 * Calculates the angle between this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The angle, in radians. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The angle, in radians.
 	 **/
-	float Angle(const Vector3 &other) const;
+	template<typename K>
+	auto Angle(const Vector3<K> &other) const
+	{
+		auto dls = Dot(other) / (Length() * other.Length());
+
+		if (dls < -1)
+		{
+			dls = -1;
+		}
+		else if (dls > 1)
+		{
+			dls = 1;
+		}
+
+		return std::acos(dls);
+	}
 
 	/**
 	 * Calculates the dot product of the this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The dot product. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The dot product.
 	 **/
-	float Dot(const Vector3 &other) const;
+	template<typename K>
+	auto Dot(const Vector3<K> &other) const
+	{
+		return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
+	}
 
 	/**
 	 * Calculates the cross product of the this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The cross product. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The cross product.
 	 **/
-	Vector3 Cross(const Vector3 &other) const;
+	template<typename K>
+	auto Cross(const Vector3<K> &other) const
+	{
+		return Vector3<decltype(m_x * other.m_x)>(m_y * other.m_z - m_z * other.m_y, other.m_x * m_z - other.m_z * m_x, m_x * other.m_y - m_y * other.m_x);
+	}
 
 	/**
 	 * Calculates the linear interpolation between this vector and another vector.
-	 * @param other The other quaternion. 
-	 * @param progression The progression. 
-	 * @return Left lerp right. 
+	 * @tparam K The others type.
+	 * @tparam J The progression type.
+	 * @param other The other vector.
+	 * @param progression The progression.
+	 * @return Left lerp right.
 	 **/
-	Vector3 Lerp(const Vector3 &other, const float &progression) const;
+	template<typename K, typename J = float>
+	auto Lerp(const Vector3<K> &other, const J &progression) const
+	{
+		auto ta = *this * (1 - progression);
+		auto tb = other * progression;
+		return ta + tb;
+	}
 
 	/**
 	 * Scales this vector by a scalar.
-	 * @param scalar The scalar value. 
-	 * @return The scaled vector. 
+	 * @tparam K The scalar type.
+	 * @param scalar The scalar value.
+	 * @return The scaled vector.
 	 **/
-	Vector3 Scale(const float &scalar) const;
+	template<typename K = float>
+	auto Scale(const K &scalar) const
+	{
+		return Vector3<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar, m_z * scalar);
+	}
 
 	/**
 	 * Rotates this vector by a angle around the origin.
-	 * @param rotation The rotation amount. 
-	 * @return The rotated vector. 
+	 * @tparam K The rotations type.
+	 * @param angle The angle to rotate by, in radians.
+	 * @return The rotated vector.
 	 **/
-	Vector3 Rotate(const Vector3 &rotation) const;
+	/*template<typename K = float>
+	auto Rotate(const Vector3<K> &rotation) const
+	{
+		Matrix4 matrix = ;
+		return matrix.Transform(*this);
+	}*/
 
 	/**
 	 * Negates this vector.
-	 * @return The negated vector. 
+	 * @return The negated vector.
 	 **/
-	Vector3 Negate() const;
+	auto Negate() const
+	{
+		return Vector3<decltype(-m_x)>(-m_x, -m_y, -m_z);
+	}
 
 	/**
 	 * Normalizes this vector.
-	 * @return The normalized vector. 
+	 * @return The normalized vector.
 	 **/
-	Vector3 Normalize() const;
+	auto Normalize() const
+	{
+		auto l = Length();
+
+		if (l == 0.0f)
+		{
+			throw std::runtime_error("Can't normalize a zero length vector");
+		}
+
+		return *this / l;
+	}
 
 	/**
 	 * Gets the length squared of this vector.
-	 * @return The length squared. 
+	 * @return The length squared.
 	 **/
-	float LengthSquared() const;
+	auto LengthSquared() const
+	{
+		return m_x * m_x + m_y * m_y + m_z * m_z;
+	}
 
 	/**
 	 * Gets the length of this vector.
-	 * @return The length. 
+	 * @return The length.
 	 **/
-	float Length() const;
+	auto Length() const
+	{
+		return std::sqrt(LengthSquared());
+	}
 
 	/**
 	 * Gets the maximum value in this vector.
-	 * @return The largest components. 
+	 * @return The largest components.
 	 **/
-	float MaxComponent() const;
+	auto MaxComponent() const
+	{
+		return std::max(m_x, std::max(m_y, m_z));
+	}
 
 	/**
 	 * Gets the lowest value in this vector.
-	 * @return The smallest components. 
+	 * @return The minimum components.
 	 **/
-	float MinComponent() const;
+	auto MinComponent() const
+	{
+		return std::min(m_x, std::min(m_y, m_z));
+	}
+
+	/**
+	 * Gets the absolute maximum value in this vector.
+	 * @return The absolute largest components.
+	 **/
+	auto AbsMaxComponent() const
+	{
+		return std::max(std::abs(m_x), std::max(std::abs(m_y), std::abs(m_z)));
+	}
+
+	/**
+	 * Gets the absolute minimum value in this vector.
+	 * @return The absolute smallest components.
+	 **/
+	auto AbsMinComponent() const
+	{
+		return std::min(std::abs(m_x), std::min(std::abs(m_y), std::abs(m_z)));
+	}
 
 	/**
 	 * Converts these euler angles to a quaternion.
-	 * @return The quaternion representation of this vector. 
+	 * @return The quaternion representation of this vector.
 	 **/
-	Quaternion ToQuaternion() const;
+	/*Quaternion ToQuaternion() const
+	{
+		auto sx = std::sin(m_x * Maths::DegToRad * 0.5f);
+		auto cx = Maths::CosFromSin(sx, m_x * Maths::DegToRad * 0.5f);
+		auto sy = std::sin(m_y * Maths::DegToRad * 0.5f);
+		auto cy = Maths::CosFromSin(sy, m_y * Maths::DegToRad * 0.5f);
+		auto sz = std::sin(m_z * Maths::DegToRad * 0.5f);
+		auto cz = Maths::CosFromSin(sz, m_z * Maths::DegToRad * 0.5f);
+		
+		auto cycz = cy * cz;
+		auto sysz = sy * sz;
+		auto sycz = sy * cz;
+		auto cysz = cy * sz;
+		
+		auto w = cx * cycz - sx * sysz;
+		auto x = sx * cycz + cx * sysz;
+		auto y = cx * sycz - sx * cysz;
+		auto z = cx * cysz + sx * sycz;
+		return Quaternion(x, y, z, w);
+	}*/
 
 	/**
 	 * Gets the distance between this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The squared distance. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The squared distance.
 	 **/
-	float DistanceSquared(const Vector3 &other) const;
+	template<typename K>
+	auto DistanceSquared(const Vector3<K> &other) const
+	{
+		auto dx = m_x - other.m_x;
+		auto dy = m_y - other.m_y;
+		auto dz = m_z - other.m_z;
+		return dx * dx + dy * dy + dz * dz;
+	}
 
 	/**
 	 * Gets the between this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The distance. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The distance.
 	 **/
-	float Distance(const Vector3 &other) const;
+	template<typename K>
+	auto Distance(const Vector3<K> &other) const
+	{
+		return std::sqrt(DistanceSquared(other));
+	}
 
 	/**
 	 * Gets the vector distance between this vector and another vector.
-	 * @param other The other vector. 
-	 * @return The vector distance. 
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The vector distance.
 	 **/
-	Vector3 DistanceVector(const Vector3 &other) const;
+	template<typename K>
+	auto DistanceVector(const Vector3<K> &other) const
+	{
+		return (*this - other) * (*this - other);
+	}
 
 	/**
 	 * Gradually changes this vector to a target.
-	 * @param target The target vector. 
-	 * @param rate The rate to go from current to the target. 
-	 * @return The changed vector. 
+	 * @param target The target vector.
+	 * @param rate The rate to go from current to the target.
+	 * @return The changed vector.
 	 **/
-	Vector3 SmoothDamp(const Vector3 &target, const Vector3 &rate) const;
-
-	/**
-	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y, z).
-	 * @return The polar coordinates (radius, theta, phi). 
-	 **/
-	Vector3 CartesianToPolar() const;
-
-	/**
-	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta, phi).
-	 * @return The cartesian coordinates (x, y, z). 
-	 **/
-	Vector3 PolarToCartesian() const;
-
-	/**
-	 * Projects this cube coordinate onto a sphere.
-	 * @param radius The sphere radius. 
-	 * @return The projected cartesian coordinates. 
-	 **/
-	Vector3 ProjectCubeToSphere(const float &radius) const;
-
-	/**
-	 * Gets the height of this vector on a point off of a 3d triangle.
-	 * @param p1 Point 1 on the triangle. 
-	 * @param p2 Point 2 on the triangle. 
-	 * @param p3 Point 3 on the triangle. 
-	 * @return Height of the triangle. 
-	 **/
-	float BaryCentric(const Vector3 &p1, const Vector3 &p2, const Vector3 &p3);
-
-	/**
-	 * Gets the lowest vector size.
-	 * @param a The first vector to get values from. 
-	 * @param b The second vector to get values from. 
-	 * @return The lowest vector. 
-	 **/
-	static Vector3 MinVector(const Vector3 &a, const Vector3 &b);
-
-	/**
-	 * Gets the maximum vector size.
-	 * @param a The first vector to get values from. 
-	 * @param b The second vector to get values from. 
-	 * @return The maximum vector. 
-	 **/
-	static Vector3 MaxVector(const Vector3 &a, const Vector3 &b);
-
-	/**
-	 * Generates a random unit vector.
-	 * @return The random unit vector. 
-	 **/
-	static Vector3 RandomUnitVector();
-
-	/**
-	 * Gets a random point from on a circle.
-	 * @param normal The circles normal. 
-	 * @param radius The circles radius. 
-	 * @return The random point in a circle. 
-	 **/
-	static Vector3 RandomPointOnCircle(const Vector3 &normal, const float &radius);
-
-	/**
-	 * Generates a random unit vector from within a cone.
-	 * @param coneDirection The cones direction. 
-	 * @param angle The cones major angle. 
-	 * @return The random unitt vector in a code. 
-	 **/
-	static Vector3 RandomUnitVectorWithinCone(const Vector3 &coneDirection, const float &angle);
-
-	float GetX() const { return m_x; }
-
-	void SetX(const float &x) { m_x = x; }
-
-	float GetY() const { return m_y; }
-
-	void SetY(const float &y) { m_y = y; }
-
-	float GetZ() const { return m_z; }
-
-	void SetZ(const float &z) { m_z = z; }
-
-	void Decode(const Metadata &metadata);
-
-	void Encode(Metadata &metadata) const;
-
-	bool operator==(const Vector3 &other) const;
-
-	bool operator!=(const Vector3 &other) const;
-
-	Vector3 operator-() const;
-
-	const float &operator[](const uint32_t &index) const;
-
-	float &operator[](const uint32_t &index);
-
-	ACID_EXPORT friend Vector3 operator+(const Vector3 &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator-(const Vector3 &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator*(const Vector3 &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator/(const Vector3 &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator+(const float &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator-(const float &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator*(const float &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator/(const float &left, const Vector3 &right);
-
-	ACID_EXPORT friend Vector3 operator+(const Vector3 &left, const float &right);
-
-	ACID_EXPORT friend Vector3 operator-(const Vector3 &left, const float &right);
-
-	ACID_EXPORT friend Vector3 operator*(const Vector3 &left, const float &right);
-
-	ACID_EXPORT friend Vector3 operator/(const Vector3 &left, const float &right);
-
-	Vector3 &operator+=(const Vector3 &other);
-
-	Vector3 &operator-=(const Vector3 &other);
-
-	Vector3 &operator*=(const Vector3 &other);
-
-	Vector3 &operator/=(const Vector3 &other);
-
-	Vector3 &operator+=(const float &other);
-
-	Vector3 &operator-=(const float &other);
-
-	Vector3 &operator*=(const float &other);
-
-	Vector3 &operator/=(const float &other);
-
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Vector3 &vector);
-
-	std::string ToString() const;
-
-	static const Vector3 Zero;
-	static const Vector3 One;
-	static const Vector3 Left;
-	static const Vector3 Right;
-	static const Vector3 Up;
-	static const Vector3 Down;
-	static const Vector3 Front;
-	static const Vector3 Back;
-	static const Vector3 PositiveInfinity;
-	static const Vector3 NegativeInfinity;
-
-	union
+	template<typename K, typename J>
+	auto SmoothDamp(const Vector3<K> &target, const Vector3<J> &rate) const
 	{
-		struct
-		{
-			float m_elements[3];
-		};
+		return Maths::SmoothDamp(*this, target, rate);
+	}
 
-		struct
+	/**
+	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
+	 * @return The polar coordinates (radius, theta).
+	 **/
+	auto CartesianToPolar() const
+	{
+		auto radius = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+		auto theta = std::atan2(m_y, m_x);
+		auto phi = std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z);
+		return Vector3<decltype(std::sqrt(m_x))>(radius, theta, phi);
+	}
+
+	/**
+	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
+	 * @return The cartesian coordinates (x, y).
+	 **/
+	auto PolarToCartesian() const
+	{
+		auto x = m_x * std::sin(m_z) * std::cos(m_y);
+		auto y = m_x * std::sin(m_z) * std::sin(m_y);
+		auto z = m_x * std::cos(m_z);
+		return Vector3<decltype(std::cos(m_x))>(x, y, z);
+	}
+
+	/**
+	 * Gets the lowest vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The lowest vector.
+	 **/
+	template<typename K>
+	auto MinVector(const Vector3<K> &other)
+	{
+		return Vector3<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z));
+	}
+
+	/**
+	 * Gets the maximum vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The maximum vector.
+	 **/
+	template<typename K>
+	auto MaxVector(const Vector3<K> &other)
+	{
+		return Vector3<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z));
+	}
+
+	T GetX() const { return m_x; }
+
+	void SetX(const T &x) { m_x = x; }
+
+	T GetY() const { return m_y; }
+
+	void SetY(const T &y) { m_y = y; }
+
+	T GetZ() const { return m_z; }
+
+	void SetZ(const T &z) { m_z = z; }
+
+	void Decode(const Metadata &metadata)
+	{
+		metadata.GetChild("x", m_x);
+		metadata.GetChild("y", m_y);
+		metadata.GetChild("z", m_z);
+	}
+
+	void Encode(Metadata &metadata) const
+	{
+		metadata.SetChild("x", m_x);
+		metadata.SetChild("y", m_y);
+		metadata.SetChild("z", m_z);
+	}
+
+	std::string ToString() const
+	{
+		std::stringstream stream;
+		stream.precision(10);
+		stream << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
+		return stream.str();
+	}
+
+	template<typename K>
+	bool operator==(const Vector3<K> &other) const
+	{
+		return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z;
+	}
+
+	template<typename K>
+	bool operator!=(const Vector3<K> &other) const
+	{
+		return !(*this == other);
+	}
+
+	Vector3 operator-() const
+	{
+		return Negate();
+	}
+
+	const T &operator[](const uint32_t &index) const
+	{
+		switch (index)
 		{
-			float m_x, m_y, m_z;
-		};
-	};
+		case 0:
+			return m_x;
+		case 1:
+			return m_y;
+		case 2:
+			return m_z;
+		default:
+			throw std::runtime_error("Vector3 index out of bounds!");
+		}
+	}
+
+	T &operator[](const uint32_t &index)
+	{
+		switch (index)
+		{
+		case 0:
+			return m_x;
+		case 1:
+			return m_y;
+		case 2:
+			return m_z;
+		default:
+			throw std::runtime_error("Vector3 index out of bounds!");
+		}
+	}
+
+	template<typename K>
+	Vector3 &operator+=(const Vector3<K> &other)
+	{
+		return *this = Add(other);
+	}
+
+	template<typename K>
+	Vector3 &operator-=(const Vector3<K> &other)
+	{
+		return *this = Subtract(other);
+	}
+
+	template<typename K>
+	Vector3 &operator*=(const Vector3<K> &other)
+	{
+		return *this = Multiply(other);
+	}
+
+	template<typename K>
+	Vector3 &operator/=(const Vector3<K> &other)
+	{
+		return *this = Divide(other);
+	}
+
+	Vector3 &operator+=(const T &other)
+	{
+		return *this = Add(Vector3<T>(other));
+	}
+
+	Vector3 &operator-=(const T &other)
+	{
+		return *this = Subtract(Vector3<T>(other));
+	}
+
+	Vector3 &operator*=(const T &other)
+	{
+		return *this = Multiply(Vector3<T>(other));
+	}
+
+	Vector3 &operator/=(const T &other)
+	{
+		return *this = Divide(Vector3<T>(other));
+	}
+
+	ACID_EXPORT static const Vector3 Zero;
+	ACID_EXPORT static const Vector3 One;
+	ACID_EXPORT static const Vector3 Left;
+	ACID_EXPORT static const Vector3 Right;
+	ACID_EXPORT static const Vector3 Up;
+	ACID_EXPORT static const Vector3 Down;
+	ACID_EXPORT static const Vector3 Front;
+	ACID_EXPORT static const Vector3 Back;
+	ACID_EXPORT static const Vector3 PositiveInfinity;
+	ACID_EXPORT static const Vector3 NegativeInfinity;
+
+	T m_x, m_y, m_z;
 };
+
+template<typename K>
+std::ostream &operator<<(std::ostream &stream, const Vector3<K> &vector)
+{
+	stream << vector.ToString();
+	return stream;
+}
+
+template<typename K, typename J>
+auto operator+(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return left.Add(right);
+}
+
+template<typename K, typename J>
+auto operator-(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return left.Subtract(right);
+}
+
+template<typename K, typename J>
+auto operator*(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return left.Multiply(right);
+}
+
+template<typename K, typename J>
+auto operator/(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return left.Divide(right);
+}
+
+template<typename K, typename J>
+auto operator+(const K &left, const Vector3<J> &right)
+{
+	return Vector3<K>(left).Add(right);
+}
+
+template<typename K, typename J>
+auto operator-(const K &left, const Vector3<J> &right)
+{
+	return Vector3<K>(left).Subtract(right);
+}
+
+template<typename K, typename J>
+auto operator*(const K &left, const Vector3<J> &right)
+{
+	return Vector3<K>(left).Multiply(right);
+}
+
+template<typename K, typename J>
+auto operator/(const K &left, const Vector3<J> &right)
+{
+	return Vector3<K>(left).Divide(right);
+}
+
+template<typename K, typename J>
+auto operator+(const Vector3<K> &left, const J &right)
+{
+	return left.Add(Vector3<J>(right));
+}
+
+template<typename K, typename J>
+auto operator-(const Vector3<K> &left, const J &right)
+{
+	return left.Subtract(Vector3<J>(right));
+}
+
+template<typename K, typename J>
+auto operator*(const Vector3<K> &left, const J &right)
+{
+	return left.Multiply(Vector3<J>(right));
+}
+
+template<typename K, typename J>
+auto operator/(const Vector3<K> &left, const J &right)
+{
+	return left.Divide(Vector3<J>(right));
+}
+
+using Vector3f = Vector3<float>;
+using Vector3d = Vector3<double>;
+using Vector3i = Vector3<int32_t>;
+using Vector3ui = Vector3<uint32_t>;
 }
 
 namespace std
 {
-template<>
-struct hash<acid::Vector3>
+template<typename T>
+struct hash<acid::Vector3<T>>
 {
-	size_t operator()(acid::Vector3 const &vector) const
+	size_t operator()(acid::Vector3<T> const &vector) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.m_x);

@@ -41,13 +41,13 @@ public:
 
 	void SetMass(const float &mass);
 
-	const Vector3 &GetGravity() const { return m_gravity; }
+	const Vector3f &GetGravity() const { return m_gravity; }
 
-	void SetGravity(const Vector3 &gravity);
+	void SetGravity(const Vector3f &gravity);
 
-	const Vector3 &GetUp() const { return m_up; }
+	const Vector3f &GetUp() const { return m_up; }
 
-	void SetUp(const Vector3 &up);
+	void SetUp(const Vector3f &up);
 
 	const float &GetStepHeight() const { return m_stepHeight; }
 
@@ -71,17 +71,17 @@ public:
 
 	bool IsOnGround() const;
 
-	void Jump(const Vector3 &direction);
+	void Jump(const Vector3f &direction);
 
-	void SetWalkDirection(const Vector3 &direction);
+	void SetWalkDirection(const Vector3f &direction);
 
 protected:
 	void RecalculateMass() override;
 
 private:
 	float m_mass;
-	Vector3 m_gravity;
-	Vector3 m_up;
+	Vector3f m_gravity;
+	Vector3f m_up;
 	float m_stepHeight;
 	float m_fallSpeed;
 	float m_jumpSpeed;

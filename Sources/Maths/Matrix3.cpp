@@ -25,7 +25,7 @@ Matrix3::Matrix3(const Matrix2 &source)
 
 Matrix3::Matrix3(const Matrix4 &source)
 {
-	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3));
+	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3f));
 }
 
 Matrix3::Matrix3(const float *source)
@@ -33,9 +33,9 @@ Matrix3::Matrix3(const float *source)
 	std::memcpy(m_rows, source, 3 * 3 * sizeof(float));
 }
 
-Matrix3::Matrix3(const Vector3 *source)
+Matrix3::Matrix3(const Vector3f *source)
 {
-	std::memcpy(m_rows, source, 3 * sizeof(Vector3));
+	std::memcpy(m_rows, source, 3 * sizeof(Vector3f));
 }
 
 Matrix3 Matrix3::Add(const Matrix3 &other) const
@@ -83,9 +83,9 @@ Matrix3 Matrix3::Multiply(const Matrix3 &other) const
 	return result;
 }
 
-Vector3 Matrix3::Multiply(const Vector3 &other) const
+Vector3f Matrix3::Multiply(const Vector3f &other) const
 {
-	Vector3 result = Vector3();
+	Vector3f result = Vector3f();
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -110,9 +110,9 @@ Matrix3 Matrix3::Divide(const Matrix3 &other) const
 	return result;
 }
 
-Vector3 Matrix3::Transform(const Vector3 &other) const
+Vector3f Matrix3::Transform(const Vector3f &other) const
 {
-	Vector3 result = Vector3();
+	Vector3f result = Vector3f();
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -122,7 +122,7 @@ Vector3 Matrix3::Transform(const Vector3 &other) const
 	return result;
 }
 
-Matrix3 Matrix3::Scale(const Vector3 &other) const
+Matrix3 Matrix3::Scale(const Vector3f &other) const
 {
 	Matrix3 result = Matrix3(*this);
 
@@ -273,13 +273,13 @@ Matrix3 Matrix3::operator-() const
 	return Negate();
 }
 
-const Vector3 &Matrix3::operator[](const uint32_t &index) const
+const Vector3f &Matrix3::operator[](const uint32_t &index) const
 {
 	assert(index < 3);
 	return m_rows[index];
 }
 
-Vector3 &Matrix3::operator[](const uint32_t &index)
+Vector3f &Matrix3::operator[](const uint32_t &index)
 {
 	assert(index < 3);
 	return m_rows[index];
@@ -305,44 +305,44 @@ Matrix3 operator/(const Matrix3 &left, const Matrix3 &right)
 	return left.Divide(right);
 }
 
-Matrix3 operator*(const Vector3 &left, const Matrix3 &right)
+Matrix3 operator*(const Vector3f &left, const Matrix3 &right)
 {
 	return right.Scale(left);
 }
 
-Matrix3 operator/(const Vector3 &left, const Matrix3 &right)
+Matrix3 operator/(const Vector3f &left, const Matrix3 &right)
 {
 	return right.Scale(1.0f / left);
 }
 
-Matrix3 operator*(const Matrix3 &left, const Vector3 &right)
+Matrix3 operator*(const Matrix3 &left, const Vector3f &right)
 {
 	return left.Scale(right);
 }
 
-Matrix3 operator/(const Matrix3 &left, const Vector3 &right)
+Matrix3 operator/(const Matrix3 &left, const Vector3f &right)
 {
 	return left.Scale(1.0f / right);
 }
 
 Matrix3 operator*(const float &left, const Matrix3 &right)
 {
-	return right.Scale(Vector3(left, left, left));
+	return right.Scale(Vector3f(left, left, left));
 }
 
 Matrix3 operator/(const float &left, const Matrix3 &right)
 {
-	return right.Scale(1.0f / Vector3(left, left, left));
+	return right.Scale(1.0f / Vector3f(left, left, left));
 }
 
 Matrix3 operator*(const Matrix3 &left, const float &right)
 {
-	return left.Scale(Vector3(right, right, right));
+	return left.Scale(Vector3f(right, right, right));
 }
 
 Matrix3 operator/(const Matrix3 &left, const float &right)
 {
-	return left.Scale(1.0f / Vector3(right, right, right));
+	return left.Scale(1.0f / Vector3f(right, right, right));
 }
 
 Matrix3 &Matrix3::operator+=(const Matrix3 &other)
@@ -365,24 +365,24 @@ Matrix3 &Matrix3::operator/=(const Matrix3 &other)
 	return *this = Divide(other);
 }
 
-Matrix3 &Matrix3::operator*=(const Vector3 &other)
+Matrix3 &Matrix3::operator*=(const Vector3f &other)
 {
 	return *this = Scale(other);
 }
 
-Matrix3 &Matrix3::operator/=(const Vector3 &other)
+Matrix3 &Matrix3::operator/=(const Vector3f &other)
 {
 	return *this = Scale(1.0f / other);
 }
 
 Matrix3 &Matrix3::operator*=(const float &other)
 {
-	return *this = Scale(Vector3(other, other, other));
+	return *this = Scale(Vector3f(other, other, other));
 }
 
 Matrix3 &Matrix3::operator/=(const float &other)
 {
-	return *this = Scale(1.0f / Vector3(other, other, other));
+	return *this = Scale(1.0f / Vector3f(other, other, other));
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix)

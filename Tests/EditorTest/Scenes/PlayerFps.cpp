@@ -48,7 +48,7 @@ void PlayerFps::Update()
 		return;
 	}
 
-	Vector3 direction = Vector3();
+	Vector3f direction = Vector3f();
 
 	if (!Scenes::Get()->IsPaused())
 	{
@@ -70,7 +70,7 @@ void PlayerFps::Update()
 		{
 			if (m_inputJump.WasDown() && character->IsOnGround())
 			{
-				character->Jump(Vector3(0.0f, JUMP_SPEED, 0.0f));
+				character->Jump(Vector3f(0.0f, JUMP_SPEED, 0.0f));
 			}
 		}
 
@@ -80,7 +80,7 @@ void PlayerFps::Update()
 
 			if (m_noclipEnabled)
 			{
-				character->SetGravity(Vector3::Zero);
+				character->SetGravity(Vector3f::Zero);
 			}
 			else
 			{
@@ -94,10 +94,10 @@ void PlayerFps::Update()
 	auto &transform = GetParent()->GetLocalTransform();
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-	transform.SetRotation(Vector3(0.0f, cameraRotation.m_y, 0.0f));
+	transform.SetRotation(Vector3f(0.0f, cameraRotation.m_y, 0.0f));
 
 	float theta = cameraRotation.m_y * Maths::DegToRad;
-	Vector3 walkDirection = direction;
+	Vector3f walkDirection = direction;
 	walkDirection.m_x = -(direction.m_z * std::sin(theta) + direction.m_x * std::cos(theta));
 	walkDirection.m_z = direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta);
 

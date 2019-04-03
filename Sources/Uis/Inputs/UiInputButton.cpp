@@ -23,7 +23,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	m_mouseOver(false)
 {
 	GetRectangle().SetDimensions(Size);
-	m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 }
 
 void UiInputButton::UpdateObject()

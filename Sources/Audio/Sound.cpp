@@ -126,21 +126,21 @@ Transform Sound::GetWorldTransform() const
 	return m_worldTransform;
 }
 
-void Sound::SetPosition(const Vector3 &position)
+void Sound::SetPosition(const Vector3f &position)
 {
 	m_position = position;
 	alSource3f(m_source, AL_POSITION, m_position.m_x, m_position.m_y, m_position.m_z);
 	Audio::CheckAl(alGetError());
 }
 
-void Sound::SetDirection(const Vector3 &direction)
+void Sound::SetDirection(const Vector3f &direction)
 {
 	m_direction = direction;
-	alSourcefv(m_source, AL_DIRECTION, m_direction.m_elements);
+	alSource3f(m_source, AL_DIRECTION, m_direction.m_x, m_direction.m_y, m_direction.m_z);
 	Audio::CheckAl(alGetError());
 }
 
-void Sound::SetVelocity(const Vector3 &velocity)
+void Sound::SetVelocity(const Vector3f &velocity)
 {
 	m_velocity = velocity;
 	alSource3f(m_source, AL_VELOCITY, m_velocity.m_x, m_velocity.m_y, m_velocity.m_z);

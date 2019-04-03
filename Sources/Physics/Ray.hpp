@@ -29,21 +29,21 @@ public:
 	 * @param viewMatrix The cameras view matrix.
 	 * @param projectionMatrix The projection view matrix.
 	 */
-	void Update(const Vector3 &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
+	void Update(const Vector3f &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix);
 
 	/**
 	 * Gets a point on the ray.
 	 * @param distance Distance down the ray to sample.
 	 * @return The destination vector.
 	 */
-	Vector3 GetPointOnRay(const float &distance) const;
+	Vector3f GetPointOnRay(const float &distance) const;
 
 	/**
 	 * Converts a position from world space to screen space.
 	 * @param position The position to convert.
 	 * @return The destination vector X and Y being screen space coords and Z being the distance to the camera.
 	 */
-	Vector3 ConvertToScreenSpace(const Vector3 &position) const;
+	Vector3f ConvertToScreenSpace(const Vector3f &position) const;
 
 	const bool &IsUseMouse() const { return m_useMouse; }
 
@@ -53,9 +53,9 @@ public:
 
 	void SetScreenStart(const Vector2f &screenStart) { m_screenStart = screenStart; }
 
-	const Vector3 &GetOrigin() const { return m_origin; }
+	const Vector3f &GetOrigin() const { return m_origin; }
 
-	const Vector3 &GetCurrentRay() const { return m_currentRay; }
+	const Vector3f &GetCurrentRay() const { return m_currentRay; }
 
 private:
 	void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
@@ -71,14 +71,14 @@ private:
 	Matrix4 m_projectionMatrix;
 
 	Vector2f m_normalizedCoords;
-	Vector4 m_clipCoords;
-	Vector4 m_eyeCoords;
+	Vector4f m_clipCoords;
+	Vector4f m_eyeCoords;
 
 	Matrix4 m_invertedProjection;
 	Matrix4 m_invertedView;
-	Vector4 m_rayWorld;
+	Vector4f m_rayWorld;
 
-	Vector3 m_origin;
-	Vector3 m_currentRay;
+	Vector3f m_origin;
+	Vector3f m_currentRay;
 };
 }

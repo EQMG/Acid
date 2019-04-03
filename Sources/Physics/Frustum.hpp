@@ -27,7 +27,7 @@ public:
 	 * @param position The point.
 	 * @return If the point is contained.
 	 */
-	bool PointInFrustum(const Vector3 &position) const;
+	bool PointInFrustum(const Vector3f &position) const;
 
 	/**
 	 * Gets if a sphere contained in the frustum.
@@ -35,7 +35,7 @@ public:
 	 * @param radius The spheres radius.
 	 * @return If the sphere is contained.
 	 */
-	bool SphereInFrustum(const Vector3 &position, const float &radius) const;
+	bool SphereInFrustum(const Vector3f &position, const float &radius) const;
 
 	/**
 	 * Gets if a cube contained in the frustum.
@@ -43,7 +43,7 @@ public:
 	 * @param max The cube max point.
 	 * @return If cube sphere is contained.
 	 */
-	bool CubeInFrustum(const Vector3 &min, const Vector3 &max) const;
+	bool CubeInFrustum(const Vector3f &min, const Vector3f &max) const;
 
 	static const Frustum Zero;
 

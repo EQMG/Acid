@@ -1,8 +1,5 @@
 #include "Colour.hpp"
 
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-
 namespace acid
 {
 const Colour Colour::Clear = Colour("#000000", 0.0f);
@@ -39,22 +36,6 @@ Colour::Colour(const std::string &hex, const float &a)
 	m_g = static_cast<float>(g) / 255.0f;
 	m_b = static_cast<float>(b) / 255.0f;
 	m_a = a;
-}
-
-Colour::Colour(const Vector3 &source, const float &a) :
-	m_r(source.m_x),
-	m_g(source.m_y),
-	m_b(source.m_z),
-	m_a(a)
-{
-}
-
-Colour::Colour(const Vector4 &source) :
-	m_r(source.m_x),
-	m_g(source.m_y),
-	m_b(source.m_z),
-	m_a(source.m_w)
-{
 }
 
 Colour Colour::Add(const Colour &other) const
@@ -165,14 +146,36 @@ bool Colour::operator!=(const Colour &other) const
 
 const float &Colour::operator[](const uint32_t &index) const
 {
-	assert(index < 4);
-	return m_elements[index];
+	switch (index)
+	{
+	case 0:
+		return m_r;
+	case 1:
+		return m_g;
+	case 2:
+		return m_b;
+	case 3:
+		return m_a;
+	default:
+		throw std::runtime_error("Colour index out of bounds!");
+	}
 }
 
 float &Colour::operator[](const uint32_t &index)
 {
-	assert(index < 4);
-	return m_elements[index];
+	switch (index)
+	{
+	case 0:
+		return m_r;
+	case 1:
+		return m_g;
+	case 2:
+		return m_b;
+	case 3:
+		return m_a;
+	default:
+		throw std::runtime_error("Colour index out of bounds!");
+	}
 }
 
 Colour operator+(const Colour &left, const Colour &right)

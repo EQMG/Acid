@@ -18,7 +18,7 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	Vector3 GeneratePosition() const override;
+	Vector3f GeneratePosition() const override;
 
 	const float &GetRadius() const { return m_radius; }
 

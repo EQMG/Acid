@@ -92,13 +92,13 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 			}
 		}
 
-		instance->m_modelMatrix = instance->m_modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3::Front);
-		instance->m_modelMatrix = instance->m_modelMatrix.Scale(particle.GetScale() * Vector3::One);
+		instance->m_modelMatrix = instance->m_modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3f::Front);
+		instance->m_modelMatrix = instance->m_modelMatrix.Scale(particle.GetScale() * Vector3f::One);
 		// TODO: Multiply MVP by View and Projection (And run update every frame?)
 
 		instance->m_colourOffset = particle.GetParticleType()->m_colourOffset;
-		instance->m_offsets = Vector4(particle.GetTextureOffset1(), particle.GetTextureOffset2());
-		instance->m_blend = Vector3(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
+		instance->m_offsets = Vector4f(particle.GetTextureOffset1(), particle.GetTextureOffset2());
+		instance->m_blend = Vector3f(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
 		m_instances++;
 	}
 

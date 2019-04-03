@@ -15,10 +15,29 @@ class Vector2
 public:
 	/**
 	 * Constructor for Vector2.
+	 **/
+	Vector2() :
+		m_x(0),
+		m_y(0)
+	{
+	}
+
+	/**
+	 * Constructor for Vector2.
+	 * @param a The value to set all components to.
+	 **/
+	explicit Vector2(const T &a) :
+		m_x(a),
+		m_y(a)
+	{
+	}
+
+	/**
+	 * Constructor for Vector2.
 	 * @param x Start x. 
 	 * @param y Start y. 
 	 **/
-	explicit Vector2(const T &x = 0, const T &y = 0) :
+	Vector2(const T &x, const T &y) :
 		m_x(x),
 		m_y(y)
 	{
@@ -26,7 +45,7 @@ public:
 
 	/**
 	 * Constructor for Vector2.
-	 * @tparam K The others type.
+	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
@@ -95,13 +114,13 @@ public:
 	{
 		auto dls = Dot(other) / (Length() * other.Length());
 
-		if (dls < -1.0f)
+		if (dls < -1)
 		{
-			dls = -1.0f;
+			dls = -1;
 		}
-		else if (dls > 1.0f)
+		else if (dls > 1)
 		{
-			dls = 1.0f;
+			dls = 1;
 		}
 
 		return std::acos(dls);
@@ -351,7 +370,7 @@ public:
 	template<typename K>
 	auto MinVector(const Vector2<K> &other)
 	{
-		return Vector2<decltype(std::max(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
+		return Vector2<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
 	}
 
 	/**
@@ -463,22 +482,22 @@ public:
 
 	Vector2 &operator+=(const T &other)
 	{
-		return *this = Add(Vector2<T>(other, other));
+		return *this = Add(Vector2<T>(other));
 	}
 
 	Vector2 &operator-=(const T &other)
 	{
-		return *this = Subtract(Vector2<T>(other, other));
+		return *this = Subtract(Vector2<T>(other));
 	}
 
 	Vector2 &operator*=(const T &other)
 	{
-		return *this = Multiply(Vector2<T>(other, other));
+		return *this = Multiply(Vector2<T>(other));
 	}
 
 	Vector2 &operator/=(const T &other)
 	{
-		return *this = Divide(Vector2<T>(other, other));
+		return *this = Divide(Vector2<T>(other));
 	}
 
 	ACID_EXPORT static const Vector2 Zero;
@@ -527,49 +546,49 @@ auto operator/(const Vector2<K> &left, const Vector2<J> &right)
 template<typename K, typename J>
 auto operator+(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>(left, left).Add(right);
+	return Vector2<K>(left).Add(right);
 }
 
 template<typename K, typename J>
 auto operator-(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>(left, left).Subtract(right);
+	return Vector2<K>(left).Subtract(right);
 }
 
 template<typename K, typename J>
 auto operator*(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>(left, left).Multiply(right);
+	return Vector2<K>(left).Multiply(right);
 }
 
 template<typename K, typename J>
 auto operator/(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>(left, left).Divide(right);
+	return Vector2<K>(left).Divide(right);
 }
 
 template<typename K, typename J>
 auto operator+(const Vector2<K> &left, const J &right)
 {
-	return left.Add(Vector2<J>(right, right));
+	return left.Add(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 auto operator-(const Vector2<K> &left, const J &right)
 {
-	return left.Subtract(Vector2<J>(right, right));
+	return left.Subtract(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 auto operator*(const Vector2<K> &left, const J &right)
 {
-	return left.Multiply(Vector2<J>(right, right));
+	return left.Multiply(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 auto operator/(const Vector2<K> &left, const J &right)
 {
-	return left.Divide(Vector2<J>(right, right));
+	return left.Divide(Vector2<J>(right));
 }
 
 using Vector2f = Vector2<float>;

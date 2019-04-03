@@ -13,9 +13,9 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Vector3 &GetSunPosition() const { return m_sunPosition; }
+	const Vector3f &GetSunPosition() const { return m_sunPosition; }
 
-	void SetSunPosition(const Vector3 &sunPosition);
+	void SetSunPosition(const Vector3f &sunPosition);
 
 	const float &GetSunHeight() const { return m_sunHeight; }
 
@@ -24,7 +24,7 @@ public:
 private:
 	PushHandler m_pushScene;
 
-	Vector3 m_sunPosition;
+	Vector3f m_sunPosition;
 	float m_sunHeight;
 };
 }

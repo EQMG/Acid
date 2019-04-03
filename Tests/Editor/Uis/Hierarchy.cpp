@@ -16,7 +16,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 		Image2d::Create("Guis/Button_Filled.png"), Colour::Yellow),
 	m_colourWheel(&m_section1.GetContent(), Colour::Yellow, UiBound(Vector2f(0.0f, 0.24f), UiReference::TopLeft))
 {
-	m_rgbColour.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+	m_rgbColour.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	m_button1.OnClick() += [this](MouseButton button)
 	{
 		if (button == MouseButton::Left)

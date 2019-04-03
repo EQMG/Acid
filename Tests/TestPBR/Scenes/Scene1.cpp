@@ -42,37 +42,37 @@ Scene1::Scene1() :
 
 void Scene1::Start()
 {
-	GetPhysics()->SetGravity(Vector3(0.0f, -9.81f, 0.0f));
+	GetPhysics()->SetGravity(Vector3f(0.0f, -9.81f, 0.0f));
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject = GetStructure()->CreateEntity(Transform(Vector3(), Vector3(0.0f, 180.0f, 0.0f)));
+	auto playerObject = GetStructure()->CreateEntity(Transform(Vector3f(), Vector3f(0.0f, 180.0f, 0.0f)));
 	//playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
 	//playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
 	playerObject->AddComponent<PlayerFps>();
 
 	// Skybox.
-	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json", Transform(Vector3(), Vector3(), 1024.0f));
+	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json", Transform(Vector3f(), Vector3f(), 1024.0f));
 
 	// Entities.
-	auto sun = GetStructure()->CreateEntity(Transform(Vector3(1000.0f, 5000.0f, 4000.0f), Vector3(), 18.0f));
+	auto sun = GetStructure()->CreateEntity(Transform(Vector3f(1000.0f, 5000.0f, 4000.0f), Vector3f(), 18.0f));
 	sun->AddComponent<Light>(Colour::White);
 
 	for (float i = 0.0f; i < 6.0f; i++)
 	{
 		for (float j = 0.0f; j < 6.0f; j++)
 		{
-			auto sphere = GetStructure()->CreateEntity(Transform(Vector3(i, j, -6.0f), Vector3(), 0.5f));
+			auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(i, j, -6.0f), Vector3f(), 0.5f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
-			sphere->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
+			sphere->AddComponent<MaterialDefault>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
 				nullptr, // Image2d::Create("Objects/Testing/Material.png")
 				Image2d::Create("Objects/Testing/Normal.png"));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
-			auto teapot = GetStructure()->CreateEntity(Transform(Vector3(i * 1.6f, j, 6.0f), Vector3(), 0.14f));
+			auto teapot = GetStructure()->CreateEntity(Transform(Vector3f(i * 1.6f, j, 6.0f), Vector3f(), 0.14f));
 			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-			teapot->AddComponent<MaterialDefault>(Colour::Yellow, nullptr, j / 5.0f, i / 5.0f);
+			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
 			teapot->AddComponent<MeshRender>();
 			teapot->AddComponent<ShadowRender>();
 		}

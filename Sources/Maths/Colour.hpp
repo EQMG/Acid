@@ -5,9 +5,6 @@
 
 namespace acid
 {
-class Vector3;
-class Vector4;
-
 /**
  * @brief Holds a RGBA colour.
  **/
@@ -15,7 +12,7 @@ class ACID_EXPORT Colour
 {
 public:
 	/**
-	 * Constructor for colour.
+	 * Constructor for Colour.
 	 * @param r The new R value. 
 	 * @param g The new G value. 
 	 * @param b The new B value. 
@@ -24,24 +21,11 @@ public:
 	explicit Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f);
 
 	/**
-	 * Constructor for colour.
+	 * Constructor for Colour.
 	 * @param hex The new values from HEX. 
 	 * @param a The new A value. 
 	 **/
 	Colour(const std::string &hex, const float &a = 1.0f);
-
-	/**
-	 * Constructor for colour.
-	 * @param source Creates this colour out of a existing vector. 
-	 * @param a The new A value. 
-	 **/
-	Colour(const Vector3 &source, const float &a = 1.0f);
-
-	/**
-	 * Constructor for colour.
-	 * @param source Creates this colour out of a existing vector. 
-	 **/
-	Colour(const Vector4 &source);
 
 	/**
 	 * Adds this colour to another colour.
@@ -214,18 +198,7 @@ public:
 	static const Colour Purple;
 	static const Colour Fuchsia;
 
-	union
-	{
-		struct
-		{
-			float m_elements[4];
-		};
-
-		struct
-		{
-			float m_r, m_g, m_b, m_a;
-		};
-	};
+	float m_r, m_g, m_b, m_a;
 };
 }
 

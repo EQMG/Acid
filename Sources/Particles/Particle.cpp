@@ -6,7 +6,7 @@ namespace acid
 {
 static const float FADE_TIME = 1.0f;
 
-Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3 &position, const Vector3 &velocity, const float &lifeLength, const float &stageCycles,
+Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles,
 	const float &rotation, const float &scale, const float &gravityEffect) :
 	m_particleType(std::move(particleType)),
 	m_position(position),
@@ -44,7 +44,7 @@ void Particle::Update()
 		return;
 	}
 
-	Vector3 cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - m_position;
+	Vector3f cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - m_position;
 	m_distanceToCamera = cameraToParticle.LengthSquared();
 
 	float lifeFactor = m_stageCycles * m_elapsedTime / m_lifeLength;

@@ -23,9 +23,9 @@ public:
 
 	void Update() override;
 
-	const Vector3 &GetLightDirection() const { return m_lightDirection; }
+	const Vector3f &GetLightDirection() const { return m_lightDirection; }
 
-	void SetLightDirection(const Vector3 &lightDirection) { m_lightDirection = lightDirection; }
+	void SetLightDirection(const Vector3f &lightDirection) { m_lightDirection = lightDirection; }
 
 	const uint32_t &GetShadowSize() const { return m_shadowSize; }
 
@@ -62,7 +62,7 @@ public:
 	const ShadowBox &GetShadowBox() const { return m_shadowBox; }
 
 private:
-	Vector3 m_lightDirection;
+	Vector3f m_lightDirection;
 
 	uint32_t m_shadowSize;
 	int32_t m_shadowPcf;

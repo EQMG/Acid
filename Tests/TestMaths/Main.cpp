@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 			return false;
 		}
 	}*/
-	/*{
+	{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));
 		Log::Out("Matrix2 Size: %i\n", static_cast<int>(sizeof(Matrix2)));
@@ -88,8 +88,15 @@ int main(int argc, char **argv)
 		Log::Out("Matrix4 Size: %i\n", static_cast<int>(sizeof(Matrix4)));
 		Log::Out("Quaternion Size: %i\n", static_cast<int>(sizeof(Quaternion)));
 		Log::Out("Vector2f Size: %i\n", static_cast<int>(sizeof(Vector2f)));
-		Log::Out("Vector3 Size: %i\n", static_cast<int>(sizeof(Vector3)));
-		Log::Out("Vector4 Size: %i\n", static_cast<int>(sizeof(Vector4)));
+		Log::Out("Vector2d Size: %i\n", static_cast<int>(sizeof(Vector2d)));
+		Log::Out("Vector2i Size: %i\n", static_cast<int>(sizeof(Vector2i)));
+		Log::Out("Vector2ui Size: %i\n", static_cast<int>(sizeof(Vector2ui)));
+		Log::Out("Vector3f Size: %i\n", static_cast<int>(sizeof(Vector3f)));
+		//Log::Out("Vector3d Size: %i\n", static_cast<int>(sizeof(Vector3d)));
+		//Log::Out("Vector3i Size: %i\n", static_cast<int>(sizeof(Vector3i)));
+		Log::Out("Vector4f Size: %i\n", static_cast<int>(sizeof(Vector4f)));
+		//Log::Out("Vector4d Size: %i\n", static_cast<int>(sizeof(Vector4d)));
+		//Log::Out("Vector4i Size: %i\n", static_cast<int>(sizeof(Vector4i)));
 		Log::Out("Transform Size: %i\n", static_cast<int>(sizeof(Transform)));
 		Log::Out("\n");
 	}
@@ -102,17 +109,17 @@ int main(int argc, char **argv)
 		Log::Out("Milliseconds: %i\n", c.AsMilliseconds());
 		Log::Out("Microseconds: %i\n", c.AsMicroseconds());
 		Log::Out("\n");
-	}*/
-	{
-		Vector3 original{ 90.0f, 0.0f, 0.0f };
+	}
+	/*{
+		Vector3f original{ 90.0f, 0.0f, 0.0f };
 		Quaternion quaternion = original.ToQuaternion();
-		Vector3 restored = quaternion.ToEuler();
+		Vector3f restored = quaternion.ToEuler();
 
 		Log::Out("Original: %s\n", original.ToString().c_str());
 		Log::Out("Quaternion: %s\n", quaternion.ToString().c_str());
 		Log::Out("Restored: %s\n", restored.ToString().c_str());
 		Log::Out("\n");
-	}
+	}*/
 	{
 		Log::Out("Vector2f:\n");
 		Vector2f a{ 3.0f, -7.2f };
@@ -137,8 +144,9 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector3:\n");
-		Vector3 a{ 12.9f, -2.0f, 6.7f };
-		Vector3 b{ -9.7f, 15.9f, -13.8f };
+		Vector3f a{ 12.9f, -2.0f, 6.7f };
+		Vector3f b{ -9.7f, 15.9f, -13.8f };
+
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
 		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());

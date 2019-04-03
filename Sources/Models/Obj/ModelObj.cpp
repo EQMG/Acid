@@ -113,9 +113,9 @@ void ModelObj::Load()
 	{
 		for (const auto &index : shape.mesh.indices)
 		{
-			Vector3 position = Vector3(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
+			Vector3f position = Vector3f(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
 			Vector2f uv = Vector2f(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
-			Vector3 normal = Vector3(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
+			Vector3f normal = Vector3f(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
 			VertexModel vertex = VertexModel(position, uv, normal);
 
 			if (uniqueVertices.count(vertex) == 0)

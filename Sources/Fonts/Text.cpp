@@ -43,7 +43,7 @@ void Text::UpdateObject()
 
 	// Updates uniforms.
 	m_uniformObject.Push("modelMatrix", GetModelMatrix());
-	m_uniformObject.Push("screenOffset", Vector4(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
+	m_uniformObject.Push("screenOffset", Vector4f(2.0f * GetScreenDimensions(), 2.0f * GetScreenPosition() - 1.0f));
 	m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
 	m_uniformObject.Push("depth", GetScreenDepth());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
@@ -339,7 +339,7 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
 {
-	vertices.emplace_back(VertexModel(Vector3(vx, vy, 0.0f), Vector2f(tx, ty), Vector3::Zero));
+	vertices.emplace_back(VertexModel(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f::Zero));
 }
 
 void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices) const
@@ -383,7 +383,7 @@ void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices)
 
 	for (auto &vertex : vertices)
 	{
-		vertex.SetPosition(Vector3((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
+		vertex.SetPosition(Vector3f((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
 	}
 }
 }

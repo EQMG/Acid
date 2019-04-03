@@ -33,7 +33,7 @@ private:
 	struct DeferredLight
 	{
 		Colour m_colour{};
-		Vector3 m_position{};
+		Vector3f m_position{};
 		float m_radius{};
 	};
 

@@ -48,7 +48,7 @@ void SkyboxCycle::Update()
 	else
 	{
 		materialSkybox->SetBlend(1.0f);
-		GetParent()->GetLocalTransform().SetRotation(Vector3::Zero);
+		GetParent()->GetLocalTransform().SetRotation(Vector3f::Zero);
 	}
 }
 

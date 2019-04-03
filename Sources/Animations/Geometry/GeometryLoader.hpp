@@ -19,11 +19,11 @@ public:
 	const std::vector<uint32_t> &GetIndices() const { return m_indices; }
 
 private:
-	std::vector<Vector3> GetPositions();
+	std::vector<Vector3f> GetPositions();
 
 	std::vector<Vector2f> GetUvs();
 
-	std::vector<Vector3> GetNormals();
+	std::vector<Vector3f> GetNormals();
 
 	const Metadata *m_meshData;
 

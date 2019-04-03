@@ -39,9 +39,9 @@ public:
 
 	void SetLocalTransform(const Transform &localTransform);
 
-	static btVector3 Convert(const Vector3 &vector);
+	static btVector3 Convert(const Vector3f &vector);
 
-	static Vector3 Convert(const btVector3 &vector);
+	static Vector3f Convert(const btVector3 &vector);
 
 	static btQuaternion Convert(const Quaternion &quaternion);
 
@@ -49,7 +49,7 @@ public:
 
 	static btTransform Convert(const Transform &transform);
 
-	static Transform Convert(const btTransform &transform, const Vector3 &scaling = Vector3::One);
+	static Transform Convert(const btTransform &transform, const Vector3f &scaling = Vector3f::One);
 
 protected:
 	Transform m_localTransform;

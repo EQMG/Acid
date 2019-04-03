@@ -56,9 +56,9 @@ public:
 
 	std::vector<float> GetPointCloud() const;
 
-	const Vector3 &GetMinExtents() const { return m_minExtents; }
+	const Vector3f &GetMinExtents() const { return m_minExtents; }
 
-	const Vector3 &GetMaxExtents() const { return m_maxExtents; }
+	const Vector3f &GetMaxExtents() const { return m_maxExtents; }
 
 	float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
 
@@ -121,14 +121,14 @@ protected:
 			commandBuffer.SubmitIdle();
 		}
 
-		m_minExtents = Vector3::PositiveInfinity;
-		m_maxExtents = Vector3::NegativeInfinity;
+		m_minExtents = Vector3f::PositiveInfinity;
+		m_maxExtents = Vector3f::NegativeInfinity;
 
 		for (const auto &vertex : vertices)
 		{
-			Vector3 position = vertex.GetPosition();
-			m_minExtents = Vector3::MinVector(m_minExtents, position);
-			m_maxExtents = Vector3::MinVector(m_maxExtents, position);
+			Vector3f position = vertex.GetPosition();
+			m_minExtents = m_minExtents.MinVector(position);
+			m_maxExtents = m_maxExtents.MinVector(position);
 		}
 
 		// FIXME: Radius calculation might be wrong.
@@ -145,8 +145,8 @@ private:
 	uint32_t m_vertexCount;
 	uint32_t m_indexCount;
 
-	Vector3 m_minExtents;
-	Vector3 m_maxExtents;
+	Vector3f m_minExtents;
+	Vector3f m_maxExtents;
 	float m_radius;
 };
 }

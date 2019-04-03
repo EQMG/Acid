@@ -29,7 +29,7 @@ void EmitterPoint::Encode(Metadata &metadata) const
 	metadata.SetChild("Local Transform", m_localTransform);
 }
 
-Vector3 EmitterPoint::GeneratePosition() const
+Vector3f EmitterPoint::GeneratePosition() const
 {
 	return m_point;
 }

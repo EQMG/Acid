@@ -32,8 +32,8 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_timerChange(CHANGE_TIME)
 {
 	GetRectangle().SetDimensions(UiInputButton::Size);
-	m_slider.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
-	m_background.SetNinePatches(Vector4(0.125f, 0.125f, 0.75f, 0.75f));
+	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
 	UpdateProgress();
 }
 

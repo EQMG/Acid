@@ -11,7 +11,7 @@
 
 namespace acid
 {
-Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3 &linearFactor, const Vector3 &angularFactor) :
+Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	CollisionObject(friction),
 	m_mass(mass),
 	m_linearFactor(linearFactor),
@@ -154,31 +154,31 @@ void Rigidbody::SetMass(const float &mass)
 	RecalculateMass();
 }
 
-void Rigidbody::SetGravity(const Vector3 &gravity)
+void Rigidbody::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
 	m_rigidBody->setGravity(Collider::Convert(gravity));
 }
 
-void Rigidbody::SetLinearFactor(const Vector3 &linearFactor)
+void Rigidbody::SetLinearFactor(const Vector3f &linearFactor)
 {
 	m_linearFactor = linearFactor;
 	m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 }
 
-void Rigidbody::SetAngularFactor(const Vector3 &angularFactor)
+void Rigidbody::SetAngularFactor(const Vector3f &angularFactor)
 {
 	m_angularFactor = angularFactor;
 	m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 }
 
-void Rigidbody::SetLinearVelocity(const Vector3 &linearVelocity)
+void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity)
 {
 	m_linearVelocity = linearVelocity;
 	m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
 }
 
-void Rigidbody::SetAngularVelocity(const Vector3 &angularVelocity)
+void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 {
 	m_angularVelocity = angularVelocity;
 	m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));

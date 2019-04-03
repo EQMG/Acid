@@ -44,14 +44,14 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 	}
 }
 
-btVector3 Collider::Convert(const Vector3 &vector)
+btVector3 Collider::Convert(const Vector3f &vector)
 {
 	return btVector3(vector.m_x, vector.m_y, vector.m_z);
 }
 
-Vector3 Collider::Convert(const btVector3 &vector)
+Vector3f Collider::Convert(const btVector3 &vector)
 {
-	return Vector3(vector.getX(), vector.getY(), vector.getZ());
+	return Vector3f(vector.getX(), vector.getY(), vector.getZ());
 }
 
 btQuaternion Collider::Convert(const Quaternion &quaternion)
@@ -76,11 +76,11 @@ btTransform Collider::Convert(const Transform &transform)
 	return worldTransform;
 }
 
-Transform Collider::Convert(const btTransform &transform, const Vector3 &scaling)
+Transform Collider::Convert(const btTransform &transform, const Vector3f &scaling)
 {
 	btVector3 position = transform.getOrigin();
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
-	return Transform(Convert(position), Vector3(pitch, yaw, roll) * Maths::RadToDeg, scaling);
+	return Transform(Convert(position), Vector3f(pitch, yaw, roll) * Maths::RadToDeg, scaling);
 }
 }

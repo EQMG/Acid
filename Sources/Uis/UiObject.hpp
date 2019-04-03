@@ -76,9 +76,9 @@ public:
 
 	void SetRectangle(const UiBound &rectangle) { m_rectangle = rectangle; }
 
-	const Vector4 &GetScissor() const { return m_scissor; }
+	const Vector4f &GetScissor() const { return m_scissor; }
 
-	void SetScissor(const Vector4 &scissor) { m_scissor = scissor; }
+	void SetScissor(const Vector4f &scissor) { m_scissor = scissor; }
 
 	const float &GetHeight() const { return m_height; }
 
@@ -138,7 +138,7 @@ private:
 
 	bool m_enabled;
 	UiBound m_rectangle;
-	Vector4 m_scissor; // TODO: Convert to UiBound.
+	Vector4f m_scissor; // TODO: Convert to UiBound.
 	float m_height;
 
 	bool m_lockRotation;

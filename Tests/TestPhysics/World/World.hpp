@@ -37,9 +37,9 @@ public:
 
 	Fog GetFog() const { return m_fog; }
 
-	Vector3 GetSkyboxRotation() const { return m_skyboxRotation; }
+	Vector3f GetSkyboxRotation() const { return m_skyboxRotation; }
 
-	Vector3 GetLightDirection() const { return m_lightDirection; }
+	Vector3f GetLightDirection() const { return m_lightDirection; }
 
 private:
 	DriverLinear<float> m_driverDay;
@@ -47,7 +47,7 @@ private:
 
 	Fog m_fog;
 
-	Vector3 m_skyboxRotation;
-	Vector3 m_lightDirection;
+	Vector3f m_skyboxRotation;
+	Vector3f m_lightDirection;
 };
 }

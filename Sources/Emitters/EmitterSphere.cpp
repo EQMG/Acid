@@ -32,7 +32,7 @@ void EmitterSphere::Encode(Metadata &metadata) const
 	metadata.SetChild("Local Transform", m_localTransform);
 }
 
-Vector3 EmitterSphere::GeneratePosition() const
+Vector3f EmitterSphere::GeneratePosition() const
 {
 	float a = Maths::Random(0.0f, 1.0f);
 	float b = Maths::Random(0.0f, 1.0f);
@@ -47,6 +47,6 @@ Vector3 EmitterSphere::GeneratePosition() const
 	float randX = b * std::cos(2.0f * Maths::Pi * (a / b));
 	float randY = b * std::sin(2.0f * Maths::Pi * (a / b));
 	float distance = Vector2f(randX, randY).Length();
-	return m_radius * distance * Vector3::RandomUnitVector();
+	return m_radius * distance * Emitter::RandomUnitVector();
 }
 }

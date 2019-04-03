@@ -14,14 +14,14 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
-	auto result = std::make_shared<ModelCube>(Vector3::Zero);
+	auto result = std::make_shared<ModelCube>(Vector3f::Zero);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	result->Decode(metadata);
 	result->Load();
 	return result;
 }
 
-std::shared_ptr<ModelCube> ModelCube::Create(const Vector3 &extents)
+std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
 	auto temp = ModelCube(extents, false);
 	Metadata metadata = Metadata();
@@ -29,7 +29,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3 &extents)
 	return Create(metadata);
 }
 
-ModelCube::ModelCube(const Vector3 &extents, const bool &load) :
+ModelCube::ModelCube(const Vector3f &extents, const bool &load) :
 	m_extents(extents)
 {
 	if (load)
@@ -40,36 +40,36 @@ ModelCube::ModelCube(const Vector3 &extents, const bool &load) :
 
 void ModelCube::Load()
 {
-	if (m_extents == Vector3::Zero)
+	if (m_extents == Vector3f::Zero)
 	{
 		return;
 	}
 
 	static std::vector<VertexModel> vertices = {
-		VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, -0.5f, 0.5f), Vector2f(0.125f, 0.25f), Vector3(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, -0.5f, -0.5f), Vector2f(0.125f, 0.5f), Vector3(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2f(0.875f, 0.5f), Vector3(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3(0.0f, 1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.125f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.125f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.875f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
 		};
 	static std::vector<uint32_t> indices = {
 		1, 2, 0, // Front

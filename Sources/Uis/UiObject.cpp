@@ -167,7 +167,7 @@ Matrix4 UiObject::GetModelMatrix() const
 
 		if (m_lockRotation)
 		{
-			Vector3 scaling = m_worldTransform->GetScaling();
+			Vector3f scaling = m_worldTransform->GetScaling();
 
 			for (uint32_t i = 0; i < 3; i++)
 			{

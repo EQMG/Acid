@@ -12,19 +12,19 @@ class ACID_EXPORT VertexModel :
 	public IVertex
 {
 public:
-	VertexModel(const Vector3 &position, const Vector2f &uv, const Vector3 &normal);
+	VertexModel(const Vector3f &position, const Vector2f &uv, const Vector3f &normal);
 
-	const Vector3 &GetPosition() const override { return m_position; };
+	const Vector3f &GetPosition() const override { return m_position; };
 
-	void SetPosition(const Vector3 &position) override { m_position = position; };
+	void SetPosition(const Vector3f &position) override { m_position = position; };
 
 	const Vector2f &GetUv() const { return m_uv; };
 
 	void SetUv(const Vector2f &uv) { m_uv = uv; };
 
-	const Vector3 &GetNormal() const { return m_normal; };
+	const Vector3f &GetNormal() const { return m_normal; };
 
-	void SetNormal(const Vector3 &normal) { m_normal = normal; };
+	void SetNormal(const Vector3f &normal) { m_normal = normal; };
 
 	bool operator==(const VertexModel &other) const;
 
@@ -33,9 +33,9 @@ public:
 	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
 
 private:
-	Vector3 m_position;
+	Vector3f m_position;
 	Vector2f m_uv;
-	Vector3 m_normal;
+	Vector3f m_normal;
 };
 }
 
