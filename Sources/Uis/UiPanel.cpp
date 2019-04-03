@@ -43,8 +43,8 @@ void UiPanel::SetScissor(UiObject *object, const bool &size)
 
 	if (object->IsEnabled() && size)
 	{
-		m_min = m_min.MinVector(object->GetScreenPosition());
-		m_max = m_max.MaxVector(object->GetScreenPosition() + object->GetScreenDimensions());
+		m_min = m_min.Min(object->GetScreenPosition());
+		m_max = m_max.Max(object->GetScreenPosition() + object->GetScreenDimensions());
 	}
 
 	for (auto &child : object->GetChildren())

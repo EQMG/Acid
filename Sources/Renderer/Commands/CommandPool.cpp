@@ -15,13 +15,13 @@ CommandPool::CommandPool(const std::thread::id &threadId) :
 	commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 	commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 	commandPoolCreateInfo.queueFamilyIndex = graphicsFamily;
-	Renderer::CheckVk(vkCreateCommandPool(logicalDevice->GetLogicalDevice(), &commandPoolCreateInfo, nullptr, &m_commandPool));
+	Renderer::CheckVk(vkCreateCommandPool(*logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 }
 
 CommandPool::~CommandPool()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroyCommandPool(logicalDevice->GetLogicalDevice(), m_commandPool, nullptr);
+	vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);
 }
 }

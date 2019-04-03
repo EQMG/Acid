@@ -11,7 +11,7 @@ class ACID_EXPORT VertexAnimated :
 	public IVertex
 {
 public:
-	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3f &jointId, const Vector3f &vertexWeight);
+	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight);
 
 	const Vector3f &GetPosition() const override { return m_position; };
 
@@ -25,9 +25,9 @@ public:
 
 	void SetNormal(const Vector3f &normal) { m_normal = normal; };
 
-	const Vector3f &GetJointId() const { return m_jointId; };
+	const Vector3ui &GetJointId() const { return m_jointId; };
 
-	void SetJointId(const Vector3f &jointId) { m_jointId = jointId; };
+	void SetJointId(const Vector3ui &jointId) { m_jointId = jointId; };
 
 	const Vector3f &GetVertexWeight() const { return m_vertexWeight; };
 
@@ -43,7 +43,7 @@ private:
 	Vector3f m_position;
 	Vector2f m_uv;
 	Vector3f m_normal;
-	Vector3f m_jointId;
+	Vector3ui m_jointId;
 	Vector3f m_vertexWeight;
 };
 }

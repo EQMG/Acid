@@ -17,9 +17,9 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_msaaSamples(VK_SAMPLE_COUNT_1_BIT)
 {
 	uint32_t physicalDeviceCount;
-	vkEnumeratePhysicalDevices(m_instance->GetInstance(), &physicalDeviceCount, nullptr);
+	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, nullptr);
 	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
-	vkEnumeratePhysicalDevices(m_instance->GetInstance(), &physicalDeviceCount, physicalDevices.data());
+	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, physicalDevices.data());
 
 	m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
 

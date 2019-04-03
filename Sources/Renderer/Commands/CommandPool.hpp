@@ -15,6 +15,8 @@ public:
 
 	~CommandPool();
 
+	operator const VkCommandPool &() const { return m_commandPool; }
+
 	const VkCommandPool &GetCommandPool() const { return m_commandPool; }
 
 	const std::thread::id &GetThreadId() const { return m_threadId; }

@@ -24,7 +24,7 @@ public:
 
 	void BindPipeline(const CommandBuffer &commandBuffer) const
 	{
-		vkCmdBindPipeline(commandBuffer.GetCommandBuffer(), GetPipelineBindPoint(), GetPipeline());
+		vkCmdBindPipeline(commandBuffer, GetPipelineBindPoint(), GetPipeline());
 	}
 
 	virtual const Shader *GetShader() const = 0;

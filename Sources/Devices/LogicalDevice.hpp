@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "Engine/Engine.hpp"
+#include "StdAfx.hpp"
 
 namespace acid
 {
@@ -15,6 +15,8 @@ public:
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
 
 	~LogicalDevice();
+	
+	operator const VkDevice &() const { return m_logicalDevice; }
 
 	const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
 

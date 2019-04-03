@@ -102,7 +102,7 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_pipeline.BindPipeline(commandBuffer);
 
 	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-	vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
+	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
 std::vector<Shader::Define> RendererDeferred::GetDefines()
@@ -245,7 +245,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		compute.CmdRender(commandBuffer, prefilteredCubemap->GetWidth() >> i, prefilteredCubemap->GetHeight() >> i);
 		commandBuffer.SubmitIdle();
 
-		vkDestroyImageView(logicalDevice->GetLogicalDevice(), levelView, nullptr);
+		vkDestroyImageView(*logicalDevice, levelView, nullptr);
 	}
 
 #if defined(ACID_VERBOSE)

@@ -29,10 +29,10 @@ This is a list of current features in Acid:
  * Networking (HTTP, FTP, UDP, TCP)
  * Serialization (JSON, YAML, XML)
  * Resource management
+ * Event delegate callbacks
  * Bullet physics
  * Entity component system
  * Particle effect systems
- * Event listeners
  * File path searching, and packaging
  * GUI and SDF font rendering
  * Audio systems (OGG, WAV)

@@ -104,7 +104,7 @@ void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, cons
 	if (m_pushDescriptors)
 	{
 		auto logicalDevice = Renderer::Get()->GetLogicalDevice();
-		Instance::FvkCmdPushDescriptorSetKHR(logicalDevice->GetLogicalDevice(), commandBuffer.GetCommandBuffer(), pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(), 0,
+		Instance::FvkCmdPushDescriptorSetKHR(*logicalDevice, commandBuffer, pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(), 0,
 			static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 	}
 	else

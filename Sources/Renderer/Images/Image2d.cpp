@@ -87,10 +87,10 @@ Image2d::~Image2d()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
-	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_view, nullptr);
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), m_memory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
+	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
+	vkDestroyImageView(*logicalDevice, m_view, nullptr);
+	vkFreeMemory(*logicalDevice, m_memory, nullptr);
+	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
 VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
@@ -223,17 +223,17 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(VkExtent3D &extent, const uint32_t
 	dstImageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout dstSubresourceLayout;
-	vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &dstImageSubresource, &dstSubresourceLayout);
+	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
 	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
-	vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
 	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
-	vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
+	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
+	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
 	return pixels;
 }

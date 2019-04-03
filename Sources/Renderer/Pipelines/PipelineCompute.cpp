@@ -39,19 +39,19 @@ PipelineCompute::~PipelineCompute()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroyShaderModule(logicalDevice->GetLogicalDevice(), m_shaderModule, nullptr);
+	vkDestroyShaderModule(*logicalDevice, m_shaderModule, nullptr);
 
-	vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
-	vkDestroyDescriptorPool(logicalDevice->GetLogicalDevice(), m_descriptorPool, nullptr);
-	vkDestroyPipeline(logicalDevice->GetLogicalDevice(), m_pipeline, nullptr);
-	vkDestroyPipelineLayout(logicalDevice->GetLogicalDevice(), m_pipelineLayout, nullptr);
+	vkDestroyDescriptorSetLayout(*logicalDevice, m_descriptorSetLayout, nullptr);
+	vkDestroyDescriptorPool(*logicalDevice, m_descriptorPool, nullptr);
+	vkDestroyPipeline(*logicalDevice, m_pipeline, nullptr);
+	vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
 }
 
 bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const
 {
 	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(width) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
 	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(height) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
-	vkCmdDispatch(commandBuffer.GetCommandBuffer(), groupCountX, groupCountY, 1);
+	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
 	return true;
 }
 
@@ -99,7 +99,7 @@ void PipelineCompute::CreateDescriptorLayout()
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 	descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
-	Renderer::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+	Renderer::CheckVk(vkCreateDescriptorSetLayout(*logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 }
 
 void PipelineCompute::CreateDescriptorPool()
@@ -114,7 +114,7 @@ void PipelineCompute::CreateDescriptorPool()
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
 	descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 	descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
-	Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+	Renderer::CheckVk(vkCreateDescriptorPool(*logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 }
 
 void PipelineCompute::CreatePipelineLayout()
@@ -129,7 +129,7 @@ void PipelineCompute::CreatePipelineLayout()
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 	pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
 	pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
-	Renderer::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+	Renderer::CheckVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 }
 
 void PipelineCompute::CreatePipelineCompute()
@@ -143,6 +143,6 @@ void PipelineCompute::CreatePipelineCompute()
 	pipelineCreateInfo.layout = m_pipelineLayout;
 	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 	pipelineCreateInfo.basePipelineIndex = -1;
-	vkCreateComputePipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
+	vkCreateComputePipelines(*logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline);
 }
 }

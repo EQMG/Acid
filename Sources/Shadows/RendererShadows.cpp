@@ -25,11 +25,11 @@ void RendererShadows::Render(const CommandBuffer &commandBuffer)
 	m_uniformScene.Push("projectionView", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix());
 	m_uniformScene.Push("cameraPosition", camera->GetPosition());
 
-	vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), BiasConstants, 0.0f, BiasSlope);
+	vkCmdSetDepthBias(commandBuffer, BiasConstants, 0.0f, BiasSlope);
 
 	m_pipeline.BindPipeline(commandBuffer);
 
-	//vkCmdSetDepthBias(commandBuffer.GetCommandBuffer(), 1.25f, 0.0f, 1.75f);
+	//vkCmdSetDepthBias(commandBuffer, 1.25f, 0.0f, 1.75f);
 
 	auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 

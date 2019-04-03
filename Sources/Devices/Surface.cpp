@@ -15,14 +15,14 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 	m_format({})
 {
 	// Creates the surface.
-	Window::Get()->CreateSurface(m_instance->GetInstance(), nullptr, &m_surface);
+	Window::Get()->CreateSurface(*m_instance, nullptr, &m_surface);
 
-	Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &m_capabilities));
+	Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, m_surface, &m_capabilities));
 
 	uint32_t surfaceFormatCount = 0;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &surfaceFormatCount, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, nullptr);
 	std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
-	vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice->GetPhysicalDevice(), m_surface, &surfaceFormatCount, surfaceFormats.data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, surfaceFormats.data());
 
 	if ((surfaceFormatCount == 1) && (surfaceFormats[0].format == VK_FORMAT_UNDEFINED))
 	{
@@ -58,6 +58,6 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 
 Surface::~Surface()
 {
-	vkDestroySurfaceKHR(m_instance->GetInstance(), m_surface, nullptr);
+	vkDestroySurfaceKHR(*m_instance, m_surface, nullptr);
 }
 }

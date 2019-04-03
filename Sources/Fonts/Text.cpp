@@ -78,7 +78,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetSize().m_y * GetScissor().m_y);
 	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetSize().m_x * GetScissor().m_z);
 	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetSize().m_y * GetScissor().m_w);
-	vkCmdSetScissor(commandBuffer.GetCommandBuffer(), 0, 1, &scissorRect);
+	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);

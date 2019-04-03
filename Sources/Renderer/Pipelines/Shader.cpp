@@ -575,7 +575,7 @@ VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShad
 	shaderModuleCreateInfo.pCode = spirv.data();
 
 	VkShaderModule shaderModule;
-	Renderer::CheckVk(vkCreateShaderModule(logicalDevice->GetLogicalDevice(), &shaderModuleCreateInfo, nullptr, &shaderModule));
+	Renderer::CheckVk(vkCreateShaderModule(*logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 	return shaderModule;
 }
 

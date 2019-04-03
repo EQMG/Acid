@@ -27,7 +27,7 @@ layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
 #if ANIMATED
-layout(location = 3) in vec3 inJointIds;
+layout(location = 3) in ivec3 inJointIds;
 layout(location = 4) in vec3 inWeights;
 #endif
 
@@ -48,7 +48,7 @@ void main()
 
 	for (int i = 0; i < MAX_WEIGHTS; i++)
 	{
-		mat4 jointTransform = object.jointTransforms[int(inJointIds[i])];
+		mat4 jointTransform = object.jointTransforms[inJointIds[i]];
 		vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
 		position += posePosition * inWeights[i];
 

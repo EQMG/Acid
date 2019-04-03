@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "Engine/Engine.hpp"
+#include "StdAfx.hpp"
 
 namespace acid
 {
@@ -29,6 +29,8 @@ public:
 
 	static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
 		const VkMemoryPropertyFlags &requiredProperties);
+	
+	operator const VkInstance &() const { return m_instance; }
 
 	const std::vector<const char *> &GetInstanceLayers() const { return m_instanceLayers; }
 

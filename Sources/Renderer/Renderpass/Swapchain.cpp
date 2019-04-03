@@ -27,9 +27,9 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 	auto presentFamily = logicalDevice->GetPresentFamily();
 
 	uint32_t physicalPresentModeCount = 0;
-	vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice->GetPhysicalDevice(), surface->GetSurface(), &physicalPresentModeCount, nullptr);
+	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
 	std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
-	vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice->GetPhysicalDevice(), surface->GetSurface(), &physicalPresentModeCount, physicalPresentModes.data());
+	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, physicalPresentModes.data());
 
 	for (const auto &presentMode : physicalPresentModes)
 	{
@@ -73,7 +73,7 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 
 	VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 	swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-	swapchainCreateInfo.surface = surface->GetSurface();
+	swapchainCreateInfo.surface = *surface;
 	swapchainCreateInfo.minImageCount = desiredImageCount;
 	swapchainCreateInfo.imageFormat = surfaceFormat.format;
 	swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -111,12 +111,12 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 		swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
 	}
 
-	Renderer::CheckVk(vkCreateSwapchainKHR(logicalDevice->GetLogicalDevice(), &swapchainCreateInfo, nullptr, &m_swapchain));
+	Renderer::CheckVk(vkCreateSwapchainKHR(*logicalDevice, &swapchainCreateInfo, nullptr, &m_swapchain));
 
-	Renderer::CheckVk(vkGetSwapchainImagesKHR(logicalDevice->GetLogicalDevice(), m_swapchain, &m_imageCount, nullptr));
+	Renderer::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &m_imageCount, nullptr));
 	m_images.resize(m_imageCount);
 	m_imageViews.resize(m_imageCount);
-	Renderer::CheckVk(vkGetSwapchainImagesKHR(logicalDevice->GetLogicalDevice(), m_swapchain, &m_imageCount, m_images.data()));
+	Renderer::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &m_imageCount, m_images.data()));
 
 	for (uint32_t i = 0; i < m_imageCount; i++)
 	{
@@ -125,28 +125,28 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 
 	VkFenceCreateInfo fenceCreateInfo = {};
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-	vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_fenceImage);
+	vkCreateFence(*logicalDevice, &fenceCreateInfo, nullptr, &m_fenceImage);
 }
 
 Swapchain::~Swapchain()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroySwapchainKHR(logicalDevice->GetLogicalDevice(), m_swapchain, nullptr);
+	vkDestroySwapchainKHR(*logicalDevice, m_swapchain, nullptr);
 
 	for (const auto &imageView : m_imageViews)
 	{
-		vkDestroyImageView(logicalDevice->GetLogicalDevice(), imageView, nullptr);
+		vkDestroyImageView(*logicalDevice, imageView, nullptr);
 	}
 
-	vkDestroyFence(logicalDevice->GetLogicalDevice(), m_fenceImage, nullptr);
+	vkDestroyFence(*logicalDevice, m_fenceImage, nullptr);
 }
 
 VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	VkResult acquireResult = vkAcquireNextImageKHR(logicalDevice->GetLogicalDevice(), m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
+	VkResult acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&m_activeImageIndex);
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
@@ -155,9 +155,9 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 		return acquireResult;
 	}
 
-	//Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+	//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-	//Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &m_fenceImage));
+	//Renderer::CheckVk(vkResetFences(*logicalDevice, 1, &m_fenceImage));
 	return VK_SUCCESS;
 }
 

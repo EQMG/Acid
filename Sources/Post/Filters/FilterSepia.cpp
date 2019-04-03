@@ -24,6 +24,6 @@ void FilterSepia::Render(const CommandBuffer &commandBuffer)
 	m_pipeline.BindPipeline(commandBuffer);
 
 	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-	vkCmdDraw(commandBuffer.GetCommandBuffer(), 3, 1, 0, 0);
+	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

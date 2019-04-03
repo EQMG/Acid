@@ -76,13 +76,13 @@ PipelineGraphics::~PipelineGraphics()
 
 	for (const auto &shaderModule : m_modules)
 	{
-		vkDestroyShaderModule(logicalDevice->GetLogicalDevice(), shaderModule, nullptr);
+		vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
 	}
 
-	vkDestroyDescriptorPool(logicalDevice->GetLogicalDevice(), m_descriptorPool, nullptr);
-	vkDestroyPipeline(logicalDevice->GetLogicalDevice(), m_pipeline, nullptr);
-	vkDestroyPipelineLayout(logicalDevice->GetLogicalDevice(), m_pipelineLayout, nullptr);
-	vkDestroyDescriptorSetLayout(logicalDevice->GetLogicalDevice(), m_descriptorSetLayout, nullptr);
+	vkDestroyDescriptorPool(*logicalDevice, m_descriptorPool, nullptr);
+	vkDestroyPipeline(*logicalDevice, m_pipeline, nullptr);
+	vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
+	vkDestroyDescriptorSetLayout(*logicalDevice, m_descriptorSetLayout, nullptr);
 }
 
 const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const
@@ -155,7 +155,7 @@ void PipelineGraphics::CreateDescriptorLayout()
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
 	descriptorSetLayoutCreateInfo.pBindings = descriptorSetLayouts.data();
-	Renderer::CheckVk(vkCreateDescriptorSetLayout(logicalDevice->GetLogicalDevice(), &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
+	Renderer::CheckVk(vkCreateDescriptorSetLayout(*logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 }
 
 void PipelineGraphics::CreateDescriptorPool()
@@ -170,7 +170,7 @@ void PipelineGraphics::CreateDescriptorPool()
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
 	descriptorPoolCreateInfo.poolSizeCount = static_cast<uint32_t>(descriptorPools.size());
 	descriptorPoolCreateInfo.pPoolSizes = descriptorPools.data();
-	Renderer::CheckVk(vkCreateDescriptorPool(logicalDevice->GetLogicalDevice(), &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
+	Renderer::CheckVk(vkCreateDescriptorPool(*logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 }
 
 void PipelineGraphics::CreatePipelineLayout()
@@ -185,7 +185,7 @@ void PipelineGraphics::CreatePipelineLayout()
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
 	pipelineLayoutCreateInfo.pushConstantRangeCount = static_cast<uint32_t>(pushConstantRanges.size());
 	pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
-	Renderer::CheckVk(vkCreatePipelineLayout(logicalDevice->GetLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
+	Renderer::CheckVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 }
 
 void PipelineGraphics::CreateAttributes()
@@ -348,7 +348,7 @@ void PipelineGraphics::CreatePipeline()
 	pipelineCreateInfo.subpass = m_stage.second;
 	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 	pipelineCreateInfo.basePipelineIndex = -1;
-	Renderer::CheckVk(vkCreateGraphicsPipelines(logicalDevice->GetLogicalDevice(), pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
+	Renderer::CheckVk(vkCreateGraphicsPipelines(*logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 }
 
 void PipelineGraphics::CreatePipelinePolygon()

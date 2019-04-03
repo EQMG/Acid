@@ -25,8 +25,8 @@ GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<Ve
 		auto uvIndex = String::From<uint32_t>(indexRawData[i * indexCount + 2]);
 
 		auto vertexWeight = m_vertexWeights[positionIndex];
-		Vector3f jointIds = Vector3f(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
-		Vector3f weights = Vector3f(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
+		auto jointIds = Vector3ui(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
+		auto weights = Vector3f(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
 
 		VertexAnimated vertex = VertexAnimated(positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights);
 

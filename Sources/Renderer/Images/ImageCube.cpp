@@ -91,10 +91,10 @@ ImageCube::~ImageCube()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_view, nullptr);
-	vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), m_memory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
+	vkDestroyImageView(*logicalDevice, m_view, nullptr);
+	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
+	vkFreeMemory(*logicalDevice, m_memory, nullptr);
+	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
 VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
@@ -226,17 +226,17 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 	dstImageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout dstSubresourceLayout;
-	vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &dstImageSubresource, &dstSubresourceLayout);
+	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
 	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
-	vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
 	std::memcpy(result.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
-	vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
+	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
+	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
 	return result;
 }

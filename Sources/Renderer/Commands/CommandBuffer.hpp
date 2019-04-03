@@ -46,6 +46,8 @@ public:
 	void Submit(const VkSemaphore &waitSemaphore = VK_NULL_HANDLE, const VkSemaphore &signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
 	const bool &IsRunning() const { return m_running; }
+	
+	operator const VkCommandBuffer &() const { return m_commandBuffer; }
 
 	const VkCommandBuffer &GetCommandBuffer() const { return m_commandBuffer; }
 

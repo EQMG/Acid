@@ -237,21 +237,54 @@ public:
 	}
 
 	/**
-	 * Gets the maximum value in this vector.
-	 * @return The largest components. 
+	 * Gets the minimal value in this vector.
+	 * @return The minimal components.
 	 **/
-	auto MaxComponent() const
+	auto Min() const
+	{
+		return std::min({ m_x, m_y });
+	}
+
+	/**
+	 * Gets the maximal value in this vector.
+	 * @return The maximal components. 
+	 **/
+	auto Max() const
 	{
 		return std::max({ m_x, m_y });
 	}
 
 	/**
-	 * Gets the lowest value in this vector.
-	 * @return The minimum components.
-	 **/
-	auto MinComponent() const
+	 * Gets the minimal and maximal values in the vector.
+	 * @return The minimal and maximal components.
+	 */
+	auto MinMax() const
 	{
-		return std::min({ m_x, m_y });
+		return std::minmax({ m_x, m_y });
+	}
+
+	/**
+	 * Gets the lowest vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The lowest vector.
+	 **/
+	template<typename K>
+	auto Min(const Vector2<K> &other)
+	{
+		return Vector2<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
+	}
+
+	/**
+	 * Gets the maximum vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The maximum vector.
+	 **/
+	template<typename K>
+	auto Max(const Vector2<K> &other)
+	{
+		return Vector2<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y));
 	}
 
 	/**
@@ -341,30 +374,6 @@ public:
 		auto x = m_x * std::cos(m_y);
 		auto y = m_x * std::sin(m_y);
 		return Vector2<decltype(std::cos(m_x))>(x, y);
-	}
-
-	/**
-	 * Gets the lowest vector size between this vector and other.
-	 * @tparam K The others type.
-	 * @param other The other vector to get values from.
-	 * @return The lowest vector. 
-	 **/
-	template<typename K>
-	auto MinVector(const Vector2<K> &other)
-	{
-		return Vector2<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
-	}
-
-	/**
-	 * Gets the maximum vector size between this vector and other.
-	 * @tparam K The others type.
-	 * @param other The other vector to get values from.
-	 * @return The maximum vector. 
-	 **/
-	template<typename K>
-	auto MaxVector(const Vector2<K> &other)
-	{
-		return Vector2<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y));
 	}
 
 	T GetX() const { return m_x; }

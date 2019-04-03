@@ -36,9 +36,9 @@ LogicalDevice::~LogicalDevice()
 void LogicalDevice::CreateQueueIndices()
 {
 	uint32_t deviceQueueFamilyPropertyCount;
-	vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice->GetPhysicalDevice(), &deviceQueueFamilyPropertyCount, nullptr);
+	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
 	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice->GetPhysicalDevice(), &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
+	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
 
 	int32_t graphicsFamily = -1;
 	int32_t presentFamily = -1;
@@ -57,7 +57,7 @@ void LogicalDevice::CreateQueueIndices()
 
 		// Check for presentation support.
 		VkBool32 presentSupport = VK_FALSE;
-		vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice->GetPhysicalDevice(), i, m_surface->GetSurface(), &presentSupport);
+		vkGetPhysicalDeviceSurfaceSupportKHR(*m_physicalDevice, i, *m_surface, &presentSupport);
 
 		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)
 		{
@@ -263,7 +263,7 @@ void LogicalDevice::CreateLogicalDevice()
 	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instance->GetDeviceExtensions().size());
 	deviceCreateInfo.ppEnabledExtensionNames = m_instance->GetDeviceExtensions().data();
 	deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
-	Renderer::CheckVk(vkCreateDevice(m_physicalDevice->GetPhysicalDevice(), &deviceCreateInfo, nullptr, &m_logicalDevice));
+	Renderer::CheckVk(vkCreateDevice(*m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 	vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
 	vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);

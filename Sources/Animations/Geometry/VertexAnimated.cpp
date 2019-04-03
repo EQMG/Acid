@@ -2,7 +2,7 @@
 
 namespace acid
 {
-VertexAnimated::VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3f &jointId, const Vector3f &vertexWeight) :
+VertexAnimated::VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight) :
 	m_position(position),
 	m_uv(uv),
 	m_normal(normal),

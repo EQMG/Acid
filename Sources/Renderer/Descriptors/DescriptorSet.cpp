@@ -19,25 +19,25 @@ DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 	descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
 	descriptorSetAllocateInfo.descriptorSetCount = 1;
 	descriptorSetAllocateInfo.pSetLayouts = layouts;
-	Renderer::CheckVk(vkAllocateDescriptorSets(logicalDevice->GetLogicalDevice(), &descriptorSetAllocateInfo, &m_descriptorSet));
+	Renderer::CheckVk(vkAllocateDescriptorSets(*logicalDevice, &descriptorSetAllocateInfo, &m_descriptorSet));
 }
 
 DescriptorSet::~DescriptorSet()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	Renderer::CheckVk(vkFreeDescriptorSets(logicalDevice->GetLogicalDevice(), m_descriptorPool, 1, &m_descriptorSet));
+	Renderer::CheckVk(vkFreeDescriptorSets(*logicalDevice, m_descriptorPool, 1, &m_descriptorSet));
 }
 
 void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkUpdateDescriptorSets(logicalDevice->GetLogicalDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+	vkUpdateDescriptorSets(*logicalDevice, static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 }
 
 void DescriptorSet::BindDescriptor(const CommandBuffer &commandBuffer)
 {
-	vkCmdBindDescriptorSets(commandBuffer.GetCommandBuffer(), m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
+	vkCmdBindDescriptorSets(commandBuffer, m_pipelineBindPoint, m_pipelineLayout, 0, 1, &m_descriptorSet, 0, nullptr);
 }
 }

@@ -39,10 +39,10 @@ Image::~Image()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_view, nullptr);
-	vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), m_memory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
+	vkDestroyImageView(*logicalDevice, m_view, nullptr);
+	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
+	vkFreeMemory(*logicalDevice, m_memory, nullptr);
+	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
 VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, const uint32_t &count)
@@ -92,17 +92,17 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &
 	dstImageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout dstSubresourceLayout;
-	vkGetImageSubresourceLayout(logicalDevice->GetLogicalDevice(), dstImage, &dstImageSubresource, &dstSubresourceLayout);
+	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
 	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
-	vkMapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
 	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
-	vkUnmapMemory(logicalDevice->GetLogicalDevice(), dstImageMemory);
+	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
+	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
 	return pixels;
 }
@@ -192,18 +192,18 @@ void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D
 	imageCreateInfo.usage = usage;
 	imageCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	Renderer::CheckVk(vkCreateImage(logicalDevice->GetLogicalDevice(), &imageCreateInfo, nullptr, &image));
+	Renderer::CheckVk(vkCreateImage(*logicalDevice, &imageCreateInfo, nullptr, &image));
 
 	VkMemoryRequirements memoryRequirements;
-	vkGetImageMemoryRequirements(logicalDevice->GetLogicalDevice(), image, &memoryRequirements);
+	vkGetImageMemoryRequirements(*logicalDevice, image, &memoryRequirements);
 
 	VkMemoryAllocateInfo memoryAllocateInfo = {};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	memoryAllocateInfo.allocationSize = memoryRequirements.size;
 	memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-	Renderer::CheckVk(vkAllocateMemory(logicalDevice->GetLogicalDevice(), &memoryAllocateInfo, nullptr, &memory));
+	Renderer::CheckVk(vkAllocateMemory(*logicalDevice, &memoryAllocateInfo, nullptr, &memory));
 
-	Renderer::CheckVk(vkBindImageMemory(logicalDevice->GetLogicalDevice(), image, memory, 0));
+	Renderer::CheckVk(vkBindImageMemory(*logicalDevice, image, memory, 0));
 }
 
 void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels)
@@ -229,7 +229,7 @@ void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const
 	samplerCreateInfo.maxLod = static_cast<float>(mipLevels);
 	samplerCreateInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 	samplerCreateInfo.unnormalizedCoordinates = VK_FALSE;
-	Renderer::CheckVk(vkCreateSampler(logicalDevice->GetLogicalDevice(), &samplerCreateInfo, nullptr, &sampler));
+	Renderer::CheckVk(vkCreateSampler(*logicalDevice, &samplerCreateInfo, nullptr, &sampler));
 }
 
 void Image::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels,
@@ -248,7 +248,7 @@ void Image::CreateImageView(const VkImage &image, VkImageView &imageView, const 
 	imageViewCreateInfo.subresourceRange.levelCount = mipLevels;
 	imageViewCreateInfo.subresourceRange.baseArrayLayer = baseArrayLayer;
 	imageViewCreateInfo.subresourceRange.layerCount = layerCount;
-	Renderer::CheckVk(vkCreateImageView(logicalDevice->GetLogicalDevice(), &imageViewCreateInfo, nullptr, &imageView));
+	Renderer::CheckVk(vkCreateImageView(*logicalDevice, &imageViewCreateInfo, nullptr, &imageView));
 }
 
 void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels,
@@ -258,7 +258,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 
 	// Get device properites for the requested texture format.
 	VkFormatProperties formatProperties;
-	vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), format, &formatProperties);
+	vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &formatProperties);
 
 	// Mip-chain generation requires support for blit source and destination
 	assert(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT);
@@ -282,7 +282,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		barrier0.subresourceRange.levelCount = 1;
 		barrier0.subresourceRange.baseArrayLayer = baseArrayLayer;
 		barrier0.subresourceRange.layerCount = layerCount;
-		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier0);
+		vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier0);
 
 		VkImageBlit imageBlit = {};
 		imageBlit.srcOffsets[1] = { int32_t(extent.width >> (i - 1)), int32_t(extent.height >> (i - 1)), 1 };
@@ -295,7 +295,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		imageBlit.dstSubresource.mipLevel = i;
 		imageBlit.dstSubresource.baseArrayLayer = baseArrayLayer;
 		imageBlit.dstSubresource.layerCount = layerCount;
-		vkCmdBlitImage(commandBuffer.GetCommandBuffer(), image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlit, VK_FILTER_LINEAR);
+		vkCmdBlitImage(commandBuffer, image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlit, VK_FILTER_LINEAR);
 
 		VkImageMemoryBarrier barrier1 = {};
 		barrier1.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -311,7 +311,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		barrier1.subresourceRange.levelCount = 1;
 		barrier1.subresourceRange.baseArrayLayer = baseArrayLayer;
 		barrier1.subresourceRange.layerCount = layerCount;
-		vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier1);
+		vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier1);
 	}
 
 	VkImageMemoryBarrier barrier = {};
@@ -328,7 +328,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 	barrier.subresourceRange.levelCount = 1;
 	barrier.subresourceRange.baseArrayLayer = baseArrayLayer;
 	barrier.subresourceRange.layerCount = layerCount;
-	vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+	vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 
 	commandBuffer.SubmitIdle();
 }
@@ -411,7 +411,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 	VkPipelineStageFlags srcStageMask = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
 	VkPipelineStageFlags dstStageMask = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
 
-	vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
+	vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 
 	commandBuffer.SubmitIdle();
 }
@@ -434,7 +434,7 @@ void Image::InsertImageMemoryBarrier(const CommandBuffer &commandBuffer, const V
 	imageMemoryBarrier.subresourceRange.levelCount = mipLevels;
 	imageMemoryBarrier.subresourceRange.baseArrayLayer = baseArrayLayer;
 	imageMemoryBarrier.subresourceRange.layerCount = layerCount;
-	vkCmdPipelineBarrier(commandBuffer.GetCommandBuffer(), srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
+	vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 0, nullptr, 1, &imageMemoryBarrier);
 }
 
 void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const VkExtent3D &extent, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
@@ -451,7 +451,7 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 	region.imageSubresource.layerCount = layerCount;
 	region.imageOffset = { 0, 0, 0 };
 	region.imageExtent = extent;
-	vkCmdCopyBufferToImage(commandBuffer.GetCommandBuffer(), buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+	vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
 	commandBuffer.SubmitIdle();
 }
@@ -467,7 +467,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 	VkFormatProperties formatProperties;
 
 	// Check if the device supports blitting from optimal images (the swapchain images are in optimal format).
-	vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), surface->GetFormat().format, &formatProperties);
+	vkGetPhysicalDeviceFormatProperties(*physicalDevice, surface->GetFormat().format, &formatProperties);
 
 	if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 	{
@@ -476,7 +476,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 	}
 
 	// Check if the device supports blitting to linear images.
-	vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), srcFormat, &formatProperties);
+	vkGetPhysicalDeviceFormatProperties(*physicalDevice, srcFormat, &formatProperties);
 
 	if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 	{
@@ -516,7 +516,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 		imageBlitRegion.dstSubresource.baseArrayLayer = 0;
 		imageBlitRegion.dstSubresource.layerCount = 1;
 		imageBlitRegion.dstOffsets[1] = blitSize;
-		vkCmdBlitImage(commandBuffer.GetCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion,
+		vkCmdBlitImage(commandBuffer, srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlitRegion,
 			VK_FILTER_NEAREST);
 	}
 	else
@@ -532,7 +532,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 		imageCopyRegion.dstSubresource.baseArrayLayer = 0;
 		imageCopyRegion.dstSubresource.layerCount = 1;
 		imageCopyRegion.extent = extent;
-		vkCmdCopyImage(commandBuffer.GetCommandBuffer(), srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
+		vkCmdCopyImage(commandBuffer, srcImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
 	}
 
 	// Transition destination image to general layout, which is the required layout for mapping the image memory later on.

@@ -30,13 +30,13 @@ Renderer::~Renderer()
 
 	glslang::FinalizeProcess();
 
-	vkDestroyPipelineCache(m_logicalDevice->GetLogicalDevice(), m_pipelineCache, nullptr);
+	vkDestroyPipelineCache(*m_logicalDevice, m_pipelineCache, nullptr);
 
 	for (size_t i = 0; i < m_flightFences.size(); i++)
 	{
-		vkDestroyFence(m_logicalDevice->GetLogicalDevice(), m_flightFences[i], nullptr);
-		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_renderCompletes[i], nullptr);
-		vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentCompletes[i], nullptr);
+		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
+		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
+		vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
 	}
 }
 
@@ -110,7 +110,7 @@ void Renderer::Update()
 
 			for (uint32_t d = 0; d < difference; d++)
 			{
-				vkCmdNextSubpass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), VK_SUBPASS_CONTENTS_INLINE);
+				vkCmdNextSubpass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], VK_SUBPASS_CONTENTS_INLINE);
 			}
 
 			subpass = key.second;
@@ -230,7 +230,7 @@ void Renderer::CheckVk(const VkResult &result)
 
 void Renderer::UpdateSurfaceCapabilities()
 {
-	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice->GetPhysicalDevice(), m_surface->GetSurface(), &m_surface->m_capabilities));
+	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, *m_surface, &m_surface->m_capabilities));
 }
 
 void Renderer::CaptureScreenshot(const std::string &filename)
@@ -253,18 +253,18 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	imageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout dstSubresourceLayout;
-	vkGetImageSubresourceLayout(m_logicalDevice->GetLogicalDevice(), dstImage, &imageSubresource, &dstSubresourceLayout);
+	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 	
 	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
-	vkMapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
 	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
-	vkUnmapMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory);
+	vkUnmapMemory(*m_logicalDevice, dstImageMemory);
 
 	// Frees temp image and memory.
-	vkFreeMemory(m_logicalDevice->GetLogicalDevice(), dstImageMemory, nullptr);
-	vkDestroyImage(m_logicalDevice->GetLogicalDevice(), dstImage, nullptr);
+	vkFreeMemory(*m_logicalDevice, dstImageMemory, nullptr);
+	vkDestroyImage(*m_logicalDevice, dstImage, nullptr);
 
 	// Creates the screenshot image file and writes to it.
 	FileSystem::ClearFile(filename);
@@ -297,9 +297,9 @@ void Renderer::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 	{
 		for (size_t i = 0; i < m_flightFences.size(); i++)
 		{
-			vkDestroyFence(m_logicalDevice->GetLogicalDevice(), m_flightFences[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_renderCompletes[i], nullptr);
-			vkDestroySemaphore(m_logicalDevice->GetLogicalDevice(), m_presentCompletes[i], nullptr);
+			vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
+			vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
+			vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
 		}
 
 		m_presentCompletes.resize(m_swapchain->GetImageCount());
@@ -316,11 +316,11 @@ void Renderer::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 
 		for (size_t i = 0; i < m_flightFences.size(); i++)
 		{
-			CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
+			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
 
-			CheckVk(vkCreateSemaphore(m_logicalDevice->GetLogicalDevice(), &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
+			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
 
-			CheckVk(vkCreateFence(m_logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &m_flightFences[i]));
+			CheckVk(vkCreateFence(*m_logicalDevice, &fenceCreateInfo, nullptr, &m_flightFences[i]));
 
 			m_commandBuffers[i] = std::make_unique<CommandBuffer>(false);
 		}
@@ -363,7 +363,7 @@ void Renderer::CreatePipelineCache()
 {
 	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-	CheckVk(vkCreatePipelineCache(m_logicalDevice->GetLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 }
 
 void Renderer::RecreatePass(RenderStage &renderStage)
@@ -406,7 +406,7 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 
 	if (!m_commandBuffers[m_swapchain->GetActiveImageIndex()]->IsRunning())
 	{
-		CheckVk(vkWaitForFences(m_logicalDevice->GetLogicalDevice(), 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
+		CheckVk(vkWaitForFences(*m_logicalDevice, 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
 		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 	}
 
@@ -421,12 +421,12 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	viewport.height = static_cast<float>(renderArea.extent.height);
 	viewport.minDepth = 0.0f;
 	viewport.maxDepth = 1.0f;
-	vkCmdSetViewport(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &viewport);
+	vkCmdSetViewport(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &viewport);
 
 	VkRect2D scissor = {};
 	scissor.offset = { 0, 0 };
 	scissor.extent = renderArea.extent;
-	vkCmdSetScissor(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), 0, 1, &scissor);
+	vkCmdSetScissor(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &scissor);
 
 	auto clearValues = renderStage.GetClearValues();
 
@@ -437,7 +437,7 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	renderPassBeginInfo.renderArea = renderArea;
 	renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 	renderPassBeginInfo.pClearValues = clearValues.data();
-	vkCmdBeginRenderPass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer(), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+	vkCmdBeginRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 	return true;
 }
@@ -446,7 +446,7 @@ void Renderer::EndRenderpass(RenderStage &renderStage)
 {
 	auto presentQueue = m_logicalDevice->GetPresentQueue();
 
-	vkCmdEndRenderPass(m_commandBuffers[m_swapchain->GetActiveImageIndex()]->GetCommandBuffer());
+	vkCmdEndRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
 	if (!renderStage.HasSwapchain())
 	{

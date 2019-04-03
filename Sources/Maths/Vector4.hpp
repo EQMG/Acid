@@ -256,21 +256,54 @@ public:
 	}
 
 	/**
-	 * Gets the maximum value in this vector.
-	 * @return The largest components.
+	 * Gets the minimal value in this vector.
+	 * @return The minimal components.
 	 **/
-	auto MaxComponent() const
+	auto Min() const
+	{
+		return std::min({ m_x, m_y, m_z, m_w });
+	}
+
+	/**
+	 * Gets the maximal value in this vector.
+	 * @return The maximal components.
+	 **/
+	auto Max() const
 	{
 		return std::max({ m_x, m_y, m_z, m_w });
 	}
 
 	/**
-	 * Gets the lowest value in this vector.
-	 * @return The minimum components.
-	 **/
-	auto MinComponent() const
+	 * Gets the minimal and maximal values in the vector.
+	 * @return The minimal and maximal components.
+	 */
+	auto MinMax() const
 	{
-		return std::min({ m_x, m_y, m_z, m_w });
+		return std::minmax({ m_x, m_y, m_z, m_w });
+	}
+
+	/**
+	 * Gets the lowest vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The lowest vector.
+	 **/
+	template<typename K>
+	auto Min(const Vector4<K> &other)
+	{
+		return Vector4<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z), std::min(m_w, other.m_w));
+	}
+
+	/**
+	 * Gets the maximum vector size between this vector and other.
+	 * @tparam K The others type.
+	 * @param other The other vector to get values from.
+	 * @return The maximum vector.
+	 **/
+	template<typename K>
+	auto Max(const Vector4<K> &other)
+	{
+		return Vector4<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w));
 	}
 
 	 /**
@@ -325,30 +358,6 @@ public:
 		return Maths::SmoothDamp(*this, target, rate);
 	}
 
-	/**
-	 * Gets the lowest vector size between this vector and other.
-	 * @tparam K The others type.
-	 * @param other The other vector to get values from.
-	 * @return The lowest vector.
-	 **/
-	template<typename K>
-	auto MinVector(const Vector4<K> &other)
-	{
-		return Vector4<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z), std::min(m_w, other.m_w));
-	}
-
-	/**
-	 * Gets the maximum vector size between this vector and other.
-	 * @tparam K The others type.
-	 * @param other The other vector to get values from.
-	 * @return The maximum vector.
-	 **/
-	template<typename K>
-	auto MaxVector(const Vector4<K> &other)
-	{
-		return Vector4<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w));
-	}
-	
 	T GetX() const { return m_x; }
 
 	void SetX(const T &x) { m_x = x; }

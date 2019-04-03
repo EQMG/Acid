@@ -22,7 +22,7 @@ ImageDepth::ImageDepth(const uint32_t &width, const uint32_t &height, const VkSa
 	for (const auto &format : TRY_FORMATS)
 	{
 		VkFormatProperties formatProperties = {};
-		vkGetPhysicalDeviceFormatProperties(physicalDevice->GetPhysicalDevice(), format, &formatProperties);
+		vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &formatProperties);
 
 		if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
 		{
@@ -54,10 +54,10 @@ ImageDepth::~ImageDepth()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkDestroyImageView(logicalDevice->GetLogicalDevice(), m_view, nullptr);
-	vkDestroySampler(logicalDevice->GetLogicalDevice(), m_sampler, nullptr);
-	vkFreeMemory(logicalDevice->GetLogicalDevice(), m_memory, nullptr);
-	vkDestroyImage(logicalDevice->GetLogicalDevice(), m_image, nullptr);
+	vkDestroyImageView(*logicalDevice, m_view, nullptr);
+	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
+	vkFreeMemory(*logicalDevice, m_memory, nullptr);
+	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
 VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)

@@ -16,10 +16,10 @@ CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType
 
 	VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
 	commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	commandBufferAllocateInfo.commandPool = m_commandPool->GetCommandPool();
+	commandBufferAllocateInfo.commandPool = *m_commandPool;
 	commandBufferAllocateInfo.level = bufferLevel;
 	commandBufferAllocateInfo.commandBufferCount = 1;
-	Renderer::CheckVk(vkAllocateCommandBuffers(logicalDevice->GetLogicalDevice(), &commandBufferAllocateInfo, &m_commandBuffer));
+	Renderer::CheckVk(vkAllocateCommandBuffers(*logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 
 	if (begin)
 	{
@@ -31,7 +31,7 @@ CommandBuffer::~CommandBuffer()
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	vkFreeCommandBuffers(logicalDevice->GetLogicalDevice(), m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
+	vkFreeCommandBuffers(*logicalDevice, m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
 }
 
 void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
@@ -78,15 +78,15 @@ void CommandBuffer::SubmitIdle()
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 
 	VkFence fence;
-	Renderer::CheckVk(vkCreateFence(logicalDevice->GetLogicalDevice(), &fenceCreateInfo, nullptr, &fence));
+	Renderer::CheckVk(vkCreateFence(*logicalDevice, &fenceCreateInfo, nullptr, &fence));
 
-	Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
+	Renderer::CheckVk(vkResetFences(*logicalDevice, 1, &fence));
 
 	Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 
-	Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+	Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-	vkDestroyFence(logicalDevice->GetLogicalDevice(), fence, nullptr);
+	vkDestroyFence(*logicalDevice, fence, nullptr);
 }
 
 void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &signalSemaphore, VkFence fence)
@@ -122,8 +122,8 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 
 	if (fence != VK_NULL_HANDLE)
 	{
-		Renderer::CheckVk(vkResetFences(logicalDevice->GetLogicalDevice(), 1, &fence));
-		//Renderer::CheckVk(vkWaitForFences(logicalDevice->GetLogicalDevice(), 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+		Renderer::CheckVk(vkResetFences(*logicalDevice, 1, &fence));
+		//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 	}
 
 	Renderer::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));

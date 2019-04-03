@@ -61,7 +61,7 @@ Framebuffers::Framebuffers(const uint32_t &width, const uint32_t &height, const 
 		framebufferCreateInfo.width = width;
 		framebufferCreateInfo.height = height;
 		framebufferCreateInfo.layers = 1;
-		Renderer::CheckVk(vkCreateFramebuffer(logicalDevice->GetLogicalDevice(), &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
+		Renderer::CheckVk(vkCreateFramebuffer(*logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
 	}
 }
 
@@ -71,7 +71,7 @@ Framebuffers::~Framebuffers()
 
 	for (const auto &framebuffer : m_framebuffers)
 	{
-		vkDestroyFramebuffer(logicalDevice->GetLogicalDevice(), framebuffer, nullptr);
+		vkDestroyFramebuffer(*logicalDevice, framebuffer, nullptr);
 	}
 }
 }

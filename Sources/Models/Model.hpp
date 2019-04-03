@@ -99,7 +99,7 @@ protected:
 
 			VkBufferCopy copyRegion = {};
 			copyRegion.size = sizeof(T) * vertices.size();
-			vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
+			vkCmdCopyBuffer(commandBuffer, vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
 
 			commandBuffer.SubmitIdle();
 		}
@@ -116,7 +116,7 @@ protected:
 
 			VkBufferCopy copyRegion = {};
 			copyRegion.size = sizeof(uint32_t) * indices.size();
-			vkCmdCopyBuffer(commandBuffer.GetCommandBuffer(), indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
+			vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
 
 			commandBuffer.SubmitIdle();
 		}
@@ -127,16 +127,11 @@ protected:
 		for (const auto &vertex : vertices)
 		{
 			Vector3f position = vertex.GetPosition();
-			m_minExtents = m_minExtents.MinVector(position);
-			m_maxExtents = m_maxExtents.MinVector(position);
+			m_minExtents = m_minExtents.Min(position);
+			m_maxExtents = m_maxExtents.Max(position);
 		}
 
-		// FIXME: Radius calculation might be wrong.
-		float min0 = std::abs(m_minExtents.MaxComponent());
-		float min1 = std::abs(m_minExtents.MinComponent());
-		float max0 = std::abs(m_maxExtents.MaxComponent());
-		float max1 = std::abs(m_maxExtents.MinComponent());
-		m_radius = std::max(min0, std::max(min1, std::max(max0, max1)));
+		m_radius = std::max(m_minExtents.Length(), m_maxExtents.Length());
 	}
 
 private:
