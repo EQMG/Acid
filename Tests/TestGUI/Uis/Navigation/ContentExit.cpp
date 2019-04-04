@@ -5,7 +5,7 @@
 namespace test
 {
 ContentExit::ContentExit(UiObject *parent) :
-	UiPanel(parent, UiBound(Vector2f(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Size, Vector2f(0.8f, 0.8f)), ScrollBar::None),
+	UiPanel(parent, UiBound(Vector2f(0.45f, 0.5f), UiReference::CentreLeft, UiAspect::Size, Vector2f(0.8f, 0.8f)), UiNavigation::ColourPanel, ScrollBar::None),
 	m_masterVolume(&GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.06f), UiReference::TopLeft)),
 	m_dropdown(&GetContent(), "Dropdown", 0, { "A", "B", "C" }, UiBound(Vector2f(0.05f, 0.12f), UiReference::TopLeft)),
 	m_generalVolume(&GetContent(), "General Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.05f, 0.18f), UiReference::TopLeft)),
@@ -125,6 +125,6 @@ ContentExit::ContentExit(UiObject *parent) :
 void ContentExit::UpdateObject()
 {
 	UiPanel::UpdateObject();
-//	GetRectangle().SetDimensions(Vector2f(0.8f, std::abs(std::cos(0.2f * Engine::Get()->GetTime().AsSeconds()))));
+	//GetRectangle().SetSize(Vector2f(0.8f, std::abs(std::cos(0.2f * Engine::Get()->GetTime().AsSeconds()))));
 }
 }

@@ -19,6 +19,7 @@ layout(binding = 1) uniform UboObject
 
 	vec4 colourOffset;
 	vec2 atlasOffset;
+	vec2 atlasScale;
 	float atlasRows;
 	vec4 ninePatches;
 } object;
@@ -54,5 +55,5 @@ void main()
 
 	gl_Position.z -= object.depth;
 
-	outUV = (inUV.xy / object.atlasRows) + object.atlasOffset;
+	outUV = object.atlasScale * ((inUV.xy / object.atlasRows) + object.atlasOffset);
 }

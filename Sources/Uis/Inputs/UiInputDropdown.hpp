@@ -20,10 +20,30 @@ public:
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
+	
+	const uint32_t &GetValue() const { return m_value; }
+	
+	void SetValue(const uint32_t &value);
+	
+	const std::vector<std::string> &GetOptions() const { return m_options; }
+	
+	void SetOptions(const std::vector<std::string> &options);
+
+	/**
+	 * Called when this value of the input changes.
+	 * @return The delegate.
+	 */
+	Delegate<void(uint32_t)> &OnValue() { return m_onValue; }
 
 private:
+	//Gui m_slider;
 	Gui m_background;
 	Text m_textTitle;
 	Sound m_soundClick;
+
+	uint32_t m_value;
+	std::vector<std::string> m_options;
+
+	Delegate<void(uint32_t)> m_onValue;
 };
 }

@@ -10,7 +10,6 @@ Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, st
 	m_model(nullptr),
 	m_numberLines(0),
 	m_string(std::move(text)),
-	m_newString({}),
 	m_justify(justify),
 	m_fontType(std::move(fontType)),
 	m_maxWidth(maxWidth),

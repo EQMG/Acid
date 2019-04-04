@@ -23,14 +23,14 @@ public:
 
 	const float &GetValueMax() const { return m_valueMax; }
 
-	void SeValueMax(const float &valueMax) { m_valueMax = valueMax; }
+	void SetValueMax(const float &valueMax) { m_valueMax = valueMax; }
 
-	const float &GetValue() const { return m_value; }
-	
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
+	const float &GetValue() const { return m_value; }
+	
 	void SetValue(const float &value);
 
 	const float &GetProgress() const { return m_progress; }

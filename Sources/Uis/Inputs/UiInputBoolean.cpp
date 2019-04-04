@@ -19,8 +19,8 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	m_value(value)
 {
 	GetRectangle().SetSize(UiInputButton::Size);
-	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateValue();
 
 	OnSelected() += [this](bool selected)

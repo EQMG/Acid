@@ -32,7 +32,7 @@ public:
 	 * @return The 2D image with the requested values.
 	 */
 	static std::shared_ptr<Image2d> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR,
-		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true);
+		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
 
 	/**
 	 * Creates a new 2D image.
@@ -43,7 +43,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @param load If this resource will be loaded immediately, otherwise {@link Image2d#Load} can be called later.
 	 */
-	explicit Image2d(std::string filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+	explicit Image2d(std::string filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
 		const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 	/**

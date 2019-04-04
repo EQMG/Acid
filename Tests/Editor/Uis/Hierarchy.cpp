@@ -5,7 +5,7 @@
 namespace test
 {
 Hierarchy::Hierarchy(UiObject *parent) :
-	UiPanel(parent, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Size, Vector2f(0.3f, 1.0f)), ScrollBar::None),
+	UiPanel(parent, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Size, Vector2f(0.3f, 1.0f)), UiInputButton::BackgroundColour, ScrollBar::None),
 	m_section1(&GetContent(), "Section Left", UiBound(Vector2f(0.08f, 0.05f), UiReference::TopLeft)),
 	m_button1(&m_section1.GetContent(), "Button #1", UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft)),
 	m_sliderR(&m_section1.GetContent(), "R", 255.0f, 0.0f, 255.0f, 0, UiBound(Vector2f(0.0f, 0.06f), UiReference::TopLeft)),

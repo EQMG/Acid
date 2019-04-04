@@ -4,7 +4,6 @@ namespace acid
 {
 PushHandler::PushHandler(const bool &multipipeline) :
 	m_multipipeline(multipipeline),
-	m_uniformBlock({}),
 	m_data(nullptr)
 {
 }

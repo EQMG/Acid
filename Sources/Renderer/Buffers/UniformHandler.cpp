@@ -4,7 +4,6 @@ namespace acid
 {
 UniformHandler::UniformHandler(const bool &multipipeline) :
 	m_multipipeline(multipipeline),
-	m_uniformBlock({}),
 	m_size(0),
 	m_data(nullptr),
 	m_uniformBuffer(nullptr),

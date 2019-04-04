@@ -12,6 +12,8 @@ Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> te
 	m_texture(std::move(texture)),
 	m_numberOfRows(1),
 	m_selectedRow(0),
+	m_atlasScale(1.0f, 1.0f),
+	m_ninePatches(0.0f),
 	m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset))
 {
 }
@@ -35,6 +37,7 @@ void Gui::UpdateObject()
 
 	m_uniformObject.Push("colourOffset", m_colourOffset);
 	m_uniformObject.Push("atlasOffset", m_atlasOffset);
+	m_uniformObject.Push("atlasScale", m_atlasScale);
 	m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));
 	m_uniformObject.Push("ninePatches", m_ninePatches);
 }

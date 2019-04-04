@@ -13,6 +13,7 @@ layout(binding = 1) uniform UboObject
 
 	vec4 colourOffset;
 	vec2 atlasOffset;
+	vec2 atlasScale;
 	float atlasRows;
 	vec4 ninePatches;
 } object;
@@ -37,7 +38,7 @@ float processAxis(float coord, float textureBorder, float windowBorder)
 
 	if (coord < 1.0f - windowBorder)
 	{
-		return map(coord,  windowBorder, 1.0f - windowBorder, textureBorder, 1.0f - textureBorder);
+		return map(coord, windowBorder, 1.0f - windowBorder, textureBorder, 1.0f - textureBorder);
 	}
 
 	return map(coord, 1.0f - windowBorder, 1.0f, 1.0f - textureBorder, 1.0f);

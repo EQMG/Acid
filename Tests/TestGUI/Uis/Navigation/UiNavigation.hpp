@@ -49,10 +49,10 @@ public:
 	void SwitchTab(UiTab *tab);
 
 private:
-	std::unique_ptr<Gui> m_background;
-	std::unique_ptr<Gui> m_navigation;
-	std::unique_ptr<Text> m_title;
-	std::unique_ptr<Text> m_createdBy;
+	Gui m_background;
+	Gui m_navigation;
+	Text m_title;
+	Text m_createdBy;
 	std::vector<std::unique_ptr<UiTab>> m_tabs;
 
 	std::unique_ptr<IDriver<float>> m_driverTarget;

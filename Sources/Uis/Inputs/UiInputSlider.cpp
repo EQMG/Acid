@@ -12,7 +12,7 @@ static const Time CHANGE_TIME = Time::Seconds(0.05f);
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
 	const UiBound &rectangle) :
 	UiObject(parent, rectangle),
-	m_slider(this, UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
+	m_slider(this, UiBound(Vector2f(0.0f, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
@@ -31,8 +31,8 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_timerChange(CHANGE_TIME)
 {
 	GetRectangle().SetSize(UiInputButton::Size);
-	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateProgress();
 
 	OnSelected() += [this](bool selected)
@@ -96,7 +96,7 @@ void UiInputSlider::UpdateObject()
 		m_mouseOver = false;
 	}
 
-	m_slider.GetRectangle().SetSize(Vector2f(1.0f - m_progress, 1.0f));
+	m_slider.GetRectangle().SetSize(Vector2f(m_progress, 1.0f));
 }
 
 void UiInputSlider::SetValue(const float &value)

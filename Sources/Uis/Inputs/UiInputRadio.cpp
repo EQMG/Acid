@@ -18,7 +18,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_type(type)
 {
 	GetRectangle().SetSize(SIZE);
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	m_background.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
 	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetSize().m_y, 0.5f));
 	UpdateValue();

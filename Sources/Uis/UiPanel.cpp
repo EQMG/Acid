@@ -1,14 +1,12 @@
 #include "UiPanel.hpp"
 
-#include "Inputs/UiInputButton.hpp"
-
 namespace acid
 {
 static const Vector2f SCROLL_BAR = Vector2f(0.01f, 0.2f);
 
-UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const BitMask<ScrollBar> &scrollBars) :
+UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colour, const BitMask<ScrollBar> &scrollBars) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), UiInputButton::BackgroundColour),
+	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), colour),
 	m_content(this, UiBound::Maximum),
 	m_scrollX(this, ScrollBar::Horizontal,
 		UiBound(Vector2f(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR.m_y, SCROLL_BAR.m_x))),

@@ -8,27 +8,28 @@ namespace test
 {
 const std::vector<std::pair<std::string, Colour>> TABS = {{ "Play", Colour("#B8312F") }, { "News", Colour("#2969af") }, { "Achievements", Colour("#41A85F") },
 	{ "Settings", Colour("#475577") }, { "Exit", Colour("#75706B") }};
-const Colour UiNavigation::ColourPanel = Colour("#161618", 0.9f);
+const Colour UiNavigation::ColourPanel = Colour("#161618", 0.95f);
 const Colour UiNavigation::ColourButton = Colour("#3e4148", 0.92f);
 
 UiNavigation::UiNavigation(UiObject *parent) :
 	UiObject(parent, UiBound::Screen),
-	m_background(std::make_unique<Gui>(this, UiBound::Screen, Image2d::Create("Guis/White.png"))),
-	m_navigation(std::make_unique<Gui>(this, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Size, Vector2f(0.4f, 1.0f)),
-		Image2d::Create("Guis/Gradient_A.png"), ColourPanel)),
-	m_title(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2f(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING", FontType::Create("Fonts/ProximaNova", "Bold"),
-		Text::Justify::Left, 1.0f, Colour::White, 0.0018f)),
-	m_createdBy(std::make_unique<Text>(m_navigation.get(), UiBound(Vector2f(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
-		FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f)),
+	m_background(this, UiBound::Screen, Image2d::Create("Undefined.png", VK_FILTER_NEAREST)),
+	m_navigation(this, UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Size, Vector2f(0.4f, 1.0f)),
+		Image2d::Create("Guis/Gradient_A.png"), ColourPanel),
+	m_title(&m_navigation, UiBound(Vector2f(0.5f, 0.05f), UiReference::TopCentre), 5.5f, "TESTING", FontType::Create("Fonts/ProximaNova", "Bold"),
+		Text::Justify::Left, 1.0f, Colour::White, 0.0018f),
+	m_createdBy(&m_navigation, UiBound(Vector2f(0.5f, 0.985f), UiReference::BottomCentre), 1.2f, "Created By: Equilibrium Games",
+		FontType::Create("Fonts/ProximaNova", "Light"), Text::Justify::Left, 1.0f, Colour::White, 0.001f),
 	m_driverTarget(nullptr),
 	m_currentTab(nullptr),
 	m_targetTab(nullptr)
 {
+	m_navigation.SetAtlasScale(Vector2f(-1.0f, 1.0f));
 	float tabYOffset = 0.25f;
 
 	for (auto &tab : TABS)
 	{
-		auto tabButton = new UiInputButton(m_navigation.get(), tab.first, UiBound(Vector2f(0.5f, tabYOffset), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+		auto tabButton = new UiInputButton(&m_navigation, tab.first, UiBound(Vector2f(0.5f, tabYOffset), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 		tabButton->GetRectangle().SetSize(Vector2f(0.3f, 0.05f));
 
 		auto tabContent = new ContentExit(this);
@@ -72,6 +73,8 @@ void UiNavigation::UpdateObject()
 			m_targetTab = nullptr;
 		}
 	}
+
+	m_background.SetAtlasScale(0.5f * Vector2f(Window::Get()->GetAspectRatio(), 1.0f));
 }
 
 void UiNavigation::SwitchTab(UiTab *tab)
@@ -94,9 +97,9 @@ void UiNavigation::SwitchTab(UiTab *tab)
 		m_currentTab->GetContent()->SetAlphaDriver(new DriverSlide<float>(1.0f, 0.0f, Time::Seconds(0.1f)));
 	}
 
-	//Events::Get()->AddEvent<EventTime>([&]()
-	//{
-	m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, Time::Seconds(0.1f)));
-	//}, Time::Seconds(0.32f));
+	if (m_targetTab->GetContent() != nullptr)
+	{
+		m_targetTab->GetContent()->SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, Time::Seconds(0.1f)));
+	}
 }
 }

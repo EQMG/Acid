@@ -13,7 +13,6 @@ UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 	m_scissor(0.0f, 0.0f, 1.0f, 1.0f),
 	m_height(0.0f),
 	m_lockRotation(true),
-	m_worldTransform({}),
 	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 	m_alpha(1.0f),
 	m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),

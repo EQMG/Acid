@@ -22,7 +22,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)
 {
 	GetRectangle().SetSize(Size);
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f));
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
 	OnSelected() += [this](bool selected)
 	{
