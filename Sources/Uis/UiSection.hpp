@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
@@ -27,7 +26,6 @@ private:
 	Gui m_icon;
 	Text m_text;
 	UiObject m_content;
-	Sound m_soundClick;
 
 	bool m_collapsed;
 

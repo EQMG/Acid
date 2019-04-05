@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <functional>
-#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
@@ -17,9 +15,11 @@ public:
 	static const float FontSize;
 	static const Time SlideTime;
 
-	static const Colour PrimaryColour;
+	static const Colour TitleColour;
+	static const Colour ValueColour;
+
 	static const Colour BackgroundColour;
-	static const Colour AccentColour;
+	static const Colour PrimaryColour;
 	static const Colour SelectedColour;
 
 	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
@@ -33,6 +33,5 @@ public:
 private:
 	Gui m_background;
 	Text m_text;
-	Sound m_soundClick;
 };
 }

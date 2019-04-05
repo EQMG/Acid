@@ -24,7 +24,7 @@ Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, st
 	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 	m_borderSize(0.0f)
 {
-	SetScaleDriver(new DriverConstant<float>(fontSize));
+	SetScaleDriver(new DriverConstant<Vector2f>(Vector2f(fontSize)));
 	LoadText();
 }
 
@@ -150,14 +150,14 @@ float Text::GetGlowSize() const
 float Text::CalculateEdgeStart() const
 {
 	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-	auto size = 0.5f * scale;
+	auto size = 0.5f * scale.m_x;
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
 	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
-	auto size = 0.5f * scale;
+	auto size = 0.5f * scale.m_x;
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
 }

@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "Audio/Sound.hpp"
 #include "Devices/Joysticks.hpp"
 #include "Devices/Keyboard.hpp"
 #include "Devices/Mouse.hpp"
@@ -32,7 +31,6 @@ protected:
 	Gui m_background;
 	Text m_textTitle;
 	Text m_textValue;
-	Sound m_soundClick;
 
 	int32_t m_lastKey;
 

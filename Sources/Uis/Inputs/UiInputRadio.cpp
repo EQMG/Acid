@@ -12,8 +12,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Left, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
 	m_fill(&m_background, UiBound::Maximum, nullptr, Colour::White),
-	m_text(this, UiBound::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
+	m_text(this, UiBound::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_value(value),
 	m_type(type)
 {
@@ -33,13 +32,8 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	{
 		if (button == MouseButton::Left)
 		{
-			if (!m_soundClick.IsPlaying())
-			{
-				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-				m_soundClick.Play();
-			}
-
 			CancelEvent(MouseButton::Left);
+
 			m_value = !m_value;
 			UpdateValue();
 			m_onValue(m_value);

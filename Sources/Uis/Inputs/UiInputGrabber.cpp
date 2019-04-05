@@ -10,10 +10,9 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
-		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
+		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
 	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
+		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_lastKey(0),
 	m_updating(false),
 	m_mouseOver(false)
@@ -60,12 +59,6 @@ void UiInputGrabber::UpdateObject()
 
 void UiInputGrabber::SetUpdating(const bool &updating)
 {
-	if (!m_soundClick.IsPlaying())
-	{
-		m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-		m_soundClick.Play();
-	}
-
 	m_updating = updating;
 	m_mouseOver = true;
 }
@@ -145,7 +138,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 
 		if (button == MouseButton::Left)
 		{
-			if (!m_background.IsSelected() || m_soundClick.IsPlaying())
+			if (!m_background.IsSelected())
 			{
 				return;
 			}

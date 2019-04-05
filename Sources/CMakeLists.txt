@@ -9,7 +9,11 @@ if(NOT glfw_FOUND)
 endif()
 # Defined in find_package(PhysFS)
 if(NOT PHYSFS_FOUND)
-	add_dependencies(Acid physfs)
+	if(PHYSFS_BUILD_STATIC)
+		add_dependencies(Acid physfs-static)
+	else()
+		add_dependencies(Acid physfs)
+	endif()
 endif()
 # Defined in find_package(Freetype)
 if(NOT Freetype_FOUND)
@@ -89,7 +93,7 @@ target_include_directories(Acid
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 		PRIVATE
-		# Since building locally from the submodules won't always create these vars..
+		# Since building locally from the submodules won't always create these vars.
 		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>

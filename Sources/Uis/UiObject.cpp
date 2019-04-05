@@ -15,7 +15,7 @@ UiObject::UiObject(UiObject *parent, const UiBound &rectangle) :
 	m_lockRotation(true),
 	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 	m_alpha(1.0f),
-	m_scaleDriver(std::make_unique<DriverConstant<float>>(1.0f)),
+	m_scaleDriver(std::make_unique<DriverConstant<Vector2f>>(Vector2f(1.0f))),
 	m_scale(1.0f),
 	m_screenDepth(0.0f),
 	m_screenAlpha(1.0f),
@@ -95,8 +95,7 @@ void UiObject::Update(std::vector<UiObject *> &list)
 			m_screenScale *= m_parent->m_screenScale;
 		}
 
-		m_screenPosition =
-			(m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenSize) - (m_screenSize * m_rectangle.GetReference()) + m_parent->m_screenPosition;
+		m_screenPosition = (m_rectangle.GetScreenPosition(aspectRatio) * m_parent->m_screenSize) - (m_screenSize * m_rectangle.GetReference()) + m_parent->m_screenPosition;
 		m_screenAlpha *= m_parent->m_screenAlpha;
 	}
 	else

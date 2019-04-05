@@ -1,18 +1,40 @@
 #include "UiPanel.hpp"
 
+#include "Inputs/UiInputButton.hpp"
+
 namespace acid
 {
-static const Vector2f SCROLL_BAR = Vector2f(0.01f, 0.2f);
+static const float SCROLL_BAR_SIZE = 0.01f;
+static const float RESIZE_SIZE = 0.016f;
 
-UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colour, const BitMask<ScrollBar> &scrollBars) :
+UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colour, const Resize &resize, const BitMask<ScrollBar> &scrollBars) :
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), colour),
 	m_content(this, UiBound::Maximum),
-	m_scrollX(this, ScrollBar::Horizontal,
-		UiBound(Vector2f(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR.m_y, SCROLL_BAR.m_x))),
-	m_scrollY(this, ScrollBar::Vertical, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR.m_x, SCROLL_BAR.m_y))),
+	m_resizeHandle(this, UiBound()),
+	m_resize(resize),
+	m_scrollX(this, ScrollBar::Horizontal, UiBound(Vector2f(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Size, Vector2f(1.0f, SCROLL_BAR_SIZE))),
+	m_scrollY(this, ScrollBar::Vertical, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR_SIZE, 1.0f))),
 	m_scrollBars(scrollBars)
 {
+	switch (resize)
+	{
+	case Resize::Left:
+		m_resizeHandle.GetRectangle() = UiBound(Vector2f(RESIZE_SIZE / 2.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
+		break;
+	case Resize::Right:
+		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
+		break;
+	default:
+		m_resizeHandle.SetEnabled(false);
+		break;
+	}
+
+	m_resizeHandle.OnSelected() += [this](bool selected)
+	{
+		auto standard = m_resize == Resize::Left || m_resize == Resize::Right ? CursorStandard::ResizeX : CursorStandard::ResizeY;
+		Mouse::Get()->SetCursor(selected ? standard : CursorStandard::Arrow);
+	};
 }
 
 void UiPanel::UpdateObject()
@@ -21,10 +43,10 @@ void UiPanel::UpdateObject()
 	m_scrollX.SetEnabled((m_scrollBars & ScrollBar::Horizontal) && contentSize.m_x > 1.05f);
 	m_scrollY.SetEnabled((m_scrollBars & ScrollBar::Vertical) && contentSize.m_y > 1.05f);
 
-	m_scrollX.GetRectangle().SetSize(Vector2f(0.5f * (1.0f / contentSize.m_x), SCROLL_BAR.m_x));
-	m_scrollY.GetRectangle().SetSize(Vector2f(SCROLL_BAR.m_x, 0.5f * (1.0f / contentSize.m_y)));
+	m_scrollX.SetSize(Vector2f(0.5f * (1.0f / contentSize.m_x), 1.0f));
+	m_scrollY.SetSize(Vector2f(1.0f, 0.5f * (1.0f / contentSize.m_y)));
 
-	//m_content.GetRectangle().SetPosition(0.5f - (Vector2f(m_scrollX->GetProgress(), m_scrollY->GetProgress()) * contentSize));
+	//m_content.GetRectangle().SetPosition(0.5f - (Vector2f(m_scrollX.GetProgress(), m_scrollY.GetProgress()) * contentSize));
 
 	m_min = Vector2f::PositiveInfinity;
 	m_max = Vector2f::NegativeInfinity;

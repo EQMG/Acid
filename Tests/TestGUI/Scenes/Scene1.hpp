@@ -3,7 +3,7 @@
 #include <Scenes/Scene.hpp>
 #include <Inputs/ButtonCompound.hpp>
 #include <Uis/UiStartLogo.hpp>
-#include "Uis/Navigation/UiNavigation.hpp"
+#include "Uis/Panels.hpp"
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
@@ -29,6 +29,6 @@ private:
 
 	UiStartLogo m_uiStartLogo;
 	OverlayDebug m_overlayDebug;
-	UiNavigation m_uiNavigation;
+	Panels m_uiPanels;
 };
 }

@@ -16,10 +16,9 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 		UiInputButton::PrimaryColour),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
-		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
+		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
 	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_soundClick(Sound("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f)),
+		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_value(value),
 	m_valueMin(valueMin),
 	m_valueMax(valueMax),
@@ -45,23 +44,11 @@ void UiInputSlider::UpdateObject()
 {
 	if (m_background.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
 	{
-		if (!m_updating && !m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-		}
-
 		m_updating = true;
 		CancelEvent(MouseButton::Left);
 	}
 	else if (!Uis::Get()->IsDown(MouseButton::Left))
 	{
-		if (m_updating && !m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-		}
-
 		m_updating = false;
 	}
 	else if (m_updating)

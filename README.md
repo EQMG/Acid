@@ -3,6 +3,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 [![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
+[![Documentation](https://codedocs.xyz/Equilibrium-Games/Acid.svg)](https://codedocs.xyz/Equilibrium-Games/Acid/)
 
 Acid is an open-source, cross-platform game engine written in modern C++17 with a focus on modularity and simplicity. Features are broken down into modules, modules can be loaded or unloaded from Acid with ease. Acid uses an Entity Component System that breaks entity features between serializable Components.
 
@@ -13,11 +14,9 @@ Acid is licensed under the MIT licence and is open to contributions, read [Compi
 ## Links
 GitBooks   [Git Books](https://acid.equilibrium.games)
 
-Doxygen   [Autogen docs](https://equilibrium-games.github.io/Acid-Docs)
+Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
 Website   [Learn more](https://equilibrium.games)
-
-Trello   [Board](https://trello.com/b/ZRvpbbYC)
 
 ## Features
 This is a list of current features in Acid:

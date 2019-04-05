@@ -1,7 +1,5 @@
 #pragma once
 
-#include <functional>
-#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
@@ -39,7 +37,6 @@ private:
 	//Gui m_slider;
 	Gui m_background;
 	Text m_textTitle;
-	Sound m_soundClick;
 
 	uint32_t m_value;
 	std::vector<std::string> m_options;

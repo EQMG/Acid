@@ -66,7 +66,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 	for (const auto &text : texts)
 	{
 		Vector2f extent = Window::Get()->GetSize();
-		float scale = text->GetScreenScale() / 64.0f;
+		auto scale = text->GetScreenScale() / 64.0f;
 		//auto dimensions = 2.0f * text->GetScreenDimensions();
 		auto position = extent * text->GetScreenPosition(); // 2.0f *text->GetScreenPosition() - 1.0f;
 
@@ -86,14 +86,14 @@ void FontType::Update(const std::vector<Text *> &texts)
 			if (c == '\n')
 			{
 				localOffset.m_x = 0.0f;
-				localOffset.m_y += gi->vertAdvance * scale;
+				localOffset.m_y += gi->vertAdvance * scale.m_y;
 				continue;
 			}
 
-			inst->rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale) / (extent.m_x / 2.0f) - 1.0f;
-			inst->rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale) / (extent.m_y / 2.0f) - 1.0f;
-			inst->rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale) / (extent.m_x / 2.0f) - 1.0f;
-			inst->rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale) / (extent.m_y / 2.0f) - 1.0f;
+			inst->rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			inst->rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			inst->rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			inst->rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
 			//inst->rect.minX = ((x + local.m_x) + gi->bbox.minX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.minY = ((y + local.m_y) - gi->bbox.minY * localScale) / (extent.m_y / 2.0f) - 1.0f;
@@ -103,13 +103,13 @@ void FontType::Update(const std::vector<Text *> &texts)
 			if (inst->rect.minX <= 1.0f && inst->rect.maxX >= -1.0f && inst->rect.maxY <= 1.0f && inst->rect.minY >= -1.0f)
 			{
 				inst->glyphIndex = glyphIndex;
-				inst->sharpness = scale;
+				inst->sharpness = scale.m_x;
 				inst->colour = text->GetTextColour();
 
 				m_instances++;
 			}
 
-			localOffset.m_x += gi->horiAdvance * scale;
+			localOffset.m_x += gi->horiAdvance * scale.m_x;
 		}
 	}
 

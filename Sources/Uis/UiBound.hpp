@@ -22,7 +22,10 @@ public:
 enum class UiAspect :
 	uint32_t
 {
-	None = 0, Position = 1, Size = 2, Scale = 4
+	None = 0, 
+	Position = 1, 
+	Size = 2,
+	Scale = 4
 };
 
 ENABLE_BITMASK_OPERATORS(UiAspect)

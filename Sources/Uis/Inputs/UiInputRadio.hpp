@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Audio/Sound.hpp"
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
@@ -45,7 +44,6 @@ private:
 	Gui m_background;
 	Gui m_fill;
 	Text m_text;
-	Sound m_soundClick;
 
 	bool m_value;
 	Type m_type;

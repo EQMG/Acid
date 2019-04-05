@@ -15,7 +15,7 @@ Scene1::Scene1() :
 	m_buttonPause(ButtonCompound({ new ButtonKeyboard(Key::Escape), new ButtonJoystick(0, 7) })),
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer()),
-	m_uiNavigation(&Uis::Get()->GetContainer())
+	m_uiPanels(&Uis::Get()->GetContainer())
 {
 	m_buttonPause.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -27,12 +27,12 @@ Scene1::Scene1() :
 
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
-	m_uiNavigation.SetAlphaDriver(new DriverConstant<float>(0.0f));
+	m_uiPanels.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
 	m_uiStartLogo.OnFinished() += [this]()
 	{
 		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
-		//  m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
+		//m_uiPanels.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		TogglePause();
 	};
 }
@@ -47,7 +47,7 @@ void Scene1::Update()
 
 bool Scene1::IsPaused() const
 {
-	return !m_uiStartLogo.IsFinished() || m_uiNavigation.GetAlpha() > 0.0f;
+	return !m_uiStartLogo.IsFinished() || m_uiPanels.GetAlpha() > 0.0f;
 }
 
 void Scene1::TogglePause()
@@ -59,11 +59,11 @@ void Scene1::TogglePause()
 
 	if (IsPaused())
 	{
-		m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(m_uiNavigation.GetAlpha(), 0.0f, UI_SLIDE_TIME));
+		m_uiPanels.SetAlphaDriver(new DriverSlide<float>(m_uiPanels.GetAlpha(), 0.0f, UI_SLIDE_TIME));
 	}
 	else
 	{
-		m_uiNavigation.SetAlphaDriver(new DriverSlide<float>(m_uiNavigation.GetAlpha(), 1.0f, UI_SLIDE_TIME));
+		m_uiPanels.SetAlphaDriver(new DriverSlide<float>(m_uiPanels.GetAlpha(), 1.0f, UI_SLIDE_TIME));
 	}
 }
 }

@@ -6,15 +6,18 @@
 
 namespace acid
 {
+const Colour UiScrollBar::BackgroundColour = Colour("#20292b");
+const Colour UiScrollBar::PrimaryColour = Colour("#5b7073");
+const Colour UiScrollBar::SelectedColour = Colour("#FF6600");
+
 UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
-	m_scroll(this, UiBound(Vector2f(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"), UiInputButton::PrimaryColour),
+	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), BackgroundColour),
+	m_scroll(this, UiBound(Vector2f(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/White.png"), PrimaryColour),
 	m_index(type == ScrollBar::Horizontal ? 0 : 1),
 	m_updating(false),
 	m_mouseOver(false)
 {
-	m_scroll.SetNinePatches(Vector4f(0.125f, 0.125f, 0.75f, 0.75f)); // FIXME
-
 	Mouse::Get()->OnScroll() += [this](Vector2f wheelDelta)
 	{
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled())
@@ -49,12 +52,12 @@ void UiScrollBar::UpdateObject()
 	{
 		if (m_scroll.IsSelected() && !m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::AccentColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_scroll.IsSelected() && m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), PrimaryColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}
@@ -64,6 +67,11 @@ float UiScrollBar::GetProgress()
 {
 	// TODO: Mark const
 	return m_scroll.GetRectangle().GetPosition()[m_index];
+}
+
+void UiScrollBar::SetSize(const Vector2f &size)
+{
+	m_scroll.GetRectangle().SetSize(size);
 }
 
 float UiScrollBar::ScrollByDelta(const float &delta)

@@ -102,11 +102,11 @@ public:
 
 	const float &GetAlpha() const { return m_alpha; }
 
-	IDriver<float> *GetScaleDriver() const { return m_scaleDriver.get(); }
+	IDriver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
-	void SetScaleDriver(IDriver<float> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+	void SetScaleDriver(IDriver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
-	const float &GetScale() const { return m_scale; }
+	const Vector2f &GetScale() const { return m_scale; }
 
 	const Vector2f &GetScreenPosition() const { return m_screenPosition; }
 
@@ -116,7 +116,7 @@ public:
 
 	const float &GetScreenAlpha() const { return m_screenAlpha; }
 
-	const float &GetScreenScale() const { return m_screenScale; }
+	const Vector2f &GetScreenScale() const { return m_screenScale; }
 	
 	/**
 	 * Gets if the object provided has the cursor hovered above it.
@@ -153,14 +153,14 @@ private:
 	std::unique_ptr<IDriver<float>> m_alphaDriver;
 	float m_alpha;
 
-	std::unique_ptr<IDriver<float>> m_scaleDriver;
-	float m_scale;
+	std::unique_ptr<IDriver<Vector2f>> m_scaleDriver;
+	Vector2f m_scale;
 
 	Vector2f m_screenPosition;
 	Vector2f m_screenSize;
 	float m_screenDepth;
 	float m_screenAlpha;
-	float m_screenScale;
+	Vector2f m_screenScale;
 	bool m_selected;
 
 	Delegate<void(MouseButton)> m_onClick;

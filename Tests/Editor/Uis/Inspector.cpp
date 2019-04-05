@@ -1,12 +1,13 @@
 #include "Inspector.hpp"
 
+#include <Audio/Audio.hpp>
 #include <Devices/Keyboard.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 
 namespace test
 {
 Inspector::Inspector(UiObject *parent) :
-	UiPanel(parent, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(0.3f, 1.0f)), UiInputButton::BackgroundColour, ScrollBar::None),
+	UiPanel(parent, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(0.3f, 1.0f)), UiInputButton::BackgroundColour, Resize::Right, ScrollBar::None),
 	m_section1(&GetContent(), "Section Right", UiBound(Vector2f(0.08f, 0.05f), UiReference::TopLeft)),
 	m_button1(&m_section1.GetContent(), "Button #2", UiBound(Vector2f(0.0f, 0.0f), UiReference::TopLeft)),
 	m_input1(&m_section1.GetContent(), "Mouse Grabber", MouseButton::Left, UiBound(Vector2f(0.0f, 0.06f), UiReference::TopLeft)),

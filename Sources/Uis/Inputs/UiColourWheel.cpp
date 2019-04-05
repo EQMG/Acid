@@ -10,7 +10,6 @@ static const Vector2f SIZE = Vector2f(0.22f, 0.22f);
 UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBound &rectangle) :
 	UiObject(parent, rectangle),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/ColourWheel.png")),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 	m_value(value)
 {
 	GetRectangle().SetSize(SIZE);
@@ -25,12 +24,6 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBoun
 	{
 		if (button == MouseButton::Left)
 		{
-			if (!m_soundClick.IsPlaying())
-			{
-				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-				m_soundClick.Play();
-			}
-
 			CancelEvent(MouseButton::Left);
 
 			Vector2f distance = Mouse::Get()->GetPosition() - (m_background.GetScreenPosition() + (m_background.GetScreenSize() / 2.0f));

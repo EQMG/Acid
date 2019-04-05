@@ -10,8 +10,13 @@ class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:
+	enum class Resize
+	{
+		None, Left, Top, Right, Bottom
+	};
+
 	explicit UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size),
-		const Colour &colour = Colour::White, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
+		const Colour &colour = Colour::White, const Resize &resize = Resize::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;
 
@@ -26,10 +31,15 @@ private:
 
 	Gui m_background;
 	UiObject m_content;
+
+	UiObject m_resizeHandle;
+	Resize m_resize;
+
 	UiScrollBar m_scrollX;
 	UiScrollBar m_scrollY;
-
 	BitMask<ScrollBar> m_scrollBars;
+
+
 	Vector2f m_min;
 	Vector2f m_max;
 };

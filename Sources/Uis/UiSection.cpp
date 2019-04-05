@@ -14,39 +14,36 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound 
 	m_icon(this, UiBound::Left, Image2d::Create("Guis/Triangle_Down.png")),
 	m_text(this, UiBound::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
 	m_content(this, UiBound(Vector2f(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Size)),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
 	m_collapsed(false)
 {
 	GetRectangle().SetSize(SIZE);
 	m_icon.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
 	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetSize().m_y, 0.5f));
+
+	OnClick() += [this](MouseButton button)
+	{
+		if (button == MouseButton::Left)
+		{
+			CancelEvent(MouseButton::Left);
+
+			m_collapsed = !m_collapsed;
+
+			if (m_collapsed)
+			{
+				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Right.png"));
+			}
+			else
+			{
+				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Down.png"));
+			}
+
+			m_onCollapsed(this, m_collapsed);
+		}
+	};
 }
 
 void UiSection::UpdateObject()
 {
-	if (m_icon.IsSelected() && Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (!m_soundClick.IsPlaying())
-		{
-			m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-			m_soundClick.Play();
-			CancelEvent(MouseButton::Left);
-		}
-
-		m_collapsed = !m_collapsed;
-
-		if (m_collapsed)
-		{
-			m_icon.SetTexture(Image2d::Create("Guis/Triangle_Right.png"));
-		}
-		else
-		{
-			m_icon.SetTexture(Image2d::Create("Guis/Triangle_Down.png"));
-		}
-
-		m_onCollapsed(this, m_collapsed);
-	}
-
 	m_content.SetEnabled(!m_collapsed);
 }
 }

@@ -12,8 +12,7 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 	//	UiInputButton::PrimaryColour),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
-		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White),
-	m_soundClick("Sounds/Button1.ogg", Transform::Identity, Audio::Type::Effect, false, false, 0.9f),
+		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
 	m_value(value),
 	m_options(options)
 {
@@ -27,19 +26,6 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
 			UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
-	OnClick() += [this](MouseButton button)
-	{
-		if (button == MouseButton::Left)
-		{
-			if (!m_soundClick.IsPlaying())
-			{
-				m_soundClick.SetPitch(Maths::Random(0.7f, 0.9f));
-				m_soundClick.Play();
-			}
-
-			CancelEvent(MouseButton::Left);
-		}
 	};
 }
 

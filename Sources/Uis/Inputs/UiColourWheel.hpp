@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Audio/Sound.hpp"
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
 
@@ -27,7 +26,6 @@ public:
 
 private:
 	Gui m_background;
-	Sound m_soundClick;
 
 	Colour m_value;
 

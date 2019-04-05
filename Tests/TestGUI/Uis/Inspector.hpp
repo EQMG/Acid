@@ -8,16 +8,17 @@
 #include <Uis/Inputs/UiInputGrabber.hpp>
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiPanel.hpp>
+#include <Guis/Gui.hpp>
 
 using namespace acid;
 
 namespace test
 {
-class ContentExit :
+class Inspector :
 	public UiPanel
 {
 public:
-	explicit ContentExit(UiObject *parent);
+	explicit Inspector(UiObject *parent);
 
 	void UpdateObject() override;
 
