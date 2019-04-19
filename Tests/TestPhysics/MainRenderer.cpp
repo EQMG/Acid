@@ -33,22 +33,35 @@ void MainRenderer::Start()
 {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
-	std::vector<Attachment> renderpassAttachments0 = { Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) };
-	std::vector<SubpassType> renderpassSubpasses0 = { SubpassType(0, { 0 }) };
+	std::vector<Attachment> renderpassAttachments0 = { 
+		Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R16_SFLOAT) 
+	};
+	std::vector<SubpassType> renderpassSubpasses0 = { 
+		SubpassType(0, { 0 }) 
+	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(Vector2ui(4096, 4096))));
 
-	std::vector<Attachment> renderpassAttachments1 = { Attachment(0, "depth", Attachment::Type::Depth, false), Attachment(1, "swapchain", Attachment::Type::Swapchain),
+	std::vector<Attachment> renderpassAttachments1 = { 
+		Attachment(0, "depth", Attachment::Type::Depth, false), 
+		Attachment(1, "swapchain", Attachment::Type::Swapchain),
 		Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) };
-	std::vector<SubpassType> renderpassSubpasses1 = { SubpassType(0, { 0, 2, 3, 4, 5 }), SubpassType(1, { 0, 6 }), SubpassType(2, { 0, 1 }) };
+		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
+		Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
+		Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) 
+	};
+	std::vector<SubpassType> renderpassSubpasses1 = { 
+		SubpassType(0, { 0, 2, 3, 4, 5 }), 
+		SubpassType(1, { 0, 6 }), 
+		SubpassType(2, { 0, 1 }) 
+	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
 
 	auto &rendererContainer = GetRendererContainer();
 	rendererContainer.Clear();
 
-	//rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+	rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
 
 	rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
 
@@ -76,7 +89,7 @@ void MainRenderer::Start()
 void MainRenderer::Update()
 {
 	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
-	//renderpassCreate0->GetViewport().SetSize(Vector2ui(Shadows::Get()->GetShadowSize(), Shadows::Get()->GetShadowSize())); // * RendererShadows::NUM_CASCADES
+	//renderpassCreate0->GetViewport().SetSize(Vector2ui(Shadows::Get()->GetShadowSize()));
 
 	//auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
 	//renderpassCreate1->GetViewport().SetScale(0.75f);

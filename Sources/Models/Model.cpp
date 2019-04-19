@@ -70,9 +70,22 @@ std::vector<float> Model::GetPointCloud() const
 	}
 
 	// TODO: Fix Vulkan memory mapping error.
-	std::vector<float> pointCloud(m_vertexBuffer->GetSize() / sizeof(float));
-	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(pointCloud.data()));
+	std::vector<uint32_t> indices(m_indexBuffer->GetSize() / sizeof(uint32_t));
+	m_vertexBuffer->MapMemory(reinterpret_cast<void**>(indices.data()));
 	m_vertexBuffer->UnmapMemory();
+
+	std::vector<float> vertices(m_vertexBuffer->GetSize() / sizeof(float));
+	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(vertices.data()));
+	m_vertexBuffer->UnmapMemory();
+
+	std::vector<float> pointCloud;
+	pointCloud.reserve(indices.size());
+
+	for (auto index : indices)
+	{
+		pointCloud.emplace_back(vertices[index]);
+	}
+
 	return pointCloud;
 }
 }

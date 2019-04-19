@@ -17,7 +17,7 @@
       "generator": "Ninja",
       "configurationType": "Release",
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
-      "installRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\install\\${name}",
+      "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",

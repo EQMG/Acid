@@ -14,13 +14,13 @@ ShadowBox::ShadowBox() :
 	m_nearWidth(0.0f)
 {
 	// Creates the offset for part of the conversion to shadow map space.
-	m_offset = m_offset.Translate(Vector3f(0.5f, 0.5f, 0.5f));
-	m_offset = m_offset.Scale(Vector3f(0.5f, 0.5f, 0.5f));
+	m_offset = m_offset.Translate(Vector3f(0.5f));
+	m_offset = m_offset.Scale(Vector3f(0.5f));
 }
 
-void ShadowBox::Update(const Camera &camera, const Vector3f &lightPosition, const float &shadowOffset, const float &shadowDistance)
+void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, const float &shadowOffset, const float &shadowDistance)
 {
-	m_lightDirection = lightPosition.Normalize();
+	m_lightDirection = lightDirection;
 	m_shadowOffset = shadowOffset;
 	m_shadowDistance = shadowDistance;
 
@@ -52,11 +52,10 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 	UpdateSizes(camera);
 
 	auto rotation = Matrix4();
-	rotation = rotation.Rotate(camera.GetRotation().m_y * Maths::DegToRad, Vector3f::Up);
-	rotation = rotation.Rotate(camera.GetRotation().m_x * Maths::DegToRad, Vector3f::Right);
+	rotation = rotation.Rotate(-camera.GetRotation().m_y * Maths::DegToRad, Vector3f::Up);
+	rotation = rotation.Rotate(-camera.GetRotation().m_x * Maths::DegToRad, Vector3f::Right);
 
-	auto forwardVector4 = rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f));
-	auto forwardVector = Vector3f(forwardVector4);
+	auto forwardVector = Vector3f(rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f)));
 
 	auto toFar = forwardVector * m_shadowDistance;
 	auto toNear = forwardVector * camera.GetNearPlane();
@@ -65,48 +64,14 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 
 	auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
-	for (uint32_t i = 0; i < 8; i++)
+	m_minExtents = Vector3f::PositiveInfinity;
+	m_maxExtents = Vector3f::NegativeInfinity;
+
+	for (uint32_t i = 0; i < points.size(); i++)
 	{
-		auto point = points[i];
-
-		if (i == 0)
-		{
-			m_minExtents.m_x = point.m_x;
-			m_maxExtents.m_x = point.m_x;
-			m_minExtents.m_y = point.m_y;
-			m_maxExtents.m_y = point.m_y;
-			m_minExtents.m_z = point.m_z;
-			m_maxExtents.m_z = point.m_z;
-		}
-		else
-		{
-			if (point.m_x > m_maxExtents.m_x)
-			{
-				m_maxExtents.m_x = point.m_x;
-			}
-			else if (point.m_x < m_minExtents.m_x)
-			{
-				m_minExtents.m_x = point.m_x;
-			}
-
-			if (point.m_y > m_maxExtents.m_y)
-			{
-				m_maxExtents.m_y = point.m_y;
-			}
-			else if (point.m_y < m_minExtents.m_y)
-			{
-				m_minExtents.m_y = point.m_y;
-			}
-
-			if (point.m_z > m_maxExtents.m_z)
-			{
-				m_maxExtents.m_z = point.m_z;
-			}
-			else if (point.m_z < m_minExtents.m_z)
-			{
-				m_minExtents.m_z = point.m_z;
-			}
-		}
+		auto point = Vector3f(points[i]);
+		m_minExtents = m_minExtents.Min(point);
+		m_maxExtents = m_minExtents.Max(point);
 	}
 
 	m_maxExtents.m_z += m_shadowOffset;
@@ -122,21 +87,15 @@ void ShadowBox::UpdateSizes(const Camera &camera)
 
 std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar)
 {
-	auto upVector4 = rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f));
-	auto upVector = Vector3f(upVector4);
+	auto upVector = Vector3f(rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f)));
 	auto rightVector = forwardVector.Cross(upVector);
 	auto downVector = -upVector;
 	auto leftVector = -rightVector;
 
-	auto farUpVector = upVector * m_farHeight;
-	auto farDownVector = downVector * m_farHeight;
-	auto nearUpVector = upVector * m_nearHeight;
-	auto nearDownVector = downVector * m_nearHeight;
-
-	auto farTop = centreFar + farUpVector;
-	auto farBottom = centreFar + farDownVector;
-	auto nearTop = centreNear + nearUpVector;
-	auto nearBottom = centreNear + nearDownVector;
+	auto farTop = centreFar + (upVector * m_farHeight);
+	auto farBottom = centreFar + (downVector * m_farHeight);
+	auto nearTop = centreNear + (upVector * m_nearHeight);
+	auto nearBottom = centreNear + (downVector * m_nearHeight);
 
 	auto points = std::array<Vector4f, 8>();
 	points[0] = CalculateLightSpaceFrustumCorner(farTop, rightVector, m_farWidth);
@@ -152,10 +111,9 @@ std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotat
 
 Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, const float &width) const
 {
-	auto point = startPoint + (direction * width);
-	auto point4 = Vector4f(point);
-	point4 = m_lightViewMatrix.Transform(point4);
-	return point4;
+	auto point = Vector4f(startPoint + (direction * width));
+	point = m_lightViewMatrix.Transform(point);
+	return point;
 }
 
 void ShadowBox::UpdateOrthoProjectionMatrix()
@@ -169,12 +127,8 @@ void ShadowBox::UpdateOrthoProjectionMatrix()
 
 void ShadowBox::UpdateCenter()
 {
-	auto x = (m_minExtents.m_x + m_maxExtents.m_x) / 2.0f;
-	auto y = (m_minExtents.m_y + m_maxExtents.m_y) / 2.0f;
-	auto z = (m_minExtents.m_z + m_maxExtents.m_z) / 2.0f;
-	auto centre = Vector4f(x, y, z, 1.0f);
+	auto centre = Vector4f((m_minExtents + m_maxExtents) / 2.0f);
 	auto invertedLight = m_lightViewMatrix.Inverse();
-
 	m_centre = Vector3f(invertedLight.Transform(centre));
 }
 
@@ -183,15 +137,15 @@ void ShadowBox::UpdateLightViewMatrix()
 	m_lightViewMatrix = Matrix4::Identity;
 	auto pitch = std::acos(Vector2f(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3f::Right);
-	auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z) * Maths::RadToDeg;
+	auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z);
 
 	if (m_lightDirection.m_z > 0.0f)
 	{
-		yaw -= 180.0f;
+		yaw -= Maths::Pi;
 	}
 
-	m_lightViewMatrix = m_lightViewMatrix.Rotate(-yaw * Maths::DegToRad, Vector3f::Up);
-	m_lightViewMatrix = m_lightViewMatrix.Translate(-m_centre);
+	m_lightViewMatrix = m_lightViewMatrix.Rotate(-yaw, Vector3f::Up);
+	m_lightViewMatrix = m_lightViewMatrix.Translate(m_centre);
 }
 
 void ShadowBox::UpdateViewShadowMatrix()

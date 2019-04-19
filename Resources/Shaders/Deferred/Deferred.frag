@@ -27,13 +27,14 @@ layout(binding = 1) buffer Lights
 	Light lights[];
 } lights;
 
-layout(binding = 2) uniform sampler2D samplerPosition;
-layout(binding = 3) uniform sampler2D samplerDiffuse;
-layout(binding = 4) uniform sampler2D samplerNormal;
-layout(binding = 5) uniform sampler2D samplerMaterial;
-layout(binding = 6) uniform sampler2D samplerBRDF;
-layout(binding = 7) uniform samplerCube samplerIrradiance;
-layout(binding = 8) uniform samplerCube samplerPrefiltered;
+layout(binding = 2) uniform sampler2D samplerShadows;
+layout(binding = 3) uniform sampler2D samplerPosition;
+layout(binding = 4) uniform sampler2D samplerDiffuse;
+layout(binding = 5) uniform sampler2D samplerNormal;
+layout(binding = 6) uniform sampler2D samplerMaterial;
+layout(binding = 7) uniform sampler2D samplerBRDF;
+layout(binding = 8) uniform samplerCube samplerIrradiance;
+layout(binding = 9) uniform samplerCube samplerPrefiltered;
 
 layout(location = 0) in vec2 inUV;
 
@@ -123,6 +124,25 @@ vec3 specularContribution(vec3 diffuse, vec3 L, vec3 V, vec3 N, vec3 F0, float m
 	return colour;
 }
 
+float shadowFactor(vec4 shadowCoords)
+{
+	vec3 ndc = shadowCoords.xyz /= shadowCoords.w;
+	
+	if (abs(ndc.x) > 1.0f || abs(ndc.y) > 1.0f || abs(ndc.z) > 1.0f)
+	{
+		return 0.0f;
+	}
+	
+	float shadowValue = texture(samplerShadows, shadowCoords.xy).r;
+
+	if (ndc.z > shadowValue)
+	{
+		return 0.0f;
+	}
+
+	return 1.0f;
+}
+
 void main()
 {
 	vec3 worldPosition = texture(samplerPosition, inUV).rgb;
@@ -174,6 +194,10 @@ void main()
 		vec3 ambient = (kD * albedo + specular);
 	
 		outColour = vec4(ambient + Lo, 1.0f);
+
+		// Shadow mapping
+		vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
+		outColour *= shadowFactor(shadowCoords);
 	}
 	else
 	{

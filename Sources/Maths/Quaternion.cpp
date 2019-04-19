@@ -18,12 +18,28 @@ Quaternion::Quaternion(const float &x, const float &y, const float &z, const flo
 {
 }
 
-Quaternion::Quaternion(const Vector3f &source, const float &w) :
-	m_x(source.m_x),
-	m_y(source.m_y),
-	m_z(source.m_z),
-	m_w(w)
+Quaternion::Quaternion(const Vector3f &source) :
+	m_x(0.0f),
+	m_y(0.0f),
+	m_z(0.0f),
+	m_w(1.0f)
 {
+	auto sx = std::sin(source.m_x * 0.5f);
+	auto cx = Maths::CosFromSin(sx, source.m_x * 0.5f);
+	auto sy = std::sin(source.m_y * 0.5f);
+	auto cy = Maths::CosFromSin(sy, source.m_y * 0.5f);
+	auto sz = std::sin(source.m_z * 0.5f);
+	auto cz = Maths::CosFromSin(sz, source.m_z * 0.5f);
+
+	auto cycz = cy * cz;
+	auto sysz = sy * sz;
+	auto sycz = sy * cz;
+	auto cysz = cy * sz;
+
+	m_w = cx * cycz - sx * sysz;
+	m_x = sx * cycz + cx * sysz;
+	m_y = cx * sycz - sx * cysz;
+	m_z = cx * cysz + sx * sycz;
 }
 
 Quaternion::Quaternion(const Matrix4 &source)

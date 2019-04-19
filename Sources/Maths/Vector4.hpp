@@ -64,7 +64,7 @@ public:
 	 * @param right Creates this vector out of a existing vector, zw.
 	 **/
 	template<typename K>
-	Vector4(const Vector2<K> &left, const Vector2<K> &right = Vector2<K>::Up) :
+	explicit Vector4(const Vector2<K> &left, const Vector2<K> &right = Vector2<K>::Up) :
 		m_x(static_cast<T>(left.m_x)),
 		m_y(static_cast<T>(left.m_y)),
 		m_z(static_cast<T>(right.m_x)),
@@ -79,7 +79,7 @@ public:
 	 * @param w Start w.
 	 **/
 	template<typename K>
-	Vector4(const Vector3<K> &source, const T &w = 1) :
+	explicit Vector4(const Vector3<K> &source, const T &w = 1) :
 		m_x(static_cast<T>(source.m_x)),
 		m_y(static_cast<T>(source.m_y)),
 		m_z(static_cast<T>(source.m_z)),
@@ -358,19 +358,19 @@ public:
 		return Maths::SmoothDamp(*this, target, rate);
 	}
 
-	T GetX() const { return m_x; }
+	const T &GetX() const { return m_x; }
 
 	void SetX(const T &x) { m_x = x; }
 
-	T GetY() const { return m_y; }
+	const T &GetY() const { return m_y; }
 
 	void SetY(const T &y) { m_y = y; }
 	
-	T GetZ() const { return m_z; }
+	const T &GetZ() const { return m_z; }
 
 	void SetZ(const T &z) { m_z = z; }
 	
-	T GetW() const { return m_w; }
+	const T &GetW() const { return m_w; }
 	
 	void SetW(const T &w) { m_w = w; }
 

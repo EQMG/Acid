@@ -4,6 +4,7 @@
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Shadows/Shadows.hpp>
 
 namespace test
 {
@@ -24,9 +25,7 @@ void World::Update()
 	m_factorDay = m_driverDay.Update(Engine::Get()->GetDelta());
 
 	m_skyboxRotation = Vector3f(360.0f * m_factorDay, 0.0f, 0.0f);
-
-	//m_lightDirection = m_skyboxRotation.Rotate(Vector3f(0.154303f, 0.771517f, -0.617213f) * Maths::DegToRad); // TODO
-	//m_lightDirection = m_lightDirection.Normalize();
+	m_lightDirection = Vector3f(0.154303f, 0.771517f, -0.617213f);
 
 	Colour fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
 	fogColour = fogColour.Lerp(FOG_COLOUR_DAY, GetShadowFactor());
@@ -49,6 +48,15 @@ void World::Update()
 	if (deferred != nullptr)
 	{
 		deferred->SetFog(m_fog);
+	}
+
+	if (Shadows::Get() != nullptr)
+	{
+		Shadows::Get()->SetLightDirection(-m_lightDirection);
+		//Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
+		//Shadows::Get()->SetShadowBoxDistance(40.0f);
+		//Shadows::Get()->SetShadowTransition(5.0f);
+		//Shadows::Get()->SetShadowDarkness(0.6f * GetShadowFactor());
 	}
 }
 

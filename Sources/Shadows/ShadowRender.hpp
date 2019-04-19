@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Scenes/Component.hpp"
+#include "Maths/Matrix4.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Buffers/UniformHandler.hpp"
+#include "Renderer/Buffers/PushHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
@@ -24,10 +25,10 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 private:
 	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformObject;
+	PushHandler m_pushObject;
 };
 }

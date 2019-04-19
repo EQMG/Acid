@@ -26,10 +26,10 @@ void FilterDarken::Render(const CommandBuffer &commandBuffer)
 	}
 
 	// Draws the object.
-	m_pushScene.BindPush(commandBuffer, m_pipeline);
 	m_pipeline.BindPipeline(commandBuffer);
 
 	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
+	m_pushScene.BindPush(commandBuffer, m_pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

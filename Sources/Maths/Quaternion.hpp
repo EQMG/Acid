@@ -22,10 +22,10 @@ public:
 
 	/**
 	 * Constructor for Quaternion.
-	 * @param source Creates this quaternion out of a existing vector (pitch, yaw roll). >
+	 * @param source Creates this quaternion out of a existing vector (pitch, yaw roll).
 	 * @param w Start w. 
 	 **/
-	Quaternion(const Vector3f &source, const float &w = 1.0f);
+	explicit Quaternion(const Vector3f &source);
 
 	/**
 	 * Constructor for Quaternion.

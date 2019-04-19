@@ -24,11 +24,11 @@ public:
 	 * Will make sure that the box covers the smallest area possible while still ensuring that everything.
 	 * Objects inside the camera's view (and in range) will be shadowed.
 	 * @param camera The camera object to be used when calculating the shadow boxes size.
-	 * @param lightPosition The lights position.
+	 * @param lightDirection The lights direction.
 	 * @param shadowOffset The shadows offset.
 	 * @param shadowDistance The shadows distance.
 	 */
-	void Update(const Camera &camera, const Vector3f &lightPosition, const float &shadowOffset, const float &shadowDistance);
+	void Update(const Camera &camera, const Vector3f &lightDirection, const float &shadowOffset, const float &shadowDistance);
 
 	/**
 	 * Tests if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.

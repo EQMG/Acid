@@ -11,9 +11,6 @@ class Vector2;
 template<typename T>
 class Vector4;
 
-//template<typename T>
-//class Quaternion;
-
 /**
  * @brief Holds a 3-tuple vector.
  * @tparam T The value type.
@@ -62,7 +59,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	Vector3(const Vector2<K> &source) :
+	explicit Vector3(const Vector2<K> &source) :
 		m_x(static_cast<T>(source.m_x)),
 		m_y(static_cast<T>(source.m_y)),
 		m_z(0)
@@ -88,7 +85,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	Vector3(const Vector4<K> &source) :
+	explicit Vector3(const Vector4<K> &source) :
 		m_x(static_cast<T>(source.m_x)),
 		m_y(static_cast<T>(source.m_y)),
 		m_z(static_cast<T>(source.m_z))
@@ -326,31 +323,6 @@ public:
 	}
 
 	/**
-	 * Converts these euler angles to a quaternion.
-	 * @return The quaternion representation of this vector.
-	 **/
-	/*Quaternion ToQuaternion() const
-	{
-		auto sx = std::sin(m_x * Maths::DegToRad * 0.5f);
-		auto cx = Maths::CosFromSin(sx, m_x * Maths::DegToRad * 0.5f);
-		auto sy = std::sin(m_y * Maths::DegToRad * 0.5f);
-		auto cy = Maths::CosFromSin(sy, m_y * Maths::DegToRad * 0.5f);
-		auto sz = std::sin(m_z * Maths::DegToRad * 0.5f);
-		auto cz = Maths::CosFromSin(sz, m_z * Maths::DegToRad * 0.5f);
-		
-		auto cycz = cy * cz;
-		auto sysz = sy * sz;
-		auto sycz = sy * cz;
-		auto cysz = cy * sz;
-		
-		auto w = cx * cycz - sx * sysz;
-		auto x = sx * cycz + cx * sysz;
-		auto y = cx * sycz - sx * cysz;
-		auto z = cx * cysz + sx * sycz;
-		return Quaternion(x, y, z, w);
-	}*/
-
-	/**
 	 * Gets the distance between this vector and another vector.
 	 * @tparam K The others type.
 	 * @param other The other vector.
@@ -410,7 +382,7 @@ public:
 		auto radius = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 		auto theta = std::atan2(m_y, m_x);
 		auto phi = std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z);
-		return Vector3<decltype(std::sqrt(m_x))>(radius, theta, phi);
+		return Vector3<decltype(radius)>(radius, theta, phi);
 	}
 
 	/**
@@ -422,18 +394,18 @@ public:
 		auto x = m_x * std::sin(m_z) * std::cos(m_y);
 		auto y = m_x * std::sin(m_z) * std::sin(m_y);
 		auto z = m_x * std::cos(m_z);
-		return Vector3<decltype(std::cos(m_x))>(x, y, z);
+		return Vector3<decltype(x)>(x, y, z);
 	}
 
-	T GetX() const { return m_x; }
+	const T &GetX() const { return m_x; }
 
 	void SetX(const T &x) { m_x = x; }
 
-	T GetY() const { return m_y; }
+	const T &GetY() const { return m_y; }
 
 	void SetY(const T &y) { m_y = y; }
 
-	T GetZ() const { return m_z; }
+	const T &GetZ() const { return m_z; }
 
 	void SetZ(const T &z) { m_z = z; }
 

@@ -3,6 +3,7 @@
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
 #include "Models/VertexModel.hpp"
+#include "Shadows/Shadows.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Pipelines/PipelineCompute.hpp"
 #include "Renderer/Renderer.hpp"
@@ -71,6 +72,7 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 
 	// Updates uniforms.
 	m_uniformScene.Push("view", camera->GetViewMatrix());
+	m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
 	m_uniformScene.Push("cameraPosition", camera->GetPosition());
 	m_uniformScene.Push("lightsCount", lightCount);
 	m_uniformScene.Push("fogColour", m_fog.GetColour());
@@ -83,6 +85,7 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	// Updates descriptors.
 	m_descriptorSet.Push("UboScene", m_uniformScene);
 	m_descriptorSet.Push("Lights", m_storageLights);
+	m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 	m_descriptorSet.Push("samplerPosition", Renderer::Get()->GetAttachment("position"));
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
@@ -240,8 +243,8 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		descriptorSet.Push("samplerColour", source);
 		descriptorSet.Update(compute);
 
-		pushHandler.BindPush(commandBuffer, compute);
 		descriptorSet.BindDescriptor(commandBuffer, compute);
+		pushHandler.BindPush(commandBuffer, compute);
 		compute.CmdRender(commandBuffer, prefilteredCubemap->GetWidth() >> i, prefilteredCubemap->GetHeight() >> i);
 		commandBuffer.SubmitIdle();
 

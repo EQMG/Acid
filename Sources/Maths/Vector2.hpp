@@ -5,6 +5,9 @@
 
 namespace acid
 {
+template<typename T>
+class Vector3;
+
 /**
  * @brief Holds a 2-tuple vector.
  * @tparam T The value type.
@@ -50,6 +53,18 @@ public:
 	 **/
 	template<typename K>
 	Vector2(const Vector2<K> &source) :
+		m_x(static_cast<T>(source.m_x)),
+		m_y(static_cast<T>(source.m_y))
+	{
+	}
+
+	/**
+	 * Constructor for Vector3.
+	 * @tparam K The sources type.
+	 * @param source Creates this vector out of a existing vector.
+	 **/
+	template<typename K>
+	explicit Vector2(const Vector3<K> &source) :
 		m_x(static_cast<T>(source.m_x)),
 		m_y(static_cast<T>(source.m_y))
 	{
@@ -189,8 +204,9 @@ public:
 	template<typename K = float, typename J>
 	auto Rotate(const K &angle, const Vector2<J> &rotationAxis) const
 	{
-		return Vector2<decltype((m_x - rotationAxis.m_x) * angle)>(((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x),
-			((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y));
+		auto x = ((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x);
+		auto y = ((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y);
+		return Vector2<decltype(x)>(x, y);
 	}
 
 	/**
@@ -362,7 +378,7 @@ public:
 	{
 		auto radius = std::sqrt(m_x * m_x + m_y * m_y);
 		auto theta = std::atan2(m_y, m_x);
-		return Vector2<decltype(std::sqrt(m_x))>(radius, theta);
+		return Vector2<decltype(radius)>(radius, theta);
 	}
 
 	/**
@@ -373,14 +389,14 @@ public:
 	{
 		auto x = m_x * std::cos(m_y);
 		auto y = m_x * std::sin(m_y);
-		return Vector2<decltype(std::cos(m_x))>(x, y);
+		return Vector2<decltype(x)>(x, y);
 	}
 
-	T GetX() const { return m_x; }
+	const T &GetX() const { return m_x; }
 
 	void SetX(const T &x) { m_x = x; }
 
-	T GetY() const { return m_y; }
+	const T &GetY() const { return m_y; }
 
 	void SetY(const T &y) { m_y = y; }
 

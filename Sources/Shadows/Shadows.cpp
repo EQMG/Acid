@@ -6,7 +6,7 @@ namespace acid
 {
 Shadows::Shadows() :
 	m_lightDirection(0.5f, 0.0f, 0.5f),
-	m_shadowSize(8192),
+	m_shadowSize(4096),
 	m_shadowPcf(1),
 	m_shadowBias(0.001f),
 	m_shadowDarkness(0.6f),

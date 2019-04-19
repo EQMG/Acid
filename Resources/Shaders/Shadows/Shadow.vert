@@ -2,15 +2,9 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboScene
+layout(push_constant) uniform PushObject
 {
-	mat4 projectionView;
-	vec3 cameraPos;
-} scene;
-
-layout(binding = 1) uniform UboObject
-{
-	mat4 transform;
+	mat4 mvp;
 } object;
 
 layout(location = 0) in vec3 inPosition;
@@ -22,7 +16,5 @@ out gl_PerVertex
 
 void main()
 {
-	vec4 worldPosition = object.transform * vec4(inPosition, 1.0f);
-
-	gl_Position = scene.projectionView * worldPosition;
+	gl_Position = object.mvp * vec4(inPosition, 1.0f);
 }
