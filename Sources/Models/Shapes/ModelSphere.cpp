@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -48,7 +48,7 @@ void ModelSphere::Load()
 		return;
 	}
 
-	std::vector<VertexModel> vertices;
+	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
 	// TODO: Reserve.
 
@@ -65,7 +65,7 @@ void ModelSphere::Load()
 			Vector3f normal = Vector3f(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
 			Vector3f position = m_radius * normal;
 			Vector2f uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
-			vertices.emplace_back(VertexModel(position, uvs, normal));
+			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
 

@@ -8,10 +8,13 @@
 
 namespace acid
 {
-CollisionObject::CollisionObject(const float &friction) :
+CollisionObject::CollisionObject(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
+	m_mass(mass),
 	m_friction(friction),
 	m_frictionRolling(0.1f),
 	m_frictionSpinning(0.2f),
+	m_linearFactor(linearFactor),
+	m_angularFactor(angularFactor),
 	m_shape(nullptr),
 	m_body(nullptr)
 {

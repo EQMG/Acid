@@ -64,7 +64,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
-	m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
+	m_descriptorSet.Push("samplerColour", m_fontType->GetImage());
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 	if (!updateSuccess)
@@ -264,9 +264,9 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 	lines.emplace_back(currentLine);
 }
 
-std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
+std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 {
-	std::vector<VertexModel> vertices;
+	std::vector<VertexDefault> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
 	auto cursorX = 0.0f;
@@ -316,7 +316,7 @@ std::vector<VertexModel> Text::CreateQuad(const std::vector<Line> &lines)
 	return vertices;
 }
 
-void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices)
+void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices)
 {
 	auto vertexX = cursorX + character.m_offsetX;
 	auto vertexY = cursorY + character.m_offsetY;
@@ -336,12 +336,12 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 }
 
-void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices)
+void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
 {
-	vertices.emplace_back(VertexModel(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f::Zero));
+	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f::Zero));
 }
 
-void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices) const
+void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexDefault> &vertices) const
 {
 	auto min = Vector2f::PositiveInfinity;
 	auto max = Vector2f::NegativeInfinity;

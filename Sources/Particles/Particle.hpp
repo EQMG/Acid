@@ -41,10 +41,6 @@ public:
 
 	const Vector3f &GetChange() const { return m_change; }
 
-	const Vector2f &GetTextureOffset1() const { return m_textureOffset1; }
-
-	const Vector2f &GetTextureOffset2() const { return m_textureOffset2; }
-
 	const float &GetLifeLength() const { return m_lifeLength; }
 
 	const float &GetRotation() const { return m_rotation; }
@@ -57,14 +53,14 @@ public:
 
 	const float &GetTransparency() const { return m_transparency; }
 
-	const float &GetTextureBlendFactor() const { return m_textureBlendFactor; }
-
 	const float &DistanceToCamera() const { return m_distanceToCamera; }
 
 	bool operator<(const Particle &other) const;
 
 private:
-	Vector2f CalculateTextureOffset(const int32_t &index) const;
+	friend class ParticleType;
+
+	Vector2f CalculateImageOffset(const int32_t &index) const;
 
 	std::shared_ptr<ParticleType> m_particleType;
 
@@ -72,8 +68,8 @@ private:
 	Vector3f m_velocity;
 	Vector3f m_change;
 
-	Vector2f m_textureOffset1;
-	Vector2f m_textureOffset2;
+	Vector2f m_imageOffset1;
+	Vector2f m_imageOffset2;
 
 	float m_lifeLength;
 	float m_stageCycles;
@@ -83,7 +79,7 @@ private:
 
 	float m_elapsedTime;
 	float m_transparency;
-	float m_textureBlendFactor;
+	float m_imageBlendFactor;
 	float m_distanceToCamera;
 };
 }

@@ -28,18 +28,18 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength,
+std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength,
 	const float &stageCycles, const float &scale)
 {
-	auto temp = ParticleType(texture, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
+	auto temp = ParticleType(image, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Metadata metadata = Metadata();
 	temp.Encode(metadata);
 	return Create(metadata);
 }
 
-ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
+ParticleType::ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
 	const float &scale) :
-	m_texture(std::move(texture)),
+	m_image(std::move(image)),
 	m_model(ModelRectangle::Create(-0.5f, 0.5f)),
 	m_numberOfRows(numberOfRows),
 	m_colourOffset(colourOffset),
@@ -48,7 +48,7 @@ ParticleType::ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &num
 	m_scale(scale),
 	m_maxInstances(0),
 	m_instances(0),
-	m_instanceBuffer(sizeof(ParticleTypeData) * MAX_INSTANCES)
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
 {
 }
 
@@ -65,8 +65,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		return;
 	}
 
-	ParticleTypeData *particleInstances;
-	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&particleInstances));
+	Instance * instances;
+	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &particle : particles)
 	{
@@ -81,7 +81,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		}
 
 		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
-		ParticleTypeData *instance = &particleInstances[m_instances];
+		auto instance = &instances[m_instances];
 		instance->m_modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
 
 		for (int32_t row = 0; row < 3; row++)
@@ -97,8 +97,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		// TODO: Multiply MVP by View and Projection (And run update every frame?)
 
 		instance->m_colourOffset = particle.GetParticleType()->m_colourOffset;
-		instance->m_offsets = Vector4f(particle.GetTextureOffset1(), particle.GetTextureOffset2());
-		instance->m_blend = Vector3f(particle.GetTextureBlendFactor(), particle.GetTransparency(), static_cast<float>(particle.GetParticleType()->m_numberOfRows));
+		instance->m_offsets = Vector4f(particle.m_imageOffset1, particle.m_imageOffset2);
+		instance->m_blend = Vector3f(particle.m_imageBlendFactor, particle.m_transparency, static_cast<float>(particle.m_particleType->m_numberOfRows));
 		m_instances++;
 	}
 
@@ -114,7 +114,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
-	m_descriptorSet.Push("samplerColour", m_texture);
+	m_descriptorSet.Push("samplerColour", m_image);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 	if (!updateSuccess)
@@ -135,7 +135,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 void ParticleType::Decode(const Metadata &metadata)
 {
-	metadata.GetResource("Texture", m_texture);
+	metadata.GetResource("Image", m_image);
 	metadata.GetChild("Number Of Rows", m_numberOfRows);
 	metadata.GetChild("Colour Offset", m_colourOffset);
 	metadata.GetChild("Life Length", m_lifeLength);
@@ -145,28 +145,11 @@ void ParticleType::Decode(const Metadata &metadata)
 
 void ParticleType::Encode(Metadata &metadata) const
 {
-	metadata.SetResource("Texture", m_texture);
+	metadata.SetResource("Image", m_image);
 	metadata.SetChild("Number Of Rows", m_numberOfRows);
 	metadata.SetChild("Colour Offset", m_colourOffset);
 	metadata.SetChild("Life Length", m_lifeLength);
 	metadata.SetChild("Stage Cycles", m_stageCycles);
 	metadata.SetChild("Scale", m_scale);
-}
-
-Shader::VertexInput ParticleType::GetVertexInput(const uint32_t &baseBinding)
-{
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-		VkVertexInputBindingDescription{baseBinding, sizeof(ParticleTypeData), VK_VERTEX_INPUT_RATE_INSTANCE}
-	};
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-		VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-		VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-		VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-		VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-		VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_colourOffset)},
-		VkVertexInputAttributeDescription{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_offsets)},
-		VkVertexInputAttributeDescription{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(ParticleTypeData, m_blend)}
-	};
-	return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 }
 }

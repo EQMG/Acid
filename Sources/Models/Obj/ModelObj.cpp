@@ -5,7 +5,7 @@
 #include "tiny_obj_loader.h"
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -105,9 +105,9 @@ void ModelObj::Load()
 		throw std::runtime_error(warn + err);
 	}
 
-	std::vector<VertexModel> vertices;
+	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
-	std::unordered_map<VertexModel, size_t> uniqueVertices;
+	std::unordered_map<VertexDefault, size_t> uniqueVertices;
 
 	for (const auto &shape : shapes)
 	{
@@ -116,7 +116,7 @@ void ModelObj::Load()
 			Vector3f position = Vector3f(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
 			Vector2f uv = Vector2f(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
 			Vector3f normal = Vector3f(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
-			VertexModel vertex = VertexModel(position, uv, normal);
+			VertexDefault vertex = VertexDefault(position, uv, normal);
 
 			if (uniqueVertices.count(vertex) == 0)
 			{

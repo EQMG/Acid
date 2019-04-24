@@ -90,7 +90,7 @@ const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t
 	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetDepthStencil();
 }
 
-const Image2d *PipelineGraphics::GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage) const
+const Image2d *PipelineGraphics::GetImage(const uint32_t &index, const std::optional<uint32_t> &stage) const
 {
 	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 }

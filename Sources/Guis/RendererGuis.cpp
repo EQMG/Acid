@@ -1,6 +1,6 @@
 #include "RendererGuis.hpp"
 
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
@@ -9,7 +9,7 @@ namespace acid
 {
 RendererGuis::RendererGuis(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag" }, { VertexModel::GetVertexInput() })
+	m_pipeline(pipelineStage, { "Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag" }, { VertexDefault::GetVertexInput() })
 {
 }
 

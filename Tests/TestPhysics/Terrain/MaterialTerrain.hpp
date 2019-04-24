@@ -11,7 +11,7 @@ class MaterialTerrain :
 	public Material
 {
 public:
-	explicit MaterialTerrain(std::shared_ptr<Image2d> textureR = nullptr, std::shared_ptr<Image2d> textureG = nullptr);
+	explicit MaterialTerrain(std::shared_ptr<Image2d> imageR = nullptr, std::shared_ptr<Image2d> imageG = nullptr);
 
 	void Start() override;
 
@@ -25,16 +25,16 @@ public:
 
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-	const std::shared_ptr<Image2d> &GetTextureR() const { return m_textureR; }
+	const std::shared_ptr<Image2d> &GetImageR() const { return m_imageR; }
 
-	void SetTextureR(const std::shared_ptr<Image2d> &textureR) { m_textureR = textureR; }
+	void SetImageR(const std::shared_ptr<Image2d> &imageR) { m_imageR = imageR; }
 
-	const std::shared_ptr<Image2d> &GetTextureG() const { return m_textureG; }
+	const std::shared_ptr<Image2d> &GetImageG() const { return m_imageG; }
 
-	void SetTextureG(const std::shared_ptr<Image2d> &textureG) { m_textureG = textureG; }
+	void SetImageG(const std::shared_ptr<Image2d> &imageG) { m_imageG = imageG; }
 
 private:
-	std::shared_ptr<Image2d> m_textureR;
-	std::shared_ptr<Image2d> m_textureG;
+	std::shared_ptr<Image2d> m_imageR;
+	std::shared_ptr<Image2d> m_imageG;
 };
 }

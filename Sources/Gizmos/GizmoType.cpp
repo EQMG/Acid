@@ -40,7 +40,7 @@ GizmoType::GizmoType(std::shared_ptr<Model> model, const float &lineThickness, c
 	m_colour(colour),
 	m_maxInstances(0),
 	m_instances(0),
-	m_instanceBuffer(sizeof(GizmoTypeData) * MAX_INSTANCES)
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
 {
 }
 
@@ -57,8 +57,8 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 		return;
 	}
 
-	GizmoTypeData *gizmoInstances;
-	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&gizmoInstances));
+	Instance *instances;
+	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &gizmo : gizmos)
 	{
@@ -72,9 +72,9 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 		//continue;
 		//}
 
-		auto instance = &gizmoInstances[m_instances];
-		instance->m_modelMatrix = gizmo->GetTransform().GetWorldMatrix();
-		instance->m_colour = gizmo->GetColour();
+		auto instance = &instances[m_instances];
+		instance->m_modelMatrix = gizmo->m_transform.GetWorldMatrix();
+		instance->m_colour = gizmo->m_colour;
 		m_instances++;
 	}
 
@@ -122,20 +122,5 @@ void GizmoType::Encode(Metadata &metadata) const
 	metadata.SetResource("Model", m_model);
 	metadata.SetChild("Line Thickness", m_lineThickness);
 	metadata.SetChild("Colour", m_colour);
-}
-
-Shader::VertexInput GizmoType::GetVertexInput(const uint32_t &baseBinding)
-{
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-		VkVertexInputBindingDescription{baseBinding, sizeof(GizmoTypeData), VK_VERTEX_INPUT_RATE_INSTANCE}
-	};
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-		VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GizmoTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-		VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GizmoTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-		VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GizmoTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-		VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GizmoTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-		VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GizmoTypeData, m_colour)}
-	};
-	return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 }
 }

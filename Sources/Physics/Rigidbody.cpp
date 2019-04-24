@@ -12,10 +12,7 @@
 namespace acid
 {
 Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(friction),
-	m_mass(mass),
-	m_linearFactor(linearFactor),
-	m_angularFactor(angularFactor),
+	CollisionObject(mass, friction, linearFactor, angularFactor),
 	m_rigidBody(nullptr)
 {
 }
@@ -112,20 +109,20 @@ void Rigidbody::Update()
 
 void Rigidbody::Decode(const Metadata &metadata)
 {
+	metadata.GetChild("Mass", m_mass);
 	metadata.GetChild("Friction", m_friction);
 	metadata.GetChild("Friction Rolling", m_frictionRolling);
 	metadata.GetChild("Friction Spinning", m_frictionSpinning);
-	metadata.GetChild("Mass", m_mass);
 	metadata.GetChild("Linear Factor", m_linearFactor);
 	metadata.GetChild("Angular Factor", m_angularFactor);
 }
 
 void Rigidbody::Encode(Metadata &metadata) const
 {
+	metadata.SetChild("Mass", m_mass);
 	metadata.SetChild("Friction", m_friction);
 	metadata.SetChild("Friction Rolling", m_frictionRolling);
 	metadata.SetChild("Friction Spinning", m_frictionSpinning);
-	metadata.SetChild("Mass", m_mass);
 	metadata.SetChild("Linear Factor", m_linearFactor);
 	metadata.SetChild("Angular Factor", m_angularFactor);
 }

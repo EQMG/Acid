@@ -1,7 +1,7 @@
 #include "ModelCube.hpp"
 
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -45,31 +45,31 @@ void ModelCube::Load()
 		return;
 	}
 
-	static std::vector<VertexModel> vertices = {
-		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.125f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.125f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.875f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexModel(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexModel(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexModel(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
+	static std::vector<VertexDefault> vertices = {
+		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.125f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.125f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.875f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
+		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
+		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
+		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
 		};
 	static std::vector<uint32_t> indices = {
 		1, 2, 0, // Front

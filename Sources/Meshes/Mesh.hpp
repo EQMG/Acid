@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid
@@ -29,7 +29,7 @@ public:
 
 	virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
-	virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexModel::GetVertexInput(binding); }
+	virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexDefault::GetVertexInput(binding); }
 
 	virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 

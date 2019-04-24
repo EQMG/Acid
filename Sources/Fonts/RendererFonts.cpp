@@ -1,6 +1,6 @@
 #include "RendererFonts.hpp"
 
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 #include "Text.hpp"
@@ -9,7 +9,7 @@ namespace acid
 {
 RendererFonts::RendererFonts(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag" }, { VertexModel::GetVertexInput() })
+	m_pipeline(pipelineStage, { "Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag" }, { VertexDefault::GetVertexInput() })
 {
 }
 

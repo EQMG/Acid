@@ -110,21 +110,21 @@ int main(int argc, char **argv)
 		Log::Out("Microseconds: %i\n", c.AsMicroseconds());
 		Log::Out("\n");
 	}
-	/*{
-		Vector3f original{ 90.0f, 0.0f, 0.0f };
-		Quaternion quaternion = original.ToQuaternion();
+	{
+		Vector3f original(90.0f, 0.0f, 0.0f);
+		Quaternion quaternion = Quaternion(original);
 		Vector3f restored = quaternion.ToEuler();
 
 		Log::Out("Original: %s\n", original.ToString().c_str());
 		Log::Out("Quaternion: %s\n", quaternion.ToString().c_str());
 		Log::Out("Restored: %s\n", restored.ToString().c_str());
 		Log::Out("\n");
-	}*/
+	}
 	{
 		Log::Out("Vector2f:\n");
-		Vector2f a{ 3.0f, -7.2f };
-		Vector2f b{ -1.74f, 15.4f };
-		Vector2i c{ -8, 2 };
+		Vector2f a(3.0f, -7.2f);
+		Vector2f b(-1.74f, 15.4f);
+		Vector2i c(-8, 2);
 
 		Log::Out("  %s + %f = %s\n", a.ToString().c_str(), 20.0f, (a + 20.0f).ToString().c_str());
 		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString().c_str(), (-1.11f * a).ToString().c_str());
@@ -144,8 +144,8 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector3:\n");
-		Vector3f a{ 12.9f, -2.0f, 6.7f };
-		Vector3f b{ -9.7f, 15.9f, -13.8f };
+		Vector3f a(12.9f, -2.0f, 6.7f);
+		Vector3f b(-9.7f, 15.9f, -13.8f);
 
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());

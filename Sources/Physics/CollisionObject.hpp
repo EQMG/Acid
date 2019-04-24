@@ -23,9 +23,12 @@ class ACID_EXPORT CollisionObject :
 public:
 	/**
 	 * Creates a new collision object.
+	 * @param mass The mass of the object.
 	 * @param friction The amount of surface friction.
+	 * @param linearFactor How effected each axis will be to linear movement.
+	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(const float &friction = 0.2f);
+	explicit CollisionObject(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = Vector3f::One, const Vector3f &angularFactor = Vector3f::One);
 
 	virtual ~CollisionObject();
 
@@ -53,6 +56,22 @@ public:
 
 	void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
 
+	const float &GetMass() const { return m_mass; }
+
+	virtual void SetMass(const float &mass) = 0;
+
+	const Vector3f &GetGravity() const { return m_gravity; }
+
+	virtual void SetGravity(const Vector3f &gravity) = 0;
+	
+	const Vector3f &GetLinearFactor() const { return m_linearFactor; }
+
+	virtual void SetLinearFactor(const Vector3f &linearFactor) = 0;
+
+	const Vector3f &GetAngularFactor() const { return m_angularFactor; }
+
+	virtual void SetAngularFactor(const Vector3f &angularFactor) = 0;
+
 	const float &GetFriction() const { return m_friction; }
 
 	void SetFriction(const float &friction);
@@ -64,6 +83,14 @@ public:
 	const float &GetFrictionSpinning() const { return m_frictionSpinning; }
 
 	void SetFrictionSpinning(const float &frictionSpinning);
+
+	const Vector3f &GetLinearVelocity() const { return m_linearVelocity; }
+
+	virtual void SetLinearVelocity(const Vector3f &linearVelocity) = 0;
+
+	const Vector3f &GetAngularVelocity() const { return m_angularVelocity; }
+
+	virtual void SetAngularVelocity(const Vector3f &angularVelocity) = 0;
 
 	/**
 	 * Called when this object collides from a object.
@@ -82,9 +109,18 @@ protected:
 
 	virtual void RecalculateMass() = 0;
 
+	float m_mass;
+	Vector3f m_gravity;
+
 	float m_friction;
 	float m_frictionRolling;
 	float m_frictionSpinning;
+
+	Vector3f m_linearFactor;
+	Vector3f m_angularFactor;
+
+	Vector3f m_linearVelocity;
+	Vector3f m_angularVelocity;
 
 	std::unique_ptr<btCollisionShape> m_shape;
 	btCollisionObject *m_body;

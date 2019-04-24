@@ -9,8 +9,7 @@
 namespace acid
 {
 KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
-	CollisionObject(friction),
-	m_mass(mass),
+	CollisionObject(mass, friction),
 	m_up(Vector3f::Up),
 	m_stepHeight(0.0f),
 	m_fallSpeed(55.0f),
@@ -92,10 +91,14 @@ void KinematicCharacter::Update()
 	auto &transform = GetParent()->GetLocalTransform();
 	btTransform worldTransform = m_ghostObject->getWorldTransform();
 	transform = Collider::Convert(worldTransform, transform.GetScaling());
+
+	m_linearVelocity = Collider::Convert(m_controller->getLinearVelocity());
+	m_angularVelocity = Collider::Convert(m_controller->getAngularVelocity());
 }
 
 void KinematicCharacter::Decode(const Metadata &metadata)
 {
+	metadata.GetChild("Mass", m_mass);
 	metadata.GetChild("Friction", m_friction);
 	metadata.GetChild("Friction Rolling", m_frictionRolling);
 	metadata.GetChild("Friction Spinning", m_frictionSpinning);
@@ -109,6 +112,7 @@ void KinematicCharacter::Decode(const Metadata &metadata)
 
 void KinematicCharacter::Encode(Metadata &metadata) const
 {
+	metadata.SetChild("Mass", m_mass);
 	metadata.SetChild("Friction", m_friction);
 	metadata.SetChild("Friction Rolling", m_frictionRolling);
 	metadata.SetChild("Friction Spinning", m_frictionSpinning);
@@ -148,6 +152,30 @@ void KinematicCharacter::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
 	m_controller->setGravity(Collider::Convert(gravity));
+}
+
+void KinematicCharacter::SetLinearFactor(const Vector3f &linearFactor)
+{
+	m_linearFactor = linearFactor;
+	//m_controller->setLinearFactor(Collider::Convert(m_linearFactor)); // TODO
+}
+
+void KinematicCharacter::SetAngularFactor(const Vector3f &angularFactor)
+{
+	m_angularFactor = angularFactor;
+	//m_controller->setAngularFactor(Collider::Convert(m_angularFactor)); // TODO
+}
+
+void KinematicCharacter::SetLinearVelocity(const Vector3f &linearVelocity)
+{
+	m_linearVelocity = linearVelocity;
+	m_controller->setLinearVelocity(Collider::Convert(m_linearVelocity));
+}
+
+void KinematicCharacter::SetAngularVelocity(const Vector3f &angularVelocity)
+{
+	m_angularVelocity = angularVelocity;
+	m_controller->setAngularVelocity(Collider::Convert(m_angularVelocity));
 }
 
 void KinematicCharacter::SetUp(const Vector3f &up)

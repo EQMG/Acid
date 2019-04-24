@@ -56,11 +56,11 @@ public:
 
 	/**
 	 * Gets a image used in a stage by the index given to it in the renderpass.
-	 * @param index The renderpass texture index.
+	 * @param index The renderpass Image index.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
 	 * @return The image that is found.
 	 */
-	const Image2d *GetTexture(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
+	const Image2d *GetImage(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
 	/**
 	 * Gets the size of the render stage in pixels.

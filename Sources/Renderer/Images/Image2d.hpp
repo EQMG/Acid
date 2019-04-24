@@ -50,7 +50,7 @@ public:
 	 * Creates a new 2D image.
 	 * @param width The images width.
 	 * @param height The images height.
-	 * @param pixels The initial pixels to use in the texture. {@link Image2d#GetPixels} to get a copy of the pixels, and {@link Image2d#SetPixels} to set the pixels.
+	 * @param pixels The initial pixels to use in the Image. {@link Image2d#GetPixels} to get a copy of the pixels, and {@link Image2d#SetPixels} to set the pixels.
 	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param layout The layout that the image subresources accessible from.
 	 * @param usage The intended usage of the image.

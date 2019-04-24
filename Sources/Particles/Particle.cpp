@@ -18,7 +18,7 @@ Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &p
 	m_gravityEffect(gravityEffect),
 	m_elapsedTime(0.0f),
 	m_transparency(1.0f),
-	m_textureBlendFactor(0.0f),
+	m_imageBlendFactor(0.0f),
 	m_distanceToCamera(0.0f)
 {
 }
@@ -49,7 +49,7 @@ void Particle::Update()
 
 	float lifeFactor = m_stageCycles * m_elapsedTime / m_lifeLength;
 
-	if (m_particleType->GetTexture() == nullptr)
+	if (m_particleType->GetImage() == nullptr)
 	{
 		return;
 	}
@@ -59,9 +59,9 @@ void Particle::Update()
 	auto index1 = static_cast<int32_t>(std::floor(atlasProgression));
 	int32_t index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
-	m_textureBlendFactor = std::fmod(atlasProgression, 1.0f);
-	m_textureOffset1 = CalculateTextureOffset(index1);
-	m_textureOffset2 = CalculateTextureOffset(index2);
+	m_imageBlendFactor = std::fmod(atlasProgression, 1.0f);
+	m_imageOffset1 = CalculateImageOffset(index1);
+	m_imageOffset2 = CalculateImageOffset(index2);
 }
 
 bool Particle::operator<(const Particle &other) const
@@ -69,7 +69,7 @@ bool Particle::operator<(const Particle &other) const
 	return m_distanceToCamera > other.m_distanceToCamera;
 }
 
-Vector2f Particle::CalculateTextureOffset(const int32_t &index) const
+Vector2f Particle::CalculateImageOffset(const int32_t &index) const
 {
 	int32_t column = index % m_particleType->GetNumberOfRows();
 	int32_t row = index / m_particleType->GetNumberOfRows();

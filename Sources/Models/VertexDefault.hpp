@@ -7,22 +7,22 @@
 
 namespace acid
 {
-class ACID_EXPORT VertexModel
+class ACID_EXPORT VertexDefault
 {
 public:
-	VertexModel(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
+	VertexDefault(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
 		m_position(position),
 		m_uv(uv),
 		m_normal(normal)
 	{
 	}
 
-	bool operator==(const VertexModel &other) const
+	bool operator==(const VertexDefault &other) const
 	{
 		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal;
 	}
 
-	bool operator!=(const VertexModel &other) const
+	bool operator!=(const VertexDefault &other) const
 	{
 		return !(*this == other);
 	}
@@ -30,12 +30,12 @@ public:
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-			VkVertexInputBindingDescription{baseBinding, sizeof(VertexModel), VK_VERTEX_INPUT_RATE_VERTEX}
+			VkVertexInputBindingDescription{baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX}
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexModel, m_position)},
-			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexModel, m_uv)},
-			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexModel, m_normal)}
+			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_position)},
+			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv)},
+			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal)}
 		};
 		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 	}
@@ -49,9 +49,9 @@ public:
 namespace std
 {
 template<>
-struct hash<acid::VertexModel>
+struct hash<acid::VertexDefault>
 {
-	size_t operator()(acid::VertexModel const &vertex) const noexcept
+	size_t operator()(acid::VertexDefault const &vertex) const noexcept
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);

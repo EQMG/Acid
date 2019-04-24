@@ -8,8 +8,8 @@
     }
   },
   "MaterialDefault": {
-    "Diffuse Colour": "#C7BEBE",
-    "Diffuse Texture": {
+    "Base Diffuse": "#C7BEBE",
+    "Image Diffuse": {
       "Filename": "Entities/Testing/Diffuse.png",
       "Filter": 1,
       "Address Mode": 2,
@@ -18,14 +18,14 @@
     },
     "Metallic": 0.0,
     "Roughness": 0.0,
-    "Material Texture": {
+    "Image Material": {
       "Filename": "Entities/Testing/Material.png",
       "Filter": 1,
       "Address Mode": 2,
       "Anisotropic": true,
       "Mipmap": true
     },
-    "Normal Texture": {
+    "Image Normal": {
       "Filename": "Entities/Testing/Normal.png",
       "Filter": 1,
       "Address Mode": 2,

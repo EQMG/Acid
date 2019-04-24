@@ -20,6 +20,34 @@ class ACID_EXPORT GizmoType :
 	public Resource
 {
 public:
+	class Instance
+	{
+	public:
+		Instance(const Matrix4 &modelMatrix, const Colour &colour) :
+			m_modelMatrix(modelMatrix),
+			m_colour(colour)
+		{
+		}
+
+		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
+		{
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			};
+			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
+				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
+				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
+				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
+				VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
+			};
+			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+		}
+
+		Matrix4 m_modelMatrix;
+		Colour m_colour;
+	};
+
 	/**
 	 * Creates a new gizmo type, or finds one with the same values.
 	 * @param metadata The metadata to decode values from.
@@ -52,8 +80,6 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
-
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
@@ -67,12 +93,6 @@ public:
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
 private:
-	struct GizmoTypeData // TODO: Convert into a IVertex!
-	{
-		Matrix4 m_modelMatrix;
-		Colour m_colour;
-	};
-
 	std::shared_ptr<Model> m_model;
 	float m_lineThickness;
 	Colour m_colour;

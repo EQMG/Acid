@@ -19,7 +19,7 @@ public:
 	 * @param transform The objects initial world position, rotation, and scale.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const Transform &transform);
+	Entity *CreateEntity(const Transform &transform = Transform::Identity);
 
 	/**
 	 * Creates a new entity from a prefab that starts in this structure.
@@ -27,7 +27,7 @@ public:
 	 * @param transform The objects initial world position, rotation, and scale.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const std::string &filename, const Transform &transform);
+	Entity *CreateEntity(const std::string &filename, const Transform &transform = Transform::Identity);
 
 	/**
 	 * Adds a new object to the spatial structure.

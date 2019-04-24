@@ -81,7 +81,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
 #if defined(ACID_VERBOSE)
-	// Saves the noise texture.
+	// Saves the noise Image.
 	/*std::string filename = FileSystem::GetWorkingDirectory() + "/SSAO_Noise.png";
 	FileSystem::ClearFile(filename);
 	uint32_t width = 0;

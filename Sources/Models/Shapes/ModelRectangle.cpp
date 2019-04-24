@@ -1,7 +1,7 @@
 #include "ModelRectangle.hpp"
 
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -46,11 +46,11 @@ void ModelRectangle::Load()
 		return;
 	}
 
-	std::vector<VertexModel> vertices = {
-		VertexModel(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f::Zero),
-		VertexModel(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f::Zero),
-		VertexModel(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f::Zero),
-		VertexModel(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f::Zero),
+	std::vector<VertexDefault> vertices = {
+		VertexDefault(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f::Zero),
+		VertexDefault(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f::Zero),
+		VertexDefault(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f::Zero),
+		VertexDefault(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f::Zero),
 	};
 	static std::vector<uint32_t> indices = {
 		0, 1, 2,

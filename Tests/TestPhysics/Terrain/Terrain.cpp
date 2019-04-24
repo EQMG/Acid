@@ -18,16 +18,10 @@ Terrain::Terrain(const float &sideLength, const float &squareSize) :
 void Terrain::Start()
 {
 	auto mesh = GetParent()->GetComponent<Mesh>(true);
-	auto colliderHeightfield = GetParent()->GetComponent<ColliderHeightfield>(true);
 
 	if (mesh == nullptr)
 	{
-		Log::Error("Terrain must be attached to a object with a mesh!");
-		return;
-	}
-
-	if (colliderHeightfield == nullptr)
-	{
+		Log::Error("Terrain must be attached to a object with a mesh!\n");
 		return;
 	}
 
@@ -35,6 +29,14 @@ void Terrain::Start()
 	float textureScale = CalculateTextureScale(m_sideLength);
 	m_heightmap = GenerateHeightmap(vertexCount);
 	mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
+
+	auto colliderHeightfield = GetParent()->GetComponent<ColliderHeightfield>(true);
+
+	if (colliderHeightfield == nullptr)
+	{
+		Log::Error("Terrain does not contail a heightfield collider!\n");
+		return;
+	}
 
 	colliderHeightfield->Initialize(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
 }

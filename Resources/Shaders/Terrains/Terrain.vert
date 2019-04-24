@@ -17,12 +17,10 @@ layout(binding = 1) uniform UniformObject
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inUV;
 layout(location = 2) in vec3 inNormal;
-//layout(location = 3) in vec3 inTexture;
 
 layout(location = 0) out vec3 outPosition;
 layout(location = 1) out vec2 outUV;
 layout(location = 2) out vec3 outNormal;
-//layout(location = 3) out vec3 outTexture;
 
 out gl_PerVertex
 {
@@ -39,5 +37,4 @@ void main()
 	outPosition = worldPosition.xyz;
 	outUV = inUV;
 	outNormal = normalMatrix * normalize(inNormal);
-//	outTangent = inTexture;
 }

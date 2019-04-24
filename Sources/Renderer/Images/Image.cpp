@@ -256,7 +256,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 {
 	auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
 
-	// Get device properites for the requested texture format.
+	// Get device properites for the requested Image format.
 	VkFormatProperties formatProperties;
 	vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &formatProperties);
 

@@ -30,11 +30,11 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound 
 
 			if (m_collapsed)
 			{
-				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Right.png"));
+				m_icon.SetImage(Image2d::Create("Guis/Triangle_Right.png"));
 			}
 			else
 			{
-				m_icon.SetTexture(Image2d::Create("Guis/Triangle_Down.png"));
+				m_icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
 			}
 
 			m_onCollapsed(this, m_collapsed);

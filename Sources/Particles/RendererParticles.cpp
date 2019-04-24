@@ -1,14 +1,14 @@
 #include "RendererParticles.hpp"
 
 #include "Scenes/Scenes.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Particles.hpp"
 
 namespace acid
 {
 RendererParticles::RendererParticles(const Pipeline::Stage &pipelineStage) :
 	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag" }, { VertexModel::GetVertexInput(0), ParticleType::GetVertexInput(1) }, {},
+	m_pipeline(pipelineStage, { "Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag" }, { VertexDefault::GetVertexInput(0), ParticleType::Instance::GetVertexInput(1) }, {},
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::Read, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST)
 {
 }

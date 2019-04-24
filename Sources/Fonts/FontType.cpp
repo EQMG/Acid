@@ -39,7 +39,7 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 FontType::FontType(std::string filename, std::string style, const bool &load) :
 	m_filename(std::move(filename)),
 	m_style(std::move(style)),
-	m_texture(nullptr),
+	m_image(nullptr),
 	m_metadata(nullptr),
 	m_storageGlyphs(nullptr),
 	m_instanceBuffer(nullptr),
@@ -81,7 +81,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 
 			const uint32_t glyphIndex = m_charmap[c];
 			const HostGlyphInfo *gi = &m_glyphInfos[glyphIndex];
-			GlyphInstance *inst = &m_glyphInstances[m_instances];
+			auto instance = &m_glyphInstances[m_instances];
 
 			if (c == '\n')
 			{
@@ -90,21 +90,21 @@ void FontType::Update(const std::vector<Text *> &texts)
 				continue;
 			}
 
-			inst->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			inst->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
-			inst->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			inst->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
 			//inst->rect.minX = ((x + local.m_x) + gi->bbox.minX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.minY = ((y + local.m_y) - gi->bbox.minY * localScale) / (extent.m_y / 2.0f) - 1.0f;
 			//inst->rect.maxX = ((x + local.m_x) + gi->bbox.maxX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.maxY = ((y + local.m_y) - gi->bbox.maxY * localScale) / (extent.m_y / 2.0f) - 1.0f;
 
-			if (inst->m_rect.minX <= 1.0f && inst->m_rect.maxX >= -1.0f && inst->m_rect.maxY <= 1.0f && inst->m_rect.minY >= -1.0f)
+			if (instance->m_rect.minX <= 1.0f && instance->m_rect.maxX >= -1.0f && instance->m_rect.maxY <= 1.0f && instance->m_rect.minY >= -1.0f)
 			{
-				inst->m_glyphIndex = glyphIndex;
-				inst->m_sharpness = scale.m_x;
-				inst->m_colour = text->GetTextColour();
+				instance->m_glyphIndex = glyphIndex;
+				instance->m_sharpness = scale.m_x;
+				instance->m_colour = text->m_textColour;
 
 				m_instances++;
 			}
@@ -150,7 +150,7 @@ void FontType::Load()
 		return;
 	}
 
-	m_texture = Image2d::Create(m_filename + "/" + m_style + ".png");
+	m_image = Image2d::Create(m_filename + "/" + m_style + ".png");
 	m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
 	LoadFont(m_filename + "/" + m_style + ".ttf");
 }

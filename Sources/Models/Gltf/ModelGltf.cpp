@@ -7,7 +7,7 @@
 #include "tiny_gltf.h"
 #include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -84,9 +84,9 @@ void ModelGltf::Load()
 		}
 	}
 
-	std::vector<VertexModel> vertices;
+	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
-	std::unordered_map<VertexModel, size_t> uniqueVertices;
+	std::unordered_map<VertexDefault, size_t> uniqueVertices;
 
 	//LoadTextureSamplers(gltfModel);
 	//LoadTextures(gltfModel);

@@ -6,10 +6,10 @@
 
 namespace acid
 {
-Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> texture, const Colour &colourOffset) :
+Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset) :
 	UiObject(parent, rectangle),
 	m_model(ModelRectangle::Create(0.0f, 1.0f)),
-	m_texture(std::move(texture)),
+	m_image(std::move(image)),
 	m_numberOfRows(1),
 	m_selectedRow(0),
 	m_atlasScale(1.0f, 1.0f),
@@ -20,7 +20,7 @@ Gui::Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> te
 
 void Gui::UpdateObject()
 {
-	int32_t numberOfRows = m_texture != nullptr ? m_numberOfRows : 1;
+	int32_t numberOfRows = m_image != nullptr ? m_numberOfRows : 1;
 	int32_t column = m_selectedRow % numberOfRows;
 	int32_t row = m_selectedRow / numberOfRows;
 	m_atlasOffset = Vector2f(static_cast<float>(column) / static_cast<float>(numberOfRows), static_cast<float>(row) / static_cast<float>(numberOfRows));
@@ -45,7 +45,7 @@ void Gui::UpdateObject()
 bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
 {
 	// Gets if this should be rendered.
-	if (m_texture == nullptr || !IsEnabled())
+	if (m_image == nullptr || !IsEnabled())
 	{
 		return false;
 	}
@@ -53,7 +53,7 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
-	m_descriptorSet.Push("samplerColour", m_texture);
+	m_descriptorSet.Push("samplerColour", m_image);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 	if (!updateSuccess)

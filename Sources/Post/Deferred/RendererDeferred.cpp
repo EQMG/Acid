@@ -2,7 +2,7 @@
 
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Resources/Resources.hpp"
 #include "Renderer/Pipelines/PipelineCompute.hpp"
@@ -32,7 +32,7 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	auto camera = Scenes::Get()->GetCamera();
 
 	auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-	auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetCubemap();
+	auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetImage();
 
 	if (m_skybox != skybox)
 	{
@@ -137,7 +137,7 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
-	// Saves the BRDF texture.
+	// Saves the BRDF Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
@@ -179,7 +179,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
-	// Saves the irradiance texture.
+	// Saves the irradiance Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
@@ -254,7 +254,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 #if defined(ACID_VERBOSE)
 	/*for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
-		// Saves the prefiltered texture.
+		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";

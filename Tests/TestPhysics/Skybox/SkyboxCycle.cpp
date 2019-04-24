@@ -29,13 +29,13 @@ void SkyboxCycle::Update()
 
 	if (m_enableFog)
 	{
-		materialSkybox->SetSkyColour(SKYBOX_COLOUR_DAY);
+		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(World::Get()->GetFog().GetColour());
 		materialSkybox->SetFogLimits(Vector2f(World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()));
 	}
 	else
 	{
-		materialSkybox->SetSkyColour(SKYBOX_COLOUR_DAY);
+		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(Colour::Black);
 		materialSkybox->SetFogLimits(Vector2f(-1000000.0f, -1000000.0f));
 	}

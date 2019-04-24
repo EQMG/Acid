@@ -4,7 +4,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/Driver.hpp"
 #include "Models/Model.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
@@ -196,6 +196,8 @@ public:
 	bool IsLoaded() const;
 
 private:
+	friend class FontType;
+
 	/**
 	 * During the loading of a text this represents one word in the text.
 	 */
@@ -284,13 +286,13 @@ private:
 
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const;
 
-	std::vector<VertexModel> CreateQuad(const std::vector<Line> &lines);
+	std::vector<VertexDefault> CreateQuad(const std::vector<Line> &lines);
 
-	static void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexModel> &vertices);
+	static void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices);
 
-	static void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexModel> &vertices);
+	static void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices);
 
-	void NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices) const;
+	void NormalizeQuad(Vector2f &bounding, std::vector<VertexDefault> &vertices) const;
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;

@@ -112,7 +112,7 @@
 #include "Models/Shapes/ModelDisk.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Models/Shapes/ModelSphere.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Network/Ftp/Ftp.hpp"
 #include "Network/Ftp/FtpDataChannel.hpp"
 #include "Network/Ftp/FtpResponse.hpp"

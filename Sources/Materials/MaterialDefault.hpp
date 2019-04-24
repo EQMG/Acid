@@ -14,8 +14,8 @@ class ACID_EXPORT MaterialDefault :
 	public Material
 {
 public:
-	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> diffuseTexture = nullptr, const float &metallic = 0.0f,
-		const float &roughness = 0.0f, std::shared_ptr<Image2d> materialTexture = nullptr, std::shared_ptr<Image2d> normalTexture = nullptr, const bool &castsShadows = true,
+	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, const float &metallic = 0.0f,
+		const float &roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, const bool &castsShadows = true,
 		const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
 	void Start() override;
@@ -34,9 +34,9 @@ public:
 
 	void SetBaseDiffuse(const Colour &baseDiffuse) { m_baseDiffuse = baseDiffuse; }
 
-	const std::shared_ptr<Image2d> &GetDiffuseTexture() const { return m_diffuseTexture; }
+	const std::shared_ptr<Image2d> &GetImageDiffuse() const { return m_imageDiffuse; }
 
-	void SetDiffuseTexture(const std::shared_ptr<Image2d> &diffuseTexture) { m_diffuseTexture = diffuseTexture; }
+	void SetImageDiffuse(const std::shared_ptr<Image2d> &imageDiffuse) { m_imageDiffuse = imageDiffuse; }
 
 	const float &GetMetallic() const { return m_metallic; }
 
@@ -46,13 +46,13 @@ public:
 
 	void SetRoughness(const float &roughness) { m_roughness = roughness; }
 
-	const std::shared_ptr<Image2d> &GetMaterialTexture() const { return m_materialTexture; }
+	const std::shared_ptr<Image2d> &GetImageMaterial() const { return m_imageMaterial; }
 
-	void SetMaterialTexture(const std::shared_ptr<Image2d> &materialTexture) { m_materialTexture = materialTexture; }
+	void SetImageMaterial(const std::shared_ptr<Image2d> &imageMaterial) { m_imageMaterial = imageMaterial; }
 
-	const std::shared_ptr<Image2d> &GetNormalTexture() const { return m_normalTexture; }
+	const std::shared_ptr<Image2d> &GetImageNormal() const { return m_imageNormal; }
 
-	void SetNormalTexture(const std::shared_ptr<Image2d> &normalTexture) { m_normalTexture = normalTexture; }
+	void SetImageNormal(const std::shared_ptr<Image2d> &imageNormal) { m_imageNormal = imageNormal; }
 
 	const bool &IsCastsShadows() const { return m_castsShadows; }
 
@@ -71,12 +71,12 @@ private:
 
 	bool m_animated;
 	Colour m_baseDiffuse;
-	std::shared_ptr<Image2d> m_diffuseTexture;
+	std::shared_ptr<Image2d> m_imageDiffuse;
 
 	float m_metallic;
 	float m_roughness;
-	std::shared_ptr<Image2d> m_materialTexture;
-	std::shared_ptr<Image2d> m_normalTexture;
+	std::shared_ptr<Image2d> m_imageMaterial;
+	std::shared_ptr<Image2d> m_imageNormal;
 
 	bool m_castsShadows;
 	bool m_ignoreLighting;

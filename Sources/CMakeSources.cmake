@@ -112,7 +112,7 @@ set(_temp_acid_headers
 		Models/Shapes/ModelDisk.hpp
 		Models/Shapes/ModelRectangle.hpp
 		Models/Shapes/ModelSphere.hpp
-		Models/VertexModel.hpp
+		Models/VertexDefault.hpp
 		Network/Ftp/Ftp.hpp
 		Network/Ftp/FtpDataChannel.hpp
 		Network/Ftp/FtpResponse.hpp

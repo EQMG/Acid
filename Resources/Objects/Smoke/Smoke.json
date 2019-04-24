@@ -2,7 +2,7 @@
   "ParticleSystem": {
     "Types": [
       {
-        "Texture": {
+        "Image": {
           "Filename": "Objects/Smoke/Circular.png",
           "Filter": 1,
           "Address Mode": 2,
@@ -16,7 +16,7 @@
         "Scale": 0.500000
       },
       {
-        "Texture": {
+        "Image": {
           "Filename": "Objects/Smoke/Circular.png",
           "Filter": 1,
           "Address Mode": 2,
@@ -30,7 +30,7 @@
         "Scale": 1.000000
       },
       {
-        "Texture": {
+        "Image": {
           "Filename": "Objects/Smoke/Circular.png",
           "Filter": 1,
           "Address Mode": 2,
@@ -44,7 +44,7 @@
         "Scale": 0.800000
       },
       {
-        "Texture": {
+        "Image": {
           "Filename": "Objects/Smoke/Circular.png",
           "Filter": 1,
           "Address Mode": 2,

@@ -63,16 +63,16 @@ void UiInputRadio::UpdateValue()
 	switch (m_type)
 	{
 	case Type::Filled:
-		m_fill.SetTexture(Image2d::Create("Guis/Radio_Filled.png"));
+		m_fill.SetImage(Image2d::Create("Guis/Radio_Filled.png"));
 		break;
 	case Type::X:
-		m_fill.SetTexture(Image2d::Create("Guis/Radio_X.png"));
+		m_fill.SetImage(Image2d::Create("Guis/Radio_X.png"));
 		break;
 	case Type::Check:
-		m_fill.SetTexture(Image2d::Create("Guis/Radio_Check.png"));
+		m_fill.SetImage(Image2d::Create("Guis/Radio_Check.png"));
 		break;
 	case Type::Dot:
-		m_fill.SetTexture(Image2d::Create("Guis/Radio_Dot.png"));
+		m_fill.SetImage(Image2d::Create("Guis/Radio_Dot.png"));
 		break;
 	}
 

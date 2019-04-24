@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -49,7 +49,7 @@ void ModelDisk::Load()
 		return;
 	}
 
-	std::vector<VertexModel> vertices;
+	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
 	// TODO: Reserve.
 
@@ -67,7 +67,7 @@ void ModelDisk::Load()
 			Vector3f position = Vector3f(radius * xDir, 0.0f, radius * yDir);
 			Vector2f uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivLoops);
 			Vector3f normal = Vector3f(0.0f, 1.0f, 0.0f);
-			vertices.emplace_back(VertexModel(position, uvs, normal));
+			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
 

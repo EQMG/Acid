@@ -36,14 +36,18 @@ public:
 	bool InFrustum(const Frustum &frustum) override;
 
 	void ClearForces() override;
+	
+	void SetMass(const float &mass) override;
 
-	const float &GetMass() const { return m_mass; }
+	void SetGravity(const Vector3f &gravity) override;
 
-	void SetMass(const float &mass);
+	void SetLinearFactor(const Vector3f &linearFactor) override;
 
-	const Vector3f &GetGravity() const { return m_gravity; }
+	void SetAngularFactor(const Vector3f &angularFactor) override;
 
-	void SetGravity(const Vector3f &gravity);
+	void SetLinearVelocity(const Vector3f &linearVelocity) override;
+
+	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
 	const Vector3f &GetUp() const { return m_up; }
 
@@ -79,8 +83,6 @@ protected:
 	void RecalculateMass() override;
 
 private:
-	float m_mass;
-	Vector3f m_gravity;
 	Vector3f m_up;
 	float m_stepHeight;
 	float m_fallSpeed;

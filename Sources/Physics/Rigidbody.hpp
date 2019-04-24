@@ -39,43 +39,22 @@ public:
 
 	void ClearForces() override;
 
-	const float &GetMass() const { return m_mass; }
+	void SetMass(const float &mass) override;
 
-	void SetMass(const float &mass);
+	void SetGravity(const Vector3f &gravity) override;
 
-	const Vector3f &GetGravity() const { return m_gravity; }
+	void SetLinearFactor(const Vector3f &linearFactor) override;
 
-	void SetGravity(const Vector3f &gravity);
+	void SetAngularFactor(const Vector3f &angularFactor) override;
 
-	const Vector3f &GetLinearFactor() const { return m_linearFactor; }
+	void SetLinearVelocity(const Vector3f &linearVelocity) override;
 
-	void SetLinearFactor(const Vector3f &linearFactor);
-
-	const Vector3f &GetAngularFactor() const { return m_angularFactor; }
-
-	void SetAngularFactor(const Vector3f &angularFactor);
-
-	const Vector3f &GetLinearVelocity() const { return m_linearVelocity; }
-
-	void SetLinearVelocity(const Vector3f &linearVelocity);
-
-	const Vector3f &GetAngularVelocity() const { return m_angularVelocity; }
-
-	void SetAngularVelocity(const Vector3f &angularVelocity);
+	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
 protected:
 	void RecalculateMass() override;
 
 private:
-	float m_mass;
-	Vector3f m_gravity;
-
-	Vector3f m_linearFactor;
-	Vector3f m_angularFactor;
-
-	Vector3f m_linearVelocity;
-	Vector3f m_angularVelocity;
-
 	std::unique_ptr<btRigidBody> m_rigidBody;
 };
 }

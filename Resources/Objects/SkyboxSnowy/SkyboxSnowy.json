@@ -8,7 +8,7 @@
     }
   },
   "MaterialSkybox": {
-    "Cubemap": {
+    "Image": {
       "Filename": "Objects/SkyboxSnowy",
       "Suffix": ".png",
       "Sides": [
@@ -19,7 +19,7 @@
       "Anisotropic": true,
       "Mipmap": true
     },
-    "Sky Colour": "#FFFFFF"
+    "Base Colour": "#FFFFFF"
   },
   "SkyboxCycle": {
     "Enable Fog": false,

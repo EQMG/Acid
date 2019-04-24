@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 
 namespace acid
 {
@@ -9,16 +9,16 @@ class ACID_EXPORT MeshPattern :
 	public Model
 {
 public:
-	MeshPattern(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
+	MeshPattern(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &uvScale);
 
 protected:
 	void GenerateMesh();
 
-	virtual VertexModel GetVertex(const uint32_t &col, const uint32_t &row);
+	virtual VertexDefault GetVertex(const uint32_t &col, const uint32_t &row);
 
 	float m_sideLength;
 	float m_squareSize;
 	uint32_t m_vertexCount;
-	float m_textureScale;
+	float m_uvScale;
 };
 }

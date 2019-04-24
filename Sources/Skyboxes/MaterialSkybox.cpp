@@ -1,13 +1,13 @@
 #include "MaterialSkybox.hpp"
 
-#include "Models/VertexModel.hpp"
+#include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
 {
-MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> cubemap, const Colour &skyColour) :
-	m_cubemap(std::move(cubemap)),
-	m_skyColour(skyColour),
+MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour & baseColour) :
+	m_image(std::move(image)),
+	m_baseColour(baseColour),
 	m_blend(1.0f),
 	m_fogLimits(-10000.0f, -10000.0f)
 {
@@ -16,7 +16,7 @@ MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> cubemap, const Colour 
 void MaterialSkybox::Start()
 {
 	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
-		PipelineGraphicsCreate({ "Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag" }, { VertexModel::GetVertexInput() }, {}, PipelineGraphics::Mode::Mrt,
+		PipelineGraphicsCreate({ "Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag" }, { VertexDefault::GetVertexInput() }, {}, PipelineGraphics::Mode::Mrt,
 			PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT));
 }
 
@@ -26,20 +26,20 @@ void MaterialSkybox::Update()
 
 void MaterialSkybox::Decode(const Metadata &metadata)
 {
-	metadata.GetResource("Cubemap", m_cubemap);
-	metadata.GetChild("Sky Colour", m_skyColour);
+	metadata.GetResource("Image", m_image);
+	metadata.GetChild("Base Colour", m_baseColour);
 }
 
 void MaterialSkybox::Encode(Metadata &metadata) const
 {
-	metadata.SetResource("Cubemap", m_cubemap);
-	metadata.SetChild("Sky Colour", m_skyColour);
+	metadata.SetResource("Image", m_image);
+	metadata.SetChild("Base Colour", m_baseColour);
 }
 
 void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 {
 	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
-	uniformObject.Push("skyColour", m_skyColour);
+	uniformObject.Push("baseColour", m_baseColour);
 	uniformObject.Push("fogColour", m_fogColour);
 	uniformObject.Push("fogLimits", GetParent()->GetLocalTransform().GetScaling().m_y * m_fogLimits);
 	uniformObject.Push("blendFactor", m_blend);
@@ -47,6 +47,6 @@ void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 
 void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
-	descriptorSet.Push("samplerCubemap", m_cubemap);
+	descriptorSet.Push("samplerColour", m_image);
 }
 }

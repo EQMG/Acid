@@ -79,6 +79,7 @@ void PlayerFps::Update()
 			if (m_noclipEnabled)
 			{
 				character->SetGravity(Vector3f::Zero);
+				character->SetLinearVelocity(Vector3f::Zero);
 			}
 			else
 			{

@@ -56,7 +56,7 @@ public:
 
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
 
-	const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
+	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
 	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
 
@@ -109,7 +109,7 @@ private:
 	uint32_t m_glyphCellsOffset{};
 	uint32_t m_glyphPointsOffset{};
 
-	std::shared_ptr<Image2d> m_texture;
+	std::shared_ptr<Image2d> m_image;
 	std::unique_ptr<FontMetafile> m_metadata;
 
 	DescriptorsHandler m_descriptorSet;

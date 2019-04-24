@@ -14,7 +14,7 @@ class ACID_EXPORT MaterialSkybox :
 	public Material
 {
 public:
-	explicit MaterialSkybox(std::shared_ptr<ImageCube> cubemap = nullptr, const Colour &skyColour = Colour::White);
+	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);
 
 	void Start() override;
 
@@ -28,13 +28,13 @@ public:
 
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-	const std::shared_ptr<ImageCube> &GetCubemap() const { return m_cubemap; }
+	const std::shared_ptr<ImageCube> &GetImage() const { return m_image; }
 
-	void SetCubemap(const std::shared_ptr<ImageCube> &cubemap) { m_cubemap = cubemap; }
+	void SetImage(const std::shared_ptr<ImageCube> &image) { m_image = image; }
 
-	const Colour &GetSkyColour() const { return m_skyColour; }
+	const Colour &GetBaseColour() const { return m_baseColour; }
 
-	void SetSkyColour(const Colour &skyColour) { m_skyColour = skyColour; }
+	void SetBaseColour(const Colour &baseColour) { m_baseColour = baseColour; }
 
 	const float &GetBlend() const { return m_blend; }
 
@@ -49,8 +49,8 @@ public:
 	void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
 
 private:
-	std::shared_ptr<ImageCube> m_cubemap;
-	Colour m_skyColour;
+	std::shared_ptr<ImageCube> m_image;
+	Colour m_baseColour;
 	float m_blend;
 	Colour m_fogColour;
 	Vector2f m_fogLimits;

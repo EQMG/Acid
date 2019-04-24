@@ -22,6 +22,40 @@ class ACID_EXPORT ParticleType :
 	public Resource
 {
 public:
+	class Instance
+	{
+	public:
+		Instance(const Matrix4 &modelMatrix, const Colour &colourOffset, const Vector4f &offsets, const Vector3f &blend) :
+			m_modelMatrix(modelMatrix),
+			m_colourOffset(colourOffset),
+			m_offsets(offsets),
+			m_blend(blend)
+		{
+		}
+
+		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
+		{
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			};
+			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
+				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
+				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
+				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
+				VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colourOffset)},
+				VkVertexInputAttributeDescription{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_offsets)},
+				VkVertexInputAttributeDescription{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Instance, m_blend)}
+			};
+			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+		}
+
+		Matrix4 m_modelMatrix;
+		Colour m_colourOffset;
+		Vector4f m_offsets;
+		Vector3f m_blend;
+	};
+
 	/**
 	 * Creates a new particle type, or finds one with the same values.
 	 * @param metadata The metadata to decode values from.
@@ -31,27 +65,27 @@ public:
 
 	/**
 	 * Creates a new particle type, or finds one with the same values.
-	 * @param texture The particles texture.
-	 * @param numberOfRows The number of texture rows.
-	 * @param colourOffset The particles texture colour offset.
+	 * @param image The particles image.
+	 * @param numberOfRows The number of Image rows.
+	 * @param colourOffset The particles Image colour offset.
 	 * @param lifeLength The averaged life length for the particle.
 	 * @param stageCycles The amount of times stages will be shown.
 	 * @param scale The averaged scale for the particle.
 	 * @return The particle type with the requested values.
 	 */
-	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> & image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 		const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 	/**
 	 * Creates a new particle type.
-	 * @param texture The particles texture.
-	 * @param numberOfRows The number of texture rows.
-	 * @param colourOffset The particles texture colour offset.
+	 * @param image The particles image.
+	 * @param numberOfRows The number of Image rows.
+	 * @param colourOffset The particles Image colour offset.
 	 * @param lifeLength The averaged life length for the particle.
 	 * @param stageCycles The amount of times stages will be shown.
 	 * @param scale The averaged scale for the particle.
 	 */
-	explicit ParticleType(std::shared_ptr<Image2d> texture, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f,
+	explicit ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f,
 		const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 	void Update(const std::vector<Particle> &particles);
@@ -62,11 +96,9 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
+	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
-	const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
-
-	void SetTexture(const std::shared_ptr<Image2d> &texture) { m_texture = texture; }
+	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 
 	const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
@@ -89,15 +121,7 @@ public:
 	void SetScale(const float &scale) { m_scale = scale; }
 
 private:
-	struct ParticleTypeData // TODO: Convert into a IVertex!
-	{
-		Matrix4 m_modelMatrix;
-		Colour m_colourOffset;
-		Vector4f m_offsets;
-		Vector3f m_blend;
-	};
-
-	std::shared_ptr<Image2d> m_texture;
+	std::shared_ptr<Image2d> m_image;
 	std::shared_ptr<Model> m_model;
 	uint32_t m_numberOfRows;
 	Colour m_colourOffset;

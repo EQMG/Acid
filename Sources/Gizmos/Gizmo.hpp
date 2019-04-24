@@ -36,6 +36,8 @@ public:
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
 private:
+	friend class GizmoType;
+
 	std::shared_ptr<GizmoType> m_gizmoType;
 	Transform m_transform;
 	Colour m_colour;

@@ -22,18 +22,18 @@ public:
 	 * Creates a new GUI object.
 	 * @param parent The parent screen object.
 	 * @param rectangle The rectangle that will represent the bounds of the ui object.
-	 * @param texture The objects texture.
-	 * @param colourOffset The texture colour offset.
+	 * @param image The objects image.
+	 * @param colourOffset The image colour offset.
 	 */
-	Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> texture, const Colour &colourOffset = Colour::White);
+	Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset = Colour::White);
 
 	void UpdateObject() override;
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-	const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
+	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
-	void SetTexture(const std::shared_ptr<Image2d> &texture) { m_texture = texture; }
+	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 
 	const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
 
@@ -53,7 +53,7 @@ public:
 
 	/**
 	 * Sets nine the patches value size, if zero it will be disabled. This value represents the top-left and bottom-right content bounds.
-	 * 9-patch/9-slicing allows for a single section of a texture to be scale with corners and edges kept in the screens aspect ratio.
+	 * 9-patch/9-slicing allows for a single section of a image to be scale with corners and edges kept in the screens aspect ratio.
 	 * @param ninePatches The values, x/y being to top left corner and z/w bottom right for the scalable section.
 	 */
 	void SetNinePatches(const Vector4f &ninePatches) { m_ninePatches = ninePatches; }
@@ -73,7 +73,7 @@ private:
 	UniformHandler m_uniformObject;
 
 	std::shared_ptr<Model> m_model;
-	std::shared_ptr<Image2d> m_texture;
+	std::shared_ptr<Image2d> m_image;
 	uint32_t m_numberOfRows;
 	uint32_t m_selectedRow;
 	Vector2f m_atlasOffset;
