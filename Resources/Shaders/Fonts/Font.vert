@@ -2,13 +2,13 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboScene
+layout(binding = 0) uniform UniformScene
 {
 	mat4 projection;
 	mat4 view;
 } scene;
 
-layout(binding = 1) uniform UboObject
+layout(binding = 1) uniform UniformObject
 {
 	mat4 modelMatrix;
 	vec4 screenOffset;

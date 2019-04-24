@@ -286,10 +286,6 @@ bool Quaternion::operator==(const Quaternion &other) const
 	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
 }
 
-bool Quaternion::operator!=(const Quaternion &other) const
-{
-	return !(*this == other);
-}
 
 Quaternion Quaternion::operator-() const
 {

@@ -8,10 +8,10 @@ namespace acid
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT IButton
+class ACID_EXPORT Button
 {
 public:
-	virtual ~IButton() = default;
+	virtual ~Button() = default;
 
 	/**
 	 * Returns whether this button is currently pressed.

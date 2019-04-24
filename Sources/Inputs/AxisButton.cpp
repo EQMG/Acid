@@ -2,7 +2,7 @@
 
 namespace acid
 {
-AxisButton::AxisButton(IButton *negative, IButton *positive) :
+AxisButton::AxisButton(Button *negative, Button *positive) :
 	m_negative(negative),
 	m_positive(positive)
 {

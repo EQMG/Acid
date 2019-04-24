@@ -2,14 +2,14 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboScene
+layout(binding = 0) uniform UniformScene
 {
 	mat4 projection;
 	mat4 view;
 	vec3 cameraPos;
 } scene;
 
-layout(binding = 1) uniform UboObject
+layout(binding = 1) uniform UniformObject
 {
 #if ANIMATED
 	mat4 jointTransforms[MAX_JOINTS];

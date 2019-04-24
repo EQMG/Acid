@@ -2,7 +2,7 @@
 
 namespace acid
 {
-AxisCompound::AxisCompound(const std::vector<IAxis *> &axes)
+AxisCompound::AxisCompound(const std::vector<Axis *> &axes)
 {
 	for (const auto &axis : axes)
 	{

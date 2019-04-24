@@ -5,7 +5,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"
-#include "Maths/Visual/IDriver.hpp"
+#include "Maths/Visual/Driver.hpp"
 #include "UiBound.hpp"
 
 namespace acid
@@ -96,15 +96,15 @@ public:
 
 	Matrix4 GetModelMatrix() const;
 
-	IDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
+	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
-	void SetAlphaDriver(IDriver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
+	void SetAlphaDriver(Driver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
 	const float &GetAlpha() const { return m_alpha; }
 
-	IDriver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
+	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
-	void SetScaleDriver(IDriver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+	void SetScaleDriver(Driver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
 	const Vector2f &GetScale() const { return m_scale; }
 
@@ -150,10 +150,10 @@ private:
 	bool m_lockRotation;
 	std::optional<Transform> m_worldTransform;
 
-	std::unique_ptr<IDriver<float>> m_alphaDriver;
+	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;
 
-	std::unique_ptr<IDriver<Vector2f>> m_scaleDriver;
+	std::unique_ptr<Driver<Vector2f>> m_scaleDriver;
 	Vector2f m_scale;
 
 	Vector2f m_screenPosition;

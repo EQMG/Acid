@@ -51,8 +51,8 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", uniformScene);
-	m_descriptorSet.Push("UboObject", m_uniformObject);
+	m_descriptorSet.Push("UniformScene", uniformScene);
+	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_texture);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 

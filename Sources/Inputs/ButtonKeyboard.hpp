@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Devices/Keyboard.hpp"
-#include "IButton.hpp"
+#include "Button.hpp"
 
 namespace acid
 {
@@ -9,7 +9,7 @@ namespace acid
  * @brief Button input from the keyboard input device.
  */
 class ACID_EXPORT ButtonKeyboard :
-	public IButton
+	public Button
 {
 public:
 	/**

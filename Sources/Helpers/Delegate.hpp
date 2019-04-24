@@ -61,7 +61,7 @@ public:
 
 	virtual ~Delegate() = default;
 
-	Delegate &Connect(FunctionType &&function)
+	Delegate &Add(FunctionType &&function)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functionList.emplace_back(function);
@@ -94,7 +94,7 @@ public:
 
 	Delegate &operator+=(FunctionType &&function)
 	{
-		return Connect(std::move(function));
+		return Add(std::move(function));
 	}
 
 	Delegate &operator-=(const FunctionType function)

@@ -62,7 +62,7 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
+	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
 
 	const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
 
@@ -89,7 +89,7 @@ public:
 	void SetScale(const float &scale) { m_scale = scale; }
 
 private:
-	struct ParticleTypeData
+	struct ParticleTypeData // TODO: Convert into a IVertex!
 	{
 		Matrix4 m_modelMatrix;
 		Colour m_colourOffset;

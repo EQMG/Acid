@@ -113,7 +113,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", uniformScene);
+	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("samplerColour", m_texture);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
@@ -153,59 +153,20 @@ void ParticleType::Encode(Metadata &metadata) const
 	metadata.SetChild("Scale", m_scale);
 }
 
-Shader::VertexInput ParticleType::GetVertexInput(const uint32_t &binding)
+Shader::VertexInput ParticleType::GetVertexInput(const uint32_t &baseBinding)
 {
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
-
-	// The vertex input description.
-	bindingDescriptions[0].binding = binding;
-	bindingDescriptions[0].stride = sizeof(ParticleTypeData);
-	bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
-
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions(7);
-
-	// Model matrix row 0 attribute.
-	attributeDescriptions[0].binding = binding;
-	attributeDescriptions[0].location = 0;
-	attributeDescriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[0].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[0]);
-
-	// Model matrix row 1 attribute.
-	attributeDescriptions[1].binding = binding;
-	attributeDescriptions[1].location = 1;
-	attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[1].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[1]);
-
-	// Model matrix row 2 attribute.
-	attributeDescriptions[2].binding = binding;
-	attributeDescriptions[2].location = 2;
-	attributeDescriptions[2].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[2].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[2]);
-
-	// Model matrix row 3 attribute.
-	attributeDescriptions[3].binding = binding;
-	attributeDescriptions[3].location = 3;
-	attributeDescriptions[3].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[3].offset = offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[3]);
-
-	// Colour offset attribute.
-	attributeDescriptions[4].binding = binding;
-	attributeDescriptions[4].location = 4;
-	attributeDescriptions[4].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[4].offset = offsetof(ParticleTypeData, m_colourOffset);
-
-	// Offsets attribute.
-	attributeDescriptions[5].binding = binding;
-	attributeDescriptions[5].location = 5;
-	attributeDescriptions[5].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[5].offset = offsetof(ParticleTypeData, m_offsets);
-
-	// Blend attribute.
-	attributeDescriptions[6].binding = binding;
-	attributeDescriptions[6].location = 6;
-	attributeDescriptions[6].format = VK_FORMAT_R32G32B32_SFLOAT;
-	attributeDescriptions[6].offset = offsetof(ParticleTypeData, m_blend);
-
-	return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
+	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+		VkVertexInputBindingDescription{baseBinding, sizeof(ParticleTypeData), VK_VERTEX_INPUT_RATE_INSTANCE}
+	};
+	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+		VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
+		VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
+		VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
+		VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
+		VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_colourOffset)},
+		VkVertexInputAttributeDescription{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(ParticleTypeData, m_offsets)},
+		VkVertexInputAttributeDescription{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(ParticleTypeData, m_blend)}
+	};
+	return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 }
 }

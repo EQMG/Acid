@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IDriver.hpp"
+#include "Driver.hpp"
 
 namespace acid
 {
@@ -10,7 +10,7 @@ namespace acid
  **/
 template<typename T>
 class DriverLinear :
-	public IDriver<T>
+	public Driver<T>
 {
 public:
 	/**
@@ -20,7 +20,7 @@ public:
 	 * @param length The time to go between values. 
 	 **/
 	DriverLinear(const T &start, const T &end, const Time &length) :
-		IDriver<T>(length),
+		Driver<T>(length),
 		m_start(start),
 		m_end(end)
 	{

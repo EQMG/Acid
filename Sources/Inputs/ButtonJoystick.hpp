@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IButton.hpp"
+#include "Button.hpp"
 
 namespace acid
 {
@@ -8,7 +8,7 @@ namespace acid
  * @brief Button input from a joystick input device.
  */
 class ACID_EXPORT ButtonJoystick :
-	public IButton
+	public Button
 {
 public:
 	/**

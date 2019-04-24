@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Audio/Sound.hpp>
-#include <Inputs/IButton.hpp>
 #include <Inputs/ButtonMouse.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/ButtonCompound.hpp>

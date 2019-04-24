@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboScene
+layout(binding = 0) uniform UniformScene
 {
 	vec3 kernel[SSAO_KERNEL_SIZE];
 

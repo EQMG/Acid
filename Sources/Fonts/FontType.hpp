@@ -54,7 +54,7 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
+	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
 
 	const std::shared_ptr<Image2d> &GetTexture() const { return m_texture; }
 
@@ -69,12 +69,12 @@ private:
 		uint32_t cellCountY;
 	};
 
-	struct GlyphInstance
+	struct GlyphInstance // TODO: Convert into a IVertex!
 	{
-		Rect rect;
-		uint32_t glyphIndex;
-		float sharpness;
-		Colour colour;
+		Rect m_rect;
+		uint32_t m_glyphIndex;
+		float m_sharpness;
+		Colour m_colour;
 	};
 
 	struct HostGlyphInfo

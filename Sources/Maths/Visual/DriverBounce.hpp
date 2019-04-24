@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Maths.hpp"
-#include "IDriver.hpp"
+#include "Driver.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
  **/
 template<typename T>
 class DriverBounce :
-	public IDriver<T>
+	public Driver<T>
 {
 public:
 	/**
@@ -21,7 +21,7 @@ public:
 	 * @param length The length between two waves. 
 	 **/
 	DriverBounce(const T &start, const T &end, const Time &length) :
-		IDriver<T>(length),
+		Driver<T>(length),
 		m_start(start),
 		m_end(end)
 	{
@@ -56,7 +56,7 @@ protected:
 	{
 		float value = 0.5f + std::sin(Maths::Pi * 2.0f * factor) * 0.5f;
 
-		if (IDriver<T>::m_actualTime > IDriver<T>::GetLength() / 2.0f)
+		if (Driver<T>::m_actualTime > Driver<T>::GetLength() / 2.0f)
 		{
 			value = 0.0f;
 		}

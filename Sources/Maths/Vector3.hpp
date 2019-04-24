@@ -57,12 +57,13 @@ public:
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
+	 * @param z Start z.
 	 **/
 	template<typename K>
-	explicit Vector3(const Vector2<K> &source) :
+	explicit Vector3(const Vector2<K> &source, const float &z = 0) :
 		m_x(static_cast<T>(source.m_x)),
 		m_y(static_cast<T>(source.m_y)),
-		m_z(0)
+		m_z(z)
 	{
 	}
 

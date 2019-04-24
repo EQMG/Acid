@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IAxis.hpp"
+#include "Axis.hpp"
 
 namespace acid
 {
@@ -8,7 +8,7 @@ namespace acid
  * @brief Axis input from a joystick input device.
  */
 class ACID_EXPORT AxisJoystick :
-	public IAxis
+	public Axis
 {
 public:
 	/**

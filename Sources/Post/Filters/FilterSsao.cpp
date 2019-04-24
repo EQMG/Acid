@@ -38,7 +38,7 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	m_uniformScene.Push("cameraPosition", camera->GetPosition());
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", m_uniformScene);
+	m_descriptorSet.Push("UniformScene", m_uniformScene);
 	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	m_descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
 	m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));

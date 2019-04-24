@@ -83,8 +83,8 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", m_uniformScene);
-	m_descriptorSet.Push("Lights", m_storageLights);
+	m_descriptorSet.Push("UniformScene", m_uniformScene);
+	m_descriptorSet.Push("BufferLights", m_storageLights);
 	m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
 	m_descriptorSet.Push("samplerPosition", Renderer::Get()->GetAttachment("position"));
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));

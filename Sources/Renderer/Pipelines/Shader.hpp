@@ -28,9 +28,8 @@ public:
 	class VertexInput
 	{
 	public:
-		explicit VertexInput(const uint32_t &binding = 0, std::vector<VkVertexInputBindingDescription> bindingDescriptions = {},
+		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {},
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
-			m_binding(binding),
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions))
 		{
@@ -38,19 +37,15 @@ public:
 
 		void Decode(const Metadata &metadata)
 		{
-			metadata.GetChild("Binding", m_binding);
 			//metadata.GetChild("Binding Descriptions", m_bindingDescriptions);
 			//metadata.GetChild("Attribute Descriptions", m_attributeDescriptions);
 		}
 
 		void Encode(Metadata &metadata) const
 		{
-			metadata.SetChild("Binding", m_binding);
 			//metadata.SetChild("Binding Descriptions", m_bindingDescriptions);
 			//metadata.SetChild("Attribute Descriptions", m_attributeDescriptions);
 		}
-
-		const uint32_t &GetBinding() const { return m_binding; }
 
 		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
 
@@ -58,7 +53,7 @@ public:
 
 		bool operator<(const VertexInput &other) const
 		{
-			return m_binding < other.m_binding;
+			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
 		}
 
 	private:

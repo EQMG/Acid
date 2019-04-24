@@ -3,7 +3,6 @@
 #include "Maths/Vector3.hpp"
 #include "Renderer/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"
-#include "IVertex.hpp"
 
 namespace acid
 {
@@ -35,7 +34,7 @@ public:
 
 	/**
 	 * Creates a new model.
-	 * @tparam T The vertex class that implements {@link IVertex}.
+	 * @tparam T The vertex type.
 	 * @param vertices The model vertices.
 	 * @param indices The model indices.
 	 */
@@ -82,8 +81,6 @@ protected:
 	template<typename T>
 	void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
 	{
-		static_assert(std::is_base_of<IVertex, T>::value, "T must derive from IVertex!");
-
 		m_vertexBuffer = nullptr;
 		m_indexBuffer = nullptr;
 
@@ -126,7 +123,7 @@ protected:
 
 		for (const auto &vertex : vertices)
 		{
-			Vector3f position = vertex.GetPosition();
+			auto position = vertex.m_position;
 			m_minExtents = m_minExtents.Min(position);
 			m_maxExtents = m_maxExtents.Max(position);
 		}

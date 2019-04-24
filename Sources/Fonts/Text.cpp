@@ -62,8 +62,8 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", uniformScene);
-	m_descriptorSet.Push("UboObject", m_uniformObject);
+	m_descriptorSet.Push("UniformScene", uniformScene);
+	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_fontType->GetTexture());
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
@@ -92,14 +92,14 @@ void Text::SetString(const std::string &string)
 	}
 }
 
-void Text::SetBorderDriver(IDriver<float> *borderDriver)
+void Text::SetBorderDriver(Driver<float> *borderDriver)
 {
 	m_borderDriver.reset(borderDriver);
 	m_solidBorder = true;
 	m_glowBorder = false;
 }
 
-void Text::SetGlowDriver(IDriver<float> *glowDriver)
+void Text::SetGlowDriver(Driver<float> *glowDriver)
 {
 	m_glowDriver.reset(glowDriver);
 	m_solidBorder = false;
@@ -343,46 +343,28 @@ void Text::AddVertex(const float &vx, const float &vy, const float &tx, const fl
 
 void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexModel> &vertices) const
 {
-	auto minX = +std::numeric_limits<float>::infinity();
-	auto minY = +std::numeric_limits<float>::infinity();
-	auto maxX = -std::numeric_limits<float>::infinity();
-	auto maxY = -std::numeric_limits<float>::infinity();
+	auto min = Vector2f::PositiveInfinity;
+	auto max = Vector2f::NegativeInfinity;
 
 	for (const auto &vertex : vertices)
 	{
-		auto position = vertex.GetPosition();
-
-		if (position.m_x < minX)
-		{
-			minX = position.m_x;
-		}
-		else if (position.m_x > maxX)
-		{
-			maxX = position.m_x;
-		}
-
-		if (position.m_y < minY)
-		{
-			minY = position.m_y;
-		}
-		else if (position.m_y > maxY)
-		{
-			maxY = position.m_y;
-		}
+		auto position = Vector2f(vertex.m_position);
+		min = min.Min(position);
+		max = max.Max(position);
 	}
 
 	if (m_justify == Justify::Centre)
 	{
-		minX = 0.0f;
-		maxX = m_maxWidth;
+		min.m_x = 0.0f;
+		max.m_x = m_maxWidth;
 	}
 
-	//maxY = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
-	bounding = Vector2f((maxX - minX) / 2.0f, (maxY - minX) / 2.0f);
+	//max.m_y = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
+	bounding = (max - min) / 2.0f;
 
 	for (auto &vertex : vertices)
 	{
-		vertex.SetPosition(Vector3f((vertex.GetPosition().m_x - minX) / (maxX - minX), (vertex.GetPosition().m_y - minY) / (maxY - minY), 0.0f));
+		vertex.m_position = Vector3f((Vector2f(vertex.m_position) - min) / (max - min));
 	}
 }
 }

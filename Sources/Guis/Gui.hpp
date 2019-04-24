@@ -58,13 +58,13 @@ public:
 	 */
 	void SetNinePatches(const Vector4f &ninePatches) { m_ninePatches = ninePatches; }
 
-	IDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
+	Driver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
 
 	/**
 	 * Sets the colour offset driver.
 	 * @param colourDriver The new colour offset driver.
 	 */
-	void SetColourDriver(IDriver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
+	void SetColourDriver(Driver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
 
 	const Colour &GetColourOffset() const { return m_colourOffset; }
 
@@ -80,7 +80,7 @@ private:
 	Vector2f m_atlasScale;
 	Vector4f m_ninePatches; // TODO: Use UiBound
 
-	std::unique_ptr<IDriver<Colour>> m_colourDriver;
+	std::unique_ptr<Driver<Colour>> m_colourDriver;
 	Colour m_colourOffset;
 };
 }

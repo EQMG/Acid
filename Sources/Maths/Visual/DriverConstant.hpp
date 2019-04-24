@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IDriver.hpp"
+#include "Driver.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
 
 template<typename T>
 class DriverConstant :
-	public IDriver<T>
+	public Driver<T>
 {
 public:
 	/**
@@ -19,7 +19,7 @@ public:
 	 * @param constant The constant value. 
 	 **/
 	explicit DriverConstant(const T &constant) :
-		IDriver<T>(Time::Max),
+		Driver<T>(Time::Max),
 		m_constant(constant)
 	{
 	}

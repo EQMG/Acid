@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IAxis.hpp"
-#include "IButton.hpp"
+#include "Axis.hpp"
+#include "Button.hpp"
 
 namespace acid
 {
@@ -9,7 +9,7 @@ namespace acid
  * @brief Axis composed of two buttons.
  */
 class ACID_EXPORT AxisButton :
-	public IAxis
+	public Axis
 {
 public:
 	/**
@@ -22,7 +22,7 @@ public:
 	template<class T, typename... Args>
 	static AxisButton *Create(Args &&... args)
 	{
-		std::vector<IButton *> buttons;
+		std::vector<Button *> buttons;
 
 		for (const auto &x : { args... })
 		{
@@ -37,12 +37,12 @@ public:
 	 * @param negative When this button is down, the axis is negative.
 	 * @param positive When this button is down, the axis is positive.
 	 */
-	AxisButton(IButton *negative, IButton *positive);
+	AxisButton(Button *negative, Button *positive);
 
 	float GetAmount() const override;
 
 private:
-	std::unique_ptr<IButton> m_negative;
-	std::unique_ptr<IButton> m_positive;
+	std::unique_ptr<Button> m_negative;
+	std::unique_ptr<Button> m_positive;
 };
 }

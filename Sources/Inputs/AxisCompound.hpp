@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include "Helpers/NonCopyable.hpp"
-#include "IAxis.hpp"
+#include "Axis.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
  * @brief Combines multiple axes inputs into a single axis.
  */
 class ACID_EXPORT AxisCompound :
-	public IAxis,
+	public Axis,
 	public NonCopyable
 {
 public:
@@ -25,7 +25,7 @@ public:
 	template<class T, typename... Args>
 	static AxisCompound *Create(Args &&... args)
 	{
-		std::vector<IAxis *> axes;
+		std::vector<Axis *> axes;
 
 		for (const auto &x : { args... })
 		{
@@ -39,11 +39,11 @@ public:
 	 * Creates a new compound axis.
 	 * @param axes The axes on the being added.
 	 */
-	explicit AxisCompound(const std::vector<IAxis *> &axes);
+	explicit AxisCompound(const std::vector<Axis *> &axes);
 
 	float GetAmount() const override;
 
 private:
-	std::vector<std::unique_ptr<IAxis>> m_axes;
+	std::vector<std::unique_ptr<Axis>> m_axes;
 };
 }

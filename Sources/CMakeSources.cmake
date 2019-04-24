@@ -1,7 +1,6 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
-		Acid.hpp
-		Animations/Animation/Animation.hpp
+		Acid.hpp		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
 		Animations/Animator.hpp
 		Animations/Geometry/GeometryLoader.hpp
@@ -61,16 +60,16 @@ set(_temp_acid_headers
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeTraits.hpp
+		Inputs/Axis.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp
+		Inputs/Button.hpp
 		Inputs/ButtonCompound.hpp
 		Inputs/ButtonJoystick.hpp
 		Inputs/ButtonKeyboard.hpp
 		Inputs/ButtonMouse.hpp
 		Inputs/HatJoystick.hpp
-		Inputs/IAxis.hpp
-		Inputs/IButton.hpp
 		Inputs/InputDelay.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
@@ -92,18 +91,17 @@ set(_temp_acid_headers
 		Maths/Vector2.hpp
 		Maths/Vector3.hpp
 		Maths/Vector4.hpp
+		Maths/Visual/Driver.hpp
 		Maths/Visual/DriverBounce.hpp
 		Maths/Visual/DriverConstant.hpp
 		Maths/Visual/DriverFade.hpp
 		Maths/Visual/DriverLinear.hpp
 		Maths/Visual/DriverSinwave.hpp
 		Maths/Visual/DriverSlide.hpp
-		Maths/Visual/IDriver.hpp
 		Meshes/Mesh.hpp
 		Meshes/MeshRender.hpp
 		Meshes/RendererMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
-		Models/IVertex.hpp
 		Models/Model.hpp
 		Models/ModelRegister.hpp
 		Models/Obj/ModelObj.hpp
@@ -241,7 +239,6 @@ set(_temp_acid_sources
 		Animations/Animation/AnimationLoader.cpp
 		Animations/Animator.cpp
 		Animations/Geometry/GeometryLoader.cpp
-		Animations/Geometry/VertexAnimated.cpp
 		Animations/Joint/Joint.cpp
 		Animations/Joint/JointTransform.cpp
 		Animations/Keyframe/Keyframe.cpp
@@ -329,7 +326,6 @@ set(_temp_acid_sources
 		Models/Shapes/ModelDisk.cpp
 		Models/Shapes/ModelRectangle.cpp
 		Models/Shapes/ModelSphere.cpp
-		Models/VertexModel.cpp
 		Network/Ftp/Ftp.cpp
 		Network/Ftp/FtpDataChannel.cpp
 		Network/Ftp/FtpResponse.cpp

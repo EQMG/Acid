@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UboScene
+layout(binding = 0) uniform UniformScene
 {
 	mat4 view;
 	mat4 shadowSpace;
@@ -22,12 +22,12 @@ struct Light
 	float radius;
 };
 
-layout(binding = 1) buffer Lights
+layout(binding = 1) buffer BufferLights
 {
 	Light lights[];
-} lights;
+} bufferLights;
 
-layout(binding = 2) uniform sampler2D samplerShadows;
+//layout(binding = 2) uniform sampler2D samplerShadows;
 layout(binding = 3) uniform sampler2D samplerPosition;
 layout(binding = 4) uniform sampler2D samplerDiffuse;
 layout(binding = 5) uniform sampler2D samplerNormal;
@@ -124,7 +124,7 @@ vec3 specularContribution(vec3 diffuse, vec3 L, vec3 V, vec3 N, vec3 F0, float m
 	return colour;
 }
 
-float shadowFactor(vec4 shadowCoords)
+/*float shadowFactor(vec4 shadowCoords)
 {
 	vec3 ndc = shadowCoords.xyz /= shadowCoords.w;
 	
@@ -141,7 +141,7 @@ float shadowFactor(vec4 shadowCoords)
 	}
 
 	return 1.0f;
-}
+}*/
 
 void main()
 {
@@ -169,7 +169,7 @@ void main()
 
 		for (int i = 0; i < scene.lightsCount; i++)
 		{
-			Light light = lights.lights[i];
+			Light light = bufferLights.lights[i];
 			vec3 L = light.position - worldPosition;
 			float Dl = length(L);
 			L /= Dl;
@@ -196,8 +196,8 @@ void main()
 		outColour = vec4(ambient + Lo, 1.0f);
 
 		// Shadow mapping
-		vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
-		outColour *= shadowFactor(shadowCoords);
+		//vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
+		//outColour *= shadowFactor(shadowCoords);
 	}
 	else
 	{

@@ -90,21 +90,21 @@ void FontType::Update(const std::vector<Text *> &texts)
 				continue;
 			}
 
-			inst->rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			inst->rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
-			inst->rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			inst->rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			inst->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			inst->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			inst->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			inst->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
 			//inst->rect.minX = ((x + local.m_x) + gi->bbox.minX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.minY = ((y + local.m_y) - gi->bbox.minY * localScale) / (extent.m_y / 2.0f) - 1.0f;
 			//inst->rect.maxX = ((x + local.m_x) + gi->bbox.maxX * localScale) / (extent.m_x / 2.0f) - 1.0f;
 			//inst->rect.maxY = ((y + local.m_y) - gi->bbox.maxY * localScale) / (extent.m_y / 2.0f) - 1.0f;
 
-			if (inst->rect.minX <= 1.0f && inst->rect.maxX >= -1.0f && inst->rect.maxY <= 1.0f && inst->rect.minY >= -1.0f)
+			if (inst->m_rect.minX <= 1.0f && inst->m_rect.maxX >= -1.0f && inst->m_rect.maxY <= 1.0f && inst->m_rect.minY >= -1.0f)
 			{
-				inst->glyphIndex = glyphIndex;
-				inst->sharpness = scale.m_x;
-				inst->colour = text->GetTextColour();
+				inst->m_glyphIndex = glyphIndex;
+				inst->m_sharpness = scale.m_x;
+				inst->m_colour = text->GetTextColour();
 
 				m_instances++;
 			}
@@ -124,9 +124,9 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("GlyphBuffer", *m_storageGlyphs, OffsetSize(m_glyphInfoOffset, m_glyphInfoSize));
-	m_descriptorSet.Push("CellBuffer", *m_storageGlyphs, OffsetSize(m_glyphCellsOffset, m_glyphCellsSize));
-	m_descriptorSet.Push("PointBuffer", *m_storageGlyphs, OffsetSize(m_glyphPointsOffset, m_glyphPointsSize));
+	m_descriptorSet.Push("BufferGlyph", *m_storageGlyphs, OffsetSize(m_glyphInfoOffset, m_glyphInfoSize));
+	m_descriptorSet.Push("BufferCell", *m_storageGlyphs, OffsetSize(m_glyphCellsOffset, m_glyphCellsSize));
+	m_descriptorSet.Push("BufferPoint", *m_storageGlyphs, OffsetSize(m_glyphPointsOffset, m_glyphPointsSize));
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
 	if (!updateSuccess)
@@ -167,42 +167,18 @@ void FontType::Encode(Metadata &metadata) const
 	metadata.SetChild("Style", m_style);
 }
 
-Shader::VertexInput FontType::GetVertexInput(const uint32_t &binding)
+Shader::VertexInput FontType::GetVertexInput(const uint32_t &baseBinding)
 {
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
-
-	// The vertex input description.
-	bindingDescriptions[0].binding = binding;
-	bindingDescriptions[0].stride = sizeof(GlyphInstance);
-	bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
-
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
-
-	// Rectangle attribute.
-	attributeDescriptions[0].binding = binding;
-	attributeDescriptions[0].location = 0;
-	attributeDescriptions[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[0].offset = offsetof(GlyphInstance, rect);
-
-	// Glyph Index attribute.
-	attributeDescriptions[1].binding = binding;
-	attributeDescriptions[1].location = 1;
-	attributeDescriptions[1].format = VK_FORMAT_R32_UINT;
-	attributeDescriptions[1].offset = offsetof(GlyphInstance, glyphIndex);
-
-	// Sharpness attribute.
-	attributeDescriptions[2].binding = binding;
-	attributeDescriptions[2].location = 2;
-	attributeDescriptions[2].format = VK_FORMAT_R32_SFLOAT;
-	attributeDescriptions[2].offset = offsetof(GlyphInstance, sharpness);
-
-	// Colour attribute.
-	attributeDescriptions[3].binding = binding;
-	attributeDescriptions[3].location = 3;
-	attributeDescriptions[3].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-	attributeDescriptions[3].offset = offsetof(GlyphInstance, colour);
-
-	return Shader::VertexInput(binding, bindingDescriptions, attributeDescriptions);
+	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+		VkVertexInputBindingDescription{baseBinding, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE}
+	};
+	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+		VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, m_rect)},
+		VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, m_glyphIndex)},
+		VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, m_sharpness)},
+		VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, m_colour)}
+	};
+	return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 }
 
 uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)

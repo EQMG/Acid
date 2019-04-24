@@ -65,8 +65,8 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	auto &pipeline = *materialPipeline->GetPipeline();
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UboScene", uniformScene);
-	m_descriptorSet.Push("UboObject", m_uniformObject);
+	m_descriptorSet.Push("UniformScene", uniformScene);
+	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	material->PushDescriptors(m_descriptorSet);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
 

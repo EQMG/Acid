@@ -2,7 +2,7 @@
 
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
-#include "Maths/Visual/IDriver.hpp"
+#include "Maths/Visual/Driver.hpp"
 #include "Models/Model.hpp"
 #include "Models/VertexModel.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
@@ -144,21 +144,21 @@ public:
 	 */
 	void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
-	IDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
+	Driver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
 
 	/**
 	 * Sets the glow driver, will disable solid borders.
 	 * @param glowDriver The new glow driver.
 	 */
-	void SetGlowDriver(IDriver<float> *glowDriver);
+	void SetGlowDriver(Driver<float> *glowDriver);
 
-	IDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
+	Driver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
 	/**
 	 * Sets the border driver, will disable glowing.
 	 * @param borderDriver The new border driver.
 	 */
-	void SetBorderDriver(IDriver<float> *borderDriver);
+	void SetBorderDriver(Driver<float> *borderDriver);
 
 	/**
 	 * Disables both solid borders and glow borders.
@@ -312,10 +312,10 @@ private:
 	bool m_solidBorder;
 	bool m_glowBorder;
 
-	std::unique_ptr<IDriver<float>> m_glowDriver;
+	std::unique_ptr<Driver<float>> m_glowDriver;
 	float m_glowSize;
 
-	std::unique_ptr<IDriver<float>> m_borderDriver;
+	std::unique_ptr<Driver<float>> m_borderDriver;
 	float m_borderSize;
 };
 }

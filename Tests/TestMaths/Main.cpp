@@ -11,13 +11,13 @@
 #include <Maths/Vector4.hpp>
 #include <Maths/Transform.hpp>
 
-//#include <Helpers/RingBuffer.hpp>
+#include <Helpers/RingBuffer.hpp>
 
 using namespace acid;
 
 int main(int argc, char **argv)
 {
-	/*{
+	{
 		RingBuffer<int32_t> buffer(4);
 
 		if (!buffer.push(1, 2, 3, 4))
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 		{
 			return false;
 		}
-	}*/
+	}
 	{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
 		Log::Out("Colour Size: %i\n", static_cast<int>(sizeof(Colour)));

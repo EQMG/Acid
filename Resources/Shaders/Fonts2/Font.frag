@@ -4,15 +4,15 @@
 
 #define UDIST_BIAS 0.001f
 
-layout (binding = 1) buffer CellBuffer
+layout (binding = 1) buffer BufferCell
 {
 	uint cells[];
-} cellBuffer;
+} bufferCell;
 
-layout (binding = 2) buffer PointBuffer
+layout (binding = 2) buffer BufferPoint
 {
 	vec2 points[];
-} pointBuffer;
+} bufferPoint;
 
 layout(location = 0) in vec2 inGlyphPos;
 layout(location = 1) flat in uvec4 inCellInfo;
@@ -58,7 +58,7 @@ void processBezier2(vec2 p, uint i, inout float minUdist, inout float v)
 
 		if (udist >= minUdist - UDIST_BIAS)
 		{
-			vec2 prevp = pointBuffer.points[i - 2];
+			vec2 prevp = bufferPoint.points[i - 2];
 			float prevd = distToLine(p0, p2, prevp);
 			v = mix(min(bez, v), max(bez, v), step(prevd, 0.0f));
 		}
@@ -100,7 +100,7 @@ void main()
 {
 	uvec2 c = min(uvec2(inCellCoord), inCellInfo.zw - 1);
 	uint cellIndex = inCellInfo.y + inCellInfo.z * c.y + c.x;
-	uint cell = cellBuffer.cells[cellIndex];
+	uint cell = bufferCell.cells[cellIndex];
 
 	float v = cellSignedDist(inCellInfo.x, cell, inGlyphPos);
 	float alpha = clamp(v * inSharpness + 0.5f, 0.0f, 1.0f);

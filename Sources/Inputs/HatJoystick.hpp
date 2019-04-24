@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Devices/Joysticks.hpp"
-#include "IAxis.hpp"
-#include "IButton.hpp"
+#include "Axis.hpp"
+#include "Button.hpp"
 
 namespace acid
 {
@@ -10,8 +10,8 @@ namespace acid
  * @brief Button from a joystick.
  */
 class ACID_EXPORT HatJoystick :
-	public IAxis,
-	public IButton
+	public Axis,
+	public Button
 {
 public:
 	/**

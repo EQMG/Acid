@@ -4,35 +4,42 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
-#include "IVertex.hpp"
 
 namespace acid
 {
-class ACID_EXPORT VertexModel :
-	public IVertex
+class ACID_EXPORT VertexModel
 {
 public:
-	VertexModel(const Vector3f &position, const Vector2f &uv, const Vector3f &normal);
+	VertexModel(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
+		m_position(position),
+		m_uv(uv),
+		m_normal(normal)
+	{
+	}
 
-	const Vector3f &GetPosition() const override { return m_position; };
+	bool operator==(const VertexModel &other) const
+	{
+		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal;
+	}
 
-	void SetPosition(const Vector3f &position) override { m_position = position; };
+	bool operator!=(const VertexModel &other) const
+	{
+		return !(*this == other);
+	}
 
-	const Vector2f &GetUv() const { return m_uv; };
+	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+	{
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+			VkVertexInputBindingDescription{baseBinding, sizeof(VertexModel), VK_VERTEX_INPUT_RATE_VERTEX}
+		};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexModel, m_position)},
+			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexModel, m_uv)},
+			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexModel, m_normal)}
+		};
+		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+	}
 
-	void SetUv(const Vector2f &uv) { m_uv = uv; };
-
-	const Vector3f &GetNormal() const { return m_normal; };
-
-	void SetNormal(const Vector3f &normal) { m_normal = normal; };
-
-	bool operator==(const VertexModel &other) const;
-
-	bool operator!=(const VertexModel &other) const;
-
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
-
-private:
 	Vector3f m_position;
 	Vector2f m_uv;
 	Vector3f m_normal;
@@ -47,9 +54,9 @@ struct hash<acid::VertexModel>
 	size_t operator()(acid::VertexModel const &vertex) const noexcept
 	{
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vertex.GetPosition());
-		acid::Maths::HashCombine(seed, vertex.GetUv());
-		acid::Maths::HashCombine(seed, vertex.GetNormal());
+		acid::Maths::HashCombine(seed, vertex.m_position);
+		acid::Maths::HashCombine(seed, vertex.m_uv);
+		acid::Maths::HashCombine(seed, vertex.m_normal);
 		return seed;
 	}
 };

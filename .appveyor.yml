@@ -26,6 +26,7 @@ environment:
   MSVC_HOME: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community"
 
 install:
+  - ps: [Net.ServicePointManager]::SecurityProtocol = 'Ssl3, Tls, Tls11, Tls12'
   - git submodule update --init --recursive
   # Get Vulkan SDK
   - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe

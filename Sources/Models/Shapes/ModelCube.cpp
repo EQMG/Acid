@@ -88,7 +88,7 @@ void ModelCube::Load()
 
 	for (auto &vertex : vertices)
 	{
-		vertex.SetPosition(vertex.GetPosition() * m_extents);
+		vertex.m_position *= m_extents;
 	}
 
 	Initialize(vertices, indices);

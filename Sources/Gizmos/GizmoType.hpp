@@ -52,7 +52,7 @@ public:
 
 	void Encode(Metadata &metadata) const override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
+	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
 
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
@@ -67,10 +67,10 @@ public:
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
 private:
-	struct GizmoTypeData
+	struct GizmoTypeData // TODO: Convert into a IVertex!
 	{
-		Matrix4 modelMatrix;
-		Colour colour;
+		Matrix4 m_modelMatrix;
+		Colour m_colour;
 	};
 
 	std::shared_ptr<Model> m_model;

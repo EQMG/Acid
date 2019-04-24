@@ -2,7 +2,7 @@
 
 namespace acid
 {
-ButtonCompound::ButtonCompound(const std::vector<IButton *> &buttons, const bool &useAnd) :
+ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool &useAnd) :
 	m_useAnd(useAnd),
 	m_lastDown(false)
 {

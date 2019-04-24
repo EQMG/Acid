@@ -9,21 +9,21 @@ namespace acid
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class IDriver
+class Driver
 {
 public:
 	/**
 	 * Creates a new driver with a length.
 	 * @param length The drivers length. 
 	 **/
-	explicit IDriver(const Time &length) :
+	explicit Driver(const Time &length) :
 		m_length(length),
 		m_actualTime(Time::Zero),
 		m_currentTime(Time::Zero)
 	{
 	}
 
-	virtual ~IDriver() = default;
+	virtual ~Driver() = default;
 
 	/**
 	 * Updates the driver with the passed time.

@@ -2,44 +2,47 @@
 
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
-#include "Models/IVertex.hpp"
 #include "Renderer/Pipelines/Pipeline.hpp"
 
 namespace acid
 {
-class ACID_EXPORT VertexAnimated :
-	public IVertex
+class ACID_EXPORT VertexAnimated
 {
 public:
-	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight);
+	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight) :
+		m_position(position),
+		m_uv(uv),
+		m_normal(normal),
+		m_jointId(jointId),
+		m_vertexWeight(vertexWeight)
+	{
+	}
 
-	const Vector3f &GetPosition() const override { return m_position; };
+	bool operator==(const VertexAnimated &other) const
+	{
+		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal && m_jointId == other.m_jointId && m_vertexWeight == other.m_vertexWeight;
+	}
 
-	void SetPosition(const Vector3f &position) override { m_position = position; };
+	bool operator!=(const VertexAnimated &other) const
+	{
+		return !(*this == other);
+	}
 
-	const Vector2f &GetUv() const { return m_uv; };
+	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+	{
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+			VkVertexInputBindingDescription{baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX}
+		};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position)},
+			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv)},
+			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal)},
+			VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId)},
+			VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight)}
+		};
+		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+	}
 
-	void SetUv(const Vector2f &uv) { m_uv = uv; };
-
-	const Vector3f &GetNormal() const { return m_normal; };
-
-	void SetNormal(const Vector3f &normal) { m_normal = normal; };
-
-	const Vector3ui &GetJointId() const { return m_jointId; };
-
-	void SetJointId(const Vector3ui &jointId) { m_jointId = jointId; };
-
-	const Vector3f &GetVertexWeight() const { return m_vertexWeight; };
-
-	void SetVertexWeight(const Vector3f &vertexWeight) { m_vertexWeight = vertexWeight; };
-
-	bool operator==(const VertexAnimated &other) const;
-
-	bool operator!=(const VertexAnimated &other) const;
-
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0);
-
-private:
 	Vector3f m_position;
 	Vector2f m_uv;
 	Vector3f m_normal;
@@ -56,11 +59,11 @@ struct hash<acid::VertexAnimated>
 	size_t operator()(acid::VertexAnimated const &vertex) const noexcept
 	{
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vertex.GetPosition());
-		acid::Maths::HashCombine(seed, vertex.GetUv());
-		acid::Maths::HashCombine(seed, vertex.GetNormal());
-		acid::Maths::HashCombine(seed, vertex.GetJointId());
-		acid::Maths::HashCombine(seed, vertex.GetVertexWeight());
+		acid::Maths::HashCombine(seed, vertex.m_position);
+		acid::Maths::HashCombine(seed, vertex.m_uv);
+		acid::Maths::HashCombine(seed, vertex.m_normal);
+		acid::Maths::HashCombine(seed, vertex.m_jointId);
+		acid::Maths::HashCombine(seed, vertex.m_vertexWeight);
 		return seed;
 	}
 };

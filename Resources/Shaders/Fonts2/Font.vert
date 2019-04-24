@@ -2,7 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-struct GlyphInfo
+struct Glyph
 {
     vec4 bbox;
 
@@ -13,10 +13,10 @@ struct GlyphInfo
     uvec4 cellInfo;
 };
 
-layout(binding = 0) buffer GlyphBuffer
+layout(binding = 0) buffer BufferGlyph
 {
-	GlyphInfo glyphs[];
-} glyphBuffer;
+	Glyph glyphs[];
+} bufferGlyph;
 
 layout(location = 0) in vec4 inRect;
 layout(location = 1) in uint inGlyphIndex;
@@ -36,7 +36,7 @@ out gl_PerVertex
 
 void main()
 {
-    GlyphInfo gi = glyphBuffer.glyphs[inGlyphIndex];
+    Glyph gi = bufferGlyph.glyphs[inGlyphIndex];
 
     vec2 pos[4];
 	pos[0] = vec2(inRect.x, inRect.y);

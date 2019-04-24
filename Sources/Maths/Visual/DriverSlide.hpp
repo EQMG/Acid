@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IDriver.hpp"
+#include "Driver.hpp"
 
 namespace acid
 {
@@ -10,7 +10,7 @@ namespace acid
  **/
 template<typename T>
 class DriverSlide :
-	public IDriver<T>
+	public Driver<T>
 {
 public:
 	/**
@@ -20,7 +20,7 @@ public:
 	 * @param length The time to get to the end value. 
 	 **/
 	DriverSlide(const T &start, const T &end, const Time &length) :
-		IDriver<T>(length),
+		Driver<T>(length),
 		m_start(start),
 		m_end(end)
 	{
@@ -53,7 +53,7 @@ public:
 protected:
 	T Calculate(const float &factor) override
 	{
-		float realTime = std::min(IDriver<T>::m_actualTime, IDriver<T>::GetLength()) / IDriver<T>::GetLength();
+		float realTime = std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength();
 		return m_start + realTime * (m_end - m_start);
 		//return Maths::CosInterpolate(m_start, m_end, realTime);
 	}

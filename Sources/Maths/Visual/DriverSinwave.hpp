@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Maths.hpp"
-#include "IDriver.hpp"
+#include "Driver.hpp"
 
 namespace acid
 {
@@ -11,7 +11,7 @@ namespace acid
  **/
 template<typename T>
 class DriverSinwave :
-	public IDriver<T>
+	public Driver<T>
 {
 public:
 	/**
@@ -21,7 +21,7 @@ public:
 	 * @param length The length between two waves. 
 	 **/
 	DriverSinwave(const T &min, const T &max, const Time &length) :
-		IDriver<T>(length),
+		Driver<T>(length),
 		m_min(min),
 		m_max(max)
 	{

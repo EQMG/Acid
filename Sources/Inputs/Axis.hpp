@@ -8,10 +8,10 @@ namespace acid
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_EXPORT IAxis
+class ACID_EXPORT Axis
 {
 public:
-	virtual ~IAxis() = default;
+	virtual ~Axis() = default;
 
 	/**
 	 * Gets the current value along the axis. -1 is smallest input, 1 is largest input.
