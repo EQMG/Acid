@@ -30,7 +30,7 @@ HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMas
 				m_onButton(InputAction::Repeat, 0);
 			}
 		}
-	}, std::ref(*static_cast<Button*>(this)));
+	}, static_cast<Button *>(this));
 }
 
 float HatJoystick::GetAmount() const

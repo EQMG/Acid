@@ -19,7 +19,7 @@ public:
 			m_scalar += a;
 			printf("%s, %f => %p\n", m_message.c_str(), m_scalar * static_cast<float>(i), static_cast<void*>(this));
 		};
-		delegate.Add(std::move(function), std::ref(*this));
+		delegate.Add(std::move(function), this);
 	}
 
 	~Object1()

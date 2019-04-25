@@ -9,7 +9,7 @@ AxisCompound::AxisCompound(const std::vector<Axis *> &axes)
 		axis->OnAxis().Add([this](float value)
 		{
 			m_onAxis(GetAmount());
-		}, std::ref(*this));
+		}, this);
 
 		m_axes.emplace_back(axis);
 	}

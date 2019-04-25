@@ -11,7 +11,7 @@ ButtonKeyboard::ButtonKeyboard(const Key &key) :
 		{
 			m_onButton(action, mods);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 bool ButtonKeyboard::IsDown() const

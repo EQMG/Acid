@@ -75,7 +75,7 @@ public:
 						}
 					}
 				}
-			}, std::ref(*this), std::ref(*input));
+			}, this);
 		}
 	}
 

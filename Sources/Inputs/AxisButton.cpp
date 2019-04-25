@@ -9,11 +9,11 @@ AxisButton::AxisButton(Button *negative, Button *positive) :
 	m_negative->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
-	}, std::ref(*this));
+	}, this);
 	m_positive->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
-	}, std::ref(*this));
+	}, this);
 }
 
 float AxisButton::GetAmount() const

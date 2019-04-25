@@ -26,7 +26,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
 			m_scroll.GetRectangle().SetPosition(position);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 void UiScrollBar::UpdateObject()

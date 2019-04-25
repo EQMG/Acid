@@ -11,7 +11,7 @@ ButtonMouse::ButtonMouse(const MouseButton &button) :
 		{
 			m_onButton(action, mods);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 bool ButtonMouse::IsDown() const

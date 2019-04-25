@@ -36,7 +36,7 @@ Sound::Sound(const std::string &filename, const Transform &localTransform, const
 		{
 			SetGain(m_gain);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 Sound::~Sound()

@@ -47,7 +47,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			m_inputDelay.Update(true);
 			SetUpdating(false);
 		}
-	}, std::ref(*this));
+	}, this);
 	Keyboard::Get()->OnChar().Add([this](char c)
 	{
 		if (!m_updating)
@@ -72,7 +72,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			m_inputDelay.Update(false);
 			m_lastKey = 0;
 		}
-	}, std::ref(*this));
+	}, this);
 
 	OnSelected().Add([this](bool selected)
 	{

@@ -14,7 +14,7 @@ ButtonJoystick::ButtonJoystick(const uint32_t &port, const uint32_t &button) :
 		{
 			m_onButton(action, 0);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 bool ButtonJoystick::IsDown() const

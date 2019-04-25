@@ -34,7 +34,7 @@ UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colou
 	{
 		auto standard = m_resize == Resize::Left || m_resize == Resize::Right ? CursorStandard::ResizeX : CursorStandard::ResizeY;
 		Mouse::Get()->SetCursor(selected ? standard : CursorStandard::Arrow);
-	}, std::ref(*this));
+	}, this);
 }
 
 void UiPanel::UpdateObject()

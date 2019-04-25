@@ -26,7 +26,7 @@ ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool 
 			{
 				m_onButton(InputAction::Repeat, 0);
 			}
-		}, std::ref(*this));
+		}, this);
 
 		m_buttons.emplace_back(button);
 	}

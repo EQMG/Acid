@@ -15,7 +15,7 @@ AxisJoystick::AxisJoystick(const uint32_t &port, const uint32_t &axis, const boo
 		{
 			m_onAxis(value);
 		}
-	}, std::ref(*this));
+	}, this);
 }
 
 float AxisJoystick::GetAmount() const

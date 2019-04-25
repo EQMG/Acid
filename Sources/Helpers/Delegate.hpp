@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mutex>
-#include "StdAfx.hpp"
+#include "TypeTraits.hpp"
 
 namespace acid
 {
@@ -12,16 +12,13 @@ class ACID_EXPORT Observer
 {
 public:
 	Observer() :
-		m_deleted(false)
+		m_valid(std::make_shared<bool>(true))
 	{
 	}
 
-	virtual ~Observer()
-	{
-		m_deleted = true;
-	}
+	virtual ~Observer() = default;
 
-	bool m_deleted;
+	std::shared_ptr<bool> m_valid;
 };
 
 template<typename TReturnType, typename... TArgs>
@@ -37,13 +34,13 @@ public:
 
 		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
-			if (it->IsDeleted())
+			if (it->IsExpired())
 			{
 				it = delegate.m_functions.erase(it);
 				continue;
 			}
 
-			returnValues.emplace_back((*it->function)(params...));
+			returnValues.emplace_back((*it->m_function)(params...));
 			++it;
 		}
 
@@ -68,13 +65,13 @@ public:
 
 		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
-			if (it->IsDeleted())
+			if (it->IsExpired())
 			{
 				it = delegate.m_functions.erase(it);
 				continue;
 			}
 
-			it->function(params...);
+			it->m_function(params...);
 			++it;
 		}
 	}
@@ -86,17 +83,18 @@ class Delegate<TReturnType(TArgs ...)>
 public:
 	using Invoker = acid::Invoker<TReturnType, TArgs...>;
 	using FunctionType = std::function<TReturnType(TArgs ...)>;
-	using FunctionObserver = std::reference_wrapper<Observer>;
+	using ObserversType = std::vector<std::weak_ptr<bool>>;
+
 	struct FunctionPair
 	{
-		FunctionType function;
-		std::vector<FunctionObserver> observers;
+		FunctionType m_function;
+		ObserversType m_observers;
 
-		bool IsDeleted()
+		bool IsExpired()
 		{
-			for (const auto &observer : observers)
+			for (const auto &observer : m_observers)
 			{
-				if (observer.get().m_deleted)
+				if (observer.expired())
 				{
 					return true;
 				}
@@ -109,12 +107,22 @@ public:
 	Delegate() = default;
 
 	virtual ~Delegate() = default;
-
+	
 	template<typename... KArgs>
-	void Add(FunctionType &&function, KArgs ...observers)
+	void Add(FunctionType &&function, KArgs ...args)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
-		m_functions.emplace_back(FunctionPair{ std::move(function), { std::forward<KArgs>(observers)... } });
+		ObserversType observers;
+
+		if constexpr (sizeof...(args) != 0)
+		{
+			for (const auto &arg : { args... })
+			{
+				observers.emplace_back(TypeTraits::AsPtr(arg)->m_valid);
+			}
+		}
+
+		m_functions.emplace_back(FunctionPair{ std::move(function), observers });
 	}
 
 	void Remove(const FunctionType &function)
@@ -122,7 +130,7 @@ public:
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functions.erase(std::remove_if(m_functions.begin(), m_functions.end(), [function](FunctionPair &f)
 		{
-			return Hash(f.function) == Hash(function);
+			return Hash(f.m_function) == Hash(function);
 		}), m_functions.end());
 	}
 
