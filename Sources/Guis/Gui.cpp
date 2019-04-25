@@ -62,10 +62,10 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	}
 
 	VkRect2D scissorRect = {};
-	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetSize().m_x * GetScissor().m_x);
-	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetSize().m_y * GetScissor().m_y);
-	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetSize().m_x * GetScissor().m_z);
-	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetSize().m_y * GetScissor().m_w);
+	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_x);
+	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_y);
+	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_z);
+	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_w);
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.

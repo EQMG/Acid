@@ -120,7 +120,7 @@ void Image::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const u
 	CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_extent, layerCount, baseArrayLayer);
 }
 
-std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, uint32_t &width, uint32_t &height, uint32_t &components, VkFormat &format)
+std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector2ui &extent, uint32_t &components, VkFormat &format)
 {
 	auto fileLoaded = Files::Read(filename);
 
@@ -131,8 +131,8 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, uint32
 	}
 
 	std::unique_ptr<uint8_t[]> pixels(
-		stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), reinterpret_cast<int32_t *>(&width),
-			reinterpret_cast<int32_t *>(&height), reinterpret_cast<int32_t *>(&components), STBI_rgb_alpha));
+		stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), reinterpret_cast<int32_t *>(&extent.m_x),
+			reinterpret_cast<int32_t *>(&extent.m_y), reinterpret_cast<int32_t *>(&components), STBI_rgb_alpha));
 
 	// STBI_rgb_alpha converts the loaded image to a 32 bit image, if another loader is used components and format may differ.
 	components = 4;
@@ -146,9 +146,9 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, uint32
 	return pixels;
 }
 
-void Image::WritePixels(const std::string &filename, const uint8_t *pixels, const int32_t &width, const int32_t &height, const int32_t &components)
+void Image::WritePixels(const std::string &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
 {
-	int32_t result = stbi_write_png(filename.c_str(), width, height, components, pixels, width * components);
+	int32_t result = stbi_write_png(filename.c_str(), extent.m_x, extent.m_y, components, pixels, extent.m_x * components);
 
 	if (result != 1)
 	{

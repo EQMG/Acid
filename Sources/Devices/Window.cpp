@@ -238,11 +238,10 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 
 	for (const auto &filename : filenames)
 	{
-		uint32_t width = 0;
-		uint32_t height = 0;
-		uint32_t components = 0;
-		VkFormat format = VK_FORMAT_UNDEFINED;
-		auto data = Image::LoadPixels(filename, width, height, components, format);
+		Vector2ui extent;
+		uint32_t components;
+		VkFormat format;
+		auto data = Image::LoadPixels(filename, extent, components, format);
 
 		if (data == nullptr)
 		{
@@ -250,8 +249,8 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 		}
 
 		GLFWimage icon = {};
-		icon.width = width;
-		icon.height = height;
+		icon.width = extent.m_x;
+		icon.height = extent.m_y;
 		icon.pixels = data.get();
 		icons.emplace_back(icon);
 		pixels.emplace_back(std::move(data));

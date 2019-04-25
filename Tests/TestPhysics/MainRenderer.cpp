@@ -22,6 +22,7 @@
 #include <Post/Pipelines/PipelineBlur.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Shadows/RendererShadows.hpp>
+#include "Devices/Keyboard.hpp"
 
 namespace test
 {
@@ -68,7 +69,7 @@ void MainRenderer::Start()
 	rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
 	rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
 
-	rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+	//rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
 	//rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
 	//rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
 	//auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
@@ -78,7 +79,7 @@ void MainRenderer::Start()
 	//rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
 	//rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
 	//rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
+	//rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
 	//rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
 	rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
 	//rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
@@ -91,8 +92,18 @@ void MainRenderer::Update()
 	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
 	//renderpassCreate0->GetViewport().SetSize(Vector2ui(Shadows::Get()->GetShadowSize()));
 
-	//auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
-	//renderpassCreate1->GetViewport().SetScale(0.75f);
+	auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
+
+	if (Keyboard::Get()->GetKey(Key::L) != InputAction::Release)
+	{
+		renderpassCreate1->GetViewport().SetScale(Vector2f::One);
+		renderpassCreate1->GetViewport().SetOffset(Vector2ui::Zero);
+	}
+	else
+	{
+		renderpassCreate1->GetViewport().SetScale(Vector2f(0.6f, 0.6f));
+		renderpassCreate1->GetViewport().SetOffset(Vector2ui(100, 100));
+	}
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 }

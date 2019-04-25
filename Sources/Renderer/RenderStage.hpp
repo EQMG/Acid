@@ -80,6 +80,48 @@ private:
 	std::vector<uint32_t> m_attachmentBindings;
 };
 
+class ACID_EXPORT RenderArea
+{
+public:
+	explicit RenderArea(const Vector2ui &extent = Vector2ui::Zero, const Vector2i &offset = Vector2ui::Zero) :
+		m_extent(extent),
+		m_offset(offset),
+		m_aspectRatio(1.0f)
+	{
+	}
+
+	const Vector2ui &GetExtent() const { return m_extent; }
+
+	void SetExtent(const Vector2ui &extent) { m_extent = extent; }
+
+	const Vector2i &GetOffset() const { return m_offset; }
+
+	void SetOffset(const Vector2i &offset) { m_offset = offset; }
+	
+	/**
+	 * Gets the aspect ratio between the render stages width and height.
+	 * @return The aspect ratio.
+	 */
+	const float &GetAspectRatio() const { return m_aspectRatio; }
+	
+	void SetAspectRatio(const float &aspectRatio) { m_aspectRatio = aspectRatio; }
+	
+	bool operator==(const RenderArea &other) const
+	{
+		return m_extent == other.m_extent && m_offset == other.m_offset;
+	}
+
+	bool operator!=(const RenderArea &other) const
+	{
+		return !(*this == other);
+	}
+
+private:
+	Vector2ui m_extent;
+	Vector2i m_offset;
+	float m_aspectRatio;
+};
+
 class ACID_EXPORT Viewport
 {
 public:
@@ -136,17 +178,11 @@ public:
 	void SetViewport(const Viewport &viewport) { m_viewport = viewport; }
 
 	/**
-	 * Gets the size of the render stage in pixels.
-	 * @return The size of the render stage.
+	 * Gets the render stage viewport.
+	 * @return The the render stage viewport.
 	 */
-	const Vector2ui &GetSize() const { return m_size; }
-
-	/**
-	 * Gets the aspect ratio between the render stages width and height.
-	 * @return The aspect ratio.
-	 */
-	const float &GetAspectRatio() const { return m_aspectRatio; }
-
+	const RenderArea &GetRenderArea() const { return m_renderArea; }
+	
 	/**
 	 * Gets if the width or height has changed between the last update and now.
 	 * @return If the width or height has changed.
@@ -193,8 +229,7 @@ private:
 	std::optional<Attachment> m_swapchainAttachment;
 	std::vector<bool> m_subpassMultisampled;
 
-	Vector2ui m_size;
-	float m_aspectRatio;
+	RenderArea m_renderArea;
 	bool m_outOfDate;
 };
 }

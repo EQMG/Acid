@@ -210,15 +210,6 @@ public:
 	}
 
 	/**
-	 * Negates this vector.
-	 * @return The negated vector. 
-	 **/
-	auto Negate() const
-	{
-		return Vector2<decltype(-m_x)>(-m_x, -m_y);
-	}
-
-	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector. 
 	 **/
@@ -432,9 +423,16 @@ public:
 		return !(*this == other);
 	}
 
-	Vector2 operator-() const
+	template<typename U = T>
+	std::enable_if_t<std::is_signed_v<U>, Vector2> operator-() const
 	{
-		return Negate();
+		return Vector2(-m_x, -m_y);
+	}
+
+	template<typename U = T>
+	std::enable_if_t<std::is_integral_v<U>, Vector2> operator~() const
+	{
+		return Vector2(~m_x, ~m_y);
 	}
 
 	const T &operator[](const uint32_t &index) const
@@ -596,6 +594,54 @@ template<typename K, typename J>
 auto operator/(const Vector2<K> &left, const J &right)
 {
 	return left.Divide(Vector2<J>(right));
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator&(const Vector2<K> &left, const Vector2<J> &right)
+{
+	return Vector2<J>(left.m_x & right.m_x, left.m_y & right.m_y);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator|(const Vector2<K> &left, const Vector2<J> &right)
+{
+	return Vector2<J>(left.m_x | right.m_x, left.m_y | right.m_y);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator>>(const Vector2<K> &left, const Vector2<J> &right)
+{
+	return Vector2<J>(left.m_x >> right.m_x, left.m_y >> right.m_y);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator<<(const Vector2<K> &left, const Vector2<J> &right)
+{
+	return Vector2<J>(left.m_x << right.m_x, left.m_y << right.m_y);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator&(const Vector2<K> &left, const J &right)
+{
+	return Vector2<J>(left.m_x & right, left.m_y & right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator|(const Vector2<K> &left, const J &right)
+{
+	return Vector2<J>(left.m_x | right, left.m_y | right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator>>(const Vector2<K> &left, const J &right)
+{
+	return Vector2<J>(left.m_x >> right, left.m_y >> right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator<<(const Vector2<K> &left, const J &right)
+{
+	return Vector2<J>(left.m_x << right, left.m_y << right);
 }
 
 using Vector2f = Vector2<float>;

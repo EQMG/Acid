@@ -77,7 +77,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 		ssaoNoise[i] = noise;
 	}
 
-	auto noiseImage = std::make_shared<Image2d>(size, size, std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32_SFLOAT,
+	auto noiseImage = std::make_shared<Image2d>(Vector2ui(size), std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32_SFLOAT,
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
 #if defined(ACID_VERBOSE)

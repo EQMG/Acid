@@ -399,7 +399,7 @@ Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
 	result = result.Rotate(rotation.m_y, Vector3f::Up);
 	result = result.Rotate(rotation.m_z, Vector3f::Front);
-	result = result.Translate(position.Negate());
+	result = result.Translate(-position);
 	return result;
 }
 

@@ -48,8 +48,7 @@ public:
 
 	/**
 	 * Creates a new 2D image.
-	 * @param width The images width.
-	 * @param height The images height.
+	 * @param extent The images extent in pixels.
 	 * @param pixels The initial pixels to use in the Image. {@link Image2d#GetPixels} to get a copy of the pixels, and {@link Image2d#SetPixels} to set the pixels.
 	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param layout The layout that the image subresources accessible from.
@@ -60,7 +59,7 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	Image2d(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+	Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
@@ -112,9 +111,7 @@ public:
 
 	const uint32_t &GetComponents() const { return m_components; }
 
-	const uint32_t &GetWidth() const { return m_width; }
-
-	const uint32_t &GetHeight() const { return m_height; }
+	const Vector2ui &GetExtent() const { return m_extent; }
 
 	const uint32_t &GetMipLevels() const { return m_mipLevels; }
 
@@ -140,7 +137,7 @@ private:
 	VkImageUsageFlags m_usage;
 
 	uint32_t m_components;
-	uint32_t m_width, m_height;
+	Vector2ui m_extent;
 	std::unique_ptr<uint8_t[]> m_loadPixels;
 	uint32_t m_mipLevels;
 

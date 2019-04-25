@@ -3,6 +3,7 @@
 #include "Maths/Vector2.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"
+#include "Renderer/RenderStage.hpp"
 
 namespace acid
 {
@@ -63,18 +64,11 @@ public:
 	const Image2d *GetImage(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
 	/**
-	 * Gets the size of the render stage in pixels.
+	 * Gets the render stage viewport.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The size of the render stage.
+	 * @return The the render stage viewport.
 	 */
-	Vector2ui GetSize(const std::optional<uint32_t> &stage = {}) const;
-
-	/**
-	 * Gets the aspect ratio between the render stages width and height.
-	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The aspect ratio.
-	 */
-	float GetAspectRatio(const std::optional<uint32_t> &stage = {}) const;
+	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = {}) const;
 
 	const Stage &GetStage() const { return m_stage; }
 

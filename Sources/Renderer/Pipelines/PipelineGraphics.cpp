@@ -95,14 +95,9 @@ const Image2d *PipelineGraphics::GetImage(const uint32_t &index, const std::opti
 	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 }
 
-Vector2ui PipelineGraphics::GetSize(const std::optional<uint32_t> &stage) const
+RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage) const
 {
-	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetSize();
-}
-
-float PipelineGraphics::GetAspectRatio(const std::optional<uint32_t> &stage) const
-{
-	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetAspectRatio();
+	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetRenderArea();
 }
 
 void PipelineGraphics::CreateShaderProgram()

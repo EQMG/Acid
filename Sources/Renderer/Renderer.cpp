@@ -239,11 +239,11 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 	auto debugStart = Engine::GetTime();
 #endif
 
-	auto size = Window::Get()->GetSize();
+	auto extent = Window::Get()->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { size.m_x, size.m_y, 1 },
+	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { extent.m_x, extent.m_y, 1 },
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
@@ -268,7 +268,7 @@ void Renderer::CaptureScreenshot(const std::string &filename)
 
 	// Creates the screenshot image file and writes to it.
 	FileSystem::ClearFile(filename);
-	Image::WritePixels(filename, pixels.get(), size.m_x, size.m_y);
+	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Engine::GetTime();
@@ -411,8 +411,8 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	}
 
 	VkRect2D renderArea = {};
-	renderArea.offset = { 0, 0 };
-	renderArea.extent = { renderStage.GetSize().m_x, renderStage.GetSize().m_y };
+	renderArea.offset = { renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y };
+	renderArea.extent = { renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y };
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
@@ -424,7 +424,7 @@ bool Renderer::StartRenderpass(RenderStage &renderStage)
 	vkCmdSetViewport(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &viewport);
 
 	VkRect2D scissor = {};
-	scissor.offset = { 0, 0 };
+	scissor.offset = renderArea.offset;
 	scissor.extent = renderArea.extent;
 	vkCmdSetScissor(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &scissor);
 

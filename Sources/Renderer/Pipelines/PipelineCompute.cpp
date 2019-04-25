@@ -47,12 +47,11 @@ PipelineCompute::~PipelineCompute()
 	vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
 }
 
-bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const
+void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const
 {
-	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(width) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
-	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(height) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
+	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_x) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
+	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_y) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
 	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
-	return true;
 }
 
 void PipelineCompute::CreateShaderProgram()

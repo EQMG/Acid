@@ -230,15 +230,6 @@ public:
 	}*/
 
 	/**
-	 * Negates this vector.
-	 * @return The negated vector.
-	 **/
-	auto Negate() const
-	{
-		return Vector3<decltype(-m_x)>(-m_x, -m_y, -m_z);
-	}
-
-	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
 	 **/
@@ -444,9 +435,16 @@ public:
 		return !(*this == other);
 	}
 
-	Vector3 operator-() const
+	template<typename U = T>
+	std::enable_if_t<std::is_signed_v<U>, Vector3> operator-() const
 	{
-		return Negate();
+		return Vector3(-m_x, -m_y, -m_z);;
+	}
+
+	template<typename U = T>
+	std::enable_if_t<std::is_integral_v<U>, Vector3> operator~() const
+	{
+		return Vector3(~m_x, ~m_y, ~m_z);
 	}
 
 	const T &operator[](const uint32_t &index) const
@@ -614,6 +612,54 @@ template<typename K, typename J>
 auto operator/(const Vector3<K> &left, const J &right)
 {
 	return left.Divide(Vector3<J>(right));
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator&(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return Vector3<J>(left.m_x & right.m_x, left.m_y & right.m_y, left.m_z & right.m_z);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator|(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return Vector3<J>(left.m_x | right.m_x, left.m_y | right.m_y, left.m_z | right.m_z);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator>>(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return Vector3<J>(left.m_x >> right.m_x, left.m_y >> right.m_y, left.m_z >> right.m_z);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator<<(const Vector3<K> &left, const Vector3<J> &right)
+{
+	return Vector3<J>(left.m_x << right.m_x, left.m_y << right.m_y, left.m_z << right.m_z);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator&(const Vector3<K> &left, const J &right)
+{
+	return Vector3<J>(left.m_x & right, left.m_y & right, left.m_z & right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator|(const Vector3<K> &left, const J &right)
+{
+	return Vector3<J>(left.m_x | right, left.m_y | right, left.m_z | right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator>>(const Vector3<K> &left, const J &right)
+{
+	return Vector3<J>(left.m_x >> right, left.m_y >> right, left.m_z >> right);
+}
+
+template<typename K, typename J>
+std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator<<(const Vector3<K> &left, const J &right)
+{
+	return Vector3<J>(left.m_x << right, left.m_y << right, left.m_z << right);
 }
 
 using Vector3f = Vector3<float>;

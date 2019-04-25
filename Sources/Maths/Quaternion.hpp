@@ -99,12 +99,6 @@ public:
 	Quaternion Scale(const float &scalar) const;
 
 	/**
-	 * Negates this quaternion.
-	 * @return The negated quaternion. 
-	 **/
-	Quaternion Negate() const;
-
-	/**
 	 * Normalizes this quaternion.
 	 * @return The normalized quaternion. 
 	 **/

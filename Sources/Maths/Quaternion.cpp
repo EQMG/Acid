@@ -167,11 +167,6 @@ Quaternion Quaternion::Scale(const float &scalar) const
 	return Quaternion(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
 }
 
-Quaternion Quaternion::Negate() const
-{
-	return Quaternion(-m_x, -m_y, -m_z, -m_w);
-}
-
 Quaternion Quaternion::Normalize() const
 {
 	float l = Length();
@@ -289,7 +284,7 @@ bool Quaternion::operator==(const Quaternion &other) const
 
 Quaternion Quaternion::operator-() const
 {
-	return Negate();
+	return Quaternion(-m_x, -m_y, -m_z, -m_w);
 }
 
 const float &Quaternion::operator[](const uint32_t &index) const
