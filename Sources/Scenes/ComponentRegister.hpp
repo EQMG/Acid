@@ -24,6 +24,7 @@ public:
 		if (m_components.find(name) != m_components.end())
 		{
 			Log::Error("Component '%s' is already registered!\n", name.c_str());
+			Remove(name);
 			return;
 		}
 

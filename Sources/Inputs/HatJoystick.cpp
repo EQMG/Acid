@@ -8,7 +8,7 @@ HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMas
 	m_hatFlags(hatFlags),
 	m_lastDown(false)
 {
-	Joysticks::Get()->OnHat() += [this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value)
+	Joysticks::Get()->OnHat().Add([this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value)
 	{
 		if (port == m_port && hat == m_hat)
 		{
@@ -30,7 +30,7 @@ HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMas
 				m_onButton(InputAction::Repeat, 0);
 			}
 		}
-	};
+	}, std::ref(*static_cast<Button*>(this)));
 }
 
 float HatJoystick::GetAmount() const

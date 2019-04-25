@@ -39,14 +39,14 @@ MainGame::MainGame() :
 	Files::Get()->AddSearchPath("Resources/Engine");
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
-	m_buttonFullscreen.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
-	};
-	m_buttonScreenshot.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -55,14 +55,14 @@ MainGame::MainGame() :
 				Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
 			});
 		}
-	};
-	m_buttonExit.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Engine::Get()->RequestClose(false);
 		}
-	};
+	});
 
 	// Registers modules.
 	auto &moduleManager = Engine::Get()->GetModuleManager();

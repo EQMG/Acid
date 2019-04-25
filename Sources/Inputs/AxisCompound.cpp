@@ -6,10 +6,10 @@ AxisCompound::AxisCompound(const std::vector<Axis *> &axes)
 {
 	for (const auto &axis : axes)
 	{
-		axis->OnAxis() += [this](float value)
+		axis->OnAxis().Add([this](float value)
 		{
 			m_onAxis(GetAmount());
-		};
+		}, std::ref(*this));
 
 		m_axes.emplace_back(axis);
 	}

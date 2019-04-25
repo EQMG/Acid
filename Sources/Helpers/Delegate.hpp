@@ -1,18 +1,33 @@
 #pragma once
 
 #include <mutex>
-#include <vector>
-#include <algorithm>
-#include <functional>
+#include "StdAfx.hpp"
 
 namespace acid
 {
 template<typename>
 class Delegate;
 
-template<typename TReturnType, typename... TArgs>
-struct Invoker
+class ACID_EXPORT Observer
 {
+public:
+	Observer() :
+		m_deleted(false)
+	{
+	}
+
+	virtual ~Observer()
+	{
+		m_deleted = true;
+	}
+
+	bool m_deleted;
+};
+
+template<typename TReturnType, typename... TArgs>
+class Invoker
+{
+public:
 	using ReturnType = std::vector<TReturnType>;
 
 	static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params)
@@ -20,9 +35,16 @@ struct Invoker
 		std::lock_guard<std::mutex> lock(delegate.m_mutex);
 		ReturnType returnValues;
 
-		for (const auto &functionPtr : delegate.m_functionList)
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
-			returnValues.emplace_back((*functionPtr)(params...));
+			if (it->IsDeleted())
+			{
+				it = delegate.m_functions.erase(it);
+				continue;
+			}
+
+			returnValues.emplace_back((*it->function)(params...));
+			++it;
 		}
 
 		return returnValues;
@@ -30,23 +52,31 @@ struct Invoker
 };
 
 template<typename... TArgs>
-struct Invoker<void, TArgs...>
+class Invoker<void, TArgs...>
 {
+public:
 	using ReturnType = void;
 
 	static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params)
 	{
 		std::lock_guard<std::mutex> lock(delegate.m_mutex);
 
-		if (delegate.m_functionList.empty())
+		if (delegate.m_functions.empty())
 		{
 			return;
 		}
 
-		std::for_each(delegate.m_functionList.begin(), delegate.m_functionList.end(), [&](auto &f)
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
-			f(params...);
-		});
+			if (it->IsDeleted())
+			{
+				it = delegate.m_functions.erase(it);
+				continue;
+			}
+
+			it->function(params...);
+			++it;
+		}
 	}
 };
 
@@ -56,50 +86,50 @@ class Delegate<TReturnType(TArgs ...)>
 public:
 	using Invoker = acid::Invoker<TReturnType, TArgs...>;
 	using FunctionType = std::function<TReturnType(TArgs ...)>;
+	using FunctionObserver = std::reference_wrapper<Observer>;
+	struct FunctionPair
+	{
+		FunctionType function;
+		std::vector<FunctionObserver> observers;
+
+		bool IsDeleted()
+		{
+			for (const auto &observer : observers)
+			{
+				if (observer.get().m_deleted)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+	};
 
 	Delegate() = default;
 
 	virtual ~Delegate() = default;
 
-	Delegate &Add(FunctionType &&function)
+	template<typename... KArgs>
+	void Add(FunctionType &&function, KArgs ...observers)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
-		m_functionList.emplace_back(function);
-		return *this;
+		m_functions.emplace_back(FunctionPair{ std::move(function), { std::forward<KArgs>(observers)... } });
 	}
 
-	Delegate &Remove(const FunctionType function)
+	void Remove(const FunctionType &function)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
-
-		m_functionList.remove_if([&](FunctionType &f)
+		m_functions.erase(std::remove_if(m_functions.begin(), m_functions.end(), [function](FunctionPair &f)
 		{
-			return Hash(f) == Hash(function);
-		});
-
-		return *this;
+			return Hash(f.function) == Hash(function);
+		}), m_functions.end());
 	}
 
-	typename Invoker::ReturnType Invoke(TArgs ... args)
-	{
-		return Invoker::Invoke(*this, args...);
-	}
-
-	Delegate &Clear()
+	void Clear()
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
-		m_functionList.clear();
-		return *this;
-	}
-
-	Delegate &operator+=(FunctionType &&function)
-	{
-		return Add(std::move(function));
-	}
-
-	Delegate &operator-=(const FunctionType function)
-	{
-		return Remove(function);
+		m_functions.clear();
 	}
 
 	typename Invoker::ReturnType operator()(TArgs ... args)
@@ -116,6 +146,6 @@ private:
 	}
 
 	std::mutex m_mutex;
-	std::vector<FunctionType> m_functionList;
+	std::vector<FunctionPair> m_functions;
 };
 }

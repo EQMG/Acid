@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCylinder :
 	public Collider
 {
 public:
-	explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCylinder();
 

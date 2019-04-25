@@ -30,11 +30,11 @@ UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colou
 		break;
 	}
 
-	m_resizeHandle.OnSelected() += [this](bool selected)
+	m_resizeHandle.OnSelected().Add([this](bool selected)
 	{
 		auto standard = m_resize == Resize::Left || m_resize == Resize::Right ? CursorStandard::ResizeX : CursorStandard::ResizeY;
 		Mouse::Get()->SetCursor(selected ? standard : CursorStandard::Arrow);
-	};
+	}, std::ref(*this));
 }
 
 void UiPanel::UpdateObject()

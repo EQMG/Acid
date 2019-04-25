@@ -25,12 +25,12 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	GetRectangle().SetSize(Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : PrimaryColour,
 			SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
+	});
 }
 
 void UiInputButton::UpdateObject()

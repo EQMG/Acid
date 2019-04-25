@@ -20,10 +20,10 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	GetRectangle().SetSize(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
+	});
 }
 
 void UiInputGrabber::UpdateObject()
@@ -75,7 +75,7 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 {
 	UpdateValue();
 
-	Joysticks::Get()->OnButton() += [this](uint32_t port, uint32_t button, InputAction action)
+	Joysticks::Get()->OnButton().Add([this](uint32_t port, uint32_t button, InputAction action)
 	{
 		if (!m_updating || port != m_port)
 		{
@@ -86,7 +86,7 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 		m_onValue(m_port, m_value);
 		SetUpdating(false);
 		UpdateValue();
-	};
+	});
 }
 
 void UiGrabberJoystick::SetValue(const uint32_t &value)
@@ -102,7 +102,7 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 {
 	UpdateValue();
 
-	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_updating)
 		{
@@ -113,7 +113,7 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 		m_onValue(m_value);
 		SetUpdating(false);
 		UpdateValue();
-	};
+	});
 }
 
 void UiGrabberKeyboard::SetValue(const Key &value)
@@ -129,7 +129,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 {
 	UpdateValue();
 
-	Mouse::Get()->OnButton() += [this](MouseButton button, InputAction action, BitMask<InputMod> mods)
+	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_updating)
 		{
@@ -150,7 +150,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 		m_onValue(m_value);
 		SetUpdating(false);
 		UpdateValue();
-	};
+	});
 }
 
 void UiGrabberMouse::SetValue(const MouseButton &value)

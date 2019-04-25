@@ -8,7 +8,8 @@ namespace acid
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT Button
+class ACID_EXPORT Button :
+	public Observer
 {
 public:
 	virtual ~Button() = default;

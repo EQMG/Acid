@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterLine :
 	public Emitter
 {
 public:
-	explicit EmitterLine(const float &length = 1.0f, const Vector3f &axis = Vector3f::Right, const Transform &localTransform = Transform::Identity);
+	explicit EmitterLine(const float &length = 1.0f, const Vector3f &axis = Vector3f::Right, const Transform &localTransform = Transform::Zero);
 
 	void Start() override;
 

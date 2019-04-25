@@ -20,7 +20,7 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound 
 	m_icon.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
 	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetSize().m_y, 0.5f));
 
-	OnClick() += [this](MouseButton button)
+	OnClick().Add([this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -39,7 +39,7 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound 
 
 			m_onCollapsed(this, m_collapsed);
 		}
-	};
+	});
 }
 
 void UiSection::UpdateObject()

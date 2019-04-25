@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCube :
 	public Collider
 {
 public:
-	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCube();
 

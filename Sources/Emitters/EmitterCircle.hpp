@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterCircle :
 	public Emitter
 {
 public:
-	explicit EmitterCircle(const float &radius = 1.0f, const Vector3f &heading = Vector3f::Up, const Transform &localTransform = Transform::Identity);
+	explicit EmitterCircle(const float &radius = 1.0f, const Vector3f &heading = Vector3f::Up, const Transform &localTransform = Transform::Zero);
 
 	void Start() override;
 

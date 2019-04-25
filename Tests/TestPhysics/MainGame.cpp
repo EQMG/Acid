@@ -59,14 +59,14 @@ MainGame::MainGame() :
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();
 
-	m_buttonFullscreen.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
-	};
-	m_buttonScreenshot.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -75,14 +75,14 @@ MainGame::MainGame() :
 				Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
 			});
 		}
-	};
-	m_buttonExit.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Engine::Get()->RequestClose(false);
 		}
-	};
+	});
 
 	// Registers modules.
 	auto &moduleManager = Engine::Get()->GetModuleManager();

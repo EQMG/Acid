@@ -20,7 +20,7 @@ public:
 	 * @param radius How far the light will have influence (-1 sets this to a directional light).
 	 * @param localTransform The local transform from the parents space.
 	 */
-	explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f, const Transform &localTransform = Transform::Identity);
+	explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f, const Transform &localTransform = Transform::Zero);
 
 	void Start() override;
 

@@ -46,7 +46,7 @@ Metadata *Metadata::AddChild(Metadata *child)
 
 void Metadata::RemoveChild(Metadata *child)
 {
-	m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [&](std::unique_ptr<Metadata> &c)
+	m_children.erase(std::remove_if(m_children.begin(), m_children.end(), [child](std::unique_ptr<Metadata> &c)
 	{
 		return c.get() == child;
 	}), m_children.end());

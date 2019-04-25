@@ -22,13 +22,13 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateValue();
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
 			UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
-	OnClick() += [this](MouseButton button)
+	});
+	OnClick().Add([this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -37,7 +37,7 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 			m_onValue(m_value);
 			UpdateValue();
 		}
-	};
+	});
 }
 
 void UiInputBoolean::UpdateObject()

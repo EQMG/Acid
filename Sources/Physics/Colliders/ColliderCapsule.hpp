@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCapsule :
 	public Collider
 {
 public:
-	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCapsule();
 

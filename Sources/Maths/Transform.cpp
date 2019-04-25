@@ -4,7 +4,7 @@
 
 namespace acid
 {
-const Transform Transform::Identity = Transform(Vector3f::Zero, Vector3f::Zero, Vector3f::One);
+const Transform Transform::Zero = Transform(Vector3f::Zero, Vector3f::Zero, Vector3f::One);
 
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scaling) :
 	m_position(position),
@@ -19,14 +19,6 @@ Transform::Transform(const Vector3f &position, const Vector3f &rotation, const f
 	m_rotation(rotation),
 	m_scaling(scale, scale, scale),
 	m_dirty(true)
-{
-}
-
-void Transform::Start()
-{
-}
-
-void Transform::Update()
 {
 }
 

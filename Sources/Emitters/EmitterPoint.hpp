@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterPoint :
 	public Emitter
 {
 public:
-	explicit EmitterPoint(const Transform &localTransform = Transform::Identity);
+	explicit EmitterPoint(const Transform &localTransform = Transform::Zero);
 
 	void Start() override;
 

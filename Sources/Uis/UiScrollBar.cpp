@@ -18,7 +18,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 	m_updating(false),
 	m_mouseOver(false)
 {
-	Mouse::Get()->OnScroll() += [this](Vector2f wheelDelta)
+	Mouse::Get()->OnScroll().Add([this](Vector2f wheelDelta)
 	{
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled())
 		{
@@ -26,7 +26,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
 			m_scroll.GetRectangle().SetPosition(position);
 		}
-	};
+	}, std::ref(*this));
 }
 
 void UiScrollBar::UpdateObject()

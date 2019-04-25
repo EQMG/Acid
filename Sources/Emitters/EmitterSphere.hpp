@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterSphere :
 	public Emitter
 {
 public:
-	explicit EmitterSphere(const float &radius = 1.0f, const Transform &localTransform = Transform::Identity);
+	explicit EmitterSphere(const float &radius = 1.0f, const Transform &localTransform = Transform::Zero);
 
 	void Start() override;
 

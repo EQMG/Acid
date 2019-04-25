@@ -4,8 +4,8 @@ namespace test
 {
 Panels::Panels(UiObject *parent) :
 	UiObject(parent, UiBound::Screen),
-	m_hierarchy(Hierarchy(this)),
-	m_inspector(Inspector(this))
+	m_hierarchy(this),
+	m_inspector(this)
 {
 }
 

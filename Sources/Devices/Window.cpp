@@ -33,7 +33,7 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 			}
 		}
 
-		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [&](std::unique_ptr<Monitor> &m)
+		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [monitor](std::unique_ptr<Monitor> &m)
 		{
 			return monitor == m->GetMonitor();
 		}));

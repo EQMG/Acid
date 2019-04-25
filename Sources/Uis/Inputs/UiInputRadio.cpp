@@ -22,13 +22,13 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetSize().m_y, 0.5f));
 	UpdateValue();
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
 			UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
-	OnClick() += [this](MouseButton button)
+	});
+	OnClick().Add([this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -38,7 +38,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 			UpdateValue();
 			m_onValue(m_value);
 		}
-	};
+	});
 }
 
 void UiInputRadio::UpdateObject()

@@ -23,7 +23,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 	GetRectangle().SetSize(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
-	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
 		if (!m_updating)
 		{
@@ -47,8 +47,8 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			m_inputDelay.Update(true);
 			SetUpdating(false);
 		}
-	};
-	Keyboard::Get()->OnChar() += [this](char c)
+	}, std::ref(*this));
+	Keyboard::Get()->OnChar().Add([this](char c)
 	{
 		if (!m_updating)
 		{
@@ -72,12 +72,12 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 			m_inputDelay.Update(false);
 			m_lastKey = 0;
 		}
-	};
+	}, std::ref(*this));
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
+	});
 }
 
 void UiInputText::UpdateObject()

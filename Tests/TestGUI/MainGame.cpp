@@ -40,7 +40,7 @@ MainGame::MainGame() :
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
 
 	// Watches all files in the working directory.
-	m_fileWatcher.OnChange() += [](std::string path, FileWatcher::Status status)
+	m_fileWatcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
 	{
 		switch (status)
 		{
@@ -54,16 +54,16 @@ MainGame::MainGame() :
 			Log::Out("Erased '%s'\n", path.c_str());
 			break;
 		}
-	};
+	});
 
-	m_buttonFullscreen.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
-	};
-	m_buttonScreenshot.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -72,14 +72,14 @@ MainGame::MainGame() :
 				Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
 			});
 		}
-	};
-	m_buttonExit.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Engine::Get()->RequestClose(false);
 		}
-	};
+	});
 
 	// Registers modules.
 	auto &moduleManager = Engine::Get()->GetModuleManager();
