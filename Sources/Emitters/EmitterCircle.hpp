@@ -14,10 +14,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	Vector3f GeneratePosition() const override;
 
 	const float &GetRadius() const { return m_radius; }
@@ -27,6 +23,10 @@ public:
 	const Vector3f &GetHeading() const { return m_heading; }
 
 	void SetHeading(const Vector3f &heading) { m_heading = heading; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterCircle& emitter);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterCircle& emitter);
 
 private:
 	float m_radius;

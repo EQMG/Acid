@@ -21,13 +21,15 @@ void HeightDespawn::Update()
 	}
 }
 
-void HeightDespawn::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, HeightDespawn& heightDespawn)
 {
-	m_removeHeight = metadata.GetChild<float>("Remove Height");
+	metadata.GetChild("Remove Height", heightDespawn.m_removeHeight);
+	return metadata;
 }
 
-void HeightDespawn::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const HeightDespawn& heightDespawn)
 {
-	metadata.SetChild<float>("Remove Height", m_removeHeight);
+	metadata.SetChild("Remove Height", heightDespawn.m_removeHeight);
+	return metadata;
 }
 }

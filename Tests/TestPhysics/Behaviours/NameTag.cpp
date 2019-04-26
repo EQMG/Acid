@@ -45,13 +45,15 @@ void NameTag::Update()
 	m_text.SetWorldTransform(m_transform);
 }
 
-void NameTag::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, NameTag& nameTag)
 {
-	m_heightOffset = metadata.GetChild<float>("Height Offset");
+	metadata.GetChild("Height Offset", nameTag.m_heightOffset);
+	return metadata;
 }
 
-void NameTag::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const NameTag& nameTag)
 {
-	metadata.SetChild<float>("Height Offset", m_heightOffset);
+	metadata.SetChild("Height Offset", nameTag.m_heightOffset);
+	return metadata;
 }
 }

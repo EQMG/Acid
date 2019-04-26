@@ -14,13 +14,13 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
 
 	bool operator<(const MeshRender &other) const;
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MeshRender& meshRender);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MeshRender& meshRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

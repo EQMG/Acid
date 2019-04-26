@@ -16,7 +16,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 
 	auto result = std::make_shared<PipelineMaterial>();
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;*/
 	return nullptr;
@@ -26,7 +26,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 {
 	auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 
 	auto resource = Resources::Get()->Find(metadata);
 
@@ -37,7 +37,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 
 	auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	//result->Decode(metadata);
+	//metadata >> *result;
 	//result->Load();
 	return result;
 }
@@ -69,17 +69,20 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 	return true;
 }
 
-void PipelineMaterial::Decode(const Metadata &metadata)
+
+const Metadata& operator>>(const Metadata& metadata, PipelineMaterial& pipeline)
 {
-	metadata.GetChild("Renderpass", m_pipelineStage.first);
-	metadata.GetChild("Subpass", m_pipelineStage.second);
-	metadata.GetChild("Pipeline Create", m_pipelineCreate);
+	metadata.GetChild("Renderpass", pipeline.m_pipelineStage.first);
+	metadata.GetChild("Subpass", pipeline.m_pipelineStage.second);
+	metadata.GetChild("Pipeline Create", pipeline.m_pipelineCreate);
+	return metadata;
 }
 
-void PipelineMaterial::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const PipelineMaterial& pipeline)
 {
-	metadata.SetChild("Renderpass", m_pipelineStage.first);
-	metadata.SetChild("Subpass", m_pipelineStage.second);
-	metadata.SetChild("Pipeline Create", m_pipelineCreate);
+	metadata.SetChild("Renderpass", pipeline.m_pipelineStage.first);
+	metadata.SetChild("Subpass", pipeline.m_pipelineStage.second);
+	metadata.SetChild("Pipeline Create", pipeline.m_pipelineCreate);
+	return metadata;
 }
 }

@@ -18,14 +18,6 @@ void ShadowRender::Update()
 {
 }
 
-void ShadowRender::Decode(const Metadata &metadata)
-{
-}
-
-void ShadowRender::Encode(Metadata &metadata) const
-{
-}
-
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	// Update push constants.
@@ -52,5 +44,15 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	m_pushObject.BindPush(commandBuffer, pipeline);
 	return mesh->GetModel()->CmdRender(commandBuffer);
+}
+
+const Metadata& operator>>(const Metadata& metadata, ShadowRender& shadowRender)
+{
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const ShadowRender& shadowRender)
+{
+	return metadata;
 }
 }

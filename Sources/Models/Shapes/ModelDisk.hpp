@@ -40,9 +40,9 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelDisk& model);
 
-	void Encode(Metadata &metadata) const override;
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelDisk& model);
 
 private:
 	float m_innerRadius;

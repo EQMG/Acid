@@ -27,20 +27,6 @@ void ColliderCylinder::Update()
 	Collider::Update();
 }
 
-void ColliderCylinder::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Local Transform", m_localTransform);
-	metadata.GetChild("Radius", m_radius);
-	metadata.GetChild("Height", m_height);
-}
-
-void ColliderCylinder::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Local Transform", m_localTransform);
-	metadata.SetChild("Radius", m_radius);
-	metadata.SetChild("Height", m_height);
-}
-
 btCollisionShape *ColliderCylinder::GetCollisionShape() const
 {
 	return m_shape.get();
@@ -58,5 +44,21 @@ void ColliderCylinder::SetHeight(const float &height)
 	m_height = height;
 	m_shape->setImplicitShapeDimensions(btVector3(m_radius, m_height / 2.0f, m_radius));
 	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
+}
+
+const Metadata& operator>>(const Metadata& metadata, ColliderCylinder& collider)
+{
+	metadata.GetChild("Local Transform", collider.m_localTransform);
+	metadata.GetChild("Radius", collider.m_radius);
+	metadata.GetChild("Height", collider.m_height);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const ColliderCylinder& collider)
+{
+	metadata.SetChild("Local Transform", collider.m_localTransform);
+	metadata.SetChild("Radius", collider.m_radius);
+	metadata.SetChild("Height", collider.m_height);
+	return metadata;
 }
 }

@@ -38,22 +38,6 @@ public:
 	{
 	}
 
-	/**
-	 * Used to decode this component from a loaded data format.
-	 * @param metadata The metadata to decode from.
-	 */
-	virtual void Decode(const Metadata &metadata)
-	{
-	}
-
-	/**
-	 * Used to encode this component into a data format.
-	 * @param metadata The metadata to encode into.
-	 */
-	virtual void Encode(Metadata &metadata) const
-	{
-	}
-
 	const bool &IsEnabled() const { return m_enabled; };
 
 	void SetEnabled(const bool &enable) { m_enabled = enable; }
@@ -74,6 +58,18 @@ public:
 	 */
 	void SetParent(Entity *parent) { m_parent = parent; }
 
+	friend const Metadata& operator>>(const Metadata& metadata, Component& component)
+	{
+		// TODO: Virtual?
+		return metadata;
+	}
+
+	friend Metadata& operator<<(Metadata& metadata, const Component& component)
+	{
+		// TODO: Virtual?
+		return metadata;
+	}
+
 private:
 	friend class Entity;
 	bool m_started;
@@ -81,4 +77,5 @@ private:
 	bool m_removed;
 	Entity *m_parent;
 };
+
 }

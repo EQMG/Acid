@@ -24,18 +24,6 @@ void MaterialSkybox::Update()
 {
 }
 
-void MaterialSkybox::Decode(const Metadata &metadata)
-{
-	metadata.GetResource("Image", m_image);
-	metadata.GetChild("Base Colour", m_baseColour);
-}
-
-void MaterialSkybox::Encode(Metadata &metadata) const
-{
-	metadata.SetResource("Image", m_image);
-	metadata.SetChild("Base Colour", m_baseColour);
-}
-
 void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 {
 	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
@@ -48,5 +36,19 @@ void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
 	descriptorSet.Push("samplerColour", m_image);
+}
+
+const Metadata& operator>>(const Metadata& metadata, MaterialSkybox& material)
+{
+	metadata.GetResource("Image", material.m_image);
+	metadata.GetChild("Base Colour", material.m_baseColour);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const MaterialSkybox& material)
+{
+	metadata.SetResource("Image", material.m_image);
+	metadata.SetChild("Base Colour", material.m_baseColour);
+	return metadata;
 }
 }

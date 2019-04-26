@@ -24,10 +24,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	void Play(const bool &loop = false);
 
 	void Pause();
@@ -61,6 +57,10 @@ public:
 	const float &GetPitch() const { return m_pitch; }
 
 	void SetPitch(const float &pitch);
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Sound& sound);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Sound& sound);
 
 private:
 	std::shared_ptr<SoundBuffer> m_soundBuffer;

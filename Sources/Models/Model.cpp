@@ -54,14 +54,6 @@ void Model::Load()
 {
 }
 
-void Model::Decode(const Metadata &metadata)
-{
-}
-
-void Model::Encode(Metadata &metadata) const
-{
-}
-
 std::vector<float> Model::GetPointCloud() const
 {
 	if (m_vertexBuffer == nullptr)
@@ -87,5 +79,17 @@ std::vector<float> Model::GetPointCloud() const
 	}
 
 	return pointCloud;
+}
+
+const Metadata& operator>>(const Metadata& metadata, Model& model)
+{
+	// TODO: Virtual?
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const Model& model)
+{
+	// TODO: Virtual?
+	return metadata;
 }
 }

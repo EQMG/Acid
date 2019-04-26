@@ -23,7 +23,7 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
 	//auto metadata = Metadata();
-	//m_pipeline.GetShader()->Encode(metadata);
+	//metadata << *m_pipeline.GetShader();
 	//File("Shaders/Deferred.json", new Json(&metadata)).Write();
 }
 

@@ -28,10 +28,6 @@ public:
 	 */
 	Transform(const Vector3f &position, const Vector3f &rotation, const float &scale);
 
-	void Decode(const Metadata &metadata);
-
-	void Encode(Metadata &metadata) const;
-
 	/**
 	 * Multiplies this transform with another transform.
 	 * @param other The other transform.
@@ -57,6 +53,8 @@ public:
 
 	void SetDirty(const bool &dirty) const;
 
+	std::string ToString() const;
+
 	bool operator==(const Transform &other) const;
 
 	bool operator!=(const Transform &other) const;
@@ -65,9 +63,11 @@ public:
 
 	Transform &operator*=(const Transform &other);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Transform& transform);
 
-	std::string ToString() const;
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Transform& transform);
+
+	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 
 	static const Transform Zero;
 private:

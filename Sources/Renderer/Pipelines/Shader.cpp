@@ -147,22 +147,24 @@ void Shader::ProcessShader()
 	}
 }
 
-void Shader::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, Shader& shader)
 {
-	metadata.GetChild("Name", m_name);
-	metadata.GetChild("Uniforms", m_uniforms);
-	metadata.GetChild("Uniform Blocks", m_uniformBlocks);
-	metadata.GetChild("Attributes", m_attributes);
-	//metadata.GetChild("Local Sizes", m_localSizes);
+	metadata.GetChild("Name", shader.m_name);
+	metadata.GetChild("Uniforms", shader.m_uniforms);
+	metadata.GetChild("Uniform Blocks", shader.m_uniformBlocks);
+	metadata.GetChild("Attributes", shader.m_attributes);
+	//metadata.GetChild("Local Sizes", shader.m_localSizes);
+	return metadata;
 }
 
-void Shader::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const Shader& shader)
 {
-	metadata.SetChild("Name", m_name);
-	metadata.SetChild("Uniforms", m_uniforms);
-	metadata.SetChild("Uniform Blocks", m_uniformBlocks);
-	metadata.SetChild("Attributes", m_attributes);
-	//metadata.SetChild("Local Sizes", m_localSizes);
+	metadata.SetChild("Name", shader.m_name);
+	metadata.SetChild("Uniforms", shader.m_uniforms);
+	metadata.SetChild("Uniform Blocks", shader.m_uniformBlocks);
+	metadata.SetChild("Attributes", shader.m_attributes);
+	//metadata.SetChild("Local Sizes", shader.m_localSizes);
+	return metadata;
 }
 
 VkFormat Shader::GlTypeToVk(const int32_t &type)

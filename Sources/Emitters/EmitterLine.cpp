@@ -20,22 +20,24 @@ void EmitterLine::Update()
 {
 }
 
-void EmitterLine::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Length", m_length);
-	metadata.GetChild("Axis", m_axis);
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void EmitterLine::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Length", m_length);
-	metadata.SetChild("Axis", m_axis);
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 Vector3f EmitterLine::GeneratePosition() const
 {
 	return m_axis * m_length * Maths::Random(-0.5f, 0.5f);
+}
+
+const Metadata& operator>>(const Metadata& metadata, EmitterLine& emitter)
+{
+	metadata.GetChild("Length", emitter.m_length);
+	metadata.GetChild("Axis", emitter.m_axis);
+	metadata.GetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const EmitterLine& emitter)
+{
+	metadata.SetChild("Length", emitter.m_length);
+	metadata.SetChild("Axis", emitter.m_axis);
+	metadata.SetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
 }
 }

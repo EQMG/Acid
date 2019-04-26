@@ -49,12 +49,14 @@ void Terrain::Update()
 	}
 }
 
-void Terrain::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, Terrain& terrain)
 {
+	return metadata;
 }
 
-void Terrain::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const Terrain& terrain)
 {
+	return metadata;
 }
 
 uint32_t Terrain::CalculateVertexCount(const float &sideLength, const float &squareSize)

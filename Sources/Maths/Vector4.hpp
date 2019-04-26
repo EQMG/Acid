@@ -365,22 +365,6 @@ public:
 	
 	void SetW(const T &w) { m_w = w; }
 
-	void Decode(const Metadata &metadata)
-	{
-		metadata.GetChild("x", m_x);
-		metadata.GetChild("y", m_y);
-		metadata.GetChild("z", m_z);
-		metadata.GetChild("w", m_w);
-	}
-
-	void Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("x", m_x);
-		metadata.SetChild("y", m_y);
-		metadata.SetChild("z", m_z);
-		metadata.SetChild("w", m_w);
-	}
-
 	std::string ToString() const
 	{
 		std::stringstream stream;

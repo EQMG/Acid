@@ -19,9 +19,9 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
+	friend const Metadata& operator>>(const Metadata& metadata, PlayerFps& player);
 
-	void Encode(Metadata &metadata) const override;
+	friend Metadata& operator<<(Metadata& metadata, const PlayerFps& player);
 
 private:
 	Vector3f m_velocity;

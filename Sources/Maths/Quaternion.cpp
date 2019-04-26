@@ -260,20 +260,12 @@ Vector3f Quaternion::ToEuler() const
 	return result * Maths::RadToDeg;
 }
 
-void Quaternion::Decode(const Metadata &metadata)
+std::string Quaternion::ToString() const
 {
-	metadata.GetChild("x", m_x);
-	metadata.GetChild("y", m_y);
-	metadata.GetChild("z", m_z);
-	metadata.GetChild("w", m_w);
-}
-
-void Quaternion::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("x", m_x);
-	metadata.SetChild("y", m_y);
-	metadata.SetChild("z", m_z);
-	metadata.SetChild("w", m_w);
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
+	return stream.str();
 }
 
 bool Quaternion::operator==(const Quaternion &other) const
@@ -366,17 +358,27 @@ Quaternion &Quaternion::operator*=(const float &other)
 	return *this = Scale(other);
 }
 
+const Metadata& operator>>(const Metadata& metadata, Quaternion& quaternion)
+{
+	metadata.GetChild("x", quaternion.m_x);
+	metadata.GetChild("y", quaternion.m_y);
+	metadata.GetChild("z", quaternion.m_z);
+	metadata.GetChild("w", quaternion.m_w);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const Quaternion& quaternion)
+{
+	metadata.SetChild("x", quaternion.m_x);
+	metadata.SetChild("y", quaternion.m_y);
+	metadata.SetChild("z", quaternion.m_z);
+	metadata.SetChild("w", quaternion.m_w);
+	return metadata;
+}
+
 std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion)
 {
 	stream << quaternion.ToString();
 	return stream;
-}
-
-std::string Quaternion::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
-	return stream.str();
 }
 }

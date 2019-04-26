@@ -18,10 +18,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	btCollisionShape *GetCollisionShape() const override;
 
 	const float &GetRadius() const { return m_radius; }
@@ -31,6 +27,10 @@ public:
 	const float &GetHeight() const { return m_height; }
 
 	void SetHeight(const float &height);
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ColliderCapsule& collider);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderCapsule& collider);
 
 private:
 	btCapsuleShape *m_shape;

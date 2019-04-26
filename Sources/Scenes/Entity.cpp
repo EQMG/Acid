@@ -33,7 +33,7 @@ Entity::Entity(const std::string &filename, const Transform &transform) :
 			continue;
 		}
 
-		component->Decode(*child);
+		*child >> *component;
 		AddComponent(component);
 	}
 

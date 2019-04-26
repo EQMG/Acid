@@ -23,10 +23,6 @@ public:
 
 	void Load(); // override
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	const std::shared_ptr<Model> &GetModel() const override { return m_model; }
 
 	Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const override { return VertexAnimated::GetVertexInput(binding); }
@@ -34,6 +30,10 @@ public:
 	void SetModel(const std::shared_ptr<Model> &model) override { m_model = model; }
 
 	const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MeshAnimated& meshAnimated);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MeshAnimated& meshAnimated);
 
 	static const uint32_t MaxJoints;
 	static const uint32_t MaxWeights;

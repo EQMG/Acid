@@ -21,7 +21,7 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<GizmoType>(nullptr);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -30,7 +30,7 @@ std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model
 {
 	auto temp = GizmoType(model, lineThickness, colour);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -110,17 +110,20 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 	return true;
 }
 
-void GizmoType::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, GizmoType& gizmoType)
 {
-	metadata.GetResource("Model", m_model);
-	metadata.GetChild("Line Thickness", m_lineThickness);
-	metadata.GetChild("Colour", m_colour);
+	metadata.GetResource("Model", gizmoType.m_model);
+	metadata.GetChild("Line Thickness", gizmoType.m_lineThickness);
+	metadata.GetChild("Colour", gizmoType.m_colour);
+	return metadata;
 }
 
-void GizmoType::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const GizmoType& gizmoType)
 {
-	metadata.SetResource("Model", m_model);
-	metadata.SetChild("Line Thickness", m_lineThickness);
-	metadata.SetChild("Colour", m_colour);
+	metadata.SetResource("Model", gizmoType.m_model);
+	metadata.SetChild("Line Thickness", gizmoType.m_lineThickness);
+	metadata.SetChild("Colour", gizmoType.m_colour);
+	return metadata;
+
 }
 }

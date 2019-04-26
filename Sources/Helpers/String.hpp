@@ -1,7 +1,7 @@
 #pragma once
 
 #include <locale>
-#include "TypeTraits.hpp"
+#include "ConstExpr.hpp"
 
 namespace acid
 {
@@ -173,7 +173,7 @@ public:
 		{
 			return str;
 		}
-		else if constexpr (TypeTraits::is_optional<T>::value)
+		else if constexpr (is_optional_v<T>)
 		{
 			typedef typename T::value_type base_type;
 			base_type temp;

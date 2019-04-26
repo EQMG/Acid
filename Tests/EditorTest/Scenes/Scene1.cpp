@@ -97,7 +97,7 @@ Scene1::Scene1() :
 					entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
 					auto transformNode = entityNode->AddChild(new Metadata("Transform"));
 					auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-					entity->GetLocalTransform().Encode(*transformNode);
+					*transformNode << entity->GetLocalTransform();
 
 					for (auto &component : entity->GetComponents())
 					{
@@ -111,7 +111,7 @@ Scene1::Scene1() :
 						if (componentName)
 						{
 							auto child = componentsNode->AddChild(new Metadata(*componentName));
-							component->Encode(*child);
+							*child << component;
 						}
 					}
 				}

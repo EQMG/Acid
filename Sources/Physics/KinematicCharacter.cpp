@@ -96,34 +96,6 @@ void KinematicCharacter::Update()
 	m_angularVelocity = Collider::Convert(m_controller->getAngularVelocity());
 }
 
-void KinematicCharacter::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Mass", m_mass);
-	metadata.GetChild("Friction", m_friction);
-	metadata.GetChild("Friction Rolling", m_frictionRolling);
-	metadata.GetChild("Friction Spinning", m_frictionSpinning);
-	metadata.GetChild("Up", m_up);
-	metadata.GetChild("Step Height", m_stepHeight);
-	metadata.GetChild("Fall Speed", m_fallSpeed);
-	metadata.GetChild("Jump Speed", m_jumpSpeed);
-	metadata.GetChild("Max Height", m_maxHeight);
-	metadata.GetChild("Interpolate", m_interpolate);
-}
-
-void KinematicCharacter::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Mass", m_mass);
-	metadata.SetChild("Friction", m_friction);
-	metadata.SetChild("Friction Rolling", m_frictionRolling);
-	metadata.SetChild("Friction Spinning", m_frictionSpinning);
-	metadata.SetChild("Up", m_up);
-	metadata.SetChild("Step Height", m_stepHeight);
-	metadata.SetChild("Fall Speed", m_fallSpeed);
-	metadata.SetChild("Jump Speed", m_jumpSpeed);
-	metadata.SetChild("Max Height", m_maxHeight);
-	metadata.SetChild("Interpolate", m_interpolate);
-}
-
 bool KinematicCharacter::InFrustum(const Frustum &frustum)
 {
 	btVector3 min = btVector3();
@@ -227,6 +199,36 @@ void KinematicCharacter::Jump(const Vector3f &direction)
 void KinematicCharacter::SetWalkDirection(const Vector3f &direction)
 {
 	m_controller->setWalkDirection(Collider::Convert(direction));
+}
+
+const Metadata& operator>>(const Metadata& metadata, KinematicCharacter& character)
+{
+	metadata.GetChild("Mass", character.m_mass);
+	metadata.GetChild("Friction", character.m_friction);
+	metadata.GetChild("Friction Rolling", character.m_frictionRolling);
+	metadata.GetChild("Friction Spinning", character.m_frictionSpinning);
+	metadata.GetChild("Up", character.m_up);
+	metadata.GetChild("Step Height", character.m_stepHeight);
+	metadata.GetChild("Fall Speed", character.m_fallSpeed);
+	metadata.GetChild("Jump Speed", character.m_jumpSpeed);
+	metadata.GetChild("Max Height", character.m_maxHeight);
+	metadata.GetChild("Interpolate", character.m_interpolate);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const KinematicCharacter& character)
+{
+	metadata.SetChild("Mass", character.m_mass);
+	metadata.SetChild("Friction", character.m_friction);
+	metadata.SetChild("Friction Rolling", character.m_frictionRolling);
+	metadata.SetChild("Friction Spinning", character.m_frictionSpinning);
+	metadata.SetChild("Up", character.m_up);
+	metadata.SetChild("Step Height", character.m_stepHeight);
+	metadata.SetChild("Fall Speed", character.m_fallSpeed);
+	metadata.SetChild("Jump Speed", character.m_jumpSpeed);
+	metadata.SetChild("Max Height", character.m_maxHeight);
+	metadata.SetChild("Interpolate", character.m_interpolate);
+	return metadata;
 }
 
 void KinematicCharacter::RecalculateMass()

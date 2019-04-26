@@ -401,20 +401,6 @@ public:
 
 	void SetZ(const T &z) { m_z = z; }
 
-	void Decode(const Metadata &metadata)
-	{
-		metadata.GetChild("x", m_x);
-		metadata.GetChild("y", m_y);
-		metadata.GetChild("z", m_z);
-	}
-
-	void Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("x", m_x);
-		metadata.SetChild("y", m_y);
-		metadata.SetChild("z", m_z);
-	}
-
 	std::string ToString() const
 	{
 		std::stringstream stream;

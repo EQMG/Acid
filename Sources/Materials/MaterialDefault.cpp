@@ -41,36 +41,6 @@ void MaterialDefault::Update()
 {
 }
 
-void MaterialDefault::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Base Diffuse", m_baseDiffuse);
-	metadata.GetResource("Image Diffuse", m_imageDiffuse);
-
-	metadata.GetChild("Metallic", m_metallic);
-	metadata.GetChild("Roughness", m_roughness);
-	metadata.GetResource("Image Material", m_imageMaterial);
-	metadata.GetResource("Image Normal", m_imageNormal);
-
-	metadata.GetChild("Casts Shadows", m_castsShadows);
-	metadata.GetChild("Ignore Lighting", m_ignoreLighting);
-	metadata.GetChild("Ignore Fog", m_ignoreFog);
-}
-
-void MaterialDefault::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Base Diffuse", m_baseDiffuse);
-	metadata.SetResource("Image Diffuse", m_imageDiffuse);
-
-	metadata.SetChild("Metallic", m_metallic);
-	metadata.SetChild("Roughness", m_roughness);
-	metadata.SetResource("Image Material", m_imageMaterial);
-	metadata.SetResource("Image Normal", m_imageNormal);
-
-	metadata.SetChild("Casts Shadows", m_castsShadows);
-	metadata.SetChild("Ignore Lighting", m_ignoreLighting);
-	metadata.SetChild("Ignore Fog", m_ignoreFog);
-}
-
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
 	if (m_animated)
@@ -105,5 +75,37 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 	defines.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MaxJoints));
 	defines.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights));
 	return defines;
+}
+
+const Metadata& operator>>(const Metadata& metadata, MaterialDefault& material)
+{
+	metadata.GetChild("Base Diffuse", material.m_baseDiffuse);
+	metadata.GetResource("Image Diffuse", material.m_imageDiffuse);
+
+	metadata.GetChild("Metallic", material.m_metallic);
+	metadata.GetChild("Roughness", material.m_roughness);
+	metadata.GetResource("Image Material", material.m_imageMaterial);
+	metadata.GetResource("Image Normal", material.m_imageNormal);
+
+	metadata.GetChild("Casts Shadows", material.m_castsShadows);
+	metadata.GetChild("Ignore Lighting", material.m_ignoreLighting);
+	metadata.GetChild("Ignore Fog", material.m_ignoreFog);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const MaterialDefault& material)
+{
+	metadata.SetChild("Base Diffuse", material.m_baseDiffuse);
+	metadata.SetResource("Image Diffuse", material.m_imageDiffuse);
+
+	metadata.SetChild("Metallic", material.m_metallic);
+	metadata.SetChild("Roughness", material.m_roughness);
+	metadata.SetResource("Image Material", material.m_imageMaterial);
+	metadata.SetResource("Image Normal", material.m_imageNormal);
+
+	metadata.SetChild("Casts Shadows", material.m_castsShadows);
+	metadata.SetChild("Ignore Lighting", material.m_ignoreLighting);
+	metadata.SetChild("Ignore Fog", material.m_ignoreFog);
+	return metadata;
 }
 }

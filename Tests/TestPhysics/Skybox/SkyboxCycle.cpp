@@ -52,15 +52,17 @@ void SkyboxCycle::Update()
 	}
 }
 
-void SkyboxCycle::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, SkyboxCycle& skyboxCycle)
 {
-	metadata.GetChild("Enable Fog", m_enableFog);
-	metadata.GetChild("Enable Rotation", m_enableRotation);
+	metadata.GetChild("Enable Fog", skyboxCycle.m_enableFog);
+	metadata.GetChild("Enable Rotation", skyboxCycle.m_enableRotation);
+	return metadata;
 }
 
-void SkyboxCycle::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const SkyboxCycle& skyboxCycle)
 {
-	metadata.SetChild("Enable Fog", m_enableFog);
-	metadata.SetChild("Enable Rotation", m_enableRotation);
+	metadata.SetChild("Enable Fog", skyboxCycle.m_enableFog);
+	metadata.SetChild("Enable Rotation", skyboxCycle.m_enableRotation);
+	return metadata;
 }
 }

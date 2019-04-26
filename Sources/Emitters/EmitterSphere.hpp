@@ -14,15 +14,15 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	Vector3f GeneratePosition() const override;
 
 	const float &GetRadius() const { return m_radius; }
 
 	void SetRadius(const float &radius) { m_radius = radius; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterSphere& emitter);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterSphere& emitter);
 
 private:
 	float m_radius;

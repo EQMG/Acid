@@ -21,6 +21,29 @@ class ACID_EXPORT FontType :
 	public Resource
 {
 public:
+	class Instance
+	{
+	public:
+		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
+		{
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			};
+			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect)},
+				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex)},
+				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_sharpness)},
+				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
+			};
+			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+		}
+
+		Rect m_rect;
+		uint32_t m_glyphIndex;
+		float m_sharpness;
+		Colour m_colour;
+	};
+
 	/**
 	 * Creates a new font type, or finds one with the same values.
 	 * @param metadata The metadata to decode values from.
@@ -50,15 +73,13 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
-	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0);
-
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
 	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, FontType& fontType);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const FontType& fontType);
 
 private:
 	struct CellInfo
@@ -67,14 +88,6 @@ private:
 		uint32_t cellOffset;
 		uint32_t cellCountX;
 		uint32_t cellCountY;
-	};
-
-	struct GlyphInstance // TODO: Convert into a IVertex!
-	{
-		Rect m_rect;
-		uint32_t m_glyphIndex;
-		float m_sharpness;
-		Colour m_colour;
 	};
 
 	struct HostGlyphInfo
@@ -116,7 +129,6 @@ private:
 	std::unique_ptr<StorageBuffer> m_storageGlyphs;
 	std::unique_ptr<InstanceBuffer> m_instanceBuffer;
 
-	GlyphInstance *m_glyphInstances;
 	uint32_t m_instances;
 };
 }

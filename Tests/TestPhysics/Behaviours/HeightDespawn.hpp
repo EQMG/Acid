@@ -16,9 +16,9 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
+	friend const Metadata& operator>>(const Metadata& metadata, HeightDespawn& heightDespawn);
 
-	void Encode(Metadata &metadata) const override;
+	friend Metadata& operator<<(Metadata& metadata, const HeightDespawn& heightDespawn);
 
 private:
 	float m_removeHeight;

@@ -26,18 +26,6 @@ void ColliderSphere::Update()
 	Collider::Update();
 }
 
-void ColliderSphere::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Local Transform", m_localTransform);
-	metadata.GetChild("Radius", m_radius);
-}
-
-void ColliderSphere::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Local Transform", m_localTransform);
-	metadata.SetChild("Radius", m_radius);
-}
-
 btCollisionShape *ColliderSphere::GetCollisionShape() const
 {
 	return m_shape.get();
@@ -48,5 +36,19 @@ void ColliderSphere::SetRadius(const float &radius)
 	m_radius = radius;
 	m_shape->setUnscaledRadius(m_radius);
 	m_localTransform.SetScaling(Vector3f(m_radius, m_radius, m_radius));
+}
+
+const Metadata& operator>>(const Metadata& metadata, ColliderSphere& collider)
+{
+	metadata.GetChild("Local Transform", collider.m_localTransform);
+	metadata.GetChild("Radius", collider.m_radius);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const ColliderSphere& collider)
+{
+	metadata.SetChild("Local Transform", collider.m_localTransform);
+	metadata.SetChild("Radius", collider.m_radius);
+	return metadata;
 }
 }

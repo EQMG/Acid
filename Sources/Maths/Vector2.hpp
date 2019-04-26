@@ -391,18 +391,6 @@ public:
 
 	void SetY(const T &y) { m_y = y; }
 
-	void Decode(const Metadata &metadata)
-	{
-		metadata.GetChild("x", m_x);
-		metadata.GetChild("y", m_y);
-	}
-
-	void Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("x", m_x);
-		metadata.SetChild("y", m_y);
-	}
-
 	std::string ToString() const
 	{
 		std::stringstream stream;

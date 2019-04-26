@@ -95,7 +95,7 @@ void Pannable::UpdateObject()
 	Vector2f offset = GetRectangle().GetPosition();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
-	dynamic_cast<DriverConstant<float> *>(GetScaleDriver())->SetConstant(m_zoom);
+	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector2f(m_zoom));
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 	{

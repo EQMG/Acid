@@ -14,10 +14,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	Vector3f GeneratePosition() const override;
 
 	const float &GetLength() const { return m_length; }
@@ -27,6 +23,10 @@ public:
 	const Vector3f &GetAxis() const { return m_axis; }
 
 	void SetAxis(const Vector3f &axis) { m_axis = axis; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterLine& emitter);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterLine& emitter);
 
 private:
 	float m_length;

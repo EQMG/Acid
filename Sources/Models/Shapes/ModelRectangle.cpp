@@ -16,7 +16,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelRectangle>(0.0f, 0.0f);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -25,7 +25,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const f
 {
 	auto temp = ModelRectangle(min, max, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -60,16 +60,18 @@ void ModelRectangle::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelRectangle::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, ModelRectangle& model)
 {
-	metadata.GetChild("Min", m_min);
-	metadata.GetChild("Max", m_max);
+	metadata.GetChild("Min", model.m_min);
+	metadata.GetChild("Max", model.m_max);
+	return metadata;
 }
 
-void ModelRectangle::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const ModelRectangle& model)
 {
 	metadata.SetChild<std::string>("Type", "ModelRectangle");
-	metadata.SetChild("Min", m_min);
-	metadata.SetChild("Max", m_max);
+	metadata.SetChild("Min", model.m_min);
+	metadata.SetChild("Max", model.m_max);
+	return metadata;
 }
 }

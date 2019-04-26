@@ -19,15 +19,15 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	btCollisionShape *GetCollisionShape() const override;
 
 	const uint32_t &GetPointCount() const { return m_pointCount; }
 
 	void Initialize(const std::vector<float> &pointCloud);
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ColliderConvexHull& collider);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderConvexHull& collider);
 
 private:
 	std::unique_ptr<btConvexHullShape> m_shape;

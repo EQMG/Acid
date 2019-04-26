@@ -22,21 +22,5 @@ public:
 	virtual void Load()
 	{
 	}
-
-	/**
-	 * Used to decode this resource from a loaded data format.
-	 * @param metadata The metadata to decode from.
-	 */
-	virtual void Decode(const Metadata &metadata)
-	{
-	}
-
-	/**
-	 * Used to encode this resource into a data format.
-	 * @param metadata The metadata to encode into.
-	 */
-	virtual void Encode(Metadata &metadata) const
-	{
-	}
 };
 }

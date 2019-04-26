@@ -34,9 +34,9 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelCube& model);
 
-	void Encode(Metadata &metadata) const override;
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelCube& model);
 
 private:
 	Vector3f m_extents;

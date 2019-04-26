@@ -23,12 +23,6 @@ public:
 	class Instance
 	{
 	public:
-		Instance(const Matrix4 &modelMatrix, const Colour &colour) :
-			m_modelMatrix(modelMatrix),
-			m_colour(colour)
-		{
-		}
-
 		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
 		{
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
@@ -76,10 +70,6 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
@@ -91,6 +81,10 @@ public:
 	const Colour &GetColour() const { return m_colour; }
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, GizmoType& gizmoType);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const GizmoType& gizmoType);
 
 private:
 	std::shared_ptr<Model> m_model;

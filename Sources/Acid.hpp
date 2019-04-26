@@ -59,7 +59,7 @@
 #include "Helpers/RingBuffer.hpp"
 #include "Helpers/String.hpp"
 #include "Helpers/ThreadPool.hpp"
-#include "Helpers/TypeTraits.hpp"
+#include "Helpers/ConstExpr.hpp"
 #include "Inputs/Axis.hpp"
 #include "Inputs/AxisButton.hpp"
 #include "Inputs/AxisCompound.hpp"

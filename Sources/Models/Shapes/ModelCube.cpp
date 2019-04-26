@@ -16,7 +16,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelCube>(Vector3f::Zero);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -25,7 +25,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
 	auto temp = ModelCube(extents, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -94,14 +94,16 @@ void ModelCube::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelCube::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, ModelCube& model)
 {
-	metadata.GetChild("Extents", m_extents);
+	metadata.GetChild("Extents", model.m_extents);
+	return metadata;
 }
 
-void ModelCube::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const ModelCube& model)
 {
 	metadata.SetChild<std::string>("Type", "ModelCube");
-	metadata.SetChild("Extents", m_extents);
+	metadata.SetChild("Extents", model.m_extents);
+	return metadata;
 }
 }

@@ -124,14 +124,12 @@ std::string Colour::GetHex() const
 	return result.str();
 }
 
-void Colour::Decode(const Metadata &metadata)
+std::string Colour::ToString() const
 {
-	*this = metadata.Get<std::string>();
-}
-
-void Colour::Encode(Metadata &metadata) const
-{
-	metadata.Set(GetHex());
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
+	return stream.str();
 }
 
 bool Colour::operator==(const Colour &other) const
@@ -278,17 +276,23 @@ Colour &Colour::operator/=(const float &value)
 	return *this = Divide(Colour(value, value, value));
 }
 
+const Metadata &operator>>(const Metadata &metadata, Colour &colour)
+{
+	std::string hex;
+	metadata >> hex;
+	colour = hex;
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Colour &colour)
+{
+	metadata << colour.GetHex();
+	return metadata;
+}
+
 std::ostream &operator<<(std::ostream &stream, const Colour &colour)
 {
 	stream << colour.ToString();
 	return stream;
-}
-
-std::string Colour::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
-	return stream.str();
 }
 }

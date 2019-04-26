@@ -22,7 +22,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<EntityPrefab>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -31,7 +31,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 {
 	auto temp = EntityPrefab(filename, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -73,16 +73,6 @@ void EntityPrefab::Load()
 	}
 }
 
-void EntityPrefab::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Filename", m_filename);
-}
-
-void EntityPrefab::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Filename", m_filename);
-}
-
 void EntityPrefab::Write(const Entity &entity)
 {
 	m_file->GetMetadata()->ClearChildren();
@@ -98,12 +88,24 @@ void EntityPrefab::Write(const Entity &entity)
 
 		auto child = new Metadata(*componentName);
 		m_file->GetMetadata()->AddChild(child);
-		component->Encode(*child);
+		*child << component;
 	}
 }
 
 void EntityPrefab::Save()
 {
 	m_file->Write();
+}
+
+const Metadata& operator>>(const Metadata& metadata, EntityPrefab& enityPrefab)
+{
+	metadata.GetChild("Filename", enityPrefab.m_filename);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const EntityPrefab& enityPrefab)
+{
+	metadata.SetChild("Filename", enityPrefab.m_filename);
+	return metadata;
 }
 }

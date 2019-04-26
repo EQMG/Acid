@@ -17,10 +17,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	void PushUniforms(UniformHandler &uniformObject) override;
 
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
@@ -32,6 +28,10 @@ public:
 	const std::shared_ptr<Image2d> &GetImageG() const { return m_imageG; }
 
 	void SetImageG(const std::shared_ptr<Image2d> &imageG) { m_imageG = imageG; }
+
+	friend const Metadata& operator>>(const Metadata& metadata, MaterialTerrain& material);
+
+	friend Metadata& operator<<(Metadata& metadata, const MaterialTerrain& material);
 
 private:
 	std::shared_ptr<Image2d> m_imageR;

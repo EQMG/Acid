@@ -38,9 +38,9 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelSphere& model);
 
-	void Encode(Metadata &metadata) const override;
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelSphere& model);
 
 private:
 	float m_radius;

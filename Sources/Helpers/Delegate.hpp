@@ -1,7 +1,7 @@
 #pragma once
 
 #include <mutex>
-#include "TypeTraits.hpp"
+#include "ConstExpr.hpp"
 #include "NonCopyable.hpp"
 
 namespace acid
@@ -119,7 +119,7 @@ public:
 		{
 			for (const auto &arg : { args... })
 			{
-				observers.emplace_back(TypeTraits::AsPtr(arg)->m_valid);
+				observers.emplace_back(ConstExpr::AsPtr(arg)->m_valid);
 			}
 		}
 

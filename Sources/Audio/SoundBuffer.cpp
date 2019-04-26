@@ -24,7 +24,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<SoundBuffer>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -33,7 +33,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 {
 	auto temp = SoundBuffer(filename, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -69,16 +69,6 @@ void SoundBuffer::Load()
 	{
 		m_buffer = LoadBufferOgg(m_filename);
 	}
-}
-
-void SoundBuffer::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Filename", m_filename);
-}
-
-void SoundBuffer::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Filename", m_filename);
 }
 
 uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
@@ -195,5 +185,17 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
+}
+
+const Metadata& operator>>(const Metadata& metadata, SoundBuffer& soundBuffer)
+{
+	metadata.GetChild("Filename", soundBuffer.m_filename);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const SoundBuffer& soundBuffer)
+{
+	metadata.SetChild("Filename", soundBuffer.m_filename);
+	return metadata;
 }
 }

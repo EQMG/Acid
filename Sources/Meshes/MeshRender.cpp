@@ -80,14 +80,6 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	return meshModel->CmdRender(commandBuffer);
 }
 
-void MeshRender::Decode(const Metadata &metadata)
-{
-}
-
-void MeshRender::Encode(Metadata &metadata) const
-{
-}
-
 bool MeshRender::operator<(const MeshRender &other) const
 {
 	auto camera = Scenes::Get()->GetCamera();
@@ -96,5 +88,15 @@ bool MeshRender::operator<(const MeshRender &other) const
 	float otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
 
 	return thisDistance2 > otherDistance2;
+}
+
+const Metadata& operator>>(const Metadata& metadata, MeshRender& meshRender)
+{
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const MeshRender& meshRender)
+{
+	return metadata;
 }
 }

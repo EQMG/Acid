@@ -54,16 +54,6 @@ void Sound::Update()
 	SetPosition(GetWorldTransform().GetPosition());
 }
 
-void Sound::Decode(const Metadata &metadata)
-{
-	metadata.GetResource("Buffer", m_soundBuffer);
-}
-
-void Sound::Encode(Metadata &metadata) const
-{
-	metadata.SetResource("Buffer", m_soundBuffer);
-}
-
 void Sound::Play(const bool &loop)
 {
 	alSourcei(m_source, AL_LOOPING, loop);
@@ -159,5 +149,17 @@ void Sound::SetPitch(const float &pitch)
 	m_pitch = pitch;
 	alSourcef(m_source, AL_PITCH, m_pitch);
 	Audio::CheckAl(alGetError());
+}
+
+const Metadata& operator>>(const Metadata& metadata, Sound& sound)
+{
+	metadata.GetResource("Buffer", sound.m_soundBuffer);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const Sound& sound)
+{
+	metadata.SetResource("Buffer", sound.m_soundBuffer);
+	return metadata;
 }
 }

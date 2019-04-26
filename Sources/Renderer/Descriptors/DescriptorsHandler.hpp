@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/TypeTraits.hpp"
+#include "Helpers/ConstExpr.hpp"
 #include "Renderer/Descriptors/DescriptorSet.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Buffers/StorageHandler.hpp"
@@ -33,7 +33,7 @@ public:
 		if (it != m_descriptors.end())
 		{
 			// If the descriptor and size have not changed then the write is not modified.
-			if (it->second.m_descriptor == TypeTraits::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize)
+			if (it->second.m_descriptor == ConstExpr::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize)
 			{
 				return;
 			}
@@ -42,7 +42,7 @@ public:
 		}
 
 		// Only non-null descriptors can be mapped.
-		if (TypeTraits::AsPtr(descriptor) == nullptr)
+		if (ConstExpr::AsPtr(descriptor) == nullptr)
 		{
 			return;
 		}
@@ -76,8 +76,8 @@ public:
 		}
 
 		// Adds the new descriptor value.
-		auto writeDescriptor = TypeTraits::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
-		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
+		auto writeDescriptor = ConstExpr::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
+		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
 		m_changed = true;
 	}
 
@@ -97,9 +97,9 @@ public:
 		}
 
 		auto location = m_shader->GetDescriptorLocation(descriptorName);
-		auto descriptorType = m_shader->GetDescriptorType(*location);
+		//auto descriptorType = m_shader->GetDescriptorType(*location);
 
-		m_descriptors.emplace(descriptorName, DescriptorValue{ TypeTraits::AsPtr(descriptor), std::move(writeDescriptorSet), {}, *location });
+		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), {}, *location });
 		m_changed = true;
 	}
 

@@ -23,7 +23,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ParticleType>(nullptr);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -33,7 +33,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 {
 	auto temp = ParticleType(image, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -65,7 +65,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		return;
 	}
 
-	Instance * instances;
+	Instance *instances;
 	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &particle : particles)
@@ -133,23 +133,25 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return true;
 }
 
-void ParticleType::Decode(const Metadata &metadata)
+const Metadata& operator>>(const Metadata& metadata, ParticleType& particleType)
 {
-	metadata.GetResource("Image", m_image);
-	metadata.GetChild("Number Of Rows", m_numberOfRows);
-	metadata.GetChild("Colour Offset", m_colourOffset);
-	metadata.GetChild("Life Length", m_lifeLength);
-	metadata.GetChild("Stage Cycles", m_stageCycles);
-	metadata.GetChild("Scale", m_scale);
+	metadata.GetResource("Image", particleType.m_image);
+	metadata.GetChild("Number Of Rows", particleType.m_numberOfRows);
+	metadata.GetChild("Colour Offset", particleType.m_colourOffset);
+	metadata.GetChild("Life Length", particleType.m_lifeLength);
+	metadata.GetChild("Stage Cycles", particleType.m_stageCycles);
+	metadata.GetChild("Scale", particleType.m_scale);
+	return metadata;
 }
 
-void ParticleType::Encode(Metadata &metadata) const
+Metadata& operator<<(Metadata& metadata, const ParticleType& particleType)
 {
-	metadata.SetResource("Image", m_image);
-	metadata.SetChild("Number Of Rows", m_numberOfRows);
-	metadata.SetChild("Colour Offset", m_colourOffset);
-	metadata.SetChild("Life Length", m_lifeLength);
-	metadata.SetChild("Stage Cycles", m_stageCycles);
-	metadata.SetChild("Scale", m_scale);
+	metadata.SetResource("Image", particleType.m_image);
+	metadata.SetChild("Number Of Rows", particleType.m_numberOfRows);
+	metadata.SetChild("Colour Offset", particleType.m_colourOffset);
+	metadata.SetChild("Life Length", particleType.m_lifeLength);
+	metadata.SetChild("Stage Cycles", particleType.m_stageCycles);
+	metadata.SetChild("Scale", particleType.m_scale);
+	return metadata;
 }
 }

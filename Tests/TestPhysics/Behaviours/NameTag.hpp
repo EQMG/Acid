@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
+	friend const Metadata& operator>>(const Metadata& metadata, NameTag& nameTag);
 
-	void Encode(Metadata &metadata) const override;
+	friend Metadata& operator<<(Metadata& metadata, const NameTag& nameTag);
 
 private:
 	std::string m_name;

@@ -17,20 +17,22 @@ void EmitterPoint::Update()
 {
 }
 
-void EmitterPoint::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Point", m_point);
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void EmitterPoint::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Point", m_point);
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 Vector3f EmitterPoint::GeneratePosition() const
 {
 	return m_point;
+}
+
+const Metadata& operator>>(const Metadata& metadata, EmitterPoint& emitter)
+{
+	metadata.GetChild("Point", emitter.m_point);
+	metadata.GetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const EmitterPoint& emitter)
+{
+	metadata.SetChild("Point", emitter.m_point);
+	metadata.SetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
 }
 }

@@ -73,10 +73,6 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	/**
 	 * Copies the images pixels from memory.
 	 * @param extent The sampled images extent.
@@ -125,6 +121,9 @@ public:
 
 	const VkFormat &GetFormat() const { return m_format; }
 
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Image2d& image);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Image2d& image);
 private:
 	std::string m_filename;
 

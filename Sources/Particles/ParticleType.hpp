@@ -25,14 +25,6 @@ public:
 	class Instance
 	{
 	public:
-		Instance(const Matrix4 &modelMatrix, const Colour &colourOffset, const Vector4f &offsets, const Vector3f &blend) :
-			m_modelMatrix(modelMatrix),
-			m_colourOffset(colourOffset),
-			m_offsets(offsets),
-			m_blend(blend)
-		{
-		}
-
 		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
 		{
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
@@ -92,10 +84,6 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
 	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
@@ -119,6 +107,10 @@ public:
 	const float &GetScale() const { return m_scale; }
 
 	void SetScale(const float &scale) { m_scale = scale; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ParticleType& particleType);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ParticleType& particleType);
 
 private:
 	std::shared_ptr<Image2d> m_image;

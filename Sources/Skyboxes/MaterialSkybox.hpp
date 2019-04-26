@@ -20,10 +20,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	void PushUniforms(UniformHandler &uniformObject) override;
 
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
@@ -47,6 +43,10 @@ public:
 	const Vector2f &GetFogLimits() const { return m_fogLimits; }
 
 	void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MaterialSkybox& material);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MaterialSkybox& material);
 
 private:
 	std::shared_ptr<ImageCube> m_image;

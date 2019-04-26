@@ -18,7 +18,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ImageCube>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -28,7 +28,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const 
 {
 	auto temp = ImageCube(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -183,28 +183,6 @@ void ImageCube::Load()
 	m_loadPixels = nullptr;
 }
 
-void ImageCube::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Filename", m_filename);
-	metadata.GetChild("Suffix", m_fileSuffix);
-	//metadata.GetChild("Sides", m_fileSides);
-	metadata.GetChild("Filter", m_filter);
-	metadata.GetChild("Address Mode", m_addressMode);
-	metadata.GetChild("Anisotropic", m_anisotropic);
-	metadata.GetChild("Mipmap", m_mipmap);
-}
-
-void ImageCube::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Filename", m_filename);
-	metadata.SetChild("Suffix", m_fileSuffix);
-	//metadata.SetChild("Sides", m_fileSides);
-	metadata.SetChild("Filter", m_filter);
-	metadata.SetChild("Address Mode", m_addressMode);
-	metadata.SetChild("Anisotropic", m_anisotropic);
-	metadata.SetChild("Mipmap", m_mipmap);
-}
-
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
@@ -298,5 +276,29 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 	}
 
 	return result;
+}
+
+const Metadata& operator>>(const Metadata& metadata, ImageCube& image)
+{
+	metadata.GetChild("Filename", image.m_filename);
+	metadata.GetChild("Suffix", image.m_fileSuffix);
+	//metadata.GetChild("Sides", image.m_fileSides);
+	metadata.GetChild("Filter", image.m_filter);
+	metadata.GetChild("Address Mode", image.m_addressMode);
+	metadata.GetChild("Anisotropic", image.m_anisotropic);
+	metadata.GetChild("Mipmap", image.m_mipmap);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const ImageCube& image)
+{
+	metadata.SetChild("Filename", image.m_filename);
+	metadata.SetChild("Suffix", image.m_fileSuffix);
+	//metadata.SetChild("Sides", image.m_fileSides);
+	metadata.SetChild("Filter", image.m_filter);
+	metadata.SetChild("Address Mode", image.m_addressMode);
+	metadata.SetChild("Anisotropic", image.m_anisotropic);
+	metadata.SetChild("Mipmap", image.m_mipmap);
+	return metadata;
 }
 }

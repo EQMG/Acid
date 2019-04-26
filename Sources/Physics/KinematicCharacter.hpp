@@ -29,10 +29,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	bool InFrustum(const Frustum &frustum) override;
 
 	void ClearForces() override;
@@ -78,6 +74,10 @@ public:
 	void Jump(const Vector3f &direction);
 
 	void SetWalkDirection(const Vector3f &direction);
+
+	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, KinematicCharacter& character);
+
+	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const KinematicCharacter& character);
 
 protected:
 	void RecalculateMass() override;

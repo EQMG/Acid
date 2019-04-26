@@ -124,9 +124,7 @@ public:
 
 	void SetA(const float &a) { m_a = a; }
 
-	void Decode(const Metadata &metadata);
-
-	void Encode(Metadata &metadata) const;
+	std::string ToString() const;
 
 	bool operator==(const Colour &other) const;
 
@@ -176,9 +174,11 @@ public:
 
 	Colour &operator/=(const float &value);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Colour &colour);
 
-	std::string ToString() const;
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Colour &colour);
+
+	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 
 	static const Colour Clear;
 	static const Colour Black;

@@ -1,7 +1,5 @@
 ﻿#include "Transform.hpp"
 
-#include "Scenes/Entity.hpp"
-
 namespace acid
 {
 const Transform Transform::Zero = Transform(Vector3f::Zero, Vector3f::Zero, Vector3f::One);
@@ -20,21 +18,6 @@ Transform::Transform(const Vector3f &position, const Vector3f &rotation, const f
 	m_scaling(scale, scale, scale),
 	m_dirty(true)
 {
-}
-
-void Transform::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Position", m_position);
-	metadata.GetChild("Rotation", m_rotation);
-	metadata.GetChild("Scaling", m_scaling);
-	m_dirty = true;
-}
-
-void Transform::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Position", m_position);
-	metadata.SetChild("Rotation", m_rotation);
-	metadata.SetChild("Scaling", m_scaling);
 }
 
 Transform Transform::Multiply(const Transform &other) const
@@ -86,6 +69,13 @@ void Transform::SetDirty(const bool &dirty) const
 	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation * Maths::DegToRad, m_scaling);
 }
 
+std::string Transform::ToString() const
+{
+	std::stringstream stream;
+	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
+	return stream.str();
+}
+
 bool Transform::operator==(const Transform &other) const
 {
 	return m_position == other.m_position && m_rotation == other.m_rotation && m_scaling == other.m_scaling;
@@ -106,16 +96,25 @@ Transform &Transform::operator*=(const Transform &other)
 	return *this = Multiply(other);
 }
 
+const Metadata& operator>>(const Metadata& metadata, Transform& transform)
+{
+	metadata.GetChild("Position", transform.m_position);
+	metadata.GetChild("Rotation", transform.m_rotation);
+	metadata.GetChild("Scaling", transform.m_scaling);
+	return metadata;
+}
+
+Metadata& operator<<(Metadata& metadata, const Transform& transform)
+{
+	metadata.SetChild("Position", transform.m_position);
+	metadata.SetChild("Rotation", transform.m_rotation);
+	metadata.SetChild("Scaling", transform.m_scaling);
+	return metadata;
+}
+
 std::ostream &operator<<(std::ostream &stream, const Transform &transform)
 {
 	stream << transform.ToString();
 	return stream;
-}
-
-std::string Transform::ToString() const
-{
-	std::stringstream stream;
-	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
-	return stream.str();
 }
 }
