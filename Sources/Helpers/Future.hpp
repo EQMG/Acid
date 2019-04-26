@@ -33,6 +33,15 @@ public:
 
 		return *m_current;
 	}
+	
+	constexpr operator bool() const
+	{
+		return HasValue();
+	}
+
+	T &operator*() { return Get(); }
+
+	T *operator->() { return &Get(); }
 
 private:
 	std::future<T> m_future;

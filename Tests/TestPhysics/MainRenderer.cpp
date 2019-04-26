@@ -92,7 +92,7 @@ void MainRenderer::Update()
 	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
 	//renderpassCreate0->GetViewport().SetSize(Vector2ui(Shadows::Get()->GetShadowSize()));
 
-	auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
+	/*auto renderpassCreate1 = Renderer::Get()->GetRenderStage(1);
 
 	if (Keyboard::Get()->GetKey(Key::L) != InputAction::Release)
 	{
@@ -103,7 +103,7 @@ void MainRenderer::Update()
 	{
 		renderpassCreate1->GetViewport().SetScale(Vector2f(0.6f, 0.6f));
 		renderpassCreate1->GetViewport().SetOffset(Vector2ui(100, 100));
-	}
+	}*/
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 }

@@ -28,7 +28,7 @@ This is a list of current features in Acid:
  * Networking (HTTP, FTP, UDP, TCP)
  * Serialization (JSON, YAML, XML)
  * Resource management
- * Event delegate callbacks
+ * Event delegate callbacks with scoped functions
  * Bullet physics
  * Entity component system
  * Particle effect systems
@@ -86,16 +86,27 @@ sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material 
 Vector2f a(3.0f, -7.2f);
 Vector2f b(-1.74f, 15.4f);
 Vector2f c = a * b;
+// Distance between the two points.
 float dist = a.Distance(b);
+// Right shift of the x and y bits by 1.
+Vector2i rshift = Vector2i(5, 9) >> 1;
 
 // Split a string by spaces.
 std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, " ");
 
-// Will run a lambda on window resize.
-Window::Get()->OnSize() += [](Vector2ui size){
+// Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
+Window::Get()->OnSize().Add([this](Vector2ui size){
 	Log::Out("Hello world: %s\n", size.ToString().c_str());
-};
+}, this);
+
+// A value container that calls a delegate on value assignments.
+DelegateValue<Vector3f> da;
+da.Add([](Vector3f value)
+{
+	Log::Out("New Value: %s\n", value.ToString().c_str());
+});
+da = Vector3f(10.0f, -4.11f, 99.991f);
 ```
 
 ## Screenshots

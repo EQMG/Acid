@@ -500,6 +500,26 @@ public:
 };
 
 template<typename K>
+const Metadata &operator>>(const Metadata &metadata, Vector4<K> &vector)
+{
+	metadata.GetChild("x", vector.m_x);
+	metadata.GetChild("y", vector.m_y);
+	metadata.GetChild("z", vector.m_z);
+	metadata.GetChild("w", vector.m_w);
+	return metadata;
+}
+
+template<typename K>
+Metadata &operator<<(Metadata &metadata, const Vector4<K> &vector)
+{
+	metadata.SetChild("x", vector.m_x);
+	metadata.SetChild("y", vector.m_y);
+	metadata.SetChild("z", vector.m_z);
+	metadata.SetChild("w", vector.m_w);
+	return metadata;
+}
+
+template<typename K>
 std::ostream &operator<<(std::ostream &stream, const Vector4<K> &vector)
 {
 	stream << vector.ToString();

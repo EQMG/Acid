@@ -90,9 +90,9 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
 	m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
-	m_descriptorSet.Push("samplerBRDF", m_brdf.Get());
-	m_descriptorSet.Push("samplerIrradiance", m_irradiance.Get());
-	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.Get());
+	m_descriptorSet.Push("samplerBRDF", *m_brdf);
+	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
+	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
 
 	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 

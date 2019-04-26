@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include "TypeTraits.hpp"
+#include "NonCopyable.hpp"
 
 namespace acid
 {
@@ -21,7 +22,7 @@ public:
 	std::shared_ptr<bool> m_valid;
 };
 
-template<typename TReturnType, typename... TArgs>
+template<typename TReturnType, typename ...TArgs>
 class Invoker
 {
 public:
@@ -77,7 +78,7 @@ public:
 	}
 };
 
-template<typename TReturnType, typename... TArgs>
+template<typename TReturnType, typename ...TArgs>
 class Delegate<TReturnType(TArgs ...)>
 {
 public:
@@ -108,7 +109,7 @@ public:
 
 	virtual ~Delegate() = default;
 	
-	template<typename... KArgs>
+	template<typename ...KArgs>
 	void Add(FunctionType &&function, KArgs ...args)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
@@ -139,6 +140,21 @@ public:
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functions.clear();
 	}
+	
+	typename Invoker::ReturnType Invoke(TArgs ... args)
+	{
+		return Invoker::Invoke(*this, args...);
+	}
+	
+	Delegate &operator+=(FunctionType &&function)
+	{
+		return Add(std::move(function));
+	}
+
+	Delegate &operator-=(const FunctionType function)
+	{
+		return Remove(function);
+	}
 
 	typename Invoker::ReturnType operator()(TArgs ... args)
 	{
@@ -155,5 +171,35 @@ private:
 
 	std::mutex m_mutex;
 	std::vector<FunctionPair> m_functions;
+};
+
+template<typename T>
+class DelegateValue :
+	public Delegate<void(T)>,
+	public NonCopyable
+{
+public:
+	template <typename ...Args>
+	DelegateValue(Args ...args) :
+		m_value(std::forward<Args>(args)...)
+	{
+	}
+
+	virtual ~DelegateValue() = default;
+
+	DelegateValue &operator=(T value)
+	{
+		m_value = value;
+		Invoke(m_value);
+		return *this;
+	}
+	
+	const T &Get() const { return m_value; }
+
+	const T &operator*() const { return m_value; }
+
+	const T *operator->() const { return &m_value; }
+protected:
+	T m_value;
 };
 }
