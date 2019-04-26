@@ -9,6 +9,8 @@
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
+#include "Files/File.hpp"
+#include "Serialized/Yaml/Yaml.hpp"
 
 namespace acid
 {
@@ -22,9 +24,9 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	m_skybox(nullptr),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
-	//auto metadata = Metadata();
-	//metadata << *m_pipeline.GetShader();
-	//File("Shaders/Deferred.json", new Json(&metadata)).Write();
+	auto metadata = Metadata();
+	metadata << *m_pipeline.GetShader();
+	File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
 
 void RendererDeferred::Render(const CommandBuffer &commandBuffer)

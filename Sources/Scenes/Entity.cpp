@@ -33,7 +33,7 @@ Entity::Entity(const std::string &filename, const Transform &transform) :
 			continue;
 		}
 
-		*child >> *component;
+		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
 		AddComponent(component);
 	}
 

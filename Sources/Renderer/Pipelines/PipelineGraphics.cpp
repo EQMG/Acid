@@ -125,7 +125,7 @@ void PipelineGraphics::CreateShaderProgram()
 		shaderCode = Shader::ProcessIncludes(shaderCode);
 
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
-		auto shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
+		auto shaderModule = m_shader->CreateShaderModule(shaderStage, shaderCode, stageFlag);
 
 		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -136,7 +136,7 @@ void PipelineGraphics::CreateShaderProgram()
 		m_modules.emplace_back(shaderModule);
 	}
 
-	m_shader->ProcessShader();
+	m_shader->CreateReflection();
 }
 
 void PipelineGraphics::CreateDescriptorLayout()

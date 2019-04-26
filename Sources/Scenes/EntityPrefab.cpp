@@ -86,9 +86,8 @@ void EntityPrefab::Write(const Entity &entity)
 			continue;
 		}
 
-		auto child = new Metadata(*componentName);
-		m_file->GetMetadata()->AddChild(child);
-		*child << component;
+		auto child = m_file->GetMetadata()->AddChild(new Metadata(*componentName));
+		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 	}
 }
 

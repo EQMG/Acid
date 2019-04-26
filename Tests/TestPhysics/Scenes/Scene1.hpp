@@ -26,6 +26,7 @@ public:
 private:
 	ButtonMouse m_buttonSpawnSphere;
 	std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
+	ButtonKeyboard m_buttonSave;
 
 	UiStartLogo m_uiStartLogo;
 	OverlayDebug m_overlayDebug;

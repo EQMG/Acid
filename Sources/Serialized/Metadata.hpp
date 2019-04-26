@@ -96,8 +96,7 @@ public:
 
 		if (child == nullptr)
 		{
-			child = new Metadata(name);
-			m_children.emplace_back(child);
+			child = AddChild(new Metadata(name));
 		}
 
 		*child << value;
@@ -137,8 +136,13 @@ public:
 
 		if (child == nullptr)
 		{
-			child = new Metadata(name);
-			m_children.emplace_back(child);
+			child = AddChild(new Metadata(name));
+		}
+
+		if (value == nullptr)
+		{
+			child->SetValue("null");
+			return;
 		}
 
 		*child << *value;
@@ -203,6 +207,12 @@ const Metadata& operator>>(const Metadata& metadata, std::unique_ptr<T>& object)
 template<typename T>
 Metadata& operator<<(Metadata& metadata, const std::unique_ptr<T>& object)
 {
+	if (object == nullptr)
+	{
+		metadata.SetValue("null");
+		return metadata;
+	}
+
 	metadata << *object;
 	return metadata;
 }
@@ -219,6 +229,12 @@ const Metadata& operator>>(const Metadata& metadata, std::shared_ptr<T>& object)
 template<typename T>
 Metadata& operator<<(Metadata& metadata, const std::shared_ptr<T>& object)
 {
+	if (object == nullptr)
+	{
+		metadata.SetValue("null");
+		return metadata;
+	}
+
 	metadata << *object;
 	return metadata;
 }
@@ -254,7 +270,8 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Metadata&> operator
 		return metadata;
 	}
 
-	return metadata << ConstExpr::AsRef(object);
+	metadata << ConstExpr::AsRef(object);
+	return metadata;
 }
 
 template<typename T, typename K>

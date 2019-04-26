@@ -301,7 +301,7 @@ public:
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
-	void ProcessShader();
+	void CreateReflection();
 
 	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Shader& shader);
 
@@ -345,7 +345,7 @@ public:
 
 	static std::string ProcessIncludes(const std::string &shaderCode);
 
-	VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag);
+	VkShaderModule CreateShaderModule(const std::string& moduleName, const std::string& moduleCode, const VkShaderStageFlags &moduleFlag);
 
 	std::string ToString() const;
 
@@ -361,6 +361,7 @@ private:
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
 	std::string m_name;
+	std::vector<std::string> m_stages;
 	std::map<std::string, Uniform> m_uniforms;
 	std::map<std::string, UniformBlock> m_uniformBlocks;
 	std::map<std::string, Attribute> m_attributes;

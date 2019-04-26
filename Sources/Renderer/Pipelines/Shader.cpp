@@ -33,7 +33,7 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 	return false;
 }
 
-void Shader::ProcessShader()
+void Shader::CreateReflection()
 {
 	std::map<VkDescriptorType, uint32_t> descriptorPoolCounts;
 
@@ -150,6 +150,7 @@ void Shader::ProcessShader()
 const Metadata& operator>>(const Metadata& metadata, Shader& shader)
 {
 	metadata.GetChild("Name", shader.m_name);
+	metadata.GetChild("Stages", shader.m_stages);
 	metadata.GetChild("Uniforms", shader.m_uniforms);
 	metadata.GetChild("Uniform Blocks", shader.m_uniformBlocks);
 	metadata.GetChild("Attributes", shader.m_attributes);
@@ -160,6 +161,7 @@ const Metadata& operator>>(const Metadata& metadata, Shader& shader)
 Metadata& operator<<(Metadata& metadata, const Shader& shader)
 {
 	metadata.SetChild("Name", shader.m_name);
+	metadata.SetChild("Stages", shader.m_stages);
 	metadata.SetChild("Uniforms", shader.m_uniforms);
 	metadata.SetChild("Uniform Blocks", shader.m_uniformBlocks);
 	metadata.SetChild("Attributes", shader.m_attributes);
@@ -489,12 +491,14 @@ TBuiltInResource GetResources()
 	return resources;
 }
 
-VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag)
+VkShaderModule Shader::CreateShaderModule(const std::string& moduleName, const std::string& moduleCode, const VkShaderStageFlags& moduleFlag)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
+	m_stages.emplace_back(moduleName);
+
 	// Starts converting GLSL to SPIR-V.
-	EShLanguage language = GetEshLanguage(stageFlag);
+	EShLanguage language = GetEshLanguage(moduleFlag);
 	glslang::TProgram program;
 	glslang::TShader shader(language);
 	TBuiltInResource resources = GetResources();
@@ -505,7 +509,7 @@ VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShad
 	messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
-	const char *shaderSource = shaderCode.c_str();
+	const char *shaderSource = moduleCode.c_str();
 	shader.setStrings(&shaderSource, 1);
 
 	shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 110);
@@ -543,17 +547,17 @@ VkShaderModule Shader::ProcessShader(const std::string &shaderCode, const VkShad
 
 	for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 	{
-		LoadUniformBlock(program, stageFlag, i);
+		LoadUniformBlock(program, moduleFlag, i);
 	}
 
 	for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
 	{
-		LoadUniform(program, stageFlag, i);
+		LoadUniform(program, moduleFlag, i);
 	}
 
 	for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
 	{
-		LoadVertexAttribute(program, stageFlag, i);
+		LoadVertexAttribute(program, moduleFlag, i);
 	}
 
 	glslang::SpvOptions spvOptions;

@@ -42,18 +42,6 @@ public:
 
 	void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
 
-	friend const Metadata& operator>>(const Metadata& metadata, Emitter& emitter)
-	{
-		// TODO: Virtual?
-		return metadata;
-	}
-
-	friend Metadata& operator<<(Metadata& metadata, const Emitter& emitter)
-	{
-		// TODO: Virtual?
-		return metadata;
-	}
-
 protected:
 	Transform m_localTransform;
 };

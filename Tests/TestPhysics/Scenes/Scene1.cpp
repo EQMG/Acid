@@ -7,6 +7,7 @@
 #include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
+#include <Resources/Resources.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
@@ -49,6 +50,7 @@ Scene1::Scene1() :
 	Scene(new CameraFps()),
 	m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
 	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
+	m_buttonSave(Key::K),
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
@@ -80,6 +82,45 @@ Scene1::Scene1() :
 		if (action == InputAction::Press)
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
+		}
+	});
+
+	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	{
+		if (action == InputAction::Press)
+		{
+			Resources::Get()->GetThreadPool().Enqueue([this]()
+				{
+					auto sceneFile = File("Scene1.yaml", new Yaml());
+					auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
+
+					for (auto& entity : GetStructure()->QueryAll())
+					{
+						auto entityNode = sceneNode->AddChild(new Metadata());
+						entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
+						auto transformNode = entityNode->AddChild(new Metadata("Transform"));
+						auto componentsNode = entityNode->AddChild(new Metadata("Components"));
+						*transformNode << entity->GetLocalTransform();
+
+						for (auto& component : entity->GetComponents())
+						{
+							//if (component->IsFromPrefab())
+							//{
+							//	continue;
+							//}
+
+							auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+
+							if (componentName)
+							{
+								auto child = componentsNode->AddChild(new Metadata(*componentName));
+								Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
+							}
+						}
+					}
+
+					sceneFile.Write();
+				});
 		}
 	});
 
@@ -137,7 +178,11 @@ void Scene1::Start()
 	//animatedObject->AddComponent<MaterialDefault>();
 	//animatedObject->AddComponent<MeshRender>();
 	//animatedObject->AddComponent<ShadowRender>();
-	
+
+	EntityPrefab prefabAnimated = EntityPrefab("Prefabs/Animated.yaml");
+	prefabAnimated.Write(*animatedObject);
+	prefabAnimated.Save();
+
 	// Entities.
 	auto sun = GetStructure()->CreateEntity(Transform(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f));
 	//sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
@@ -167,7 +212,7 @@ void Scene1::Start()
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
 	
-	EntityPrefab prefabTerrain = EntityPrefab("Terrain.yaml");
+	EntityPrefab prefabTerrain = EntityPrefab("Prefabs/Terrain.yaml");
 	prefabTerrain.Write(*terrain);
 	prefabTerrain.Save();
 	
@@ -197,17 +242,22 @@ void Scene1::Start()
 	//suzanne1->AddComponent<MeshRender>();
 	//suzanne1->AddComponent<ShadowRender>();
 
-	auto teapot = GetStructure()->CreateEntity(Transform(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), 0.2f));
-	teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")); //teapot->AddComponent<Rigidbody>(1.0f);
-	//teapot->AddComponent<ColliderConvexHull>();
-	teapot->AddComponent<Rotate>(Vector3f(50.0f, 30.0f, 40.0f), 0);
-	teapot->AddComponent<NameTag>("Vector3", 1.4f);
-	teapot->AddComponent<MeshRender>();
-	teapot->AddComponent<ShadowRender>();
+	auto teapot1 = GetStructure()->CreateEntity(Transform(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), 0.2f));
+	teapot1->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
+	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")); 
+	//teapot1->AddComponent<Rigidbody>(1.0f);
+	//teapot1->AddComponent<ColliderConvexHull>();
+	teapot1->AddComponent<Rotate>(Vector3f(50.0f, 30.0f, 40.0f), 0);
+	teapot1->AddComponent<NameTag>("Vector3", 1.4f);
+	teapot1->AddComponent<MeshRender>();
+	teapot1->AddComponent<ShadowRender>();
+
+	EntityPrefab prefabTeapot1 = EntityPrefab("Prefabs/Teapot1.yaml");
+	prefabTeapot1.Write(*teapot1);
+	prefabTeapot1.Save();
 
 	auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), 3.0f));
-	teapotCone->SetParent(teapot);
+	teapotCone->SetParent(teapot1);
 	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
 	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3f(0.0f, 0.5f, 0.0f)));
@@ -251,7 +301,8 @@ void Scene1::Start()
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3f(-15.0f, 4.0f, 12.0f)));
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
-	EntityPrefab prefabSmokeSystem = EntityPrefab("SmokeSystem.json");
+
+	EntityPrefab prefabSmokeSystem = EntityPrefab("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem.Write(*smokeSystem);
 	prefabSmokeSystem.Save();
 }

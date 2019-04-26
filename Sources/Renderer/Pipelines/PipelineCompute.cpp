@@ -77,14 +77,14 @@ void PipelineCompute::CreateShaderProgram()
 	shaderCode = Shader::ProcessIncludes(shaderCode);
 
 	auto stageFlag = Shader::GetShaderStage(m_shaderStage);
-	m_shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
+	m_shaderModule = m_shader->CreateShaderModule(m_shaderStage, shaderCode, stageFlag);
 
 	m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 	m_shaderStageCreateInfo.stage = stageFlag;
 	m_shaderStageCreateInfo.module = m_shaderModule;
 	m_shaderStageCreateInfo.pName = "main";
 
-	m_shader->ProcessShader();
+	m_shader->CreateReflection();
 }
 
 void PipelineCompute::CreateDescriptorLayout()

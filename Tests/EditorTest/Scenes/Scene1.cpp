@@ -111,7 +111,7 @@ Scene1::Scene1() :
 						if (componentName)
 						{
 							auto child = componentsNode->AddChild(new Metadata(*componentName));
-							*child << component;
+							Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 						}
 					}
 				}
